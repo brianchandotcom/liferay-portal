@@ -10,9 +10,7 @@ import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,24 +39,8 @@ public class ViewAllSectionFDSItemsActions implements FDSItemsActions {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			_sectionDisplayContextHelper.getFDSActionDropdownItems(
-				httpServletRequest);
-
-		fdsActionDropdownItems.add(
-			6,
-			new FDSActionDropdownItem(
-				"{embedded.file.link.href}", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link"));
-		fdsActionDropdownItems.add(
-			8,
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "info-circle-open", "show-details",
-				LanguageUtil.get(httpServletRequest, "show-details"), null,
-				null, "infoPanel"));
-
-		return fdsActionDropdownItems;
+		return _sectionDisplayContextHelper.getAllSectionFDSActionDropdownItems(
+			httpServletRequest);
 	}
 
 	@Activate

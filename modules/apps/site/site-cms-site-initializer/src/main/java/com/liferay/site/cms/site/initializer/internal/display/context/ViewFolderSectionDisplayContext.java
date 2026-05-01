@@ -8,7 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -17,14 +16,11 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -68,7 +64,6 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			objectEntryFolderModelResourcePermission, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 
-		_httpServletRequest = httpServletRequest;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 	}
 
@@ -153,100 +148,13 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		List<DropdownItem> fdsBulkActionDropdownItems =
-			super.getBulkActionDropdownItems();
+		if (_isContentsFolder()) {
+			return sectionDisplayContextHelper.
+				getContentsBulkActionDropdownItems(httpServletRequest);
+		}
 
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"move-folder"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "move-to")
-			).build(
-				"move-to"
-			));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"copy"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "copy-to")
-			).build(
-				"copy-to"
-			));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"upload"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "export-for-translation")
-			).build(
-				"export-for-translation"
-			));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "password-policies", "default-permissions",
-				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"time"
-			).setLabel(
-				LanguageUtil.get(_httpServletRequest, "expire")
-			).build(
-				"expire"
-			));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-default-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-default-permissions-by-role"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-permissions-by-role"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"reset-to-default-permissions",
-				LanguageUtil.get(
-					httpServletRequest, "reset-to-default-permissions"),
-				null, null, null));
-
-		return fdsBulkActionDropdownItems;
+		return sectionDisplayContextHelper.getFilesBulkActionDropdownItems(
+			httpServletRequest);
 	}
 
 	public String getCMSSiteInitializerFDSName() {
@@ -311,44 +219,13 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			super.getFDSActionDropdownItems();
-
-		fdsActionDropdownItems.add(
-			6,
-			new FDSActionDropdownItem(
-				"{embedded.file.link.href}", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link"));
-
-		if (!Objects.equals(
-				getRootObjectEntryFolderExternalReferenceCode(),
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)) {
-
-			fdsActionDropdownItems.add(
-				7,
-				new FDSActionDropdownItem(
-					StringBundler.concat(
-						"/o", GroupConstants.CMS_FRIENDLY_URL,
-						"/download-folder/",
-						portal.getClassNameId(ObjectEntryFolder.class),
-						"/{embedded.id}"),
-					"download", "download-folder",
-					LanguageUtil.get(httpServletRequest, "download"), "get",
-					null, "link",
-					HashMapBuilder.<String, Object>put(
-						"entryClassName", ObjectEntryFolder.class.getName()
-					).build()));
+		if (_isContentsFolder()) {
+			return sectionDisplayContextHelper.
+				getContentsFDSActionDropdownItems(httpServletRequest);
 		}
 
-		fdsActionDropdownItems.add(
-			9,
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "info-circle-open", "show-details",
-				LanguageUtil.get(httpServletRequest, "show-details"), null,
-				null, "infoPanel"));
-
-		return fdsActionDropdownItems;
+		return sectionDisplayContextHelper.getFilesFDSActionDropdownItems(
+			httpServletRequest);
 	}
 
 	@Override
@@ -440,7 +317,12 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return true;
 	}
 
-	private final HttpServletRequest _httpServletRequest;
+	private boolean _isContentsFolder() {
+		return Objects.equals(
+			getRootObjectEntryFolderExternalReferenceCode(),
+			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);
+	}
+
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private String _objectFolderExternalReferenceCode;
 	private String _rootObjectEntryFolderExternalReferenceCode;

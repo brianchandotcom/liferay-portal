@@ -7,16 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -57,100 +54,8 @@ public abstract class BaseContentsSectionDisplayContext
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		List<DropdownItem> fdsBulkActionDropdownItems =
-			super.getBulkActionDropdownItems();
-
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"move-folder"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "move-to")
-			).build(
-				"move-to"
-			));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"copy"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "copy-to")
-			).build(
-				"copy-to"
-			));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"time"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "expire")
-			).build(
-				"expire"
-			));
-		fdsBulkActionDropdownItems.add(
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
-				"#"
-			).setIcon(
-				"upload"
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "export-for-translation")
-			).build(
-				"export-for-translation"
-			));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "password-policies", "permissions",
-				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
-				null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				"#", "password-policies", "default-permissions",
-				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-default-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-default-permissions-by-role"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"edit-permissions-by-role",
-				LanguageUtil.get(
-					httpServletRequest, "edit-permissions-by-role"),
-				null, null, null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "password-policies",
-				"reset-to-default-permissions",
-				LanguageUtil.get(
-					httpServletRequest, "reset-to-default-permissions"),
-				null, null, null));
-
-		return fdsBulkActionDropdownItems;
+		return sectionDisplayContextHelper.getContentsBulkActionDropdownItems(
+			httpServletRequest);
 	}
 
 	@Override
@@ -169,6 +74,12 @@ public abstract class BaseContentsSectionDisplayContext
 		).put(
 			"title", language.get(httpServletRequest, "no-content-yet")
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
+		return sectionDisplayContextHelper.getContentsFDSActionDropdownItems(
+			httpServletRequest);
 	}
 
 	protected abstract String getEmptyStateDescriptionKey();

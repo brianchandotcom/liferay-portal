@@ -6,6 +6,7 @@
 package com.liferay.ant.groovy;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -14,6 +15,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -25,6 +27,7 @@ import org.apache.tools.ant.types.FileSet;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
@@ -312,7 +315,9 @@ public class GroovyValidateFileTask extends Task {
 
 			return groovyBlocks;
 		}
-		catch (Exception exception) {
+		catch (IOException | ParserConfigurationException | SAXException
+					exception) {
+
 			throw new BuildException(
 				"Failed to parse " + file + ": " + exception.getMessage(),
 				exception);

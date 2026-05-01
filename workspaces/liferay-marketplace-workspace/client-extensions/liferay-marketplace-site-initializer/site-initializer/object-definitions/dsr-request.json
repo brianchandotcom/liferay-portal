@@ -1,0 +1,170 @@
+{
+	"externalReferenceCode": "DSR-REQUEST",
+	"label": {
+		"en_US": "DSR Request"
+	},
+	"name": "DSRRequest",
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Accept EULA Agreement"
+			},
+			"name": "acceptEulaAgreement",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Accept Terms and Conditions"
+			},
+			"name": "acceptTermsAndConditions",
+			"required": false,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Corp Project Name"
+			},
+			"name": "corpProjectName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Corp Project UUID"
+			},
+			"name": "corpProjectUuid",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Data Center Location"
+			},
+			"name": "dataCenterLocation",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Host Name"
+			},
+			"name": "hostName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Incident Report Email Addresses"
+			},
+			"name": "incidentReportEmailAddresses",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "IP Addresses"
+			},
+			"name": "ipAddresses",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MAC Addresses"
+			},
+			"name": "macAddresses",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Owner Email Address"
+			},
+			"name": "ownerEmailAddress",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Server Location"
+			},
+			"name": "serverLocation",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Workspace Name"
+			},
+			"name": "workspaceName",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Workspace Owner Email"
+			},
+			"name": "workspaceOwnerEmail",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "MARKETPLACE",
+	"pluralLabel": {
+		"en_US": "DSR Requests"
+	},
+	"scope": "company"
+}

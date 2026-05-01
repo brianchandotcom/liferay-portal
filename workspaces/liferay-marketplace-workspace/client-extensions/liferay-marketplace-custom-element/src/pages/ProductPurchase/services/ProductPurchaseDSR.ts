@@ -7,6 +7,7 @@ import {OrderCustomFields, OrderTypes} from '../../../enums/Order';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
 import provisioningOAuth2 from '../../../services/oauth/Provisioning';
+import HeadlessDSRRequest from '../../../services/rest/HeadlessDSRRequest';
 import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
@@ -51,10 +52,19 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 
 		const order = await super.createOrder(cart);
 
+		const analyticsForm = this.buildAnalyticsForm();
 		const dsrForm = this.buildDSRForm();
 
+		await HeadlessDSRRequest.createDSRRequest({
+			...dsrForm,
+			...analyticsForm,
+			incidentReportEmailAddresses:
+				analyticsForm.incidentReportEmailAddresses.join(','),
+			r_orderToDSRRequest_commerceOrderId: order.id,
+		}).catch(console.error);
+
 		await provisioningOAuth2.provisionDSR({
-			analyticsForm: this.buildAnalyticsForm(),
+			analyticsForm,
 			licenseEntry: {
 				hostName: dsrForm.hostName,
 				ipAddresses: dsrForm.ipAddresses,

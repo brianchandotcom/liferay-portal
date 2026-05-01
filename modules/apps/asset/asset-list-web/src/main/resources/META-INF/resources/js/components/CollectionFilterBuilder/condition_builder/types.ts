@@ -6,11 +6,12 @@
 import React from 'react';
 
 export type PropertyType =
+	| 'asset-categories'
+	| 'asset-tags'
 	| 'boolean'
 	| 'date'
 	| 'date-time'
 	| 'double'
-	| 'id'
 	| 'integer'
 	| 'picklist'
 	| 'string';
@@ -38,6 +39,15 @@ export interface GenericProperty {
 	type: PropertyType;
 }
 
+/**
+ * A labeled group of properties, rendered as a section header in the
+ * field Picker.
+ */
+export interface PropertyGroup {
+	items: GenericProperty[];
+	label: string;
+}
+
 export interface GenericOperator {
 	label: string;
 	value: string;
@@ -49,7 +59,7 @@ export interface FilterCondition {
 	id: string;
 	operatorName?: string;
 	propertyName?: string;
-	value?: string;
+	value?: string | Array<string | object>;
 }
 
 export type ConditionType = 'all' | 'any';
@@ -63,8 +73,8 @@ export type ConditionType = 'all' | 'any';
 export type ValueInputRenderer = (
 	property: GenericProperty,
 	operator: string,
-	value: string | undefined,
-	onChange: (value: string) => void
+	value: string | Array<string | object> | undefined,
+	onChange: (value: string | Array<string | object>) => void
 ) => React.ReactNode;
 
 export interface ConditionBuilderProps {
@@ -84,7 +94,7 @@ export interface ConditionBuilderProps {
 		conditionType: ConditionType
 	) => void;
 
-	properties: GenericProperty[];
+	properties: Array<GenericProperty | PropertyGroup>;
 
 	renderValueInput: ValueInputRenderer;
 

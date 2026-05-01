@@ -19,97 +19,73 @@ import org.json.JSONObject;
 public class BusinessEvent {
 
 	public BusinessEvent(JSONObject jsonObject) {
-		JSONObject propertiesJSONObject = jsonObject.optJSONObject(
-			"properties");
+		_accountExternalKey = jsonObject.optString("accountExternalKey");
 
-		if (propertiesJSONObject == null) {
-			propertiesJSONObject = jsonObject;
-		}
+		_actualEventDate = jsonObject.optString("actualEventDate");
 
-		_accountExternalReferenceCode = propertiesJSONObject.optString(
-			"accountEntryToBusinessEventsERC");
-		_accountId = propertiesJSONObject.optLong(
-			"r_accountEntryToBusinessEvents_accountEntryId");
+		_associatedTickets = jsonObject.optString("associatedTickets");
 
-		_businessEventId = jsonObject.optString("id");
+		_author = jsonObject.optString("author");
 
-		JSONObject creatorJSONObject = jsonObject.optJSONObject("creator");
+		_businessEventId = StringPool.BLANK;
 
-		if (creatorJSONObject != null) {
-			_creatorGivenName = creatorJSONObject.optString("givenName");
-			_creatorId = creatorJSONObject.optLong("id");
-		}
-		else {
-			_creatorGivenName = StringPool.BLANK;
-			_creatorId = 0;
-		}
+		_currentLiferayVersionKey = jsonObject.optString(
+			"currentLiferayVersion");
 
-		_actualEventDate = propertiesJSONObject.optString("actualEventDate");
-		_associatedTickets = propertiesJSONObject.optString(
-			"associatedTickets");
+		_currentLiferayVersionName = StringPool.BLANK;
 
-		JSONObject currentLiferayVersionJSONObject = _toKeyValueJSONObject(
-			propertiesJSONObject, "currentLiferayVersion");
+		_description = jsonObject.optString("description");
 
-		_currentLiferayVersionKey = currentLiferayVersionJSONObject.optString(
-			"key");
-		_currentLiferayVersionName = currentLiferayVersionJSONObject.optString(
-			"value");
+		_eventStatusName = jsonObject.optString("eventStatus");
 
-		_description = propertiesJSONObject.optString("description");
+		_eventTypeName = jsonObject.optString("eventType");
 
-		_eventStatusKey = _toKeyValueJSONObject(
-			propertiesJSONObject, "eventStatus"
-		).optString(
-			"key"
-		);
-		_eventTypeName = _toKeyValueJSONObject(
-			propertiesJSONObject, "eventType"
-		).optString(
-			"value"
-		);
+		_lastComment = jsonObject.optString("lastComment");
 
-		_lastComment = propertiesJSONObject.optString("lastComment");
-		_name = propertiesJSONObject.optString("name");
+		_lastUpdatedAuthor = jsonObject.optString("author");
 
-		JSONObject newLiferayVersionJSONObject = _toKeyValueJSONObject(
-			propertiesJSONObject, "newLiferayVersion");
+		_name = jsonObject.optString("name");
 
-		_newLiferayVersionKey = newLiferayVersionJSONObject.optString("key");
-		_newLiferayVersionName = newLiferayVersionJSONObject.optString("value");
+		_newLiferayVersionKey = jsonObject.optString("newLiferayVersion");
 
-		_plannedEventDate = propertiesJSONObject.optString("plannedEventDate");
-		_timeZoneName = _toKeyValueJSONObject(
-			propertiesJSONObject, "timeZone"
-		).optString(
-			"value"
-		);
+		_newLiferayVersionName = StringPool.BLANK;
+
+		_plannedEventDate = jsonObject.optString("plannedEventDate");
+
+		_timeZoneName = jsonObject.optString("timeZone");
 	}
 
 	public BusinessEvent(
 		String accountExternalReferenceCode, JSONObject jsmJSONObject) {
 
-		_accountExternalReferenceCode =
-			(accountExternalReferenceCode != null) ?
-				accountExternalReferenceCode : StringPool.BLANK;
+		if (Validator.isNotNull(accountExternalReferenceCode)) {
+			_accountExternalKey = accountExternalReferenceCode;
+		}
+		else {
+			_accountExternalKey = StringPool.BLANK;
+		}
 
-		_accountId = 0;
 		_businessEventId = jsmJSONObject.optString("id");
-		_creatorGivenName = StringPool.BLANK;
-		_creatorId = 0;
 
 		JSONArray attributesJSONArray = jsmJSONObject.getJSONArray(
 			"attributes");
 
 		_actualEventDate = _toAttributeJSONObject(
 			attributesJSONArray,
-			BusinessEventConstants.ATTRIBUTE_ACTUAL_GO_LIVE_DATE
+			BusinessEventConstants.ATTRIBUTE_ACTUAL_EVENT_DATE
 		).optString(
 			"key"
 		);
+
 		_associatedTickets = _toAttributeJSONObject(
 			attributesJSONArray,
 			BusinessEventConstants.ATTRIBUTE_ASSOCIATED_TICKETS
+		).optString(
+			"value"
+		);
+
+		_author = _toAttributeJSONObject(
+			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_AUTHOR
 		).optString(
 			"value"
 		);
@@ -120,6 +96,7 @@ public class BusinessEvent {
 
 		_currentLiferayVersionKey = currentLiferayVersionJSONObject.optString(
 			"key");
+
 		_currentLiferayVersionName = currentLiferayVersionJSONObject.optString(
 			"value");
 
@@ -129,32 +106,31 @@ public class BusinessEvent {
 			"value"
 		);
 
-		String eventStatusKey = _toAttributeJSONObject(
+		_eventStatusName = _toAttributeJSONObject(
 			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_EVENT_STATUS
 		).optString(
 			"value"
 		);
-
-		if (Validator.isNull(eventStatusKey)) {
-			eventStatusKey = _toAttributeJSONObject(
-				attributesJSONArray, BusinessEventConstants.ATTRIBUTE_STATUS
-			).optString(
-				"value"
-			);
-		}
-
-		_eventStatusKey = eventStatusKey;
 
 		_eventTypeName = _toAttributeJSONObject(
 			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_EVENT_TYPE
 		).optString(
 			"value"
 		);
+
 		_lastComment = _toAttributeJSONObject(
 			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_LAST_COMMENT
 		).optString(
 			"value"
 		);
+
+		_lastUpdatedAuthor = _toAttributeJSONObject(
+			attributesJSONArray,
+			BusinessEventConstants.ATTRIBUTE_LAST_UPDATED_AUTHOR
+		).optString(
+			"value"
+		);
+
 		_name = _toAttributeJSONObject(
 			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_NAME
 		).optString(
@@ -169,10 +145,11 @@ public class BusinessEvent {
 
 		_plannedEventDate = _toAttributeJSONObject(
 			attributesJSONArray,
-			BusinessEventConstants.ATTRIBUTE_TARGET_EVENT_DATE
+			BusinessEventConstants.ATTRIBUTE_PLANNED_EVENT_DATE
 		).optString(
 			"key"
 		);
+
 		_timeZoneName = _toAttributeJSONObject(
 			attributesJSONArray, BusinessEventConstants.ATTRIBUTE_TIME_ZONE
 		).optString(
@@ -180,12 +157,8 @@ public class BusinessEvent {
 		);
 	}
 
-	public String getAccountExternalReferenceCode() {
-		return _accountExternalReferenceCode;
-	}
-
-	public long getAccountId() {
-		return _accountId;
+	public String getAccountExternalKey() {
+		return _accountExternalKey;
 	}
 
 	public String getActivityHistoryURL(String customerPortalURL) {
@@ -200,16 +173,12 @@ public class BusinessEvent {
 		return _associatedTickets;
 	}
 
+	public String getAuthor() {
+		return _author;
+	}
+
 	public String getBusinessEventId() {
 		return _businessEventId;
-	}
-
-	public String getCreatorGivenName() {
-		return _creatorGivenName;
-	}
-
-	public long getCreatorId() {
-		return _creatorId;
 	}
 
 	public String getCurrentLiferayVersionKey() {
@@ -228,8 +197,8 @@ public class BusinessEvent {
 		return getURL(customerPortalURL) + "/edit";
 	}
 
-	public String getEventStatusKey() {
-		return _eventStatusKey;
+	public String getEventStatusName() {
+		return _eventStatusName;
 	}
 
 	public String getEventTypeName() {
@@ -238,6 +207,10 @@ public class BusinessEvent {
 
 	public String getLastComment() {
 		return _lastComment;
+	}
+
+	public String getLastUpdatedAuthor() {
+		return _lastUpdatedAuthor;
 	}
 
 	public String getName() {
@@ -256,10 +229,6 @@ public class BusinessEvent {
 		return _plannedEventDate;
 	}
 
-	public String getPlannedEventDateOnly() {
-		return _plannedEventDate.split("T")[0];
-	}
-
 	public String getTimeZoneName() {
 		return _timeZoneName;
 	}
@@ -269,7 +238,7 @@ public class BusinessEvent {
 
 		sb.append(customerPortalURL);
 		sb.append("/project/#/");
-		sb.append(_accountExternalReferenceCode);
+		sb.append(_accountExternalKey);
 		sb.append("/business-events/");
 		sb.append(_businessEventId);
 
@@ -297,9 +266,9 @@ public class BusinessEvent {
 			"eventStatus",
 			new JSONObject(
 			).put(
-				"key", _eventStatusKey
+				"key", _eventStatusName
 			).put(
-				"name", _eventStatusKey
+				"name", _eventStatusName
 			)
 		).put(
 			"eventType",
@@ -311,8 +280,6 @@ public class BusinessEvent {
 			)
 		).put(
 			"id", _businessEventId
-		).put(
-			"lastComment", _lastComment
 		).put(
 			"name", _name
 		).put(
@@ -344,13 +311,10 @@ public class BusinessEvent {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject attributeJSONObject = jsonArray.getJSONObject(i);
 
-			String name = attributeJSONObject.getJSONObject(
-				"objectTypeAttribute"
-			).getString(
-				"name"
-			);
+			String name = attributeJSONObject.optString(
+				"objectTypeAttributeName");
 
-			if (!attributeName.equals(name)) {
+			if (Validator.isNull(name) || !attributeName.equals(name)) {
 				continue;
 			}
 
@@ -387,51 +351,18 @@ public class BusinessEvent {
 		return new JSONObject();
 	}
 
-	private JSONObject _toKeyValueJSONObject(
-		JSONObject jsonObject, String fieldName) {
-
-		JSONObject keyValueJSONObject = jsonObject.optJSONObject(fieldName);
-
-		if (keyValueJSONObject != null) {
-			String key = keyValueJSONObject.optString("key");
-
-			String value = keyValueJSONObject.optString("name", key);
-
-			if (Validator.isNull(key)) {
-				key = value;
-			}
-
-			return new JSONObject(
-			).put(
-				"key", key
-			).put(
-				"value", value
-			);
-		}
-
-		String value = jsonObject.optString(fieldName);
-
-		return new JSONObject(
-		).put(
-			"key", value
-		).put(
-			"value", value
-		);
-	}
-
-	private final String _accountExternalReferenceCode;
-	private final long _accountId;
+	private final String _accountExternalKey;
 	private final String _actualEventDate;
 	private final String _associatedTickets;
+	private final String _author;
 	private final String _businessEventId;
-	private final String _creatorGivenName;
-	private final long _creatorId;
 	private final String _currentLiferayVersionKey;
 	private final String _currentLiferayVersionName;
 	private final String _description;
-	private final String _eventStatusKey;
+	private final String _eventStatusName;
 	private final String _eventTypeName;
 	private final String _lastComment;
+	private final String _lastUpdatedAuthor;
 	private final String _name;
 	private final String _newLiferayVersionKey;
 	private final String _newLiferayVersionName;

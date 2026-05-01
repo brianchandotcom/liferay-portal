@@ -4,12 +4,9 @@
  */
 
 import {useEffect, useState} from 'react';
-import {JSM_FIELDS, LIST_TYPES} from '~/features/project/utils/constants';
-import {getListTypeEntriesLegacy} from '~/services/liferay/api';
+import {JSM_FIELDS} from '~/features/project/utils/constants';
 import {getFieldOptions} from '~/services/liferay/rest/jira/Jira';
 import {IOption} from '~/utils/types';
-
-import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetBusinessEventTypesList(): {
 	businessEventTypesList: IOption[];
@@ -22,16 +19,10 @@ export default function useGetBusinessEventTypesList(): {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	const isJiraBackend = useIsJiraBackend();
-
 	useEffect(() => {
 		const fetchListTypeEntries = async () => {
 			try {
-				const response = isJiraBackend
-					? await getFieldOptions(JSM_FIELDS.eventType)
-					: await getListTypeEntriesLegacy(
-							LIST_TYPES.businessEventTypes
-						);
+				const response = await getFieldOptions(JSM_FIELDS.eventType);
 
 				setBusinessEventTypesList(
 					response
@@ -55,7 +46,7 @@ export default function useGetBusinessEventTypesList(): {
 		};
 
 		fetchListTypeEntries();
-	}, [isJiraBackend]);
+	}, []);
 
 	return {businessEventTypesList, error, loading};
 }

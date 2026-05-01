@@ -8,13 +8,10 @@ import {Observer} from '@clayui/modal/lib/types';
 import {useState} from 'react';
 import {Badge} from '~/components';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEventLegacy} from '~/services/liferay/api';
 import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
-import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
@@ -37,14 +34,6 @@ const CancelEventPage: React.FC<IProps> = ({
 	const [reason, setReason] = useState('');
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
-	const isJiraBackend = useIsJiraBackend();
-
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		accountExternalReferenceCode,
-		businessEvent,
-		false,
-		true
-	);
 
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {...businessEvent};
@@ -56,31 +45,24 @@ const CancelEventPage: React.FC<IProps> = ({
 		}
 
 		const formattedBusinessEvent = {
-			eventStatus: {key: 'Canceled'},
+			...updatedBusinessEvent,
+			currentLiferayVersion:
+				updatedBusinessEvent.currentLiferayVersion?.key,
+			eventStatus: 'Canceled',
+			eventType: updatedBusinessEvent.eventType?.key,
 			lastComment: reason,
-			plannedEventDate: updatedBusinessEvent.plannedEventDate,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
+			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
+			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			if (isJiraBackend) {
-				await updateBusinessEvent(
-					accountExternalReferenceCode,
-					businessEventId,
-					formattedBusinessEvent
-				);
-			}
-			else {
-				await updateAccountBusinessEvents();
-
-				await updateBusinessEventLegacy(
-					businessEventId,
-					formattedBusinessEvent
-				);
-			}
+			await updateBusinessEvent(
+				accountExternalReferenceCode,
+				businessEventId,
+				formattedBusinessEvent
+			);
 
 			closeFunction(false);
 			onCancel();

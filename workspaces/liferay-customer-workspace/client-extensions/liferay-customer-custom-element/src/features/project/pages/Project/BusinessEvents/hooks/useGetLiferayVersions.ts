@@ -4,17 +4,9 @@
  */
 
 import {useEffect, useState} from 'react';
-import {
-	JSM_OBJECT_TYPES,
-	JSM_SCHEMAS,
-	LIST_TYPES,
-} from '~/features/project/utils/constants';
-import {getListTypeEntriesLegacy} from '~/services/liferay/api';
-import {getJSMObjects} from '~/services/liferay/rest/jira/Jira';
+import {getProductVersions} from '~/services/liferay/rest/jira/Jira';
 import sortLiferayVersions from '~/utils/sortLiferayVersions';
 import {IOption} from '~/utils/types';
-
-import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetLiferayVersions(): {
 	error: boolean;
@@ -25,40 +17,19 @@ export default function useGetLiferayVersions(): {
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 
-	const isJiraBackend = useIsJiraBackend();
-
 	useEffect(() => {
 		const fetchLiferayVersions = async () => {
 			try {
-				if (isJiraBackend) {
-					const response = await getJSMObjects(
-						JSM_SCHEMAS.businessEvents,
-						JSM_OBJECT_TYPES.productVersion
-					);
+				const response = await getProductVersions();
 
-					setProductVersions(
-						sortLiferayVersions(
-							response.map((entry: any) => ({
-								key: entry.key,
-								name: entry.name,
-							}))
-						).map(({key, name}) => ({label: name, value: key}))
-					);
-				}
-				else {
-					const response = await getListTypeEntriesLegacy(
-						LIST_TYPES.dxpMinorVersionAndPortalMajorVersion
-					);
-
-					setProductVersions(
-						sortLiferayVersions(
-							response.map((entry: any) => ({
-								key: entry.key,
-								name: entry.name,
-							}))
-						).map(({key, name}) => ({label: name, value: key}))
-					);
-				}
+				setProductVersions(
+					sortLiferayVersions(
+						response.map((entry: any) => ({
+							key: entry.key,
+							name: entry.name,
+						}))
+					).map(({key, name}) => ({label: name, value: key}))
+				);
 			}
 			catch (error) {
 				console.error('Error fetching Liferay versions:', error);
@@ -71,7 +42,7 @@ export default function useGetLiferayVersions(): {
 		};
 
 		fetchLiferayVersions();
-	}, [isJiraBackend]);
+	}, []);
 
 	return {
 		error,

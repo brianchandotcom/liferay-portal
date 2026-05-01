@@ -5,11 +5,8 @@
 
 import {useCallback, useEffect, useState} from 'react';
 import useAccountKey from '~/hooks/useAccountKey';
-import {getBusinessEventByIdLegacy} from '~/services/liferay/api';
 import {getBusinessEventById} from '~/services/liferay/rest/jira/Jira';
 import {IBusinessEvent} from '~/utils/types';
-
-import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetBusinessEvent(id: string): {
 	businessEvent: IBusinessEvent | undefined;
@@ -23,8 +20,6 @@ export default function useGetBusinessEvent(id: string): {
 	const [loading, setLoading] = useState(true);
 
 	const accountKey = useAccountKey();
-	const isJiraBackend = useIsJiraBackend();
-
 	const fetchBusinessEvent = useCallback(async () => {
 		if (!accountKey) {
 			return;
@@ -33,9 +28,10 @@ export default function useGetBusinessEvent(id: string): {
 		setLoading(true);
 
 		try {
-			const businessEventResponse = isJiraBackend
-				? await getBusinessEventById(accountKey, id)
-				: await getBusinessEventByIdLegacy(id);
+			const businessEventResponse = await getBusinessEventById(
+				accountKey,
+				id
+			);
 
 			setBusinessEvent(businessEventResponse as IBusinessEvent);
 		}
@@ -45,7 +41,7 @@ export default function useGetBusinessEvent(id: string): {
 		finally {
 			setLoading(false);
 		}
-	}, [accountKey, id, isJiraBackend]);
+	}, [accountKey, id]);
 
 	useEffect(() => {
 		if (!id) {

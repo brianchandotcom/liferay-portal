@@ -4,12 +4,9 @@
  */
 
 import {useEffect, useState} from 'react';
-import {JSM_FIELDS, LIST_TYPES} from '~/features/project/utils/constants';
-import {getListTypeEntriesLegacy} from '~/services/liferay/api';
+import {JSM_FIELDS} from '~/features/project/utils/constants';
 import {getFieldOptions} from '~/services/liferay/rest/jira/Jira';
 import {IOption} from '~/utils/types';
-
-import useIsJiraBackend from './useIsJiraBackend';
 
 export default function useGetUTCTimeZonesList(): {
 	error: boolean;
@@ -20,14 +17,10 @@ export default function useGetUTCTimeZonesList(): {
 	const [utcTimeZonesList, setUTCTimeZonesList] = useState<IOption[]>([]);
 	const [loading, setLoading] = useState(true);
 
-	const isJiraBackend = useIsJiraBackend();
-
 	useEffect(() => {
 		const fetchListTypeEntries = async () => {
 			try {
-				const response = isJiraBackend
-					? await getFieldOptions(JSM_FIELDS.timeZone)
-					: await getListTypeEntriesLegacy(LIST_TYPES.utcTimeZones);
+				const response = await getFieldOptions(JSM_FIELDS.timeZone);
 
 				setUTCTimeZonesList(
 					response.map((entry: any) => ({
@@ -47,7 +40,7 @@ export default function useGetUTCTimeZonesList(): {
 		};
 
 		fetchListTypeEntries();
-	}, [isJiraBackend]);
+	}, []);
 
 	return {error, loading, utcTimeZonesList};
 }

@@ -52,16 +52,6 @@ export async function createBusinessEvent(
 	return response;
 }
 
-export async function deleteBusinessEvent(
-	externalReferenceCode: string,
-	id: string | number
-) {
-	return jiraFetch(
-		`/accounts/${externalReferenceCode}/business-events/${id}`,
-		{method: 'DELETE'}
-	);
-}
-
 export async function getAccountTickets(
 	externalReferenceCode: string,
 	ticketIds?: string[]
@@ -75,7 +65,7 @@ export async function getAccountTickets(
 
 export async function getBusinessEventById(
 	externalReferenceCode: string,
-	id: string | number
+	id: string
 ) {
 	return jiraFetchJSON(
 		`/accounts/${externalReferenceCode}/business-events/${id}`
@@ -96,10 +86,10 @@ export async function getBusinessEvents(externalReferenceCode: string) {
 
 export async function getBusinessEventVersions(
 	externalReferenceCode: string,
-	filters: string
+	id: string
 ) {
 	return jiraFetchJSON(
-		`/accounts/${externalReferenceCode}/business-events/versions?${filters}`
+		`/accounts/${externalReferenceCode}/business-events/${id}/versions`
 	);
 }
 
@@ -117,8 +107,8 @@ export async function getIssue(issueKey: string) {
 	return jiraFetchJSON(`/issue/${issueKey}`);
 }
 
-export async function getJSMObjects(schema: string, name: string) {
-	const response = await jiraFetch(`/jsm-objects/${schema}/${name}`);
+export async function getProductVersions() {
+	const response = await jiraFetch('/product-versions');
 
 	if (!response.ok) {
 		return [];
@@ -139,7 +129,7 @@ export async function searchSecurityVulnerabilities(queryString: string) {
 
 export async function updateBusinessEvent(
 	externalReferenceCode: string,
-	id: string | number,
+	id: string,
 	fieldsToPatch: any
 ) {
 	return jiraFetchJSON(
@@ -147,7 +137,7 @@ export async function updateBusinessEvent(
 		{
 			body: JSON.stringify(fieldsToPatch),
 			headers: {'Content-Type': 'application/json'},
-			method: 'POST',
+			method: 'PUT',
 		}
 	);
 }

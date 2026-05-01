@@ -20,7 +20,6 @@ import useGetBusinessEventTypesList from '~/features/project/pages/Project/Busin
 import useGetLiferayVersions from '~/features/project/pages/Project/BusinessEvents/hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetUTCTimeZonesList';
 import {Liferay} from '~/services/liferay';
-import {updateBusinessEventLegacy} from '~/services/liferay/api';
 import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
@@ -28,12 +27,10 @@ import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 import {isValidDate} from '~/utils/validations.form';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import useCanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
-import useIsJiraBackend from '../../../hooks/useIsJiraBackend';
 import {containsOption} from '../../../utils/containsOption';
 import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
 import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
@@ -62,16 +59,9 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	values,
 }) => {
 	const [{project, subscriptionGroups}] = useAppContext();
-	const isJiraBackend = useIsJiraBackend();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		true,
-		false
-	);
 	const [reason, setReason] = useState('');
 
 	const {businessEventTypesList, loading: loadingBusinessEventTypesList} =
@@ -197,43 +187,21 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	}, []);
 
 	const handleSubmit = async () => {
-		const formattedBusinessEvent = isJiraBackend
-			? {
-					associatedTickets: businessEvent.associatedTickets,
-					currentLiferayVersion:
-						businessEvent.currentLiferayVersion?.key,
-					description: businessEvent.description,
-					eventStatus: {key: originalBusinessEvent.eventStatus?.key},
-					eventType: businessEvent.eventType,
-					lastComment: reason,
-					name: businessEvent?.name,
-					newLiferayVersion: businessEvent.newLiferayVersion?.key,
-					plannedEventDate: getFormattedEventDateTime(
-						businessEvent.plannedEventDate,
-						businessEvent.plannedEventTime
-					),
-					r_accountEntryToBusinessEvents_accountEntryId:
-						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-					timeZone: businessEvent.timeZone?.key,
-				}
-			: {
-					associatedTickets: businessEvent.associatedTickets,
-					currentLiferayVersion:
-						businessEvent.currentLiferayVersion?.key,
-					description: businessEvent.description,
-					eventStatus: {key: originalBusinessEvent.eventStatus?.key},
-					eventType: businessEvent.eventType,
-					lastComment: reason,
-					name: businessEvent?.name,
-					newLiferayVersion: businessEvent.newLiferayVersion?.key,
-					plannedEventDate: getFormattedEventDateTime(
-						businessEvent.plannedEventDate,
-						businessEvent.plannedEventTime
-					),
-					r_accountEntryToBusinessEvents_accountEntryId:
-						businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-					timeZone: businessEvent.timeZone?.key,
-				};
+		const formattedBusinessEvent = {
+			associatedTickets: businessEvent.associatedTickets,
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			description: businessEvent.description,
+			eventStatus: originalBusinessEvent.eventStatus?.key,
+			eventType: businessEvent.eventType?.key,
+			lastComment: reason,
+			name: businessEvent?.name,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
+			plannedEventDate: getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
+			),
+			timeZone: businessEvent.timeZone?.key,
+		};
 
 		try {
 			setIsLoadingSubmitButton(true);
@@ -242,21 +210,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 				throw new Error('Business event ID is missing');
 			}
 
-			if (isJiraBackend) {
-				await updateBusinessEvent(
-					project?.accountKey || '',
-					businessEvent.id,
-					formattedBusinessEvent
-				);
-			}
-			else {
-				await updateAccountBusinessEvents();
-
-				await updateBusinessEventLegacy(
-					businessEvent.id!,
-					formattedBusinessEvent
-				);
-			}
+			await updateBusinessEvent(
+				project?.accountKey || '',
+				businessEvent.id,
+				formattedBusinessEvent
+			);
 
 			navigate(
 				`/${project?.accountKey}/business-events/${businessEvent.id}`
@@ -477,7 +435,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 					<div>
 						<div
-							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} mb-1 d-inline px-2 py-1`}
 						>
 							{i18n.translate(
 								getKebabCase(
@@ -879,7 +837,7 @@ const BusinessEventsItemEdit: React.FC = () => {
 	}
 
 	if (
-		['canceled', 'completed'].includes(
+		['Canceled', 'Completed'].includes(
 			businessEvent?.eventStatus?.key || ''
 		)
 	) {

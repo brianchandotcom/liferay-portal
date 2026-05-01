@@ -5,10 +5,7 @@
 
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import {getBusinessEventsLegacy} from '~/services/liferay/api';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEvents} from '~/services/liferay/rest/jira/Jira';
-import {fetcher} from '~/services/liferay/fetcher';
 import {
 	getAccountByExternalReferenceCode,
 	getAccountSubscriptionGroups,
@@ -17,6 +14,7 @@ import {
 	getStructuredContentFolders,
 	getUserAccount,
 } from '~/services/liferay/graphql/queries';
+import {getBusinessEvents} from '~/services/liferay/rest/jira/Jira';
 import {
 	EXPERIENCE_SUBSCRIPTIONS,
 	LEGACY_SUBSCRIPTIONS,
@@ -58,7 +56,7 @@ const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 ]);
 
 const AppContextProvider = ({children}: {children: React.ReactNode}) => {
-	const {client, featureFlags} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 	const [state, dispatch] = useReducer<React.Reducer<IState, IAction>>(
 		reducer,
 		{
@@ -83,11 +81,8 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 	useEffect(() => {
 		const fetchBusinessEvents = async (accountKey: string) => {
 			try {
-				const businessEventsResponse = featureFlags.includes('LRSD-11821')
-					? await getBusinessEvents(accountKey)
-					: await getBusinessEventsLegacy(
-							`filter=r_accountEntryToBusinessEvents_accountEntryERC eq '${accountKey}'`
-						);
+				const businessEventsResponse =
+					await getBusinessEvents(accountKey);
 
 				const items = (businessEventsResponse.items ||
 					[]) as IBusinessEvent[];

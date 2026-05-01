@@ -92,7 +92,7 @@ liferay-default:
 
                                     rm --force --verbose /temp/liferay/deploy/com.liferay.portal.search.opensearch2.${1}.jar
 
-                                    exit 0
+                                    exit 1
                                 fi
                             }
 

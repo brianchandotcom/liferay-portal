@@ -57,12 +57,7 @@ public class CTEntryModelListener extends BaseModelListener<CTEntry> {
 			_updateCTScore(ctEntry, true);
 		}
 
-		if ((originalCTEntry.getCtCollectionId() !=
-				ctEntry.getCtCollectionId()) ||
-			(originalCTEntry.getUserId() != ctEntry.getUserId())) {
-
-			_reindexCTEntry(ctEntry, "reindex");
-		}
+		_reindexCTEntry(ctEntry, "reindex");
 
 		_ctClosureFactory.clearCache(ctEntry.getCtCollectionId());
 	}

@@ -300,10 +300,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	protected Site doGetSite(String externalReferenceCode) throws Exception {
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
-
-		return _toSite(group);
+		return _toSite(
+			_groupService.getGroupByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId()));
 	}
 
 	@Override

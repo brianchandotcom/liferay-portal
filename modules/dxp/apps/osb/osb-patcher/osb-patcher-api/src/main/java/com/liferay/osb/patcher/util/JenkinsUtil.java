@@ -119,15 +119,18 @@ public class JenkinsUtil {
 				PatcherFix patcherFix)
 		throws Exception {
 
-		Map<String, String> jenkinsRequestParameters = new HashMap<>();
+		Map<String, String> jenkinsRequestParameters = HashMapBuilder.put(
+			"osb.patcher.autoFix",
+			() -> {
+				if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
+					return "true";
+				}
 
-		if (patcherFix.getType() == PatcherFixConstants.TYPE_AUTO_FIX) {
-			jenkinsRequestParameters.put("osb.patcher.autoFix", "true");
-		}
-
-		jenkinsRequestParameters.put(
-			"osb.patcher.committish",
-			String.valueOf(patcherFix.getCommittish()));
+				return null;
+			}
+		).put(
+			"osb.patcher.committish", String.valueOf(patcherFix.getCommittish())
+		).build();
 
 		if (patcherFix.getStatus() == WorkflowConstants.STATUS_FIX_REBASING) {
 			List<Long> parentPatcherFixIds =

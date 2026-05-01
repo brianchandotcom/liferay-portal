@@ -627,6 +627,16 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testGetGroupByExternalReferenceCode() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		Group group = _groupService.getGroupByExternalReferenceCode(
+			_group.getExternalReferenceCode(), _group.getCompanyId());
+
+		Assert.assertEquals(_group.getGroupId(), group.getGroupId());
+	}
+
+	@Test
 	public void testGetGroupsLikeName() throws Exception {
 		List<Group> allChildGroups = new ArrayList<>();
 

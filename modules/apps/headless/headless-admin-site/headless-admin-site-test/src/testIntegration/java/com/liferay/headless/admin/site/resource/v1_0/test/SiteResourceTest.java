@@ -158,6 +158,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		super.testGetSite();
 
 		_testGetSiteWithDollar();
+		_testGetSiteWithoutViewPermission();
 	}
 
 	@Ignore
@@ -589,6 +590,39 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		assertEquals(postSite, getSite);
 		assertValid(getSite);
+	}
+
+	private void _testGetSiteWithoutViewPermission() throws Exception {
+		User user = UserTestUtil.addUser(false);
+
+		user = _userLocalService.updatePassword(
+			user.getUserId(), "test", "test", false, true);
+
+		SiteResource siteResource = SiteResource.builder(
+		).authentication(
+			user.getEmailAddress(), "test"
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		Site randomSite = randomSite();
+
+		randomSite.setMembershipType(Site.MembershipType.PRIVATE);
+
+		Site postSite = _testPostSite_addSite(randomSite);
+
+		try {
+			siteResource.getSite(postSite.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
 	}
 
 	private Site _testPostSite_addSite(Site site) throws Exception {

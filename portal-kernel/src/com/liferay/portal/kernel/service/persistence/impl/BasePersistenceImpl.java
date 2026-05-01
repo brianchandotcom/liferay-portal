@@ -982,6 +982,41 @@ public class BasePersistenceImpl
 
 	protected void setModelImplClass(Class<? extends T> modelImplClass) {
 		_modelImplClass = modelImplClass;
+
+		String className = modelImplClass.getName();
+
+		_finderPathCountAll = new FinderPath(
+			className.concat(".List2"), "countAll", new String[0],
+			new String[0], false);
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			className.concat(".List2"), "findAll", new String[0], new String[0],
+			true);
+		_finderPathWithPaginationFindAll = new FinderPath(
+			className.concat(".List1"), "findAll", new String[0], new String[0],
+			true);
+
+		try {
+			_defaultOrderByJPQL = (String)modelImplClass.getField(
+				"ORDER_BY_JPQL"
+			).get(
+				null
+			);
+
+			String entityAlias = (String)modelImplClass.getField(
+				"ENTITY_ALIAS"
+			).get(
+				null
+			);
+
+			_entityAliasPrefix = entityAlias.concat(".");
+
+			_countSQL = StringBundler.concat(
+				"SELECT COUNT(", entityAlias, ") FROM ",
+				_modelClass.getSimpleName(), " ", entityAlias);
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			ReflectionUtil.throwException(reflectiveOperationException);
+		}
 	}
 
 	protected void setModelPKClass(Class<? extends Serializable> clazz) {
@@ -1488,11 +1523,17 @@ public class BasePersistenceImpl
 			Timestamp.class, Type.TIMESTAMP
 		).build();
 
+	private String _countSQL;
 	private int _databaseOrderByMaxColumns;
 	private long _dataLimitModelMaxCount;
 	private DataSource _dataSource;
 	private DB _db;
 	private Map<String, String> _dbColumnNames = Collections.emptyMap();
+	private String _defaultOrderByJPQL;
+	private String _entityAliasPrefix;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathWithPaginationFindAll;
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;
 	private ModelPKType _modelPKType = ModelPKType.COMPOUND;

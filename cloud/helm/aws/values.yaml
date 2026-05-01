@@ -7,8 +7,6 @@ liferay-default:
         sidecar.opentelemetry.io/inject: "false"
     configmap:
         data:
-            com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config: |
-                remoteClusterConnectionId="REMOTE"
             com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |
                 active=B"true"
                 authenticationEnabled=B"true"
@@ -146,9 +144,6 @@ liferay-default:
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
         x-liferay-aws-opensearch:
-            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
-                name: liferay-configmap
-                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
@@ -183,6 +178,8 @@ liferay-default:
         -   com.liferay.portal.search.elasticsearch7.impl
         -   com.liferay.portal.search.learning.to.rank.api
         -   com.liferay.portal.search.learning.to.rank.impl
+    portalProperties: |
+        configuration.override.com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration_remoteClusterConnectionId="REMOTE"
     resources:
         limits:
             cpu: 4000m

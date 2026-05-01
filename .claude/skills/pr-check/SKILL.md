@@ -17,7 +17,7 @@ The script writes `${REPO_ROOT}/tmp/pr-check/results/<SHA>.status` (`PASS` or `F
 
 ## Workflow
 
-### 1. Compute the Diff and Resolve Pre-Conditions
+### 1. Compute the Diff and Resolve Preconditions
 
 ```bash
 # Find the remote whose URL matches liferay/liferay-portal (reject `origin` on a fork)
@@ -41,9 +41,9 @@ Read each changed file's diff (not just the path) and classify by *kind* and *in
 | Change Kind | Examples | Risk |
 |---|---|---|
 | Configuration | `bnd.bnd`, `gradle.properties`, non-`test` `package.json` keys | Build catches compile-time issues. For OSGi runtime keys (`Bundle-Activator`, `Liferay-*`, `Provide-Capability`, `Require-Capability`), the structural smoke baseline plus **Integration Test Compile** cover wiring breaks; deeper IT execution is out of scope (use `test-plan`). |
-| Doc / language | `*.md`, `Language*.properties` | Always-on minimum is sufficient. |
+| Doc / language | `*.md`, `Language*.properties` | **Source Format** only. The structural smoke baseline does not exercise documentation, so when the entire diff is doc / language, skip **Test Run** as well. |
 | Frontend / resource | `*.{css,sass,scss}`, `*.ftl`, `*.jsp`, `*.jspf`, lockfiles (`package-lock.json`, `yarn.lock`), module `*.properties` | **Per-Module Deploy** verifies JSP/FTL parse and resource bundling. Lockfile changes also fire JavaScript unit tests for affected modules. |
-| Generated output | `*ModelImpl.java`, `*PersistenceImpl.java`, REST DTOs, any file whose header carries `@generated` | Hand-editing is an anti-pattern — the next regen of the corresponding generator overwrites it. Flag the change but do not fire the regen + drift test on its own; the drift test fires from input changes only. |
+| Generated output | `*ModelImpl.java`, `*PersistenceImpl.java`, REST DTOs, any file whose header carries `@generated` | Hand-editing is an anti-pattern — the next regen overwrites it. Flag the change. The drift check fires from input changes; an output-only diff falls under **Output-Only Catch-Up Regen** below. |
 | Generator input | `instance_wrappers.xml`, `rest-config.yaml`, `rest-openapi.yaml`, `service.xml` | Regen must run; uncommitted output breaks the build. |
 | Poshi DSL | `*.{function,macro,path,testcase}` | Poshi syntax may break. |
 | Source — behavior change | Java/JS/TS adding, removing, or changing logic | Test the change at the unit level. Broader integration coverage lives in `test-plan`. |
@@ -59,7 +59,7 @@ Print the plan — each validation with trigger, one-sentence rationale, and tim
 
 ### 4. Write `check.sh`
 
-Create `${REPO_ROOT}/tmp/pr-check/` if missing (the repo-root `tmp/` directory is gitignored via the `.gitignore` entry `/tmp`, so nothing accidentally enters version control). Delete any existing `tmp/pr-check/check.sh`, then write a new one per the **`check.sh` Contract** below. Mark it executable (`chmod +x tmp/pr-check/check.sh`).
+Create `${REPO_ROOT}/tmp/pr-check` if missing (the repo-root `tmp` directory is gitignored via the `.gitignore` entry `/tmp`, so nothing accidentally enters version control). Delete any existing `tmp/pr-check/check.sh`, then write a new one per the **`check.sh` Contract** below. Mark it executable (`chmod +x tmp/pr-check/check.sh`).
 
 ### 5. Run `check.sh` and Evaluate
 
@@ -73,12 +73,12 @@ Wait for the harness completion notification — do not poll. When the backgroun
 
 ```bash
 status_file="${REPO_ROOT}/tmp/pr-check/results/$(git rev-parse HEAD).status"
-[ -f "${status_file}" ] && head -1 "${status_file}"
+[ -f "${status_file}" ] && head --lines=1 "${status_file}"
 ```
 
 - **`PASS`** — report success and exit. Do not read the log; keep its content out of context.
 
-- **`FAIL <exit-code>`** — read the log tail (`tail -200 "${REPO_ROOT}/tmp/pr-check/run.log"`) and grep for `BUILD FAILED`, `FAIL`, or `ERROR` markers to identify the failing validation. Surface a concise diagnostic to the developer (which validation failed, the relevant log excerpt, and the next step).
+- **`FAIL <exit-code>`** — read the log tail (`tail --lines=200 "${REPO_ROOT}/tmp/pr-check/run.log"`) and grep for `BUILD FAILED`, `FAIL`, or `ERROR` markers to identify the failing validation. Surface a concise diagnostic to the developer (which validation failed, the relevant log excerpt, and the next step).
 
 - **File missing** — the script did not complete (interrupted, crashed, or refused to start because the working tree was dirty). Surface the issue to the developer.
 
@@ -94,11 +94,11 @@ Each row is a validation. Trigger globs match against the changed file set from 
 | **Instance Wrapper Build** | `portal-impl/src/com/liferay/portal/tools/instance_wrappers.xml` changed, OR a Java file whose fully qualified name appears as a `<class name="...">` value in that XML was modified | `cd portal-impl && ant build-iw`, then `git diff --quiet` excluding `*-portlet-service.jar`, `packageinfo`, `service.properties`, `yarn.lock` |
 | **Integration Test Compile** | a Java file changed in an OSGi module (excluding `modules/dxp/apps/saml/saml-admin-rest-test/**` and `modules/sdk/**`) AND **Full Portal Build** did not fire. Catches IT compile breaks without running ITs (IT execution is out of scope). | `../gradlew :<path>:compileTestIntegrationJava --parallel` per affected module |
 | **Per-Module Deploy** | a module is in the **Build Path Selection** deploy set: either **Full Portal Build** did not fire and the module has changed Java/JS/TS/resource files, OR **Full Portal Build** fired but the module lacks `.lfrbuild-portal` (so `ant all` did not deploy it) | `ant compile install-portal-snapshots`, then `../gradlew :<path>:deploy --parallel` per affected module |
-| **Poshi Syntax** | a Poshi DSL file changed | `ant -f build-test.xml run-poshi-validation` |
+| **Poshi Syntax** | a Poshi DSL file changed | `ant -buildfile build-test.xml run-poshi-validation` |
 | **REST Builder** | a `rest-config.yaml` or `rest-openapi.yaml` actually changed. Auto-generated REST DTOs, resources, and clients are **not** triggers — drift is caught by `git diff --quiet`. | `cd portal-impl && ant build-rests` (faster than `gradlew buildREST` — single JVM scans `${basedir}/../modules` directly via `RESTBuilder`), then `git diff --quiet` over the regen output paths to flag drift |
-| **Service Builder** | a Service Builder *input* changed in a `-service` module: `service.xml`, `service.properties`, `META-INF/module-hbm.xml`, `META-INF/portlet-model-hints.xml`, `META-INF/sql/*.sql`, or developer-editable `*Impl.java` files under `model/impl/` (e.g. `FooImpl.java`) and `service/impl/` (e.g. `FooLocalServiceImpl.java`, `FooServiceImpl.java`). Auto-generated outputs (`*BaseImpl.java`, `*CacheModel.java`, `*ModelArgumentsResolver.java`, `*ModelImpl.java`, `*PersistenceConstants.java`, `*PersistenceImpl.java`, `*ServiceBaseImpl.java`, `*ServiceHttp.java`) are **not** triggers — drift between them and the regen result is caught by `git diff --quiet`. | `cd portal-impl && ant build-services`, then `git diff --quiet` over the regen output paths to flag drift |
+| **Service Builder** | a Service Builder *input* changed anywhere in the diff: `service.xml`, `service.properties`, `META-INF/module-hbm.xml`, `META-INF/portlet-model-hints.xml`, `META-INF/sql/*.sql`, or a developer-editable `*Impl.java` file under `model/impl` (e.g. `FooImpl.java`) or `service/impl` (e.g. `FooLocalServiceImpl.java`, `FooServiceImpl.java`). `portal-impl` (portal-core) and OSGi `-service` modules are both in scope — `cd portal-impl && ant build-services` regenerates against every `service.xml` it finds. Auto-generated outputs (`*BaseImpl.java`, `*CacheModel.java`, `*ModelArgumentsResolver.java`, `*ModelImpl.java`, `*PersistenceConstants.java`, `*PersistenceImpl.java`, `*ServiceBaseImpl.java`, `*ServiceHttp.java`) are **not** triggers on their own — drift between them and the regen result is caught by `git diff --quiet`, and an **output-only diff** falls under the catch-up-regen rule below. | `cd portal-impl && ant build-services`, then `git diff --quiet` over the regen output paths to flag drift |
 | **Source Format** | always | `ant setup-sdk && cd portal-impl && ant format-source-current-branch`. The formatter is dual-mode: it auto-applies fixable violations (captured by the auto-commit block) and lists unfixable ones as errors that exit non-zero, failing pr-check so the developer fixes them manually. |
-| **Test Run** | always | structural smoke baseline (`ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`) plus Java unit tests for directly changed code and JavaScript unit tests via `npm test` for affected modules whose `package.json` declares a `"test"` script. |
+| **Test Run** | always, except when the entire diff is documentation / language properties | structural smoke baseline (`ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`) plus Java unit tests for directly changed code and JavaScript unit tests via `npm test` for affected modules whose `package.json` declares a `"test"` script. |
 | **Workspace Build** | a `workspaces/**` file changed | `cd <workspace-dir> && ./gradlew build` per affected workspace |
 
 The Step 2 judgment is what eliminates spurious fires:
@@ -108,6 +108,18 @@ The Step 2 judgment is what eliminates spurious fires:
 - A `service.xml` is renamed but the schema body is unchanged → **Service Builder** fires (output filenames may shift), drift-check is likely clean.
 
 - An auto-generated `*ModelImpl.java` is hand-edited but no Service Builder input changed → **Service Builder** does **not** fire; flag the change as an anti-pattern (the next regen will overwrite it).
+
+## Output-Only Catch-Up Regen
+
+The drift validations above (**Service Builder**, **REST Builder**, **Instance Wrapper Build**) normally fire on input changes because drift is caught by running the regen and `git diff --quiet`. That logic breaks when a PR ships **only** the regenerator's output — e.g., the input changed in an earlier merge and the developer is committing a catch-up regen.
+
+When the diff matches *only* generated-output patterns and contains **no** corresponding input file, fire the matching regen + drift check anyway:
+
+- Output set includes a class referenced by `instance_wrappers.xml` and no XML change → run **Instance Wrapper Build**.
+- Output set matches REST Builder patterns (DTO `*.java`, serdes `*SerDes.java`, `OpenAPIResource*.java`, `Base*ResourceTestCase.java`, `packageinfo` adjacent to those) and no `rest-config.yaml`/`rest-openapi.yaml` changed → run **REST Builder**.
+- Output set matches Service Builder patterns (`*BaseImpl.java`, `*CacheModel.java`, `*ModelArgumentsResolver.java`, `*ModelImpl.java`, `*PersistenceConstants.java`, `*PersistenceImpl.java`, `*ServiceBaseImpl.java`, `*ServiceHttp.java`, `packageinfo` adjacent to those, `sql/indexes.sql`) and no `service.xml`/`service.properties`/HBM/model-hints/SQL input changed → run **Service Builder**.
+
+This catches the catch-up-regen failure mode where stale outputs land because the developer ran the regen against an old input snapshot.
 
 ## Build Path Selection
 
@@ -122,6 +134,19 @@ Compute N. Start with the touched OSGi modules. For each `*-api/**/*.java` in th
 
 When **Full Portal Build** fires alongside non-`.lfrbuild-portal` modules in the touched set, **Per-Module Deploy** also runs for those — `ant all`'s marketplace branch only deploys modules with the marker.
 
+## Time Budget
+
+Target a **15-minute nominal** wall-clock budget per run, with **20 minutes as the soft cap**. The plan summary in Step 3 should show the estimate; when it exceeds 20 minutes, surface the breakdown and ask whether the developer wants to trim a validation (e.g., skip **Test Run** because the Jest suite is the long pole, or split the PR).
+
+Typical envelopes from the validation catalog:
+
+- Doc-only diff: ~1 min (Source Format alone).
+- Median PR (1-4 OSGi modules, parallel-name unit tests): 5-8 min.
+- Portal-core PR (`ant all` mandatory): 10-13 min.
+- Worst case (portal-core + many modules + drift, OR a lockfile-driven full Jest suite on a large module): 15-20 min.
+
+Anything past 20 min is a signal that pr-check is being asked to do too much in one run. Integration tests, Playwright, and Poshi runs are out of scope by design — those live in `test-plan` and have their own budget.
+
 ## Auto-Commit on Drift
 
 Drift validations and **Source Format** rewrite or regenerate files in place. When that produces working-tree changes, `check.sh` stages and commits them as a separate commit using Liferay's standard message form. The HEAD advances during the script's execution; the result file is written for the final SHA so the `pr` skill's lookup matches.
@@ -133,7 +158,7 @@ Drift validations and **Source Format** rewrite or regenerate files in place. Wh
 | **Service Builder** | `<TICKET> buildServices` |
 | **Source Format** | `<TICKET> SF` |
 
-Each block follows the pattern: run the regen, check `git status --porcelain`, and when non-empty, `git add -A && git commit -m "<TICKET> <op>"`. The clean-tree pre-condition from Step 1 ensures the staged content is only the regen output.
+Each block follows the pattern: run the regen, check `git status --porcelain`, and when non-empty, `git add --all && git commit --message "<TICKET> <op>"`. The clean-tree precondition from Step 1 ensures the staged content is only the regen output.
 
 When the auto-commit itself fails (for example, a pre-commit hook rejects), the script records the failure (`EXIT_CODE=1`) and continues to the next validation so the developer sees the full picture.
 
@@ -143,19 +168,42 @@ When the auto-commit itself fails (for example, a pre-commit hook rejects), the 
 
 The **Test Run** umbrella has three components:
 
-1. **Structural smoke baseline** — a fixed five-class set that runs every default-mode run regardless of diff: `ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`.
+1. **Structural smoke baseline** — a fixed five-class set that runs whenever **Test Run** fires: `ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`. **Test Run** itself is skipped for documentation / language-only diffs (see the Validation Catalog), so the smoke baseline is skipped along with it.
 
-1. **Java unit tests** — for directly changed Java source files. Locate the counterpart test by parallel name: `Foo.java` → `FooTest.java` in the same module's `src/test/java/**` (or `portal-impl/src/test/java/**` for portal-core). Run only the specific test class — `../gradlew :<path>:test --continue --tests "<FQN>" -Dtest.ignore.failures=false` for OSGi modules, `ant test-unit -Dtest.class=<ClassName>` for portal-core — not the module's full suite. The Gradle flags are required: `--continue` keeps Gradle going if a downstream task fails so we still see the test results, and `-Dtest.ignore.failures=false` overrides Liferay's default of swallowing test failures. When multiple Java files in the same module changed, batch their counterparts into the same invocation: `--tests "<FQN1>" --tests "<FQN2>"`. Fall back to the module's full unit suite only when no parallel-name counterpart exists and the module is small enough that running everything is cheap.
+	**Batch by directory** — the five tests live in three places: two in `portal-impl/test/unit`, two in `portal-kernel/test/unit`, and one in `modules/util/portal-tools-sample-sql-builder`. Run **three** invocations, not five — each invocation forks a single JUnit JVM that runs every class matching its include pattern in one batch. The `ant test-class` target in `build-common.xml` evaluates `test.includes="**/${test.class}.class"`, and Ant filesets accept space-separated patterns inside that attribute, so passing two classes in one invocation works:
 
-1. **JavaScript unit tests** — Jest, run via the module's `npm test` script. Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `Foo.spec.tsx`, often under a `__tests__/` directory or a sibling `tests/` tree. The module's `package.json` `jest.testMatch` or `testRegex` declares the exact convention — read it to confirm the spec lookup pattern. Run only the specific spec — `cd <module> && npm test -- <relative-spec-path>` — rather than the module's full Jest suite. Fires when JS or TS source, JS-relevant `package.json` keys (`dependencies`, `devDependencies`, `scripts.build`, `scripts.test`), or lockfile changed and the module's `package.json` declares a `"test"` script.
+	```bash
+	(cd "${REPO_ROOT}/portal-impl" && ant test-class -Dtest.class="ConfigurationEnvBuilderTest.class **/Log4jConfigUtilTest") || EXIT_CODE=1
+	(cd "${REPO_ROOT}/portal-kernel" && ant test-class -Dtest.class="LibraryReferenceTest.class **/ModulesStructureTest") || EXIT_CODE=1
+	"${REPO_ROOT}/gradlew" \
+		--continue \
+		-Dtest.ignore.failures=false \
+		--project-dir "${REPO_ROOT}/modules" \
+		--tests "*.SampleSQLBuilderTest" \
+		:util:portal-tools-sample-sql-builder:test || EXIT_CODE=1
+	```
+
+	The first arg includes the `.class` suffix (so `**/${test.class}.class` expands to `**/ConfigurationEnvBuilderTest.class`); the second arg starts with `**/` so the second pattern reads `**/Log4jConfigUtilTest.class` after the `.class` suffix is appended. This collapses five JVM forks down to three.
+
+1. **Java unit tests** — for directly changed Java source files. Locate the counterpart test by parallel name: `Foo.java` → `FooTest.java` in the same module's `src/test/java/**` (for OSGi modules) or `portal-impl/test/unit/**` / `portal-kernel/test/unit/**` (for portal-core). Run only the specific test class — `../gradlew :<path>:test --continue --tests "<FQN>" -Dtest.ignore.failures=false` for OSGi modules, `cd portal-impl && ant test-class -Dtest.class=<ClassName>` (or `portal-kernel`) for portal-core — not the module's full suite. The Gradle flags are required: `--continue` keeps Gradle going if a downstream task fails so we still see the test results, and `-Dtest.ignore.failures=false` overrides Liferay's default of swallowing test failures. The portal-core `test-class` target (defined in `build-common.xml`) is the one that filters by `test.class`; `test-unit` runs the module's full suite, ignoring `test.class`. When multiple Java files in the same module changed, batch their counterparts: for Gradle, `--tests "<FQN1>" --tests "<FQN2>"`; for portal-core, `-Dtest.class="<ClassA>.class **/<ClassB>"` (Ant fileset multi-include — see the smoke-baseline batching pattern below). Fall back to the module's full unit suite only when no parallel-name counterpart exists and the module is small enough that running everything is cheap.
+
+1. **JavaScript unit tests** — Jest, run via the module's `npm test` script. Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `Foo.spec.tsx`, often under a `__tests__` directory or a sibling `tests` tree. The module's `package.json` `jest.testMatch` or `testRegex` declares the exact convention — read it to confirm the spec lookup pattern. Run only the specific spec — `cd <module> && npm test -- <relative-spec-path>` — rather than the module's full Jest suite. Fires when JS or TS source, JS-relevant `package.json` keys (`dependencies`, `devDependencies`, `scripts.build`, `scripts.test`), or lockfile changed and the module's `package.json` declares a `"test"` script.
+
+	**Lockfile changes run the full module suite.** When `package-lock.json` or `yarn.lock` is in the diff, run the module's full Jest suite (`cd <module> && npm test`) regardless of module size. Parallel-name lookup yields nothing for a lockfile, and a transitive-dependency pin can affect any code path that touches the runtime, so blast radius is the whole module.
+
+	**Deletion handling.** A deleted JS or TS file has no parallel-name counterpart to run, but its consumers can still break. Two layered checks:
+
+	- **Consumer search.** For each deleted file, grep the surrounding module for `import` statements that reference the deleted basename or relative path. For every consumer found, queue the consumer's parallel-name spec (and the consumer's spec itself when it is the consumer). This catches direct-import breakage where a surviving spec imports a now-deleted source.
+
+	- **High-risk-deletion full suite.** When a deletion lands under `__mocks__`, `test`, or `tests`, fall back to the module's full Jest suite. Those locations are explicit Jest extension points (manual mocks, shared helpers, fixtures) whose removal can change runtime behavior for tests with no naming relationship to the deleted file.
 
 Java integration tests, Playwright tests, and Poshi tests are out of scope. Use `test-plan` when their coverage is needed.
 
-Do not re-pick the structural smoke baseline classes; they already run unconditionally. Verify every test file exists before adding it to the script.
+Do not re-pick the structural smoke baseline classes; they are already covered by **Test Run**. Verify every test file exists before adding it to the script.
 
 ## `check.sh` Contract
 
-The script lives at `${REPO_ROOT}/tmp/pr-check/check.sh` (the repo-root `tmp/` directory is gitignored). Run via `bash tmp/pr-check/check.sh`. Output streams to the terminal — pipe to `tee` for capture.
+The script lives at `${REPO_ROOT}/tmp/pr-check/check.sh` (the repo-root `tmp` directory is gitignored). Run via `bash tmp/pr-check/check.sh`. Output streams to the terminal — pipe to `tee` for capture.
 
 ```bash
 #!/bin/bash
@@ -210,13 +258,13 @@ exit ${EXIT_CODE}
 	```bash
 	(cd "${REPO_ROOT}/portal-impl" && ant build-services) || EXIT_CODE=1
 	if [ -n "$(git -C "${REPO_ROOT}" status --porcelain)" ]; then
-		(cd "${REPO_ROOT}" && git add -A && git commit -m "${TICKET} buildServices") || EXIT_CODE=1
+		(cd "${REPO_ROOT}" && git add --all && git commit --message "${TICKET} buildServices") || EXIT_CODE=1
 	fi
 	```
 
 - Refresh `SHA` immediately before writing the result file. The auto-commits move HEAD; the `pr` skill looks up `<final-SHA>.status`, so the result must be written under that SHA.
 
-- Use `"${REPO_ROOT}/gradlew" --project-dir "${REPO_ROOT}/modules"` for Gradle tasks that need to run against `modules/` without changing the script's working directory.
+- Use `"${REPO_ROOT}/gradlew" --project-dir "${REPO_ROOT}/modules"` for Gradle tasks that need to run against `modules` without changing the script's working directory.
 
 - The script does not bootstrap a portal — none of the in-scope checks need one.
 
@@ -227,5 +275,7 @@ exit ${EXIT_CODE}
 - Verify every test file exists before adding it to the script.
 
 - When changes are purely cosmetic (formatting, comments only), the plan is just **Source Format** + **Test Run** (smoke baseline only).
+
+- When the entire diff is documentation or language properties (`*.md`, `Language*.properties`), the plan is just **Source Format**. **Test Run** is skipped — the smoke baseline does not exercise documentation.
 
 - When the diff is empty, exit with a one-line message — no test produces useful signal on a clean branch.

@@ -42,7 +42,6 @@ public class PhoneNumberDDMFormFieldTemplateContextContributor
 		DDMForm ddmForm = ddmFormField.getDDMForm();
 		boolean localizedObjectField = GetterUtil.getBoolean(
 			ddmFormField.getProperty("localizedObjectField"));
-
 		ObjectFieldBusinessType phoneNumberObjectFieldBusinessType =
 			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER);

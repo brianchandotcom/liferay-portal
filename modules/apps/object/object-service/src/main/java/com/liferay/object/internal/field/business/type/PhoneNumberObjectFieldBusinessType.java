@@ -285,19 +285,19 @@ public class PhoneNumberObjectFieldBusinessType
 
 	@Activate
 	protected void activate() {
-		Set<String> countryA2List = new HashSet<>();
+		Set<String> a2s = new HashSet<>();
 
 		for (String languageId : PropsValues.LOCALES) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
-			String countryA2 = locale.getCountry();
+			String a2 = locale.getCountry();
 
-			if (Validator.isNotNull(countryA2)) {
-				countryA2List.add(countryA2);
+			if (Validator.isNotNull(a2)) {
+				a2s.add(a2);
 			}
 		}
 
-		_availableCountryA2List = Collections.unmodifiableSet(countryA2List);
+		_a2s = Collections.unmodifiableSet(a2s);
 	}
 
 	private List<Map<String, String>> _getCountries() {
@@ -314,13 +314,13 @@ public class PhoneNumberObjectFieldBusinessType
 			return Collections.emptyList();
 		}
 
+		List<Map<String, String>> countries = new ArrayList<>();
+
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		if (locale == null) {
 			locale = LocaleUtil.getDefault();
 		}
-
-		List<Map<String, String>> countries = new ArrayList<>();
 
 		String languageId = LocaleUtil.toLanguageId(locale);
 
@@ -329,7 +329,7 @@ public class PhoneNumberObjectFieldBusinessType
 
 			String a2 = country.getA2();
 
-			if (!_availableCountryA2List.contains(a2)) {
+			if (!_a2s.contains(a2)) {
 				continue;
 			}
 
@@ -389,7 +389,7 @@ public class PhoneNumberObjectFieldBusinessType
 	private static final Pattern _prefixPattern = Pattern.compile(
 		"^\\+[1-9][0-9]{0,2}$");
 
-	private Set<String> _availableCountryA2List;
+	private Set<String> _a2s;
 
 	@Reference
 	private CountryLocalService _countryLocalService;

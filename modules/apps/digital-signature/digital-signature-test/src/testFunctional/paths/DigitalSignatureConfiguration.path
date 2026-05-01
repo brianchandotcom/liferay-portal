@@ -11,8 +11,8 @@
 
 <tbody>
 <tr>
-	<td>DIGITAL_SIGNATURE_USER_ID</td>
-	<td>//input[contains(@name,'apiUsername')]</td>
+	<td>CHECK_INPUT_ENABLED</td>
+	<td>//input[contains(@id, 'SiteSettingsPortlet_enabled') and @checked]</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,6 +33,21 @@
 <tr>
 	<td>DIGITAL_SIGNATURE_RSA_PRIVATE_KEY</td>
 	<td>//textarea[contains(@name,'rsaPrivateKey')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIGITAL_SIGNATURE_USER_ID</td>
+	<td>//input[contains(@name,'apiUsername')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_SETTINGS_STRATEGY</td>
+	<td>//select[contains(@name,'siteSettingsStrategy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_SETTINGS_STRATEGY_CHOOSEN</td>
+	<td>//div[contains(@class, 'form-group')]//div[contains(@class, 'col-md-12') and contains(., '${siteSettingsStrategy}')]</td>
 	<td></td>
 </tr>
 </tbody>

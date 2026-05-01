@@ -135,7 +135,7 @@ public class CIForwardProcessor {
 					catch (PullRequest.ForwardPullRequestException
 								forwardPullRequestException) {
 
-						if (forwardPullRequestException.isRetry()) {
+						if (forwardPullRequestException.isRetryable()) {
 							System.out.println(
 								forwardPullRequestException.getMessage());
 						}

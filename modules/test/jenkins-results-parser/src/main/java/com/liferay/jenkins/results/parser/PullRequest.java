@@ -1204,18 +1204,18 @@ public class PullRequest {
 	public static class ForwardPullRequestException extends Exception {
 
 		public ForwardPullRequestException(
-			String message, boolean retry, Throwable throwable) {
+			String message, boolean retryable, Throwable throwable) {
 
 			super(message, throwable);
 
-			_retry = retry;
+			_retryable = retryable;
 		}
 
-		public boolean isRetry() {
-			return _retry;
+		public boolean isRetryable() {
+			return _retryable;
 		}
 
-		private final boolean _retry;
+		private final boolean _retryable;
 
 	}
 

@@ -327,27 +327,27 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				return null;
 			}
 
-			List<JSONObject> queueItemJSONObjects = new ArrayList<>(
-				jenkinsMaster.getQueueItemJSONObjects());
-
-			String jenkinsJobName = build.getJobName();
-
 			Build.Invocation currentInvocation = build.getCurrentInvocation();
 
 			long currentQueueId = currentInvocation.getQueueId();
 
-			for (JSONObject queueItemJSONObject : queueItemJSONObjects) {
-				if (currentQueueId > 0) {
-					if (Objects.equals(
-							queueItemJSONObject.getLong("id"),
-							currentQueueId)) {
+			if (currentQueueId > 0) {
+				JenkinsMaster.QueueItem queueItem = jenkinsMaster.getQueueItem(
+					currentQueueId);
 
-						return queueItemJSONObject;
-					}
-
-					continue;
+				if (queueItem == null) {
+					return null;
 				}
 
+				return queueItem.getJSONObject();
+			}
+
+			String jenkinsJobName = build.getJobName();
+
+			List<JSONObject> queueItemJSONObjects = new ArrayList<>(
+				jenkinsMaster.getQueueItemJSONObjects());
+
+			for (JSONObject queueItemJSONObject : queueItemJSONObjects) {
 				JSONObject taskJSONObject = queueItemJSONObject.getJSONObject(
 					"task");
 

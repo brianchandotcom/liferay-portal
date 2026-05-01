@@ -230,11 +230,9 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		String decodedString = new String(
-			Base64.getDecoder(
-			).decode(
-				string
-			));
+		Base64.Decoder decoder = Base64.getDecoder();
+
+		String decodedString = new String(decoder.decode(string));
 
 		return objectMapper.readValue(decodedString, typeReference);
 	}
@@ -314,14 +312,13 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	private String _serialize(Object object) throws JsonProcessingException {
+		Base64.Encoder encoder = Base64.getEncoder();
+
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		String json = objectMapper.writeValueAsString(object);
 
-		return Base64.getEncoder(
-		).encodeToString(
-			json.getBytes()
-		);
+		return encoder.encodeToString(json.getBytes());
 	}
 
 	private void _testExport(

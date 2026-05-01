@@ -68,11 +68,11 @@ liferay-default:
                                 {{- if eq .image.tag "latest" }}
                                 local product_version="nightly"
 
-                                local url="https://releases.liferay.com/opensearch2/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
+                                local url="{{ .search.opensearch2DownloadBaseURL }}/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
                                 {{- else }}
                                 local product_version="{{ .image.tag }}"
 
-                                local url="https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
+                                local url="{{ .search.opensearch2DownloadBaseURL }}/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
                                 {{- end }}
 
                                 local http_code=$( \
@@ -197,6 +197,8 @@ liferay-default:
         requests:
             cpu: 2000m
             memory: 4Gi
+    search:
+        opensearch2DownloadBaseURL: https://releases.liferay.com/opensearch2
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

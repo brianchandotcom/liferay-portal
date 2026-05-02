@@ -356,12 +356,12 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 	private static final String _SIMPLE_CLASS_NAME_JOURNAL_ARTICLE =
 		"JournalArticle";
 
-	private static MockedStatic<FriendlyURLResolverRegistryUtil>
+	private MockedStatic<FriendlyURLResolverRegistryUtil>
 		_friendlyURLResolverRegistryUtilMockedStatic;
-	private static FriendlyURLSeparatorConfigurationManager
+	private FriendlyURLSeparatorConfigurationManager
 		_friendlyURLSeparatorConfigurationManager;
-	private static JSONFactory _jsonFactory;
-	private static Portal _portal;
+	private JSONFactory _jsonFactory;
+	private Portal _portal;
 
 	private static class FriendlyURLResolverImpl
 		implements FriendlyURLResolver {

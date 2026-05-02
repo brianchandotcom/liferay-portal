@@ -937,14 +937,14 @@ public class FriendlyURLServletLocalizedFriendlyURLTest {
 	private static Map<Locale, String> _friendlyURLMap;
 	private static Map<Locale, String> _nameMap;
 
-	@Inject
-	private static Portal _portal;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject(
 		filter = "(&(servlet.type=friendly-url)(servlet.init.private=false))"

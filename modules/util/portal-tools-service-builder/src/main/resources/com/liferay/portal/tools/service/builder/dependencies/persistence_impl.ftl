@@ -578,7 +578,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
-	<#if entity.uniqueEntityFinders?size &gt; 0>
+	<#if !serviceBuilder.isVersionGTE_7_4_0() && entity.uniqueEntityFinders?size &gt; 0>
 		protected void cacheUniqueFindersCache(${entity.name}ModelImpl ${entity.variableName}ModelImpl) {
 			<#if entity.isChangeTrackingEnabled()>
 				try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(${entity.variableName}ModelImpl.getCtCollectionId())) {
@@ -1124,17 +1124,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 
 		<#if serviceBuilder.isVersionGTE_7_3_0()>
-			${entityCache}.putResult(
-				${entity.name}Impl.class,
-				<#if (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0)>
-					${entity.variableName}ModelImpl
-				<#else>
-					${entity.variableName}
-				</#if>
-				, false, true);
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				cacheUniqueFindersResult(${entity.variableName}, false);
+			<#else>
+				${entityCache}.putResult(
+					${entity.name}Impl.class,
+					<#if (entity.collectionEntityFinders?size != 0) || (entity.uniqueEntityFinders?size &gt; 0)>
+						${entity.variableName}ModelImpl
+					<#else>
+						${entity.variableName}
+					</#if>
+					, false, true);
 
-			<#if entity.uniqueEntityFinders?size &gt; 0>
-				cacheUniqueFindersCache(${entity.variableName}ModelImpl);
+				<#if entity.uniqueEntityFinders?size &gt; 0>
+					cacheUniqueFindersCache(${entity.variableName}ModelImpl);
+				</#if>
 			</#if>
 
 			if (isNew) {

@@ -35,6 +35,7 @@ export const test = mergeTests(
 	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
+		'LPD-35013': {enabled: true},
 		'LPD-84028': {enabled: true},
 		'LPS-164563': {enabled: true},
 	}),
@@ -1303,5 +1304,129 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.filter({hasText: 'Web Content Translation'})
 			.locator('+ tr')
 			.getByText(editedTitle, {exact: true})
+	).toBeVisible();
+});
+
+test('LPS-179026 Can preview changes for WikiPages', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+
+	const wikiNode = await apiHelpers.headlessDelivery.postWikiNode(site.id);
+
+	const wikiPageContent = 'Wiki Page Content';
+	const wikiPageTitle = 'Wiki Page Title';
+
+	const wikiPage = await apiHelpers.headlessDelivery.postWikiPage(
+		wikiNode.id,
+		{
+			content: wikiPageContent,
+			headline: wikiPageTitle,
+		}
+	);
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	const wikiPageContentEdited = wikiPageContent + ' Edited';
+
+	await apiHelpers.put(
+		`${apiHelpers.baseUrl}headless-delivery/v1.0/wiki-pages/${wikiPage.id}`,
+		{
+			data: {
+				content: wikiPageContentEdited,
+				encodingFormat: 'plain_text',
+				headline: wikiPageTitle,
+			},
+			failOnStatusCode: true,
+		}
+	);
+
+	await apiHelpers.post(
+		`${apiHelpers.baseUrl}headless-delivery/v1.0/wiki-pages/${wikiPage.id}/wiki-page-attachments`,
+		{
+			failOnStatusCode: true,
+			headers: {
+				...(await apiHelpers.getCSRFTokenHeader()),
+			},
+			multipart: {
+				file: createReadStream(
+					path.join(__dirname, '/dependencies/attachment.txt')
+				),
+			},
+		}
+	);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	await changeTrackingPage.reviewChange(wikiPageTitle);
+
+	const renderViewDropdown = page.locator(
+		'.publications-render-view-divider .dropdown'
+	);
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+
+	await expect(
+		page.locator('.diff-html-added').filter({hasText: 'Edited'})
+	).toBeVisible();
+
+	await expect(
+		page.locator('.diff-html-added').filter({hasText: 'Attachments'})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Split View'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(wikiPageContent, {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(wikiPageContentEdited, {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page.locator('td.publications-render-view-content .page-attachments')
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(wikiPageContent, {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {
+			name: `Version: 1.1 (${ctCollection.body.name})`,
+		})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(wikiPageContentEdited, {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page.locator('td.publications-render-view-content .page-attachments')
 	).toBeVisible();
 });

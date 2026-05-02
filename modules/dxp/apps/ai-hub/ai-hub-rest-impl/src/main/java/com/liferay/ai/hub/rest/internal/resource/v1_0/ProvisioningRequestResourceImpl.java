@@ -12,13 +12,21 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.rest.dto.v1_0.ProvisioningRequest;
 import com.liferay.ai.hub.rest.resource.v1_0.ProvisioningRequestResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.io.Serializable;
 
 import java.util.Calendar;
 
@@ -69,6 +77,44 @@ public class ProvisioningRequestResourceImpl
 				customerAccountEntry.getAccountEntryId()
 			},
 			new long[0], serviceAccountUser.getUserId());
+
+		_addQuota(customerAccountEntry, serviceContext);
+	}
+
+	private void _addQuota(
+			AccountEntry accountEntry, ServiceContext serviceContext)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", contextCompany.getCompanyId());
+
+		String externalReferenceCode =
+			"quota-" + accountEntry.getAccountEntryId();
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
+
+		if (objectEntry != null) {
+			return;
+		}
+
+		_objectEntryLocalService.addObjectEntry(
+			0, contextUser.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"limit", 1000000
+			).put(
+				"r_accountToAIHubQuotas_accountEntryId",
+				accountEntry.getAccountEntryId()
+			).put(
+				"usage", 0
+			).build(),
+			serviceContext);
 	}
 
 	private AccountEntry _getOrAddAccountEntry(
@@ -120,6 +166,12 @@ public class ProvisioningRequestResourceImpl
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

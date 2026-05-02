@@ -102,6 +102,12 @@ definition {
 
 		Depot.viewNoPanel(panelName = "Sharing");
 
+		DepotNavigator.openToConfigSharingInInstanceSettings();
+
+		FormFields.enableCheckbox(fieldName = "enabled");
+
+		SystemSettings.saveConfiguration();
+
 		DepotNavigator.openToConfigSharingInSystemSettings();
 
 		FormFields.disableCheckbox(fieldName = "enabled");

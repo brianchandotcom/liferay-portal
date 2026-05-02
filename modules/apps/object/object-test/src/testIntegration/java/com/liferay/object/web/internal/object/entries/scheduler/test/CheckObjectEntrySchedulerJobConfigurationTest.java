@@ -368,13 +368,13 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 	private static UnsafeRunnable<Exception> _jobExecutorUnsafeRunnable;
 	private static ObjectDefinition _objectDefinition;
 
-	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
-
 	@Inject(
 		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
 	)
 	private static SchedulerJobConfiguration _schedulerJobConfiguration;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

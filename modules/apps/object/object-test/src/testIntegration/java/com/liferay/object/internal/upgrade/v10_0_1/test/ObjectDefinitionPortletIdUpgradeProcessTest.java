@@ -164,11 +164,6 @@ public class ObjectDefinitionPortletIdUpgradeProcessTest {
 		"com.liferay.object.internal.upgrade.v10_0_1." +
 			"ObjectDefinitionPortletIdUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private String _newPortletId;
 
 	@DeleteAfterTestRun
@@ -189,5 +184,10 @@ public class ObjectDefinitionPortletIdUpgradeProcessTest {
 	private PortletPreferencesPersistence _portletPreferencesPersistence;
 
 	private ServiceRegistration<Portlet> _serviceRegistration;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

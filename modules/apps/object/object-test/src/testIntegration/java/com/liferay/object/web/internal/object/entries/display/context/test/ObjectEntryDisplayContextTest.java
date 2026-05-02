@@ -657,10 +657,6 @@ public class ObjectEntryDisplayContextTest {
 	private static ObjectRelationship _companyObjectRelationshipA_AA;
 	private static ObjectRelationship _companyObjectRelationshipAA_AAA;
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;
-
-	@Inject
-	private static DepotEntryLocalService _depotEntryLocalService;
-
 	private static DTOConverterContext _dtoConverterContext;
 
 	@Inject
@@ -670,10 +666,6 @@ public class ObjectEntryDisplayContextTest {
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private static ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
@@ -698,6 +690,13 @@ public class ObjectEntryDisplayContextTest {
 
 	@Inject
 	private DDMFormRenderer _ddmFormRenderer;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Inject
 	private ObjectEntryDisplayContextFactory _objectEntryDisplayContextFactory;

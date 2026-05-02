@@ -64,10 +64,9 @@ public class ObjectDefinitionTreeFactoryTest {
 	}
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
-	private static ObjectRelationshipLocalService
-		_objectRelationshipLocalService;
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

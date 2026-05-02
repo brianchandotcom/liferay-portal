@@ -163,12 +163,12 @@ public class SAPEntryAllowedServiceSignaturesUpgradeProcessTest {
 		CacheRegistryUtil.clear();
 	}
 
+	@Inject
+	private SAPEntryLocalService _sapEntryLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.object.rest.internal.upgrade.registry.ObjectRESTImplUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private SAPEntryLocalService _sapEntryLocalService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

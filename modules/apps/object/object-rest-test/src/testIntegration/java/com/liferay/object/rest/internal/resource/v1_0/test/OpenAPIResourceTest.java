@@ -478,7 +478,7 @@ public class OpenAPIResourceTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

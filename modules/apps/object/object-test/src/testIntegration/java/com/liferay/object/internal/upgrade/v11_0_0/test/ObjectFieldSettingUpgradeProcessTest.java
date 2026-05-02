@@ -89,11 +89,6 @@ public class ObjectFieldSettingUpgradeProcessTest {
 			objectFieldSetting);
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private CounterLocalService _counterLocalService;
 
@@ -105,5 +100,10 @@ public class ObjectFieldSettingUpgradeProcessTest {
 
 	@Inject
 	private ObjectFieldSettingPersistence _objectFieldSettingPersistence;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

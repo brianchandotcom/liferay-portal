@@ -277,14 +277,14 @@ public class ObjectEntryExtensionProviderTest {
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Inject
-	private static ObjectFieldLocalService _objectFieldLocalService;
-
 	private static User _user;
 
 	@Inject(
 		filter = "component.name=com.liferay.object.rest.internal.vulcan.extension.v1_0.ObjectEntryExtensionProvider"
 	)
 	private ExtensionProvider _extensionProvider;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

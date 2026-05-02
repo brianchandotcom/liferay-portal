@@ -83,10 +83,9 @@ const LocalizablePhoneNumber = ({
 					onBlur={onBlur}
 					onChange={handleLocalChange}
 					onFocus={onFocus}
-					predefinedValue={predefinedValue}
 					prefix={prefix}
 					prefixType={prefixType}
-					value={value[editingLanguageId] ?? ''}
+					value={value[editingLanguageId] ?? predefinedValue ?? ''}
 				/>
 
 				<ClayInput.GroupItem shrink>
@@ -134,10 +133,9 @@ const NonLocalizablePhoneNumber = ({
 						onChange?.(event);
 					}}
 					onFocus={onFocus}
-					predefinedValue={predefinedValue}
 					prefix={prefix}
 					prefixType={prefixType}
-					value={initialValue}
+					value={initialValue || predefinedValue}
 				/>
 			</ClayInput.Group>
 

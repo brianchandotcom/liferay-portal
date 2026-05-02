@@ -18,7 +18,6 @@ interface PhoneNumberInputProps {
 	onBlur?: (event: React.FocusEvent) => void;
 	onChange?: (event: {target: {value: string}}) => void;
 	onFocus?: (event: React.FocusEvent) => void;
-	predefinedValue?: string;
 	prefix?: string;
 	prefixType?: 'definedByUser' | 'fixed';
 	value?: string;
@@ -32,10 +31,9 @@ export function PhoneNumberInput({
 	onBlur,
 	onChange,
 	onFocus,
-	predefinedValue,
 	prefix,
 	prefixType = 'definedByUser',
-	value: initialValue,
+	value = '',
 }: PhoneNumberInputProps) {
 	const [localNumber, setLocalNumber] = useState('');
 	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
@@ -64,15 +62,13 @@ export function PhoneNumberInput({
 
 	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
-		const phoneValue = initialValue || predefinedValue || '';
-
 		if (prefixType === 'fixed') {
-			if (prefix && phoneValue.startsWith(prefix)) {
-				setLocalNumber(phoneValue.substring(prefix.length));
+			if (prefix && value.startsWith(prefix)) {
+				setLocalNumber(value.substring(prefix.length));
 			}
 			else {
 				const {localNumber: parsedLocalNumber} = parsePhoneValue(
-					phoneValue,
+					value,
 					countries
 				);
 
@@ -81,7 +77,7 @@ export function PhoneNumberInput({
 		}
 		else {
 			const {countryA2, localNumber: parsedLocalNumber} = parsePhoneValue(
-				phoneValue,
+				value,
 				countries
 			);
 

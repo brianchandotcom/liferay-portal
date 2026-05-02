@@ -383,11 +383,6 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	private static DB _db;
 	private static List<IndexMetadata> _indexMetadataList;
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
@@ -417,5 +412,10 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

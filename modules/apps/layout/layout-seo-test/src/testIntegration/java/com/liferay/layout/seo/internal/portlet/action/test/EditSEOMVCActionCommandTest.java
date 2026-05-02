@@ -267,7 +267,7 @@ public class EditSEOMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private static Company _company;
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

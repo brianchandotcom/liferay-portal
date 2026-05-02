@@ -406,9 +406,6 @@ public class ExportImportLocalServiceTest {
 	}
 
 	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	private ExportImportConfiguration _exportImportConfiguration;
@@ -427,6 +424,9 @@ public class ExportImportLocalServiceTest {
 
 	@Inject
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

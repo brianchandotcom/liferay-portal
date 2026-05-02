@@ -4354,9 +4354,6 @@ public class RenderLayoutStructureTagTest {
 	private static final Pattern _inputJSONObjectPattern = Pattern.compile(
 		"<p>InputJSONObject:(.*?)<\\/p>");
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -4441,6 +4438,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private JSONFactory _jsonFactory;

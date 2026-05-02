@@ -210,11 +210,6 @@ public class LayoutUpgradeProcessTest {
 	private static final String _CLASS_NAME =
 		"com.liferay.layout.internal.upgrade.v1_4_2.LayoutUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -232,5 +227,10 @@ public class LayoutUpgradeProcessTest {
 	private MultiVMPool _multiVMPool;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

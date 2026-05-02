@@ -365,11 +365,6 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 		"com.liferay.layout.internal.upgrade.v1_4_1." +
 			"LayoutClassedModelUsageUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -403,5 +398,10 @@ public class LayoutClassedModelUsageCTUpgradeProcessTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

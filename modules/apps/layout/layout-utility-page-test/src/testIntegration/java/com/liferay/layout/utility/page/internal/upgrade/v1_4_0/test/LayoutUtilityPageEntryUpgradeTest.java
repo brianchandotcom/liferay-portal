@@ -171,11 +171,6 @@ public class LayoutUtilityPageEntryUpgradeTest {
 		_assertLayoutFriendlyURLs(layout);
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.utility.page.internal.upgrade.registry.LayoutUtilityPageEntryUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -193,5 +188,10 @@ public class LayoutUtilityPageEntryUpgradeTest {
 	private MultiVMPool _multiVMPool;
 
 	private ServiceContext _serviceContext;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.utility.page.internal.upgrade.registry.LayoutUtilityPageEntryUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

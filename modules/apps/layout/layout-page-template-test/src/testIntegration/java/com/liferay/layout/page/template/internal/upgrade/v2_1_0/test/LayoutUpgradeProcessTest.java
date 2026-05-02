@@ -100,11 +100,6 @@ public class LayoutUpgradeProcessTest {
 		}
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
@@ -126,5 +121,10 @@ public class LayoutUpgradeProcessTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -267,17 +267,17 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		"com.liferay.release.feature.flag.web";
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

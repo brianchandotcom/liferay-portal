@@ -8117,49 +8117,10 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, boolean hidden, String layoutTemplateId, String name,
-		boolean privateLayout, long parentLayoutId, String... columns) {
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
-			).build();
-
-		for (int i = 0; i < columns.length; i++) {
-			if (!columns[i].equals("")) {
-				typeSettingsUnicodeProperties.setProperty(
-					"column-" + (i + 1), columns[i]);
-			}
-		}
-
-		if (name.equals("search")) {
-			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
-		}
-		else {
-			typeSettingsUnicodeProperties.setProperty(
-				"privateLayout", String.valueOf(privateLayout));
-		}
-
-		return newLayoutModel(
-			name, groupId, hidden, name, privateLayout, parentLayoutId,
-			typeSettingsUnicodeProperties.toString());
-	}
-
-	protected LayoutModel newLayoutModel(
-		long groupId, String layoutTemplateId, String name,
-		boolean privateLayout, String... columns) {
-
-		return newLayoutModel(
-			groupId, false, layoutTemplateId, name, privateLayout, 0, columns);
-	}
-
-	protected LayoutModel newLayoutModel(
-		String friendlyURL, long groupId, boolean hidden, boolean system,
-		String themeId, String name, String type, boolean privateLayout,
-		long parentLayoutId, long classNameId, long classPK,
-		String typeSettings, String uuid, String externalReferenceCode) {
+		long groupId, boolean privateLayout, long parentLayoutId,
+		long classNameId, long classPK, String name, String type,
+		String typeSettings, boolean hidden, boolean system, String friendlyURL,
+		String themeId, String uuid, String externalReferenceCode) {
 
 		SimpleCounter simpleCounter = _layoutIdCounters.computeIfAbsent(
 			LayoutLocalServiceImpl.getCounterName(groupId, privateLayout),
@@ -8224,15 +8185,54 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
+		long groupId, boolean hidden, String layoutTemplateId, String name,
+		boolean privateLayout, long parentLayoutId, String... columns) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).build();
+
+		for (int i = 0; i < columns.length; i++) {
+			if (!columns[i].equals("")) {
+				typeSettingsUnicodeProperties.setProperty(
+					"column-" + (i + 1), columns[i]);
+			}
+		}
+
+		if (name.equals("search")) {
+			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
+		}
+		else {
+			typeSettingsUnicodeProperties.setProperty(
+				"privateLayout", String.valueOf(privateLayout));
+		}
+
+		return newLayoutModel(
+			name, groupId, hidden, name, privateLayout, parentLayoutId,
+			typeSettingsUnicodeProperties.toString());
+	}
+
+	protected LayoutModel newLayoutModel(
+		long groupId, String layoutTemplateId, String name,
+		boolean privateLayout, String... columns) {
+
+		return newLayoutModel(
+			groupId, false, layoutTemplateId, name, privateLayout, 0, columns);
+	}
+
+	protected LayoutModel newLayoutModel(
 		String friendlyURL, long groupId, boolean hidden, String name,
 		boolean privateLayout, long parentLayoutId, String typeSettings) {
 
 		String uuid = SequentialUUID.generate();
 
 		return newLayoutModel(
-			friendlyURL, groupId, hidden, false, null, name,
-			LayoutConstants.TYPE_PORTLET, privateLayout, parentLayoutId, 0, 0,
-			typeSettings, uuid, uuid);
+			groupId, privateLayout, parentLayoutId, 0, 0, name,
+			LayoutConstants.TYPE_PORTLET, typeSettings, hidden, false,
+			friendlyURL, null, uuid, uuid);
 	}
 
 	protected LayoutSetModel newLayoutSetModel(
@@ -9105,9 +9105,10 @@ public class DataFactory {
 		long classPK, String typeSettings, String externalReferenceCode) {
 
 		return newLayoutModel(
-			friendlyURL, groupId, true, true, "classic_WAR_classictheme", name,
-			LayoutConstants.TYPE_UTILITY, false, 0, classNameId, classPK,
-			typeSettings, SequentialUUID.generate(), externalReferenceCode);
+			groupId, false, 0, classNameId, classPK, name,
+			LayoutConstants.TYPE_UTILITY, typeSettings, true, true, friendlyURL,
+			"classic_WAR_classictheme", SequentialUUID.generate(),
+			externalReferenceCode);
 	}
 
 	protected String nextDDLCustomFieldName(

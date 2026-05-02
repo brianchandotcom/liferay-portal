@@ -572,11 +572,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 	private static final String _SEGMENTS_EXPERIENCE_SEPARATOR_2 =
 		"SEGMENTSEXPERIENCE";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
@@ -612,6 +607,11 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 	private long _segmentsExperienceId1;
 	private long _segmentsExperienceId2;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private class TestPortlet extends GenericPortlet {
 	}

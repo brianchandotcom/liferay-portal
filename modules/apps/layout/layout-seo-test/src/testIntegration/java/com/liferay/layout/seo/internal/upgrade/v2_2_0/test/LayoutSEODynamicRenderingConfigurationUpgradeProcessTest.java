@@ -148,16 +148,16 @@ public class LayoutSEODynamicRenderingConfigurationUpgradeProcessTest {
 		"userAgent1", "userAgent2"
 	};
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.seo.internal.upgrade.registry.LayoutSEOServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	private Dictionary<String, Object> _originalCrawlerUserAgentsProperties;
 	private Dictionary<String, Object>
 		_originalLayoutSEODynamicRenderingProperties;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.seo.internal.upgrade.registry.LayoutSEOServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

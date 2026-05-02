@@ -100,11 +100,10 @@ public class DisplayPageTemplateServiceTest {
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
-	@Inject
-	private static LayoutPageTemplateEntryService
-		_layoutPageTemplateEntryService;
-
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 }

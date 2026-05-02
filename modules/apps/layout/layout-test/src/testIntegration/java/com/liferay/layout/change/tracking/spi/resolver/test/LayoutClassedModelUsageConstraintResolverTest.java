@@ -87,11 +87,11 @@ public class LayoutClassedModelUsageConstraintResolverTest {
 		}
 	}
 
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService

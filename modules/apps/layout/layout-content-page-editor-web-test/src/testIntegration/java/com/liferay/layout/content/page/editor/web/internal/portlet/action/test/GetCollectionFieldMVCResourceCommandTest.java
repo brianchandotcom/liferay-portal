@@ -725,9 +725,6 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -745,6 +742,10 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	private ServiceRegistration<InfoCollectionProvider<?>>
 		_infoCollectionProviderServiceRegistration;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
 	private Layout _layout;
 
 	@Inject(

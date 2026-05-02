@@ -106,11 +106,6 @@ public class LayoutLocalizationUpgradeProcessTest {
 		"com.liferay.layout.internal.upgrade.v1_3_1." +
 			"LayoutLocalizationUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -140,5 +135,10 @@ public class LayoutLocalizationUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

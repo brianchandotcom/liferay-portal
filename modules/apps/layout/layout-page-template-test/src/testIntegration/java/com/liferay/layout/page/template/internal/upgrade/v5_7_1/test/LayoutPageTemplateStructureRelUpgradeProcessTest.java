@@ -237,11 +237,6 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 		"com.liferay.layout.page.template.internal.upgrade.v5_7_1." +
 			"LayoutPageTemplateStructureRelUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Layout _draftLayout;
 
 	@Inject
@@ -278,5 +273,10 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

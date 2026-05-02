@@ -279,11 +279,6 @@ public class LayoutSEOEntryUpgradeProcessTest
 		}
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.seo.internal.upgrade.registry.LayoutSEOServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Connection _connection;
 
 	@Inject
@@ -307,5 +302,10 @@ public class LayoutSEOEntryUpgradeProcessTest
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.seo.internal.upgrade.registry.LayoutSEOServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

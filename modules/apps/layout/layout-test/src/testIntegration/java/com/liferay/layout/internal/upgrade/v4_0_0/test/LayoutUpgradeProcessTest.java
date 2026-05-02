@@ -209,11 +209,6 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		}
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Connection _connection;
 	private DBInspector _dbInspector;
 
@@ -230,5 +225,10 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

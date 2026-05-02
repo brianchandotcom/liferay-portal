@@ -228,11 +228,6 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 		"com.liferay.layout.page.template.internal.upgrade.v3_4_2." +
 			"FragmentEntryLinkEditableValuesUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Layout _draftLayout;
 
 	@Inject
@@ -262,5 +257,10 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

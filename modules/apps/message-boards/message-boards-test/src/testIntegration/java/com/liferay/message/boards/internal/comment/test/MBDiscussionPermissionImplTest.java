@@ -226,13 +226,13 @@ public class MBDiscussionPermissionImplTest {
 		}
 	}
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	@Inject(
 		filter = "component.name=com.liferay.message.boards.comment.internal.MBCommentManagerImpl"
 	)
 	private CommentManager _commentManager;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private DiscussionPermission _discussionPermission;

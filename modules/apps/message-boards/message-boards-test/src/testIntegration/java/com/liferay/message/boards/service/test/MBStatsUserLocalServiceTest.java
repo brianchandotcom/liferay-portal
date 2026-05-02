@@ -176,14 +176,14 @@ public class MBStatsUserLocalServiceTest {
 			_message.getBody(), serviceContext);
 	}
 
-	@Inject
-	private static MBMessageLocalService _mbMessageLocalService;
-
-	@Inject
-	private static MBStatsUserLocalService _mbStatsUserLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private MBMessageLocalService _mbMessageLocalService;
+
+	@Inject
+	private MBStatsUserLocalService _mbStatsUserLocalService;
 
 	private MBMessage _message;
 

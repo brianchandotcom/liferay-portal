@@ -381,12 +381,12 @@ public class MBThreadTrashHandlerTest
 	@Inject(
 		filter = "model.class.name=com.liferay.message.boards.model.MBCategory"
 	)
-	private static TrashHandler _mbCategoryTrashHandler;
+	private TrashHandler _mbCategoryTrashHandler;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.message.boards.model.MBThread"
 	)
-	private static TrashHandler _mbThreadTrashHandler;
+	private TrashHandler _mbThreadTrashHandler;
 
 	@Inject
 	private TrashHelper _trashHelper;

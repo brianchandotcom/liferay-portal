@@ -133,16 +133,11 @@ public class FriendlyURLUpgradeProcessTest {
 		upgradeProcess.upgrade();
 	}
 
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.message.boards.internal.upgrade.registry.MBServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
@@ -152,5 +147,10 @@ public class FriendlyURLUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.message.boards.internal.upgrade.registry.MBServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

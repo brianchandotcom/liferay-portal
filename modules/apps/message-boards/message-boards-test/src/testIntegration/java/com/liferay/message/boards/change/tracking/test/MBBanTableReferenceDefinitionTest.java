@@ -42,6 +42,6 @@ public class MBBanTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static MBBanLocalService _mbBanLocalService;
+	private MBBanLocalService _mbBanLocalService;
 
 }

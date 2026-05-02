@@ -80,13 +80,14 @@ public class MBCategoryPermissionCheckerTest extends BasePermissionTestCase {
 		return MBConstants.RESOURCE_NAME;
 	}
 
+	private MBCategory _category;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.message.boards.model.MBCategory"
 	)
-	private static ModelResourcePermission<MBCategory>
+	private ModelResourcePermission<MBCategory>
 		_categoryModelResourcePermission;
 
-	private MBCategory _category;
 	private MBCategory _subcategory;
 
 }

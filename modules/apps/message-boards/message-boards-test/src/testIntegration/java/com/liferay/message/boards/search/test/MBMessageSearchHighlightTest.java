@@ -130,12 +130,12 @@ public class MBMessageSearchHighlightTest {
 		}
 	}
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer<MBMessage> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
 
 }

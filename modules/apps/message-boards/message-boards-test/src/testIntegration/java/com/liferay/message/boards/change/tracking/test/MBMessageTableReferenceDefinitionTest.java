@@ -70,7 +70,7 @@ public class MBMessageTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static MBMessageLocalService _mbMessageLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 	private MBThread _mbThread;
 

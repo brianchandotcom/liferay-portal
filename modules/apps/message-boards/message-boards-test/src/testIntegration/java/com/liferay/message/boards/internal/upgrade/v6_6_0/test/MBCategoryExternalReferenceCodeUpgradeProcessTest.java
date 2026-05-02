@@ -67,12 +67,12 @@ public class MBCategoryExternalReferenceCodeUpgradeProcessTest
 		return new Version(6, 6, 0);
 	}
 
+	@Inject
+	private MBCategoryLocalService _mbCategoryLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.message.boards.internal.upgrade.registry.MBServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private MBCategoryLocalService _mbCategoryLocalService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

@@ -90,13 +90,13 @@ public class MBMessagePermissionCheckerTest extends BasePermissionTestCase {
 		return MBConstants.RESOURCE_NAME;
 	}
 
+	private MBMessage _message;
+
 	@Inject(
 		filter = "model.class.name=com.liferay.message.boards.model.MBMessage"
 	)
-	private static ModelResourcePermission<MBMessage>
-		_messageModelResourcePermission;
+	private ModelResourcePermission<MBMessage> _messageModelResourcePermission;
 
-	private MBMessage _message;
 	private MBMessage _submessage;
 
 }

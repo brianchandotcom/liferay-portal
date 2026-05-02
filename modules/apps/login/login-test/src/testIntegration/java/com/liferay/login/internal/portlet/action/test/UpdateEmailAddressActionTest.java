@@ -123,16 +123,16 @@ public class UpdateEmailAddressActionTest {
 			ServiceContextThreadLocal.popServiceContext();
 		}
 
-		String responseString = mockHttpServletResponse.getContentAsString();
+		String content = mockHttpServletResponse.getContentAsString();
 
-		Matcher matcher = _refererValuePattern.matcher(responseString);
+		Matcher matcher = _pattern.matcher(content);
 
-		Assert.assertTrue(responseString, matcher.find());
+		Assert.assertTrue(content, matcher.find());
 
 		Assert.assertEquals(expectedRenderedRefererURL, matcher.group(1));
 	}
 
-	private static final Pattern _refererValuePattern = Pattern.compile(
+	private static final Pattern _pattern = Pattern.compile(
 		"id=\"referer\"[^>]*value=\"([^\"]*)\"");
 
 	@Inject

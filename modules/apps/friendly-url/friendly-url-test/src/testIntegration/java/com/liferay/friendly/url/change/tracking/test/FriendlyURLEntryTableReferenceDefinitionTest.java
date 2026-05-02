@@ -49,6 +49,6 @@ public class FriendlyURLEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

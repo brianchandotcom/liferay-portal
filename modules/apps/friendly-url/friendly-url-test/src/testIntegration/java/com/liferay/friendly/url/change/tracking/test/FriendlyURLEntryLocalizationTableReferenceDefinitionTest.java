@@ -59,9 +59,9 @@ public class FriendlyURLEntryLocalizationTableReferenceDefinitionTest
 			_friendlyURLEntry, "zh_CN", "url-title-zh");
 	}
 
-	@Inject
-	private static FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
-
 	private FriendlyURLEntry _friendlyURLEntry;
+
+	@Inject
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 }

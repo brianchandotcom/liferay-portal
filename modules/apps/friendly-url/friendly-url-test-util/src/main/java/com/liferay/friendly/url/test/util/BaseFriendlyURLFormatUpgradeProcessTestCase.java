@@ -77,8 +77,7 @@ public abstract class BaseFriendlyURLFormatUpgradeProcessTestCase {
 
 	protected String defaultLanguageId;
 
-	private static FriendlyURLEntryLocalizationPersistence _persistence;
-
 	private FriendlyURLEntry _friendlyURLEntry;
+	private FriendlyURLEntryLocalizationPersistence _persistence;
 
 }

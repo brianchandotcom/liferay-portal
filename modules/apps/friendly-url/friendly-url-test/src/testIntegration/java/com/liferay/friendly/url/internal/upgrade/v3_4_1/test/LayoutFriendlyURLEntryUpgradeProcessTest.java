@@ -545,11 +545,6 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 		"com.liferay.friendly.url.internal.upgrade.v3_4_1." +
 			"LayoutFriendlyURLEntryUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.friendly.url.internal.upgrade.registry.FriendlyURLServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -593,5 +588,10 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 
 	@Inject
 	private ResourceActions _resourceActions;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.friendly.url.internal.upgrade.registry.FriendlyURLServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

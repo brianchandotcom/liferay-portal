@@ -133,12 +133,10 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 		}
 	}
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	private static SafeCloseable _safeCloseable;
-
 	private long _companyId;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
@@ -149,5 +147,7 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private SafeCloseable _safeCloseable;
 
 }

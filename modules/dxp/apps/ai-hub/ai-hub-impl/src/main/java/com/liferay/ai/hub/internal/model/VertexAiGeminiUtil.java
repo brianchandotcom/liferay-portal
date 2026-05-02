@@ -27,17 +27,15 @@ public class VertexAiGeminiUtil {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		String location = vertexAIConfiguration.location();
-
 		VertexAiGeminiChatModel.VertexAiGeminiChatModelBuilder builder =
 			VertexAiGeminiChatModel.builder();
 
-		if (Objects.equals(location, "global")) {
+		if (Objects.equals(vertexAIConfiguration.location(), "global")) {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
 		builder.location(
-			location
+			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()
 		).project(
@@ -55,17 +53,15 @@ public class VertexAiGeminiUtil {
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
 
-		String location = vertexAIConfiguration.location();
-
 		VertexAiGeminiStreamingChatModel.VertexAiGeminiStreamingChatModelBuilder
 			builder = VertexAiGeminiStreamingChatModel.builder();
 
-		if (Objects.equals(location, "global")) {
+		if (Objects.equals(vertexAIConfiguration.location(), "global")) {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
 		builder.location(
-			location
+			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()
 		).project(

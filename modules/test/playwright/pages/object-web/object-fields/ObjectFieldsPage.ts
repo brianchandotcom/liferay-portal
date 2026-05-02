@@ -64,20 +64,14 @@ export class ObjectFieldsPage {
 		this.objectFieldNameInput = page.locator('input[name="name"]');
 		this.objectFieldOptionsDropdown = page.getByText('Select an Option');
 		this.page = page;
-		this.prefixDropdown = this.iframeLocator
-			.locator('.form-group')
-			.filter({
-				has: this.iframeLocator.locator('label', {hasText: /^Prefix$/}),
-			})
-			.getByRole('combobox');
-		this.prefixTypeDropdown = this.iframeLocator
-			.locator('.form-group')
-			.filter({
-				has: this.iframeLocator.locator('label', {
-					hasText: /^Prefix Type$/,
-				}),
-			})
-			.getByRole('combobox');
+		this.prefixDropdown = this.iframeLocator.getByRole('combobox', {
+			exact: true,
+			name: 'Prefix',
+		});
+		this.prefixTypeDropdown = this.iframeLocator.getByRole('combobox', {
+			exact: true,
+			name: 'Prefix Type',
+		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.selectOptionButton = this.iframeLocator.getByRole('combobox');
 		this.useDefaultValueToggle = this.iframeLocator.getByRole('switch', {

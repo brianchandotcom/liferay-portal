@@ -10,12 +10,13 @@ import React from 'react';
 
 import {CountryInfo, getFlagSymbol} from './phoneNumberUtil';
 
-interface CountryCodePickerProps {
+type CountryCodePickerProps = Omit<
+	React.ComponentProps<typeof Picker>,
+	'children' | 'items' | 'onSelectionChange'
+> & {
 	countries: CountryInfo[];
-	disabled?: boolean;
 	onSelectionChange: (country: CountryInfo) => void;
-	selectedKey: string;
-}
+};
 
 const PickerTrigger = React.forwardRef<
 	HTMLDivElement,
@@ -41,19 +42,19 @@ export function CountryCodePicker({
 	disabled,
 	onSelectionChange,
 	selectedKey,
+	...otherProps
 }: CountryCodePickerProps) {
 	const selectedCountry =
 		countries.find((country) => country.a2 === selectedKey) || countries[0];
 
 	return (
 		<Picker
+			{...otherProps}
 			as={PickerTrigger}
 			disabled={disabled}
 			items={countries}
 			onSelectionChange={(key) => {
-				const country = countries.find(
-					(country) => country.a2 === key
-				);
+				const country = countries.find((country) => country.a2 === key);
 
 				if (country) {
 					onSelectionChange(country);
@@ -73,9 +74,7 @@ export function CountryCodePicker({
 					>
 						<div className="autofit-row">
 							<div className="autofit-col">
-								{flagSymbol && (
-									<ClayIcon symbol={flagSymbol} />
-								)}
+								{flagSymbol && <ClayIcon symbol={flagSymbol} />}
 							</div>
 
 							<div

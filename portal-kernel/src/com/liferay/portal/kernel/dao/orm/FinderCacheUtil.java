@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -61,6 +62,14 @@ public class FinderCacheUtil {
 		FinderCache finderCache = getFinderCache();
 
 		finderCache.invalidate();
+	}
+
+	public static void putResult(
+		FinderPath finderPath, BaseModel<?> baseModel) {
+
+		FinderCache finderCache = getFinderCache();
+
+		finderCache.putResult(finderPath, baseModel);
 	}
 
 	public static void putResult(

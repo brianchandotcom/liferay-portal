@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -28,6 +29,12 @@ public interface FinderCache {
 		BasePersistence<?> basePersistence);
 
 	public void invalidate();
+
+	public default void putResult(
+		FinderPath finderPath, BaseModel<?> baseModel) {
+
+		putResult(finderPath, finderPath.extractArgs(baseModel), baseModel);
+	}
 
 	public void putResult(FinderPath finderPath, Object[] args, Object result);
 

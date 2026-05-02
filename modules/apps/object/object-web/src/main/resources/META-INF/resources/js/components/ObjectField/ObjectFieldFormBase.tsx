@@ -11,6 +11,7 @@ import {
 	API,
 	FormError,
 	Input,
+	PREFIX_TYPE,
 	SingleSelect,
 	Toggle,
 } from '@liferay/object-js-components-web';
@@ -134,7 +135,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 		[
 			{
 				name: 'prefixType',
-				value: 'definedByUser',
+				value: PREFIX_TYPE.DEFINED_BY_USER,
 			},
 		],
 	],

@@ -7,6 +7,8 @@ import ClayForm from '@clayui/form';
 import {
 	CountryCodePicker,
 	CountryInfo,
+	PREFIX_TYPE,
+	PrefixType,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
 import React from 'react';
@@ -16,14 +18,7 @@ import {
 	updateFieldSettings,
 } from '../../../../utils/fieldSettings';
 
-export const PREFIX_TYPES = {
-	DEFINED_BY_USER: 'definedByUser',
-	FIXED: 'fixed',
-} as const;
-
-export type PrefixType = (typeof PREFIX_TYPES)[keyof typeof PREFIX_TYPES];
-
-export type {CountryInfo};
+export type {CountryInfo, PrefixType};
 
 interface IPhoneNumberPropertiesProps {
 	countries: CountryInfo[];
@@ -44,7 +39,7 @@ export function PhoneNumberProperties({
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const prefix = settings.prefix || '+1';
-	const prefixType = settings.prefixType || PREFIX_TYPES.DEFINED_BY_USER;
+	const prefixType = settings.prefixType || PREFIX_TYPE.DEFINED_BY_USER;
 
 	const selectedCountry =
 		countries.find((country) => `+${country.idd}` === prefix) ||
@@ -56,12 +51,12 @@ export function PhoneNumberProperties({
 			value,
 		});
 
-		if (value === PREFIX_TYPES.DEFINED_BY_USER) {
+		if (value === PREFIX_TYPE.DEFINED_BY_USER) {
 			updatedSettings = updatedSettings.filter(
 				(setting) => setting.name !== 'prefix'
 			);
 		}
-		else if (value === PREFIX_TYPES.FIXED) {
+		else if (value === PREFIX_TYPE.FIXED) {
 			updatedSettings = updateFieldSettings(updatedSettings, {
 				name: 'prefix',
 				value: `+${countries[0].idd}`,
@@ -101,11 +96,11 @@ export function PhoneNumberProperties({
 	const prefixTypeOptions = [
 		{
 			label: Liferay.Language.get('defined-by-user'),
-			value: PREFIX_TYPES.DEFINED_BY_USER,
+			value: PREFIX_TYPE.DEFINED_BY_USER,
 		},
 		{
 			label: Liferay.Language.get('fixed'),
-			value: PREFIX_TYPES.FIXED,
+			value: PREFIX_TYPE.FIXED,
 		},
 	];
 
@@ -120,7 +115,7 @@ export function PhoneNumberProperties({
 				selectedKey={prefixType as string}
 			/>
 
-			{prefixType === PREFIX_TYPES.FIXED && (
+			{prefixType === PREFIX_TYPE.FIXED && (
 				<div className="form-group-autofit">
 					<ClayForm.Group className="form-group-item-shrink">
 						<label>{Liferay.Language.get('prefix')}</label>

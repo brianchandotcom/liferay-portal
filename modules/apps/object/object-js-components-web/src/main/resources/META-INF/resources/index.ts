@@ -39,8 +39,12 @@ export {
 	getCombinedValue,
 	getFlagSymbol,
 	parsePhoneValue,
+	PREFIX_TYPE,
 } from './components/PhoneNumber/phoneNumberUtil';
-export type {CountryInfo} from './components/PhoneNumber/phoneNumberUtil';
+export type {
+	CountryInfo,
+	PrefixType,
+} from './components/PhoneNumber/phoneNumberUtil';
 export {PanelBody, PanelSimpleBody} from './components/Panel/PanelBody';
 export {PanelHeader} from './components/Panel/PanelHeader';
 export {RadioField} from './components/RadioField/RadioField';

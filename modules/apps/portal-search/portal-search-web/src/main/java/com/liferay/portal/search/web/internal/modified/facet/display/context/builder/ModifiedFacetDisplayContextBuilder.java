@@ -308,6 +308,12 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private String _getCustomRangeURL() {
+		String rangeURL = HttpComponentsUtil.removeParameter(
+			_currentURL, "modified");
+
+		rangeURL = HttpComponentsUtil.removeParameter(
+			rangeURL, _paginationStartParameterName);
+
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd", LocaleUtil.US);
 
@@ -318,12 +324,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		calendar.add(Calendar.DATE, -1);
 
 		String from = dateFormat.format(calendar.getTime());
-
-		String rangeURL = HttpComponentsUtil.removeParameter(
-			_currentURL, "modified");
-
-		rangeURL = HttpComponentsUtil.removeParameter(
-			rangeURL, _paginationStartParameterName);
 
 		rangeURL = HttpComponentsUtil.setParameter(
 			rangeURL, "modifiedFrom", from);
@@ -338,10 +338,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 			_currentURL, "modifiedFrom");
 
 		rangeURL = HttpComponentsUtil.removeParameter(rangeURL, "modifiedTo");
-
 		rangeURL = HttpComponentsUtil.removeParameter(
 			rangeURL, _paginationStartParameterName);
-
 		rangeURL = HttpComponentsUtil.setParameter(rangeURL, "modified", label);
 
 		return HttpComponentsUtil.sortParameters(rangeURL);

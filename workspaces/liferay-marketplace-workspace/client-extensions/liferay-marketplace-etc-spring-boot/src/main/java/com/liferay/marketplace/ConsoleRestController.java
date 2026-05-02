@@ -45,11 +45,9 @@ public class ConsoleRestController extends BaseRestController {
 		throws Exception {
 
 		if (emailAddress == null) {
-			emailAddress = String.valueOf(
-				jwt.getClaims(
-				).get(
-					"username"
-				));
+			Map<String, Object> claims = jwt.getClaims();
+
+			emailAddress = String.valueOf(claims.get("username"));
 		}
 
 		return _consoleService.getProjectsUsage(emailAddress);

@@ -65,6 +65,10 @@ public class UpdateEmailAddressActionTest {
 			String expectedRenderedRefererURL, String referURL)
 		throws Exception {
 
+		RequestDispatcher requestDispatcher =
+			mockHttpServletRequest.getRequestDispatcher(
+				"/html/portal/update_email_address.jsp");
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
 
@@ -77,6 +81,9 @@ public class UpdateEmailAddressActionTest {
 				}
 
 			};
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, "http://localhost:8080");
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -95,17 +102,12 @@ public class UpdateEmailAddressActionTest {
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.CURRENT_URL, "http://localhost:8080");
-		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
+
 		mockHttpServletRequest.setParameter(WebKeys.REFERER, referURL);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
-
-		RequestDispatcher requestDispatcher =
-			mockHttpServletRequest.getRequestDispatcher(
-				"/html/portal/update_email_address.jsp");
 
 		ServiceContext serviceContext = new ServiceContext();
 

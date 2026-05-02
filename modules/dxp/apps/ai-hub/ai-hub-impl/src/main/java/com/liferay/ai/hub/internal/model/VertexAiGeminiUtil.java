@@ -34,15 +34,13 @@ public class VertexAiGeminiUtil {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
-		builder.location(
+		return builder.location(
 			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()
 		).project(
 			vertexAIConfiguration.projectId()
-		);
-
-		return builder.build();
+		).build();
 	}
 
 	public static VertexAiGeminiStreamingChatModel
@@ -60,15 +58,13 @@ public class VertexAiGeminiUtil {
 			builder.apiEndpoint("aiplatform.googleapis.com");
 		}
 
-		builder.location(
+		return builder.location(
 			vertexAIConfiguration.location()
 		).modelName(
 			vertexAIConfiguration.modelName()
 		).project(
 			vertexAIConfiguration.projectId()
-		);
-
-		return builder.build();
+		).build();
 	}
 
 }

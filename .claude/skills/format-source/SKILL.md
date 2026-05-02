@@ -21,7 +21,7 @@ Run across the entire codebase:
 cd <repo-root>/portal-impl && ant format-source-current-branch
 ```
 
-`ant format-source-current-branch` only inspects committed files, so run it after creating the commit and amend any formatter changes or fixes into that commit.
+`ant format-source-current-branch` only inspects committed files, so run it after creating the commit, and amend any formatter changes or fixes into that commit.
 
 In both cases, if there are issues to be fixed, the formatter will list them. Fix them.
 

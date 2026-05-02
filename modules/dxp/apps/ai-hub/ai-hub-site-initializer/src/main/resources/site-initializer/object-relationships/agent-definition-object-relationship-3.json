@@ -1,5 +1,5 @@
 {
-	"deletionType": "cascade",
+	"deletionType": "disassociate",
 	"externalReferenceCode": "L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 	"label": {
 		"en_US": "Agent Definitions to Content Retrievers"

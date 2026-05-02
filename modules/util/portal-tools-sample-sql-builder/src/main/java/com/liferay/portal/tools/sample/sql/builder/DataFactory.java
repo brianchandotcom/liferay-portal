@@ -2041,7 +2041,7 @@ public class DataFactory {
 
 					layoutModels.add(
 						newLayoutModel(
-							groupId, sublayoutJSONObject.getBoolean("hidden"),
+							groupId,
 							sublayoutJSONObject.getString("layoutTemplateId"),
 							StringUtil.replace(
 								StringUtil.toLowerCase(
@@ -2049,6 +2049,7 @@ public class DataFactory {
 								CharPool.SPACE, CharPool.DASH),
 							sublayoutJSONObject.getBoolean("privateLayout"),
 							layoutModel.getLayoutId(),
+							sublayoutJSONObject.getBoolean("hidden"),
 							getPortletNames(
 								sublayoutJSONObject.getJSONArray("portlets"))));
 				}
@@ -6823,7 +6824,7 @@ public class DataFactory {
 
 	public LayoutModel newSearchLayoutModel(long groupId, boolean hidden) {
 		return newLayoutModel(
-			groupId, hidden, "1_2_columns_i", "search", false, 0,
+			groupId, "1_2_columns_i", "search", false, 0, hidden,
 			new String[] {
 				StringBundler.concat(
 					SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
@@ -8197,8 +8198,9 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, boolean hidden, String layoutTemplateId, String name,
-		boolean privateLayout, long parentLayoutId, String... columns) {
+		long groupId, String layoutTemplateId, String name,
+		boolean privateLayout, long parentLayoutId, boolean hidden,
+		String... columns) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			UnicodePropertiesBuilder.create(
@@ -8232,7 +8234,7 @@ public class DataFactory {
 		boolean privateLayout, String... columns) {
 
 		return newLayoutModel(
-			groupId, false, layoutTemplateId, name, privateLayout, 0, columns);
+			groupId, layoutTemplateId, name, privateLayout, 0, false, columns);
 	}
 
 	protected LayoutSetModel newLayoutSetModel(

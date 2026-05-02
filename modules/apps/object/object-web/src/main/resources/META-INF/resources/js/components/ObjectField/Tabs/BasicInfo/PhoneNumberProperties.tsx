@@ -36,6 +36,9 @@ export function PhoneNumberProperties({
 	setValues,
 	values,
 }: IPhoneNumberPropertiesProps) {
+	const prefixPickerId = React.useId();
+	const prefixTypeId = React.useId();
+
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const prefix = settings.prefix || '+1';
@@ -107,6 +110,7 @@ export function PhoneNumberProperties({
 	return (
 		<>
 			<SingleSelect
+				id={prefixTypeId}
 				items={prefixTypeOptions}
 				label={Liferay.Language.get('prefix-type')}
 				onSelectionChange={(value) =>
@@ -118,9 +122,12 @@ export function PhoneNumberProperties({
 			{prefixType === PREFIX_TYPE.FIXED && (
 				<div className="form-group-autofit">
 					<ClayForm.Group className="form-group-item-shrink">
-						<label>{Liferay.Language.get('prefix')}</label>
+						<label id={prefixPickerId}>
+							{Liferay.Language.get('prefix')}
+						</label>
 
 						<CountryCodePicker
+							aria-labelledby={prefixPickerId}
 							countries={countries}
 							onSelectionChange={handlePrefixChange}
 							selectedKey={selectedCountry.a2}

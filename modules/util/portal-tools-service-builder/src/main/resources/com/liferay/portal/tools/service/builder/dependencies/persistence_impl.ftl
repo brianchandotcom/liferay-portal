@@ -401,22 +401,26 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#list entity.uniqueEntityFinders as uniqueEntityFinder>
 			<#assign entityColumns = uniqueEntityFinder.entityColumns />
 
-			${finderCache}.putResult(
-				_finderPathFetchBy${uniqueEntityFinder.name},
-				new Object[] {
-					<#list entityColumns as entityColumn>
-						<#if stringUtil.equals(entityColumn.type, "boolean")>
-							${entity.variableName}.is${entityColumn.methodName}()
-						<#else>
-							${entity.variableName}.get${entityColumn.methodName}()
-						</#if>
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, ${entity.variableName});
+			<#else>
+				${finderCache}.putResult(
+					_finderPathFetchBy${uniqueEntityFinder.name},
+					new Object[] {
+						<#list entityColumns as entityColumn>
+							<#if stringUtil.equals(entityColumn.type, "boolean")>
+								${entity.variableName}.is${entityColumn.methodName}()
+							<#else>
+								${entity.variableName}.get${entityColumn.methodName}()
+							</#if>
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
-				},
-				${entity.variableName});
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+					},
+					${entity.variableName});
+			</#if>
 		</#list>
 
 		<#if serviceBuilder.isVersionLTE_7_2_0()>
@@ -585,33 +589,37 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#list entity.uniqueEntityFinders as uniqueEntityFinder>
 				<#assign entityColumns = uniqueEntityFinder.entityColumns />
 
-				<#if uniqueEntityFinder_index == 0>
-					Object[]
-				</#if>
-				args = new Object[] {
-					<#list entityColumns as entityColumn>
-						<#if stringUtil.equals(entityColumn.type, "boolean")>
-							${entity.variableName}ModelImpl.is${entityColumn.methodName}()
-						<#elseif stringUtil.equals(entityColumn.type, "Date")>
-							_getTime(${entity.variableName}ModelImpl.get${entityColumn.methodName}())
-						<#else>
-							${entity.variableName}ModelImpl.get${entityColumn.methodName}()
-						</#if>
-
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
-				};
-
-				<#if serviceBuilder.isVersionLTE_7_3_0()>
-					${finderCache}.putResult(_finderPathCountBy${uniqueEntityFinder.name}, args, Long.valueOf(1), false);
-				</#if>
-				${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, args, ${entity.variableName}ModelImpl
-					<#if serviceBuilder.isVersionLTE_7_3_0()>
-						, false
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+					${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, ${entity.variableName}ModelImpl);
+				<#else>
+					<#if uniqueEntityFinder_index == 0>
+						Object[]
 					</#if>
-					);
+					args = new Object[] {
+						<#list entityColumns as entityColumn>
+							<#if stringUtil.equals(entityColumn.type, "boolean")>
+								${entity.variableName}ModelImpl.is${entityColumn.methodName}()
+							<#elseif stringUtil.equals(entityColumn.type, "Date")>
+								_getTime(${entity.variableName}ModelImpl.get${entityColumn.methodName}())
+							<#else>
+								${entity.variableName}ModelImpl.get${entityColumn.methodName}()
+							</#if>
+
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+					};
+
+					<#if serviceBuilder.isVersionLTE_7_3_0()>
+						${finderCache}.putResult(_finderPathCountBy${uniqueEntityFinder.name}, args, Long.valueOf(1), false);
+					</#if>
+					${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, args, ${entity.variableName}ModelImpl
+						<#if serviceBuilder.isVersionLTE_7_3_0()>
+							, false
+						</#if>
+						);
+				</#if>
 			</#list>
 
 			<#if entity.isChangeTrackingEnabled()>
@@ -2878,7 +2886,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if !entityFinder.isCollection() || entityFinder.isUnique()>
 				_finderPathFetchBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
+						createUniqueFinderPath(
 					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
 						_createFinderPath(
 					<#else>
@@ -2908,8 +2916,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									,
 								</#if>
 							</#list>
-							},
-						true
+							}
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							,
+							<#if entityFinder.isPretouch()>true<#else>false</#if>
+
+							<#list entityColumns as entityColumn>
+								,
+								${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+							</#list>
+						<#else>
+							,
+							true
+						</#if>
 					<#elseif columnBitmaskEnabled>
 						,
 
@@ -2924,7 +2943,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 					);
 
-				<#if entityFinder.isPretouch()>
+				<#if !serviceBuilder.isVersionGTE_7_4_0() && entityFinder.isPretouch()>
 					_finderPathFetchBy${entityFinder.name}.touch();
 				</#if>
 			</#if>

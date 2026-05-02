@@ -67,7 +67,7 @@ definition {
 		Depot.viewDefaultLanguage(defaultDepotLanguage = "Spanish (Spain)");
 	}
 
-	@description = "This ensures that the web content language can be set in a depot."
+	@description = "This ensures that the custom type and web content language can be set in a depot."
 	@priority = 4
 	@refactordone
 	test CanViewCustomLanguagesOrderForCustomTypeAndWebContent {

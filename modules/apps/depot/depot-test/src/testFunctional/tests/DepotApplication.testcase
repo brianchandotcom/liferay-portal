@@ -145,7 +145,7 @@ definition {
 			value1 = "This application is not supported for Asset Libraries.");
 	}
 
-	@description = "This ensures that the DM application can be viewed after reactivating in a depot."
+	@description = "This ensures that the Collections, DM, and WC applications can be viewed after reactivating in a depot."
 	@priority = 4
 	@refactordone
 	test CollectionsDMAndWCRemainAfterReactivating {

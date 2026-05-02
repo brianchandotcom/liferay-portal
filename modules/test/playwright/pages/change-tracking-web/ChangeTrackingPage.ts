@@ -449,6 +449,16 @@ export class ChangeTrackingPage {
 		await this.page.locator('h2').filter({hasText: title}).waitFor();
 	}
 
+	async selectRenderView(name: string) {
+		const renderViewDropdown = this.page.locator(
+			'.publications-render-view-divider .dropdown'
+		);
+
+		await renderViewDropdown.click();
+
+		await this.page.getByRole('menuitem', {name}).click();
+	}
+
 	async selectTab(tabLabel: string) {
 		const tabLink = this.tabsContainer.locator('a', {
 			hasText: tabLabel,

@@ -642,23 +642,6 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 		};
 	}
 
-	private static ObjectDefinition _objectDefinition;
-
-	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Inject
-	private static ObjectFieldLocalService _objectFieldLocalService;
-
-	@Inject
-	private static ObjectFieldSettingLocalService
-		_objectFieldSettingLocalService;
-
-	private static User _user;
-
-	@Inject
-	private static UserLocalService _userLocalService;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -670,6 +653,11 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	private ObjectDefinition _objectDefinition;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ObjectDefinitionSettingLocalService
@@ -691,6 +679,17 @@ public class SharedAssetResourceTest extends BaseSharedAssetResourceTestCase {
 	private ObjectEntryService _objectEntryService;
 
 	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
+
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

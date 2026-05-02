@@ -280,7 +280,6 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 	}
 
 	private static WorkflowDefinition _workflowDefinition;
-	private static WorkflowInstance _workflowInstance;
 
 	private Role _administratorRole;
 
@@ -294,6 +293,7 @@ public class WorkflowLogResourceTest extends BaseWorkflowLogResourceTestCase {
 	private RoleLocalService _roleLocalService;
 
 	private Role _siteContentReviewerRole;
+	private WorkflowInstance _workflowInstance;
 	private WorkflowTask _workflowTask;
 
 	@Inject

@@ -901,9 +901,6 @@ public class StructuredContentResourceTest
 		};
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	private DDMStructure _ddmStructure;
 	private DDMStructure _depotDDMStructure;
 	private DepotEntry _depotEntry;
@@ -915,6 +912,9 @@ public class StructuredContentResourceTest
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	private DDMStructure _localizedDDMStructure;
 	private StructuredContentResource _structuredContentResource;

@@ -204,9 +204,6 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 		promise.getValue();
 	}
 
-	@Inject
-	private static ServiceComponentRuntime _serviceComponentRuntime;
-
 	@Inject(
 		filter = "component.name=com.liferay.headless.builder.internal.model.listener.APIApplicationPublisherObjectEntryModelListener"
 	)
@@ -216,5 +213,8 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 		filter = "component.name=com.liferay.headless.builder.internal.instance.lifecycle.APIApplicationPublisherPortalInstanceLifecycleListener"
 	)
 	private PortalInstanceLifecycleListener _portalInstanceLifecycleListener;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

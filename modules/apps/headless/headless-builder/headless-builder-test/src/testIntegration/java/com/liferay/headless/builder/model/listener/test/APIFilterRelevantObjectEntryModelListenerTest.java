@@ -423,7 +423,7 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	private static final String _OBJECT_NAME =
 		ObjectDefinitionTestUtil.getRandomName();
 
-	private static JSONObject _objectDefinitionJSONObject;
-	private static JSONObject _objectEntryJSONObject;
+	private JSONObject _objectDefinitionJSONObject;
+	private JSONObject _objectEntryJSONObject;
 
 }

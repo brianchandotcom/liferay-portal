@@ -1128,3 +1128,180 @@ test('LPD-82268 FragmentEntryLink change displays the fragment related to the pu
 		page.getByRole('link', {name: `Heading for ${pageTitle}`})
 	).toBeVisible();
 });
+
+test('LPD-86809 Web content change details display diff preview', async ({
+	changeTrackingPage,
+	ctCollection,
+	journalEditArticlePage,
+	page,
+}) => {
+	await changeTrackingPage.workOnProduction();
+
+	await journalEditArticlePage.goto();
+
+	const title = getRandomString();
+
+	await journalEditArticlePage.fillTitle(title);
+
+	const content = getRandomString();
+
+	await journalEditArticlePage.journalPage.fillArticleContent(content);
+
+	await journalEditArticlePage.publishArticle();
+
+	await waitForAlert(page, `Success:${title} was created successfully.`);
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await journalEditArticlePage.editArticle(title);
+
+	const editedTitle = title + ' Edited';
+
+	await journalEditArticlePage.fillTitle(editedTitle);
+
+	const editedContent = content + ' Edited';
+
+	await journalEditArticlePage.journalPage.articleContentTextBox.click();
+	await journalEditArticlePage.journalPage.articleContentTextBox.selectText();
+	await journalEditArticlePage.journalPage.articleContentTextBox.press(
+		'Backspace'
+	);
+	await journalEditArticlePage.journalPage.articleContentTextBox.pressSequentially(
+		editedContent
+	);
+
+	await journalEditArticlePage.publishArticle(true);
+
+	await waitForAlert(
+		page,
+		`Success:${editedTitle} was updated successfully.`
+	);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	await changeTrackingPage.reviewChange(editedTitle);
+
+	const renderViewDropdown = page.locator(
+		'.publications-render-view-divider .dropdown'
+	);
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+
+	await expect(
+		page.locator('.diff-html-added').filter({hasText: 'Edited'})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Split View'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(content, {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(editedContent, {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(content, {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {
+			name: `Version: 1.1 (${ctCollection.body.name})`,
+		})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.getByText(editedContent, {exact: true})})
+	).toBeVisible();
+
+	await changeTrackingPage.selectTab('Data');
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+
+	await expect(
+		page.locator(
+			'td.publications-key-td:has-text("Name") + td .diff-html-added'
+		)
+	).toHaveText('Edited');
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Split View'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Name") + td')
+			.filter({has: page.getByText(title, {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Name") + td')
+			.filter({has: page.getByText(editedTitle, {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Name") + td')
+			.filter({has: page.getByText(title, {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {
+			name: `Version: 1.1 (${ctCollection.body.name})`,
+		})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Name") + td')
+			.filter({has: page.getByText(editedTitle, {exact: true})})
+	).toBeVisible();
+
+	await changeTrackingPage.selectTab('Parents');
+
+	await expect(
+		page.locator('tr').filter({hasText: 'Site'}).locator('+ tr')
+	).toHaveText('Guest');
+
+	await changeTrackingPage.selectTab('Children');
+
+	await expect(
+		page
+			.locator('tr')
+			.filter({hasText: 'Web Content Translation'})
+			.locator('+ tr')
+			.getByText(editedTitle, {exact: true})
+	).toBeVisible();
+});

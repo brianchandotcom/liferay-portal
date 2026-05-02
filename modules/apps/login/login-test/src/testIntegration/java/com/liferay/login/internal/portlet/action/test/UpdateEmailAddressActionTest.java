@@ -54,15 +54,11 @@ public class UpdateEmailAddressActionTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testRenderRefererURLWhenURLIsInvalid() throws Exception {
+	public void testRenderRefererURL() throws Exception {
+		_testRenderRefererURL("http://localhost:8080", "http://localhost:8080");
 		_testRenderRefererURL(
 			StringPool.BLANK,
 			"http://" + RandomTestUtil.randomString() + ".com");
-	}
-
-	@Test
-	public void testRenderRefererURLWhenURLIsValid() throws Exception {
-		_testRenderRefererURL("http://localhost:8080", "http://localhost:8080");
 	}
 
 	private void _testRenderRefererURL(

@@ -10075,12 +10075,6 @@ public class ObjectEntryLocalServiceTest {
 		ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
 			RandomTestUtil.randomString();
 
-	@Inject(
-		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
-	)
-	private static SchedulerJobConfiguration
-		_checkObjectEntrySchedulerJobConfiguration;
-
 	private static ServiceRegistration<?> _serviceRegistration;
 	private static final TestDLFileEntryModelListener
 		_testDLFileEntryModelListener = new TestDLFileEntryModelListener();
@@ -10102,6 +10096,12 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private AttachmentManager _attachmentManager;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.web.internal.scheduler.CheckObjectEntrySchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration
+		_checkObjectEntrySchedulerJobConfiguration;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

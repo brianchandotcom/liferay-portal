@@ -214,11 +214,6 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcessTest {
 		"com.liferay.object.internal.upgrade.v10_5_0." +
 			"ObjectEntryDefaultLanguageIdUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Company _company;
 
@@ -236,5 +231,10 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcessTest {
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

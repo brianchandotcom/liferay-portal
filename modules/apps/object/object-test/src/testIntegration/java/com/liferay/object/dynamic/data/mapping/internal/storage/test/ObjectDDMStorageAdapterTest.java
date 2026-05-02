@@ -407,7 +407,7 @@ public class ObjectDDMStorageAdapterTest {
 	}
 
 	@Inject
-	private static DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
+	private DDMStorageAdapterRegistry _ddmStorageAdapterRegistry;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

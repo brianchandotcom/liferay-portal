@@ -240,12 +240,6 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 				ActionKeys.DOWNLOAD));
 	}
 
-	@Inject(
-		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
-	)
-	private static ModelResourcePermission<DLFileEntry>
-		_dlFileEntryModelResourcePermission;
-
 	private Company _company;
 
 	@Inject
@@ -258,6 +252,12 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject(
+		filter = "model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
+	)
+	private ModelResourcePermission<DLFileEntry>
+		_dlFileEntryModelResourcePermission;
 
 	@Inject
 	private DLURLHelper _dlURLHelper;

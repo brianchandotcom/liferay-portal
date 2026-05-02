@@ -87,14 +87,14 @@ public class ObjectFieldStaleUserIdUpgradeProcessTest
 	}
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
-	private static ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

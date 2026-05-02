@@ -128,10 +128,9 @@ public class ObjectFieldSettingLocalServiceTest {
 	private static ObjectField _objectField;
 
 	@Inject
-	private static ObjectFieldLocalService _objectFieldLocalService;
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
-	private static ObjectFieldSettingLocalService
-		_objectFieldSettingLocalService;
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }

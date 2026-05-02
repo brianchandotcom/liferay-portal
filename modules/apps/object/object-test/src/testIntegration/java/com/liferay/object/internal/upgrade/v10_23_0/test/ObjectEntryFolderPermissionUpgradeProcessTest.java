@@ -98,11 +98,6 @@ public class ObjectEntryFolderPermissionUpgradeProcessTest {
 		"com.liferay.object.internal.upgrade.v10_23_0." +
 			"ObjectEntryFolderPermissionUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -114,5 +109,10 @@ public class ObjectEntryFolderPermissionUpgradeProcessTest {
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

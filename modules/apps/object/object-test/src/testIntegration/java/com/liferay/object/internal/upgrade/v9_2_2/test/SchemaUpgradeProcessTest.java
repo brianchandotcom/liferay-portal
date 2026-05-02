@@ -185,11 +185,6 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 	private static final String _CLASS_NAME =
 		"com.liferay.object.internal.upgrade.v9_2_2.SchemaUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
@@ -198,6 +193,11 @@ public class SchemaUpgradeProcessTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private final List<String> _viewNames = new ArrayList<>();
 

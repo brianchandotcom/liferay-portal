@@ -293,11 +293,6 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 			"SCOPE_PICKLIST");
 	}
 
-	@Inject(
-		filter = "component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -318,6 +313,11 @@ public class ListTypeDefinitionsUpgradeProcessTest {
 
 	@Inject
 	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.headless.builder.internal.upgrade.registry.HeadlessBuilderUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

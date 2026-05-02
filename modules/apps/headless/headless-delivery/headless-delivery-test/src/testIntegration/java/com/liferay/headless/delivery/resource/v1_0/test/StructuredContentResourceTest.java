@@ -3594,9 +3594,6 @@ public class StructuredContentResourceTest
 	private static final String _JOURNAL_ARTICLE_TITLE_FR =
 		RandomTestUtil.randomString();
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -3650,6 +3647,9 @@ public class StructuredContentResourceTest
 	private JournalConverter _journalConverter;
 
 	private JournalFolder _journalFolder;
+
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject
 	private Language _language;

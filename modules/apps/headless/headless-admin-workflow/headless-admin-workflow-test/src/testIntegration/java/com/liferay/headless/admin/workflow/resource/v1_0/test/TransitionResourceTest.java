@@ -230,6 +230,7 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 	}
 
 	private static WorkflowDefinition _workflowDefinition;
-	private static WorkflowInstance _workflowInstance;
+
+	private WorkflowInstance _workflowInstance;
 
 }

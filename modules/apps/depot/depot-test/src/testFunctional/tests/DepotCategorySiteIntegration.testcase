@@ -283,7 +283,7 @@ definition {
 			assetTitle = "WC WebContent Title 2");
 	}
 
-	@description = "This test covers LPS-131774. It ensures that a depot category can be viewed through details info on a connected site."
+	@description = "This test covers LPS-131774 and LPS-131849. It ensures that a depot category can be viewed through details info on a connected site, and that a user cannot add a category to depot from the connected site."
 	@priority = 4
 	test CategoryCanBeViewedFromInfoPanelAndCannotBeAddedFromConnectedSite {
 		var categoryId = JSONCategory.addCategory(
@@ -318,7 +318,7 @@ definition {
 		DMDocument.viewCategoriesInfo(categoryName = "apple");
 	}
 
-	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site."
+	@description = "This ensures that a depot vocabulary cannot be seen when creating assets from the disconnected site, and that a depot category cannot be shown in Category Navigation on a disconnected site."
 	@priority = 4
 	test VocabularyAndCategoryShouldNotBeViewedFromDisconnectedSite {
 		JSONLayout.addWidgetToPublicLayout(

@@ -85,7 +85,7 @@ definition {
 		DMDocumentSharing.viewSharingOption(dmDocumentTitle = "Document_1.doc");
 	}
 
-	@description = "This test ensures that depot sharing can be disabled at the instance level."
+	@description = "This test ensures that depot sharing can be disabled at the instance and system levels."
 	@priority = 4
 	@refactordone
 	test CanDisableDepotSharingAtInstanceAndSystemScope {

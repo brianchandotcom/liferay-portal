@@ -58,8 +58,10 @@ public class UpgradeVersionTreeMapTest {
 
 		upgradeVersionTreeMap.put(new Version(1, 0, 0), upgradeProcess);
 
+		UpgradeStep[] upgradeSteps = upgradeProcess.getUpgradeSteps();
+
 		UpgradeProcess[] upgradeProcesses =
-			new UpgradeProcess[upgradeProcess.getUpgradeSteps().length];
+			new UpgradeProcess[upgradeSteps.length];
 
 		int i = 0;
 

@@ -911,6 +911,33 @@ public class BasePersistenceImpl
 		}
 	}
 
+	@SafeVarargs
+	protected final FinderPath createUniqueFinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean pretouch,
+		Function<? super T, ?>... argsExtractors) {
+
+		FinderPath finderPath = new FinderPath(
+			cacheName, methodName, params, columnNames, true,
+			baseModel -> {
+				Object[] args = new Object[argsExtractors.length];
+
+				for (int i = 0; i < argsExtractors.length; i++) {
+					args[i] = argsExtractors[i].apply((T)baseModel);
+				}
+
+				return args;
+			});
+
+		_uniqueFinderPaths.add(finderPath);
+
+		if (pretouch) {
+			finderPath.touch();
+		}
+
+		return finderPath;
+	}
+
 	protected ClassLoader getClassLoader() {
 		Class<?> clazz = getClass();
 
@@ -1699,6 +1726,7 @@ public class BasePersistenceImpl
 	private Boolean _permissionsInMemoryFilterEnabled;
 	private SessionFactory _sessionFactory;
 	private Table<?> _table;
+	private final List<FinderPath> _uniqueFinderPaths = new ArrayList<>();
 
 	private static class NullModel
 		implements BaseModel<NullModel>, CacheModel<NullModel>, MVCCModel {

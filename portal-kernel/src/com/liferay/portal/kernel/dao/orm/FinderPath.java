@@ -7,12 +7,14 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Brian Wing Shun Chan
@@ -42,9 +44,20 @@ public class FinderPath {
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult) {
 
+		this(
+			cacheName, methodName, params, columnNames, baseModelResult,
+			_EMPTY_ARGS_EXTRACTOR);
+	}
+
+	public FinderPath(
+		String cacheName, String methodName, String[] params,
+		String[] columnNames, boolean baseModelResult,
+		Function<Object, Object[]> argsExtractor) {
+
 		_cacheName = cacheName;
 		_columnNames = columnNames;
 		_baseModelResult = baseModelResult;
+		_argsExtractor = argsExtractor;
 
 		_initCacheKeyPrefix(methodName, params);
 
@@ -54,6 +67,10 @@ public class FinderPath {
 		else {
 			_singleResult = true;
 		}
+	}
+
+	public Object[] extractArgs(BaseModel<?> baseModel) {
+		return _argsExtractor.apply(baseModel);
 	}
 
 	public String getCacheKeyPrefix() {
@@ -133,12 +150,16 @@ public class FinderPath {
 			"value.object.finder.cache.single.result.cool.down.period"),
 		600_000_000_000L);
 
+	private static final Function<Object, Object[]> _EMPTY_ARGS_EXTRACTOR =
+		baseModel -> new Object[0];
+
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
 	private static final String _TABLE_SEPARATOR = "_T_";
 
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 
+	private final Function<Object, Object[]> _argsExtractor;
 	private final boolean _baseModelResult;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;

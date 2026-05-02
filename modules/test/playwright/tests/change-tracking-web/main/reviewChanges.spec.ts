@@ -902,10 +902,6 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 	await changeTrackingPage.reviewChange('astronaut2');
 
-	const renderViewDropdown = page.locator(
-		'.publications-render-view-divider .dropdown'
-	);
-
 	await expect(
 		page
 			.locator('td.publications-render-view-content')
@@ -913,9 +909,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 			.first()
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Production'}).click();
+	await changeTrackingPage.selectRenderView('Production');
 
 	await expect(
 		page
@@ -923,11 +917,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 			.filter({has: page.locator('img[src*="astronaut"]')})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {name: ctCollection.body.name})
-		.click();
+	await changeTrackingPage.selectRenderView(ctCollection.body.name);
 
 	await expect(
 		page
@@ -937,9 +927,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 
 	await changeTrackingPage.selectTab('Data');
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+	await changeTrackingPage.selectRenderView('Unified View');
 
 	await expect(
 		page.locator(
@@ -947,9 +935,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 		)
 	).toHaveText('astronaut2');
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Split View'}).click();
+	await changeTrackingPage.selectRenderView('Split View');
 
 	await expect(
 		page
@@ -963,9 +949,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 			.filter({has: page.getByText('astronaut2', {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Production'}).click();
+	await changeTrackingPage.selectRenderView('Production');
 
 	await expect(
 		page
@@ -973,11 +957,7 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 			.filter({has: page.getByText('astronaut.png', {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {name: ctCollection.body.name})
-		.click();
+	await changeTrackingPage.selectRenderView(ctCollection.body.name);
 
 	await expect(
 		page
@@ -1182,21 +1162,13 @@ test('LPD-86809 Web content change details display diff preview', async ({
 
 	await changeTrackingPage.reviewChange(editedTitle);
 
-	const renderViewDropdown = page.locator(
-		'.publications-render-view-divider .dropdown'
-	);
-
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+	await changeTrackingPage.selectRenderView('Unified View');
 
 	await expect(
 		page.locator('.diff-html-added').filter({hasText: 'Edited'})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Split View'}).click();
+	await changeTrackingPage.selectRenderView('Split View');
 
 	await expect(
 		page
@@ -1210,11 +1182,7 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.filter({has: page.getByText(editedContent, {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
-		.click();
+	await changeTrackingPage.selectRenderView('Version: 1.0 (Production)');
 
 	await expect(
 		page
@@ -1222,13 +1190,9 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.filter({has: page.getByText(content, {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {
-			name: `Version: 1.1 (${ctCollection.body.name})`,
-		})
-		.click();
+	await changeTrackingPage.selectRenderView(
+		`Version: 1.1 (${ctCollection.body.name})`
+	);
 
 	await expect(
 		page
@@ -1238,9 +1202,7 @@ test('LPD-86809 Web content change details display diff preview', async ({
 
 	await changeTrackingPage.selectTab('Data');
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+	await changeTrackingPage.selectRenderView('Unified View');
 
 	await expect(
 		page.locator(
@@ -1248,9 +1210,7 @@ test('LPD-86809 Web content change details display diff preview', async ({
 		)
 	).toHaveText('Edited');
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Split View'}).click();
+	await changeTrackingPage.selectRenderView('Split View');
 
 	await expect(
 		page
@@ -1264,11 +1224,7 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.filter({has: page.getByText(editedTitle, {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
-		.click();
+	await changeTrackingPage.selectRenderView('Version: 1.0 (Production)');
 
 	await expect(
 		page
@@ -1276,13 +1232,9 @@ test('LPD-86809 Web content change details display diff preview', async ({
 			.filter({has: page.getByText(title, {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {
-			name: `Version: 1.1 (${ctCollection.body.name})`,
-		})
-		.click();
+	await changeTrackingPage.selectRenderView(
+		`Version: 1.1 (${ctCollection.body.name})`
+	);
 
 	await expect(
 		page
@@ -1364,13 +1316,7 @@ test('LPS-179026 Can preview changes for WikiPages', async ({
 
 	await changeTrackingPage.reviewChange(wikiPageTitle);
 
-	const renderViewDropdown = page.locator(
-		'.publications-render-view-divider .dropdown'
-	);
-
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+	await changeTrackingPage.selectRenderView('Unified View');
 
 	await expect(
 		page.locator('.diff-html-added').filter({hasText: 'Edited'})
@@ -1380,9 +1326,7 @@ test('LPS-179026 Can preview changes for WikiPages', async ({
 		page.locator('.diff-html-added').filter({hasText: 'Attachments'})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page.getByRole('menuitem', {name: 'Split View'}).click();
+	await changeTrackingPage.selectRenderView('Split View');
 
 	await expect(
 		page
@@ -1400,11 +1344,7 @@ test('LPS-179026 Can preview changes for WikiPages', async ({
 		page.locator('td.publications-render-view-content .page-attachments')
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {name: 'Version: 1.0 (Production)'})
-		.click();
+	await changeTrackingPage.selectRenderView('Version: 1.0 (Production)');
 
 	await expect(
 		page
@@ -1412,13 +1352,9 @@ test('LPS-179026 Can preview changes for WikiPages', async ({
 			.filter({has: page.getByText(wikiPageContent, {exact: true})})
 	).toBeVisible();
 
-	await renderViewDropdown.click();
-
-	await page
-		.getByRole('menuitem', {
-			name: `Version: 1.1 (${ctCollection.body.name})`,
-		})
-		.click();
+	await changeTrackingPage.selectRenderView(
+		`Version: 1.1 (${ctCollection.body.name})`
+	);
 
 	await expect(
 		page

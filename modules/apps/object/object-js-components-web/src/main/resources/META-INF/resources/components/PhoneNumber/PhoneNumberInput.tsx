@@ -8,7 +8,13 @@ import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
 import {CountryCodePicker} from './CountryCodePicker';
-import {CountryInfo, getFlagSymbol, parsePhoneValue} from './phoneNumberUtil';
+import {
+	CountryInfo,
+	PREFIX_TYPE,
+	PrefixType,
+	getFlagSymbol,
+	parsePhoneValue,
+} from './phoneNumberUtil';
 
 interface PhoneNumberInputProps {
 	countries?: CountryInfo[];
@@ -19,7 +25,7 @@ interface PhoneNumberInputProps {
 	onChange?: (event: {target: {value: string}}) => void;
 	onFocus?: (event: React.FocusEvent) => void;
 	prefix?: string;
-	prefixType?: 'definedByUser' | 'fixed';
+	prefixType?: PrefixType;
 	value?: string;
 }
 
@@ -32,7 +38,7 @@ export function PhoneNumberInput({
 	onChange,
 	onFocus,
 	prefix,
-	prefixType = 'definedByUser',
+	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	value = '',
 }: PhoneNumberInputProps) {
 	const [localNumber, setLocalNumber] = useState('');
@@ -41,7 +47,7 @@ export function PhoneNumberInput({
 	);
 
 	const fixedCountry =
-		prefixType === 'fixed'
+		prefixType === PREFIX_TYPE.FIXED
 			? countries.find((country) => `+${country.idd}` === prefix)
 			: null;
 
@@ -50,7 +56,7 @@ export function PhoneNumberInput({
 	const handleValueChange = (country: CountryInfo, number: string) => {
 		if (onChange) {
 			const resolvedPrefix =
-				prefixType === 'fixed' ? prefix || '' : `+${country.idd}`;
+				prefixType === PREFIX_TYPE.FIXED ? prefix || '' : `+${country.idd}`;
 
 			onChange({
 				target: {
@@ -62,7 +68,7 @@ export function PhoneNumberInput({
 
 	/** Parse the phone value to set the initial states. */
 	useEffect(() => {
-		if (prefixType === 'fixed') {
+		if (prefixType === PREFIX_TYPE.FIXED) {
 			if (prefix && value.startsWith(prefix)) {
 				setLocalNumber(value.substring(prefix.length));
 			}
@@ -95,8 +101,8 @@ export function PhoneNumberInput({
 
 	return (
 		<>
-			<ClayInput.GroupItem prepend={prefixType === 'fixed'} shrink>
-				{prefixType === 'fixed' ? (
+			<ClayInput.GroupItem prepend={prefixType === PREFIX_TYPE.FIXED} shrink>
+				{prefixType === PREFIX_TYPE.FIXED ? (
 					<ClayInput.GroupText>
 						{fixedFlagSymbol && (
 							<span className="inline-item inline-item-before">
@@ -119,7 +125,7 @@ export function PhoneNumberInput({
 				)}
 			</ClayInput.GroupItem>
 
-			<ClayInput.GroupItem prepend={prefixType === 'fixed'}>
+			<ClayInput.GroupItem prepend={prefixType === PREFIX_TYPE.FIXED}>
 				<ClayInput
 					className="ddm-field-text form-control"
 					disabled={disabled}

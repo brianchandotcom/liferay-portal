@@ -4,7 +4,12 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import {CountryInfo, PhoneNumberInput} from '@liferay/object-js-components-web';
+import {
+	CountryInfo,
+	PREFIX_TYPE,
+	PhoneNumberInput,
+	PrefixType,
+} from '@liferay/object-js-components-web';
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
@@ -25,7 +30,7 @@ interface BasePhoneNumberProps {
 	onFocus?: (event: React.FocusEvent) => void;
 	predefinedValue?: string;
 	prefix?: string;
-	prefixType?: 'definedByUser' | 'fixed';
+	prefixType?: PrefixType;
 	readOnly?: boolean;
 	[key: string]: unknown;
 }
@@ -53,7 +58,7 @@ const LocalizablePhoneNumber = ({
 	onFocus,
 	predefinedValue,
 	prefix,
-	prefixType = 'definedByUser',
+	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
 	value = {} as LocalizedValue<string>,
 	...otherProps
@@ -108,7 +113,7 @@ const NonLocalizablePhoneNumber = ({
 	onFocus,
 	predefinedValue,
 	prefix,
-	prefixType = 'definedByUser',
+	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
 	value: initialValue,
 	...otherProps

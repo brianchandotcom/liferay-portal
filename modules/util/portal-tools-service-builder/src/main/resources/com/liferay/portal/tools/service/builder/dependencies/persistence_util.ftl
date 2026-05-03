@@ -43,6 +43,22 @@ public class ${entity.name}Util {
 	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(java.util.List)
+		 */
+		public static void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
+			getPersistence().cacheResult(${entity.pluralVariableName});
+		}
+
+		/**
+		 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+		 */
+		public static void cacheResult(${entity.name} ${entity.variableName}) {
+			getPersistence().cacheResult(${entity.variableName});
+		}
+	</#if>
+
 	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */

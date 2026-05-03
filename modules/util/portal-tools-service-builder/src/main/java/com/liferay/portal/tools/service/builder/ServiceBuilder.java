@@ -1796,6 +1796,9 @@ public class ServiceBuilder {
 
 			return true;
 		}
+		else if (methodName.equals("cacheResult")) {
+			return isVersionGTE_7_4_0();
+		}
 		else if (methodName.equals("getBadColumnNames")) {
 			return !isVersionLTE_7_1_0();
 		}

@@ -55,7 +55,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
-			_sharingEntryService,
+			contextCompany.getCompanyId(), _sharingEntryService,
 			_ticketLocalService, type);
 	}
 
@@ -84,7 +84,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
-			_sharingEntryService,
+			contextCompany.getCompanyId(), _sharingEntryService,
 			_ticketLocalService, type);
 	}
 
@@ -106,7 +106,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
-			_collaboratorDTOConverter,
+			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, _sharingEntryService, _ticketLocalService,
 			type, contextUriInfo, contextUser);
 	}
@@ -160,7 +160,7 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			_classNameLocalService.getClassNameId(
 				ObjectEntryFolder.class.getName()),
 			objectEntryFolder.getObjectEntryFolderId(), collaboratorId,
-			_collaboratorDTOConverter,
+			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, _sharingEntryService, _ticketLocalService,
 			type, contextUriInfo, contextUser);
 	}

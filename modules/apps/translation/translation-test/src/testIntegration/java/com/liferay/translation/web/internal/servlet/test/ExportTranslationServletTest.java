@@ -133,9 +133,9 @@ public class ExportTranslationServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 
-		byte[] contentBytes = mockHttpServletResponse.getContentAsByteArray();
+		byte[] bytes = mockHttpServletResponse.getContentAsByteArray();
 
-		Assert.assertTrue(contentBytes.length > 0);
+		Assert.assertTrue(bytes.length > 0);
 	}
 
 	private static final String _MIMETYPE_XLIFF_1_2 = "application/x-xliff+xml";

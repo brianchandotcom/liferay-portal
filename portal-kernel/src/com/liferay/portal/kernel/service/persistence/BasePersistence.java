@@ -42,6 +42,10 @@ import javax.sql.DataSource;
  */
 public interface BasePersistence<T extends BaseModel<T>> {
 
+	public void cacheResult(List<T> models);
+
+	public void cacheResult(T model);
+
 	/**
 	 * Clears the cache for all instances of this model.
 	 *

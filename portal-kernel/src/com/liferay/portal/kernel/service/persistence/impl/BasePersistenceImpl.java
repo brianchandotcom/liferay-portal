@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.model.ModelWrapper;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -168,12 +169,71 @@ public class BasePersistenceImpl
 		}
 	}
 
+	@Override
 	public void cacheResult(List<T> models) {
-		throw new UnsupportedOperationException();
+		if ((_VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD == 0) ||
+			((_VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD > 0) &&
+			 (models.size() > _VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD))) {
+
+			return;
+		}
+
+		EntityCache entityCache = getEntityCache();
+
+		if (getCTPersistenceHelper() == null) {
+			for (T model : models) {
+				@SuppressWarnings("unchecked")
+				T cachedModel = (T)entityCache.getResult(
+					_modelImplClass, model.getPrimaryKeyObj());
+
+				if (cachedModel == null) {
+					cacheResult(model);
+				}
+				else {
+					model.copyCacheFields(cachedModel);
+				}
+			}
+
+			return;
+		}
+
+		for (T model : models) {
+			CTModel<?> ctModel = (CTModel<?>)model;
+
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+						ctModel.getCtCollectionId())) {
+
+				@SuppressWarnings("unchecked")
+				T cachedModel = (T)entityCache.getResult(
+					_modelImplClass, model.getPrimaryKeyObj());
+
+				if (cachedModel == null) {
+					cacheResult(model);
+				}
+				else {
+					model.copyCacheFields(cachedModel);
+				}
+			}
+		}
 	}
 
+	@Override
 	public void cacheResult(T model) {
-		throw new UnsupportedOperationException();
+		if (getCTPersistenceHelper() == null) {
+			_cacheUniqueFindersResult(model, true);
+
+			return;
+		}
+
+		CTModel<?> ctModel = (CTModel<?>)model;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctModel.getCtCollectionId())) {
+
+			_cacheUniqueFindersResult(model, true);
+		}
 	}
 
 	@Override
@@ -1180,6 +1240,24 @@ public class BasePersistenceImpl
 	@Deprecated
 	protected boolean finderCacheEnabled = true;
 
+	private void _cacheUniqueFindersResult(T model, boolean quiet) {
+		EntityCache entityCache = getEntityCache();
+
+		if (quiet) {
+			entityCache.putResult(
+				_modelImplClass, model.getPrimaryKeyObj(), model);
+		}
+		else {
+			entityCache.putResult(_modelImplClass, model, false, true);
+		}
+
+		FinderCache finderCache = getFinderCache();
+
+		for (FinderPath finderPath : _uniqueFinderPaths) {
+			finderCache.putResult(finderPath, model);
+		}
+	}
+
 	private int _countAll() {
 		FinderCache finderCache = getFinderCache();
 
@@ -1677,6 +1755,10 @@ public class BasePersistenceImpl
 	private static final boolean _PERMISSIONS_IN_MEMORY_FILTER_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get("permissions.in.memory.filter.enabled"), true);
+
+	private static final int _VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);

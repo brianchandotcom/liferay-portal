@@ -41,16 +41,16 @@ public class ObjectEntryFolderModelDocumentContributor
 		document.addKeyword(Field.STATUS, objectEntryFolder.getStatus());
 		document.addText(Field.TITLE, objectEntryFolder.getName());
 
+		String[] parts = StringUtil.split(
+			objectEntryFolder.getTreePath(), CharPool.SLASH);
+
+		document.addKeyword(Field.TREE_PATH, parts);
+
 		if (objectEntryFolder.getStatus() ==
 				WorkflowConstants.STATUS_IN_TRASH) {
 
 			document.addKeyword(Field.VIEW_ACTION_ID, ActionKeys.DELETE);
 		}
-
-		String[] parts = StringUtil.split(
-			objectEntryFolder.getTreePath(), CharPool.SLASH);
-
-		document.addKeyword(Field.TREE_PATH, parts);
 
 		String cmsSection = _getCMSSection(parts);
 

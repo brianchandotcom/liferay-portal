@@ -310,6 +310,14 @@ public class ObjectEntryModelDocumentContributor
 				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
 				document.get(Field.ENTRY_CLASS_PK)));
 
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		if (objectDefinition.isCMS() &&
+			(objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+
+			document.addKeyword(Field.VIEW_ACTION_ID, ActionKeys.DELETE);
+		}
+
 		FieldArray fieldArray = (FieldArray)document.getField(
 			"nestedFieldArray");
 
@@ -321,15 +329,6 @@ public class ObjectEntryModelDocumentContributor
 
 		document.addKeyword(
 			"objectDefinitionId", objectEntry.getObjectDefinitionId());
-
-		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
-
-		if (objectDefinition.isCMS() &&
-			(objectEntry.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
-
-			document.addKeyword(Field.VIEW_ACTION_ID, ActionKeys.DELETE);
-		}
-
 		document.addKeyword(
 			"objectDefinitionExternalReferenceCode",
 			objectDefinition.getExternalReferenceCode());

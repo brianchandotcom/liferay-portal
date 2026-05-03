@@ -10,6 +10,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
@@ -65,7 +66,7 @@ public class CollaboratorUtil {
 			UserLocalService userLocalService)
 		throws Exception {
 
-		_validateType(type);
+		_validateType(companyId, type);
 
 		if (StringUtil.equals("Email", type)) {
 			_validateEmailAddress(collaborator.getEmailAddress());
@@ -78,7 +79,7 @@ public class CollaboratorUtil {
 					acceptLanguage, dtoConverter, dtoConverterRegistry,
 					_addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
-						existingUser.getUserId(), groupId,
+						existingUser.getUserId(), companyId, groupId,
 						sharingEntryService, "User", userGroupLocalService,
 						userLocalService),
 					uriInfo, user);
@@ -92,7 +93,7 @@ public class CollaboratorUtil {
 				acceptLanguage, dtoConverter, dtoConverterRegistry,
 				_addOrUpdateSharingEntry(
 					classNameId, classPK, collaborator, ticket.getTicketId(),
-					groupId, sharingEntryService, type,
+					companyId, groupId, sharingEntryService, type,
 					userGroupLocalService, userLocalService),
 				uriInfo, user);
 		}
@@ -100,7 +101,7 @@ public class CollaboratorUtil {
 		return toCollaborator(
 			acceptLanguage, dtoConverter, dtoConverterRegistry,
 			_addOrUpdateSharingEntry(
-				classNameId, classPK, collaborator, collaboratorId,
+				classNameId, classPK, collaborator, collaboratorId, companyId,
 				groupId, sharingEntryService, type, userGroupLocalService,
 				userLocalService),
 			uriInfo, user);
@@ -127,7 +128,7 @@ public class CollaboratorUtil {
 		Set<Long> ticketIds = new HashSet<>();
 
 		for (Collaborator collaborator : collaborators) {
-			_validateType(collaborator.getType());
+			_validateType(companyId, collaborator.getType());
 
 			SharingEntry sharingEntry = null;
 
@@ -144,7 +145,7 @@ public class CollaboratorUtil {
 
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
-						ticket.getTicketId(), groupId,
+						ticket.getTicketId(), companyId, groupId,
 						sharingEntryService, collaborator.getType(),
 						userGroupLocalService, userLocalService);
 
@@ -153,7 +154,7 @@ public class CollaboratorUtil {
 				else {
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
-						existingUser.getUserId(), groupId,
+						existingUser.getUserId(), companyId, groupId,
 						sharingEntryService, "User", userGroupLocalService,
 						userLocalService);
 				}
@@ -161,7 +162,7 @@ public class CollaboratorUtil {
 			else {
 				sharingEntry = _addOrUpdateSharingEntry(
 					classNameId, classPK, collaborator, collaborator.getId(),
-					groupId, sharingEntryService,
+					companyId, groupId, sharingEntryService,
 					collaborator.getType(), userGroupLocalService,
 					userLocalService);
 			}
@@ -204,12 +205,12 @@ public class CollaboratorUtil {
 
 	public static void deleteCollaborator(
 			String className, long classNameId, long classPK,
-			Long collaboratorId,
+			Long collaboratorId, long companyId,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, String type)
 		throws Exception {
 
-		_validateType(type);
+		_validateType(companyId, type);
 
 		if (StringUtil.equals("Email", type)) {
 			_deleteInvitedCollaborator(
@@ -228,7 +229,7 @@ public class CollaboratorUtil {
 
 	public static Collaborator getCollaborator(
 			AcceptLanguage acceptLanguage, String className, long classNameId,
-			long classPK, Long collaboratorId,
+			long classPK, Long collaboratorId, long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry,
 			SharingEntryService sharingEntryService,
@@ -236,7 +237,7 @@ public class CollaboratorUtil {
 			User user)
 		throws Exception {
 
-		_validateType(type);
+		_validateType(companyId, type);
 
 		if (StringUtil.equals("Email", type)) {
 			Ticket ticket = ticketLocalService.getTicket(collaboratorId);
@@ -332,13 +333,13 @@ public class CollaboratorUtil {
 
 	private static SharingEntry _addOrUpdateSharingEntry(
 			long classNameId, long classPK, Collaborator collaborator,
-			long collaboratorId, long groupId,
+			long collaboratorId, long companyId, long groupId,
 			SharingEntryService sharingEntryService, String type,
 			UserGroupLocalService userGroupLocalService,
 			UserLocalService userLocalService)
 		throws Exception {
 
-		_validateType(type);
+		_validateType(companyId, type);
 
 		long toTicketId = 0;
 		long toUserGroupId = 0;
@@ -463,14 +464,25 @@ public class CollaboratorUtil {
 		}
 	}
 
-	private static void _validateType(String type) {
-		if (!StringUtil.equals("Email", type) &&
-			!StringUtil.equals("User", type) &&
+	private static void _validateType(long companyId, String type) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-52006")) {
+			if (!StringUtil.equals("Email", type) &&
+				!StringUtil.equals("User", type) &&
+				!StringUtil.equals("UserGroup", type)) {
+
+				throw new IllegalArgumentException(
+					"Collaborator type must be \"Email\", \"User\" or " +
+						"\"UserGroup\"");
+			}
+
+			return;
+		}
+
+		if (!StringUtil.equals("User", type) &&
 			!StringUtil.equals("UserGroup", type)) {
 
 			throw new IllegalArgumentException(
-				"Collaborator type must be \"Email\", \"User\" or " +
-					"\"UserGroup\"");
+				"Collaborator type must be \"User\" or \"UserGroup\"");
 		}
 	}
 

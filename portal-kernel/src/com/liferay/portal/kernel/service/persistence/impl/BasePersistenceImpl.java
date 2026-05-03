@@ -220,20 +220,7 @@ public class BasePersistenceImpl
 
 	@Override
 	public void cacheResult(T model) {
-		if (getCTPersistenceHelper() == null) {
-			_cacheUniqueFindersResult(model, true);
-
-			return;
-		}
-
-		CTModel<?> ctModel = (CTModel<?>)model;
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctModel.getCtCollectionId())) {
-
-			_cacheUniqueFindersResult(model, true);
-		}
+		cacheUniqueFindersResult(model, true);
 	}
 
 	@Override
@@ -968,6 +955,23 @@ public class BasePersistenceImpl
 					sb.append(ORDER_BY_DESC);
 				}
 			}
+		}
+	}
+
+	protected void cacheUniqueFindersResult(T model, boolean quiet) {
+		if (getCTPersistenceHelper() == null) {
+			_cacheUniqueFindersResult(model, quiet);
+
+			return;
+		}
+
+		CTModel<?> ctModel = (CTModel<?>)model;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctModel.getCtCollectionId())) {
+
+			_cacheUniqueFindersResult(model, quiet);
 		}
 	}
 

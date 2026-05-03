@@ -34,6 +34,9 @@ public interface BaseModel<T>
 
 	public T cloneWithOriginalValues();
 
+	public default void copyCacheFields(T source) {
+	}
+
 	public default Map<String, Function<T, Object>>
 		getAttributeGetterFunctions() {
 

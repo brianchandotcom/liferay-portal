@@ -381,29 +381,27 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 	}
 
-	/**
-	 * Caches the ${entity.humanName} in the entity cache if it is enabled.
-	 *
-	 * @param ${entity.variableName} the ${entity.humanName}
-	 */
-	@Override
-	public void cacheResult(${entity.name} ${entity.variableName}) {
-		<#if entity.isChangeTrackingEnabled()>
-			try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(${entity.variableName}.getCtCollectionId())) {
-		</#if>
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Caches the ${entity.humanName} in the entity cache if it is enabled.
+		 *
+		 * @param ${entity.variableName} the ${entity.humanName}
+		 */
+		@Override
+		public void cacheResult(${entity.name} ${entity.variableName}) {
+			<#if entity.isChangeTrackingEnabled()>
+				try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(${entity.variableName}.getCtCollectionId())) {
+			</#if>
 
-		${entityCache}.putResult(
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					${entityCacheEnabled},
-				</#if>
-				${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey(), ${entity.variableName});
+			${entityCache}.putResult(
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${entityCacheEnabled},
+					</#if>
+					${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey(), ${entity.variableName});
 
-		<#list entity.uniqueEntityFinders as uniqueEntityFinder>
-			<#assign entityColumns = uniqueEntityFinder.entityColumns />
+			<#list entity.uniqueEntityFinders as uniqueEntityFinder>
+				<#assign entityColumns = uniqueEntityFinder.entityColumns />
 
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				${finderCache}.putResult(_finderPathFetchBy${uniqueEntityFinder.name}, ${entity.variableName});
-			<#else>
 				${finderCache}.putResult(
 					_finderPathFetchBy${uniqueEntityFinder.name},
 					new Object[] {
@@ -420,79 +418,79 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						</#list>
 					},
 					${entity.variableName});
+			</#list>
+
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				${entity.variableName}.resetOriginalValues();
 			</#if>
-		</#list>
 
-		<#if serviceBuilder.isVersionLTE_7_2_0()>
-			${entity.variableName}.resetOriginalValues();
-		</#if>
-
-		<#if entity.isChangeTrackingEnabled()>
-			}
-		</#if>
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ${entity.pluralHumanName} in the entity cache if it is enabled.
-	 *
-	 * @param ${entity.pluralVariableName} the ${entity.pluralHumanName}
-	 */
-	@Override
-	public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
+			<#if entity.isChangeTrackingEnabled()>
+				}
+			</#if>
 		}
 
-		for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
-			<#if entity.isChangeTrackingEnabled()>
-				try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(${entity.variableName}.getCtCollectionId())) {
-			</#if>
+		private int _valueObjectFinderCacheListThreshold;
 
-			<#if (cacheFields?size > 0)>
-				${entity.name} cached${entity.name} = (${entity.name})${entityCache}.getResult(
-					<#if serviceBuilder.isVersionLTE_7_2_0()>
-						${entityCacheEnabled},
-					</#if>
-					${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
+		/**
+		 * Caches the ${entity.pluralHumanName} in the entity cache if it is enabled.
+		 *
+		 * @param ${entity.pluralVariableName} the ${entity.pluralHumanName}
+		 */
+		@Override
+		public void cacheResult(List<${entity.name}> ${entity.pluralVariableName}) {
+			if ((_valueObjectFinderCacheListThreshold == 0) ||
+				((_valueObjectFinderCacheListThreshold > 0) &&
+				 (${entity.pluralVariableName}.size() > _valueObjectFinderCacheListThreshold))) {
 
-				if (cached${entity.name} == null) {
-					cacheResult(${entity.variableName});
-				}
-				else {
-					${entity.name}ModelImpl ${entity.variableName}ModelImpl = (${entity.name}ModelImpl)${entity.variableName};
-					${entity.name}ModelImpl cached${entity.name}ModelImpl = (${entity.name}ModelImpl)cached${entity.name};
+				return;
+			}
 
-					<#list cacheFields as cacheField>
-						<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+			for (${entity.name} ${entity.variableName} : ${entity.pluralVariableName}) {
+				<#if entity.isChangeTrackingEnabled()>
+					try (SafeCloseable safeCloseable = CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(${entity.variableName}.getCtCollectionId())) {
+				</#if>
 
-						${entity.variableName}ModelImpl.set${methodName}(cached${entity.name}ModelImpl.get${methodName}());
-					</#list>
-				}
-			<#else>
-				if (${entityCache}.getResult(
-					<#if serviceBuilder.isVersionLTE_7_2_0()>
-						${entityCacheEnabled},
-					</#if>
-					${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey()) == null) {
-					cacheResult(${entity.variableName});
-				}
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
+				<#if (cacheFields?size > 0)>
+					${entity.name} cached${entity.name} = (${entity.name})${entityCache}.getResult(
+						<#if serviceBuilder.isVersionLTE_7_2_0()>
+							${entityCacheEnabled},
+						</#if>
+						${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey());
+
+					if (cached${entity.name} == null) {
+						cacheResult(${entity.variableName});
+					}
 					else {
-						${entity.variableName}.resetOriginalValues();
+						${entity.name}ModelImpl ${entity.variableName}ModelImpl = (${entity.name}ModelImpl)${entity.variableName};
+						${entity.name}ModelImpl cached${entity.name}ModelImpl = (${entity.name}ModelImpl)cached${entity.name};
+
+						<#list cacheFields as cacheField>
+							<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+
+							${entity.variableName}ModelImpl.set${methodName}(cached${entity.name}ModelImpl.get${methodName}());
+						</#list>
+					}
+				<#else>
+					if (${entityCache}.getResult(
+						<#if serviceBuilder.isVersionLTE_7_2_0()>
+							${entityCacheEnabled},
+						</#if>
+						${entity.name}Impl.class, ${entity.variableName}.getPrimaryKey()) == null) {
+						cacheResult(${entity.variableName});
+					}
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						else {
+							${entity.variableName}.resetOriginalValues();
+						}
+					</#if>
+				</#if>
+
+				<#if entity.isChangeTrackingEnabled()>
 					}
 				</#if>
-			</#if>
-
-			<#if entity.isChangeTrackingEnabled()>
-				}
-			</#if>
+			}
 		}
-	}
+	</#if>
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>
 		/**
@@ -2625,13 +2623,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 		</#if>
 
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(PropsUtil.get(
-			<#if serviceBuilder.isVersionGTE_7_1_0()>
-				PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD
-			<#else>
-				"value.object.finder.cache.list.threshold"
-			</#if>
-		));
+		<#if !serviceBuilder.isVersionGTE_7_4_0()>
+			_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(PropsUtil.get(
+				<#if serviceBuilder.isVersionGTE_7_1_0()>
+					PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD
+				<#else>
+					"value.object.finder.cache.list.threshold"
+				</#if>
+			));
+		</#if>
 
 		<#list entity.entityColumns as entityColumn>
 			<#if entityColumn.isCollection() && entityColumn.isMappingManyToMany()>

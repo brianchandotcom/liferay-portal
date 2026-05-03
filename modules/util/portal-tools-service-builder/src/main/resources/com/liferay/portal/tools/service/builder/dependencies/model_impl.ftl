@@ -1683,6 +1683,19 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	}
 
+	<#if cacheFields?size != 0>
+		@Override
+		public void copyCacheFields(${entity.name} source) {
+			${entity.name}ModelImpl sourceModelImpl = (${entity.name}ModelImpl)source;
+
+			<#list cacheFields as cacheField>
+				<#assign methodName = serviceBuilder.getCacheFieldMethodName(cacheField) />
+
+				set${methodName}(sourceModelImpl.get${methodName}());
+			</#list>
+		}
+	</#if>
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

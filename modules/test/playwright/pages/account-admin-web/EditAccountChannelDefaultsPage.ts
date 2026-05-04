@@ -52,7 +52,9 @@ export class EditAccountChannelDefaultsPage {
 		text: string
 	) => Locator;
 	readonly modalContainer: FrameLocator;
+	readonly modalIframe: Locator;
 	readonly modalOptionCheckbox: (optionName: string) => Locator;
+	readonly modalRadioLabels: Locator;
 	readonly modalSaveButton: Locator;
 	readonly page: Page;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
@@ -73,6 +75,10 @@ export class EditAccountChannelDefaultsPage {
 		);
 		this.defaultUsersTable = page.getByTestId('defaultUsers');
 		this.modalContainer = page.frameLocator('.fds-modal-body > iframe');
+		this.modalIframe = page.locator('.fds-modal-body > iframe');
+		this.modalRadioLabels = this.modalContainer.locator(
+			'label:has(input[type="radio"])'
+		);
 		this.page = page;
 
 		this.addChannelAccountManagerButton = this.defaultUsersTable

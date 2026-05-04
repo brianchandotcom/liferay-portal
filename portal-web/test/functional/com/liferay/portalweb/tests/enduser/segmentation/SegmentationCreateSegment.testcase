@@ -449,6 +449,36 @@ definition {
 				locator1 = "Segmentation#CRITERION_KEY_ANY",
 				value1 = "languageId");
 		}
+
+		task ("Add segment with User Agent property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "User Agent");
+
+			Segmentation.fillTitle(titleField = "AddSegmentBySessionUserAgent Test");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(criterionValue = "Chrome");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the User Agent segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentBySessionUserAgent Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "Chrome");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_OPERATOR",
+				value1 = "contains");
+		}
 	}
 
 	@description = "Test Automation for LPS-130324: Validate if it's posible to create a segment based on Session > Signed In criteria"
@@ -479,41 +509,6 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "false");
-		}
-	}
-
-	@description = "Test Automation for LPS-130326: Validate if it's posible to create a segment based on Session > User Agent criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionUserAgent {
-		task ("Add segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			Segmentation.addProperties(propertyOption = "User Agent");
-
-			Segmentation.fillTitle(titleField = "AddSegmentBySessionUserAgent Test");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "Chrome");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentBySessionUserAgent Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "Chrome");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_OPERATOR",
-				value1 = "contains");
 		}
 	}
 

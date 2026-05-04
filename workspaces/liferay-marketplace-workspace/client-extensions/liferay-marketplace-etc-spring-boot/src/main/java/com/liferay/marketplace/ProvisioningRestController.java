@@ -7,12 +7,15 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.AnalyticsService;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
@@ -22,8 +25,11 @@ import com.liferay.osb.provisioning.rest.client.dto.v1_0.LicenseKey;
 import com.liferay.osb.provisioning.rest.client.resource.v1_0.LicenseKeyResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.time.Instant;
 
@@ -184,20 +190,10 @@ public class ProvisioningRestController extends BaseRestController {
 
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
 
-		if (Objects.equals(appLicenseKey.getHostName(), null) &&
-			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
-			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
-
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST,
-				"At least one of the following fields is required: host " +
-					"name, IP addresses, or MAC addresses");
-		}
-
-		Order order = _marketplaceService.getOrder(
-			GetterUtil.getLong(appLicenseKey.getOrderId()));
-
-		return _postBetaLicenseKey(appLicenseKey, jwt, order);
+		return _postBetaLicenseKey(
+			appLicenseKey, jwt,
+			_marketplaceService.getOrder(
+				GetterUtil.getLong(appLicenseKey.getOrderId())));
 	}
 
 	@PostMapping("dsr-beta-license-key")
@@ -205,28 +201,17 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		JSONObject jsonObject = new JSONObject(json);
-
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
-			jsonObject.getJSONObject(
+			new JSONObject(
+				json
+			).getJSONObject(
 				"licenseEntry"
 			).toString());
-
-		if (Objects.equals(appLicenseKey.getHostName(), null) &&
-			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
-			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
-
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST,
-				"At least one of the following fields is required: host " +
-					"name, IP addresses, or MAC addresses");
-		}
 
 		Order order = _marketplaceService.getOrder(
 			GetterUtil.getLong(appLicenseKey.getOrderId()));
 
-		_analyticsService.provision(
-			jsonObject.getJSONObject("analyticsForm"));
+		_postAnalyticsProject(new JSONObject(json), jwt, order);
 
 		return _postBetaLicenseKey(appLicenseKey, jwt, order);
 	}
@@ -336,9 +321,66 @@ public class ProvisioningRestController extends BaseRestController {
 		return new ResponseEntity<>(content, httpHeaders, HttpStatus.OK);
 	}
 
+	private void _postAnalyticsProject(
+			JSONObject jsonObject, Jwt jwt, Order order)
+		throws Exception {
+
+		if (!jsonObject.has("analyticsForm")) {
+			return;
+		}
+
+		if (!jsonObject.has("productPurchaseKey")) {
+			ProductResource productResource =
+				_koroneikiService.getProductResource();
+
+			Product product = productResource.getProductByNameProductName(
+				"Analytics%20Cloud%20Basic");
+
+			_koroneikiService.postAccountAccountKeyProductPurchase(
+				order.getAccountExternalReferenceCode(), jwt, "Subscription",
+				null,
+				new OrderItem() {
+					{
+						setOrderId(order::getId);
+						setQuantity(() -> new BigDecimal(1));
+						setSkuExternalReferenceCode(product::getKey);
+					}
+				});
+		}
+
+		String analyticsProject = _analyticsService.provision(
+			jsonObject.getJSONObject("analyticsForm"));
+
+		_marketplaceService.updateOrder(
+			HashMapBuilder.put(
+				"order-metadata",
+				new JSONObject(
+					GetterUtil.get(
+						order.getCustomFields(
+						).get(
+							"order-metadata"
+						),
+						"{}")
+				).put(
+					"analyticsProject", new JSONObject(analyticsProject)
+				).toString()
+			).build(),
+			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
+	}
+
 	private AppLicenseKey _postBetaLicenseKey(
 			AppLicenseKey appLicenseKey, Jwt jwt, Order order)
 		throws Exception {
+
+		if (Objects.equals(appLicenseKey.getHostName(), null) &&
+			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
+			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
+
+			throw new ResponseStatusException(
+				HttpStatus.BAD_REQUEST,
+				"At least one of the following fields is required: host " +
+					"name, IP addresses, or MAC addresses");
+		}
 
 		ProductPurchase[] productPurchases =
 			_koroneikiService.postAccountProductPurchases(

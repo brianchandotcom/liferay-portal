@@ -171,7 +171,7 @@ public class CentralGitSubrepository {
 		String path = JenkinsResultsParserUtil.combine(
 			"git/refs/heads/", _gitSubrepositoryUpstreamBranchName);
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
 
 		JSONObject branchJSONObject = JenkinsResultsParserUtil.toJSONObject(
@@ -195,7 +195,7 @@ public class CentralGitSubrepository {
 		String path = JenkinsResultsParserUtil.combine(
 			"commits/", getGitSubrepositoryUpstreamCommit(), "/statuses");
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 			_gitSubrepositoryName, _gitSubrepositoryUsername, path);
 
 		for (int i = 0; i < 15; i++) {

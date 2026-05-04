@@ -462,7 +462,7 @@ public class GitWorkingDirectory {
 					"title", title
 				);
 
-				String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+				String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 					_gitRepositoryName, receiverUserName, "pulls");
 
 				JSONObject responseJSONObject;

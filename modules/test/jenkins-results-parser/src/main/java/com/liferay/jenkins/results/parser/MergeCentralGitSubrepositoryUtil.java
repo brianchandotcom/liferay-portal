@@ -203,7 +203,7 @@ public class MergeCentralGitSubrepositoryUtil {
 		String gitSubrepositoryUpstreamCommit =
 			centralGitSubrepository.getGitSubrepositoryUpstreamCommit();
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 			gitSubrepositoryName, senderUserName,
 			"statuses/" + gitSubrepositoryUpstreamCommit);
 
@@ -288,7 +288,7 @@ public class MergeCentralGitSubrepositoryUtil {
 			int page = 1;
 
 			while (page < 10) {
-				String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+				String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 					centralGitWorkingDirectory.getGitRepositoryName(),
 					receiverUserName, "pulls?page=" + String.valueOf(page));
 

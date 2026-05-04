@@ -2068,7 +2068,7 @@ public class JenkinsResultsParserUtil {
 			"https://api.github.com/search/issues?q=", join("+", filters));
 	}
 
-	public static String getGitHubApiUrl(
+	public static String getGitHubAPIURL(
 		String gitRepositoryName, String username, String path) {
 
 		return combine(

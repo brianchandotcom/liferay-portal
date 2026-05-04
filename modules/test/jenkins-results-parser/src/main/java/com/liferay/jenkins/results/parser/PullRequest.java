@@ -100,7 +100,7 @@ public class PullRequest {
 				"Secondary rate limit exceeded", "Liferay CI");
 
 			throw new GitHubSecondaryRateLimitRuntimeException(
-				gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),
+				gitHubSecondaryRateLimitRuntimeException.getGitHubAPIURL(),
 				gitHubSecondaryRateLimitRuntimeException.getRetryAfterSeconds(),
 				sb.toString(), gitHubSecondaryRateLimitRuntimeException);
 		}
@@ -140,13 +140,13 @@ public class PullRequest {
 			jsonArray.put(newLabel.getName());
 		}
 
-		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/labels");
 
 		try {
 			JenkinsResultsParserUtil.toString(
-				gitHubApiUrl, false, HttpRequestMethod.POST,
+				gitHubAPIURL, false, HttpRequestMethod.POST,
 				jsonArray.toString());
 		}
 		catch (IOException ioException) {
@@ -260,7 +260,7 @@ public class PullRequest {
 			throw new RuntimeException("Unable to push branch to GitHub");
 		}
 
-		String compareApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String compareAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
 			getGitRepositoryName(), forwardReceiverUsername,
 			JenkinsResultsParserUtil.combine(
 				"compare/", getUpstreamRemoteGitBranchName(), "...",
@@ -270,7 +270,7 @@ public class PullRequest {
 
 		try {
 			JSONObject compareJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(compareApiUrl);
+				JenkinsResultsParserUtil.toJSONObject(compareAPIURL);
 
 			aheadBy = compareJSONObject.getInt("ahead_by");
 		}
@@ -340,7 +340,7 @@ public class PullRequest {
 
 		_comments = new ArrayList<>();
 
-		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(),
 			"issues/" + getNumber() + "/comments?per_page=100&page=");
 
@@ -352,7 +352,7 @@ public class PullRequest {
 			try {
 				JSONArray commentJSONArray =
 					JenkinsResultsParserUtil.toJSONArray(
-						gitHubApiUrl + pageNumber, false);
+						gitHubAPIURL + pageNumber, false);
 
 				if (commentJSONArray.length() == 0) {
 					break;
@@ -964,12 +964,12 @@ public class PullRequest {
 			"issues/", getNumber(), "/labels/",
 			JenkinsResultsParserUtil.fixURL(labelName));
 
-		String gitHubApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String gitHubAPIURL = JenkinsResultsParserUtil.getGitHubAPIURL(
 			getGitHubRemoteGitRepositoryName(), getOwnerUsername(), path);
 
 		try {
 			JenkinsResultsParserUtil.toString(
-				gitHubApiUrl, false, HttpRequestMethod.DELETE);
+				gitHubAPIURL, false, HttpRequestMethod.DELETE);
 
 			_labels = null;
 		}
@@ -1283,8 +1283,8 @@ public class PullRequest {
 		refresh();
 	}
 
-	protected String getGitHubApiUrl() {
-		return JenkinsResultsParserUtil.getGitHubApiUrl(
+	protected String getGitHubAPIURL() {
+		return JenkinsResultsParserUtil.getGitHubAPIURL(
 			_gitHubRemoteGitRepositoryName, _ownerUsername, "pulls/" + _number);
 	}
 
@@ -1402,7 +1402,7 @@ public class PullRequest {
 	private void _refreshJSONObject() {
 		try {
 			_jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				getGitHubApiUrl(), false);
+				getGitHubAPIURL(), false);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

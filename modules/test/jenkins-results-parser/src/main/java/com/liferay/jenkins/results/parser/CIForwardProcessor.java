@@ -180,7 +180,7 @@ public class CIForwardProcessor {
 					"Unable to forward pull request", "Liferay CI");
 
 				throw new GitHubSecondaryRateLimitRuntimeException(
-					gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),
+					gitHubSecondaryRateLimitRuntimeException.getGitHubAPIURL(),
 					gitHubSecondaryRateLimitRuntimeException.
 						getRetryAfterSeconds(),
 					sb.toString(), gitHubSecondaryRateLimitRuntimeException);

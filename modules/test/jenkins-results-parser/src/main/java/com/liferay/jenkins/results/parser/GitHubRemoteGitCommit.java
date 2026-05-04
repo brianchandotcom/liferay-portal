@@ -142,7 +142,7 @@ public class GitHubRemoteGitCommit extends BaseGitCommit {
 	}
 
 	protected String getGitHubStatusURL() {
-		return JenkinsResultsParserUtil.getGitHubApiUrl(
+		return JenkinsResultsParserUtil.getGitHubAPIURL(
 			getGitRepositoryName(), _gitHubUsername, "statuses/" + getSHA());
 	}
 

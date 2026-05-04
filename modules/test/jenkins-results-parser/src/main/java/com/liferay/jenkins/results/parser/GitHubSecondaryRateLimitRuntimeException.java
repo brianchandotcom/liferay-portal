@@ -11,30 +11,30 @@ package com.liferay.jenkins.results.parser;
 public class GitHubSecondaryRateLimitRuntimeException extends RuntimeException {
 
 	public GitHubSecondaryRateLimitRuntimeException(
-		String gitHubApiUrl, int retryAfterSeconds, Exception exception) {
+		String gitHubAPIURL, int retryAfterSeconds, Exception exception) {
 
-		this(gitHubApiUrl, retryAfterSeconds, null, exception);
+		this(gitHubAPIURL, retryAfterSeconds, null, exception);
 	}
 
 	public GitHubSecondaryRateLimitRuntimeException(
-		String gitHubApiUrl, int retryAfterSeconds, String message,
+		String gitHubAPIURL, int retryAfterSeconds, String message,
 		Exception exception) {
 
 		super(message, exception);
 
-		_gitHubApiUrl = gitHubApiUrl;
+		_gitHubAPIURL = gitHubAPIURL;
 		_retryAfterSeconds = retryAfterSeconds;
 	}
 
-	public String getGitHubApiUrl() {
-		return _gitHubApiUrl;
+	public String getGitHubAPIURL() {
+		return _gitHubAPIURL;
 	}
 
 	public int getRetryAfterSeconds() {
 		return _retryAfterSeconds;
 	}
 
-	private final String _gitHubApiUrl;
+	private final String _gitHubAPIURL;
 	private final int _retryAfterSeconds;
 
 }

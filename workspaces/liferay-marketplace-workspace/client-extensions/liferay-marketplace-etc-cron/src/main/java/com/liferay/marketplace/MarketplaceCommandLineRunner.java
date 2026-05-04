@@ -1025,7 +1025,7 @@ public class MarketplaceCommandLineRunner
 	}
 
 	private void _putReportByExternalReferenceCode(
-		String data, String externalReferenceCode) {
+		String body, String externalReferenceCode) {
 
 		put(
 			_liferayOAuth2AccessTokenManager.getAuthorization(

@@ -744,7 +744,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			externalReferenceCode, companyId);
 
 		if (user == null) {
-			user = addUserWithWorkflow(
+			user = userLocalService.addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,
@@ -1045,7 +1045,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					WorkflowConstants.ACTION_PUBLISH);
 			}
 
-			return addUserWithWorkflow(
+			return userLocalService.addUserWithWorkflow(
 				creatorUserId, companyId, autoPassword, password1, password2,
 				autoScreenName, screenName, emailAddress, locale, firstName,
 				middleName, lastName, prefixListTypeId, suffixListTypeId, male,

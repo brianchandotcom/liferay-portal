@@ -50,6 +50,7 @@ export function CountryCodePicker({
 	return (
 		<Picker
 			{...otherProps}
+			aria-label={Liferay.Language.get('country-code')}
 			as={PickerTrigger}
 			disabled={disabled}
 			items={countries}

@@ -5659,15 +5659,18 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const fixedFieldContainer = page.locator(
 				`[data-field-name="${fixedFieldLabel}"]`
 			);
+
 			const fixedPhoneInput =
 				fixedFieldContainer.locator('input[type="tel"]');
 
 			const userFieldContainer = page.locator(
 				`[data-field-name="${userFieldLabel}"]`
 			);
+
 			const userPhoneInput =
 				userFieldContainer.locator('input[type="tel"]');
-			const userPrefixCombobox = userFieldContainer.getByRole('combobox');
+			const userPrefixCombobox =
+				userFieldContainer.getByLabel('Country Code');
 
 			let objectDefinition: ObjectDefinition;
 

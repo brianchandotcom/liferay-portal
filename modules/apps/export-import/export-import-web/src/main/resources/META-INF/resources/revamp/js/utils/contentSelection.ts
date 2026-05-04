@@ -20,15 +20,18 @@ export function isSelected(
 		return false;
 	}
 
-	if (entry.type === 'choice') {
+	if (entry.type === 'Choice') {
 		return true;
 	}
 
-	if (!entry.controls?.length || typeof value !== 'object') {
+	if (
+		!entry.portletDataHandlerControls?.length ||
+		typeof value !== 'object'
+	) {
 		return true;
 	}
 
-	return entry.controls.every((control) =>
+	return entry.portletDataHandlerControls.every((control) =>
 		isSelected(value[control.name], control)
 	);
 }
@@ -36,17 +39,17 @@ export function isSelected(
 export function getInitialSelection(
 	entry: PortletDataHandlerControl
 ): HandlerSelection {
-	if (entry.type === 'choice') {
+	if (entry.type === 'Choice') {
 		return entry.choices[0].name;
 	}
 
-	if (!entry.controls?.length) {
+	if (!entry.portletDataHandlerControls?.length) {
 		return true;
 	}
 
 	const selection: Record<string, HandlerSelection> = {};
 
-	entry.controls.forEach((control) => {
+	entry.portletDataHandlerControls.forEach((control) => {
 		selection[control.name] = getInitialSelection(control);
 	});
 

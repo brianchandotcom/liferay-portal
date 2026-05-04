@@ -35,7 +35,7 @@ export default function ContentSection({
 	const portletContextsValue = value || {};
 
 	const controls = section.portletDataHandlers.map<PortletDataHandlerBoolean>(
-		(handler) => ({...handler, type: 'boolean'})
+		(handler) => ({...handler, type: 'Boolean'})
 	);
 
 	const selected = controls.every((context) =>

@@ -26,11 +26,11 @@ export function flattenContentSelection({
 
 	const collectCheckboxNames = (controls: PortletDataHandlerControl[]) => {
 		controls.forEach((control) => {
-			if (control.type === 'boolean') {
+			if (control.type === 'Boolean') {
 				checkboxNames.push(control.name);
 
-				if (control.controls) {
-					collectCheckboxNames(control.controls);
+				if (control.portletDataHandlerControls) {
+					collectCheckboxNames(control.portletDataHandlerControls);
 				}
 			}
 		});
@@ -40,8 +40,8 @@ export function flattenContentSelection({
 		section.portletDataHandlers.forEach((handler) => {
 			checkboxNames.push(handler.name);
 
-			if (handler.controls) {
-				collectCheckboxNames(handler.controls);
+			if (handler.portletDataHandlerControls) {
+				collectCheckboxNames(handler.portletDataHandlerControls);
 			}
 		});
 	});

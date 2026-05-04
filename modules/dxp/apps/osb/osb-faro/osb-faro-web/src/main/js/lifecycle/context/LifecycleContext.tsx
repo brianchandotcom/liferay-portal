@@ -40,9 +40,8 @@ const initialValues: ILifecycleFilterValues = {
 };
 
 export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
-	const [filterValues, setFilterValues] = useState<ILifecycleFilterValues>(
-		initialValues
-	);
+	const [filterValues, setFilterValues] =
+		useState<ILifecycleFilterValues>(initialValues);
 
 	const filters = useMemo<ILifecycleFilters>(
 		() => ({
@@ -60,11 +59,10 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 
 	const resetFilters = useCallback(() => setFilterValues(initialValues), []);
 
-	const value = useMemo(() => ({filters, resetFilters, updateFilters}), [
-		filters,
-		resetFilters,
-		updateFilters
-	]);
+	const value = useMemo(
+		() => ({filters, resetFilters, updateFilters}),
+		[filters, resetFilters, updateFilters]
+	);
 
 	return (
 		<LifecycleContext.Provider value={value}>

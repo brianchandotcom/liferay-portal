@@ -55,7 +55,9 @@ String mode = editCommerceOrderAttachmentDisplayContext.getMode();
 
 			<aui:input name="priority" type="text" value="<%= editCommerceOrderAttachmentDisplayContext.getPriority() %>" />
 
-			<aui:input checked="<%= editCommerceOrderAttachmentDisplayContext.getRestricted() %>" label="restricted" name="restricted" type="checkbox" />
+			<c:if test="<%= editCommerceOrderAttachmentDisplayContext.hasViewRestrictedCommerceOrderAttachmentsPermission() %>">
+				<aui:input checked="<%= editCommerceOrderAttachmentDisplayContext.getRestricted() %>" label="restricted" name="restricted" type="checkbox" />
+			</c:if>
 		</commerce-ui:panel>
 
 		<div class="dialog-footer">

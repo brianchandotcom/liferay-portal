@@ -240,6 +240,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
+	public String getFriendlyURL() {
+		return friendlyURL;
+	}
+
+	public void setFriendlyURL(String friendlyURL) {
+		this.friendlyURL = friendlyURL;
+	}
+
+	public void setFriendlyURL(
+		UnsafeSupplier<String, Exception> friendlyURLUnsafeSupplier) {
+
+		try {
+			friendlyURL = friendlyURLUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String friendlyURL;
+
 	public Long getId() {
 		return id;
 	}
@@ -570,4 +591,4 @@ public class AssetLibrary implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:779165087
+// LIFERAY-REST-BUILDER-HASH:279296314

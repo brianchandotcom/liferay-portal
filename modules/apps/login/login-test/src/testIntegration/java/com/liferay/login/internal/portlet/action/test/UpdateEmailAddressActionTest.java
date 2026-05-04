@@ -65,10 +65,6 @@ public class UpdateEmailAddressActionTest {
 			String expectedRenderedRefererURL, String referURL)
 		throws Exception {
 
-		RequestDispatcher requestDispatcher =
-			mockHttpServletRequest.getRequestDispatcher(
-				"/html/portal/update_email_address.jsp");
-
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(HttpMethods.GET, StringPool.BLANK) {
 
@@ -116,6 +112,10 @@ public class UpdateEmailAddressActionTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
+			RequestDispatcher requestDispatcher =
+				mockHttpServletRequest.getRequestDispatcher(
+					"/html/portal/update_email_address.jsp");
+
 			requestDispatcher.include(
 				mockHttpServletRequest, mockHttpServletResponse);
 		}

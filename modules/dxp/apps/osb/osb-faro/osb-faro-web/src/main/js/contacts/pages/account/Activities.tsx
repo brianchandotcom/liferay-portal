@@ -1,4 +1,5 @@
 import ActivityStreamCard from './components/ActivityStreamCard';
+import ActivityStreamCardHeader from './components/ActivityStreamCardHeader';
 import BaseCard from 'shared/components/base-card';
 import React from 'react';
 import {Interval, RangeSelectors} from 'shared/types';
@@ -18,6 +19,7 @@ const Activities = () => {
 				description={Liferay.Language.get(
 					'chronological-timeline-of-the-accounts-activities-within-the-selected-timeframe-with-details-on-events-and-session-context'
 				)}
+				Header={ActivityStreamCardHeader}
 				headerProps={{showRangeKey: true}}
 				label={Liferay.Language.get('activity-stream').toUpperCase()}
 				legacyDropdownRangeKey={false}

@@ -1,4 +1,5 @@
 import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import Loading from 'shared/components/Loading';
 import moment from 'moment';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -26,6 +27,7 @@ interface IActivityStreamTimelineProps {
 }
 
 interface UserGroup {
+	isAnonymous: boolean;
 	sessions: AccountUserSession[];
 	userName: string;
 }
@@ -63,23 +65,27 @@ const EVENT_ATTRIBUTE_KEYS: (keyof AccountUserSessionEvent)[] = [
 	'url'
 ];
 
-const RAIL_LEFT_REM = 0.8125;
-const RAIL_PADDING_LEFT_REM = 2.0625;
+const RAIL_LEFT_REM = 0.6875;
+const RAIL_PADDING_LEFT_REM = 1.9375;
 const RAIL_WIDTH_PX = 2;
+const CARD_BODY_PADDING_REM = 1.5;
 
 const RAIL_CENTER_FROM_WRAPPER_REM =
 	RAIL_LEFT_REM - RAIL_PADDING_LEFT_REM + RAIL_WIDTH_PX / 2 / 16;
 
-const SESSION_DOT_SIZE_REM = 0.875;
+const SESSION_DOT_SIZE_REM = 1.125;
 const EVENT_DOT_SIZE_REM = 0.5;
 
+const RAIL_BOTTOM_TAIL_REM = 4;
+
 const RAIL_STYLE: React.CSSProperties = {
-	backgroundColor: '#e7e7ed',
-	bottom: 0,
+	backgroundColor: 'var(--secondary-l1)',
+	bottom: `${RAIL_BOTTOM_TAIL_REM}rem`,
 	left: `${RAIL_LEFT_REM}rem`,
 	position: 'absolute',
 	top: 0,
-	width: RAIL_WIDTH_PX
+	width: RAIL_WIDTH_PX,
+	zIndex: 2
 };
 
 const SESSION_DOT_STYLE: React.CSSProperties = {
@@ -89,13 +95,13 @@ const SESSION_DOT_STYLE: React.CSSProperties = {
 	height: `${SESSION_DOT_SIZE_REM}rem`,
 	left: `${RAIL_CENTER_FROM_WRAPPER_REM - SESSION_DOT_SIZE_REM / 2}rem`,
 	position: 'absolute',
-	top: '0.625rem',
+	top: '0.5rem',
 	width: `${SESSION_DOT_SIZE_REM}rem`,
-	zIndex: 1
+	zIndex: 3
 };
 
 const EVENT_DOT_STYLE: React.CSSProperties = {
-	backgroundColor: '#a7a9bc',
+	backgroundColor: 'var(--secondary)',
 	border: '1px solid #fff',
 	borderRadius: '50%',
 	height: `${EVENT_DOT_SIZE_REM}rem`,
@@ -103,8 +109,23 @@ const EVENT_DOT_STYLE: React.CSSProperties = {
 	position: 'absolute',
 	top: '0.875rem',
 	width: `${EVENT_DOT_SIZE_REM}rem`,
+	zIndex: 3
+};
+
+const ROW_WRAPPER_BASE_STYLE: React.CSSProperties = {
+	marginLeft: `-${RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM}rem`,
+	marginRight: `-${CARD_BODY_PADDING_REM}rem`,
+	overflow: 'hidden'
+};
+
+const ROW_WRAPPER_HIGHLIGHTED_STYLE: React.CSSProperties = {
+	position: 'relative',
 	zIndex: 1
 };
+
+const ROW_INNER_PADDING_LEFT_REM =
+	RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM + 1;
+const ROW_INNER_PADDING_RIGHT_REM = CARD_BODY_PADDING_REM + 1;
 
 const RAIL_INDENT_STYLE: React.CSSProperties = {
 	paddingLeft: `${RAIL_PADDING_LEFT_REM}rem`
@@ -133,11 +154,10 @@ const formatSessionTimeRange = (
 	return `${start} - ${Liferay.Language.get('in-progress').toLowerCase()}`;
 };
 
-const formatAttributeValue = (value: unknown): string => {
-	if (value === null || value === undefined || value === '') {
-		return '""';
-	}
+const isEmptyValue = (value: unknown): boolean =>
+	value === null || value === undefined || value === '';
 
+const formatAttributeValue = (value: unknown): string => {
 	if (typeof value === 'string') {
 		return /^[\w-]+$/.test(value) ? value : `"${value}"`;
 	}
@@ -180,6 +200,7 @@ const groupByDate = (
 
 			const userGroups: UserGroup[] = Array.from(byUser.entries()).map(
 				([userName, userSessions]) => ({
+					isAnonymous: userSessions[0].userName === null,
 					sessions: userSessions.sort(
 						(a, b) =>
 							moment(b.createDate).valueOf() -
@@ -218,6 +239,13 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 		() => groupByDate(sessions, timeZoneId),
 		[sessions, timeZoneId]
 	);
+
+	const isLastPage = page * delta >= totalEvents;
+
+	const railStyle: React.CSSProperties = {
+		...RAIL_STYLE,
+		bottom: isLastPage ? `${RAIL_BOTTOM_TAIL_REM}rem` : 0
+	};
 
 	if (loading) {
 		return <Loading />;
@@ -264,7 +292,7 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 		<div className='account-activity-stream-timeline'>
 			{dateGroups.map(({dateKey, totalEvents: dayEvents, userGroups}) => (
 				<section className='mb-4' key={dateKey}>
-					<header className='d-flex align-items-center py-2 border-bottom mb-3'>
+					<header className='d-flex align-items-center py-2 border-bottom mb-3 mt-2'>
 						<Text size={4} weight='semi-bold'>
 							{formatDay(dateKey, timeZoneId)}
 						</Text>
@@ -276,40 +304,50 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 						</span>
 					</header>
 
-					{userGroups.map(({sessions: userSessions, userName}) => (
-						<div className='mb-4' key={`${dateKey}-${userName}`}>
-							<div className='d-flex align-items-center mb-2'>
-								<span
-									className='d-inline-flex align-items-center justify-content-center bg-secondary text-white rounded-circle mr-2'
-									style={{
-										height: '1.625rem',
-										width: '1.625rem'
-									}}
-								>
-									<ClayIcon symbol='user' />
-								</span>
-
-								<Text color='primary' weight='semi-bold'>
-									{userName}
-								</Text>
-							</div>
-
+					{userGroups.map(
+						({isAnonymous, sessions: userSessions, userName}) => (
 							<div
-								className='position-relative'
-								style={RAIL_INDENT_STYLE}
+								className='mb-4'
+								key={`${dateKey}-${userName}`}
 							>
-								<div style={RAIL_STYLE} />
+								<div className='d-flex align-items-center'>
+									<ClaySticker
+										className='mr-2'
+										shape='user-icon'
+										size='sm'
+									>
+										<ClayIcon
+											color='gray'
+											symbol={
+												isAnonymous
+													? 'anonymize'
+													: 'user'
+											}
+										/>
+									</ClaySticker>
 
-								{userSessions.map((session, idx) => (
-									<SessionRow
-										key={`${session.createDate}-${idx}`}
-										session={session}
-										timeZoneId={timeZoneId}
-									/>
-								))}
+									<Text color='primary' weight='semi-bold'>
+										{userName}
+									</Text>
+								</div>
+
+								<div
+									className='position-relative'
+									style={RAIL_INDENT_STYLE}
+								>
+									<div style={railStyle} />
+
+									{userSessions.map((session, idx) => (
+										<SessionRow
+											key={`${session.createDate}-${idx}`}
+											session={session}
+											timeZoneId={timeZoneId}
+										/>
+									))}
+								</div>
 							</div>
-						</div>
-					))}
+						)
+					)}
 				</section>
 			))}
 
@@ -332,47 +370,71 @@ interface ISessionRowProps {
 
 const SessionRow: React.FC<ISessionRowProps> = ({session, timeZoneId}) => {
 	const [expanded, setExpanded] = useState(false);
+	const [hovered, setHovered] = useState(false);
 
 	const deviceIcon = session.deviceType
 		? DEVICE_ICONS[session.deviceType.toLowerCase()] ?? 'devices'
 		: null;
 
 	return (
-		<div className='mb-2'>
+		<div>
 			<div className='position-relative'>
 				<span style={SESSION_DOT_STYLE} />
 
-				<button
-					aria-expanded={expanded}
-					className={`btn btn-unstyled d-flex align-items-center w-100 py-2 px-3 text-left rounded ${
-						expanded ? 'bg-light' : ''
-					}`}
-					onClick={() => setExpanded(prev => !prev)}
-					type='button'
+				<div
+					style={{
+						...ROW_WRAPPER_BASE_STYLE,
+						...(expanded || hovered
+							? ROW_WRAPPER_HIGHLIGHTED_STYLE
+							: {}),
+						backgroundColor:
+							expanded || hovered
+								? 'var(--primary-l3)'
+								: undefined
+					}}
 				>
-					<Text weight='semi-bold'>
-						{formatSessionTimeRange(session, timeZoneId)}
-					</Text>
+					<button
+						aria-expanded={expanded}
+						className='btn btn-unstyled border-0 d-flex align-items-center w-100 py-2 text-left'
+						onClick={() => setExpanded(prev => !prev)}
+						onMouseEnter={() => setHovered(true)}
+						onMouseLeave={() => setHovered(false)}
+						style={{
+							paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
+							paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
+						}}
+						type='button'
+					>
+						<Text weight='semi-bold'>
+							{formatSessionTimeRange(session, timeZoneId)}
+						</Text>
 
-					<span className='ml-auto d-inline-flex align-items-center text-secondary'>
-						<span className='d-inline-flex align-items-center mr-3'>
-							<ClayIcon className='mr-1' symbol='click' />
+						<span className='ml-auto d-inline-flex align-items-center text-secondary'>
+							<span
+								className='d-inline-flex align-items-center mr-3'
+								style={{fontSize: '1rem'}}
+							>
+								<ClayIcon className='mr-1' symbol='click' />
 
-							{session.events?.length ?? 0}
+								{session.events?.length ?? 0}
+							</span>
+
+							{deviceIcon && (
+								<ClayIcon
+									className='mr-3'
+									symbol={deviceIcon}
+								/>
+							)}
+
+							<ClayIcon
+								symbol={expanded ? 'caret-top' : 'caret-bottom'}
+							/>
 						</span>
+					</button>
 
-						{deviceIcon && (
-							<ClayIcon className='mr-3' symbol={deviceIcon} />
-						)}
-
-						<ClayIcon
-							symbol={expanded ? 'caret-top' : 'caret-bottom'}
-						/>
-					</span>
-				</button>
+					{expanded && <SessionAttributes session={session} />}
+				</div>
 			</div>
-
-			{expanded && <SessionAttributes session={session} />}
 
 			<ul className='list-unstyled mb-0 mt-2'>
 				{session.events?.map((event, idx) => (
@@ -394,44 +456,69 @@ interface IEventRowProps {
 
 const EventRow: React.FC<IEventRowProps> = ({event, timeZoneId}) => {
 	const [expanded, setExpanded] = useState(false);
+	const [hovered, setHovered] = useState(false);
 
 	return (
-		<li className='mb-1'>
+		<li>
 			<div className='position-relative'>
 				<span style={EVENT_DOT_STYLE} />
 
-				<button
-					aria-expanded={expanded}
-					className='btn btn-unstyled d-flex align-items-baseline w-100 py-2 px-3 text-left rounded'
-					onClick={() => setExpanded(prev => !prev)}
-					type='button'
+				<div
+					style={{
+						...ROW_WRAPPER_BASE_STYLE,
+						...(expanded || hovered
+							? ROW_WRAPPER_HIGHLIGHTED_STYLE
+							: {}),
+						backgroundColor:
+							expanded || hovered
+								? 'var(--primary-l3)'
+								: undefined
+					}}
 				>
-					<span className='text-secondary' style={{minWidth: '5rem'}}>
-						{formatTime(event.createDate, timeZoneId)}
-					</span>
+					<button
+						aria-expanded={expanded}
+						className='btn btn-unstyled border-0 d-flex align-items-start w-100 py-2 text-left'
+						onClick={() => setExpanded(prev => !prev)}
+						onMouseEnter={() => setHovered(true)}
+						onMouseLeave={() => setHovered(false)}
+						style={{
+							paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
+							paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
+						}}
+						type='button'
+					>
+						<span
+							className='text-secondary'
+							style={{minWidth: '5rem'}}
+						>
+							{formatTime(event.createDate, timeZoneId)}
+						</span>
 
-					<span className='text-secondary mr-3'>{event.name}</span>
+						<div className='flex-grow-1 min-w-0'>
+							<div className='font-weight-semi-bold text-dark'>
+								{event.name}
+							</div>
 
-					<div className='flex-grow-1 min-w-0'>
-						<div className='font-weight-semi-bold text-truncate'>
-							{event.pageTitle || event.assetTitle}
+							<div className='font-weight-semi-bold text-secondary text-truncate'>
+								{event.pageTitle || event.assetTitle}
+							</div>
+
+							{event.url && (
+								<div className='text-secondary text-truncate'>
+									{event.url}
+								</div>
+							)}
 						</div>
 
-						{event.url && (
-							<div className='text-secondary text-truncate'>
-								{event.url}
-							</div>
-						)}
-					</div>
+						<ClayIcon
+							className='ml-3 text-secondary'
+							symbol={expanded ? 'caret-top' : 'caret-bottom'}
+						/>
+					</button>
 
-					<ClayIcon
-						className='ml-3 text-secondary'
-						symbol={expanded ? 'caret-top' : 'caret-bottom'}
-					/>
-				</button>
+					{expanded && <EventAttributes event={event} />}
+				</div>
 			</div>
-
-			{expanded && <EventAttributes event={event} />}
 		</li>
 	);
 };
@@ -440,39 +527,65 @@ interface ISessionAttributesProps {
 	session: AccountUserSession;
 }
 
-const SessionAttributes: React.FC<ISessionAttributesProps> = ({session}) => (
-	<div className='px-3 py-3 bg-light rounded'>
-		<div className='font-weight-semi-bold mb-2'>
-			{Liferay.Language.get('session-attributes')}
-		</div>
+const SessionAttributes: React.FC<ISessionAttributesProps> = ({session}) => {
+	const items = SESSION_ATTRIBUTE_KEYS.map(key => ({
+		key,
+		value: session[key]
+	})).filter(({value}) => !isEmptyValue(value));
 
-		<AttributesList
-			items={SESSION_ATTRIBUTE_KEYS.map(key => ({
-				key,
-				value: session[key]
-			}))}
-		/>
-	</div>
-);
+	if (!items.length) {
+		return null;
+	}
+
+	return (
+		<div
+			className='pb-3 bg-light'
+			style={{
+				paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
+				paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
+			}}
+		>
+			<div className='font-weight-semi-bold mb-2'>
+				{Liferay.Language.get('session-attributes')}
+			</div>
+
+			<AttributesList items={items} />
+		</div>
+	);
+};
 
 interface IEventAttributesProps {
 	event: AccountUserSessionEvent;
 }
 
-const EventAttributes: React.FC<IEventAttributesProps> = ({event}) => (
-	<div className='px-3 py-3 bg-light rounded'>
-		<div className='font-weight-semi-bold mb-2'>
-			{Liferay.Language.get('event-attributes')}
-		</div>
+const EventAttributes: React.FC<IEventAttributesProps> = ({event}) => {
+	const items = EVENT_ATTRIBUTE_KEYS.map(key => ({
+		key,
+		value: event[key]
+	})).filter(({value}) => !isEmptyValue(value));
 
-		<AttributesList
-			items={EVENT_ATTRIBUTE_KEYS.map(key => ({
-				key,
-				value: event[key]
-			}))}
-		/>
-	</div>
-);
+	if (!items.length) {
+		return null;
+	}
+
+	return (
+		<div
+			className='pb-3 bg-light'
+			style={{
+				paddingLeft: `${
+					RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM + 6.5
+				}rem`,
+				paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
+			}}
+		>
+			<div className='font-weight-semi-bold text-secondary mb-2'>
+				{Liferay.Language.get('event-attributes')}
+			</div>
+
+			<AttributesList items={items} />
+		</div>
+	);
+};
 
 interface IAttributesListProps {
 	items: {key: string; value: unknown}[];
@@ -489,7 +602,7 @@ const AttributesList: React.FC<IAttributesListProps> = ({items}) => (
 					{key}
 				</dt>
 
-				<dd className='mb-0 text-break'>
+				<dd className='mb-0 text-break text-secondary'>
 					{formatAttributeValue(value)}
 				</dd>
 			</div>

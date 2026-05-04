@@ -39,7 +39,7 @@ export const BAR_COLORS = {
 
 export interface ChartTooltipRow {
 	className?: string;
-	label: string;
+	label: string | (() => React.ReactNode);
 	value?: string;
 }
 
@@ -89,7 +89,7 @@ interface IRechartsTooltipProps extends React.HTMLAttributes<HTMLElement> {
 	dateTitle?: string;
 	rows: {
 		className?: string;
-		label?: string;
+		label?: string | (() => React.ReactNode);
 		value?: string;
 	}[];
 }

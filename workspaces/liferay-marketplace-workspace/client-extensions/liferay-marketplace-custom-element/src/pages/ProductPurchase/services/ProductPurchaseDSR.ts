@@ -11,7 +11,12 @@ import HeadlessDSRRequest from '../../../services/rest/HeadlessDSRRequest';
 import {getSiteURL} from '../../../utils/site';
 import ProductPurchase from './ProductPurchase';
 
-type DSRForm = z.infer<typeof zodSchema.dsrLicenseKey>;
+type DSRForm = z.infer<typeof zodSchema.dsrLicenseKey> & {
+	productKey?: string;
+	productPurchaseKey?: string;
+};
+
+const digitalSalesRoomERC = crypto.randomUUID();
 
 export default class ProductPurchaseDSR extends ProductPurchase {
 	private form?: DSRForm;
@@ -36,8 +41,8 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 			customFields: {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
-					analyticsForm: this.buildAnalyticsForm(),
-					dsrForm: this.buildDSRForm(),
+					analyticsForm: this.getAnalyticsForm(),
+					dsrForm: this.getDSRForm(),
 				}),
 			},
 		} as Cart;
@@ -52,27 +57,30 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 
 		const order = await super.createOrder(cart);
 
-		const analyticsForm = this.buildAnalyticsForm();
-		const dsrForm = this.buildDSRForm();
+		const analyticsForm = this.getAnalyticsForm();
+		const dsrForm = this.getDSRForm();
 
-		await HeadlessDSRRequest.createDSRRequest({
-			...dsrForm,
-			...analyticsForm,
-			incidentReportEmailAddresses:
-				analyticsForm.incidentReportEmailAddresses.join(','),
-			r_orderToDSRRequest_commerceOrderId: order.id,
-		}).catch(console.error);
+		await HeadlessDSRRequest.putDSRRequest(
+			{
+				...analyticsForm,
+				...dsrForm,
+				incidentReportEmailAddresses:
+					analyticsForm?.incidentReportEmailAddresses.join(','),
+				r_orderToDSRRequest_commerceOrderId: order.id,
+			},
+			digitalSalesRoomERC
+		).catch(console.error);
 
 		await provisioningOAuth2.provisionDSR({
 			analyticsForm,
 			licenseEntry: {
 				hostName: dsrForm.hostName,
-				ipAddresses: dsrForm.ipAddresses,
-				macAddresses: dsrForm.macAddresses,
+				ipAddresses: dsrForm.ipAddresses?.replaceAll('\n', ','),
+				macAddresses: dsrForm.macAddresses?.replaceAll('\n', ','),
 				orderId: String(order.id),
-				productPurchaseKey:
-					this.product.skus[0]?.externalReferenceCode ?? '',
 			},
+			productKey: this.form.productKey,
+			productPurchaseKey: this.form.productPurchaseKey,
 		});
 
 		return order;
@@ -82,7 +90,11 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 		return `${window.location.origin}${getSiteURL()}/customer-dashboard#/products/${cart.id}?next-steps`;
 	}
 
-	private buildAnalyticsForm() {
+	private getAnalyticsForm() {
+		if (this.hasAnalyticsCloud) {
+			return;
+		}
+
 		const ownerEmailAddress =
 			this.form?.workspaceOwnerEmail?.trim() ||
 			Liferay.ThemeDisplay.getUserEmailAddress();
@@ -97,25 +109,17 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 		};
 	}
 
-	private buildDSRForm() {
+	private getDSRForm() {
 		return {
 			acceptEulaAgreement: this.form?.acceptEulaAgreement ?? false,
 			acceptTermsAndConditions:
 				this.form?.acceptTermsAndConditions ?? false,
 			dataCenterLocation: this.form?.dataCenterLocation ?? '',
 			hostName: this.form?.hostname?.trim() ?? '',
-			ipAddresses: toCommaSeparatedList(this.form?.ipAddress),
-			macAddresses: toCommaSeparatedList(this.form?.macAddress),
+			ipAddresses: this.form?.ipAddress?.replaceAll('\n', ','),
+			macAddresses: this.form?.macAddress?.replaceAll('\n', ','),
 			workspaceName: this.form?.workspaceName ?? '',
 			workspaceOwnerEmail: this.form?.workspaceOwnerEmail ?? '',
 		};
 	}
-}
-
-function toCommaSeparatedList(value: string | undefined): string {
-	return (value ?? '')
-		.split(/\r?\n/)
-		.map((line) => line.trim())
-		.filter(Boolean)
-		.join(',');
 }

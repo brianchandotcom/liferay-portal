@@ -6,7 +6,10 @@
 import fetcher from '../fetcher';
 
 export default class HeadlessDSRRequest {
-	static async createDSRRequest(body: any) {
-		return fetcher.post('o/c/dsrrequests', body);
+	static async putDSRRequest(body: any, externalReferenceCode: string) {
+		return fetcher.put(
+			`o/c/dsrrequests/by-external-reference-code/${externalReferenceCode}`,
+			body
+		);
 	}
 }

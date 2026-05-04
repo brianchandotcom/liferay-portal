@@ -57,7 +57,9 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
-					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.join(','),
+					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.map(
+						(extension) => `.${extension}`
+					).join(','),
 					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('image'),
 					onSelect: (items) => {

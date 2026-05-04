@@ -48,7 +48,10 @@ function _run_test {
 function _test_exits_with_error_when_argument_count_is_wrong {
 	local output
 
-	output=$(bash "${script}" gcs /source 2>&1 || true)
+	if output=$(bash "${script}" gcs /source 2>&1)
+	then
+		return 1
+	fi
 
 	[[ "${output}" == *"Usage:"* ]]
 }
@@ -56,7 +59,10 @@ function _test_exits_with_error_when_argument_count_is_wrong {
 function _test_exits_with_error_when_no_bucket_env_var_is_set {
 	local output
 
-	output=$(unset LIFERAY_OVERLAY_BUCKET_NAME; bash "${script}" gcs source/path dest/path 2>&1 || true)
+	if output=$(unset LIFERAY_OVERLAY_BUCKET_NAME; bash "${script}" gcs source/path dest/path 2>&1)
+	then
+		return 1
+	fi
 
 	[[ "${output}" == *"Overlay bucket does not exist"* ]]
 }

@@ -83,12 +83,13 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		String ariaPagination = namespace + id + "_ariaPagination";
 		String ariaPaginationButton = namespace + id + "_ariaPaginationButton";
 		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
+		String ariaPaginationReloadDescription = namespace + id + "_ariaPaginationReloadDescription";
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
 		%>
 
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page" id="<%= ariaPagination %>">
-				<button aria-controls="<%= ariaPaginationPicker %>" aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-haspopup="listbox" aria-label="<%= LanguageUtil.get(request, "items-per-page") %>" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" id=<%= ariaPaginationButton %> role="combobox">
+				<button aria-controls="<%= ariaPaginationPicker %>" aria-describedby="<%= ariaPaginationResults %> <%= ariaPaginationReloadDescription %>" aria-expanded="false" aria-haspopup="listbox" aria-label="<%= LanguageUtil.get(request, "items-per-page") %>" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" id=<%= ariaPaginationButton %> role="combobox">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" translateArguments="<%= false %>" />
 
 					<aui:icon image="caret-double-l" markupView="lexicon" />
@@ -120,6 +121,10 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					%>
 
 				</ul>
+
+				<span class="sr-only" id="<%= ariaPaginationReloadDescription %>">
+					<liferay-ui:message key="selecting-an-option-will-reload-the-page" />
+				</span>
 			</div>
 
 			<aui:script senna="temporary" type="text/javascript">

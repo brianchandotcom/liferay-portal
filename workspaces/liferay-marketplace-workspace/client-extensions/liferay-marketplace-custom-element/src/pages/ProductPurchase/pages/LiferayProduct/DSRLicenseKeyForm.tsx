@@ -6,17 +6,18 @@
 import {ClayCheckbox} from '@clayui/form';
 import classNames from 'classnames';
 import {Controller, useForm} from 'react-hook-form';
+import useSWR from 'swr';
 
 import {RequiredMask} from '../../../../components/FieldBase';
 import {Input} from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading';
 import ProductPurchase from '../../../../components/ProductPurchase';
 import Select from '../../../../components/Select/Select';
-import useHasAnalyticsCloud from '../../../../hooks/useHasAnalyticsCloud';
 import useListTypeDefinition from '../../../../hooks/useListTypeDefinition';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema, {z, zodResolver} from '../../../../schema/zod';
+import analyticsOAuth2 from '../../../../services/oauth/Analytics';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseDSR from '../../services/ProductPurchaseDSR';
 
@@ -29,6 +30,7 @@ const DSRLicenseKeyForm = () => {
 	const {
 		actions: {previousStep},
 		handlePurchase,
+
 		product,
 		productPurchaseCart,
 		selectedAccount,
@@ -40,9 +42,23 @@ const DSRLicenseKeyForm = () => {
 
 	const acRegions = acRegionsResponse?.listTypeEntries ?? [];
 
-	const {hasAnalyticsCloud, isLoading: isLoadingHasAC} = useHasAnalyticsCloud(
-		selectedAccount?.externalReferenceCode
+	const accountKey = selectedAccount.externalReferenceCode;
+
+	const {
+		data: analyticsPlan,
+		error,
+		isLoading,
+	} = useSWR(
+		accountKey ? `/ac-plan/${accountKey}` : null,
+		async () => {
+			return analyticsOAuth2.getPlan(accountKey);
+		},
+		{
+			shouldRetryOnError: false,
+		}
 	);
+
+	const hasAnalyticsCloud = !!analyticsPlan?.productPurchaseKey && !error;
 
 	const {
 		control,
@@ -76,7 +92,12 @@ const DSRLicenseKeyForm = () => {
 			product
 		);
 
-		productPurchase.setForm(data);
+		productPurchase.setForm({
+			...data,
+			productPurchaseKey: analyticsPlan?.productPurchaseKey,
+			productKey: analyticsPlan?.productKey,
+		});
+
 		productPurchase.setHasAnalyticsCloud(hasAnalyticsCloud);
 
 		await handlePurchase(
@@ -86,7 +107,7 @@ const DSRLicenseKeyForm = () => {
 		);
 	};
 
-	if (isLoadingRegions || isLoadingHasAC) {
+	if (isLoadingRegions || isLoading) {
 		return <Loading />;
 	}
 

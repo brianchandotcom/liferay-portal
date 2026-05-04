@@ -28,10 +28,10 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		BasePersistenceImpl<T, ?> basePersistenceImpl,
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
-		String defaultOrderByJpql, String orderByEntityAlias,
+		String defaultOrderByJpql, String orderByEntityAlias, String where,
 		FinderColumn<T>... finderColumns) {
 
-		super(basePersistenceImpl, sqlSelectWhere, finderColumns);
+		super(basePersistenceImpl, sqlSelectWhere, where, finderColumns);
 
 		_paginatedFindPath = paginatedFindPath;
 		_unpaginatedFindPath = unpaginatedFindPath;
@@ -189,11 +189,11 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		StringBundler sb = null;
 
 		if (orderByComparator == null) {
-			sb = new StringBundler(finderColumns.length + 2);
+			sb = new StringBundler((finderColumns.length * 2) + 3);
 		}
 		else {
 			sb = new StringBundler(
-				finderColumns.length + 2 +
+				(finderColumns.length * 2) + 3 +
 					(orderByComparator.getOrderByFields().length * 2));
 		}
 
@@ -201,6 +201,14 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 
 		for (int i = 0; i < finderColumns.length; i++) {
 			sb.append(finderColumns[i].getSqlFragment(values[i]));
+			sb.append(" AND ");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		if ((where != null) && !where.isEmpty()) {
+			sb.append(" AND ");
+			sb.append(where);
 		}
 
 		if (orderByComparator == null) {

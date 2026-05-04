@@ -37,6 +37,7 @@ interface IChartProps<T> extends React.HTMLAttributes<HTMLElement> {
 	alwaysShowSelectedTooltip: boolean;
 	hasSelectedPoint?: boolean;
 	height?: number;
+	hideGrid?: boolean;
 	history: Array<T>;
 	interval: Interval;
 	LDPEnabled?: boolean;
@@ -61,6 +62,7 @@ const ActivitiesChart: React.FC<
 	alwaysShowSelectedTooltip = false,
 	hasSelectedPoint,
 	height = 340,
+	hideGrid = false,
 	history,
 	interval,
 	onPointSelect,
@@ -177,11 +179,13 @@ const ActivitiesChart: React.FC<
 				onMouseLeave={() => setMouseOutside(true)}
 				onMouseMove={() => setMouseOutside(false)}
 			>
-				<CartesianGrid
-					stroke={AXIS.gridStroke}
-					strokeDasharray='3 3'
-					vertical={false}
-				/>
+				{!hideGrid && (
+					<CartesianGrid
+						stroke={AXIS.gridStroke}
+						strokeDasharray='3 3'
+						vertical={false}
+					/>
+				)}
 
 				<XAxis
 					axisLine={{stroke: AXIS.borderStroke}}
@@ -246,21 +250,25 @@ const ActivitiesChart: React.FC<
 					yAxisId='right'
 				/>
 
-				<Tooltip
-					content={renderTooltip}
-					cursor={{stroke: CHART_BLUE}}
-					position={
-						showFixedTooltip &&
-						selectedTooltipX !== null &&
-						selectedTooltipX !== undefined
-							? {x: selectedTooltipX}
-							: undefined
-					}
-					ref={_tooltipRef}
-					wrapperStyle={
-						showFixedTooltip ? {visibility: 'visible'} : undefined
-					}
-				/>
+				{!hideGrid && (
+					<Tooltip
+						content={renderTooltip}
+						cursor={{stroke: CHART_BLUE}}
+						position={
+							showFixedTooltip &&
+							selectedTooltipX !== null &&
+							selectedTooltipX !== undefined
+								? {x: selectedTooltipX}
+								: undefined
+						}
+						ref={_tooltipRef}
+						wrapperStyle={
+							showFixedTooltip
+								? {visibility: 'visible'}
+								: undefined
+						}
+					/>
+				)}
 
 				<ReferenceLine
 					strokeWidth={1}

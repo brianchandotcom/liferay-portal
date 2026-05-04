@@ -331,7 +331,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="deploy-and-execute-ant-target-builder">
+	<macrodef name="deploy-and-execute-builder-ant-target">
 		<attribute name="ant.target.file" />
 		<attribute name="ant.target.name" />
 		<attribute name="builder.type" />
@@ -352,7 +352,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<arg value="--all" />
 			</exec>
 
-			<execute-ant-target-builder
+			<execute-builder-ant-target
 				ant.target.file="@{ant.target.file}"
 				ant.target.name="@{ant.target.name}"
 				builder.type="@{builder.type}"
@@ -425,7 +425,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="execute-ant-target-builder">
+	<macrodef name="execute-builder-ant-target">
 		<attribute name="ant.target.name" />
 		<attribute name="ant.target.file" />
 		<attribute name="builder.type" />
@@ -10286,7 +10286,7 @@ ${output.content}</echo>
 	<target name="rest-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-ant-target-builder
+				<deploy-and-execute-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-rests"
 					builder.type="REST builder"
@@ -10303,14 +10303,14 @@ ${output.content}</echo>
 	<target name="rest-builder-and-service-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-ant-target-builder
+				<deploy-and-execute-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-services"
 					builder.type="build services"
 					tooling.dir="modules/util/portal-tools-service-builder"
 				/>
 
-				<deploy-and-execute-ant-target-builder
+				<deploy-and-execute-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-rests"
 					builder.type="REST builder"
@@ -10425,7 +10425,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 	<target name="service-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-ant-target-builder
+				<deploy-and-execute-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-services"
 					builder.type="build services"

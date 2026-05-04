@@ -23,6 +23,7 @@ DesignLibraryResourcesDisplayContext designLibraryResourcesDisplayContext = new 
 
 	<div class="design-library-fds-wrapper design-library-fds-wrapper--resources">
 		<frontend-data-set:headless-display
+			additionalProps="<%= designLibraryResourcesDisplayContext.getFDSAdditionalProps(designLibraryEntryId) %>"
 			apiURL="<%= designLibraryResourcesDisplayContext.getAPIURL() %>"
 			emptyState="<%= designLibraryResourcesDisplayContext.getEmptyState() %>"
 			fdsActionDropdownItems="<%= designLibraryResourcesDisplayContext.getFDSActionDropdownItems() %>"

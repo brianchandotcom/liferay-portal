@@ -529,6 +529,11 @@ public class SharingEntryLocalServiceImpl
 			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
 	}
 
+	@Override
+	public List<SharingEntry> getToTicketSharingEntries(long toTicketId) {
+		return sharingEntryPersistence.findByToTicketId(toTicketId);
+	}
+
 	/**
 	 * Returns the list of sharing entries for resources shared with the user.
 	 *

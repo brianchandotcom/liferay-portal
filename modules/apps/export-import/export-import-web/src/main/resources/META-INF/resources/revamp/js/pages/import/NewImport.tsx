@@ -20,7 +20,9 @@ export function NewImport({
 	backURL: string;
 	importPreviewAPIURL: string;
 }) {
-	const [importPreview, setImportPreview] = useState<ImportPreview | undefined>();
+	const [importPreview, setImportPreview] = useState<
+		ImportPreview | undefined
+	>();
 
 	return (
 		<Wizard backURL={backURL}>
@@ -33,8 +35,7 @@ export function NewImport({
 					name: '',
 				}}
 				isStepValid={(values) =>
-					values.fileSelector instanceof File &&
-					!!values.name.trim()
+					values.fileSelector instanceof File && !!values.name.trim()
 				}
 				title={Liferay.Language.get('setup')}
 			>

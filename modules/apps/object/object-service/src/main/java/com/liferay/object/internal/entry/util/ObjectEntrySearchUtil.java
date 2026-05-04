@@ -19,6 +19,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -39,6 +40,38 @@ import java.util.Locale;
  * @author Carolina Barbosa
  */
 public class ObjectEntrySearchUtil {
+
+	public static Predicate getAssigneeFieldPredicate(
+		Table<?> table, String dbColumnName, String search) {
+
+		String[] parts = StringUtil.split(search, CharPool.UNDERLINE);
+
+		if (parts.length != 2) {
+			return null;
+		}
+
+		long classNameId = GetterUtil.getLong(parts[0]);
+		long classPK = GetterUtil.getLong(parts[1]);
+
+		if ((classNameId == 0L) || (classPK == 0L)) {
+			return null;
+		}
+
+		Column<?, Long> classNameIdColumn = (Column<?, Long>)table.getColumn(
+			"classNameId_" + dbColumnName);
+		Column<?, Long> classPKColumn = (Column<?, Long>)table.getColumn(
+			"classPK_" + dbColumnName);
+
+		if ((classNameIdColumn == null) || (classPKColumn == null)) {
+			return null;
+		}
+
+		return classNameIdColumn.eq(
+			classNameId
+		).and(
+			classPKColumn.eq(classPK)
+		);
+	}
 
 	public static String getLanguageId() throws PortalException {
 		Locale locale = null;

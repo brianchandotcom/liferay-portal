@@ -248,6 +248,30 @@ public class ObjectEntryKeywordQueryContributor
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE)) {
+
+			BooleanQuery assigneeBooleanQuery = new BooleanQuery();
+
+			String keywordFieldName =
+				"nestedFieldArray.value_keyword_lowercase";
+
+			assigneeBooleanQuery.add(
+				new TermQuery(keywordFieldName, StringUtil.toLowerCase(token)),
+				BooleanClauseOccur.SHOULD);
+
+			String textFieldName = "nestedFieldArray.value_text";
+
+			assigneeBooleanQuery.add(
+				new MatchQuery(textFieldName, token),
+				BooleanClauseOccur.SHOULD);
+
+			nestedBooleanQuery.add(
+				assigneeBooleanQuery, BooleanClauseOccur.MUST);
+
+			queryConfig.addHighlightFieldNames(keywordFieldName, textFieldName);
+		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
 				 Objects.equals(
 					 objectField.getDBType(),

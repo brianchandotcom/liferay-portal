@@ -13,6 +13,7 @@ export class CommerceAdminCurrencyDetailsPage {
 	readonly backLink: Locator;
 	readonly cancelButton: Locator;
 	readonly codeInput: Locator;
+	readonly formatPatternInput: Locator;
 	readonly nameInput: Locator;
 	readonly primaryToggle: Locator;
 	readonly priority: Locator;
@@ -25,6 +26,7 @@ export class CommerceAdminCurrencyDetailsPage {
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.codeInput = page.getByLabel('Code');
+		this.formatPatternInput = page.getByLabel('Format Pattern');
 		this.nameInput = page.getByLabel('Name');
 		this.primaryToggle = page.getByText('Primary');
 		this.priority = page.getByLabel('Priority');

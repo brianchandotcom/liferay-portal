@@ -71,20 +71,6 @@ public class FragmentDTOConverter
 			fragmentEntry.getHeadId());
 	}
 
-	private FragmentSet _getFragmentSet(FragmentEntry fragmentEntry)
-		throws Exception {
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.fetchFragmentCollection(
-				fragmentEntry.getFragmentCollectionId());
-
-		if (fragmentCollection == null) {
-			return null;
-		}
-
-		return _fragmentSetDTOConverter.toDTO(null, fragmentCollection);
-	}
-
 	private Fragment _toFragment(FragmentEntry fragmentEntry) {
 		List<FragmentVersion> fragmentVersionList = new ArrayList<>();
 
@@ -132,7 +118,11 @@ public class FragmentDTOConverter
 				setDateModified(fragmentEntry::getModifiedDate);
 				setExternalReferenceCode(
 					fragmentEntry::getExternalReferenceCode);
-				setFragmentSet(() -> _getFragmentSet(fragmentEntry));
+				setFragmentSet(
+					() -> _fragmentSetDTOConverter.toDTO(
+						null,
+						_fragmentCollectionLocalService.getFragmentCollection(
+							fragmentEntry.getFragmentCollectionId())));
 				setFragmentVersions(
 					() -> fragmentVersionList.toArray(new FragmentVersion[0]));
 				setIcon(fragmentEntry::getIcon);

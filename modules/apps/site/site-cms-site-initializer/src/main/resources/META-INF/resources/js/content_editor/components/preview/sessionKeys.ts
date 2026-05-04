@@ -9,6 +9,9 @@ export const PREVIEW_CHANNEL_SESSION_KEY =
 export const PREVIEW_DISPLAY_PAGE_SESSION_KEY =
 	'CMSContentEditorPreviewSelectedDisplayPageKey';
 
+export const PREVIEW_EXTERNAL_URL_SESSION_KEY =
+	'CMSContentEditorPreviewExternalURL';
+
 export const PREVIEW_VISIBLE_SESSION_KEY = 'CMSContentEditorPreviewVisible';
 
 export const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';

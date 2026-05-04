@@ -11,6 +11,7 @@ import ApiHelper from '../../../common/services/ApiHelper';
 import {
 	PREVIEW_CHANNEL_SESSION_KEY,
 	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	PREVIEW_EXTERNAL_URL_SESSION_KEY,
 } from './sessionKeys';
 
 export type Site = {
@@ -24,16 +25,25 @@ export type Site = {
 	name: string;
 };
 
+const EXTERNAL_URL_CHANNEL_ID = 1;
+
 export default function usePreviewState(
 	getPreviewDataURL: string,
 	languageId: Liferay.Language.Locale
 ) {
+	const [externalURL = '', setExternalURL] = useSessionState<string>(
+		PREVIEW_EXTERNAL_URL_SESSION_KEY,
+		''
+	);
 	const [selectedChannelKey, setSelectedChannelKey] =
 		useSessionState<React.Key>(PREVIEW_CHANNEL_SESSION_KEY, '');
 	const [selectedDisplayPageKey, setSelectedDisplayPageKey] =
 		useSessionState<React.Key>(PREVIEW_DISPLAY_PAGE_SESSION_KEY, '');
 	const [sites, setSites] = useState<Site[]>([]);
 	const [sitesStatus, setSitesStatus] = useState<Status>('saving');
+
+	const isExternalURL =
+		Number(selectedChannelKey) === EXTERNAL_URL_CHANNEL_ID;
 
 	const loadSites = useCallback(async () => {
 		setSitesStatus('saving');
@@ -64,7 +74,7 @@ export default function usePreviewState(
 			})),
 			{
 				icon: 'chain-broken',
-				id: 1,
+				id: EXTERNAL_URL_CHANNEL_ID,
 				name: Liferay.Language.get('external-url'),
 			},
 		],
@@ -79,6 +89,10 @@ export default function usePreviewState(
 	);
 
 	const previewURL = useMemo(() => {
+		if (isExternalURL) {
+			return externalURL || undefined;
+		}
+
 		const url = displayPageTemplates?.find(
 			({plid}) => plid === selectedDisplayPageKey
 		)?.url;
@@ -95,14 +109,21 @@ export default function usePreviewState(
 		localizedURL.searchParams.set('languageId', languageId);
 
 		return localizedURL.toString();
-	}, [displayPageTemplates, languageId, selectedDisplayPageKey]);
+	}, [
+		displayPageTemplates,
+		externalURL,
+		isExternalURL,
+		languageId,
+		selectedDisplayPageKey,
+	]);
 
 	const selectChannel = useCallback(
 		(key: React.Key) => {
 			setSelectedChannelKey(key);
 			setSelectedDisplayPageKey('');
+			setExternalURL('');
 		},
-		[setSelectedChannelKey, setSelectedDisplayPageKey]
+		[setExternalURL, setSelectedChannelKey, setSelectedDisplayPageKey]
 	);
 
 	const showDisplayPageTemplateAlert =
@@ -111,11 +132,14 @@ export default function usePreviewState(
 	return {
 		channels,
 		displayPageTemplates,
+		externalURL,
+		isExternalURL,
 		loadSites,
 		previewURL,
 		selectChannel,
 		selectedChannelKey,
 		selectedDisplayPageKey,
+		setExternalURL,
 		setSelectedDisplayPageKey,
 		showDisplayPageTemplateAlert,
 		sitesStatus,

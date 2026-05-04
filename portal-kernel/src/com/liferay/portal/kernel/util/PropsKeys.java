@@ -2502,6 +2502,9 @@ public interface PropsKeys {
 
 	public static final String SITES_FORM_UPDATE_SEO = "sites.form.update.seo";
 
+	public static final String SITES_FRIENDLY_URL_KEYWORDS =
+		"sites.friendly.url.keywords";
+
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND =
 		"sites.friendly.url.page.not.found";
 

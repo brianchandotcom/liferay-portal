@@ -38,12 +38,12 @@ public class FriendlyURLKeywordsUtil {
 
 	static {
 		_FRIENDLY_URL_KEYWORDS =
-			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
+			new String[PropsValues.SITES_FRIENDLY_URL_KEYWORDS.length];
 
-		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
+		for (int i = 0; i < PropsValues.SITES_FRIENDLY_URL_KEYWORDS.length;
 			 i++) {
 
-			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
+			String keyword = PropsValues.SITES_FRIENDLY_URL_KEYWORDS[i];
 
 			keyword = StringPool.SLASH + keyword;
 

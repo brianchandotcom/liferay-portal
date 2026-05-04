@@ -479,39 +479,22 @@ export default function ShareModalContent({
 								loadingState={autocompleteNetworkStatus}
 								onChange={setAutocompleteValue}
 								onItemsChange={(items) => {
-									const lastItem = items[items.length - 1];
-									const trimmedValue = (
-										(lastItem &&
-											(lastItem as {value?: string})
-												.value) ||
-										''
-									).trim();
+									const lastItem = items[items.length - 1] as
+										| {
+												type: CollaboratorType;
+												user:
+													| ExternalUser
+													| UserAccount
+													| UserGroup;
+										  }
+										| undefined;
 
-									if (
-										_isFolder ||
-										!isEmailAddressValid(trimmedValue)
-									) {
-										return;
+									if (lastItem?.type && lastItem.user) {
+										handleAddUser(
+											lastItem.user,
+											lastItem.type
+										);
 									}
-
-									const hasUserMatch = users?.items?.some(
-										(item: any) =>
-											item.embedded?.emailAddress?.toLowerCase() ===
-											trimmedValue.toLowerCase()
-									);
-
-									if (hasUserMatch) {
-										return;
-									}
-
-									handleAddUser(
-										{
-											emailAddress: trimmedValue,
-											id: trimmedValue,
-											name: trimmedValue,
-										},
-										COLLABORATOR_TYPE.EXTERNAL_USER
-									);
 								}}
 								placeholder={Liferay.Language.get(
 									'enter-name-email-or-groups'

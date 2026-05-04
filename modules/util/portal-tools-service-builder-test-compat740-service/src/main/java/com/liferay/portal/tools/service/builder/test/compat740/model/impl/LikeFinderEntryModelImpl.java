@@ -702,4 +702,4 @@ public class LikeFinderEntryModelImpl
 	private LikeFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1559745906
+// LIFERAY-SERVICE-BUILDER-HASH:1374391262

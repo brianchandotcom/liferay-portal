@@ -274,4 +274,4 @@ public class ManyColumnsEntryUtil {
 	private static volatile ManyColumnsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1576698724
+// LIFERAY-SERVICE-BUILDER-HASH:1008873392

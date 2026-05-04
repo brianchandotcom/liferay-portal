@@ -507,4 +507,4 @@ public class LazyBlobEntryUtil {
 	private static volatile LazyBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1912439185
+// LIFERAY-SERVICE-BUILDER-HASH:77309645

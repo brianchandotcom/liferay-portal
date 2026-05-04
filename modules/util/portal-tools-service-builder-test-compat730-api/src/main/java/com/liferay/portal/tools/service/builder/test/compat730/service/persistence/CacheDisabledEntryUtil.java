@@ -342,4 +342,4 @@ public class CacheDisabledEntryUtil {
 	private static volatile CacheDisabledEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1250304193
+// LIFERAY-SERVICE-BUILDER-HASH:-749945835

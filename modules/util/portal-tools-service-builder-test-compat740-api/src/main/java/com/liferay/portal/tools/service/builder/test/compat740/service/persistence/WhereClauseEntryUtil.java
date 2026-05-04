@@ -36,6 +36,20 @@ public class WhereClauseEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<WhereClauseEntry> whereClauseEntries) {
+		getPersistence().cacheResult(whereClauseEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WhereClauseEntry whereClauseEntry) {
+		getPersistence().cacheResult(whereClauseEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -233,24 +247,6 @@ public class WhereClauseEntryUtil {
 	}
 
 	/**
-	 * Caches the where clause entry in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntry the where clause entry
-	 */
-	public static void cacheResult(WhereClauseEntry whereClauseEntry) {
-		getPersistence().cacheResult(whereClauseEntry);
-	}
-
-	/**
-	 * Caches the where clause entries in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntries the where clause entries
-	 */
-	public static void cacheResult(List<WhereClauseEntry> whereClauseEntries) {
-		getPersistence().cacheResult(whereClauseEntries);
-	}
-
-	/**
 	 * Creates a new where clause entry with the primary key. Does not add the where clause entry to the database.
 	 *
 	 * @param whereClauseEntryId the primary key for the new where clause entry
@@ -315,4 +311,4 @@ public class WhereClauseEntryUtil {
 	private static volatile WhereClauseEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1754880020
+// LIFERAY-SERVICE-BUILDER-HASH:-1103088947

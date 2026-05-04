@@ -271,4 +271,4 @@ public class LocalizedEntryUtil {
 	private static volatile LocalizedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-565348701
+// LIFERAY-SERVICE-BUILDER-HASH:528446941

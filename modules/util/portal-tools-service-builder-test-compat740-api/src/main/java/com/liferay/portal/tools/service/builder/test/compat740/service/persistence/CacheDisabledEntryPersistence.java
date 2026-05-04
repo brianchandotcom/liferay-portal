@@ -77,21 +77,6 @@ public interface CacheDisabledEntryPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the cache disabled entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntry the cache disabled entry
-	 */
-	public void cacheResult(CacheDisabledEntry cacheDisabledEntry);
-
-	/**
-	 * Caches the cache disabled entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntries the cache disabled entries
-	 */
-	public void cacheResult(
-		java.util.List<CacheDisabledEntry> cacheDisabledEntries);
-
-	/**
 	 * Creates a new cache disabled entry with the primary key. Does not add the cache disabled entry to the database.
 	 *
 	 * @param cacheDisabledEntryId the primary key for the new cache disabled entry
@@ -130,4 +115,4 @@ public interface CacheDisabledEntryPersistence
 	public CacheDisabledEntry fetchByPrimaryKey(long cacheDisabledEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-307955687
+// LIFERAY-SERVICE-BUILDER-HASH:-9087979

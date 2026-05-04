@@ -2878,4 +2878,4 @@ public class ManyColumnsEntryModelImpl
 	private ManyColumnsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-435875017
+// LIFERAY-SERVICE-BUILDER-HASH:-2025897001

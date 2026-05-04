@@ -135,21 +135,6 @@ public interface WhereClauseEntryPersistence
 	public int countByName_Nickname(String name);
 
 	/**
-	 * Caches the where clause entry in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntry the where clause entry
-	 */
-	public void cacheResult(WhereClauseEntry whereClauseEntry);
-
-	/**
-	 * Caches the where clause entries in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntries the where clause entries
-	 */
-	public void cacheResult(
-		java.util.List<WhereClauseEntry> whereClauseEntries);
-
-	/**
 	 * Creates a new where clause entry with the primary key. Does not add the where clause entry to the database.
 	 *
 	 * @param whereClauseEntryId the primary key for the new where clause entry
@@ -188,4 +173,4 @@ public interface WhereClauseEntryPersistence
 	public WhereClauseEntry fetchByPrimaryKey(long whereClauseEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:338339324
+// LIFERAY-SERVICE-BUILDER-HASH:-1145958328

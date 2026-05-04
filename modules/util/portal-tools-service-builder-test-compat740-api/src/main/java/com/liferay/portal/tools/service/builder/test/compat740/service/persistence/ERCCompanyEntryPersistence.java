@@ -299,20 +299,6 @@ public interface ERCCompanyEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the erc company entry in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntry the erc company entry
-	 */
-	public void cacheResult(ERCCompanyEntry ercCompanyEntry);
-
-	/**
-	 * Caches the erc company entries in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntries the erc company entries
-	 */
-	public void cacheResult(java.util.List<ERCCompanyEntry> ercCompanyEntries);
-
-	/**
 	 * Creates a new erc company entry with the primary key. Does not add the erc company entry to the database.
 	 *
 	 * @param ercCompanyEntryId the primary key for the new erc company entry
@@ -351,4 +337,4 @@ public interface ERCCompanyEntryPersistence
 	public ERCCompanyEntry fetchByPrimaryKey(long ercCompanyEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:703220606
+// LIFERAY-SERVICE-BUILDER-HASH:1678817688

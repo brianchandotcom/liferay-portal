@@ -334,4 +334,4 @@ public class ConvertNullEntryUtil {
 	private static volatile ConvertNullEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-471597081
+// LIFERAY-SERVICE-BUILDER-HASH:-672546141

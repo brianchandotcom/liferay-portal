@@ -33,20 +33,6 @@ public interface LocalizedEntryPersistence
 	 */
 
 	/**
-	 * Caches the localized entry in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntry the localized entry
-	 */
-	public void cacheResult(LocalizedEntry localizedEntry);
-
-	/**
-	 * Caches the localized entries in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntries the localized entries
-	 */
-	public void cacheResult(java.util.List<LocalizedEntry> localizedEntries);
-
-	/**
 	 * Creates a new localized entry with the primary key. Does not add the localized entry to the database.
 	 *
 	 * @param localizedEntryId the primary key for the new localized entry
@@ -85,4 +71,4 @@ public interface LocalizedEntryPersistence
 	public LocalizedEntry fetchByPrimaryKey(long localizedEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014852125
+// LIFERAY-SERVICE-BUILDER-HASH:1593638557

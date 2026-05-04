@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -330,64 +327,6 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the eager blob entry in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntry the eager blob entry
-	 */
-	@Override
-	public void cacheResult(EagerBlobEntry eagerBlobEntry) {
-		dummyEntityCache.putResult(
-			EagerBlobEntryImpl.class, eagerBlobEntry.getPrimaryKey(),
-			eagerBlobEntry);
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				eagerBlobEntry.getUuid(), eagerBlobEntry.getGroupId()
-			},
-			eagerBlobEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the eager blob entries in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntries the eager blob entries
-	 */
-	@Override
-	public void cacheResult(List<EagerBlobEntry> eagerBlobEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (eagerBlobEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (EagerBlobEntry eagerBlobEntry : eagerBlobEntries) {
-			if (dummyEntityCache.getResult(
-					EagerBlobEntryImpl.class, eagerBlobEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(eagerBlobEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		EagerBlobEntryModelImpl eagerBlobEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			eagerBlobEntryModelImpl.getUuid(),
-			eagerBlobEntryModelImpl.getGroupId()
-		};
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByUUID_G, args, eagerBlobEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new eager blob entry with the primary key. Does not add the eager blob entry to the database.
 	 *
 	 * @param eagerBlobEntryId the primary key for the new eager blob entry
@@ -501,10 +440,7 @@ public class EagerBlobEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			EagerBlobEntryImpl.class, eagerBlobEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(eagerBlobEntryModelImpl);
+		cacheUniqueFindersResult(eagerBlobEntry, false);
 
 		if (isNew) {
 			eagerBlobEntry.setNew(false);
@@ -570,9 +506,6 @@ public class EagerBlobEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -600,10 +533,11 @@ public class EagerBlobEntryPersistenceImpl
 				"eagerBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, EagerBlobEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, EagerBlobEntry::getUuid,
+			EagerBlobEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_EAGERBLOBENTRY_WHERE,
@@ -677,4 +611,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1332357936
+// LIFERAY-SERVICE-BUILDER-HASH:-1138423252

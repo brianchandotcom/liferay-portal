@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchWhereClauseEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.WhereClauseEntry;
@@ -401,45 +398,6 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the where clause entry in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntry the where clause entry
-	 */
-	@Override
-	public void cacheResult(WhereClauseEntry whereClauseEntry) {
-		entityCache.putResult(
-			WhereClauseEntryImpl.class, whereClauseEntry.getPrimaryKey(),
-			whereClauseEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the where clause entries in the entity cache if it is enabled.
-	 *
-	 * @param whereClauseEntries the where clause entries
-	 */
-	@Override
-	public void cacheResult(List<WhereClauseEntry> whereClauseEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (whereClauseEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WhereClauseEntry whereClauseEntry : whereClauseEntries) {
-			if (entityCache.getResult(
-					WhereClauseEntryImpl.class,
-					whereClauseEntry.getPrimaryKey()) == null) {
-
-				cacheResult(whereClauseEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new where clause entry with the primary key. Does not add the where clause entry to the database.
 	 *
 	 * @param whereClauseEntryId the primary key for the new where clause entry
@@ -544,8 +502,7 @@ public class WhereClauseEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WhereClauseEntryImpl.class, whereClauseEntryModelImpl, false, true);
+		cacheUniqueFindersResult(whereClauseEntry, false);
 
 		if (isNew) {
 			whereClauseEntry.setNew(false);
@@ -606,9 +563,6 @@ public class WhereClauseEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByName_Nickname = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Nickname",
 			new String[] {
@@ -692,4 +646,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2096216860
+// LIFERAY-SERVICE-BUILDER-HASH:-967105732

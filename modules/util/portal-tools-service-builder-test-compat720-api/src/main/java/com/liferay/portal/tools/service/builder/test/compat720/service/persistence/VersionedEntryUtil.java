@@ -689,4 +689,4 @@ public class VersionedEntryUtil {
 	private static volatile VersionedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:355145256
+// LIFERAY-SERVICE-BUILDER-HASH:700993932

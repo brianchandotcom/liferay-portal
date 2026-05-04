@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1343,92 +1341,6 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the erc versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntry the erc versioned entry
-	 */
-	@Override
-	public void cacheResult(ERCVersionedEntry ercVersionedEntry) {
-		entityCache.putResult(
-			ERCVersionedEntryImpl.class, ercVersionedEntry.getPrimaryKey(),
-			ercVersionedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Head,
-			new Object[] {
-				ercVersionedEntry.getUuid(), ercVersionedEntry.getGroupId(),
-				ercVersionedEntry.isHead()
-			},
-			ercVersionedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G_Head,
-			new Object[] {
-				ercVersionedEntry.getExternalReferenceCode(),
-				ercVersionedEntry.getGroupId(), ercVersionedEntry.isHead()
-			},
-			ercVersionedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId,
-			new Object[] {ercVersionedEntry.getHeadId()}, ercVersionedEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the erc versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntries the erc versioned entries
-	 */
-	@Override
-	public void cacheResult(List<ERCVersionedEntry> ercVersionedEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ercVersionedEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ERCVersionedEntry ercVersionedEntry : ercVersionedEntries) {
-			if (entityCache.getResult(
-					ERCVersionedEntryImpl.class,
-					ercVersionedEntry.getPrimaryKey()) == null) {
-
-				cacheResult(ercVersionedEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ERCVersionedEntryModelImpl ercVersionedEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			ercVersionedEntryModelImpl.getUuid(),
-			ercVersionedEntryModelImpl.getGroupId(),
-			ercVersionedEntryModelImpl.isHead()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Head, args, ercVersionedEntryModelImpl);
-
-		args = new Object[] {
-			ercVersionedEntryModelImpl.getExternalReferenceCode(),
-			ercVersionedEntryModelImpl.getGroupId(),
-			ercVersionedEntryModelImpl.isHead()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G_Head, args, ercVersionedEntryModelImpl);
-
-		args = new Object[] {ercVersionedEntryModelImpl.getHeadId()};
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId, args, ercVersionedEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new erc versioned entry with the primary key. Does not add the erc versioned entry to the database.
 	 *
 	 * @param ercVersionedEntryId the primary key for the new erc versioned entry
@@ -1611,11 +1523,7 @@ public class ERCVersionedEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ERCVersionedEntryImpl.class, ercVersionedEntryModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(ercVersionedEntryModelImpl);
+		cacheUniqueFindersResult(ercVersionedEntry, false);
 
 		if (isNew) {
 			ercVersionedEntry.setNew(false);
@@ -1681,9 +1589,6 @@ public class ERCVersionedEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1779,13 +1684,15 @@ public class ERCVersionedEntryPersistenceImpl
 					"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = new FinderPath(
+		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "head"}, true);
+			new String[] {"uuid_", "groupId", "head"}, false,
+			ERCVersionedEntry::getUuid, ERCVersionedEntry::getGroupId,
+			ERCVersionedEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
@@ -1909,13 +1816,15 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ERCVersionedEntry::getGroupId));
 
-		_finderPathFetchByERC_G_Head = new FinderPath(
+		_finderPathFetchByERC_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, true);
+			new String[] {"externalReferenceCode", "groupId", "head"}, false,
+			ERCVersionedEntry::getExternalReferenceCode,
+			ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_Head,
@@ -1931,9 +1840,10 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 				true, true, ERCVersionedEntry::isHead));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			ERCVersionedEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
@@ -2010,4 +1920,4 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2096391048
+// LIFERAY-SERVICE-BUILDER-HASH:705622292

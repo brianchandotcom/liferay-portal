@@ -18,11 +18,8 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchMappingEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.BasicEntry;
@@ -84,43 +81,6 @@ public class MappingEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(MappingEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the mapping entry in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntry the mapping entry
-	 */
-	@Override
-	public void cacheResult(MappingEntry mappingEntry) {
-		entityCache.putResult(
-			MappingEntryImpl.class, mappingEntry.getPrimaryKey(), mappingEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the mapping entries in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntries the mapping entries
-	 */
-	@Override
-	public void cacheResult(List<MappingEntry> mappingEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mappingEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MappingEntry mappingEntry : mappingEntries) {
-			if (entityCache.getResult(
-					MappingEntryImpl.class, mappingEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(mappingEntry);
-			}
-		}
 	}
 
 	/**
@@ -211,8 +171,7 @@ public class MappingEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MappingEntryImpl.class, mappingEntry, false, true);
+		cacheUniqueFindersResult(mappingEntry, false);
 
 		if (isNew) {
 			mappingEntry.setNew(false);
@@ -593,9 +552,6 @@ public class MappingEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		mappingEntryToBasicEntryTableMapper = TableMapperFactory.getTableMapper(
 			"MappingEntries_BasicEntries#mappingEntryId",
 			"MappingEntries_BasicEntries", "companyId", "mappingEntryId",
@@ -664,4 +620,4 @@ public class MappingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:556691525
+// LIFERAY-SERVICE-BUILDER-HASH:-1848786956

@@ -36,6 +36,20 @@ public class LikeFinderEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LikeFinderEntry> likeFinderEntries) {
+		getPersistence().cacheResult(likeFinderEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LikeFinderEntry likeFinderEntry) {
+		getPersistence().cacheResult(likeFinderEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -351,24 +365,6 @@ public class LikeFinderEntryUtil {
 	}
 
 	/**
-	 * Caches the like finder entry in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntry the like finder entry
-	 */
-	public static void cacheResult(LikeFinderEntry likeFinderEntry) {
-		getPersistence().cacheResult(likeFinderEntry);
-	}
-
-	/**
-	 * Caches the like finder entries in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntries the like finder entries
-	 */
-	public static void cacheResult(List<LikeFinderEntry> likeFinderEntries) {
-		getPersistence().cacheResult(likeFinderEntries);
-	}
-
-	/**
 	 * Creates a new like finder entry with the primary key. Does not add the like finder entry to the database.
 	 *
 	 * @param likeFinderEntryId the primary key for the new like finder entry
@@ -431,4 +427,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1883511809
+// LIFERAY-SERVICE-BUILDER-HASH:1609009256

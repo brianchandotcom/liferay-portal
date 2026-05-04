@@ -36,6 +36,20 @@ public class ERCGroupEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ERCGroupEntry> ercGroupEntries) {
+		getPersistence().cacheResult(ercGroupEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ERCGroupEntry ercGroupEntry) {
+		getPersistence().cacheResult(ercGroupEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -499,24 +513,6 @@ public class ERCGroupEntryUtil {
 	}
 
 	/**
-	 * Caches the erc group entry in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntry the erc group entry
-	 */
-	public static void cacheResult(ERCGroupEntry ercGroupEntry) {
-		getPersistence().cacheResult(ercGroupEntry);
-	}
-
-	/**
-	 * Caches the erc group entries in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntries the erc group entries
-	 */
-	public static void cacheResult(List<ERCGroupEntry> ercGroupEntries) {
-		getPersistence().cacheResult(ercGroupEntries);
-	}
-
-	/**
 	 * Creates a new erc group entry with the primary key. Does not add the erc group entry to the database.
 	 *
 	 * @param ercGroupEntryId the primary key for the new erc group entry
@@ -579,4 +575,4 @@ public class ERCGroupEntryUtil {
 	private static volatile ERCGroupEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-228174104
+// LIFERAY-SERVICE-BUILDER-HASH:1274787319

@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -503,65 +501,6 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the erc company entry in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntry the erc company entry
-	 */
-	@Override
-	public void cacheResult(ERCCompanyEntry ercCompanyEntry) {
-		entityCache.putResult(
-			ERCCompanyEntryImpl.class, ercCompanyEntry.getPrimaryKey(),
-			ercCompanyEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				ercCompanyEntry.getExternalReferenceCode(),
-				ercCompanyEntry.getCompanyId()
-			},
-			ercCompanyEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the erc company entries in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntries the erc company entries
-	 */
-	@Override
-	public void cacheResult(List<ERCCompanyEntry> ercCompanyEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ercCompanyEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ERCCompanyEntry ercCompanyEntry : ercCompanyEntries) {
-			if (entityCache.getResult(
-					ERCCompanyEntryImpl.class,
-					ercCompanyEntry.getPrimaryKey()) == null) {
-
-				cacheResult(ercCompanyEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ERCCompanyEntryModelImpl ercCompanyEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			ercCompanyEntryModelImpl.getExternalReferenceCode(),
-			ercCompanyEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, ercCompanyEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new erc company entry with the primary key. Does not add the erc company entry to the database.
 	 *
 	 * @param ercCompanyEntryId the primary key for the new erc company entry
@@ -743,10 +682,7 @@ public class ERCCompanyEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ERCCompanyEntryImpl.class, ercCompanyEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ercCompanyEntryModelImpl);
+		cacheUniqueFindersResult(ercCompanyEntry, false);
 
 		if (isNew) {
 			ercCompanyEntry.setNew(false);
@@ -812,9 +748,6 @@ public class ERCCompanyEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -875,10 +808,12 @@ public class ERCCompanyEntryPersistenceImpl
 					"ercCompanyEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ERCCompanyEntry::getCompanyId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			ERCCompanyEntry::getExternalReferenceCode,
+			ERCCompanyEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ERCCOMPANYENTRY_WHERE,
@@ -959,4 +894,4 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-732644464
+// LIFERAY-SERVICE-BUILDER-HASH:-1476260340

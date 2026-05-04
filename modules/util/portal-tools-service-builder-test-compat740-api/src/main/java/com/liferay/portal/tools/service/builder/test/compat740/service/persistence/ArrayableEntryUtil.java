@@ -36,6 +36,20 @@ public class ArrayableEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ArrayableEntry> arrayableEntries) {
+		getPersistence().cacheResult(arrayableEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ArrayableEntry arrayableEntry) {
+		getPersistence().cacheResult(arrayableEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -318,24 +332,6 @@ public class ArrayableEntryUtil {
 	}
 
 	/**
-	 * Caches the arrayable entry in the entity cache if it is enabled.
-	 *
-	 * @param arrayableEntry the arrayable entry
-	 */
-	public static void cacheResult(ArrayableEntry arrayableEntry) {
-		getPersistence().cacheResult(arrayableEntry);
-	}
-
-	/**
-	 * Caches the arrayable entries in the entity cache if it is enabled.
-	 *
-	 * @param arrayableEntries the arrayable entries
-	 */
-	public static void cacheResult(List<ArrayableEntry> arrayableEntries) {
-		getPersistence().cacheResult(arrayableEntries);
-	}
-
-	/**
 	 * Creates a new arrayable entry with the primary key. Does not add the arrayable entry to the database.
 	 *
 	 * @param arrayableEntryId the primary key for the new arrayable entry
@@ -398,4 +394,4 @@ public class ArrayableEntryUtil {
 	private static volatile ArrayableEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1171530826
+// LIFERAY-SERVICE-BUILDER-HASH:206708577

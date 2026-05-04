@@ -923,4 +923,4 @@ public class BasicEntryModelImpl
 	private BasicEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1012107866
+// LIFERAY-SERVICE-BUILDER-HASH:-464652452

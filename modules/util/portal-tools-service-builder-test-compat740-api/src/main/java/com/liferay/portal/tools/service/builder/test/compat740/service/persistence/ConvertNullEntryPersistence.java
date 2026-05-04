@@ -77,21 +77,6 @@ public interface ConvertNullEntryPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the convert null entry in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntry the convert null entry
-	 */
-	public void cacheResult(ConvertNullEntry convertNullEntry);
-
-	/**
-	 * Caches the convert null entries in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntries the convert null entries
-	 */
-	public void cacheResult(
-		java.util.List<ConvertNullEntry> convertNullEntries);
-
-	/**
 	 * Creates a new convert null entry with the primary key. Does not add the convert null entry to the database.
 	 *
 	 * @param convertNullEntryId the primary key for the new convert null entry
@@ -130,4 +115,4 @@ public interface ConvertNullEntryPersistence
 	public ConvertNullEntry fetchByPrimaryKey(long convertNullEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:283923571
+// LIFERAY-SERVICE-BUILDER-HASH:-1750281929

@@ -36,6 +36,20 @@ public class TrashEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TrashEntry> trashEntries) {
+		getPersistence().cacheResult(trashEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TrashEntry trashEntry) {
+		getPersistence().cacheResult(trashEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class TrashEntryUtil {
 	}
 
 	/**
-	 * Caches the trash entry in the entity cache if it is enabled.
-	 *
-	 * @param trashEntry the trash entry
-	 */
-	public static void cacheResult(TrashEntry trashEntry) {
-		getPersistence().cacheResult(trashEntry);
-	}
-
-	/**
-	 * Caches the trash entries in the entity cache if it is enabled.
-	 *
-	 * @param trashEntries the trash entries
-	 */
-	public static void cacheResult(List<TrashEntry> trashEntries) {
-		getPersistence().cacheResult(trashEntries);
-	}
-
-	/**
 	 * Creates a new trash entry with the primary key. Does not add the trash entry to the database.
 	 *
 	 * @param trashEntryId the primary key for the new trash entry
@@ -191,4 +187,4 @@ public class TrashEntryUtil {
 	private static volatile TrashEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1791560391
+// LIFERAY-SERVICE-BUILDER-HASH:1291578650

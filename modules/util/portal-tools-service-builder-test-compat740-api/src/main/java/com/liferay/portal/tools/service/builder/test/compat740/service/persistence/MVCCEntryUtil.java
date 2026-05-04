@@ -36,6 +36,20 @@ public class MVCCEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MVCCEntry> mvccEntries) {
+		getPersistence().cacheResult(mvccEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MVCCEntry mvccEntry) {
+		getPersistence().cacheResult(mvccEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -298,24 +312,6 @@ public class MVCCEntryUtil {
 	}
 
 	/**
-	 * Caches the mvcc entry in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntry the mvcc entry
-	 */
-	public static void cacheResult(MVCCEntry mvccEntry) {
-		getPersistence().cacheResult(mvccEntry);
-	}
-
-	/**
-	 * Caches the mvcc entries in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntries the mvcc entries
-	 */
-	public static void cacheResult(List<MVCCEntry> mvccEntries) {
-		getPersistence().cacheResult(mvccEntries);
-	}
-
-	/**
 	 * Creates a new mvcc entry with the primary key. Does not add the mvcc entry to the database.
 	 *
 	 * @param mvccEntryId the primary key for the new mvcc entry
@@ -378,4 +374,4 @@ public class MVCCEntryUtil {
 	private static volatile MVCCEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1703488047
+// LIFERAY-SERVICE-BUILDER-HASH:-688325816

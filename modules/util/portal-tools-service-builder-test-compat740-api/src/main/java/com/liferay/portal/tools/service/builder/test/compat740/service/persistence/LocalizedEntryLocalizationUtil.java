@@ -36,6 +36,24 @@ public class LocalizedEntryLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LocalizedEntryLocalization> localizedEntryLocalizations) {
+
+		getPersistence().cacheResult(localizedEntryLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LocalizedEntryLocalization localizedEntryLocalization) {
+
+		getPersistence().cacheResult(localizedEntryLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -321,28 +339,6 @@ public class LocalizedEntryLocalizationUtil {
 	}
 
 	/**
-	 * Caches the localized entry localization in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntryLocalization the localized entry localization
-	 */
-	public static void cacheResult(
-		LocalizedEntryLocalization localizedEntryLocalization) {
-
-		getPersistence().cacheResult(localizedEntryLocalization);
-	}
-
-	/**
-	 * Caches the localized entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntryLocalizations the localized entry localizations
-	 */
-	public static void cacheResult(
-		List<LocalizedEntryLocalization> localizedEntryLocalizations) {
-
-		getPersistence().cacheResult(localizedEntryLocalizations);
-	}
-
-	/**
 	 * Creates a new localized entry localization with the primary key. Does not add the localized entry localization to the database.
 	 *
 	 * @param localizedEntryLocalizationId the primary key for the new localized entry localization
@@ -415,4 +411,4 @@ public class LocalizedEntryLocalizationUtil {
 	private static volatile LocalizedEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-8567693
+// LIFERAY-SERVICE-BUILDER-HASH:-828949825

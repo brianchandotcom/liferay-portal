@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.service.builder.test.compat740.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -23,10 +22,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchCTEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.CTEntry;
@@ -342,71 +338,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct entry in the entity cache if it is enabled.
-	 *
-	 * @param ctEntry the ct entry
-	 */
-	@Override
-	public void cacheResult(CTEntry ctEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctEntry.getCtCollectionId())) {
-
-			dummyEntityCache.putResult(
-				CTEntryImpl.class, ctEntry.getPrimaryKey(), ctEntry);
-
-			dummyFinderCache.putResult(
-				_finderPathFetchByC_N,
-				new Object[] {ctEntry.getCompanyId(), ctEntry.getName()},
-				ctEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct entries in the entity cache if it is enabled.
-	 *
-	 * @param ctEntries the ct entries
-	 */
-	@Override
-	public void cacheResult(List<CTEntry> ctEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTEntry ctEntry : ctEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctEntry.getCtCollectionId())) {
-
-				if (dummyEntityCache.getResult(
-						CTEntryImpl.class, ctEntry.getPrimaryKey()) == null) {
-
-					cacheResult(ctEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CTEntryModelImpl ctEntryModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ctEntryModelImpl.getCompanyId(), ctEntryModelImpl.getName()
-			};
-
-			dummyFinderCache.putResult(
-				_finderPathFetchByC_N, args, ctEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
 	 * @param ctEntryId the primary key for the new ct entry
@@ -512,10 +443,7 @@ public class CTEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			CTEntryImpl.class, ctEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctEntryModelImpl);
+		cacheUniqueFindersResult(ctEntry, false);
 
 		if (isNew) {
 			ctEntry.setNew(false);
@@ -633,9 +561,6 @@ public class CTEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -665,10 +590,11 @@ public class CTEntryPersistenceImpl
 					"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getCompanyId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, CTEntry::getCompanyId,
+			CTEntry::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_CTENTRY_WHERE,
@@ -742,4 +668,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1006712317
+// LIFERAY-SERVICE-BUILDER-HASH:367009711

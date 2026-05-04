@@ -32,20 +32,6 @@ public interface MappingEntryPersistence extends BasePersistence<MappingEntry> {
 	 */
 
 	/**
-	 * Caches the mapping entry in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntry the mapping entry
-	 */
-	public void cacheResult(MappingEntry mappingEntry);
-
-	/**
-	 * Caches the mapping entries in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntries the mapping entries
-	 */
-	public void cacheResult(java.util.List<MappingEntry> mappingEntries);
-
-	/**
 	 * Creates a new mapping entry with the primary key. Does not add the mapping entry to the database.
 	 *
 	 * @param mappingEntryId the primary key for the new mapping entry
@@ -267,4 +253,4 @@ public interface MappingEntryPersistence extends BasePersistence<MappingEntry> {
 				BasicEntry> basicEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2107085740
+// LIFERAY-SERVICE-BUILDER-HASH:1791344744

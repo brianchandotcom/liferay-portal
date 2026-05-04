@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchMVCCEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.MVCCEntry;
@@ -319,57 +316,6 @@ public class MVCCEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the mvcc entry in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntry the mvcc entry
-	 */
-	@Override
-	public void cacheResult(MVCCEntry mvccEntry) {
-		entityCache.putResult(
-			MVCCEntryImpl.class, mvccEntry.getPrimaryKey(), mvccEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {mvccEntry.getCompanyId(), mvccEntry.getName()},
-			mvccEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the mvcc entries in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntries the mvcc entries
-	 */
-	@Override
-	public void cacheResult(List<MVCCEntry> mvccEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mvccEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MVCCEntry mvccEntry : mvccEntries) {
-			if (entityCache.getResult(
-					MVCCEntryImpl.class, mvccEntry.getPrimaryKey()) == null) {
-
-				cacheResult(mvccEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MVCCEntryModelImpl mvccEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			mvccEntryModelImpl.getCompanyId(), mvccEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(_finderPathFetchByC_N, args, mvccEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new mvcc entry with the primary key. Does not add the mvcc entry to the database.
 	 *
 	 * @param mvccEntryId the primary key for the new mvcc entry
@@ -470,10 +416,7 @@ public class MVCCEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MVCCEntryImpl.class, mvccEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(mvccEntryModelImpl);
+		cacheUniqueFindersResult(mvccEntry, false);
 
 		if (isNew) {
 			mvccEntry.setNew(false);
@@ -534,9 +477,6 @@ public class MVCCEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -566,10 +506,11 @@ public class MVCCEntryPersistenceImpl
 					"mvccEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MVCCEntry::getCompanyId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, MVCCEntry::getCompanyId,
+			MVCCEntry::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_MVCCENTRY_WHERE,
@@ -646,4 +587,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1304606041
+// LIFERAY-SERVICE-BUILDER-HASH:-1816146607

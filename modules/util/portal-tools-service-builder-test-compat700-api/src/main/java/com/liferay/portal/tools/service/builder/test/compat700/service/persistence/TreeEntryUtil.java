@@ -304,4 +304,4 @@ public class TreeEntryUtil {
 	private static volatile TreeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-382465495
+// LIFERAY-SERVICE-BUILDER-HASH:-1723341001

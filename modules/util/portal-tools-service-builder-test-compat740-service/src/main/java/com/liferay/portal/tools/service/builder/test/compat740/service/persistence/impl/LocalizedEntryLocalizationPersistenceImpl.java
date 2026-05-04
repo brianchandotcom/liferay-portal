@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchLocalizedEntryLocalizationException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.LocalizedEntryLocalization;
@@ -340,74 +337,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the localized entry localization in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntryLocalization the localized entry localization
-	 */
-	@Override
-	public void cacheResult(
-		LocalizedEntryLocalization localizedEntryLocalization) {
-
-		entityCache.putResult(
-			LocalizedEntryLocalizationImpl.class,
-			localizedEntryLocalization.getPrimaryKey(),
-			localizedEntryLocalization);
-
-		finderCache.putResult(
-			_finderPathFetchByLocalizedEntryId_LanguageId,
-			new Object[] {
-				localizedEntryLocalization.getLocalizedEntryId(),
-				localizedEntryLocalization.getLanguageId()
-			},
-			localizedEntryLocalization);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the localized entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntryLocalizations the localized entry localizations
-	 */
-	@Override
-	public void cacheResult(
-		List<LocalizedEntryLocalization> localizedEntryLocalizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (localizedEntryLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LocalizedEntryLocalization localizedEntryLocalization :
-				localizedEntryLocalizations) {
-
-			if (entityCache.getResult(
-					LocalizedEntryLocalizationImpl.class,
-					localizedEntryLocalization.getPrimaryKey()) == null) {
-
-				cacheResult(localizedEntryLocalization);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LocalizedEntryLocalizationModelImpl
-			localizedEntryLocalizationModelImpl) {
-
-		Object[] args = new Object[] {
-			localizedEntryLocalizationModelImpl.getLocalizedEntryId(),
-			localizedEntryLocalizationModelImpl.getLanguageId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByLocalizedEntryId_LanguageId, args,
-			localizedEntryLocalizationModelImpl);
-	}
-
-	/**
 	 * Creates a new localized entry localization with the primary key. Does not add the localized entry localization to the database.
 	 *
 	 * @param localizedEntryLocalizationId the primary key for the new localized entry localization
@@ -524,11 +453,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LocalizedEntryLocalizationImpl.class,
-			localizedEntryLocalizationModelImpl, false, true);
-
-		cacheUniqueFindersCache(localizedEntryLocalizationModelImpl);
+		cacheUniqueFindersResult(localizedEntryLocalization, false);
 
 		if (isNew) {
 			localizedEntryLocalization.setNew(false);
@@ -592,9 +517,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLocalizedEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLocalizedEntryId",
 			new String[] {
@@ -627,10 +549,12 @@ public class LocalizedEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LocalizedEntryLocalization::getLocalizedEntryId));
 
-		_finderPathFetchByLocalizedEntryId_LanguageId = new FinderPath(
+		_finderPathFetchByLocalizedEntryId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLocalizedEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"localizedEntryId", "languageId"}, true);
+			new String[] {"localizedEntryId", "languageId"}, false,
+			LocalizedEntryLocalization::getLocalizedEntryId,
+			LocalizedEntryLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -711,4 +635,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:979306359
+// LIFERAY-SERVICE-BUILDER-HASH:-1204054251

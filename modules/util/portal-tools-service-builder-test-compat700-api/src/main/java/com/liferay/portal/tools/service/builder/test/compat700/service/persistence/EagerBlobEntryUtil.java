@@ -507,4 +507,4 @@ public class EagerBlobEntryUtil {
 	private static volatile EagerBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1573798429
+// LIFERAY-SERVICE-BUILDER-HASH:2140236845

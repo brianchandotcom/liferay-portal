@@ -223,20 +223,6 @@ public interface LikeFinderEntryPersistence
 		long companyId, long ownerId, int ownerType, String portletId);
 
 	/**
-	 * Caches the like finder entry in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntry the like finder entry
-	 */
-	public void cacheResult(LikeFinderEntry likeFinderEntry);
-
-	/**
-	 * Caches the like finder entries in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntries the like finder entries
-	 */
-	public void cacheResult(java.util.List<LikeFinderEntry> likeFinderEntries);
-
-	/**
 	 * Creates a new like finder entry with the primary key. Does not add the like finder entry to the database.
 	 *
 	 * @param likeFinderEntryId the primary key for the new like finder entry
@@ -275,4 +261,4 @@ public interface LikeFinderEntryPersistence
 	public LikeFinderEntry fetchByPrimaryKey(long likeFinderEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:995076315
+// LIFERAY-SERVICE-BUILDER-HASH:-1597207203

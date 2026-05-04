@@ -343,6 +343,16 @@ public class SharingEntryLocalServiceImpl
 				externalReferenceCode, groupId));
 	}
 
+	@Override
+	public void deleteToUserGroupSharingEntries(long toUserGroupId) {
+		List<SharingEntry> sharingEntries =
+			sharingEntryPersistence.findByToUserGroupId(toUserGroupId);
+
+		for (SharingEntry sharingEntry : sharingEntries) {
+			sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+		}
+	}
+
 	/**
 	 * Deletes the sharing entries for resources shared with the user.
 	 *
@@ -527,6 +537,11 @@ public class SharingEntryLocalServiceImpl
 
 		return sharingEntryPersistence.findByTT_TUG_TU_C_C(
 			toTicketId, toUserGroupId, toUserId, classNameId, classPK);
+	}
+
+	@Override
+	public List<SharingEntry> getToUserGroupSharingEntries(long toUserGroupId) {
+		return sharingEntryPersistence.findByToUserGroupId(toUserGroupId);
 	}
 
 	/**

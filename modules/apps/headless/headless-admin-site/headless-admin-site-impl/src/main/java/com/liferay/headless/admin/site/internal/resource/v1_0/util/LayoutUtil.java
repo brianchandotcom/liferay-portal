@@ -906,9 +906,13 @@ public class LayoutUtil {
 					pageSpecification.getCustomFields(),
 					LocaleUtil.getSiteDefault());
 
-			ExpandoUtil.fillMissingDefaultLocaleValues(expandoBridgeAttributes);
+			if (expandoBridgeAttributes != null) {
+				ExpandoUtil.fillMissingDefaultLocaleValues(
+					expandoBridgeAttributes);
 
-			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+				serviceContext.setExpandoBridgeAttributes(
+					expandoBridgeAttributes);
+			}
 		}
 	}
 

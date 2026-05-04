@@ -759,13 +759,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_OPERATOR",
 				value1 = "not-contains");
 		}
-	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Equals Option"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserEmailAddressNotEquals {
-		task ("Add segment") {
+		task ("Add segment with Not Equals operator") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Email Address");
@@ -781,7 +776,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Not Equals segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressNotEquals Test");
 
 			AssertValue(

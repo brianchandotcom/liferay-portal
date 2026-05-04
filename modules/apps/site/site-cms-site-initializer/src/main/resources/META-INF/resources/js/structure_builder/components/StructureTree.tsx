@@ -325,6 +325,18 @@ export default function StructureTree({search}: {search: string}) {
 											{childItem.actions?.length ? (
 												<ClayDropDownWithItems
 													items={childItem.actions}
+													menuElementAttrs={{
+														onKeyDown: (event) => {
+															if (
+																event.key ===
+																	'Enter' ||
+																event.key ===
+																	' '
+															) {
+																event.stopPropagation();
+															}
+														},
+													}}
 													trigger={
 														<ClayButtonWithIcon
 															aria-label={Liferay.Language.get(

@@ -49,13 +49,14 @@ public class CollaboratorDTOConverter
 			DTOConverterContext dtoConverterContext, SharingEntry sharingEntry)
 		throws Exception {
 
-		User user = _fetchUser(sharingEntry);
-		UserGroup userGroup = _fetchUserGroup(sharingEntry);
-
 		String ticketEmailAddress = _fetchEmailAddress(
 			_fetchTicket(sharingEntry));
 
+		User user = _fetchUser(sharingEntry);
+
 		boolean hasViewPermission = _hasViewPermission(user);
+
+		UserGroup userGroup = _fetchUserGroup(sharingEntry);
 
 		return new Collaborator() {
 			{

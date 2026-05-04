@@ -18,6 +18,7 @@ export interface AccountEventsTrendData {
 export interface AccountEventsTrendVariables {
 	accountId: string;
 	channelId: string;
+	entityId: string;
 	entityType: SessionEntityTypes;
 	keywords?: string;
 	rangeEnd?: string | null;
@@ -29,6 +30,7 @@ export default gql`
 	query AccountEventsTrend(
 		$accountId: String!
 		$channelId: String!
+		$entityId: String!
 		$entityType: EntityType!
 		$keywords: String
 		$rangeEnd: String
@@ -38,6 +40,7 @@ export default gql`
 		eventsByUserSessions(
 			accountId: $accountId
 			channelId: $channelId
+			entityId: $entityId
 			entityType: $entityType
 			keywords: $keywords
 			page: 0

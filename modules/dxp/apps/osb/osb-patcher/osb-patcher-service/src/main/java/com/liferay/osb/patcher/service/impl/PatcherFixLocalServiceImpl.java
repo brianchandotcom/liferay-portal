@@ -5,10 +5,13 @@
 
 package com.liferay.osb.patcher.service.impl;
 
+import com.liferay.osb.patcher.constants.PatcherConstants;
 import com.liferay.osb.patcher.constants.PatcherFixConstants;
 import com.liferay.osb.patcher.constants.WorkflowConstants;
 import com.liferay.osb.patcher.model.PatcherFix;
+import com.liferay.osb.patcher.model.PatcherProjectVersion;
 import com.liferay.osb.patcher.service.PatcherFixLocalServiceUtil;
+import com.liferay.osb.patcher.service.PatcherProjectVersionLocalServiceUtil;
 import com.liferay.osb.patcher.service.base.PatcherFixLocalServiceBaseImpl;
 import com.liferay.osb.patcher.service.persistence.PatcherFixRelPersistence;
 import com.liferay.osb.patcher.util.EmailUtil;
@@ -17,9 +20,12 @@ import com.liferay.osb.patcher.util.PatcherFixUtil;
 import com.liferay.osb.patcher.util.PatcherProjectVersionUtil;
 import com.liferay.osb.patcher.util.PatcherUtil;
 import com.liferay.osb.patcher.util.comparator.PatcherFixKeyVersionComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -27,9 +33,14 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,6 +123,41 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 		patcherFix.setStatusDate(new Date());
 
 		return patcherFixPersistence.update(patcherFix);
+	}
+
+	@Override
+	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
+			String patcherProjectVersionName, String ticketList)
+		throws PortalException {
+
+		_validateCheckPatcherFixesByPatcherProjectVersionName(
+			patcherProjectVersionName, ticketList);
+
+		PatcherProjectVersion patcherProjectVersion =
+			PatcherProjectVersionLocalServiceUtil.
+				fetchPatcherProjectVersionByName(patcherProjectVersionName);
+
+		List<PatcherFix> patcherFixes = getPatcherFixes(
+			patcherProjectVersion.getPatcherProjectVersionId(), true,
+			PatcherFixConstants.TYPE_ANY,
+			WorkflowConstants.STATUS_FIX_COMPLETE);
+
+		Set<String> patcherFixNames = new HashSet<>();
+
+		for (PatcherFix patcherFix : patcherFixes) {
+			patcherFixNames.add(patcherFix.getName());
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		for (String ticket : ticketList.split(",")) {
+			String preparedTicket = PatcherUtil.preparePatcherName(ticket);
+
+			jsonObject.put(
+				preparedTicket, patcherFixNames.contains(preparedTicket));
+		}
+
+		return jsonObject;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -500,8 +546,55 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			_userLocalService.getUser(userId));
 	}
 
+	private void _validateCheckPatcherFixesByPatcherProjectVersionName(
+			String patcherProjectVersionName, String ticketList)
+		throws PortalException {
+
+		if (Validator.isNull(patcherProjectVersionName)) {
+			throw new PortalException("The project version name is invalid");
+		}
+
+		PatcherProjectVersion patcherProjectVersion =
+			PatcherProjectVersionLocalServiceUtil.
+				fetchPatcherProjectVersionByName(patcherProjectVersionName);
+
+		if (patcherProjectVersion == null) {
+			throw new PortalException("The project version is invalid");
+		}
+
+		if (Validator.isNull(ticketList)) {
+			throw new PortalException("The ticket list is invalid");
+		}
+
+		List<String> invalidTickets = new ArrayList<>();
+		Pattern pattern = Pattern.compile(
+			PatcherConstants.TICKET_NAME_LPD_LPE_LPS_REGEX);
+
+		for (String ticket : ticketList.split(",")) {
+			String preparedTicket = PatcherUtil.preparePatcherName(ticket);
+
+			if (!pattern.matcher(
+					preparedTicket
+				).matches()) {
+
+				invalidTickets.add(ticket);
+			}
+		}
+
+		if (!invalidTickets.isEmpty()) {
+			String invalidTicketList = StringUtil.merge(
+				invalidTickets, StringPool.COMMA_AND_SPACE);
+
+			throw new PortalException(
+				"The following tickets are invalid: " + invalidTicketList);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PatcherFixLocalServiceImpl.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private PatcherFixRelPersistence _patcherFixRelPersistence;

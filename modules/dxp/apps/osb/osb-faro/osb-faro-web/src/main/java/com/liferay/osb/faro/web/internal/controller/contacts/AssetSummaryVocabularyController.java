@@ -36,10 +36,11 @@ public class AssetSummaryVocabularyController extends BaseFaroController {
 	public FaroFDSResultsDisplay getAssetSummaryVocabularies(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
+			@QueryParam("keywords") String keywords,
 			@QueryParam("rangeEnd") String rangeEnd,
-			@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
+			@QueryParam("rangeKey") int rangeKey,
 			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("cur") int cur,
+			@QueryParam("sort") String sort, @QueryParam("cur") int cur,
 			@DefaultValue("20") @QueryParam("delta") int delta)
 		throws Exception {
 
@@ -48,8 +49,8 @@ public class AssetSummaryVocabularyController extends BaseFaroController {
 
 		Results<AssetSummaryVocabulary> results =
 			contactsEngineClient.getAssetSummaryVocabularies(
-				faroProject, channelId, rangeEnd, rangeKey, rangeStart, cur,
-				delta);
+				faroProject, channelId, keywords, rangeEnd, rangeKey,
+				rangeStart, sort, cur, delta);
 
 		Function<AssetSummaryVocabulary, AssetSummaryVocabularyDisplay>
 			function = AssetSummaryVocabularyDisplay::new;

@@ -460,11 +460,13 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta) {
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta) {
 
 		return contactsEngineClient.getAssetSummaryCategories(
-			faroProject, channelId, rangeEnd, rangeKey, rangeStart, cur, delta);
+			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
+			sort, cur, delta);
 	}
 
 	@Override
@@ -478,11 +480,13 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryTag> getAssetSummaryTags(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta) {
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta) {
 
 		return contactsEngineClient.getAssetSummaryTags(
-			faroProject, channelId, rangeEnd, rangeKey, rangeStart, cur, delta);
+			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
+			sort, cur, delta);
 	}
 
 	@Override
@@ -496,11 +500,13 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryVocabulary> getAssetSummaryVocabularies(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta) {
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta) {
 
 		return contactsEngineClient.getAssetSummaryVocabularies(
-			faroProject, channelId, rangeEnd, rangeKey, rangeStart, cur, delta);
+			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
+			sort, cur, delta);
 	}
 
 	@Override

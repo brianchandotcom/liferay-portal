@@ -72,21 +72,6 @@ The pull request head is `<github-username>:<branch-name>` (the GitHub username 
 
 Push the current branch to the user's remote when it has not been pushed yet or when new local commits exist (including any auto-commits from **Run pr-check**).
 
-When pr-check ran and passed, post a GitHub commit status to the head SHA so the PR opens with the local pr-check run reflected:
-
-```bash
-gh api \
-	--field "context=pr-check" \
-	--field "description=All pr-check validations passed locally" \
-	--field "state=success" \
-	--method POST \
-	"repos/<github-username>/liferay-portal/statuses/$(git rev-parse HEAD)"
-```
-
-The status posts to the fork that hosts the SHA — `<github-username>` from **Target Repository** — not the target repo where the PR lands. When the API call fails, surface the error and continue with PR creation; the developer can post the status manually afterward.
-
-When pr-check was skipped (via `--skip-pr-check`), do not post a status. The absence of the status is the honest signal — pr-check did not run, so there is nothing to report.
-
 ### Pull Request
 
 The title is concise (under 72 characters) and prefixed with the Jira ticket:
@@ -119,28 +104,7 @@ tests. It should contain the rationale provided by the user.
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
-When pr-check ran and passed, apply the `pr-check - success` label to the newly created PR. The color matches the team's existing CI success labels (for example, `ci:test:sf - success`).
-
-**Cross-fork tolerance.** When the target repository is not `<github-username>/liferay-portal` — the PR lands on a teammate's fork or upstream where the developer lacks write access — both the label create (HTTP 404) and the label apply (HTTP 403) calls will fail. Skip the label step entirely in that case and surface a one-line note in the summary: the pr-check status is still posted on `<github-username>/liferay-portal` at the head SHA, so reviewers who want to see it can navigate to the commit on the source fork. The PR check rollup on the target repo will not show pr-check, since GitHub statuses are scoped per-repository and only repo collaborators can post them — this is a known limitation of cross-fork PRs, not a skill bug.
-
-When the target repository **is** `<github-username>/liferay-portal`, ensure the label exists (idempotent — the create call fails harmlessly when the label is already present):
-
-```bash
-gh label create "pr-check - success" \
-	--color c7e8cb \
-	--description "pr-check passed locally" \
-	--repo <target-org>/liferay-portal 2>/dev/null || true
-```
-
-Apply it to the PR:
-
-```bash
-gh pr edit <PR-number> \
-	--add-label "pr-check - success" \
-	--repo <target-org>/liferay-portal
-```
-
-When pr-check was skipped, do not apply the label.
+If pr-check passed, invoke the `pr-check-publish` skill with the newly created pull request URL.
 
 ### Transitioned Jira Ticket
 

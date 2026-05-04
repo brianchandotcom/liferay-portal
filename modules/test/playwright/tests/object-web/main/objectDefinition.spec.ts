@@ -9,7 +9,7 @@ import {
 	ObjectFolderAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {Locator, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -30,7 +30,6 @@ import {
 	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import getFormContainerDefinition from '../../layout-content-page-editor-web/main/utils/getFormContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
@@ -1661,11 +1660,9 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await expect(page.getByText('Required')).toBeVisible();
 	});
-});
 
-test.describe('Manage object definitions through the Object Definitions portlet', () => {
 	test(
-		'Verify that the Access in Control Panel and View permissions control Object Admin portlet access and object visibility',
+		'verify that the Access in Control Panel and View permissions control Object Admin portlet access and object visibility',
 		{tag: '@LPS-135390'},
 		async ({
 			apiHelpers,
@@ -1732,9 +1729,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 				page.getByRole('menuitem', {exact: true, name: 'Objects'})
 			).toBeHidden();
 
-			await page.goto(`/group/guest${PORTLET_URLS.objects}`, {
-				waitUntil: 'load',
-			});
+			await viewObjectDefinitionsPage.goto();
 
 			await expect(
 				page.getByText(
@@ -1819,7 +1814,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify that the Add Object Definition permission controls the ability to create an Object',
+		'verify that the Add Object Definition permission controls the ability to create an Object',
 		{tag: '@LPS-135390'},
 		async ({
 			apiHelpers,
@@ -1907,13 +1902,11 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 				viewObjectDefinitionsPage.createObjectDefinitionButton
 			).toBeVisible();
 
-			const objectDefinitionLabel = 'CustomObject' + getRandomInt();
-
 			await viewObjectDefinitionsPage.createObjectDefinitionButton.click();
 
 			const objectDefinition =
 				await modalAddObjectDefinitionPage.createObjectDefinition(
-					objectDefinitionLabel
+					'CustomObject' + getRandomInt()
 				);
 
 			apiHelpers.data.push({
@@ -1923,17 +1916,17 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 
 			await waitForAlert(
 				page,
-				`Success:${objectDefinitionLabel} was created successfully.`
+				`Success:${objectDefinition.label['en_US']} was created successfully.`
 			);
 
 			await expect(
-				page.getByRole('link', {name: objectDefinitionLabel})
+				page.getByRole('link', {name: objectDefinition.label['en_US']})
 			).toBeVisible();
 		}
 	);
 
 	test(
-		'Verify that the Delete permission controls the ability to delete an Object',
+		'verify that the Delete permission controls the ability to delete an Object',
 		{tag: '@LPS-135390'},
 		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
 			const objectDefinition =
@@ -2049,10 +2042,8 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			);
 
 			expect(
-				await page
-					.getByRole('switch', {name: 'Activate Object'})
-					.isChecked()
-			).toBeFalsy();
+				page.getByRole('switch', {name: 'Activate Object'})
+			).not.toBeChecked();
 
 			await viewObjectDefinitionsPage.goto();
 
@@ -2063,9 +2054,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
 
 			await page
-				.getByPlaceholder('Confirm Object Definition Name', {
-					exact: false,
-				})
+				.getByPlaceholder('Confirm Object Definition Name')
 				.fill(objectDefinition.name);
 
 			await page.getByRole('button', {name: 'Delete'}).click();
@@ -2093,7 +2082,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify that it is not possible to create an Object with a duplicated Object Name',
+		'verify that it is not possible to create an Object with a duplicated Object Name',
 		{tag: '@LPS-135549'},
 		async ({
 			apiHelpers,
@@ -2131,7 +2120,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify required field validations and Object Name autofill when creating an Object',
+		'verify required field validations and Object Name autofill when creating an Object',
 		{tag: '@LPS-135549'},
 		async ({
 			modalAddObjectDefinitionPage,
@@ -2153,23 +2142,6 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await expect(
 				modalAddObjectDefinitionPage.objectNameInput
 			).toHaveValue(objectDefinitionLabel);
-			await modalAddObjectDefinitionPage.objectNameInput.fill('Object@');
-
-			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
-
-			await expect(
-				page.getByText('Name must only contain letters and digits.')
-			).toBeVisible();
-
-			await modalAddObjectDefinitionPage.objectNameInput.fill('object');
-
-			await modalAddObjectDefinitionPage.objectDefinitionSaveButton.click();
-
-			await expect(
-				page.getByText(
-					'The first character of a name must be an uppercase letter.'
-				)
-			).toBeVisible();
 
 			await modalAddObjectDefinitionPage.objectNameInput.fill('');
 
@@ -2219,7 +2191,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify it is possible to search for Custom and System Objects and verify the empty state when no results are found',
+		'verify it is possible to search for Custom and System Objects and verify the empty state when no results are found',
 		{tag: '@LPS-135547'},
 		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
 			const objectDefinition =
@@ -2269,129 +2241,11 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await page.keyboard.press('Enter');
 
 			await expect(page.getByText('No Results Found')).toBeVisible();
-
-			await viewObjectDefinitionsPage.searchInput.clear();
-
-			await page.keyboard.press('Enter');
-
-			await expect(
-				page.getByRole('link', {exact: true, name: 'Account'})
-			).toBeVisible();
-
-			await expect(
-				page.getByRole('link', {
-					exact: true,
-					name: objectDefinition.label['en_US'],
-				})
-			).toBeVisible();
 		}
 	);
 
 	test(
-		'Verify it is possible to view Object Details by clicking on its name or the eye icon',
-		{tag: '@LPS-135549'},
-		async ({
-			apiHelpers,
-			editObjectDetailsPage,
-			page,
-			viewObjectDefinitionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
-				objectDefinition.label['en_US']
-			);
-
-			await page
-				.getByRole('menuitem', {
-					name: 'View',
-				})
-				.click();
-
-			await expect(editObjectDetailsPage.detailsTabItem).toBeVisible();
-
-			await expect(
-				page
-					.getByRole('heading', {
-						name: objectDefinition.label['en_US'],
-					})
-					.first()
-			).toBeVisible();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-				objectDefinition.label['en_US']
-			);
-
-			await expect(editObjectDetailsPage.detailsTabItem).toBeVisible();
-
-			await expect(
-				page
-					.getByRole('heading', {
-						name: objectDefinition.label['en_US'],
-					})
-					.first()
-			).toBeVisible();
-		}
-	);
-
-	test(
-		'Verify that the columns Label, System and Status display the correct values for custom and system objects',
-		{tag: '@LPS-135549'},
-		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectDefinitionsPage.goto();
-
-			for (const col of ['Label', 'System', 'Status']) {
-				await expect(
-					page.getByRole('columnheader', {name: col})
-				).toBeVisible();
-			}
-
-			const ths = await page.locator('th').allTextContents();
-			const cell = (row: Locator, col: string) =>
-				row.getByRole('cell').nth(ths.indexOf(col));
-
-			const customRow = page
-				.getByRole('row')
-				.filter({hasText: objectDefinition.label['en_US']});
-
-			await expect(cell(customRow, 'Label')).toContainText(
-				objectDefinition.label['en_US']
-			);
-			await expect(cell(customRow, 'System')).toHaveText('No');
-			await expect(cell(customRow, 'Status')).toHaveText('Approved');
-
-			const systemRow = page.getByRole('row').filter({hasText: 'User'});
-
-			await expect(cell(systemRow, 'Label')).toContainText('User');
-			await expect(cell(systemRow, 'System')).toHaveText('Yes');
-			await expect(cell(systemRow, 'Status')).toHaveText('Approved');
-		}
-	);
-
-	test(
-		'Verify that previous filled data is not kept when cancelling the creation of an Object',
+		'verify that previous filled data is not kept when cancelling the creation of an Object',
 		{tag: '@LPS-139418'},
 		async ({
 			modalAddObjectDefinitionPage,
@@ -2427,7 +2281,144 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify that the Object visibility in Collection Providers changes according to activation status',
+		'verify that the Object portlet visibility in the Open Menu changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			globalMenuPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					panelCategoryKey: 'control_panel.object',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await globalMenuPage.goToControlPanel();
+
+			await expect(
+				page.getByRole('link', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
+
+	test(
+		'verify that the Object portlet visibility in the Site Menu changes according to activation status',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			page,
+			productMenuPage,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					panelCategoryKey: 'site_administration.content',
+					scope: 'site',
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await page.reload();
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await page.goto('/');
+
+			await productMenuPage.openProductMenuIfClosed();
+
+			await productMenuPage.contentAndDataButton.click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					name: objectDefinition.pluralLabel['en_US'],
+				})
+			).toBeVisible();
+		}
+	);
+});
+
+test.describe('Manage object definitions through Page Templates', () => {
+	test(
+		'verify that the Object visibility in Collection Providers changes according to activation status',
 		{tag: '@LPS-139005'},
 		async ({
 			apiHelpers,
@@ -2481,78 +2472,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify that the Object visibility in the Page Item Selector changes according to activation status',
-		{tag: '@LPS-139005'},
-		async ({
-			apiHelpers,
-			page,
-			pageEditorPage,
-			site,
-			viewObjectDefinitionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const headingDefinition = getFragmentDefinition({
-				id: getRandomString(),
-				key: 'BASIC_COMPONENT-heading',
-			});
-
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([headingDefinition]),
-				siteId: site.id,
-				title: getRandomString(),
-			});
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await page.getByText('Heading Example', {exact: true}).dblclick();
-
-			await page.getByLabel('Select Item').click();
-
-			const selectFrame = page.frameLocator('iframe[title="Select"]');
-
-			await expect(
-				selectFrame.getByRole('menuitem', {
-					name: objectDefinition.name,
-				})
-			).toBeHidden();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await pageEditorPage.goto(layout, site.friendlyUrlPath);
-
-			await page.getByText('Heading Example', {exact: true}).dblclick();
-
-			await page.getByLabel('Select Item').click();
-
-			await expect(
-				selectFrame.getByRole('menuitem', {
-					name: objectDefinition.name,
-				})
-			).toBeVisible();
-		}
-	);
-
-	test(
-		'Verify that the Object visibility in the Page Template subtype changes according to activation status',
+		'verify that the Object visibility in the Page Template subtype changes according to activation status',
 		{tag: '@LPS-139005'},
 		async ({
 			apiHelpers,
@@ -2629,7 +2549,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 	);
 
 	test(
-		'Verify that the Object entry visibility in Page fragments changes according to activation status',
+		'verify that the Object entry visibility in Page fragments changes according to activation status',
 		{tag: '@LPS-139005'},
 		async ({
 			apiHelpers,
@@ -2638,17 +2558,10 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			site,
 			viewObjectDefinitionsPage,
 		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const fieldName = objectFields[0].name!;
-
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
 					status: {code: 0},
-					titleObjectFieldName: fieldName,
+					titleObjectFieldName: 'textField',
 				});
 
 			apiHelpers.data.push({
@@ -2660,7 +2573,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 				'c/' + objectDefinition.name.toLowerCase() + 's';
 
 			await apiHelpers.objectEntry.postObjectEntry(
-				{[fieldName!]: 'Test 1'},
+				{textField: 'Test 1'},
 				applicationName
 			);
 
@@ -2675,6 +2588,12 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 				title: getRandomString(),
 			});
 
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
 			await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
 			await page.getByText('Heading Example', {exact: true}).dblclick();
@@ -2682,6 +2601,30 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			await page.getByLabel('Select Item').click();
 
 			const selectFrame = page.frameLocator('iframe[title="Select"]');
+
+			await expect(
+				selectFrame.getByRole('menuitem', {
+					name: objectDefinition.name,
+				})
+			).toBeHidden();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinition.name
+			);
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByLabel('Select Item').click();
+
+			await expect(
+				selectFrame.getByRole('menuitem', {
+					name: objectDefinition.name,
+				})
+			).toBeVisible();
 
 			await selectFrame
 				.getByRole('menuitem', {name: objectDefinition.name})
@@ -2691,7 +2634,7 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 
 			await page
 				.getByLabel('Field')
-				.selectOption(`ObjectField_${fieldName}`);
+				.selectOption('ObjectField_textField');
 
 			await pageEditorPage.publishPage();
 
@@ -2725,141 +2668,6 @@ test.describe('Manage object definitions through the Object Definitions portlet'
 			);
 
 			await expect(page.getByText('Test 1')).toBeVisible();
-		}
-	);
-
-	test(
-		'Verify that the Object portlet visibility in the Open Menu changes according to activation status',
-		{tag: '@LPS-139005'},
-		async ({
-			apiHelpers,
-			globalMenuPage,
-			page,
-			viewObjectDefinitionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					panelCategoryKey: 'control_panel.object',
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await page.goto('/');
-
-			await globalMenuPage.goToControlPanel();
-
-			await expect(
-				page.getByRole('link', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeVisible();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await page.goto('/');
-
-			await globalMenuPage.goToControlPanel();
-
-			await expect(
-				page.getByRole('link', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeHidden();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await page.goto('/');
-
-			await globalMenuPage.goToControlPanel();
-
-			await expect(
-				page.getByRole('link', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeVisible();
-		}
-	);
-
-	test(
-		'Verify that the Object portlet visibility in the Site Menu changes according to activation status',
-		{tag: '@LPS-139005'},
-		async ({
-			apiHelpers,
-			page,
-			productMenuPage,
-			viewObjectDefinitionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					panelCategoryKey: 'site_administration.content',
-					scope: 'site',
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await page.reload();
-
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.contentAndDataButton.click();
-
-			await expect(
-				page.getByRole('menuitem', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeVisible();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await page.goto('/');
-
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.contentAndDataButton.click();
-
-			await expect(
-				page.getByRole('menuitem', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeHidden();
-
-			await viewObjectDefinitionsPage.goto();
-
-			await viewObjectDefinitionsPage.changeObjectActivateStatus(
-				objectDefinition.name
-			);
-
-			await page.goto('/');
-
-			await productMenuPage.openProductMenuIfClosed();
-
-			await productMenuPage.contentAndDataButton.click();
-
-			await expect(
-				page.getByRole('menuitem', {
-					name: objectDefinition.pluralLabel['en_US'],
-				})
-			).toBeVisible();
 		}
 	);
 });

@@ -10,6 +10,7 @@ import path from 'path';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {getTempDir} from '../../utils/temp';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class ViewObjectDefinitionsPage {
 	readonly actionsButton: Locator;
@@ -94,9 +95,10 @@ export class ViewObjectDefinitionsPage {
 
 		await this.page.getByRole('button', {name: 'Save'}).click();
 
-		await this.page
-			.getByText('The object was saved successfully.')
-			.waitFor();
+		await waitForAlert(
+			this.page,
+			`Success:The object was saved successfully.`
+		);
 	}
 
 	async clickEditObjectDefinitionLink(
@@ -200,7 +202,6 @@ export class ViewObjectDefinitionsPage {
 			`/group${siteUrl || '/guest'}${PORTLET_URLS.objects}`,
 			{waitUntil: 'load'}
 		);
-		await this.openObjectFolder('Default');
 	}
 
 	async importObjectDefinition(

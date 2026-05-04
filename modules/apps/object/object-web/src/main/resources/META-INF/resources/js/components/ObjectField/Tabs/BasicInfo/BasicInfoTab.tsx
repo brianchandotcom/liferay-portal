@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Input, SidebarCategory} from '@liferay/object-js-components-web';
+import {
+	CountryInfo,
+	Input,
+	SidebarCategory,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {ElementType, useState} from 'react';
@@ -13,7 +17,6 @@ import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilterContainer} from './AggregationFilterContainer';
 import {BasicInfoContainer} from './BasicInfoContainer';
 import {FormulaContainer} from './FormulaContainer';
-import {CountryInfo} from './PhoneNumberProperties';
 import {SearchableContainer} from './SearchableContainer';
 import {TranslationOptionsContainer} from './TranslationOptionsContainer';
 

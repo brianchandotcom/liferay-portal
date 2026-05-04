@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {CountryInfo} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {
 	ILearnResourceContext,
@@ -17,7 +18,7 @@ import ObjectFieldFormBase, {
 import {AttachmentProperties} from './AttachmentProperties';
 import {AggregationFilters} from './BasicInfoTab';
 import {MaxLengthProperties} from './MaxLengthProperties';
-import {CountryInfo, PhoneNumberProperties} from './PhoneNumberProperties';
+import {PhoneNumberProperties} from './PhoneNumberProperties';
 
 import '../../EditObjectFieldContent.scss';
 

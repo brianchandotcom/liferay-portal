@@ -14,7 +14,7 @@ autoscaling:
                 type: Resource
         minReplicas: 1
     keda:
-        customTriggers: []
+        customTriggers: {}
         maxReplicaCount: 100
         minReplicaCount: 1
         pollingInterval: 30
@@ -23,11 +23,13 @@ autoscaling:
             annotations: {}
             spec: {}
         triggers:
-            -   metadata:
+            hikari-active-connections:
+                metadata:
                     metricName: hikari_active_connections
                     query: max({__name__=~"com_zaxxer_hikari_pool_hikaripool_.*_activeconnections"})
                     threshold: "50"
-            -   metadata:
+            jvm-threads-current:
+                metadata:
                     metricName: jvm_threads_current
                     query: jvm_threads_current
                     threshold: "500"

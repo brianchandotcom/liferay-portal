@@ -371,13 +371,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_KEY_ANY",
 				value1 = "GUEST_LANGUAGE_ID");
 		}
-	}
 
-	@description = "LPS-163095 Bug: SegmentRequestContentContributor are not propertly registered"
-	@priority = 4
-	@uitest
-	test AddSegmentBySessionIPGeocoderCountry {
-		task ("Add segment using IP Geocoder Country") {
+		task ("Add segment with IP Geocoder Country property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Session");
@@ -393,7 +388,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the IP Geocoder Country segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionIPGeocoderCountry Test");
 
 			AssertValue(

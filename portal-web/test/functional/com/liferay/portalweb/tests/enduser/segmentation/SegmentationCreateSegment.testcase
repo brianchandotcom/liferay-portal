@@ -222,7 +222,7 @@ definition {
 	@description = "Test Automation for LPS-130278: Validate if it's posible to create a segment based on Organization > Organization criteria"
 	@priority = 5
 	@uitest
-	test AddSegmentByOrganizationOrganization {
+	test AddSegmentByOrganizationProperties {
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

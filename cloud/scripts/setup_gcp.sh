@@ -112,10 +112,6 @@ function _configure_gcs_bucket {
 	gcloud storage buckets update \
 		"gs://${bucket_name}" \
 		--default-encryption-key "projects/${project_id}/locations/${region}/keyRings/${key_name}/cryptoKeys/${key_name}" \
-		--project "${project_id}"
-
-	gcloud storage buckets update \
-		"gs://${bucket_name}" \
 		--project "${project_id}" \
 		--retention-period "90d"
 }

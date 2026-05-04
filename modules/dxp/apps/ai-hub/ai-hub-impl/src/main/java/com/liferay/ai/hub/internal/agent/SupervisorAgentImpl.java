@@ -18,6 +18,7 @@ import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -81,10 +83,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 							vertexAiGeminiChatModel);
 					}
 					catch (Exception exception) {
-						_log.error(exception);
-
-						_handleException(
-							exception, agentContext.getSseEventSinkKey());
+						_handleException(agentContext, exception);
 					}
 					finally {
 						PermissionThreadLocal.setPermissionChecker(
@@ -177,34 +176,44 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		}
 	}
 
-	private void _handleException(Exception exception, String sseEventSinkKey) {
-		if (exception instanceof
-				UnsupportedOperationException unsupportedOperationException) {
+	private void _handleException(
+		AgentContext agentContext, Exception exception) {
 
+		_log.error(exception);
+
+		DTOConverterContext dtoConverterContext =
+			agentContext.getDTOConverterContext();
+
+		if (exception instanceof UnsupportedOperationException) {
 			SseUtil.send(
-				unsupportedOperationException.getMessage(), "Chat Message Sent",
-				null, sseEventSinkKey);
+				_language.get(
+					dtoConverterContext.getLocale(),
+					"you-have-exceeded-your-token-quota"),
+				"Chat Message Sent", null, agentContext.getSseEventSinkKey());
 
 			return;
 		}
 
-		if (!(exception.getCause() instanceof InvocationTargetException)) {
+		if (!(exception.getCause() instanceof
+				InvocationTargetException invocationTargetException)) {
+
 			SseUtil.send(
-				"I cannot fulfill this request.", "Chat Message Sent", null,
-				sseEventSinkKey);
+				_language.get(
+					dtoConverterContext.getLocale(),
+					"i-cannot-fulfill-this-request"),
+				"Chat Message Sent", null, agentContext.getSseEventSinkKey());
 
 			return;
 		}
-
-		InvocationTargetException invocationTargetException =
-			(InvocationTargetException)exception.getCause();
 
 		if (invocationTargetException.getCause() instanceof
-				UnsupportedOperationException unsupportedOperationException) {
+				UnsupportedOperationException) {
 
 			SseUtil.send(
-				unsupportedOperationException.getMessage(), "Chat Message Sent",
-				null, sseEventSinkKey);
+				_language.get(
+					dtoConverterContext.getLocale(),
+					"you-have-exceeded-your-token-quota"),
+				"Chat Message Sent", null, agentContext.getSseEventSinkKey());
 		}
 	}
 
@@ -242,6 +251,9 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
+
+	@Reference
+	private Language _language;
 
 	private NoticeableExecutorService _noticeableExecutorService;
 

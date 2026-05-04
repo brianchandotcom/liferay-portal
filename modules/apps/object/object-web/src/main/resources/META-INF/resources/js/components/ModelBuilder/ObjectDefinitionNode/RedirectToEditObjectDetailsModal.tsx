@@ -29,49 +29,47 @@ export function RedirectToEditObjectDetailsModal({
 		<>
 			<ClayModalProvider>
 				<ClayModal center observer={observer} status="info">
-						<ClayModal.Header
-							closeButtonAriaLabel={Liferay.Language.get('close')}
-						>
-							{Liferay.Language.get(
-								'leaving-object-model-builder'
-							)}
-						</ClayModal.Header>
+					<ClayModal.Header
+						closeButtonAriaLabel={Liferay.Language.get('close')}
+					>
+						{Liferay.Language.get('leaving-object-model-builder')}
+					</ClayModal.Header>
 
-						<ClayModal.Body>
-							<ClayForm>
+					<ClayModal.Body>
+						<ClayForm>
 							<p>
 								{Liferay.Language.get(
 									'you-are-leaving-object-model-builder-and-opening-the-object-admin-page-view-in-a-new-tab'
 								)}
 							</p>
-							</ClayForm>
-						</ClayModal.Body>
+						</ClayForm>
+					</ClayModal.Body>
 
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group key={1} spaced>
-									<ClayButton
-										aria-labelledby={Liferay.Language.get(
-											'cancel'
-										)}
-										displayType="secondary"
-										onClick={onClose}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group key={1} spaced>
+								<ClayButton
+									aria-labelledby={Liferay.Language.get(
+										'cancel'
+									)}
+									displayType="secondary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-									<ClayButton
-										aria-labelledby={Liferay.Language.get(
-											'open-page-view'
-										)}
-										displayType="info"
-										onClick={handleSubmit}
-									>
-										{Liferay.Language.get('open-page-view')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						/>
+								<ClayButton
+									aria-labelledby={Liferay.Language.get(
+										'open-page-view'
+									)}
+									displayType="info"
+									onClick={handleSubmit}
+								>
+									{Liferay.Language.get('open-page-view')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
 				</ClayModal>
 			</ClayModalProvider>
 		</>

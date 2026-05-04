@@ -10,11 +10,13 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
+import {mockExportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/mockExportPreview';
 
 const renderComponent = () => {
 	return render(
 		<NewExport
 			backURL="/some/back/url"
+			exportPreview={mockExportPreview}
 			exportPreviewAPIURL="/o/export-import/v1.0/export-preview"
 		/>
 	);

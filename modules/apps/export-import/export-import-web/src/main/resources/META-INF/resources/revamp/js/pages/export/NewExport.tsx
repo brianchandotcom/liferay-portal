@@ -3,17 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Form, Formik, FormikValues} from 'formik';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import Footer from '../../components/Footer';
 import {DateFilterValues} from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
+import {fetchExportPreview} from '../../services/exportPreviewService';
 import {ExportPreview} from '../../types/portletDataHandlerSection';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
-import {mockExportPreview} from '../../utils/mockExportPreview';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
 
@@ -25,9 +27,55 @@ interface NewExportProps {
 
 export function NewExport({
 	backURL,
-	exportPreview = mockExportPreview,
+	exportPreview,
+	exportPreviewAPIURL,
 }: NewExportProps) {
-	const sections = exportPreview.portletDataHandlerSections;
+	const [data, setData] = useState<ExportPreview | undefined>(exportPreview);
+	const [error, setError] = useState<string | null>(null);
+	const [loading, setLoading] = useState(!exportPreview);
+	const initialPreviewRef = useRef<ExportPreview | undefined>(exportPreview);
+
+	useEffect(() => {
+		if (exportPreview) {
+			return;
+		}
+
+		setLoading(true);
+		setError(null);
+
+		fetchExportPreview(exportPreviewAPIURL).then((result) => {
+			if (result.error !== null) {
+				setError(result.error);
+			}
+			else {
+				setData(result.data);
+
+				if (!initialPreviewRef.current) {
+					initialPreviewRef.current = result.data;
+				}
+			}
+
+			setLoading(false);
+		});
+	}, [exportPreview, exportPreviewAPIURL]);
+
+	if (loading) {
+		return (
+			<div className="sheet">
+				<ClayLoadingIndicator className="mb-9 mt-8" />
+			</div>
+		);
+	}
+
+	if (error) {
+		return <ClayAlert displayType="danger">{error}</ClayAlert>;
+	}
+
+	if (!data) {
+		return null;
+	}
+
+	const sections = data.portletDataHandlerSections;
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 

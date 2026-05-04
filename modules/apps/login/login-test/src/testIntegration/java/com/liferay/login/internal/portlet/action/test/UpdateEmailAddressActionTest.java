@@ -102,6 +102,10 @@ public class UpdateEmailAddressActionTest {
 
 		mockHttpServletRequest.setParameter(WebKeys.REFERER, referURL);
 
+		RequestDispatcher requestDispatcher =
+			mockHttpServletRequest.getRequestDispatcher(
+				"/html/portal/update_email_address.jsp");
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -112,10 +116,6 @@ public class UpdateEmailAddressActionTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			RequestDispatcher requestDispatcher =
-				mockHttpServletRequest.getRequestDispatcher(
-					"/html/portal/update_email_address.jsp");
-
 			requestDispatcher.include(
 				mockHttpServletRequest, mockHttpServletResponse);
 		}

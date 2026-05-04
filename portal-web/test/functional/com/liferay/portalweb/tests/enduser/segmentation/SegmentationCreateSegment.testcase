@@ -314,41 +314,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130314: Validate if it's posible to create a segment based on Session > Cookies criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionCookies {
-		task ("Add segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			Segmentation.addProperties(propertyOption = "Cookies");
-
-			Segmentation.fillTitle(titleField = "AddSegmentBySessionCookies Test");
-
-			Segmentation.fillProperty(
-				criterionKey = "GUEST_LANGUAGE_ID",
-				criterionValue = "en_US");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentBySessionCookies Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "en_US");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_KEY_ANY",
-				value1 = "GUEST_LANGUAGE_ID");
-		}
-	}
-
 	@description = "Test Automation for LPS-130319: Validate if it's posible to create a segment based on Session > Hostname criteria"
 	@priority = 5
 	@uitest
@@ -375,6 +340,36 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "localhost");
+		}
+
+		task ("Add segment with Cookies property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Cookies");
+
+			Segmentation.fillTitle(titleField = "AddSegmentBySessionCookies Test");
+
+			Segmentation.fillProperty(
+				criterionKey = "GUEST_LANGUAGE_ID",
+				criterionValue = "en_US");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the Cookies segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentBySessionCookies Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "en_US");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_KEY_ANY",
+				value1 = "GUEST_LANGUAGE_ID");
 		}
 	}
 

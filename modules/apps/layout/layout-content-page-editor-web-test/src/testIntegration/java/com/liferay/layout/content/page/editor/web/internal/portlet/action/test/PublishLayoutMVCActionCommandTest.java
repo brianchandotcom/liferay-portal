@@ -494,35 +494,30 @@ public class PublishLayoutMVCActionCommandTest {
 	public void testPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortlet()
 		throws Exception {
 
-		ServiceContext serviceContext =
+		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		try {
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		_assertPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortlet(
+			new String[] {
+				StringBundler.concat(
+					"<div class=\"fragment_1\">[@liferay_portlet.runtime ",
+					"portletName=\"com_liferay_journal_content_web_",
+					"portlet_JournalContentPortlet\" ",
+					"instanceId=\"myInstanceId0\" persistSettings=false /]",
+					"</div>"),
+				StringBundler.concat(
+					"<div class=\"fragment_1\">[@liferay_portlet",
+					"[\"runtime\"] portletName=\"com_liferay_journal_",
+					"content_web_portlet_JournalContentPortlet\" ",
+					"instanceId=\"myInstanceId1\" persistSettings=false /]",
+					"</div>")
+			},
+			(index, namespace) -> PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT,
+				"myInstanceId" + index));
 
-			_assertPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortlet(
-				new String[] {
-					StringBundler.concat(
-						"<div class=\"fragment_1\">[@liferay_portlet.runtime ",
-						"portletName=\"com_liferay_journal_content_web_",
-						"portlet_JournalContentPortlet\" ",
-						"instanceId=\"myInstanceId0\" persistSettings=false /]",
-						"</div>"),
-					StringBundler.concat(
-						"<div class=\"fragment_1\">[@liferay_portlet",
-						"[\"runtime\"] portletName=\"com_liferay_journal_",
-						"content_web_portlet_JournalContentPortlet\" ",
-						"instanceId=\"myInstanceId1\" persistSettings=false /]",
-						"</div>")
-				},
-				(index, namespace) -> PortletIdCodec.encode(
-					JournalContentPortletKeys.JOURNAL_CONTENT,
-					"myInstanceId" + index));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -530,34 +525,29 @@ public class PublishLayoutMVCActionCommandTest {
 	public void testPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortletAndDynamicInstanceId()
 		throws Exception {
 
-		ServiceContext serviceContext =
+		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
-		try {
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		_assertPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortlet(
+			new String[] {
+				StringBundler.concat(
+					"<div class=\"fragment_1\">[@liferay_portlet.runtime ",
+					"portletName=\"com_liferay_journal_content_web_",
+					"portlet_JournalContentPortlet\" ",
+					"instanceId=\"fragmentEntryLinkNamespace\" ",
+					"persistSettings=false /]</div>"),
+				StringBundler.concat(
+					"<div class=\"fragment_2\">[@liferay_portlet",
+					"[\"runtime\"] portletName=\"com_liferay_journal_",
+					"content_web_portlet_JournalContentPortlet\" ",
+					"instanceId=\"fragmentEntryLinkNamespace\" ",
+					"persistSettings=false /]</div>")
+			},
+			(index, namespace) -> PortletIdCodec.encode(
+				JournalContentPortletKeys.JOURNAL_CONTENT, namespace));
 
-			_assertPublishedLayoutFragmentEntryLinkWithFreeMarkerEmbeddedPortlet(
-				new String[] {
-					StringBundler.concat(
-						"<div class=\"fragment_1\">[@liferay_portlet.runtime ",
-						"portletName=\"com_liferay_journal_content_web_",
-						"portlet_JournalContentPortlet\" ",
-						"instanceId=\"fragmentEntryLinkNamespace\" ",
-						"persistSettings=false /]</div>"),
-					StringBundler.concat(
-						"<div class=\"fragment_2\">[@liferay_portlet",
-						"[\"runtime\"] portletName=\"com_liferay_journal_",
-						"content_web_portlet_JournalContentPortlet\" ",
-						"instanceId=\"fragmentEntryLinkNamespace\" ",
-						"persistSettings=false /]</div>")
-				},
-				(index, namespace) -> PortletIdCodec.encode(
-					JournalContentPortletKeys.JOURNAL_CONTENT, namespace));
-		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -761,18 +751,14 @@ public class PublishLayoutMVCActionCommandTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		try {
-			for (FragmentEntryLinkListener fragmentEntryLinkListener :
-					_fragmentEntryLinkListenerRegistry.
-						getFragmentEntryLinkListeners()) {
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				_fragmentEntryLinkListenerRegistry.
+					getFragmentEntryLinkListeners()) {
 
-				fragmentEntryLinkListener.onAddFragmentEntryLink(
-					fragmentEntryLink);
-			}
+			fragmentEntryLinkListener.onAddFragmentEntryLink(fragmentEntryLink);
 		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
-		}
+
+		ServiceContextThreadLocal.popServiceContext();
 
 		return fragmentEntryLink;
 	}

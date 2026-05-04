@@ -1194,7 +1194,8 @@ public class CPDefinitionLocalServiceImpl
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								StringBundler.concat(
-									"Unable to find new CPDefinitionOptionValueRel for key ",
+									"Unable to find new ",
+									"CPDefinitionOptionValueRel for key ",
 									sourceCPDefinitionOptionValueRel.getKey(),
 									" under CPDefinitionOptionRel ",
 									newCPDefinitionOptionRelId));
@@ -1203,10 +1204,9 @@ public class CPDefinitionLocalServiceImpl
 						break;
 					}
 
-					newCPInstanceOptionValueRel.
-						setCPDefinitionOptionValueRelId(
-							newCPDefinitionOptionValueRel.
-								getCPDefinitionOptionValueRelId());
+					newCPInstanceOptionValueRel.setCPDefinitionOptionValueRelId(
+						newCPDefinitionOptionValueRel.
+							getCPDefinitionOptionValueRelId());
 
 					break;
 				}

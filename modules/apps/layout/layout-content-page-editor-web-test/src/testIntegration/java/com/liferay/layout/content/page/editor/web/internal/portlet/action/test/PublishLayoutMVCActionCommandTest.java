@@ -436,24 +436,20 @@ public class PublishLayoutMVCActionCommandTest {
 		User user = UserTestUtil.addCompanyAdminUser(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
 		Layout originalLayout = _layoutLocalService.addLayout(
 			null, user.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			LayoutConstants.TYPE_PORTLET, false, StringPool.BLANK,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId()));
 
 		Assert.assertEquals(user.getUserId(), originalLayout.getUserId());
 		Assert.assertTrue(originalLayout.isTypePortlet());
 
-		serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 

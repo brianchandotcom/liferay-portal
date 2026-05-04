@@ -31,7 +31,7 @@ export default function PortletDataControl({
 	onChange,
 	value,
 }: PortletDataControlProps) {
-	if (control.type === 'choice') {
+	if (control.type === 'Choice') {
 		return (
 			<PortletDataControlChoice
 				className="mt-2 pl-2"
@@ -68,8 +68,8 @@ export default function PortletDataControl({
 					</span>
 				</div>
 
-				{control.controls?.map((nestedControl) =>
-					nestedControl.type === 'choice' && !selected ? null : (
+				{control.portletDataHandlerControls?.map((nestedControl) =>
+					nestedControl.type === 'Choice' && !selected ? null : (
 						<PortletDataControl
 							className="mt-2"
 							control={nestedControl}

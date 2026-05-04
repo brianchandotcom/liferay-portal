@@ -4,17 +4,17 @@
  */
 
 export interface PortletDataHandlerBoolean {
-	controls?: PortletDataHandlerControl[];
 	label: string;
 	name: string;
-	type: 'boolean';
+	portletDataHandlerControls?: PortletDataHandlerControl[];
+	type: 'Boolean';
 }
 
 export interface PortletDataHandlerChoice {
 	choices: {label: string; name: string}[];
 	label: string;
 	name: string;
-	type: 'choice';
+	type: 'Choice';
 }
 
 export type PortletDataHandlerControl =
@@ -63,14 +63,18 @@ export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
 		name: 'category.site_administration.content',
 		portletDataHandlers: [
 			{
-				controls: [
+				label: 'Web Content',
+				name: 'PORTLET_DATA_com_liferay_journal_web_portlet_JournalPortlet',
+				portletDataHandlerControls: [
 					{
 						label: 'Web Content',
 						name: '_journal_web-content',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
-						controls: [
+						label: 'Referenced Content',
+						name: '_journal_referenced-content',
+						portletDataHandlerControls: [
 							{
 								choices: [
 									{
@@ -84,43 +88,45 @@ export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
 								],
 								label: 'Referenced Content Behavior',
 								name: '_journal_referenced-content-behavior',
-								type: 'choice',
+								type: 'Choice',
 							},
 						],
-						label: 'Referenced Content',
-						name: '_journal_referenced-content',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
 						label: 'Version History',
 						name: '_journal_version-history',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 				],
-				label: 'Web Content',
-				name: 'PORTLET_DATA_com_liferay_journal_web_portlet_JournalPortlet',
 			},
 			{
-				controls: [
+				label: 'Documents and Media',
+				name: 'PORTLET_DATA_com_liferay_document_library_web_portlet_DLAdminPortlet',
+				portletDataHandlerControls: [
 					{
 						label: 'Repositories',
 						name: '_document_library_repositories',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
 						label: 'Folders',
 						name: '_document_library_folders',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
-						controls: [
+						label: 'Documents',
+						name: '_document_library_documents',
+						portletDataHandlerControls: [
 							{
 								label: 'Previews and Thumbnails',
 								name: '_document_library_previews-and-thumbnails',
-								type: 'boolean',
+								type: 'Boolean',
 							},
 							{
-								controls: [
+								label: 'Referenced Content',
+								name: '_document_library_referenced-content',
+								portletDataHandlerControls: [
 									{
 										choices: [
 											{
@@ -134,31 +140,25 @@ export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
 										],
 										label: 'Referenced Content Behavior',
 										name: '_document_library_referenced-content-behavior',
-										type: 'choice',
+										type: 'Choice',
 									},
 								],
-								label: 'Referenced Content',
-								name: '_document_library_referenced-content',
-								type: 'boolean',
+								type: 'Boolean',
 							},
 						],
-						label: 'Documents',
-						name: '_document_library_documents',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
 						label: 'Document Types',
 						name: '_document_library_document-types',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 					{
 						label: 'Shortcuts',
 						name: '_document_library_shortcuts',
-						type: 'boolean',
+						type: 'Boolean',
 					},
 				],
-				label: 'Documents and Media',
-				name: 'PORTLET_DATA_com_liferay_document_library_web_portlet_DLAdminPortlet',
 			},
 		],
 	},

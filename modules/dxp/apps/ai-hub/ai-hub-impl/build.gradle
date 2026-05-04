@@ -22,6 +22,7 @@ dependencies {
 	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk7", version: "1.8.21"
 	compileInclude group: "org.jetbrains.kotlin", name: "kotlin-stdlib-jdk8", version: "1.8.21"
 	compileInclude group: "org.jspecify", name: "jspecify", version: "1.0.0"
+	compileOnly group: "com.google.protobuf", name: "protobuf-java", version: "3.25.5"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay", name: "jakarta.ws.rs", version: "3.1.0.LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
@@ -31,6 +32,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:oauth2-provider:oauth2-provider-api")

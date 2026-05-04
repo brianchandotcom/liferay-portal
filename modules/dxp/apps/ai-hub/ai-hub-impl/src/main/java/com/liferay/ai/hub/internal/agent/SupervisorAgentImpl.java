@@ -9,6 +9,7 @@ import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.internal.model.VertexAiGeminiUtil;
+import com.liferay.ai.hub.internal.quota.QuotaUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -16,6 +17,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
@@ -37,6 +39,8 @@ import dev.langchain4j.agentic.internal.InternalAgent;
 import dev.langchain4j.agentic.supervisor.SupervisorContextStrategy;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.List;
 
@@ -79,10 +83,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 					catch (Exception exception) {
 						_log.error(exception);
 
-						SseUtil.send(
-							"I cannot fulfill this request.",
-							"Chat Message Sent", null,
-							agentContext.getSseEventSinkKey());
+						_handleException(
+							exception, agentContext.getSseEventSinkKey());
 					}
 					finally {
 						PermissionThreadLocal.setPermissionChecker(
@@ -175,9 +177,46 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		}
 	}
 
+	private void _handleException(Exception exception, String sseEventSinkKey) {
+		if (exception instanceof
+				UnsupportedOperationException unsupportedOperationException) {
+
+			SseUtil.send(
+				unsupportedOperationException.getMessage(), "Chat Message Sent",
+				null, sseEventSinkKey);
+
+			return;
+		}
+
+		if (!(exception.getCause() instanceof InvocationTargetException)) {
+			SseUtil.send(
+				"I cannot fulfill this request.", "Chat Message Sent", null,
+				sseEventSinkKey);
+
+			return;
+		}
+
+		InvocationTargetException invocationTargetException =
+			(InvocationTargetException)exception.getCause();
+
+		if (invocationTargetException.getCause() instanceof
+				UnsupportedOperationException unsupportedOperationException) {
+
+			SseUtil.send(
+				unsupportedOperationException.getMessage(), "Chat Message Sent",
+				null, sseEventSinkKey);
+		}
+	}
+
 	private void _invoke(
-		AgentContext agentContext, InternalAgent[] internalAgents,
-		VertexAiGeminiChatModel vertexAiGeminiChatModel) {
+			AgentContext agentContext, InternalAgent[] internalAgents,
+			VertexAiGeminiChatModel vertexAiGeminiChatModel)
+		throws PortalException {
+
+		String message = MapUtil.getString(agentContext.getInput(), "message");
+
+		QuotaUtil.checkUsage(
+			agentContext.getCompanyId(), message, agentContext.getUserId());
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
 			AgenticServices.supervisorBuilder(
@@ -197,9 +236,8 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			).build();
 
 		SseUtil.send(
-			supervisorAgent.invoke(
-				MapUtil.getString(agentContext.getInput(), "message")),
-			"Chat Message Sent", null, agentContext.getSseEventSinkKey());
+			supervisorAgent.invoke(message), "Chat Message Sent", null,
+			agentContext.getSseEventSinkKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

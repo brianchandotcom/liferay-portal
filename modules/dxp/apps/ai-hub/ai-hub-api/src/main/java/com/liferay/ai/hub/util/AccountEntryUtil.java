@@ -8,6 +8,7 @@ package com.liferay.ai.hub.util;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import java.util.Objects;
 public class AccountEntryUtil {
 
 	public static AccountEntry getUserAccountEntry(long userId)
-		throws Exception {
+		throws PortalException {
 
 		List<AccountEntryUserRel> accountEntryUserRels =
 			AccountEntryUserRelLocalServiceUtil.

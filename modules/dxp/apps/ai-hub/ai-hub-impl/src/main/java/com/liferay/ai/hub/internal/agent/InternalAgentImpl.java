@@ -125,6 +125,9 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 					_agentContext.getUserId(), _workflowDefinitionName,
 					workflowDefinition.getVersion(), null, workflowContext));
 		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			throw unsupportedOperationException;
+		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}

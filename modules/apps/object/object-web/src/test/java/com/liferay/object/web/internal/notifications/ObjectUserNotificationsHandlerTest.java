@@ -13,6 +13,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -20,8 +22,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,6 +55,106 @@ public class ObjectUserNotificationsHandlerTest {
 			_assetDisplayPageFriendlyURLProvider, _objectDefinition);
 
 		_setUpServiceContext();
+	}
+
+	@Test
+	public void testGetLinkAppendsBackURLToNotificationLink() throws Exception {
+		Mockito.when(
+			_userNotificationEvent.getPayload()
+		).thenReturn(
+			"{\"appendBackURL\": true, \"notificationLink\": " +
+				"\"/web/cms/view-asset?objectEntryId=123\"}"
+		);
+
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getRequest()
+		).thenReturn(
+			httpServletRequest
+		);
+
+		Mockito.when(
+			_serviceContext.getThemeDisplay()
+		).thenReturn(
+			themeDisplay
+		);
+
+		LiferayPortletURL liferayPortletURL = Mockito.mock(
+			LiferayPortletURL.class);
+
+		Mockito.when(
+			liferayPortletURL.toString()
+		).thenReturn(
+			"/web/notifications-panel"
+		);
+
+		try (MockedStatic<HttpComponentsUtil> httpComponentsUtilMockedStatic =
+				Mockito.mockStatic(HttpComponentsUtil.class);
+			MockedStatic<PortletURLFactoryUtil>
+				portletURLFactoryUtilMockedStatic = Mockito.mockStatic(
+					PortletURLFactoryUtil.class)) {
+
+			portletURLFactoryUtilMockedStatic.when(
+				() -> PortletURLFactoryUtil.create(
+					httpServletRequest,
+					"com_liferay_notifications_web_portlet_" +
+						"NotificationsPortlet",
+					PortletRequest.RENDER_PHASE)
+			).thenReturn(
+				liferayPortletURL
+			);
+
+			httpComponentsUtilMockedStatic.when(
+				() -> HttpComponentsUtil.addParameter(
+					"/web/cms/view-asset?objectEntryId=123", "backURL",
+					"/web/notifications-panel")
+			).thenReturn(
+				"/web/cms/view-asset?objectEntryId=123" +
+					"&backURL=%2Fweb%2Fnotifications-panel"
+			);
+
+			Assert.assertEquals(
+				"/web/cms/view-asset?objectEntryId=123" +
+					"&backURL=%2Fweb%2Fnotifications-panel",
+				_objectUserNotificationsHandler.getLink(
+					_userNotificationEvent, _serviceContext));
+		}
+	}
+
+	@Test
+	public void testGetLinkReturnsNotificationLinkOverrideUntouched()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEvent.getPayload()
+		).thenReturn(
+			"{\"notificationLink\": \"/web/cms/view-asset?objectEntryId=123\"}"
+		);
+
+		Assert.assertEquals(
+			"/web/cms/view-asset?objectEntryId=123",
+			_objectUserNotificationsHandler.getLink(
+				_userNotificationEvent, _serviceContext));
+	}
+
+	@Test
+	public void testGetLinkSkipsBackURLWhenThemeDisplayIsNull()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEvent.getPayload()
+		).thenReturn(
+			"{\"appendBackURL\": true, \"notificationLink\": " +
+				"\"/web/cms/view-asset?objectEntryId=123\"}"
+		);
+
+		Assert.assertEquals(
+			"/web/cms/view-asset?objectEntryId=123",
+			_objectUserNotificationsHandler.getLink(
+				_userNotificationEvent, _serviceContext));
 	}
 
 	@Test

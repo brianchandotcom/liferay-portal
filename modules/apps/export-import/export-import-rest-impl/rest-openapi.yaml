@@ -128,6 +128,7 @@ components:
                 mapping:
                     Boolean: "#/components/schemas/PortletDataHandlerBoolean"
                     Choice: "#/components/schemas/PortletDataHandlerChoice"
+                    Setting: "#/components/schemas/PortletDataHandlerSetting"
                 propertyName: type
             properties:
                 disabled:
@@ -140,7 +141,7 @@ components:
                     readOnly: true
                     type: string
                 type:
-                    enum: [Boolean, Choice]
+                    enum: [Boolean, Choice, Setting]
                     readOnly: true
                     type: string
             required:
@@ -167,6 +168,19 @@ components:
                         $ref: "#/components/schemas/PortletDataHandler"
                     readOnly: true
                     type: array
+            type: object
+        PortletDataHandlerSetting:
+            allOf:
+                -   $ref: "#/components/schemas/PortletDataHandlerControl"
+                -   properties:
+                        defaultState:
+                            readOnly: true
+                            type: boolean
+                        portletDataHandlerControls:
+                            items:
+                                $ref: "#/components/schemas/PortletDataHandlerControl"
+                            readOnly: true
+                            type: array
             type: object
         ReportEntry:
             properties:

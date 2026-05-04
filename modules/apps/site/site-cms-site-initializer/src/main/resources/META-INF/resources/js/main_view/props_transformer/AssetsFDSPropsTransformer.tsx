@@ -56,6 +56,7 @@ import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer'
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
+import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
 import transformFDSBulkActions from './utils/transformFDSBulkActions';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
 import GalleryView from './views/GalleryView';
@@ -436,6 +437,25 @@ export default function AssetsFDSPropsTransformer({
 					additionalProps.rootObjectEntryFolderExternalReferenceCode ||
 						additionalProps.parentObjectEntryFolderExternalReferenceCode
 				);
+			}
+			else if (action?.data?.id === 'duplicate') {
+				const href = itemData.actions.duplicate?.href;
+
+				if (!href) {
+					return;
+				}
+
+				event?.preventDefault();
+
+				executeAsyncItemAction({
+					method: 'POST',
+					refreshData: loadData,
+					successMessage: sub(
+						Liferay.Language.get('x-was-successfully-duplicated'),
+						`<strong>"${Liferay.Util.escapeHTML(itemData.title)}"</strong>`
+					),
+					url: href,
+				});
 			}
 			else if (
 				action?.data?.id === 'default-permissions' ||

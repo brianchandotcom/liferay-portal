@@ -26,7 +26,7 @@ function WorkloadByStepCard({processId, routeParams}) {
 
 	return (
 		<PromisesResolver promises={promises}>
-			<ClayPanel className="mt-4">
+			<ClayPanel className="mt-4" displayType="secondary">
 				<PanelHeaderWithOptions
 					className="tabs-panel-header"
 					description={Liferay.Language.get(

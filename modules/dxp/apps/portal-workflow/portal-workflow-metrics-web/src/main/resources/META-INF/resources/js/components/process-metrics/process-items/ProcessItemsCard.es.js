@@ -44,7 +44,7 @@ const ProcessItemsCard = ({
 
 	return (
 		<PromisesResolver promises={promises}>
-			<ClayPanel className="mt-4">
+			<ClayPanel className="mt-4" displayType="secondary">
 				<ProcessItemsCard.Header
 					data={data}
 					description={description}

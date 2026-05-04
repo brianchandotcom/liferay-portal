@@ -19,7 +19,7 @@ public class ServiceContextUtil {
 
 	public static ServiceContext getServiceContext(
 		long companyId, Date createDate, long groupId,
-		HttpServletRequest httpServletRequest, Date modifiedDate) {
+		HttpServletRequest httpServletRequest, Date modifiedDate, long userId) {
 
 		ServiceContext serviceContext = ServiceContextBuilder.create(
 			groupId, httpServletRequest, null
@@ -28,6 +28,7 @@ public class ServiceContextUtil {
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setCreateDate(createDate);
 		serviceContext.setModifiedDate(modifiedDate);
+		serviceContext.setUserId(userId);
 
 		return serviceContext;
 	}

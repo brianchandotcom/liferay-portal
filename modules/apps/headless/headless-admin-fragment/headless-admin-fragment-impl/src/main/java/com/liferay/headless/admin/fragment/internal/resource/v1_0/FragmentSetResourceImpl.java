@@ -127,7 +127,7 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 				ServiceContextUtil.getServiceContext(
 					contextCompany.getCompanyId(), fragmentSet.getDateCreated(),
 					groupId, contextHttpServletRequest,
-					fragmentSet.getDateModified())));
+					fragmentSet.getDateModified(), contextUser.getUserId())));
 	}
 
 	@Override
@@ -157,7 +157,8 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 						contextCompany.getCompanyId(),
 						fragmentSet.getDateCreated(), groupId,
 						contextHttpServletRequest,
-						fragmentSet.getDateModified())));
+						fragmentSet.getDateModified(),
+						contextUser.getUserId())));
 		}
 
 		return _toFragmentSet(

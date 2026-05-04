@@ -138,6 +138,22 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 	}
 
 	@Override
+	public Fragment postSiteFragment(
+			String siteExternalReferenceCode, Fragment fragment)
+		throws Exception {
+
+		EnabledUtil.checkEnabled(contextCompany);
+
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		return _addFragmentEntry(
+			fragment.getExternalReferenceCode(), fragment,
+			_getOrAddFragmentCollection(fragment.getFragmentSet(), groupId),
+			groupId);
+	}
+
+	@Override
 	public Fragment postSiteFragmentSetFragment(
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode, Fragment fragment)

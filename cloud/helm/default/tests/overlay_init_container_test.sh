@@ -2,6 +2,7 @@
 
 set -o errexit
 set -o nounset
+set -o pipefail
 
 function main {
 	local chart_directory
@@ -38,9 +39,12 @@ function _run_test {
 }
 
 function _test_init_container_absent_when_overlay_is_disabled {
-	! helm template test "${chart_directory}" \
-		--set 'overlay.enabled=false' \
-		| grep --quiet "name: liferay-overlay"
+	local output
+
+	output=$(helm template test "${chart_directory}" \
+		--set 'overlay.enabled=false')
+
+	! echo "${output}" | grep --quiet "name: liferay-overlay"
 }
 
 function _test_init_container_present_when_overlay_is_enabled {

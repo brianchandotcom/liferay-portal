@@ -1,4 +1,4 @@
-import mockStore from 'test/mock-store';
+import mockStore, {mockStoreDataLDP} from 'test/mock-store';
 import React from 'react';
 import Sidebar from '../index';
 import {Provider} from 'react-redux';
@@ -18,7 +18,7 @@ jest.unmock('react-dom');
 describe('Sidebar', () => {
 	it('should render', () => {
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<Provider store={mockStore(mockStoreDataLDP)}>
 				<StaticRouter>
 					<Sidebar {...defaultProps} />
 				</StaticRouter>
@@ -30,7 +30,7 @@ describe('Sidebar', () => {
 
 	it('should render as collapsed', () => {
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<Provider store={mockStore(mockStoreDataLDP)}>
 				<StaticRouter>
 					<Sidebar {...defaultProps} collapsed />
 				</StaticRouter>
@@ -46,7 +46,7 @@ describe('Sidebar', () => {
 		const activePathName = '/workspace/23/123/contacts/individuals';
 
 		const {container} = render(
-			<Provider store={mockStore()}>
+			<Provider store={mockStore(mockStoreDataLDP)}>
 				<StaticRouter>
 					<Sidebar
 						{...defaultProps}

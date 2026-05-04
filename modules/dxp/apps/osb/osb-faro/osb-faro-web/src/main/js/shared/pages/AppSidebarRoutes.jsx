@@ -178,16 +178,6 @@ const CommerceDashboard = lazy(() =>
 
 const ROUTES = [
 	{
-		data: AccountsList,
-		path: Routes.CONTACTS_LIST_ACCOUNT
-	},
-	{
-		data: AccountProfileRoutes,
-		exact: false,
-		path: Routes.CONTACTS_ACCOUNT
-	},
-
-	{
 		data: SegmentsList,
 		path: Routes.CONTACTS_LIST_SEGMENT
 	},
@@ -289,11 +279,6 @@ const ROUTES = [
 		destructured: false,
 		path: Routes.CHANNEL
 	},
-	{
-		data: LifecycleDashboard,
-		destructured: false,
-		path: Routes.LIFECYCLE
-	},
 	DEVELOPER_MODE && {
 		data: CommerceDashboard,
 		destructured: false,
@@ -356,6 +341,31 @@ export default class AppSidebarRoutes extends React.PureComponent {
 								destructured={false}
 								exact={false}
 								path={Routes.CONTACTS_INDIVIDUALS}
+							/>
+						)}
+
+						{LDPEnabled && (
+							<BundleRouter
+								data={AccountsList}
+								exact
+								path={Routes.CONTACTS_LIST_ACCOUNT}
+							/>
+						)}
+
+						{LDPEnabled && (
+							<BundleRouter
+								data={AccountProfileRoutes}
+								exact={false}
+								path={Routes.CONTACTS_ACCOUNT}
+							/>
+						)}
+
+						{LDPEnabled && (
+							<BundleRouter
+								data={LifecycleDashboard}
+								destructured={false}
+								exact
+								path={Routes.LIFECYCLE}
 							/>
 						)}
 

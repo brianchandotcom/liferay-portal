@@ -8,6 +8,7 @@ import UserDropdown, {Menus} from 'shared/components/user-dropdown';
 import {ACCOUNTS, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {DEVELOPER_MODE, LANGUAGES} from 'shared/util/constants';
 import {Link, matchPath} from 'react-router-dom';
+import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
 import {User} from 'shared/util/records';
 
 interface ISidebarProps {
@@ -31,10 +32,12 @@ const Sidebar: React.FC<ISidebarProps> = ({
 	groupId,
 	onToggle
 }) => {
+	const LDPEnabled = useLDPEnabled({groupId});
+
 	const sidebarSections = [
 		{
 			items: [
-				{
+				LDPEnabled && {
 					icon: 'polls',
 					label: Liferay.Language.get('lifecycles'),
 					route: Routes.LIFECYCLE,
@@ -64,7 +67,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 						groupId
 					})
 				}
-			],
+			].filter(Boolean) as [],
 			label: Liferay.Language.get('touchpoints')
 		},
 		{
@@ -79,7 +82,7 @@ const Sidebar: React.FC<ISidebarProps> = ({
 						type: SEGMENTS
 					})
 				},
-				{
+				LDPEnabled && {
 					icon: 'ac_account',
 					label: Liferay.Language.get('accounts'),
 					route: Routes.CONTACTS_LIST_ACCOUNT,

@@ -163,6 +163,11 @@ export const mockStoreData = fromJS({
 	}
 });
 
+export const mockStoreDataLDP = mockStoreData.setIn(
+	['projects', '23', 'data', 'faroSubscription'],
+	fromJS({name: 'Liferay Data Platform'})
+);
+
 export default function mockStore(
 	initialState = mockStoreData,
 	reducer = reducers

@@ -131,31 +131,26 @@ public class Fragment implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
-	public String getFragmentSetExternalReferenceCode() {
-		return fragmentSetExternalReferenceCode;
+	public FragmentSet getFragmentSet() {
+		return fragmentSet;
 	}
 
-	public void setFragmentSetExternalReferenceCode(
-		String fragmentSetExternalReferenceCode) {
-
-		this.fragmentSetExternalReferenceCode =
-			fragmentSetExternalReferenceCode;
+	public void setFragmentSet(FragmentSet fragmentSet) {
+		this.fragmentSet = fragmentSet;
 	}
 
-	public void setFragmentSetExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			fragmentSetExternalReferenceCodeUnsafeSupplier) {
+	public void setFragmentSet(
+		UnsafeSupplier<FragmentSet, Exception> fragmentSetUnsafeSupplier) {
 
 		try {
-			fragmentSetExternalReferenceCode =
-				fragmentSetExternalReferenceCodeUnsafeSupplier.get();
+			fragmentSet = fragmentSetUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String fragmentSetExternalReferenceCode;
+	protected FragmentSet fragmentSet;
 
 	public FragmentVersion[] getFragmentVersions() {
 		return fragmentVersions;
@@ -370,4 +365,4 @@ public class Fragment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:280628122
+// LIFERAY-REST-BUILDER-HASH:-1435204289

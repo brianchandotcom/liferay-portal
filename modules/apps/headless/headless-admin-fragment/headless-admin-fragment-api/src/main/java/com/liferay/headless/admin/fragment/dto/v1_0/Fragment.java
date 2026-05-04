@@ -275,36 +275,32 @@ public class Fragment implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The external reference code of the fragment set this fragment belongs to."
+		description = "The fragment's set."
 	)
-	public String getFragmentSetExternalReferenceCode() {
-		if (_fragmentSetExternalReferenceCodeSupplier != null) {
-			fragmentSetExternalReferenceCode =
-				_fragmentSetExternalReferenceCodeSupplier.get();
+	@Valid
+	public FragmentSet getFragmentSet() {
+		if (_fragmentSetSupplier != null) {
+			fragmentSet = _fragmentSetSupplier.get();
 
-			_fragmentSetExternalReferenceCodeSupplier = null;
+			_fragmentSetSupplier = null;
 		}
 
-		return fragmentSetExternalReferenceCode;
+		return fragmentSet;
 	}
 
-	public void setFragmentSetExternalReferenceCode(
-		String fragmentSetExternalReferenceCode) {
+	public void setFragmentSet(FragmentSet fragmentSet) {
+		this.fragmentSet = fragmentSet;
 
-		this.fragmentSetExternalReferenceCode =
-			fragmentSetExternalReferenceCode;
-
-		_fragmentSetExternalReferenceCodeSupplier = null;
+		_fragmentSetSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentSetExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			fragmentSetExternalReferenceCodeUnsafeSupplier) {
+	public void setFragmentSet(
+		UnsafeSupplier<FragmentSet, Exception> fragmentSetUnsafeSupplier) {
 
-		_fragmentSetExternalReferenceCodeSupplier = () -> {
+		_fragmentSetSupplier = () -> {
 			try {
-				return fragmentSetExternalReferenceCodeUnsafeSupplier.get();
+				return fragmentSetUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -315,14 +311,12 @@ public class Fragment implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The external reference code of the fragment set this fragment belongs to."
-	)
+	@GraphQLField(description = "The fragment's set.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String fragmentSetExternalReferenceCode;
+	protected FragmentSet fragmentSet;
 
 	@JsonIgnore
-	private Supplier<String> _fragmentSetExternalReferenceCodeSupplier;
+	private Supplier<FragmentSet> _fragmentSetSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment's versions. A fragment can have up to 2 versions, one draft and one published (approved)."
@@ -740,21 +734,16 @@ public class Fragment implements Serializable {
 			sb.append("\"");
 		}
 
-		String fragmentSetExternalReferenceCode =
-			getFragmentSetExternalReferenceCode();
+		FragmentSet fragmentSet = getFragmentSet();
 
-		if (fragmentSetExternalReferenceCode != null) {
+		if (fragmentSet != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentSetExternalReferenceCode\": ");
+			sb.append("\"fragmentSet\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragmentSetExternalReferenceCode));
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragmentSet));
 		}
 
 		FragmentVersion[] fragmentVersions = getFragmentVersions();
@@ -1004,4 +993,4 @@ public class Fragment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1892692228
+// LIFERAY-REST-BUILDER-HASH:1029568033

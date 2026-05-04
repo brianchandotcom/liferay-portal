@@ -182,7 +182,6 @@ public abstract class BaseFragmentResourceTestCase {
 		Fragment fragment = randomFragment();
 
 		fragment.setExternalReferenceCode(regex);
-		fragment.setFragmentSetExternalReferenceCode(regex);
 		fragment.setIcon(regex);
 		fragment.setKey(regex);
 		fragment.setName(regex);
@@ -194,8 +193,6 @@ public abstract class BaseFragmentResourceTestCase {
 		fragment = FragmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, fragment.getExternalReferenceCode());
-		Assert.assertEquals(
-			regex, fragment.getFragmentSetExternalReferenceCode());
 		Assert.assertEquals(regex, fragment.getIcon());
 		Assert.assertEquals(regex, fragment.getKey());
 		Assert.assertEquals(regex, fragment.getName());
@@ -224,8 +221,8 @@ public abstract class BaseFragmentResourceTestCase {
 	}
 
 	protected Fragment testDeleteSiteFragment_addFragment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return fragmentResource.postSiteFragment(
+			testGroup.getExternalReferenceCode(), randomFragment());
 	}
 
 	protected String testDeleteSiteFragment_getSiteExternalReferenceCode()
@@ -247,8 +244,8 @@ public abstract class BaseFragmentResourceTestCase {
 	}
 
 	protected Fragment testGetSiteFragment_addFragment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return fragmentResource.postSiteFragment(
+			testGroup.getExternalReferenceCode(), randomFragment());
 	}
 
 	protected String testGetSiteFragment_getSiteExternalReferenceCode()
@@ -465,6 +462,24 @@ public abstract class BaseFragmentResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteFragment() throws Exception {
+		Fragment randomFragment = randomFragment();
+
+		Fragment postFragment = testPostSiteFragment_addFragment(
+			randomFragment);
+
+		assertEquals(randomFragment, postFragment);
+		assertValid(postFragment);
+	}
+
+	protected Fragment testPostSiteFragment_addFragment(Fragment fragment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSiteFragmentSetFragment() throws Exception {
 		Fragment randomFragment = randomFragment();
 
@@ -505,8 +520,8 @@ public abstract class BaseFragmentResourceTestCase {
 	}
 
 	protected Fragment testPutSiteFragment_addFragment() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		return fragmentResource.postSiteFragment(
+			testGroup.getExternalReferenceCode(), randomFragment());
 	}
 
 	protected String testPutSiteFragment_getSiteExternalReferenceCode()
@@ -678,11 +693,8 @@ public abstract class BaseFragmentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"fragmentSetExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (fragment.getFragmentSetExternalReferenceCode() == null) {
+			if (Objects.equals("fragmentSet", additionalAssertFieldName)) {
+				if (fragment.getFragmentSet() == null) {
 					valid = false;
 				}
 
@@ -918,13 +930,10 @@ public abstract class BaseFragmentResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"fragmentSetExternalReferenceCode",
-					additionalAssertFieldName)) {
-
+			if (Objects.equals("fragmentSet", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						fragment1.getFragmentSetExternalReferenceCode(),
-						fragment2.getFragmentSetExternalReferenceCode())) {
+						fragment1.getFragmentSet(),
+						fragment2.getFragmentSet())) {
 
 					return false;
 				}
@@ -1225,50 +1234,9 @@ public abstract class BaseFragmentResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("fragmentSetExternalReferenceCode")) {
-			Object object = fragment.getFragmentSetExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+		if (entityFieldName.equals("fragmentSet")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("fragmentVersions")) {
@@ -1478,8 +1446,6 @@ public abstract class BaseFragmentResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				externalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				fragmentSetExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				icon = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
@@ -1733,4 +1699,4 @@ public abstract class BaseFragmentResourceTestCase {
 		_fragmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1673803105
+// LIFERAY-REST-BUILDER-HASH:-536011696

@@ -115,18 +115,14 @@ public class FragmentSerDes {
 			sb.append("\"");
 		}
 
-		if (fragment.getFragmentSetExternalReferenceCode() != null) {
+		if (fragment.getFragmentSet() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentSetExternalReferenceCode\": ");
+			sb.append("\"fragmentSet\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(fragment.getFragmentSetExternalReferenceCode()));
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragment.getFragmentSet()));
 		}
 
 		if (fragment.getFragmentVersions() != null) {
@@ -285,13 +281,11 @@ public class FragmentSerDes {
 				String.valueOf(fragment.getExternalReferenceCode()));
 		}
 
-		if (fragment.getFragmentSetExternalReferenceCode() == null) {
-			map.put("fragmentSetExternalReferenceCode", null);
+		if (fragment.getFragmentSet() == null) {
+			map.put("fragmentSet", null);
 		}
 		else {
-			map.put(
-				"fragmentSetExternalReferenceCode",
-				String.valueOf(fragment.getFragmentSetExternalReferenceCode()));
+			map.put("fragmentSet", String.valueOf(fragment.getFragmentSet()));
 		}
 
 		if (fragment.getFragmentVersions() == null) {
@@ -379,10 +373,7 @@ public class FragmentSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"fragmentSetExternalReferenceCode")) {
-
+			else if (Objects.equals(jsonParserFieldName, "fragmentSet")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentVersions")) {
@@ -446,13 +437,10 @@ public class FragmentSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName,
-						"fragmentSetExternalReferenceCode")) {
-
+			else if (Objects.equals(jsonParserFieldName, "fragmentSet")) {
 				if (jsonParserFieldValue != null) {
-					fragment.setFragmentSetExternalReferenceCode(
-						(String)jsonParserFieldValue);
+					fragment.setFragmentSet(
+						FragmentSetSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentVersions")) {
@@ -583,4 +571,4 @@ public class FragmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2036088733
+// LIFERAY-REST-BUILDER-HASH:-1404535722

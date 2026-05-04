@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(ExportPreviewResourceImpl.class);
 
+			add(ImportPreviewResourceImpl.class);
+
 			add(ImportProcessResourceImpl.class);
 
 			add(ReportEntryResourceImpl.class);
@@ -96,4 +98,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1742407081
+// LIFERAY-REST-BUILDER-HASH:-911450476

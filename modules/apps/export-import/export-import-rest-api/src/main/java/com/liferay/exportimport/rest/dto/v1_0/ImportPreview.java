@@ -1,0 +1,639 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.exportimport.rest.dto.v1_0;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
+
+import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
+
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+import java.io.Serializable;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Supplier;
+
+/**
+ * @author Petteri Karttunen
+ * @generated
+ */
+@Generated("")
+@GraphQLName("ImportPreview")
+@JsonFilter("Liferay.Vulcan")
+@XmlRootElement(name = "ImportPreview")
+public class ImportPreview implements Serializable {
+
+	public static ImportPreview toDTO(String json) {
+		return ObjectMapperUtil.readValue(ImportPreview.class, json);
+	}
+
+	public static ImportPreview unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ImportPreview.class, json);
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getAdditionCount() {
+		if (_additionCountSupplier != null) {
+			additionCount = _additionCountSupplier.get();
+
+			_additionCountSupplier = null;
+		}
+
+		return additionCount;
+	}
+
+	public void setAdditionCount(Long additionCount) {
+		this.additionCount = additionCount;
+
+		_additionCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAdditionCount(
+		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
+
+		_additionCountSupplier = () -> {
+			try {
+				return additionCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long additionCount;
+
+	@JsonIgnore
+	private Supplier<Long> _additionCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getAuthor() {
+		if (_authorSupplier != null) {
+			author = _authorSupplier.get();
+
+			_authorSupplier = null;
+		}
+
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+
+		_authorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAuthor(
+		UnsafeSupplier<String, Exception> authorUnsafeSupplier) {
+
+		_authorSupplier = () -> {
+			try {
+				return authorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String author;
+
+	@JsonIgnore
+	private Supplier<String> _authorSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getDeletionCount() {
+		if (_deletionCountSupplier != null) {
+			deletionCount = _deletionCountSupplier.get();
+
+			_deletionCountSupplier = null;
+		}
+
+		return deletionCount;
+	}
+
+	public void setDeletionCount(Long deletionCount) {
+		this.deletionCount = deletionCount;
+
+		_deletionCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDeletionCount(
+		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
+
+		_deletionCountSupplier = () -> {
+			try {
+				return deletionCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long deletionCount;
+
+	@JsonIgnore
+	private Supplier<Long> _deletionCountSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Date getExportDate() {
+		if (_exportDateSupplier != null) {
+			exportDate = _exportDateSupplier.get();
+
+			_exportDateSupplier = null;
+		}
+
+		return exportDate;
+	}
+
+	public void setExportDate(Date exportDate) {
+		this.exportDate = exportDate;
+
+		_exportDateSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExportDate(
+		UnsafeSupplier<Date, Exception> exportDateUnsafeSupplier) {
+
+		_exportDateSupplier = () -> {
+			try {
+				return exportDateUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Date exportDate;
+
+	@JsonIgnore
+	private Supplier<Date> _exportDateSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getFileEntryId() {
+		if (_fileEntryIdSupplier != null) {
+			fileEntryId = _fileEntryIdSupplier.get();
+
+			_fileEntryIdSupplier = null;
+		}
+
+		return fileEntryId;
+	}
+
+	public void setFileEntryId(Long fileEntryId) {
+		this.fileEntryId = fileEntryId;
+
+		_fileEntryIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileEntryId(
+		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
+
+		_fileEntryIdSupplier = () -> {
+			try {
+				return fileEntryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long fileEntryId;
+
+	@JsonIgnore
+	private Supplier<Long> _fileEntryIdSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getFileName() {
+		if (_fileNameSupplier != null) {
+			fileName = _fileNameSupplier.get();
+
+			_fileNameSupplier = null;
+		}
+
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+
+		_fileNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileName(
+		UnsafeSupplier<String, Exception> fileNameUnsafeSupplier) {
+
+		_fileNameSupplier = () -> {
+			try {
+				return fileNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String fileName;
+
+	@JsonIgnore
+	private Supplier<String> _fileNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getFileSize() {
+		if (_fileSizeSupplier != null) {
+			fileSize = _fileSizeSupplier.get();
+
+			_fileSizeSupplier = null;
+		}
+
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
+
+		_fileSizeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileSize(
+		UnsafeSupplier<Long, Exception> fileSizeUnsafeSupplier) {
+
+		_fileSizeSupplier = () -> {
+			try {
+				return fileSizeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long fileSize;
+
+	@JsonIgnore
+	private Supplier<Long> _fileSizeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public PortletDataHandlerSection[] getPortletDataHandlerSections() {
+		if (_portletDataHandlerSectionsSupplier != null) {
+			portletDataHandlerSections =
+				_portletDataHandlerSectionsSupplier.get();
+
+			_portletDataHandlerSectionsSupplier = null;
+		}
+
+		return portletDataHandlerSections;
+	}
+
+	public void setPortletDataHandlerSections(
+		PortletDataHandlerSection[] portletDataHandlerSections) {
+
+		this.portletDataHandlerSections = portletDataHandlerSections;
+
+		_portletDataHandlerSectionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPortletDataHandlerSections(
+		UnsafeSupplier<PortletDataHandlerSection[], Exception>
+			portletDataHandlerSectionsUnsafeSupplier) {
+
+		_portletDataHandlerSectionsSupplier = () -> {
+			try {
+				return portletDataHandlerSectionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected PortletDataHandlerSection[] portletDataHandlerSections;
+
+	@JsonIgnore
+	private Supplier<PortletDataHandlerSection[]>
+		_portletDataHandlerSectionsSupplier;
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof ImportPreview)) {
+			return false;
+		}
+
+		ImportPreview importPreview = (ImportPreview)object;
+
+		return Objects.equals(toString(), importPreview.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler();
+
+		sb.append("{");
+
+		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		Long additionCount = getAdditionCount();
+
+		if (additionCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"additionCount\": ");
+
+			sb.append(additionCount);
+		}
+
+		String author = getAuthor();
+
+		if (author != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"author\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(author));
+
+			sb.append("\"");
+		}
+
+		Long deletionCount = getDeletionCount();
+
+		if (deletionCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"deletionCount\": ");
+
+			sb.append(deletionCount);
+		}
+
+		Date exportDate = getExportDate();
+
+		if (exportDate != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"exportDate\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(exportDate));
+
+			sb.append("\"");
+		}
+
+		Long fileEntryId = getFileEntryId();
+
+		if (fileEntryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileEntryId\": ");
+
+			sb.append(fileEntryId);
+		}
+
+		String fileName = getFileName();
+
+		if (fileName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileName));
+
+			sb.append("\"");
+		}
+
+		Long fileSize = getFileSize();
+
+		if (fileSize != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileSize\": ");
+
+			sb.append(fileSize);
+		}
+
+		PortletDataHandlerSection[] portletDataHandlerSections =
+			getPortletDataHandlerSections();
+
+		if (portletDataHandlerSections != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portletDataHandlerSections\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < portletDataHandlerSections.length; i++) {
+				sb.append(String.valueOf(portletDataHandlerSections[i]));
+
+				if ((i + 1) < portletDataHandlerSections.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
+		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.ImportPreview",
+		name = "x-class-name"
+	)
+	public String xClassName;
+
+	private static String _escape(Object object) {
+		return StringUtil.replace(
+			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
+			_JSON_ESCAPE_STRINGS[1]);
+	}
+
+	private static boolean _isArray(Object value) {
+		if (value == null) {
+			return false;
+		}
+
+		Class<?> clazz = value.getClass();
+
+		return clazz.isArray();
+	}
+
+	private static String _toJSON(Map<String, ?> map) {
+		StringBuilder sb = new StringBuilder("{");
+
+		@SuppressWarnings("unchecked")
+		Set set = map.entrySet();
+
+		@SuppressWarnings("unchecked")
+		Iterator<Map.Entry<String, ?>> iterator = set.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, ?> entry = iterator.next();
+
+			sb.append("\"");
+			sb.append(_escape(entry.getKey()));
+			sb.append("\": ");
+
+			Object value = entry.getValue();
+
+			if (_isArray(value)) {
+				sb.append("[");
+
+				Object[] valueArray = (Object[])value;
+
+				for (int i = 0; i < valueArray.length; i++) {
+					if (valueArray[i] instanceof Map) {
+						sb.append(_toJSON((Map<String, ?>)valueArray[i]));
+					}
+					else if (valueArray[i] instanceof String) {
+						sb.append("\"");
+						sb.append(valueArray[i]);
+						sb.append("\"");
+					}
+					else {
+						sb.append(valueArray[i]);
+					}
+
+					if ((i + 1) < valueArray.length) {
+						sb.append(", ");
+					}
+				}
+
+				sb.append("]");
+			}
+			else if (value instanceof Map) {
+				sb.append(_toJSON((Map<String, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape(value));
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
+
+			if (iterator.hasNext()) {
+				sb.append(", ");
+			}
+		}
+
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final String[][] _JSON_ESCAPE_STRINGS = {
+		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
+		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
+	};
+
+	private Map<String, Serializable> _extendedProperties;
+
+}
+// LIFERAY-REST-BUILDER-HASH:-1915030020

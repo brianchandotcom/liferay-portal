@@ -16130,7 +16130,15 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<![CDATA[
 									#!/bin/bash
 
-									${database.sqlserver.executable} -P ${database.sqlserver.password} -Q "RESTORE DATABASE ${database.sqlserver.schema} FROM DISK='/tmp/${database.type}.bak'" -S localhost -U ${database.sqlserver.username}
+									set -e
+
+									${database.sqlserver.executable} -b -P "${database.sqlserver.password}" -Q "restore database ${database.sqlserver.schema} from disk='/tmp/${database.type}.bak'" -S localhost -U ${database.sqlserver.username}
+
+									${database.sqlserver.executable} -b -P "${database.sqlserver.password}" -Q "alter database ${database.sqlserver.schema} set allow_snapshot_isolation on;" -S localhost -U ${database.sqlserver.username}
+
+									${database.sqlserver.executable} -b -P "${database.sqlserver.password}" -Q "alter database ${database.sqlserver.schema} set read_committed_snapshot on with rollback immediate;" -S localhost -U ${database.sqlserver.username}
+
+									${database.sqlserver.executable} -b -P "${database.sqlserver.password}" -Q "dbcc traceon (1222, -1);" -S localhost -U ${database.sqlserver.username}
 								]]>
 							</echo>
 
@@ -16329,15 +16337,9 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.schema" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${database.sqlserver.executable}" failonerror="true">
-								<arg value="-P" />
-								<arg value="${database.password}" />
-								<arg value="-Q" />
-								<arg value="RESTORE DATABASE ${database.schema} FROM DISK='${liferay.home}/${database.type}.bak'" />
-								<arg value="-S" />
-								<arg value="${database.host}" />
-								<arg value="-U" />
-								<arg value="${database.username}" />
+							<exec executable="/bin/bash" failonerror="true">
+								<arg value="-c" />
+								<arg value="${database.sqlserver.executable} -b -P &quot;${database.password}&quot; -Q &quot;restore database ${database.schema} from disk='${liferay.home}/${database.type}.bak' with replace; alter database ${database.schema} set allow_snapshot_isolation on; alter database ${database.schema} set read_committed_snapshot on with rollback immediate; dbcc traceon (1222, -1);&quot; -S ${database.host} -U ${database.username}" />
 							</exec>
 						</then>
 					</elseif>

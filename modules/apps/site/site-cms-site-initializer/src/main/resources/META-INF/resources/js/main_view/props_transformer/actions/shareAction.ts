@@ -35,48 +35,60 @@ export default async function shareAction({
 	title: string;
 }) {
 	try {
+		const externalUserSharingEnabled = !!Liferay.FeatureFlags['LPD-52006'];
+
 		const items = await CollaboratorService.getCollaborators(
 			collaboratorURL,
 			itemId
 		);
 
-		const initialCollaborators: Collaborator[] = items.reverse().map(
-			({
-				actionIds,
-				dateExpired,
-				emailAddress,
-				id,
-				name,
-				portrait,
-				share,
-				type,
-			}) => {
-				const isExternalUser = type === COLLABORATOR_TYPE.EXTERNAL_USER;
-
-				return {
-					actionIds: isExternalUser
-						? 'VIEW'
-						: actionIds
-								.filter((actionId) => actionId !== 'DOWNLOAD')
-								.sort()
-								.join(','),
+		const initialCollaborators: Collaborator[] = items
+			.reverse()
+			.filter(
+				({type}) =>
+					externalUserSharingEnabled ||
+					type !== COLLABORATOR_TYPE.EXTERNAL_USER
+			)
+			.map(
+				({
+					actionIds,
 					dateExpired,
+					emailAddress,
+					id,
+					name,
+					portrait,
 					share,
 					type,
-					user: isExternalUser
-						? {
-								emailAddress: emailAddress ?? '',
-								id: emailAddress ?? '',
-								name: emailAddress ?? name,
-							}
-						: {
-								id: id?.toString() ?? '',
-								image: portrait,
-								name,
-							},
-				} as Collaborator;
-			}
-		);
+				}) => {
+					const isExternalUser =
+						type === COLLABORATOR_TYPE.EXTERNAL_USER;
+
+					return {
+						actionIds: isExternalUser
+							? 'VIEW'
+							: actionIds
+									.filter(
+										(actionId) => actionId !== 'DOWNLOAD'
+									)
+									.sort()
+									.join(','),
+						dateExpired,
+						share,
+						type,
+						user: isExternalUser
+							? {
+									emailAddress: emailAddress ?? '',
+									id: emailAddress ?? '',
+									name: emailAddress ?? name,
+								}
+							: {
+									id: id?.toString() ?? '',
+									image: portrait,
+									name,
+								},
+					} as Collaborator;
+				}
+			);
 
 		openCMSModal({
 			className: 'share-modal',
@@ -88,6 +100,7 @@ export default async function shareAction({
 					collaboratorURL,
 					creator: {...creator, id: creator.id.toString()},
 					entryClassName,
+					externalUserSharingEnabled,
 					initialCollaborators,
 					itemId,
 					title,

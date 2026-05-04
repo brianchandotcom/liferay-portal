@@ -24,6 +24,7 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -58,6 +59,14 @@ public interface FragmentResource {
 	public Page<Fragment> getSiteFragmentSetFragmentsPage(
 			String siteExternalReferenceCode,
 			String fragmentSetExternalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Fragment postSiteFragment(
+			String siteExternalReferenceCode, Fragment fragment)
+		throws Exception;
+
+	public Response postSiteFragmentBatch(
+			String siteExternalReferenceCode, String callbackURL, Object object)
 		throws Exception;
 
 	public Fragment postSiteFragmentSetFragment(
@@ -166,4 +175,4 @@ public interface FragmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-331058809
+// LIFERAY-REST-BUILDER-HASH:-1492165397

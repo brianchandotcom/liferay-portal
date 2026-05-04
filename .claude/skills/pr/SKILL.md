@@ -19,7 +19,7 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 
 - The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first (suggest `/commit`); do not stash or discard their work.
 
-- Unless `${ARGUMENTS}` contains `--skip-pr-check`, the `pr-check` skill must pass.
+- The `pr-check` skill must pass. Skip only if `${ARGUMENTS}` contains `--skip-pr-check`.
 
 ## Input
 

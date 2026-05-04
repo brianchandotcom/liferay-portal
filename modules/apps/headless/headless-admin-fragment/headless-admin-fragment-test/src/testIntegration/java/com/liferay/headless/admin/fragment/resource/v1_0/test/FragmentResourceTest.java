@@ -305,12 +305,12 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		FragmentSet expectedFragmentSet, FragmentSet fragmentSet) {
 
 		Assert.assertEquals(
+			expectedFragmentSet.getDescription(), fragmentSet.getDescription());
+		Assert.assertEquals(
 			expectedFragmentSet.getExternalReferenceCode(),
 			fragmentSet.getExternalReferenceCode());
 		Assert.assertEquals(
 			expectedFragmentSet.getName(), fragmentSet.getName());
-		Assert.assertEquals(
-			expectedFragmentSet.getDescription(), fragmentSet.getDescription());
 	}
 
 	private void _assertPostFragmentDuplicateKeyProblemException(

@@ -332,7 +332,11 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 		}
 
 		return FragmentSetUtil.addFragmentCollection(
-			fragmentSet, groupId, contextHttpServletRequest);
+			fragmentSet,
+			ServiceContextUtil.getServiceContext(
+				contextCompany.getCompanyId(), fragmentSet.getDateCreated(),
+				groupId, contextHttpServletRequest,
+				fragmentSet.getDateModified()));
 	}
 
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {

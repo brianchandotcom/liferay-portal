@@ -53,16 +53,6 @@ public class CommerceShipmentServiceUtil {
 			commerceShippingOptionName, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	public static void deleteCommerceShipment(long commerceShipmentId)
-		throws PortalException {
-
-		getService().deleteCommerceShipment(commerceShipmentId);
-	}
-
 	public static void deleteCommerceShipment(
 			long commerceShipmentId, boolean restoreStockQuantity)
 		throws PortalException {
@@ -124,7 +114,8 @@ public class CommerceShipmentServiceUtil {
 	}
 
 	public static List<CommerceShipment> getCommerceShipmentsByOrderId(
-		long commerceOrderId, int start, int end) {
+			long commerceOrderId, int start, int end)
+		throws PortalException {
 
 		return getService().getCommerceShipmentsByOrderId(
 			commerceOrderId, start, end);
@@ -161,7 +152,9 @@ public class CommerceShipmentServiceUtil {
 			excludeShipmentStatus);
 	}
 
-	public static int getCommerceShipmentsCountByOrderId(long commerceOrderId) {
+	public static int getCommerceShipmentsCountByOrderId(long commerceOrderId)
+		throws PortalException {
+
 		return getService().getCommerceShipmentsCountByOrderId(commerceOrderId);
 	}
 
@@ -297,4 +290,4 @@ public class CommerceShipmentServiceUtil {
 			CommerceShipmentServiceUtil.class, CommerceShipmentService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-102631805
+// LIFERAY-SERVICE-BUILDER-HASH:-1340809123

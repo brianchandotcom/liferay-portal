@@ -117,6 +117,9 @@ public class CommerceShipmentModelImpl
 	public static final String ORDER_BY_SQL =
 		" ORDER BY CommerceShipment.createDate DESC";
 
+	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
+		" ORDER BY commerceShipment.createDate DESC";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1371,4 +1374,4 @@ public class CommerceShipmentModelImpl
 	private CommerceShipment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1434615578
+// LIFERAY-SERVICE-BUILDER-HASH:1368458609

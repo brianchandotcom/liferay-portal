@@ -106,7 +106,7 @@ public class ViewAllSectionDisplayContextTest
 			getBulkActionDropdownItems();
 
 		Assert.assertEquals(
-			bulkActionDropdownItems.toString(), 13,
+			bulkActionDropdownItems.toString(), 14,
 			bulkActionDropdownItems.size());
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
@@ -137,16 +137,19 @@ public class ViewAllSectionDisplayContextTest
 			"password-policies", "permissions", "Permissions", null,
 			bulkActionDropdownItems.get(9));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "default-permissions", "Default Permissions",
+			null, bulkActionDropdownItems.get(10));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "edit-default-permissions-by-role",
 			"Edit Default Permissions by Role", null,
-			bulkActionDropdownItems.get(10));
+			bulkActionDropdownItems.get(11));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "edit-permissions-by-role",
-			"Edit Permissions by Role", null, bulkActionDropdownItems.get(11));
+			"Edit Permissions by Role", null, bulkActionDropdownItems.get(12));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "reset-to-default-permissions",
 			"Reset to Default Permissions", null,
-			bulkActionDropdownItems.get(12));
+			bulkActionDropdownItems.get(13));
 	}
 
 	@Override

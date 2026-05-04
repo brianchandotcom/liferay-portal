@@ -287,6 +287,32 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			serviceContext);
 	}
 
+	private void _assertFragmentSet(
+		FragmentCollection expectedFragmentCollection,
+		FragmentSet fragmentSet) {
+
+		Assert.assertEquals(
+			expectedFragmentCollection.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedFragmentCollection.getName(), fragmentSet.getName());
+		Assert.assertEquals(
+			expectedFragmentCollection.getDescription(),
+			fragmentSet.getDescription());
+	}
+
+	private void _assertFragmentSet(
+		FragmentSet expectedFragmentSet, FragmentSet fragmentSet) {
+
+		Assert.assertEquals(
+			expectedFragmentSet.getExternalReferenceCode(),
+			fragmentSet.getExternalReferenceCode());
+		Assert.assertEquals(
+			expectedFragmentSet.getName(), fragmentSet.getName());
+		Assert.assertEquals(
+			expectedFragmentSet.getDescription(), fragmentSet.getDescription());
+	}
+
 	private void _assertPostFragmentDuplicateKeyProblemException(
 			UnsafeFunction<Fragment, Fragment, Exception>
 				postFragmentUnsafeFunction)
@@ -767,16 +793,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment postFragment = _postSiteFragment(fragment);
 
-		FragmentSet postFragmentSet = postFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			fragmentCollection.getExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			fragmentCollection.getName(), postFragmentSet.getName());
-		Assert.assertEquals(
-			fragmentCollection.getDescription(),
-			postFragmentSet.getDescription());
+		_assertFragmentSet(fragmentCollection, postFragment.getFragmentSet());
 	}
 
 	private void _testPostSiteFragmentFragmentSetNonexisting()
@@ -797,15 +814,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 			Fragment postFragment = _postSiteFragment(fragment);
 
-			FragmentSet postFragmentSet = postFragment.getFragmentSet();
-
-			Assert.assertEquals(
-				fragmentSetExternalReferenceCode,
-				postFragmentSet.getExternalReferenceCode());
-			Assert.assertEquals(
-				fragmentSet.getName(), postFragmentSet.getName());
-			Assert.assertEquals(
-				fragmentSet.getDescription(), postFragmentSet.getDescription());
+			_assertFragmentSet(fragmentSet, postFragment.getFragmentSet());
 
 			Assert.assertNotNull(
 				_fragmentCollectionLocalService.
@@ -845,16 +854,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 
-		FragmentSet postFragmentSet = postFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			_fragmentCollection.getExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			_fragmentCollection.getName(), postFragmentSet.getName());
-		Assert.assertEquals(
-			_fragmentCollection.getDescription(),
-			postFragmentSet.getDescription());
+		_assertFragmentSet(_fragmentCollection, postFragment.getFragmentSet());
 	}
 
 	private void _testPostSiteFragmentSetFragmentFragmentSetExternalReferenceCodeNull()
@@ -866,16 +866,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 
-		FragmentSet postFragmentSet = postFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			_fragmentCollection.getExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			_fragmentCollection.getName(), postFragmentSet.getName());
-		Assert.assertEquals(
-			_fragmentCollection.getDescription(),
-			postFragmentSet.getDescription());
+		_assertFragmentSet(_fragmentCollection, postFragment.getFragmentSet());
 	}
 
 	private void _testPostSiteFragmentSetFragmentFragmentSetNonexisting()
@@ -911,16 +902,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 
-		FragmentSet postFragmentSet = postFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			_fragmentCollection.getExternalReferenceCode(),
-			postFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			_fragmentCollection.getName(), postFragmentSet.getName());
-		Assert.assertEquals(
-			_fragmentCollection.getDescription(),
-			postFragmentSet.getDescription());
+		_assertFragmentSet(_fragmentCollection, postFragment.getFragmentSet());
 	}
 
 	private void _testPutFragment(
@@ -999,16 +981,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			testGroup.getExternalReferenceCode(), externalReferenceCode,
 			fragment);
 
-		FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			fragmentCollection.getExternalReferenceCode(),
-			putFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			fragmentCollection.getName(), putFragmentSet.getName());
-		Assert.assertEquals(
-			fragmentCollection.getDescription(),
-			putFragmentSet.getDescription());
+		_assertFragmentSet(fragmentCollection, putFragment.getFragmentSet());
 	}
 
 	private void _testPutSiteFragmentCreateFragmentSetNonexisting()
@@ -1034,15 +1007,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				testGroup.getExternalReferenceCode(), externalReferenceCode,
 				fragment);
 
-			FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-			Assert.assertEquals(
-				fragmentSetExternalReferenceCode,
-				putFragmentSet.getExternalReferenceCode());
-			Assert.assertEquals(
-				fragmentSet.getName(), putFragmentSet.getName());
-			Assert.assertEquals(
-				fragmentSet.getDescription(), putFragmentSet.getDescription());
+			_assertFragmentSet(fragmentSet, putFragment.getFragmentSet());
 
 			Assert.assertNotNull(
 				_fragmentCollectionLocalService.
@@ -1164,16 +1129,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			postFragment.getExternalReferenceCode(), fragment);
 
-		FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			fragmentCollection.getExternalReferenceCode(),
-			putFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			fragmentCollection.getName(), putFragmentSet.getName());
-		Assert.assertEquals(
-			fragmentCollection.getDescription(),
-			putFragmentSet.getDescription());
+		_assertFragmentSet(fragmentCollection, putFragment.getFragmentSet());
 	}
 
 	private void _testPutSiteFragmentUpdateFragmentSetExternalReferenceCodeNull()
@@ -1192,16 +1148,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			postFragment.getExternalReferenceCode(), fragment);
 
-		FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			_fragmentCollection.getExternalReferenceCode(),
-			putFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			_fragmentCollection.getName(), putFragmentSet.getName());
-		Assert.assertEquals(
-			_fragmentCollection.getDescription(),
-			putFragmentSet.getDescription());
+		_assertFragmentSet(_fragmentCollection, putFragment.getFragmentSet());
 	}
 
 	private void _testPutSiteFragmentUpdateFragmentSetNonexisting()
@@ -1229,15 +1176,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				postFragment.getExternalReferenceCode(), fragment);
 
-			FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-			Assert.assertEquals(
-				fragmentSetExternalReferenceCode,
-				putFragmentSet.getExternalReferenceCode());
-			Assert.assertEquals(
-				fragmentSet.getName(), putFragmentSet.getName());
-			Assert.assertEquals(
-				fragmentSet.getDescription(), putFragmentSet.getDescription());
+			_assertFragmentSet(fragmentSet, putFragment.getFragmentSet());
 
 			Assert.assertNotNull(
 				_fragmentCollectionLocalService.
@@ -1261,16 +1200,7 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			testGroup.getExternalReferenceCode(),
 			postFragment.getExternalReferenceCode(), fragment);
 
-		FragmentSet putFragmentSet = putFragment.getFragmentSet();
-
-		Assert.assertEquals(
-			_fragmentCollection.getExternalReferenceCode(),
-			putFragmentSet.getExternalReferenceCode());
-		Assert.assertEquals(
-			_fragmentCollection.getName(), putFragmentSet.getName());
-		Assert.assertEquals(
-			_fragmentCollection.getDescription(),
-			putFragmentSet.getDescription());
+		_assertFragmentSet(_fragmentCollection, putFragment.getFragmentSet());
 	}
 
 	private FragmentSet _toFragmentSet(FragmentCollection fragmentCollection) {

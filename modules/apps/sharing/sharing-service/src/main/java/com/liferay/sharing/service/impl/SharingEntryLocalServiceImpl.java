@@ -540,6 +540,11 @@ public class SharingEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<SharingEntry> getToTicketSharingEntries(long toTicketId) {
+		return sharingEntryPersistence.findByToTicketId(toTicketId);
+	}
+
+	@Override
 	public List<SharingEntry> getToUserGroupSharingEntries(long toUserGroupId) {
 		return sharingEntryPersistence.findByToUserGroupId(toUserGroupId);
 	}

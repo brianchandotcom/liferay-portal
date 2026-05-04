@@ -113,12 +113,18 @@ export class CommerceAdminChannelDetailsPage {
 	readonly sidePanelFrameEditMenuItem: (
 		tableName: string
 	) => Promise<Locator>;
+	readonly sidePanelFrameAddButton: (tableName: string) => Promise<Locator>;
 	readonly sidePanelNestedFrame: (
 		tableName: string,
 		depth?: number
 	) => Promise<FrameLocator>;
 	readonly sidePanelNestedFrameAmountInput: (
 		tableName: string
+	) => Promise<Locator>;
+	readonly sidePanelNestedFrameInput: (
+		label: string,
+		tableName: string,
+		depth?: number
 	) => Promise<Locator>;
 	readonly sidePanelFrameLocator: FrameLocator;
 	readonly sidePanelNestedCloseButton: Locator;
@@ -434,10 +440,22 @@ export class CommerceAdminChannelDetailsPage {
 
 			return frame;
 		};
+		this.sidePanelFrameAddButton = async (tableName: string) => {
+			return (await this.sidePanelFrame(tableName))
+				.getByTestId('managementToolbar')
+				.locator('[data-testid="fdsCreationActionButton"]');
+		};
+		this.sidePanelNestedFrameInput = async (
+			label: string,
+			tableName: string,
+			depth: number = 1
+		) => {
+			return (
+				await this.sidePanelNestedFrame(tableName, depth)
+			).getByLabel(label);
+		};
 		this.sidePanelNestedFrameAmountInput = async (tableName: string) => {
-			return (await this.sidePanelNestedFrame(tableName)).getByLabel(
-				'Amount'
-			);
+			return this.sidePanelNestedFrameInput('Amount', tableName);
 		};
 		this.page = page;
 		this.placeHolderTerm = async (
@@ -534,33 +552,36 @@ export class CommerceAdminChannelDetailsPage {
 	async addFlatRateShippingOption(
 		name: string,
 		amount?: string,
-		description?: string
+		description?: string,
+		priority?: string
 	) {
 		const tableName = 'Shipping Methods';
 		await (
 			await this.generalCommerceAdminChannelTableLink('Flat Rate')
 		).click();
 		await (await this.shippingOptionsTab(tableName)).click();
-		await (await this.sidePanelFrame(tableName))
-			.getByTestId('managementToolbar')
-			.locator('[data-testid="fdsCreationActionButton"]')
-			.click();
-		await (await this.sidePanelNestedFrame(tableName))
-			.getByLabel('Name')
-			.fill(name);
+		await (await this.sidePanelFrameAddButton(tableName)).click();
+		await (
+			await this.sidePanelNestedFrameInput('Name', tableName)
+		).fill(name);
 		if (description) {
-			await (await this.sidePanelNestedFrame(tableName))
-				.getByLabel('Description')
-				.fill(description);
+			await (
+				await this.sidePanelNestedFrameInput('Description', tableName)
+			).fill(description);
 		}
 		if (amount) {
-			await (await this.sidePanelNestedFrame(tableName))
-				.getByLabel('Amount')
-				.fill(amount);
+			await (
+				await this.sidePanelNestedFrameInput('Amount', tableName)
+			).fill(amount);
 		}
-		await (await this.sidePanelNestedFrame(tableName))
-			.getByLabel('Key')
-			.fill(name);
+		if (priority) {
+			await (
+				await this.sidePanelNestedFrameInput('Priority', tableName)
+			).fill(priority);
+		}
+		await (
+			await this.sidePanelNestedFrameInput('Key', tableName)
+		).fill(name);
 		await (await this.frameSaveButton(true, tableName)).click();
 		await waitForAlert(await this.sidePanelNestedFrame('Shipping Methods'));
 		await (
@@ -577,15 +598,13 @@ export class CommerceAdminChannelDetailsPage {
 			await this.generalCommerceAdminChannelTableLink('Variable Rate')
 		).click();
 		(await this.shippingOptionsTab(tableName)).click();
-		await (await this.sidePanelFrame(tableName))
-			.getByText('Add Shipping Option')
-			.click();
-		await (await this.sidePanelNestedFrame(tableName))
-			.getByLabel('Name')
-			.fill(name);
-		await (await this.sidePanelNestedFrame(tableName))
-			.getByLabel('Key')
-			.fill(name);
+		await (await this.sidePanelFrameAddButton(tableName)).click();
+		await (
+			await this.sidePanelNestedFrameInput('Name', tableName)
+		).fill(name);
+		await (
+			await this.sidePanelNestedFrameInput('Key', tableName)
+		).fill(name);
 		await (await this.frameSaveButton(true, tableName)).click();
 		await waitForAlert(await this.sidePanelNestedFrame('Shipping Methods'));
 		await (
@@ -598,7 +617,9 @@ export class CommerceAdminChannelDetailsPage {
 
 	async addVariableRateShippingOptionSetting(
 		optionName: string,
-		subtotalPercentagePrice?: string
+		subtotalPercentagePrice?: string,
+		fixedPrice?: string,
+		weightTo?: string
 	) {
 		const tableName = 'Shipping Methods';
 		await (
@@ -615,9 +636,25 @@ export class CommerceAdminChannelDetailsPage {
 			.click();
 
 		if (subtotalPercentagePrice) {
+			await (
+				await this.sidePanelNestedFrameInput(
+					'Subtotal Percentage Price',
+					tableName,
+					2
+				)
+			).fill(subtotalPercentagePrice);
+		}
+
+		if (fixedPrice) {
 			await (await this.sidePanelNestedFrame(tableName, 2))
-				.getByLabel('Subtotal Percentage Price')
-				.fill(subtotalPercentagePrice);
+				.getByLabel('Fixed Price', {exact: true})
+				.fill(fixedPrice);
+		}
+
+		if (weightTo) {
+			await (
+				await this.sidePanelNestedFrameInput('Weight To', tableName, 2)
+			).fill(weightTo);
 		}
 
 		await (await this.frameSaveButton(true, tableName, 2)).click();
@@ -826,10 +863,15 @@ export class CommerceAdminChannelDetailsPage {
 
 			await eligibilityButton.click();
 
+			const placeholderText =
+				eligibilityOption === 'Specific Order Types'
+					? 'Find an Order Type'
+					: 'Find a Delivery Term';
+
 			const placeholderInput = await this.placeHolderTerm(
 				isNestedFrame,
 				tableName,
-				'Find a Delivery Term'
+				placeholderText
 			);
 
 			await expect(placeholderInput).toBeVisible();

@@ -61,17 +61,6 @@ public interface CommerceShipmentLocalService
 	 */
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
-	 */
-	@Deprecated
-	@Indexable(type = IndexableType.REINDEX)
-	public CommerceShipment addCommerceDeliverySubscriptionShipment(
-			long userId, long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber)
-		throws PortalException;
-
-	/**
 	 * Adds the commerce shipment to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -485,4 +474,4 @@ public interface CommerceShipmentLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528163368
+// LIFERAY-SERVICE-BUILDER-HASH:856579958

@@ -52,17 +52,6 @@ public class CommerceShipmentServiceWrapper
 			commerceShippingOptionName, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	@Override
-	public void deleteCommerceShipment(long commerceShipmentId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_commerceShipmentService.deleteCommerceShipment(commerceShipmentId);
-	}
-
 	@Override
 	public void deleteCommerceShipment(
 			long commerceShipmentId, boolean restoreStockQuantity)
@@ -145,8 +134,9 @@ public class CommerceShipmentServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipment>
-		getCommerceShipmentsByOrderId(
-			long commerceOrderId, int start, int end) {
+			getCommerceShipmentsByOrderId(
+				long commerceOrderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentService.getCommerceShipmentsByOrderId(
 			commerceOrderId, start, end);
@@ -188,7 +178,9 @@ public class CommerceShipmentServiceWrapper
 	}
 
 	@Override
-	public int getCommerceShipmentsCountByOrderId(long commerceOrderId) {
+	public int getCommerceShipmentsCountByOrderId(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _commerceShipmentService.getCommerceShipmentsCountByOrderId(
 			commerceOrderId);
 	}
@@ -346,4 +338,4 @@ public class CommerceShipmentServiceWrapper
 	private CommerceShipmentService _commerceShipmentService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1959955025
+// LIFERAY-SERVICE-BUILDER-HASH:-362710443

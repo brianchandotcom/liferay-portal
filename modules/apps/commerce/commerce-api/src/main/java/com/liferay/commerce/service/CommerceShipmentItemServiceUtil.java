@@ -59,16 +59,6 @@ public class CommerceShipmentItemServiceUtil {
 			validateInventory, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	public static void deleteCommerceShipmentItem(long commerceShipmentItemId)
-		throws PortalException {
-
-		getService().deleteCommerceShipmentItem(commerceShipmentItemId);
-	}
-
 	public static void deleteCommerceShipmentItem(
 			long commerceShipmentItemId, boolean restoreStockQuantity)
 		throws PortalException {
@@ -109,17 +99,6 @@ public class CommerceShipmentItemServiceUtil {
 		throws PortalException {
 
 		return getService().getCommerceShipmentItem(commerceShipmentItemId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static List<CommerceShipmentItem> getCommerceShipmentItems(
-			long commerceOrderItemId)
-		throws PortalException {
-
-		return getService().getCommerceShipmentItems(commerceOrderItemId);
 	}
 
 	public static List<CommerceShipmentItem> getCommerceShipmentItems(
@@ -172,21 +151,23 @@ public class CommerceShipmentItemServiceUtil {
 	}
 
 	public static CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			java.math.BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentId, long commerceShipmentItemId,
+			long commerceInventoryWarehouseId, java.math.BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException {
 
 		return getService().updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
-			validateInventory);
+			commerceShipmentId, commerceShipmentItemId,
+			commerceInventoryWarehouseId, quantity, validateInventory);
 	}
 
 	public static CommerceShipmentItem updateExternalReferenceCode(
-			long commerceShipmentItemId, String externalReferenceCode)
+			long commerceShipmentId, long commerceShipmentItemId,
+			String externalReferenceCode)
 		throws PortalException {
 
 		return getService().updateExternalReferenceCode(
-			commerceShipmentItemId, externalReferenceCode);
+			commerceShipmentId, commerceShipmentItemId, externalReferenceCode);
 	}
 
 	public static CommerceShipmentItemService getService() {
@@ -199,4 +180,4 @@ public class CommerceShipmentItemServiceUtil {
 			CommerceShipmentItemService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-142098154
+// LIFERAY-SERVICE-BUILDER-HASH:-1417626033

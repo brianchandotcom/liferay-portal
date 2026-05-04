@@ -40,124 +40,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-151362 LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Experiences menu Then alert is shown including breadcrumb link to segments service"
-	@priority = 5
-	test ViewAndReEnableAlertAtExperiencesMenu {
-		task ("Open the Experience menu") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-		}
-
-		task ("Check alert shows Segmentation is disabled") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Dynamic Collection editor Then should be forwarded to Segments Service at Instance Settings"
-	@priority = 3
-	test ViewAndReEnableAlertAtDynamicCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addDynamicAssetListEntry(
-				groupName = "Test Site Name",
-				title = "Dynamic Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
-		}
-
-		task ("Check alert shows Segmentation is disabled and re-enable instructions") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Manual Collection editor Then should be forwarded to Segments Service at Instance Settings"
-	@priority = 3
-	test ViewAndReEnableAlertAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Check alert shows re-enable instructions") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Segments Admin Then should be forwarded to Segments Service at Instance Settings"
-	@priority = 4
-	test ViewAndReEnableAlertAtSegmentsList {
-		task ("Open the Segments List") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-		}
-
-		task ("Check alert shows re-enable instructions") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
 	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled When user clicks at Close button at Dynamic Collection Editor page And user leaves and returns to page Then the alert reappears"
 	@priority = 3
 	test CloseAndRecoverAlertAtDynamicCollectionEditor {
@@ -450,6 +332,124 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
+		}
+	}
+
+	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Dynamic Collection editor Then should be forwarded to Segments Service at Instance Settings"
+	@priority = 3
+	test ViewAndReEnableAlertAtDynamicCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection Test");
+		}
+
+		task ("Navigate to Collection Admin") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection Test");
+		}
+
+		task ("Check alert shows Segmentation is disabled and re-enable instructions") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "To enable, go to Instance Settings.");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+
+			AssertVisible(
+				key_configurationName = "Segments Service",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-151362 LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Experiences menu Then alert is shown including breadcrumb link to segments service"
+	@priority = 5
+	test ViewAndReEnableAlertAtExperiencesMenu {
+		task ("Open the Experience menu") {
+			Navigator.openURL();
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.openExperienceMenu();
+		}
+
+		task ("Check alert shows Segmentation is disabled") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "Segmentation is disabled");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+
+			AssertVisible(
+				key_configurationName = "Segments Service",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Manual Collection editor Then should be forwarded to Segments Service at Instance Settings"
+	@priority = 3
+	test ViewAndReEnableAlertAtManualCollectionEditor {
+		task ("Create a Collection via JSONWS") {
+			JSONAssetlist.addManualAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "All Subtypes",
+				itemType = "Web Content Article",
+				title = "Manual Collection Test");
+		}
+
+		task ("Navigate to Manual Collection Editor") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
+		}
+
+		task ("Check alert shows re-enable instructions") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "To enable, go to Instance Settings.");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+
+			AssertVisible(
+				key_configurationName = "Segments Service",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+		}
+	}
+
+	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Segments Admin Then should be forwarded to Segments Service at Instance Settings"
+	@priority = 4
+	test ViewAndReEnableAlertAtSegmentsList {
+		task ("Open the Segments List") {
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		}
+
+		task ("Check alert shows re-enable instructions") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "To enable, go to Instance Settings.");
+		}
+
+		task ("Click at warning with link and confirm Instance Settings is open") {
+			Segmentation.clickToReEnableSegmentsWarningLink();
+
+			AssertVisible(
+				key_configurationName = "Segments Service",
+				key_configurationScope = "Virtual Instance Scope",
+				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 	}
 

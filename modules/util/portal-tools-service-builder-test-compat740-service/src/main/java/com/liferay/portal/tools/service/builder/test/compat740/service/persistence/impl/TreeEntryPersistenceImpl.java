@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.kernel.service.persistence.impl.PersistenceNestedSetsTreeManager;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchTreeEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.TreeEntry;
@@ -88,42 +85,6 @@ public class TreeEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(TreeEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the tree entry in the entity cache if it is enabled.
-	 *
-	 * @param treeEntry the tree entry
-	 */
-	@Override
-	public void cacheResult(TreeEntry treeEntry) {
-		entityCache.putResult(
-			TreeEntryImpl.class, treeEntry.getPrimaryKey(), treeEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the tree entries in the entity cache if it is enabled.
-	 *
-	 * @param treeEntries the tree entries
-	 */
-	@Override
-	public void cacheResult(List<TreeEntry> treeEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (treeEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TreeEntry treeEntry : treeEntries) {
-			if (entityCache.getResult(
-					TreeEntryImpl.class, treeEntry.getPrimaryKey()) == null) {
-
-				cacheResult(treeEntry);
-			}
-		}
 	}
 
 	/**
@@ -267,7 +228,7 @@ public class TreeEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(TreeEntryImpl.class, treeEntry, false, true);
+		cacheUniqueFindersResult(treeEntry, false);
 
 		if (isNew) {
 			treeEntry.setNew(false);
@@ -573,9 +534,6 @@ public class TreeEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationCountAncestors = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countAncestors",
 			new String[] {
@@ -671,4 +629,4 @@ public class TreeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1822463541
+// LIFERAY-SERVICE-BUILDER-HASH:-1944266106

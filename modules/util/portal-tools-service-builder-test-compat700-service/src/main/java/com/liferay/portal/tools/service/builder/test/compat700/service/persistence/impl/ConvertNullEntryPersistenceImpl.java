@@ -1181,4 +1181,4 @@ public class ConvertNullEntryPersistenceImpl
 		ConvertNullEntryPersistenceImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-557846083
+// LIFERAY-SERVICE-BUILDER-HASH:-65286620

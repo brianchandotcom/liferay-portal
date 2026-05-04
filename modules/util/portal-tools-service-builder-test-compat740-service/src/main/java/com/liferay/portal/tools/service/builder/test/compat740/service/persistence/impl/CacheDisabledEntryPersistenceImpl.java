@@ -16,9 +16,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchCacheDisabledEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.CacheDisabledEntry;
@@ -33,7 +30,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -166,58 +162,6 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cache disabled entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntry the cache disabled entry
-	 */
-	@Override
-	public void cacheResult(CacheDisabledEntry cacheDisabledEntry) {
-		dummyEntityCache.putResult(
-			CacheDisabledEntryImpl.class, cacheDisabledEntry.getPrimaryKey(),
-			cacheDisabledEntry);
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName, new Object[] {cacheDisabledEntry.getName()},
-			cacheDisabledEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cache disabled entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntries the cache disabled entries
-	 */
-	@Override
-	public void cacheResult(List<CacheDisabledEntry> cacheDisabledEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cacheDisabledEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CacheDisabledEntry cacheDisabledEntry : cacheDisabledEntries) {
-			if (dummyEntityCache.getResult(
-					CacheDisabledEntryImpl.class,
-					cacheDisabledEntry.getPrimaryKey()) == null) {
-
-				cacheResult(cacheDisabledEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CacheDisabledEntryModelImpl cacheDisabledEntryModelImpl) {
-
-		Object[] args = new Object[] {cacheDisabledEntryModelImpl.getName()};
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName, args, cacheDisabledEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new cache disabled entry with the primary key. Does not add the cache disabled entry to the database.
 	 *
 	 * @param cacheDisabledEntryId the primary key for the new cache disabled entry
@@ -326,11 +270,7 @@ public class CacheDisabledEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			CacheDisabledEntryImpl.class, cacheDisabledEntryModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(cacheDisabledEntryModelImpl);
+		cacheUniqueFindersResult(cacheDisabledEntry, false);
 
 		if (isNew) {
 			cacheDisabledEntry.setNew(false);
@@ -391,12 +331,10 @@ public class CacheDisabledEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			CacheDisabledEntry::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName, _SQL_SELECT_CACHEDISABLEDENTRY_WHERE,
@@ -461,4 +399,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-156317354
+// LIFERAY-SERVICE-BUILDER-HASH:-1716452837

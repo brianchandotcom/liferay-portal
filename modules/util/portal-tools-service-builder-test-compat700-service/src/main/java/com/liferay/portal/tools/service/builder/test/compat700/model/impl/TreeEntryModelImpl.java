@@ -655,4 +655,4 @@ public class TreeEntryModelImpl
 	private TreeEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-776145783
+// LIFERAY-SERVICE-BUILDER-HASH:1074305911

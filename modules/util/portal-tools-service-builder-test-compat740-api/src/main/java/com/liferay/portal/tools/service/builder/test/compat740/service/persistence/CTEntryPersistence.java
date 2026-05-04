@@ -186,20 +186,6 @@ public interface CTEntryPersistence
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the ct entry in the entity cache if it is enabled.
-	 *
-	 * @param ctEntry the ct entry
-	 */
-	public void cacheResult(CTEntry ctEntry);
-
-	/**
-	 * Caches the ct entries in the entity cache if it is enabled.
-	 *
-	 * @param ctEntries the ct entries
-	 */
-	public void cacheResult(java.util.List<CTEntry> ctEntries);
-
-	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
 	 * @param ctEntryId the primary key for the new ct entry
@@ -237,4 +223,4 @@ public interface CTEntryPersistence
 	public CTEntry fetchByPrimaryKey(long ctEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-172751142
+// LIFERAY-SERVICE-BUILDER-HASH:-1704151196

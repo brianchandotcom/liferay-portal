@@ -36,6 +36,20 @@ public class ConvertNullEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ConvertNullEntry> convertNullEntries) {
+		getPersistence().cacheResult(convertNullEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ConvertNullEntry convertNullEntry) {
+		getPersistence().cacheResult(convertNullEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -171,24 +185,6 @@ public class ConvertNullEntryUtil {
 	}
 
 	/**
-	 * Caches the convert null entry in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntry the convert null entry
-	 */
-	public static void cacheResult(ConvertNullEntry convertNullEntry) {
-		getPersistence().cacheResult(convertNullEntry);
-	}
-
-	/**
-	 * Caches the convert null entries in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntries the convert null entries
-	 */
-	public static void cacheResult(List<ConvertNullEntry> convertNullEntries) {
-		getPersistence().cacheResult(convertNullEntries);
-	}
-
-	/**
 	 * Creates a new convert null entry with the primary key. Does not add the convert null entry to the database.
 	 *
 	 * @param convertNullEntryId the primary key for the new convert null entry
@@ -253,4 +249,4 @@ public class ConvertNullEntryUtil {
 	private static volatile ConvertNullEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1062851430
+// LIFERAY-SERVICE-BUILDER-HASH:-196204301

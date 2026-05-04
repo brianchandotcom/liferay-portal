@@ -24,11 +24,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchBasicEntryException;
@@ -330,57 +327,6 @@ public class BasicEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the basic entry in the entity cache if it is enabled.
-	 *
-	 * @param basicEntry the basic entry
-	 */
-	@Override
-	public void cacheResult(BasicEntry basicEntry) {
-		entityCache.putResult(
-			BasicEntryImpl.class, basicEntry.getPrimaryKey(), basicEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {basicEntry.getCompanyId(), basicEntry.getName()},
-			basicEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the basic entries in the entity cache if it is enabled.
-	 *
-	 * @param basicEntries the basic entries
-	 */
-	@Override
-	public void cacheResult(List<BasicEntry> basicEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (basicEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BasicEntry basicEntry : basicEntries) {
-			if (entityCache.getResult(
-					BasicEntryImpl.class, basicEntry.getPrimaryKey()) == null) {
-
-				cacheResult(basicEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BasicEntryModelImpl basicEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			basicEntryModelImpl.getCompanyId(), basicEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(_finderPathFetchByC_N, args, basicEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new basic entry with the primary key. Does not add the basic entry to the database.
 	 *
 	 * @param basicEntryId the primary key for the new basic entry
@@ -511,10 +457,7 @@ public class BasicEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BasicEntryImpl.class, basicEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(basicEntryModelImpl);
+		cacheUniqueFindersResult(basicEntry, false);
 
 		if (isNew) {
 			basicEntry.setNew(false);
@@ -899,9 +842,6 @@ public class BasicEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		basicEntryToMappingEntryTableMapper = TableMapperFactory.getTableMapper(
 			"MappingEntries_BasicEntries#basicEntryId",
 			"MappingEntries_BasicEntries", "companyId", "basicEntryId",
@@ -936,10 +876,11 @@ public class BasicEntryPersistenceImpl
 					"basicEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BasicEntry::getGroupId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, BasicEntry::getCompanyId,
+			BasicEntry::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_BASICENTRY_WHERE,
@@ -1022,4 +963,4 @@ public class BasicEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1748030085
+// LIFERAY-SERVICE-BUILDER-HASH:-1973338623

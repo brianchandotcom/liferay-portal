@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -592,77 +590,6 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the erc group entry in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntry the erc group entry
-	 */
-	@Override
-	public void cacheResult(ERCGroupEntry ercGroupEntry) {
-		entityCache.putResult(
-			ERCGroupEntryImpl.class, ercGroupEntry.getPrimaryKey(),
-			ercGroupEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {ercGroupEntry.getUuid(), ercGroupEntry.getGroupId()},
-			ercGroupEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G,
-			new Object[] {
-				ercGroupEntry.getExternalReferenceCode(),
-				ercGroupEntry.getGroupId()
-			},
-			ercGroupEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the erc group entries in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntries the erc group entries
-	 */
-	@Override
-	public void cacheResult(List<ERCGroupEntry> ercGroupEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ercGroupEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ERCGroupEntry ercGroupEntry : ercGroupEntries) {
-			if (entityCache.getResult(
-					ERCGroupEntryImpl.class, ercGroupEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(ercGroupEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ERCGroupEntryModelImpl ercGroupEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			ercGroupEntryModelImpl.getUuid(),
-			ercGroupEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, ercGroupEntryModelImpl);
-
-		args = new Object[] {
-			ercGroupEntryModelImpl.getExternalReferenceCode(),
-			ercGroupEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G, args, ercGroupEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new erc group entry with the primary key. Does not add the erc group entry to the database.
 	 *
 	 * @param ercGroupEntryId the primary key for the new erc group entry
@@ -840,10 +767,7 @@ public class ERCGroupEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ERCGroupEntryImpl.class, ercGroupEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ercGroupEntryModelImpl);
+		cacheUniqueFindersResult(ercGroupEntry, false);
 
 		if (isNew) {
 			ercGroupEntry.setNew(false);
@@ -909,9 +833,6 @@ public class ERCGroupEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -939,10 +860,11 @@ public class ERCGroupEntryPersistenceImpl
 				"ercGroupEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ERCGroupEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, ERCGroupEntry::getUuid,
+			ERCGroupEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_ERCGROUPENTRY_WHERE,
@@ -986,10 +908,11 @@ public class ERCGroupEntryPersistenceImpl
 					"ercGroupEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ERCGroupEntry::getCompanyId));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			ERCGroupEntry::getExternalReferenceCode, ERCGroupEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_ERCGROUPENTRY_WHERE,
@@ -1070,4 +993,4 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2067811857
+// LIFERAY-SERVICE-BUILDER-HASH:734667307

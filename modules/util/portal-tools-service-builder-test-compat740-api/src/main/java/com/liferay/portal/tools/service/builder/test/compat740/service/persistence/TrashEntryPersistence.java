@@ -32,20 +32,6 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	 */
 
 	/**
-	 * Caches the trash entry in the entity cache if it is enabled.
-	 *
-	 * @param trashEntry the trash entry
-	 */
-	public void cacheResult(TrashEntry trashEntry);
-
-	/**
-	 * Caches the trash entries in the entity cache if it is enabled.
-	 *
-	 * @param trashEntries the trash entries
-	 */
-	public void cacheResult(java.util.List<TrashEntry> trashEntries);
-
-	/**
 	 * Creates a new trash entry with the primary key. Does not add the trash entry to the database.
 	 *
 	 * @param trashEntryId the primary key for the new trash entry
@@ -84,4 +70,4 @@ public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
 	public TrashEntry fetchByPrimaryKey(long trashEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:953795191
+// LIFERAY-SERVICE-BUILDER-HASH:-412913161

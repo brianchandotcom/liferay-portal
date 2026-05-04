@@ -36,6 +36,20 @@ public class BasicEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BasicEntry> basicEntries) {
+		getPersistence().cacheResult(basicEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BasicEntry basicEntry) {
+		getPersistence().cacheResult(basicEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -294,24 +308,6 @@ public class BasicEntryUtil {
 	 */
 	public static int countByC_N(long companyId, String name) {
 		return getPersistence().countByC_N(companyId, name);
-	}
-
-	/**
-	 * Caches the basic entry in the entity cache if it is enabled.
-	 *
-	 * @param basicEntry the basic entry
-	 */
-	public static void cacheResult(BasicEntry basicEntry) {
-		getPersistence().cacheResult(basicEntry);
-	}
-
-	/**
-	 * Caches the basic entries in the entity cache if it is enabled.
-	 *
-	 * @param basicEntries the basic entries
-	 */
-	public static void cacheResult(List<BasicEntry> basicEntries) {
-		getPersistence().cacheResult(basicEntries);
 	}
 
 	/**
@@ -603,4 +599,4 @@ public class BasicEntryUtil {
 	private static volatile BasicEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1677520301
+// LIFERAY-SERVICE-BUILDER-HASH:758770522

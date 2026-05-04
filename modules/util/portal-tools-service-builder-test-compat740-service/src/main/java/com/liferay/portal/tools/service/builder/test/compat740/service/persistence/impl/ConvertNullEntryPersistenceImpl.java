@@ -16,9 +16,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchConvertNullEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.ConvertNullEntry;
@@ -33,7 +30,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -166,58 +162,6 @@ public class ConvertNullEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the convert null entry in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntry the convert null entry
-	 */
-	@Override
-	public void cacheResult(ConvertNullEntry convertNullEntry) {
-		dummyEntityCache.putResult(
-			ConvertNullEntryImpl.class, convertNullEntry.getPrimaryKey(),
-			convertNullEntry);
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName, new Object[] {convertNullEntry.getName()},
-			convertNullEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the convert null entries in the entity cache if it is enabled.
-	 *
-	 * @param convertNullEntries the convert null entries
-	 */
-	@Override
-	public void cacheResult(List<ConvertNullEntry> convertNullEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (convertNullEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ConvertNullEntry convertNullEntry : convertNullEntries) {
-			if (dummyEntityCache.getResult(
-					ConvertNullEntryImpl.class,
-					convertNullEntry.getPrimaryKey()) == null) {
-
-				cacheResult(convertNullEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ConvertNullEntryModelImpl convertNullEntryModelImpl) {
-
-		Object[] args = new Object[] {convertNullEntryModelImpl.getName()};
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName, args, convertNullEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new convert null entry with the primary key. Does not add the convert null entry to the database.
 	 *
 	 * @param convertNullEntryId the primary key for the new convert null entry
@@ -322,10 +266,7 @@ public class ConvertNullEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			ConvertNullEntryImpl.class, convertNullEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(convertNullEntryModelImpl);
+		cacheUniqueFindersResult(convertNullEntry, false);
 
 		if (isNew) {
 			convertNullEntry.setNew(false);
@@ -386,12 +327,10 @@ public class ConvertNullEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			ConvertNullEntry::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName, _SQL_SELECT_CONVERTNULLENTRY_WHERE,
@@ -456,4 +395,4 @@ public class ConvertNullEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-513022562
+// LIFERAY-SERVICE-BUILDER-HASH:-1946170537

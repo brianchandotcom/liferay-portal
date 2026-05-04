@@ -36,6 +36,20 @@ public class TreeEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TreeEntry> treeEntries) {
+		getPersistence().cacheResult(treeEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TreeEntry treeEntry) {
+		getPersistence().cacheResult(treeEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -108,24 +122,6 @@ public class TreeEntryUtil {
 		TreeEntry treeEntry, ServiceContext serviceContext) {
 
 		return getPersistence().update(treeEntry, serviceContext);
-	}
-
-	/**
-	 * Caches the tree entry in the entity cache if it is enabled.
-	 *
-	 * @param treeEntry the tree entry
-	 */
-	public static void cacheResult(TreeEntry treeEntry) {
-		getPersistence().cacheResult(treeEntry);
-	}
-
-	/**
-	 * Caches the tree entries in the entity cache if it is enabled.
-	 *
-	 * @param treeEntries the tree entries
-	 */
-	public static void cacheResult(List<TreeEntry> treeEntries) {
-		getPersistence().cacheResult(treeEntries);
 	}
 
 	/**
@@ -225,4 +221,4 @@ public class TreeEntryUtil {
 	private static volatile TreeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-55336558
+// LIFERAY-SERVICE-BUILDER-HASH:-588311309

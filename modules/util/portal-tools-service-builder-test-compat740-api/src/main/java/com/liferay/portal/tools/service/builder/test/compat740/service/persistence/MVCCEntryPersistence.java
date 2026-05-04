@@ -184,20 +184,6 @@ public interface MVCCEntryPersistence extends BasePersistence<MVCCEntry> {
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the mvcc entry in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntry the mvcc entry
-	 */
-	public void cacheResult(MVCCEntry mvccEntry);
-
-	/**
-	 * Caches the mvcc entries in the entity cache if it is enabled.
-	 *
-	 * @param mvccEntries the mvcc entries
-	 */
-	public void cacheResult(java.util.List<MVCCEntry> mvccEntries);
-
-	/**
 	 * Creates a new mvcc entry with the primary key. Does not add the mvcc entry to the database.
 	 *
 	 * @param mvccEntryId the primary key for the new mvcc entry
@@ -235,4 +221,4 @@ public interface MVCCEntryPersistence extends BasePersistence<MVCCEntry> {
 	public MVCCEntry fetchByPrimaryKey(long mvccEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-198234437
+// LIFERAY-SERVICE-BUILDER-HASH:-1610959707

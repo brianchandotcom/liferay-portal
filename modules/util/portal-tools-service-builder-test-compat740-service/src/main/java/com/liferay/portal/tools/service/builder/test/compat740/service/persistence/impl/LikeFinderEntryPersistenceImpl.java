@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchLikeFinderEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.LikeFinderEntry;
@@ -379,66 +376,6 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the like finder entry in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntry the like finder entry
-	 */
-	@Override
-	public void cacheResult(LikeFinderEntry likeFinderEntry) {
-		entityCache.putResult(
-			LikeFinderEntryImpl.class, likeFinderEntry.getPrimaryKey(),
-			likeFinderEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByO_O_P,
-			new Object[] {
-				likeFinderEntry.getOwnerId(), likeFinderEntry.getOwnerType(),
-				likeFinderEntry.getPortletId()
-			},
-			likeFinderEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the like finder entries in the entity cache if it is enabled.
-	 *
-	 * @param likeFinderEntries the like finder entries
-	 */
-	@Override
-	public void cacheResult(List<LikeFinderEntry> likeFinderEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (likeFinderEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LikeFinderEntry likeFinderEntry : likeFinderEntries) {
-			if (entityCache.getResult(
-					LikeFinderEntryImpl.class,
-					likeFinderEntry.getPrimaryKey()) == null) {
-
-				cacheResult(likeFinderEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LikeFinderEntryModelImpl likeFinderEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			likeFinderEntryModelImpl.getOwnerId(),
-			likeFinderEntryModelImpl.getOwnerType(),
-			likeFinderEntryModelImpl.getPortletId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByO_O_P, args, likeFinderEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new like finder entry with the primary key. Does not add the like finder entry to the database.
 	 *
 	 * @param likeFinderEntryId the primary key for the new like finder entry
@@ -545,10 +482,7 @@ public class LikeFinderEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LikeFinderEntryImpl.class, likeFinderEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(likeFinderEntryModelImpl);
+		cacheUniqueFindersResult(likeFinderEntry, false);
 
 		if (isNew) {
 			likeFinderEntry.setNew(false);
@@ -609,16 +543,15 @@ public class LikeFinderEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByO_O_P = new FinderPath(
+		_finderPathFetchByO_O_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"ownerId", "ownerType", "portletId"}, true);
+			new String[] {"ownerId", "ownerType", "portletId"}, false,
+			LikeFinderEntry::getOwnerId, LikeFinderEntry::getOwnerType,
+			LikeFinderEntry::getPortletId);
 
 		_uniquePersistenceFinderByO_O_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O_P, _SQL_SELECT_LIKEFINDERENTRY_WHERE,
@@ -738,4 +671,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-518392388
+// LIFERAY-SERVICE-BUILDER-HASH:-10880837

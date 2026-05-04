@@ -185,20 +185,6 @@ public interface EagerBlobEntryPersistence
 	public int countByUUID_G(String uuid, long groupId);
 
 	/**
-	 * Caches the eager blob entry in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntry the eager blob entry
-	 */
-	public void cacheResult(EagerBlobEntry eagerBlobEntry);
-
-	/**
-	 * Caches the eager blob entries in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntries the eager blob entries
-	 */
-	public void cacheResult(java.util.List<EagerBlobEntry> eagerBlobEntries);
-
-	/**
 	 * Creates a new eager blob entry with the primary key. Does not add the eager blob entry to the database.
 	 *
 	 * @param eagerBlobEntryId the primary key for the new eager blob entry
@@ -237,4 +223,4 @@ public interface EagerBlobEntryPersistence
 	public EagerBlobEntry fetchByPrimaryKey(long eagerBlobEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-158915146
+// LIFERAY-SERVICE-BUILDER-HASH:943859396

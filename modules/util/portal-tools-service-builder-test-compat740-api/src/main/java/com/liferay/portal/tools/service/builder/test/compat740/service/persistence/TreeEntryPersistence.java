@@ -32,20 +32,6 @@ public interface TreeEntryPersistence extends BasePersistence<TreeEntry> {
 	 */
 
 	/**
-	 * Caches the tree entry in the entity cache if it is enabled.
-	 *
-	 * @param treeEntry the tree entry
-	 */
-	public void cacheResult(TreeEntry treeEntry);
-
-	/**
-	 * Caches the tree entries in the entity cache if it is enabled.
-	 *
-	 * @param treeEntries the tree entries
-	 */
-	public void cacheResult(java.util.List<TreeEntry> treeEntries);
-
-	/**
 	 * Creates a new tree entry with the primary key. Does not add the tree entry to the database.
 	 *
 	 * @param treeEntryId the primary key for the new tree entry
@@ -105,4 +91,4 @@ public interface TreeEntryPersistence extends BasePersistence<TreeEntry> {
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1250017769
+// LIFERAY-SERVICE-BUILDER-HASH:-362061685

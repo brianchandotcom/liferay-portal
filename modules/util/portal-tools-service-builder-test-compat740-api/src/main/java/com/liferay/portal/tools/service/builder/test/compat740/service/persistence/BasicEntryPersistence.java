@@ -184,20 +184,6 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the basic entry in the entity cache if it is enabled.
-	 *
-	 * @param basicEntry the basic entry
-	 */
-	public void cacheResult(BasicEntry basicEntry);
-
-	/**
-	 * Caches the basic entries in the entity cache if it is enabled.
-	 *
-	 * @param basicEntries the basic entries
-	 */
-	public void cacheResult(java.util.List<BasicEntry> basicEntries);
-
-	/**
 	 * Creates a new basic entry with the primary key. Does not add the basic entry to the database.
 	 *
 	 * @param basicEntryId the primary key for the new basic entry
@@ -419,4 +405,4 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 				MappingEntry> mappingEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:114082739
+// LIFERAY-SERVICE-BUILDER-HASH:133738631

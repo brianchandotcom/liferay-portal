@@ -270,4 +270,4 @@ public class TrashEntryUtil {
 	private static volatile TrashEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:556309570
+// LIFERAY-SERVICE-BUILDER-HASH:-671888282

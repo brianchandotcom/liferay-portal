@@ -803,21 +803,6 @@ public interface ERCVersionedEntryVersionPersistence
 	public int countByUuid_C_Version(String uuid, long companyId, int version);
 
 	/**
-	 * Caches the erc versioned entry version in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntryVersion the erc versioned entry version
-	 */
-	public void cacheResult(ERCVersionedEntryVersion ercVersionedEntryVersion);
-
-	/**
-	 * Caches the erc versioned entry versions in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntryVersions the erc versioned entry versions
-	 */
-	public void cacheResult(
-		java.util.List<ERCVersionedEntryVersion> ercVersionedEntryVersions);
-
-	/**
 	 * Creates a new erc versioned entry version with the primary key. Does not add the erc versioned entry version to the database.
 	 *
 	 * @param ercVersionedEntryVersionId the primary key for the new erc versioned entry version
@@ -859,4 +844,4 @@ public interface ERCVersionedEntryVersionPersistence
 		long ercVersionedEntryVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1814018850
+// LIFERAY-SERVICE-BUILDER-HASH:-1062403910

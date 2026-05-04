@@ -208,20 +208,6 @@ public interface ArrayableEntryPersistence
 	public int countByGroupId(long[] groupIds);
 
 	/**
-	 * Caches the arrayable entry in the entity cache if it is enabled.
-	 *
-	 * @param arrayableEntry the arrayable entry
-	 */
-	public void cacheResult(ArrayableEntry arrayableEntry);
-
-	/**
-	 * Caches the arrayable entries in the entity cache if it is enabled.
-	 *
-	 * @param arrayableEntries the arrayable entries
-	 */
-	public void cacheResult(java.util.List<ArrayableEntry> arrayableEntries);
-
-	/**
 	 * Creates a new arrayable entry with the primary key. Does not add the arrayable entry to the database.
 	 *
 	 * @param arrayableEntryId the primary key for the new arrayable entry
@@ -260,4 +246,4 @@ public interface ArrayableEntryPersistence
 	public ArrayableEntry fetchByPrimaryKey(long arrayableEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:886055721
+// LIFERAY-SERVICE-BUILDER-HASH:-259079693

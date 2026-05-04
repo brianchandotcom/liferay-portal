@@ -762,4 +762,4 @@ public class ERCGroupEntryUtil {
 	private static volatile ERCGroupEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1756010537
+// LIFERAY-SERVICE-BUILDER-HASH:1304807303

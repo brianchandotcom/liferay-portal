@@ -290,20 +290,6 @@ public interface VersionedEntryPersistence
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntry the versioned entry
-	 */
-	public void cacheResult(VersionedEntry versionedEntry);
-
-	/**
-	 * Caches the versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntries the versioned entries
-	 */
-	public void cacheResult(java.util.List<VersionedEntry> versionedEntries);
-
-	/**
 	 * Creates a new versioned entry with the primary key. Does not add the versioned entry to the database.
 	 *
 	 * @param versionedEntryId the primary key for the new versioned entry
@@ -342,4 +328,4 @@ public interface VersionedEntryPersistence
 	public VersionedEntry fetchByPrimaryKey(long versionedEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1711631859
+// LIFERAY-SERVICE-BUILDER-HASH:1765371983

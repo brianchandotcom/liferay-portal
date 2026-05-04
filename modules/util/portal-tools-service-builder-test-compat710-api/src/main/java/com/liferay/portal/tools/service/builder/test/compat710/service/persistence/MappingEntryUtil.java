@@ -500,4 +500,4 @@ public class MappingEntryUtil {
 	private static volatile MappingEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:843277794
+// LIFERAY-SERVICE-BUILDER-HASH:875811226

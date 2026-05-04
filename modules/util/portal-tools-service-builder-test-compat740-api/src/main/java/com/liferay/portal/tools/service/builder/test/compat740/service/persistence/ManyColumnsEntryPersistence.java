@@ -33,21 +33,6 @@ public interface ManyColumnsEntryPersistence
 	 */
 
 	/**
-	 * Caches the many columns entry in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntry the many columns entry
-	 */
-	public void cacheResult(ManyColumnsEntry manyColumnsEntry);
-
-	/**
-	 * Caches the many columns entries in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntries the many columns entries
-	 */
-	public void cacheResult(
-		java.util.List<ManyColumnsEntry> manyColumnsEntries);
-
-	/**
 	 * Creates a new many columns entry with the primary key. Does not add the many columns entry to the database.
 	 *
 	 * @param manyColumnsEntryId the primary key for the new many columns entry
@@ -86,4 +71,4 @@ public interface ManyColumnsEntryPersistence
 	public ManyColumnsEntry fetchByPrimaryKey(long manyColumnsEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1922624095
+// LIFERAY-SERVICE-BUILDER-HASH:1605621661

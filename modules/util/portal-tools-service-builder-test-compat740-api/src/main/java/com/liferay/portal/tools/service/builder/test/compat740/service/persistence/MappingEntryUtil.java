@@ -36,6 +36,20 @@ public class MappingEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MappingEntry> mappingEntries) {
+		getPersistence().cacheResult(mappingEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MappingEntry mappingEntry) {
+		getPersistence().cacheResult(mappingEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -108,24 +122,6 @@ public class MappingEntryUtil {
 		MappingEntry mappingEntry, ServiceContext serviceContext) {
 
 		return getPersistence().update(mappingEntry, serviceContext);
-	}
-
-	/**
-	 * Caches the mapping entry in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntry the mapping entry
-	 */
-	public static void cacheResult(MappingEntry mappingEntry) {
-		getPersistence().cacheResult(mappingEntry);
-	}
-
-	/**
-	 * Caches the mapping entries in the entity cache if it is enabled.
-	 *
-	 * @param mappingEntries the mapping entries
-	 */
-	public static void cacheResult(List<MappingEntry> mappingEntries) {
-		getPersistence().cacheResult(mappingEntries);
 	}
 
 	/**
@@ -417,4 +413,4 @@ public class MappingEntryUtil {
 	private static volatile MappingEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1196379519
+// LIFERAY-SERVICE-BUILDER-HASH:303918698

@@ -16,9 +16,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.compat740.exception.NoSuchTrashEntryException;
 import com.liferay.portal.tools.service.builder.test.compat740.model.TrashEntry;
@@ -34,7 +31,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -80,42 +76,6 @@ public class TrashEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(TrashEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the trash entry in the entity cache if it is enabled.
-	 *
-	 * @param trashEntry the trash entry
-	 */
-	@Override
-	public void cacheResult(TrashEntry trashEntry) {
-		entityCache.putResult(
-			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the trash entries in the entity cache if it is enabled.
-	 *
-	 * @param trashEntries the trash entries
-	 */
-	@Override
-	public void cacheResult(List<TrashEntry> trashEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (trashEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TrashEntry trashEntry : trashEntries) {
-			if (entityCache.getResult(
-					TrashEntryImpl.class, trashEntry.getPrimaryKey()) == null) {
-
-				cacheResult(trashEntry);
-			}
-		}
 	}
 
 	/**
@@ -246,7 +206,7 @@ public class TrashEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(TrashEntryImpl.class, trashEntry, false, true);
+		cacheUniqueFindersResult(trashEntry, false);
 
 		if (isNew) {
 			trashEntry.setNew(false);
@@ -307,9 +267,6 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		TrashEntryUtil.setPersistence(this);
 	}
 
@@ -367,4 +324,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:797226705
+// LIFERAY-SERVICE-BUILDER-HASH:-91865064

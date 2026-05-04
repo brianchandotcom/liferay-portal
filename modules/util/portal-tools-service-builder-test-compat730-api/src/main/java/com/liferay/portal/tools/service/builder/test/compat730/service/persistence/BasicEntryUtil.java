@@ -734,4 +734,4 @@ public class BasicEntryUtil {
 	private static volatile BasicEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:767913882
+// LIFERAY-SERVICE-BUILDER-HASH:249317966

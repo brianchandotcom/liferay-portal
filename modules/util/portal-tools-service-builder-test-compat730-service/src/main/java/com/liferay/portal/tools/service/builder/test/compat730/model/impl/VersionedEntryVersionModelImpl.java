@@ -703,4 +703,4 @@ public class VersionedEntryVersionModelImpl
 	private VersionedEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-599658768
+// LIFERAY-SERVICE-BUILDER-HASH:1693098056

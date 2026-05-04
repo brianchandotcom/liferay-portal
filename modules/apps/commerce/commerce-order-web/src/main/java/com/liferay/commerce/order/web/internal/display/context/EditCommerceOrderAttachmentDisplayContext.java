@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderAttachment;
 import com.liferay.commerce.order.web.internal.display.context.helper.CommerceOrderRequestHelper;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -18,6 +20,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -164,6 +168,19 @@ public class EditCommerceOrderAttachmentDisplayContext {
 		}
 
 		return _commerceOrderAttachment.getType();
+	}
+
+	public boolean hasViewRestrictedCommerceOrderAttachmentsPermission() {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		return permissionChecker.hasPermission(
+			_commerceOrderRequestHelper.getScopeGroupId(),
+			CommerceOrderConstants.RESOURCE_NAME, _commerceOrderId,
+			CommerceOrderActionKeys.VIEW_RESTRICTED_COMMERCE_ORDER_ATTACHMENTS);
 	}
 
 	private String _getBaseURL() {

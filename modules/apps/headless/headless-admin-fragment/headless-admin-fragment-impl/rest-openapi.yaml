@@ -389,6 +389,35 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Fragment"
             tags: ["Fragment"]
+    "/sites/{siteExternalReferenceCode}/fragments":
+        post:
+            description:
+                Adds a new fragment to a site.
+            operationId: postSiteFragment
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Fragment"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Fragment"
+            tags: ["Fragment"]
     "/sites/{siteExternalReferenceCode}/fragments/{fragmentExternalReferenceCode}":
         delete:
             description:

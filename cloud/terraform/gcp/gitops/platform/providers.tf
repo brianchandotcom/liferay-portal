@@ -20,6 +20,7 @@ provider "kubernetes" {
 	token=data.google_client_config.default.access_token
 }
 terraform {
+	backend "gcs" {}
 	required_providers {
 		google={
 			source="hashicorp/google"

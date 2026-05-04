@@ -84,8 +84,7 @@ export interface ConditionBuilderProps {
 	/**
 	 * Returns the operator set for a given property.
 	 * Allows each consumer to restrict or extend the available operators
-	 * per field type (e.g. Objects only needs includes/excludes for picklists,
-	 * while Collections needs the full OData set).
+	 * per field type.
 	 */
 	getOperators: (property: GenericProperty) => GenericOperator[];
 

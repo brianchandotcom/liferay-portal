@@ -67,8 +67,7 @@
 				/>
 			</c:when>
 			<c:otherwise>
-
-				<!-- TO-DO: Move AssetFilterBuilder here -->
+				<!-- Move AssetFilterBuilder here for FF LPD-74731 -->
 			</c:otherwise>
 		</c:choose>
 	</div>

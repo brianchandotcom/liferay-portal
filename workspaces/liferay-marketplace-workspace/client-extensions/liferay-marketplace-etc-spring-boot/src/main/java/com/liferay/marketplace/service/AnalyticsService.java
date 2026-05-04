@@ -51,9 +51,9 @@ public class AnalyticsService extends BaseService {
 			MediaType.APPLICATION_FORM_URLENCODED
 		).body(
 			BodyInserters.fromFormData(
-				"corpProjectName", jsonObject.getString("corpProjectName")
+				"corpProjectName", jsonObject.optString("corpProjectName")
 			).with(
-				"corpProjectUuid", jsonObject.getString("corpProjectUuid")
+				"corpProjectUuid", jsonObject.optString("corpProjectUuid")
 			).with(
 				"incidentReportEmailAddresses",
 				jsonObject.getJSONArray(

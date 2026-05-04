@@ -513,6 +513,12 @@ public interface ObjectEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValuesListCount(
+			long companyId, Long[] groupIds, Long[] objectDefinitionIds,
+			Predicate predicate)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getValuesListCount(
 			Long[] groupIds, long companyId, long userId,
 			long objectDefinitionId, Predicate predicate,
 			boolean preferApproved, String search)
@@ -620,4 +626,4 @@ public interface ObjectEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:709473226
+// LIFERAY-SERVICE-BUILDER-HASH:-404821026

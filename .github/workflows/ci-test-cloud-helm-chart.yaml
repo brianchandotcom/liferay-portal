@@ -11,7 +11,7 @@ jobs:
             -   name: Install Helm
                 uses: azure/setup-helm@v4
             -   name: Install helm-unittest plugin
-                run: helm plugin install https://github.com/helm-unittest/helm-unittest --version 1.0.3
+                run: helm plugin install --verify=false --version 1.0.3 https://github.com/helm-unittest/helm-unittest
             -   name: Set up Kubeconform
                 uses: bmuschko/setup-kubeconform@v1
                 with:

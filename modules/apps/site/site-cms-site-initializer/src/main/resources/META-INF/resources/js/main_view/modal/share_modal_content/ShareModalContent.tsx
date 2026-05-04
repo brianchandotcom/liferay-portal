@@ -363,7 +363,9 @@ export default function ShareModalContent({
 					}),
 					...(type === COLLABORATOR_TYPE.EXTERNAL_USER
 						? {emailAddress: (user as ExternalUser).emailAddress}
-						: {id: Number(user.id)}),
+						: user.id
+							? {id: Number(user.id)}
+							: {}),
 					share,
 					type,
 				})

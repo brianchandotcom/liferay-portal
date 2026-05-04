@@ -352,7 +352,7 @@ definition {
 	@description = "Test Automation for LPS-130319: Validate if it's posible to create a segment based on Session > Hostname criteria"
 	@priority = 5
 	@uitest
-	test AddSegmentBySessionHostname {
+	test AddSegmentBySessionProperties {
 		task ("Add segment") {
 			LexiconEntry.gotoAdd();
 

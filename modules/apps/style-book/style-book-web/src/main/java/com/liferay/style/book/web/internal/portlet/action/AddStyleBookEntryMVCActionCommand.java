@@ -49,8 +49,12 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			StyleBookEntry styleBookEntry = _addStyleBookEntry(actionRequest);
 
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 			JSONObject jsonObject = JSONUtil.put(
-				"redirectURL", _getRedirectURL(actionResponse, styleBookEntry));
+				"redirectURL",
+				!redirect.isEmpty() ? redirect :
+					_getRedirectURL(actionResponse, styleBookEntry));
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {
@@ -80,9 +84,11 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		long groupId = ParamUtil.getLong(
+			actionRequest, "groupId", serviceContext.getScopeGroupId());
+
 		return _styleBookEntryService.addStyleBookEntry(
-			null, serviceContext.getScopeGroupId(), name, StringPool.BLANK,
-			themeId, serviceContext);
+			null, groupId, name, StringPool.BLANK, themeId, serviceContext);
 	}
 
 	private String _getRedirectURL(

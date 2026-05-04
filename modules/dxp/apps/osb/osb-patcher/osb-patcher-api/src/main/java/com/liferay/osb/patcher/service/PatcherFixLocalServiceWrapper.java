@@ -138,6 +138,17 @@ public class PatcherFixLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONObject
+			checkPatcherFixesByPatcherProjectVersionName(
+				String patcherProjectVersionName, String ticketList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixLocalService.
+			checkPatcherFixesByPatcherProjectVersionName(
+				patcherProjectVersionName, ticketList);
+	}
+
+	@Override
 	public void clearPatcherBuildPatcherFixes(long patcherBuildId) {
 		_patcherFixLocalService.clearPatcherBuildPatcherFixes(patcherBuildId);
 	}
@@ -815,4 +826,4 @@ public class PatcherFixLocalServiceWrapper
 	private PatcherFixLocalService _patcherFixLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-233519990
+// LIFERAY-SERVICE-BUILDER-HASH:769446415

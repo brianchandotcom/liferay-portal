@@ -419,13 +419,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "http://localhost:8080");
 		}
-	}
 
-	@description = "Test Automation for LPS-130323: Validate if it's posible to create a segment based on Session > Request Parameters criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionRequestParameters {
-		task ("Add segment") {
+		task ("Add segment with Request Parameters property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Session");
@@ -443,7 +438,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Request Parameters segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionRequestParameters Test");
 
 			AssertValue(

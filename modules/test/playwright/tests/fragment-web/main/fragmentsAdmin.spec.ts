@@ -1799,7 +1799,7 @@ testDeprecatedFragmentSet(
 );
 
 testEmbeddingWidgets(
-	'The Embedded Widget Modal appears when embedding widgets inside of fragments using lfr-widget tags',
+	'Fragment editor autocompletes lfr-widget tags',
 	{
 		tag: '@LPD-44999',
 	},
@@ -1819,44 +1819,18 @@ testEmbeddingWidgets(
 
 		await fragmentsPage.createFragment(setName, fragmentName);
 
-		// Check that fragment editor don't autocomplete for lfr-widget tags
+		// Assert fragment editor autocomplete for lfr-widget tags
 
 		await page.locator('.html.source-editor .CodeMirror').click();
 
 		await page.keyboard.type('<lfr-widget-');
 
 		await expect(page.getByText('lfr-widget-asset-list')).toBeVisible();
-
-		// Edit the fragment and add a lfr-widget tag
-
-		await page.keyboard.type('asset-list>');
-
-		// Check the warning icon
-
-		await page.locator('.warning-icon').hover();
-
-		await expect(
-			page.getByTitle(
-				'Embedding widgets within fragments is a deprecated practice that can cause performance issues.'
-			)
-		).toBeVisible();
-
-		// Publish the fragment
-
-		await page.getByRole('button', {name: 'Publish'}).click();
-
-		const frameLocator = page.getByLabel('Fragment with Embedded Widget');
-
-		await frameLocator.getByRole('button', {name: 'Publish'}).click();
-
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
 	}
 );
 
 test(
-	'The Embedded Widget Modal appears when embedding widgets inside of fragments using liferay_portlet taglib',
+	'The Embedded Widget Modal appears when embedding widgets inside of fragments',
 	{
 		tag: '@LPD-44999',
 	},
@@ -1870,42 +1844,52 @@ test(
 
 		await fragmentsPage.createFragmentSet(setName);
 
-		// Create fragment
-
-		const fragmentName = getRandomString();
-
-		await fragmentsPage.createFragment(setName, fragmentName);
-
-		// Add a liferay_portlet taglib to see the warning icon
-
-		await page.locator('.html.source-editor .CodeMirror').click();
-
-		await page.keyboard.type(
+		const widgetSnippets = [
+			'<lfr-widget-asset-list>',
 			'[@liferay_portlet["runtime"]\n' +
 				'portletName="com_liferay_journal_content_web_portlet_JournalContentPortlet"\n' +
-				'instanceId="myInstanceId" persistSettings=false /]'
-		);
+				'instanceId="myInstanceId" persistSettings=false /]',
+		];
 
-		// Check the warning icon
+		for (const widgetSnippet of widgetSnippets) {
 
-		await page.locator('.warning-icon').hover();
+			// Create fragment
 
-		await expect(
-			page.getByTitle(
-				'Embedding widgets within fragments is a deprecated practice that can cause performance issues.'
-			)
-		).toBeVisible();
+			await fragmentsPage.goto(site.friendlyUrlPath);
 
-		// Publish the fragment
+			const fragmentName = getRandomString();
 
-		await page.getByRole('button', {name: 'Publish'}).click();
+			await fragmentsPage.createFragment(setName, fragmentName);
 
-		const frameLocator = page.getByLabel('Fragment with Embedded Widget');
+			// Edit the fragment and add a widget tag
 
-		await frameLocator.getByRole('button', {name: 'Publish'}).click();
+			await page.locator('.html.source-editor .CodeMirror').click();
 
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
+			await page.keyboard.type(widgetSnippet);
+
+			// Check the warning icon
+
+			await page.locator('.warning-icon').hover();
+
+			await expect(
+				page.getByTitle(
+					'Embedding widgets within fragments is a deprecated practice that can cause performance issues.'
+				)
+			).toBeVisible();
+
+			// Publish the fragment
+
+			await page.getByRole('button', {name: 'Publish'}).click();
+
+			const frameLocator = page.getByLabel(
+				'Fragment with Embedded Widget'
+			);
+
+			await frameLocator.getByRole('button', {name: 'Publish'}).click();
+
+			await expect(
+				page.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+		}
 	}
 );

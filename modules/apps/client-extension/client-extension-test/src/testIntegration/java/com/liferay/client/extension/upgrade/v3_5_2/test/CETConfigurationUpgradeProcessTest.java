@@ -6,12 +6,13 @@
 package com.liferay.client.extension.upgrade.v3_5_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -20,13 +21,13 @@ import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,6 +35,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Anthony Chu
+ * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
 public class CETConfigurationUpgradeProcessTest {
@@ -43,18 +45,29 @@ public class CETConfigurationUpgradeProcessTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_initialConfigurationCount = _getConfigurationCount();
+	}
+
 	@After
 	public void tearDown() throws Exception {
 		DB db = DBManagerUtil.getDB();
 
-		db.runSQL("delete from Configuration_ where " + _PIDS_IN_CLAUSE);
+		db.runSQL(
+			"delete from Configuration_ where configurationId in ('" +
+				StringUtil.merge(_pids, StringPool.COMMA_AND_SPACE) + "')");
 	}
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_insertConfiguration(_STALE_CET_PID_1);
-		_insertConfiguration(_STALE_CET_PID_2);
-		_insertConfiguration(_UNRELATED_PID);
+		Assert.assertEquals(
+			_initialConfigurationCount, _getConfigurationCount());
+
+		_insertConfiguration();
+
+		Assert.assertEquals(
+			_initialConfigurationCount + 1, _getConfigurationCount());
 
 		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
 			_upgradeStepRegistrator,
@@ -63,26 +76,31 @@ public class CETConfigurationUpgradeProcessTest {
 
 		upgradeProcess.upgrade();
 
+		Assert.assertEquals(0, _getConfigurationCount());
+	}
+
+	private long _getConfigurationCount() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 
-			Statement statement = connection.createStatement();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"select count(*) as count from Configuration_ where " +
+					"configurationId like ?")) {
 
-			ResultSet resultSet = statement.executeQuery(
-				"select configurationId from Configuration_ where " +
-					_PIDS_IN_CLAUSE)) {
+			preparedStatement.setString(1, _FACTORY_PID + "~%");
 
-			Set<String> survivingPids = new HashSet<>();
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					throw new Exception("Could not count configurations");
+				}
 
-			while (resultSet.next()) {
-				survivingPids.add(resultSet.getString("configurationId"));
+				return resultSet.getLong("count");
 			}
-
-			Assert.assertEquals(
-				SetUtil.fromArray(_UNRELATED_PID), survivingPids);
 		}
 	}
 
-	private void _insertConfiguration(String pid) throws Exception {
+	private void _insertConfiguration() throws Exception {
+		String pid = _FACTORY_PID + "~" + RandomTestUtil.randomString();
+
 		try (Connection connection = DataAccess.getConnection();
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
@@ -94,25 +112,15 @@ public class CETConfigurationUpgradeProcessTest {
 
 			preparedStatement.execute();
 		}
+
+		_pids.add(pid);
 	}
 
-	private static final String _CET_CONFIGURATION_PID_PREFIX =
-		"com.liferay.client.extension.type.configuration.CETConfiguration~";
+	private static final String _FACTORY_PID =
+		"com.liferay.client.extension.type.configuration.CETConfiguration";
 
-	private static final String _PIDS_IN_CLAUSE = StringBundler.concat(
-		"configurationId in ('",
-		CETConfigurationUpgradeProcessTest._STALE_CET_PID_1, "', '",
-		CETConfigurationUpgradeProcessTest._STALE_CET_PID_2, "', '",
-		CETConfigurationUpgradeProcessTest._UNRELATED_PID, "')");
-
-	private static final String _STALE_CET_PID_1 =
-		_CET_CONFIGURATION_PID_PREFIX + "upgrade-test-cet-1/liferay.com";
-
-	private static final String _STALE_CET_PID_2 =
-		_CET_CONFIGURATION_PID_PREFIX + "upgrade-test-cet-2/liferay.com";
-
-	private static final String _UNRELATED_PID =
-		"com.liferay.client.extension.upgrade.test.unrelated";
+	private long _initialConfigurationCount;
+	private final List<String> _pids = new ArrayList<>();
 
 	@Inject(
 		filter = "component.name=com.liferay.client.extension.internal.upgrade.registry.ClientExtensionUpgradeStepRegistrator"

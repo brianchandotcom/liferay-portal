@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CommerceCatalogUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2130,80 +2127,6 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce catalog in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalog the commerce catalog
-	 */
-	@Override
-	public void cacheResult(CommerceCatalog commerceCatalog) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceCatalog.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommerceCatalogImpl.class, commerceCatalog.getPrimaryKey(),
-				commerceCatalog);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					commerceCatalog.getExternalReferenceCode(),
-					commerceCatalog.getCompanyId()
-				},
-				commerceCatalog);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce catalogs in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalogs the commerce catalogs
-	 */
-	@Override
-	public void cacheResult(List<CommerceCatalog> commerceCatalogs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceCatalogs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceCatalog commerceCatalog : commerceCatalogs) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commerceCatalog.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommerceCatalogImpl.class,
-						commerceCatalog.getPrimaryKey()) == null) {
-
-					cacheResult(commerceCatalog);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceCatalogModelImpl commerceCatalogModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceCatalogModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commerceCatalogModelImpl.getExternalReferenceCode(),
-				commerceCatalogModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, commerceCatalogModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce catalog with the primary key. Does not add the commerce catalog to the database.
 	 *
 	 * @param commerceCatalogId the primary key for the new commerce catalog
@@ -2418,10 +2341,7 @@ public class CommerceCatalogPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceCatalogImpl.class, commerceCatalogModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceCatalogModelImpl);
+		cacheUniqueFindersResult(commerceCatalog, false);
 
 		if (isNew) {
 			commerceCatalog.setNew(false);
@@ -2559,9 +2479,6 @@ public class CommerceCatalogPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2713,10 +2630,12 @@ public class CommerceCatalogPersistenceImpl
 				"commerceCatalog.", "system", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCatalog::isSystem));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceCatalog::getExternalReferenceCode,
+			CommerceCatalog::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECATALOG_WHERE,
@@ -2823,4 +2742,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1693929569
+// LIFERAY-SERVICE-BUILDER-HASH:-161722890

@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -772,52 +769,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount usage entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntry the commerce discount usage entry
-	 */
-	@Override
-	public void cacheResult(
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-		entityCache.putResult(
-			CommerceDiscountUsageEntryImpl.class,
-			commerceDiscountUsageEntry.getPrimaryKey(),
-			commerceDiscountUsageEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount usage entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntries the commerce discount usage entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceDiscountUsageEntry> commerceDiscountUsageEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountUsageEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountUsageEntry commerceDiscountUsageEntry :
-				commerceDiscountUsageEntries) {
-
-			if (entityCache.getResult(
-					CommerceDiscountUsageEntryImpl.class,
-					commerceDiscountUsageEntry.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscountUsageEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount usage entry with the primary key. Does not add the commerce discount usage entry to the database.
 	 *
 	 * @param commerceDiscountUsageEntryId the primary key for the new commerce discount usage entry
@@ -962,9 +913,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountUsageEntryImpl.class,
-			commerceDiscountUsageEntryModelImpl, false, true);
+		cacheUniqueFindersResult(commerceDiscountUsageEntry, false);
 
 		if (isNew) {
 			commerceDiscountUsageEntry.setNew(false);
@@ -1028,9 +977,6 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -1257,4 +1203,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-322682373
+// LIFERAY-SERVICE-BUILDER-HASH:-1364783894

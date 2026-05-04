@@ -2610,20 +2610,6 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		boolean latestKeyBuild, String name);
 
 	/**
-	 * Caches the patcher build in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuild the patcher build
-	 */
-	public void cacheResult(PatcherBuild patcherBuild);
-
-	/**
-	 * Caches the patcher builds in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuilds the patcher builds
-	 */
-	public void cacheResult(java.util.List<PatcherBuild> patcherBuilds);
-
-	/**
 	 * Creates a new patcher build with the primary key. Does not add the patcher build to the database.
 	 *
 	 * @param patcherBuildId the primary key for the new patcher build
@@ -3011,4 +2997,4 @@ public interface PatcherBuildPersistence extends BasePersistence<PatcherBuild> {
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1580242385
+// LIFERAY-SERVICE-BUILDER-HASH:1301020673

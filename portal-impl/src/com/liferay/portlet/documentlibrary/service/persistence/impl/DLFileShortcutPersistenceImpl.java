@@ -13,7 +13,6 @@ import com.liferay.document.library.kernel.service.persistence.DLFileShortcutPer
 import com.liferay.document.library.kernel.service.persistence.DLFileShortcutUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -44,8 +43,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2745,94 +2742,6 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 	/**
-	 * Caches the document library file shortcut in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcut the document library file shortcut
-	 */
-	@Override
-	public void cacheResult(DLFileShortcut dlFileShortcut) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileShortcut.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey(),
-				dlFileShortcut);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
-				},
-				dlFileShortcut);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					dlFileShortcut.getExternalReferenceCode(),
-					dlFileShortcut.getGroupId()
-				},
-				dlFileShortcut);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the document library file shortcuts in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcuts the document library file shortcuts
-	 */
-	@Override
-	public void cacheResult(List<DLFileShortcut> dlFileShortcuts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlFileShortcuts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlFileShortcut.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						DLFileShortcutImpl.class,
-						dlFileShortcut.getPrimaryKey()) == null) {
-
-					cacheResult(dlFileShortcut);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLFileShortcutModelImpl dlFileShortcutModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileShortcutModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlFileShortcutModelImpl.getUuid(),
-				dlFileShortcutModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, dlFileShortcutModelImpl);
-
-			args = new Object[] {
-				dlFileShortcutModelImpl.getExternalReferenceCode(),
-				dlFileShortcutModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, dlFileShortcutModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	 *
 	 * @param fileShortcutId the primary key for the new document library file shortcut
@@ -3044,10 +2953,7 @@ public class DLFileShortcutPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			DLFileShortcutImpl.class, dlFileShortcutModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlFileShortcutModelImpl);
+		cacheUniqueFindersResult(dlFileShortcut, false);
 
 		if (isNew) {
 			dlFileShortcut.setNew(false);
@@ -3191,9 +3097,6 @@ public class DLFileShortcutPersistenceImpl
 	 * Initializes the document library file shortcut persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3221,10 +3124,11 @@ public class DLFileShortcutPersistenceImpl
 				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileShortcut::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DLFileShortcut::getUuid,
+			DLFileShortcut::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
@@ -3501,10 +3405,12 @@ public class DLFileShortcutPersistenceImpl
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, DLFileShortcut::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			DLFileShortcut::getExternalReferenceCode,
+			DLFileShortcut::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
@@ -3575,4 +3481,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-163575414
+// LIFERAY-SERVICE-BUILDER-HASH:1841155727

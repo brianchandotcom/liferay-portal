@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1059,52 +1056,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the permission check finder entry in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntry the permission check finder entry
-	 */
-	@Override
-	public void cacheResult(
-		PermissionCheckFinderEntry permissionCheckFinderEntry) {
-
-		entityCache.putResult(
-			PermissionCheckFinderEntryImpl.class,
-			permissionCheckFinderEntry.getPrimaryKey(),
-			permissionCheckFinderEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the permission check finder entries in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntries the permission check finder entries
-	 */
-	@Override
-	public void cacheResult(
-		List<PermissionCheckFinderEntry> permissionCheckFinderEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (permissionCheckFinderEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PermissionCheckFinderEntry permissionCheckFinderEntry :
-				permissionCheckFinderEntries) {
-
-			if (entityCache.getResult(
-					PermissionCheckFinderEntryImpl.class,
-					permissionCheckFinderEntry.getPrimaryKey()) == null) {
-
-				cacheResult(permissionCheckFinderEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new permission check finder entry with the primary key. Does not add the permission check finder entry to the database.
 	 *
 	 * @param permissionCheckFinderEntryId the primary key for the new permission check finder entry
@@ -1224,9 +1175,7 @@ public class PermissionCheckFinderEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PermissionCheckFinderEntryImpl.class,
-			permissionCheckFinderEntryModelImpl, false, true);
+		cacheUniqueFindersResult(permissionCheckFinderEntry, false);
 
 		if (isNew) {
 			permissionCheckFinderEntry.setNew(false);
@@ -1294,9 +1243,6 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	 * Initializes the permission check finder entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1390,4 +1336,4 @@ public class PermissionCheckFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1201114222
+// LIFERAY-SERVICE-BUILDER-HASH:-469045145

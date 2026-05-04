@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1365,78 +1363,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce inventory replenishment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
-	 */
-	@Override
-	public void cacheResult(
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
-
-		entityCache.putResult(
-			CommerceInventoryReplenishmentItemImpl.class,
-			commerceInventoryReplenishmentItem.getPrimaryKey(),
-			commerceInventoryReplenishmentItem);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceInventoryReplenishmentItem.getExternalReferenceCode(),
-				commerceInventoryReplenishmentItem.getCompanyId()
-			},
-			commerceInventoryReplenishmentItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce inventory replenishment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItems the commerce inventory replenishment items
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceInventoryReplenishmentItem>
-			commerceInventoryReplenishmentItems) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceInventoryReplenishmentItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceInventoryReplenishmentItem
-				commerceInventoryReplenishmentItem :
-					commerceInventoryReplenishmentItems) {
-
-			if (entityCache.getResult(
-					CommerceInventoryReplenishmentItemImpl.class,
-					commerceInventoryReplenishmentItem.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commerceInventoryReplenishmentItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceInventoryReplenishmentItemModelImpl
-			commerceInventoryReplenishmentItemModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceInventoryReplenishmentItemModelImpl.
-				getExternalReferenceCode(),
-			commerceInventoryReplenishmentItemModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args,
-			commerceInventoryReplenishmentItemModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce inventory replenishment item with the primary key. Does not add the commerce inventory replenishment item to the database.
 	 *
 	 * @param commerceInventoryReplenishmentItemId the primary key for the new commerce inventory replenishment item
@@ -1680,11 +1606,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceInventoryReplenishmentItemImpl.class,
-			commerceInventoryReplenishmentItemModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceInventoryReplenishmentItemModelImpl);
+		cacheUniqueFindersResult(commerceInventoryReplenishmentItem, false);
 
 		if (isNew) {
 			commerceInventoryReplenishmentItem.setNew(false);
@@ -1755,9 +1677,6 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2018,10 +1937,12 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryReplenishmentItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceInventoryReplenishmentItem::getExternalReferenceCode,
+			CommerceInventoryReplenishmentItem::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -2107,4 +2028,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:888201835
+// LIFERAY-SERVICE-BUILDER-HASH:-1807980737

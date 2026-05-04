@@ -504,20 +504,6 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 	public int countByLTEI_OSFI(long listTypeEntryId, long objectStateFlowId);
 
 	/**
-	 * Caches the object state in the entity cache if it is enabled.
-	 *
-	 * @param objectState the object state
-	 */
-	public void cacheResult(ObjectState objectState);
-
-	/**
-	 * Caches the object states in the entity cache if it is enabled.
-	 *
-	 * @param objectStates the object states
-	 */
-	public void cacheResult(java.util.List<ObjectState> objectStates);
-
-	/**
 	 * Creates a new object state with the primary key. Does not add the object state to the database.
 	 *
 	 * @param objectStateId the primary key for the new object state
@@ -556,4 +542,4 @@ public interface ObjectStatePersistence extends BasePersistence<ObjectState> {
 	public ObjectState fetchByPrimaryKey(long objectStateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-406784276
+// LIFERAY-SERVICE-BUILDER-HASH:1198483068

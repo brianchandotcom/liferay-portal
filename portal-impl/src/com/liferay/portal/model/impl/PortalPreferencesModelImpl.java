@@ -675,4 +675,4 @@ public class PortalPreferencesModelImpl
 	private PortalPreferences _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1717210070
+// LIFERAY-SERVICE-BUILDER-HASH:308856570

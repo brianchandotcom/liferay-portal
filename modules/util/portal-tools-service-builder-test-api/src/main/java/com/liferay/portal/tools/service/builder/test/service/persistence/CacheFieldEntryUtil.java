@@ -36,6 +36,20 @@ public class CacheFieldEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CacheFieldEntry> cacheFieldEntries) {
+		getPersistence().cacheResult(cacheFieldEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CacheFieldEntry cacheFieldEntry) {
+		getPersistence().cacheResult(cacheFieldEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -232,24 +246,6 @@ public class CacheFieldEntryUtil {
 	}
 
 	/**
-	 * Caches the cache field entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheFieldEntry the cache field entry
-	 */
-	public static void cacheResult(CacheFieldEntry cacheFieldEntry) {
-		getPersistence().cacheResult(cacheFieldEntry);
-	}
-
-	/**
-	 * Caches the cache field entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheFieldEntries the cache field entries
-	 */
-	public static void cacheResult(List<CacheFieldEntry> cacheFieldEntries) {
-		getPersistence().cacheResult(cacheFieldEntries);
-	}
-
-	/**
 	 * Creates a new cache field entry with the primary key. Does not add the cache field entry to the database.
 	 *
 	 * @param cacheFieldEntryId the primary key for the new cache field entry
@@ -312,4 +308,4 @@ public class CacheFieldEntryUtil {
 	private static volatile CacheFieldEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1364191309
+// LIFERAY-SERVICE-BUILDER-HASH:-497757992

@@ -36,6 +36,24 @@ public class LVEntryLocalizationVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LVEntryLocalizationVersion> lvEntryLocalizationVersions) {
+
+		getPersistence().cacheResult(lvEntryLocalizationVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
+
+		getPersistence().cacheResult(lvEntryLocalizationVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -817,28 +835,6 @@ public class LVEntryLocalizationVersionUtil {
 	}
 
 	/**
-	 * Caches the lv entry localization version in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizationVersion the lv entry localization version
-	 */
-	public static void cacheResult(
-		LVEntryLocalizationVersion lvEntryLocalizationVersion) {
-
-		getPersistence().cacheResult(lvEntryLocalizationVersion);
-	}
-
-	/**
-	 * Caches the lv entry localization versions in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizationVersions the lv entry localization versions
-	 */
-	public static void cacheResult(
-		List<LVEntryLocalizationVersion> lvEntryLocalizationVersions) {
-
-		getPersistence().cacheResult(lvEntryLocalizationVersions);
-	}
-
-	/**
 	 * Creates a new lv entry localization version with the primary key. Does not add the lv entry localization version to the database.
 	 *
 	 * @param lvEntryLocalizationVersionId the primary key for the new lv entry localization version
@@ -911,4 +907,4 @@ public class LVEntryLocalizationVersionUtil {
 	private static volatile LVEntryLocalizationVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1116082579
+// LIFERAY-SERVICE-BUILDER-HASH:-837158917

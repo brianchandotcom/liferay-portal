@@ -36,6 +36,24 @@ public class WorkflowMetricsSLADefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions) {
+
+		getPersistence().cacheResult(workflowMetricsSLADefinitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
+
+		getPersistence().cacheResult(workflowMetricsSLADefinition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1301,28 +1319,6 @@ public class WorkflowMetricsSLADefinitionUtil {
 	}
 
 	/**
-	 * Caches the workflow metrics sla definition in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinition the workflow metrics sla definition
-	 */
-	public static void cacheResult(
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-
-		getPersistence().cacheResult(workflowMetricsSLADefinition);
-	}
-
-	/**
-	 * Caches the workflow metrics sla definitions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitions the workflow metrics sla definitions
-	 */
-	public static void cacheResult(
-		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions) {
-
-		getPersistence().cacheResult(workflowMetricsSLADefinitions);
-	}
-
-	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionId the primary key for the new workflow metrics sla definition
@@ -1398,4 +1394,4 @@ public class WorkflowMetricsSLADefinitionUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-444537819
+// LIFERAY-SERVICE-BUILDER-HASH:-183795869

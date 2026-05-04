@@ -36,6 +36,20 @@ public class KaleoActionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoAction> kaleoActions) {
+		getPersistence().cacheResult(kaleoActions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoAction kaleoAction) {
+		getPersistence().cacheResult(kaleoAction);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -984,24 +998,6 @@ public class KaleoActionUtil {
 	}
 
 	/**
-	 * Caches the kaleo action in the entity cache if it is enabled.
-	 *
-	 * @param kaleoAction the kaleo action
-	 */
-	public static void cacheResult(KaleoAction kaleoAction) {
-		getPersistence().cacheResult(kaleoAction);
-	}
-
-	/**
-	 * Caches the kaleo actions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoActions the kaleo actions
-	 */
-	public static void cacheResult(List<KaleoAction> kaleoActions) {
-		getPersistence().cacheResult(kaleoActions);
-	}
-
-	/**
 	 * Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
 	 *
 	 * @param kaleoActionId the primary key for the new kaleo action
@@ -1064,4 +1060,4 @@ public class KaleoActionUtil {
 	private static volatile KaleoActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1919096217
+// LIFERAY-SERVICE-BUILDER-HASH:-1329454169

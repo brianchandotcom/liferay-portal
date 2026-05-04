@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.TicketImpl;
@@ -701,51 +698,6 @@ public class TicketPersistenceImpl
 	}
 
 	/**
-	 * Caches the ticket in the entity cache if it is enabled.
-	 *
-	 * @param ticket the ticket
-	 */
-	@Override
-	public void cacheResult(Ticket ticket) {
-		EntityCacheUtil.putResult(
-			TicketImpl.class, ticket.getPrimaryKey(), ticket);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByKey, new Object[] {ticket.getKey()}, ticket);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the tickets in the entity cache if it is enabled.
-	 *
-	 * @param tickets the tickets
-	 */
-	@Override
-	public void cacheResult(List<Ticket> tickets) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (tickets.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Ticket ticket : tickets) {
-			if (EntityCacheUtil.getResult(
-					TicketImpl.class, ticket.getPrimaryKey()) == null) {
-
-				cacheResult(ticket);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(TicketModelImpl ticketModelImpl) {
-		Object[] args = new Object[] {ticketModelImpl.getKey()};
-
-		FinderCacheUtil.putResult(_finderPathFetchByKey, args, ticketModelImpl);
-	}
-
-	/**
 	 * Creates a new ticket with the primary key. Does not add the ticket to the database.
 	 *
 	 * @param ticketId the primary key for the new ticket
@@ -860,10 +812,7 @@ public class TicketPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			TicketImpl.class, ticketModelImpl, false, true);
-
-		cacheUniqueFindersCache(ticketModelImpl);
+		cacheUniqueFindersResult(ticket, false);
 
 		if (isNew) {
 			ticket.setNew(false);
@@ -926,12 +875,10 @@ public class TicketPersistenceImpl
 	 * Initializes the ticket persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByKey = new FinderPath(
+		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, true);
+			new String[] {String.class.getName()}, new String[] {"key_"}, false,
+			Ticket::getKey);
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKey, _SQL_SELECT_TICKET_WHERE,
@@ -1102,4 +1049,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1911884892
+// LIFERAY-SERVICE-BUILDER-HASH:1403205391

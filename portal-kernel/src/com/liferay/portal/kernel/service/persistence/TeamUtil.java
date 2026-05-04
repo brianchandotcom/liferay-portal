@@ -36,6 +36,20 @@ public class TeamUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Team> teams) {
+		getPersistence().cacheResult(teams);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Team team) {
+		getPersistence().cacheResult(team);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -774,24 +788,6 @@ public class TeamUtil {
 	}
 
 	/**
-	 * Caches the team in the entity cache if it is enabled.
-	 *
-	 * @param team the team
-	 */
-	public static void cacheResult(Team team) {
-		getPersistence().cacheResult(team);
-	}
-
-	/**
-	 * Caches the teams in the entity cache if it is enabled.
-	 *
-	 * @param teams the teams
-	 */
-	public static void cacheResult(List<Team> teams) {
-		getPersistence().cacheResult(teams);
-	}
-
-	/**
 	 * Creates a new team with the primary key. Does not add the team to the database.
 	 *
 	 * @param teamId the primary key for the new team
@@ -1281,4 +1277,4 @@ public class TeamUtil {
 	private static volatile TeamPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-192236160
+// LIFERAY-SERVICE-BUILDER-HASH:-1636566102

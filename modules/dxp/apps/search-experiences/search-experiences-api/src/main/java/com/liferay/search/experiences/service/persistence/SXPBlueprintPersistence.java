@@ -552,20 +552,6 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the sxp blueprint in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprint the sxp blueprint
-	 */
-	public void cacheResult(SXPBlueprint sxpBlueprint);
-
-	/**
-	 * Caches the sxp blueprints in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprints the sxp blueprints
-	 */
-	public void cacheResult(java.util.List<SXPBlueprint> sxpBlueprints);
-
-	/**
 	 * Creates a new sxp blueprint with the primary key. Does not add the sxp blueprint to the database.
 	 *
 	 * @param sxpBlueprintId the primary key for the new sxp blueprint
@@ -604,4 +590,4 @@ public interface SXPBlueprintPersistence extends BasePersistence<SXPBlueprint> {
 	public SXPBlueprint fetchByPrimaryKey(long sxpBlueprintId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1901060007
+// LIFERAY-SERVICE-BUILDER-HASH:558890069

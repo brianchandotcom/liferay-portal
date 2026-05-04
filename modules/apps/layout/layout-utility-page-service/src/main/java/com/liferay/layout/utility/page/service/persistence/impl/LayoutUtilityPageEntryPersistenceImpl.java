@@ -16,7 +16,6 @@ import com.liferay.layout.utility.page.service.persistence.LayoutUtilityPageEntr
 import com.liferay.layout.utility.page.service.persistence.impl.constants.LayoutUtilityPagePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -4251,129 +4248,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout utility page entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntry the layout utility page entry
-	 */
-	@Override
-	public void cacheResult(LayoutUtilityPageEntry layoutUtilityPageEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutUtilityPageEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutUtilityPageEntryImpl.class,
-				layoutUtilityPageEntry.getPrimaryKey(), layoutUtilityPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutUtilityPageEntry.getUuid(),
-					layoutUtilityPageEntry.getGroupId()
-				},
-				layoutUtilityPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByPlid,
-				new Object[] {layoutUtilityPageEntry.getPlid()},
-				layoutUtilityPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_N_T,
-				new Object[] {
-					layoutUtilityPageEntry.getGroupId(),
-					layoutUtilityPageEntry.getName(),
-					layoutUtilityPageEntry.getType()
-				},
-				layoutUtilityPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					layoutUtilityPageEntry.getExternalReferenceCode(),
-					layoutUtilityPageEntry.getGroupId()
-				},
-				layoutUtilityPageEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout utility page entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntries the layout utility page entries
-	 */
-	@Override
-	public void cacheResult(
-		List<LayoutUtilityPageEntry> layoutUtilityPageEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutUtilityPageEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutUtilityPageEntry layoutUtilityPageEntry :
-				layoutUtilityPageEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutUtilityPageEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutUtilityPageEntryImpl.class,
-						layoutUtilityPageEntry.getPrimaryKey()) == null) {
-
-					cacheResult(layoutUtilityPageEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutUtilityPageEntryModelImpl layoutUtilityPageEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutUtilityPageEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutUtilityPageEntryModelImpl.getUuid(),
-				layoutUtilityPageEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				layoutUtilityPageEntryModelImpl);
-
-			args = new Object[] {layoutUtilityPageEntryModelImpl.getPlid()};
-
-			finderCache.putResult(
-				_finderPathFetchByPlid, args, layoutUtilityPageEntryModelImpl);
-
-			args = new Object[] {
-				layoutUtilityPageEntryModelImpl.getGroupId(),
-				layoutUtilityPageEntryModelImpl.getName(),
-				layoutUtilityPageEntryModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_N_T, args, layoutUtilityPageEntryModelImpl);
-
-			args = new Object[] {
-				layoutUtilityPageEntryModelImpl.getExternalReferenceCode(),
-				layoutUtilityPageEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, layoutUtilityPageEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key for the new layout utility page entry
@@ -4600,11 +4474,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutUtilityPageEntryImpl.class, layoutUtilityPageEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(layoutUtilityPageEntryModelImpl);
+		cacheUniqueFindersResult(layoutUtilityPageEntry, false);
 
 		if (isNew) {
 			layoutUtilityPageEntry.setNew(false);
@@ -4753,9 +4623,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4784,10 +4651,12 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutUtilityPageEntry::getUuid,
+			LayoutUtilityPageEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -4867,9 +4736,10 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getGroupId));
 
-		_finderPathFetchByPlid = new FinderPath(
+		_finderPathFetchByPlid = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, true);
+			new String[] {Long.class.getName()}, new String[] {"plid"}, false,
+			LayoutUtilityPageEntry::getPlid);
 
 		_uniquePersistenceFinderByPlid = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByPlid,
@@ -4947,13 +4817,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathFetchByG_N_T = new FinderPath(
+		_finderPathFetchByG_N_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "name", "type_"}, true);
+			new String[] {"groupId", "name", "type_"}, false,
+			LayoutUtilityPageEntry::getGroupId, LayoutUtilityPageEntry::getName,
+			LayoutUtilityPageEntry::getType);
 
 		_uniquePersistenceFinderByG_N_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N_T,
@@ -4985,10 +4857,12 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			},
 			new String[] {"groupId", "name", "type_"}, false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			LayoutUtilityPageEntry::getExternalReferenceCode,
+			LayoutUtilityPageEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G,
@@ -5098,4 +4972,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1561532017
+// LIFERAY-SERVICE-BUILDER-HASH:-131595109

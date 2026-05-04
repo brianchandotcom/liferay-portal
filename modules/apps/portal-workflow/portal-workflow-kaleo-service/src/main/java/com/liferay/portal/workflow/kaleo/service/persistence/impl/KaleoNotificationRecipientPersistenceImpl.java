@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
@@ -591,62 +587,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipient the kaleo notification recipient
-	 */
-	@Override
-	public void cacheResult(
-		KaleoNotificationRecipient kaleoNotificationRecipient) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoNotificationRecipient.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoNotificationRecipientImpl.class,
-				kaleoNotificationRecipient.getPrimaryKey(),
-				kaleoNotificationRecipient);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipients the kaleo notification recipients
-	 */
-	@Override
-	public void cacheResult(
-		List<KaleoNotificationRecipient> kaleoNotificationRecipients) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoNotificationRecipients.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoNotificationRecipient kaleoNotificationRecipient :
-				kaleoNotificationRecipients) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoNotificationRecipient.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoNotificationRecipientImpl.class,
-						kaleoNotificationRecipient.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoNotificationRecipient);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new kaleo notification recipient with the primary key. Does not add the kaleo notification recipient to the database.
 	 *
 	 * @param kaleoNotificationRecipientId the primary key for the new kaleo notification recipient
@@ -799,9 +739,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoNotificationRecipientImpl.class,
-			kaleoNotificationRecipientModelImpl, false, true);
+		cacheUniqueFindersResult(kaleoNotificationRecipient, false);
 
 		if (isNew) {
 			kaleoNotificationRecipient.setNew(false);
@@ -939,9 +877,6 @@ public class KaleoNotificationRecipientPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1112,4 +1047,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1044011622
+// LIFERAY-SERVICE-BUILDER-HASH:-567318080

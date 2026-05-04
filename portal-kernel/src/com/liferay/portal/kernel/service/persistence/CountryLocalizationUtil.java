@@ -36,6 +36,22 @@ public class CountryLocalizationUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CountryLocalization> countryLocalizations) {
+
+		getPersistence().cacheResult(countryLocalizations);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CountryLocalization countryLocalization) {
+		getPersistence().cacheResult(countryLocalization);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -314,26 +330,6 @@ public class CountryLocalizationUtil {
 	}
 
 	/**
-	 * Caches the country localization in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalization the country localization
-	 */
-	public static void cacheResult(CountryLocalization countryLocalization) {
-		getPersistence().cacheResult(countryLocalization);
-	}
-
-	/**
-	 * Caches the country localizations in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalizations the country localizations
-	 */
-	public static void cacheResult(
-		List<CountryLocalization> countryLocalizations) {
-
-		getPersistence().cacheResult(countryLocalizations);
-	}
-
-	/**
 	 * Creates a new country localization with the primary key. Does not add the country localization to the database.
 	 *
 	 * @param countryLocalizationId the primary key for the new country localization
@@ -403,4 +399,4 @@ public class CountryLocalizationUtil {
 	private static volatile CountryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1962620313
+// LIFERAY-SERVICE-BUILDER-HASH:-362083897

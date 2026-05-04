@@ -36,6 +36,24 @@ public class ObjectDefinitionSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectDefinitionSetting> objectDefinitionSettings) {
+
+		getPersistence().cacheResult(objectDefinitionSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ObjectDefinitionSetting objectDefinitionSetting) {
+
+		getPersistence().cacheResult(objectDefinitionSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -847,28 +865,6 @@ public class ObjectDefinitionSettingUtil {
 	}
 
 	/**
-	 * Caches the object definition setting in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSetting the object definition setting
-	 */
-	public static void cacheResult(
-		ObjectDefinitionSetting objectDefinitionSetting) {
-
-		getPersistence().cacheResult(objectDefinitionSetting);
-	}
-
-	/**
-	 * Caches the object definition settings in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSettings the object definition settings
-	 */
-	public static void cacheResult(
-		List<ObjectDefinitionSetting> objectDefinitionSettings) {
-
-		getPersistence().cacheResult(objectDefinitionSettings);
-	}
-
-	/**
 	 * Creates a new object definition setting with the primary key. Does not add the object definition setting to the database.
 	 *
 	 * @param objectDefinitionSettingId the primary key for the new object definition setting
@@ -940,4 +936,4 @@ public class ObjectDefinitionSettingUtil {
 	private static volatile ObjectDefinitionSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1220737723
+// LIFERAY-SERVICE-BUILDER-HASH:328058835

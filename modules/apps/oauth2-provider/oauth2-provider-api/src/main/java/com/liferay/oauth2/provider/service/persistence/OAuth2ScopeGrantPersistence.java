@@ -217,20 +217,6 @@ public interface OAuth2ScopeGrantPersistence
 		String applicationName, String bundleSymbolicName, String scope);
 
 	/**
-	 * Caches the o auth2 scope grant in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 */
-	public void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant);
-
-	/**
-	 * Caches the o auth2 scope grants in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrants the o auth2 scope grants
-	 */
-	public void cacheResult(java.util.List<OAuth2ScopeGrant> oAuth2ScopeGrants);
-
-	/**
 	 * Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	 *
 	 * @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
@@ -454,4 +440,4 @@ public interface OAuth2ScopeGrantPersistence
 			oAuth2Authorizations);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:547719799
+// LIFERAY-SERVICE-BUILDER-HASH:-1116897201

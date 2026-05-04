@@ -1055,20 +1055,6 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the sxp element in the entity cache if it is enabled.
-	 *
-	 * @param sxpElement the sxp element
-	 */
-	public void cacheResult(SXPElement sxpElement);
-
-	/**
-	 * Caches the sxp elements in the entity cache if it is enabled.
-	 *
-	 * @param sxpElements the sxp elements
-	 */
-	public void cacheResult(java.util.List<SXPElement> sxpElements);
-
-	/**
 	 * Creates a new sxp element with the primary key. Does not add the sxp element to the database.
 	 *
 	 * @param sxpElementId the primary key for the new sxp element
@@ -1107,4 +1093,4 @@ public interface SXPElementPersistence extends BasePersistence<SXPElement> {
 	public SXPElement fetchByPrimaryKey(long sxpElementId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2053721131
+// LIFERAY-SERVICE-BUILDER-HASH:649164045

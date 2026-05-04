@@ -246,20 +246,6 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public int countByDTI_S(long dispatchTriggerId, int status);
 
 	/**
-	 * Caches the dispatch log in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLog the dispatch log
-	 */
-	public void cacheResult(DispatchLog dispatchLog);
-
-	/**
-	 * Caches the dispatch logs in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLogs the dispatch logs
-	 */
-	public void cacheResult(java.util.List<DispatchLog> dispatchLogs);
-
-	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
 	 * @param dispatchLogId the primary key for the new dispatch log
@@ -297,4 +283,4 @@ public interface DispatchLogPersistence extends BasePersistence<DispatchLog> {
 	public DispatchLog fetchByPrimaryKey(long dispatchLogId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:420971468
+// LIFERAY-SERVICE-BUILDER-HASH:1656374556

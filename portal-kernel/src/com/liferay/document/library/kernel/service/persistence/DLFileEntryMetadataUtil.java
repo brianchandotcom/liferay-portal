@@ -36,6 +36,22 @@ public class DLFileEntryMetadataUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DLFileEntryMetadata> dlFileEntryMetadatas) {
+
+		getPersistence().cacheResult(dlFileEntryMetadatas);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileEntryMetadata dlFileEntryMetadata) {
+		getPersistence().cacheResult(dlFileEntryMetadata);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -762,26 +778,6 @@ public class DLFileEntryMetadataUtil {
 	}
 
 	/**
-	 * Caches the document library file entry metadata in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadata the document library file entry metadata
-	 */
-	public static void cacheResult(DLFileEntryMetadata dlFileEntryMetadata) {
-		getPersistence().cacheResult(dlFileEntryMetadata);
-	}
-
-	/**
-	 * Caches the document library file entry metadatas in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadatas the document library file entry metadatas
-	 */
-	public static void cacheResult(
-		List<DLFileEntryMetadata> dlFileEntryMetadatas) {
-
-		getPersistence().cacheResult(dlFileEntryMetadatas);
-	}
-
-	/**
 	 * Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
 	 *
 	 * @param fileEntryMetadataId the primary key for the new document library file entry metadata
@@ -850,4 +846,4 @@ public class DLFileEntryMetadataUtil {
 	private static volatile DLFileEntryMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1580211667
+// LIFERAY-SERVICE-BUILDER-HASH:1704767743

@@ -36,6 +36,20 @@ public class ExpandoColumnUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ExpandoColumn> expandoColumns) {
+		getPersistence().cacheResult(expandoColumns);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ExpandoColumn expandoColumn) {
+		getPersistence().cacheResult(expandoColumn);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -466,24 +480,6 @@ public class ExpandoColumnUtil {
 	}
 
 	/**
-	 * Caches the expando column in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumn the expando column
-	 */
-	public static void cacheResult(ExpandoColumn expandoColumn) {
-		getPersistence().cacheResult(expandoColumn);
-	}
-
-	/**
-	 * Caches the expando columns in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumns the expando columns
-	 */
-	public static void cacheResult(List<ExpandoColumn> expandoColumns) {
-		getPersistence().cacheResult(expandoColumns);
-	}
-
-	/**
 	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
 	 *
 	 * @param columnId the primary key for the new expando column
@@ -544,4 +540,4 @@ public class ExpandoColumnUtil {
 	private static volatile ExpandoColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1221443932
+// LIFERAY-SERVICE-BUILDER-HASH:-2129340706

@@ -181,21 +181,6 @@ public interface DefinedDefaultOrderEntryPersistence
 	public int countByName_Collection(String name);
 
 	/**
-	 * Caches the defined default order entry in the entity cache if it is enabled.
-	 *
-	 * @param definedDefaultOrderEntry the defined default order entry
-	 */
-	public void cacheResult(DefinedDefaultOrderEntry definedDefaultOrderEntry);
-
-	/**
-	 * Caches the defined default order entries in the entity cache if it is enabled.
-	 *
-	 * @param definedDefaultOrderEntries the defined default order entries
-	 */
-	public void cacheResult(
-		java.util.List<DefinedDefaultOrderEntry> definedDefaultOrderEntries);
-
-	/**
 	 * Creates a new defined default order entry with the primary key. Does not add the defined default order entry to the database.
 	 *
 	 * @param definedDefaultOrderEntryId the primary key for the new defined default order entry
@@ -237,4 +222,4 @@ public interface DefinedDefaultOrderEntryPersistence
 		long definedDefaultOrderEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1848699880
+// LIFERAY-SERVICE-BUILDER-HASH:1334538098

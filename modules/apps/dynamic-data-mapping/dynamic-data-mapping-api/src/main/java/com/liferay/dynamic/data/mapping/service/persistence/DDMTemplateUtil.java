@@ -36,6 +36,20 @@ public class DDMTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMTemplate> ddmTemplates) {
+		getPersistence().cacheResult(ddmTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMTemplate ddmTemplate) {
+		getPersistence().cacheResult(ddmTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2897,24 +2911,6 @@ public class DDMTemplateUtil {
 	}
 
 	/**
-	 * Caches the ddm template in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplate the ddm template
-	 */
-	public static void cacheResult(DDMTemplate ddmTemplate) {
-		getPersistence().cacheResult(ddmTemplate);
-	}
-
-	/**
-	 * Caches the ddm templates in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplates the ddm templates
-	 */
-	public static void cacheResult(List<DDMTemplate> ddmTemplates) {
-		getPersistence().cacheResult(ddmTemplates);
-	}
-
-	/**
 	 * Creates a new ddm template with the primary key. Does not add the ddm template to the database.
 	 *
 	 * @param templateId the primary key for the new ddm template
@@ -2977,4 +2973,4 @@ public class DDMTemplateUtil {
 	private static volatile DDMTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-629655412
+// LIFERAY-SERVICE-BUILDER-HASH:249286860

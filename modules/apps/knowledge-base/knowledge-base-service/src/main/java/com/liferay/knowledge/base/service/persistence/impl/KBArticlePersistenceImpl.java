@@ -15,7 +15,6 @@ import com.liferay.knowledge.base.service.persistence.KBArticleUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36476,122 +36473,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Caches the kb article in the entity cache if it is enabled.
-	 *
-	 * @param kbArticle the kb article
-	 */
-	@Override
-	public void cacheResult(KBArticle kbArticle) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbArticle.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KBArticleImpl.class, kbArticle.getPrimaryKey(), kbArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {kbArticle.getUuid(), kbArticle.getGroupId()},
-				kbArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByR_V,
-				new Object[] {
-					kbArticle.getResourcePrimKey(), kbArticle.getVersion()
-				},
-				kbArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByR_G_V,
-				new Object[] {
-					kbArticle.getResourcePrimKey(), kbArticle.getGroupId(),
-					kbArticle.getVersion()
-				},
-				kbArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V,
-				new Object[] {
-					kbArticle.getGroupId(),
-					kbArticle.getExternalReferenceCode(), kbArticle.getVersion()
-				},
-				kbArticle);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kb articles in the entity cache if it is enabled.
-	 *
-	 * @param kbArticles the kb articles
-	 */
-	@Override
-	public void cacheResult(List<KBArticle> kbArticles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kbArticles.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KBArticle kbArticle : kbArticles) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kbArticle.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KBArticleImpl.class, kbArticle.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(kbArticle);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KBArticleModelImpl kbArticleModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbArticleModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kbArticleModelImpl.getUuid(), kbArticleModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, kbArticleModelImpl);
-
-			args = new Object[] {
-				kbArticleModelImpl.getResourcePrimKey(),
-				kbArticleModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByR_V, args, kbArticleModelImpl);
-
-			args = new Object[] {
-				kbArticleModelImpl.getResourcePrimKey(),
-				kbArticleModelImpl.getGroupId(), kbArticleModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByR_G_V, args, kbArticleModelImpl);
-
-			args = new Object[] {
-				kbArticleModelImpl.getGroupId(),
-				kbArticleModelImpl.getExternalReferenceCode(),
-				kbArticleModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V, args, kbArticleModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *
 	 * @param kbArticleId the primary key for the new kb article
@@ -36795,10 +36676,7 @@ public class KBArticlePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KBArticleImpl.class, kbArticleModelImpl, false, true);
-
-		cacheUniqueFindersCache(kbArticleModelImpl);
+		cacheUniqueFindersResult(kbArticle, false);
 
 		if (isNew) {
 			kbArticle.setNew(false);
@@ -36962,9 +36840,6 @@ public class KBArticlePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
 			new String[] {
@@ -37021,10 +36896,11 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KBArticle::getUuid,
+			KBArticle::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBARTICLE_WHERE,
@@ -37099,10 +36975,11 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
 
-		_finderPathFetchByR_V = new FinderPath(
+		_finderPathFetchByR_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "version"}, true);
+			new String[] {"resourcePrimKey", "version"}, false,
+			KBArticle::getResourcePrimKey, KBArticle::getVersion);
 
 		_uniquePersistenceFinderByR_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_V, _SQL_SELECT_KBARTICLE_WHERE,
@@ -37500,13 +37377,15 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathFetchByR_G_V = new FinderPath(
+		_finderPathFetchByR_G_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_G_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"resourcePrimKey", "groupId", "version"}, true);
+			new String[] {"resourcePrimKey", "groupId", "version"}, false,
+			KBArticle::getResourcePrimKey, KBArticle::getGroupId,
+			KBArticle::getVersion);
 
 		_uniquePersistenceFinderByR_G_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_G_V, _SQL_SELECT_KBARTICLE_WHERE,
@@ -37686,13 +37565,15 @@ public class KBArticlePersistenceImpl
 			},
 			new String[] {"resourcePrimKey", "main", "status"}, false);
 
-		_finderPathFetchByG_ERC_V = new FinderPath(
+		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, true);
+			new String[] {"groupId", "externalReferenceCode", "version"}, false,
+			KBArticle::getGroupId, KBArticle::getExternalReferenceCode,
+			KBArticle::getVersion);
 
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_KBARTICLE_WHERE,
@@ -38601,4 +38482,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:319633783
+// LIFERAY-SERVICE-BUILDER-HASH:-609606971

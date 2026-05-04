@@ -636,4 +636,4 @@ public class DefinedDefaultOrderEntryModelImpl
 	private DefinedDefaultOrderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2075742667
+// LIFERAY-SERVICE-BUILDER-HASH:-2103924141

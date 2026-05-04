@@ -13,7 +13,6 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryUtil;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -36,11 +35,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.asset.model.impl.AssetEntryImpl;
@@ -1954,92 +1950,6 @@ public class AssetEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset entry in the entity cache if it is enabled.
-	 *
-	 * @param assetEntry the asset entry
-	 */
-	@Override
-	public void cacheResult(AssetEntry assetEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetEntry.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AssetEntryImpl.class, assetEntry.getPrimaryKey(), assetEntry);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_CU,
-				new Object[] {
-					assetEntry.getGroupId(), assetEntry.getClassUuid()
-				},
-				assetEntry);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					assetEntry.getClassNameId(), assetEntry.getClassPK()
-				},
-				assetEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset entries in the entity cache if it is enabled.
-	 *
-	 * @param assetEntries the asset entries
-	 */
-	@Override
-	public void cacheResult(List<AssetEntry> assetEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetEntry assetEntry : assetEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetEntry.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AssetEntryImpl.class, assetEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(assetEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetEntryModelImpl assetEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetEntryModelImpl.getGroupId(),
-				assetEntryModelImpl.getClassUuid()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_CU, args, assetEntryModelImpl);
-
-			args = new Object[] {
-				assetEntryModelImpl.getClassNameId(),
-				assetEntryModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C, args, assetEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset entry with the primary key. Does not add the asset entry to the database.
 	 *
 	 * @param entryId the primary key for the new asset entry
@@ -2175,10 +2085,7 @@ public class AssetEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AssetEntryImpl.class, assetEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetEntryModelImpl);
+		cacheUniqueFindersResult(assetEntry, false);
 
 		if (isNew) {
 			assetEntry.setNew(false);
@@ -2651,9 +2558,6 @@ public class AssetEntryPersistenceImpl
 	 * Initializes the asset entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		assetEntryToAssetTagTableMapper = TableMapperFactory.getTableMapper(
 			"AssetEntries_AssetTags", "companyId", "entryId", "tagId", this,
 			assetTagPersistence);
@@ -2861,10 +2765,11 @@ public class AssetEntryPersistenceImpl
 					"assetEntry.", "layoutUuid", FinderColumn.Type.STRING, "=",
 					true, true, AssetEntry::getLayoutUuid));
 
-		_finderPathFetchByG_CU = new FinderPath(
+		_finderPathFetchByG_CU = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "classUuid"}, true);
+			new String[] {"groupId", "classUuid"}, false,
+			AssetEntry::getGroupId, AssetEntry::getClassUuid);
 
 		_uniquePersistenceFinderByG_CU = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_CU, _SQL_SELECT_ASSETENTRY_WHERE,
@@ -2906,10 +2811,11 @@ public class AssetEntryPersistenceImpl
 				"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, AssetEntry::getClassNameId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			AssetEntry::getClassNameId, AssetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_ASSETENTRY_WHERE,
@@ -3056,4 +2962,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1269954957
+// LIFERAY-SERVICE-BUILDER-HASH:-1490206712

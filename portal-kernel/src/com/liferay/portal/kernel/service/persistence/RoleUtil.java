@@ -36,6 +36,20 @@ public class RoleUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Role> roles) {
+		getPersistence().cacheResult(roles);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Role role) {
+		getPersistence().cacheResult(role);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2273,24 +2287,6 @@ public class RoleUtil {
 	}
 
 	/**
-	 * Caches the role in the entity cache if it is enabled.
-	 *
-	 * @param role the role
-	 */
-	public static void cacheResult(Role role) {
-		getPersistence().cacheResult(role);
-	}
-
-	/**
-	 * Caches the roles in the entity cache if it is enabled.
-	 *
-	 * @param roles the roles
-	 */
-	public static void cacheResult(List<Role> roles) {
-		getPersistence().cacheResult(roles);
-	}
-
-	/**
 	 * Creates a new role with the primary key. Does not add the role to the database.
 	 *
 	 * @param roleId the primary key for the new role
@@ -2779,4 +2775,4 @@ public class RoleUtil {
 	private static volatile RolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:224743248
+// LIFERAY-SERVICE-BUILDER-HASH:259985122

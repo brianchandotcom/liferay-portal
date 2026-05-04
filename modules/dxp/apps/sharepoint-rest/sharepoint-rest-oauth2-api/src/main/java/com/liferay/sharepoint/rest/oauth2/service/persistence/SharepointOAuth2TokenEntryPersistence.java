@@ -188,23 +188,6 @@ public interface SharepointOAuth2TokenEntryPersistence
 	public int countByU_C(long userId, String configurationPid);
 
 	/**
-	 * Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	 */
-	public void cacheResult(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry);
-
-	/**
-	 * Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntries the sharepoint o auth2 token entries
-	 */
-	public void cacheResult(
-		java.util.List<SharepointOAuth2TokenEntry>
-			sharepointOAuth2TokenEntries);
-
-	/**
 	 * Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
 	 *
 	 * @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
@@ -246,4 +229,4 @@ public interface SharepointOAuth2TokenEntryPersistence
 		long sharepointOAuth2TokenEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-965162704
+// LIFERAY-SERVICE-BUILDER-HASH:2085120214

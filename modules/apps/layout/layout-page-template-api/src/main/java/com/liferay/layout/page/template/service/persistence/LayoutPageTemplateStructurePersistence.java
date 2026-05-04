@@ -451,23 +451,6 @@ public interface LayoutPageTemplateStructurePersistence
 	public int countByG_P(long groupId, long plid);
 
 	/**
-	 * Caches the layout page template structure in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructure the layout page template structure
-	 */
-	public void cacheResult(
-		LayoutPageTemplateStructure layoutPageTemplateStructure);
-
-	/**
-	 * Caches the layout page template structures in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructures the layout page template structures
-	 */
-	public void cacheResult(
-		java.util.List<LayoutPageTemplateStructure>
-			layoutPageTemplateStructures);
-
-	/**
 	 * Creates a new layout page template structure with the primary key. Does not add the layout page template structure to the database.
 	 *
 	 * @param layoutPageTemplateStructureId the primary key for the new layout page template structure
@@ -511,4 +494,4 @@ public interface LayoutPageTemplateStructurePersistence
 		long layoutPageTemplateStructureId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-59302040
+// LIFERAY-SERVICE-BUILDER-HASH:-1261763456

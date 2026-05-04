@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -462,52 +459,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce payment entry audit in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudit the commerce payment entry audit
-	 */
-	@Override
-	public void cacheResult(
-		CommercePaymentEntryAudit commercePaymentEntryAudit) {
-
-		entityCache.putResult(
-			CommercePaymentEntryAuditImpl.class,
-			commercePaymentEntryAudit.getPrimaryKey(),
-			commercePaymentEntryAudit);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce payment entry audits in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudits the commerce payment entry audits
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePaymentEntryAudit> commercePaymentEntryAudits) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePaymentEntryAudits.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePaymentEntryAudit commercePaymentEntryAudit :
-				commercePaymentEntryAudits) {
-
-			if (entityCache.getResult(
-					CommercePaymentEntryAuditImpl.class,
-					commercePaymentEntryAudit.getPrimaryKey()) == null) {
-
-				cacheResult(commercePaymentEntryAudit);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce payment entry audit with the primary key. Does not add the commerce payment entry audit to the database.
 	 *
 	 * @param commercePaymentEntryAuditId the primary key for the new commerce payment entry audit
@@ -649,9 +600,7 @@ public class CommercePaymentEntryAuditPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePaymentEntryAuditImpl.class,
-			commercePaymentEntryAuditModelImpl, false, true);
+		cacheUniqueFindersResult(commercePaymentEntryAudit, false);
 
 		if (isNew) {
 			commercePaymentEntryAudit.setNew(false);
@@ -715,9 +664,6 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommercePaymentEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommercePaymentEntryId",
@@ -848,4 +794,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1811949004
+// LIFERAY-SERVICE-BUILDER-HASH:1453848068

@@ -863,20 +863,6 @@ public interface FaroNotificationPersistence
 		String type, String subtype);
 
 	/**
-	 * Caches the faro notification in the entity cache if it is enabled.
-	 *
-	 * @param faroNotification the faro notification
-	 */
-	public void cacheResult(FaroNotification faroNotification);
-
-	/**
-	 * Caches the faro notifications in the entity cache if it is enabled.
-	 *
-	 * @param faroNotifications the faro notifications
-	 */
-	public void cacheResult(java.util.List<FaroNotification> faroNotifications);
-
-	/**
 	 * Creates a new faro notification with the primary key. Does not add the faro notification to the database.
 	 *
 	 * @param faroNotificationId the primary key for the new faro notification
@@ -915,4 +901,4 @@ public interface FaroNotificationPersistence
 	public FaroNotification fetchByPrimaryKey(long faroNotificationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1922950040
+// LIFERAY-SERVICE-BUILDER-HASH:1524277974

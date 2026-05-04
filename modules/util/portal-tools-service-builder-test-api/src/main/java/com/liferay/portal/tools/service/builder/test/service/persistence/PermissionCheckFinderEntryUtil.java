@@ -36,6 +36,24 @@ public class PermissionCheckFinderEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PermissionCheckFinderEntry> permissionCheckFinderEntries) {
+
+		getPersistence().cacheResult(permissionCheckFinderEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		PermissionCheckFinderEntry permissionCheckFinderEntry) {
+
+		getPersistence().cacheResult(permissionCheckFinderEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -450,28 +468,6 @@ public class PermissionCheckFinderEntryUtil {
 	}
 
 	/**
-	 * Caches the permission check finder entry in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntry the permission check finder entry
-	 */
-	public static void cacheResult(
-		PermissionCheckFinderEntry permissionCheckFinderEntry) {
-
-		getPersistence().cacheResult(permissionCheckFinderEntry);
-	}
-
-	/**
-	 * Caches the permission check finder entries in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntries the permission check finder entries
-	 */
-	public static void cacheResult(
-		List<PermissionCheckFinderEntry> permissionCheckFinderEntries) {
-
-		getPersistence().cacheResult(permissionCheckFinderEntries);
-	}
-
-	/**
 	 * Creates a new permission check finder entry with the primary key. Does not add the permission check finder entry to the database.
 	 *
 	 * @param permissionCheckFinderEntryId the primary key for the new permission check finder entry
@@ -544,4 +540,4 @@ public class PermissionCheckFinderEntryUtil {
 	private static volatile PermissionCheckFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1424900816
+// LIFERAY-SERVICE-BUILDER-HASH:110875095

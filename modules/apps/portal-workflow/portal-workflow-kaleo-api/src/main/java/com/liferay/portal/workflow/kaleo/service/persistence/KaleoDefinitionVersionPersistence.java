@@ -307,21 +307,6 @@ public interface KaleoDefinitionVersionPersistence
 	public int countByC_N_V(long companyId, String name, String version);
 
 	/**
-	 * Caches the kaleo definition version in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 */
-	public void cacheResult(KaleoDefinitionVersion kaleoDefinitionVersion);
-
-	/**
-	 * Caches the kaleo definition versions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersions the kaleo definition versions
-	 */
-	public void cacheResult(
-		java.util.List<KaleoDefinitionVersion> kaleoDefinitionVersions);
-
-	/**
 	 * Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
 	 *
 	 * @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
@@ -363,4 +348,4 @@ public interface KaleoDefinitionVersionPersistence
 		long kaleoDefinitionVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:937999309
+// LIFERAY-SERVICE-BUILDER-HASH:544054885

@@ -429,21 +429,6 @@ public interface SocialActivityLimitPersistence
 		int activityType, String activityCounterName);
 
 	/**
-	 * Caches the social activity limit in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimit the social activity limit
-	 */
-	public void cacheResult(SocialActivityLimit socialActivityLimit);
-
-	/**
-	 * Caches the social activity limits in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimits the social activity limits
-	 */
-	public void cacheResult(
-		java.util.List<SocialActivityLimit> socialActivityLimits);
-
-	/**
 	 * Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
 	 *
 	 * @param activityLimitId the primary key for the new social activity limit
@@ -483,4 +468,4 @@ public interface SocialActivityLimitPersistence
 	public SocialActivityLimit fetchByPrimaryKey(long activityLimitId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1808990654
+// LIFERAY-SERVICE-BUILDER-HASH:-1009617984

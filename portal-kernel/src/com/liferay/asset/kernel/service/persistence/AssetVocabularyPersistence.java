@@ -1238,20 +1238,6 @@ public interface AssetVocabularyPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the asset vocabulary in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabulary the asset vocabulary
-	 */
-	public void cacheResult(AssetVocabulary assetVocabulary);
-
-	/**
-	 * Caches the asset vocabularies in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularies the asset vocabularies
-	 */
-	public void cacheResult(java.util.List<AssetVocabulary> assetVocabularies);
-
-	/**
 	 * Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
 	 *
 	 * @param vocabularyId the primary key for the new asset vocabulary
@@ -1290,4 +1276,4 @@ public interface AssetVocabularyPersistence
 	public AssetVocabulary fetchByPrimaryKey(long vocabularyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1486583155
+// LIFERAY-SERVICE-BUILDER-HASH:1384254115

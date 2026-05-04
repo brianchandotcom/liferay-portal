@@ -189,23 +189,6 @@ public interface CommerceShippingFixedOptionPersistence
 	public int countByC_K(long companyId, String key);
 
 	/**
-	 * Caches the commerce shipping fixed option in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOption the commerce shipping fixed option
-	 */
-	public void cacheResult(
-		CommerceShippingFixedOption commerceShippingFixedOption);
-
-	/**
-	 * Caches the commerce shipping fixed options in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptions the commerce shipping fixed options
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShippingFixedOption>
-			commerceShippingFixedOptions);
-
-	/**
 	 * Creates a new commerce shipping fixed option with the primary key. Does not add the commerce shipping fixed option to the database.
 	 *
 	 * @param commerceShippingFixedOptionId the primary key for the new commerce shipping fixed option
@@ -249,4 +232,4 @@ public interface CommerceShippingFixedOptionPersistence
 		long commerceShippingFixedOptionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1258368499
+// LIFERAY-SERVICE-BUILDER-HASH:-188370101

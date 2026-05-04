@@ -81,20 +81,6 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the web dav props in the entity cache if it is enabled.
-	 *
-	 * @param webDAVProps the web dav props
-	 */
-	public void cacheResult(WebDAVProps webDAVProps);
-
-	/**
-	 * Caches the web dav propses in the entity cache if it is enabled.
-	 *
-	 * @param webDAVPropses the web dav propses
-	 */
-	public void cacheResult(java.util.List<WebDAVProps> webDAVPropses);
-
-	/**
 	 * Creates a new web dav props with the primary key. Does not add the web dav props to the database.
 	 *
 	 * @param webDavPropsId the primary key for the new web dav props
@@ -133,4 +119,4 @@ public interface WebDAVPropsPersistence extends BasePersistence<WebDAVProps> {
 	public WebDAVProps fetchByPrimaryKey(long webDavPropsId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1436174357
+// LIFERAY-SERVICE-BUILDER-HASH:47062981

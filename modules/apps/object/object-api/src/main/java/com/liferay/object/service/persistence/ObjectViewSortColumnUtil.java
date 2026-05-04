@@ -36,6 +36,22 @@ public class ObjectViewSortColumnUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectViewSortColumn> objectViewSortColumns) {
+
+		getPersistence().cacheResult(objectViewSortColumns);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectViewSortColumn objectViewSortColumn) {
+		getPersistence().cacheResult(objectViewSortColumn);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -635,26 +651,6 @@ public class ObjectViewSortColumnUtil {
 	}
 
 	/**
-	 * Caches the object view sort column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumn the object view sort column
-	 */
-	public static void cacheResult(ObjectViewSortColumn objectViewSortColumn) {
-		getPersistence().cacheResult(objectViewSortColumn);
-	}
-
-	/**
-	 * Caches the object view sort columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumns the object view sort columns
-	 */
-	public static void cacheResult(
-		List<ObjectViewSortColumn> objectViewSortColumns) {
-
-		getPersistence().cacheResult(objectViewSortColumns);
-	}
-
-	/**
 	 * Creates a new object view sort column with the primary key. Does not add the object view sort column to the database.
 	 *
 	 * @param objectViewSortColumnId the primary key for the new object view sort column
@@ -724,4 +720,4 @@ public class ObjectViewSortColumnUtil {
 	private static volatile ObjectViewSortColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:989246782
+// LIFERAY-SERVICE-BUILDER-HASH:-988819466

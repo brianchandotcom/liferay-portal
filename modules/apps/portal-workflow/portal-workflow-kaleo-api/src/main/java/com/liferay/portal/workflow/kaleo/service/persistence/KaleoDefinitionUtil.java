@@ -36,6 +36,20 @@ public class KaleoDefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoDefinition> kaleoDefinitions) {
+		getPersistence().cacheResult(kaleoDefinitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoDefinition kaleoDefinition) {
+		getPersistence().cacheResult(kaleoDefinition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1401,24 +1415,6 @@ public class KaleoDefinitionUtil {
 	}
 
 	/**
-	 * Caches the kaleo definition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 */
-	public static void cacheResult(KaleoDefinition kaleoDefinition) {
-		getPersistence().cacheResult(kaleoDefinition);
-	}
-
-	/**
-	 * Caches the kaleo definitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitions the kaleo definitions
-	 */
-	public static void cacheResult(List<KaleoDefinition> kaleoDefinitions) {
-		getPersistence().cacheResult(kaleoDefinitions);
-	}
-
-	/**
 	 * Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
 	 *
 	 * @param kaleoDefinitionId the primary key for the new kaleo definition
@@ -1481,4 +1477,4 @@ public class KaleoDefinitionUtil {
 	private static volatile KaleoDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1389867835
+// LIFERAY-SERVICE-BUILDER-HASH:-1487689361

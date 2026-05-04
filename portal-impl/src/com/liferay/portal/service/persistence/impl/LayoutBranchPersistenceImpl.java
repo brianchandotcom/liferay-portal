@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.LayoutBranchImpl;
 import com.liferay.portal.model.impl.LayoutBranchModelImpl;
@@ -814,63 +811,6 @@ public class LayoutBranchPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout branch in the entity cache if it is enabled.
-	 *
-	 * @param layoutBranch the layout branch
-	 */
-	@Override
-	public void cacheResult(LayoutBranch layoutBranch) {
-		EntityCacheUtil.putResult(
-			LayoutBranchImpl.class, layoutBranch.getPrimaryKey(), layoutBranch);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByL_P_N,
-			new Object[] {
-				layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
-				layoutBranch.getName()
-			},
-			layoutBranch);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout branches in the entity cache if it is enabled.
-	 *
-	 * @param layoutBranchs the layout branches
-	 */
-	@Override
-	public void cacheResult(List<LayoutBranch> layoutBranchs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutBranchs.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutBranch layoutBranch : layoutBranchs) {
-			if (EntityCacheUtil.getResult(
-					LayoutBranchImpl.class, layoutBranch.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(layoutBranch);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutBranchModelImpl layoutBranchModelImpl) {
-
-		Object[] args = new Object[] {
-			layoutBranchModelImpl.getLayoutSetBranchId(),
-			layoutBranchModelImpl.getPlid(), layoutBranchModelImpl.getName()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByL_P_N, args, layoutBranchModelImpl);
-	}
-
-	/**
 	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	 *
 	 * @param layoutBranchId the primary key for the new layout branch
@@ -975,10 +915,7 @@ public class LayoutBranchPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutBranchImpl.class, layoutBranchModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutBranchModelImpl);
+		cacheUniqueFindersResult(layoutBranch, false);
 
 		if (isNew) {
 			layoutBranch.setNew(false);
@@ -1038,9 +975,6 @@ public class LayoutBranchPersistenceImpl
 	 * Initializes the layout branch persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutSetBranchId",
 			new String[] {
@@ -1127,13 +1061,15 @@ public class LayoutBranchPersistenceImpl
 				"layoutBranch.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, LayoutBranch::getPlid));
 
-		_finderPathFetchByL_P_N = new FinderPath(
+		_finderPathFetchByL_P_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"layoutSetBranchId", "plid", "name"}, true);
+			new String[] {"layoutSetBranchId", "plid", "name"}, false,
+			LayoutBranch::getLayoutSetBranchId, LayoutBranch::getPlid,
+			LayoutBranch::getName);
 
 		_uniquePersistenceFinderByL_P_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByL_P_N, _SQL_SELECT_LAYOUTBRANCH_WHERE,
@@ -1220,4 +1156,4 @@ public class LayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1205241206
+// LIFERAY-SERVICE-BUILDER-HASH:1526392981

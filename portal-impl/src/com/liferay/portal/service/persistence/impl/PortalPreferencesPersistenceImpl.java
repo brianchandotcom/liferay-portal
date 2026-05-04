@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.PortalPreferencesImpl;
 import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
@@ -318,64 +315,6 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Caches the portal preferences in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferences the portal preferences
-	 */
-	@Override
-	public void cacheResult(PortalPreferences portalPreferences) {
-		EntityCacheUtil.putResult(
-			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey(),
-			portalPreferences);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByO_O,
-			new Object[] {
-				portalPreferences.getOwnerId(), portalPreferences.getOwnerType()
-			},
-			portalPreferences);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the portal preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceses the portal preferenceses
-	 */
-	@Override
-	public void cacheResult(List<PortalPreferences> portalPreferenceses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (portalPreferenceses.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PortalPreferences portalPreferences : portalPreferenceses) {
-			if (EntityCacheUtil.getResult(
-					PortalPreferencesImpl.class,
-					portalPreferences.getPrimaryKey()) == null) {
-
-				cacheResult(portalPreferences);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PortalPreferencesModelImpl portalPreferencesModelImpl) {
-
-		Object[] args = new Object[] {
-			portalPreferencesModelImpl.getOwnerId(),
-			portalPreferencesModelImpl.getOwnerType()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByO_O, args, portalPreferencesModelImpl);
-	}
-
-	/**
 	 * Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
 	 *
 	 * @param portalPreferencesId the primary key for the new portal preferences
@@ -484,11 +423,7 @@ public class PortalPreferencesPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PortalPreferencesImpl.class, portalPreferencesModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(portalPreferencesModelImpl);
+		cacheUniqueFindersResult(portalPreferences, false);
 
 		if (isNew) {
 			portalPreferences.setNew(false);
@@ -548,9 +483,6 @@ public class PortalPreferencesPersistenceImpl
 	 * Initializes the portal preferences persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByOwnerType = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerType",
 			new String[] {
@@ -582,10 +514,11 @@ public class PortalPreferencesPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					PortalPreferences::getOwnerType));
 
-		_finderPathFetchByO_O = new FinderPath(
+		_finderPathFetchByO_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ownerId", "ownerType"}, true);
+			new String[] {"ownerId", "ownerType"}, false,
+			PortalPreferences::getOwnerId, PortalPreferences::getOwnerType);
 
 		_uniquePersistenceFinderByO_O = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O, _SQL_SELECT_PORTALPREFERENCES_WHERE,
@@ -629,4 +562,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:124591464
+// LIFERAY-SERVICE-BUILDER-HASH:-615957016

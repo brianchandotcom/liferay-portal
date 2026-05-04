@@ -14,7 +14,6 @@ import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -41,8 +40,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -5007,121 +5004,6 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the fragment entry version in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersion the fragment entry version
-	 */
-	@Override
-	public void cacheResult(FragmentEntryVersion fragmentEntryVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntryVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FragmentEntryVersionImpl.class,
-				fragmentEntryVersion.getPrimaryKey(), fragmentEntryVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByFragmentEntryId_Version,
-				new Object[] {
-					fragmentEntryVersion.getFragmentEntryId(),
-					fragmentEntryVersion.getVersion()
-				},
-				fragmentEntryVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Version,
-				new Object[] {
-					fragmentEntryVersion.getUuid(),
-					fragmentEntryVersion.getGroupId(),
-					fragmentEntryVersion.getVersion()
-				},
-				fragmentEntryVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByG_FEK_Version,
-				new Object[] {
-					fragmentEntryVersion.getGroupId(),
-					fragmentEntryVersion.getFragmentEntryKey(),
-					fragmentEntryVersion.getVersion()
-				},
-				fragmentEntryVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the fragment entry versions in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersions the fragment entry versions
-	 */
-	@Override
-	public void cacheResult(List<FragmentEntryVersion> fragmentEntryVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (fragmentEntryVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FragmentEntryVersion fragmentEntryVersion :
-				fragmentEntryVersions) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						fragmentEntryVersion.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FragmentEntryVersionImpl.class,
-						fragmentEntryVersion.getPrimaryKey()) == null) {
-
-					cacheResult(fragmentEntryVersion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FragmentEntryVersionModelImpl fragmentEntryVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntryVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				fragmentEntryVersionModelImpl.getFragmentEntryId(),
-				fragmentEntryVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByFragmentEntryId_Version, args,
-				fragmentEntryVersionModelImpl);
-
-			args = new Object[] {
-				fragmentEntryVersionModelImpl.getUuid(),
-				fragmentEntryVersionModelImpl.getGroupId(),
-				fragmentEntryVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Version, args,
-				fragmentEntryVersionModelImpl);
-
-			args = new Object[] {
-				fragmentEntryVersionModelImpl.getGroupId(),
-				fragmentEntryVersionModelImpl.getFragmentEntryKey(),
-				fragmentEntryVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_FEK_Version, args,
-				fragmentEntryVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new fragment entry version with the primary key. Does not add the fragment entry version to the database.
 	 *
 	 * @param fragmentEntryVersionId the primary key for the new fragment entry version
@@ -5306,11 +5188,7 @@ public class FragmentEntryVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FragmentEntryVersionImpl.class, fragmentEntryVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(fragmentEntryVersionModelImpl);
+		cacheUniqueFindersResult(fragmentEntryVersion, false);
 
 		if (isNew) {
 			fragmentEntryVersion.setNew(false);
@@ -5471,9 +5349,6 @@ public class FragmentEntryVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByFragmentEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFragmentEntryId",
 			new String[] {
@@ -5506,10 +5381,12 @@ public class FragmentEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryVersion::getFragmentEntryId));
 
-		_finderPathFetchByFragmentEntryId_Version = new FinderPath(
+		_finderPathFetchByFragmentEntryId_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFragmentEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"fragmentEntryId", "version"}, true);
+			new String[] {"fragmentEntryId", "version"}, false,
+			FragmentEntryVersion::getFragmentEntryId,
+			FragmentEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByFragmentEntryId_Version =
 			new UniquePersistenceFinder<>(
@@ -5623,13 +5500,15 @@ public class FragmentEntryVersionPersistenceImpl
 					"fragmentEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryVersion::getGroupId));
 
-		_finderPathFetchByUUID_G_Version = new FinderPath(
+		_finderPathFetchByUUID_G_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "version"}, true);
+			new String[] {"uuid_", "groupId", "version"}, false,
+			FragmentEntryVersion::getUuid, FragmentEntryVersion::getGroupId,
+			FragmentEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByUUID_G_Version =
 			new UniquePersistenceFinder<>(
@@ -6047,13 +5926,16 @@ public class FragmentEntryVersionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				FragmentEntryVersion::getFragmentEntryKey));
 
-		_finderPathFetchByG_FEK_Version = new FinderPath(
+		_finderPathFetchByG_FEK_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_FEK_Version",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "fragmentEntryKey", "version"}, true);
+			new String[] {"groupId", "fragmentEntryKey", "version"}, false,
+			FragmentEntryVersion::getGroupId,
+			FragmentEntryVersion::getFragmentEntryKey,
+			FragmentEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByG_FEK_Version = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_FEK_Version,
@@ -6694,4 +6576,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-308648917
+// LIFERAY-SERVICE-BUILDER-HASH:1158492366

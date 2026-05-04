@@ -38,6 +38,20 @@ public class BigDecimalEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BigDecimalEntry> bigDecimalEntries) {
+		getPersistence().cacheResult(bigDecimalEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BigDecimalEntry bigDecimalEntry) {
+		getPersistence().cacheResult(bigDecimalEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -494,24 +508,6 @@ public class BigDecimalEntryUtil {
 	}
 
 	/**
-	 * Caches the big decimal entry in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntry the big decimal entry
-	 */
-	public static void cacheResult(BigDecimalEntry bigDecimalEntry) {
-		getPersistence().cacheResult(bigDecimalEntry);
-	}
-
-	/**
-	 * Caches the big decimal entries in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntries the big decimal entries
-	 */
-	public static void cacheResult(List<BigDecimalEntry> bigDecimalEntries) {
-		getPersistence().cacheResult(bigDecimalEntries);
-	}
-
-	/**
 	 * Creates a new big decimal entry with the primary key. Does not add the big decimal entry to the database.
 	 *
 	 * @param bigDecimalEntryId the primary key for the new big decimal entry
@@ -802,4 +798,4 @@ public class BigDecimalEntryUtil {
 	private static volatile BigDecimalEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1226752121
+// LIFERAY-SERVICE-BUILDER-HASH:-2079676978

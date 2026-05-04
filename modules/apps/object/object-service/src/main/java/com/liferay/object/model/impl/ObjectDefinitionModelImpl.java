@@ -2689,4 +2689,4 @@ public class ObjectDefinitionModelImpl
 	private ObjectDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1979884921
+// LIFERAY-SERVICE-BUILDER-HASH:453700389

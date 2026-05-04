@@ -36,6 +36,20 @@ public class VirtualHostUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<VirtualHost> virtualHosts) {
+		getPersistence().cacheResult(virtualHosts);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(VirtualHost virtualHost) {
+		getPersistence().cacheResult(virtualHost);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -653,24 +667,6 @@ public class VirtualHostUtil {
 	}
 
 	/**
-	 * Caches the virtual host in the entity cache if it is enabled.
-	 *
-	 * @param virtualHost the virtual host
-	 */
-	public static void cacheResult(VirtualHost virtualHost) {
-		getPersistence().cacheResult(virtualHost);
-	}
-
-	/**
-	 * Caches the virtual hosts in the entity cache if it is enabled.
-	 *
-	 * @param virtualHosts the virtual hosts
-	 */
-	public static void cacheResult(List<VirtualHost> virtualHosts) {
-		getPersistence().cacheResult(virtualHosts);
-	}
-
-	/**
 	 * Creates a new virtual host with the primary key. Does not add the virtual host to the database.
 	 *
 	 * @param virtualHostId the primary key for the new virtual host
@@ -731,4 +727,4 @@ public class VirtualHostUtil {
 	private static volatile VirtualHostPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1120660297
+// LIFERAY-SERVICE-BUILDER-HASH:-1254469211

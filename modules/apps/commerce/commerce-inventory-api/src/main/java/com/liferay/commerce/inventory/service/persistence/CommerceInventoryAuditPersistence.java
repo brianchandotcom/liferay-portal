@@ -260,21 +260,6 @@ public interface CommerceInventoryAuditPersistence
 		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Caches the commerce inventory audit in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudit the commerce inventory audit
-	 */
-	public void cacheResult(CommerceInventoryAudit commerceInventoryAudit);
-
-	/**
-	 * Caches the commerce inventory audits in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudits the commerce inventory audits
-	 */
-	public void cacheResult(
-		java.util.List<CommerceInventoryAudit> commerceInventoryAudits);
-
-	/**
 	 * Creates a new commerce inventory audit with the primary key. Does not add the commerce inventory audit to the database.
 	 *
 	 * @param commerceInventoryAuditId the primary key for the new commerce inventory audit
@@ -316,4 +301,4 @@ public interface CommerceInventoryAuditPersistence
 		long commerceInventoryAuditId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1982723707
+// LIFERAY-SERVICE-BUILDER-HASH:-1048616179

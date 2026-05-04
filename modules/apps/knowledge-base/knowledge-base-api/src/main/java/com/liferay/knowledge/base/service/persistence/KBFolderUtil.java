@@ -36,6 +36,20 @@ public class KBFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KBFolder> kbFolders) {
+		getPersistence().cacheResult(kbFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KBFolder kbFolder) {
+		getPersistence().cacheResult(kbFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1183,24 +1197,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Caches the kb folder in the entity cache if it is enabled.
-	 *
-	 * @param kbFolder the kb folder
-	 */
-	public static void cacheResult(KBFolder kbFolder) {
-		getPersistence().cacheResult(kbFolder);
-	}
-
-	/**
-	 * Caches the kb folders in the entity cache if it is enabled.
-	 *
-	 * @param kbFolders the kb folders
-	 */
-	public static void cacheResult(List<KBFolder> kbFolders) {
-		getPersistence().cacheResult(kbFolders);
-	}
-
-	/**
 	 * Creates a new kb folder with the primary key. Does not add the kb folder to the database.
 	 *
 	 * @param kbFolderId the primary key for the new kb folder
@@ -1261,4 +1257,4 @@ public class KBFolderUtil {
 	private static volatile KBFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:144640875
+// LIFERAY-SERVICE-BUILDER-HASH:-673034453

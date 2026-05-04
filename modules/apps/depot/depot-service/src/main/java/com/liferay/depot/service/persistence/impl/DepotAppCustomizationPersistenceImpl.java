@@ -14,7 +14,6 @@ import com.liferay.depot.service.persistence.DepotAppCustomizationPersistence;
 import com.liferay.depot.service.persistence.DepotAppCustomizationUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -458,100 +454,6 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the depot app customization in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomization the depot app customization
-	 */
-	@Override
-	public void cacheResult(DepotAppCustomization depotAppCustomization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotAppCustomization.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DepotAppCustomizationImpl.class,
-				depotAppCustomization.getPrimaryKey(), depotAppCustomization);
-
-			finderCache.putResult(
-				_finderPathFetchByD_E,
-				new Object[] {
-					depotAppCustomization.getDepotEntryId(),
-					depotAppCustomization.isEnabled()
-				},
-				depotAppCustomization);
-
-			finderCache.putResult(
-				_finderPathFetchByD_P,
-				new Object[] {
-					depotAppCustomization.getDepotEntryId(),
-					depotAppCustomization.getPortletId()
-				},
-				depotAppCustomization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the depot app customizations in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomizations the depot app customizations
-	 */
-	@Override
-	public void cacheResult(
-		List<DepotAppCustomization> depotAppCustomizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (depotAppCustomizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DepotAppCustomization depotAppCustomization :
-				depotAppCustomizations) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						depotAppCustomization.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DepotAppCustomizationImpl.class,
-						depotAppCustomization.getPrimaryKey()) == null) {
-
-					cacheResult(depotAppCustomization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DepotAppCustomizationModelImpl depotAppCustomizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotAppCustomizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				depotAppCustomizationModelImpl.getDepotEntryId(),
-				depotAppCustomizationModelImpl.isEnabled()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByD_E, args, depotAppCustomizationModelImpl);
-
-			args = new Object[] {
-				depotAppCustomizationModelImpl.getDepotEntryId(),
-				depotAppCustomizationModelImpl.getPortletId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByD_P, args, depotAppCustomizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new depot app customization with the primary key. Does not add the depot app customization to the database.
 	 *
 	 * @param depotAppCustomizationId the primary key for the new depot app customization
@@ -673,11 +575,7 @@ public class DepotAppCustomizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DepotAppCustomizationImpl.class, depotAppCustomizationModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(depotAppCustomizationModelImpl);
+		cacheUniqueFindersResult(depotAppCustomization, false);
 
 		if (isNew) {
 			depotAppCustomization.setNew(false);
@@ -800,9 +698,6 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
 			new String[] {
@@ -835,10 +730,12 @@ public class DepotAppCustomizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DepotAppCustomization::getDepotEntryId));
 
-		_finderPathFetchByD_E = new FinderPath(
+		_finderPathFetchByD_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"depotEntryId", "enabled"}, true);
+			new String[] {"depotEntryId", "enabled"}, false,
+			DepotAppCustomization::getDepotEntryId,
+			DepotAppCustomization::isEnabled);
 
 		_uniquePersistenceFinderByD_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_E,
@@ -851,10 +748,12 @@ public class DepotAppCustomizationPersistenceImpl
 				"depotAppCustomization.", "enabled", FinderColumn.Type.BOOLEAN,
 				"=", true, true, DepotAppCustomization::isEnabled));
 
-		_finderPathFetchByD_P = new FinderPath(
+		_finderPathFetchByD_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"depotEntryId", "portletId"}, true);
+			new String[] {"depotEntryId", "portletId"}, false,
+			DepotAppCustomization::getDepotEntryId,
+			DepotAppCustomization::getPortletId);
 
 		_uniquePersistenceFinderByD_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_P,
@@ -936,4 +835,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-192458718
+// LIFERAY-SERVICE-BUILDER-HASH:-1457813209

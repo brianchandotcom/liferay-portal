@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.VirtualHostImpl;
@@ -1179,72 +1175,6 @@ public class VirtualHostPersistenceImpl
 	}
 
 	/**
-	 * Caches the virtual host in the entity cache if it is enabled.
-	 *
-	 * @param virtualHost the virtual host
-	 */
-	@Override
-	public void cacheResult(VirtualHost virtualHost) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					virtualHost.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				VirtualHostImpl.class, virtualHost.getPrimaryKey(),
-				virtualHost);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByHostname,
-				new Object[] {virtualHost.getHostname()}, virtualHost);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the virtual hosts in the entity cache if it is enabled.
-	 *
-	 * @param virtualHosts the virtual hosts
-	 */
-	@Override
-	public void cacheResult(List<VirtualHost> virtualHosts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (virtualHosts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (VirtualHost virtualHost : virtualHosts) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						virtualHost.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						VirtualHostImpl.class, virtualHost.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(virtualHost);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		VirtualHostModelImpl virtualHostModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					virtualHostModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {virtualHostModelImpl.getHostname()};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByHostname, args, virtualHostModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new virtual host with the primary key. Does not add the virtual host to the database.
 	 *
 	 * @param virtualHostId the primary key for the new virtual host
@@ -1353,10 +1283,7 @@ public class VirtualHostPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			VirtualHostImpl.class, virtualHostModelImpl, false, true);
-
-		cacheUniqueFindersCache(virtualHostModelImpl);
+		cacheUniqueFindersResult(virtualHost, false);
 
 		if (isNew) {
 			virtualHost.setNew(false);
@@ -1476,9 +1403,6 @@ public class VirtualHostPersistenceImpl
 	 * Initializes the virtual host persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1508,10 +1432,10 @@ public class VirtualHostPersistenceImpl
 					"virtualHost.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, VirtualHost::getCompanyId));
 
-		_finderPathFetchByHostname = new FinderPath(
+		_finderPathFetchByHostname = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
 			new String[] {String.class.getName()}, new String[] {"hostname"},
-			true);
+			false, VirtualHost::getHostname);
 
 		_uniquePersistenceFinderByHostname = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHostname, _SQL_SELECT_VIRTUALHOST_WHERE,
@@ -1597,4 +1521,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1379898058
+// LIFERAY-SERVICE-BUILDER-HASH:-682050532

@@ -191,22 +191,6 @@ public interface CommercePaymentEntryAuditPersistence
 	public int filterCountByCommercePaymentEntryId(long commercePaymentEntryId);
 
 	/**
-	 * Caches the commerce payment entry audit in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudit the commerce payment entry audit
-	 */
-	public void cacheResult(
-		CommercePaymentEntryAudit commercePaymentEntryAudit);
-
-	/**
-	 * Caches the commerce payment entry audits in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudits the commerce payment entry audits
-	 */
-	public void cacheResult(
-		java.util.List<CommercePaymentEntryAudit> commercePaymentEntryAudits);
-
-	/**
 	 * Creates a new commerce payment entry audit with the primary key. Does not add the commerce payment entry audit to the database.
 	 *
 	 * @param commercePaymentEntryAuditId the primary key for the new commerce payment entry audit
@@ -248,4 +232,4 @@ public interface CommercePaymentEntryAuditPersistence
 		long commercePaymentEntryAuditId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1130995612
+// LIFERAY-SERVICE-BUILDER-HASH:752621860

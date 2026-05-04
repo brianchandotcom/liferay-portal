@@ -1693,20 +1693,6 @@ public interface UserPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the user in the entity cache if it is enabled.
-	 *
-	 * @param user the user
-	 */
-	public void cacheResult(User user);
-
-	/**
-	 * Caches the users in the entity cache if it is enabled.
-	 *
-	 * @param users the users
-	 */
-	public void cacheResult(java.util.List<User> users);
-
-	/**
 	 * Creates a new user with the primary key. Does not add the user to the database.
 	 *
 	 * @param userId the primary key for the new user
@@ -2606,4 +2592,4 @@ public interface UserPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1056040945
+// LIFERAY-SERVICE-BUILDER-HASH:1823394535

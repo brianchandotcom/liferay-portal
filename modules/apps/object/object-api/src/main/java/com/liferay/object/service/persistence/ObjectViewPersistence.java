@@ -460,20 +460,6 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 		long objectDefinitionId, boolean defaultObjectView);
 
 	/**
-	 * Caches the object view in the entity cache if it is enabled.
-	 *
-	 * @param objectView the object view
-	 */
-	public void cacheResult(ObjectView objectView);
-
-	/**
-	 * Caches the object views in the entity cache if it is enabled.
-	 *
-	 * @param objectViews the object views
-	 */
-	public void cacheResult(java.util.List<ObjectView> objectViews);
-
-	/**
 	 * Creates a new object view with the primary key. Does not add the object view to the database.
 	 *
 	 * @param objectViewId the primary key for the new object view
@@ -512,4 +498,4 @@ public interface ObjectViewPersistence extends BasePersistence<ObjectView> {
 	public ObjectView fetchByPrimaryKey(long objectViewId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2012605061
+// LIFERAY-SERVICE-BUILDER-HASH:492059913

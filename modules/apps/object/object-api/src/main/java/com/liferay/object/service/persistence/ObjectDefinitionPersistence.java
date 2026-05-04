@@ -2623,20 +2623,6 @@ public interface ObjectDefinitionPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the object definition in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinition the object definition
-	 */
-	public void cacheResult(ObjectDefinition objectDefinition);
-
-	/**
-	 * Caches the object definitions in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitions the object definitions
-	 */
-	public void cacheResult(java.util.List<ObjectDefinition> objectDefinitions);
-
-	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
 	 * @param objectDefinitionId the primary key for the new object definition
@@ -2675,4 +2661,4 @@ public interface ObjectDefinitionPersistence
 	public ObjectDefinition fetchByPrimaryKey(long objectDefinitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-167017029
+// LIFERAY-SERVICE-BUILDER-HASH:-1390872459

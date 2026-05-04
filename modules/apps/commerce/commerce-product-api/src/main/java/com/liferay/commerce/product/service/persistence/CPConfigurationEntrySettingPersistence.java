@@ -454,23 +454,6 @@ public interface CPConfigurationEntrySettingPersistence
 	public int countByC_T(long CPConfigurationEntryId, int type);
 
 	/**
-	 * Caches the cp configuration entry setting in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntrySetting the cp configuration entry setting
-	 */
-	public void cacheResult(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting);
-
-	/**
-	 * Caches the cp configuration entry settings in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntrySettings the cp configuration entry settings
-	 */
-	public void cacheResult(
-		java.util.List<CPConfigurationEntrySetting>
-			cpConfigurationEntrySettings);
-
-	/**
 	 * Creates a new cp configuration entry setting with the primary key. Does not add the cp configuration entry setting to the database.
 	 *
 	 * @param CPConfigurationEntrySettingId the primary key for the new cp configuration entry setting
@@ -514,4 +497,4 @@ public interface CPConfigurationEntrySettingPersistence
 		long CPConfigurationEntrySettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1602866692
+// LIFERAY-SERVICE-BUILDER-HASH:2002563192

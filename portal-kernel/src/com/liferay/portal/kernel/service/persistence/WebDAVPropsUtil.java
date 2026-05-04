@@ -36,6 +36,20 @@ public class WebDAVPropsUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<WebDAVProps> webDAVPropses) {
+		getPersistence().cacheResult(webDAVPropses);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WebDAVProps webDAVProps) {
+		getPersistence().cacheResult(webDAVProps);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -175,24 +189,6 @@ public class WebDAVPropsUtil {
 	}
 
 	/**
-	 * Caches the web dav props in the entity cache if it is enabled.
-	 *
-	 * @param webDAVProps the web dav props
-	 */
-	public static void cacheResult(WebDAVProps webDAVProps) {
-		getPersistence().cacheResult(webDAVProps);
-	}
-
-	/**
-	 * Caches the web dav propses in the entity cache if it is enabled.
-	 *
-	 * @param webDAVPropses the web dav propses
-	 */
-	public static void cacheResult(List<WebDAVProps> webDAVPropses) {
-		getPersistence().cacheResult(webDAVPropses);
-	}
-
-	/**
 	 * Creates a new web dav props with the primary key. Does not add the web dav props to the database.
 	 *
 	 * @param webDavPropsId the primary key for the new web dav props
@@ -253,4 +249,4 @@ public class WebDAVPropsUtil {
 	private static volatile WebDAVPropsPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:559448183
+// LIFERAY-SERVICE-BUILDER-HASH:1732361698

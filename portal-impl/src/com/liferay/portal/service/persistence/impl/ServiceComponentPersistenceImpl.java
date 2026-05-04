@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.ServiceComponentImpl;
@@ -335,65 +332,6 @@ public class ServiceComponentPersistenceImpl
 	}
 
 	/**
-	 * Caches the service component in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponent the service component
-	 */
-	@Override
-	public void cacheResult(ServiceComponent serviceComponent) {
-		EntityCacheUtil.putResult(
-			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
-			serviceComponent);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByBNS_BNU,
-			new Object[] {
-				serviceComponent.getBuildNamespace(),
-				serviceComponent.getBuildNumber()
-			},
-			serviceComponent);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the service components in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponents the service components
-	 */
-	@Override
-	public void cacheResult(List<ServiceComponent> serviceComponents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (serviceComponents.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ServiceComponent serviceComponent : serviceComponents) {
-			if (EntityCacheUtil.getResult(
-					ServiceComponentImpl.class,
-					serviceComponent.getPrimaryKey()) == null) {
-
-				cacheResult(serviceComponent);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ServiceComponentModelImpl serviceComponentModelImpl) {
-
-		Object[] args = new Object[] {
-			serviceComponentModelImpl.getBuildNamespace(),
-			serviceComponentModelImpl.getBuildNumber()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByBNS_BNU, args, serviceComponentModelImpl);
-	}
-
-	/**
 	 * Creates a new service component with the primary key. Does not add the service component to the database.
 	 *
 	 * @param serviceComponentId the primary key for the new service component
@@ -498,10 +436,7 @@ public class ServiceComponentPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ServiceComponentImpl.class, serviceComponentModelImpl, false, true);
-
-		cacheUniqueFindersCache(serviceComponentModelImpl);
+		cacheUniqueFindersResult(serviceComponent, false);
 
 		if (isNew) {
 			serviceComponent.setNew(false);
@@ -566,9 +501,6 @@ public class ServiceComponentPersistenceImpl
 	 * Initializes the service component persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByBuildNamespace = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBuildNamespace",
 			new String[] {
@@ -600,10 +532,12 @@ public class ServiceComponentPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					ServiceComponent::getBuildNamespace));
 
-		_finderPathFetchByBNS_BNU = new FinderPath(
+		_finderPathFetchByBNS_BNU = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBNS_BNU",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"buildNamespace", "buildNumber"}, true);
+			new String[] {"buildNamespace", "buildNumber"}, false,
+			ServiceComponent::getBuildNamespace,
+			ServiceComponent::getBuildNumber);
 
 		_uniquePersistenceFinderByBNS_BNU = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByBNS_BNU, _SQL_SELECT_SERVICECOMPONENT_WHERE,
@@ -650,4 +584,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1569160766
+// LIFERAY-SERVICE-BUILDER-HASH:-1491401559

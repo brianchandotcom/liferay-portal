@@ -188,20 +188,6 @@ public interface ServiceComponentPersistence
 	public int countByBNS_BNU(String buildNamespace, long buildNumber);
 
 	/**
-	 * Caches the service component in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponent the service component
-	 */
-	public void cacheResult(ServiceComponent serviceComponent);
-
-	/**
-	 * Caches the service components in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponents the service components
-	 */
-	public void cacheResult(java.util.List<ServiceComponent> serviceComponents);
-
-	/**
 	 * Creates a new service component with the primary key. Does not add the service component to the database.
 	 *
 	 * @param serviceComponentId the primary key for the new service component
@@ -240,4 +226,4 @@ public interface ServiceComponentPersistence
 	public ServiceComponent fetchByPrimaryKey(long serviceComponentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369219254
+// LIFERAY-SERVICE-BUILDER-HASH:1625630410

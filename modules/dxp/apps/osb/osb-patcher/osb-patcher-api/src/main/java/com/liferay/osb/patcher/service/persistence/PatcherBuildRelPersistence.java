@@ -239,20 +239,6 @@ public interface PatcherBuildRelPersistence
 	public int countByParentPatcherBuildId(long parentPatcherBuildId);
 
 	/**
-	 * Caches the patcher build rel in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuildRel the patcher build rel
-	 */
-	public void cacheResult(PatcherBuildRel patcherBuildRel);
-
-	/**
-	 * Caches the patcher build rels in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuildRels the patcher build rels
-	 */
-	public void cacheResult(java.util.List<PatcherBuildRel> patcherBuildRels);
-
-	/**
 	 * Creates a new patcher build rel with the primary key. Does not add the patcher build rel to the database.
 	 *
 	 * @param patcherBuildRelId the primary key for the new patcher build rel
@@ -291,4 +277,4 @@ public interface PatcherBuildRelPersistence
 	public PatcherBuildRel fetchByPrimaryKey(long patcherBuildRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1011736083
+// LIFERAY-SERVICE-BUILDER-HASH:1467520319

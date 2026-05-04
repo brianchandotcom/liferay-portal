@@ -348,22 +348,6 @@ public interface CPDefinitionVirtualSettingPersistence
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the cp definition virtual setting in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
-	 */
-	public void cacheResult(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting);
-
-	/**
-	 * Caches the cp definition virtual settings in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionVirtualSettings the cp definition virtual settings
-	 */
-	public void cacheResult(
-		java.util.List<CPDefinitionVirtualSetting> cpDefinitionVirtualSettings);
-
-	/**
 	 * Creates a new cp definition virtual setting with the primary key. Does not add the cp definition virtual setting to the database.
 	 *
 	 * @param CPDefinitionVirtualSettingId the primary key for the new cp definition virtual setting
@@ -405,4 +389,4 @@ public interface CPDefinitionVirtualSettingPersistence
 		long CPDefinitionVirtualSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:99875367
+// LIFERAY-SERVICE-BUILDER-HASH:-2118051545

@@ -269,20 +269,6 @@ public interface KaleoTimerPersistence
 		String kaleoClassName, long kaleoClassPK, boolean blocking);
 
 	/**
-	 * Caches the kaleo timer in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimer the kaleo timer
-	 */
-	public void cacheResult(KaleoTimer kaleoTimer);
-
-	/**
-	 * Caches the kaleo timers in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimers the kaleo timers
-	 */
-	public void cacheResult(java.util.List<KaleoTimer> kaleoTimers);
-
-	/**
 	 * Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
 	 *
 	 * @param kaleoTimerId the primary key for the new kaleo timer
@@ -320,4 +306,4 @@ public interface KaleoTimerPersistence
 	public KaleoTimer fetchByPrimaryKey(long kaleoTimerId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:498291177
+// LIFERAY-SERVICE-BUILDER-HASH:1816685993

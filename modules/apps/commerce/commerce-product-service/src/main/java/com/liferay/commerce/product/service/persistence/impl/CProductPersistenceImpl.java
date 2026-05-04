@@ -15,7 +15,6 @@ import com.liferay.commerce.product.service.persistence.CProductPersistence;
 import com.liferay.commerce.product.service.persistence.CProductUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -775,88 +772,6 @@ public class CProductPersistenceImpl
 	}
 
 	/**
-	 * Caches the c product in the entity cache if it is enabled.
-	 *
-	 * @param cProduct the c product
-	 */
-	@Override
-	public void cacheResult(CProduct cProduct) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cProduct.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CProductImpl.class, cProduct.getPrimaryKey(), cProduct);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {cProduct.getUuid(), cProduct.getGroupId()},
-				cProduct);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cProduct.getExternalReferenceCode(), cProduct.getCompanyId()
-				},
-				cProduct);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the c products in the entity cache if it is enabled.
-	 *
-	 * @param cProducts the c products
-	 */
-	@Override
-	public void cacheResult(List<CProduct> cProducts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cProducts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CProduct cProduct : cProducts) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cProduct.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CProductImpl.class, cProduct.getPrimaryKey()) == null) {
-
-					cacheResult(cProduct);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CProductModelImpl cProductModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cProductModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cProductModelImpl.getUuid(), cProductModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cProductModelImpl);
-
-			args = new Object[] {
-				cProductModelImpl.getExternalReferenceCode(),
-				cProductModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cProductModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new c product with the primary key. Does not add the c product to the database.
 	 *
 	 * @param CProductId the primary key for the new c product
@@ -1055,10 +970,7 @@ public class CProductPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CProductImpl.class, cProductModelImpl, false, true);
-
-		cacheUniqueFindersCache(cProductModelImpl);
+		cacheUniqueFindersResult(cProduct, false);
 
 		if (isNew) {
 			cProduct.setNew(false);
@@ -1195,9 +1107,6 @@ public class CProductPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1225,10 +1134,11 @@ public class CProductPersistenceImpl
 				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				CProduct::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CProduct::getUuid,
+			CProduct::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPRODUCT_WHERE,
@@ -1301,10 +1211,11 @@ public class CProductPersistenceImpl
 					"cProduct.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CProduct::getGroupId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CProduct::getExternalReferenceCode, CProduct::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPRODUCT_WHERE,
@@ -1387,4 +1298,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-10518963
+// LIFERAY-SERVICE-BUILDER-HASH:-114331934

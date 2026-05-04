@@ -36,6 +36,24 @@ public class FriendlyURLEntryMappingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FriendlyURLEntryMapping> friendlyURLEntryMappings) {
+
+		getPersistence().cacheResult(friendlyURLEntryMappings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		FriendlyURLEntryMapping friendlyURLEntryMapping) {
+
+		getPersistence().cacheResult(friendlyURLEntryMapping);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -186,28 +204,6 @@ public class FriendlyURLEntryMappingUtil {
 	}
 
 	/**
-	 * Caches the friendly url entry mapping in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMapping the friendly url entry mapping
-	 */
-	public static void cacheResult(
-		FriendlyURLEntryMapping friendlyURLEntryMapping) {
-
-		getPersistence().cacheResult(friendlyURLEntryMapping);
-	}
-
-	/**
-	 * Caches the friendly url entry mappings in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMappings the friendly url entry mappings
-	 */
-	public static void cacheResult(
-		List<FriendlyURLEntryMapping> friendlyURLEntryMappings) {
-
-		getPersistence().cacheResult(friendlyURLEntryMappings);
-	}
-
-	/**
 	 * Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
 	 *
 	 * @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
@@ -279,4 +275,4 @@ public class FriendlyURLEntryMappingUtil {
 	private static volatile FriendlyURLEntryMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-597750256
+// LIFERAY-SERVICE-BUILDER-HASH:-698632544

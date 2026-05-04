@@ -36,6 +36,20 @@ public class ObjectLayoutRowUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectLayoutRow> objectLayoutRows) {
+		getPersistence().cacheResult(objectLayoutRows);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectLayoutRow objectLayoutRow) {
+		getPersistence().cacheResult(objectLayoutRow);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -488,24 +502,6 @@ public class ObjectLayoutRowUtil {
 	}
 
 	/**
-	 * Caches the object layout row in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRow the object layout row
-	 */
-	public static void cacheResult(ObjectLayoutRow objectLayoutRow) {
-		getPersistence().cacheResult(objectLayoutRow);
-	}
-
-	/**
-	 * Caches the object layout rows in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRows the object layout rows
-	 */
-	public static void cacheResult(List<ObjectLayoutRow> objectLayoutRows) {
-		getPersistence().cacheResult(objectLayoutRows);
-	}
-
-	/**
 	 * Creates a new object layout row with the primary key. Does not add the object layout row to the database.
 	 *
 	 * @param objectLayoutRowId the primary key for the new object layout row
@@ -566,4 +562,4 @@ public class ObjectLayoutRowUtil {
 	private static volatile ObjectLayoutRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1140530153
+// LIFERAY-SERVICE-BUILDER-HASH:-1698729553

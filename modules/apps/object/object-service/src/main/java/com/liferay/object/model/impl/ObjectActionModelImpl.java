@@ -1733,4 +1733,4 @@ public class ObjectActionModelImpl
 	private ObjectAction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-259110987
+// LIFERAY-SERVICE-BUILDER-HASH:-210591811

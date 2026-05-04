@@ -36,6 +36,20 @@ public class CompanyInfoUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CompanyInfo> companyInfos) {
+		getPersistence().cacheResult(companyInfos);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CompanyInfo companyInfo) {
+		getPersistence().cacheResult(companyInfo);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -169,24 +183,6 @@ public class CompanyInfoUtil {
 	}
 
 	/**
-	 * Caches the company info in the entity cache if it is enabled.
-	 *
-	 * @param companyInfo the company info
-	 */
-	public static void cacheResult(CompanyInfo companyInfo) {
-		getPersistence().cacheResult(companyInfo);
-	}
-
-	/**
-	 * Caches the company infos in the entity cache if it is enabled.
-	 *
-	 * @param companyInfos the company infos
-	 */
-	public static void cacheResult(List<CompanyInfo> companyInfos) {
-		getPersistence().cacheResult(companyInfos);
-	}
-
-	/**
 	 * Creates a new company info with the primary key. Does not add the company info to the database.
 	 *
 	 * @param companyInfoId the primary key for the new company info
@@ -247,4 +243,4 @@ public class CompanyInfoUtil {
 	private static volatile CompanyInfoPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-797309603
+// LIFERAY-SERVICE-BUILDER-HASH:-380394123

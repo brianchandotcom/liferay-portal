@@ -551,20 +551,6 @@ public interface MBThreadFlagPersistence
 	public int countByU_T(long userId, long threadId);
 
 	/**
-	 * Caches the message boards thread flag in the entity cache if it is enabled.
-	 *
-	 * @param mbThreadFlag the message boards thread flag
-	 */
-	public void cacheResult(MBThreadFlag mbThreadFlag);
-
-	/**
-	 * Caches the message boards thread flags in the entity cache if it is enabled.
-	 *
-	 * @param mbThreadFlags the message boards thread flags
-	 */
-	public void cacheResult(java.util.List<MBThreadFlag> mbThreadFlags);
-
-	/**
 	 * Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	 *
 	 * @param threadFlagId the primary key for the new message boards thread flag
@@ -603,4 +589,4 @@ public interface MBThreadFlagPersistence
 	public MBThreadFlag fetchByPrimaryKey(long threadFlagId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1767775756
+// LIFERAY-SERVICE-BUILDER-HASH:-191168750

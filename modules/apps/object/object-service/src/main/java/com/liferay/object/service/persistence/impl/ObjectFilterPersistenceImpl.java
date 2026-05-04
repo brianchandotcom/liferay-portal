@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -546,43 +543,6 @@ public class ObjectFilterPersistenceImpl
 	}
 
 	/**
-	 * Caches the object filter in the entity cache if it is enabled.
-	 *
-	 * @param objectFilter the object filter
-	 */
-	@Override
-	public void cacheResult(ObjectFilter objectFilter) {
-		entityCache.putResult(
-			ObjectFilterImpl.class, objectFilter.getPrimaryKey(), objectFilter);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object filters in the entity cache if it is enabled.
-	 *
-	 * @param objectFilters the object filters
-	 */
-	@Override
-	public void cacheResult(List<ObjectFilter> objectFilters) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectFilters.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectFilter objectFilter : objectFilters) {
-			if (entityCache.getResult(
-					ObjectFilterImpl.class, objectFilter.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(objectFilter);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object filter with the primary key. Does not add the object filter to the database.
 	 *
 	 * @param objectFilterId the primary key for the new object filter
@@ -721,8 +681,7 @@ public class ObjectFilterPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectFilterImpl.class, objectFilterModelImpl, false, true);
+		cacheUniqueFindersResult(objectFilter, false);
 
 		if (isNew) {
 			objectFilter.setNew(false);
@@ -788,9 +747,6 @@ public class ObjectFilterPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -949,4 +905,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1558416356
+// LIFERAY-SERVICE-BUILDER-HASH:85782263

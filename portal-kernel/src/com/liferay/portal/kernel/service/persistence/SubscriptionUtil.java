@@ -38,6 +38,20 @@ public class SubscriptionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Subscription> subscriptions) {
+		getPersistence().cacheResult(subscriptions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Subscription subscription) {
+		getPersistence().cacheResult(subscription);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -837,24 +851,6 @@ public class SubscriptionUtil {
 	}
 
 	/**
-	 * Caches the subscription in the entity cache if it is enabled.
-	 *
-	 * @param subscription the subscription
-	 */
-	public static void cacheResult(Subscription subscription) {
-		getPersistence().cacheResult(subscription);
-	}
-
-	/**
-	 * Caches the subscriptions in the entity cache if it is enabled.
-	 *
-	 * @param subscriptions the subscriptions
-	 */
-	public static void cacheResult(List<Subscription> subscriptions) {
-		getPersistence().cacheResult(subscriptions);
-	}
-
-	/**
 	 * Creates a new subscription with the primary key. Does not add the subscription to the database.
 	 *
 	 * @param subscriptionId the primary key for the new subscription
@@ -915,4 +911,4 @@ public class SubscriptionUtil {
 	private static volatile SubscriptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-249256049
+// LIFERAY-SERVICE-BUILDER-HASH:669555081

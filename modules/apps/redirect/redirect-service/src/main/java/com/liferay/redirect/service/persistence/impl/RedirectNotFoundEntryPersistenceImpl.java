@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.redirect.exception.NoSuchNotFoundEntryException;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
@@ -334,69 +332,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the redirect not found entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntry the redirect not found entry
-	 */
-	@Override
-	public void cacheResult(RedirectNotFoundEntry redirectNotFoundEntry) {
-		entityCache.putResult(
-			RedirectNotFoundEntryImpl.class,
-			redirectNotFoundEntry.getPrimaryKey(), redirectNotFoundEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByG_U,
-			new Object[] {
-				redirectNotFoundEntry.getGroupId(),
-				redirectNotFoundEntry.getUrl()
-			},
-			redirectNotFoundEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the redirect not found entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntries the redirect not found entries
-	 */
-	@Override
-	public void cacheResult(
-		List<RedirectNotFoundEntry> redirectNotFoundEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (redirectNotFoundEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RedirectNotFoundEntry redirectNotFoundEntry :
-				redirectNotFoundEntries) {
-
-			if (entityCache.getResult(
-					RedirectNotFoundEntryImpl.class,
-					redirectNotFoundEntry.getPrimaryKey()) == null) {
-
-				cacheResult(redirectNotFoundEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RedirectNotFoundEntryModelImpl redirectNotFoundEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			redirectNotFoundEntryModelImpl.getGroupId(),
-			redirectNotFoundEntryModelImpl.getUrl()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_U, args, redirectNotFoundEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new redirect not found entry with the primary key. Does not add the redirect not found entry to the database.
 	 *
 	 * @param redirectNotFoundEntryId the primary key for the new redirect not found entry
@@ -562,11 +497,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			RedirectNotFoundEntryImpl.class, redirectNotFoundEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(redirectNotFoundEntryModelImpl);
+		cacheUniqueFindersResult(redirectNotFoundEntry, false);
 
 		if (isNew) {
 			redirectNotFoundEntry.setNew(false);
@@ -629,9 +560,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -663,10 +591,11 @@ public class RedirectNotFoundEntryPersistenceImpl
 					"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RedirectNotFoundEntry::getGroupId));
 
-		_finderPathFetchByG_U = new FinderPath(
+		_finderPathFetchByG_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "url"}, true);
+			new String[] {"groupId", "url"}, false,
+			RedirectNotFoundEntry::getGroupId, RedirectNotFoundEntry::getUrl);
 
 		_uniquePersistenceFinderByG_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U,
@@ -744,4 +673,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1922861636
+// LIFERAY-SERVICE-BUILDER-HASH:-1963047840

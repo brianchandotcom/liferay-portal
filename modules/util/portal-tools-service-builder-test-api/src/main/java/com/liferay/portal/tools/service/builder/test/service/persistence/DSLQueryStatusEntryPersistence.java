@@ -33,21 +33,6 @@ public interface DSLQueryStatusEntryPersistence
 	 */
 
 	/**
-	 * Caches the dsl query status entry in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntry the dsl query status entry
-	 */
-	public void cacheResult(DSLQueryStatusEntry dslQueryStatusEntry);
-
-	/**
-	 * Caches the dsl query status entries in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntries the dsl query status entries
-	 */
-	public void cacheResult(
-		java.util.List<DSLQueryStatusEntry> dslQueryStatusEntries);
-
-	/**
 	 * Creates a new dsl query status entry with the primary key. Does not add the dsl query status entry to the database.
 	 *
 	 * @param dslQueryStatusEntryId the primary key for the new dsl query status entry
@@ -87,4 +72,4 @@ public interface DSLQueryStatusEntryPersistence
 	public DSLQueryStatusEntry fetchByPrimaryKey(long dslQueryStatusEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-613132526
+// LIFERAY-SERVICE-BUILDER-HASH:830890604

@@ -36,6 +36,24 @@ public class StyleBookEntryVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<StyleBookEntryVersion> styleBookEntryVersions) {
+
+		getPersistence().cacheResult(styleBookEntryVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		StyleBookEntryVersion styleBookEntryVersion) {
+
+		getPersistence().cacheResult(styleBookEntryVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2975,28 +2993,6 @@ public class StyleBookEntryVersionUtil {
 	}
 
 	/**
-	 * Caches the style book entry version in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntryVersion the style book entry version
-	 */
-	public static void cacheResult(
-		StyleBookEntryVersion styleBookEntryVersion) {
-
-		getPersistence().cacheResult(styleBookEntryVersion);
-	}
-
-	/**
-	 * Caches the style book entry versions in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntryVersions the style book entry versions
-	 */
-	public static void cacheResult(
-		List<StyleBookEntryVersion> styleBookEntryVersions) {
-
-		getPersistence().cacheResult(styleBookEntryVersions);
-	}
-
-	/**
 	 * Creates a new style book entry version with the primary key. Does not add the style book entry version to the database.
 	 *
 	 * @param styleBookEntryVersionId the primary key for the new style book entry version
@@ -3064,4 +3060,4 @@ public class StyleBookEntryVersionUtil {
 	private static volatile StyleBookEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-993479633
+// LIFERAY-SERVICE-BUILDER-HASH:604520965

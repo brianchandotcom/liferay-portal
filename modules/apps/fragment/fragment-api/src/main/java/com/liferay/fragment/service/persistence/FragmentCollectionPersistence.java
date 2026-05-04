@@ -1164,21 +1164,6 @@ public interface FragmentCollectionPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the fragment collection in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollection the fragment collection
-	 */
-	public void cacheResult(FragmentCollection fragmentCollection);
-
-	/**
-	 * Caches the fragment collections in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollections the fragment collections
-	 */
-	public void cacheResult(
-		java.util.List<FragmentCollection> fragmentCollections);
-
-	/**
 	 * Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	 *
 	 * @param fragmentCollectionId the primary key for the new fragment collection
@@ -1217,4 +1202,4 @@ public interface FragmentCollectionPersistence
 	public FragmentCollection fetchByPrimaryKey(long fragmentCollectionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1193774625
+// LIFERAY-SERVICE-BUILDER-HASH:836043037

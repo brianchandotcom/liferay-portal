@@ -426,21 +426,6 @@ public interface KaleoTimerInstanceTokenPersistence
 		long kaleoInstanceTokenId, boolean blocking, boolean completed);
 
 	/**
-	 * Caches the kaleo timer instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceToken the kaleo timer instance token
-	 */
-	public void cacheResult(KaleoTimerInstanceToken kaleoTimerInstanceToken);
-
-	/**
-	 * Caches the kaleo timer instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceTokens the kaleo timer instance tokens
-	 */
-	public void cacheResult(
-		java.util.List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens);
-
-	/**
 	 * Creates a new kaleo timer instance token with the primary key. Does not add the kaleo timer instance token to the database.
 	 *
 	 * @param kaleoTimerInstanceTokenId the primary key for the new kaleo timer instance token
@@ -482,4 +467,4 @@ public interface KaleoTimerInstanceTokenPersistence
 		long kaleoTimerInstanceTokenId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:815900967
+// LIFERAY-SERVICE-BUILDER-HASH:1424071911

@@ -452,20 +452,6 @@ public interface ObjectLayoutTabPersistence
 	public int countByObjectRelationshipId(long objectRelationshipId);
 
 	/**
-	 * Caches the object layout tab in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTab the object layout tab
-	 */
-	public void cacheResult(ObjectLayoutTab objectLayoutTab);
-
-	/**
-	 * Caches the object layout tabs in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTabs the object layout tabs
-	 */
-	public void cacheResult(java.util.List<ObjectLayoutTab> objectLayoutTabs);
-
-	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
 	 * @param objectLayoutTabId the primary key for the new object layout tab
@@ -504,4 +490,4 @@ public interface ObjectLayoutTabPersistence
 	public ObjectLayoutTab fetchByPrimaryKey(long objectLayoutTabId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-35300753
+// LIFERAY-SERVICE-BUILDER-HASH:987467943

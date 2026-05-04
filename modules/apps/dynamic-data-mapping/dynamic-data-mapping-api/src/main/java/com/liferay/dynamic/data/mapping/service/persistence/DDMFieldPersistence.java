@@ -509,20 +509,6 @@ public interface DDMFieldPersistence
 	public int countByS_I(long storageId, String instanceId);
 
 	/**
-	 * Caches the ddm field in the entity cache if it is enabled.
-	 *
-	 * @param ddmField the ddm field
-	 */
-	public void cacheResult(DDMField ddmField);
-
-	/**
-	 * Caches the ddm fields in the entity cache if it is enabled.
-	 *
-	 * @param ddmFields the ddm fields
-	 */
-	public void cacheResult(java.util.List<DDMField> ddmFields);
-
-	/**
 	 * Creates a new ddm field with the primary key. Does not add the ddm field to the database.
 	 *
 	 * @param fieldId the primary key for the new ddm field
@@ -559,4 +545,4 @@ public interface DDMFieldPersistence
 	public DDMField fetchByPrimaryKey(long fieldId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-919602163
+// LIFERAY-SERVICE-BUILDER-HASH:1014934305

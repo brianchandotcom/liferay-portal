@@ -36,6 +36,20 @@ public class VersionedEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<VersionedEntry> versionedEntries) {
+		getPersistence().cacheResult(versionedEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(VersionedEntry versionedEntry) {
+		getPersistence().cacheResult(versionedEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -426,24 +440,6 @@ public class VersionedEntryUtil {
 	}
 
 	/**
-	 * Caches the versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntry the versioned entry
-	 */
-	public static void cacheResult(VersionedEntry versionedEntry) {
-		getPersistence().cacheResult(versionedEntry);
-	}
-
-	/**
-	 * Caches the versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntries the versioned entries
-	 */
-	public static void cacheResult(List<VersionedEntry> versionedEntries) {
-		getPersistence().cacheResult(versionedEntries);
-	}
-
-	/**
 	 * Creates a new versioned entry with the primary key. Does not add the versioned entry to the database.
 	 *
 	 * @param versionedEntryId the primary key for the new versioned entry
@@ -506,4 +502,4 @@ public class VersionedEntryUtil {
 	private static volatile VersionedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-137837376
+// LIFERAY-SERVICE-BUILDER-HASH:-1452140895

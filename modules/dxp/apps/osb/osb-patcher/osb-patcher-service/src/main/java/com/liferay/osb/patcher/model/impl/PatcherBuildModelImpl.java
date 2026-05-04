@@ -2303,4 +2303,4 @@ public class PatcherBuildModelImpl
 	private PatcherBuild _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:446694418
+// LIFERAY-SERVICE-BUILDER-HASH:821809038

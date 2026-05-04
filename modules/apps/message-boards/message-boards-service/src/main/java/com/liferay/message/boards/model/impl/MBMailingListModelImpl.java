@@ -1603,4 +1603,4 @@ public class MBMailingListModelImpl
 	private MBMailingList _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-898173500
+// LIFERAY-SERVICE-BUILDER-HASH:-1028294144

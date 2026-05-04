@@ -2765,20 +2765,6 @@ public interface DLFolderPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the document library folder in the entity cache if it is enabled.
-	 *
-	 * @param dlFolder the document library folder
-	 */
-	public void cacheResult(DLFolder dlFolder);
-
-	/**
-	 * Caches the document library folders in the entity cache if it is enabled.
-	 *
-	 * @param dlFolders the document library folders
-	 */
-	public void cacheResult(java.util.List<DLFolder> dlFolders);
-
-	/**
 	 * Creates a new document library folder with the primary key. Does not add the document library folder to the database.
 	 *
 	 * @param folderId the primary key for the new document library folder
@@ -3005,4 +2991,4 @@ public interface DLFolderPersistence
 				dlFileEntryTypes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:729083955
+// LIFERAY-SERVICE-BUILDER-HASH:-1213012713

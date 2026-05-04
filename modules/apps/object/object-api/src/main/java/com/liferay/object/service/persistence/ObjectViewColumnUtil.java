@@ -36,6 +36,20 @@ public class ObjectViewColumnUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectViewColumn> objectViewColumns) {
+		getPersistence().cacheResult(objectViewColumns);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectViewColumn objectViewColumn) {
+		getPersistence().cacheResult(objectViewColumn);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -624,24 +638,6 @@ public class ObjectViewColumnUtil {
 	}
 
 	/**
-	 * Caches the object view column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumn the object view column
-	 */
-	public static void cacheResult(ObjectViewColumn objectViewColumn) {
-		getPersistence().cacheResult(objectViewColumn);
-	}
-
-	/**
-	 * Caches the object view columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumns the object view columns
-	 */
-	public static void cacheResult(List<ObjectViewColumn> objectViewColumns) {
-		getPersistence().cacheResult(objectViewColumns);
-	}
-
-	/**
 	 * Creates a new object view column with the primary key. Does not add the object view column to the database.
 	 *
 	 * @param objectViewColumnId the primary key for the new object view column
@@ -704,4 +700,4 @@ public class ObjectViewColumnUtil {
 	private static volatile ObjectViewColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-724653242
+// LIFERAY-SERVICE-BUILDER-HASH:745569686

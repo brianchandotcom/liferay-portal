@@ -36,6 +36,24 @@ public class CommerceShippingFixedOptionRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels) {
+
+		getPersistence().cacheResult(commerceShippingFixedOptionRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
+
+		getPersistence().cacheResult(commerceShippingFixedOptionRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -554,28 +572,6 @@ public class CommerceShippingFixedOptionRelUtil {
 	}
 
 	/**
-	 * Caches the commerce shipping fixed option rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
-	 */
-	public static void cacheResult(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
-
-		getPersistence().cacheResult(commerceShippingFixedOptionRel);
-	}
-
-	/**
-	 * Caches the commerce shipping fixed option rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRels the commerce shipping fixed option rels
-	 */
-	public static void cacheResult(
-		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels) {
-
-		getPersistence().cacheResult(commerceShippingFixedOptionRels);
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option rel with the primary key. Does not add the commerce shipping fixed option rel to the database.
 	 *
 	 * @param commerceShippingFixedOptionRelId the primary key for the new commerce shipping fixed option rel
@@ -651,4 +647,4 @@ public class CommerceShippingFixedOptionRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1778297511
+// LIFERAY-SERVICE-BUILDER-HASH:-353407755

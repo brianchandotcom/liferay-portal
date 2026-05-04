@@ -36,6 +36,20 @@ public class FriendlyURLEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FriendlyURLEntry> friendlyURLEntries) {
+		getPersistence().cacheResult(friendlyURLEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FriendlyURLEntry friendlyURLEntry) {
+		getPersistence().cacheResult(friendlyURLEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -847,24 +861,6 @@ public class FriendlyURLEntryUtil {
 	}
 
 	/**
-	 * Caches the friendly url entry in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntry the friendly url entry
-	 */
-	public static void cacheResult(FriendlyURLEntry friendlyURLEntry) {
-		getPersistence().cacheResult(friendlyURLEntry);
-	}
-
-	/**
-	 * Caches the friendly url entries in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntries the friendly url entries
-	 */
-	public static void cacheResult(List<FriendlyURLEntry> friendlyURLEntries) {
-		getPersistence().cacheResult(friendlyURLEntries);
-	}
-
-	/**
 	 * Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
 	 *
 	 * @param friendlyURLEntryId the primary key for the new friendly url entry
@@ -929,4 +925,4 @@ public class FriendlyURLEntryUtil {
 	private static volatile FriendlyURLEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:348755349
+// LIFERAY-SERVICE-BUILDER-HASH:681619986

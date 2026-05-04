@@ -1276,20 +1276,6 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the sharing entry in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntry the sharing entry
-	 */
-	public void cacheResult(SharingEntry sharingEntry);
-
-	/**
-	 * Caches the sharing entries in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntries the sharing entries
-	 */
-	public void cacheResult(java.util.List<SharingEntry> sharingEntries);
-
-	/**
 	 * Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	 *
 	 * @param sharingEntryId the primary key for the new sharing entry
@@ -1327,4 +1313,4 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public SharingEntry fetchByPrimaryKey(long sharingEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1661335027
+// LIFERAY-SERVICE-BUILDER-HASH:-1036639967

@@ -511,23 +511,6 @@ public interface CommerceDiscountOrderTypeRelPersistence
 		long commerceDiscountId, long commerceOrderTypeId);
 
 	/**
-	 * Caches the commerce discount order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRel the commerce discount order type rel
-	 */
-	public void cacheResult(
-		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel);
-
-	/**
-	 * Caches the commerce discount order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRels the commerce discount order type rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceDiscountOrderTypeRel>
-			commerceDiscountOrderTypeRels);
-
-	/**
 	 * Creates a new commerce discount order type rel with the primary key. Does not add the commerce discount order type rel to the database.
 	 *
 	 * @param commerceDiscountOrderTypeRelId the primary key for the new commerce discount order type rel
@@ -571,4 +554,4 @@ public interface CommerceDiscountOrderTypeRelPersistence
 		long commerceDiscountOrderTypeRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2076365124
+// LIFERAY-SERVICE-BUILDER-HASH:-450373692

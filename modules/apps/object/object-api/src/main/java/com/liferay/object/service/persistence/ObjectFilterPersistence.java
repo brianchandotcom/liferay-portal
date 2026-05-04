@@ -347,20 +347,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public int countByObjectFieldId(long objectFieldId);
 
 	/**
-	 * Caches the object filter in the entity cache if it is enabled.
-	 *
-	 * @param objectFilter the object filter
-	 */
-	public void cacheResult(ObjectFilter objectFilter);
-
-	/**
-	 * Caches the object filters in the entity cache if it is enabled.
-	 *
-	 * @param objectFilters the object filters
-	 */
-	public void cacheResult(java.util.List<ObjectFilter> objectFilters);
-
-	/**
 	 * Creates a new object filter with the primary key. Does not add the object filter to the database.
 	 *
 	 * @param objectFilterId the primary key for the new object filter
@@ -399,4 +385,4 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	public ObjectFilter fetchByPrimaryKey(long objectFilterId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1251386887
+// LIFERAY-SERVICE-BUILDER-HASH:1365384149

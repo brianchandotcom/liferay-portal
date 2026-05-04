@@ -36,6 +36,22 @@ public class CommerceOrderPaymentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceOrderPayment> commerceOrderPayments) {
+
+		getPersistence().cacheResult(commerceOrderPayments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceOrderPayment commerceOrderPayment) {
+		getPersistence().cacheResult(commerceOrderPayment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -240,26 +256,6 @@ public class CommerceOrderPaymentUtil {
 	}
 
 	/**
-	 * Caches the commerce order payment in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayment the commerce order payment
-	 */
-	public static void cacheResult(CommerceOrderPayment commerceOrderPayment) {
-		getPersistence().cacheResult(commerceOrderPayment);
-	}
-
-	/**
-	 * Caches the commerce order payments in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayments the commerce order payments
-	 */
-	public static void cacheResult(
-		List<CommerceOrderPayment> commerceOrderPayments) {
-
-		getPersistence().cacheResult(commerceOrderPayments);
-	}
-
-	/**
 	 * Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	 *
 	 * @param commerceOrderPaymentId the primary key for the new commerce order payment
@@ -327,4 +323,4 @@ public class CommerceOrderPaymentUtil {
 	private static volatile CommerceOrderPaymentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-428822759
+// LIFERAY-SERVICE-BUILDER-HASH:-1187109689

@@ -1050,20 +1050,6 @@ public interface KBCommentPersistence
 	public int countByC_C_S(long classNameId, long classPK, int[] statuses);
 
 	/**
-	 * Caches the kb comment in the entity cache if it is enabled.
-	 *
-	 * @param kbComment the kb comment
-	 */
-	public void cacheResult(KBComment kbComment);
-
-	/**
-	 * Caches the kb comments in the entity cache if it is enabled.
-	 *
-	 * @param kbComments the kb comments
-	 */
-	public void cacheResult(java.util.List<KBComment> kbComments);
-
-	/**
 	 * Creates a new kb comment with the primary key. Does not add the kb comment to the database.
 	 *
 	 * @param kbCommentId the primary key for the new kb comment
@@ -1101,4 +1087,4 @@ public interface KBCommentPersistence
 	public KBComment fetchByPrimaryKey(long kbCommentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1858953031
+// LIFERAY-SERVICE-BUILDER-HASH:-950408513

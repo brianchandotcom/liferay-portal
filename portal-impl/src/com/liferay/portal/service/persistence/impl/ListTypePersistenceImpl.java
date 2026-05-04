@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -788,61 +785,6 @@ public class ListTypePersistenceImpl
 	}
 
 	/**
-	 * Caches the list type in the entity cache if it is enabled.
-	 *
-	 * @param listType the list type
-	 */
-	@Override
-	public void cacheResult(ListType listType) {
-		EntityCacheUtil.putResult(
-			ListTypeImpl.class, listType.getPrimaryKey(), listType);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_N_T,
-			new Object[] {
-				listType.getCompanyId(), listType.getName(), listType.getType()
-			},
-			listType);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the list types in the entity cache if it is enabled.
-	 *
-	 * @param listTypes the list types
-	 */
-	@Override
-	public void cacheResult(List<ListType> listTypes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (listTypes.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ListType listType : listTypes) {
-			if (EntityCacheUtil.getResult(
-					ListTypeImpl.class, listType.getPrimaryKey()) == null) {
-
-				cacheResult(listType);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ListTypeModelImpl listTypeModelImpl) {
-
-		Object[] args = new Object[] {
-			listTypeModelImpl.getCompanyId(), listTypeModelImpl.getName(),
-			listTypeModelImpl.getType()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_N_T, args, listTypeModelImpl);
-	}
-
-	/**
 	 * Creates a new list type with the primary key. Does not add the list type to the database.
 	 *
 	 * @param listTypeId the primary key for the new list type
@@ -976,10 +918,7 @@ public class ListTypePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ListTypeImpl.class, listTypeModelImpl, false, true);
-
-		cacheUniqueFindersCache(listTypeModelImpl);
+		cacheUniqueFindersResult(listType, false);
 
 		if (isNew) {
 			listType.setNew(false);
@@ -1044,9 +983,6 @@ public class ListTypePersistenceImpl
 	 * Initializes the list type persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1167,13 +1103,14 @@ public class ListTypePersistenceImpl
 				"listType.", "type", FinderColumn.Type.STRING, "=", true, true,
 				ListType::getType));
 
-		_finderPathFetchByC_N_T = new FinderPath(
+		_finderPathFetchByC_N_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_T",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "type_"}, true);
+			new String[] {"companyId", "name", "type_"}, false,
+			ListType::getCompanyId, ListType::getName, ListType::getType);
 
 		_uniquePersistenceFinderByC_N_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_T, _SQL_SELECT_LISTTYPE_WHERE,
@@ -1223,4 +1160,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1968285813
+// LIFERAY-SERVICE-BUILDER-HASH:-922489332

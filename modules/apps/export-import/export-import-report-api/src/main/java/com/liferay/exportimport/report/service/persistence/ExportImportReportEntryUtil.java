@@ -36,6 +36,24 @@ public class ExportImportReportEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ExportImportReportEntry> exportImportReportEntries) {
+
+		getPersistence().cacheResult(exportImportReportEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ExportImportReportEntry exportImportReportEntry) {
+
+		getPersistence().cacheResult(exportImportReportEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -366,28 +384,6 @@ public class ExportImportReportEntryUtil {
 	}
 
 	/**
-	 * Caches the export import report entry in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntry the export import report entry
-	 */
-	public static void cacheResult(
-		ExportImportReportEntry exportImportReportEntry) {
-
-		getPersistence().cacheResult(exportImportReportEntry);
-	}
-
-	/**
-	 * Caches the export import report entries in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntries the export import report entries
-	 */
-	public static void cacheResult(
-		List<ExportImportReportEntry> exportImportReportEntries) {
-
-		getPersistence().cacheResult(exportImportReportEntries);
-	}
-
-	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
 	 * @param exportImportReportEntryId the primary key for the new export import report entry
@@ -459,4 +455,4 @@ public class ExportImportReportEntryUtil {
 	private static volatile ExportImportReportEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1138377767
+// LIFERAY-SERVICE-BUILDER-HASH:1271657346

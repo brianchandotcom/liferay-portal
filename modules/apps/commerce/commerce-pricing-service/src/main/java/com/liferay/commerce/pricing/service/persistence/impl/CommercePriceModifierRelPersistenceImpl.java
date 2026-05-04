@@ -14,7 +14,6 @@ import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRel
 import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierRelUtil;
 import com.liferay.commerce.pricing.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -729,88 +725,6 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price modifier rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifierRel the commerce price modifier rel
-	 */
-	@Override
-	public void cacheResult(CommercePriceModifierRel commercePriceModifierRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceModifierRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceModifierRelImpl.class,
-				commercePriceModifierRel.getPrimaryKey(),
-				commercePriceModifierRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCPM_CN_CPK,
-				new Object[] {
-					commercePriceModifierRel.getCommercePriceModifierId(),
-					commercePriceModifierRel.getClassNameId(),
-					commercePriceModifierRel.getClassPK()
-				},
-				commercePriceModifierRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price modifier rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifierRels the commerce price modifier rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceModifierRel> commercePriceModifierRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceModifierRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceModifierRel commercePriceModifierRel :
-				commercePriceModifierRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceModifierRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceModifierRelImpl.class,
-						commercePriceModifierRel.getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceModifierRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceModifierRelModelImpl commercePriceModifierRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceModifierRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceModifierRelModelImpl.getCommercePriceModifierId(),
-				commercePriceModifierRelModelImpl.getClassNameId(),
-				commercePriceModifierRelModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPM_CN_CPK, args,
-				commercePriceModifierRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price modifier rel with the primary key. Does not add the commerce price modifier rel to the database.
 	 *
 	 * @param commercePriceModifierRelId the primary key for the new commerce price modifier rel
@@ -960,11 +874,7 @@ public class CommercePriceModifierRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceModifierRelImpl.class,
-			commercePriceModifierRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePriceModifierRelModelImpl);
+		cacheUniqueFindersResult(commercePriceModifierRel, false);
 
 		if (isNew) {
 			commercePriceModifierRel.setNew(false);
@@ -1096,9 +1006,6 @@ public class CommercePriceModifierRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommercePriceModifierId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommercePriceModifierId",
@@ -1209,13 +1116,15 @@ public class CommercePriceModifierRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceModifierRel::getClassPK));
 
-		_finderPathFetchByCPM_CN_CPK = new FinderPath(
+		_finderPathFetchByCPM_CN_CPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPM_CN_CPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"commercePriceModifierId", "classNameId", "classPK"},
-			true);
+			false, CommercePriceModifierRel::getCommercePriceModifierId,
+			CommercePriceModifierRel::getClassNameId,
+			CommercePriceModifierRel::getClassPK);
 
 		_uniquePersistenceFinderByCPM_CN_CPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCPM_CN_CPK,
@@ -1301,4 +1210,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1427819129
+// LIFERAY-SERVICE-BUILDER-HASH:272337407

@@ -36,6 +36,20 @@ public class DLFileEntryTypeUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLFileEntryType> dlFileEntryTypes) {
+		getPersistence().cacheResult(dlFileEntryTypes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileEntryType dlFileEntryType) {
+		getPersistence().cacheResult(dlFileEntryType);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1087,24 +1101,6 @@ public class DLFileEntryTypeUtil {
 	}
 
 	/**
-	 * Caches the document library file entry type in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryType the document library file entry type
-	 */
-	public static void cacheResult(DLFileEntryType dlFileEntryType) {
-		getPersistence().cacheResult(dlFileEntryType);
-	}
-
-	/**
-	 * Caches the document library file entry types in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryTypes the document library file entry types
-	 */
-	public static void cacheResult(List<DLFileEntryType> dlFileEntryTypes) {
-		getPersistence().cacheResult(dlFileEntryTypes);
-	}
-
-	/**
 	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	 *
 	 * @param fileEntryTypeId the primary key for the new document library file entry type
@@ -1387,4 +1383,4 @@ public class DLFileEntryTypeUtil {
 	private static volatile DLFileEntryTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549095094
+// LIFERAY-SERVICE-BUILDER-HASH:-879055928

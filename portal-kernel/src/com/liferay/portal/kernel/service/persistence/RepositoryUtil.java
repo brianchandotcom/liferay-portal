@@ -36,6 +36,20 @@ public class RepositoryUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Repository> repositories) {
+		getPersistence().cacheResult(repositories);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Repository repository) {
+		getPersistence().cacheResult(repository);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -805,24 +819,6 @@ public class RepositoryUtil {
 	}
 
 	/**
-	 * Caches the repository in the entity cache if it is enabled.
-	 *
-	 * @param repository the repository
-	 */
-	public static void cacheResult(Repository repository) {
-		getPersistence().cacheResult(repository);
-	}
-
-	/**
-	 * Caches the repositories in the entity cache if it is enabled.
-	 *
-	 * @param repositories the repositories
-	 */
-	public static void cacheResult(List<Repository> repositories) {
-		getPersistence().cacheResult(repositories);
-	}
-
-	/**
 	 * Creates a new repository with the primary key. Does not add the repository to the database.
 	 *
 	 * @param repositoryId the primary key for the new repository
@@ -883,4 +879,4 @@ public class RepositoryUtil {
 	private static volatile RepositoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-933609346
+// LIFERAY-SERVICE-BUILDER-HASH:-1809309447

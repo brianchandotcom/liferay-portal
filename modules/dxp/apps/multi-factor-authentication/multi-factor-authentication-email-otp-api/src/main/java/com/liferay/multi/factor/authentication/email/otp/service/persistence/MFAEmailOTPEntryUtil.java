@@ -36,6 +36,20 @@ public class MFAEmailOTPEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MFAEmailOTPEntry> mfaEmailOTPEntries) {
+		getPersistence().cacheResult(mfaEmailOTPEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MFAEmailOTPEntry mfaEmailOTPEntry) {
+		getPersistence().cacheResult(mfaEmailOTPEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -171,24 +185,6 @@ public class MFAEmailOTPEntryUtil {
 	}
 
 	/**
-	 * Caches the mfa email otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntry the mfa email otp entry
-	 */
-	public static void cacheResult(MFAEmailOTPEntry mfaEmailOTPEntry) {
-		getPersistence().cacheResult(mfaEmailOTPEntry);
-	}
-
-	/**
-	 * Caches the mfa email otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntries the mfa email otp entries
-	 */
-	public static void cacheResult(List<MFAEmailOTPEntry> mfaEmailOTPEntries) {
-		getPersistence().cacheResult(mfaEmailOTPEntries);
-	}
-
-	/**
 	 * Creates a new mfa email otp entry with the primary key. Does not add the mfa email otp entry to the database.
 	 *
 	 * @param mfaEmailOTPEntryId the primary key for the new mfa email otp entry
@@ -253,4 +249,4 @@ public class MFAEmailOTPEntryUtil {
 	private static volatile MFAEmailOTPEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:344501629
+// LIFERAY-SERVICE-BUILDER-HASH:-1567912034

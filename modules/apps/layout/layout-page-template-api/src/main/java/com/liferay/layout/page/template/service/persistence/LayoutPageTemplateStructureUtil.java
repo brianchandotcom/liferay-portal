@@ -36,6 +36,24 @@ public class LayoutPageTemplateStructureUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutPageTemplateStructure> layoutPageTemplateStructures) {
+
+		getPersistence().cacheResult(layoutPageTemplateStructures);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutPageTemplateStructure layoutPageTemplateStructure) {
+
+		getPersistence().cacheResult(layoutPageTemplateStructure);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -634,28 +652,6 @@ public class LayoutPageTemplateStructureUtil {
 	}
 
 	/**
-	 * Caches the layout page template structure in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructure the layout page template structure
-	 */
-	public static void cacheResult(
-		LayoutPageTemplateStructure layoutPageTemplateStructure) {
-
-		getPersistence().cacheResult(layoutPageTemplateStructure);
-	}
-
-	/**
-	 * Caches the layout page template structures in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructures the layout page template structures
-	 */
-	public static void cacheResult(
-		List<LayoutPageTemplateStructure> layoutPageTemplateStructures) {
-
-		getPersistence().cacheResult(layoutPageTemplateStructures);
-	}
-
-	/**
 	 * Creates a new layout page template structure with the primary key. Does not add the layout page template structure to the database.
 	 *
 	 * @param layoutPageTemplateStructureId the primary key for the new layout page template structure
@@ -729,4 +725,4 @@ public class LayoutPageTemplateStructureUtil {
 	private static volatile LayoutPageTemplateStructurePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:691058968
+// LIFERAY-SERVICE-BUILDER-HASH:-1041692894

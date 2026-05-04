@@ -36,6 +36,22 @@ public class ObjectRelationshipUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectRelationship> objectRelationships) {
+
+		getPersistence().cacheResult(objectRelationships);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectRelationship objectRelationship) {
+		getPersistence().cacheResult(objectRelationship);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2770,26 +2786,6 @@ public class ObjectRelationshipUtil {
 	}
 
 	/**
-	 * Caches the object relationship in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationship the object relationship
-	 */
-	public static void cacheResult(ObjectRelationship objectRelationship) {
-		getPersistence().cacheResult(objectRelationship);
-	}
-
-	/**
-	 * Caches the object relationships in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationships the object relationships
-	 */
-	public static void cacheResult(
-		List<ObjectRelationship> objectRelationships) {
-
-		getPersistence().cacheResult(objectRelationships);
-	}
-
-	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *
 	 * @param objectRelationshipId the primary key for the new object relationship
@@ -2856,4 +2852,4 @@ public class ObjectRelationshipUtil {
 	private static volatile ObjectRelationshipPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:831877373
+// LIFERAY-SERVICE-BUILDER-HASH:1370193565

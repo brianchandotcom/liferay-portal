@@ -39,6 +39,24 @@ public class CommerceNotificationQueueEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries) {
+
+		getPersistence().cacheResult(commerceNotificationQueueEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
+
+		getPersistence().cacheResult(commerceNotificationQueueEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -799,28 +817,6 @@ public class CommerceNotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntry the commerce notification queue entry
-	 */
-	public static void cacheResult(
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
-
-		getPersistence().cacheResult(commerceNotificationQueueEntry);
-	}
-
-	/**
-	 * Caches the commerce notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntries the commerce notification queue entries
-	 */
-	public static void cacheResult(
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries) {
-
-		getPersistence().cacheResult(commerceNotificationQueueEntries);
-	}
-
-	/**
 	 * Creates a new commerce notification queue entry with the primary key. Does not add the commerce notification queue entry to the database.
 	 *
 	 * @param commerceNotificationQueueEntryId the primary key for the new commerce notification queue entry
@@ -896,4 +892,4 @@ public class CommerceNotificationQueueEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2065823703
+// LIFERAY-SERVICE-BUILDER-HASH:-446222486

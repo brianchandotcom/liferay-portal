@@ -14,7 +14,6 @@ import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSetting
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -522,77 +518,6 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the cs diagram setting in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSetting the cs diagram setting
-	 */
-	@Override
-	public void cacheResult(CSDiagramSetting csDiagramSetting) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					csDiagramSetting.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CSDiagramSettingImpl.class, csDiagramSetting.getPrimaryKey(),
-				csDiagramSetting);
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId,
-				new Object[] {csDiagramSetting.getCPDefinitionId()},
-				csDiagramSetting);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cs diagram settings in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSettings the cs diagram settings
-	 */
-	@Override
-	public void cacheResult(List<CSDiagramSetting> csDiagramSettings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (csDiagramSettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CSDiagramSetting csDiagramSetting : csDiagramSettings) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						csDiagramSetting.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CSDiagramSettingImpl.class,
-						csDiagramSetting.getPrimaryKey()) == null) {
-
-					cacheResult(csDiagramSetting);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CSDiagramSettingModelImpl csDiagramSettingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					csDiagramSettingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				csDiagramSettingModelImpl.getCPDefinitionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId, args,
-				csDiagramSettingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cs diagram setting with the primary key. Does not add the cs diagram setting to the database.
 	 *
 	 * @param CSDiagramSettingId the primary key for the new cs diagram setting
@@ -742,10 +667,7 @@ public class CSDiagramSettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CSDiagramSettingImpl.class, csDiagramSettingModelImpl, false, true);
-
-		cacheUniqueFindersCache(csDiagramSettingModelImpl);
+		cacheUniqueFindersResult(csDiagramSetting, false);
 
 		if (isNew) {
 			csDiagramSetting.setNew(false);
@@ -881,9 +803,6 @@ public class CSDiagramSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -945,10 +864,11 @@ public class CSDiagramSettingPersistenceImpl
 					"csDiagramSetting.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramSetting::getCompanyId));
 
-		_finderPathFetchByCPDefinitionId = new FinderPath(
+		_finderPathFetchByCPDefinitionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId",
 			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
+			new String[] {"CPDefinitionId"}, false,
+			CSDiagramSetting::getCPDefinitionId);
 
 		_uniquePersistenceFinderByCPDefinitionId =
 			new UniquePersistenceFinder<>(
@@ -1031,4 +951,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1684788008
+// LIFERAY-SERVICE-BUILDER-HASH:-852410712

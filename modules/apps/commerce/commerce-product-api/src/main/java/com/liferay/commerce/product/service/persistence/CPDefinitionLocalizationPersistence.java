@@ -192,21 +192,6 @@ public interface CPDefinitionLocalizationPersistence
 		long CPDefinitionId, String languageId);
 
 	/**
-	 * Caches the cp definition localization in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalization the cp definition localization
-	 */
-	public void cacheResult(CPDefinitionLocalization cpDefinitionLocalization);
-
-	/**
-	 * Caches the cp definition localizations in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalizations the cp definition localizations
-	 */
-	public void cacheResult(
-		java.util.List<CPDefinitionLocalization> cpDefinitionLocalizations);
-
-	/**
 	 * Creates a new cp definition localization with the primary key. Does not add the cp definition localization to the database.
 	 *
 	 * @param cpDefinitionLocalizationId the primary key for the new cp definition localization
@@ -248,4 +233,4 @@ public interface CPDefinitionLocalizationPersistence
 		long cpDefinitionLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:313623677
+// LIFERAY-SERVICE-BUILDER-HASH:1520281399

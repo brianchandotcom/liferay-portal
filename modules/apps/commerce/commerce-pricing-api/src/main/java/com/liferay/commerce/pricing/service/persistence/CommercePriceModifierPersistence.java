@@ -1298,21 +1298,6 @@ public interface CommercePriceModifierPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce price modifier in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifier the commerce price modifier
-	 */
-	public void cacheResult(CommercePriceModifier commercePriceModifier);
-
-	/**
-	 * Caches the commerce price modifiers in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifiers the commerce price modifiers
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceModifier> commercePriceModifiers);
-
-	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *
 	 * @param commercePriceModifierId the primary key for the new commerce price modifier
@@ -1353,4 +1338,4 @@ public interface CommercePriceModifierPersistence
 		long commercePriceModifierId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1480479819
+// LIFERAY-SERVICE-BUILDER-HASH:1331422733

@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -422,49 +419,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce inventory audit in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudit the commerce inventory audit
-	 */
-	@Override
-	public void cacheResult(CommerceInventoryAudit commerceInventoryAudit) {
-		entityCache.putResult(
-			CommerceInventoryAuditImpl.class,
-			commerceInventoryAudit.getPrimaryKey(), commerceInventoryAudit);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce inventory audits in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudits the commerce inventory audits
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceInventoryAudit> commerceInventoryAudits) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceInventoryAudits.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceInventoryAudit commerceInventoryAudit :
-				commerceInventoryAudits) {
-
-			if (entityCache.getResult(
-					CommerceInventoryAuditImpl.class,
-					commerceInventoryAudit.getPrimaryKey()) == null) {
-
-				cacheResult(commerceInventoryAudit);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce inventory audit with the primary key. Does not add the commerce inventory audit to the database.
 	 *
 	 * @param commerceInventoryAuditId the primary key for the new commerce inventory audit
@@ -603,9 +557,7 @@ public class CommerceInventoryAuditPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceInventoryAuditImpl.class, commerceInventoryAuditModelImpl,
-			false, true);
+		cacheUniqueFindersResult(commerceInventoryAudit, false);
 
 		if (isNew) {
 			commerceInventoryAudit.setNew(false);
@@ -674,9 +626,6 @@ public class CommerceInventoryAuditPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
 			new String[] {
@@ -814,4 +763,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-160812354
+// LIFERAY-SERVICE-BUILDER-HASH:549178250

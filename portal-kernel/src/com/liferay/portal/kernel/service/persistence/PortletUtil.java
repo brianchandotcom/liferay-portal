@@ -36,6 +36,20 @@ public class PortletUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Portlet> portlets) {
+		getPersistence().cacheResult(portlets);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Portlet portlet) {
+		getPersistence().cacheResult(portlet);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -295,24 +309,6 @@ public class PortletUtil {
 	}
 
 	/**
-	 * Caches the portlet in the entity cache if it is enabled.
-	 *
-	 * @param portlet the portlet
-	 */
-	public static void cacheResult(Portlet portlet) {
-		getPersistence().cacheResult(portlet);
-	}
-
-	/**
-	 * Caches the portlets in the entity cache if it is enabled.
-	 *
-	 * @param portlets the portlets
-	 */
-	public static void cacheResult(List<Portlet> portlets) {
-		getPersistence().cacheResult(portlets);
-	}
-
-	/**
 	 * Creates a new portlet with the primary key. Does not add the portlet to the database.
 	 *
 	 * @param id the primary key for the new portlet
@@ -373,4 +369,4 @@ public class PortletUtil {
 	private static volatile PortletPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1562049782
+// LIFERAY-SERVICE-BUILDER-HASH:-590716160

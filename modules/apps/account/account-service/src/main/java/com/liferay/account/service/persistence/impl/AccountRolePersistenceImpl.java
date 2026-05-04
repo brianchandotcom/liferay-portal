@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2622,72 +2620,6 @@ public class AccountRolePersistenceImpl
 	}
 
 	/**
-	 * Caches the account role in the entity cache if it is enabled.
-	 *
-	 * @param accountRole the account role
-	 */
-	@Override
-	public void cacheResult(AccountRole accountRole) {
-		entityCache.putResult(
-			AccountRoleImpl.class, accountRole.getPrimaryKey(), accountRole);
-
-		finderCache.putResult(
-			_finderPathFetchByRoleId, new Object[] {accountRole.getRoleId()},
-			accountRole);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				accountRole.getExternalReferenceCode(),
-				accountRole.getCompanyId()
-			},
-			accountRole);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account roles in the entity cache if it is enabled.
-	 *
-	 * @param accountRoles the account roles
-	 */
-	@Override
-	public void cacheResult(List<AccountRole> accountRoles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountRoles.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountRole accountRole : accountRoles) {
-			if (entityCache.getResult(
-					AccountRoleImpl.class, accountRole.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(accountRole);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountRoleModelImpl accountRoleModelImpl) {
-
-		Object[] args = new Object[] {accountRoleModelImpl.getRoleId()};
-
-		finderCache.putResult(
-			_finderPathFetchByRoleId, args, accountRoleModelImpl);
-
-		args = new Object[] {
-			accountRoleModelImpl.getExternalReferenceCode(),
-			accountRoleModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, accountRoleModelImpl);
-	}
-
-	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
 	 * @param accountRoleId the primary key for the new account role
@@ -2852,10 +2784,7 @@ public class AccountRolePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountRoleImpl.class, accountRoleModelImpl, false, true);
-
-		cacheUniqueFindersCache(accountRoleModelImpl);
+		cacheUniqueFindersResult(accountRole, false);
 
 		if (isNew) {
 			accountRole.setNew(false);
@@ -2916,9 +2845,6 @@ public class AccountRolePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2971,9 +2897,10 @@ public class AccountRolePersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"accountEntryId"}, false);
 
-		_finderPathFetchByRoleId = new FinderPath(
+		_finderPathFetchByRoleId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"roleId"}, false,
+			AccountRole::getRoleId);
 
 		_uniquePersistenceFinderByRoleId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByRoleId, _SQL_SELECT_ACCOUNTROLE_WHERE,
@@ -3005,10 +2932,11 @@ public class AccountRolePersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"companyId", "accountEntryId"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			AccountRole::getExternalReferenceCode, AccountRole::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTROLE_WHERE,
@@ -3109,4 +3037,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-126931157
+// LIFERAY-SERVICE-BUILDER-HASH:-1246813649

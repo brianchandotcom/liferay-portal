@@ -2538,20 +2538,6 @@ public interface MicroblogsEntryPersistence
 		long userId, Date createDate, int type, int socialRelationType);
 
 	/**
-	 * Caches the microblogs entry in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntry the microblogs entry
-	 */
-	public void cacheResult(MicroblogsEntry microblogsEntry);
-
-	/**
-	 * Caches the microblogs entries in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntries the microblogs entries
-	 */
-	public void cacheResult(java.util.List<MicroblogsEntry> microblogsEntries);
-
-	/**
 	 * Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
 	 *
 	 * @param microblogsEntryId the primary key for the new microblogs entry
@@ -2590,4 +2576,4 @@ public interface MicroblogsEntryPersistence
 	public MicroblogsEntry fetchByPrimaryKey(long microblogsEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292556882
+// LIFERAY-SERVICE-BUILDER-HASH:1531237910

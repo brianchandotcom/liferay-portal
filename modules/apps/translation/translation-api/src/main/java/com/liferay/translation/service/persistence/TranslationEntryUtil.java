@@ -36,6 +36,20 @@ public class TranslationEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TranslationEntry> translationEntries) {
+		getPersistence().cacheResult(translationEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TranslationEntry translationEntry) {
+		getPersistence().cacheResult(translationEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -635,24 +649,6 @@ public class TranslationEntryUtil {
 	}
 
 	/**
-	 * Caches the translation entry in the entity cache if it is enabled.
-	 *
-	 * @param translationEntry the translation entry
-	 */
-	public static void cacheResult(TranslationEntry translationEntry) {
-		getPersistence().cacheResult(translationEntry);
-	}
-
-	/**
-	 * Caches the translation entries in the entity cache if it is enabled.
-	 *
-	 * @param translationEntries the translation entries
-	 */
-	public static void cacheResult(List<TranslationEntry> translationEntries) {
-		getPersistence().cacheResult(translationEntries);
-	}
-
-	/**
 	 * Creates a new translation entry with the primary key. Does not add the translation entry to the database.
 	 *
 	 * @param translationEntryId the primary key for the new translation entry
@@ -715,4 +711,4 @@ public class TranslationEntryUtil {
 	private static volatile TranslationEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2093138512
+// LIFERAY-SERVICE-BUILDER-HASH:-1193546689

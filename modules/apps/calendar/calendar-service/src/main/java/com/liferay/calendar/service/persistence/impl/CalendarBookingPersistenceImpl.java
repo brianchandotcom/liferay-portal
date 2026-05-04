@@ -16,7 +16,6 @@ import com.liferay.calendar.service.persistence.CalendarBookingUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2287,127 +2284,6 @@ public class CalendarBookingPersistenceImpl
 	}
 
 	/**
-	 * Caches the calendar booking in the entity cache if it is enabled.
-	 *
-	 * @param calendarBooking the calendar booking
-	 */
-	@Override
-	public void cacheResult(CalendarBooking calendarBooking) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarBooking.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CalendarBookingImpl.class, calendarBooking.getPrimaryKey(),
-				calendarBooking);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					calendarBooking.getUuid(), calendarBooking.getGroupId()
-				},
-				calendarBooking);
-
-			finderCache.putResult(
-				_finderPathFetchByC_P,
-				new Object[] {
-					calendarBooking.getCalendarId(),
-					calendarBooking.getParentCalendarBookingId()
-				},
-				calendarBooking);
-
-			finderCache.putResult(
-				_finderPathFetchByC_V,
-				new Object[] {
-					calendarBooking.getCalendarId(),
-					calendarBooking.getVEventUid()
-				},
-				calendarBooking);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					calendarBooking.getExternalReferenceCode(),
-					calendarBooking.getGroupId()
-				},
-				calendarBooking);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the calendar bookings in the entity cache if it is enabled.
-	 *
-	 * @param calendarBookings the calendar bookings
-	 */
-	@Override
-	public void cacheResult(List<CalendarBooking> calendarBookings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (calendarBookings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CalendarBooking calendarBooking : calendarBookings) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						calendarBooking.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CalendarBookingImpl.class,
-						calendarBooking.getPrimaryKey()) == null) {
-
-					cacheResult(calendarBooking);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CalendarBookingModelImpl calendarBookingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarBookingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				calendarBookingModelImpl.getUuid(),
-				calendarBookingModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, calendarBookingModelImpl);
-
-			args = new Object[] {
-				calendarBookingModelImpl.getCalendarId(),
-				calendarBookingModelImpl.getParentCalendarBookingId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_P, args, calendarBookingModelImpl);
-
-			args = new Object[] {
-				calendarBookingModelImpl.getCalendarId(),
-				calendarBookingModelImpl.getVEventUid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_V, args, calendarBookingModelImpl);
-
-			args = new Object[] {
-				calendarBookingModelImpl.getExternalReferenceCode(),
-				calendarBookingModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, calendarBookingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new calendar booking with the primary key. Does not add the calendar booking to the database.
 	 *
 	 * @param calendarBookingId the primary key for the new calendar booking
@@ -2620,10 +2496,7 @@ public class CalendarBookingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CalendarBookingImpl.class, calendarBookingModelImpl, false, true);
-
-		cacheUniqueFindersCache(calendarBookingModelImpl);
+		cacheUniqueFindersResult(calendarBooking, false);
 
 		if (isNew) {
 			calendarBooking.setNew(false);
@@ -2785,9 +2658,6 @@ public class CalendarBookingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2815,10 +2685,11 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CalendarBooking::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CalendarBooking::getUuid,
+			CalendarBooking::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
@@ -2993,10 +2864,12 @@ public class CalendarBookingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarBooking::getRecurringCalendarBookingId));
 
-		_finderPathFetchByC_P = new FinderPath(
+		_finderPathFetchByC_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"calendarId", "parentCalendarBookingId"}, true);
+			new String[] {"calendarId", "parentCalendarBookingId"}, false,
+			CalendarBooking::getCalendarId,
+			CalendarBooking::getParentCalendarBookingId);
 
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_P, _SQL_SELECT_CALENDARBOOKING_WHERE,
@@ -3008,10 +2881,11 @@ public class CalendarBookingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CalendarBooking::getParentCalendarBookingId));
 
-		_finderPathFetchByC_V = new FinderPath(
+		_finderPathFetchByC_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"calendarId", "vEventUid"}, true);
+			new String[] {"calendarId", "vEventUid"}, false,
+			CalendarBooking::getCalendarId, CalendarBooking::getVEventUid);
 
 		_uniquePersistenceFinderByC_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_V, _SQL_SELECT_CALENDARBOOKING_WHERE,
@@ -3078,10 +2952,12 @@ public class CalendarBookingPersistenceImpl
 				"calendarBooking.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CalendarBooking::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			CalendarBooking::getExternalReferenceCode,
+			CalendarBooking::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
@@ -3165,4 +3041,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400653252
+// LIFERAY-SERVICE-BUILDER-HASH:-1486262000

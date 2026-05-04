@@ -3174,21 +3174,6 @@ public interface FragmentEntryVersionPersistence
 		int version);
 
 	/**
-	 * Caches the fragment entry version in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersion the fragment entry version
-	 */
-	public void cacheResult(FragmentEntryVersion fragmentEntryVersion);
-
-	/**
-	 * Caches the fragment entry versions in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersions the fragment entry versions
-	 */
-	public void cacheResult(
-		java.util.List<FragmentEntryVersion> fragmentEntryVersions);
-
-	/**
 	 * Creates a new fragment entry version with the primary key. Does not add the fragment entry version to the database.
 	 *
 	 * @param fragmentEntryVersionId the primary key for the new fragment entry version
@@ -3228,4 +3213,4 @@ public interface FragmentEntryVersionPersistence
 	public FragmentEntryVersion fetchByPrimaryKey(long fragmentEntryVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1341005270
+// LIFERAY-SERVICE-BUILDER-HASH:-24368558

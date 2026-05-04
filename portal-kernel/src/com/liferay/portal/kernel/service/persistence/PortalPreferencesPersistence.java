@@ -184,21 +184,6 @@ public interface PortalPreferencesPersistence
 	public int countByO_O(long ownerId, int ownerType);
 
 	/**
-	 * Caches the portal preferences in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferences the portal preferences
-	 */
-	public void cacheResult(PortalPreferences portalPreferences);
-
-	/**
-	 * Caches the portal preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceses the portal preferenceses
-	 */
-	public void cacheResult(
-		java.util.List<PortalPreferences> portalPreferenceses);
-
-	/**
 	 * Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
 	 *
 	 * @param portalPreferencesId the primary key for the new portal preferences
@@ -237,4 +222,4 @@ public interface PortalPreferencesPersistence
 	public PortalPreferences fetchByPrimaryKey(long portalPreferencesId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-270371545
+// LIFERAY-SERVICE-BUILDER-HASH:1822190613

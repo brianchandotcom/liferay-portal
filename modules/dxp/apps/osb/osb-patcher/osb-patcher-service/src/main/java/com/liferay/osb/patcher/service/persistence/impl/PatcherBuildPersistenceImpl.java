@@ -39,11 +39,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -6741,60 +6738,6 @@ public class PatcherBuildPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher build in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuild the patcher build
-	 */
-	@Override
-	public void cacheResult(PatcherBuild patcherBuild) {
-		entityCache.putResult(
-			PatcherBuildImpl.class, patcherBuild.getPrimaryKey(), patcherBuild);
-
-		finderCache.putResult(
-			_finderPathFetchByK_KV,
-			new Object[] {patcherBuild.getKey(), patcherBuild.getKeyVersion()},
-			patcherBuild);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher builds in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuilds the patcher builds
-	 */
-	@Override
-	public void cacheResult(List<PatcherBuild> patcherBuilds) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherBuilds.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherBuild patcherBuild : patcherBuilds) {
-			if (entityCache.getResult(
-					PatcherBuildImpl.class, patcherBuild.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(patcherBuild);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherBuildModelImpl patcherBuildModelImpl) {
-
-		Object[] args = new Object[] {
-			patcherBuildModelImpl.getKey(),
-			patcherBuildModelImpl.getKeyVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByK_KV, args, patcherBuildModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher build with the primary key. Does not add the patcher build to the database.
 	 *
 	 * @param patcherBuildId the primary key for the new patcher build
@@ -6929,10 +6872,7 @@ public class PatcherBuildPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherBuildImpl.class, patcherBuildModelImpl, false, true);
-
-		cacheUniqueFindersCache(patcherBuildModelImpl);
+		cacheUniqueFindersResult(patcherBuild, false);
 
 		if (isNew) {
 			patcherBuild.setNew(false);
@@ -7647,9 +7587,6 @@ public class PatcherBuildPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		patcherBuildToPatcherAccountTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OSBPatcher_PAccounts_PBuilds#patcherBuildId",
@@ -7814,10 +7751,11 @@ public class PatcherBuildPersistenceImpl
 				"patcherBuild.", "childBuild", FinderColumn.Type.BOOLEAN, "=",
 				true, true, PatcherBuild::isChildBuild));
 
-		_finderPathFetchByK_KV = new FinderPath(
+		_finderPathFetchByK_KV = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByK_KV",
 			new String[] {String.class.getName(), Double.class.getName()},
-			new String[] {"key_", "keyVersion"}, true);
+			new String[] {"key_", "keyVersion"}, false, PatcherBuild::getKey,
+			PatcherBuild::getKeyVersion);
 
 		_uniquePersistenceFinderByK_KV = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByK_KV, _SQL_SELECT_PATCHERBUILD_WHERE,
@@ -8233,4 +8171,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-76113475
+// LIFERAY-SERVICE-BUILDER-HASH:1502184848

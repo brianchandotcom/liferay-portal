@@ -1530,21 +1530,6 @@ public interface ResourcePermissionPersistence
 		boolean viewActionId);
 
 	/**
-	 * Caches the resource permission in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermission the resource permission
-	 */
-	public void cacheResult(ResourcePermission resourcePermission);
-
-	/**
-	 * Caches the resource permissions in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermissions the resource permissions
-	 */
-	public void cacheResult(
-		java.util.List<ResourcePermission> resourcePermissions);
-
-	/**
 	 * Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	 *
 	 * @param resourcePermissionId the primary key for the new resource permission
@@ -1583,4 +1568,4 @@ public interface ResourcePermissionPersistence
 	public ResourcePermission fetchByPrimaryKey(long resourcePermissionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400419875
+// LIFERAY-SERVICE-BUILDER-HASH:454171011

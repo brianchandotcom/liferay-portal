@@ -2943,21 +2943,6 @@ public interface FragmentEntryLinkPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the fragment entry link in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLink the fragment entry link
-	 */
-	public void cacheResult(FragmentEntryLink fragmentEntryLink);
-
-	/**
-	 * Caches the fragment entry links in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLinks the fragment entry links
-	 */
-	public void cacheResult(
-		java.util.List<FragmentEntryLink> fragmentEntryLinks);
-
-	/**
 	 * Creates a new fragment entry link with the primary key. Does not add the fragment entry link to the database.
 	 *
 	 * @param fragmentEntryLinkId the primary key for the new fragment entry link
@@ -2996,4 +2981,4 @@ public interface FragmentEntryLinkPersistence
 	public FragmentEntryLink fetchByPrimaryKey(long fragmentEntryLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1603854963
+// LIFERAY-SERVICE-BUILDER-HASH:-1798903477

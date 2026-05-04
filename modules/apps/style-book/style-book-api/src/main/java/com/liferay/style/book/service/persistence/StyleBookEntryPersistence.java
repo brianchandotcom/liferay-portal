@@ -2429,20 +2429,6 @@ public interface StyleBookEntryPersistence
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the style book entry in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntry the style book entry
-	 */
-	public void cacheResult(StyleBookEntry styleBookEntry);
-
-	/**
-	 * Caches the style book entries in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntries the style book entries
-	 */
-	public void cacheResult(java.util.List<StyleBookEntry> styleBookEntries);
-
-	/**
 	 * Creates a new style book entry with the primary key. Does not add the style book entry to the database.
 	 *
 	 * @param styleBookEntryId the primary key for the new style book entry
@@ -2481,4 +2467,4 @@ public interface StyleBookEntryPersistence
 	public StyleBookEntry fetchByPrimaryKey(long styleBookEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-326766679
+// LIFERAY-SERVICE-BUILDER-HASH:-1560253981

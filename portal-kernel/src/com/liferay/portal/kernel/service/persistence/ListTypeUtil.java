@@ -36,6 +36,20 @@ public class ListTypeUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ListType> listTypes) {
+		getPersistence().cacheResult(listTypes);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ListType listType) {
+		getPersistence().cacheResult(listType);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -678,24 +692,6 @@ public class ListTypeUtil {
 	}
 
 	/**
-	 * Caches the list type in the entity cache if it is enabled.
-	 *
-	 * @param listType the list type
-	 */
-	public static void cacheResult(ListType listType) {
-		getPersistence().cacheResult(listType);
-	}
-
-	/**
-	 * Caches the list types in the entity cache if it is enabled.
-	 *
-	 * @param listTypes the list types
-	 */
-	public static void cacheResult(List<ListType> listTypes) {
-		getPersistence().cacheResult(listTypes);
-	}
-
-	/**
 	 * Creates a new list type with the primary key. Does not add the list type to the database.
 	 *
 	 * @param listTypeId the primary key for the new list type
@@ -756,4 +752,4 @@ public class ListTypeUtil {
 	private static volatile ListTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1083423894
+// LIFERAY-SERVICE-BUILDER-HASH:-2119434278

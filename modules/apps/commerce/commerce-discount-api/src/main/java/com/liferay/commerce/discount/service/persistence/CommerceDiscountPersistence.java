@@ -1307,20 +1307,6 @@ public interface CommerceDiscountPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce discount in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscount the commerce discount
-	 */
-	public void cacheResult(CommerceDiscount commerceDiscount);
-
-	/**
-	 * Caches the commerce discounts in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscounts the commerce discounts
-	 */
-	public void cacheResult(java.util.List<CommerceDiscount> commerceDiscounts);
-
-	/**
 	 * Creates a new commerce discount with the primary key. Does not add the commerce discount to the database.
 	 *
 	 * @param commerceDiscountId the primary key for the new commerce discount
@@ -1359,4 +1345,4 @@ public interface CommerceDiscountPersistence
 	public CommerceDiscount fetchByPrimaryKey(long commerceDiscountId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1716837141
+// LIFERAY-SERVICE-BUILDER-HASH:1694550543

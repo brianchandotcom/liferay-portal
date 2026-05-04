@@ -36,6 +36,20 @@ public class LVEntryVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LVEntryVersion> lvEntryVersions) {
+		getPersistence().cacheResult(lvEntryVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LVEntryVersion lvEntryVersion) {
+		getPersistence().cacheResult(lvEntryVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1521,24 +1535,6 @@ public class LVEntryVersionUtil {
 	}
 
 	/**
-	 * Caches the lv entry version in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersion the lv entry version
-	 */
-	public static void cacheResult(LVEntryVersion lvEntryVersion) {
-		getPersistence().cacheResult(lvEntryVersion);
-	}
-
-	/**
-	 * Caches the lv entry versions in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersions the lv entry versions
-	 */
-	public static void cacheResult(List<LVEntryVersion> lvEntryVersions) {
-		getPersistence().cacheResult(lvEntryVersions);
-	}
-
-	/**
 	 * Creates a new lv entry version with the primary key. Does not add the lv entry version to the database.
 	 *
 	 * @param lvEntryVersionId the primary key for the new lv entry version
@@ -1843,4 +1839,4 @@ public class LVEntryVersionUtil {
 	private static volatile LVEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-825721580
+// LIFERAY-SERVICE-BUILDER-HASH:1666527470

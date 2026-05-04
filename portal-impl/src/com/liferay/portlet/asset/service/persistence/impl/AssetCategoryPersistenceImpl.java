@@ -13,7 +13,6 @@ import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5696,111 +5693,6 @@ public class AssetCategoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset category in the entity cache if it is enabled.
-	 *
-	 * @param assetCategory the asset category
-	 */
-	@Override
-	public void cacheResult(AssetCategory assetCategory) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetCategory.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AssetCategoryImpl.class, assetCategory.getPrimaryKey(),
-				assetCategory);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetCategory.getUuid(), assetCategory.getGroupId()
-				},
-				assetCategory);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_N_V,
-				new Object[] {
-					assetCategory.getParentCategoryId(),
-					assetCategory.getName(), assetCategory.getVocabularyId()
-				},
-				assetCategory);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					assetCategory.getExternalReferenceCode(),
-					assetCategory.getGroupId()
-				},
-				assetCategory);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset categories in the entity cache if it is enabled.
-	 *
-	 * @param assetCategories the asset categories
-	 */
-	@Override
-	public void cacheResult(List<AssetCategory> assetCategories) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetCategories.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetCategory assetCategory : assetCategories) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetCategory.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AssetCategoryImpl.class,
-						assetCategory.getPrimaryKey()) == null) {
-
-					cacheResult(assetCategory);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetCategoryModelImpl assetCategoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetCategoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetCategoryModelImpl.getUuid(),
-				assetCategoryModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, assetCategoryModelImpl);
-
-			args = new Object[] {
-				assetCategoryModelImpl.getParentCategoryId(),
-				assetCategoryModelImpl.getName(),
-				assetCategoryModelImpl.getVocabularyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_N_V, args, assetCategoryModelImpl);
-
-			args = new Object[] {
-				assetCategoryModelImpl.getExternalReferenceCode(),
-				assetCategoryModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, assetCategoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset category with the primary key. Does not add the asset category to the database.
 	 *
 	 * @param categoryId the primary key for the new asset category
@@ -6010,10 +5902,7 @@ public class AssetCategoryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AssetCategoryImpl.class, assetCategoryModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetCategoryModelImpl);
+		cacheUniqueFindersResult(assetCategory, false);
 
 		if (isNew) {
 			assetCategory.setNew(false);
@@ -6158,9 +6047,6 @@ public class AssetCategoryPersistenceImpl
 	 * Initializes the asset category persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6188,10 +6074,11 @@ public class AssetCategoryPersistenceImpl
 				"assetCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetCategory::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, AssetCategory::getUuid,
+			AssetCategory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETCATEGORY_WHERE,
@@ -6560,13 +6447,15 @@ public class AssetCategoryPersistenceImpl
 			},
 			new String[] {"groupId", "name", "vocabularyId"}, false);
 
-		_finderPathFetchByP_N_V = new FinderPath(
+		_finderPathFetchByP_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_N_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"parentCategoryId", "name", "vocabularyId"}, true);
+			new String[] {"parentCategoryId", "name", "vocabularyId"}, false,
+			AssetCategory::getParentCategoryId, AssetCategory::getName,
+			AssetCategory::getVocabularyId);
 
 		_uniquePersistenceFinderByP_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByP_N_V, _SQL_SELECT_ASSETCATEGORY_WHERE,
@@ -6580,10 +6469,11 @@ public class AssetCategoryPersistenceImpl
 				"assetCategory.", "vocabularyId", FinderColumn.Type.LONG, "=",
 				true, true, AssetCategory::getVocabularyId));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			AssetCategory::getExternalReferenceCode, AssetCategory::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETCATEGORY_WHERE,
@@ -6654,4 +6544,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-436684334
+// LIFERAY-SERVICE-BUILDER-HASH:-955986794

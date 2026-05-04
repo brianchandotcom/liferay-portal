@@ -1385,20 +1385,6 @@ public interface DispatchTriggerPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the dispatch trigger in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTrigger the dispatch trigger
-	 */
-	public void cacheResult(DispatchTrigger dispatchTrigger);
-
-	/**
-	 * Caches the dispatch triggers in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTriggers the dispatch triggers
-	 */
-	public void cacheResult(java.util.List<DispatchTrigger> dispatchTriggers);
-
-	/**
 	 * Creates a new dispatch trigger with the primary key. Does not add the dispatch trigger to the database.
 	 *
 	 * @param dispatchTriggerId the primary key for the new dispatch trigger
@@ -1437,4 +1423,4 @@ public interface DispatchTriggerPersistence
 	public DispatchTrigger fetchByPrimaryKey(long dispatchTriggerId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-525645158
+// LIFERAY-SERVICE-BUILDER-HASH:1739769370

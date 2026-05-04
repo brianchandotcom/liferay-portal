@@ -36,6 +36,20 @@ public class TicketUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Ticket> tickets) {
+		getPersistence().cacheResult(tickets);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Ticket ticket) {
+		getPersistence().cacheResult(ticket);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -610,24 +624,6 @@ public class TicketUtil {
 	}
 
 	/**
-	 * Caches the ticket in the entity cache if it is enabled.
-	 *
-	 * @param ticket the ticket
-	 */
-	public static void cacheResult(Ticket ticket) {
-		getPersistence().cacheResult(ticket);
-	}
-
-	/**
-	 * Caches the tickets in the entity cache if it is enabled.
-	 *
-	 * @param tickets the tickets
-	 */
-	public static void cacheResult(List<Ticket> tickets) {
-		getPersistence().cacheResult(tickets);
-	}
-
-	/**
 	 * Creates a new ticket with the primary key. Does not add the ticket to the database.
 	 *
 	 * @param ticketId the primary key for the new ticket
@@ -688,4 +684,4 @@ public class TicketUtil {
 	private static volatile TicketPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1387766158
+// LIFERAY-SERVICE-BUILDER-HASH:709452262

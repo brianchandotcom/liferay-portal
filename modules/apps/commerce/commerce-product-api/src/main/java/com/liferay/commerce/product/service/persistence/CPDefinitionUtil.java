@@ -37,6 +37,20 @@ public class CPDefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPDefinition> cpDefinitions) {
+		getPersistence().cacheResult(cpDefinitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPDefinition cpDefinition) {
+		getPersistence().cacheResult(cpDefinition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1707,24 +1721,6 @@ public class CPDefinitionUtil {
 	}
 
 	/**
-	 * Caches the cp definition in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinition the cp definition
-	 */
-	public static void cacheResult(CPDefinition cpDefinition) {
-		getPersistence().cacheResult(cpDefinition);
-	}
-
-	/**
-	 * Caches the cp definitions in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitions the cp definitions
-	 */
-	public static void cacheResult(List<CPDefinition> cpDefinitions) {
-		getPersistence().cacheResult(cpDefinitions);
-	}
-
-	/**
 	 * Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	 *
 	 * @param CPDefinitionId the primary key for the new cp definition
@@ -1787,4 +1783,4 @@ public class CPDefinitionUtil {
 	private static volatile CPDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405595372
+// LIFERAY-SERVICE-BUILDER-HASH:648562196

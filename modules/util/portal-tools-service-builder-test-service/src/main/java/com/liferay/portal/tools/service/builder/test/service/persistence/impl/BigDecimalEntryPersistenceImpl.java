@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -539,45 +536,6 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the big decimal entry in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntry the big decimal entry
-	 */
-	@Override
-	public void cacheResult(BigDecimalEntry bigDecimalEntry) {
-		entityCache.putResult(
-			BigDecimalEntryImpl.class, bigDecimalEntry.getPrimaryKey(),
-			bigDecimalEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the big decimal entries in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntries the big decimal entries
-	 */
-	@Override
-	public void cacheResult(List<BigDecimalEntry> bigDecimalEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (bigDecimalEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BigDecimalEntry bigDecimalEntry : bigDecimalEntries) {
-			if (entityCache.getResult(
-					BigDecimalEntryImpl.class,
-					bigDecimalEntry.getPrimaryKey()) == null) {
-
-				cacheResult(bigDecimalEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new big decimal entry with the primary key. Does not add the big decimal entry to the database.
 	 *
 	 * @param bigDecimalEntryId the primary key for the new big decimal entry
@@ -687,8 +645,7 @@ public class BigDecimalEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BigDecimalEntryImpl.class, bigDecimalEntryModelImpl, false, true);
+		cacheUniqueFindersResult(bigDecimalEntry, false);
 
 		if (isNew) {
 			bigDecimalEntry.setNew(false);
@@ -1091,9 +1048,6 @@ public class BigDecimalEntryPersistenceImpl
 	 * Initializes the big decimal entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		bigDecimalEntryToLVEntryTableMapper = TableMapperFactory.getTableMapper(
 			"BigDecimalEntries_LVEntries", "companyId", "bigDecimalEntryId",
 			"lvEntryId", this, lvEntryPersistence);
@@ -1228,4 +1182,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1108289372
+// LIFERAY-SERVICE-BUILDER-HASH:1106155441

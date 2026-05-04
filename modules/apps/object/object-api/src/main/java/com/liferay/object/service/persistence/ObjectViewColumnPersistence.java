@@ -460,20 +460,6 @@ public interface ObjectViewColumnPersistence
 	public int countByOVI_OFN(long objectViewId, String objectFieldName);
 
 	/**
-	 * Caches the object view column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumn the object view column
-	 */
-	public void cacheResult(ObjectViewColumn objectViewColumn);
-
-	/**
-	 * Caches the object view columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumns the object view columns
-	 */
-	public void cacheResult(java.util.List<ObjectViewColumn> objectViewColumns);
-
-	/**
 	 * Creates a new object view column with the primary key. Does not add the object view column to the database.
 	 *
 	 * @param objectViewColumnId the primary key for the new object view column
@@ -512,4 +498,4 @@ public interface ObjectViewColumnPersistence
 	public ObjectViewColumn fetchByPrimaryKey(long objectViewColumnId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-629076837
+// LIFERAY-SERVICE-BUILDER-HASH:-1136566247

@@ -36,6 +36,24 @@ public class CTermEntryLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CTermEntryLocalization> cTermEntryLocalizations) {
+
+		getPersistence().cacheResult(cTermEntryLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CTermEntryLocalization cTermEntryLocalization) {
+
+		getPersistence().cacheResult(cTermEntryLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -319,28 +337,6 @@ public class CTermEntryLocalizationUtil {
 	}
 
 	/**
-	 * Caches the c term entry localization in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalization the c term entry localization
-	 */
-	public static void cacheResult(
-		CTermEntryLocalization cTermEntryLocalization) {
-
-		getPersistence().cacheResult(cTermEntryLocalization);
-	}
-
-	/**
-	 * Caches the c term entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalizations the c term entry localizations
-	 */
-	public static void cacheResult(
-		List<CTermEntryLocalization> cTermEntryLocalizations) {
-
-		getPersistence().cacheResult(cTermEntryLocalizations);
-	}
-
-	/**
 	 * Creates a new c term entry localization with the primary key. Does not add the c term entry localization to the database.
 	 *
 	 * @param cTermEntryLocalizationId the primary key for the new c term entry localization
@@ -410,4 +406,4 @@ public class CTermEntryLocalizationUtil {
 	private static volatile CTermEntryLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:240910951
+// LIFERAY-SERVICE-BUILDER-HASH:1962150945

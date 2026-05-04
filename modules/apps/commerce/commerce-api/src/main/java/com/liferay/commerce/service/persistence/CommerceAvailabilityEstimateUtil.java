@@ -36,6 +36,24 @@ public class CommerceAvailabilityEstimateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates) {
+
+		getPersistence().cacheResult(commerceAvailabilityEstimates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
+
+		getPersistence().cacheResult(commerceAvailabilityEstimate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -685,28 +703,6 @@ public class CommerceAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Caches the commerce availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimate the commerce availability estimate
-	 */
-	public static void cacheResult(
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-		getPersistence().cacheResult(commerceAvailabilityEstimate);
-	}
-
-	/**
-	 * Caches the commerce availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimates the commerce availability estimates
-	 */
-	public static void cacheResult(
-		List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates) {
-
-		getPersistence().cacheResult(commerceAvailabilityEstimates);
-	}
-
-	/**
 	 * Creates a new commerce availability estimate with the primary key. Does not add the commerce availability estimate to the database.
 	 *
 	 * @param commerceAvailabilityEstimateId the primary key for the new commerce availability estimate
@@ -782,4 +778,4 @@ public class CommerceAvailabilityEstimateUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-909238633
+// LIFERAY-SERVICE-BUILDER-HASH:1865170389

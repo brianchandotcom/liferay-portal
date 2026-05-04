@@ -15,7 +15,6 @@ import com.liferay.message.boards.service.persistence.MBThreadUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -7127,82 +7124,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Caches the message boards thread in the entity cache if it is enabled.
-	 *
-	 * @param mbThread the message boards thread
-	 */
-	@Override
-	public void cacheResult(MBThread mbThread) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbThread.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBThreadImpl.class, mbThread.getPrimaryKey(), mbThread);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {mbThread.getUuid(), mbThread.getGroupId()},
-				mbThread);
-
-			finderCache.putResult(
-				_finderPathFetchByRootMessageId,
-				new Object[] {mbThread.getRootMessageId()}, mbThread);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message boards threads in the entity cache if it is enabled.
-	 *
-	 * @param mbThreads the message boards threads
-	 */
-	@Override
-	public void cacheResult(List<MBThread> mbThreads) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbThreads.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBThread mbThread : mbThreads) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbThread.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBThreadImpl.class, mbThread.getPrimaryKey()) == null) {
-
-					cacheResult(mbThread);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MBThreadModelImpl mbThreadModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbThreadModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbThreadModelImpl.getUuid(), mbThreadModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbThreadModelImpl);
-
-			args = new Object[] {mbThreadModelImpl.getRootMessageId()};
-
-			finderCache.putResult(
-				_finderPathFetchByRootMessageId, args, mbThreadModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
 	 *
 	 * @param threadId the primary key for the new message boards thread
@@ -7366,10 +7287,7 @@ public class MBThreadPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MBThreadImpl.class, mbThreadModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbThreadModelImpl);
+		cacheUniqueFindersResult(mbThread, false);
 
 		if (isNew) {
 			mbThread.setNew(false);
@@ -7513,9 +7431,6 @@ public class MBThreadPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -7543,10 +7458,11 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBThread::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBThread::getUuid,
+			MBThread::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBTHREAD_WHERE,
@@ -7608,10 +7524,10 @@ public class MBThreadPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathFetchByRootMessageId = new FinderPath(
+		_finderPathFetchByRootMessageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRootMessageId",
 			new String[] {Long.class.getName()}, new String[] {"rootMessageId"},
-			true);
+			false, MBThread::getRootMessageId);
 
 		_uniquePersistenceFinderByRootMessageId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByRootMessageId, _SQL_SELECT_MBTHREAD_WHERE,
@@ -7996,4 +7912,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1217691828
+// LIFERAY-SERVICE-BUILDER-HASH:1774862137

@@ -815,4 +815,4 @@ public class PermissionCheckFinderEntryModelImpl
 	private PermissionCheckFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-498131033
+// LIFERAY-SERVICE-BUILDER-HASH:650458417

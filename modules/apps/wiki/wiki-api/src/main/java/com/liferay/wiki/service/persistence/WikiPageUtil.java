@@ -36,6 +36,20 @@ public class WikiPageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<WikiPage> wikiPages) {
+		getPersistence().cacheResult(wikiPages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WikiPage wikiPage) {
+		getPersistence().cacheResult(wikiPage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -5551,24 +5565,6 @@ public class WikiPageUtil {
 	}
 
 	/**
-	 * Caches the wiki page in the entity cache if it is enabled.
-	 *
-	 * @param wikiPage the wiki page
-	 */
-	public static void cacheResult(WikiPage wikiPage) {
-		getPersistence().cacheResult(wikiPage);
-	}
-
-	/**
-	 * Caches the wiki pages in the entity cache if it is enabled.
-	 *
-	 * @param wikiPages the wiki pages
-	 */
-	public static void cacheResult(List<WikiPage> wikiPages) {
-		getPersistence().cacheResult(wikiPages);
-	}
-
-	/**
 	 * Creates a new wiki page with the primary key. Does not add the wiki page to the database.
 	 *
 	 * @param pageId the primary key for the new wiki page
@@ -5629,4 +5625,4 @@ public class WikiPageUtil {
 	private static volatile WikiPagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:436221825
+// LIFERAY-SERVICE-BUILDER-HASH:-621900311

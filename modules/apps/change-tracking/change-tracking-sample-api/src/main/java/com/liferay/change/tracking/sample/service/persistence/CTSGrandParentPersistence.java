@@ -135,20 +135,6 @@ public interface CTSGrandParentPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the cts grand parent in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParent the cts grand parent
-	 */
-	public void cacheResult(CTSGrandParent ctsGrandParent);
-
-	/**
-	 * Caches the cts grand parents in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParents the cts grand parents
-	 */
-	public void cacheResult(java.util.List<CTSGrandParent> ctsGrandParents);
-
-	/**
 	 * Creates a new cts grand parent with the primary key. Does not add the cts grand parent to the database.
 	 *
 	 * @param ctsGrandParentId the primary key for the new cts grand parent
@@ -187,4 +173,4 @@ public interface CTSGrandParentPersistence
 	public CTSGrandParent fetchByPrimaryKey(long ctsGrandParentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1262034559
+// LIFERAY-SERVICE-BUILDER-HASH:894361745

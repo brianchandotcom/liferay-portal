@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPOptionUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1440,88 +1437,6 @@ public class CPOptionPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp option in the entity cache if it is enabled.
-	 *
-	 * @param cpOption the cp option
-	 */
-	@Override
-	public void cacheResult(CPOption cpOption) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpOption.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPOptionImpl.class, cpOption.getPrimaryKey(), cpOption);
-
-			finderCache.putResult(
-				_finderPathFetchByC_K,
-				new Object[] {cpOption.getCompanyId(), cpOption.getKey()},
-				cpOption);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpOption.getExternalReferenceCode(), cpOption.getCompanyId()
-				},
-				cpOption);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp options in the entity cache if it is enabled.
-	 *
-	 * @param cpOptions the cp options
-	 */
-	@Override
-	public void cacheResult(List<CPOption> cpOptions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpOptions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPOption cpOption : cpOptions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpOption.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPOptionImpl.class, cpOption.getPrimaryKey()) == null) {
-
-					cacheResult(cpOption);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPOptionModelImpl cpOptionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpOptionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpOptionModelImpl.getCompanyId(), cpOptionModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_K, args, cpOptionModelImpl);
-
-			args = new Object[] {
-				cpOptionModelImpl.getExternalReferenceCode(),
-				cpOptionModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpOptionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp option with the primary key. Does not add the cp option to the database.
 	 *
 	 * @param CPOptionId the primary key for the new cp option
@@ -1720,10 +1635,7 @@ public class CPOptionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPOptionImpl.class, cpOptionModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpOptionModelImpl);
+		cacheUniqueFindersResult(cpOption, false);
 
 		if (isNew) {
 			cpOption.setNew(false);
@@ -1865,9 +1777,6 @@ public class CPOptionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1957,10 +1866,11 @@ public class CPOptionPersistenceImpl
 					"cpOption.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CPOption::getCompanyId));
 
-		_finderPathFetchByC_K = new FinderPath(
+		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, true);
+			new String[] {"companyId", "key_"}, false, CPOption::getCompanyId,
+			CPOption::getKey);
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K, _SQL_SELECT_CPOPTION_WHERE,
@@ -1971,10 +1881,11 @@ public class CPOptionPersistenceImpl
 				"cpOption.", "key", FinderColumn.Type.STRING, "=", true, true,
 				CPOption::getKey));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPOption::getExternalReferenceCode, CPOption::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPOPTION_WHERE,
@@ -2080,4 +1991,4 @@ public class CPOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-217444582
+// LIFERAY-SERVICE-BUILDER-HASH:-257447803

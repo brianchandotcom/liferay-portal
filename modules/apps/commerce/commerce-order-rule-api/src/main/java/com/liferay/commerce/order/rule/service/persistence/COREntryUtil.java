@@ -37,6 +37,20 @@ public class COREntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<COREntry> corEntries) {
+		getPersistence().cacheResult(corEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(COREntry corEntry) {
+		getPersistence().cacheResult(corEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1564,24 +1578,6 @@ public class COREntryUtil {
 	}
 
 	/**
-	 * Caches the cor entry in the entity cache if it is enabled.
-	 *
-	 * @param corEntry the cor entry
-	 */
-	public static void cacheResult(COREntry corEntry) {
-		getPersistence().cacheResult(corEntry);
-	}
-
-	/**
-	 * Caches the cor entries in the entity cache if it is enabled.
-	 *
-	 * @param corEntries the cor entries
-	 */
-	public static void cacheResult(List<COREntry> corEntries) {
-		getPersistence().cacheResult(corEntries);
-	}
-
-	/**
 	 * Creates a new cor entry with the primary key. Does not add the cor entry to the database.
 	 *
 	 * @param COREntryId the primary key for the new cor entry
@@ -1644,4 +1640,4 @@ public class COREntryUtil {
 	private static volatile COREntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1166286364
+// LIFERAY-SERVICE-BUILDER-HASH:2111334623

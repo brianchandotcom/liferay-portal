@@ -992,20 +992,6 @@ public interface AssetTagPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the asset tag in the entity cache if it is enabled.
-	 *
-	 * @param assetTag the asset tag
-	 */
-	public void cacheResult(AssetTag assetTag);
-
-	/**
-	 * Caches the asset tags in the entity cache if it is enabled.
-	 *
-	 * @param assetTags the asset tags
-	 */
-	public void cacheResult(java.util.List<AssetTag> assetTags);
-
-	/**
 	 * Creates a new asset tag with the primary key. Does not add the asset tag to the database.
 	 *
 	 * @param tagId the primary key for the new asset tag
@@ -1217,4 +1203,4 @@ public interface AssetTagPersistence
 		java.util.List<com.liferay.asset.kernel.model.AssetEntry> assetEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549436908
+// LIFERAY-SERVICE-BUILDER-HASH:-787714238

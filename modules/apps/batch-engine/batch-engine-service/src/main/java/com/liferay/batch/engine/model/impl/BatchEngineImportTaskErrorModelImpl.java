@@ -893,4 +893,4 @@ public class BatchEngineImportTaskErrorModelImpl
 	private BatchEngineImportTaskError _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-585903119
+// LIFERAY-SERVICE-BUILDER-HASH:-960726013

@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -267,53 +264,6 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Caches the notification queue entry attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachment the notification queue entry attachment
-	 */
-	@Override
-	public void cacheResult(
-		NotificationQueueEntryAttachment notificationQueueEntryAttachment) {
-
-		entityCache.putResult(
-			NotificationQueueEntryAttachmentImpl.class,
-			notificationQueueEntryAttachment.getPrimaryKey(),
-			notificationQueueEntryAttachment);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the notification queue entry attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachments the notification queue entry attachments
-	 */
-	@Override
-	public void cacheResult(
-		List<NotificationQueueEntryAttachment>
-			notificationQueueEntryAttachments) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (notificationQueueEntryAttachments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NotificationQueueEntryAttachment notificationQueueEntryAttachment :
-				notificationQueueEntryAttachments) {
-
-			if (entityCache.getResult(
-					NotificationQueueEntryAttachmentImpl.class,
-					notificationQueueEntryAttachment.getPrimaryKey()) == null) {
-
-				cacheResult(notificationQueueEntryAttachment);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new notification queue entry attachment with the primary key. Does not add the notification queue entry attachment to the database.
 	 *
 	 * @param notificationQueueEntryAttachmentId the primary key for the new notification queue entry attachment
@@ -438,9 +388,7 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NotificationQueueEntryAttachmentImpl.class,
-			notificationQueueEntryAttachmentModelImpl, false, true);
+		cacheUniqueFindersResult(notificationQueueEntryAttachment, false);
 
 		if (isNew) {
 			notificationQueueEntryAttachment.setNew(false);
@@ -511,9 +459,6 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByNotificationQueueEntryId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -625,4 +570,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:546712603
+// LIFERAY-SERVICE-BUILDER-HASH:-2103013506

@@ -602,20 +602,6 @@ public interface ObjectFolderPersistence extends BasePersistence<ObjectFolder> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the object folder in the entity cache if it is enabled.
-	 *
-	 * @param objectFolder the object folder
-	 */
-	public void cacheResult(ObjectFolder objectFolder);
-
-	/**
-	 * Caches the object folders in the entity cache if it is enabled.
-	 *
-	 * @param objectFolders the object folders
-	 */
-	public void cacheResult(java.util.List<ObjectFolder> objectFolders);
-
-	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
 	 * @param objectFolderId the primary key for the new object folder
@@ -654,4 +640,4 @@ public interface ObjectFolderPersistence extends BasePersistence<ObjectFolder> {
 	public ObjectFolder fetchByPrimaryKey(long objectFolderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:235275047
+// LIFERAY-SERVICE-BUILDER-HASH:1234147903

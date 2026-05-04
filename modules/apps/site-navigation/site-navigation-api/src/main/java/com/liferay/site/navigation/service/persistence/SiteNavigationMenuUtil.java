@@ -36,6 +36,22 @@ public class SiteNavigationMenuUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SiteNavigationMenu> siteNavigationMenus) {
+
+		getPersistence().cacheResult(siteNavigationMenus);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SiteNavigationMenu siteNavigationMenu) {
+		getPersistence().cacheResult(siteNavigationMenu);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1759,26 +1775,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Caches the site navigation menu in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenu the site navigation menu
-	 */
-	public static void cacheResult(SiteNavigationMenu siteNavigationMenu) {
-		getPersistence().cacheResult(siteNavigationMenu);
-	}
-
-	/**
-	 * Caches the site navigation menus in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenus the site navigation menus
-	 */
-	public static void cacheResult(
-		List<SiteNavigationMenu> siteNavigationMenus) {
-
-		getPersistence().cacheResult(siteNavigationMenus);
-	}
-
-	/**
 	 * Creates a new site navigation menu with the primary key. Does not add the site navigation menu to the database.
 	 *
 	 * @param siteNavigationMenuId the primary key for the new site navigation menu
@@ -1845,4 +1841,4 @@ public class SiteNavigationMenuUtil {
 	private static volatile SiteNavigationMenuPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1523418955
+// LIFERAY-SERVICE-BUILDER-HASH:2020767367

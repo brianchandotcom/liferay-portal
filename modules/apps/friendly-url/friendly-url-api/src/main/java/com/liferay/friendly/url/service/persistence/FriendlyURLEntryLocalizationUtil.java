@@ -36,6 +36,24 @@ public class FriendlyURLEntryLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations) {
+
+		getPersistence().cacheResult(friendlyURLEntryLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
+
+		getPersistence().cacheResult(friendlyURLEntryLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1055,28 +1073,6 @@ public class FriendlyURLEntryLocalizationUtil {
 	}
 
 	/**
-	 * Caches the friendly url entry localization in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalization the friendly url entry localization
-	 */
-	public static void cacheResult(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-
-		getPersistence().cacheResult(friendlyURLEntryLocalization);
-	}
-
-	/**
-	 * Caches the friendly url entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalizations the friendly url entry localizations
-	 */
-	public static void cacheResult(
-		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations) {
-
-		getPersistence().cacheResult(friendlyURLEntryLocalizations);
-	}
-
-	/**
 	 * Creates a new friendly url entry localization with the primary key. Does not add the friendly url entry localization to the database.
 	 *
 	 * @param friendlyURLEntryLocalizationId the primary key for the new friendly url entry localization
@@ -1152,4 +1148,4 @@ public class FriendlyURLEntryLocalizationUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:631744822
+// LIFERAY-SERVICE-BUILDER-HASH:1401790938

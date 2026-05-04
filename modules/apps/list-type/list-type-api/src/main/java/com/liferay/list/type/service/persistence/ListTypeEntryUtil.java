@@ -36,6 +36,20 @@ public class ListTypeEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ListTypeEntry> listTypeEntries) {
+		getPersistence().cacheResult(listTypeEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ListTypeEntry listTypeEntry) {
+		getPersistence().cacheResult(listTypeEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1084,24 +1098,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Caches the list type entry in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntry the list type entry
-	 */
-	public static void cacheResult(ListTypeEntry listTypeEntry) {
-		getPersistence().cacheResult(listTypeEntry);
-	}
-
-	/**
-	 * Caches the list type entries in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntries the list type entries
-	 */
-	public static void cacheResult(List<ListTypeEntry> listTypeEntries) {
-		getPersistence().cacheResult(listTypeEntries);
-	}
-
-	/**
 	 * Creates a new list type entry with the primary key. Does not add the list type entry to the database.
 	 *
 	 * @param listTypeEntryId the primary key for the new list type entry
@@ -1162,4 +1158,4 @@ public class ListTypeEntryUtil {
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:254035806
+// LIFERAY-SERVICE-BUILDER-HASH:198861881

@@ -880,20 +880,6 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the account entry in the entity cache if it is enabled.
-	 *
-	 * @param accountEntry the account entry
-	 */
-	public void cacheResult(AccountEntry accountEntry);
-
-	/**
-	 * Caches the account entries in the entity cache if it is enabled.
-	 *
-	 * @param accountEntries the account entries
-	 */
-	public void cacheResult(java.util.List<AccountEntry> accountEntries);
-
-	/**
 	 * Creates a new account entry with the primary key. Does not add the account entry to the database.
 	 *
 	 * @param accountEntryId the primary key for the new account entry
@@ -931,4 +917,4 @@ public interface AccountEntryPersistence extends BasePersistence<AccountEntry> {
 	public AccountEntry fetchByPrimaryKey(long accountEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-202566243
+// LIFERAY-SERVICE-BUILDER-HASH:2124649653

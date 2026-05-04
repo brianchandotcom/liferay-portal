@@ -356,20 +356,6 @@ public interface LayoutSEOEntryPersistence
 	public int countByG_P_L(long groupId, boolean privateLayout, long layoutId);
 
 	/**
-	 * Caches the layout seo entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntry the layout seo entry
-	 */
-	public void cacheResult(LayoutSEOEntry layoutSEOEntry);
-
-	/**
-	 * Caches the layout seo entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntries the layout seo entries
-	 */
-	public void cacheResult(java.util.List<LayoutSEOEntry> layoutSEOEntries);
-
-	/**
 	 * Creates a new layout seo entry with the primary key. Does not add the layout seo entry to the database.
 	 *
 	 * @param layoutSEOEntryId the primary key for the new layout seo entry
@@ -408,4 +394,4 @@ public interface LayoutSEOEntryPersistence
 	public LayoutSEOEntry fetchByPrimaryKey(long layoutSEOEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:734773047
+// LIFERAY-SERVICE-BUILDER-HASH:-904499435

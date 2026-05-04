@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1372,65 +1370,6 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the list type definition in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinition the list type definition
-	 */
-	@Override
-	public void cacheResult(ListTypeDefinition listTypeDefinition) {
-		entityCache.putResult(
-			ListTypeDefinitionImpl.class, listTypeDefinition.getPrimaryKey(),
-			listTypeDefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				listTypeDefinition.getExternalReferenceCode(),
-				listTypeDefinition.getCompanyId()
-			},
-			listTypeDefinition);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the list type definitions in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinitions the list type definitions
-	 */
-	@Override
-	public void cacheResult(List<ListTypeDefinition> listTypeDefinitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (listTypeDefinitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			if (entityCache.getResult(
-					ListTypeDefinitionImpl.class,
-					listTypeDefinition.getPrimaryKey()) == null) {
-
-				cacheResult(listTypeDefinition);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ListTypeDefinitionModelImpl listTypeDefinitionModelImpl) {
-
-		Object[] args = new Object[] {
-			listTypeDefinitionModelImpl.getExternalReferenceCode(),
-			listTypeDefinitionModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, listTypeDefinitionModelImpl);
-	}
-
-	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *
 	 * @param listTypeDefinitionId the primary key for the new list type definition
@@ -1642,11 +1581,7 @@ public class ListTypeDefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ListTypeDefinitionImpl.class, listTypeDefinitionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(listTypeDefinitionModelImpl);
+		cacheUniqueFindersResult(listTypeDefinition, false);
 
 		if (isNew) {
 			listTypeDefinition.setNew(false);
@@ -1712,9 +1647,6 @@ public class ListTypeDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1808,10 +1740,12 @@ public class ListTypeDefinitionPersistenceImpl
 				"listTypeDefinition.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, ListTypeDefinition::getUserId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			ListTypeDefinition::getExternalReferenceCode,
+			ListTypeDefinition::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_LISTTYPEDEFINITION_WHERE,
@@ -1915,4 +1849,4 @@ public class ListTypeDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:174533787
+// LIFERAY-SERVICE-BUILDER-HASH:-2072887201

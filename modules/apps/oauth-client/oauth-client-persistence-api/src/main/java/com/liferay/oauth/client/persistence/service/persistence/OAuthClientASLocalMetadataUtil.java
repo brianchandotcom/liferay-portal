@@ -36,6 +36,24 @@ public class OAuthClientASLocalMetadataUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas) {
+
+		getPersistence().cacheResult(oAuthClientASLocalMetadatas);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
+
+		getPersistence().cacheResult(oAuthClientASLocalMetadata);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1365,28 +1383,6 @@ public class OAuthClientASLocalMetadataUtil {
 	}
 
 	/**
-	 * Caches the o auth client as local metadata in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadata the o auth client as local metadata
-	 */
-	public static void cacheResult(
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
-
-		getPersistence().cacheResult(oAuthClientASLocalMetadata);
-	}
-
-	/**
-	 * Caches the o auth client as local metadatas in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadatas the o auth client as local metadatas
-	 */
-	public static void cacheResult(
-		List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas) {
-
-		getPersistence().cacheResult(oAuthClientASLocalMetadatas);
-	}
-
-	/**
 	 * Creates a new o auth client as local metadata with the primary key. Does not add the o auth client as local metadata to the database.
 	 *
 	 * @param oAuthClientASLocalMetadataId the primary key for the new o auth client as local metadata
@@ -1459,4 +1455,4 @@ public class OAuthClientASLocalMetadataUtil {
 	private static volatile OAuthClientASLocalMetadataPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1788877293
+// LIFERAY-SERVICE-BUILDER-HASH:-1251130913

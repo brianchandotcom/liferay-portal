@@ -37,6 +37,20 @@ public class SamlIdpSsoSessionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SamlIdpSsoSession> samlIdpSsoSessions) {
+		getPersistence().cacheResult(samlIdpSsoSessions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlIdpSsoSession samlIdpSsoSession) {
+		getPersistence().cacheResult(samlIdpSsoSession);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -367,24 +381,6 @@ public class SamlIdpSsoSessionUtil {
 	}
 
 	/**
-	 * Caches the saml idp sso session in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSession the saml idp sso session
-	 */
-	public static void cacheResult(SamlIdpSsoSession samlIdpSsoSession) {
-		getPersistence().cacheResult(samlIdpSsoSession);
-	}
-
-	/**
-	 * Caches the saml idp sso sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSessions the saml idp sso sessions
-	 */
-	public static void cacheResult(List<SamlIdpSsoSession> samlIdpSsoSessions) {
-		getPersistence().cacheResult(samlIdpSsoSessions);
-	}
-
-	/**
 	 * Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
 	 *
 	 * @param samlIdpSsoSessionId the primary key for the new saml idp sso session
@@ -453,4 +449,4 @@ public class SamlIdpSsoSessionUtil {
 	private static volatile SamlIdpSsoSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:793537230
+// LIFERAY-SERVICE-BUILDER-HASH:-890724588

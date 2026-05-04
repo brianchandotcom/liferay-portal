@@ -18,16 +18,12 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -73,42 +69,6 @@ public class TestEntityPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(TestEntityTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the test entity in the entity cache if it is enabled.
-	 *
-	 * @param testEntity the test entity
-	 */
-	@Override
-	public void cacheResult(TestEntity testEntity) {
-		entityCache.putResult(
-			TestEntityImpl.class, testEntity.getPrimaryKey(), testEntity);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the test entities in the entity cache if it is enabled.
-	 *
-	 * @param testEntities the test entities
-	 */
-	@Override
-	public void cacheResult(List<TestEntity> testEntities) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (testEntities.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TestEntity testEntity : testEntities) {
-			if (entityCache.getResult(
-					TestEntityImpl.class, testEntity.getPrimaryKey()) == null) {
-
-				cacheResult(testEntity);
-			}
-		}
 	}
 
 	/**
@@ -192,7 +152,7 @@ public class TestEntityPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(TestEntityImpl.class, testEntity, false, true);
+		cacheUniqueFindersResult(testEntity, false);
 
 		if (isNew) {
 			testEntity.setNew(false);
@@ -257,9 +217,6 @@ public class TestEntityPersistenceImpl
 	 * Initializes the test entity persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		TestEntityUtil.setPersistence(this);
 	}
 
@@ -293,4 +250,4 @@ public class TestEntityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1912085752
+// LIFERAY-SERVICE-BUILDER-HASH:327806214

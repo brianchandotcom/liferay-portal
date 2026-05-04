@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -932,73 +929,6 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce qualifier entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntry the commerce qualifier entry
-	 */
-	@Override
-	public void cacheResult(CommerceQualifierEntry commerceQualifierEntry) {
-		entityCache.putResult(
-			CommerceQualifierEntryImpl.class,
-			commerceQualifierEntry.getPrimaryKey(), commerceQualifierEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByS_S_T_T,
-			new Object[] {
-				commerceQualifierEntry.getSourceClassNameId(),
-				commerceQualifierEntry.getSourceClassPK(),
-				commerceQualifierEntry.getTargetClassNameId(),
-				commerceQualifierEntry.getTargetClassPK()
-			},
-			commerceQualifierEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce qualifier entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntries the commerce qualifier entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceQualifierEntry> commerceQualifierEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceQualifierEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceQualifierEntry commerceQualifierEntry :
-				commerceQualifierEntries) {
-
-			if (entityCache.getResult(
-					CommerceQualifierEntryImpl.class,
-					commerceQualifierEntry.getPrimaryKey()) == null) {
-
-				cacheResult(commerceQualifierEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceQualifierEntryModelImpl commerceQualifierEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceQualifierEntryModelImpl.getSourceClassNameId(),
-			commerceQualifierEntryModelImpl.getSourceClassPK(),
-			commerceQualifierEntryModelImpl.getTargetClassNameId(),
-			commerceQualifierEntryModelImpl.getTargetClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByS_S_T_T, args, commerceQualifierEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce qualifier entry with the primary key. Does not add the commerce qualifier entry to the database.
 	 *
 	 * @param commerceQualifierEntryId the primary key for the new commerce qualifier entry
@@ -1137,11 +1067,7 @@ public class CommerceQualifierEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceQualifierEntryImpl.class, commerceQualifierEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceQualifierEntryModelImpl);
+		cacheUniqueFindersResult(commerceQualifierEntry, false);
 
 		if (isNew) {
 			commerceQualifierEntry.setNew(false);
@@ -1210,9 +1136,6 @@ public class CommerceQualifierEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByS_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
 			new String[] {
@@ -1383,7 +1306,7 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassPK));
 
-		_finderPathFetchByS_S_T_T = new FinderPath(
+		_finderPathFetchByS_S_T_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_S_T_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1393,7 +1316,10 @@ public class CommerceQualifierEntryPersistenceImpl
 				"sourceClassNameId", "sourceClassPK", "targetClassNameId",
 				"targetClassPK"
 			},
-			true);
+			false, CommerceQualifierEntry::getSourceClassNameId,
+			CommerceQualifierEntry::getSourceClassPK,
+			CommerceQualifierEntry::getTargetClassNameId,
+			CommerceQualifierEntry::getTargetClassPK);
 
 		_uniquePersistenceFinderByS_S_T_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_S_T_T,
@@ -1487,4 +1413,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1432241037
+// LIFERAY-SERVICE-BUILDER-HASH:1727668592

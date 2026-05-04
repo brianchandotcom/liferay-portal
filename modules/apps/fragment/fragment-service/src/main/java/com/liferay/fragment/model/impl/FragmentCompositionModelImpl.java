@@ -1618,4 +1618,4 @@ public class FragmentCompositionModelImpl
 	private FragmentComposition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1118155945
+// LIFERAY-SERVICE-BUILDER-HASH:799427599

@@ -36,6 +36,20 @@ public class RatingsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RatingsEntry> ratingsEntries) {
+		getPersistence().cacheResult(ratingsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RatingsEntry ratingsEntry) {
+		getPersistence().cacheResult(ratingsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -816,24 +830,6 @@ public class RatingsEntryUtil {
 	}
 
 	/**
-	 * Caches the ratings entry in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntry the ratings entry
-	 */
-	public static void cacheResult(RatingsEntry ratingsEntry) {
-		getPersistence().cacheResult(ratingsEntry);
-	}
-
-	/**
-	 * Caches the ratings entries in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntries the ratings entries
-	 */
-	public static void cacheResult(List<RatingsEntry> ratingsEntries) {
-		getPersistence().cacheResult(ratingsEntries);
-	}
-
-	/**
 	 * Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
 	 *
 	 * @param entryId the primary key for the new ratings entry
@@ -894,4 +890,4 @@ public class RatingsEntryUtil {
 	private static volatile RatingsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1233243069
+// LIFERAY-SERVICE-BUILDER-HASH:696874048

@@ -36,6 +36,20 @@ public class KBTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KBTemplate> kbTemplates) {
+		getPersistence().cacheResult(kbTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KBTemplate kbTemplate) {
+		getPersistence().cacheResult(kbTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -600,24 +614,6 @@ public class KBTemplateUtil {
 	}
 
 	/**
-	 * Caches the kb template in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplate the kb template
-	 */
-	public static void cacheResult(KBTemplate kbTemplate) {
-		getPersistence().cacheResult(kbTemplate);
-	}
-
-	/**
-	 * Caches the kb templates in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplates the kb templates
-	 */
-	public static void cacheResult(List<KBTemplate> kbTemplates) {
-		getPersistence().cacheResult(kbTemplates);
-	}
-
-	/**
 	 * Creates a new kb template with the primary key. Does not add the kb template to the database.
 	 *
 	 * @param kbTemplateId the primary key for the new kb template
@@ -678,4 +674,4 @@ public class KBTemplateUtil {
 	private static volatile KBTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1662750424
+// LIFERAY-SERVICE-BUILDER-HASH:-1244902332

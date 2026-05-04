@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2712,79 +2710,6 @@ public class ObjectFieldPersistenceImpl
 	}
 
 	/**
-	 * Caches the object field in the entity cache if it is enabled.
-	 *
-	 * @param objectField the object field
-	 */
-	@Override
-	public void cacheResult(ObjectField objectField) {
-		entityCache.putResult(
-			ObjectFieldImpl.class, objectField.getPrimaryKey(), objectField);
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N,
-			new Object[] {
-				objectField.getObjectDefinitionId(), objectField.getName()
-			},
-			objectField);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI,
-			new Object[] {
-				objectField.getExternalReferenceCode(),
-				objectField.getCompanyId(), objectField.getObjectDefinitionId()
-			},
-			objectField);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object fields in the entity cache if it is enabled.
-	 *
-	 * @param objectFields the object fields
-	 */
-	@Override
-	public void cacheResult(List<ObjectField> objectFields) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectFields.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectField objectField : objectFields) {
-			if (entityCache.getResult(
-					ObjectFieldImpl.class, objectField.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(objectField);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectFieldModelImpl objectFieldModelImpl) {
-
-		Object[] args = new Object[] {
-			objectFieldModelImpl.getObjectDefinitionId(),
-			objectFieldModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N, args, objectFieldModelImpl);
-
-		args = new Object[] {
-			objectFieldModelImpl.getExternalReferenceCode(),
-			objectFieldModelImpl.getCompanyId(),
-			objectFieldModelImpl.getObjectDefinitionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI, args, objectFieldModelImpl);
-	}
-
-	/**
 	 * Creates a new object field with the primary key. Does not add the object field to the database.
 	 *
 	 * @param objectFieldId the primary key for the new object field
@@ -2960,10 +2885,7 @@ public class ObjectFieldPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectFieldImpl.class, objectFieldModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectFieldModelImpl);
+		cacheUniqueFindersResult(objectField, false);
 
 		if (isNew) {
 			objectField.setNew(false);
@@ -3029,9 +2951,6 @@ public class ObjectFieldPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3408,10 +3327,11 @@ public class ObjectFieldPersistenceImpl
 				"objectField.", "localized", FinderColumn.Type.BOOLEAN, "=",
 				true, true, ObjectField::isLocalized));
 
-		_finderPathFetchByODI_N = new FinderPath(
+		_finderPathFetchByODI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "name"}, true);
+			new String[] {"objectDefinitionId", "name"}, false,
+			ObjectField::getObjectDefinitionId, ObjectField::getName);
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTFIELD_WHERE,
@@ -3453,7 +3373,7 @@ public class ObjectFieldPersistenceImpl
 				"objectField.", "system", FinderColumn.Type.BOOLEAN, "=", true,
 				true, ObjectField::isSystem));
 
-		_finderPathFetchByERC_C_ODI = new FinderPath(
+		_finderPathFetchByERC_C_ODI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -3462,7 +3382,8 @@ public class ObjectFieldPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			true);
+			false, ObjectField::getExternalReferenceCode,
+			ObjectField::getCompanyId, ObjectField::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI, _SQL_SELECT_OBJECTFIELD_WHERE,
@@ -3632,4 +3553,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1222812871
+// LIFERAY-SERVICE-BUILDER-HASH:-1688652029

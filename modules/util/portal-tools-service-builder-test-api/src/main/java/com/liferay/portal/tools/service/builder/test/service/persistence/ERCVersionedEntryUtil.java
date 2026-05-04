@@ -36,6 +36,22 @@ public class ERCVersionedEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ERCVersionedEntry> ercVersionedEntries) {
+
+		getPersistence().cacheResult(ercVersionedEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ERCVersionedEntry ercVersionedEntry) {
+		getPersistence().cacheResult(ercVersionedEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1139,26 +1155,6 @@ public class ERCVersionedEntryUtil {
 	}
 
 	/**
-	 * Caches the erc versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntry the erc versioned entry
-	 */
-	public static void cacheResult(ERCVersionedEntry ercVersionedEntry) {
-		getPersistence().cacheResult(ercVersionedEntry);
-	}
-
-	/**
-	 * Caches the erc versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntries the erc versioned entries
-	 */
-	public static void cacheResult(
-		List<ERCVersionedEntry> ercVersionedEntries) {
-
-		getPersistence().cacheResult(ercVersionedEntries);
-	}
-
-	/**
 	 * Creates a new erc versioned entry with the primary key. Does not add the erc versioned entry to the database.
 	 *
 	 * @param ercVersionedEntryId the primary key for the new erc versioned entry
@@ -1227,4 +1223,4 @@ public class ERCVersionedEntryUtil {
 	private static volatile ERCVersionedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:911414424
+// LIFERAY-SERVICE-BUILDER-HASH:-735181711

@@ -291,21 +291,6 @@ public interface MFAFIDO2CredentialEntryPersistence
 	public int countByU_C(long userId, long credentialKeyHash);
 
 	/**
-	 * Caches the mfafido2 credential entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
-	 */
-	public void cacheResult(MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry);
-
-	/**
-	 * Caches the mfafido2 credential entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntries the mfafido2 credential entries
-	 */
-	public void cacheResult(
-		java.util.List<MFAFIDO2CredentialEntry> mfaFIDO2CredentialEntries);
-
-	/**
 	 * Creates a new mfafido2 credential entry with the primary key. Does not add the mfafido2 credential entry to the database.
 	 *
 	 * @param mfaFIDO2CredentialEntryId the primary key for the new mfafido2 credential entry
@@ -347,4 +332,4 @@ public interface MFAFIDO2CredentialEntryPersistence
 		long mfaFIDO2CredentialEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:651663872
+// LIFERAY-SERVICE-BUILDER-HASH:1989991668

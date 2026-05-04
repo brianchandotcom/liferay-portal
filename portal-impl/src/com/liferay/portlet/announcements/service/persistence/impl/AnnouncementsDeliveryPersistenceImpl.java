@@ -11,7 +11,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsDeliveryTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryPersistence;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsDeliveryUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
@@ -508,84 +504,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 	/**
-	 * Caches the announcements delivery in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDelivery the announcements delivery
-	 */
-	@Override
-	public void cacheResult(AnnouncementsDelivery announcementsDelivery) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					announcementsDelivery.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AnnouncementsDeliveryImpl.class,
-				announcementsDelivery.getPrimaryKey(), announcementsDelivery);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_T,
-				new Object[] {
-					announcementsDelivery.getUserId(),
-					announcementsDelivery.getType()
-				},
-				announcementsDelivery);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the announcements deliveries in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDeliveries the announcements deliveries
-	 */
-	@Override
-	public void cacheResult(
-		List<AnnouncementsDelivery> announcementsDeliveries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (announcementsDeliveries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AnnouncementsDelivery announcementsDelivery :
-				announcementsDeliveries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						announcementsDelivery.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AnnouncementsDeliveryImpl.class,
-						announcementsDelivery.getPrimaryKey()) == null) {
-
-					cacheResult(announcementsDelivery);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					announcementsDeliveryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				announcementsDeliveryModelImpl.getUserId(),
-				announcementsDeliveryModelImpl.getType()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_T, args, announcementsDeliveryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
 	 *
 	 * @param deliveryId the primary key for the new announcements delivery
@@ -707,11 +625,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AnnouncementsDeliveryImpl.class, announcementsDeliveryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(announcementsDeliveryModelImpl);
+		cacheUniqueFindersResult(announcementsDelivery, false);
 
 		if (isNew) {
 			announcementsDelivery.setNew(false);
@@ -837,9 +751,6 @@ public class AnnouncementsDeliveryPersistenceImpl
 	 * Initializes the announcements delivery persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -902,10 +813,11 @@ public class AnnouncementsDeliveryPersistenceImpl
 					"announcementsDelivery.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsDelivery::getUserId));
 
-		_finderPathFetchByU_T = new FinderPath(
+		_finderPathFetchByU_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, true);
+			new String[] {"userId", "type_"}, false,
+			AnnouncementsDelivery::getUserId, AnnouncementsDelivery::getType);
 
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_T,
@@ -953,4 +865,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2044120398
+// LIFERAY-SERVICE-BUILDER-HASH:331416204

@@ -37,6 +37,24 @@ public class CommerceMLForecastAlertEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceMLForecastAlertEntry> commerceMLForecastAlertEntries) {
+
+		getPersistence().cacheResult(commerceMLForecastAlertEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
+
+		getPersistence().cacheResult(commerceMLForecastAlertEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1285,28 +1303,6 @@ public class CommerceMLForecastAlertEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce ml forecast alert entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
-	 */
-	public static void cacheResult(
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-		getPersistence().cacheResult(commerceMLForecastAlertEntry);
-	}
-
-	/**
-	 * Caches the commerce ml forecast alert entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntries the commerce ml forecast alert entries
-	 */
-	public static void cacheResult(
-		List<CommerceMLForecastAlertEntry> commerceMLForecastAlertEntries) {
-
-		getPersistence().cacheResult(commerceMLForecastAlertEntries);
-	}
-
-	/**
 	 * Creates a new commerce ml forecast alert entry with the primary key. Does not add the commerce ml forecast alert entry to the database.
 	 *
 	 * @param commerceMLForecastAlertEntryId the primary key for the new commerce ml forecast alert entry
@@ -1382,4 +1378,4 @@ public class CommerceMLForecastAlertEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1463327753
+// LIFERAY-SERVICE-BUILDER-HASH:1310072368

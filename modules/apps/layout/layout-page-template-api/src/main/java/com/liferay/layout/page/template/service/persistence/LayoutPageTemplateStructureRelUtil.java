@@ -36,6 +36,24 @@ public class LayoutPageTemplateStructureRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels) {
+
+		getPersistence().cacheResult(layoutPageTemplateStructureRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
+
+		getPersistence().cacheResult(layoutPageTemplateStructureRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -801,28 +819,6 @@ public class LayoutPageTemplateStructureRelUtil {
 	}
 
 	/**
-	 * Caches the layout page template structure rel in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRel the layout page template structure rel
-	 */
-	public static void cacheResult(
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
-
-		getPersistence().cacheResult(layoutPageTemplateStructureRel);
-	}
-
-	/**
-	 * Caches the layout page template structure rels in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRels the layout page template structure rels
-	 */
-	public static void cacheResult(
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels) {
-
-		getPersistence().cacheResult(layoutPageTemplateStructureRels);
-	}
-
-	/**
 	 * Creates a new layout page template structure rel with the primary key. Does not add the layout page template structure rel to the database.
 	 *
 	 * @param layoutPageTemplateStructureRelId the primary key for the new layout page template structure rel
@@ -898,4 +894,4 @@ public class LayoutPageTemplateStructureRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1703283006
+// LIFERAY-SERVICE-BUILDER-HASH:1651642020

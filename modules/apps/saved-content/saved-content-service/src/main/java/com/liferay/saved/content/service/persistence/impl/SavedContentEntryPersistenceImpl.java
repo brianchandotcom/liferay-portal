@@ -7,7 +7,6 @@ package com.liferay.saved.content.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3332,119 +3328,6 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the saved content entry in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntry the saved content entry
-	 */
-	@Override
-	public void cacheResult(SavedContentEntry savedContentEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					savedContentEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SavedContentEntryImpl.class, savedContentEntry.getPrimaryKey(),
-				savedContentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					savedContentEntry.getUuid(), savedContentEntry.getGroupId()
-				},
-				savedContentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_U_C_C,
-				new Object[] {
-					savedContentEntry.getGroupId(),
-					savedContentEntry.getUserId(),
-					savedContentEntry.getClassNameId(),
-					savedContentEntry.getClassPK()
-				},
-				savedContentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByC_U_C_C,
-				new Object[] {
-					savedContentEntry.getCompanyId(),
-					savedContentEntry.getUserId(),
-					savedContentEntry.getClassNameId(),
-					savedContentEntry.getClassPK()
-				},
-				savedContentEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saved content entries in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntries the saved content entries
-	 */
-	@Override
-	public void cacheResult(List<SavedContentEntry> savedContentEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (savedContentEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SavedContentEntry savedContentEntry : savedContentEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						savedContentEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SavedContentEntryImpl.class,
-						savedContentEntry.getPrimaryKey()) == null) {
-
-					cacheResult(savedContentEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SavedContentEntryModelImpl savedContentEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					savedContentEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				savedContentEntryModelImpl.getUuid(),
-				savedContentEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, savedContentEntryModelImpl);
-
-			args = new Object[] {
-				savedContentEntryModelImpl.getGroupId(),
-				savedContentEntryModelImpl.getUserId(),
-				savedContentEntryModelImpl.getClassNameId(),
-				savedContentEntryModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_U_C_C, args, savedContentEntryModelImpl);
-
-			args = new Object[] {
-				savedContentEntryModelImpl.getCompanyId(),
-				savedContentEntryModelImpl.getUserId(),
-				savedContentEntryModelImpl.getClassNameId(),
-				savedContentEntryModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_U_C_C, args, savedContentEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new saved content entry with the primary key. Does not add the saved content entry to the database.
 	 *
 	 * @param savedContentEntryId the primary key for the new saved content entry
@@ -3596,11 +3479,7 @@ public class SavedContentEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SavedContentEntryImpl.class, savedContentEntryModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(savedContentEntryModelImpl);
+		cacheUniqueFindersResult(savedContentEntry, false);
 
 		if (isNew) {
 			savedContentEntry.setNew(false);
@@ -3738,9 +3617,6 @@ public class SavedContentEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3769,10 +3645,11 @@ public class SavedContentEntryPersistenceImpl
 				"savedContentEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, SavedContentEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			SavedContentEntry::getUuid, SavedContentEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_SAVEDCONTENTENTRY_WHERE,
@@ -4047,13 +3924,15 @@ public class SavedContentEntryPersistenceImpl
 				"savedContentEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, SavedContentEntry::getClassPK));
 
-		_finderPathFetchByG_U_C_C = new FinderPath(
+		_finderPathFetchByG_U_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "userId", "classNameId", "classPK"}, true);
+			new String[] {"groupId", "userId", "classNameId", "classPK"}, false,
+			SavedContentEntry::getGroupId, SavedContentEntry::getUserId,
+			SavedContentEntry::getClassNameId, SavedContentEntry::getClassPK);
 
 		_uniquePersistenceFinderByG_U_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U_C_C,
@@ -4091,14 +3970,16 @@ public class SavedContentEntryPersistenceImpl
 			new String[] {"companyId", "userId", "classNameId", "classPK"},
 			true);
 
-		_finderPathFetchByC_U_C_C = new FinderPath(
+		_finderPathFetchByC_U_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "userId", "classNameId", "classPK"},
-			true);
+			false, SavedContentEntry::getCompanyId,
+			SavedContentEntry::getUserId, SavedContentEntry::getClassNameId,
+			SavedContentEntry::getClassPK);
 
 		_finderPathCountByC_U_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_C_C",
@@ -4213,4 +4094,4 @@ public class SavedContentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:895597983
+// LIFERAY-SERVICE-BUILDER-HASH:124743964

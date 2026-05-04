@@ -36,6 +36,24 @@ public class LayoutPageTemplateEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutPageTemplateEntry> layoutPageTemplateEntries) {
+
+		getPersistence().cacheResult(layoutPageTemplateEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		getPersistence().cacheResult(layoutPageTemplateEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -6424,28 +6442,6 @@ public class LayoutPageTemplateEntryUtil {
 	}
 
 	/**
-	 * Caches the layout page template entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateEntry the layout page template entry
-	 */
-	public static void cacheResult(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		getPersistence().cacheResult(layoutPageTemplateEntry);
-	}
-
-	/**
-	 * Caches the layout page template entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateEntries the layout page template entries
-	 */
-	public static void cacheResult(
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries) {
-
-		getPersistence().cacheResult(layoutPageTemplateEntries);
-	}
-
-	/**
 	 * Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.
 	 *
 	 * @param layoutPageTemplateEntryId the primary key for the new layout page template entry
@@ -6517,4 +6513,4 @@ public class LayoutPageTemplateEntryUtil {
 	private static volatile LayoutPageTemplateEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1002082117
+// LIFERAY-SERVICE-BUILDER-HASH:-1991188326

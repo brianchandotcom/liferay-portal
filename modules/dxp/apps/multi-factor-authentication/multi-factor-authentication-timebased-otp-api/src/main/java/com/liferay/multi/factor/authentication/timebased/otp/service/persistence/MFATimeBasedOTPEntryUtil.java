@@ -36,6 +36,22 @@ public class MFATimeBasedOTPEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<MFATimeBasedOTPEntry> mfaTimeBasedOTPEntries) {
+
+		getPersistence().cacheResult(mfaTimeBasedOTPEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
+		getPersistence().cacheResult(mfaTimeBasedOTPEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -174,26 +190,6 @@ public class MFATimeBasedOTPEntryUtil {
 	}
 
 	/**
-	 * Caches the mfa time based otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
-	 */
-	public static void cacheResult(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
-		getPersistence().cacheResult(mfaTimeBasedOTPEntry);
-	}
-
-	/**
-	 * Caches the mfa time based otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntries the mfa time based otp entries
-	 */
-	public static void cacheResult(
-		List<MFATimeBasedOTPEntry> mfaTimeBasedOTPEntries) {
-
-		getPersistence().cacheResult(mfaTimeBasedOTPEntries);
-	}
-
-	/**
 	 * Creates a new mfa time based otp entry with the primary key. Does not add the mfa time based otp entry to the database.
 	 *
 	 * @param mfaTimeBasedOTPEntryId the primary key for the new mfa time based otp entry
@@ -263,4 +259,4 @@ public class MFATimeBasedOTPEntryUtil {
 	private static volatile MFATimeBasedOTPEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:834429239
+// LIFERAY-SERVICE-BUILDER-HASH:-979204174

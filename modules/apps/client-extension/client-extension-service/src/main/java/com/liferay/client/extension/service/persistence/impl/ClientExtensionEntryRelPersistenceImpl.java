@@ -15,7 +15,6 @@ import com.liferay.client.extension.service.persistence.ClientExtensionEntryRelP
 import com.liferay.client.extension.service.persistence.ClientExtensionEntryRelUtil;
 import com.liferay.client.extension.service.persistence.impl.constants.ClientExtensionPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1330,103 +1327,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the client extension entry rel in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRel the client extension entry rel
-	 */
-	@Override
-	public void cacheResult(ClientExtensionEntryRel clientExtensionEntryRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					clientExtensionEntryRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				ClientExtensionEntryRelImpl.class,
-				clientExtensionEntryRel.getPrimaryKey(),
-				clientExtensionEntryRel);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					clientExtensionEntryRel.getUuid(),
-					clientExtensionEntryRel.getGroupId()
-				},
-				clientExtensionEntryRel);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					clientExtensionEntryRel.getExternalReferenceCode(),
-					clientExtensionEntryRel.getGroupId()
-				},
-				clientExtensionEntryRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the client extension entry rels in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRels the client extension entry rels
-	 */
-	@Override
-	public void cacheResult(
-		List<ClientExtensionEntryRel> clientExtensionEntryRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (clientExtensionEntryRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ClientExtensionEntryRel clientExtensionEntryRel :
-				clientExtensionEntryRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						clientExtensionEntryRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						ClientExtensionEntryRelImpl.class,
-						clientExtensionEntryRel.getPrimaryKey()) == null) {
-
-					cacheResult(clientExtensionEntryRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ClientExtensionEntryRelModelImpl clientExtensionEntryRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					clientExtensionEntryRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				clientExtensionEntryRelModelImpl.getUuid(),
-				clientExtensionEntryRelModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				clientExtensionEntryRelModelImpl);
-
-			args = new Object[] {
-				clientExtensionEntryRelModelImpl.getExternalReferenceCode(),
-				clientExtensionEntryRelModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args,
-				clientExtensionEntryRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
 	 * @param clientExtensionEntryRelId the primary key for the new client extension entry rel
@@ -1655,11 +1555,7 @@ public class ClientExtensionEntryRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ClientExtensionEntryRelImpl.class, clientExtensionEntryRelModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(clientExtensionEntryRelModelImpl);
+		cacheUniqueFindersResult(clientExtensionEntryRel, false);
 
 		if (isNew) {
 			clientExtensionEntryRel.setNew(false);
@@ -1804,9 +1700,6 @@ public class ClientExtensionEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1836,10 +1729,12 @@ public class ClientExtensionEntryRelPersistenceImpl
 				"clientExtensionEntryRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, ClientExtensionEntryRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			ClientExtensionEntryRel::getUuid,
+			ClientExtensionEntryRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2031,10 +1926,12 @@ public class ClientExtensionEntryRelPersistenceImpl
 				"clientExtensionEntryRel.", "type", FinderColumn.Type.STRING,
 				"=", true, true, ClientExtensionEntryRel::getType));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			ClientExtensionEntryRel::getExternalReferenceCode,
+			ClientExtensionEntryRel::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G,
@@ -2119,4 +2016,4 @@ public class ClientExtensionEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:896385849
+// LIFERAY-SERVICE-BUILDER-HASH:389151221

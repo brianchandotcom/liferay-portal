@@ -224,21 +224,6 @@ public interface ExportImportReportEntryPersistence
 		long classNameId, long exportImportConfigurationId, int type);
 
 	/**
-	 * Caches the export import report entry in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntry the export import report entry
-	 */
-	public void cacheResult(ExportImportReportEntry exportImportReportEntry);
-
-	/**
-	 * Caches the export import report entries in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntries the export import report entries
-	 */
-	public void cacheResult(
-		java.util.List<ExportImportReportEntry> exportImportReportEntries);
-
-	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
 	 * @param exportImportReportEntryId the primary key for the new export import report entry
@@ -280,4 +265,4 @@ public interface ExportImportReportEntryPersistence
 		long exportImportReportEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-149204705
+// LIFERAY-SERVICE-BUILDER-HASH:-2129832367

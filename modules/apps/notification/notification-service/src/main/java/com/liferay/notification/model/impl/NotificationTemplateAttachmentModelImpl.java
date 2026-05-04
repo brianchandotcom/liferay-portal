@@ -710,4 +710,4 @@ public class NotificationTemplateAttachmentModelImpl
 	private NotificationTemplateAttachment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:206700849
+// LIFERAY-SERVICE-BUILDER-HASH:998907617

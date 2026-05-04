@@ -36,6 +36,24 @@ public class CommerceVirtualOrderItemUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceVirtualOrderItem> commerceVirtualOrderItems) {
+
+		getPersistence().cacheResult(commerceVirtualOrderItems);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceVirtualOrderItem commerceVirtualOrderItem) {
+
+		getPersistence().cacheResult(commerceVirtualOrderItem);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -507,28 +525,6 @@ public class CommerceVirtualOrderItemUtil {
 	}
 
 	/**
-	 * Caches the commerce virtual order item in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItem the commerce virtual order item
-	 */
-	public static void cacheResult(
-		CommerceVirtualOrderItem commerceVirtualOrderItem) {
-
-		getPersistence().cacheResult(commerceVirtualOrderItem);
-	}
-
-	/**
-	 * Caches the commerce virtual order items in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItems the commerce virtual order items
-	 */
-	public static void cacheResult(
-		List<CommerceVirtualOrderItem> commerceVirtualOrderItems) {
-
-		getPersistence().cacheResult(commerceVirtualOrderItems);
-	}
-
-	/**
 	 * Creates a new commerce virtual order item with the primary key. Does not add the commerce virtual order item to the database.
 	 *
 	 * @param commerceVirtualOrderItemId the primary key for the new commerce virtual order item
@@ -601,4 +597,4 @@ public class CommerceVirtualOrderItemUtil {
 	private static volatile CommerceVirtualOrderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-143764922
+// LIFERAY-SERVICE-BUILDER-HASH:-295090944

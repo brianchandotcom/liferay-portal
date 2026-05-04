@@ -36,6 +36,20 @@ public class EagerBlobEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<EagerBlobEntry> eagerBlobEntries) {
+		getPersistence().cacheResult(eagerBlobEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(EagerBlobEntry eagerBlobEntry) {
+		getPersistence().cacheResult(eagerBlobEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -295,24 +309,6 @@ public class EagerBlobEntryUtil {
 	}
 
 	/**
-	 * Caches the eager blob entry in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntry the eager blob entry
-	 */
-	public static void cacheResult(EagerBlobEntry eagerBlobEntry) {
-		getPersistence().cacheResult(eagerBlobEntry);
-	}
-
-	/**
-	 * Caches the eager blob entries in the entity cache if it is enabled.
-	 *
-	 * @param eagerBlobEntries the eager blob entries
-	 */
-	public static void cacheResult(List<EagerBlobEntry> eagerBlobEntries) {
-		getPersistence().cacheResult(eagerBlobEntries);
-	}
-
-	/**
 	 * Creates a new eager blob entry with the primary key. Does not add the eager blob entry to the database.
 	 *
 	 * @param eagerBlobEntryId the primary key for the new eager blob entry
@@ -375,4 +371,4 @@ public class EagerBlobEntryUtil {
 	private static volatile EagerBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1616183820
+// LIFERAY-SERVICE-BUILDER-HASH:405958447

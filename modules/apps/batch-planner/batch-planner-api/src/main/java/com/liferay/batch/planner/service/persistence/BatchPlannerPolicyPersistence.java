@@ -188,21 +188,6 @@ public interface BatchPlannerPolicyPersistence
 	public int countByBPPI_N(long batchPlannerPlanId, String name);
 
 	/**
-	 * Caches the batch planner policy in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPolicy the batch planner policy
-	 */
-	public void cacheResult(BatchPlannerPolicy batchPlannerPolicy);
-
-	/**
-	 * Caches the batch planner policies in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPolicies the batch planner policies
-	 */
-	public void cacheResult(
-		java.util.List<BatchPlannerPolicy> batchPlannerPolicies);
-
-	/**
 	 * Creates a new batch planner policy with the primary key. Does not add the batch planner policy to the database.
 	 *
 	 * @param batchPlannerPolicyId the primary key for the new batch planner policy
@@ -241,4 +226,4 @@ public interface BatchPlannerPolicyPersistence
 	public BatchPlannerPolicy fetchByPrimaryKey(long batchPlannerPolicyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369311562
+// LIFERAY-SERVICE-BUILDER-HASH:-963181726

@@ -1971,20 +1971,6 @@ public interface SegmentsEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the segments entry in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntry the segments entry
-	 */
-	public void cacheResult(SegmentsEntry segmentsEntry);
-
-	/**
-	 * Caches the segments entries in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntries the segments entries
-	 */
-	public void cacheResult(java.util.List<SegmentsEntry> segmentsEntries);
-
-	/**
 	 * Creates a new segments entry with the primary key. Does not add the segments entry to the database.
 	 *
 	 * @param segmentsEntryId the primary key for the new segments entry
@@ -2023,4 +2009,4 @@ public interface SegmentsEntryPersistence
 	public SegmentsEntry fetchByPrimaryKey(long segmentsEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1918456908
+// LIFERAY-SERVICE-BUILDER-HASH:1891833268

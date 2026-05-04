@@ -36,6 +36,20 @@ public class SegmentsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SegmentsEntry> segmentsEntries) {
+		getPersistence().cacheResult(segmentsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SegmentsEntry segmentsEntry) {
+		getPersistence().cacheResult(segmentsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2438,24 +2452,6 @@ public class SegmentsEntryUtil {
 	}
 
 	/**
-	 * Caches the segments entry in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntry the segments entry
-	 */
-	public static void cacheResult(SegmentsEntry segmentsEntry) {
-		getPersistence().cacheResult(segmentsEntry);
-	}
-
-	/**
-	 * Caches the segments entries in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntries the segments entries
-	 */
-	public static void cacheResult(List<SegmentsEntry> segmentsEntries) {
-		getPersistence().cacheResult(segmentsEntries);
-	}
-
-	/**
 	 * Creates a new segments entry with the primary key. Does not add the segments entry to the database.
 	 *
 	 * @param segmentsEntryId the primary key for the new segments entry
@@ -2516,4 +2512,4 @@ public class SegmentsEntryUtil {
 	private static volatile SegmentsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-66541497
+// LIFERAY-SERVICE-BUILDER-HASH:-1802375488

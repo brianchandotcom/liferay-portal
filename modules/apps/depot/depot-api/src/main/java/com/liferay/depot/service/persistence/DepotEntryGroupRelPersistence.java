@@ -887,21 +887,6 @@ public interface DepotEntryGroupRelPersistence
 	public int countByTGI_T(long toGroupId, int type);
 
 	/**
-	 * Caches the depot entry group rel in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRel the depot entry group rel
-	 */
-	public void cacheResult(DepotEntryGroupRel depotEntryGroupRel);
-
-	/**
-	 * Caches the depot entry group rels in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRels the depot entry group rels
-	 */
-	public void cacheResult(
-		java.util.List<DepotEntryGroupRel> depotEntryGroupRels);
-
-	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
 	 *
 	 * @param depotEntryGroupRelId the primary key for the new depot entry group rel
@@ -940,4 +925,4 @@ public interface DepotEntryGroupRelPersistence
 	public DepotEntryGroupRel fetchByPrimaryKey(long depotEntryGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-900263336
+// LIFERAY-SERVICE-BUILDER-HASH:1040172196

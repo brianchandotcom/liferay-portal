@@ -6,7 +6,6 @@
 package com.liferay.translation.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -800,97 +796,6 @@ public class TranslationEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the translation entry in the entity cache if it is enabled.
-	 *
-	 * @param translationEntry the translation entry
-	 */
-	@Override
-	public void cacheResult(TranslationEntry translationEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					translationEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				TranslationEntryImpl.class, translationEntry.getPrimaryKey(),
-				translationEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					translationEntry.getUuid(), translationEntry.getGroupId()
-				},
-				translationEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_L,
-				new Object[] {
-					translationEntry.getClassNameId(),
-					translationEntry.getClassPK(),
-					translationEntry.getLanguageId()
-				},
-				translationEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the translation entries in the entity cache if it is enabled.
-	 *
-	 * @param translationEntries the translation entries
-	 */
-	@Override
-	public void cacheResult(List<TranslationEntry> translationEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (translationEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TranslationEntry translationEntry : translationEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						translationEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						TranslationEntryImpl.class,
-						translationEntry.getPrimaryKey()) == null) {
-
-					cacheResult(translationEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		TranslationEntryModelImpl translationEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					translationEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				translationEntryModelImpl.getUuid(),
-				translationEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, translationEntryModelImpl);
-
-			args = new Object[] {
-				translationEntryModelImpl.getClassNameId(),
-				translationEntryModelImpl.getClassPK(),
-				translationEntryModelImpl.getLanguageId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_L, args, translationEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new translation entry with the primary key. Does not add the translation entry to the database.
 	 *
 	 * @param translationEntryId the primary key for the new translation entry
@@ -1040,10 +945,7 @@ public class TranslationEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			TranslationEntryImpl.class, translationEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(translationEntryModelImpl);
+		cacheUniqueFindersResult(translationEntry, false);
 
 		if (isNew) {
 			translationEntry.setNew(false);
@@ -1187,9 +1089,6 @@ public class TranslationEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1218,10 +1117,11 @@ public class TranslationEntryPersistenceImpl
 				"translationEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, TranslationEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, TranslationEntry::getUuid,
+			TranslationEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_TRANSLATIONENTRY_WHERE,
@@ -1297,13 +1197,15 @@ public class TranslationEntryPersistenceImpl
 				"translationEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, TranslationEntry::getClassPK));
 
-		_finderPathFetchByC_C_L = new FinderPath(
+		_finderPathFetchByC_C_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "languageId"}, true);
+			new String[] {"classNameId", "classPK", "languageId"}, false,
+			TranslationEntry::getClassNameId, TranslationEntry::getClassPK,
+			TranslationEntry::getLanguageId);
 
 		_uniquePersistenceFinderByC_C_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_L, _SQL_SELECT_TRANSLATIONENTRY_WHERE,
@@ -1389,4 +1291,4 @@ public class TranslationEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:216632436
+// LIFERAY-SERVICE-BUILDER-HASH:573119959

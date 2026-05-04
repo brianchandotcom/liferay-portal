@@ -304,20 +304,6 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	public int countByC_C_C(long classNameId, long classPK, long COREntryId);
 
 	/**
-	 * Caches the cor entry rel in the entity cache if it is enabled.
-	 *
-	 * @param corEntryRel the cor entry rel
-	 */
-	public void cacheResult(COREntryRel corEntryRel);
-
-	/**
-	 * Caches the cor entry rels in the entity cache if it is enabled.
-	 *
-	 * @param corEntryRels the cor entry rels
-	 */
-	public void cacheResult(java.util.List<COREntryRel> corEntryRels);
-
-	/**
 	 * Creates a new cor entry rel with the primary key. Does not add the cor entry rel to the database.
 	 *
 	 * @param COREntryRelId the primary key for the new cor entry rel
@@ -356,4 +342,4 @@ public interface COREntryRelPersistence extends BasePersistence<COREntryRel> {
 	public COREntryRel fetchByPrimaryKey(long COREntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:682546025
+// LIFERAY-SERVICE-BUILDER-HASH:63445353

@@ -623,20 +623,6 @@ public interface AssetLinkPersistence
 	public int countByE_E_T(long entryId1, long entryId2, int type);
 
 	/**
-	 * Caches the asset link in the entity cache if it is enabled.
-	 *
-	 * @param assetLink the asset link
-	 */
-	public void cacheResult(AssetLink assetLink);
-
-	/**
-	 * Caches the asset links in the entity cache if it is enabled.
-	 *
-	 * @param assetLinks the asset links
-	 */
-	public void cacheResult(java.util.List<AssetLink> assetLinks);
-
-	/**
 	 * Creates a new asset link with the primary key. Does not add the asset link to the database.
 	 *
 	 * @param linkId the primary key for the new asset link
@@ -673,4 +659,4 @@ public interface AssetLinkPersistence
 	public AssetLink fetchByPrimaryKey(long linkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1363396583
+// LIFERAY-SERVICE-BUILDER-HASH:-2131391287

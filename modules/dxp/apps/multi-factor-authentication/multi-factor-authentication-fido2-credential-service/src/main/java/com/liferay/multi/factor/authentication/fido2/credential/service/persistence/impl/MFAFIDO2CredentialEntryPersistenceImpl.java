@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -489,69 +486,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the mfafido2 credential entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
-	 */
-	@Override
-	public void cacheResult(MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
-		entityCache.putResult(
-			MFAFIDO2CredentialEntryImpl.class,
-			mfaFIDO2CredentialEntry.getPrimaryKey(), mfaFIDO2CredentialEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByU_C,
-			new Object[] {
-				mfaFIDO2CredentialEntry.getUserId(),
-				mfaFIDO2CredentialEntry.getCredentialKeyHash()
-			},
-			mfaFIDO2CredentialEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the mfafido2 credential entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntries the mfafido2 credential entries
-	 */
-	@Override
-	public void cacheResult(
-		List<MFAFIDO2CredentialEntry> mfaFIDO2CredentialEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mfaFIDO2CredentialEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry :
-				mfaFIDO2CredentialEntries) {
-
-			if (entityCache.getResult(
-					MFAFIDO2CredentialEntryImpl.class,
-					mfaFIDO2CredentialEntry.getPrimaryKey()) == null) {
-
-				cacheResult(mfaFIDO2CredentialEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MFAFIDO2CredentialEntryModelImpl mfaFIDO2CredentialEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			mfaFIDO2CredentialEntryModelImpl.getUserId(),
-			mfaFIDO2CredentialEntryModelImpl.getCredentialKeyHash()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByU_C, args, mfaFIDO2CredentialEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new mfafido2 credential entry with the primary key. Does not add the mfafido2 credential entry to the database.
 	 *
 	 * @param mfaFIDO2CredentialEntryId the primary key for the new mfafido2 credential entry
@@ -691,11 +625,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MFAFIDO2CredentialEntryImpl.class, mfaFIDO2CredentialEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(mfaFIDO2CredentialEntryModelImpl);
+		cacheUniqueFindersResult(mfaFIDO2CredentialEntry, false);
 
 		if (isNew) {
 			mfaFIDO2CredentialEntry.setNew(false);
@@ -759,9 +689,6 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -825,10 +752,12 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					MFAFIDO2CredentialEntry::getCredentialKeyHash));
 
-		_finderPathFetchByU_C = new FinderPath(
+		_finderPathFetchByU_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "credentialKeyHash"}, true);
+			new String[] {"userId", "credentialKeyHash"}, false,
+			MFAFIDO2CredentialEntry::getUserId,
+			MFAFIDO2CredentialEntry::getCredentialKeyHash);
 
 		_uniquePersistenceFinderByU_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_C,
@@ -907,4 +836,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2069186741
+// LIFERAY-SERVICE-BUILDER-HASH:555506426

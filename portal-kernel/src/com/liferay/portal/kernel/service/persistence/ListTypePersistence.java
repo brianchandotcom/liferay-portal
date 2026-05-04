@@ -509,20 +509,6 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public int countByC_N_T(long companyId, String name, String type);
 
 	/**
-	 * Caches the list type in the entity cache if it is enabled.
-	 *
-	 * @param listType the list type
-	 */
-	public void cacheResult(ListType listType);
-
-	/**
-	 * Caches the list types in the entity cache if it is enabled.
-	 *
-	 * @param listTypes the list types
-	 */
-	public void cacheResult(java.util.List<ListType> listTypes);
-
-	/**
 	 * Creates a new list type with the primary key. Does not add the list type to the database.
 	 *
 	 * @param listTypeId the primary key for the new list type
@@ -560,4 +546,4 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	public ListType fetchByPrimaryKey(long listTypeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1671482169
+// LIFERAY-SERVICE-BUILDER-HASH:-247357491

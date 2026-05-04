@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.NoSuchUserException;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectUser;
@@ -349,66 +346,6 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 	/**
-	 * Caches the open ID connect user in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUser the open ID connect user
-	 */
-	@Override
-	public void cacheResult(OpenIdConnectUser openIdConnectUser) {
-		entityCache.putResult(
-			OpenIdConnectUserImpl.class, openIdConnectUser.getPrimaryKey(),
-			openIdConnectUser);
-
-		finderCache.putResult(
-			_finderPathFetchByC_I_S,
-			new Object[] {
-				openIdConnectUser.getCompanyId(), openIdConnectUser.getIssuer(),
-				openIdConnectUser.getSubject()
-			},
-			openIdConnectUser);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the open ID connect users in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUsers the open ID connect users
-	 */
-	@Override
-	public void cacheResult(List<OpenIdConnectUser> openIdConnectUsers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (openIdConnectUsers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OpenIdConnectUser openIdConnectUser : openIdConnectUsers) {
-			if (entityCache.getResult(
-					OpenIdConnectUserImpl.class,
-					openIdConnectUser.getPrimaryKey()) == null) {
-
-				cacheResult(openIdConnectUser);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OpenIdConnectUserModelImpl openIdConnectUserModelImpl) {
-
-		Object[] args = new Object[] {
-			openIdConnectUserModelImpl.getCompanyId(),
-			openIdConnectUserModelImpl.getIssuer(),
-			openIdConnectUserModelImpl.getSubject()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_I_S, args, openIdConnectUserModelImpl);
-	}
-
-	/**
 	 * Creates a new open ID connect user with the primary key. Does not add the open ID connect user to the database.
 	 *
 	 * @param openIdConnectUserId the primary key for the new open ID connect user
@@ -532,11 +469,7 @@ public class OpenIdConnectUserPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OpenIdConnectUserImpl.class, openIdConnectUserModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(openIdConnectUserModelImpl);
+		cacheUniqueFindersResult(openIdConnectUser, false);
 
 		if (isNew) {
 			openIdConnectUser.setNew(false);
@@ -597,9 +530,6 @@ public class OpenIdConnectUserPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
 			new String[] {
@@ -632,13 +562,15 @@ public class OpenIdConnectUserPersistenceImpl
 				"openIdConnectUser.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectUser::getUserId));
 
-		_finderPathFetchByC_I_S = new FinderPath(
+		_finderPathFetchByC_I_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_I_S",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "issuer", "subject"}, true);
+			new String[] {"companyId", "issuer", "subject"}, false,
+			OpenIdConnectUser::getCompanyId, OpenIdConnectUser::getIssuer,
+			OpenIdConnectUser::getSubject);
 
 		_uniquePersistenceFinderByC_I_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_I_S, _SQL_SELECT_OPENIDCONNECTUSER_WHERE,
@@ -718,4 +650,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089745301
+// LIFERAY-SERVICE-BUILDER-HASH:-1878763162

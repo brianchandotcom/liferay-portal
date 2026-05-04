@@ -930,21 +930,6 @@ public interface OAuthClientEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the o auth client entry in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntry the o auth client entry
-	 */
-	public void cacheResult(OAuthClientEntry oAuthClientEntry);
-
-	/**
-	 * Caches the o auth client entries in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntries the o auth client entries
-	 */
-	public void cacheResult(
-		java.util.List<OAuthClientEntry> oAuthClientEntries);
-
-	/**
 	 * Creates a new o auth client entry with the primary key. Does not add the o auth client entry to the database.
 	 *
 	 * @param oAuthClientEntryId the primary key for the new o auth client entry
@@ -983,4 +968,4 @@ public interface OAuthClientEntryPersistence
 	public OAuthClientEntry fetchByPrimaryKey(long oAuthClientEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:296736909
+// LIFERAY-SERVICE-BUILDER-HASH:1913762291

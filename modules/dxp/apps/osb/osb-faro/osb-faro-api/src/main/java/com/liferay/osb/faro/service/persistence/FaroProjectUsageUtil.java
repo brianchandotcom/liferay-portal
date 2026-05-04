@@ -36,6 +36,20 @@ public class FaroProjectUsageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FaroProjectUsage> faroProjectUsages) {
+		getPersistence().cacheResult(faroProjectUsages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FaroProjectUsage faroProjectUsage) {
+		getPersistence().cacheResult(faroProjectUsage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -178,24 +192,6 @@ public class FaroProjectUsageUtil {
 	}
 
 	/**
-	 * Caches the faro project usage in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsage the faro project usage
-	 */
-	public static void cacheResult(FaroProjectUsage faroProjectUsage) {
-		getPersistence().cacheResult(faroProjectUsage);
-	}
-
-	/**
-	 * Caches the faro project usages in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsages the faro project usages
-	 */
-	public static void cacheResult(List<FaroProjectUsage> faroProjectUsages) {
-		getPersistence().cacheResult(faroProjectUsages);
-	}
-
-	/**
 	 * Creates a new faro project usage with the primary key. Does not add the faro project usage to the database.
 	 *
 	 * @param faroProjectUsageId the primary key for the new faro project usage
@@ -258,4 +254,4 @@ public class FaroProjectUsageUtil {
 	private static volatile FaroProjectUsagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1403780924
+// LIFERAY-SERVICE-BUILDER-HASH:-435856538

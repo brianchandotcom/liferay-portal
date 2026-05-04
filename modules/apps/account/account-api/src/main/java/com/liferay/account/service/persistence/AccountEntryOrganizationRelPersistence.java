@@ -292,23 +292,6 @@ public interface AccountEntryOrganizationRelPersistence
 	public int countByA_O(long accountEntryId, long organizationId);
 
 	/**
-	 * Caches the account entry organization rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRel the account entry organization rel
-	 */
-	public void cacheResult(
-		AccountEntryOrganizationRel accountEntryOrganizationRel);
-
-	/**
-	 * Caches the account entry organization rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRels the account entry organization rels
-	 */
-	public void cacheResult(
-		java.util.List<AccountEntryOrganizationRel>
-			accountEntryOrganizationRels);
-
-	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
 	 * @param accountEntryOrganizationRelId the primary key for the new account entry organization rel
@@ -352,4 +335,4 @@ public interface AccountEntryOrganizationRelPersistence
 		long accountEntryOrganizationRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2129851777
+// LIFERAY-SERVICE-BUILDER-HASH:-1466964553

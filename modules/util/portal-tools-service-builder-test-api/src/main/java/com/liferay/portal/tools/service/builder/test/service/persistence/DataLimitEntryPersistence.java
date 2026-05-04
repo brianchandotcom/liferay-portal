@@ -33,20 +33,6 @@ public interface DataLimitEntryPersistence
 	 */
 
 	/**
-	 * Caches the data limit entry in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntry the data limit entry
-	 */
-	public void cacheResult(DataLimitEntry dataLimitEntry);
-
-	/**
-	 * Caches the data limit entries in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntries the data limit entries
-	 */
-	public void cacheResult(java.util.List<DataLimitEntry> dataLimitEntries);
-
-	/**
 	 * Creates a new data limit entry with the primary key. Does not add the data limit entry to the database.
 	 *
 	 * @param dataLimitEntryId the primary key for the new data limit entry
@@ -85,4 +71,4 @@ public interface DataLimitEntryPersistence
 	public DataLimitEntry fetchByPrimaryKey(long dataLimitEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:767631774
+// LIFERAY-SERVICE-BUILDER-HASH:205902586

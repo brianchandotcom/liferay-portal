@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetVocabularyGroupRelTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyGroupRelPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyGroupRelUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -945,102 +941,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset vocabulary group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRel the asset vocabulary group rel
-	 */
-	@Override
-	public void cacheResult(AssetVocabularyGroupRel assetVocabularyGroupRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetVocabularyGroupRel.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AssetVocabularyGroupRelImpl.class,
-				assetVocabularyGroupRel.getPrimaryKey(),
-				assetVocabularyGroupRel);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetVocabularyGroupRel.getUuid(),
-					assetVocabularyGroupRel.getGroupId()
-				},
-				assetVocabularyGroupRel);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_V,
-				new Object[] {
-					assetVocabularyGroupRel.getGroupId(),
-					assetVocabularyGroupRel.getVocabularyId()
-				},
-				assetVocabularyGroupRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset vocabulary group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRels the asset vocabulary group rels
-	 */
-	@Override
-	public void cacheResult(
-		List<AssetVocabularyGroupRel> assetVocabularyGroupRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetVocabularyGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				assetVocabularyGroupRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetVocabularyGroupRel.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AssetVocabularyGroupRelImpl.class,
-						assetVocabularyGroupRel.getPrimaryKey()) == null) {
-
-					cacheResult(assetVocabularyGroupRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetVocabularyGroupRelModelImpl assetVocabularyGroupRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetVocabularyGroupRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetVocabularyGroupRelModelImpl.getUuid(),
-				assetVocabularyGroupRelModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args,
-				assetVocabularyGroupRelModelImpl);
-
-			args = new Object[] {
-				assetVocabularyGroupRelModelImpl.getGroupId(),
-				assetVocabularyGroupRelModelImpl.getVocabularyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_V, args, assetVocabularyGroupRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
 	 * @param assetVocabularyGroupRelId the primary key for the new asset vocabulary group rel
@@ -1173,11 +1073,7 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AssetVocabularyGroupRelImpl.class, assetVocabularyGroupRelModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(assetVocabularyGroupRelModelImpl);
+		cacheUniqueFindersResult(assetVocabularyGroupRel, false);
 
 		if (isNew) {
 			assetVocabularyGroupRel.setNew(false);
@@ -1305,9 +1201,6 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	 * Initializes the asset vocabulary group rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1337,10 +1230,12 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, AssetVocabularyGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			AssetVocabularyGroupRel::getUuid,
+			AssetVocabularyGroupRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1453,10 +1348,12 @@ public class AssetVocabularyGroupRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetVocabularyGroupRel::getVocabularyId));
 
-		_finderPathFetchByG_V = new FinderPath(
+		_finderPathFetchByG_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_V",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "vocabularyId"}, true);
+			new String[] {"groupId", "vocabularyId"}, false,
+			AssetVocabularyGroupRel::getGroupId,
+			AssetVocabularyGroupRel::getVocabularyId);
 
 		_uniquePersistenceFinderByG_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_V,
@@ -1506,4 +1403,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1878359259
+// LIFERAY-SERVICE-BUILDER-HASH:359118960

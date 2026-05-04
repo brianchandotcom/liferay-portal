@@ -36,6 +36,22 @@ public class ChangesetCollectionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ChangesetCollection> changesetCollections) {
+
+		getPersistence().cacheResult(changesetCollections);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ChangesetCollection changesetCollection) {
+		getPersistence().cacheResult(changesetCollection);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -688,26 +704,6 @@ public class ChangesetCollectionUtil {
 	}
 
 	/**
-	 * Caches the changeset collection in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollection the changeset collection
-	 */
-	public static void cacheResult(ChangesetCollection changesetCollection) {
-		getPersistence().cacheResult(changesetCollection);
-	}
-
-	/**
-	 * Caches the changeset collections in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollections the changeset collections
-	 */
-	public static void cacheResult(
-		List<ChangesetCollection> changesetCollections) {
-
-		getPersistence().cacheResult(changesetCollections);
-	}
-
-	/**
 	 * Creates a new changeset collection with the primary key. Does not add the changeset collection to the database.
 	 *
 	 * @param changesetCollectionId the primary key for the new changeset collection
@@ -775,4 +771,4 @@ public class ChangesetCollectionUtil {
 	private static volatile ChangesetCollectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2047819545
+// LIFERAY-SERVICE-BUILDER-HASH:-942527165

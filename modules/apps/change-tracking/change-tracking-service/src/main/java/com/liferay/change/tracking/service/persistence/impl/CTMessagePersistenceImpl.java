@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -232,42 +229,6 @@ public class CTMessagePersistenceImpl
 	}
 
 	/**
-	 * Caches the ct message in the entity cache if it is enabled.
-	 *
-	 * @param ctMessage the ct message
-	 */
-	@Override
-	public void cacheResult(CTMessage ctMessage) {
-		entityCache.putResult(
-			CTMessageImpl.class, ctMessage.getPrimaryKey(), ctMessage);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct messages in the entity cache if it is enabled.
-	 *
-	 * @param ctMessages the ct messages
-	 */
-	@Override
-	public void cacheResult(List<CTMessage> ctMessages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctMessages.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTMessage ctMessage : ctMessages) {
-			if (entityCache.getResult(
-					CTMessageImpl.class, ctMessage.getPrimaryKey()) == null) {
-
-				cacheResult(ctMessage);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new ct message with the primary key. Does not add the ct message to the database.
 	 *
 	 * @param ctMessageId the primary key for the new ct message
@@ -368,8 +329,7 @@ public class CTMessagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTMessageImpl.class, ctMessageModelImpl, false, true);
+		cacheUniqueFindersResult(ctMessage, false);
 
 		if (isNew) {
 			ctMessage.setNew(false);
@@ -430,9 +390,6 @@ public class CTMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
@@ -528,4 +485,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:719364087
+// LIFERAY-SERVICE-BUILDER-HASH:-1834091645

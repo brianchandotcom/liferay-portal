@@ -1496,6 +1496,20 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(FragmentEntryLink source) {
+		FragmentEntryLinkModelImpl sourceModelImpl =
+			(FragmentEntryLinkModelImpl)source;
+
+		setConfigurationJSONObject(
+			sourceModelImpl.getConfigurationJSONObject());
+
+		setEditableValuesJSONObject(
+			sourceModelImpl.getEditableValuesJSONObject());
+
+		setFragmentEntry(sourceModelImpl.getFragmentEntry());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -2090,4 +2104,4 @@ public class FragmentEntryLinkModelImpl
 	private FragmentEntryLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:256861869
+// LIFERAY-SERVICE-BUILDER-HASH:-109082964

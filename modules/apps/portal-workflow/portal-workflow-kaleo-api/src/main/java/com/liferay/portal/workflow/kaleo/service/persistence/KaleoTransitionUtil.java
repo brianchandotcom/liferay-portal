@@ -36,6 +36,20 @@ public class KaleoTransitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoTransition> kaleoTransitions) {
+		getPersistence().cacheResult(kaleoTransitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoTransition kaleoTransition) {
+		getPersistence().cacheResult(kaleoTransition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -630,24 +644,6 @@ public class KaleoTransitionUtil {
 	}
 
 	/**
-	 * Caches the kaleo transition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransition the kaleo transition
-	 */
-	public static void cacheResult(KaleoTransition kaleoTransition) {
-		getPersistence().cacheResult(kaleoTransition);
-	}
-
-	/**
-	 * Caches the kaleo transitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransitions the kaleo transitions
-	 */
-	public static void cacheResult(List<KaleoTransition> kaleoTransitions) {
-		getPersistence().cacheResult(kaleoTransitions);
-	}
-
-	/**
 	 * Creates a new kaleo transition with the primary key. Does not add the kaleo transition to the database.
 	 *
 	 * @param kaleoTransitionId the primary key for the new kaleo transition
@@ -710,4 +706,4 @@ public class KaleoTransitionUtil {
 	private static volatile KaleoTransitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1185600296
+// LIFERAY-SERVICE-BUILDER-HASH:1791706002

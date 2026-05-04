@@ -11,7 +11,6 @@ import com.liferay.expando.kernel.model.ExpandoValueTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoValuePersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoValueUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
@@ -1624,95 +1620,6 @@ public class ExpandoValuePersistenceImpl
 	}
 
 	/**
-	 * Caches the expando value in the entity cache if it is enabled.
-	 *
-	 * @param expandoValue the expando value
-	 */
-	@Override
-	public void cacheResult(ExpandoValue expandoValue) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoValue.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				ExpandoValueImpl.class, expandoValue.getPrimaryKey(),
-				expandoValue);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_R,
-				new Object[] {
-					expandoValue.getColumnId(), expandoValue.getRowId()
-				},
-				expandoValue);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_C_C,
-				new Object[] {
-					expandoValue.getTableId(), expandoValue.getColumnId(),
-					expandoValue.getClassPK()
-				},
-				expandoValue);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the expando values in the entity cache if it is enabled.
-	 *
-	 * @param expandoValues the expando values
-	 */
-	@Override
-	public void cacheResult(List<ExpandoValue> expandoValues) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (expandoValues.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ExpandoValue expandoValue : expandoValues) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						expandoValue.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						ExpandoValueImpl.class, expandoValue.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(expandoValue);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ExpandoValueModelImpl expandoValueModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoValueModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				expandoValueModelImpl.getColumnId(),
-				expandoValueModelImpl.getRowId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_R, args, expandoValueModelImpl);
-
-			args = new Object[] {
-				expandoValueModelImpl.getTableId(),
-				expandoValueModelImpl.getColumnId(),
-				expandoValueModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_C_C, args, expandoValueModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new expando value with the primary key. Does not add the expando value to the database.
 	 *
 	 * @param valueId the primary key for the new expando value
@@ -1823,10 +1730,7 @@ public class ExpandoValuePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ExpandoValueImpl.class, expandoValueModelImpl, false, true);
-
-		cacheUniqueFindersCache(expandoValueModelImpl);
+		cacheUniqueFindersResult(expandoValue, false);
 
 		if (isNew) {
 			expandoValue.setNew(false);
@@ -1956,9 +1860,6 @@ public class ExpandoValuePersistenceImpl
 	 * Initializes the expando value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByTableId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
 			new String[] {
@@ -2136,10 +2037,11 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByC_R = new FinderPath(
+		_finderPathFetchByC_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"columnId", "rowId_"}, true);
+			new String[] {"columnId", "rowId_"}, false,
+			ExpandoValue::getColumnId, ExpandoValue::getRowId);
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_R, _SQL_SELECT_EXPANDOVALUE_WHERE,
@@ -2181,12 +2083,14 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByT_C_C = new FinderPath(
+		_finderPathFetchByT_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"tableId", "columnId", "classPK"}, true);
+			new String[] {"tableId", "columnId", "classPK"}, false,
+			ExpandoValue::getTableId, ExpandoValue::getColumnId,
+			ExpandoValue::getClassPK);
 
 		_uniquePersistenceFinderByT_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_C_C, _SQL_SELECT_EXPANDOVALUE_WHERE,
@@ -2276,4 +2180,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1308089025
+// LIFERAY-SERVICE-BUILDER-HASH:494354990

@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
@@ -1458,62 +1454,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo task assignment instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
-	 */
-	@Override
-	public void cacheResult(
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTaskAssignmentInstance.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoTaskAssignmentInstanceImpl.class,
-				kaleoTaskAssignmentInstance.getPrimaryKey(),
-				kaleoTaskAssignmentInstance);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo task assignment instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstances the kaleo task assignment instances
-	 */
-	@Override
-	public void cacheResult(
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoTaskAssignmentInstances.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance :
-				kaleoTaskAssignmentInstances) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoTaskAssignmentInstance.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoTaskAssignmentInstanceImpl.class,
-						kaleoTaskAssignmentInstance.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoTaskAssignmentInstance);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new kaleo task assignment instance with the primary key. Does not add the kaleo task assignment instance to the database.
 	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key for the new kaleo task assignment instance
@@ -1671,9 +1611,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoTaskAssignmentInstanceImpl.class,
-			kaleoTaskAssignmentInstanceModelImpl, false, true);
+		cacheUniqueFindersResult(kaleoTaskAssignmentInstance, false);
 
 		if (isNew) {
 			kaleoTaskAssignmentInstance.setNew(false);
@@ -1811,9 +1749,6 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2168,4 +2103,4 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1706441449
+// LIFERAY-SERVICE-BUILDER-HASH:88177354

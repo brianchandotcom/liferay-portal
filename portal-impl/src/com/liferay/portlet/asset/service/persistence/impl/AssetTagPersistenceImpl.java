@@ -15,7 +15,6 @@ import com.liferay.asset.kernel.service.persistence.AssetTagUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -49,8 +48,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2809,88 +2806,6 @@ public class AssetTagPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset tag in the entity cache if it is enabled.
-	 *
-	 * @param assetTag the asset tag
-	 */
-	@Override
-	public void cacheResult(AssetTag assetTag) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetTag.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {assetTag.getUuid(), assetTag.getGroupId()},
-				assetTag);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					assetTag.getExternalReferenceCode(), assetTag.getGroupId()
-				},
-				assetTag);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset tags in the entity cache if it is enabled.
-	 *
-	 * @param assetTags the asset tags
-	 */
-	@Override
-	public void cacheResult(List<AssetTag> assetTags) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetTags.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetTag assetTag : assetTags) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetTag.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AssetTagImpl.class, assetTag.getPrimaryKey()) == null) {
-
-					cacheResult(assetTag);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetTagModelImpl assetTagModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetTagModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetTagModelImpl.getUuid(), assetTagModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, assetTagModelImpl);
-
-			args = new Object[] {
-				assetTagModelImpl.getExternalReferenceCode(),
-				assetTagModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, assetTagModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset tag with the primary key. Does not add the asset tag to the database.
 	 *
 	 * @param tagId the primary key for the new asset tag
@@ -3094,10 +3009,7 @@ public class AssetTagPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AssetTagImpl.class, assetTagModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetTagModelImpl);
+		cacheUniqueFindersResult(assetTag, false);
 
 		if (isNew) {
 			assetTag.setNew(false);
@@ -3565,9 +3477,6 @@ public class AssetTagPersistenceImpl
 	 * Initializes the asset tag persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		assetTagToAssetEntryTableMapper = TableMapperFactory.getTableMapper(
 			"AssetEntries_AssetTags", "companyId", "tagId", "entryId", this,
 			assetEntryPersistence);
@@ -3599,10 +3508,11 @@ public class AssetTagPersistenceImpl
 				"assetTag.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				AssetTag::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, AssetTag::getUuid,
+			AssetTag::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETTAG_WHERE,
@@ -3724,10 +3634,11 @@ public class AssetTagPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			AssetTag::getExternalReferenceCode, AssetTag::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETTAG_WHERE,
@@ -3782,4 +3693,4 @@ public class AssetTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1555471439
+// LIFERAY-SERVICE-BUILDER-HASH:-505282760

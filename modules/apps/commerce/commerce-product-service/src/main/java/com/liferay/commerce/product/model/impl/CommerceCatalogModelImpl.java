@@ -1183,4 +1183,4 @@ public class CommerceCatalogModelImpl
 	private CommerceCatalog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1202647120
+// LIFERAY-SERVICE-BUILDER-HASH:1524279874

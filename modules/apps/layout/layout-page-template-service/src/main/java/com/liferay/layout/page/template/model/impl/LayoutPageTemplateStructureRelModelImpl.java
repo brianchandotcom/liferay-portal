@@ -1032,6 +1032,14 @@ public class LayoutPageTemplateStructureRelModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(LayoutPageTemplateStructureRel source) {
+		LayoutPageTemplateStructureRelModelImpl sourceModelImpl =
+			(LayoutPageTemplateStructureRelModelImpl)source;
+
+		setDataJSONObject(sourceModelImpl.getDataJSONObject());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1449,4 +1457,4 @@ public class LayoutPageTemplateStructureRelModelImpl
 	private LayoutPageTemplateStructureRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2044913501
+// LIFERAY-SERVICE-BUILDER-HASH:-2047590773

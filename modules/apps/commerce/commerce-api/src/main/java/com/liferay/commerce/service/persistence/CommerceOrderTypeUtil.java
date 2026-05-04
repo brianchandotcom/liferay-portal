@@ -37,6 +37,20 @@ public class CommerceOrderTypeUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceOrderType> commerceOrderTypes) {
+		getPersistence().cacheResult(commerceOrderTypes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceOrderType commerceOrderType) {
+		getPersistence().cacheResult(commerceOrderType);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1340,24 +1354,6 @@ public class CommerceOrderTypeUtil {
 	}
 
 	/**
-	 * Caches the commerce order type in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderType the commerce order type
-	 */
-	public static void cacheResult(CommerceOrderType commerceOrderType) {
-		getPersistence().cacheResult(commerceOrderType);
-	}
-
-	/**
-	 * Caches the commerce order types in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderTypes the commerce order types
-	 */
-	public static void cacheResult(List<CommerceOrderType> commerceOrderTypes) {
-		getPersistence().cacheResult(commerceOrderTypes);
-	}
-
-	/**
 	 * Creates a new commerce order type with the primary key. Does not add the commerce order type to the database.
 	 *
 	 * @param commerceOrderTypeId the primary key for the new commerce order type
@@ -1424,4 +1420,4 @@ public class CommerceOrderTypeUtil {
 	private static volatile CommerceOrderTypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1138751325
+// LIFERAY-SERVICE-BUILDER-HASH:-935809463

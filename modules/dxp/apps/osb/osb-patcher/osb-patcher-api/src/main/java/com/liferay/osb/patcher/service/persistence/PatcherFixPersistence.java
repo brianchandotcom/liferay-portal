@@ -1842,20 +1842,6 @@ public interface PatcherFixPersistence extends BasePersistence<PatcherFix> {
 		long patcherProjectVersionId, boolean latestFix, int type, int status);
 
 	/**
-	 * Caches the patcher fix in the entity cache if it is enabled.
-	 *
-	 * @param patcherFix the patcher fix
-	 */
-	public void cacheResult(PatcherFix patcherFix);
-
-	/**
-	 * Caches the patcher fixes in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixes the patcher fixes
-	 */
-	public void cacheResult(java.util.List<PatcherFix> patcherFixes);
-
-	/**
 	 * Creates a new patcher fix with the primary key. Does not add the patcher fix to the database.
 	 *
 	 * @param patcherFixId the primary key for the new patcher fix
@@ -2246,4 +2232,4 @@ public interface PatcherFixPersistence extends BasePersistence<PatcherFix> {
 			patcherFixPacks);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1300029678
+// LIFERAY-SERVICE-BUILDER-HASH:-1367174300

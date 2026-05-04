@@ -1081,21 +1081,6 @@ public interface AssetListEntryUsagePersistence
 		String key, long plid);
 
 	/**
-	 * Caches the asset list entry usage in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsage the asset list entry usage
-	 */
-	public void cacheResult(AssetListEntryUsage assetListEntryUsage);
-
-	/**
-	 * Caches the asset list entry usages in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsages the asset list entry usages
-	 */
-	public void cacheResult(
-		java.util.List<AssetListEntryUsage> assetListEntryUsages);
-
-	/**
 	 * Creates a new asset list entry usage with the primary key. Does not add the asset list entry usage to the database.
 	 *
 	 * @param assetListEntryUsageId the primary key for the new asset list entry usage
@@ -1135,4 +1120,4 @@ public interface AssetListEntryUsagePersistence
 	public AssetListEntryUsage fetchByPrimaryKey(long assetListEntryUsageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-515200109
+// LIFERAY-SERVICE-BUILDER-HASH:-237654353

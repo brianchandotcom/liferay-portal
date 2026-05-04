@@ -560,21 +560,6 @@ public interface DLFileEntryMetadataPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the document library file entry metadata in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadata the document library file entry metadata
-	 */
-	public void cacheResult(DLFileEntryMetadata dlFileEntryMetadata);
-
-	/**
-	 * Caches the document library file entry metadatas in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadatas the document library file entry metadatas
-	 */
-	public void cacheResult(
-		java.util.List<DLFileEntryMetadata> dlFileEntryMetadatas);
-
-	/**
 	 * Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
 	 *
 	 * @param fileEntryMetadataId the primary key for the new document library file entry metadata
@@ -614,4 +599,4 @@ public interface DLFileEntryMetadataPersistence
 	public DLFileEntryMetadata fetchByPrimaryKey(long fileEntryMetadataId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1532869655
+// LIFERAY-SERVICE-BUILDER-HASH:1671118461

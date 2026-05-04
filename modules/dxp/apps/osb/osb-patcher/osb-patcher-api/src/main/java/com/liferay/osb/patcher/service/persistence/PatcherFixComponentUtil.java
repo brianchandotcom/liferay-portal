@@ -36,6 +36,22 @@ public class PatcherFixComponentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PatcherFixComponent> patcherFixComponents) {
+
+		getPersistence().cacheResult(patcherFixComponents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherFixComponent patcherFixComponent) {
+		getPersistence().cacheResult(patcherFixComponent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -174,26 +190,6 @@ public class PatcherFixComponentUtil {
 	}
 
 	/**
-	 * Caches the patcher fix component in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponent the patcher fix component
-	 */
-	public static void cacheResult(PatcherFixComponent patcherFixComponent) {
-		getPersistence().cacheResult(patcherFixComponent);
-	}
-
-	/**
-	 * Caches the patcher fix components in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponents the patcher fix components
-	 */
-	public static void cacheResult(
-		List<PatcherFixComponent> patcherFixComponents) {
-
-		getPersistence().cacheResult(patcherFixComponents);
-	}
-
-	/**
 	 * Creates a new patcher fix component with the primary key. Does not add the patcher fix component to the database.
 	 *
 	 * @param patcherFixComponentId the primary key for the new patcher fix component
@@ -263,4 +259,4 @@ public class PatcherFixComponentUtil {
 	private static volatile PatcherFixComponentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:887569325
+// LIFERAY-SERVICE-BUILDER-HASH:757502019

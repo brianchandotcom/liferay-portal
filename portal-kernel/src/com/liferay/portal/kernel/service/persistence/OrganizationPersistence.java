@@ -1772,20 +1772,6 @@ public interface OrganizationPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the organization in the entity cache if it is enabled.
-	 *
-	 * @param organization the organization
-	 */
-	public void cacheResult(Organization organization);
-
-	/**
-	 * Caches the organizations in the entity cache if it is enabled.
-	 *
-	 * @param organizations the organizations
-	 */
-	public void cacheResult(java.util.List<Organization> organizations);
-
-	/**
 	 * Creates a new organization with the primary key. Does not add the organization to the database.
 	 *
 	 * @param organizationId the primary key for the new organization
@@ -2164,4 +2150,4 @@ public interface OrganizationPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1437914779
+// LIFERAY-SERVICE-BUILDER-HASH:1561350643

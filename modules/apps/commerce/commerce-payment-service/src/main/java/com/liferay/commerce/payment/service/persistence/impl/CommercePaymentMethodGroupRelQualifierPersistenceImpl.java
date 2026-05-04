@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -581,82 +578,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce payment method group rel qualifier in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifier the commerce payment method group rel qualifier
-	 */
-	@Override
-	public void cacheResult(
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier) {
-
-		entityCache.putResult(
-			CommercePaymentMethodGroupRelQualifierImpl.class,
-			commercePaymentMethodGroupRelQualifier.getPrimaryKey(),
-			commercePaymentMethodGroupRelQualifier);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C,
-			new Object[] {
-				commercePaymentMethodGroupRelQualifier.getClassNameId(),
-				commercePaymentMethodGroupRelQualifier.getClassPK(),
-				commercePaymentMethodGroupRelQualifier.
-					getCommercePaymentMethodGroupRelId()
-			},
-			commercePaymentMethodGroupRelQualifier);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce payment method group rel qualifiers in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifiers the commerce payment method group rel qualifiers
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePaymentMethodGroupRelQualifier>
-			commercePaymentMethodGroupRelQualifiers) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePaymentMethodGroupRelQualifiers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePaymentMethodGroupRelQualifier
-				commercePaymentMethodGroupRelQualifier :
-					commercePaymentMethodGroupRelQualifiers) {
-
-			if (entityCache.getResult(
-					CommercePaymentMethodGroupRelQualifierImpl.class,
-					commercePaymentMethodGroupRelQualifier.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commercePaymentMethodGroupRelQualifier);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePaymentMethodGroupRelQualifierModelImpl
-			commercePaymentMethodGroupRelQualifierModelImpl) {
-
-		Object[] args = new Object[] {
-			commercePaymentMethodGroupRelQualifierModelImpl.getClassNameId(),
-			commercePaymentMethodGroupRelQualifierModelImpl.getClassPK(),
-			commercePaymentMethodGroupRelQualifierModelImpl.
-				getCommercePaymentMethodGroupRelId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args,
-			commercePaymentMethodGroupRelQualifierModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce payment method group rel qualifier with the primary key. Does not add the commerce payment method group rel qualifier to the database.
 	 *
 	 * @param commercePaymentMethodGroupRelQualifierId the primary key for the new commerce payment method group rel qualifier
@@ -814,12 +735,7 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePaymentMethodGroupRelQualifierImpl.class,
-			commercePaymentMethodGroupRelQualifierModelImpl, false, true);
-
-		cacheUniqueFindersCache(
-			commercePaymentMethodGroupRelQualifierModelImpl);
+		cacheUniqueFindersResult(commercePaymentMethodGroupRelQualifier, false);
 
 		if (isNew) {
 			commercePaymentMethodGroupRelQualifier.setNew(false);
@@ -891,9 +807,6 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommercePaymentMethodGroupRelId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -971,13 +884,16 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				CommercePaymentMethodGroupRelQualifier::
 					getCommercePaymentMethodGroupRelId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "CPaymentMethodGroupRelId"},
-			true);
+			false, CommercePaymentMethodGroupRelQualifier::getClassNameId,
+			CommercePaymentMethodGroupRelQualifier::getClassPK,
+			CommercePaymentMethodGroupRelQualifier::
+				getCommercePaymentMethodGroupRelId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
@@ -1073,4 +989,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1204902197
+// LIFERAY-SERVICE-BUILDER-HASH:-658921693

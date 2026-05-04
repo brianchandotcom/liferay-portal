@@ -36,6 +36,20 @@ public class SystemEventUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SystemEvent> systemEvents) {
+		getPersistence().cacheResult(systemEvents);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SystemEvent systemEvent) {
+		getPersistence().cacheResult(systemEvent);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -671,24 +685,6 @@ public class SystemEventUtil {
 	}
 
 	/**
-	 * Caches the system event in the entity cache if it is enabled.
-	 *
-	 * @param systemEvent the system event
-	 */
-	public static void cacheResult(SystemEvent systemEvent) {
-		getPersistence().cacheResult(systemEvent);
-	}
-
-	/**
-	 * Caches the system events in the entity cache if it is enabled.
-	 *
-	 * @param systemEvents the system events
-	 */
-	public static void cacheResult(List<SystemEvent> systemEvents) {
-		getPersistence().cacheResult(systemEvents);
-	}
-
-	/**
 	 * Creates a new system event with the primary key. Does not add the system event to the database.
 	 *
 	 * @param systemEventId the primary key for the new system event
@@ -749,4 +745,4 @@ public class SystemEventUtil {
 	private static volatile SystemEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-54028999
+// LIFERAY-SERVICE-BUILDER-HASH:-1630735255

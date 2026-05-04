@@ -135,20 +135,6 @@ public interface UserTrackerPathPersistence
 	public int countByUserTrackerId(long userTrackerId);
 
 	/**
-	 * Caches the user tracker path in the entity cache if it is enabled.
-	 *
-	 * @param userTrackerPath the user tracker path
-	 */
-	public void cacheResult(UserTrackerPath userTrackerPath);
-
-	/**
-	 * Caches the user tracker paths in the entity cache if it is enabled.
-	 *
-	 * @param userTrackerPaths the user tracker paths
-	 */
-	public void cacheResult(java.util.List<UserTrackerPath> userTrackerPaths);
-
-	/**
 	 * Creates a new user tracker path with the primary key. Does not add the user tracker path to the database.
 	 *
 	 * @param userTrackerPathId the primary key for the new user tracker path
@@ -187,4 +173,4 @@ public interface UserTrackerPathPersistence
 	public UserTrackerPath fetchByPrimaryKey(long userTrackerPathId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:622061177
+// LIFERAY-SERVICE-BUILDER-HASH:339735203

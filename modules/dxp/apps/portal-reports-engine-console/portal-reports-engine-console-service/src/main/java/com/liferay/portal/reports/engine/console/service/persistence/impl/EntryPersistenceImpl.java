@@ -16,9 +16,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.reports.engine.console.exception.NoSuchEntryException;
 import com.liferay.portal.reports.engine.console.model.Entry;
@@ -34,7 +31,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -80,41 +76,6 @@ public class EntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(EntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the entry in the entity cache if it is enabled.
-	 *
-	 * @param entry the entry
-	 */
-	@Override
-	public void cacheResult(Entry entry) {
-		entityCache.putResult(EntryImpl.class, entry.getPrimaryKey(), entry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the entries in the entity cache if it is enabled.
-	 *
-	 * @param entries the entries
-	 */
-	@Override
-	public void cacheResult(List<Entry> entries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (entries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Entry entry : entries) {
-			if (entityCache.getResult(EntryImpl.class, entry.getPrimaryKey()) ==
-					null) {
-
-				cacheResult(entry);
-			}
-		}
 	}
 
 	/**
@@ -241,7 +202,7 @@ public class EntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(EntryImpl.class, entry, false, true);
+		cacheUniqueFindersResult(entry, false);
 
 		if (isNew) {
 			entry.setNew(false);
@@ -300,9 +261,6 @@ public class EntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		EntryUtil.setPersistence(this);
 	}
 
@@ -360,4 +318,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1051958131
+// LIFERAY-SERVICE-BUILDER-HASH:-1264808706

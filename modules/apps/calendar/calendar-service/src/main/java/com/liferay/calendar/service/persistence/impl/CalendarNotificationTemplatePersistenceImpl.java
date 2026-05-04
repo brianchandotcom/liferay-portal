@@ -14,7 +14,6 @@ import com.liferay.calendar.service.persistence.CalendarNotificationTemplatePers
 import com.liferay.calendar.service.persistence.CalendarNotificationTemplateUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -822,110 +818,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the calendar notification template in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplate the calendar notification template
-	 */
-	@Override
-	public void cacheResult(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarNotificationTemplate.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CalendarNotificationTemplateImpl.class,
-				calendarNotificationTemplate.getPrimaryKey(),
-				calendarNotificationTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					calendarNotificationTemplate.getUuid(),
-					calendarNotificationTemplate.getGroupId()
-				},
-				calendarNotificationTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByC_NT_NTT,
-				new Object[] {
-					calendarNotificationTemplate.getCalendarId(),
-					calendarNotificationTemplate.getNotificationType(),
-					calendarNotificationTemplate.getNotificationTemplateType()
-				},
-				calendarNotificationTemplate);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the calendar notification templates in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplates the calendar notification templates
-	 */
-	@Override
-	public void cacheResult(
-		List<CalendarNotificationTemplate> calendarNotificationTemplates) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (calendarNotificationTemplates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CalendarNotificationTemplate calendarNotificationTemplate :
-				calendarNotificationTemplates) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						calendarNotificationTemplate.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CalendarNotificationTemplateImpl.class,
-						calendarNotificationTemplate.getPrimaryKey()) == null) {
-
-					cacheResult(calendarNotificationTemplate);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CalendarNotificationTemplateModelImpl
-			calendarNotificationTemplateModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarNotificationTemplateModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				calendarNotificationTemplateModelImpl.getUuid(),
-				calendarNotificationTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				calendarNotificationTemplateModelImpl);
-
-			args = new Object[] {
-				calendarNotificationTemplateModelImpl.getCalendarId(),
-				calendarNotificationTemplateModelImpl.getNotificationType(),
-				calendarNotificationTemplateModelImpl.
-					getNotificationTemplateType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_NT_NTT, args,
-				calendarNotificationTemplateModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
 	 *
 	 * @param calendarNotificationTemplateId the primary key for the new calendar notification template
@@ -1093,11 +985,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CalendarNotificationTemplateImpl.class,
-			calendarNotificationTemplateModelImpl, false, true);
-
-		cacheUniqueFindersCache(calendarNotificationTemplateModelImpl);
+		cacheUniqueFindersResult(calendarNotificationTemplate, false);
 
 		if (isNew) {
 			calendarNotificationTemplate.setNew(false);
@@ -1239,9 +1127,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1272,10 +1157,12 @@ public class CalendarNotificationTemplatePersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CalendarNotificationTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CalendarNotificationTemplate::getUuid,
+			CalendarNotificationTemplate::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1358,7 +1245,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CalendarNotificationTemplate::getCalendarId));
 
-		_finderPathFetchByC_NT_NTT = new FinderPath(
+		_finderPathFetchByC_NT_NTT = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_NT_NTT",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1367,7 +1254,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			new String[] {
 				"calendarId", "notificationType", "notificationTemplateType"
 			},
-			true);
+			false, CalendarNotificationTemplate::getCalendarId,
+			CalendarNotificationTemplate::getNotificationType,
+			CalendarNotificationTemplate::getNotificationTemplateType);
 
 		_uniquePersistenceFinderByC_NT_NTT = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_NT_NTT,
@@ -1458,4 +1347,4 @@ public class CalendarNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1584783555
+// LIFERAY-SERVICE-BUILDER-HASH:-1849559285

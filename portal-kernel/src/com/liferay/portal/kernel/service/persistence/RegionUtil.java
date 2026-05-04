@@ -36,6 +36,20 @@ public class RegionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Region> regions) {
+		getPersistence().cacheResult(regions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Region region) {
+		getPersistence().cacheResult(region);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -784,24 +798,6 @@ public class RegionUtil {
 	}
 
 	/**
-	 * Caches the region in the entity cache if it is enabled.
-	 *
-	 * @param region the region
-	 */
-	public static void cacheResult(Region region) {
-		getPersistence().cacheResult(region);
-	}
-
-	/**
-	 * Caches the regions in the entity cache if it is enabled.
-	 *
-	 * @param regions the regions
-	 */
-	public static void cacheResult(List<Region> regions) {
-		getPersistence().cacheResult(regions);
-	}
-
-	/**
 	 * Creates a new region with the primary key. Does not add the region to the database.
 	 *
 	 * @param regionId the primary key for the new region
@@ -862,4 +858,4 @@ public class RegionUtil {
 	private static volatile RegionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-591933111
+// LIFERAY-SERVICE-BUILDER-HASH:-591813067

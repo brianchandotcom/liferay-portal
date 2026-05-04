@@ -36,6 +36,20 @@ public class DLStorageQuotaUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLStorageQuota> dlStorageQuotas) {
+		getPersistence().cacheResult(dlStorageQuotas);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLStorageQuota dlStorageQuota) {
+		getPersistence().cacheResult(dlStorageQuota);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -171,24 +185,6 @@ public class DLStorageQuotaUtil {
 	}
 
 	/**
-	 * Caches the dl storage quota in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuota the dl storage quota
-	 */
-	public static void cacheResult(DLStorageQuota dlStorageQuota) {
-		getPersistence().cacheResult(dlStorageQuota);
-	}
-
-	/**
-	 * Caches the dl storage quotas in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuotas the dl storage quotas
-	 */
-	public static void cacheResult(List<DLStorageQuota> dlStorageQuotas) {
-		getPersistence().cacheResult(dlStorageQuotas);
-	}
-
-	/**
 	 * Creates a new dl storage quota with the primary key. Does not add the dl storage quota to the database.
 	 *
 	 * @param dlStorageQuotaId the primary key for the new dl storage quota
@@ -251,4 +247,4 @@ public class DLStorageQuotaUtil {
 	private static volatile DLStorageQuotaPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:356323853
+// LIFERAY-SERVICE-BUILDER-HASH:1158930817

@@ -299,21 +299,6 @@ public interface DDMStructureVersionPersistence
 	public int countByS_S(long structureId, int status);
 
 	/**
-	 * Caches the ddm structure version in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 */
-	public void cacheResult(DDMStructureVersion ddmStructureVersion);
-
-	/**
-	 * Caches the ddm structure versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersions the ddm structure versions
-	 */
-	public void cacheResult(
-		java.util.List<DDMStructureVersion> ddmStructureVersions);
-
-	/**
 	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	 *
 	 * @param structureVersionId the primary key for the new ddm structure version
@@ -353,4 +338,4 @@ public interface DDMStructureVersionPersistence
 	public DDMStructureVersion fetchByPrimaryKey(long structureVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:43634032
+// LIFERAY-SERVICE-BUILDER-HASH:857540856

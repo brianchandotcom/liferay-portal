@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3423,82 +3421,6 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscount the commerce discount
-	 */
-	@Override
-	public void cacheResult(CommerceDiscount commerceDiscount) {
-		entityCache.putResult(
-			CommerceDiscountImpl.class, commerceDiscount.getPrimaryKey(),
-			commerceDiscount);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_A,
-			new Object[] {
-				commerceDiscount.getCompanyId(),
-				commerceDiscount.getCouponCode(), commerceDiscount.isActive()
-			},
-			commerceDiscount);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceDiscount.getExternalReferenceCode(),
-				commerceDiscount.getCompanyId()
-			},
-			commerceDiscount);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discounts in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscounts the commerce discounts
-	 */
-	@Override
-	public void cacheResult(List<CommerceDiscount> commerceDiscounts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscounts.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscount commerceDiscount : commerceDiscounts) {
-			if (entityCache.getResult(
-					CommerceDiscountImpl.class,
-					commerceDiscount.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscount);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceDiscountModelImpl commerceDiscountModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceDiscountModelImpl.getCompanyId(),
-			commerceDiscountModelImpl.getCouponCode(),
-			commerceDiscountModelImpl.isActive()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_A, args, commerceDiscountModelImpl);
-
-		args = new Object[] {
-			commerceDiscountModelImpl.getExternalReferenceCode(),
-			commerceDiscountModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceDiscountModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce discount with the primary key. Does not add the commerce discount to the database.
 	 *
 	 * @param commerceDiscountId the primary key for the new commerce discount
@@ -3706,10 +3628,7 @@ public class CommerceDiscountPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountImpl.class, commerceDiscountModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceDiscountModelImpl);
+		cacheUniqueFindersResult(commerceDiscount, false);
 
 		if (isNew) {
 			commerceDiscount.setNew(false);
@@ -3775,9 +3694,6 @@ public class CommerceDiscountPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3941,13 +3857,15 @@ public class CommerceDiscountPersistenceImpl
 				"commerceDiscount.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CommerceDiscount::getStatus));
 
-		_finderPathFetchByC_C_A = new FinderPath(
+		_finderPathFetchByC_C_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"companyId", "couponCode", "active_"}, true);
+			new String[] {"companyId", "couponCode", "active_"}, false,
+			CommerceDiscount::getCompanyId, CommerceDiscount::getCouponCode,
+			CommerceDiscount::isActive);
 
 		_finderPathWithPaginationFindByC_L_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_A_S",
@@ -3996,10 +3914,12 @@ public class CommerceDiscountPersistenceImpl
 					"commerceDiscount.", "status", FinderColumn.Type.INTEGER,
 					"=", true, true, CommerceDiscount::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceDiscount::getExternalReferenceCode,
+			CommerceDiscount::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEDISCOUNT_WHERE,
@@ -4103,4 +4023,4 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:448433884
+// LIFERAY-SERVICE-BUILDER-HASH:1405055447

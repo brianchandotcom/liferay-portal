@@ -36,6 +36,20 @@ public class AssetTagUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetTag> assetTags) {
+		getPersistence().cacheResult(assetTags);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetTag assetTag) {
+		getPersistence().cacheResult(assetTag);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1241,24 +1255,6 @@ public class AssetTagUtil {
 	}
 
 	/**
-	 * Caches the asset tag in the entity cache if it is enabled.
-	 *
-	 * @param assetTag the asset tag
-	 */
-	public static void cacheResult(AssetTag assetTag) {
-		getPersistence().cacheResult(assetTag);
-	}
-
-	/**
-	 * Caches the asset tags in the entity cache if it is enabled.
-	 *
-	 * @param assetTags the asset tags
-	 */
-	public static void cacheResult(List<AssetTag> assetTags) {
-		getPersistence().cacheResult(assetTags);
-	}
-
-	/**
 	 * Creates a new asset tag with the primary key. Does not add the asset tag to the database.
 	 *
 	 * @param tagId the primary key for the new asset tag
@@ -1536,4 +1532,4 @@ public class AssetTagUtil {
 	private static volatile AssetTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-941329671
+// LIFERAY-SERVICE-BUILDER-HASH:1955057095

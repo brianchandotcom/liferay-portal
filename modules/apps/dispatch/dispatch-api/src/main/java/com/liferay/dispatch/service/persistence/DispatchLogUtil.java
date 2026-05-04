@@ -36,6 +36,20 @@ public class DispatchLogUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DispatchLog> dispatchLogs) {
+		getPersistence().cacheResult(dispatchLogs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DispatchLog dispatchLog) {
+		getPersistence().cacheResult(dispatchLog);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -372,24 +386,6 @@ public class DispatchLogUtil {
 	}
 
 	/**
-	 * Caches the dispatch log in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLog the dispatch log
-	 */
-	public static void cacheResult(DispatchLog dispatchLog) {
-		getPersistence().cacheResult(dispatchLog);
-	}
-
-	/**
-	 * Caches the dispatch logs in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLogs the dispatch logs
-	 */
-	public static void cacheResult(List<DispatchLog> dispatchLogs) {
-		getPersistence().cacheResult(dispatchLogs);
-	}
-
-	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
 	 * @param dispatchLogId the primary key for the new dispatch log
@@ -450,4 +446,4 @@ public class DispatchLogUtil {
 	private static volatile DispatchLogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:295990065
+// LIFERAY-SERVICE-BUILDER-HASH:1811261037

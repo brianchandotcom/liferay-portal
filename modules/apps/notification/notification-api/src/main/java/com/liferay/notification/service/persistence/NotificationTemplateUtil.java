@@ -36,6 +36,22 @@ public class NotificationTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationTemplate> notificationTemplates) {
+
+		getPersistence().cacheResult(notificationTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(NotificationTemplate notificationTemplate) {
+		getPersistence().cacheResult(notificationTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -750,26 +766,6 @@ public class NotificationTemplateUtil {
 	}
 
 	/**
-	 * Caches the notification template in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplate the notification template
-	 */
-	public static void cacheResult(NotificationTemplate notificationTemplate) {
-		getPersistence().cacheResult(notificationTemplate);
-	}
-
-	/**
-	 * Caches the notification templates in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplates the notification templates
-	 */
-	public static void cacheResult(
-		List<NotificationTemplate> notificationTemplates) {
-
-		getPersistence().cacheResult(notificationTemplates);
-	}
-
-	/**
 	 * Creates a new notification template with the primary key. Does not add the notification template to the database.
 	 *
 	 * @param notificationTemplateId the primary key for the new notification template
@@ -839,4 +835,4 @@ public class NotificationTemplateUtil {
 	private static volatile NotificationTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2011510242
+// LIFERAY-SERVICE-BUILDER-HASH:1762588844

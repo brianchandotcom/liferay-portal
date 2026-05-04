@@ -1474,20 +1474,6 @@ public interface JournalFolderPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the journal folder in the entity cache if it is enabled.
-	 *
-	 * @param journalFolder the journal folder
-	 */
-	public void cacheResult(JournalFolder journalFolder);
-
-	/**
-	 * Caches the journal folders in the entity cache if it is enabled.
-	 *
-	 * @param journalFolders the journal folders
-	 */
-	public void cacheResult(java.util.List<JournalFolder> journalFolders);
-
-	/**
 	 * Creates a new journal folder with the primary key. Does not add the journal folder to the database.
 	 *
 	 * @param folderId the primary key for the new journal folder
@@ -1525,4 +1511,4 @@ public interface JournalFolderPersistence
 	public JournalFolder fetchByPrimaryKey(long folderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1357462376
+// LIFERAY-SERVICE-BUILDER-HASH:193142812

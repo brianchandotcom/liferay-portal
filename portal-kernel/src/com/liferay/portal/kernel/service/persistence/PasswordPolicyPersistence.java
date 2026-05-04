@@ -549,20 +549,6 @@ public interface PasswordPolicyPersistence
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the password policy in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicy the password policy
-	 */
-	public void cacheResult(PasswordPolicy passwordPolicy);
-
-	/**
-	 * Caches the password policies in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicies the password policies
-	 */
-	public void cacheResult(java.util.List<PasswordPolicy> passwordPolicies);
-
-	/**
 	 * Creates a new password policy with the primary key. Does not add the password policy to the database.
 	 *
 	 * @param passwordPolicyId the primary key for the new password policy
@@ -601,4 +587,4 @@ public interface PasswordPolicyPersistence
 	public PasswordPolicy fetchByPrimaryKey(long passwordPolicyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-739797936
+// LIFERAY-SERVICE-BUILDER-HASH:1057169508

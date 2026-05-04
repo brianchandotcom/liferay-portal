@@ -36,6 +36,20 @@ public class AppUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<App> apps) {
+		getPersistence().cacheResult(apps);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(App app) {
+		getPersistence().cacheResult(app);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -649,24 +663,6 @@ public class AppUtil {
 	}
 
 	/**
-	 * Caches the app in the entity cache if it is enabled.
-	 *
-	 * @param app the app
-	 */
-	public static void cacheResult(App app) {
-		getPersistence().cacheResult(app);
-	}
-
-	/**
-	 * Caches the apps in the entity cache if it is enabled.
-	 *
-	 * @param apps the apps
-	 */
-	public static void cacheResult(List<App> apps) {
-		getPersistence().cacheResult(apps);
-	}
-
-	/**
 	 * Creates a new app with the primary key. Does not add the app to the database.
 	 *
 	 * @param appId the primary key for the new app
@@ -727,4 +723,4 @@ public class AppUtil {
 	private static volatile AppPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1182750637
+// LIFERAY-SERVICE-BUILDER-HASH:-2025505889

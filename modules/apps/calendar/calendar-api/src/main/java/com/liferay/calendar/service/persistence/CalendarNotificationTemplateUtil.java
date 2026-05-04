@@ -36,6 +36,24 @@ public class CalendarNotificationTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CalendarNotificationTemplate> calendarNotificationTemplates) {
+
+		getPersistence().cacheResult(calendarNotificationTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CalendarNotificationTemplate calendarNotificationTemplate) {
+
+		getPersistence().cacheResult(calendarNotificationTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -654,28 +672,6 @@ public class CalendarNotificationTemplateUtil {
 	}
 
 	/**
-	 * Caches the calendar notification template in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplate the calendar notification template
-	 */
-	public static void cacheResult(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-
-		getPersistence().cacheResult(calendarNotificationTemplate);
-	}
-
-	/**
-	 * Caches the calendar notification templates in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplates the calendar notification templates
-	 */
-	public static void cacheResult(
-		List<CalendarNotificationTemplate> calendarNotificationTemplates) {
-
-		getPersistence().cacheResult(calendarNotificationTemplates);
-	}
-
-	/**
 	 * Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
 	 *
 	 * @param calendarNotificationTemplateId the primary key for the new calendar notification template
@@ -751,4 +747,4 @@ public class CalendarNotificationTemplateUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1381647686
+// LIFERAY-SERVICE-BUILDER-HASH:-847618852

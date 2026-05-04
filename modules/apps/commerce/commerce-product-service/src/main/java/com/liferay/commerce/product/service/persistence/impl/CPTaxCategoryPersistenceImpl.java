@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPTaxCategoryUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1372,79 +1369,6 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp tax category in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategory the cp tax category
-	 */
-	@Override
-	public void cacheResult(CPTaxCategory cpTaxCategory) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpTaxCategory.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPTaxCategoryImpl.class, cpTaxCategory.getPrimaryKey(),
-				cpTaxCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpTaxCategory.getExternalReferenceCode(),
-					cpTaxCategory.getCompanyId()
-				},
-				cpTaxCategory);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp tax categories in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategories the cp tax categories
-	 */
-	@Override
-	public void cacheResult(List<CPTaxCategory> cpTaxCategories) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpTaxCategories.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpTaxCategory.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPTaxCategoryImpl.class,
-						cpTaxCategory.getPrimaryKey()) == null) {
-
-					cacheResult(cpTaxCategory);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPTaxCategoryModelImpl cpTaxCategoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpTaxCategoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpTaxCategoryModelImpl.getExternalReferenceCode(),
-				cpTaxCategoryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpTaxCategoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
 	 * @param CPTaxCategoryId the primary key for the new cp tax category
@@ -1654,10 +1578,7 @@ public class CPTaxCategoryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPTaxCategoryImpl.class, cpTaxCategoryModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpTaxCategoryModelImpl);
+		cacheUniqueFindersResult(cpTaxCategory, false);
 
 		if (isNew) {
 			cpTaxCategory.setNew(false);
@@ -1792,9 +1713,6 @@ public class CPTaxCategoryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1884,10 +1802,12 @@ public class CPTaxCategoryPersistenceImpl
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPTaxCategory::getExternalReferenceCode,
+			CPTaxCategory::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPTAXCATEGORY_WHERE,
@@ -1994,4 +1914,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1732916424
+// LIFERAY-SERVICE-BUILDER-HASH:-2144062697

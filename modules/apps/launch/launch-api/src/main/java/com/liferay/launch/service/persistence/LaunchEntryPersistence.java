@@ -459,20 +459,6 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the launch entry in the entity cache if it is enabled.
-	 *
-	 * @param launchEntry the launch entry
-	 */
-	public void cacheResult(LaunchEntry launchEntry);
-
-	/**
-	 * Caches the launch entries in the entity cache if it is enabled.
-	 *
-	 * @param launchEntries the launch entries
-	 */
-	public void cacheResult(java.util.List<LaunchEntry> launchEntries);
-
-	/**
 	 * Creates a new launch entry with the primary key. Does not add the launch entry to the database.
 	 *
 	 * @param launchEntryId the primary key for the new launch entry
@@ -511,4 +497,4 @@ public interface LaunchEntryPersistence extends BasePersistence<LaunchEntry> {
 	public LaunchEntry fetchByPrimaryKey(long launchEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2030535691
+// LIFERAY-SERVICE-BUILDER-HASH:1445174899

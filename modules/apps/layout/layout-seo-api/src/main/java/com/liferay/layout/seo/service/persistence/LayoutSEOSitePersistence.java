@@ -340,20 +340,6 @@ public interface LayoutSEOSitePersistence
 	public int countByGroupId(long groupId);
 
 	/**
-	 * Caches the layout seo site in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSite the layout seo site
-	 */
-	public void cacheResult(LayoutSEOSite layoutSEOSite);
-
-	/**
-	 * Caches the layout seo sites in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSites the layout seo sites
-	 */
-	public void cacheResult(java.util.List<LayoutSEOSite> layoutSEOSites);
-
-	/**
 	 * Creates a new layout seo site with the primary key. Does not add the layout seo site to the database.
 	 *
 	 * @param layoutSEOSiteId the primary key for the new layout seo site
@@ -392,4 +378,4 @@ public interface LayoutSEOSitePersistence
 	public LayoutSEOSite fetchByPrimaryKey(long layoutSEOSiteId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1910614937
+// LIFERAY-SERVICE-BUILDER-HASH:49760737

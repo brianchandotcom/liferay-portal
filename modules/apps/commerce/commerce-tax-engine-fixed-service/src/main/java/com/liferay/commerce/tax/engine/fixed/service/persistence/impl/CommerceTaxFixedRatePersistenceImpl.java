@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -494,67 +491,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce tax fixed rate in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRate the commerce tax fixed rate
-	 */
-	@Override
-	public void cacheResult(CommerceTaxFixedRate commerceTaxFixedRate) {
-		entityCache.putResult(
-			CommerceTaxFixedRateImpl.class,
-			commerceTaxFixedRate.getPrimaryKey(), commerceTaxFixedRate);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				commerceTaxFixedRate.getCPTaxCategoryId(),
-				commerceTaxFixedRate.getCommerceTaxMethodId()
-			},
-			commerceTaxFixedRate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce tax fixed rates in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRates the commerce tax fixed rates
-	 */
-	@Override
-	public void cacheResult(List<CommerceTaxFixedRate> commerceTaxFixedRates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTaxFixedRates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTaxFixedRate commerceTaxFixedRate :
-				commerceTaxFixedRates) {
-
-			if (entityCache.getResult(
-					CommerceTaxFixedRateImpl.class,
-					commerceTaxFixedRate.getPrimaryKey()) == null) {
-
-				cacheResult(commerceTaxFixedRate);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceTaxFixedRateModelImpl.getCPTaxCategoryId(),
-			commerceTaxFixedRateModelImpl.getCommerceTaxMethodId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, commerceTaxFixedRateModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce tax fixed rate with the primary key. Does not add the commerce tax fixed rate to the database.
 	 *
 	 * @param commerceTaxFixedRateId the primary key for the new commerce tax fixed rate
@@ -691,11 +627,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTaxFixedRateImpl.class, commerceTaxFixedRateModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceTaxFixedRateModelImpl);
+		cacheUniqueFindersResult(commerceTaxFixedRate, false);
 
 		if (isNew) {
 			commerceTaxFixedRate.setNew(false);
@@ -756,9 +688,6 @@ public class CommerceTaxFixedRatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPTaxCategoryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPTaxCategoryId",
 			new String[] {
@@ -823,10 +752,12 @@ public class CommerceTaxFixedRatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxFixedRate::getCommerceTaxMethodId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPTaxCategoryId", "commerceTaxMethodId"}, true);
+			new String[] {"CPTaxCategoryId", "commerceTaxMethodId"}, false,
+			CommerceTaxFixedRate::getCPTaxCategoryId,
+			CommerceTaxFixedRate::getCommerceTaxMethodId);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
@@ -905,4 +836,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1627265543
+// LIFERAY-SERVICE-BUILDER-HASH:-1995300531

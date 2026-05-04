@@ -1721,21 +1721,6 @@ public interface CPAttachmentFileEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp attachment file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntry the cp attachment file entry
-	 */
-	public void cacheResult(CPAttachmentFileEntry cpAttachmentFileEntry);
-
-	/**
-	 * Caches the cp attachment file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntries the cp attachment file entries
-	 */
-	public void cacheResult(
-		java.util.List<CPAttachmentFileEntry> cpAttachmentFileEntries);
-
-	/**
 	 * Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	 *
 	 * @param CPAttachmentFileEntryId the primary key for the new cp attachment file entry
@@ -1776,4 +1761,4 @@ public interface CPAttachmentFileEntryPersistence
 		long CPAttachmentFileEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:389663370
+// LIFERAY-SERVICE-BUILDER-HASH:-2026591598

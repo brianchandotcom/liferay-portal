@@ -1410,4 +1410,4 @@ public class StyleBookEntryModelImpl
 	private StyleBookEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:587466825
+// LIFERAY-SERVICE-BUILDER-HASH:231434971

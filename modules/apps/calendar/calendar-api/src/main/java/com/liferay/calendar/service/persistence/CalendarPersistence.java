@@ -645,20 +645,6 @@ public interface CalendarPersistence
 		long groupId, long calendarResourceId, boolean defaultCalendar);
 
 	/**
-	 * Caches the calendar in the entity cache if it is enabled.
-	 *
-	 * @param calendar the calendar
-	 */
-	public void cacheResult(Calendar calendar);
-
-	/**
-	 * Caches the calendars in the entity cache if it is enabled.
-	 *
-	 * @param calendars the calendars
-	 */
-	public void cacheResult(java.util.List<Calendar> calendars);
-
-	/**
 	 * Creates a new calendar with the primary key. Does not add the calendar to the database.
 	 *
 	 * @param calendarId the primary key for the new calendar
@@ -696,4 +682,4 @@ public interface CalendarPersistence
 	public Calendar fetchByPrimaryKey(long calendarId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:632058312
+// LIFERAY-SERVICE-BUILDER-HASH:-1900263492

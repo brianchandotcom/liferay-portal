@@ -505,21 +505,6 @@ public interface BatchEngineImportTaskPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the batch engine import task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTask the batch engine import task
-	 */
-	public void cacheResult(BatchEngineImportTask batchEngineImportTask);
-
-	/**
-	 * Caches the batch engine import tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTasks the batch engine import tasks
-	 */
-	public void cacheResult(
-		java.util.List<BatchEngineImportTask> batchEngineImportTasks);
-
-	/**
 	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *
 	 * @param batchEngineImportTaskId the primary key for the new batch engine import task
@@ -560,4 +545,4 @@ public interface BatchEngineImportTaskPersistence
 		long batchEngineImportTaskId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1866198751
+// LIFERAY-SERVICE-BUILDER-HASH:963655681

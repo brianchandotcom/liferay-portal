@@ -36,6 +36,20 @@ public class DLFileShortcutUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLFileShortcut> dlFileShortcuts) {
+		getPersistence().cacheResult(dlFileShortcuts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileShortcut dlFileShortcut) {
+		getPersistence().cacheResult(dlFileShortcut);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1714,24 +1728,6 @@ public class DLFileShortcutUtil {
 	}
 
 	/**
-	 * Caches the document library file shortcut in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcut the document library file shortcut
-	 */
-	public static void cacheResult(DLFileShortcut dlFileShortcut) {
-		getPersistence().cacheResult(dlFileShortcut);
-	}
-
-	/**
-	 * Caches the document library file shortcuts in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcuts the document library file shortcuts
-	 */
-	public static void cacheResult(List<DLFileShortcut> dlFileShortcuts) {
-		getPersistence().cacheResult(dlFileShortcuts);
-	}
-
-	/**
 	 * Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	 *
 	 * @param fileShortcutId the primary key for the new document library file shortcut
@@ -1794,4 +1790,4 @@ public class DLFileShortcutUtil {
 	private static volatile DLFileShortcutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1452173837
+// LIFERAY-SERVICE-BUILDER-HASH:1333841753

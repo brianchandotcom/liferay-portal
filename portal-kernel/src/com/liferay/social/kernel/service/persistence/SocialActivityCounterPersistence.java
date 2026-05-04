@@ -538,21 +538,6 @@ public interface SocialActivityCounterPersistence
 		int ownerType, int endPeriod);
 
 	/**
-	 * Caches the social activity counter in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounter the social activity counter
-	 */
-	public void cacheResult(SocialActivityCounter socialActivityCounter);
-
-	/**
-	 * Caches the social activity counters in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounters the social activity counters
-	 */
-	public void cacheResult(
-		java.util.List<SocialActivityCounter> socialActivityCounters);
-
-	/**
 	 * Creates a new social activity counter with the primary key. Does not add the social activity counter to the database.
 	 *
 	 * @param activityCounterId the primary key for the new social activity counter
@@ -592,4 +577,4 @@ public interface SocialActivityCounterPersistence
 	public SocialActivityCounter fetchByPrimaryKey(long activityCounterId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:980111070
+// LIFERAY-SERVICE-BUILDER-HASH:470200994

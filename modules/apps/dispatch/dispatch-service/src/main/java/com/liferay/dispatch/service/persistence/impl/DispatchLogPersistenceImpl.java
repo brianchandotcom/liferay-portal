@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -408,43 +405,6 @@ public class DispatchLogPersistenceImpl
 	}
 
 	/**
-	 * Caches the dispatch log in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLog the dispatch log
-	 */
-	@Override
-	public void cacheResult(DispatchLog dispatchLog) {
-		entityCache.putResult(
-			DispatchLogImpl.class, dispatchLog.getPrimaryKey(), dispatchLog);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dispatch logs in the entity cache if it is enabled.
-	 *
-	 * @param dispatchLogs the dispatch logs
-	 */
-	@Override
-	public void cacheResult(List<DispatchLog> dispatchLogs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dispatchLogs.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DispatchLog dispatchLog : dispatchLogs) {
-			if (entityCache.getResult(
-					DispatchLogImpl.class, dispatchLog.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(dispatchLog);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new dispatch log with the primary key. Does not add the dispatch log to the database.
 	 *
 	 * @param dispatchLogId the primary key for the new dispatch log
@@ -570,8 +530,7 @@ public class DispatchLogPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DispatchLogImpl.class, dispatchLogModelImpl, false, true);
+		cacheUniqueFindersResult(dispatchLog, false);
 
 		if (isNew) {
 			dispatchLog.setNew(false);
@@ -637,9 +596,6 @@ public class DispatchLogPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByDispatchTriggerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDispatchTriggerId",
 			new String[] {
@@ -769,4 +725,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2062806184
+// LIFERAY-SERVICE-BUILDER-HASH:389844402

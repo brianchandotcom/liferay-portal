@@ -362,21 +362,6 @@ public interface AnalyticsDeleteMessagePersistence
 	public int countByC_LtM(long companyId, Date modifiedDate);
 
 	/**
-	 * Caches the analytics delete message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessage the analytics delete message
-	 */
-	public void cacheResult(AnalyticsDeleteMessage analyticsDeleteMessage);
-
-	/**
-	 * Caches the analytics delete messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessages the analytics delete messages
-	 */
-	public void cacheResult(
-		java.util.List<AnalyticsDeleteMessage> analyticsDeleteMessages);
-
-	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
 	 * @param analyticsDeleteMessageId the primary key for the new analytics delete message
@@ -418,4 +403,4 @@ public interface AnalyticsDeleteMessagePersistence
 		long analyticsDeleteMessageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:395949559
+// LIFERAY-SERVICE-BUILDER-HASH:2707791

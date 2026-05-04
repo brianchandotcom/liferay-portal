@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.UserIdMapperImpl;
@@ -412,74 +409,6 @@ public class UserIdMapperPersistenceImpl
 	}
 
 	/**
-	 * Caches the user ID mapper in the entity cache if it is enabled.
-	 *
-	 * @param userIdMapper the user ID mapper
-	 */
-	@Override
-	public void cacheResult(UserIdMapper userIdMapper) {
-		EntityCacheUtil.putResult(
-			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_T,
-			new Object[] {userIdMapper.getUserId(), userIdMapper.getType()},
-			userIdMapper);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByT_E,
-			new Object[] {
-				userIdMapper.getType(), userIdMapper.getExternalUserId()
-			},
-			userIdMapper);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the user ID mappers in the entity cache if it is enabled.
-	 *
-	 * @param userIdMappers the user ID mappers
-	 */
-	@Override
-	public void cacheResult(List<UserIdMapper> userIdMappers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (userIdMappers.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UserIdMapper userIdMapper : userIdMappers) {
-			if (EntityCacheUtil.getResult(
-					UserIdMapperImpl.class, userIdMapper.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(userIdMapper);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UserIdMapperModelImpl userIdMapperModelImpl) {
-
-		Object[] args = new Object[] {
-			userIdMapperModelImpl.getUserId(), userIdMapperModelImpl.getType()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_T, args, userIdMapperModelImpl);
-
-		args = new Object[] {
-			userIdMapperModelImpl.getType(),
-			userIdMapperModelImpl.getExternalUserId()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByT_E, args, userIdMapperModelImpl);
-	}
-
-	/**
 	 * Creates a new user ID mapper with the primary key. Does not add the user ID mapper to the database.
 	 *
 	 * @param userIdMapperId the primary key for the new user ID mapper
@@ -584,10 +513,7 @@ public class UserIdMapperPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			UserIdMapperImpl.class, userIdMapperModelImpl, false, true);
-
-		cacheUniqueFindersCache(userIdMapperModelImpl);
+		cacheUniqueFindersResult(userIdMapper, false);
 
 		if (isNew) {
 			userIdMapper.setNew(false);
@@ -652,9 +578,6 @@ public class UserIdMapperPersistenceImpl
 	 * Initializes the user ID mapper persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -683,10 +606,11 @@ public class UserIdMapperPersistenceImpl
 					"userIdMapper.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserIdMapper::getUserId));
 
-		_finderPathFetchByU_T = new FinderPath(
+		_finderPathFetchByU_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, true);
+			new String[] {"userId", "type_"}, false, UserIdMapper::getUserId,
+			UserIdMapper::getType);
 
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_T, _SQL_SELECT_USERIDMAPPER_WHERE,
@@ -697,10 +621,11 @@ public class UserIdMapperPersistenceImpl
 				"userIdMapper.", "type", FinderColumn.Type.STRING, "=", true,
 				true, UserIdMapper::getType));
 
-		_finderPathFetchByT_E = new FinderPath(
+		_finderPathFetchByT_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"type_", "externalUserId"}, true);
+			new String[] {"type_", "externalUserId"}, false,
+			UserIdMapper::getType, UserIdMapper::getExternalUserId);
 
 		_uniquePersistenceFinderByT_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_E, _SQL_SELECT_USERIDMAPPER_WHERE,
@@ -747,4 +672,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:553635716
+// LIFERAY-SERVICE-BUILDER-HASH:144115905

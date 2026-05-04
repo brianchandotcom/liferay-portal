@@ -36,6 +36,20 @@ public class AMImageEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AMImageEntry> amImageEntries) {
+		getPersistence().cacheResult(amImageEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AMImageEntry amImageEntry) {
+		getPersistence().cacheResult(amImageEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1126,24 +1140,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Caches the am image entry in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntry the am image entry
-	 */
-	public static void cacheResult(AMImageEntry amImageEntry) {
-		getPersistence().cacheResult(amImageEntry);
-	}
-
-	/**
-	 * Caches the am image entries in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntries the am image entries
-	 */
-	public static void cacheResult(List<AMImageEntry> amImageEntries) {
-		getPersistence().cacheResult(amImageEntries);
-	}
-
-	/**
 	 * Creates a new am image entry with the primary key. Does not add the am image entry to the database.
 	 *
 	 * @param amImageEntryId the primary key for the new am image entry
@@ -1206,4 +1202,4 @@ public class AMImageEntryUtil {
 	private static volatile AMImageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-725290819
+// LIFERAY-SERVICE-BUILDER-HASH:-973583332

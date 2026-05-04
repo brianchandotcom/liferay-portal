@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -554,52 +551,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce tax fixed rate address rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-
-		entityCache.putResult(
-			CommerceTaxFixedRateAddressRelImpl.class,
-			commerceTaxFixedRateAddressRel.getPrimaryKey(),
-			commerceTaxFixedRateAddressRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce tax fixed rate address rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRels the commerce tax fixed rate address rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTaxFixedRateAddressRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel :
-				commerceTaxFixedRateAddressRels) {
-
-			if (entityCache.getResult(
-					CommerceTaxFixedRateAddressRelImpl.class,
-					commerceTaxFixedRateAddressRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceTaxFixedRateAddressRel);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce tax fixed rate address rel with the primary key. Does not add the commerce tax fixed rate address rel to the database.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key for the new commerce tax fixed rate address rel
@@ -749,9 +700,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTaxFixedRateAddressRelImpl.class,
-			commerceTaxFixedRateAddressRelModelImpl, false, true);
+		cacheUniqueFindersResult(commerceTaxFixedRateAddressRel, false);
 
 		if (isNew) {
 			commerceTaxFixedRateAddressRel.setNew(false);
@@ -821,9 +770,6 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceTaxMethodId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTaxMethodId",
 			new String[] {
@@ -992,4 +938,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-219610812
+// LIFERAY-SERVICE-BUILDER-HASH:967763895

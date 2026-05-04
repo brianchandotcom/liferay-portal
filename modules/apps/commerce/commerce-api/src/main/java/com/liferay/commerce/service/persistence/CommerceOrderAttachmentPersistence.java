@@ -563,21 +563,6 @@ public interface CommerceOrderAttachmentPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce order attachment in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderAttachment the commerce order attachment
-	 */
-	public void cacheResult(CommerceOrderAttachment commerceOrderAttachment);
-
-	/**
-	 * Caches the commerce order attachments in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderAttachments the commerce order attachments
-	 */
-	public void cacheResult(
-		java.util.List<CommerceOrderAttachment> commerceOrderAttachments);
-
-	/**
 	 * Creates a new commerce order attachment with the primary key. Does not add the commerce order attachment to the database.
 	 *
 	 * @param commerceOrderAttachmentId the primary key for the new commerce order attachment
@@ -619,4 +604,4 @@ public interface CommerceOrderAttachmentPersistence
 		long commerceOrderAttachmentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1273925713
+// LIFERAY-SERVICE-BUILDER-HASH:-1253332697

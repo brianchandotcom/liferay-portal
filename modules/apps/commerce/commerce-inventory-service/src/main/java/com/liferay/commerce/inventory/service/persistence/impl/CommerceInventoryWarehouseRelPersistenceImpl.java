@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -556,77 +553,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce inventory warehouse rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRel the commerce inventory warehouse rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel) {
-
-		entityCache.putResult(
-			CommerceInventoryWarehouseRelImpl.class,
-			commerceInventoryWarehouseRel.getPrimaryKey(),
-			commerceInventoryWarehouseRel);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_CIWI,
-			new Object[] {
-				commerceInventoryWarehouseRel.getClassNameId(),
-				commerceInventoryWarehouseRel.getClassPK(),
-				commerceInventoryWarehouseRel.getCommerceInventoryWarehouseId()
-			},
-			commerceInventoryWarehouseRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce inventory warehouse rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRels the commerce inventory warehouse rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceInventoryWarehouseRel> commerceInventoryWarehouseRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceInventoryWarehouseRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceInventoryWarehouseRel commerceInventoryWarehouseRel :
-				commerceInventoryWarehouseRels) {
-
-			if (entityCache.getResult(
-					CommerceInventoryWarehouseRelImpl.class,
-					commerceInventoryWarehouseRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceInventoryWarehouseRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceInventoryWarehouseRelModelImpl
-			commerceInventoryWarehouseRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceInventoryWarehouseRelModelImpl.getClassNameId(),
-			commerceInventoryWarehouseRelModelImpl.getClassPK(),
-			commerceInventoryWarehouseRelModelImpl.
-				getCommerceInventoryWarehouseId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_CIWI, args,
-			commerceInventoryWarehouseRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce inventory warehouse rel with the primary key. Does not add the commerce inventory warehouse rel to the database.
 	 *
 	 * @param commerceInventoryWarehouseRelId the primary key for the new commerce inventory warehouse rel
@@ -776,11 +702,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceInventoryWarehouseRelImpl.class,
-			commerceInventoryWarehouseRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceInventoryWarehouseRelModelImpl);
+		cacheUniqueFindersResult(commerceInventoryWarehouseRel, false);
 
 		if (isNew) {
 			commerceInventoryWarehouseRel.setNew(false);
@@ -849,9 +771,6 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceInventoryWarehouseId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -929,12 +848,15 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				CommerceInventoryWarehouseRel::
 					getCommerceInventoryWarehouseId));
 
-		_finderPathFetchByC_C_CIWI = new FinderPath(
+		_finderPathFetchByC_C_CIWI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_CIWI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "CIWarehouseId"}, true);
+			new String[] {"classNameId", "classPK", "CIWarehouseId"}, false,
+			CommerceInventoryWarehouseRel::getClassNameId,
+			CommerceInventoryWarehouseRel::getClassPK,
+			CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId);
 
 		_uniquePersistenceFinderByC_C_CIWI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_CIWI,
@@ -1027,4 +949,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1856087795
+// LIFERAY-SERVICE-BUILDER-HASH:811056374

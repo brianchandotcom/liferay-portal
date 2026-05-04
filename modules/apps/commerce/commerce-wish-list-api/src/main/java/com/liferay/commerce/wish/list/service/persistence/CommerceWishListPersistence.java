@@ -844,20 +844,6 @@ public interface CommerceWishListPersistence
 	public int countByG_U_D(long groupId, long userId, boolean defaultWishList);
 
 	/**
-	 * Caches the commerce wish list in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishList the commerce wish list
-	 */
-	public void cacheResult(CommerceWishList commerceWishList);
-
-	/**
-	 * Caches the commerce wish lists in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishLists the commerce wish lists
-	 */
-	public void cacheResult(java.util.List<CommerceWishList> commerceWishLists);
-
-	/**
 	 * Creates a new commerce wish list with the primary key. Does not add the commerce wish list to the database.
 	 *
 	 * @param commerceWishListId the primary key for the new commerce wish list
@@ -896,4 +882,4 @@ public interface CommerceWishListPersistence
 	public CommerceWishList fetchByPrimaryKey(long commerceWishListId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-387072004
+// LIFERAY-SERVICE-BUILDER-HASH:-915629804

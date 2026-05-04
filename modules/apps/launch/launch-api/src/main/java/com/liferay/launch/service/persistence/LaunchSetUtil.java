@@ -36,6 +36,20 @@ public class LaunchSetUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LaunchSet> launchSets) {
+		getPersistence().cacheResult(launchSets);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LaunchSet launchSet) {
+		getPersistence().cacheResult(launchSet);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -902,24 +916,6 @@ public class LaunchSetUtil {
 	}
 
 	/**
-	 * Caches the launch set in the entity cache if it is enabled.
-	 *
-	 * @param launchSet the launch set
-	 */
-	public static void cacheResult(LaunchSet launchSet) {
-		getPersistence().cacheResult(launchSet);
-	}
-
-	/**
-	 * Caches the launch sets in the entity cache if it is enabled.
-	 *
-	 * @param launchSets the launch sets
-	 */
-	public static void cacheResult(List<LaunchSet> launchSets) {
-		getPersistence().cacheResult(launchSets);
-	}
-
-	/**
 	 * Creates a new launch set with the primary key. Does not add the launch set to the database.
 	 *
 	 * @param launchSetId the primary key for the new launch set
@@ -980,4 +976,4 @@ public class LaunchSetUtil {
 	private static volatile LaunchSetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1810478100
+// LIFERAY-SERVICE-BUILDER-HASH:-673431808

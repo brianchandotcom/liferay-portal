@@ -291,20 +291,6 @@ public interface ObjectStateFlowPersistence
 	public int countByObjectFieldId(long objectFieldId);
 
 	/**
-	 * Caches the object state flow in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlow the object state flow
-	 */
-	public void cacheResult(ObjectStateFlow objectStateFlow);
-
-	/**
-	 * Caches the object state flows in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlows the object state flows
-	 */
-	public void cacheResult(java.util.List<ObjectStateFlow> objectStateFlows);
-
-	/**
 	 * Creates a new object state flow with the primary key. Does not add the object state flow to the database.
 	 *
 	 * @param objectStateFlowId the primary key for the new object state flow
@@ -343,4 +329,4 @@ public interface ObjectStateFlowPersistence
 	public ObjectStateFlow fetchByPrimaryKey(long objectStateFlowId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1937615729
+// LIFERAY-SERVICE-BUILDER-HASH:-1397259577

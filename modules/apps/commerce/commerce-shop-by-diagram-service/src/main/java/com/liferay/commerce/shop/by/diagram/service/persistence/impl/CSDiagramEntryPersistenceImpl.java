@@ -15,7 +15,6 @@ import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryPe
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramEntryUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -783,96 +780,6 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cs diagram entry in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntry the cs diagram entry
-	 */
-	@Override
-	public void cacheResult(CSDiagramEntry csDiagramEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					csDiagramEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CSDiagramEntryImpl.class, csDiagramEntry.getPrimaryKey(),
-				csDiagramEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByCPDI_S,
-				new Object[] {
-					csDiagramEntry.getCPDefinitionId(),
-					csDiagramEntry.getSequence()
-				},
-				csDiagramEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					csDiagramEntry.getExternalReferenceCode(),
-					csDiagramEntry.getCompanyId()
-				},
-				csDiagramEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cs diagram entries in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntries the cs diagram entries
-	 */
-	@Override
-	public void cacheResult(List<CSDiagramEntry> csDiagramEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (csDiagramEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CSDiagramEntry csDiagramEntry : csDiagramEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						csDiagramEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CSDiagramEntryImpl.class,
-						csDiagramEntry.getPrimaryKey()) == null) {
-
-					cacheResult(csDiagramEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CSDiagramEntryModelImpl csDiagramEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					csDiagramEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				csDiagramEntryModelImpl.getCPDefinitionId(),
-				csDiagramEntryModelImpl.getSequence()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPDI_S, args, csDiagramEntryModelImpl);
-
-			args = new Object[] {
-				csDiagramEntryModelImpl.getExternalReferenceCode(),
-				csDiagramEntryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, csDiagramEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cs diagram entry with the primary key. Does not add the cs diagram entry to the database.
 	 *
 	 * @param CSDiagramEntryId the primary key for the new cs diagram entry
@@ -1077,10 +984,7 @@ public class CSDiagramEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CSDiagramEntryImpl.class, csDiagramEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(csDiagramEntryModelImpl);
+		cacheUniqueFindersResult(csDiagramEntry, false);
 
 		if (isNew) {
 			csDiagramEntry.setNew(false);
@@ -1217,9 +1121,6 @@ public class CSDiagramEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -1309,10 +1210,11 @@ public class CSDiagramEntryPersistenceImpl
 					"csDiagramEntry.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCProductId));
 
-		_finderPathFetchByCPDI_S = new FinderPath(
+		_finderPathFetchByCPDI_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "sequence"}, true);
+			new String[] {"CPDefinitionId", "sequence"}, false,
+			CSDiagramEntry::getCPDefinitionId, CSDiagramEntry::getSequence);
 
 		_uniquePersistenceFinderByCPDI_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCPDI_S, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
@@ -1323,10 +1225,12 @@ public class CSDiagramEntryPersistenceImpl
 				"csDiagramEntry.", "sequence", FinderColumn.Type.STRING, "=",
 				true, true, CSDiagramEntry::getSequence));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CSDiagramEntry::getExternalReferenceCode,
+			CSDiagramEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
@@ -1407,4 +1311,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1197116893
+// LIFERAY-SERVICE-BUILDER-HASH:1504569430

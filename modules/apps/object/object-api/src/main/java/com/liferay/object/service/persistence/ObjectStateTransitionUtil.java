@@ -36,6 +36,24 @@ public class ObjectStateTransitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectStateTransition> objectStateTransitions) {
+
+		getPersistence().cacheResult(objectStateTransitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ObjectStateTransition objectStateTransition) {
+
+		getPersistence().cacheResult(objectStateTransition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -750,28 +768,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Caches the object state transition in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransition the object state transition
-	 */
-	public static void cacheResult(
-		ObjectStateTransition objectStateTransition) {
-
-		getPersistence().cacheResult(objectStateTransition);
-	}
-
-	/**
-	 * Caches the object state transitions in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransitions the object state transitions
-	 */
-	public static void cacheResult(
-		List<ObjectStateTransition> objectStateTransitions) {
-
-		getPersistence().cacheResult(objectStateTransitions);
-	}
-
-	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
 	 * @param objectStateTransitionId the primary key for the new object state transition
@@ -841,4 +837,4 @@ public class ObjectStateTransitionUtil {
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1376782187
+// LIFERAY-SERVICE-BUILDER-HASH:905235613

@@ -610,21 +610,6 @@ public interface AnalyticsAssociationPersistence
 		long companyId, String associationClassName, long associationClassPK);
 
 	/**
-	 * Caches the analytics association in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociation the analytics association
-	 */
-	public void cacheResult(AnalyticsAssociation analyticsAssociation);
-
-	/**
-	 * Caches the analytics associations in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociations the analytics associations
-	 */
-	public void cacheResult(
-		java.util.List<AnalyticsAssociation> analyticsAssociations);
-
-	/**
 	 * Creates a new analytics association with the primary key. Does not add the analytics association to the database.
 	 *
 	 * @param analyticsAssociationId the primary key for the new analytics association
@@ -664,4 +649,4 @@ public interface AnalyticsAssociationPersistence
 	public AnalyticsAssociation fetchByPrimaryKey(long analyticsAssociationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1134815416
+// LIFERAY-SERVICE-BUILDER-HASH:-1875353616

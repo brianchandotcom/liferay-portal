@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.ContactUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.ContactImpl;
 import com.liferay.portal.model.impl.ContactModelImpl;
@@ -681,42 +678,6 @@ public class ContactPersistenceImpl
 	}
 
 	/**
-	 * Caches the contact in the entity cache if it is enabled.
-	 *
-	 * @param contact the contact
-	 */
-	@Override
-	public void cacheResult(Contact contact) {
-		EntityCacheUtil.putResult(
-			ContactImpl.class, contact.getPrimaryKey(), contact);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the contacts in the entity cache if it is enabled.
-	 *
-	 * @param contacts the contacts
-	 */
-	@Override
-	public void cacheResult(List<Contact> contacts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (contacts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Contact contact : contacts) {
-			if (EntityCacheUtil.getResult(
-					ContactImpl.class, contact.getPrimaryKey()) == null) {
-
-				cacheResult(contact);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new contact with the primary key. Does not add the contact to the database.
 	 *
 	 * @param contactId the primary key for the new contact
@@ -840,8 +801,7 @@ public class ContactPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ContactImpl.class, contactModelImpl, false, true);
+		cacheUniqueFindersResult(contact, false);
 
 		if (isNew) {
 			contact.setNew(false);
@@ -901,9 +861,6 @@ public class ContactPersistenceImpl
 	 * Initializes the contact persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1056,4 +1013,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1463554646
+// LIFERAY-SERVICE-BUILDER-HASH:-70813902

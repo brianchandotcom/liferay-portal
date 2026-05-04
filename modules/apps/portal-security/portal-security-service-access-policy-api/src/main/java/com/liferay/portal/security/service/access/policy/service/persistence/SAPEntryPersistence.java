@@ -712,20 +712,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the sap entry in the entity cache if it is enabled.
-	 *
-	 * @param sapEntry the sap entry
-	 */
-	public void cacheResult(SAPEntry sapEntry);
-
-	/**
-	 * Caches the sap entries in the entity cache if it is enabled.
-	 *
-	 * @param sapEntries the sap entries
-	 */
-	public void cacheResult(java.util.List<SAPEntry> sapEntries);
-
-	/**
 	 * Creates a new sap entry with the primary key. Does not add the sap entry to the database.
 	 *
 	 * @param sapEntryId the primary key for the new sap entry
@@ -763,4 +749,4 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	public SAPEntry fetchByPrimaryKey(long sapEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:596431584
+// LIFERAY-SERVICE-BUILDER-HASH:-297321226

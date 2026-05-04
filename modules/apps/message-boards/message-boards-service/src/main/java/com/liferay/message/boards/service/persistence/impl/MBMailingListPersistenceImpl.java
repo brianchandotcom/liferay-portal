@@ -14,7 +14,6 @@ import com.liferay.message.boards.service.persistence.MBMailingListPersistence;
 import com.liferay.message.boards.service.persistence.MBMailingListUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -776,93 +772,6 @@ public class MBMailingListPersistenceImpl
 	}
 
 	/**
-	 * Caches the message boards mailing list in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 */
-	@Override
-	public void cacheResult(MBMailingList mbMailingList) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbMailingList.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
-				mbMailingList);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					mbMailingList.getUuid(), mbMailingList.getGroupId()
-				},
-				mbMailingList);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C,
-				new Object[] {
-					mbMailingList.getGroupId(), mbMailingList.getCategoryId()
-				},
-				mbMailingList);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message boards mailing lists in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingLists the message boards mailing lists
-	 */
-	@Override
-	public void cacheResult(List<MBMailingList> mbMailingLists) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbMailingLists.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBMailingList mbMailingList : mbMailingLists) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbMailingList.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBMailingListImpl.class,
-						mbMailingList.getPrimaryKey()) == null) {
-
-					cacheResult(mbMailingList);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MBMailingListModelImpl mbMailingListModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbMailingListModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbMailingListModelImpl.getUuid(),
-				mbMailingListModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbMailingListModelImpl);
-
-			args = new Object[] {
-				mbMailingListModelImpl.getGroupId(),
-				mbMailingListModelImpl.getCategoryId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C, args, mbMailingListModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	 *
 	 * @param mailingListId the primary key for the new message boards mailing list
@@ -1009,10 +918,7 @@ public class MBMailingListPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MBMailingListImpl.class, mbMailingListModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbMailingListModelImpl);
+		cacheUniqueFindersResult(mbMailingList, false);
 
 		if (isNew) {
 			mbMailingList.setNew(false);
@@ -1163,9 +1069,6 @@ public class MBMailingListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1193,10 +1096,11 @@ public class MBMailingListPersistenceImpl
 				"mbMailingList.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBMailingList::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBMailingList::getUuid,
+			MBMailingList::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBMAILINGLIST_WHERE,
@@ -1269,10 +1173,11 @@ public class MBMailingListPersistenceImpl
 					"mbMailingList.", "active", FinderColumn.Type.BOOLEAN, "=",
 					true, true, MBMailingList::isActive));
 
-		_finderPathFetchByG_C = new FinderPath(
+		_finderPathFetchByG_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, true);
+			new String[] {"groupId", "categoryId"}, false,
+			MBMailingList::getGroupId, MBMailingList::getCategoryId);
 
 		_uniquePersistenceFinderByG_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C, _SQL_SELECT_MBMAILINGLIST_WHERE,
@@ -1355,4 +1260,4 @@ public class MBMailingListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:744981562
+// LIFERAY-SERVICE-BUILDER-HASH:-2099879853

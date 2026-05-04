@@ -36,6 +36,22 @@ public class ObjectFieldSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectFieldSetting> objectFieldSettings) {
+
+		getPersistence().cacheResult(objectFieldSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectFieldSetting objectFieldSetting) {
+		getPersistence().cacheResult(objectFieldSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -558,26 +574,6 @@ public class ObjectFieldSettingUtil {
 	}
 
 	/**
-	 * Caches the object field setting in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSetting the object field setting
-	 */
-	public static void cacheResult(ObjectFieldSetting objectFieldSetting) {
-		getPersistence().cacheResult(objectFieldSetting);
-	}
-
-	/**
-	 * Caches the object field settings in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSettings the object field settings
-	 */
-	public static void cacheResult(
-		List<ObjectFieldSetting> objectFieldSettings) {
-
-		getPersistence().cacheResult(objectFieldSettings);
-	}
-
-	/**
 	 * Creates a new object field setting with the primary key. Does not add the object field setting to the database.
 	 *
 	 * @param objectFieldSettingId the primary key for the new object field setting
@@ -644,4 +640,4 @@ public class ObjectFieldSettingUtil {
 	private static volatile ObjectFieldSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2000863899
+// LIFERAY-SERVICE-BUILDER-HASH:1550958563

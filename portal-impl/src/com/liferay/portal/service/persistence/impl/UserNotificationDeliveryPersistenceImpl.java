@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
@@ -357,76 +354,6 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 	/**
-	 * Caches the user notification delivery in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDelivery the user notification delivery
-	 */
-	@Override
-	public void cacheResult(UserNotificationDelivery userNotificationDelivery) {
-		EntityCacheUtil.putResult(
-			UserNotificationDeliveryImpl.class,
-			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_P_C_N_D,
-			new Object[] {
-				userNotificationDelivery.getUserId(),
-				userNotificationDelivery.getPortletId(),
-				userNotificationDelivery.getClassNameId(),
-				userNotificationDelivery.getNotificationType(),
-				userNotificationDelivery.getDeliveryType()
-			},
-			userNotificationDelivery);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the user notification deliveries in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDeliveries the user notification deliveries
-	 */
-	@Override
-	public void cacheResult(
-		List<UserNotificationDelivery> userNotificationDeliveries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (userNotificationDeliveries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UserNotificationDelivery userNotificationDelivery :
-				userNotificationDeliveries) {
-
-			if (EntityCacheUtil.getResult(
-					UserNotificationDeliveryImpl.class,
-					userNotificationDelivery.getPrimaryKey()) == null) {
-
-				cacheResult(userNotificationDelivery);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl) {
-
-		Object[] args = new Object[] {
-			userNotificationDeliveryModelImpl.getUserId(),
-			userNotificationDeliveryModelImpl.getPortletId(),
-			userNotificationDeliveryModelImpl.getClassNameId(),
-			userNotificationDeliveryModelImpl.getNotificationType(),
-			userNotificationDeliveryModelImpl.getDeliveryType()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_P_C_N_D, args,
-			userNotificationDeliveryModelImpl);
-	}
-
-	/**
 	 * Creates a new user notification delivery with the primary key. Does not add the user notification delivery to the database.
 	 *
 	 * @param userNotificationDeliveryId the primary key for the new user notification delivery
@@ -543,11 +470,7 @@ public class UserNotificationDeliveryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			UserNotificationDeliveryImpl.class,
-			userNotificationDeliveryModelImpl, false, true);
-
-		cacheUniqueFindersCache(userNotificationDeliveryModelImpl);
+		cacheUniqueFindersResult(userNotificationDelivery, false);
 
 		if (isNew) {
 			userNotificationDelivery.setNew(false);
@@ -610,9 +533,6 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * Initializes the user notification delivery persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -644,7 +564,7 @@ public class UserNotificationDeliveryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					UserNotificationDelivery::getUserId));
 
-		_finderPathFetchByU_P_C_N_D = new FinderPath(
+		_finderPathFetchByU_P_C_N_D = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -655,7 +575,11 @@ public class UserNotificationDeliveryPersistenceImpl
 				"userId", "portletId", "classNameId", "notificationType",
 				"deliveryType"
 			},
-			true);
+			false, UserNotificationDelivery::getUserId,
+			UserNotificationDelivery::getPortletId,
+			UserNotificationDelivery::getClassNameId,
+			UserNotificationDelivery::getNotificationType,
+			UserNotificationDelivery::getDeliveryType);
 
 		_uniquePersistenceFinderByU_P_C_N_D = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_P_C_N_D,
@@ -714,4 +638,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1806577480
+// LIFERAY-SERVICE-BUILDER-HASH:-952955584

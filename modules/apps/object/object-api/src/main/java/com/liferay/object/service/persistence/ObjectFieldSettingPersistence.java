@@ -399,21 +399,6 @@ public interface ObjectFieldSettingPersistence
 	public int countByOFI_N(long objectFieldId, String name);
 
 	/**
-	 * Caches the object field setting in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSetting the object field setting
-	 */
-	public void cacheResult(ObjectFieldSetting objectFieldSetting);
-
-	/**
-	 * Caches the object field settings in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSettings the object field settings
-	 */
-	public void cacheResult(
-		java.util.List<ObjectFieldSetting> objectFieldSettings);
-
-	/**
 	 * Creates a new object field setting with the primary key. Does not add the object field setting to the database.
 	 *
 	 * @param objectFieldSettingId the primary key for the new object field setting
@@ -452,4 +437,4 @@ public interface ObjectFieldSettingPersistence
 	public ObjectFieldSetting fetchByPrimaryKey(long objectFieldSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2063197051
+// LIFERAY-SERVICE-BUILDER-HASH:1909160973

@@ -14,7 +14,6 @@ import com.liferay.depot.service.persistence.DepotEntryGroupRelPersistence;
 import com.liferay.depot.service.persistence.DepotEntryGroupRelUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1460,96 +1456,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the depot entry group rel in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRel the depot entry group rel
-	 */
-	@Override
-	public void cacheResult(DepotEntryGroupRel depotEntryGroupRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotEntryGroupRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DepotEntryGroupRelImpl.class,
-				depotEntryGroupRel.getPrimaryKey(), depotEntryGroupRel);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					depotEntryGroupRel.getUuid(),
-					depotEntryGroupRel.getGroupId()
-				},
-				depotEntryGroupRel);
-
-			finderCache.putResult(
-				_finderPathFetchByD_TGI,
-				new Object[] {
-					depotEntryGroupRel.getDepotEntryId(),
-					depotEntryGroupRel.getToGroupId()
-				},
-				depotEntryGroupRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the depot entry group rels in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRels the depot entry group rels
-	 */
-	@Override
-	public void cacheResult(List<DepotEntryGroupRel> depotEntryGroupRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (depotEntryGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						depotEntryGroupRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DepotEntryGroupRelImpl.class,
-						depotEntryGroupRel.getPrimaryKey()) == null) {
-
-					cacheResult(depotEntryGroupRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DepotEntryGroupRelModelImpl depotEntryGroupRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotEntryGroupRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				depotEntryGroupRelModelImpl.getUuid(),
-				depotEntryGroupRelModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, depotEntryGroupRelModelImpl);
-
-			args = new Object[] {
-				depotEntryGroupRelModelImpl.getDepotEntryId(),
-				depotEntryGroupRelModelImpl.getToGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByD_TGI, args, depotEntryGroupRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
 	 *
 	 * @param depotEntryGroupRelId the primary key for the new depot entry group rel
@@ -1703,11 +1609,7 @@ public class DepotEntryGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DepotEntryGroupRelImpl.class, depotEntryGroupRelModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(depotEntryGroupRelModelImpl);
+		cacheUniqueFindersResult(depotEntryGroupRel, false);
 
 		if (isNew) {
 			depotEntryGroupRel.setNew(false);
@@ -1847,9 +1749,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1878,10 +1777,11 @@ public class DepotEntryGroupRelPersistenceImpl
 				"depotEntryGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, DepotEntryGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			DepotEntryGroupRel::getUuid, DepotEntryGroupRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2022,10 +1922,12 @@ public class DepotEntryGroupRelPersistenceImpl
 					"depotEntryGroupRel.", "toGroupId", FinderColumn.Type.LONG,
 					"=", true, true, DepotEntryGroupRel::getToGroupId));
 
-		_finderPathFetchByD_TGI = new FinderPath(
+		_finderPathFetchByD_TGI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"depotEntryId", "toGroupId"}, true);
+			new String[] {"depotEntryId", "toGroupId"}, false,
+			DepotEntryGroupRel::getDepotEntryId,
+			DepotEntryGroupRel::getToGroupId);
 
 		_uniquePersistenceFinderByD_TGI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_TGI, _SQL_SELECT_DEPOTENTRYGROUPREL_WHERE,
@@ -2172,4 +2074,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-425354658
+// LIFERAY-SERVICE-BUILDER-HASH:-254358006

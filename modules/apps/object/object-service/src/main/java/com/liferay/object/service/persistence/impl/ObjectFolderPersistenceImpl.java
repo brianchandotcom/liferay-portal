@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1417,76 +1415,6 @@ public class ObjectFolderPersistenceImpl
 	}
 
 	/**
-	 * Caches the object folder in the entity cache if it is enabled.
-	 *
-	 * @param objectFolder the object folder
-	 */
-	@Override
-	public void cacheResult(ObjectFolder objectFolder) {
-		entityCache.putResult(
-			ObjectFolderImpl.class, objectFolder.getPrimaryKey(), objectFolder);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {objectFolder.getCompanyId(), objectFolder.getName()},
-			objectFolder);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				objectFolder.getExternalReferenceCode(),
-				objectFolder.getCompanyId()
-			},
-			objectFolder);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object folders in the entity cache if it is enabled.
-	 *
-	 * @param objectFolders the object folders
-	 */
-	@Override
-	public void cacheResult(List<ObjectFolder> objectFolders) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectFolders.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectFolder objectFolder : objectFolders) {
-			if (entityCache.getResult(
-					ObjectFolderImpl.class, objectFolder.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(objectFolder);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectFolderModelImpl objectFolderModelImpl) {
-
-		Object[] args = new Object[] {
-			objectFolderModelImpl.getCompanyId(),
-			objectFolderModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, objectFolderModelImpl);
-
-		args = new Object[] {
-			objectFolderModelImpl.getExternalReferenceCode(),
-			objectFolderModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, objectFolderModelImpl);
-	}
-
-	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
 	 * @param objectFolderId the primary key for the new object folder
@@ -1687,10 +1615,7 @@ public class ObjectFolderPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectFolderImpl.class, objectFolderModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectFolderModelImpl);
+		cacheUniqueFindersResult(objectFolder, false);
 
 		if (isNew) {
 			objectFolder.setNew(false);
@@ -1756,9 +1681,6 @@ public class ObjectFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1848,10 +1770,11 @@ public class ObjectFolderPersistenceImpl
 					"objectFolder.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectFolder::getCompanyId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			ObjectFolder::getCompanyId, ObjectFolder::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_OBJECTFOLDER_WHERE,
@@ -1862,10 +1785,11 @@ public class ObjectFolderPersistenceImpl
 				"objectFolder.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ObjectFolder::getName));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			ObjectFolder::getExternalReferenceCode, ObjectFolder::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OBJECTFOLDER_WHERE,
@@ -1969,4 +1893,4 @@ public class ObjectFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-902391482
+// LIFERAY-SERVICE-BUILDER-HASH:69245222

@@ -1945,4 +1945,4 @@ public class MBMessageModelImpl
 	private MBMessage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1097164535
+// LIFERAY-SERVICE-BUILDER-HASH:129970375

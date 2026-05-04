@@ -36,6 +36,24 @@ public class CommerceSubscriptionEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceSubscriptionEntry> commerceSubscriptionEntries) {
+
+		getPersistence().cacheResult(commerceSubscriptionEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceSubscriptionEntry commerceSubscriptionEntry) {
+
+		getPersistence().cacheResult(commerceSubscriptionEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1232,28 +1250,6 @@ public class CommerceSubscriptionEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce subscription entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceSubscriptionEntry the commerce subscription entry
-	 */
-	public static void cacheResult(
-		CommerceSubscriptionEntry commerceSubscriptionEntry) {
-
-		getPersistence().cacheResult(commerceSubscriptionEntry);
-	}
-
-	/**
-	 * Caches the commerce subscription entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceSubscriptionEntries the commerce subscription entries
-	 */
-	public static void cacheResult(
-		List<CommerceSubscriptionEntry> commerceSubscriptionEntries) {
-
-		getPersistence().cacheResult(commerceSubscriptionEntries);
-	}
-
-	/**
 	 * Creates a new commerce subscription entry with the primary key. Does not add the commerce subscription entry to the database.
 	 *
 	 * @param commerceSubscriptionEntryId the primary key for the new commerce subscription entry
@@ -1324,4 +1320,4 @@ public class CommerceSubscriptionEntryUtil {
 	private static volatile CommerceSubscriptionEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-755472000
+// LIFERAY-SERVICE-BUILDER-HASH:1164608587

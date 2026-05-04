@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -23,10 +22,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.social.model.impl.SocialActivitySetImpl;
@@ -1171,55 +1167,6 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity set in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySet the social activity set
-	 */
-	@Override
-	public void cacheResult(SocialActivitySet socialActivitySet) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivitySet.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivitySetImpl.class, socialActivitySet.getPrimaryKey(),
-				socialActivitySet);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activity sets in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySets the social activity sets
-	 */
-	@Override
-	public void cacheResult(List<SocialActivitySet> socialActivitySets) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivitySets.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivitySet socialActivitySet : socialActivitySets) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivitySet.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivitySetImpl.class,
-						socialActivitySet.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivitySet);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new social activity set with the primary key. Does not add the social activity set to the database.
 	 *
 	 * @param activitySetId the primary key for the new social activity set
@@ -1336,9 +1283,7 @@ public class SocialActivitySetPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivitySetImpl.class, socialActivitySetModelImpl, false,
-			true);
+		cacheUniqueFindersResult(socialActivitySet, false);
 
 		if (isNew) {
 			socialActivitySet.setNew(false);
@@ -1466,9 +1411,6 @@ public class SocialActivitySetPersistenceImpl
 	 * Initializes the social activity set persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1736,4 +1678,4 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-475742744
+// LIFERAY-SERVICE-BUILDER-HASH:2060987130

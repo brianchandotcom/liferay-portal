@@ -2778,21 +2778,6 @@ public interface CommercePriceListPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce price list in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceList the commerce price list
-	 */
-	public void cacheResult(CommercePriceList commercePriceList);
-
-	/**
-	 * Caches the commerce price lists in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceLists the commerce price lists
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceList> commercePriceLists);
-
-	/**
 	 * Creates a new commerce price list with the primary key. Does not add the commerce price list to the database.
 	 *
 	 * @param commercePriceListId the primary key for the new commerce price list
@@ -2831,4 +2816,4 @@ public interface CommercePriceListPersistence
 	public CommercePriceList fetchByPrimaryKey(long commercePriceListId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1971822200
+// LIFERAY-SERVICE-BUILDER-HASH:2074733332

@@ -36,6 +36,20 @@ public class DispatchTriggerUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DispatchTrigger> dispatchTriggers) {
+		getPersistence().cacheResult(dispatchTriggers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DispatchTrigger dispatchTrigger) {
+		getPersistence().cacheResult(dispatchTrigger);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1762,24 +1776,6 @@ public class DispatchTriggerUtil {
 	}
 
 	/**
-	 * Caches the dispatch trigger in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTrigger the dispatch trigger
-	 */
-	public static void cacheResult(DispatchTrigger dispatchTrigger) {
-		getPersistence().cacheResult(dispatchTrigger);
-	}
-
-	/**
-	 * Caches the dispatch triggers in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTriggers the dispatch triggers
-	 */
-	public static void cacheResult(List<DispatchTrigger> dispatchTriggers) {
-		getPersistence().cacheResult(dispatchTriggers);
-	}
-
-	/**
 	 * Creates a new dispatch trigger with the primary key. Does not add the dispatch trigger to the database.
 	 *
 	 * @param dispatchTriggerId the primary key for the new dispatch trigger
@@ -1840,4 +1836,4 @@ public class DispatchTriggerUtil {
 	private static volatile DispatchTriggerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:424511034
+// LIFERAY-SERVICE-BUILDER-HASH:-1805390860

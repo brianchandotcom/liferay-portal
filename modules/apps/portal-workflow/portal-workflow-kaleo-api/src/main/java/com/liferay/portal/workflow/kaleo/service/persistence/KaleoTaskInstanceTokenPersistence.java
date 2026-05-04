@@ -741,21 +741,6 @@ public interface KaleoTaskInstanceTokenPersistence
 	public int countByC_U_C(long companyId, long userId, boolean completed);
 
 	/**
-	 * Caches the kaleo task instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskInstanceToken the kaleo task instance token
-	 */
-	public void cacheResult(KaleoTaskInstanceToken kaleoTaskInstanceToken);
-
-	/**
-	 * Caches the kaleo task instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskInstanceTokens the kaleo task instance tokens
-	 */
-	public void cacheResult(
-		java.util.List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens);
-
-	/**
 	 * Creates a new kaleo task instance token with the primary key. Does not add the kaleo task instance token to the database.
 	 *
 	 * @param kaleoTaskInstanceTokenId the primary key for the new kaleo task instance token
@@ -797,4 +782,4 @@ public interface KaleoTaskInstanceTokenPersistence
 		long kaleoTaskInstanceTokenId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1932701825
+// LIFERAY-SERVICE-BUILDER-HASH:1490287207

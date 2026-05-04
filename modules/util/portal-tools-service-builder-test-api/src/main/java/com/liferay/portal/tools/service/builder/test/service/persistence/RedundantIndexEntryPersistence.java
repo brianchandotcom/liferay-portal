@@ -83,21 +83,6 @@ public interface RedundantIndexEntryPersistence
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the redundant index entry in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntry the redundant index entry
-	 */
-	public void cacheResult(RedundantIndexEntry redundantIndexEntry);
-
-	/**
-	 * Caches the redundant index entries in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntries the redundant index entries
-	 */
-	public void cacheResult(
-		java.util.List<RedundantIndexEntry> redundantIndexEntries);
-
-	/**
 	 * Creates a new redundant index entry with the primary key. Does not add the redundant index entry to the database.
 	 *
 	 * @param redundantIndexEntryId the primary key for the new redundant index entry
@@ -137,4 +122,4 @@ public interface RedundantIndexEntryPersistence
 	public RedundantIndexEntry fetchByPrimaryKey(long redundantIndexEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1814615217
+// LIFERAY-SERVICE-BUILDER-HASH:-817513391

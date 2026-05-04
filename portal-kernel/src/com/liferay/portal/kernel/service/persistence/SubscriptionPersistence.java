@@ -633,20 +633,6 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 		long companyId, long userId, long classNameId, long[] classPKs);
 
 	/**
-	 * Caches the subscription in the entity cache if it is enabled.
-	 *
-	 * @param subscription the subscription
-	 */
-	public void cacheResult(Subscription subscription);
-
-	/**
-	 * Caches the subscriptions in the entity cache if it is enabled.
-	 *
-	 * @param subscriptions the subscriptions
-	 */
-	public void cacheResult(java.util.List<Subscription> subscriptions);
-
-	/**
 	 * Creates a new subscription with the primary key. Does not add the subscription to the database.
 	 *
 	 * @param subscriptionId the primary key for the new subscription
@@ -685,4 +671,4 @@ public interface SubscriptionPersistence extends BasePersistence<Subscription> {
 	public Subscription fetchByPrimaryKey(long subscriptionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1268664669
+// LIFERAY-SERVICE-BUILDER-HASH:-1624399989

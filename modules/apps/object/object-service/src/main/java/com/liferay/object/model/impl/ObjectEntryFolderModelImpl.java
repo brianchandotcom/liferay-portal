@@ -1452,4 +1452,4 @@ public class ObjectEntryFolderModelImpl
 	private ObjectEntryFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1869013917
+// LIFERAY-SERVICE-BUILDER-HASH:286391771

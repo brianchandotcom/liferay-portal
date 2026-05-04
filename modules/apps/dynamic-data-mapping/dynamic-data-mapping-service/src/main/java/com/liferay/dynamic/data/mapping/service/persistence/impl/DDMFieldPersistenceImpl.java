@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -838,76 +834,6 @@ public class DDMFieldPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm field in the entity cache if it is enabled.
-	 *
-	 * @param ddmField the ddm field
-	 */
-	@Override
-	public void cacheResult(DDMField ddmField) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmField.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMFieldImpl.class, ddmField.getPrimaryKey(), ddmField);
-
-			finderCache.putResult(
-				_finderPathFetchByS_I,
-				new Object[] {
-					ddmField.getStorageId(), ddmField.getInstanceId()
-				},
-				ddmField);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm fields in the entity cache if it is enabled.
-	 *
-	 * @param ddmFields the ddm fields
-	 */
-	@Override
-	public void cacheResult(List<DDMField> ddmFields) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmFields.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMField ddmField : ddmFields) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmField.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMFieldImpl.class, ddmField.getPrimaryKey()) == null) {
-
-					cacheResult(ddmField);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMFieldModelImpl ddmFieldModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFieldModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmFieldModelImpl.getStorageId(),
-				ddmFieldModelImpl.getInstanceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByS_I, args, ddmFieldModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm field with the primary key. Does not add the ddm field to the database.
 	 *
 	 * @param fieldId the primary key for the new ddm field
@@ -1013,10 +939,7 @@ public class DDMFieldPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMFieldImpl.class, ddmFieldModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmFieldModelImpl);
+		cacheUniqueFindersResult(ddmField, false);
 
 		if (isNew) {
 			ddmField.setNew(false);
@@ -1139,9 +1062,6 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByStorageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
 			new String[] {
@@ -1262,10 +1182,11 @@ public class DDMFieldPersistenceImpl
 				"ddmField.", "fieldName", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldName));
 
-		_finderPathFetchByS_I = new FinderPath(
+		_finderPathFetchByS_I = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "instanceId"}, true);
+			new String[] {"storageId", "instanceId"}, false,
+			DDMField::getStorageId, DDMField::getInstanceId);
 
 		_uniquePersistenceFinderByS_I = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_I, _SQL_SELECT_DDMFIELD_WHERE,
@@ -1345,4 +1266,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:789370119
+// LIFERAY-SERVICE-BUILDER-HASH:360064938

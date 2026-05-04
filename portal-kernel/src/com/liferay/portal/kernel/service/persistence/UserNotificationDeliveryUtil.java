@@ -36,6 +36,24 @@ public class UserNotificationDeliveryUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<UserNotificationDelivery> userNotificationDeliveries) {
+
+		getPersistence().cacheResult(userNotificationDeliveries);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		UserNotificationDelivery userNotificationDelivery) {
+
+		getPersistence().cacheResult(userNotificationDelivery);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -336,28 +354,6 @@ public class UserNotificationDeliveryUtil {
 	}
 
 	/**
-	 * Caches the user notification delivery in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDelivery the user notification delivery
-	 */
-	public static void cacheResult(
-		UserNotificationDelivery userNotificationDelivery) {
-
-		getPersistence().cacheResult(userNotificationDelivery);
-	}
-
-	/**
-	 * Caches the user notification deliveries in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDeliveries the user notification deliveries
-	 */
-	public static void cacheResult(
-		List<UserNotificationDelivery> userNotificationDeliveries) {
-
-		getPersistence().cacheResult(userNotificationDeliveries);
-	}
-
-	/**
 	 * Creates a new user notification delivery with the primary key. Does not add the user notification delivery to the database.
 	 *
 	 * @param userNotificationDeliveryId the primary key for the new user notification delivery
@@ -430,4 +426,4 @@ public class UserNotificationDeliveryUtil {
 	private static volatile UserNotificationDeliveryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-6534555
+// LIFERAY-SERVICE-BUILDER-HASH:-655813300

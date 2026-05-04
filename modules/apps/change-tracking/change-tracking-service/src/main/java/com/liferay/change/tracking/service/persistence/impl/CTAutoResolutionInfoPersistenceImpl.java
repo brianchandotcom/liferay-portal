@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -917,47 +914,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct auto resolution info in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfo the ct auto resolution info
-	 */
-	@Override
-	public void cacheResult(CTAutoResolutionInfo ctAutoResolutionInfo) {
-		entityCache.putResult(
-			CTAutoResolutionInfoImpl.class,
-			ctAutoResolutionInfo.getPrimaryKey(), ctAutoResolutionInfo);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct auto resolution infos in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfos the ct auto resolution infos
-	 */
-	@Override
-	public void cacheResult(List<CTAutoResolutionInfo> ctAutoResolutionInfos) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctAutoResolutionInfos.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				ctAutoResolutionInfos) {
-
-			if (entityCache.getResult(
-					CTAutoResolutionInfoImpl.class,
-					ctAutoResolutionInfo.getPrimaryKey()) == null) {
-
-				cacheResult(ctAutoResolutionInfo);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new ct auto resolution info with the primary key. Does not add the ct auto resolution info to the database.
 	 *
 	 * @param ctAutoResolutionInfoId the primary key for the new ct auto resolution info
@@ -1084,9 +1040,7 @@ public class CTAutoResolutionInfoPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTAutoResolutionInfoImpl.class, ctAutoResolutionInfoModelImpl,
-			false, true);
+		cacheUniqueFindersResult(ctAutoResolutionInfo, false);
 
 		if (isNew) {
 			ctAutoResolutionInfo.setNew(false);
@@ -1147,9 +1101,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
@@ -1290,4 +1241,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-73027372
+// LIFERAY-SERVICE-BUILDER-HASH:2029145134

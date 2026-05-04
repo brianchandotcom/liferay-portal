@@ -529,21 +529,6 @@ public interface OpenIdConnectSessionPersistence
 		long userId, String authServerWellKnownURI, String clientId);
 
 	/**
-	 * Caches the open ID connect session in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSession the open ID connect session
-	 */
-	public void cacheResult(OpenIdConnectSession openIdConnectSession);
-
-	/**
-	 * Caches the open ID connect sessions in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSessions the open ID connect sessions
-	 */
-	public void cacheResult(
-		java.util.List<OpenIdConnectSession> openIdConnectSessions);
-
-	/**
 	 * Creates a new open ID connect session with the primary key. Does not add the open ID connect session to the database.
 	 *
 	 * @param openIdConnectSessionId the primary key for the new open ID connect session
@@ -583,4 +568,4 @@ public interface OpenIdConnectSessionPersistence
 	public OpenIdConnectSession fetchByPrimaryKey(long openIdConnectSessionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-633592620
+// LIFERAY-SERVICE-BUILDER-HASH:-926267120

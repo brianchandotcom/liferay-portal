@@ -36,6 +36,22 @@ public class DDMStructureVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMStructureVersion> ddmStructureVersions) {
+
+		getPersistence().cacheResult(ddmStructureVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMStructureVersion ddmStructureVersion) {
+		getPersistence().cacheResult(ddmStructureVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -444,26 +460,6 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
-	 * Caches the ddm structure version in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 */
-	public static void cacheResult(DDMStructureVersion ddmStructureVersion) {
-		getPersistence().cacheResult(ddmStructureVersion);
-	}
-
-	/**
-	 * Caches the ddm structure versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersions the ddm structure versions
-	 */
-	public static void cacheResult(
-		List<DDMStructureVersion> ddmStructureVersions) {
-
-		getPersistence().cacheResult(ddmStructureVersions);
-	}
-
-	/**
 	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	 *
 	 * @param structureVersionId the primary key for the new ddm structure version
@@ -532,4 +528,4 @@ public class DDMStructureVersionUtil {
 	private static volatile DDMStructureVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1812802768
+// LIFERAY-SERVICE-BUILDER-HASH:406734970

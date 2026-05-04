@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingImpl;
 import com.liferay.portlet.social.model.impl.SocialActivitySettingModelImpl;
@@ -900,89 +896,6 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity setting in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySetting the social activity setting
-	 */
-	@Override
-	public void cacheResult(SocialActivitySetting socialActivitySetting) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivitySetting.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivitySettingImpl.class,
-				socialActivitySetting.getPrimaryKey(), socialActivitySetting);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_A_N,
-				new Object[] {
-					socialActivitySetting.getGroupId(),
-					socialActivitySetting.getClassNameId(),
-					socialActivitySetting.getActivityType(),
-					socialActivitySetting.getName()
-				},
-				socialActivitySetting);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activity settings in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySettings the social activity settings
-	 */
-	@Override
-	public void cacheResult(
-		List<SocialActivitySetting> socialActivitySettings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivitySettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivitySetting socialActivitySetting :
-				socialActivitySettings) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivitySetting.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivitySettingImpl.class,
-						socialActivitySetting.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivitySetting);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialActivitySettingModelImpl socialActivitySettingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivitySettingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialActivitySettingModelImpl.getGroupId(),
-				socialActivitySettingModelImpl.getClassNameId(),
-				socialActivitySettingModelImpl.getActivityType(),
-				socialActivitySettingModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_A_N, args,
-				socialActivitySettingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
 	 *
 	 * @param activitySettingId the primary key for the new social activity setting
@@ -1104,11 +1017,7 @@ public class SocialActivitySettingPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivitySettingImpl.class, socialActivitySettingModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(socialActivitySettingModelImpl);
+		cacheUniqueFindersResult(socialActivitySetting, false);
 
 		if (isNew) {
 			socialActivitySetting.setNew(false);
@@ -1231,9 +1140,6 @@ public class SocialActivitySettingPersistenceImpl
 	 * Initializes the social activity setting persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1372,14 +1278,17 @@ public class SocialActivitySettingPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				SocialActivitySetting::getActivityType));
 
-		_finderPathFetchByG_C_A_N = new FinderPath(
+		_finderPathFetchByG_C_A_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_A_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "activityType", "name"},
-			true);
+			false, SocialActivitySetting::getGroupId,
+			SocialActivitySetting::getClassNameId,
+			SocialActivitySetting::getActivityType,
+			SocialActivitySetting::getName);
 
 		_uniquePersistenceFinderByG_C_A_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_A_N,
@@ -1431,4 +1340,4 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-779829669
+// LIFERAY-SERVICE-BUILDER-HASH:-343414137

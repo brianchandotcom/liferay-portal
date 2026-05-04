@@ -792,21 +792,6 @@ public interface CommerceCurrencyPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce currency in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrency the commerce currency
-	 */
-	public void cacheResult(CommerceCurrency commerceCurrency);
-
-	/**
-	 * Caches the commerce currencies in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrencies the commerce currencies
-	 */
-	public void cacheResult(
-		java.util.List<CommerceCurrency> commerceCurrencies);
-
-	/**
 	 * Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
 	 *
 	 * @param commerceCurrencyId the primary key for the new commerce currency
@@ -845,4 +830,4 @@ public interface CommerceCurrencyPersistence
 	public CommerceCurrency fetchByPrimaryKey(long commerceCurrencyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:17857338
+// LIFERAY-SERVICE-BUILDER-HASH:-282488382

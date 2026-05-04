@@ -14,7 +14,6 @@ import com.liferay.layout.service.persistence.LayoutLocalizationPersistence;
 import com.liferay.layout.service.persistence.LayoutLocalizationUtil;
 import com.liferay.layout.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -883,114 +879,6 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout localization in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalization the layout localization
-	 */
-	@Override
-	public void cacheResult(LayoutLocalization layoutLocalization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutLocalization.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutLocalizationImpl.class,
-				layoutLocalization.getPrimaryKey(), layoutLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutLocalization.getUuid(),
-					layoutLocalization.getGroupId()
-				},
-				layoutLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByL_P,
-				new Object[] {
-					layoutLocalization.getLanguageId(),
-					layoutLocalization.getPlid()
-				},
-				layoutLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByG_L_P,
-				new Object[] {
-					layoutLocalization.getGroupId(),
-					layoutLocalization.getLanguageId(),
-					layoutLocalization.getPlid()
-				},
-				layoutLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout localizations in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalizations the layout localizations
-	 */
-	@Override
-	public void cacheResult(List<LayoutLocalization> layoutLocalizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutLocalization.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutLocalizationImpl.class,
-						layoutLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(layoutLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutLocalizationModelImpl layoutLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutLocalizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutLocalizationModelImpl.getUuid(),
-				layoutLocalizationModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, layoutLocalizationModelImpl);
-
-			args = new Object[] {
-				layoutLocalizationModelImpl.getLanguageId(),
-				layoutLocalizationModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByL_P, args, layoutLocalizationModelImpl);
-
-			args = new Object[] {
-				layoutLocalizationModelImpl.getGroupId(),
-				layoutLocalizationModelImpl.getLanguageId(),
-				layoutLocalizationModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_L_P, args, layoutLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout localization with the primary key. Does not add the layout localization to the database.
 	 *
 	 * @param layoutLocalizationId the primary key for the new layout localization
@@ -1144,11 +1032,7 @@ public class LayoutLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutLocalizationImpl.class, layoutLocalizationModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(layoutLocalizationModelImpl);
+		cacheUniqueFindersResult(layoutLocalization, false);
 
 		if (isNew) {
 			layoutLocalization.setNew(false);
@@ -1287,9 +1171,6 @@ public class LayoutLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1318,10 +1199,11 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, LayoutLocalization::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutLocalization::getUuid, LayoutLocalization::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1392,10 +1274,11 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getPlid));
 
-		_finderPathFetchByL_P = new FinderPath(
+		_finderPathFetchByL_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_P",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"languageId", "plid"}, true);
+			new String[] {"languageId", "plid"}, false,
+			LayoutLocalization::getLanguageId, LayoutLocalization::getPlid);
 
 		_uniquePersistenceFinderByL_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByL_P, _SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
@@ -1406,13 +1289,15 @@ public class LayoutLocalizationPersistenceImpl
 				"layoutLocalization.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutLocalization::getPlid));
 
-		_finderPathFetchByG_L_P = new FinderPath(
+		_finderPathFetchByG_L_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_L_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"groupId", "languageId", "plid"}, true);
+			new String[] {"groupId", "languageId", "plid"}, false,
+			LayoutLocalization::getGroupId, LayoutLocalization::getLanguageId,
+			LayoutLocalization::getPlid);
 
 		_uniquePersistenceFinderByG_L_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_L_P, _SQL_SELECT_LAYOUTLOCALIZATION_WHERE,
@@ -1498,4 +1383,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:763741776
+// LIFERAY-SERVICE-BUILDER-HASH:1521863280

@@ -783,21 +783,6 @@ public interface PatcherProjectVersionPersistence
 		long patcherProductVersionId, String repositoryName);
 
 	/**
-	 * Caches the patcher project version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersion the patcher project version
-	 */
-	public void cacheResult(PatcherProjectVersion patcherProjectVersion);
-
-	/**
-	 * Caches the patcher project versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersions the patcher project versions
-	 */
-	public void cacheResult(
-		java.util.List<PatcherProjectVersion> patcherProjectVersions);
-
-	/**
 	 * Creates a new patcher project version with the primary key. Does not add the patcher project version to the database.
 	 *
 	 * @param patcherProjectVersionId the primary key for the new patcher project version
@@ -838,4 +823,4 @@ public interface PatcherProjectVersionPersistence
 		long patcherProjectVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:491058579
+// LIFERAY-SERVICE-BUILDER-HASH:-995236851

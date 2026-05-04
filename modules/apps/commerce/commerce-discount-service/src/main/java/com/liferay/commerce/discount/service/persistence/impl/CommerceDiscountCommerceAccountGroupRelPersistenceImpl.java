@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -537,81 +534,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRel the commerce discount commerce account group rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel) {
-
-		entityCache.putResult(
-			CommerceDiscountCommerceAccountGroupRelImpl.class,
-			commerceDiscountCommerceAccountGroupRel.getPrimaryKey(),
-			commerceDiscountCommerceAccountGroupRel);
-
-		finderCache.putResult(
-			_finderPathFetchByCDI_CAGI,
-			new Object[] {
-				commerceDiscountCommerceAccountGroupRel.getCommerceDiscountId(),
-				commerceDiscountCommerceAccountGroupRel.
-					getCommerceAccountGroupId()
-			},
-			commerceDiscountCommerceAccountGroupRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRels the commerce discount commerce account group rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceDiscountCommerceAccountGroupRel>
-			commerceDiscountCommerceAccountGroupRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountCommerceAccountGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountCommerceAccountGroupRel
-				commerceDiscountCommerceAccountGroupRel :
-					commerceDiscountCommerceAccountGroupRels) {
-
-			if (entityCache.getResult(
-					CommerceDiscountCommerceAccountGroupRelImpl.class,
-					commerceDiscountCommerceAccountGroupRel.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commerceDiscountCommerceAccountGroupRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceDiscountCommerceAccountGroupRelModelImpl
-			commerceDiscountCommerceAccountGroupRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceDiscountCommerceAccountGroupRelModelImpl.
-				getCommerceDiscountId(),
-			commerceDiscountCommerceAccountGroupRelModelImpl.
-				getCommerceAccountGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCDI_CAGI, args,
-			commerceDiscountCommerceAccountGroupRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce discount commerce account group rel with the primary key. Does not add the commerce discount commerce account group rel to the database.
 	 *
 	 * @param commerceDiscountCommerceAccountGroupRelId the primary key for the new commerce discount commerce account group rel
@@ -769,12 +691,8 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountCommerceAccountGroupRelImpl.class,
-			commerceDiscountCommerceAccountGroupRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(
-			commerceDiscountCommerceAccountGroupRelModelImpl);
+		cacheUniqueFindersResult(
+			commerceDiscountCommerceAccountGroupRel, false);
 
 		if (isNew) {
 			commerceDiscountCommerceAccountGroupRel.setNew(false);
@@ -846,9 +764,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -921,11 +836,13 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 					CommerceDiscountCommerceAccountGroupRel::
 						getCommerceAccountGroupId));
 
-		_finderPathFetchByCDI_CAGI = new FinderPath(
+		_finderPathFetchByCDI_CAGI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CAGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commerceDiscountId", "commerceAccountGroupId"},
-			true);
+			false,
+			CommerceDiscountCommerceAccountGroupRel::getCommerceDiscountId,
+			CommerceDiscountCommerceAccountGroupRel::getCommerceAccountGroupId);
 
 		_uniquePersistenceFinderByCDI_CAGI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_CAGI,
@@ -1014,4 +931,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-545084118
+// LIFERAY-SERVICE-BUILDER-HASH:1741785146

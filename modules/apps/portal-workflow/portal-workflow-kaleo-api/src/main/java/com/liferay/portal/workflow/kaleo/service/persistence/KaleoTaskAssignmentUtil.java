@@ -36,6 +36,22 @@ public class KaleoTaskAssignmentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoTaskAssignment> kaleoTaskAssignments) {
+
+		getPersistence().cacheResult(kaleoTaskAssignments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoTaskAssignment kaleoTaskAssignment) {
+		getPersistence().cacheResult(kaleoTaskAssignment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -668,26 +684,6 @@ public class KaleoTaskAssignmentUtil {
 	}
 
 	/**
-	 * Caches the kaleo task assignment in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignment the kaleo task assignment
-	 */
-	public static void cacheResult(KaleoTaskAssignment kaleoTaskAssignment) {
-		getPersistence().cacheResult(kaleoTaskAssignment);
-	}
-
-	/**
-	 * Caches the kaleo task assignments in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignments the kaleo task assignments
-	 */
-	public static void cacheResult(
-		List<KaleoTaskAssignment> kaleoTaskAssignments) {
-
-		getPersistence().cacheResult(kaleoTaskAssignments);
-	}
-
-	/**
 	 * Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
 	 *
 	 * @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
@@ -757,4 +753,4 @@ public class KaleoTaskAssignmentUtil {
 	private static volatile KaleoTaskAssignmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1706664901
+// LIFERAY-SERVICE-BUILDER-HASH:1112147719

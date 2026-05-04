@@ -14,7 +14,6 @@ import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 import com.liferay.journal.service.persistence.JournalContentSearchUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -1618,89 +1614,6 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 	/**
-	 * Caches the journal content search in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearch the journal content search
-	 */
-	@Override
-	public void cacheResult(JournalContentSearch journalContentSearch) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalContentSearch.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalContentSearchImpl.class,
-				journalContentSearch.getPrimaryKey(), journalContentSearch);
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_L_P_A,
-				new Object[] {
-					journalContentSearch.getGroupId(),
-					journalContentSearch.isPrivateLayout(),
-					journalContentSearch.getLayoutId(),
-					journalContentSearch.getPortletId(),
-					journalContentSearch.getArticleId()
-				},
-				journalContentSearch);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal content searches in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearchs the journal content searches
-	 */
-	@Override
-	public void cacheResult(List<JournalContentSearch> journalContentSearchs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalContentSearchs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalContentSearch journalContentSearch :
-				journalContentSearchs) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalContentSearch.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalContentSearchImpl.class,
-						journalContentSearch.getPrimaryKey()) == null) {
-
-					cacheResult(journalContentSearch);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalContentSearchModelImpl journalContentSearchModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalContentSearchModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalContentSearchModelImpl.getGroupId(),
-				journalContentSearchModelImpl.isPrivateLayout(),
-				journalContentSearchModelImpl.getLayoutId(),
-				journalContentSearchModelImpl.getPortletId(),
-				journalContentSearchModelImpl.getArticleId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_L_P_A, args,
-				journalContentSearchModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
 	 *
 	 * @param contentSearchId the primary key for the new journal content search
@@ -1820,11 +1733,7 @@ public class JournalContentSearchPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalContentSearchImpl.class, journalContentSearchModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(journalContentSearchModelImpl);
+		cacheUniqueFindersResult(journalContentSearch, false);
 
 		if (isNew) {
 			journalContentSearch.setNew(false);
@@ -1950,9 +1859,6 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2251,7 +2157,7 @@ public class JournalContentSearchPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					JournalContentSearch::getPortletId));
 
-		_finderPathFetchByG_P_L_P_A = new FinderPath(
+		_finderPathFetchByG_P_L_P_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -2261,7 +2167,11 @@ public class JournalContentSearchPersistenceImpl
 			new String[] {
 				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
 			},
-			true);
+			false, JournalContentSearch::getGroupId,
+			JournalContentSearch::isPrivateLayout,
+			JournalContentSearch::getLayoutId,
+			JournalContentSearch::getPortletId,
+			JournalContentSearch::getArticleId);
 
 		_uniquePersistenceFinderByG_P_L_P_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_L_P_A,
@@ -2352,4 +2262,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1153649597
+// LIFERAY-SERVICE-BUILDER-HASH:-605250332

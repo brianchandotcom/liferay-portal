@@ -36,6 +36,22 @@ public class RedundantIndexEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RedundantIndexEntry> redundantIndexEntries) {
+
+		getPersistence().cacheResult(redundantIndexEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RedundantIndexEntry redundantIndexEntry) {
+		getPersistence().cacheResult(redundantIndexEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -179,26 +195,6 @@ public class RedundantIndexEntryUtil {
 	}
 
 	/**
-	 * Caches the redundant index entry in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntry the redundant index entry
-	 */
-	public static void cacheResult(RedundantIndexEntry redundantIndexEntry) {
-		getPersistence().cacheResult(redundantIndexEntry);
-	}
-
-	/**
-	 * Caches the redundant index entries in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntries the redundant index entries
-	 */
-	public static void cacheResult(
-		List<RedundantIndexEntry> redundantIndexEntries) {
-
-		getPersistence().cacheResult(redundantIndexEntries);
-	}
-
-	/**
 	 * Creates a new redundant index entry with the primary key. Does not add the redundant index entry to the database.
 	 *
 	 * @param redundantIndexEntryId the primary key for the new redundant index entry
@@ -268,4 +264,4 @@ public class RedundantIndexEntryUtil {
 	private static volatile RedundantIndexEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1864486743
+// LIFERAY-SERVICE-BUILDER-HASH:-1359174860

@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -993,71 +989,6 @@ public class RegionPersistenceImpl
 	}
 
 	/**
-	 * Caches the region in the entity cache if it is enabled.
-	 *
-	 * @param region the region
-	 */
-	@Override
-	public void cacheResult(Region region) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					region.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RegionImpl.class, region.getPrimaryKey(), region);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_R,
-				new Object[] {region.getCountryId(), region.getRegionCode()},
-				region);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the regions in the entity cache if it is enabled.
-	 *
-	 * @param regions the regions
-	 */
-	@Override
-	public void cacheResult(List<Region> regions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (regions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Region region : regions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						region.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RegionImpl.class, region.getPrimaryKey()) == null) {
-
-					cacheResult(region);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(RegionModelImpl regionModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					regionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				regionModelImpl.getCountryId(), regionModelImpl.getRegionCode()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_R, args, regionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new region with the primary key. Does not add the region to the database.
 	 *
 	 * @param regionId the primary key for the new region
@@ -1197,10 +1128,7 @@ public class RegionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RegionImpl.class, regionModelImpl, false, true);
-
-		cacheUniqueFindersCache(regionModelImpl);
+		cacheUniqueFindersResult(region, false);
 
 		if (isNew) {
 			region.setNew(false);
@@ -1334,9 +1262,6 @@ public class RegionPersistenceImpl
 	 * Initializes the region persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1486,10 +1411,11 @@ public class RegionPersistenceImpl
 				"region.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Region::isActive));
 
-		_finderPathFetchByC_R = new FinderPath(
+		_finderPathFetchByC_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "regionCode"}, true);
+			new String[] {"countryId", "regionCode"}, false,
+			Region::getCountryId, Region::getRegionCode);
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_R, _SQL_SELECT_REGION_WHERE,
@@ -1539,4 +1465,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1059130364
+// LIFERAY-SERVICE-BUILDER-HASH:413702634

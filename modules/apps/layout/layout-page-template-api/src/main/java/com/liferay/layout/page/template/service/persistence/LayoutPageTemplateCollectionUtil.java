@@ -36,6 +36,24 @@ public class LayoutPageTemplateCollectionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections) {
+
+		getPersistence().cacheResult(layoutPageTemplateCollections);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
+
+		getPersistence().cacheResult(layoutPageTemplateCollection);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1951,28 +1969,6 @@ public class LayoutPageTemplateCollectionUtil {
 	}
 
 	/**
-	 * Caches the layout page template collection in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateCollection the layout page template collection
-	 */
-	public static void cacheResult(
-		LayoutPageTemplateCollection layoutPageTemplateCollection) {
-
-		getPersistence().cacheResult(layoutPageTemplateCollection);
-	}
-
-	/**
-	 * Caches the layout page template collections in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateCollections the layout page template collections
-	 */
-	public static void cacheResult(
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections) {
-
-		getPersistence().cacheResult(layoutPageTemplateCollections);
-	}
-
-	/**
 	 * Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
 	 *
 	 * @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
@@ -2048,4 +2044,4 @@ public class LayoutPageTemplateCollectionUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1937026611
+// LIFERAY-SERVICE-BUILDER-HASH:1712947429

@@ -878,23 +878,6 @@ public interface AssetListEntryAssetEntryRelPersistence
 		long assetListEntryId, long segmentsEntryId, int position);
 
 	/**
-	 * Caches the asset list entry asset entry rel in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
-	 */
-	public void cacheResult(
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel);
-
-	/**
-	 * Caches the asset list entry asset entry rels in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryAssetEntryRels the asset list entry asset entry rels
-	 */
-	public void cacheResult(
-		java.util.List<AssetListEntryAssetEntryRel>
-			assetListEntryAssetEntryRels);
-
-	/**
 	 * Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	 *
 	 * @param assetListEntryAssetEntryRelId the primary key for the new asset list entry asset entry rel
@@ -938,4 +921,4 @@ public interface AssetListEntryAssetEntryRelPersistence
 		long assetListEntryAssetEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-81467937
+// LIFERAY-SERVICE-BUILDER-HASH:338515091

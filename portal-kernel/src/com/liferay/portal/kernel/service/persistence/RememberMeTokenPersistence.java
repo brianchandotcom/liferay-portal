@@ -239,20 +239,6 @@ public interface RememberMeTokenPersistence
 	public int countByLteExpirationDate(Date expirationDate);
 
 	/**
-	 * Caches the remember me token in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeToken the remember me token
-	 */
-	public void cacheResult(RememberMeToken rememberMeToken);
-
-	/**
-	 * Caches the remember me tokens in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeTokens the remember me tokens
-	 */
-	public void cacheResult(java.util.List<RememberMeToken> rememberMeTokens);
-
-	/**
 	 * Creates a new remember me token with the primary key. Does not add the remember me token to the database.
 	 *
 	 * @param rememberMeTokenId the primary key for the new remember me token
@@ -291,4 +277,4 @@ public interface RememberMeTokenPersistence
 	public RememberMeToken fetchByPrimaryKey(long rememberMeTokenId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1656183688
+// LIFERAY-SERVICE-BUILDER-HASH:638518950

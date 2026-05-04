@@ -1182,20 +1182,6 @@ public interface CalendarResourcePersistence
 	public int countByC_LikeC_A(long companyId, String code, boolean active);
 
 	/**
-	 * Caches the calendar resource in the entity cache if it is enabled.
-	 *
-	 * @param calendarResource the calendar resource
-	 */
-	public void cacheResult(CalendarResource calendarResource);
-
-	/**
-	 * Caches the calendar resources in the entity cache if it is enabled.
-	 *
-	 * @param calendarResources the calendar resources
-	 */
-	public void cacheResult(java.util.List<CalendarResource> calendarResources);
-
-	/**
 	 * Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
 	 *
 	 * @param calendarResourceId the primary key for the new calendar resource
@@ -1234,4 +1220,4 @@ public interface CalendarResourcePersistence
 	public CalendarResource fetchByPrimaryKey(long calendarResourceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1806926229
+// LIFERAY-SERVICE-BUILDER-HASH:636699561

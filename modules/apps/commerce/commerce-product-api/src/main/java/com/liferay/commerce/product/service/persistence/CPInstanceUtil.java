@@ -37,6 +37,20 @@ public class CPInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPInstance> cpInstances) {
+		getPersistence().cacheResult(cpInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPInstance cpInstance) {
+		getPersistence().cacheResult(cpInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2088,24 +2102,6 @@ public class CPInstanceUtil {
 	}
 
 	/**
-	 * Caches the cp instance in the entity cache if it is enabled.
-	 *
-	 * @param cpInstance the cp instance
-	 */
-	public static void cacheResult(CPInstance cpInstance) {
-		getPersistence().cacheResult(cpInstance);
-	}
-
-	/**
-	 * Caches the cp instances in the entity cache if it is enabled.
-	 *
-	 * @param cpInstances the cp instances
-	 */
-	public static void cacheResult(List<CPInstance> cpInstances) {
-		getPersistence().cacheResult(cpInstances);
-	}
-
-	/**
 	 * Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	 *
 	 * @param CPInstanceId the primary key for the new cp instance
@@ -2168,4 +2164,4 @@ public class CPInstanceUtil {
 	private static volatile CPInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1191762427
+// LIFERAY-SERVICE-BUILDER-HASH:109431421

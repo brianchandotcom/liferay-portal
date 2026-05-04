@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1552,101 +1550,6 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce shipment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItem the commerce shipment item
-	 */
-	@Override
-	public void cacheResult(CommerceShipmentItem commerceShipmentItem) {
-		entityCache.putResult(
-			CommerceShipmentItemImpl.class,
-			commerceShipmentItem.getPrimaryKey(), commerceShipmentItem);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceShipmentItem.getUuid(),
-				commerceShipmentItem.getGroupId()
-			},
-			commerceShipmentItem);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C,
-			new Object[] {
-				commerceShipmentItem.getCommerceShipmentId(),
-				commerceShipmentItem.getCommerceOrderItemId(),
-				commerceShipmentItem.getCommerceInventoryWarehouseId()
-			},
-			commerceShipmentItem);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceShipmentItem.getExternalReferenceCode(),
-				commerceShipmentItem.getCompanyId()
-			},
-			commerceShipmentItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce shipment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItems the commerce shipment items
-	 */
-	@Override
-	public void cacheResult(List<CommerceShipmentItem> commerceShipmentItems) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceShipmentItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceShipmentItem commerceShipmentItem :
-				commerceShipmentItems) {
-
-			if (entityCache.getResult(
-					CommerceShipmentItemImpl.class,
-					commerceShipmentItem.getPrimaryKey()) == null) {
-
-				cacheResult(commerceShipmentItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceShipmentItemModelImpl commerceShipmentItemModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceShipmentItemModelImpl.getUuid(),
-			commerceShipmentItemModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, commerceShipmentItemModelImpl);
-
-		args = new Object[] {
-			commerceShipmentItemModelImpl.getCommerceShipmentId(),
-			commerceShipmentItemModelImpl.getCommerceOrderItemId(),
-			commerceShipmentItemModelImpl.getCommerceInventoryWarehouseId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args, commerceShipmentItemModelImpl);
-
-		args = new Object[] {
-			commerceShipmentItemModelImpl.getExternalReferenceCode(),
-			commerceShipmentItemModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceShipmentItemModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *
 	 * @param commerceShipmentItemId the primary key for the new commerce shipment item
@@ -1859,11 +1762,7 @@ public class CommerceShipmentItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceShipmentItemImpl.class, commerceShipmentItemModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceShipmentItemModelImpl);
+		cacheUniqueFindersResult(commerceShipmentItem, false);
 
 		if (isNew) {
 			commerceShipmentItem.setNew(false);
@@ -1929,9 +1828,6 @@ public class CommerceShipmentItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1960,10 +1856,11 @@ public class CommerceShipmentItemPersistenceImpl
 				"commerceShipmentItem.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceShipmentItem::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommerceShipmentItem::getUuid, CommerceShipmentItem::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2140,7 +2037,7 @@ public class CommerceShipmentItemPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShipmentItem::getCommerceOrderItemId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -2149,7 +2046,9 @@ public class CommerceShipmentItemPersistenceImpl
 				"commerceShipmentId", "commerceOrderItemId",
 				"commerceInventoryWarehouseId"
 			},
-			true);
+			false, CommerceShipmentItem::getCommerceShipmentId,
+			CommerceShipmentItem::getCommerceOrderItemId,
+			CommerceShipmentItem::getCommerceInventoryWarehouseId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
@@ -2211,10 +2110,12 @@ public class CommerceShipmentItemPersistenceImpl
 					FinderColumn.Type.BIG_DECIMAL, ">=", true, true,
 					CommerceShipmentItem::getQuantity));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceShipmentItem::getExternalReferenceCode,
+			CommerceShipmentItem::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -2296,4 +2197,4 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1695973991
+// LIFERAY-SERVICE-BUILDER-HASH:1346188449

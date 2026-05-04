@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUndefinedDefaultOrderEntryException;
@@ -314,69 +311,6 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the undefined default order entry in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntry the undefined default order entry
-	 */
-	@Override
-	public void cacheResult(
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
-
-		entityCache.putResult(
-			UndefinedDefaultOrderEntryImpl.class,
-			undefinedDefaultOrderEntry.getPrimaryKey(),
-			undefinedDefaultOrderEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {undefinedDefaultOrderEntry.getName()},
-			undefinedDefaultOrderEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the undefined default order entries in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntries the undefined default order entries
-	 */
-	@Override
-	public void cacheResult(
-		List<UndefinedDefaultOrderEntry> undefinedDefaultOrderEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (undefinedDefaultOrderEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UndefinedDefaultOrderEntry undefinedDefaultOrderEntry :
-				undefinedDefaultOrderEntries) {
-
-			if (entityCache.getResult(
-					UndefinedDefaultOrderEntryImpl.class,
-					undefinedDefaultOrderEntry.getPrimaryKey()) == null) {
-
-				cacheResult(undefinedDefaultOrderEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UndefinedDefaultOrderEntryModelImpl
-			undefinedDefaultOrderEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			undefinedDefaultOrderEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, undefinedDefaultOrderEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new undefined default order entry with the primary key. Does not add the undefined default order entry to the database.
 	 *
 	 * @param undefinedDefaultOrderEntryId the primary key for the new undefined default order entry
@@ -508,11 +442,7 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			UndefinedDefaultOrderEntryImpl.class,
-			undefinedDefaultOrderEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(undefinedDefaultOrderEntryModelImpl);
+		cacheUniqueFindersResult(undefinedDefaultOrderEntry, false);
 
 		if (isNew) {
 			undefinedDefaultOrderEntry.setNew(false);
@@ -575,12 +505,10 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	 * Initializes the undefined default order entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			UndefinedDefaultOrderEntry::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -659,4 +587,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1883425178
+// LIFERAY-SERVICE-BUILDER-HASH:706878958

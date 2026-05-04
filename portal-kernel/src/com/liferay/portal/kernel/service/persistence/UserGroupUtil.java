@@ -36,6 +36,20 @@ public class UserGroupUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UserGroup> userGroups) {
+		getPersistence().cacheResult(userGroups);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UserGroup userGroup) {
+		getPersistence().cacheResult(userGroup);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1421,24 +1435,6 @@ public class UserGroupUtil {
 	}
 
 	/**
-	 * Caches the user group in the entity cache if it is enabled.
-	 *
-	 * @param userGroup the user group
-	 */
-	public static void cacheResult(UserGroup userGroup) {
-		getPersistence().cacheResult(userGroup);
-	}
-
-	/**
-	 * Caches the user groups in the entity cache if it is enabled.
-	 *
-	 * @param userGroups the user groups
-	 */
-	public static void cacheResult(List<UserGroup> userGroups) {
-		getPersistence().cacheResult(userGroups);
-	}
-
-	/**
 	 * Creates a new user group with the primary key. Does not add the user group to the database.
 	 *
 	 * @param userGroupId the primary key for the new user group
@@ -2140,4 +2136,4 @@ public class UserGroupUtil {
 	private static volatile UserGroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1969181100
+// LIFERAY-SERVICE-BUILDER-HASH:-284544492

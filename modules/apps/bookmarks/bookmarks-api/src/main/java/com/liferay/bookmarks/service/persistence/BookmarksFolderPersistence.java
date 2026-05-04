@@ -1314,20 +1314,6 @@ public interface BookmarksFolderPersistence
 		long folderId, long companyId, long parentFolderId, int status);
 
 	/**
-	 * Caches the bookmarks folder in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolder the bookmarks folder
-	 */
-	public void cacheResult(BookmarksFolder bookmarksFolder);
-
-	/**
-	 * Caches the bookmarks folders in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolders the bookmarks folders
-	 */
-	public void cacheResult(java.util.List<BookmarksFolder> bookmarksFolders);
-
-	/**
 	 * Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
 	 *
 	 * @param folderId the primary key for the new bookmarks folder
@@ -1365,4 +1351,4 @@ public interface BookmarksFolderPersistence
 	public BookmarksFolder fetchByPrimaryKey(long folderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1672967967
+// LIFERAY-SERVICE-BUILDER-HASH:-918390635

@@ -1235,20 +1235,6 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cor entry in the entity cache if it is enabled.
-	 *
-	 * @param corEntry the cor entry
-	 */
-	public void cacheResult(COREntry corEntry);
-
-	/**
-	 * Caches the cor entries in the entity cache if it is enabled.
-	 *
-	 * @param corEntries the cor entries
-	 */
-	public void cacheResult(java.util.List<COREntry> corEntries);
-
-	/**
 	 * Creates a new cor entry with the primary key. Does not add the cor entry to the database.
 	 *
 	 * @param COREntryId the primary key for the new cor entry
@@ -1286,4 +1272,4 @@ public interface COREntryPersistence extends BasePersistence<COREntry> {
 	public COREntry fetchByPrimaryKey(long COREntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1518552445
+// LIFERAY-SERVICE-BUILDER-HASH:-1724337617

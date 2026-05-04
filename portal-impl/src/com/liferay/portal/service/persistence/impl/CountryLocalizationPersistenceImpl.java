@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.CountryLocalizationImpl;
 import com.liferay.portal.model.impl.CountryLocalizationModelImpl;
@@ -352,81 +348,6 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the country localization in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalization the country localization
-	 */
-	@Override
-	public void cacheResult(CountryLocalization countryLocalization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					countryLocalization.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				CountryLocalizationImpl.class,
-				countryLocalization.getPrimaryKey(), countryLocalization);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByCountryId_LanguageId,
-				new Object[] {
-					countryLocalization.getCountryId(),
-					countryLocalization.getLanguageId()
-				},
-				countryLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the country localizations in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalizations the country localizations
-	 */
-	@Override
-	public void cacheResult(List<CountryLocalization> countryLocalizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (countryLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CountryLocalization countryLocalization : countryLocalizations) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						countryLocalization.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						CountryLocalizationImpl.class,
-						countryLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(countryLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CountryLocalizationModelImpl countryLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					countryLocalizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				countryLocalizationModelImpl.getCountryId(),
-				countryLocalizationModelImpl.getLanguageId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByCountryId_LanguageId, args,
-				countryLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new country localization with the primary key. Does not add the country localization to the database.
 	 *
 	 * @param countryLocalizationId the primary key for the new country localization
@@ -545,11 +466,7 @@ public class CountryLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			CountryLocalizationImpl.class, countryLocalizationModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(countryLocalizationModelImpl);
+		cacheUniqueFindersResult(countryLocalization, false);
 
 		if (isNew) {
 			countryLocalization.setNew(false);
@@ -669,9 +586,6 @@ public class CountryLocalizationPersistenceImpl
 	 * Initializes the country localization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCountryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
 			new String[] {
@@ -703,10 +617,12 @@ public class CountryLocalizationPersistenceImpl
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
 					"=", true, true, CountryLocalization::getCountryId));
 
-		_finderPathFetchByCountryId_LanguageId = new FinderPath(
+		_finderPathFetchByCountryId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCountryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "languageId"}, true);
+			new String[] {"countryId", "languageId"}, false,
+			CountryLocalization::getCountryId,
+			CountryLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByCountryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -753,4 +669,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1258979934
+// LIFERAY-SERVICE-BUILDER-HASH:1557164247

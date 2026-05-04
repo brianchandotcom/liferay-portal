@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1269,64 +1266,6 @@ public class CommerceWishListPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce wish list in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishList the commerce wish list
-	 */
-	@Override
-	public void cacheResult(CommerceWishList commerceWishList) {
-		entityCache.putResult(
-			CommerceWishListImpl.class, commerceWishList.getPrimaryKey(),
-			commerceWishList);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceWishList.getUuid(), commerceWishList.getGroupId()
-			},
-			commerceWishList);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce wish lists in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishLists the commerce wish lists
-	 */
-	@Override
-	public void cacheResult(List<CommerceWishList> commerceWishLists) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceWishLists.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceWishList commerceWishList : commerceWishLists) {
-			if (entityCache.getResult(
-					CommerceWishListImpl.class,
-					commerceWishList.getPrimaryKey()) == null) {
-
-				cacheResult(commerceWishList);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceWishListModelImpl commerceWishListModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceWishListModelImpl.getUuid(),
-			commerceWishListModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, commerceWishListModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce wish list with the primary key. Does not add the commerce wish list to the database.
 	 *
 	 * @param commerceWishListId the primary key for the new commerce wish list
@@ -1468,10 +1407,7 @@ public class CommerceWishListPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceWishListImpl.class, commerceWishListModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceWishListModelImpl);
+		cacheUniqueFindersResult(commerceWishList, false);
 
 		if (isNew) {
 			commerceWishList.setNew(false);
@@ -1537,9 +1473,6 @@ public class CommerceWishListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1568,10 +1501,11 @@ public class CommerceWishListPersistenceImpl
 				"commerceWishList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceWishList::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CommerceWishList::getUuid,
+			CommerceWishList::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEWISHLIST_WHERE,
@@ -1842,4 +1776,4 @@ public class CommerceWishListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-78683835
+// LIFERAY-SERVICE-BUILDER-HASH:1424356481

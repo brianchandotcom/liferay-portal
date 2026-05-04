@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkPers
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -531,82 +527,6 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm structure link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLink the ddm structure link
-	 */
-	@Override
-	public void cacheResult(DDMStructureLink ddmStructureLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructureLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
-				ddmStructureLink);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_S,
-				new Object[] {
-					ddmStructureLink.getClassNameId(),
-					ddmStructureLink.getClassPK(),
-					ddmStructureLink.getStructureId()
-				},
-				ddmStructureLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm structure links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLinks the ddm structure links
-	 */
-	@Override
-	public void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmStructureLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmStructureLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMStructureLinkImpl.class,
-						ddmStructureLink.getPrimaryKey()) == null) {
-
-					cacheResult(ddmStructureLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMStructureLinkModelImpl ddmStructureLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructureLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmStructureLinkModelImpl.getClassNameId(),
-				ddmStructureLinkModelImpl.getClassPK(),
-				ddmStructureLinkModelImpl.getStructureId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_S, args, ddmStructureLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm structure link with the primary key. Does not add the ddm structure link to the database.
 	 *
 	 * @param structureLinkId the primary key for the new ddm structure link
@@ -721,10 +641,7 @@ public class DDMStructureLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMStructureLinkImpl.class, ddmStructureLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmStructureLinkModelImpl);
+		cacheUniqueFindersResult(ddmStructureLink, false);
 
 		if (isNew) {
 			ddmStructureLink.setNew(false);
@@ -846,9 +763,6 @@ public class DDMStructureLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
 			new String[] {
@@ -911,12 +825,14 @@ public class DDMStructureLinkPersistenceImpl
 				"ddmStructureLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getClassPK));
 
-		_finderPathFetchByC_C_S = new FinderPath(
+		_finderPathFetchByC_C_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "structureId"}, true);
+			new String[] {"classNameId", "classPK", "structureId"}, false,
+			DDMStructureLink::getClassNameId, DDMStructureLink::getClassPK,
+			DDMStructureLink::getStructureId);
 
 		_uniquePersistenceFinderByC_C_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_S, _SQL_SELECT_DDMSTRUCTURELINK_WHERE,
@@ -999,4 +915,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1468863511
+// LIFERAY-SERVICE-BUILDER-HASH:-1344538927

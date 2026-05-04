@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.UserTrackerUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.UserTrackerImpl;
 import com.liferay.portal.model.impl.UserTrackerModelImpl;
@@ -517,43 +514,6 @@ public class UserTrackerPersistenceImpl
 	}
 
 	/**
-	 * Caches the user tracker in the entity cache if it is enabled.
-	 *
-	 * @param userTracker the user tracker
-	 */
-	@Override
-	public void cacheResult(UserTracker userTracker) {
-		EntityCacheUtil.putResult(
-			UserTrackerImpl.class, userTracker.getPrimaryKey(), userTracker);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the user trackers in the entity cache if it is enabled.
-	 *
-	 * @param userTrackers the user trackers
-	 */
-	@Override
-	public void cacheResult(List<UserTracker> userTrackers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (userTrackers.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UserTracker userTracker : userTrackers) {
-			if (EntityCacheUtil.getResult(
-					UserTrackerImpl.class, userTracker.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(userTracker);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	 *
 	 * @param userTrackerId the primary key for the new user tracker
@@ -672,8 +632,7 @@ public class UserTrackerPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			UserTrackerImpl.class, userTrackerModelImpl, false, true);
+		cacheUniqueFindersResult(userTracker, false);
 
 		if (isNew) {
 			userTracker.setNew(false);
@@ -733,9 +692,6 @@ public class UserTrackerPersistenceImpl
 	 * Initializes the user tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -855,4 +811,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:466523652
+// LIFERAY-SERVICE-BUILDER-HASH:-1834903213

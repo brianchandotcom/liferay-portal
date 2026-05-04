@@ -294,21 +294,6 @@ public interface AnnouncementsFlagPersistence
 	public int countByU_E_V(long userId, long entryId, int value);
 
 	/**
-	 * Caches the announcements flag in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlag the announcements flag
-	 */
-	public void cacheResult(AnnouncementsFlag announcementsFlag);
-
-	/**
-	 * Caches the announcements flags in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlags the announcements flags
-	 */
-	public void cacheResult(
-		java.util.List<AnnouncementsFlag> announcementsFlags);
-
-	/**
 	 * Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
 	 *
 	 * @param flagId the primary key for the new announcements flag
@@ -346,4 +331,4 @@ public interface AnnouncementsFlagPersistence
 	public AnnouncementsFlag fetchByPrimaryKey(long flagId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:256459575
+// LIFERAY-SERVICE-BUILDER-HASH:2052585663

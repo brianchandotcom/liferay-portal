@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -756,52 +753,6 @@ public class AppPersistenceImpl
 	}
 
 	/**
-	 * Caches the app in the entity cache if it is enabled.
-	 *
-	 * @param app the app
-	 */
-	@Override
-	public void cacheResult(App app) {
-		entityCache.putResult(AppImpl.class, app.getPrimaryKey(), app);
-
-		finderCache.putResult(
-			_finderPathFetchByRemoteAppId, new Object[] {app.getRemoteAppId()},
-			app);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the apps in the entity cache if it is enabled.
-	 *
-	 * @param apps the apps
-	 */
-	@Override
-	public void cacheResult(List<App> apps) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (apps.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (App app : apps) {
-			if (entityCache.getResult(AppImpl.class, app.getPrimaryKey()) ==
-					null) {
-
-				cacheResult(app);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(AppModelImpl appModelImpl) {
-		Object[] args = new Object[] {appModelImpl.getRemoteAppId()};
-
-		finderCache.putResult(
-			_finderPathFetchByRemoteAppId, args, appModelImpl);
-	}
-
-	/**
 	 * Creates a new app with the primary key. Does not add the app to the database.
 	 *
 	 * @param appId the primary key for the new app
@@ -934,9 +885,7 @@ public class AppPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(AppImpl.class, appModelImpl, false, true);
-
-		cacheUniqueFindersCache(appModelImpl);
+		cacheUniqueFindersResult(app, false);
 
 		if (isNew) {
 			app.setNew(false);
@@ -1000,9 +949,6 @@ public class AppPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1092,10 +1038,10 @@ public class AppPersistenceImpl
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, App::getCompanyId));
 
-		_finderPathFetchByRemoteAppId = new FinderPath(
+		_finderPathFetchByRemoteAppId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRemoteAppId",
 			new String[] {Long.class.getName()}, new String[] {"remoteAppId"},
-			true);
+			false, App::getRemoteAppId);
 
 		_uniquePersistenceFinderByRemoteAppId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByRemoteAppId, _SQL_SELECT_APP_WHERE,
@@ -1200,4 +1146,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:7400989
+// LIFERAY-SERVICE-BUILDER-HASH:492608026

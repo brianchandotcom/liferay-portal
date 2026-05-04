@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1338,74 +1334,6 @@ public class DDLRecordPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddl record in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecord the ddl record
-	 */
-	@Override
-	public void cacheResult(DDLRecord ddlRecord) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddlRecord.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDLRecordImpl.class, ddlRecord.getPrimaryKey(), ddlRecord);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {ddlRecord.getUuid(), ddlRecord.getGroupId()},
-				ddlRecord);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddl records in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecords the ddl records
-	 */
-	@Override
-	public void cacheResult(List<DDLRecord> ddlRecords) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddlRecords.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDLRecord ddlRecord : ddlRecords) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddlRecord.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDLRecordImpl.class, ddlRecord.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ddlRecord);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDLRecordModelImpl ddlRecordModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddlRecordModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddlRecordModelImpl.getUuid(), ddlRecordModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, ddlRecordModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	 *
 	 * @param recordId the primary key for the new ddl record
@@ -1546,10 +1474,7 @@ public class DDLRecordPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDLRecordImpl.class, ddlRecordModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddlRecordModelImpl);
+		cacheUniqueFindersResult(ddlRecord, false);
 
 		if (isNew) {
 			ddlRecord.setNew(false);
@@ -1690,9 +1615,6 @@ public class DDLRecordPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1720,10 +1642,11 @@ public class DDLRecordPersistenceImpl
 				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DDLRecord::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DDLRecord::getUuid,
+			DDLRecord::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORD_WHERE,
@@ -1990,4 +1913,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1666943741
+// LIFERAY-SERVICE-BUILDER-HASH:-264426887

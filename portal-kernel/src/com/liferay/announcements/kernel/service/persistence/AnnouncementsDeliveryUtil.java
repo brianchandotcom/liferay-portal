@@ -36,6 +36,24 @@ public class AnnouncementsDeliveryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AnnouncementsDelivery> announcementsDeliveries) {
+
+		getPersistence().cacheResult(announcementsDeliveries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AnnouncementsDelivery announcementsDelivery) {
+
+		getPersistence().cacheResult(announcementsDelivery);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -425,28 +443,6 @@ public class AnnouncementsDeliveryUtil {
 	}
 
 	/**
-	 * Caches the announcements delivery in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDelivery the announcements delivery
-	 */
-	public static void cacheResult(
-		AnnouncementsDelivery announcementsDelivery) {
-
-		getPersistence().cacheResult(announcementsDelivery);
-	}
-
-	/**
-	 * Caches the announcements deliveries in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDeliveries the announcements deliveries
-	 */
-	public static void cacheResult(
-		List<AnnouncementsDelivery> announcementsDeliveries) {
-
-		getPersistence().cacheResult(announcementsDeliveries);
-	}
-
-	/**
 	 * Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
 	 *
 	 * @param deliveryId the primary key for the new announcements delivery
@@ -513,4 +509,4 @@ public class AnnouncementsDeliveryUtil {
 	private static volatile AnnouncementsDeliveryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:455124181
+// LIFERAY-SERVICE-BUILDER-HASH:-763264088

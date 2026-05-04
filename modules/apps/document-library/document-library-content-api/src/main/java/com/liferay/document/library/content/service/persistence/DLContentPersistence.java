@@ -449,20 +449,6 @@ public interface DLContentPersistence
 		long companyId, long repositoryId, String path, String version);
 
 	/**
-	 * Caches the document library content in the entity cache if it is enabled.
-	 *
-	 * @param dlContent the document library content
-	 */
-	public void cacheResult(DLContent dlContent);
-
-	/**
-	 * Caches the document library contents in the entity cache if it is enabled.
-	 *
-	 * @param dlContents the document library contents
-	 */
-	public void cacheResult(java.util.List<DLContent> dlContents);
-
-	/**
 	 * Creates a new document library content with the primary key. Does not add the document library content to the database.
 	 *
 	 * @param contentId the primary key for the new document library content
@@ -500,4 +486,4 @@ public interface DLContentPersistence
 	public DLContent fetchByPrimaryKey(long contentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1485851555
+// LIFERAY-SERVICE-BUILDER-HASH:-1652998639

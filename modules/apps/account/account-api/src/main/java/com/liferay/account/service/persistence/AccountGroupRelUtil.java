@@ -36,6 +36,20 @@ public class AccountGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AccountGroupRel> accountGroupRels) {
+		getPersistence().cacheResult(accountGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AccountGroupRel accountGroupRel) {
+		getPersistence().cacheResult(accountGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -586,24 +600,6 @@ public class AccountGroupRelUtil {
 	}
 
 	/**
-	 * Caches the account group rel in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRel the account group rel
-	 */
-	public static void cacheResult(AccountGroupRel accountGroupRel) {
-		getPersistence().cacheResult(accountGroupRel);
-	}
-
-	/**
-	 * Caches the account group rels in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRels the account group rels
-	 */
-	public static void cacheResult(List<AccountGroupRel> accountGroupRels) {
-		getPersistence().cacheResult(accountGroupRels);
-	}
-
-	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
 	 * @param accountGroupRelId the primary key for the new account group rel
@@ -664,4 +660,4 @@ public class AccountGroupRelUtil {
 	private static volatile AccountGroupRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:438456859
+// LIFERAY-SERVICE-BUILDER-HASH:1994586925

@@ -956,4 +956,4 @@ public class CommerceDiscountRuleModelImpl
 	private CommerceDiscountRule _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1866494254
+// LIFERAY-SERVICE-BUILDER-HASH:2021727426

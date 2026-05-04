@@ -36,6 +36,22 @@ public class SocialActivityLimitUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SocialActivityLimit> socialActivityLimits) {
+
+		getPersistence().cacheResult(socialActivityLimits);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SocialActivityLimit socialActivityLimit) {
+		getPersistence().cacheResult(socialActivityLimit);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -599,26 +615,6 @@ public class SocialActivityLimitUtil {
 	}
 
 	/**
-	 * Caches the social activity limit in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimit the social activity limit
-	 */
-	public static void cacheResult(SocialActivityLimit socialActivityLimit) {
-		getPersistence().cacheResult(socialActivityLimit);
-	}
-
-	/**
-	 * Caches the social activity limits in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimits the social activity limits
-	 */
-	public static void cacheResult(
-		List<SocialActivityLimit> socialActivityLimits) {
-
-		getPersistence().cacheResult(socialActivityLimits);
-	}
-
-	/**
 	 * Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
 	 *
 	 * @param activityLimitId the primary key for the new social activity limit
@@ -685,4 +681,4 @@ public class SocialActivityLimitUtil {
 	private static volatile SocialActivityLimitPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-668503232
+// LIFERAY-SERVICE-BUILDER-HASH:-1473665714

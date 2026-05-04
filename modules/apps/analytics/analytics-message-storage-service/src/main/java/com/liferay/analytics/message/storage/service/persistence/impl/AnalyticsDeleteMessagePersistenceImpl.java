@@ -14,7 +14,6 @@ import com.liferay.analytics.message.storage.service.persistence.AnalyticsDelete
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsDeleteMessageUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -598,59 +594,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 	/**
-	 * Caches the analytics delete message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessage the analytics delete message
-	 */
-	@Override
-	public void cacheResult(AnalyticsDeleteMessage analyticsDeleteMessage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					analyticsDeleteMessage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AnalyticsDeleteMessageImpl.class,
-				analyticsDeleteMessage.getPrimaryKey(), analyticsDeleteMessage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the analytics delete messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessages the analytics delete messages
-	 */
-	@Override
-	public void cacheResult(
-		List<AnalyticsDeleteMessage> analyticsDeleteMessages) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (analyticsDeleteMessages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AnalyticsDeleteMessage analyticsDeleteMessage :
-				analyticsDeleteMessages) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						analyticsDeleteMessage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AnalyticsDeleteMessageImpl.class,
-						analyticsDeleteMessage.getPrimaryKey()) == null) {
-
-					cacheResult(analyticsDeleteMessage);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
 	 * @param analyticsDeleteMessageId the primary key for the new analytics delete message
@@ -797,9 +740,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AnalyticsDeleteMessageImpl.class, analyticsDeleteMessageModelImpl,
-			false, true);
+		cacheUniqueFindersResult(analyticsDeleteMessage, false);
 
 		if (isNew) {
 			analyticsDeleteMessage.setNew(false);
@@ -926,9 +867,6 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1086,4 +1024,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1006615134
+// LIFERAY-SERVICE-BUILDER-HASH:-949347672

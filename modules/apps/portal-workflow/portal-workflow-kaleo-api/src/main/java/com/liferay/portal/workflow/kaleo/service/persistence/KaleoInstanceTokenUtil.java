@@ -37,6 +37,22 @@ public class KaleoInstanceTokenUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoInstanceToken> kaleoInstanceTokens) {
+
+		getPersistence().cacheResult(kaleoInstanceTokens);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoInstanceToken kaleoInstanceToken) {
+		getPersistence().cacheResult(kaleoInstanceToken);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -801,26 +817,6 @@ public class KaleoInstanceTokenUtil {
 	}
 
 	/**
-	 * Caches the kaleo instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceToken the kaleo instance token
-	 */
-	public static void cacheResult(KaleoInstanceToken kaleoInstanceToken) {
-		getPersistence().cacheResult(kaleoInstanceToken);
-	}
-
-	/**
-	 * Caches the kaleo instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceTokens the kaleo instance tokens
-	 */
-	public static void cacheResult(
-		List<KaleoInstanceToken> kaleoInstanceTokens) {
-
-		getPersistence().cacheResult(kaleoInstanceTokens);
-	}
-
-	/**
 	 * Creates a new kaleo instance token with the primary key. Does not add the kaleo instance token to the database.
 	 *
 	 * @param kaleoInstanceTokenId the primary key for the new kaleo instance token
@@ -889,4 +885,4 @@ public class KaleoInstanceTokenUtil {
 	private static volatile KaleoInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1529993191
+// LIFERAY-SERVICE-BUILDER-HASH:-295608437

@@ -36,6 +36,22 @@ public class AssetListEntryUsageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetListEntryUsage> assetListEntryUsages) {
+
+		getPersistence().cacheResult(assetListEntryUsages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetListEntryUsage assetListEntryUsage) {
+		getPersistence().cacheResult(assetListEntryUsage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1378,26 +1394,6 @@ public class AssetListEntryUsageUtil {
 	}
 
 	/**
-	 * Caches the asset list entry usage in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsage the asset list entry usage
-	 */
-	public static void cacheResult(AssetListEntryUsage assetListEntryUsage) {
-		getPersistence().cacheResult(assetListEntryUsage);
-	}
-
-	/**
-	 * Caches the asset list entry usages in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsages the asset list entry usages
-	 */
-	public static void cacheResult(
-		List<AssetListEntryUsage> assetListEntryUsages) {
-
-		getPersistence().cacheResult(assetListEntryUsages);
-	}
-
-	/**
 	 * Creates a new asset list entry usage with the primary key. Does not add the asset list entry usage to the database.
 	 *
 	 * @param assetListEntryUsageId the primary key for the new asset list entry usage
@@ -1465,4 +1461,4 @@ public class AssetListEntryUsageUtil {
 	private static volatile AssetListEntryUsagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1263158368
+// LIFERAY-SERVICE-BUILDER-HASH:843820710

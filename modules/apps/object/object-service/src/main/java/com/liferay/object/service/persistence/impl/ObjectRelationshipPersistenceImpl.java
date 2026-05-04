@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3347,118 +3345,6 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 	/**
-	 * Caches the object relationship in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationship the object relationship
-	 */
-	@Override
-	public void cacheResult(ObjectRelationship objectRelationship) {
-		entityCache.putResult(
-			ObjectRelationshipImpl.class, objectRelationship.getPrimaryKey(),
-			objectRelationship);
-
-		finderCache.putResult(
-			_finderPathFetchByObjectFieldId2,
-			new Object[] {objectRelationship.getObjectFieldId2()},
-			objectRelationship);
-
-		finderCache.putResult(
-			_finderPathFetchByDTN_R,
-			new Object[] {
-				objectRelationship.getDBTableName(),
-				objectRelationship.isReverse()
-			},
-			objectRelationship);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI1,
-			new Object[] {
-				objectRelationship.getExternalReferenceCode(),
-				objectRelationship.getCompanyId(),
-				objectRelationship.getObjectDefinitionId1()
-			},
-			objectRelationship);
-
-		finderCache.putResult(
-			_finderPathFetchByODI1_ODI2_N_R_T,
-			new Object[] {
-				objectRelationship.getObjectDefinitionId1(),
-				objectRelationship.getObjectDefinitionId2(),
-				objectRelationship.getName(), objectRelationship.isReverse(),
-				objectRelationship.getType()
-			},
-			objectRelationship);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object relationships in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationships the object relationships
-	 */
-	@Override
-	public void cacheResult(List<ObjectRelationship> objectRelationships) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectRelationships.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (entityCache.getResult(
-					ObjectRelationshipImpl.class,
-					objectRelationship.getPrimaryKey()) == null) {
-
-				cacheResult(objectRelationship);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectRelationshipModelImpl objectRelationshipModelImpl) {
-
-		Object[] args = new Object[] {
-			objectRelationshipModelImpl.getObjectFieldId2()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByObjectFieldId2, args,
-			objectRelationshipModelImpl);
-
-		args = new Object[] {
-			objectRelationshipModelImpl.getDBTableName(),
-			objectRelationshipModelImpl.isReverse()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByDTN_R, args, objectRelationshipModelImpl);
-
-		args = new Object[] {
-			objectRelationshipModelImpl.getExternalReferenceCode(),
-			objectRelationshipModelImpl.getCompanyId(),
-			objectRelationshipModelImpl.getObjectDefinitionId1()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI1, args, objectRelationshipModelImpl);
-
-		args = new Object[] {
-			objectRelationshipModelImpl.getObjectDefinitionId1(),
-			objectRelationshipModelImpl.getObjectDefinitionId2(),
-			objectRelationshipModelImpl.getName(),
-			objectRelationshipModelImpl.isReverse(),
-			objectRelationshipModelImpl.getType()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI1_ODI2_N_R_T, args,
-			objectRelationshipModelImpl);
-	}
-
-	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *
 	 * @param objectRelationshipId the primary key for the new object relationship
@@ -3644,11 +3530,7 @@ public class ObjectRelationshipPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectRelationshipImpl.class, objectRelationshipModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(objectRelationshipModelImpl);
+		cacheUniqueFindersResult(objectRelationship, false);
 
 		if (isNew) {
 			objectRelationship.setNew(false);
@@ -3714,9 +3596,6 @@ public class ObjectRelationshipPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3870,10 +3749,11 @@ public class ObjectRelationshipPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getObjectDefinitionId2));
 
-		_finderPathFetchByObjectFieldId2 = new FinderPath(
+		_finderPathFetchByObjectFieldId2 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId2",
 			new String[] {Long.class.getName()},
-			new String[] {"objectFieldId2"}, true);
+			new String[] {"objectFieldId2"}, false,
+			ObjectRelationship::getObjectFieldId2);
 
 		_uniquePersistenceFinderByObjectFieldId2 =
 			new UniquePersistenceFinder<>(
@@ -4121,10 +4001,11 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathFetchByDTN_R = new FinderPath(
+		_finderPathFetchByDTN_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByDTN_R",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"dbTableName", "reverse"}, true);
+			new String[] {"dbTableName", "reverse"}, false,
+			ObjectRelationship::getDBTableName, ObjectRelationship::isReverse);
 
 		_uniquePersistenceFinderByDTN_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByDTN_R, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
@@ -4135,7 +4016,7 @@ public class ObjectRelationshipPersistenceImpl
 				"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 				"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathFetchByERC_C_ODI1 = new FinderPath(
+		_finderPathFetchByERC_C_ODI1 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI1",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -4144,7 +4025,9 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId1"
 			},
-			true);
+			false, ObjectRelationship::getExternalReferenceCode,
+			ObjectRelationship::getCompanyId,
+			ObjectRelationship::getObjectDefinitionId1);
 
 		_uniquePersistenceFinderByERC_C_ODI1 = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI1,
@@ -4409,7 +4292,7 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getType));
 
-		_finderPathFetchByODI1_ODI2_N_R_T = new FinderPath(
+		_finderPathFetchByODI1_ODI2_N_R_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI1_ODI2_N_R_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -4420,7 +4303,10 @@ public class ObjectRelationshipPersistenceImpl
 				"objectDefinitionId1", "objectDefinitionId2", "name", "reverse",
 				"type_"
 			},
-			true);
+			false, ObjectRelationship::getObjectDefinitionId1,
+			ObjectRelationship::getObjectDefinitionId2,
+			ObjectRelationship::getName, ObjectRelationship::isReverse,
+			ObjectRelationship::getType);
 
 		_uniquePersistenceFinderByODI1_ODI2_N_R_T =
 			new UniquePersistenceFinder<>(
@@ -4513,4 +4399,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1392576672
+// LIFERAY-SERVICE-BUILDER-HASH:1185709704

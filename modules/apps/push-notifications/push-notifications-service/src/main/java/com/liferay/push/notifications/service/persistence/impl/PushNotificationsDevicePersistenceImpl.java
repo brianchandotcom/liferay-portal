@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
@@ -829,65 +826,6 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 	/**
-	 * Caches the push notifications device in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevice the push notifications device
-	 */
-	@Override
-	public void cacheResult(PushNotificationsDevice pushNotificationsDevice) {
-		entityCache.putResult(
-			PushNotificationsDeviceImpl.class,
-			pushNotificationsDevice.getPrimaryKey(), pushNotificationsDevice);
-
-		finderCache.putResult(
-			_finderPathFetchByToken,
-			new Object[] {pushNotificationsDevice.getToken()},
-			pushNotificationsDevice);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the push notifications devices in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevices the push notifications devices
-	 */
-	@Override
-	public void cacheResult(
-		List<PushNotificationsDevice> pushNotificationsDevices) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (pushNotificationsDevices.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PushNotificationsDevice pushNotificationsDevice :
-				pushNotificationsDevices) {
-
-			if (entityCache.getResult(
-					PushNotificationsDeviceImpl.class,
-					pushNotificationsDevice.getPrimaryKey()) == null) {
-
-				cacheResult(pushNotificationsDevice);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl) {
-
-		Object[] args = new Object[] {
-			pushNotificationsDeviceModelImpl.getToken()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByToken, args, pushNotificationsDeviceModelImpl);
-	}
-
-	/**
 	 * Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	 *
 	 * @param pushNotificationsDeviceId the primary key for the new push notifications device
@@ -1017,11 +955,7 @@ public class PushNotificationsDevicePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PushNotificationsDeviceImpl.class, pushNotificationsDeviceModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(pushNotificationsDeviceModelImpl);
+		cacheUniqueFindersResult(pushNotificationsDevice, false);
 
 		if (isNew) {
 			pushNotificationsDevice.setNew(false);
@@ -1085,13 +1019,10 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByToken = new FinderPath(
+		_finderPathFetchByToken = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
 			new String[] {String.class.getName()}, new String[] {"token"},
-			true);
+			false, PushNotificationsDevice::getToken);
 
 		_uniquePersistenceFinderByToken = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByToken,
@@ -1190,4 +1121,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1074514186
+// LIFERAY-SERVICE-BUILDER-HASH:1557472705

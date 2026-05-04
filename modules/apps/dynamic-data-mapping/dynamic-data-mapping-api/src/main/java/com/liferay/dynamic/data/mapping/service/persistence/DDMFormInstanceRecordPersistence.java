@@ -726,21 +726,6 @@ public interface DDMFormInstanceRecordPersistence
 	public int countByF_F(long formInstanceId, String formInstanceVersion);
 
 	/**
-	 * Caches the ddm form instance record in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceRecord the ddm form instance record
-	 */
-	public void cacheResult(DDMFormInstanceRecord ddmFormInstanceRecord);
-
-	/**
-	 * Caches the ddm form instance records in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceRecords the ddm form instance records
-	 */
-	public void cacheResult(
-		java.util.List<DDMFormInstanceRecord> ddmFormInstanceRecords);
-
-	/**
 	 * Creates a new ddm form instance record with the primary key. Does not add the ddm form instance record to the database.
 	 *
 	 * @param formInstanceRecordId the primary key for the new ddm form instance record
@@ -780,4 +765,4 @@ public interface DDMFormInstanceRecordPersistence
 	public DDMFormInstanceRecord fetchByPrimaryKey(long formInstanceRecordId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:846535541
+// LIFERAY-SERVICE-BUILDER-HASH:858963865

@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.exportimport.model.impl.ExportImportConfigurationImpl;
@@ -874,52 +871,6 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 	/**
-	 * Caches the export import configuration in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfiguration the export import configuration
-	 */
-	@Override
-	public void cacheResult(
-		ExportImportConfiguration exportImportConfiguration) {
-
-		EntityCacheUtil.putResult(
-			ExportImportConfigurationImpl.class,
-			exportImportConfiguration.getPrimaryKey(),
-			exportImportConfiguration);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the export import configurations in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfigurations the export import configurations
-	 */
-	@Override
-	public void cacheResult(
-		List<ExportImportConfiguration> exportImportConfigurations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (exportImportConfigurations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ExportImportConfiguration exportImportConfiguration :
-				exportImportConfigurations) {
-
-			if (EntityCacheUtil.getResult(
-					ExportImportConfigurationImpl.class,
-					exportImportConfiguration.getPrimaryKey()) == null) {
-
-				cacheResult(exportImportConfiguration);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
 	 *
 	 * @param exportImportConfigurationId the primary key for the new export import configuration
@@ -1061,9 +1012,7 @@ public class ExportImportConfigurationPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ExportImportConfigurationImpl.class,
-			exportImportConfigurationModelImpl, false, true);
+		cacheUniqueFindersResult(exportImportConfiguration, false);
 
 		if (isNew) {
 			exportImportConfiguration.setNew(false);
@@ -1131,9 +1080,6 @@ public class ExportImportConfigurationPersistenceImpl
 	 * Initializes the export import configuration persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1345,4 +1291,4 @@ public class ExportImportConfigurationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:322012862
+// LIFERAY-SERVICE-BUILDER-HASH:-2060993657

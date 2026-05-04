@@ -7,7 +7,6 @@ package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -27,10 +26,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
@@ -1100,118 +1096,6 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity counter in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounter the social activity counter
-	 */
-	@Override
-	public void cacheResult(SocialActivityCounter socialActivityCounter) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityCounter.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivityCounterImpl.class,
-				socialActivityCounter.getPrimaryKey(), socialActivityCounter);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_C_N_O_S,
-				new Object[] {
-					socialActivityCounter.getGroupId(),
-					socialActivityCounter.getClassNameId(),
-					socialActivityCounter.getClassPK(),
-					socialActivityCounter.getName(),
-					socialActivityCounter.getOwnerType(),
-					socialActivityCounter.getStartPeriod()
-				},
-				socialActivityCounter);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_C_N_O_E,
-				new Object[] {
-					socialActivityCounter.getGroupId(),
-					socialActivityCounter.getClassNameId(),
-					socialActivityCounter.getClassPK(),
-					socialActivityCounter.getName(),
-					socialActivityCounter.getOwnerType(),
-					socialActivityCounter.getEndPeriod()
-				},
-				socialActivityCounter);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activity counters in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounters the social activity counters
-	 */
-	@Override
-	public void cacheResult(
-		List<SocialActivityCounter> socialActivityCounters) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivityCounters.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivityCounter socialActivityCounter :
-				socialActivityCounters) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivityCounter.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivityCounterImpl.class,
-						socialActivityCounter.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivityCounter);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialActivityCounterModelImpl socialActivityCounterModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityCounterModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialActivityCounterModelImpl.getGroupId(),
-				socialActivityCounterModelImpl.getClassNameId(),
-				socialActivityCounterModelImpl.getClassPK(),
-				socialActivityCounterModelImpl.getName(),
-				socialActivityCounterModelImpl.getOwnerType(),
-				socialActivityCounterModelImpl.getStartPeriod()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_C_N_O_S, args,
-				socialActivityCounterModelImpl);
-
-			args = new Object[] {
-				socialActivityCounterModelImpl.getGroupId(),
-				socialActivityCounterModelImpl.getClassNameId(),
-				socialActivityCounterModelImpl.getClassPK(),
-				socialActivityCounterModelImpl.getName(),
-				socialActivityCounterModelImpl.getOwnerType(),
-				socialActivityCounterModelImpl.getEndPeriod()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_C_C_N_O_E, args,
-				socialActivityCounterModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social activity counter with the primary key. Does not add the social activity counter to the database.
 	 *
 	 * @param activityCounterId the primary key for the new social activity counter
@@ -1333,11 +1217,7 @@ public class SocialActivityCounterPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivityCounterImpl.class, socialActivityCounterModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(socialActivityCounterModelImpl);
+		cacheUniqueFindersResult(socialActivityCounter, false);
 
 		if (isNew) {
 			socialActivityCounter.setNew(false);
@@ -1480,9 +1360,6 @@ public class SocialActivityCounterPersistenceImpl
 	 * Initializes the social activity counter persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1575,7 +1452,7 @@ public class SocialActivityCounterPersistenceImpl
 			new String[] {"groupId", "classNameId", "classPK", "ownerType"},
 			false);
 
-		_finderPathFetchByG_C_C_N_O_S = new FinderPath(
+		_finderPathFetchByG_C_C_N_O_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1586,7 +1463,11 @@ public class SocialActivityCounterPersistenceImpl
 				"groupId", "classNameId", "classPK", "name", "ownerType",
 				"startPeriod"
 			},
-			true);
+			false, SocialActivityCounter::getGroupId,
+			SocialActivityCounter::getClassNameId,
+			SocialActivityCounter::getClassPK, SocialActivityCounter::getName,
+			SocialActivityCounter::getOwnerType,
+			SocialActivityCounter::getStartPeriod);
 
 		_uniquePersistenceFinderByG_C_C_N_O_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C_N_O_S,
@@ -1612,7 +1493,7 @@ public class SocialActivityCounterPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				SocialActivityCounter::getStartPeriod));
 
-		_finderPathFetchByG_C_C_N_O_E = new FinderPath(
+		_finderPathFetchByG_C_C_N_O_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1623,7 +1504,11 @@ public class SocialActivityCounterPersistenceImpl
 				"groupId", "classNameId", "classPK", "name", "ownerType",
 				"endPeriod"
 			},
-			true);
+			false, SocialActivityCounter::getGroupId,
+			SocialActivityCounter::getClassNameId,
+			SocialActivityCounter::getClassPK, SocialActivityCounter::getName,
+			SocialActivityCounter::getOwnerType,
+			SocialActivityCounter::getEndPeriod);
 
 		_uniquePersistenceFinderByG_C_C_N_O_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C_N_O_E,
@@ -1685,4 +1570,4 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1766473702
+// LIFERAY-SERVICE-BUILDER-HASH:1485978706

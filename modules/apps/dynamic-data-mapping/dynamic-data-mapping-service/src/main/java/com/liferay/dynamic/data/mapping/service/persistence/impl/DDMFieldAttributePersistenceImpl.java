@@ -15,7 +15,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFieldAttributeUti
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -35,10 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -1401,82 +1397,6 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm field attribute in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttribute the ddm field attribute
-	 */
-	@Override
-	public void cacheResult(DDMFieldAttribute ddmFieldAttribute) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFieldAttribute.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMFieldAttributeImpl.class, ddmFieldAttribute.getPrimaryKey(),
-				ddmFieldAttribute);
-
-			finderCache.putResult(
-				_finderPathFetchByF_AN_L,
-				new Object[] {
-					ddmFieldAttribute.getFieldId(),
-					ddmFieldAttribute.getAttributeName(),
-					ddmFieldAttribute.getLanguageId()
-				},
-				ddmFieldAttribute);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm field attributes in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttributes the ddm field attributes
-	 */
-	@Override
-	public void cacheResult(List<DDMFieldAttribute> ddmFieldAttributes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmFieldAttributes.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmFieldAttribute.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMFieldAttributeImpl.class,
-						ddmFieldAttribute.getPrimaryKey()) == null) {
-
-					cacheResult(ddmFieldAttribute);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMFieldAttributeModelImpl ddmFieldAttributeModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFieldAttributeModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmFieldAttributeModelImpl.getFieldId(),
-				ddmFieldAttributeModelImpl.getAttributeName(),
-				ddmFieldAttributeModelImpl.getLanguageId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByF_AN_L, args, ddmFieldAttributeModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm field attribute with the primary key. Does not add the ddm field attribute to the database.
 	 *
 	 * @param fieldAttributeId the primary key for the new ddm field attribute
@@ -1593,11 +1513,7 @@ public class DDMFieldAttributePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMFieldAttributeImpl.class, ddmFieldAttributeModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(ddmFieldAttributeModelImpl);
+		cacheUniqueFindersResult(ddmFieldAttribute, false);
 
 		if (isNew) {
 			ddmFieldAttribute.setNew(false);
@@ -1722,9 +1638,6 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByStorageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
 			new String[] {
@@ -1846,13 +1759,15 @@ public class DDMFieldAttributePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					DDMFieldAttribute::getSmallAttributeValue));
 
-		_finderPathFetchByF_AN_L = new FinderPath(
+		_finderPathFetchByF_AN_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"fieldId", "attributeName", "languageId"}, true);
+			new String[] {"fieldId", "attributeName", "languageId"}, false,
+			DDMFieldAttribute::getFieldId, DDMFieldAttribute::getAttributeName,
+			DDMFieldAttribute::getLanguageId);
 
 		_uniquePersistenceFinderByF_AN_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_AN_L, _SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
@@ -1935,4 +1850,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:885261429
+// LIFERAY-SERVICE-BUILDER-HASH:1334951445

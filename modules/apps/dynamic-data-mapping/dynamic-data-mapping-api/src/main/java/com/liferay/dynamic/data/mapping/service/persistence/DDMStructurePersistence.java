@@ -2002,20 +2002,6 @@ public interface DDMStructurePersistence
 		long[] groupIds, long classNameId, String name, String description);
 
 	/**
-	 * Caches the ddm structure in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructure the ddm structure
-	 */
-	public void cacheResult(DDMStructure ddmStructure);
-
-	/**
-	 * Caches the ddm structures in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructures the ddm structures
-	 */
-	public void cacheResult(java.util.List<DDMStructure> ddmStructures);
-
-	/**
 	 * Creates a new ddm structure with the primary key. Does not add the ddm structure to the database.
 	 *
 	 * @param structureId the primary key for the new ddm structure
@@ -2054,4 +2040,4 @@ public interface DDMStructurePersistence
 	public DDMStructure fetchByPrimaryKey(long structureId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:428860364
+// LIFERAY-SERVICE-BUILDER-HASH:962660022

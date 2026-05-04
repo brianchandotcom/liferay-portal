@@ -1438,20 +1438,6 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 		long objectDefinitionId);
 
 	/**
-	 * Caches the object entry in the entity cache if it is enabled.
-	 *
-	 * @param objectEntry the object entry
-	 */
-	public void cacheResult(ObjectEntry objectEntry);
-
-	/**
-	 * Caches the object entries in the entity cache if it is enabled.
-	 *
-	 * @param objectEntries the object entries
-	 */
-	public void cacheResult(java.util.List<ObjectEntry> objectEntries);
-
-	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *
 	 * @param objectEntryId the primary key for the new object entry
@@ -1490,4 +1476,4 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	public ObjectEntry fetchByPrimaryKey(long objectEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1107798479
+// LIFERAY-SERVICE-BUILDER-HASH:698699033

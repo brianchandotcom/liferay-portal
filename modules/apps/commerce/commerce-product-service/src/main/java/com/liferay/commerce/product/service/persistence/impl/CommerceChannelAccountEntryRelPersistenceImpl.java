@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEn
 import com.liferay.commerce.product.service.persistence.CommerceChannelAccountEntryRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -1481,97 +1477,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce channel account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRel the commerce channel account entry rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannelAccountEntryRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommerceChannelAccountEntryRelImpl.class,
-				commerceChannelAccountEntryRel.getPrimaryKey(),
-				commerceChannelAccountEntryRel);
-
-			finderCache.putResult(
-				_finderPathFetchByA_C_C_C_T,
-				new Object[] {
-					commerceChannelAccountEntryRel.getAccountEntryId(),
-					commerceChannelAccountEntryRel.getClassNameId(),
-					commerceChannelAccountEntryRel.getClassPK(),
-					commerceChannelAccountEntryRel.getCommerceChannelId(),
-					commerceChannelAccountEntryRel.getType()
-				},
-				commerceChannelAccountEntryRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce channel account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRels the commerce channel account entry rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceChannelAccountEntryRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceChannelAccountEntryRel commerceChannelAccountEntryRel :
-				commerceChannelAccountEntryRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commerceChannelAccountEntryRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommerceChannelAccountEntryRelImpl.class,
-						commerceChannelAccountEntryRel.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(commerceChannelAccountEntryRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceChannelAccountEntryRelModelImpl
-			commerceChannelAccountEntryRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannelAccountEntryRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commerceChannelAccountEntryRelModelImpl.getAccountEntryId(),
-				commerceChannelAccountEntryRelModelImpl.getClassNameId(),
-				commerceChannelAccountEntryRelModelImpl.getClassPK(),
-				commerceChannelAccountEntryRelModelImpl.getCommerceChannelId(),
-				commerceChannelAccountEntryRelModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByA_C_C_C_T, args,
-				commerceChannelAccountEntryRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce channel account entry rel with the primary key. Does not add the commerce channel account entry rel to the database.
 	 *
 	 * @param commerceChannelAccountEntryRelId the primary key for the new commerce channel account entry rel
@@ -1729,11 +1634,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceChannelAccountEntryRelImpl.class,
-			commerceChannelAccountEntryRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceChannelAccountEntryRelModelImpl);
+		cacheUniqueFindersResult(commerceChannelAccountEntryRel, false);
 
 		if (isNew) {
 			commerceChannelAccountEntryRel.setNew(false);
@@ -1878,9 +1779,6 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
 			new String[] {
@@ -2159,7 +2057,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CommerceChannelAccountEntryRel::getType));
 
-		_finderPathFetchByA_C_C_C_T = new FinderPath(
+		_finderPathFetchByA_C_C_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_C_C_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2170,7 +2068,11 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				"accountEntryId", "classNameId", "classPK", "commerceChannelId",
 				"type_"
 			},
-			true);
+			false, CommerceChannelAccountEntryRel::getAccountEntryId,
+			CommerceChannelAccountEntryRel::getClassNameId,
+			CommerceChannelAccountEntryRel::getClassPK,
+			CommerceChannelAccountEntryRel::getCommerceChannelId,
+			CommerceChannelAccountEntryRel::getType);
 
 		_uniquePersistenceFinderByA_C_C_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C_C_C_T,
@@ -2271,4 +2173,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:333430093
+// LIFERAY-SERVICE-BUILDER-HASH:-292206592

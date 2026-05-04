@@ -37,6 +37,20 @@ public class KaleoInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoInstance> kaleoInstances) {
+		getPersistence().cacheResult(kaleoInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoInstance kaleoInstance) {
+		getPersistence().cacheResult(kaleoInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1171,24 +1185,6 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
-	 * Caches the kaleo instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstance the kaleo instance
-	 */
-	public static void cacheResult(KaleoInstance kaleoInstance) {
-		getPersistence().cacheResult(kaleoInstance);
-	}
-
-	/**
-	 * Caches the kaleo instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstances the kaleo instances
-	 */
-	public static void cacheResult(List<KaleoInstance> kaleoInstances) {
-		getPersistence().cacheResult(kaleoInstances);
-	}
-
-	/**
 	 * Creates a new kaleo instance with the primary key. Does not add the kaleo instance to the database.
 	 *
 	 * @param kaleoInstanceId the primary key for the new kaleo instance
@@ -1251,4 +1247,4 @@ public class KaleoInstanceUtil {
 	private static volatile KaleoInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-636462938
+// LIFERAY-SERVICE-BUILDER-HASH:-2125426654

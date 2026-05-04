@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -972,55 +968,6 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceToken the kaleo instance token
-	 */
-	@Override
-	public void cacheResult(KaleoInstanceToken kaleoInstanceToken) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoInstanceToken.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoInstanceTokenImpl.class,
-				kaleoInstanceToken.getPrimaryKey(), kaleoInstanceToken);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceTokens the kaleo instance tokens
-	 */
-	@Override
-	public void cacheResult(List<KaleoInstanceToken> kaleoInstanceTokens) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoInstanceTokens.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoInstanceToken kaleoInstanceToken : kaleoInstanceTokens) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoInstanceToken.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoInstanceTokenImpl.class,
-						kaleoInstanceToken.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoInstanceToken);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new kaleo instance token with the primary key. Does not add the kaleo instance token to the database.
 	 *
 	 * @param kaleoInstanceTokenId the primary key for the new kaleo instance token
@@ -1164,9 +1111,7 @@ public class KaleoInstanceTokenPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoInstanceTokenImpl.class, kaleoInstanceTokenModelImpl, false,
-			true);
+		cacheUniqueFindersResult(kaleoInstanceToken, false);
 
 		if (isNew) {
 			kaleoInstanceToken.setNew(false);
@@ -1300,9 +1245,6 @@ public class KaleoInstanceTokenPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1555,4 +1497,4 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:377875029
+// LIFERAY-SERVICE-BUILDER-HASH:-1426347335

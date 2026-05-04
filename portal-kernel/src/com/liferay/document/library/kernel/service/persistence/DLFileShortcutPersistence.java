@@ -1356,20 +1356,6 @@ public interface DLFileShortcutPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the document library file shortcut in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcut the document library file shortcut
-	 */
-	public void cacheResult(DLFileShortcut dlFileShortcut);
-
-	/**
-	 * Caches the document library file shortcuts in the entity cache if it is enabled.
-	 *
-	 * @param dlFileShortcuts the document library file shortcuts
-	 */
-	public void cacheResult(java.util.List<DLFileShortcut> dlFileShortcuts);
-
-	/**
 	 * Creates a new document library file shortcut with the primary key. Does not add the document library file shortcut to the database.
 	 *
 	 * @param fileShortcutId the primary key for the new document library file shortcut
@@ -1408,4 +1394,4 @@ public interface DLFileShortcutPersistence
 	public DLFileShortcut fetchByPrimaryKey(long fileShortcutId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1656031880
+// LIFERAY-SERVICE-BUILDER-HASH:-2064372400

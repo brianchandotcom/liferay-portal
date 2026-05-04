@@ -36,6 +36,24 @@ public class CommerceChannelAccountEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels) {
+
+		getPersistence().cacheResult(commerceChannelAccountEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel) {
+
+		getPersistence().cacheResult(commerceChannelAccountEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1190,28 +1208,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	}
 
 	/**
-	 * Caches the commerce channel account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRel the commerce channel account entry rel
-	 */
-	public static void cacheResult(
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel) {
-
-		getPersistence().cacheResult(commerceChannelAccountEntryRel);
-	}
-
-	/**
-	 * Caches the commerce channel account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRels the commerce channel account entry rels
-	 */
-	public static void cacheResult(
-		List<CommerceChannelAccountEntryRel> commerceChannelAccountEntryRels) {
-
-		getPersistence().cacheResult(commerceChannelAccountEntryRels);
-	}
-
-	/**
 	 * Creates a new commerce channel account entry rel with the primary key. Does not add the commerce channel account entry rel to the database.
 	 *
 	 * @param commerceChannelAccountEntryRelId the primary key for the new commerce channel account entry rel
@@ -1287,4 +1283,4 @@ public class CommerceChannelAccountEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-154145702
+// LIFERAY-SERVICE-BUILDER-HASH:885396586

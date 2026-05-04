@@ -1147,21 +1147,6 @@ public interface LayoutFriendlyURLPersistence
 		String languageId);
 
 	/**
-	 * Caches the layout friendly url in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURL the layout friendly url
-	 */
-	public void cacheResult(LayoutFriendlyURL layoutFriendlyURL);
-
-	/**
-	 * Caches the layout friendly urls in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURLs the layout friendly urls
-	 */
-	public void cacheResult(
-		java.util.List<LayoutFriendlyURL> layoutFriendlyURLs);
-
-	/**
 	 * Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
 	 *
 	 * @param layoutFriendlyURLId the primary key for the new layout friendly url
@@ -1200,4 +1185,4 @@ public interface LayoutFriendlyURLPersistence
 	public LayoutFriendlyURL fetchByPrimaryKey(long layoutFriendlyURLId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:743513649
+// LIFERAY-SERVICE-BUILDER-HASH:1182484011

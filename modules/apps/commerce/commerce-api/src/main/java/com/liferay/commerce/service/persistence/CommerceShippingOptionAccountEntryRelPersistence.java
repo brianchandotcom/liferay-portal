@@ -406,24 +406,6 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 	public int countByA_C(long accountEntryId, long commerceChannelId);
 
 	/**
-	 * Caches the commerce shipping option account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRel the commerce shipping option account entry rel
-	 */
-	public void cacheResult(
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel);
-
-	/**
-	 * Caches the commerce shipping option account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRels the commerce shipping option account entry rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShippingOptionAccountEntryRel>
-			commerceShippingOptionAccountEntryRels);
-
-	/**
 	 * Creates a new commerce shipping option account entry rel with the primary key. Does not add the commerce shipping option account entry rel to the database.
 	 *
 	 * @param CommerceShippingOptionAccountEntryRelId the primary key for the new commerce shipping option account entry rel
@@ -468,4 +450,4 @@ public interface CommerceShippingOptionAccountEntryRelPersistence
 		long CommerceShippingOptionAccountEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-767135140
+// LIFERAY-SERVICE-BUILDER-HASH:-1079296484

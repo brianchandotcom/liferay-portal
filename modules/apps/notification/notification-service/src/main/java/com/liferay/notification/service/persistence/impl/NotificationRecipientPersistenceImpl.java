@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -492,65 +489,6 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 	/**
-	 * Caches the notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipient the notification recipient
-	 */
-	@Override
-	public void cacheResult(NotificationRecipient notificationRecipient) {
-		entityCache.putResult(
-			NotificationRecipientImpl.class,
-			notificationRecipient.getPrimaryKey(), notificationRecipient);
-
-		finderCache.putResult(
-			_finderPathFetchByClassPK,
-			new Object[] {notificationRecipient.getClassPK()},
-			notificationRecipient);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipients the notification recipients
-	 */
-	@Override
-	public void cacheResult(
-		List<NotificationRecipient> notificationRecipients) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (notificationRecipients.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NotificationRecipient notificationRecipient :
-				notificationRecipients) {
-
-			if (entityCache.getResult(
-					NotificationRecipientImpl.class,
-					notificationRecipient.getPrimaryKey()) == null) {
-
-				cacheResult(notificationRecipient);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		NotificationRecipientModelImpl notificationRecipientModelImpl) {
-
-		Object[] args = new Object[] {
-			notificationRecipientModelImpl.getClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByClassPK, args, notificationRecipientModelImpl);
-	}
-
-	/**
 	 * Creates a new notification recipient with the primary key. Does not add the notification recipient to the database.
 	 *
 	 * @param notificationRecipientId the primary key for the new notification recipient
@@ -699,11 +637,7 @@ public class NotificationRecipientPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NotificationRecipientImpl.class, notificationRecipientModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(notificationRecipientModelImpl);
+		cacheUniqueFindersResult(notificationRecipient, false);
 
 		if (isNew) {
 			notificationRecipient.setNew(false);
@@ -771,9 +705,6 @@ public class NotificationRecipientPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -838,10 +769,10 @@ public class NotificationRecipientPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationRecipient::getCompanyId));
 
-		_finderPathFetchByClassPK = new FinderPath(
+		_finderPathFetchByClassPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			true);
+			false, NotificationRecipient::getClassPK);
 
 		_uniquePersistenceFinderByClassPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassPK,
@@ -919,4 +850,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:584778528
+// LIFERAY-SERVICE-BUILDER-HASH:-281560801

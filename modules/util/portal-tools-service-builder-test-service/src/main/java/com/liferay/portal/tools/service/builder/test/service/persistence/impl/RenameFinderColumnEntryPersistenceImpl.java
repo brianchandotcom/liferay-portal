@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchRenameFinderColumnEntryException;
@@ -31,7 +28,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -162,66 +158,6 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the rename finder column entry in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntry the rename finder column entry
-	 */
-	@Override
-	public void cacheResult(RenameFinderColumnEntry renameFinderColumnEntry) {
-		entityCache.putResult(
-			RenameFinderColumnEntryImpl.class,
-			renameFinderColumnEntry.getPrimaryKey(), renameFinderColumnEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByColumnToRename,
-			new Object[] {renameFinderColumnEntry.getColumnToRename()},
-			renameFinderColumnEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the rename finder column entries in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntries the rename finder column entries
-	 */
-	@Override
-	public void cacheResult(
-		List<RenameFinderColumnEntry> renameFinderColumnEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (renameFinderColumnEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RenameFinderColumnEntry renameFinderColumnEntry :
-				renameFinderColumnEntries) {
-
-			if (entityCache.getResult(
-					RenameFinderColumnEntryImpl.class,
-					renameFinderColumnEntry.getPrimaryKey()) == null) {
-
-				cacheResult(renameFinderColumnEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RenameFinderColumnEntryModelImpl renameFinderColumnEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			renameFinderColumnEntryModelImpl.getColumnToRename()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByColumnToRename, args,
-			renameFinderColumnEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new rename finder column entry with the primary key. Does not add the rename finder column entry to the database.
 	 *
 	 * @param renameFinderColumnEntryId the primary key for the new rename finder column entry
@@ -334,11 +270,7 @@ public class RenameFinderColumnEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			RenameFinderColumnEntryImpl.class, renameFinderColumnEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(renameFinderColumnEntryModelImpl);
+		cacheUniqueFindersResult(renameFinderColumnEntry, false);
 
 		if (isNew) {
 			renameFinderColumnEntry.setNew(false);
@@ -401,13 +333,11 @@ public class RenameFinderColumnEntryPersistenceImpl
 	 * Initializes the rename finder column entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByColumnToRename = new FinderPath(
+		_finderPathFetchByColumnToRename = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByColumnToRename",
 			new String[] {String.class.getName()},
-			new String[] {"columnToRename"}, true);
+			new String[] {"columnToRename"}, false,
+			RenameFinderColumnEntry::getColumnToRename);
 
 		_uniquePersistenceFinderByColumnToRename =
 			new UniquePersistenceFinder<>(
@@ -454,4 +384,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:61087413
+// LIFERAY-SERVICE-BUILDER-HASH:1114503638

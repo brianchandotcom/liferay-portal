@@ -36,6 +36,20 @@ public class MBCategoryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBCategory> mbCategories) {
+		getPersistence().cacheResult(mbCategories);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBCategory mbCategory) {
+		getPersistence().cacheResult(mbCategory);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3188,24 +3202,6 @@ public class MBCategoryUtil {
 	}
 
 	/**
-	 * Caches the message boards category in the entity cache if it is enabled.
-	 *
-	 * @param mbCategory the message boards category
-	 */
-	public static void cacheResult(MBCategory mbCategory) {
-		getPersistence().cacheResult(mbCategory);
-	}
-
-	/**
-	 * Caches the message boards categories in the entity cache if it is enabled.
-	 *
-	 * @param mbCategories the message boards categories
-	 */
-	public static void cacheResult(List<MBCategory> mbCategories) {
-		getPersistence().cacheResult(mbCategories);
-	}
-
-	/**
 	 * Creates a new message boards category with the primary key. Does not add the message boards category to the database.
 	 *
 	 * @param categoryId the primary key for the new message boards category
@@ -3266,4 +3262,4 @@ public class MBCategoryUtil {
 	private static volatile MBCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-198089533
+// LIFERAY-SERVICE-BUILDER-HASH:-614872158

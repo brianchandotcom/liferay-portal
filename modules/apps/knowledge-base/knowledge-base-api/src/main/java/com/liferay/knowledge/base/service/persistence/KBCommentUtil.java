@@ -36,6 +36,20 @@ public class KBCommentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KBComment> kbComments) {
+		getPersistence().cacheResult(kbComments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KBComment kbComment) {
+		getPersistence().cacheResult(kbComment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1330,24 +1344,6 @@ public class KBCommentUtil {
 	}
 
 	/**
-	 * Caches the kb comment in the entity cache if it is enabled.
-	 *
-	 * @param kbComment the kb comment
-	 */
-	public static void cacheResult(KBComment kbComment) {
-		getPersistence().cacheResult(kbComment);
-	}
-
-	/**
-	 * Caches the kb comments in the entity cache if it is enabled.
-	 *
-	 * @param kbComments the kb comments
-	 */
-	public static void cacheResult(List<KBComment> kbComments) {
-		getPersistence().cacheResult(kbComments);
-	}
-
-	/**
 	 * Creates a new kb comment with the primary key. Does not add the kb comment to the database.
 	 *
 	 * @param kbCommentId the primary key for the new kb comment
@@ -1408,4 +1404,4 @@ public class KBCommentUtil {
 	private static volatile KBCommentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1815827770
+// LIFERAY-SERVICE-BUILDER-HASH:-697140518

@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.service.persistence.DLFileVersionPers
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -35,10 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3324,93 +3320,6 @@ public class DLFileVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the document library file version in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersion the document library file version
-	 */
-	@Override
-	public void cacheResult(DLFileVersion dlFileVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileVersion.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
-				dlFileVersion);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					dlFileVersion.getUuid(), dlFileVersion.getGroupId()
-				},
-				dlFileVersion);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByF_V,
-				new Object[] {
-					dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
-				},
-				dlFileVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the document library file versions in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersions the document library file versions
-	 */
-	@Override
-	public void cacheResult(List<DLFileVersion> dlFileVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlFileVersions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlFileVersion.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						DLFileVersionImpl.class,
-						dlFileVersion.getPrimaryKey()) == null) {
-
-					cacheResult(dlFileVersion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLFileVersionModelImpl dlFileVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlFileVersionModelImpl.getUuid(),
-				dlFileVersionModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, dlFileVersionModelImpl);
-
-			args = new Object[] {
-				dlFileVersionModelImpl.getFileEntryId(),
-				dlFileVersionModelImpl.getVersion()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByF_V, args, dlFileVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new document library file version with the primary key. Does not add the document library file version to the database.
 	 *
 	 * @param fileVersionId the primary key for the new document library file version
@@ -3557,10 +3466,7 @@ public class DLFileVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			DLFileVersionImpl.class, dlFileVersionModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlFileVersionModelImpl);
+		cacheUniqueFindersResult(dlFileVersion, false);
 
 		if (isNew) {
 			dlFileVersion.setNew(false);
@@ -3716,9 +3622,6 @@ public class DLFileVersionPersistenceImpl
 	 * Initializes the document library file version persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3746,10 +3649,11 @@ public class DLFileVersionPersistenceImpl
 				"dlFileVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileVersion::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DLFileVersion::getUuid,
+			DLFileVersion::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEVERSION_WHERE,
@@ -3938,10 +3842,11 @@ public class DLFileVersionPersistenceImpl
 					"dlFileVersion.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, DLFileVersion::getStatus));
 
-		_finderPathFetchByF_V = new FinderPath(
+		_finderPathFetchByF_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"fileEntryId", "version"}, true);
+			new String[] {"fileEntryId", "version"}, false,
+			DLFileVersion::getFileEntryId, DLFileVersion::getVersion);
 
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_V, _SQL_SELECT_DLFILEVERSION_WHERE,
@@ -4165,4 +4070,4 @@ public class DLFileVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2052780591
+// LIFERAY-SERVICE-BUILDER-HASH:1123741764

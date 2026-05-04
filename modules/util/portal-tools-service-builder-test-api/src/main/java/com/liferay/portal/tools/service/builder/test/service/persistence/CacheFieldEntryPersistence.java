@@ -135,20 +135,6 @@ public interface CacheFieldEntryPersistence
 	public int countByGroupId(long groupId);
 
 	/**
-	 * Caches the cache field entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheFieldEntry the cache field entry
-	 */
-	public void cacheResult(CacheFieldEntry cacheFieldEntry);
-
-	/**
-	 * Caches the cache field entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheFieldEntries the cache field entries
-	 */
-	public void cacheResult(java.util.List<CacheFieldEntry> cacheFieldEntries);
-
-	/**
 	 * Creates a new cache field entry with the primary key. Does not add the cache field entry to the database.
 	 *
 	 * @param cacheFieldEntryId the primary key for the new cache field entry
@@ -187,4 +173,4 @@ public interface CacheFieldEntryPersistence
 	public CacheFieldEntry fetchByPrimaryKey(long cacheFieldEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2019616557
+// LIFERAY-SERVICE-BUILDER-HASH:1072339907

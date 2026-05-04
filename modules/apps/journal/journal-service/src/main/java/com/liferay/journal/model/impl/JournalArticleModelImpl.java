@@ -2277,4 +2277,4 @@ public class JournalArticleModelImpl
 	private JournalArticle _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1750318049
+// LIFERAY-SERVICE-BUILDER-HASH:1686193697

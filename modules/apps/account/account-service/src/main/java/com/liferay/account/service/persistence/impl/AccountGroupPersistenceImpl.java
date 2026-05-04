@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3654,63 +3652,6 @@ public class AccountGroupPersistenceImpl
 	}
 
 	/**
-	 * Caches the account group in the entity cache if it is enabled.
-	 *
-	 * @param accountGroup the account group
-	 */
-	@Override
-	public void cacheResult(AccountGroup accountGroup) {
-		entityCache.putResult(
-			AccountGroupImpl.class, accountGroup.getPrimaryKey(), accountGroup);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				accountGroup.getExternalReferenceCode(),
-				accountGroup.getCompanyId()
-			},
-			accountGroup);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account groups in the entity cache if it is enabled.
-	 *
-	 * @param accountGroups the account groups
-	 */
-	@Override
-	public void cacheResult(List<AccountGroup> accountGroups) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountGroups.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountGroup accountGroup : accountGroups) {
-			if (entityCache.getResult(
-					AccountGroupImpl.class, accountGroup.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(accountGroup);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountGroupModelImpl accountGroupModelImpl) {
-
-		Object[] args = new Object[] {
-			accountGroupModelImpl.getExternalReferenceCode(),
-			accountGroupModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, accountGroupModelImpl);
-	}
-
-	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
 	 * @param accountGroupId the primary key for the new account group
@@ -3911,10 +3852,7 @@ public class AccountGroupPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountGroupImpl.class, accountGroupModelImpl, false, true);
-
-		cacheUniqueFindersCache(accountGroupModelImpl);
+		cacheUniqueFindersResult(accountGroup, false);
 
 		if (isNew) {
 			accountGroup.setNew(false);
@@ -3980,9 +3918,6 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4172,10 +4107,11 @@ public class AccountGroupPersistenceImpl
 				"accountGroup.", "type", FinderColumn.Type.STRING, "=", true,
 				true, AccountGroup::getType));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			AccountGroup::getExternalReferenceCode, AccountGroup::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTGROUP_WHERE,
@@ -4279,4 +4215,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1995070698
+// LIFERAY-SERVICE-BUILDER-HASH:-233099022

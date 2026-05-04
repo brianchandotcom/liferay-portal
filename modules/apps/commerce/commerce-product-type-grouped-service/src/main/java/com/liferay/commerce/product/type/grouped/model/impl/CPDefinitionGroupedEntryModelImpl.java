@@ -1078,4 +1078,4 @@ public class CPDefinitionGroupedEntryModelImpl
 	private CPDefinitionGroupedEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1831794015
+// LIFERAY-SERVICE-BUILDER-HASH:-254537413

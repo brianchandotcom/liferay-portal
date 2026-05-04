@@ -37,6 +37,22 @@ public class AnalyticsAssociationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AnalyticsAssociation> analyticsAssociations) {
+
+		getPersistence().cacheResult(analyticsAssociations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AnalyticsAssociation analyticsAssociation) {
+		getPersistence().cacheResult(analyticsAssociation);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -826,26 +842,6 @@ public class AnalyticsAssociationUtil {
 	}
 
 	/**
-	 * Caches the analytics association in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociation the analytics association
-	 */
-	public static void cacheResult(AnalyticsAssociation analyticsAssociation) {
-		getPersistence().cacheResult(analyticsAssociation);
-	}
-
-	/**
-	 * Caches the analytics associations in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociations the analytics associations
-	 */
-	public static void cacheResult(
-		List<AnalyticsAssociation> analyticsAssociations) {
-
-		getPersistence().cacheResult(analyticsAssociations);
-	}
-
-	/**
 	 * Creates a new analytics association with the primary key. Does not add the analytics association to the database.
 	 *
 	 * @param analyticsAssociationId the primary key for the new analytics association
@@ -915,4 +911,4 @@ public class AnalyticsAssociationUtil {
 	private static volatile AnalyticsAssociationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-231999599
+// LIFERAY-SERVICE-BUILDER-HASH:-1007454951

@@ -36,6 +36,24 @@ public class KaleoTaskInstanceTokenUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens) {
+
+		getPersistence().cacheResult(kaleoTaskInstanceTokens);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+
+		getPersistence().cacheResult(kaleoTaskInstanceToken);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -988,28 +1006,6 @@ public class KaleoTaskInstanceTokenUtil {
 	}
 
 	/**
-	 * Caches the kaleo task instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskInstanceToken the kaleo task instance token
-	 */
-	public static void cacheResult(
-		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-
-		getPersistence().cacheResult(kaleoTaskInstanceToken);
-	}
-
-	/**
-	 * Caches the kaleo task instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskInstanceTokens the kaleo task instance tokens
-	 */
-	public static void cacheResult(
-		List<KaleoTaskInstanceToken> kaleoTaskInstanceTokens) {
-
-		getPersistence().cacheResult(kaleoTaskInstanceTokens);
-	}
-
-	/**
 	 * Creates a new kaleo task instance token with the primary key. Does not add the kaleo task instance token to the database.
 	 *
 	 * @param kaleoTaskInstanceTokenId the primary key for the new kaleo task instance token
@@ -1079,4 +1075,4 @@ public class KaleoTaskInstanceTokenUtil {
 	private static volatile KaleoTaskInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-187078028
+// LIFERAY-SERVICE-BUILDER-HASH:-266832858

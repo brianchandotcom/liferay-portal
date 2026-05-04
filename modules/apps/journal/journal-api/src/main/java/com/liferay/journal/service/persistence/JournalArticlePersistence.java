@@ -6505,20 +6505,6 @@ public interface JournalArticlePersistence
 		long groupId, long folderId, long classNameId, int status);
 
 	/**
-	 * Caches the journal article in the entity cache if it is enabled.
-	 *
-	 * @param journalArticle the journal article
-	 */
-	public void cacheResult(JournalArticle journalArticle);
-
-	/**
-	 * Caches the journal articles in the entity cache if it is enabled.
-	 *
-	 * @param journalArticles the journal articles
-	 */
-	public void cacheResult(java.util.List<JournalArticle> journalArticles);
-
-	/**
 	 * Creates a new journal article with the primary key. Does not add the journal article to the database.
 	 *
 	 * @param id the primary key for the new journal article
@@ -6556,4 +6542,4 @@ public interface JournalArticlePersistence
 	public JournalArticle fetchByPrimaryKey(long id);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:848373322
+// LIFERAY-SERVICE-BUILDER-HASH:1111423154

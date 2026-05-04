@@ -186,20 +186,6 @@ public interface KaleoNodeSettingPersistence
 	public int countByKNI_N(long kaleoNodeId, String name);
 
 	/**
-	 * Caches the kaleo node setting in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSetting the kaleo node setting
-	 */
-	public void cacheResult(KaleoNodeSetting kaleoNodeSetting);
-
-	/**
-	 * Caches the kaleo node settings in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSettings the kaleo node settings
-	 */
-	public void cacheResult(java.util.List<KaleoNodeSetting> kaleoNodeSettings);
-
-	/**
 	 * Creates a new kaleo node setting with the primary key. Does not add the kaleo node setting to the database.
 	 *
 	 * @param kaleoNodeSettingId the primary key for the new kaleo node setting
@@ -238,4 +224,4 @@ public interface KaleoNodeSettingPersistence
 	public KaleoNodeSetting fetchByPrimaryKey(long kaleoNodeSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-453175150
+// LIFERAY-SERVICE-BUILDER-HASH:-1418969910

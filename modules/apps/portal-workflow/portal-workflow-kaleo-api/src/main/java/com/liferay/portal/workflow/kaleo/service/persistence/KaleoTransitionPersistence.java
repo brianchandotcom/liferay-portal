@@ -444,20 +444,6 @@ public interface KaleoTransitionPersistence
 	public int countByKNI_DT(long kaleoNodeId, boolean defaultTransition);
 
 	/**
-	 * Caches the kaleo transition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransition the kaleo transition
-	 */
-	public void cacheResult(KaleoTransition kaleoTransition);
-
-	/**
-	 * Caches the kaleo transitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransitions the kaleo transitions
-	 */
-	public void cacheResult(java.util.List<KaleoTransition> kaleoTransitions);
-
-	/**
 	 * Creates a new kaleo transition with the primary key. Does not add the kaleo transition to the database.
 	 *
 	 * @param kaleoTransitionId the primary key for the new kaleo transition
@@ -496,4 +482,4 @@ public interface KaleoTransitionPersistence
 	public KaleoTransition fetchByPrimaryKey(long kaleoTransitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-755558346
+// LIFERAY-SERVICE-BUILDER-HASH:1600641114

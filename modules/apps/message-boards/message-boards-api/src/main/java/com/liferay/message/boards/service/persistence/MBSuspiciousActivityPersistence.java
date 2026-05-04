@@ -602,21 +602,6 @@ public interface MBSuspiciousActivityPersistence
 	public int countByU_T(long userId, long threadId);
 
 	/**
-	 * Caches the message boards suspicious activity in the entity cache if it is enabled.
-	 *
-	 * @param mbSuspiciousActivity the message boards suspicious activity
-	 */
-	public void cacheResult(MBSuspiciousActivity mbSuspiciousActivity);
-
-	/**
-	 * Caches the message boards suspicious activities in the entity cache if it is enabled.
-	 *
-	 * @param mbSuspiciousActivities the message boards suspicious activities
-	 */
-	public void cacheResult(
-		java.util.List<MBSuspiciousActivity> mbSuspiciousActivities);
-
-	/**
 	 * Creates a new message boards suspicious activity with the primary key. Does not add the message boards suspicious activity to the database.
 	 *
 	 * @param suspiciousActivityId the primary key for the new message boards suspicious activity
@@ -656,4 +641,4 @@ public interface MBSuspiciousActivityPersistence
 	public MBSuspiciousActivity fetchByPrimaryKey(long suspiciousActivityId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1618528206
+// LIFERAY-SERVICE-BUILDER-HASH:-789412100

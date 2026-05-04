@@ -853,21 +853,6 @@ public interface CPInstanceUnitOfMeasurePersistence
 	public int countByC_K_S(long companyId, String key, String sku);
 
 	/**
-	 * Caches the cp instance unit of measure in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasure the cp instance unit of measure
-	 */
-	public void cacheResult(CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure);
-
-	/**
-	 * Caches the cp instance unit of measures in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasures the cp instance unit of measures
-	 */
-	public void cacheResult(
-		java.util.List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures);
-
-	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *
 	 * @param CPInstanceUnitOfMeasureId the primary key for the new cp instance unit of measure
@@ -909,4 +894,4 @@ public interface CPInstanceUnitOfMeasurePersistence
 		long CPInstanceUnitOfMeasureId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1991215487
+// LIFERAY-SERVICE-BUILDER-HASH:-819051911

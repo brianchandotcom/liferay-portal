@@ -407,23 +407,6 @@ public interface CommercePriceListAccountRelPersistence
 	public int countByCAI_CPI(long commerceAccountId, long commercePriceListId);
 
 	/**
-	 * Caches the commerce price list account rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListAccountRel the commerce price list account rel
-	 */
-	public void cacheResult(
-		CommercePriceListAccountRel commercePriceListAccountRel);
-
-	/**
-	 * Caches the commerce price list account rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListAccountRels the commerce price list account rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceListAccountRel>
-			commercePriceListAccountRels);
-
-	/**
 	 * Creates a new commerce price list account rel with the primary key. Does not add the commerce price list account rel to the database.
 	 *
 	 * @param commercePriceListAccountRelId the primary key for the new commerce price list account rel
@@ -467,4 +450,4 @@ public interface CommercePriceListAccountRelPersistence
 		long commercePriceListAccountRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1234294372
+// LIFERAY-SERVICE-BUILDER-HASH:517561736

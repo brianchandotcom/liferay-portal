@@ -36,6 +36,24 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags) {
+
+		getPersistence().cacheResult(layoutSEOEntryCustomMetaTags);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag) {
+
+		getPersistence().cacheResult(layoutSEOEntryCustomMetaTag);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -253,28 +271,6 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	}
 
 	/**
-	 * Caches the layout seo entry custom meta tag in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTag the layout seo entry custom meta tag
-	 */
-	public static void cacheResult(
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag) {
-
-		getPersistence().cacheResult(layoutSEOEntryCustomMetaTag);
-	}
-
-	/**
-	 * Caches the layout seo entry custom meta tags in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTags the layout seo entry custom meta tags
-	 */
-	public static void cacheResult(
-		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags) {
-
-		getPersistence().cacheResult(layoutSEOEntryCustomMetaTags);
-	}
-
-	/**
 	 * Creates a new layout seo entry custom meta tag with the primary key. Does not add the layout seo entry custom meta tag to the database.
 	 *
 	 * @param layoutSEOEntryCustomMetaTagId the primary key for the new layout seo entry custom meta tag
@@ -348,4 +344,4 @@ public class LayoutSEOEntryCustomMetaTagUtil {
 	private static volatile LayoutSEOEntryCustomMetaTagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1036377972
+// LIFERAY-SERVICE-BUILDER-HASH:952328806

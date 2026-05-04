@@ -11,7 +11,6 @@ import com.liferay.asset.kernel.model.AssetTagGroupRelTable;
 import com.liferay.asset.kernel.service.persistence.AssetTagGroupRelPersistence;
 import com.liferay.asset.kernel.service.persistence.AssetTagGroupRelUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -924,94 +920,6 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset tag group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRel the asset tag group rel
-	 */
-	@Override
-	public void cacheResult(AssetTagGroupRel assetTagGroupRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetTagGroupRel.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AssetTagGroupRelImpl.class, assetTagGroupRel.getPrimaryKey(),
-				assetTagGroupRel);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetTagGroupRel.getUuid(), assetTagGroupRel.getGroupId()
-				},
-				assetTagGroupRel);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_T,
-				new Object[] {
-					assetTagGroupRel.getGroupId(), assetTagGroupRel.getTagId()
-				},
-				assetTagGroupRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset tag group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRels the asset tag group rels
-	 */
-	@Override
-	public void cacheResult(List<AssetTagGroupRel> assetTagGroupRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetTagGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetTagGroupRel assetTagGroupRel : assetTagGroupRels) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetTagGroupRel.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AssetTagGroupRelImpl.class,
-						assetTagGroupRel.getPrimaryKey()) == null) {
-
-					cacheResult(assetTagGroupRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetTagGroupRelModelImpl assetTagGroupRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetTagGroupRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetTagGroupRelModelImpl.getUuid(),
-				assetTagGroupRelModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, assetTagGroupRelModelImpl);
-
-			args = new Object[] {
-				assetTagGroupRelModelImpl.getGroupId(),
-				assetTagGroupRelModelImpl.getTagId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_T, args, assetTagGroupRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
 	 * @param assetTagGroupRelId the primary key for the new asset tag group rel
@@ -1136,10 +1044,7 @@ public class AssetTagGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AssetTagGroupRelImpl.class, assetTagGroupRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetTagGroupRelModelImpl);
+		cacheUniqueFindersResult(assetTagGroupRel, false);
 
 		if (isNew) {
 			assetTagGroupRel.setNew(false);
@@ -1264,9 +1169,6 @@ public class AssetTagGroupRelPersistenceImpl
 	 * Initializes the asset tag group rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1295,10 +1197,11 @@ public class AssetTagGroupRelPersistenceImpl
 				"assetTagGroupRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetTagGroupRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, AssetTagGroupRel::getUuid,
+			AssetTagGroupRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETTAGGROUPREL_WHERE,
@@ -1397,10 +1300,11 @@ public class AssetTagGroupRelPersistenceImpl
 				"assetTagGroupRel.", "tagId", FinderColumn.Type.LONG, "=", true,
 				true, AssetTagGroupRel::getTagId));
 
-		_finderPathFetchByG_T = new FinderPath(
+		_finderPathFetchByG_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_T",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "tagId"}, true);
+			new String[] {"groupId", "tagId"}, false,
+			AssetTagGroupRel::getGroupId, AssetTagGroupRel::getTagId);
 
 		_uniquePersistenceFinderByG_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_T, _SQL_SELECT_ASSETTAGGROUPREL_WHERE,
@@ -1447,4 +1351,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1272056285
+// LIFERAY-SERVICE-BUILDER-HASH:-1272526856

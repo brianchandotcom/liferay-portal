@@ -37,6 +37,24 @@ public class CommercePriceModifierUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceModifier> commercePriceModifiers) {
+
+		getPersistence().cacheResult(commercePriceModifiers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePriceModifier commercePriceModifier) {
+
+		getPersistence().cacheResult(commercePriceModifier);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1660,28 +1678,6 @@ public class CommercePriceModifierUtil {
 	}
 
 	/**
-	 * Caches the commerce price modifier in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifier the commerce price modifier
-	 */
-	public static void cacheResult(
-		CommercePriceModifier commercePriceModifier) {
-
-		getPersistence().cacheResult(commercePriceModifier);
-	}
-
-	/**
-	 * Caches the commerce price modifiers in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifiers the commerce price modifiers
-	 */
-	public static void cacheResult(
-		List<CommercePriceModifier> commercePriceModifiers) {
-
-		getPersistence().cacheResult(commercePriceModifiers);
-	}
-
-	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *
 	 * @param commercePriceModifierId the primary key for the new commerce price modifier
@@ -1751,4 +1747,4 @@ public class CommercePriceModifierUtil {
 	private static volatile CommercePriceModifierPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1011524157
+// LIFERAY-SERVICE-BUILDER-HASH:22794897

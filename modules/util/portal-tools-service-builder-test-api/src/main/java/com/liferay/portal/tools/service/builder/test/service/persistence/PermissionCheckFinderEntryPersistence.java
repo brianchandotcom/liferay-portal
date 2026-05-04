@@ -310,23 +310,6 @@ public interface PermissionCheckFinderEntryPersistence
 	public int filterCountByGroupId(long[] groupIds);
 
 	/**
-	 * Caches the permission check finder entry in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntry the permission check finder entry
-	 */
-	public void cacheResult(
-		PermissionCheckFinderEntry permissionCheckFinderEntry);
-
-	/**
-	 * Caches the permission check finder entries in the entity cache if it is enabled.
-	 *
-	 * @param permissionCheckFinderEntries the permission check finder entries
-	 */
-	public void cacheResult(
-		java.util.List<PermissionCheckFinderEntry>
-			permissionCheckFinderEntries);
-
-	/**
 	 * Creates a new permission check finder entry with the primary key. Does not add the permission check finder entry to the database.
 	 *
 	 * @param permissionCheckFinderEntryId the primary key for the new permission check finder entry
@@ -368,4 +351,4 @@ public interface PermissionCheckFinderEntryPersistence
 		long permissionCheckFinderEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-739625581
+// LIFERAY-SERVICE-BUILDER-HASH:1754822347

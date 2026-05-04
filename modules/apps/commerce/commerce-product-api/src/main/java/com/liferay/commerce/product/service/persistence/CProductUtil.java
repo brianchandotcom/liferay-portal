@@ -36,6 +36,20 @@ public class CProductUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CProduct> cProducts) {
+		getPersistence().cacheResult(cProducts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CProduct cProduct) {
+		getPersistence().cacheResult(cProduct);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -608,24 +622,6 @@ public class CProductUtil {
 	}
 
 	/**
-	 * Caches the c product in the entity cache if it is enabled.
-	 *
-	 * @param cProduct the c product
-	 */
-	public static void cacheResult(CProduct cProduct) {
-		getPersistence().cacheResult(cProduct);
-	}
-
-	/**
-	 * Caches the c products in the entity cache if it is enabled.
-	 *
-	 * @param cProducts the c products
-	 */
-	public static void cacheResult(List<CProduct> cProducts) {
-		getPersistence().cacheResult(cProducts);
-	}
-
-	/**
 	 * Creates a new c product with the primary key. Does not add the c product to the database.
 	 *
 	 * @param CProductId the primary key for the new c product
@@ -686,4 +682,4 @@ public class CProductUtil {
 	private static volatile CProductPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952612295
+// LIFERAY-SERVICE-BUILDER-HASH:-1691771601

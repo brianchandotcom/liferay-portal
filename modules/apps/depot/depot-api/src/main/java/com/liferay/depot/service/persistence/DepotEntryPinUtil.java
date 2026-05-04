@@ -36,6 +36,20 @@ public class DepotEntryPinUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DepotEntryPin> depotEntryPins) {
+		getPersistence().cacheResult(depotEntryPins);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DepotEntryPin depotEntryPin) {
+		getPersistence().cacheResult(depotEntryPin);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -730,24 +744,6 @@ public class DepotEntryPinUtil {
 	}
 
 	/**
-	 * Caches the depot entry pin in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryPin the depot entry pin
-	 */
-	public static void cacheResult(DepotEntryPin depotEntryPin) {
-		getPersistence().cacheResult(depotEntryPin);
-	}
-
-	/**
-	 * Caches the depot entry pins in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryPins the depot entry pins
-	 */
-	public static void cacheResult(List<DepotEntryPin> depotEntryPins) {
-		getPersistence().cacheResult(depotEntryPins);
-	}
-
-	/**
 	 * Creates a new depot entry pin with the primary key. Does not add the depot entry pin to the database.
 	 *
 	 * @param depotEntryPinId the primary key for the new depot entry pin
@@ -808,4 +804,4 @@ public class DepotEntryPinUtil {
 	private static volatile DepotEntryPinPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:689731817
+// LIFERAY-SERVICE-BUILDER-HASH:1043405067

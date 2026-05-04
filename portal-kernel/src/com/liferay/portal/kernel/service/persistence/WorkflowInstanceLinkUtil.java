@@ -36,6 +36,22 @@ public class WorkflowInstanceLinkUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<WorkflowInstanceLink> workflowInstanceLinks) {
+
+		getPersistence().cacheResult(workflowInstanceLinks);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WorkflowInstanceLink workflowInstanceLink) {
+		getPersistence().cacheResult(workflowInstanceLink);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -623,26 +639,6 @@ public class WorkflowInstanceLinkUtil {
 	}
 
 	/**
-	 * Caches the workflow instance link in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLink the workflow instance link
-	 */
-	public static void cacheResult(WorkflowInstanceLink workflowInstanceLink) {
-		getPersistence().cacheResult(workflowInstanceLink);
-	}
-
-	/**
-	 * Caches the workflow instance links in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLinks the workflow instance links
-	 */
-	public static void cacheResult(
-		List<WorkflowInstanceLink> workflowInstanceLinks) {
-
-		getPersistence().cacheResult(workflowInstanceLinks);
-	}
-
-	/**
 	 * Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
 	 *
 	 * @param workflowInstanceLinkId the primary key for the new workflow instance link
@@ -712,4 +708,4 @@ public class WorkflowInstanceLinkUtil {
 	private static volatile WorkflowInstanceLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1019362843
+// LIFERAY-SERVICE-BUILDER-HASH:-301397821

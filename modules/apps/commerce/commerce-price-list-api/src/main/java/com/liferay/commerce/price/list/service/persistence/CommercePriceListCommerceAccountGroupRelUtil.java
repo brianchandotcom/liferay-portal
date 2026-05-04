@@ -36,6 +36,26 @@ public class CommercePriceListCommerceAccountGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceListCommerceAccountGroupRel>
+			commercePriceListCommerceAccountGroupRels) {
+
+		getPersistence().cacheResult(commercePriceListCommerceAccountGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePriceListCommerceAccountGroupRel
+			commercePriceListCommerceAccountGroupRel) {
+
+		getPersistence().cacheResult(commercePriceListCommerceAccountGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -601,30 +621,6 @@ public class CommercePriceListCommerceAccountGroupRelUtil {
 	}
 
 	/**
-	 * Caches the commerce price list commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRel the commerce price list commerce account group rel
-	 */
-	public static void cacheResult(
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel) {
-
-		getPersistence().cacheResult(commercePriceListCommerceAccountGroupRel);
-	}
-
-	/**
-	 * Caches the commerce price list commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRels the commerce price list commerce account group rels
-	 */
-	public static void cacheResult(
-		List<CommercePriceListCommerceAccountGroupRel>
-			commercePriceListCommerceAccountGroupRels) {
-
-		getPersistence().cacheResult(commercePriceListCommerceAccountGroupRels);
-	}
-
-	/**
 	 * Creates a new commerce price list commerce account group rel with the primary key. Does not add the commerce price list commerce account group rel to the database.
 	 *
 	 * @param commercePriceListCommerceAccountGroupRelId the primary key for the new commerce price list commerce account group rel
@@ -706,4 +702,4 @@ public class CommercePriceListCommerceAccountGroupRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1446925813
+// LIFERAY-SERVICE-BUILDER-HASH:1412514319

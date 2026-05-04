@@ -36,6 +36,20 @@ public class UserGroupRoleUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UserGroupRole> userGroupRoles) {
+		getPersistence().cacheResult(userGroupRoles);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UserGroupRole userGroupRole) {
+		getPersistence().cacheResult(userGroupRole);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -811,24 +825,6 @@ public class UserGroupRoleUtil {
 	}
 
 	/**
-	 * Caches the user group role in the entity cache if it is enabled.
-	 *
-	 * @param userGroupRole the user group role
-	 */
-	public static void cacheResult(UserGroupRole userGroupRole) {
-		getPersistence().cacheResult(userGroupRole);
-	}
-
-	/**
-	 * Caches the user group roles in the entity cache if it is enabled.
-	 *
-	 * @param userGroupRoles the user group roles
-	 */
-	public static void cacheResult(List<UserGroupRole> userGroupRoles) {
-		getPersistence().cacheResult(userGroupRoles);
-	}
-
-	/**
 	 * Creates a new user group role with the primary key. Does not add the user group role to the database.
 	 *
 	 * @param userGroupRoleId the primary key for the new user group role
@@ -891,4 +887,4 @@ public class UserGroupRoleUtil {
 	private static volatile UserGroupRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1583326023
+// LIFERAY-SERVICE-BUILDER-HASH:-1207989849

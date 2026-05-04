@@ -33,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2601,76 +2598,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce ml forecast alert entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
-	 */
-	@Override
-	public void cacheResult(
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry) {
-
-		entityCache.putResult(
-			CommerceMLForecastAlertEntryImpl.class,
-			commerceMLForecastAlertEntry.getPrimaryKey(),
-			commerceMLForecastAlertEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_T,
-			new Object[] {
-				commerceMLForecastAlertEntry.getCompanyId(),
-				commerceMLForecastAlertEntry.getCommerceAccountId(),
-				commerceMLForecastAlertEntry.getTimestamp()
-			},
-			commerceMLForecastAlertEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce ml forecast alert entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntries the commerce ml forecast alert entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceMLForecastAlertEntry> commerceMLForecastAlertEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceMLForecastAlertEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				commerceMLForecastAlertEntries) {
-
-			if (entityCache.getResult(
-					CommerceMLForecastAlertEntryImpl.class,
-					commerceMLForecastAlertEntry.getPrimaryKey()) == null) {
-
-				cacheResult(commerceMLForecastAlertEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceMLForecastAlertEntryModelImpl
-			commerceMLForecastAlertEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceMLForecastAlertEntryModelImpl.getCompanyId(),
-			commerceMLForecastAlertEntryModelImpl.getCommerceAccountId(),
-			_getTime(commerceMLForecastAlertEntryModelImpl.getTimestamp())
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_T, args,
-			commerceMLForecastAlertEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce ml forecast alert entry with the primary key. Does not add the commerce ml forecast alert entry to the database.
 	 *
 	 * @param commerceMLForecastAlertEntryId the primary key for the new commerce ml forecast alert entry
@@ -2830,11 +2757,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceMLForecastAlertEntryImpl.class,
-			commerceMLForecastAlertEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceMLForecastAlertEntryModelImpl);
+		cacheUniqueFindersResult(commerceMLForecastAlertEntry, false);
 
 		if (isNew) {
 			commerceMLForecastAlertEntry.setNew(false);
@@ -2903,9 +2826,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2973,12 +2893,15 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceMLForecastAlertEntry::getCompanyId));
 
-		_finderPathFetchByC_C_T = new FinderPath(
+		_finderPathFetchByC_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			},
-			new String[] {"companyId", "commerceAccountId", "timestamp"}, true);
+			new String[] {"companyId", "commerceAccountId", "timestamp"}, false,
+			CommerceMLForecastAlertEntry::getCompanyId,
+			CommerceMLForecastAlertEntry::getCommerceAccountId,
+			CommerceMLForecastAlertEntry::getTimestamp);
 
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_T,
@@ -3155,4 +3078,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1558055768
+// LIFERAY-SERVICE-BUILDER-HASH:1315503609

@@ -318,24 +318,6 @@ public interface CommerceShippingFixedOptionQualifierPersistence
 		long classNameId, long classPK, long commerceShippingFixedOptionId);
 
 	/**
-	 * Caches the commerce shipping fixed option qualifier in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifier the commerce shipping fixed option qualifier
-	 */
-	public void cacheResult(
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier);
-
-	/**
-	 * Caches the commerce shipping fixed option qualifiers in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifiers the commerce shipping fixed option qualifiers
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShippingFixedOptionQualifier>
-			commerceShippingFixedOptionQualifiers);
-
-	/**
 	 * Creates a new commerce shipping fixed option qualifier with the primary key. Does not add the commerce shipping fixed option qualifier to the database.
 	 *
 	 * @param commerceShippingFixedOptionQualifierId the primary key for the new commerce shipping fixed option qualifier
@@ -380,4 +362,4 @@ public interface CommerceShippingFixedOptionQualifierPersistence
 		long commerceShippingFixedOptionQualifierId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:84628967
+// LIFERAY-SERVICE-BUILDER-HASH:257816817

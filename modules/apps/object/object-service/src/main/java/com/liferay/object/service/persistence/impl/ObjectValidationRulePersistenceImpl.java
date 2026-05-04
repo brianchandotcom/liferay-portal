@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1328,69 +1326,6 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 	/**
-	 * Caches the object validation rule in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRule the object validation rule
-	 */
-	@Override
-	public void cacheResult(ObjectValidationRule objectValidationRule) {
-		entityCache.putResult(
-			ObjectValidationRuleImpl.class,
-			objectValidationRule.getPrimaryKey(), objectValidationRule);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI,
-			new Object[] {
-				objectValidationRule.getExternalReferenceCode(),
-				objectValidationRule.getCompanyId(),
-				objectValidationRule.getObjectDefinitionId()
-			},
-			objectValidationRule);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object validation rules in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRules the object validation rules
-	 */
-	@Override
-	public void cacheResult(List<ObjectValidationRule> objectValidationRules) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectValidationRules.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectValidationRule objectValidationRule :
-				objectValidationRules) {
-
-			if (entityCache.getResult(
-					ObjectValidationRuleImpl.class,
-					objectValidationRule.getPrimaryKey()) == null) {
-
-				cacheResult(objectValidationRule);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectValidationRuleModelImpl objectValidationRuleModelImpl) {
-
-		Object[] args = new Object[] {
-			objectValidationRuleModelImpl.getExternalReferenceCode(),
-			objectValidationRuleModelImpl.getCompanyId(),
-			objectValidationRuleModelImpl.getObjectDefinitionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI, args, objectValidationRuleModelImpl);
-	}
-
-	/**
 	 * Creates a new object validation rule with the primary key. Does not add the object validation rule to the database.
 	 *
 	 * @param objectValidationRuleId the primary key for the new object validation rule
@@ -1577,11 +1512,7 @@ public class ObjectValidationRulePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectValidationRuleImpl.class, objectValidationRuleModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(objectValidationRuleModelImpl);
+		cacheUniqueFindersResult(objectValidationRule, false);
 
 		if (isNew) {
 			objectValidationRule.setNew(false);
@@ -1647,9 +1578,6 @@ public class ObjectValidationRulePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1877,7 +1805,7 @@ public class ObjectValidationRulePersistenceImpl
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getEngine));
 
-		_finderPathFetchByERC_C_ODI = new FinderPath(
+		_finderPathFetchByERC_C_ODI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -1886,7 +1814,9 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			true);
+			false, ObjectValidationRule::getExternalReferenceCode,
+			ObjectValidationRule::getCompanyId,
+			ObjectValidationRule::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI,
@@ -1972,4 +1902,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2101875452
+// LIFERAY-SERVICE-BUILDER-HASH:-189894568

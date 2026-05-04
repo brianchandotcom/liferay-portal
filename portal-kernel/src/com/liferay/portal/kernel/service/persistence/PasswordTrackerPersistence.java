@@ -134,20 +134,6 @@ public interface PasswordTrackerPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Caches the password tracker in the entity cache if it is enabled.
-	 *
-	 * @param passwordTracker the password tracker
-	 */
-	public void cacheResult(PasswordTracker passwordTracker);
-
-	/**
-	 * Caches the password trackers in the entity cache if it is enabled.
-	 *
-	 * @param passwordTrackers the password trackers
-	 */
-	public void cacheResult(java.util.List<PasswordTracker> passwordTrackers);
-
-	/**
 	 * Creates a new password tracker with the primary key. Does not add the password tracker to the database.
 	 *
 	 * @param passwordTrackerId the primary key for the new password tracker
@@ -186,4 +172,4 @@ public interface PasswordTrackerPersistence
 	public PasswordTracker fetchByPrimaryKey(long passwordTrackerId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2031048249
+// LIFERAY-SERVICE-BUILDER-HASH:-1273685707

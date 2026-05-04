@@ -350,20 +350,6 @@ public interface KaleoNodePersistence
 	public int countByC_KDVI(long companyId, long kaleoDefinitionVersionId);
 
 	/**
-	 * Caches the kaleo node in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNode the kaleo node
-	 */
-	public void cacheResult(KaleoNode kaleoNode);
-
-	/**
-	 * Caches the kaleo nodes in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodes the kaleo nodes
-	 */
-	public void cacheResult(java.util.List<KaleoNode> kaleoNodes);
-
-	/**
 	 * Creates a new kaleo node with the primary key. Does not add the kaleo node to the database.
 	 *
 	 * @param kaleoNodeId the primary key for the new kaleo node
@@ -401,4 +387,4 @@ public interface KaleoNodePersistence
 	public KaleoNode fetchByPrimaryKey(long kaleoNodeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1875984730
+// LIFERAY-SERVICE-BUILDER-HASH:-1061122576

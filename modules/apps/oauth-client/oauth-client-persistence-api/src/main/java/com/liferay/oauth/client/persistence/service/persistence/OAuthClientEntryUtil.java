@@ -36,6 +36,20 @@ public class OAuthClientEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<OAuthClientEntry> oAuthClientEntries) {
+		getPersistence().cacheResult(oAuthClientEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OAuthClientEntry oAuthClientEntry) {
+		getPersistence().cacheResult(oAuthClientEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1213,24 +1227,6 @@ public class OAuthClientEntryUtil {
 	}
 
 	/**
-	 * Caches the o auth client entry in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntry the o auth client entry
-	 */
-	public static void cacheResult(OAuthClientEntry oAuthClientEntry) {
-		getPersistence().cacheResult(oAuthClientEntry);
-	}
-
-	/**
-	 * Caches the o auth client entries in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntries the o auth client entries
-	 */
-	public static void cacheResult(List<OAuthClientEntry> oAuthClientEntries) {
-		getPersistence().cacheResult(oAuthClientEntries);
-	}
-
-	/**
 	 * Creates a new o auth client entry with the primary key. Does not add the o auth client entry to the database.
 	 *
 	 * @param oAuthClientEntryId the primary key for the new o auth client entry
@@ -1295,4 +1291,4 @@ public class OAuthClientEntryUtil {
 	private static volatile OAuthClientEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:185606148
+// LIFERAY-SERVICE-BUILDER-HASH:356782869

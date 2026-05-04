@@ -37,6 +37,20 @@ public class UserUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<User> users) {
+		getPersistence().cacheResult(users);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(User user) {
+		getPersistence().cacheResult(user);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2100,24 +2114,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Caches the user in the entity cache if it is enabled.
-	 *
-	 * @param user the user
-	 */
-	public static void cacheResult(User user) {
-		getPersistence().cacheResult(user);
-	}
-
-	/**
-	 * Caches the users in the entity cache if it is enabled.
-	 *
-	 * @param users the users
-	 */
-	public static void cacheResult(List<User> users) {
-		getPersistence().cacheResult(users);
-	}
-
-	/**
 	 * Creates a new user with the primary key. Does not add the user to the database.
 	 *
 	 * @param userId the primary key for the new user
@@ -3255,4 +3251,4 @@ public class UserUtil {
 	private static volatile UserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1218442577
+// LIFERAY-SERVICE-BUILDER-HASH:-37331359

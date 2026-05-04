@@ -344,23 +344,6 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 	public int countByCountryId(long countryId);
 
 	/**
-	 * Caches the commerce tax fixed rate address rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
-	 */
-	public void cacheResult(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel);
-
-	/**
-	 * Caches the commerce tax fixed rate address rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRels the commerce tax fixed rate address rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTaxFixedRateAddressRel>
-			commerceTaxFixedRateAddressRels);
-
-	/**
 	 * Creates a new commerce tax fixed rate address rel with the primary key. Does not add the commerce tax fixed rate address rel to the database.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key for the new commerce tax fixed rate address rel
@@ -404,4 +387,4 @@ public interface CommerceTaxFixedRateAddressRelPersistence
 		long commerceTaxFixedRateAddressRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:109154659
+// LIFERAY-SERVICE-BUILDER-HASH:-1153877709

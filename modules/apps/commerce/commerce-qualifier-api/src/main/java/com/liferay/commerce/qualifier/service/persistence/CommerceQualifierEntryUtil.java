@@ -36,6 +36,24 @@ public class CommerceQualifierEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceQualifierEntry> commerceQualifierEntries) {
+
+		getPersistence().cacheResult(commerceQualifierEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceQualifierEntry commerceQualifierEntry) {
+
+		getPersistence().cacheResult(commerceQualifierEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -794,28 +812,6 @@ public class CommerceQualifierEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce qualifier entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntry the commerce qualifier entry
-	 */
-	public static void cacheResult(
-		CommerceQualifierEntry commerceQualifierEntry) {
-
-		getPersistence().cacheResult(commerceQualifierEntry);
-	}
-
-	/**
-	 * Caches the commerce qualifier entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntries the commerce qualifier entries
-	 */
-	public static void cacheResult(
-		List<CommerceQualifierEntry> commerceQualifierEntries) {
-
-		getPersistence().cacheResult(commerceQualifierEntries);
-	}
-
-	/**
 	 * Creates a new commerce qualifier entry with the primary key. Does not add the commerce qualifier entry to the database.
 	 *
 	 * @param commerceQualifierEntryId the primary key for the new commerce qualifier entry
@@ -885,4 +881,4 @@ public class CommerceQualifierEntryUtil {
 	private static volatile CommerceQualifierEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1481748442
+// LIFERAY-SERVICE-BUILDER-HASH:217066011

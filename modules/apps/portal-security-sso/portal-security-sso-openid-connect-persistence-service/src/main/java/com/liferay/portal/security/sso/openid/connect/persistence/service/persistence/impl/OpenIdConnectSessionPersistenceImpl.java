@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.NoSuchSessionException;
 import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectSession;
@@ -872,101 +869,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 	/**
-	 * Caches the open ID connect session in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSession the open ID connect session
-	 */
-	@Override
-	public void cacheResult(OpenIdConnectSession openIdConnectSession) {
-		entityCache.putResult(
-			OpenIdConnectSessionImpl.class,
-			openIdConnectSession.getPrimaryKey(), openIdConnectSession);
-
-		finderCache.putResult(
-			_finderPathFetchByU_I,
-			new Object[] {
-				openIdConnectSession.getUserId(),
-				openIdConnectSession.getIssuer()
-			},
-			openIdConnectSession);
-
-		finderCache.putResult(
-			_finderPathFetchByI_S,
-			new Object[] {
-				openIdConnectSession.getIssuer(),
-				openIdConnectSession.getSessionId()
-			},
-			openIdConnectSession);
-
-		finderCache.putResult(
-			_finderPathFetchByU_A_C,
-			new Object[] {
-				openIdConnectSession.getUserId(),
-				openIdConnectSession.getAuthServerWellKnownURI(),
-				openIdConnectSession.getClientId()
-			},
-			openIdConnectSession);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the open ID connect sessions in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSessions the open ID connect sessions
-	 */
-	@Override
-	public void cacheResult(List<OpenIdConnectSession> openIdConnectSessions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (openIdConnectSessions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OpenIdConnectSession openIdConnectSession :
-				openIdConnectSessions) {
-
-			if (entityCache.getResult(
-					OpenIdConnectSessionImpl.class,
-					openIdConnectSession.getPrimaryKey()) == null) {
-
-				cacheResult(openIdConnectSession);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OpenIdConnectSessionModelImpl openIdConnectSessionModelImpl) {
-
-		Object[] args = new Object[] {
-			openIdConnectSessionModelImpl.getUserId(),
-			openIdConnectSessionModelImpl.getIssuer()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByU_I, args, openIdConnectSessionModelImpl);
-
-		args = new Object[] {
-			openIdConnectSessionModelImpl.getIssuer(),
-			openIdConnectSessionModelImpl.getSessionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByI_S, args, openIdConnectSessionModelImpl);
-
-		args = new Object[] {
-			openIdConnectSessionModelImpl.getUserId(),
-			openIdConnectSessionModelImpl.getAuthServerWellKnownURI(),
-			openIdConnectSessionModelImpl.getClientId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByU_A_C, args, openIdConnectSessionModelImpl);
-	}
-
-	/**
 	 * Creates a new open ID connect session with the primary key. Does not add the open ID connect session to the database.
 	 *
 	 * @param openIdConnectSessionId the primary key for the new open ID connect session
@@ -1093,11 +995,7 @@ public class OpenIdConnectSessionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OpenIdConnectSessionImpl.class, openIdConnectSessionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(openIdConnectSessionModelImpl);
+		cacheUniqueFindersResult(openIdConnectSession, false);
 
 		if (isNew) {
 			openIdConnectSession.setNew(false);
@@ -1158,9 +1056,6 @@ public class OpenIdConnectSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -1223,10 +1118,11 @@ public class OpenIdConnectSessionPersistenceImpl
 					FinderColumn.Type.DATE, "<", true, true,
 					OpenIdConnectSession::getAccessTokenExpirationDate));
 
-		_finderPathFetchByU_I = new FinderPath(
+		_finderPathFetchByU_I = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_I",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "issuer"}, true);
+			new String[] {"userId", "issuer"}, false,
+			OpenIdConnectSession::getUserId, OpenIdConnectSession::getIssuer);
 
 		_uniquePersistenceFinderByU_I = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_I, _SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
@@ -1237,10 +1133,12 @@ public class OpenIdConnectSessionPersistenceImpl
 				"openIdConnectSession.", "issuer", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getIssuer));
 
-		_finderPathFetchByI_S = new FinderPath(
+		_finderPathFetchByI_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByI_S",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"issuer", "sessionId"}, true);
+			new String[] {"issuer", "sessionId"}, false,
+			OpenIdConnectSession::getIssuer,
+			OpenIdConnectSession::getSessionId);
 
 		_uniquePersistenceFinderByI_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByI_S, _SQL_SELECT_OPENIDCONNECTSESSION_WHERE,
@@ -1296,14 +1194,16 @@ public class OpenIdConnectSessionPersistenceImpl
 				"openIdConnectSession.", "clientId", FinderColumn.Type.STRING,
 				"=", true, true, OpenIdConnectSession::getClientId));
 
-		_finderPathFetchByU_A_C = new FinderPath(
+		_finderPathFetchByU_A_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_A_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
 			new String[] {"userId", "authServerWellKnownURI", "clientId"},
-			true);
+			false, OpenIdConnectSession::getUserId,
+			OpenIdConnectSession::getAuthServerWellKnownURI,
+			OpenIdConnectSession::getClientId);
 
 		_uniquePersistenceFinderByU_A_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_A_C,
@@ -1385,4 +1285,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1836625125
+// LIFERAY-SERVICE-BUILDER-HASH:-194384117

@@ -36,6 +36,24 @@ public class DLOpenerFileEntryReferenceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences) {
+
+		getPersistence().cacheResult(dlOpenerFileEntryReferences);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
+
+		getPersistence().cacheResult(dlOpenerFileEntryReference);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -250,28 +268,6 @@ public class DLOpenerFileEntryReferenceUtil {
 	}
 
 	/**
-	 * Caches the dl opener file entry reference in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 */
-	public static void cacheResult(
-		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
-		getPersistence().cacheResult(dlOpenerFileEntryReference);
-	}
-
-	/**
-	 * Caches the dl opener file entry references in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReferences the dl opener file entry references
-	 */
-	public static void cacheResult(
-		List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences) {
-
-		getPersistence().cacheResult(dlOpenerFileEntryReferences);
-	}
-
-	/**
 	 * Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	 *
 	 * @param dlOpenerFileEntryReferenceId the primary key for the new dl opener file entry reference
@@ -344,4 +340,4 @@ public class DLOpenerFileEntryReferenceUtil {
 	private static volatile DLOpenerFileEntryReferencePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1184467850
+// LIFERAY-SERVICE-BUILDER-HASH:-1144863178

@@ -15,7 +15,6 @@ import com.liferay.layout.service.persistence.LayoutClassedModelUsageUtil;
 import com.liferay.layout.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -36,10 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3627,114 +3623,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 	/**
-	 * Caches the layout classed model usage in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsage the layout classed model usage
-	 */
-	@Override
-	public void cacheResult(LayoutClassedModelUsage layoutClassedModelUsage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutClassedModelUsage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutClassedModelUsageImpl.class,
-				layoutClassedModelUsage.getPrimaryKey(),
-				layoutClassedModelUsage);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutClassedModelUsage.getUuid(),
-					layoutClassedModelUsage.getGroupId()
-				},
-				layoutClassedModelUsage);
-
-			finderCache.putResult(
-				_finderPathFetchByG_CERC_CN_CPK_CK_CT_P,
-				new Object[] {
-					layoutClassedModelUsage.getGroupId(),
-					layoutClassedModelUsage.getClassExternalReferenceCode(),
-					layoutClassedModelUsage.getClassNameId(),
-					layoutClassedModelUsage.getClassPK(),
-					layoutClassedModelUsage.getContainerKey(),
-					layoutClassedModelUsage.getContainerType(),
-					layoutClassedModelUsage.getPlid()
-				},
-				layoutClassedModelUsage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout classed model usages in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsages the layout classed model usages
-	 */
-	@Override
-	public void cacheResult(
-		List<LayoutClassedModelUsage> layoutClassedModelUsages) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutClassedModelUsages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutClassedModelUsage layoutClassedModelUsage :
-				layoutClassedModelUsages) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutClassedModelUsage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutClassedModelUsageImpl.class,
-						layoutClassedModelUsage.getPrimaryKey()) == null) {
-
-					cacheResult(layoutClassedModelUsage);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutClassedModelUsageModelImpl layoutClassedModelUsageModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutClassedModelUsageModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutClassedModelUsageModelImpl.getUuid(),
-				layoutClassedModelUsageModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				layoutClassedModelUsageModelImpl);
-
-			args = new Object[] {
-				layoutClassedModelUsageModelImpl.getGroupId(),
-				layoutClassedModelUsageModelImpl.
-					getClassExternalReferenceCode(),
-				layoutClassedModelUsageModelImpl.getClassNameId(),
-				layoutClassedModelUsageModelImpl.getClassPK(),
-				layoutClassedModelUsageModelImpl.getContainerKey(),
-				layoutClassedModelUsageModelImpl.getContainerType(),
-				layoutClassedModelUsageModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_CERC_CN_CPK_CK_CT_P, args,
-				layoutClassedModelUsageModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
 	 *
 	 * @param layoutClassedModelUsageId the primary key for the new layout classed model usage
@@ -3892,11 +3780,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutClassedModelUsageImpl.class, layoutClassedModelUsageModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(layoutClassedModelUsageModelImpl);
+		cacheUniqueFindersResult(layoutClassedModelUsage, false);
 
 		if (isNew) {
 			layoutClassedModelUsage.setNew(false);
@@ -4043,9 +3927,6 @@ public class LayoutClassedModelUsagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4075,10 +3956,12 @@ public class LayoutClassedModelUsagePersistenceImpl
 				"layoutClassedModelUsage.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutClassedModelUsage::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutClassedModelUsage::getUuid,
+			LayoutClassedModelUsage::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -4326,7 +4209,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByG_CERC_CN_CPK_CK_CT_P = new FinderPath(
+		_finderPathFetchByG_CERC_CN_CPK_CK_CT_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CERC_CN_CPK_CK_CT_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -4338,7 +4221,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 				"groupId", "classExternalReferenceCode", "classNameId",
 				"classPK", "containerKey", "containerType", "plid"
 			},
-			true);
+			false, LayoutClassedModelUsage::getGroupId,
+			LayoutClassedModelUsage::getClassExternalReferenceCode,
+			LayoutClassedModelUsage::getClassNameId,
+			LayoutClassedModelUsage::getClassPK,
+			LayoutClassedModelUsage::getContainerKey,
+			LayoutClassedModelUsage::getContainerType,
+			LayoutClassedModelUsage::getPlid);
 
 		_uniquePersistenceFinderByG_CERC_CN_CPK_CK_CT_P =
 			new UniquePersistenceFinder<>(
@@ -4444,4 +4333,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1138012867
+// LIFERAY-SERVICE-BUILDER-HASH:-1511482004

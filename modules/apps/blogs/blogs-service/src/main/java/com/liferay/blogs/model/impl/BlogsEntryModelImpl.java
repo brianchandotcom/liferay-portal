@@ -1935,4 +1935,4 @@ public class BlogsEntryModelImpl
 	private BlogsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:177238249
+// LIFERAY-SERVICE-BUILDER-HASH:2044629755

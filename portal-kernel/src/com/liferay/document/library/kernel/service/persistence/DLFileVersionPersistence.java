@@ -1634,20 +1634,6 @@ public interface DLFileVersionPersistence
 		long groupId, long folderId, String title, String version);
 
 	/**
-	 * Caches the document library file version in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersion the document library file version
-	 */
-	public void cacheResult(DLFileVersion dlFileVersion);
-
-	/**
-	 * Caches the document library file versions in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersions the document library file versions
-	 */
-	public void cacheResult(java.util.List<DLFileVersion> dlFileVersions);
-
-	/**
 	 * Creates a new document library file version with the primary key. Does not add the document library file version to the database.
 	 *
 	 * @param fileVersionId the primary key for the new document library file version
@@ -1686,4 +1672,4 @@ public interface DLFileVersionPersistence
 	public DLFileVersion fetchByPrimaryKey(long fileVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-108370512
+// LIFERAY-SERVICE-BUILDER-HASH:-836271002

@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -322,64 +319,6 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Caches the faro preferences in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferences the faro preferences
-	 */
-	@Override
-	public void cacheResult(FaroPreferences faroPreferences) {
-		entityCache.putResult(
-			FaroPreferencesImpl.class, faroPreferences.getPrimaryKey(),
-			faroPreferences);
-
-		finderCache.putResult(
-			_finderPathFetchByG_O,
-			new Object[] {
-				faroPreferences.getGroupId(), faroPreferences.getOwnerId()
-			},
-			faroPreferences);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferenceses the faro preferenceses
-	 */
-	@Override
-	public void cacheResult(List<FaroPreferences> faroPreferenceses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroPreferenceses.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroPreferences faroPreferences : faroPreferenceses) {
-			if (entityCache.getResult(
-					FaroPreferencesImpl.class,
-					faroPreferences.getPrimaryKey()) == null) {
-
-				cacheResult(faroPreferences);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FaroPreferencesModelImpl faroPreferencesModelImpl) {
-
-		Object[] args = new Object[] {
-			faroPreferencesModelImpl.getGroupId(),
-			faroPreferencesModelImpl.getOwnerId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_O, args, faroPreferencesModelImpl);
-	}
-
-	/**
 	 * Creates a new faro preferences with the primary key. Does not add the faro preferences to the database.
 	 *
 	 * @param faroPreferencesId the primary key for the new faro preferences
@@ -486,10 +425,7 @@ public class FaroPreferencesPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroPreferencesImpl.class, faroPreferencesModelImpl, false, true);
-
-		cacheUniqueFindersCache(faroPreferencesModelImpl);
+		cacheUniqueFindersResult(faroPreferences, false);
 
 		if (isNew) {
 			faroPreferences.setNew(false);
@@ -550,9 +486,6 @@ public class FaroPreferencesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -582,10 +515,11 @@ public class FaroPreferencesPersistenceImpl
 					"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroPreferences::getGroupId));
 
-		_finderPathFetchByG_O = new FinderPath(
+		_finderPathFetchByG_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "ownerId"}, true);
+			new String[] {"groupId", "ownerId"}, false,
+			FaroPreferences::getGroupId, FaroPreferences::getOwnerId);
 
 		_uniquePersistenceFinderByG_O = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_O, _SQL_SELECT_FAROPREFERENCES_WHERE,
@@ -662,4 +596,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1604667263
+// LIFERAY-SERVICE-BUILDER-HASH:-265195834

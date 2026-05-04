@@ -1564,6 +1564,13 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	@Override
+	public void copyCacheFields(Group source) {
+		GroupModelImpl sourceModelImpl = (GroupModelImpl)source;
+
+		setClassName(sourceModelImpl.getClassName());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1992,4 +1999,4 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private Group _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-949321253
+// LIFERAY-SERVICE-BUILDER-HASH:-758322397

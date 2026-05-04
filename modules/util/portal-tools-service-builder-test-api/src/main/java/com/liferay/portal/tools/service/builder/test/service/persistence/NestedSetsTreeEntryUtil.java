@@ -36,6 +36,22 @@ public class NestedSetsTreeEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NestedSetsTreeEntry> nestedSetsTreeEntries) {
+
+		getPersistence().cacheResult(nestedSetsTreeEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(NestedSetsTreeEntry nestedSetsTreeEntry) {
+		getPersistence().cacheResult(nestedSetsTreeEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,26 +127,6 @@ public class NestedSetsTreeEntryUtil {
 		ServiceContext serviceContext) {
 
 		return getPersistence().update(nestedSetsTreeEntry, serviceContext);
-	}
-
-	/**
-	 * Caches the nested sets tree entry in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntry the nested sets tree entry
-	 */
-	public static void cacheResult(NestedSetsTreeEntry nestedSetsTreeEntry) {
-		getPersistence().cacheResult(nestedSetsTreeEntry);
-	}
-
-	/**
-	 * Caches the nested sets tree entries in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntries the nested sets tree entries
-	 */
-	public static void cacheResult(
-		List<NestedSetsTreeEntry> nestedSetsTreeEntries) {
-
-		getPersistence().cacheResult(nestedSetsTreeEntries);
 	}
 
 	/**
@@ -243,4 +239,4 @@ public class NestedSetsTreeEntryUtil {
 	private static volatile NestedSetsTreeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-779016079
+// LIFERAY-SERVICE-BUILDER-HASH:225365256

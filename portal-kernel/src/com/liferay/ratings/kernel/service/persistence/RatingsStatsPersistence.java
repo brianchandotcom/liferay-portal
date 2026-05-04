@@ -163,20 +163,6 @@ public interface RatingsStatsPersistence
 	public int countByC_C(long classNameId, long[] classPKs);
 
 	/**
-	 * Caches the ratings stats in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStats the ratings stats
-	 */
-	public void cacheResult(RatingsStats ratingsStats);
-
-	/**
-	 * Caches the ratings statses in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStatses the ratings statses
-	 */
-	public void cacheResult(java.util.List<RatingsStats> ratingsStatses);
-
-	/**
 	 * Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
 	 *
 	 * @param statsId the primary key for the new ratings stats
@@ -214,4 +200,4 @@ public interface RatingsStatsPersistence
 	public RatingsStats fetchByPrimaryKey(long statsId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1157997981
+// LIFERAY-SERVICE-BUILDER-HASH:-1709588613

@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -815,74 +812,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount account rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRel the commerce discount account rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceDiscountAccountRel commerceDiscountAccountRel) {
-
-		entityCache.putResult(
-			CommerceDiscountAccountRelImpl.class,
-			commerceDiscountAccountRel.getPrimaryKey(),
-			commerceDiscountAccountRel);
-
-		finderCache.putResult(
-			_finderPathFetchByCAI_CDI,
-			new Object[] {
-				commerceDiscountAccountRel.getCommerceAccountId(),
-				commerceDiscountAccountRel.getCommerceDiscountId()
-			},
-			commerceDiscountAccountRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount account rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRels the commerce discount account rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceDiscountAccountRel> commerceDiscountAccountRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountAccountRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountAccountRel commerceDiscountAccountRel :
-				commerceDiscountAccountRels) {
-
-			if (entityCache.getResult(
-					CommerceDiscountAccountRelImpl.class,
-					commerceDiscountAccountRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscountAccountRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceDiscountAccountRelModelImpl
-			commerceDiscountAccountRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceDiscountAccountRelModelImpl.getCommerceAccountId(),
-			commerceDiscountAccountRelModelImpl.getCommerceDiscountId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCAI_CDI, args,
-			commerceDiscountAccountRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce discount account rel with the primary key. Does not add the commerce discount account rel to the database.
 	 *
 	 * @param commerceDiscountAccountRelId the primary key for the new commerce discount account rel
@@ -1037,11 +966,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountAccountRelImpl.class,
-			commerceDiscountAccountRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceDiscountAccountRelModelImpl);
+		cacheUniqueFindersResult(commerceDiscountAccountRel, false);
 
 		if (isNew) {
 			commerceDiscountAccountRel.setNew(false);
@@ -1110,9 +1035,6 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1243,10 +1165,12 @@ public class CommerceDiscountAccountRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountAccountRel::getCommerceDiscountId));
 
-		_finderPathFetchByCAI_CDI = new FinderPath(
+		_finderPathFetchByCAI_CDI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCAI_CDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceAccountId", "commerceDiscountId"}, true);
+			new String[] {"commerceAccountId", "commerceDiscountId"}, false,
+			CommerceDiscountAccountRel::getCommerceAccountId,
+			CommerceDiscountAccountRel::getCommerceDiscountId);
 
 		_uniquePersistenceFinderByCAI_CDI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCAI_CDI,
@@ -1329,4 +1253,4 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1817964867
+// LIFERAY-SERVICE-BUILDER-HASH:-2103438190

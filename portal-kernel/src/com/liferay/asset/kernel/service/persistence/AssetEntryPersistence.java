@@ -1213,20 +1213,6 @@ public interface AssetEntryPersistence
 		long groupId, long classNameId, Date publishDate, Date expirationDate);
 
 	/**
-	 * Caches the asset entry in the entity cache if it is enabled.
-	 *
-	 * @param assetEntry the asset entry
-	 */
-	public void cacheResult(AssetEntry assetEntry);
-
-	/**
-	 * Caches the asset entries in the entity cache if it is enabled.
-	 *
-	 * @param assetEntries the asset entries
-	 */
-	public void cacheResult(java.util.List<AssetEntry> assetEntries);
-
-	/**
 	 * Creates a new asset entry with the primary key. Does not add the asset entry to the database.
 	 *
 	 * @param entryId the primary key for the new asset entry
@@ -1438,4 +1424,4 @@ public interface AssetEntryPersistence
 		java.util.List<com.liferay.asset.kernel.model.AssetTag> assetTags);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2028706272
+// LIFERAY-SERVICE-BUILDER-HASH:185157582

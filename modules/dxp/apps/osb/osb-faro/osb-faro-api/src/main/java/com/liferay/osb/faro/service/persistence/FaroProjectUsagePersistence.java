@@ -83,20 +83,6 @@ public interface FaroProjectUsagePersistence
 	public int countByF_U(long faroProjectId, long usageTime);
 
 	/**
-	 * Caches the faro project usage in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsage the faro project usage
-	 */
-	public void cacheResult(FaroProjectUsage faroProjectUsage);
-
-	/**
-	 * Caches the faro project usages in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsages the faro project usages
-	 */
-	public void cacheResult(java.util.List<FaroProjectUsage> faroProjectUsages);
-
-	/**
 	 * Creates a new faro project usage with the primary key. Does not add the faro project usage to the database.
 	 *
 	 * @param faroProjectUsageId the primary key for the new faro project usage
@@ -135,4 +121,4 @@ public interface FaroProjectUsagePersistence
 	public FaroProjectUsage fetchByPrimaryKey(long faroProjectUsageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:276107605
+// LIFERAY-SERVICE-BUILDER-HASH:-101597351

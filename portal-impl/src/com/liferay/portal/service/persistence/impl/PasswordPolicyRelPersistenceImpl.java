@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.PasswordPolicyRelImpl;
 import com.liferay.portal.model.impl.PasswordPolicyRelModelImpl;
@@ -324,65 +321,6 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the password policy rel in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRel the password policy rel
-	 */
-	@Override
-	public void cacheResult(PasswordPolicyRel passwordPolicyRel) {
-		EntityCacheUtil.putResult(
-			PasswordPolicyRelImpl.class, passwordPolicyRel.getPrimaryKey(),
-			passwordPolicyRel);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				passwordPolicyRel.getClassNameId(),
-				passwordPolicyRel.getClassPK()
-			},
-			passwordPolicyRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the password policy rels in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRels the password policy rels
-	 */
-	@Override
-	public void cacheResult(List<PasswordPolicyRel> passwordPolicyRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (passwordPolicyRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PasswordPolicyRel passwordPolicyRel : passwordPolicyRels) {
-			if (EntityCacheUtil.getResult(
-					PasswordPolicyRelImpl.class,
-					passwordPolicyRel.getPrimaryKey()) == null) {
-
-				cacheResult(passwordPolicyRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PasswordPolicyRelModelImpl passwordPolicyRelModelImpl) {
-
-		Object[] args = new Object[] {
-			passwordPolicyRelModelImpl.getClassNameId(),
-			passwordPolicyRelModelImpl.getClassPK()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C, args, passwordPolicyRelModelImpl);
-	}
-
-	/**
 	 * Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
 	 *
 	 * @param passwordPolicyRelId the primary key for the new password policy rel
@@ -491,11 +429,7 @@ public class PasswordPolicyRelPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PasswordPolicyRelImpl.class, passwordPolicyRelModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(passwordPolicyRelModelImpl);
+		cacheUniqueFindersResult(passwordPolicyRel, false);
 
 		if (isNew) {
 			passwordPolicyRel.setNew(false);
@@ -555,9 +489,6 @@ public class PasswordPolicyRelPersistenceImpl
 	 * Initializes the password policy rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByPasswordPolicyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPasswordPolicyId",
 			new String[] {
@@ -589,10 +520,11 @@ public class PasswordPolicyRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PasswordPolicyRel::getPasswordPolicyId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			PasswordPolicyRel::getClassNameId, PasswordPolicyRel::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_PASSWORDPOLICYREL_WHERE,
@@ -636,4 +568,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1128731981
+// LIFERAY-SERVICE-BUILDER-HASH:-814927617

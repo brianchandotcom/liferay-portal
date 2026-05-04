@@ -460,21 +460,6 @@ public interface ObjectViewSortColumnPersistence
 	public int countByOVI_OFN(long objectViewId, String objectFieldName);
 
 	/**
-	 * Caches the object view sort column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumn the object view sort column
-	 */
-	public void cacheResult(ObjectViewSortColumn objectViewSortColumn);
-
-	/**
-	 * Caches the object view sort columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumns the object view sort columns
-	 */
-	public void cacheResult(
-		java.util.List<ObjectViewSortColumn> objectViewSortColumns);
-
-	/**
 	 * Creates a new object view sort column with the primary key. Does not add the object view sort column to the database.
 	 *
 	 * @param objectViewSortColumnId the primary key for the new object view sort column
@@ -514,4 +499,4 @@ public interface ObjectViewSortColumnPersistence
 	public ObjectViewSortColumn fetchByPrimaryKey(long objectViewSortColumnId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:650675935
+// LIFERAY-SERVICE-BUILDER-HASH:1791402213

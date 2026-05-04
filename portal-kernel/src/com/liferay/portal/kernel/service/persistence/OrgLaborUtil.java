@@ -36,6 +36,20 @@ public class OrgLaborUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<OrgLabor> orgLabors) {
+		getPersistence().cacheResult(orgLabors);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OrgLabor orgLabor) {
+		getPersistence().cacheResult(orgLabor);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -232,24 +246,6 @@ public class OrgLaborUtil {
 	}
 
 	/**
-	 * Caches the org labor in the entity cache if it is enabled.
-	 *
-	 * @param orgLabor the org labor
-	 */
-	public static void cacheResult(OrgLabor orgLabor) {
-		getPersistence().cacheResult(orgLabor);
-	}
-
-	/**
-	 * Caches the org labors in the entity cache if it is enabled.
-	 *
-	 * @param orgLabors the org labors
-	 */
-	public static void cacheResult(List<OrgLabor> orgLabors) {
-		getPersistence().cacheResult(orgLabors);
-	}
-
-	/**
 	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
 	 *
 	 * @param orgLaborId the primary key for the new org labor
@@ -310,4 +306,4 @@ public class OrgLaborUtil {
 	private static volatile OrgLaborPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1116329315
+// LIFERAY-SERVICE-BUILDER-HASH:-1903624051

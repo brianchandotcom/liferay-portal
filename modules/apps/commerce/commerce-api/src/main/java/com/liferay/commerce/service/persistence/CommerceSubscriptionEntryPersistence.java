@@ -943,22 +943,6 @@ public interface CommerceSubscriptionEntryPersistence
 		String CPInstanceUuid, long CProductId, long commerceOrderItemId);
 
 	/**
-	 * Caches the commerce subscription entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceSubscriptionEntry the commerce subscription entry
-	 */
-	public void cacheResult(
-		CommerceSubscriptionEntry commerceSubscriptionEntry);
-
-	/**
-	 * Caches the commerce subscription entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceSubscriptionEntries the commerce subscription entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceSubscriptionEntry> commerceSubscriptionEntries);
-
-	/**
 	 * Creates a new commerce subscription entry with the primary key. Does not add the commerce subscription entry to the database.
 	 *
 	 * @param commerceSubscriptionEntryId the primary key for the new commerce subscription entry
@@ -1000,4 +984,4 @@ public interface CommerceSubscriptionEntryPersistence
 		long commerceSubscriptionEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1356993007
+// LIFERAY-SERVICE-BUILDER-HASH:-1229790285

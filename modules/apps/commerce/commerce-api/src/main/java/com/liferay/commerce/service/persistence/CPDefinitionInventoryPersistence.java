@@ -343,21 +343,6 @@ public interface CPDefinitionInventoryPersistence
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
-	 * Caches the cp definition inventory in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventory the cp definition inventory
-	 */
-	public void cacheResult(CPDefinitionInventory cpDefinitionInventory);
-
-	/**
-	 * Caches the cp definition inventories in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventories the cp definition inventories
-	 */
-	public void cacheResult(
-		java.util.List<CPDefinitionInventory> cpDefinitionInventories);
-
-	/**
 	 * Creates a new cp definition inventory with the primary key. Does not add the cp definition inventory to the database.
 	 *
 	 * @param CPDefinitionInventoryId the primary key for the new cp definition inventory
@@ -398,4 +383,4 @@ public interface CPDefinitionInventoryPersistence
 		long CPDefinitionInventoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1494470172
+// LIFERAY-SERVICE-BUILDER-HASH:883860410

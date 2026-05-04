@@ -81,20 +81,6 @@ public interface SamlIbSloMessagePersistence
 	public int countBySamlIdpSessionIndex(String samlIdpSessionIndex);
 
 	/**
-	 * Caches the saml ib slo message in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessage the saml ib slo message
-	 */
-	public void cacheResult(SamlIbSloMessage samlIbSloMessage);
-
-	/**
-	 * Caches the saml ib slo messages in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessages the saml ib slo messages
-	 */
-	public void cacheResult(java.util.List<SamlIbSloMessage> samlIbSloMessages);
-
-	/**
 	 * Creates a new saml ib slo message with the primary key. Does not add the saml ib slo message to the database.
 	 *
 	 * @param samlIbSloMessageId the primary key for the new saml ib slo message
@@ -133,4 +119,4 @@ public interface SamlIbSloMessagePersistence
 	public SamlIbSloMessage fetchByPrimaryKey(long samlIbSloMessageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1163729457
+// LIFERAY-SERVICE-BUILDER-HASH:-1170843159

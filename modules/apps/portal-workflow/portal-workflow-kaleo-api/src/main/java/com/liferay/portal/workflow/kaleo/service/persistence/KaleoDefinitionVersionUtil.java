@@ -36,6 +36,24 @@ public class KaleoDefinitionVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions) {
+
+		getPersistence().cacheResult(kaleoDefinitionVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		getPersistence().cacheResult(kaleoDefinitionVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -451,28 +469,6 @@ public class KaleoDefinitionVersionUtil {
 	}
 
 	/**
-	 * Caches the kaleo definition version in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 */
-	public static void cacheResult(
-		KaleoDefinitionVersion kaleoDefinitionVersion) {
-
-		getPersistence().cacheResult(kaleoDefinitionVersion);
-	}
-
-	/**
-	 * Caches the kaleo definition versions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersions the kaleo definition versions
-	 */
-	public static void cacheResult(
-		List<KaleoDefinitionVersion> kaleoDefinitionVersions) {
-
-		getPersistence().cacheResult(kaleoDefinitionVersions);
-	}
-
-	/**
 	 * Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
 	 *
 	 * @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
@@ -542,4 +538,4 @@ public class KaleoDefinitionVersionUtil {
 	private static volatile KaleoDefinitionVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1488899261
+// LIFERAY-SERVICE-BUILDER-HASH:-1232096079

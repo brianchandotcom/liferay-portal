@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -483,65 +480,6 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the account entry user rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRel the account entry user rel
-	 */
-	@Override
-	public void cacheResult(AccountEntryUserRel accountEntryUserRel) {
-		entityCache.putResult(
-			AccountEntryUserRelImpl.class, accountEntryUserRel.getPrimaryKey(),
-			accountEntryUserRel);
-
-		finderCache.putResult(
-			_finderPathFetchByAEI_AUI,
-			new Object[] {
-				accountEntryUserRel.getAccountEntryId(),
-				accountEntryUserRel.getAccountUserId()
-			},
-			accountEntryUserRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account entry user rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRels the account entry user rels
-	 */
-	@Override
-	public void cacheResult(List<AccountEntryUserRel> accountEntryUserRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountEntryUserRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountEntryUserRel accountEntryUserRel : accountEntryUserRels) {
-			if (entityCache.getResult(
-					AccountEntryUserRelImpl.class,
-					accountEntryUserRel.getPrimaryKey()) == null) {
-
-				cacheResult(accountEntryUserRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountEntryUserRelModelImpl accountEntryUserRelModelImpl) {
-
-		Object[] args = new Object[] {
-			accountEntryUserRelModelImpl.getAccountEntryId(),
-			accountEntryUserRelModelImpl.getAccountUserId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByAEI_AUI, args, accountEntryUserRelModelImpl);
-	}
-
-	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
 	 * @param accountEntryUserRelId the primary key for the new account entry user rel
@@ -652,11 +590,7 @@ public class AccountEntryUserRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountEntryUserRelImpl.class, accountEntryUserRelModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(accountEntryUserRelModelImpl);
+		cacheUniqueFindersResult(accountEntryUserRel, false);
 
 		if (isNew) {
 			accountEntryUserRel.setNew(false);
@@ -717,9 +651,6 @@ public class AccountEntryUserRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
 			new String[] {
@@ -784,10 +715,12 @@ public class AccountEntryUserRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryUserRel::getAccountUserId));
 
-		_finderPathFetchByAEI_AUI = new FinderPath(
+		_finderPathFetchByAEI_AUI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByAEI_AUI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "accountUserId"}, true);
+			new String[] {"accountEntryId", "accountUserId"}, false,
+			AccountEntryUserRel::getAccountEntryId,
+			AccountEntryUserRel::getAccountUserId);
 
 		_uniquePersistenceFinderByAEI_AUI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByAEI_AUI,
@@ -866,4 +799,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:199911571
+// LIFERAY-SERVICE-BUILDER-HASH:126813379

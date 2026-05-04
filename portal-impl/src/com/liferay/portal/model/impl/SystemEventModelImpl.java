@@ -1175,4 +1175,4 @@ public class SystemEventModelImpl
 	private SystemEvent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-477443337
+// LIFERAY-SERVICE-BUILDER-HASH:-292478559

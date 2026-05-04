@@ -1166,20 +1166,6 @@ public interface IndexEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the index entry in the entity cache if it is enabled.
-	 *
-	 * @param indexEntry the index entry
-	 */
-	public void cacheResult(IndexEntry indexEntry);
-
-	/**
-	 * Caches the index entries in the entity cache if it is enabled.
-	 *
-	 * @param indexEntries the index entries
-	 */
-	public void cacheResult(java.util.List<IndexEntry> indexEntries);
-
-	/**
 	 * Creates a new index entry with the primary key. Does not add the index entry to the database.
 	 *
 	 * @param indexEntryId the primary key for the new index entry
@@ -1218,4 +1204,4 @@ public interface IndexEntryPersistence
 	public IndexEntry fetchByPrimaryKey(long indexEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1035321243
+// LIFERAY-SERVICE-BUILDER-HASH:299776759

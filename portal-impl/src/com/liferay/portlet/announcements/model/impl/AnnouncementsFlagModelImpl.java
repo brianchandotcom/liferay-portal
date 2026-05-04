@@ -844,4 +844,4 @@ public class AnnouncementsFlagModelImpl
 	private AnnouncementsFlag _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1252010530
+// LIFERAY-SERVICE-BUILDER-HASH:811072268

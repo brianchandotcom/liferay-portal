@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -592,74 +589,6 @@ public class MemberRequestPersistenceImpl
 	}
 
 	/**
-	 * Caches the member request in the entity cache if it is enabled.
-	 *
-	 * @param memberRequest the member request
-	 */
-	@Override
-	public void cacheResult(MemberRequest memberRequest) {
-		entityCache.putResult(
-			MemberRequestImpl.class, memberRequest.getPrimaryKey(),
-			memberRequest);
-
-		finderCache.putResult(
-			_finderPathFetchByKey, new Object[] {memberRequest.getKey()},
-			memberRequest);
-
-		finderCache.putResult(
-			_finderPathFetchByG_R_S,
-			new Object[] {
-				memberRequest.getGroupId(), memberRequest.getReceiverUserId(),
-				memberRequest.getStatus()
-			},
-			memberRequest);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the member requests in the entity cache if it is enabled.
-	 *
-	 * @param memberRequests the member requests
-	 */
-	@Override
-	public void cacheResult(List<MemberRequest> memberRequests) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (memberRequests.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MemberRequest memberRequest : memberRequests) {
-			if (entityCache.getResult(
-					MemberRequestImpl.class, memberRequest.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(memberRequest);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MemberRequestModelImpl memberRequestModelImpl) {
-
-		Object[] args = new Object[] {memberRequestModelImpl.getKey()};
-
-		finderCache.putResult(
-			_finderPathFetchByKey, args, memberRequestModelImpl);
-
-		args = new Object[] {
-			memberRequestModelImpl.getGroupId(),
-			memberRequestModelImpl.getReceiverUserId(),
-			memberRequestModelImpl.getStatus()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_R_S, args, memberRequestModelImpl);
-	}
-
-	/**
 	 * Creates a new member request with the primary key. Does not add the member request to the database.
 	 *
 	 * @param memberRequestId the primary key for the new member request
@@ -788,10 +717,7 @@ public class MemberRequestPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MemberRequestImpl.class, memberRequestModelImpl, false, true);
-
-		cacheUniqueFindersCache(memberRequestModelImpl);
+		cacheUniqueFindersResult(memberRequest, false);
 
 		if (isNew) {
 			memberRequest.setNew(false);
@@ -857,12 +783,10 @@ public class MemberRequestPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByKey = new FinderPath(
+		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, true);
+			new String[] {String.class.getName()}, new String[] {"key_"}, false,
+			MemberRequest::getKey);
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKey, _SQL_SELECT_MEMBERREQUEST_WHERE,
@@ -930,13 +854,15 @@ public class MemberRequestPersistenceImpl
 				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, MemberRequest::getStatus));
 
-		_finderPathFetchByG_R_S = new FinderPath(
+		_finderPathFetchByG_R_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_R_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "receiverUserId", "status"}, true);
+			new String[] {"groupId", "receiverUserId", "status"}, false,
+			MemberRequest::getGroupId, MemberRequest::getReceiverUserId,
+			MemberRequest::getStatus);
 
 		_uniquePersistenceFinderByG_R_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_R_S, _SQL_SELECT_MEMBERREQUEST_WHERE,
@@ -1019,4 +945,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1511769750
+// LIFERAY-SERVICE-BUILDER-HASH:1499930784

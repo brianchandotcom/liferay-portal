@@ -36,6 +36,20 @@ public class CTSParentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTSParent> ctsParents) {
+		getPersistence().cacheResult(ctsParents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTSParent ctsParent) {
+		getPersistence().cacheResult(ctsParent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -369,24 +383,6 @@ public class CTSParentUtil {
 	}
 
 	/**
-	 * Caches the cts parent in the entity cache if it is enabled.
-	 *
-	 * @param ctsParent the cts parent
-	 */
-	public static void cacheResult(CTSParent ctsParent) {
-		getPersistence().cacheResult(ctsParent);
-	}
-
-	/**
-	 * Caches the cts parents in the entity cache if it is enabled.
-	 *
-	 * @param ctsParents the cts parents
-	 */
-	public static void cacheResult(List<CTSParent> ctsParents) {
-		getPersistence().cacheResult(ctsParents);
-	}
-
-	/**
 	 * Creates a new cts parent with the primary key. Does not add the cts parent to the database.
 	 *
 	 * @param ctsParentId the primary key for the new cts parent
@@ -449,4 +445,4 @@ public class CTSParentUtil {
 	private static volatile CTSParentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1896702446
+// LIFERAY-SERVICE-BUILDER-HASH:-1467303958

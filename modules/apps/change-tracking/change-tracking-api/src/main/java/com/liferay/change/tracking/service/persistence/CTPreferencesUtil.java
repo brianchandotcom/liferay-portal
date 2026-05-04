@@ -36,6 +36,20 @@ public class CTPreferencesUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTPreferences> ctPreferenceses) {
+		getPersistence().cacheResult(ctPreferenceses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTPreferences ctPreferences) {
+		getPersistence().cacheResult(ctPreferences);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -437,24 +451,6 @@ public class CTPreferencesUtil {
 	}
 
 	/**
-	 * Caches the ct preferences in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferences the ct preferences
-	 */
-	public static void cacheResult(CTPreferences ctPreferences) {
-		getPersistence().cacheResult(ctPreferences);
-	}
-
-	/**
-	 * Caches the ct preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferenceses the ct preferenceses
-	 */
-	public static void cacheResult(List<CTPreferences> ctPreferenceses) {
-		getPersistence().cacheResult(ctPreferenceses);
-	}
-
-	/**
 	 * Creates a new ct preferences with the primary key. Does not add the ct preferences to the database.
 	 *
 	 * @param ctPreferencesId the primary key for the new ct preferences
@@ -517,4 +513,4 @@ public class CTPreferencesUtil {
 	private static volatile CTPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-756354972
+// LIFERAY-SERVICE-BUILDER-HASH:919589227

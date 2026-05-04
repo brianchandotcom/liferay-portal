@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -480,63 +477,6 @@ public class CTPreferencesPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct preferences in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferences the ct preferences
-	 */
-	@Override
-	public void cacheResult(CTPreferences ctPreferences) {
-		entityCache.putResult(
-			CTPreferencesImpl.class, ctPreferences.getPrimaryKey(),
-			ctPreferences);
-
-		finderCache.putResult(
-			_finderPathFetchByC_U,
-			new Object[] {
-				ctPreferences.getCompanyId(), ctPreferences.getUserId()
-			},
-			ctPreferences);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferenceses the ct preferenceses
-	 */
-	@Override
-	public void cacheResult(List<CTPreferences> ctPreferenceses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctPreferenceses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTPreferences ctPreferences : ctPreferenceses) {
-			if (entityCache.getResult(
-					CTPreferencesImpl.class, ctPreferences.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(ctPreferences);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CTPreferencesModelImpl ctPreferencesModelImpl) {
-
-		Object[] args = new Object[] {
-			ctPreferencesModelImpl.getCompanyId(),
-			ctPreferencesModelImpl.getUserId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_U, args, ctPreferencesModelImpl);
-	}
-
-	/**
 	 * Creates a new ct preferences with the primary key. Does not add the ct preferences to the database.
 	 *
 	 * @param ctPreferencesId the primary key for the new ct preferences
@@ -641,10 +581,7 @@ public class CTPreferencesPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTPreferencesImpl.class, ctPreferencesModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctPreferencesModelImpl);
+		cacheUniqueFindersResult(ctPreferences, false);
 
 		if (isNew) {
 			ctPreferences.setNew(false);
@@ -705,9 +642,6 @@ public class CTPreferencesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
@@ -771,10 +705,11 @@ public class CTPreferencesPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTPreferences::getPreviousCtCollectionId));
 
-		_finderPathFetchByC_U = new FinderPath(
+		_finderPathFetchByC_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
+			new String[] {"companyId", "userId"}, false,
+			CTPreferences::getCompanyId, CTPreferences::getUserId);
 
 		_uniquePersistenceFinderByC_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_U, _SQL_SELECT_CTPREFERENCES_WHERE,
@@ -851,4 +786,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2069867762
+// LIFERAY-SERVICE-BUILDER-HASH:893382013

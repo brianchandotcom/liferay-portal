@@ -36,6 +36,22 @@ public class FragmentCompositionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FragmentComposition> fragmentCompositions) {
+
+		getPersistence().cacheResult(fragmentCompositions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FragmentComposition fragmentComposition) {
+		getPersistence().cacheResult(fragmentComposition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1417,26 +1433,6 @@ public class FragmentCompositionUtil {
 	}
 
 	/**
-	 * Caches the fragment composition in the entity cache if it is enabled.
-	 *
-	 * @param fragmentComposition the fragment composition
-	 */
-	public static void cacheResult(FragmentComposition fragmentComposition) {
-		getPersistence().cacheResult(fragmentComposition);
-	}
-
-	/**
-	 * Caches the fragment compositions in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCompositions the fragment compositions
-	 */
-	public static void cacheResult(
-		List<FragmentComposition> fragmentCompositions) {
-
-		getPersistence().cacheResult(fragmentCompositions);
-	}
-
-	/**
 	 * Creates a new fragment composition with the primary key. Does not add the fragment composition to the database.
 	 *
 	 * @param fragmentCompositionId the primary key for the new fragment composition
@@ -1504,4 +1500,4 @@ public class FragmentCompositionUtil {
 	private static volatile FragmentCompositionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1142524655
+// LIFERAY-SERVICE-BUILDER-HASH:-813278493

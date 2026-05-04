@@ -1113,20 +1113,6 @@ public interface UserGroupPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the user group in the entity cache if it is enabled.
-	 *
-	 * @param userGroup the user group
-	 */
-	public void cacheResult(UserGroup userGroup);
-
-	/**
-	 * Caches the user groups in the entity cache if it is enabled.
-	 *
-	 * @param userGroups the user groups
-	 */
-	public void cacheResult(java.util.List<UserGroup> userGroups);
-
-	/**
 	 * Creates a new user group with the primary key. Does not add the user group to the database.
 	 *
 	 * @param userGroupId the primary key for the new user group
@@ -1673,4 +1659,4 @@ public interface UserGroupPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1077901733
+// LIFERAY-SERVICE-BUILDER-HASH:-370850837

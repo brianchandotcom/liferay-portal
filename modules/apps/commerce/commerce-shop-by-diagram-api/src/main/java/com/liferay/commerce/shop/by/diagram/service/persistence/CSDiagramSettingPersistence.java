@@ -292,20 +292,6 @@ public interface CSDiagramSettingPersistence
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
-	 * Caches the cs diagram setting in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSetting the cs diagram setting
-	 */
-	public void cacheResult(CSDiagramSetting csDiagramSetting);
-
-	/**
-	 * Caches the cs diagram settings in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSettings the cs diagram settings
-	 */
-	public void cacheResult(java.util.List<CSDiagramSetting> csDiagramSettings);
-
-	/**
 	 * Creates a new cs diagram setting with the primary key. Does not add the cs diagram setting to the database.
 	 *
 	 * @param CSDiagramSettingId the primary key for the new cs diagram setting
@@ -344,4 +330,4 @@ public interface CSDiagramSettingPersistence
 	public CSDiagramSetting fetchByPrimaryKey(long CSDiagramSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1802108455
+// LIFERAY-SERVICE-BUILDER-HASH:-1151836043

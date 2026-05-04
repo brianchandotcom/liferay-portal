@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.RememberMeTokenUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.RememberMeTokenImpl;
 import com.liferay.portal.model.impl.RememberMeTokenModelImpl;
@@ -373,45 +370,6 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 	/**
-	 * Caches the remember me token in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeToken the remember me token
-	 */
-	@Override
-	public void cacheResult(RememberMeToken rememberMeToken) {
-		EntityCacheUtil.putResult(
-			RememberMeTokenImpl.class, rememberMeToken.getPrimaryKey(),
-			rememberMeToken);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the remember me tokens in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeTokens the remember me tokens
-	 */
-	@Override
-	public void cacheResult(List<RememberMeToken> rememberMeTokens) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (rememberMeTokens.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RememberMeToken rememberMeToken : rememberMeTokens) {
-			if (EntityCacheUtil.getResult(
-					RememberMeTokenImpl.class,
-					rememberMeToken.getPrimaryKey()) == null) {
-
-				cacheResult(rememberMeToken);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new remember me token with the primary key. Does not add the remember me token to the database.
 	 *
 	 * @param rememberMeTokenId the primary key for the new remember me token
@@ -533,8 +491,7 @@ public class RememberMeTokenPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RememberMeTokenImpl.class, rememberMeTokenModelImpl, false, true);
+		cacheUniqueFindersResult(rememberMeToken, false);
 
 		if (isNew) {
 			rememberMeToken.setNew(false);
@@ -594,9 +551,6 @@ public class RememberMeTokenPersistenceImpl
 	 * Initializes the remember me token persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -683,4 +637,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1425623520
+// LIFERAY-SERVICE-BUILDER-HASH:991410150

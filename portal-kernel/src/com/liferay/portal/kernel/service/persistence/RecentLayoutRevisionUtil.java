@@ -36,6 +36,22 @@ public class RecentLayoutRevisionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RecentLayoutRevision> recentLayoutRevisions) {
+
+		getPersistence().cacheResult(recentLayoutRevisions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RecentLayoutRevision recentLayoutRevision) {
+		getPersistence().cacheResult(recentLayoutRevision);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -564,26 +580,6 @@ public class RecentLayoutRevisionUtil {
 	}
 
 	/**
-	 * Caches the recent layout revision in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutRevision the recent layout revision
-	 */
-	public static void cacheResult(RecentLayoutRevision recentLayoutRevision) {
-		getPersistence().cacheResult(recentLayoutRevision);
-	}
-
-	/**
-	 * Caches the recent layout revisions in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutRevisions the recent layout revisions
-	 */
-	public static void cacheResult(
-		List<RecentLayoutRevision> recentLayoutRevisions) {
-
-		getPersistence().cacheResult(recentLayoutRevisions);
-	}
-
-	/**
 	 * Creates a new recent layout revision with the primary key. Does not add the recent layout revision to the database.
 	 *
 	 * @param recentLayoutRevisionId the primary key for the new recent layout revision
@@ -653,4 +649,4 @@ public class RecentLayoutRevisionUtil {
 	private static volatile RecentLayoutRevisionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-524708580
+// LIFERAY-SERVICE-BUILDER-HASH:1578383800

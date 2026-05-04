@@ -500,20 +500,6 @@ public interface DDMContentPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the ddm content in the entity cache if it is enabled.
-	 *
-	 * @param ddmContent the ddm content
-	 */
-	public void cacheResult(DDMContent ddmContent);
-
-	/**
-	 * Caches the ddm contents in the entity cache if it is enabled.
-	 *
-	 * @param ddmContents the ddm contents
-	 */
-	public void cacheResult(java.util.List<DDMContent> ddmContents);
-
-	/**
 	 * Creates a new ddm content with the primary key. Does not add the ddm content to the database.
 	 *
 	 * @param contentId the primary key for the new ddm content
@@ -551,4 +537,4 @@ public interface DDMContentPersistence
 	public DDMContent fetchByPrimaryKey(long contentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:964173823
+// LIFERAY-SERVICE-BUILDER-HASH:408601421

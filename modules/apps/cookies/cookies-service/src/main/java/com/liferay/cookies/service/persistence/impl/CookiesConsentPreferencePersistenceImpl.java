@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -646,71 +643,6 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 	/**
-	 * Caches the cookies consent preference in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreference the cookies consent preference
-	 */
-	@Override
-	public void cacheResult(CookiesConsentPreference cookiesConsentPreference) {
-		entityCache.putResult(
-			CookiesConsentPreferenceImpl.class,
-			cookiesConsentPreference.getPrimaryKey(), cookiesConsentPreference);
-
-		finderCache.putResult(
-			_finderPathFetchByU_D_N,
-			new Object[] {
-				cookiesConsentPreference.getUserId(),
-				cookiesConsentPreference.getDomain(),
-				cookiesConsentPreference.getName()
-			},
-			cookiesConsentPreference);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cookies consent preferences in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreferences the cookies consent preferences
-	 */
-	@Override
-	public void cacheResult(
-		List<CookiesConsentPreference> cookiesConsentPreferences) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cookiesConsentPreferences.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CookiesConsentPreference cookiesConsentPreference :
-				cookiesConsentPreferences) {
-
-			if (entityCache.getResult(
-					CookiesConsentPreferenceImpl.class,
-					cookiesConsentPreference.getPrimaryKey()) == null) {
-
-				cacheResult(cookiesConsentPreference);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CookiesConsentPreferenceModelImpl cookiesConsentPreferenceModelImpl) {
-
-		Object[] args = new Object[] {
-			cookiesConsentPreferenceModelImpl.getUserId(),
-			cookiesConsentPreferenceModelImpl.getDomain(),
-			cookiesConsentPreferenceModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByU_D_N, args, cookiesConsentPreferenceModelImpl);
-	}
-
-	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
 	 *
 	 * @param cookiesConsentPreferenceId the primary key for the new cookies consent preference
@@ -827,11 +759,7 @@ public class CookiesConsentPreferencePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CookiesConsentPreferenceImpl.class,
-			cookiesConsentPreferenceModelImpl, false, true);
-
-		cacheUniqueFindersCache(cookiesConsentPreferenceModelImpl);
+		cacheUniqueFindersResult(cookiesConsentPreference, false);
 
 		if (isNew) {
 			cookiesConsentPreference.setNew(false);
@@ -895,9 +823,6 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -994,13 +919,16 @@ public class CookiesConsentPreferencePersistenceImpl
 				"cookiesConsentPreference.", "domain", FinderColumn.Type.STRING,
 				"=", true, true, CookiesConsentPreference::getDomain));
 
-		_finderPathFetchByU_D_N = new FinderPath(
+		_finderPathFetchByU_D_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_D_N",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"userId", "domain", "name"}, true);
+			new String[] {"userId", "domain", "name"}, false,
+			CookiesConsentPreference::getUserId,
+			CookiesConsentPreference::getDomain,
+			CookiesConsentPreference::getName);
 
 		_uniquePersistenceFinderByU_D_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_D_N,
@@ -1081,4 +1009,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457317912
+// LIFERAY-SERVICE-BUILDER-HASH:957745879

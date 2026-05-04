@@ -36,6 +36,20 @@ public class ObjectActionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectAction> objectActions) {
+		getPersistence().cacheResult(objectActions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectAction objectAction) {
+		getPersistence().cacheResult(objectAction);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1175,24 +1189,6 @@ public class ObjectActionUtil {
 	}
 
 	/**
-	 * Caches the object action in the entity cache if it is enabled.
-	 *
-	 * @param objectAction the object action
-	 */
-	public static void cacheResult(ObjectAction objectAction) {
-		getPersistence().cacheResult(objectAction);
-	}
-
-	/**
-	 * Caches the object actions in the entity cache if it is enabled.
-	 *
-	 * @param objectActions the object actions
-	 */
-	public static void cacheResult(List<ObjectAction> objectActions) {
-		getPersistence().cacheResult(objectActions);
-	}
-
-	/**
 	 * Creates a new object action with the primary key. Does not add the object action to the database.
 	 *
 	 * @param objectActionId the primary key for the new object action
@@ -1253,4 +1249,4 @@ public class ObjectActionUtil {
 	private static volatile ObjectActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-370577523
+// LIFERAY-SERVICE-BUILDER-HASH:-1315473751

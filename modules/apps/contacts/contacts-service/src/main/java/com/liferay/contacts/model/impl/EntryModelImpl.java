@@ -863,4 +863,4 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	private Entry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1486077500
+// LIFERAY-SERVICE-BUILDER-HASH:146683214

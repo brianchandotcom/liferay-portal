@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1328,63 +1326,6 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 	/**
-	 * Caches the sxp blueprint in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprint the sxp blueprint
-	 */
-	@Override
-	public void cacheResult(SXPBlueprint sxpBlueprint) {
-		entityCache.putResult(
-			SXPBlueprintImpl.class, sxpBlueprint.getPrimaryKey(), sxpBlueprint);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				sxpBlueprint.getExternalReferenceCode(),
-				sxpBlueprint.getCompanyId()
-			},
-			sxpBlueprint);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sxp blueprints in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprints the sxp blueprints
-	 */
-	@Override
-	public void cacheResult(List<SXPBlueprint> sxpBlueprints) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sxpBlueprints.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-			if (entityCache.getResult(
-					SXPBlueprintImpl.class, sxpBlueprint.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(sxpBlueprint);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SXPBlueprintModelImpl sxpBlueprintModelImpl) {
-
-		Object[] args = new Object[] {
-			sxpBlueprintModelImpl.getExternalReferenceCode(),
-			sxpBlueprintModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, sxpBlueprintModelImpl);
-	}
-
-	/**
 	 * Creates a new sxp blueprint with the primary key. Does not add the sxp blueprint to the database.
 	 *
 	 * @param sxpBlueprintId the primary key for the new sxp blueprint
@@ -1611,10 +1552,7 @@ public class SXPBlueprintPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SXPBlueprintImpl.class, sxpBlueprintModelImpl, false, true);
-
-		cacheUniqueFindersCache(sxpBlueprintModelImpl);
+		cacheUniqueFindersResult(sxpBlueprint, false);
 
 		if (isNew) {
 			sxpBlueprint.setNew(false);
@@ -1680,9 +1618,6 @@ public class SXPBlueprintPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1772,10 +1707,11 @@ public class SXPBlueprintPersistenceImpl
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			SXPBlueprint::getExternalReferenceCode, SXPBlueprint::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPBLUEPRINT_WHERE,
@@ -1879,4 +1815,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1639868706
+// LIFERAY-SERVICE-BUILDER-HASH:1974267572

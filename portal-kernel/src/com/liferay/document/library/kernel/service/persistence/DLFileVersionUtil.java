@@ -37,6 +37,20 @@ public class DLFileVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLFileVersion> dlFileVersions) {
+		getPersistence().cacheResult(dlFileVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileVersion dlFileVersion) {
+		getPersistence().cacheResult(dlFileVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2046,24 +2060,6 @@ public class DLFileVersionUtil {
 	}
 
 	/**
-	 * Caches the document library file version in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersion the document library file version
-	 */
-	public static void cacheResult(DLFileVersion dlFileVersion) {
-		getPersistence().cacheResult(dlFileVersion);
-	}
-
-	/**
-	 * Caches the document library file versions in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersions the document library file versions
-	 */
-	public static void cacheResult(List<DLFileVersion> dlFileVersions) {
-		getPersistence().cacheResult(dlFileVersions);
-	}
-
-	/**
 	 * Creates a new document library file version with the primary key. Does not add the document library file version to the database.
 	 *
 	 * @param fileVersionId the primary key for the new document library file version
@@ -2126,4 +2122,4 @@ public class DLFileVersionUtil {
 	private static volatile DLFileVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-469471214
+// LIFERAY-SERVICE-BUILDER-HASH:-1182075762

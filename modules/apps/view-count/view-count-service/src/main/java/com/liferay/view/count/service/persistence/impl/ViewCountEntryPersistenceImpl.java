@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.view.count.exception.NoSuchEntryException;
@@ -247,45 +244,6 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the view count entry in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntry the view count entry
-	 */
-	@Override
-	public void cacheResult(ViewCountEntry viewCountEntry) {
-		entityCache.putResult(
-			ViewCountEntryImpl.class, viewCountEntry.getPrimaryKey(),
-			viewCountEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the view count entries in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntries the view count entries
-	 */
-	@Override
-	public void cacheResult(List<ViewCountEntry> viewCountEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (viewCountEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ViewCountEntry viewCountEntry : viewCountEntries) {
-			if (entityCache.getResult(
-					ViewCountEntryImpl.class, viewCountEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(viewCountEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new view count entry with the primary key. Does not add the view count entry to the database.
 	 *
 	 * @param viewCountEntryPK the primary key for the new view count entry
@@ -391,8 +349,7 @@ public class ViewCountEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ViewCountEntryImpl.class, viewCountEntryModelImpl, false, true);
+		cacheUniqueFindersResult(viewCountEntry, false);
 
 		if (isNew) {
 			viewCountEntry.setNew(false);
@@ -458,9 +415,6 @@ public class ViewCountEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_CN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CN",
 			new String[] {
@@ -561,4 +515,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1266937510
+// LIFERAY-SERVICE-BUILDER-HASH:-2147232512

@@ -664,21 +664,6 @@ public interface SegmentsExperimentPersistence
 	public int countByG_S_P(long groupId, long segmentsExperienceId, long plid);
 
 	/**
-	 * Caches the segments experiment in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiment the segments experiment
-	 */
-	public void cacheResult(SegmentsExperiment segmentsExperiment);
-
-	/**
-	 * Caches the segments experiments in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiments the segments experiments
-	 */
-	public void cacheResult(
-		java.util.List<SegmentsExperiment> segmentsExperiments);
-
-	/**
 	 * Creates a new segments experiment with the primary key. Does not add the segments experiment to the database.
 	 *
 	 * @param segmentsExperimentId the primary key for the new segments experiment
@@ -717,4 +702,4 @@ public interface SegmentsExperimentPersistence
 	public SegmentsExperiment fetchByPrimaryKey(long segmentsExperimentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1071972278
+// LIFERAY-SERVICE-BUILDER-HASH:-1078096820

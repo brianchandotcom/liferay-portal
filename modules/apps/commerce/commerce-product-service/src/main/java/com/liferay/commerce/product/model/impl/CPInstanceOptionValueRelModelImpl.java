@@ -1097,4 +1097,4 @@ public class CPInstanceOptionValueRelModelImpl
 	private CPInstanceOptionValueRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:899001684
+// LIFERAY-SERVICE-BUILDER-HASH:179631120

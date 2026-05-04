@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1702,75 +1700,6 @@ public class CTEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct entry in the entity cache if it is enabled.
-	 *
-	 * @param ctEntry the ct entry
-	 */
-	@Override
-	public void cacheResult(CTEntry ctEntry) {
-		entityCache.putResult(
-			CTEntryImpl.class, ctEntry.getPrimaryKey(), ctEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_MCNI_MCPK,
-			new Object[] {
-				ctEntry.getCtCollectionId(), ctEntry.getModelClassNameId(),
-				ctEntry.getModelClassPK()
-			},
-			ctEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				ctEntry.getExternalReferenceCode(), ctEntry.getCompanyId()
-			},
-			ctEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct entries in the entity cache if it is enabled.
-	 *
-	 * @param ctEntries the ct entries
-	 */
-	@Override
-	public void cacheResult(List<CTEntry> ctEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTEntry ctEntry : ctEntries) {
-			if (entityCache.getResult(
-					CTEntryImpl.class, ctEntry.getPrimaryKey()) == null) {
-
-				cacheResult(ctEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CTEntryModelImpl ctEntryModelImpl) {
-		Object[] args = new Object[] {
-			ctEntryModelImpl.getCtCollectionId(),
-			ctEntryModelImpl.getModelClassNameId(),
-			ctEntryModelImpl.getModelClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_MCNI_MCPK, args, ctEntryModelImpl);
-
-		args = new Object[] {
-			ctEntryModelImpl.getExternalReferenceCode(),
-			ctEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(_finderPathFetchByERC_C, args, ctEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
 	 * @param ctEntryId the primary key for the new ct entry
@@ -1964,9 +1893,7 @@ public class CTEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(CTEntryImpl.class, ctEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctEntryModelImpl);
+		cacheUniqueFindersResult(ctEntry, false);
 
 		if (isNew) {
 			ctEntry.setNew(false);
@@ -2032,9 +1959,6 @@ public class CTEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2185,13 +2109,14 @@ public class CTEntryPersistenceImpl
 					"ctEntry.", "modelClassNameId", FinderColumn.Type.LONG, "=",
 					true, true, CTEntry::getModelClassNameId));
 
-		_finderPathFetchByC_MCNI_MCPK = new FinderPath(
+		_finderPathFetchByC_MCNI_MCPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_MCNI_MCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"ctCollectionId", "modelClassNameId", "modelClassPK"},
-			true);
+			false, CTEntry::getCtCollectionId, CTEntry::getModelClassNameId,
+			CTEntry::getModelClassPK);
 
 		_uniquePersistenceFinderByC_MCNI_MCPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_MCNI_MCPK, _SQL_SELECT_CTENTRY_WHERE,
@@ -2223,10 +2148,11 @@ public class CTEntryPersistenceImpl
 			new String[] {"ctCollectionId", "modelClassNameId", "modelClassPK"},
 			false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CTEntry::getExternalReferenceCode, CTEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CTENTRY_WHERE,
@@ -2306,4 +2232,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089875953
+// LIFERAY-SERVICE-BUILDER-HASH:-262877705

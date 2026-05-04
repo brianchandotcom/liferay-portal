@@ -37,6 +37,20 @@ public class SamlSpMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SamlSpMessage> samlSpMessages) {
+		getPersistence().cacheResult(samlSpMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlSpMessage samlSpMessage) {
+		getPersistence().cacheResult(samlSpMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -313,24 +327,6 @@ public class SamlSpMessageUtil {
 	}
 
 	/**
-	 * Caches the saml sp message in the entity cache if it is enabled.
-	 *
-	 * @param samlSpMessage the saml sp message
-	 */
-	public static void cacheResult(SamlSpMessage samlSpMessage) {
-		getPersistence().cacheResult(samlSpMessage);
-	}
-
-	/**
-	 * Caches the saml sp messages in the entity cache if it is enabled.
-	 *
-	 * @param samlSpMessages the saml sp messages
-	 */
-	public static void cacheResult(List<SamlSpMessage> samlSpMessages) {
-		getPersistence().cacheResult(samlSpMessages);
-	}
-
-	/**
 	 * Creates a new saml sp message with the primary key. Does not add the saml sp message to the database.
 	 *
 	 * @param samlSpMessageId the primary key for the new saml sp message
@@ -391,4 +387,4 @@ public class SamlSpMessageUtil {
 	private static volatile SamlSpMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-387228149
+// LIFERAY-SERVICE-BUILDER-HASH:-1219031791

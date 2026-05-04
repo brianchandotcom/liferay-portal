@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -252,47 +249,6 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount rule in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRule the commerce discount rule
-	 */
-	@Override
-	public void cacheResult(CommerceDiscountRule commerceDiscountRule) {
-		entityCache.putResult(
-			CommerceDiscountRuleImpl.class,
-			commerceDiscountRule.getPrimaryKey(), commerceDiscountRule);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount rules in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRules the commerce discount rules
-	 */
-	@Override
-	public void cacheResult(List<CommerceDiscountRule> commerceDiscountRules) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountRules.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountRule commerceDiscountRule :
-				commerceDiscountRules) {
-
-			if (entityCache.getResult(
-					CommerceDiscountRuleImpl.class,
-					commerceDiscountRule.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscountRule);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	 *
 	 * @param commerceDiscountRuleId the primary key for the new commerce discount rule
@@ -429,9 +385,7 @@ public class CommerceDiscountRulePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountRuleImpl.class, commerceDiscountRuleModelImpl,
-			false, true);
+		cacheUniqueFindersResult(commerceDiscountRule, false);
 
 		if (isNew) {
 			commerceDiscountRule.setNew(false);
@@ -497,9 +451,6 @@ public class CommerceDiscountRulePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -601,4 +552,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1950719922
+// LIFERAY-SERVICE-BUILDER-HASH:-1693688684

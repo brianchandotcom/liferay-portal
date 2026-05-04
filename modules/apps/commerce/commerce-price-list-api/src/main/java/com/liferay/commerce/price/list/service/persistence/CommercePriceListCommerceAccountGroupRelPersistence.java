@@ -414,24 +414,6 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 		long commercePriceListId, long commerceAccountGroupId);
 
 	/**
-	 * Caches the commerce price list commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRel the commerce price list commerce account group rel
-	 */
-	public void cacheResult(
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel);
-
-	/**
-	 * Caches the commerce price list commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRels the commerce price list commerce account group rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceListCommerceAccountGroupRel>
-			commercePriceListCommerceAccountGroupRels);
-
-	/**
 	 * Creates a new commerce price list commerce account group rel with the primary key. Does not add the commerce price list commerce account group rel to the database.
 	 *
 	 * @param commercePriceListCommerceAccountGroupRelId the primary key for the new commerce price list commerce account group rel
@@ -476,4 +458,4 @@ public interface CommercePriceListCommerceAccountGroupRelPersistence
 		long commercePriceListCommerceAccountGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-391637869
+// LIFERAY-SERVICE-BUILDER-HASH:910558203

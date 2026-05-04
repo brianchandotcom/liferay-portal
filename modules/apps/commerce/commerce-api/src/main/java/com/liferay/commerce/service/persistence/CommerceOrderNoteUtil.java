@@ -36,6 +36,20 @@ public class CommerceOrderNoteUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceOrderNote> commerceOrderNotes) {
+		getPersistence().cacheResult(commerceOrderNotes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceOrderNote commerceOrderNote) {
+		getPersistence().cacheResult(commerceOrderNote);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -758,24 +772,6 @@ public class CommerceOrderNoteUtil {
 	}
 
 	/**
-	 * Caches the commerce order note in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderNote the commerce order note
-	 */
-	public static void cacheResult(CommerceOrderNote commerceOrderNote) {
-		getPersistence().cacheResult(commerceOrderNote);
-	}
-
-	/**
-	 * Caches the commerce order notes in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderNotes the commerce order notes
-	 */
-	public static void cacheResult(List<CommerceOrderNote> commerceOrderNotes) {
-		getPersistence().cacheResult(commerceOrderNotes);
-	}
-
-	/**
 	 * Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	 *
 	 * @param commerceOrderNoteId the primary key for the new commerce order note
@@ -842,4 +838,4 @@ public class CommerceOrderNoteUtil {
 	private static volatile CommerceOrderNotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-140273521
+// LIFERAY-SERVICE-BUILDER-HASH:-1104278729

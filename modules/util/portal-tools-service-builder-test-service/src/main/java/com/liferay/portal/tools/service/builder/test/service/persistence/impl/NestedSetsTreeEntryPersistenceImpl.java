@@ -17,9 +17,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.NestedSetsTreeManager;
 import com.liferay.portal.kernel.service.persistence.impl.PersistenceNestedSetsTreeManager;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchNestedSetsTreeEntryException;
@@ -79,45 +76,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(NestedSetsTreeEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the nested sets tree entry in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntry the nested sets tree entry
-	 */
-	@Override
-	public void cacheResult(NestedSetsTreeEntry nestedSetsTreeEntry) {
-		entityCache.putResult(
-			NestedSetsTreeEntryImpl.class, nestedSetsTreeEntry.getPrimaryKey(),
-			nestedSetsTreeEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the nested sets tree entries in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntries the nested sets tree entries
-	 */
-	@Override
-	public void cacheResult(List<NestedSetsTreeEntry> nestedSetsTreeEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (nestedSetsTreeEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NestedSetsTreeEntry nestedSetsTreeEntry : nestedSetsTreeEntries) {
-			if (entityCache.getResult(
-					NestedSetsTreeEntryImpl.class,
-					nestedSetsTreeEntry.getPrimaryKey()) == null) {
-
-				cacheResult(nestedSetsTreeEntry);
-			}
-		}
 	}
 
 	/**
@@ -277,8 +235,7 @@ public class NestedSetsTreeEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NestedSetsTreeEntryImpl.class, nestedSetsTreeEntry, false, true);
+		cacheUniqueFindersResult(nestedSetsTreeEntry, false);
 
 		if (isNew) {
 			nestedSetsTreeEntry.setNew(false);
@@ -602,9 +559,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 	 * Initializes the nested sets tree entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationCountAncestors = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countAncestors",
 			new String[] {
@@ -686,4 +640,4 @@ public class NestedSetsTreeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:166342412
+// LIFERAY-SERVICE-BUILDER-HASH:1037402541

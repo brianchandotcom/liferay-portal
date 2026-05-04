@@ -239,20 +239,6 @@ public interface PatcherFixRelPersistence
 	public int countByParentPatcherFixId(long parentPatcherFixId);
 
 	/**
-	 * Caches the patcher fix rel in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRel the patcher fix rel
-	 */
-	public void cacheResult(PatcherFixRel patcherFixRel);
-
-	/**
-	 * Caches the patcher fix rels in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRels the patcher fix rels
-	 */
-	public void cacheResult(java.util.List<PatcherFixRel> patcherFixRels);
-
-	/**
 	 * Creates a new patcher fix rel with the primary key. Does not add the patcher fix rel to the database.
 	 *
 	 * @param patcherFixRelId the primary key for the new patcher fix rel
@@ -291,4 +277,4 @@ public interface PatcherFixRelPersistence
 	public PatcherFixRel fetchByPrimaryKey(long patcherFixRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1057858847
+// LIFERAY-SERVICE-BUILDER-HASH:1438813667

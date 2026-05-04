@@ -36,6 +36,24 @@ public class UndefinedDefaultOrderEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<UndefinedDefaultOrderEntry> undefinedDefaultOrderEntries) {
+
+		getPersistence().cacheResult(undefinedDefaultOrderEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
+
+		getPersistence().cacheResult(undefinedDefaultOrderEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -303,28 +321,6 @@ public class UndefinedDefaultOrderEntryUtil {
 	}
 
 	/**
-	 * Caches the undefined default order entry in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntry the undefined default order entry
-	 */
-	public static void cacheResult(
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
-
-		getPersistence().cacheResult(undefinedDefaultOrderEntry);
-	}
-
-	/**
-	 * Caches the undefined default order entries in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntries the undefined default order entries
-	 */
-	public static void cacheResult(
-		List<UndefinedDefaultOrderEntry> undefinedDefaultOrderEntries) {
-
-		getPersistence().cacheResult(undefinedDefaultOrderEntries);
-	}
-
-	/**
 	 * Creates a new undefined default order entry with the primary key. Does not add the undefined default order entry to the database.
 	 *
 	 * @param undefinedDefaultOrderEntryId the primary key for the new undefined default order entry
@@ -397,4 +393,4 @@ public class UndefinedDefaultOrderEntryUtil {
 	private static volatile UndefinedDefaultOrderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1188729029
+// LIFERAY-SERVICE-BUILDER-HASH:1566778410

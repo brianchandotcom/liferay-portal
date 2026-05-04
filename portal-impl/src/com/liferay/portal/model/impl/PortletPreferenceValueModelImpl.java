@@ -936,4 +936,4 @@ public class PortletPreferenceValueModelImpl
 	private PortletPreferenceValue _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-201692054
+// LIFERAY-SERVICE-BUILDER-HASH:1348160634

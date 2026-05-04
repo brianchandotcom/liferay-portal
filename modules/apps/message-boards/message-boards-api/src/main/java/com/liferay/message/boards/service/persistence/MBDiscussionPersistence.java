@@ -391,20 +391,6 @@ public interface MBDiscussionPersistence
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the message boards discussion in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussion the message boards discussion
-	 */
-	public void cacheResult(MBDiscussion mbDiscussion);
-
-	/**
-	 * Caches the message boards discussions in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussions the message boards discussions
-	 */
-	public void cacheResult(java.util.List<MBDiscussion> mbDiscussions);
-
-	/**
 	 * Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
 	 *
 	 * @param discussionId the primary key for the new message boards discussion
@@ -443,4 +429,4 @@ public interface MBDiscussionPersistence
 	public MBDiscussion fetchByPrimaryKey(long discussionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:62553138
+// LIFERAY-SERVICE-BUILDER-HASH:2013860040

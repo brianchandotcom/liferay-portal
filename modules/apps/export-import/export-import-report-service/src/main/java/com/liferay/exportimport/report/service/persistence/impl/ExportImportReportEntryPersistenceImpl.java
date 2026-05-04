@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -404,78 +401,6 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the export import report entry in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntry the export import report entry
-	 */
-	@Override
-	public void cacheResult(ExportImportReportEntry exportImportReportEntry) {
-		entityCache.putResult(
-			ExportImportReportEntryImpl.class,
-			exportImportReportEntry.getPrimaryKey(), exportImportReportEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByG_C_C_C_E_T,
-			new Object[] {
-				exportImportReportEntry.getGroupId(),
-				exportImportReportEntry.getCompanyId(),
-				exportImportReportEntry.getClassExternalReferenceCode(),
-				exportImportReportEntry.getClassNameId(),
-				exportImportReportEntry.getExportImportConfigurationId(),
-				exportImportReportEntry.getType()
-			},
-			exportImportReportEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the export import report entries in the entity cache if it is enabled.
-	 *
-	 * @param exportImportReportEntries the export import report entries
-	 */
-	@Override
-	public void cacheResult(
-		List<ExportImportReportEntry> exportImportReportEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (exportImportReportEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ExportImportReportEntry exportImportReportEntry :
-				exportImportReportEntries) {
-
-			if (entityCache.getResult(
-					ExportImportReportEntryImpl.class,
-					exportImportReportEntry.getPrimaryKey()) == null) {
-
-				cacheResult(exportImportReportEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ExportImportReportEntryModelImpl exportImportReportEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			exportImportReportEntryModelImpl.getGroupId(),
-			exportImportReportEntryModelImpl.getCompanyId(),
-			exportImportReportEntryModelImpl.getClassExternalReferenceCode(),
-			exportImportReportEntryModelImpl.getClassNameId(),
-			exportImportReportEntryModelImpl.getExportImportConfigurationId(),
-			exportImportReportEntryModelImpl.getType()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_C_C_C_E_T, args,
-			exportImportReportEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
 	 * @param exportImportReportEntryId the primary key for the new export import report entry
@@ -615,11 +540,7 @@ public class ExportImportReportEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ExportImportReportEntryImpl.class, exportImportReportEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(exportImportReportEntryModelImpl);
+		cacheUniqueFindersResult(exportImportReportEntry, false);
 
 		if (isNew) {
 			exportImportReportEntry.setNew(false);
@@ -688,9 +609,6 @@ public class ExportImportReportEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
 			new String[] {
@@ -725,7 +643,7 @@ public class ExportImportReportEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ExportImportReportEntry::getExportImportConfigurationId));
 
-		_finderPathFetchByG_C_C_C_E_T = new FinderPath(
+		_finderPathFetchByG_C_C_C_E_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -736,7 +654,12 @@ public class ExportImportReportEntryPersistenceImpl
 				"groupId", "companyId", "classExternalReferenceCode",
 				"classNameId", "exportImportConfigurationId", "type_"
 			},
-			true);
+			false, ExportImportReportEntry::getGroupId,
+			ExportImportReportEntry::getCompanyId,
+			ExportImportReportEntry::getClassExternalReferenceCode,
+			ExportImportReportEntry::getClassNameId,
+			ExportImportReportEntry::getExportImportConfigurationId,
+			ExportImportReportEntry::getType);
 
 		_uniquePersistenceFinderByG_C_C_C_E_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C_C_E_T,
@@ -832,4 +755,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1671324851
+// LIFERAY-SERVICE-BUILDER-HASH:486084463

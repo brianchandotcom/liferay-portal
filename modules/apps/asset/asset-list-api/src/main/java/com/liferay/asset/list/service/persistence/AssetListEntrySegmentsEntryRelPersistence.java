@@ -753,23 +753,6 @@ public interface AssetListEntrySegmentsEntryRelPersistence
 	public int countByA_S_C(long assetListEntryId, long[] segmentsEntryIds);
 
 	/**
-	 * Caches the asset list entry segments entry rel in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntrySegmentsEntryRel the asset list entry segments entry rel
-	 */
-	public void cacheResult(
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel);
-
-	/**
-	 * Caches the asset list entry segments entry rels in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntrySegmentsEntryRels the asset list entry segments entry rels
-	 */
-	public void cacheResult(
-		java.util.List<AssetListEntrySegmentsEntryRel>
-			assetListEntrySegmentsEntryRels);
-
-	/**
 	 * Creates a new asset list entry segments entry rel with the primary key. Does not add the asset list entry segments entry rel to the database.
 	 *
 	 * @param assetListEntrySegmentsEntryRelId the primary key for the new asset list entry segments entry rel
@@ -813,4 +796,4 @@ public interface AssetListEntrySegmentsEntryRelPersistence
 		long assetListEntrySegmentsEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704972468
+// LIFERAY-SERVICE-BUILDER-HASH:-1891804122

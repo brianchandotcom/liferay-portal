@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.service.persistence.BrowserTrackerUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
@@ -33,7 +30,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -158,57 +154,6 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 	/**
-	 * Caches the browser tracker in the entity cache if it is enabled.
-	 *
-	 * @param browserTracker the browser tracker
-	 */
-	@Override
-	public void cacheResult(BrowserTracker browserTracker) {
-		EntityCacheUtil.putResult(
-			BrowserTrackerImpl.class, browserTracker.getPrimaryKey(),
-			browserTracker);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByUserId, new Object[] {browserTracker.getUserId()},
-			browserTracker);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the browser trackers in the entity cache if it is enabled.
-	 *
-	 * @param browserTrackers the browser trackers
-	 */
-	@Override
-	public void cacheResult(List<BrowserTracker> browserTrackers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (browserTrackers.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BrowserTracker browserTracker : browserTrackers) {
-			if (EntityCacheUtil.getResult(
-					BrowserTrackerImpl.class, browserTracker.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(browserTracker);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BrowserTrackerModelImpl browserTrackerModelImpl) {
-
-		Object[] args = new Object[] {browserTrackerModelImpl.getUserId()};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByUserId, args, browserTrackerModelImpl);
-	}
-
-	/**
 	 * Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
 	 *
 	 * @param browserTrackerId the primary key for the new browser tracker
@@ -314,10 +259,7 @@ public class BrowserTrackerPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			BrowserTrackerImpl.class, browserTrackerModelImpl, false, true);
-
-		cacheUniqueFindersCache(browserTrackerModelImpl);
+		cacheUniqueFindersResult(browserTracker, false);
 
 		if (isNew) {
 			browserTracker.setNew(false);
@@ -377,12 +319,10 @@ public class BrowserTrackerPersistenceImpl
 	 * Initializes the browser tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByUserId = new FinderPath(
+		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
+			BrowserTracker::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_BROWSERTRACKER_WHERE,
@@ -420,4 +360,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:94598899
+// LIFERAY-SERVICE-BUILDER-HASH:245734863

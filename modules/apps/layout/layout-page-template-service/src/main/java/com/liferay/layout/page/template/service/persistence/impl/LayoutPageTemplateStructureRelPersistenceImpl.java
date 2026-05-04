@@ -14,7 +14,6 @@ import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateSt
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateStructureRelUtil;
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1004,127 +1000,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout page template structure rel in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRel the layout page template structure rel
-	 */
-	@Override
-	public void cacheResult(
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutPageTemplateStructureRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutPageTemplateStructureRelImpl.class,
-				layoutPageTemplateStructureRel.getPrimaryKey(),
-				layoutPageTemplateStructureRel);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutPageTemplateStructureRel.getUuid(),
-					layoutPageTemplateStructureRel.getGroupId()
-				},
-				layoutPageTemplateStructureRel);
-
-			finderCache.putResult(
-				_finderPathFetchByL_S,
-				new Object[] {
-					layoutPageTemplateStructureRel.
-						getLayoutPageTemplateStructureId(),
-					layoutPageTemplateStructureRel.getSegmentsExperienceId()
-				},
-				layoutPageTemplateStructureRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout page template structure rels in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRels the layout page template structure rels
-	 */
-	@Override
-	public void cacheResult(
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutPageTemplateStructureRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutPageTemplateStructureRel.getCtCollectionId())) {
-
-				LayoutPageTemplateStructureRel
-					cachedLayoutPageTemplateStructureRel =
-						(LayoutPageTemplateStructureRel)entityCache.getResult(
-							LayoutPageTemplateStructureRelImpl.class,
-							layoutPageTemplateStructureRel.getPrimaryKey());
-
-				if (cachedLayoutPageTemplateStructureRel == null) {
-					cacheResult(layoutPageTemplateStructureRel);
-				}
-				else {
-					LayoutPageTemplateStructureRelModelImpl
-						layoutPageTemplateStructureRelModelImpl =
-							(LayoutPageTemplateStructureRelModelImpl)
-								layoutPageTemplateStructureRel;
-					LayoutPageTemplateStructureRelModelImpl
-						cachedLayoutPageTemplateStructureRelModelImpl =
-							(LayoutPageTemplateStructureRelModelImpl)
-								cachedLayoutPageTemplateStructureRel;
-
-					layoutPageTemplateStructureRelModelImpl.setDataJSONObject(
-						cachedLayoutPageTemplateStructureRelModelImpl.
-							getDataJSONObject());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutPageTemplateStructureRelModelImpl
-			layoutPageTemplateStructureRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutPageTemplateStructureRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutPageTemplateStructureRelModelImpl.getUuid(),
-				layoutPageTemplateStructureRelModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				layoutPageTemplateStructureRelModelImpl);
-
-			args = new Object[] {
-				layoutPageTemplateStructureRelModelImpl.
-					getLayoutPageTemplateStructureId(),
-				layoutPageTemplateStructureRelModelImpl.
-					getSegmentsExperienceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByL_S, args,
-				layoutPageTemplateStructureRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout page template structure rel with the primary key. Does not add the layout page template structure rel to the database.
 	 *
 	 * @param layoutPageTemplateStructureRelId the primary key for the new layout page template structure rel
@@ -1292,11 +1167,7 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutPageTemplateStructureRelImpl.class,
-			layoutPageTemplateStructureRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutPageTemplateStructureRelModelImpl);
+		cacheUniqueFindersResult(layoutPageTemplateStructureRel, false);
 
 		if (isNew) {
 			layoutPageTemplateStructureRel.setNew(false);
@@ -1445,9 +1316,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1478,10 +1346,12 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateStructureRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutPageTemplateStructureRel::getUuid,
+			LayoutPageTemplateStructureRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1605,13 +1475,15 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateStructureRel::getSegmentsExperienceId));
 
-		_finderPathFetchByL_S = new FinderPath(
+		_finderPathFetchByL_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {
 				"layoutPageTemplateStructureId", "segmentsExperienceId"
 			},
-			true);
+			false,
+			LayoutPageTemplateStructureRel::getLayoutPageTemplateStructureId,
+			LayoutPageTemplateStructureRel::getSegmentsExperienceId);
 
 		_uniquePersistenceFinderByL_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByL_S,
@@ -1702,4 +1574,4 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-858052836
+// LIFERAY-SERVICE-BUILDER-HASH:-15456156

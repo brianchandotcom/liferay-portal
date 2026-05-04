@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInsta
 import com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -526,90 +522,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm data provider instance link in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
-	 */
-	@Override
-	public void cacheResult(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmDataProviderInstanceLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMDataProviderInstanceLinkImpl.class,
-				ddmDataProviderInstanceLink.getPrimaryKey(),
-				ddmDataProviderInstanceLink);
-
-			finderCache.putResult(
-				_finderPathFetchByD_S,
-				new Object[] {
-					ddmDataProviderInstanceLink.getDataProviderInstanceId(),
-					ddmDataProviderInstanceLink.getStructureId()
-				},
-				ddmDataProviderInstanceLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm data provider instance links in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLinks the ddm data provider instance links
-	 */
-	@Override
-	public void cacheResult(
-		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmDataProviderInstanceLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMDataProviderInstanceLink ddmDataProviderInstanceLink :
-				ddmDataProviderInstanceLinks) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmDataProviderInstanceLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMDataProviderInstanceLinkImpl.class,
-						ddmDataProviderInstanceLink.getPrimaryKey()) == null) {
-
-					cacheResult(ddmDataProviderInstanceLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMDataProviderInstanceLinkModelImpl
-			ddmDataProviderInstanceLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmDataProviderInstanceLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmDataProviderInstanceLinkModelImpl.
-					getDataProviderInstanceId(),
-				ddmDataProviderInstanceLinkModelImpl.getStructureId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByD_S, args,
-				ddmDataProviderInstanceLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
 	 *
 	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
@@ -738,11 +650,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMDataProviderInstanceLinkImpl.class,
-			ddmDataProviderInstanceLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmDataProviderInstanceLinkModelImpl);
+		cacheUniqueFindersResult(ddmDataProviderInstanceLink, false);
 
 		if (isNew) {
 			ddmDataProviderInstanceLink.setNew(false);
@@ -866,9 +774,6 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByDataProviderInstanceId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByDataProviderInstanceId",
@@ -937,10 +842,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMDataProviderInstanceLink::getStructureId));
 
-		_finderPathFetchByD_S = new FinderPath(
+		_finderPathFetchByD_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"dataProviderInstanceId", "structureId"}, true);
+			new String[] {"dataProviderInstanceId", "structureId"}, false,
+			DDMDataProviderInstanceLink::getDataProviderInstanceId,
+			DDMDataProviderInstanceLink::getStructureId);
 
 		_uniquePersistenceFinderByD_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_S,
@@ -1024,4 +931,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:320888681
+// LIFERAY-SERVICE-BUILDER-HASH:1466026551

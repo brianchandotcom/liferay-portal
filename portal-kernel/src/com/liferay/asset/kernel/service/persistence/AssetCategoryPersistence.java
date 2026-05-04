@@ -2248,20 +2248,6 @@ public interface AssetCategoryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the asset category in the entity cache if it is enabled.
-	 *
-	 * @param assetCategory the asset category
-	 */
-	public void cacheResult(AssetCategory assetCategory);
-
-	/**
-	 * Caches the asset categories in the entity cache if it is enabled.
-	 *
-	 * @param assetCategories the asset categories
-	 */
-	public void cacheResult(java.util.List<AssetCategory> assetCategories);
-
-	/**
 	 * Creates a new asset category with the primary key. Does not add the asset category to the database.
 	 *
 	 * @param categoryId the primary key for the new asset category
@@ -2299,4 +2285,4 @@ public interface AssetCategoryPersistence
 	public AssetCategory fetchByPrimaryKey(long categoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1314499904
+// LIFERAY-SERVICE-BUILDER-HASH:1131412550

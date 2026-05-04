@@ -36,6 +36,20 @@ public class ObjectLayoutBoxUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectLayoutBox> objectLayoutBoxes) {
+		getPersistence().cacheResult(objectLayoutBoxes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectLayoutBox objectLayoutBox) {
+		getPersistence().cacheResult(objectLayoutBox);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -488,24 +502,6 @@ public class ObjectLayoutBoxUtil {
 	}
 
 	/**
-	 * Caches the object layout box in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutBox the object layout box
-	 */
-	public static void cacheResult(ObjectLayoutBox objectLayoutBox) {
-		getPersistence().cacheResult(objectLayoutBox);
-	}
-
-	/**
-	 * Caches the object layout boxes in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutBoxes the object layout boxes
-	 */
-	public static void cacheResult(List<ObjectLayoutBox> objectLayoutBoxes) {
-		getPersistence().cacheResult(objectLayoutBoxes);
-	}
-
-	/**
 	 * Creates a new object layout box with the primary key. Does not add the object layout box to the database.
 	 *
 	 * @param objectLayoutBoxId the primary key for the new object layout box
@@ -566,4 +562,4 @@ public class ObjectLayoutBoxUtil {
 	private static volatile ObjectLayoutBoxPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:768505422
+// LIFERAY-SERVICE-BUILDER-HASH:674588143

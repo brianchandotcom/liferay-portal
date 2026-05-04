@@ -36,6 +36,20 @@ public class AutoEscapeEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AutoEscapeEntry> autoEscapeEntries) {
+		getPersistence().cacheResult(autoEscapeEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AutoEscapeEntry autoEscapeEntry) {
+		getPersistence().cacheResult(autoEscapeEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class AutoEscapeEntryUtil {
 	}
 
 	/**
-	 * Caches the auto escape entry in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntry the auto escape entry
-	 */
-	public static void cacheResult(AutoEscapeEntry autoEscapeEntry) {
-		getPersistence().cacheResult(autoEscapeEntry);
-	}
-
-	/**
-	 * Caches the auto escape entries in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntries the auto escape entries
-	 */
-	public static void cacheResult(List<AutoEscapeEntry> autoEscapeEntries) {
-		getPersistence().cacheResult(autoEscapeEntries);
-	}
-
-	/**
 	 * Creates a new auto escape entry with the primary key. Does not add the auto escape entry to the database.
 	 *
 	 * @param autoEscapeEntryId the primary key for the new auto escape entry
@@ -191,4 +187,4 @@ public class AutoEscapeEntryUtil {
 	private static volatile AutoEscapeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1889852466
+// LIFERAY-SERVICE-BUILDER-HASH:1882057373

@@ -510,20 +510,6 @@ public interface LayoutSetPersistence
 	public int countByP_L(boolean privateLayout, long logoId);
 
 	/**
-	 * Caches the layout set in the entity cache if it is enabled.
-	 *
-	 * @param layoutSet the layout set
-	 */
-	public void cacheResult(LayoutSet layoutSet);
-
-	/**
-	 * Caches the layout sets in the entity cache if it is enabled.
-	 *
-	 * @param layoutSets the layout sets
-	 */
-	public void cacheResult(java.util.List<LayoutSet> layoutSets);
-
-	/**
 	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
 	 * @param layoutSetId the primary key for the new layout set
@@ -561,4 +547,4 @@ public interface LayoutSetPersistence
 	public LayoutSet fetchByPrimaryKey(long layoutSetId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1920607267
+// LIFERAY-SERVICE-BUILDER-HASH:-1078678925

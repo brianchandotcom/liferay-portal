@@ -36,6 +36,22 @@ public class MBSuspiciousActivityUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<MBSuspiciousActivity> mbSuspiciousActivities) {
+
+		getPersistence().cacheResult(mbSuspiciousActivities);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBSuspiciousActivity mbSuspiciousActivity) {
+		getPersistence().cacheResult(mbSuspiciousActivity);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -814,26 +830,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Caches the message boards suspicious activity in the entity cache if it is enabled.
-	 *
-	 * @param mbSuspiciousActivity the message boards suspicious activity
-	 */
-	public static void cacheResult(MBSuspiciousActivity mbSuspiciousActivity) {
-		getPersistence().cacheResult(mbSuspiciousActivity);
-	}
-
-	/**
-	 * Caches the message boards suspicious activities in the entity cache if it is enabled.
-	 *
-	 * @param mbSuspiciousActivities the message boards suspicious activities
-	 */
-	public static void cacheResult(
-		List<MBSuspiciousActivity> mbSuspiciousActivities) {
-
-		getPersistence().cacheResult(mbSuspiciousActivities);
-	}
-
-	/**
 	 * Creates a new message boards suspicious activity with the primary key. Does not add the message boards suspicious activity to the database.
 	 *
 	 * @param suspiciousActivityId the primary key for the new message boards suspicious activity
@@ -903,4 +899,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:224831312
+// LIFERAY-SERVICE-BUILDER-HASH:187942019

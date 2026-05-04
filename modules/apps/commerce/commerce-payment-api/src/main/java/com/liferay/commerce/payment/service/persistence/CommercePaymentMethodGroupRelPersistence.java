@@ -404,23 +404,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public int countByG_P(long groupId, String paymentIntegrationKey);
 
 	/**
-	 * Caches the commerce payment method group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
-	 */
-	public void cacheResult(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel);
-
-	/**
-	 * Caches the commerce payment method group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRels the commerce payment method group rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePaymentMethodGroupRel>
-			commercePaymentMethodGroupRels);
-
-	/**
 	 * Creates a new commerce payment method group rel with the primary key. Does not add the commerce payment method group rel to the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the primary key for the new commerce payment method group rel
@@ -464,4 +447,4 @@ public interface CommercePaymentMethodGroupRelPersistence
 		long commercePaymentMethodGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-950656803
+// LIFERAY-SERVICE-BUILDER-HASH:1607936533

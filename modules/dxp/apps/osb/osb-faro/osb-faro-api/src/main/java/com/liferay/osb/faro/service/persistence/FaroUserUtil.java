@@ -36,6 +36,20 @@ public class FaroUserUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FaroUser> faroUsers) {
+		getPersistence().cacheResult(faroUsers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FaroUser faroUser) {
+		getPersistence().cacheResult(faroUser);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1054,24 +1068,6 @@ public class FaroUserUtil {
 	}
 
 	/**
-	 * Caches the faro user in the entity cache if it is enabled.
-	 *
-	 * @param faroUser the faro user
-	 */
-	public static void cacheResult(FaroUser faroUser) {
-		getPersistence().cacheResult(faroUser);
-	}
-
-	/**
-	 * Caches the faro users in the entity cache if it is enabled.
-	 *
-	 * @param faroUsers the faro users
-	 */
-	public static void cacheResult(List<FaroUser> faroUsers) {
-		getPersistence().cacheResult(faroUsers);
-	}
-
-	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
 	 * @param faroUserId the primary key for the new faro user
@@ -1132,4 +1128,4 @@ public class FaroUserUtil {
 	private static volatile FaroUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1991274798
+// LIFERAY-SERVICE-BUILDER-HASH:-123728054

@@ -475,21 +475,6 @@ public interface KaleoNotificationPersistence
 		String kaleoClassName, long kaleoClassPK, String executionType);
 
 	/**
-	 * Caches the kaleo notification in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotification the kaleo notification
-	 */
-	public void cacheResult(KaleoNotification kaleoNotification);
-
-	/**
-	 * Caches the kaleo notifications in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotifications the kaleo notifications
-	 */
-	public void cacheResult(
-		java.util.List<KaleoNotification> kaleoNotifications);
-
-	/**
 	 * Creates a new kaleo notification with the primary key. Does not add the kaleo notification to the database.
 	 *
 	 * @param kaleoNotificationId the primary key for the new kaleo notification
@@ -528,4 +513,4 @@ public interface KaleoNotificationPersistence
 	public KaleoNotification fetchByPrimaryKey(long kaleoNotificationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-304690339
+// LIFERAY-SERVICE-BUILDER-HASH:-1851711491

@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.MembershipRequestUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.MembershipRequestImpl;
 import com.liferay.portal.model.impl.MembershipRequestModelImpl;
@@ -705,45 +702,6 @@ public class MembershipRequestPersistenceImpl
 	}
 
 	/**
-	 * Caches the membership request in the entity cache if it is enabled.
-	 *
-	 * @param membershipRequest the membership request
-	 */
-	@Override
-	public void cacheResult(MembershipRequest membershipRequest) {
-		EntityCacheUtil.putResult(
-			MembershipRequestImpl.class, membershipRequest.getPrimaryKey(),
-			membershipRequest);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the membership requests in the entity cache if it is enabled.
-	 *
-	 * @param membershipRequests the membership requests
-	 */
-	@Override
-	public void cacheResult(List<MembershipRequest> membershipRequests) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (membershipRequests.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MembershipRequest membershipRequest : membershipRequests) {
-			if (EntityCacheUtil.getResult(
-					MembershipRequestImpl.class,
-					membershipRequest.getPrimaryKey()) == null) {
-
-				cacheResult(membershipRequest);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new membership request with the primary key. Does not add the membership request to the database.
 	 *
 	 * @param membershipRequestId the primary key for the new membership request
@@ -867,9 +825,7 @@ public class MembershipRequestPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			MembershipRequestImpl.class, membershipRequestModelImpl, false,
-			true);
+		cacheUniqueFindersResult(membershipRequest, false);
 
 		if (isNew) {
 			membershipRequest.setNew(false);
@@ -929,9 +885,6 @@ public class MembershipRequestPersistenceImpl
 	 * Initializes the membership request persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1093,4 +1046,4 @@ public class MembershipRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:187264138
+// LIFERAY-SERVICE-BUILDER-HASH:555012841

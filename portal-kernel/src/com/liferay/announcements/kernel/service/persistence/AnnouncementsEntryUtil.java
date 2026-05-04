@@ -36,6 +36,22 @@ public class AnnouncementsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AnnouncementsEntry> announcementsEntries) {
+
+		getPersistence().cacheResult(announcementsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AnnouncementsEntry announcementsEntry) {
+		getPersistence().cacheResult(announcementsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1735,26 +1751,6 @@ public class AnnouncementsEntryUtil {
 	}
 
 	/**
-	 * Caches the announcements entry in the entity cache if it is enabled.
-	 *
-	 * @param announcementsEntry the announcements entry
-	 */
-	public static void cacheResult(AnnouncementsEntry announcementsEntry) {
-		getPersistence().cacheResult(announcementsEntry);
-	}
-
-	/**
-	 * Caches the announcements entries in the entity cache if it is enabled.
-	 *
-	 * @param announcementsEntries the announcements entries
-	 */
-	public static void cacheResult(
-		List<AnnouncementsEntry> announcementsEntries) {
-
-		getPersistence().cacheResult(announcementsEntries);
-	}
-
-	/**
 	 * Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
 	 *
 	 * @param entryId the primary key for the new announcements entry
@@ -1819,4 +1815,4 @@ public class AnnouncementsEntryUtil {
 	private static volatile AnnouncementsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-894431929
+// LIFERAY-SERVICE-BUILDER-HASH:-1629820282

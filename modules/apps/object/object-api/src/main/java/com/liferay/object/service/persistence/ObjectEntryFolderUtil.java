@@ -36,6 +36,20 @@ public class ObjectEntryFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectEntryFolder> objectEntryFolders) {
+		getPersistence().cacheResult(objectEntryFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectEntryFolder objectEntryFolder) {
+		getPersistence().cacheResult(objectEntryFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1222,24 +1236,6 @@ public class ObjectEntryFolderUtil {
 	}
 
 	/**
-	 * Caches the object entry folder in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolder the object entry folder
-	 */
-	public static void cacheResult(ObjectEntryFolder objectEntryFolder) {
-		getPersistence().cacheResult(objectEntryFolder);
-	}
-
-	/**
-	 * Caches the object entry folders in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolders the object entry folders
-	 */
-	public static void cacheResult(List<ObjectEntryFolder> objectEntryFolders) {
-		getPersistence().cacheResult(objectEntryFolders);
-	}
-
-	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
 	 * @param objectEntryFolderId the primary key for the new object entry folder
@@ -1306,4 +1302,4 @@ public class ObjectEntryFolderUtil {
 	private static volatile ObjectEntryFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1854880311
+// LIFERAY-SERVICE-BUILDER-HASH:985377617

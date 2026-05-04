@@ -554,21 +554,6 @@ public interface NotificationTemplatePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the notification template in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplate the notification template
-	 */
-	public void cacheResult(NotificationTemplate notificationTemplate);
-
-	/**
-	 * Caches the notification templates in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplates the notification templates
-	 */
-	public void cacheResult(
-		java.util.List<NotificationTemplate> notificationTemplates);
-
-	/**
 	 * Creates a new notification template with the primary key. Does not add the notification template to the database.
 	 *
 	 * @param notificationTemplateId the primary key for the new notification template
@@ -608,4 +593,4 @@ public interface NotificationTemplatePersistence
 	public NotificationTemplate fetchByPrimaryKey(long notificationTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1532480271
+// LIFERAY-SERVICE-BUILDER-HASH:-1379673329

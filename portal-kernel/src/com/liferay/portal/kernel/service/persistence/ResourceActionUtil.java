@@ -36,6 +36,20 @@ public class ResourceActionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ResourceAction> resourceActions) {
+		getPersistence().cacheResult(resourceActions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ResourceAction resourceAction) {
+		getPersistence().cacheResult(resourceAction);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -295,24 +309,6 @@ public class ResourceActionUtil {
 	}
 
 	/**
-	 * Caches the resource action in the entity cache if it is enabled.
-	 *
-	 * @param resourceAction the resource action
-	 */
-	public static void cacheResult(ResourceAction resourceAction) {
-		getPersistence().cacheResult(resourceAction);
-	}
-
-	/**
-	 * Caches the resource actions in the entity cache if it is enabled.
-	 *
-	 * @param resourceActions the resource actions
-	 */
-	public static void cacheResult(List<ResourceAction> resourceActions) {
-		getPersistence().cacheResult(resourceActions);
-	}
-
-	/**
 	 * Creates a new resource action with the primary key. Does not add the resource action to the database.
 	 *
 	 * @param resourceActionId the primary key for the new resource action
@@ -375,4 +371,4 @@ public class ResourceActionUtil {
 	private static volatile ResourceActionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-302962218
+// LIFERAY-SERVICE-BUILDER-HASH:2048740348

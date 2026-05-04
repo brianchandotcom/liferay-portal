@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -320,53 +317,6 @@ public class EntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the entry in the entity cache if it is enabled.
-	 *
-	 * @param entry the entry
-	 */
-	@Override
-	public void cacheResult(Entry entry) {
-		entityCache.putResult(EntryImpl.class, entry.getPrimaryKey(), entry);
-
-		finderCache.putResult(
-			_finderPathFetchByU_EA,
-			new Object[] {entry.getUserId(), entry.getEmailAddress()}, entry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the entries in the entity cache if it is enabled.
-	 *
-	 * @param entries the entries
-	 */
-	@Override
-	public void cacheResult(List<Entry> entries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (entries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Entry entry : entries) {
-			if (entityCache.getResult(EntryImpl.class, entry.getPrimaryKey()) ==
-					null) {
-
-				cacheResult(entry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(EntryModelImpl entryModelImpl) {
-		Object[] args = new Object[] {
-			entryModelImpl.getUserId(), entryModelImpl.getEmailAddress()
-		};
-
-		finderCache.putResult(_finderPathFetchByU_EA, args, entryModelImpl);
-	}
-
-	/**
 	 * Creates a new entry with the primary key. Does not add the entry to the database.
 	 *
 	 * @param entryId the primary key for the new entry
@@ -490,9 +440,7 @@ public class EntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(EntryImpl.class, entryModelImpl, false, true);
-
-		cacheUniqueFindersCache(entryModelImpl);
+		cacheUniqueFindersResult(entry, false);
 
 		if (isNew) {
 			entry.setNew(false);
@@ -551,9 +499,6 @@ public class EntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -582,10 +527,11 @@ public class EntryPersistenceImpl
 					"entry.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					Entry::getUserId));
 
-		_finderPathFetchByU_EA = new FinderPath(
+		_finderPathFetchByU_EA = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "emailAddress"}, true);
+			new String[] {"userId", "emailAddress"}, false, Entry::getUserId,
+			Entry::getEmailAddress);
 
 		_uniquePersistenceFinderByU_EA = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_EA, _SQL_SELECT_ENTRY_WHERE,
@@ -662,4 +608,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:442709876
+// LIFERAY-SERVICE-BUILDER-HASH:-2143064071

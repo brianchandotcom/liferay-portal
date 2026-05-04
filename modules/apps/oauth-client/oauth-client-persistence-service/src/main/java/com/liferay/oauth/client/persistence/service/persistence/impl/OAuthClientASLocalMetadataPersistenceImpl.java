@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2385,122 +2383,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth client as local metadata in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadata the o auth client as local metadata
-	 */
-	@Override
-	public void cacheResult(
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata) {
-
-		entityCache.putResult(
-			OAuthClientASLocalMetadataImpl.class,
-			oAuthClientASLocalMetadata.getPrimaryKey(),
-			oAuthClientASLocalMetadata);
-
-		finderCache.putResult(
-			_finderPathFetchByC_I,
-			new Object[] {
-				oAuthClientASLocalMetadata.getCompanyId(),
-				oAuthClientASLocalMetadata.getIssuer()
-			},
-			oAuthClientASLocalMetadata);
-
-		finderCache.putResult(
-			_finderPathFetchByC_LWKURI,
-			new Object[] {
-				oAuthClientASLocalMetadata.getCompanyId(),
-				oAuthClientASLocalMetadata.getLocalWellKnownURI()
-			},
-			oAuthClientASLocalMetadata);
-
-		finderCache.putResult(
-			_finderPathFetchByC_O,
-			new Object[] {
-				oAuthClientASLocalMetadata.getCompanyId(),
-				oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI()
-			},
-			oAuthClientASLocalMetadata);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				oAuthClientASLocalMetadata.getExternalReferenceCode(),
-				oAuthClientASLocalMetadata.getCompanyId()
-			},
-			oAuthClientASLocalMetadata);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth client as local metadatas in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadatas the o auth client as local metadatas
-	 */
-	@Override
-	public void cacheResult(
-		List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuthClientASLocalMetadatas.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuthClientASLocalMetadata oAuthClientASLocalMetadata :
-				oAuthClientASLocalMetadatas) {
-
-			if (entityCache.getResult(
-					OAuthClientASLocalMetadataImpl.class,
-					oAuthClientASLocalMetadata.getPrimaryKey()) == null) {
-
-				cacheResult(oAuthClientASLocalMetadata);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuthClientASLocalMetadataModelImpl
-			oAuthClientASLocalMetadataModelImpl) {
-
-		Object[] args = new Object[] {
-			oAuthClientASLocalMetadataModelImpl.getCompanyId(),
-			oAuthClientASLocalMetadataModelImpl.getIssuer()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_I, args, oAuthClientASLocalMetadataModelImpl);
-
-		args = new Object[] {
-			oAuthClientASLocalMetadataModelImpl.getCompanyId(),
-			oAuthClientASLocalMetadataModelImpl.getLocalWellKnownURI()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_LWKURI, args,
-			oAuthClientASLocalMetadataModelImpl);
-
-		args = new Object[] {
-			oAuthClientASLocalMetadataModelImpl.getCompanyId(),
-			oAuthClientASLocalMetadataModelImpl.getOAuthASLocalWellKnownURI()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_O, args, oAuthClientASLocalMetadataModelImpl);
-
-		args = new Object[] {
-			oAuthClientASLocalMetadataModelImpl.getExternalReferenceCode(),
-			oAuthClientASLocalMetadataModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, oAuthClientASLocalMetadataModelImpl);
-	}
-
-	/**
 	 * Creates a new o auth client as local metadata with the primary key. Does not add the o auth client as local metadata to the database.
 	 *
 	 * @param oAuthClientASLocalMetadataId the primary key for the new o auth client as local metadata
@@ -2728,11 +2610,7 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuthClientASLocalMetadataImpl.class,
-			oAuthClientASLocalMetadataModelImpl, false, true);
-
-		cacheUniqueFindersCache(oAuthClientASLocalMetadataModelImpl);
+		cacheUniqueFindersResult(oAuthClientASLocalMetadata, false);
 
 		if (isNew) {
 			oAuthClientASLocalMetadata.setNew(false);
@@ -2801,9 +2679,6 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2933,10 +2808,12 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					OAuthClientASLocalMetadata::getUserId));
 
-		_finderPathFetchByC_I = new FinderPath(
+		_finderPathFetchByC_I = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_I",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "issuer"}, true);
+			new String[] {"companyId", "issuer"}, false,
+			OAuthClientASLocalMetadata::getCompanyId,
+			OAuthClientASLocalMetadata::getIssuer);
 
 		_uniquePersistenceFinderByC_I = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_I,
@@ -2985,10 +2862,12 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				OAuthClientASLocalMetadata::isLocalWellKnownEnabled));
 
-		_finderPathFetchByC_LWKURI = new FinderPath(
+		_finderPathFetchByC_LWKURI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_LWKURI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "localWellKnownURI"}, true);
+			new String[] {"companyId", "localWellKnownURI"}, false,
+			OAuthClientASLocalMetadata::getCompanyId,
+			OAuthClientASLocalMetadata::getLocalWellKnownURI);
 
 		_uniquePersistenceFinderByC_LWKURI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_LWKURI,
@@ -3002,10 +2881,12 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientASLocalMetadata::getLocalWellKnownURI));
 
-		_finderPathFetchByC_O = new FinderPath(
+		_finderPathFetchByC_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "oAuthASLocalWellKnownURI"}, true);
+			new String[] {"companyId", "oAuthASLocalWellKnownURI"}, false,
+			OAuthClientASLocalMetadata::getCompanyId,
+			OAuthClientASLocalMetadata::getOAuthASLocalWellKnownURI);
 
 		_uniquePersistenceFinderByC_O = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_O,
@@ -3019,10 +2900,12 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientASLocalMetadata::getOAuthASLocalWellKnownURI));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			OAuthClientASLocalMetadata::getExternalReferenceCode,
+			OAuthClientASLocalMetadata::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -3133,4 +3016,4 @@ public class OAuthClientASLocalMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1517083889
+// LIFERAY-SERVICE-BUILDER-HASH:-1465693976

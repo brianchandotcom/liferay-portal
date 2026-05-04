@@ -980,23 +980,6 @@ public interface CommerceMLForecastAlertEntryPersistence
 		int status);
 
 	/**
-	 * Caches the commerce ml forecast alert entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntry the commerce ml forecast alert entry
-	 */
-	public void cacheResult(
-		CommerceMLForecastAlertEntry commerceMLForecastAlertEntry);
-
-	/**
-	 * Caches the commerce ml forecast alert entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceMLForecastAlertEntries the commerce ml forecast alert entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceMLForecastAlertEntry>
-			commerceMLForecastAlertEntries);
-
-	/**
 	 * Creates a new commerce ml forecast alert entry with the primary key. Does not add the commerce ml forecast alert entry to the database.
 	 *
 	 * @param commerceMLForecastAlertEntryId the primary key for the new commerce ml forecast alert entry
@@ -1040,4 +1023,4 @@ public interface CommerceMLForecastAlertEntryPersistence
 		long commerceMLForecastAlertEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:539557260
+// LIFERAY-SERVICE-BUILDER-HASH:266076254

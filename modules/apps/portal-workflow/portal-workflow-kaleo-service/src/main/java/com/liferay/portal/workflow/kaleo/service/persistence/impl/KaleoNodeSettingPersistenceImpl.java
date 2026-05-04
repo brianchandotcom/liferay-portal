@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNodeSettingException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNodeSetting;
@@ -352,80 +348,6 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo node setting in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSetting the kaleo node setting
-	 */
-	@Override
-	public void cacheResult(KaleoNodeSetting kaleoNodeSetting) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoNodeSetting.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoNodeSettingImpl.class, kaleoNodeSetting.getPrimaryKey(),
-				kaleoNodeSetting);
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_N,
-				new Object[] {
-					kaleoNodeSetting.getKaleoNodeId(),
-					kaleoNodeSetting.getName()
-				},
-				kaleoNodeSetting);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo node settings in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSettings the kaleo node settings
-	 */
-	@Override
-	public void cacheResult(List<KaleoNodeSetting> kaleoNodeSettings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoNodeSettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoNodeSetting kaleoNodeSetting : kaleoNodeSettings) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoNodeSetting.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoNodeSettingImpl.class,
-						kaleoNodeSetting.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoNodeSetting);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoNodeSettingModelImpl kaleoNodeSettingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoNodeSettingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoNodeSettingModelImpl.getKaleoNodeId(),
-				kaleoNodeSettingModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_N, args, kaleoNodeSettingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo node setting with the primary key. Does not add the kaleo node setting to the database.
 	 *
 	 * @param kaleoNodeSettingId the primary key for the new kaleo node setting
@@ -565,10 +487,7 @@ public class KaleoNodeSettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoNodeSettingImpl.class, kaleoNodeSettingModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoNodeSettingModelImpl);
+		cacheUniqueFindersResult(kaleoNodeSetting, false);
 
 		if (isNew) {
 			kaleoNodeSetting.setNew(false);
@@ -696,9 +615,6 @@ public class KaleoNodeSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByKaleoNodeId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoNodeId",
 			new String[] {
@@ -729,10 +645,11 @@ public class KaleoNodeSettingPersistenceImpl
 					"kaleoNodeSetting.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoNodeSetting::getKaleoNodeId));
 
-		_finderPathFetchByKNI_N = new FinderPath(
+		_finderPathFetchByKNI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoNodeId", "name"}, true);
+			new String[] {"kaleoNodeId", "name"}, false,
+			KaleoNodeSetting::getKaleoNodeId, KaleoNodeSetting::getName);
 
 		_uniquePersistenceFinderByKNI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKNI_N, _SQL_SELECT_KALEONODESETTING_WHERE,
@@ -812,4 +729,4 @@ public class KaleoNodeSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:828417082
+// LIFERAY-SERVICE-BUILDER-HASH:1219406444

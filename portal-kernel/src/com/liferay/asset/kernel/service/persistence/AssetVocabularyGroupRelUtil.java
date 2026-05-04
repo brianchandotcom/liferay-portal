@@ -36,6 +36,24 @@ public class AssetVocabularyGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetVocabularyGroupRel> assetVocabularyGroupRels) {
+
+		getPersistence().cacheResult(assetVocabularyGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AssetVocabularyGroupRel assetVocabularyGroupRel) {
+
+		getPersistence().cacheResult(assetVocabularyGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -759,28 +777,6 @@ public class AssetVocabularyGroupRelUtil {
 	}
 
 	/**
-	 * Caches the asset vocabulary group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRel the asset vocabulary group rel
-	 */
-	public static void cacheResult(
-		AssetVocabularyGroupRel assetVocabularyGroupRel) {
-
-		getPersistence().cacheResult(assetVocabularyGroupRel);
-	}
-
-	/**
-	 * Caches the asset vocabulary group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRels the asset vocabulary group rels
-	 */
-	public static void cacheResult(
-		List<AssetVocabularyGroupRel> assetVocabularyGroupRels) {
-
-		getPersistence().cacheResult(assetVocabularyGroupRels);
-	}
-
-	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
 	 * @param assetVocabularyGroupRelId the primary key for the new asset vocabulary group rel
@@ -852,4 +848,4 @@ public class AssetVocabularyGroupRelUtil {
 	private static volatile AssetVocabularyGroupRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1190957040
+// LIFERAY-SERVICE-BUILDER-HASH:-371554008

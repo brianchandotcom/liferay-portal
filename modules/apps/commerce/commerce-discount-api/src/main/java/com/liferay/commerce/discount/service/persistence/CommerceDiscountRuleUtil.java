@@ -36,6 +36,22 @@ public class CommerceDiscountRuleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountRule> commerceDiscountRules) {
+
+		getPersistence().cacheResult(commerceDiscountRules);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceDiscountRule commerceDiscountRule) {
+		getPersistence().cacheResult(commerceDiscountRule);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -241,26 +257,6 @@ public class CommerceDiscountRuleUtil {
 	}
 
 	/**
-	 * Caches the commerce discount rule in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRule the commerce discount rule
-	 */
-	public static void cacheResult(CommerceDiscountRule commerceDiscountRule) {
-		getPersistence().cacheResult(commerceDiscountRule);
-	}
-
-	/**
-	 * Caches the commerce discount rules in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRules the commerce discount rules
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountRule> commerceDiscountRules) {
-
-		getPersistence().cacheResult(commerceDiscountRules);
-	}
-
-	/**
 	 * Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	 *
 	 * @param commerceDiscountRuleId the primary key for the new commerce discount rule
@@ -330,4 +326,4 @@ public class CommerceDiscountRuleUtil {
 	private static volatile CommerceDiscountRulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-82494758
+// LIFERAY-SERVICE-BUILDER-HASH:-1027007120

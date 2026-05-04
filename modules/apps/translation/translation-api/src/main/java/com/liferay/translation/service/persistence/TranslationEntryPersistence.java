@@ -467,21 +467,6 @@ public interface TranslationEntryPersistence
 	public int countByC_C_L(long classNameId, long classPK, String languageId);
 
 	/**
-	 * Caches the translation entry in the entity cache if it is enabled.
-	 *
-	 * @param translationEntry the translation entry
-	 */
-	public void cacheResult(TranslationEntry translationEntry);
-
-	/**
-	 * Caches the translation entries in the entity cache if it is enabled.
-	 *
-	 * @param translationEntries the translation entries
-	 */
-	public void cacheResult(
-		java.util.List<TranslationEntry> translationEntries);
-
-	/**
 	 * Creates a new translation entry with the primary key. Does not add the translation entry to the database.
 	 *
 	 * @param translationEntryId the primary key for the new translation entry
@@ -520,4 +505,4 @@ public interface TranslationEntryPersistence
 	public TranslationEntry fetchByPrimaryKey(long translationEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1577176182
+// LIFERAY-SERVICE-BUILDER-HASH:56291954

@@ -16,7 +16,6 @@ import com.liferay.blogs.service.persistence.BlogsEntryUtil;
 import com.liferay.blogs.service.persistence.impl.constants.BlogsPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -8630,105 +8627,6 @@ public class BlogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the blogs entry in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntry the blogs entry
-	 */
-	@Override
-	public void cacheResult(BlogsEntry blogsEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					blogsEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {blogsEntry.getUuid(), blogsEntry.getGroupId()},
-				blogsEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_UT,
-				new Object[] {
-					blogsEntry.getGroupId(), blogsEntry.getUrlTitle()
-				},
-				blogsEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					blogsEntry.getExternalReferenceCode(),
-					blogsEntry.getGroupId()
-				},
-				blogsEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the blogs entries in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntries the blogs entries
-	 */
-	@Override
-	public void cacheResult(List<BlogsEntry> blogsEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (blogsEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BlogsEntry blogsEntry : blogsEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						blogsEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						BlogsEntryImpl.class, blogsEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(blogsEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BlogsEntryModelImpl blogsEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					blogsEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				blogsEntryModelImpl.getUuid(), blogsEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, blogsEntryModelImpl);
-
-			args = new Object[] {
-				blogsEntryModelImpl.getGroupId(),
-				blogsEntryModelImpl.getUrlTitle()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_UT, args, blogsEntryModelImpl);
-
-			args = new Object[] {
-				blogsEntryModelImpl.getExternalReferenceCode(),
-				blogsEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, blogsEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
 	 *
 	 * @param entryId the primary key for the new blogs entry
@@ -8968,10 +8866,7 @@ public class BlogsEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BlogsEntryImpl.class, blogsEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(blogsEntryModelImpl);
+		cacheUniqueFindersResult(blogsEntry, false);
 
 		if (isNew) {
 			blogsEntry.setNew(false);
@@ -9129,9 +9024,6 @@ public class BlogsEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -9159,10 +9051,11 @@ public class BlogsEntryPersistenceImpl
 				"blogsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, BlogsEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, BlogsEntry::getUuid,
+			BlogsEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_BLOGSENTRY_WHERE,
@@ -9264,10 +9157,11 @@ public class BlogsEntryPersistenceImpl
 					"blogsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BlogsEntry::getCompanyId));
 
-		_finderPathFetchByG_UT = new FinderPath(
+		_finderPathFetchByG_UT = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_UT",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "urlTitle"}, true);
+			new String[] {"groupId", "urlTitle"}, false, BlogsEntry::getGroupId,
+			BlogsEntry::getUrlTitle);
 
 		_uniquePersistenceFinderByG_UT = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_UT, _SQL_SELECT_BLOGSENTRY_WHERE,
@@ -9953,10 +9847,11 @@ public class BlogsEntryPersistenceImpl
 					"blogsEntry.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, BlogsEntry::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			BlogsEntry::getExternalReferenceCode, BlogsEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_BLOGSENTRY_WHERE,
@@ -10063,4 +9958,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1969000562
+// LIFERAY-SERVICE-BUILDER-HASH:-910346168

@@ -525,20 +525,6 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	public int countByL_P_M(long layoutSetBranchId, long plid, boolean master);
 
 	/**
-	 * Caches the layout branch in the entity cache if it is enabled.
-	 *
-	 * @param layoutBranch the layout branch
-	 */
-	public void cacheResult(LayoutBranch layoutBranch);
-
-	/**
-	 * Caches the layout branches in the entity cache if it is enabled.
-	 *
-	 * @param layoutBranchs the layout branches
-	 */
-	public void cacheResult(java.util.List<LayoutBranch> layoutBranchs);
-
-	/**
 	 * Creates a new layout branch with the primary key. Does not add the layout branch to the database.
 	 *
 	 * @param layoutBranchId the primary key for the new layout branch
@@ -577,4 +563,4 @@ public interface LayoutBranchPersistence extends BasePersistence<LayoutBranch> {
 	public LayoutBranch fetchByPrimaryKey(long layoutBranchId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-940907635
+// LIFERAY-SERVICE-BUILDER-HASH:1179218241

@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -856,77 +853,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce virtual order item file entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntry the commerce virtual order item file entry
-	 */
-	@Override
-	public void cacheResult(
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry) {
-
-		entityCache.putResult(
-			CommerceVirtualOrderItemFileEntryImpl.class,
-			commerceVirtualOrderItemFileEntry.getPrimaryKey(),
-			commerceVirtualOrderItemFileEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceVirtualOrderItemFileEntry.getUuid(),
-				commerceVirtualOrderItemFileEntry.getGroupId()
-			},
-			commerceVirtualOrderItemFileEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce virtual order item file entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntries the commerce virtual order item file entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceVirtualOrderItemFileEntry>
-			commerceVirtualOrderItemFileEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceVirtualOrderItemFileEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceVirtualOrderItemFileEntry
-				commerceVirtualOrderItemFileEntry :
-					commerceVirtualOrderItemFileEntries) {
-
-			if (entityCache.getResult(
-					CommerceVirtualOrderItemFileEntryImpl.class,
-					commerceVirtualOrderItemFileEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commerceVirtualOrderItemFileEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceVirtualOrderItemFileEntryModelImpl
-			commerceVirtualOrderItemFileEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceVirtualOrderItemFileEntryModelImpl.getUuid(),
-			commerceVirtualOrderItemFileEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			commerceVirtualOrderItemFileEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce virtual order item file entry with the primary key. Does not add the commerce virtual order item file entry to the database.
 	 *
 	 * @param commerceVirtualOrderItemFileEntryId the primary key for the new commerce virtual order item file entry
@@ -1088,11 +1014,7 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceVirtualOrderItemFileEntryImpl.class,
-			commerceVirtualOrderItemFileEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceVirtualOrderItemFileEntryModelImpl);
+		cacheUniqueFindersResult(commerceVirtualOrderItemFileEntry, false);
 
 		if (isNew) {
 			commerceVirtualOrderItemFileEntry.setNew(false);
@@ -1163,9 +1085,6 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1196,10 +1115,12 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceVirtualOrderItemFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommerceVirtualOrderItemFileEntry::getUuid,
+			CommerceVirtualOrderItemFileEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1398,4 +1319,4 @@ public class CommerceVirtualOrderItemFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086956318
+// LIFERAY-SERVICE-BUILDER-HASH:-1703810566

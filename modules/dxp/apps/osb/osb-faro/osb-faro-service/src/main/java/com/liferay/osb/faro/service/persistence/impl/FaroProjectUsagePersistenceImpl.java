@@ -25,16 +25,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -177,65 +173,6 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 	/**
-	 * Caches the faro project usage in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsage the faro project usage
-	 */
-	@Override
-	public void cacheResult(FaroProjectUsage faroProjectUsage) {
-		entityCache.putResult(
-			FaroProjectUsageImpl.class, faroProjectUsage.getPrimaryKey(),
-			faroProjectUsage);
-
-		finderCache.putResult(
-			_finderPathFetchByF_U,
-			new Object[] {
-				faroProjectUsage.getFaroProjectId(),
-				faroProjectUsage.getUsageTime()
-			},
-			faroProjectUsage);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro project usages in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectUsages the faro project usages
-	 */
-	@Override
-	public void cacheResult(List<FaroProjectUsage> faroProjectUsages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroProjectUsages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroProjectUsage faroProjectUsage : faroProjectUsages) {
-			if (entityCache.getResult(
-					FaroProjectUsageImpl.class,
-					faroProjectUsage.getPrimaryKey()) == null) {
-
-				cacheResult(faroProjectUsage);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FaroProjectUsageModelImpl faroProjectUsageModelImpl) {
-
-		Object[] args = new Object[] {
-			faroProjectUsageModelImpl.getFaroProjectId(),
-			faroProjectUsageModelImpl.getUsageTime()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByF_U, args, faroProjectUsageModelImpl);
-	}
-
-	/**
 	 * Creates a new faro project usage with the primary key. Does not add the faro project usage to the database.
 	 *
 	 * @param faroProjectUsageId the primary key for the new faro project usage
@@ -342,10 +279,7 @@ public class FaroProjectUsagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroProjectUsageImpl.class, faroProjectUsageModelImpl, false, true);
-
-		cacheUniqueFindersCache(faroProjectUsageModelImpl);
+		cacheUniqueFindersResult(faroProjectUsage, false);
 
 		if (isNew) {
 			faroProjectUsage.setNew(false);
@@ -406,13 +340,11 @@ public class FaroProjectUsagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByF_U = new FinderPath(
+		_finderPathFetchByF_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"faroProjectId", "usageTime"}, true);
+			new String[] {"faroProjectId", "usageTime"}, false,
+			FaroProjectUsage::getFaroProjectId, FaroProjectUsage::getUsageTime);
 
 		_uniquePersistenceFinderByF_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_U, _SQL_SELECT_FAROPROJECTUSAGE_WHERE,
@@ -486,4 +418,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1761986359
+// LIFERAY-SERVICE-BUILDER-HASH:-1259211380

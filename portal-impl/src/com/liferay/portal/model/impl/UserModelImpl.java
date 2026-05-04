@@ -1770,6 +1770,17 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	}
 
 	@Override
+	public void copyCacheFields(User source) {
+		UserModelImpl sourceModelImpl = (UserModelImpl)source;
+
+		setGroupId(sourceModelImpl.getGroupId());
+
+		setLayoutsUpdated(sourceModelImpl.getLayoutsUpdated());
+
+		setUserGroupIds(sourceModelImpl.getUserGroupIds());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -2472,4 +2483,4 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private User _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1353412876
+// LIFERAY-SERVICE-BUILDER-HASH:-1664379508

@@ -1799,20 +1799,6 @@ public interface BackgroundTaskPersistence
 		boolean completed);
 
 	/**
-	 * Caches the background task in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTask the background task
-	 */
-	public void cacheResult(BackgroundTask backgroundTask);
-
-	/**
-	 * Caches the background tasks in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTasks the background tasks
-	 */
-	public void cacheResult(java.util.List<BackgroundTask> backgroundTasks);
-
-	/**
 	 * Creates a new background task with the primary key. Does not add the background task to the database.
 	 *
 	 * @param backgroundTaskId the primary key for the new background task
@@ -1851,4 +1837,4 @@ public interface BackgroundTaskPersistence
 	public BackgroundTask fetchByPrimaryKey(long backgroundTaskId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:86039236
+// LIFERAY-SERVICE-BUILDER-HASH:-1382702280

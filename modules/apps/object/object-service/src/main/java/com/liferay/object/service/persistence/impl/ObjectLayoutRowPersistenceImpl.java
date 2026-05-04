@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -552,45 +549,6 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 	/**
-	 * Caches the object layout row in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRow the object layout row
-	 */
-	@Override
-	public void cacheResult(ObjectLayoutRow objectLayoutRow) {
-		entityCache.putResult(
-			ObjectLayoutRowImpl.class, objectLayoutRow.getPrimaryKey(),
-			objectLayoutRow);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object layout rows in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRows the object layout rows
-	 */
-	@Override
-	public void cacheResult(List<ObjectLayoutRow> objectLayoutRows) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectLayoutRows.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectLayoutRow objectLayoutRow : objectLayoutRows) {
-			if (entityCache.getResult(
-					ObjectLayoutRowImpl.class,
-					objectLayoutRow.getPrimaryKey()) == null) {
-
-				cacheResult(objectLayoutRow);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object layout row with the primary key. Does not add the object layout row to the database.
 	 *
 	 * @param objectLayoutRowId the primary key for the new object layout row
@@ -732,8 +690,7 @@ public class ObjectLayoutRowPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectLayoutRowImpl.class, objectLayoutRowModelImpl, false, true);
+		cacheUniqueFindersResult(objectLayoutRow, false);
 
 		if (isNew) {
 			objectLayoutRow.setNew(false);
@@ -799,9 +756,6 @@ public class ObjectLayoutRowPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -962,4 +916,4 @@ public class ObjectLayoutRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1251979489
+// LIFERAY-SERVICE-BUILDER-HASH:-1388844770

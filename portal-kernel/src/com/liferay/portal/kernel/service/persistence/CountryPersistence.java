@@ -2010,20 +2010,6 @@ public interface CountryPersistence
 		boolean groupFilterEnabled, boolean shippingAllowed);
 
 	/**
-	 * Caches the country in the entity cache if it is enabled.
-	 *
-	 * @param country the country
-	 */
-	public void cacheResult(Country country);
-
-	/**
-	 * Caches the countries in the entity cache if it is enabled.
-	 *
-	 * @param countries the countries
-	 */
-	public void cacheResult(java.util.List<Country> countries);
-
-	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
 	 * @param countryId the primary key for the new country
@@ -2061,4 +2047,4 @@ public interface CountryPersistence
 	public Country fetchByPrimaryKey(long countryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-117704067
+// LIFERAY-SERVICE-BUILDER-HASH:137574531

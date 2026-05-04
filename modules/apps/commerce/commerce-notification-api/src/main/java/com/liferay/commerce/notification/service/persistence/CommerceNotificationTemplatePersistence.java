@@ -795,23 +795,6 @@ public interface CommerceNotificationTemplatePersistence
 	public int filterCountByG_T_E(long groupId, String type, boolean enabled);
 
 	/**
-	 * Caches the commerce notification template in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplate the commerce notification template
-	 */
-	public void cacheResult(
-		CommerceNotificationTemplate commerceNotificationTemplate);
-
-	/**
-	 * Caches the commerce notification templates in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplates the commerce notification templates
-	 */
-	public void cacheResult(
-		java.util.List<CommerceNotificationTemplate>
-			commerceNotificationTemplates);
-
-	/**
 	 * Creates a new commerce notification template with the primary key. Does not add the commerce notification template to the database.
 	 *
 	 * @param commerceNotificationTemplateId the primary key for the new commerce notification template
@@ -855,4 +838,4 @@ public interface CommerceNotificationTemplatePersistence
 		long commerceNotificationTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-940568974
+// LIFERAY-SERVICE-BUILDER-HASH:308400794

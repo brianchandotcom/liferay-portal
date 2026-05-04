@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -646,65 +643,6 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the object field setting in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSetting the object field setting
-	 */
-	@Override
-	public void cacheResult(ObjectFieldSetting objectFieldSetting) {
-		entityCache.putResult(
-			ObjectFieldSettingImpl.class, objectFieldSetting.getPrimaryKey(),
-			objectFieldSetting);
-
-		finderCache.putResult(
-			_finderPathFetchByOFI_N,
-			new Object[] {
-				objectFieldSetting.getObjectFieldId(),
-				objectFieldSetting.getName()
-			},
-			objectFieldSetting);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object field settings in the entity cache if it is enabled.
-	 *
-	 * @param objectFieldSettings the object field settings
-	 */
-	@Override
-	public void cacheResult(List<ObjectFieldSetting> objectFieldSettings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectFieldSettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			if (entityCache.getResult(
-					ObjectFieldSettingImpl.class,
-					objectFieldSetting.getPrimaryKey()) == null) {
-
-				cacheResult(objectFieldSetting);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectFieldSettingModelImpl objectFieldSettingModelImpl) {
-
-		Object[] args = new Object[] {
-			objectFieldSettingModelImpl.getObjectFieldId(),
-			objectFieldSettingModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByOFI_N, args, objectFieldSettingModelImpl);
-	}
-
-	/**
 	 * Creates a new object field setting with the primary key. Does not add the object field setting to the database.
 	 *
 	 * @param objectFieldSettingId the primary key for the new object field setting
@@ -850,11 +788,7 @@ public class ObjectFieldSettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectFieldSettingImpl.class, objectFieldSettingModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(objectFieldSettingModelImpl);
+		cacheUniqueFindersResult(objectFieldSetting, false);
 
 		if (isNew) {
 			objectFieldSetting.setNew(false);
@@ -920,9 +854,6 @@ public class ObjectFieldSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1015,10 +946,11 @@ public class ObjectFieldSettingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectFieldSetting::getObjectFieldId));
 
-		_finderPathFetchByOFI_N = new FinderPath(
+		_finderPathFetchByOFI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByOFI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectFieldId", "name"}, true);
+			new String[] {"objectFieldId", "name"}, false,
+			ObjectFieldSetting::getObjectFieldId, ObjectFieldSetting::getName);
 
 		_uniquePersistenceFinderByOFI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByOFI_N, _SQL_SELECT_OBJECTFIELDSETTING_WHERE,
@@ -1098,4 +1030,4 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-867910713
+// LIFERAY-SERVICE-BUILDER-HASH:-522080485

@@ -580,22 +580,6 @@ public interface ExportImportConfigurationPersistence
 	public int countByG_T_S(long groupId, int type, int status);
 
 	/**
-	 * Caches the export import configuration in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfiguration the export import configuration
-	 */
-	public void cacheResult(
-		ExportImportConfiguration exportImportConfiguration);
-
-	/**
-	 * Caches the export import configurations in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfigurations the export import configurations
-	 */
-	public void cacheResult(
-		java.util.List<ExportImportConfiguration> exportImportConfigurations);
-
-	/**
 	 * Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
 	 *
 	 * @param exportImportConfigurationId the primary key for the new export import configuration
@@ -637,4 +621,4 @@ public interface ExportImportConfigurationPersistence
 		long exportImportConfigurationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1110388716
+// LIFERAY-SERVICE-BUILDER-HASH:287702674

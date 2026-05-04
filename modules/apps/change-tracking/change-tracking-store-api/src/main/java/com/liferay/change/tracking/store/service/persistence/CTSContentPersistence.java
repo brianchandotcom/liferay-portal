@@ -604,20 +604,6 @@ public interface CTSContentPersistence
 		String storeType);
 
 	/**
-	 * Caches the cts content in the entity cache if it is enabled.
-	 *
-	 * @param ctsContent the cts content
-	 */
-	public void cacheResult(CTSContent ctsContent);
-
-	/**
-	 * Caches the cts contents in the entity cache if it is enabled.
-	 *
-	 * @param ctsContents the cts contents
-	 */
-	public void cacheResult(java.util.List<CTSContent> ctsContents);
-
-	/**
 	 * Creates a new cts content with the primary key. Does not add the cts content to the database.
 	 *
 	 * @param ctsContentId the primary key for the new cts content
@@ -655,4 +641,4 @@ public interface CTSContentPersistence
 	public CTSContent fetchByPrimaryKey(long ctsContentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1242497120
+// LIFERAY-SERVICE-BUILDER-HASH:-1636496568

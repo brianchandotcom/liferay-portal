@@ -1030,4 +1030,4 @@ public class AssetCategoryPropertyModelImpl
 	private AssetCategoryProperty _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1339898408
+// LIFERAY-SERVICE-BUILDER-HASH:954439818

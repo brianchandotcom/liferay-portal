@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -690,79 +687,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce shipping option account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRel the commerce shipping option account entry rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel) {
-
-		entityCache.putResult(
-			CommerceShippingOptionAccountEntryRelImpl.class,
-			commerceShippingOptionAccountEntryRel.getPrimaryKey(),
-			commerceShippingOptionAccountEntryRel);
-
-		finderCache.putResult(
-			_finderPathFetchByA_C,
-			new Object[] {
-				commerceShippingOptionAccountEntryRel.getAccountEntryId(),
-				commerceShippingOptionAccountEntryRel.getCommerceChannelId()
-			},
-			commerceShippingOptionAccountEntryRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce shipping option account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRels the commerce shipping option account entry rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceShippingOptionAccountEntryRel>
-			commerceShippingOptionAccountEntryRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceShippingOptionAccountEntryRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceShippingOptionAccountEntryRel
-				commerceShippingOptionAccountEntryRel :
-					commerceShippingOptionAccountEntryRels) {
-
-			if (entityCache.getResult(
-					CommerceShippingOptionAccountEntryRelImpl.class,
-					commerceShippingOptionAccountEntryRel.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commerceShippingOptionAccountEntryRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceShippingOptionAccountEntryRelModelImpl
-			commerceShippingOptionAccountEntryRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceShippingOptionAccountEntryRelModelImpl.getAccountEntryId(),
-			commerceShippingOptionAccountEntryRelModelImpl.
-				getCommerceChannelId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByA_C, args,
-			commerceShippingOptionAccountEntryRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce shipping option account entry rel with the primary key. Does not add the commerce shipping option account entry rel to the database.
 	 *
 	 * @param CommerceShippingOptionAccountEntryRelId the primary key for the new commerce shipping option account entry rel
@@ -920,11 +844,7 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceShippingOptionAccountEntryRelImpl.class,
-			commerceShippingOptionAccountEntryRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceShippingOptionAccountEntryRelModelImpl);
+		cacheUniqueFindersResult(commerceShippingOptionAccountEntryRel, false);
 
 		if (isNew) {
 			commerceShippingOptionAccountEntryRel.setNew(false);
@@ -995,9 +915,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
 			new String[] {
@@ -1103,10 +1020,12 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					CommerceShippingOptionAccountEntryRel::
 						getCommerceShippingOptionKey));
 
-		_finderPathFetchByA_C = new FinderPath(
+		_finderPathFetchByA_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "commerceChannelId"}, true);
+			new String[] {"accountEntryId", "commerceChannelId"}, false,
+			CommerceShippingOptionAccountEntryRel::getAccountEntryId,
+			CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
 
 		_uniquePersistenceFinderByA_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C,
@@ -1193,4 +1112,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:285094605
+// LIFERAY-SERVICE-BUILDER-HASH:-244294519

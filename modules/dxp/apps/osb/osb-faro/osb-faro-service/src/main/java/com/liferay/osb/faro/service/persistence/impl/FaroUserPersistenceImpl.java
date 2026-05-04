@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -1264,75 +1261,6 @@ public class FaroUserPersistenceImpl
 	}
 
 	/**
-	 * Caches the faro user in the entity cache if it is enabled.
-	 *
-	 * @param faroUser the faro user
-	 */
-	@Override
-	public void cacheResult(FaroUser faroUser) {
-		entityCache.putResult(
-			FaroUserImpl.class, faroUser.getPrimaryKey(), faroUser);
-
-		finderCache.putResult(
-			_finderPathFetchByKey, new Object[] {faroUser.getKey()}, faroUser);
-
-		finderCache.putResult(
-			_finderPathFetchByG_L,
-			new Object[] {faroUser.getGroupId(), faroUser.getLiveUserId()},
-			faroUser);
-
-		finderCache.putResult(
-			_finderPathFetchByG_E,
-			new Object[] {faroUser.getGroupId(), faroUser.getEmailAddress()},
-			faroUser);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro users in the entity cache if it is enabled.
-	 *
-	 * @param faroUsers the faro users
-	 */
-	@Override
-	public void cacheResult(List<FaroUser> faroUsers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroUsers.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroUser faroUser : faroUsers) {
-			if (entityCache.getResult(
-					FaroUserImpl.class, faroUser.getPrimaryKey()) == null) {
-
-				cacheResult(faroUser);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FaroUserModelImpl faroUserModelImpl) {
-
-		Object[] args = new Object[] {faroUserModelImpl.getKey()};
-
-		finderCache.putResult(_finderPathFetchByKey, args, faroUserModelImpl);
-
-		args = new Object[] {
-			faroUserModelImpl.getGroupId(), faroUserModelImpl.getLiveUserId()
-		};
-
-		finderCache.putResult(_finderPathFetchByG_L, args, faroUserModelImpl);
-
-		args = new Object[] {
-			faroUserModelImpl.getGroupId(), faroUserModelImpl.getEmailAddress()
-		};
-
-		finderCache.putResult(_finderPathFetchByG_E, args, faroUserModelImpl);
-	}
-
-	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
 	 * @param faroUserId the primary key for the new faro user
@@ -1433,10 +1361,7 @@ public class FaroUserPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroUserImpl.class, faroUserModelImpl, false, true);
-
-		cacheUniqueFindersCache(faroUserModelImpl);
+		cacheUniqueFindersResult(faroUser, false);
 
 		if (isNew) {
 			faroUser.setNew(false);
@@ -1502,9 +1427,6 @@ public class FaroUserPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1563,9 +1485,10 @@ public class FaroUserPersistenceImpl
 					"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=",
 					true, true, FaroUser::getLiveUserId));
 
-		_finderPathFetchByKey = new FinderPath(
+		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, true);
+			new String[] {String.class.getName()}, new String[] {"key_"}, false,
+			FaroUser::getKey);
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKey, _SQL_SELECT_FAROUSER_WHERE,
@@ -1573,10 +1496,11 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "key", FinderColumn.Type.STRING, "=", true, true,
 				FaroUser::getKey));
 
-		_finderPathFetchByG_L = new FinderPath(
+		_finderPathFetchByG_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "liveUserId"}, true);
+			new String[] {"groupId", "liveUserId"}, false, FaroUser::getGroupId,
+			FaroUser::getLiveUserId);
 
 		_uniquePersistenceFinderByG_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_L, _SQL_SELECT_FAROUSER_WHERE,
@@ -1618,10 +1542,11 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "roleId", FinderColumn.Type.LONG, "=", true, true,
 				FaroUser::getRoleId));
 
-		_finderPathFetchByG_E = new FinderPath(
+		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "emailAddress"}, true);
+			new String[] {"groupId", "emailAddress"}, false,
+			FaroUser::getGroupId, FaroUser::getEmailAddress);
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_E, _SQL_SELECT_FAROUSER_WHERE,
@@ -1794,4 +1719,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1289166211
+// LIFERAY-SERVICE-BUILDER-HASH:-183233419

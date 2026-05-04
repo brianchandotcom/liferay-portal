@@ -447,20 +447,6 @@ public interface KBTemplatePersistence
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	 * Caches the kb template in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplate the kb template
-	 */
-	public void cacheResult(KBTemplate kbTemplate);
-
-	/**
-	 * Caches the kb templates in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplates the kb templates
-	 */
-	public void cacheResult(java.util.List<KBTemplate> kbTemplates);
-
-	/**
 	 * Creates a new kb template with the primary key. Does not add the kb template to the database.
 	 *
 	 * @param kbTemplateId the primary key for the new kb template
@@ -498,4 +484,4 @@ public interface KBTemplatePersistence
 	public KBTemplate fetchByPrimaryKey(long kbTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-974130350
+// LIFERAY-SERVICE-BUILDER-HASH:1753121174

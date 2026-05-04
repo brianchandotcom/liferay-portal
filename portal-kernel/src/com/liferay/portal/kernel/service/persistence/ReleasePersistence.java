@@ -76,20 +76,6 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	public int countByServletContextName(String servletContextName);
 
 	/**
-	 * Caches the release in the entity cache if it is enabled.
-	 *
-	 * @param release the release
-	 */
-	public void cacheResult(Release release);
-
-	/**
-	 * Caches the releases in the entity cache if it is enabled.
-	 *
-	 * @param releases the releases
-	 */
-	public void cacheResult(java.util.List<Release> releases);
-
-	/**
 	 * Creates a new release with the primary key. Does not add the release to the database.
 	 *
 	 * @param releaseId the primary key for the new release
@@ -127,4 +113,4 @@ public interface ReleasePersistence extends BasePersistence<Release> {
 	public Release fetchByPrimaryKey(long releaseId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1145559103
+// LIFERAY-SERVICE-BUILDER-HASH:-1249948843

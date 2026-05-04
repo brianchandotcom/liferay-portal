@@ -694,20 +694,6 @@ public interface LaunchSetPersistence extends BasePersistence<LaunchSet> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the launch set in the entity cache if it is enabled.
-	 *
-	 * @param launchSet the launch set
-	 */
-	public void cacheResult(LaunchSet launchSet);
-
-	/**
-	 * Caches the launch sets in the entity cache if it is enabled.
-	 *
-	 * @param launchSets the launch sets
-	 */
-	public void cacheResult(java.util.List<LaunchSet> launchSets);
-
-	/**
 	 * Creates a new launch set with the primary key. Does not add the launch set to the database.
 	 *
 	 * @param launchSetId the primary key for the new launch set
@@ -745,4 +731,4 @@ public interface LaunchSetPersistence extends BasePersistence<LaunchSet> {
 	public LaunchSet fetchByPrimaryKey(long launchSetId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500973728
+// LIFERAY-SERVICE-BUILDER-HASH:-1073744228

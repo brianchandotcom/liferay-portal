@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -487,73 +484,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the account entry organization rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRel the account entry organization rel
-	 */
-	@Override
-	public void cacheResult(
-		AccountEntryOrganizationRel accountEntryOrganizationRel) {
-
-		entityCache.putResult(
-			AccountEntryOrganizationRelImpl.class,
-			accountEntryOrganizationRel.getPrimaryKey(),
-			accountEntryOrganizationRel);
-
-		finderCache.putResult(
-			_finderPathFetchByA_O,
-			new Object[] {
-				accountEntryOrganizationRel.getAccountEntryId(),
-				accountEntryOrganizationRel.getOrganizationId()
-			},
-			accountEntryOrganizationRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account entry organization rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRels the account entry organization rels
-	 */
-	@Override
-	public void cacheResult(
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountEntryOrganizationRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
-
-			if (entityCache.getResult(
-					AccountEntryOrganizationRelImpl.class,
-					accountEntryOrganizationRel.getPrimaryKey()) == null) {
-
-				cacheResult(accountEntryOrganizationRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountEntryOrganizationRelModelImpl
-			accountEntryOrganizationRelModelImpl) {
-
-		Object[] args = new Object[] {
-			accountEntryOrganizationRelModelImpl.getAccountEntryId(),
-			accountEntryOrganizationRelModelImpl.getOrganizationId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByA_O, args, accountEntryOrganizationRelModelImpl);
-	}
-
-	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
 	 * @param accountEntryOrganizationRelId the primary key for the new account entry organization rel
@@ -678,11 +608,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountEntryOrganizationRelImpl.class,
-			accountEntryOrganizationRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(accountEntryOrganizationRelModelImpl);
+		cacheUniqueFindersResult(accountEntryOrganizationRel, false);
 
 		if (isNew) {
 			accountEntryOrganizationRel.setNew(false);
@@ -746,9 +672,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
 			new String[] {
@@ -813,10 +736,12 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryOrganizationRel::getOrganizationId));
 
-		_finderPathFetchByA_O = new FinderPath(
+		_finderPathFetchByA_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "organizationId"}, true);
+			new String[] {"accountEntryId", "organizationId"}, false,
+			AccountEntryOrganizationRel::getAccountEntryId,
+			AccountEntryOrganizationRel::getOrganizationId);
 
 		_uniquePersistenceFinderByA_O = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_O,
@@ -897,4 +822,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-15325327
+// LIFERAY-SERVICE-BUILDER-HASH:-1936534756

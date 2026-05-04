@@ -307,21 +307,6 @@ public interface CommerceTermEntryRelPersistence
 		long classNameId, long classPK, long commerceTermEntryId);
 
 	/**
-	 * Caches the commerce term entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntryRel the commerce term entry rel
-	 */
-	public void cacheResult(CommerceTermEntryRel commerceTermEntryRel);
-
-	/**
-	 * Caches the commerce term entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntryRels the commerce term entry rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTermEntryRel> commerceTermEntryRels);
-
-	/**
 	 * Creates a new commerce term entry rel with the primary key. Does not add the commerce term entry rel to the database.
 	 *
 	 * @param commerceTermEntryRelId the primary key for the new commerce term entry rel
@@ -361,4 +346,4 @@ public interface CommerceTermEntryRelPersistence
 	public CommerceTermEntryRel fetchByPrimaryKey(long commerceTermEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2056238256
+// LIFERAY-SERVICE-BUILDER-HASH:1976533420

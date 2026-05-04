@@ -25,16 +25,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -168,53 +164,6 @@ public class CTScorePersistenceImpl
 	}
 
 	/**
-	 * Caches the ct score in the entity cache if it is enabled.
-	 *
-	 * @param ctScore the ct score
-	 */
-	@Override
-	public void cacheResult(CTScore ctScore) {
-		entityCache.putResult(
-			CTScoreImpl.class, ctScore.getPrimaryKey(), ctScore);
-
-		finderCache.putResult(
-			_finderPathFetchByCtCollectionId,
-			new Object[] {ctScore.getCtCollectionId()}, ctScore);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct scores in the entity cache if it is enabled.
-	 *
-	 * @param ctScores the ct scores
-	 */
-	@Override
-	public void cacheResult(List<CTScore> ctScores) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctScores.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTScore ctScore : ctScores) {
-			if (entityCache.getResult(
-					CTScoreImpl.class, ctScore.getPrimaryKey()) == null) {
-
-				cacheResult(ctScore);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CTScoreModelImpl ctScoreModelImpl) {
-		Object[] args = new Object[] {ctScoreModelImpl.getCtCollectionId()};
-
-		finderCache.putResult(
-			_finderPathFetchByCtCollectionId, args, ctScoreModelImpl);
-	}
-
-	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
 	 * @param ctScoreId the primary key for the new ct score
@@ -315,9 +264,7 @@ public class CTScorePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(CTScoreImpl.class, ctScoreModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctScoreModelImpl);
+		cacheUniqueFindersResult(ctScore, false);
 
 		if (isNew) {
 			ctScore.setNew(false);
@@ -378,13 +325,10 @@ public class CTScorePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByCtCollectionId = new FinderPath(
+		_finderPathFetchByCtCollectionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCtCollectionId",
 			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
+			new String[] {"ctCollectionId"}, false, CTScore::getCtCollectionId);
 
 		_uniquePersistenceFinderByCtCollectionId =
 			new UniquePersistenceFinder<>(
@@ -457,4 +401,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1022951868
+// LIFERAY-SERVICE-BUILDER-HASH:-156742839

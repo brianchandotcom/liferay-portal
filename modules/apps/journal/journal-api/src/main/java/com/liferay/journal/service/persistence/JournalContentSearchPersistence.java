@@ -1016,21 +1016,6 @@ public interface JournalContentSearchPersistence
 		String articleId);
 
 	/**
-	 * Caches the journal content search in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearch the journal content search
-	 */
-	public void cacheResult(JournalContentSearch journalContentSearch);
-
-	/**
-	 * Caches the journal content searches in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearchs the journal content searches
-	 */
-	public void cacheResult(
-		java.util.List<JournalContentSearch> journalContentSearchs);
-
-	/**
 	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
 	 *
 	 * @param contentSearchId the primary key for the new journal content search
@@ -1070,4 +1055,4 @@ public interface JournalContentSearchPersistence
 	public JournalContentSearch fetchByPrimaryKey(long contentSearchId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-854440734
+// LIFERAY-SERVICE-BUILDER-HASH:-454767876

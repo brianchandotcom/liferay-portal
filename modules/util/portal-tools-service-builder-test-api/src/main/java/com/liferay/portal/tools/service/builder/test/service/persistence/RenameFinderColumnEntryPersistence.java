@@ -78,21 +78,6 @@ public interface RenameFinderColumnEntryPersistence
 	public int countByColumnToRename(String columnToRename);
 
 	/**
-	 * Caches the rename finder column entry in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntry the rename finder column entry
-	 */
-	public void cacheResult(RenameFinderColumnEntry renameFinderColumnEntry);
-
-	/**
-	 * Caches the rename finder column entries in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntries the rename finder column entries
-	 */
-	public void cacheResult(
-		java.util.List<RenameFinderColumnEntry> renameFinderColumnEntries);
-
-	/**
 	 * Creates a new rename finder column entry with the primary key. Does not add the rename finder column entry to the database.
 	 *
 	 * @param renameFinderColumnEntryId the primary key for the new rename finder column entry
@@ -134,4 +119,4 @@ public interface RenameFinderColumnEntryPersistence
 		long renameFinderColumnEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1643154588
+// LIFERAY-SERVICE-BUILDER-HASH:1538647586

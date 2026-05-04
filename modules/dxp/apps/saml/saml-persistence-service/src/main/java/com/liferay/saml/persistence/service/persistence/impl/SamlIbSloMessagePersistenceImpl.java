@@ -19,9 +19,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.saml.persistence.exception.NoSuchIbSloMessageException;
 import com.liferay.saml.persistence.model.SamlIbSloMessage;
@@ -37,7 +34,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -179,62 +175,6 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 	/**
-	 * Caches the saml ib slo message in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessage the saml ib slo message
-	 */
-	@Override
-	public void cacheResult(SamlIbSloMessage samlIbSloMessage) {
-		entityCache.putResult(
-			SamlIbSloMessageImpl.class, samlIbSloMessage.getPrimaryKey(),
-			samlIbSloMessage);
-
-		finderCache.putResult(
-			_finderPathFetchBySamlIdpSessionIndex,
-			new Object[] {samlIbSloMessage.getSamlIdpSessionIndex()},
-			samlIbSloMessage);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saml ib slo messages in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessages the saml ib slo messages
-	 */
-	@Override
-	public void cacheResult(List<SamlIbSloMessage> samlIbSloMessages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (samlIbSloMessages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SamlIbSloMessage samlIbSloMessage : samlIbSloMessages) {
-			if (entityCache.getResult(
-					SamlIbSloMessageImpl.class,
-					samlIbSloMessage.getPrimaryKey()) == null) {
-
-				cacheResult(samlIbSloMessage);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SamlIbSloMessageModelImpl samlIbSloMessageModelImpl) {
-
-		Object[] args = new Object[] {
-			samlIbSloMessageModelImpl.getSamlIdpSessionIndex()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchBySamlIdpSessionIndex, args,
-			samlIbSloMessageModelImpl);
-	}
-
-	/**
 	 * Creates a new saml ib slo message with the primary key. Does not add the saml ib slo message to the database.
 	 *
 	 * @param samlIbSloMessageId the primary key for the new saml ib slo message
@@ -356,10 +296,7 @@ public class SamlIbSloMessagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SamlIbSloMessageImpl.class, samlIbSloMessageModelImpl, false, true);
-
-		cacheUniqueFindersCache(samlIbSloMessageModelImpl);
+		cacheUniqueFindersResult(samlIbSloMessage, false);
 
 		if (isNew) {
 			samlIbSloMessage.setNew(false);
@@ -420,13 +357,11 @@ public class SamlIbSloMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchBySamlIdpSessionIndex = new FinderPath(
+		_finderPathFetchBySamlIdpSessionIndex = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSessionIndex",
 			new String[] {String.class.getName()},
-			new String[] {"samlIdpSessionIndex"}, true);
+			new String[] {"samlIdpSessionIndex"}, false,
+			SamlIbSloMessage::getSamlIdpSessionIndex);
 
 		_uniquePersistenceFinderBySamlIdpSessionIndex =
 			new UniquePersistenceFinder<>(
@@ -500,4 +435,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:34512378
+// LIFERAY-SERVICE-BUILDER-HASH:-938103191

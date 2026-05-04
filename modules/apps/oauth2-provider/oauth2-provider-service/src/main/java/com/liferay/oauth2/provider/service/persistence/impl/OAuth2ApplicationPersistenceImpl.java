@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1815,81 +1813,6 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth2 application in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Application the o auth2 application
-	 */
-	@Override
-	public void cacheResult(OAuth2Application oAuth2Application) {
-		entityCache.putResult(
-			OAuth2ApplicationImpl.class, oAuth2Application.getPrimaryKey(),
-			oAuth2Application);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				oAuth2Application.getCompanyId(),
-				oAuth2Application.getClientId()
-			},
-			oAuth2Application);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				oAuth2Application.getExternalReferenceCode(),
-				oAuth2Application.getCompanyId()
-			},
-			oAuth2Application);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth2 applications in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Applications the o auth2 applications
-	 */
-	@Override
-	public void cacheResult(List<OAuth2Application> oAuth2Applications) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuth2Applications.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuth2Application oAuth2Application : oAuth2Applications) {
-			if (entityCache.getResult(
-					OAuth2ApplicationImpl.class,
-					oAuth2Application.getPrimaryKey()) == null) {
-
-				cacheResult(oAuth2Application);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuth2ApplicationModelImpl oAuth2ApplicationModelImpl) {
-
-		Object[] args = new Object[] {
-			oAuth2ApplicationModelImpl.getCompanyId(),
-			oAuth2ApplicationModelImpl.getClientId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, oAuth2ApplicationModelImpl);
-
-		args = new Object[] {
-			oAuth2ApplicationModelImpl.getExternalReferenceCode(),
-			oAuth2ApplicationModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, oAuth2ApplicationModelImpl);
-	}
-
-	/**
 	 * Creates a new o auth2 application with the primary key. Does not add the o auth2 application to the database.
 	 *
 	 * @param oAuth2ApplicationId the primary key for the new o auth2 application
@@ -2099,11 +2022,7 @@ public class OAuth2ApplicationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuth2ApplicationImpl.class, oAuth2ApplicationModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(oAuth2ApplicationModelImpl);
+		cacheUniqueFindersResult(oAuth2Application, false);
 
 		if (isNew) {
 			oAuth2Application.setNew(false);
@@ -2169,9 +2088,6 @@ public class OAuth2ApplicationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2263,10 +2179,11 @@ public class OAuth2ApplicationPersistenceImpl
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "clientId"}, true);
+			new String[] {"companyId", "clientId"}, false,
+			OAuth2Application::getCompanyId, OAuth2Application::getClientId);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
@@ -2310,10 +2227,12 @@ public class OAuth2ApplicationPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				OAuth2Application::getClientProfile));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			OAuth2Application::getExternalReferenceCode,
+			OAuth2Application::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
@@ -2417,4 +2336,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-654519234
+// LIFERAY-SERVICE-BUILDER-HASH:944919123

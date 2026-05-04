@@ -186,20 +186,6 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the akismet entry in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntry the akismet entry
-	 */
-	public void cacheResult(AkismetEntry akismetEntry);
-
-	/**
-	 * Caches the akismet entries in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntries the akismet entries
-	 */
-	public void cacheResult(java.util.List<AkismetEntry> akismetEntries);
-
-	/**
 	 * Creates a new akismet entry with the primary key. Does not add the akismet entry to the database.
 	 *
 	 * @param akismetEntryId the primary key for the new akismet entry
@@ -238,4 +224,4 @@ public interface AkismetEntryPersistence extends BasePersistence<AkismetEntry> {
 	public AkismetEntry fetchByPrimaryKey(long akismetEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1740171817
+// LIFERAY-SERVICE-BUILDER-HASH:2109373459

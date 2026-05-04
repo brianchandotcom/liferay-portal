@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPInstanceUnitOfMeasureP
 import com.liferay.commerce.product.service.persistence.CPInstanceUnitOfMeasureUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1380,85 +1376,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 	/**
-	 * Caches the cp instance unit of measure in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasure the cp instance unit of measure
-	 */
-	@Override
-	public void cacheResult(CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpInstanceUnitOfMeasure.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPInstanceUnitOfMeasureImpl.class,
-				cpInstanceUnitOfMeasure.getPrimaryKey(),
-				cpInstanceUnitOfMeasure);
-
-			finderCache.putResult(
-				_finderPathFetchByC_K,
-				new Object[] {
-					cpInstanceUnitOfMeasure.getCPInstanceId(),
-					cpInstanceUnitOfMeasure.getKey()
-				},
-				cpInstanceUnitOfMeasure);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp instance unit of measures in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasures the cp instance unit of measures
-	 */
-	@Override
-	public void cacheResult(
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpInstanceUnitOfMeasures.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
-				cpInstanceUnitOfMeasures) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpInstanceUnitOfMeasure.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPInstanceUnitOfMeasureImpl.class,
-						cpInstanceUnitOfMeasure.getPrimaryKey()) == null) {
-
-					cacheResult(cpInstanceUnitOfMeasure);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPInstanceUnitOfMeasureModelImpl cpInstanceUnitOfMeasureModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpInstanceUnitOfMeasureModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpInstanceUnitOfMeasureModelImpl.getCPInstanceId(),
-				cpInstanceUnitOfMeasureModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_K, args, cpInstanceUnitOfMeasureModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *
 	 * @param CPInstanceUnitOfMeasureId the primary key for the new cp instance unit of measure
@@ -1616,11 +1533,7 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPInstanceUnitOfMeasureImpl.class, cpInstanceUnitOfMeasureModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cpInstanceUnitOfMeasureModelImpl);
+		cacheUniqueFindersResult(cpInstanceUnitOfMeasure, false);
 
 		if (isNew) {
 			cpInstanceUnitOfMeasure.setNew(false);
@@ -1765,9 +1678,6 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1933,10 +1843,12 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 				"cpInstanceUnitOfMeasure.", "active", FinderColumn.Type.BOOLEAN,
 				"=", true, true, CPInstanceUnitOfMeasure::isActive));
 
-		_finderPathFetchByC_K = new FinderPath(
+		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPInstanceId", "key_"}, true);
+			new String[] {"CPInstanceId", "key_"}, false,
+			CPInstanceUnitOfMeasure::getCPInstanceId,
+			CPInstanceUnitOfMeasure::getKey);
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K,
@@ -2101,4 +2013,4 @@ public class CPInstanceUnitOfMeasurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086159215
+// LIFERAY-SERVICE-BUILDER-HASH:-1908867124

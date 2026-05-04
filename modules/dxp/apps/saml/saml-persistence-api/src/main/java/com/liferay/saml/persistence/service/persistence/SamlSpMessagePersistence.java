@@ -193,20 +193,6 @@ public interface SamlSpMessagePersistence
 		String samlIdpEntityId, String samlIdpResponseKey);
 
 	/**
-	 * Caches the saml sp message in the entity cache if it is enabled.
-	 *
-	 * @param samlSpMessage the saml sp message
-	 */
-	public void cacheResult(SamlSpMessage samlSpMessage);
-
-	/**
-	 * Caches the saml sp messages in the entity cache if it is enabled.
-	 *
-	 * @param samlSpMessages the saml sp messages
-	 */
-	public void cacheResult(java.util.List<SamlSpMessage> samlSpMessages);
-
-	/**
 	 * Creates a new saml sp message with the primary key. Does not add the saml sp message to the database.
 	 *
 	 * @param samlSpMessageId the primary key for the new saml sp message
@@ -245,4 +231,4 @@ public interface SamlSpMessagePersistence
 	public SamlSpMessage fetchByPrimaryKey(long samlSpMessageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1616290138
+// LIFERAY-SERVICE-BUILDER-HASH:-418121314

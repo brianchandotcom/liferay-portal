@@ -36,6 +36,20 @@ public class DDMFieldUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMField> ddmFields) {
+		getPersistence().cacheResult(ddmFields);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMField ddmField) {
+		getPersistence().cacheResult(ddmField);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -682,24 +696,6 @@ public class DDMFieldUtil {
 	}
 
 	/**
-	 * Caches the ddm field in the entity cache if it is enabled.
-	 *
-	 * @param ddmField the ddm field
-	 */
-	public static void cacheResult(DDMField ddmField) {
-		getPersistence().cacheResult(ddmField);
-	}
-
-	/**
-	 * Caches the ddm fields in the entity cache if it is enabled.
-	 *
-	 * @param ddmFields the ddm fields
-	 */
-	public static void cacheResult(List<DDMField> ddmFields) {
-		getPersistence().cacheResult(ddmFields);
-	}
-
-	/**
 	 * Creates a new ddm field with the primary key. Does not add the ddm field to the database.
 	 *
 	 * @param fieldId the primary key for the new ddm field
@@ -760,4 +756,4 @@ public class DDMFieldUtil {
 	private static volatile DDMFieldPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-368298830
+// LIFERAY-SERVICE-BUILDER-HASH:-1374439518

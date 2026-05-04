@@ -1215,20 +1215,6 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the lv entry in the entity cache if it is enabled.
-	 *
-	 * @param lvEntry the lv entry
-	 */
-	public void cacheResult(LVEntry lvEntry);
-
-	/**
-	 * Caches the lv entries in the entity cache if it is enabled.
-	 *
-	 * @param lvEntries the lv entries
-	 */
-	public void cacheResult(java.util.List<LVEntry> lvEntries);
-
-	/**
 	 * Creates a new lv entry with the primary key. Does not add the lv entry to the database.
 	 *
 	 * @param lvEntryId the primary key for the new lv entry
@@ -1455,4 +1441,4 @@ public interface LVEntryPersistence extends BasePersistence<LVEntry> {
 				BigDecimalEntry> bigDecimalEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:847875423
+// LIFERAY-SERVICE-BUILDER-HASH:1084768369

@@ -36,6 +36,20 @@ public class OAuth2ScopeGrantUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
+		getPersistence().cacheResult(oAuth2ScopeGrants);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant) {
+		getPersistence().cacheResult(oAuth2ScopeGrant);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -348,24 +362,6 @@ public class OAuth2ScopeGrantUtil {
 	}
 
 	/**
-	 * Caches the o auth2 scope grant in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 */
-	public static void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		getPersistence().cacheResult(oAuth2ScopeGrant);
-	}
-
-	/**
-	 * Caches the o auth2 scope grants in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrants the o auth2 scope grants
-	 */
-	public static void cacheResult(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
-		getPersistence().cacheResult(oAuth2ScopeGrants);
-	}
-
-	/**
 	 * Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	 *
 	 * @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
@@ -673,4 +669,4 @@ public class OAuth2ScopeGrantUtil {
 	private static volatile OAuth2ScopeGrantPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1515839743
+// LIFERAY-SERVICE-BUILDER-HASH:431517725

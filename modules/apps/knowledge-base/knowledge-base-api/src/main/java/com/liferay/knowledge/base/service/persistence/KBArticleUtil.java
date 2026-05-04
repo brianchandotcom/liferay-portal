@@ -37,6 +37,20 @@ public class KBArticleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KBArticle> kbArticles) {
+		getPersistence().cacheResult(kbArticles);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KBArticle kbArticle) {
+		getPersistence().cacheResult(kbArticle);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -14486,24 +14500,6 @@ public class KBArticleUtil {
 	}
 
 	/**
-	 * Caches the kb article in the entity cache if it is enabled.
-	 *
-	 * @param kbArticle the kb article
-	 */
-	public static void cacheResult(KBArticle kbArticle) {
-		getPersistence().cacheResult(kbArticle);
-	}
-
-	/**
-	 * Caches the kb articles in the entity cache if it is enabled.
-	 *
-	 * @param kbArticles the kb articles
-	 */
-	public static void cacheResult(List<KBArticle> kbArticles) {
-		getPersistence().cacheResult(kbArticles);
-	}
-
-	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *
 	 * @param kbArticleId the primary key for the new kb article
@@ -14564,4 +14560,4 @@ public class KBArticleUtil {
 	private static volatile KBArticlePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:798540763
+// LIFERAY-SERVICE-BUILDER-HASH:-1434943687

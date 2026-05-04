@@ -36,6 +36,20 @@ public class ObjectStateFlowUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectStateFlow> objectStateFlows) {
+		getPersistence().cacheResult(objectStateFlows);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectStateFlow objectStateFlow) {
+		getPersistence().cacheResult(objectStateFlow);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -421,24 +435,6 @@ public class ObjectStateFlowUtil {
 	}
 
 	/**
-	 * Caches the object state flow in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlow the object state flow
-	 */
-	public static void cacheResult(ObjectStateFlow objectStateFlow) {
-		getPersistence().cacheResult(objectStateFlow);
-	}
-
-	/**
-	 * Caches the object state flows in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlows the object state flows
-	 */
-	public static void cacheResult(List<ObjectStateFlow> objectStateFlows) {
-		getPersistence().cacheResult(objectStateFlows);
-	}
-
-	/**
 	 * Creates a new object state flow with the primary key. Does not add the object state flow to the database.
 	 *
 	 * @param objectStateFlowId the primary key for the new object state flow
@@ -499,4 +495,4 @@ public class ObjectStateFlowUtil {
 	private static volatile ObjectStateFlowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1917736677
+// LIFERAY-SERVICE-BUILDER-HASH:78988535

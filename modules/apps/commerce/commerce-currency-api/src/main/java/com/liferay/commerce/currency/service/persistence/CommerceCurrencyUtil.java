@@ -36,6 +36,20 @@ public class CommerceCurrencyUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceCurrency> commerceCurrencies) {
+		getPersistence().cacheResult(commerceCurrencies);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceCurrency commerceCurrency) {
+		getPersistence().cacheResult(commerceCurrency);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1030,24 +1044,6 @@ public class CommerceCurrencyUtil {
 	}
 
 	/**
-	 * Caches the commerce currency in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrency the commerce currency
-	 */
-	public static void cacheResult(CommerceCurrency commerceCurrency) {
-		getPersistence().cacheResult(commerceCurrency);
-	}
-
-	/**
-	 * Caches the commerce currencies in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrencies the commerce currencies
-	 */
-	public static void cacheResult(List<CommerceCurrency> commerceCurrencies) {
-		getPersistence().cacheResult(commerceCurrencies);
-	}
-
-	/**
 	 * Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
 	 *
 	 * @param commerceCurrencyId the primary key for the new commerce currency
@@ -1110,4 +1106,4 @@ public class CommerceCurrencyUtil {
 	private static volatile CommerceCurrencyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1457806246
+// LIFERAY-SERVICE-BUILDER-HASH:1831012517

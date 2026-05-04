@@ -15,7 +15,6 @@ import com.liferay.calendar.service.persistence.CalendarUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1336,73 +1332,6 @@ public class CalendarPersistenceImpl
 	}
 
 	/**
-	 * Caches the calendar in the entity cache if it is enabled.
-	 *
-	 * @param calendar the calendar
-	 */
-	@Override
-	public void cacheResult(Calendar calendar) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendar.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CalendarImpl.class, calendar.getPrimaryKey(), calendar);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {calendar.getUuid(), calendar.getGroupId()},
-				calendar);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the calendars in the entity cache if it is enabled.
-	 *
-	 * @param calendars the calendars
-	 */
-	@Override
-	public void cacheResult(List<Calendar> calendars) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (calendars.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Calendar calendar : calendars) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						calendar.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CalendarImpl.class, calendar.getPrimaryKey()) == null) {
-
-					cacheResult(calendar);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CalendarModelImpl calendarModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				calendarModelImpl.getUuid(), calendarModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, calendarModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new calendar with the primary key. Does not add the calendar to the database.
 	 *
 	 * @param calendarId the primary key for the new calendar
@@ -1541,10 +1470,7 @@ public class CalendarPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CalendarImpl.class, calendarModelImpl, false, true);
-
-		cacheUniqueFindersCache(calendarModelImpl);
+		cacheUniqueFindersResult(calendar, false);
 
 		if (isNew) {
 			calendar.setNew(false);
@@ -1684,9 +1610,6 @@ public class CalendarPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1714,10 +1637,11 @@ public class CalendarPersistenceImpl
 				"calendar.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Calendar::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Calendar::getUuid,
+			Calendar::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDAR_WHERE,
@@ -1930,4 +1854,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1614542560
+// LIFERAY-SERVICE-BUILDER-HASH:440653753

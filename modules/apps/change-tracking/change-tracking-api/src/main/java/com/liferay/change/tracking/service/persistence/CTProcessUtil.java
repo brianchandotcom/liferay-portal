@@ -36,6 +36,20 @@ public class CTProcessUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTProcess> ctProcesses) {
+		getPersistence().cacheResult(ctProcesses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTProcess ctProcess) {
+		getPersistence().cacheResult(ctProcess);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -673,24 +687,6 @@ public class CTProcessUtil {
 	}
 
 	/**
-	 * Caches the ct process in the entity cache if it is enabled.
-	 *
-	 * @param ctProcess the ct process
-	 */
-	public static void cacheResult(CTProcess ctProcess) {
-		getPersistence().cacheResult(ctProcess);
-	}
-
-	/**
-	 * Caches the ct processes in the entity cache if it is enabled.
-	 *
-	 * @param ctProcesses the ct processes
-	 */
-	public static void cacheResult(List<CTProcess> ctProcesses) {
-		getPersistence().cacheResult(ctProcesses);
-	}
-
-	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *
 	 * @param ctProcessId the primary key for the new ct process
@@ -751,4 +747,4 @@ public class CTProcessUtil {
 	private static volatile CTProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1976792363
+// LIFERAY-SERVICE-BUILDER-HASH:1880273688

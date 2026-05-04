@@ -183,20 +183,6 @@ public interface CTRemotePersistence extends BasePersistence<CTRemote> {
 	public int filterCountByCompanyId(long companyId);
 
 	/**
-	 * Caches the ct remote in the entity cache if it is enabled.
-	 *
-	 * @param ctRemote the ct remote
-	 */
-	public void cacheResult(CTRemote ctRemote);
-
-	/**
-	 * Caches the ct remotes in the entity cache if it is enabled.
-	 *
-	 * @param ctRemotes the ct remotes
-	 */
-	public void cacheResult(java.util.List<CTRemote> ctRemotes);
-
-	/**
 	 * Creates a new ct remote with the primary key. Does not add the ct remote to the database.
 	 *
 	 * @param ctRemoteId the primary key for the new ct remote
@@ -234,4 +220,4 @@ public interface CTRemotePersistence extends BasePersistence<CTRemote> {
 	public CTRemote fetchByPrimaryKey(long ctRemoteId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1679995411
+// LIFERAY-SERVICE-BUILDER-HASH:-222183131

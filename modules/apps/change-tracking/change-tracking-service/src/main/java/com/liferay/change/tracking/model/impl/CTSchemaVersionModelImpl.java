@@ -623,4 +623,4 @@ public class CTSchemaVersionModelImpl
 	private CTSchemaVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-872079264
+// LIFERAY-SERVICE-BUILDER-HASH:-1308483744

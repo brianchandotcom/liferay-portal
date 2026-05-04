@@ -36,6 +36,22 @@ public class FragmentEntryVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FragmentEntryVersion> fragmentEntryVersions) {
+
+		getPersistence().cacheResult(fragmentEntryVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FragmentEntryVersion fragmentEntryVersion) {
+		getPersistence().cacheResult(fragmentEntryVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3951,26 +3967,6 @@ public class FragmentEntryVersionUtil {
 	}
 
 	/**
-	 * Caches the fragment entry version in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersion the fragment entry version
-	 */
-	public static void cacheResult(FragmentEntryVersion fragmentEntryVersion) {
-		getPersistence().cacheResult(fragmentEntryVersion);
-	}
-
-	/**
-	 * Caches the fragment entry versions in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryVersions the fragment entry versions
-	 */
-	public static void cacheResult(
-		List<FragmentEntryVersion> fragmentEntryVersions) {
-
-		getPersistence().cacheResult(fragmentEntryVersions);
-	}
-
-	/**
 	 * Creates a new fragment entry version with the primary key. Does not add the fragment entry version to the database.
 	 *
 	 * @param fragmentEntryVersionId the primary key for the new fragment entry version
@@ -4038,4 +4034,4 @@ public class FragmentEntryVersionUtil {
 	private static volatile FragmentEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1143255565
+// LIFERAY-SERVICE-BUILDER-HASH:-424037037

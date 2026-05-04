@@ -605,21 +605,6 @@ public interface CPOptionCategoryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp option category in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategory the cp option category
-	 */
-	public void cacheResult(CPOptionCategory cpOptionCategory);
-
-	/**
-	 * Caches the cp option categories in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategories the cp option categories
-	 */
-	public void cacheResult(
-		java.util.List<CPOptionCategory> cpOptionCategories);
-
-	/**
 	 * Creates a new cp option category with the primary key. Does not add the cp option category to the database.
 	 *
 	 * @param CPOptionCategoryId the primary key for the new cp option category
@@ -658,4 +643,4 @@ public interface CPOptionCategoryPersistence
 	public CPOptionCategory fetchByPrimaryKey(long CPOptionCategoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1218562773
+// LIFERAY-SERVICE-BUILDER-HASH:-644268357

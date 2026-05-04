@@ -16,7 +16,6 @@ import com.liferay.message.boards.service.persistence.MBMessageUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -9643,104 +9640,6 @@ public class MBMessagePersistenceImpl
 	}
 
 	/**
-	 * Caches the message-boards message in the entity cache if it is enabled.
-	 *
-	 * @param mbMessage the message-boards message
-	 */
-	@Override
-	public void cacheResult(MBMessage mbMessage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbMessage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {mbMessage.getUuid(), mbMessage.getGroupId()},
-				mbMessage);
-
-			finderCache.putResult(
-				_finderPathFetchByG_US,
-				new Object[] {
-					mbMessage.getGroupId(), mbMessage.getUrlSubject()
-				},
-				mbMessage);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					mbMessage.getExternalReferenceCode(), mbMessage.getGroupId()
-				},
-				mbMessage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message-boards messages in the entity cache if it is enabled.
-	 *
-	 * @param mbMessages the message-boards messages
-	 */
-	@Override
-	public void cacheResult(List<MBMessage> mbMessages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbMessages.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBMessage mbMessage : mbMessages) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbMessage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBMessageImpl.class, mbMessage.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(mbMessage);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MBMessageModelImpl mbMessageModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbMessageModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbMessageModelImpl.getUuid(), mbMessageModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbMessageModelImpl);
-
-			args = new Object[] {
-				mbMessageModelImpl.getGroupId(),
-				mbMessageModelImpl.getUrlSubject()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_US, args, mbMessageModelImpl);
-
-			args = new Object[] {
-				mbMessageModelImpl.getExternalReferenceCode(),
-				mbMessageModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, mbMessageModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	 *
 	 * @param messageId the primary key for the new message-boards message
@@ -9966,10 +9865,7 @@ public class MBMessagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MBMessageImpl.class, mbMessageModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbMessageModelImpl);
+		cacheUniqueFindersResult(mbMessage, false);
 
 		if (isNew) {
 			mbMessage.setNew(false);
@@ -10126,9 +10022,6 @@ public class MBMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -10156,10 +10049,11 @@ public class MBMessagePersistenceImpl
 				"mbMessage.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBMessage::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBMessage::getUuid,
+			MBMessage::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBMESSAGE_WHERE,
@@ -10382,10 +10276,11 @@ public class MBMessagePersistenceImpl
 				"mbMessage.", "categoryId", FinderColumn.Type.LONG, "=", true,
 				true, MBMessage::getCategoryId));
 
-		_finderPathFetchByG_US = new FinderPath(
+		_finderPathFetchByG_US = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_US",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "urlSubject"}, true);
+			new String[] {"groupId", "urlSubject"}, false,
+			MBMessage::getGroupId, MBMessage::getUrlSubject);
 
 		_uniquePersistenceFinderByG_US = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_US, _SQL_SELECT_MBMESSAGE_WHERE,
@@ -11013,10 +10908,11 @@ public class MBMessagePersistenceImpl
 					"mbMessage.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, MBMessage::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			MBMessage::getExternalReferenceCode, MBMessage::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_MBMESSAGE_WHERE,
@@ -11122,4 +11018,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1069703081
+// LIFERAY-SERVICE-BUILDER-HASH:298444892

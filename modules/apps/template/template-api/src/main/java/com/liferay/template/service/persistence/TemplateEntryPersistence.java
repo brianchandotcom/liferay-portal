@@ -898,20 +898,6 @@ public interface TemplateEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the template entry in the entity cache if it is enabled.
-	 *
-	 * @param templateEntry the template entry
-	 */
-	public void cacheResult(TemplateEntry templateEntry);
-
-	/**
-	 * Caches the template entries in the entity cache if it is enabled.
-	 *
-	 * @param templateEntries the template entries
-	 */
-	public void cacheResult(java.util.List<TemplateEntry> templateEntries);
-
-	/**
 	 * Creates a new template entry with the primary key. Does not add the template entry to the database.
 	 *
 	 * @param templateEntryId the primary key for the new template entry
@@ -950,4 +936,4 @@ public interface TemplateEntryPersistence
 	public TemplateEntry fetchByPrimaryKey(long templateEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1359604004
+// LIFERAY-SERVICE-BUILDER-HASH:852533516

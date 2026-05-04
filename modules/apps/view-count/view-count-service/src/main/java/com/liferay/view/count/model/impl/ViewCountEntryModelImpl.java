@@ -630,4 +630,4 @@ public class ViewCountEntryModelImpl
 	private ViewCountEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2125261203
+// LIFERAY-SERVICE-BUILDER-HASH:1648018731

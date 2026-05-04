@@ -347,22 +347,6 @@ public interface KaleoNotificationRecipientPersistence
 	public int countByKaleoNotificationId(long kaleoNotificationId);
 
 	/**
-	 * Caches the kaleo notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipient the kaleo notification recipient
-	 */
-	public void cacheResult(
-		KaleoNotificationRecipient kaleoNotificationRecipient);
-
-	/**
-	 * Caches the kaleo notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipients the kaleo notification recipients
-	 */
-	public void cacheResult(
-		java.util.List<KaleoNotificationRecipient> kaleoNotificationRecipients);
-
-	/**
 	 * Creates a new kaleo notification recipient with the primary key. Does not add the kaleo notification recipient to the database.
 	 *
 	 * @param kaleoNotificationRecipientId the primary key for the new kaleo notification recipient
@@ -404,4 +388,4 @@ public interface KaleoNotificationRecipientPersistence
 		long kaleoNotificationRecipientId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1068207192
+// LIFERAY-SERVICE-BUILDER-HASH:1312635936

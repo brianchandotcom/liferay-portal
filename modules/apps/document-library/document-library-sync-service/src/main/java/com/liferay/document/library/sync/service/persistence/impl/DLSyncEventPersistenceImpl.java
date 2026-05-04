@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -320,56 +317,6 @@ public class DLSyncEventPersistenceImpl
 	}
 
 	/**
-	 * Caches the dl sync event in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvent the dl sync event
-	 */
-	@Override
-	public void cacheResult(DLSyncEvent dlSyncEvent) {
-		entityCache.putResult(
-			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey(), dlSyncEvent);
-
-		finderCache.putResult(
-			_finderPathFetchByTypePK, new Object[] {dlSyncEvent.getTypePK()},
-			dlSyncEvent);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dl sync events in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvents the dl sync events
-	 */
-	@Override
-	public void cacheResult(List<DLSyncEvent> dlSyncEvents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlSyncEvents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLSyncEvent dlSyncEvent : dlSyncEvents) {
-			if (entityCache.getResult(
-					DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(dlSyncEvent);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLSyncEventModelImpl dlSyncEventModelImpl) {
-
-		Object[] args = new Object[] {dlSyncEventModelImpl.getTypePK()};
-
-		finderCache.putResult(
-			_finderPathFetchByTypePK, args, dlSyncEventModelImpl);
-	}
-
-	/**
 	 * Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
 	 *
 	 * @param syncEventId the primary key for the new dl sync event
@@ -471,10 +418,7 @@ public class DLSyncEventPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DLSyncEventImpl.class, dlSyncEventModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlSyncEventModelImpl);
+		cacheUniqueFindersResult(dlSyncEvent, false);
 
 		if (isNew) {
 			dlSyncEvent.setNew(false);
@@ -540,9 +484,6 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGtModifiedTime = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtModifiedTime",
 			new String[] {
@@ -566,9 +507,10 @@ public class DLSyncEventPersistenceImpl
 					"dlSyncEvent.", "modifiedTime", FinderColumn.Type.LONG, ">",
 					true, true, DLSyncEvent::getModifiedTime));
 
-		_finderPathFetchByTypePK = new FinderPath(
+		_finderPathFetchByTypePK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
-			new String[] {Long.class.getName()}, new String[] {"typePK"}, true);
+			new String[] {Long.class.getName()}, new String[] {"typePK"}, false,
+			DLSyncEvent::getTypePK);
 
 		_uniquePersistenceFinderByTypePK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByTypePK, _SQL_SELECT_DLSYNCEVENT_WHERE,
@@ -645,4 +587,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-995122721
+// LIFERAY-SERVICE-BUILDER-HASH:-1786047229

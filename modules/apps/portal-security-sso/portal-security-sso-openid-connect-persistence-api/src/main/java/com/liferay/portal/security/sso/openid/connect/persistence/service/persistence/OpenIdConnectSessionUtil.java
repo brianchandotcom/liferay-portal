@@ -37,6 +37,22 @@ public class OpenIdConnectSessionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<OpenIdConnectSession> openIdConnectSessions) {
+
+		getPersistence().cacheResult(openIdConnectSessions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OpenIdConnectSession openIdConnectSession) {
+		getPersistence().cacheResult(openIdConnectSession);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -743,26 +759,6 @@ public class OpenIdConnectSessionUtil {
 	}
 
 	/**
-	 * Caches the open ID connect session in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSession the open ID connect session
-	 */
-	public static void cacheResult(OpenIdConnectSession openIdConnectSession) {
-		getPersistence().cacheResult(openIdConnectSession);
-	}
-
-	/**
-	 * Caches the open ID connect sessions in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectSessions the open ID connect sessions
-	 */
-	public static void cacheResult(
-		List<OpenIdConnectSession> openIdConnectSessions) {
-
-		getPersistence().cacheResult(openIdConnectSessions);
-	}
-
-	/**
 	 * Creates a new open ID connect session with the primary key. Does not add the open ID connect session to the database.
 	 *
 	 * @param openIdConnectSessionId the primary key for the new open ID connect session
@@ -832,4 +828,4 @@ public class OpenIdConnectSessionUtil {
 	private static volatile OpenIdConnectSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1189295188
+// LIFERAY-SERVICE-BUILDER-HASH:-725193328

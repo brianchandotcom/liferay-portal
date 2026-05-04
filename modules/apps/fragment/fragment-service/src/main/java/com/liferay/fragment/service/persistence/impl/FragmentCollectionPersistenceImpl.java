@@ -16,7 +16,6 @@ import com.liferay.fragment.service.persistence.FragmentCollectionUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3309,112 +3306,6 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 	/**
-	 * Caches the fragment collection in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollection the fragment collection
-	 */
-	@Override
-	public void cacheResult(FragmentCollection fragmentCollection) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentCollection.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FragmentCollectionImpl.class,
-				fragmentCollection.getPrimaryKey(), fragmentCollection);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					fragmentCollection.getUuid(),
-					fragmentCollection.getGroupId()
-				},
-				fragmentCollection);
-
-			finderCache.putResult(
-				_finderPathFetchByG_FCK,
-				new Object[] {
-					fragmentCollection.getGroupId(),
-					fragmentCollection.getFragmentCollectionKey()
-				},
-				fragmentCollection);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					fragmentCollection.getExternalReferenceCode(),
-					fragmentCollection.getGroupId()
-				},
-				fragmentCollection);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the fragment collections in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollections the fragment collections
-	 */
-	@Override
-	public void cacheResult(List<FragmentCollection> fragmentCollections) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (fragmentCollections.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FragmentCollection fragmentCollection : fragmentCollections) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						fragmentCollection.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FragmentCollectionImpl.class,
-						fragmentCollection.getPrimaryKey()) == null) {
-
-					cacheResult(fragmentCollection);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FragmentCollectionModelImpl fragmentCollectionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentCollectionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				fragmentCollectionModelImpl.getUuid(),
-				fragmentCollectionModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, fragmentCollectionModelImpl);
-
-			args = new Object[] {
-				fragmentCollectionModelImpl.getGroupId(),
-				fragmentCollectionModelImpl.getFragmentCollectionKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_FCK, args, fragmentCollectionModelImpl);
-
-			args = new Object[] {
-				fragmentCollectionModelImpl.getExternalReferenceCode(),
-				fragmentCollectionModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, fragmentCollectionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	 *
 	 * @param fragmentCollectionId the primary key for the new fragment collection
@@ -3634,11 +3525,7 @@ public class FragmentCollectionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FragmentCollectionImpl.class, fragmentCollectionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(fragmentCollectionModelImpl);
+		cacheUniqueFindersResult(fragmentCollection, false);
 
 		if (isNew) {
 			fragmentCollection.setNew(false);
@@ -3782,9 +3669,6 @@ public class FragmentCollectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3813,10 +3697,11 @@ public class FragmentCollectionPersistenceImpl
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentCollection::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			FragmentCollection::getUuid, FragmentCollection::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -3884,10 +3769,12 @@ public class FragmentCollectionPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathFetchByG_FCK = new FinderPath(
+		_finderPathFetchByG_FCK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_FCK",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "fragmentCollectionKey"}, true);
+			new String[] {"groupId", "fragmentCollectionKey"}, false,
+			FragmentCollection::getGroupId,
+			FragmentCollection::getFragmentCollectionKey);
 
 		_uniquePersistenceFinderByG_FCK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_FCK, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
@@ -3954,10 +3841,12 @@ public class FragmentCollectionPersistenceImpl
 			},
 			new String[] {"groupId", "name", "marketplace"}, false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			FragmentCollection::getExternalReferenceCode,
+			FragmentCollection::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
@@ -4041,4 +3930,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1840452878
+// LIFERAY-SERVICE-BUILDER-HASH:-1851627513

@@ -318,24 +318,6 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 		long commerceNotificationTemplateId, long commerceAccountGroupId);
 
 	/**
-	 * Caches the commerce notification template commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
-	 */
-	public void cacheResult(
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel);
-
-	/**
-	 * Caches the commerce notification template commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRels the commerce notification template commerce account group rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceNotificationTemplateCommerceAccountGroupRel>
-			commerceNotificationTemplateCommerceAccountGroupRels);
-
-	/**
 	 * Creates a new commerce notification template commerce account group rel with the primary key. Does not add the commerce notification template commerce account group rel to the database.
 	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key for the new commerce notification template commerce account group rel
@@ -381,4 +363,4 @@ public interface CommerceNotificationTemplateCommerceAccountGroupRelPersistence
 			long commerceNotificationTemplateCommerceAccountGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:689141012
+// LIFERAY-SERVICE-BUILDER-HASH:1189743664

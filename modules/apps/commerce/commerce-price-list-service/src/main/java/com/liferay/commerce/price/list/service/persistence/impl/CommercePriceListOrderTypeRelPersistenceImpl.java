@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrde
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListOrderTypeRelUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -709,91 +705,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price list order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRel the commerce price list order type rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListOrderTypeRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceListOrderTypeRelImpl.class,
-				commercePriceListOrderTypeRel.getPrimaryKey(),
-				commercePriceListOrderTypeRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCPI_COTI,
-				new Object[] {
-					commercePriceListOrderTypeRel.getCommercePriceListId(),
-					commercePriceListOrderTypeRel.getCommerceOrderTypeId()
-				},
-				commercePriceListOrderTypeRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price list order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRels the commerce price list order type rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceListOrderTypeRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceListOrderTypeRel commercePriceListOrderTypeRel :
-				commercePriceListOrderTypeRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceListOrderTypeRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceListOrderTypeRelImpl.class,
-						commercePriceListOrderTypeRel.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(commercePriceListOrderTypeRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceListOrderTypeRelModelImpl
-			commercePriceListOrderTypeRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListOrderTypeRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceListOrderTypeRelModelImpl.getCommercePriceListId(),
-				commercePriceListOrderTypeRelModelImpl.getCommerceOrderTypeId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPI_COTI, args,
-				commercePriceListOrderTypeRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price list order type rel with the primary key. Does not add the commerce price list order type rel to the database.
 	 *
 	 * @param commercePriceListOrderTypeRelId the primary key for the new commerce price list order type rel
@@ -961,11 +872,7 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceListOrderTypeRelImpl.class,
-			commercePriceListOrderTypeRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePriceListOrderTypeRelModelImpl);
+		cacheUniqueFindersResult(commercePriceListOrderTypeRel, false);
 
 		if (isNew) {
 			commercePriceListOrderTypeRel.setNew(false);
@@ -1104,9 +1011,6 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1206,10 +1110,12 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceListOrderTypeRel::getCommercePriceListId));
 
-		_finderPathFetchByCPI_COTI = new FinderPath(
+		_finderPathFetchByCPI_COTI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPI_COTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commercePriceListId", "commerceOrderTypeId"}, true);
+			new String[] {"commercePriceListId", "commerceOrderTypeId"}, false,
+			CommercePriceListOrderTypeRel::getCommercePriceListId,
+			CommercePriceListOrderTypeRel::getCommerceOrderTypeId);
 
 		_uniquePersistenceFinderByCPI_COTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCPI_COTI,
@@ -1297,4 +1203,4 @@ public class CommercePriceListOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1137357521
+// LIFERAY-SERVICE-BUILDER-HASH:875278821

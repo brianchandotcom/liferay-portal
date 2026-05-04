@@ -37,6 +37,20 @@ public class SharingEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SharingEntry> sharingEntries) {
+		getPersistence().cacheResult(sharingEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SharingEntry sharingEntry) {
+		getPersistence().cacheResult(sharingEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1604,24 +1618,6 @@ public class SharingEntryUtil {
 	}
 
 	/**
-	 * Caches the sharing entry in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntry the sharing entry
-	 */
-	public static void cacheResult(SharingEntry sharingEntry) {
-		getPersistence().cacheResult(sharingEntry);
-	}
-
-	/**
-	 * Caches the sharing entries in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntries the sharing entries
-	 */
-	public static void cacheResult(List<SharingEntry> sharingEntries) {
-		getPersistence().cacheResult(sharingEntries);
-	}
-
-	/**
 	 * Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	 *
 	 * @param sharingEntryId the primary key for the new sharing entry
@@ -1682,4 +1678,4 @@ public class SharingEntryUtil {
 	private static volatile SharingEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1913374404
+// LIFERAY-SERVICE-BUILDER-HASH:2110834281

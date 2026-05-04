@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -35,10 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2310,115 +2306,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout friendly url in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURL the layout friendly url
-	 */
-	@Override
-	public void cacheResult(LayoutFriendlyURL layoutFriendlyURL) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutFriendlyURL.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				LayoutFriendlyURLImpl.class, layoutFriendlyURL.getPrimaryKey(),
-				layoutFriendlyURL);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutFriendlyURL.getUuid(), layoutFriendlyURL.getGroupId()
-				},
-				layoutFriendlyURL);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_L,
-				new Object[] {
-					layoutFriendlyURL.getPlid(),
-					layoutFriendlyURL.getLanguageId()
-				},
-				layoutFriendlyURL);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_P_F_L,
-				new Object[] {
-					layoutFriendlyURL.getGroupId(),
-					layoutFriendlyURL.isPrivateLayout(),
-					layoutFriendlyURL.getFriendlyURL(),
-					layoutFriendlyURL.getLanguageId()
-				},
-				layoutFriendlyURL);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout friendly urls in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURLs the layout friendly urls
-	 */
-	@Override
-	public void cacheResult(List<LayoutFriendlyURL> layoutFriendlyURLs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutFriendlyURLs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutFriendlyURL.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						LayoutFriendlyURLImpl.class,
-						layoutFriendlyURL.getPrimaryKey()) == null) {
-
-					cacheResult(layoutFriendlyURL);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutFriendlyURLModelImpl layoutFriendlyURLModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutFriendlyURLModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutFriendlyURLModelImpl.getUuid(),
-				layoutFriendlyURLModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, layoutFriendlyURLModelImpl);
-
-			args = new Object[] {
-				layoutFriendlyURLModelImpl.getPlid(),
-				layoutFriendlyURLModelImpl.getLanguageId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_L, args, layoutFriendlyURLModelImpl);
-
-			args = new Object[] {
-				layoutFriendlyURLModelImpl.getGroupId(),
-				layoutFriendlyURLModelImpl.isPrivateLayout(),
-				layoutFriendlyURLModelImpl.getFriendlyURL(),
-				layoutFriendlyURLModelImpl.getLanguageId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_P_F_L, args, layoutFriendlyURLModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
 	 *
 	 * @param layoutFriendlyURLId the primary key for the new layout friendly url
@@ -2570,11 +2457,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutFriendlyURLImpl.class, layoutFriendlyURLModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(layoutFriendlyURLModelImpl);
+		cacheUniqueFindersResult(layoutFriendlyURL, false);
 
 		if (isNew) {
 			layoutFriendlyURL.setNew(false);
@@ -2717,9 +2600,6 @@ public class LayoutFriendlyURLPersistenceImpl
 	 * Initializes the layout friendly url persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2748,10 +2628,11 @@ public class LayoutFriendlyURLPersistenceImpl
 				"layoutFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, LayoutFriendlyURL::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutFriendlyURL::getUuid, LayoutFriendlyURL::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
@@ -2958,10 +2839,11 @@ public class LayoutFriendlyURLPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"plid", "languageId"}, true);
 
-		_finderPathFetchByP_L = new FinderPath(
+		_finderPathFetchByP_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "languageId"}, true);
+			new String[] {"plid", "languageId"}, false,
+			LayoutFriendlyURL::getPlid, LayoutFriendlyURL::getLanguageId);
 
 		_finderPathCountByP_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
@@ -3015,7 +2897,7 @@ public class LayoutFriendlyURLPersistenceImpl
 				"layoutFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
 				"=", true, true, LayoutFriendlyURL::getFriendlyURL));
 
-		_finderPathFetchByG_P_F_L = new FinderPath(
+		_finderPathFetchByG_P_F_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_F_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -3024,7 +2906,10 @@ public class LayoutFriendlyURLPersistenceImpl
 			new String[] {
 				"groupId", "privateLayout", "friendlyURL", "languageId"
 			},
-			true);
+			false, LayoutFriendlyURL::getGroupId,
+			LayoutFriendlyURL::isPrivateLayout,
+			LayoutFriendlyURL::getFriendlyURL,
+			LayoutFriendlyURL::getLanguageId);
 
 		_uniquePersistenceFinderByG_P_F_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_F_L,
@@ -3079,4 +2964,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1620823363
+// LIFERAY-SERVICE-BUILDER-HASH:-1886330042

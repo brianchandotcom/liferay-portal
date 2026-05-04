@@ -246,21 +246,6 @@ public interface ContactsLayoutTemplatePersistence
 	public int countByG_T(long groupId, int type);
 
 	/**
-	 * Caches the contacts layout template in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplate the contacts layout template
-	 */
-	public void cacheResult(ContactsLayoutTemplate contactsLayoutTemplate);
-
-	/**
-	 * Caches the contacts layout templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplates the contacts layout templates
-	 */
-	public void cacheResult(
-		java.util.List<ContactsLayoutTemplate> contactsLayoutTemplates);
-
-	/**
 	 * Creates a new contacts layout template with the primary key. Does not add the contacts layout template to the database.
 	 *
 	 * @param contactsLayoutTemplateId the primary key for the new contacts layout template
@@ -302,4 +287,4 @@ public interface ContactsLayoutTemplatePersistence
 		long contactsLayoutTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1181217095
+// LIFERAY-SERVICE-BUILDER-HASH:654440225

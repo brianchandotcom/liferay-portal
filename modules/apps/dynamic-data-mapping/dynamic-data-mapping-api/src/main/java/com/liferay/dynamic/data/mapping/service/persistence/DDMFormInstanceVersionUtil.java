@@ -36,6 +36,24 @@ public class DDMFormInstanceVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMFormInstanceVersion> ddmFormInstanceVersions) {
+
+		getPersistence().cacheResult(ddmFormInstanceVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DDMFormInstanceVersion ddmFormInstanceVersion) {
+
+		getPersistence().cacheResult(ddmFormInstanceVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -448,28 +466,6 @@ public class DDMFormInstanceVersionUtil {
 	}
 
 	/**
-	 * Caches the ddm form instance version in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceVersion the ddm form instance version
-	 */
-	public static void cacheResult(
-		DDMFormInstanceVersion ddmFormInstanceVersion) {
-
-		getPersistence().cacheResult(ddmFormInstanceVersion);
-	}
-
-	/**
-	 * Caches the ddm form instance versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceVersions the ddm form instance versions
-	 */
-	public static void cacheResult(
-		List<DDMFormInstanceVersion> ddmFormInstanceVersions) {
-
-		getPersistence().cacheResult(ddmFormInstanceVersions);
-	}
-
-	/**
 	 * Creates a new ddm form instance version with the primary key. Does not add the ddm form instance version to the database.
 	 *
 	 * @param formInstanceVersionId the primary key for the new ddm form instance version
@@ -539,4 +535,4 @@ public class DDMFormInstanceVersionUtil {
 	private static volatile DDMFormInstanceVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:101469938
+// LIFERAY-SERVICE-BUILDER-HASH:1542112380

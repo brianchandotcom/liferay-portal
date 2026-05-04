@@ -36,6 +36,24 @@ public class LayoutUtilityPageEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutUtilityPageEntry> layoutUtilityPageEntries) {
+
+		getPersistence().cacheResult(layoutUtilityPageEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutUtilityPageEntry layoutUtilityPageEntry) {
+
+		getPersistence().cacheResult(layoutUtilityPageEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1808,28 +1826,6 @@ public class LayoutUtilityPageEntryUtil {
 	}
 
 	/**
-	 * Caches the layout utility page entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntry the layout utility page entry
-	 */
-	public static void cacheResult(
-		LayoutUtilityPageEntry layoutUtilityPageEntry) {
-
-		getPersistence().cacheResult(layoutUtilityPageEntry);
-	}
-
-	/**
-	 * Caches the layout utility page entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntries the layout utility page entries
-	 */
-	public static void cacheResult(
-		List<LayoutUtilityPageEntry> layoutUtilityPageEntries) {
-
-		getPersistence().cacheResult(layoutUtilityPageEntries);
-	}
-
-	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key for the new layout utility page entry
@@ -1899,4 +1895,4 @@ public class LayoutUtilityPageEntryUtil {
 	private static volatile LayoutUtilityPageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:803981877
+// LIFERAY-SERVICE-BUILDER-HASH:-1185814656

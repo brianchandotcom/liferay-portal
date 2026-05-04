@@ -185,20 +185,6 @@ public interface FaroPreferencesPersistence
 	public int countByG_O(long groupId, long ownerId);
 
 	/**
-	 * Caches the faro preferences in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferences the faro preferences
-	 */
-	public void cacheResult(FaroPreferences faroPreferences);
-
-	/**
-	 * Caches the faro preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferenceses the faro preferenceses
-	 */
-	public void cacheResult(java.util.List<FaroPreferences> faroPreferenceses);
-
-	/**
 	 * Creates a new faro preferences with the primary key. Does not add the faro preferences to the database.
 	 *
 	 * @param faroPreferencesId the primary key for the new faro preferences
@@ -237,4 +223,4 @@ public interface FaroPreferencesPersistence
 	public FaroPreferences fetchByPrimaryKey(long faroPreferencesId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1146518298
+// LIFERAY-SERVICE-BUILDER-HASH:2090292054

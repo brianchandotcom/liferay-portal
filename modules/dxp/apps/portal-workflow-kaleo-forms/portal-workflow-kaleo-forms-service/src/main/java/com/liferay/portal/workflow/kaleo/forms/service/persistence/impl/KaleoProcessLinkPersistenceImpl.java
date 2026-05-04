@@ -19,10 +19,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
@@ -334,65 +331,6 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo process link in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLink the kaleo process link
-	 */
-	@Override
-	public void cacheResult(KaleoProcessLink kaleoProcessLink) {
-		entityCache.putResult(
-			KaleoProcessLinkImpl.class, kaleoProcessLink.getPrimaryKey(),
-			kaleoProcessLink);
-
-		finderCache.putResult(
-			_finderPathFetchByKPI_WTN,
-			new Object[] {
-				kaleoProcessLink.getKaleoProcessId(),
-				kaleoProcessLink.getWorkflowTaskName()
-			},
-			kaleoProcessLink);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo process links in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLinks the kaleo process links
-	 */
-	@Override
-	public void cacheResult(List<KaleoProcessLink> kaleoProcessLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoProcessLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoProcessLink kaleoProcessLink : kaleoProcessLinks) {
-			if (entityCache.getResult(
-					KaleoProcessLinkImpl.class,
-					kaleoProcessLink.getPrimaryKey()) == null) {
-
-				cacheResult(kaleoProcessLink);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoProcessLinkModelImpl kaleoProcessLinkModelImpl) {
-
-		Object[] args = new Object[] {
-			kaleoProcessLinkModelImpl.getKaleoProcessId(),
-			kaleoProcessLinkModelImpl.getWorkflowTaskName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByKPI_WTN, args, kaleoProcessLinkModelImpl);
-	}
-
-	/**
 	 * Creates a new kaleo process link with the primary key. Does not add the kaleo process link to the database.
 	 *
 	 * @param kaleoProcessLinkId the primary key for the new kaleo process link
@@ -499,10 +437,7 @@ public class KaleoProcessLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoProcessLinkImpl.class, kaleoProcessLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoProcessLinkModelImpl);
+		cacheUniqueFindersResult(kaleoProcessLink, false);
 
 		if (isNew) {
 			kaleoProcessLink.setNew(false);
@@ -563,9 +498,6 @@ public class KaleoProcessLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByKaleoProcessId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoProcessId",
 			new String[] {
@@ -597,10 +529,12 @@ public class KaleoProcessLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoProcessLink::getKaleoProcessId));
 
-		_finderPathFetchByKPI_WTN = new FinderPath(
+		_finderPathFetchByKPI_WTN = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoProcessId", "workflowTaskName"}, true);
+			new String[] {"kaleoProcessId", "workflowTaskName"}, false,
+			KaleoProcessLink::getKaleoProcessId,
+			KaleoProcessLink::getWorkflowTaskName);
 
 		_uniquePersistenceFinderByKPI_WTN = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKPI_WTN, _SQL_SELECT_KALEOPROCESSLINK_WHERE,
@@ -678,4 +612,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2111271971
+// LIFERAY-SERVICE-BUILDER-HASH:-121607859

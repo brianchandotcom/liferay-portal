@@ -2512,20 +2512,6 @@ public interface AssetListEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the asset list entry in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntry the asset list entry
-	 */
-	public void cacheResult(AssetListEntry assetListEntry);
-
-	/**
-	 * Caches the asset list entries in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntries the asset list entries
-	 */
-	public void cacheResult(java.util.List<AssetListEntry> assetListEntries);
-
-	/**
 	 * Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
 	 *
 	 * @param assetListEntryId the primary key for the new asset list entry
@@ -2564,4 +2550,4 @@ public interface AssetListEntryPersistence
 	public AssetListEntry fetchByPrimaryKey(long assetListEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:95748938
+// LIFERAY-SERVICE-BUILDER-HASH:-701664236

@@ -36,6 +36,20 @@ public class AssetCategoryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetCategory> assetCategories) {
+		getPersistence().cacheResult(assetCategories);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetCategory assetCategory) {
+		getPersistence().cacheResult(assetCategory);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2812,24 +2826,6 @@ public class AssetCategoryUtil {
 	}
 
 	/**
-	 * Caches the asset category in the entity cache if it is enabled.
-	 *
-	 * @param assetCategory the asset category
-	 */
-	public static void cacheResult(AssetCategory assetCategory) {
-		getPersistence().cacheResult(assetCategory);
-	}
-
-	/**
-	 * Caches the asset categories in the entity cache if it is enabled.
-	 *
-	 * @param assetCategories the asset categories
-	 */
-	public static void cacheResult(List<AssetCategory> assetCategories) {
-		getPersistence().cacheResult(assetCategories);
-	}
-
-	/**
 	 * Creates a new asset category with the primary key. Does not add the asset category to the database.
 	 *
 	 * @param categoryId the primary key for the new asset category
@@ -2890,4 +2886,4 @@ public class AssetCategoryUtil {
 	private static volatile AssetCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:446669630
+// LIFERAY-SERVICE-BUILDER-HASH:2110571513

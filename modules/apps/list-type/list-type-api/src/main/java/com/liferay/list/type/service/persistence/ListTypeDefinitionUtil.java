@@ -36,6 +36,22 @@ public class ListTypeDefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ListTypeDefinition> listTypeDefinitions) {
+
+		getPersistence().cacheResult(listTypeDefinitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ListTypeDefinition listTypeDefinition) {
+		getPersistence().cacheResult(listTypeDefinition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -762,26 +778,6 @@ public class ListTypeDefinitionUtil {
 	}
 
 	/**
-	 * Caches the list type definition in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinition the list type definition
-	 */
-	public static void cacheResult(ListTypeDefinition listTypeDefinition) {
-		getPersistence().cacheResult(listTypeDefinition);
-	}
-
-	/**
-	 * Caches the list type definitions in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinitions the list type definitions
-	 */
-	public static void cacheResult(
-		List<ListTypeDefinition> listTypeDefinitions) {
-
-		getPersistence().cacheResult(listTypeDefinitions);
-	}
-
-	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *
 	 * @param listTypeDefinitionId the primary key for the new list type definition
@@ -850,4 +846,4 @@ public class ListTypeDefinitionUtil {
 	private static volatile ListTypeDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2145808403
+// LIFERAY-SERVICE-BUILDER-HASH:-1145513281

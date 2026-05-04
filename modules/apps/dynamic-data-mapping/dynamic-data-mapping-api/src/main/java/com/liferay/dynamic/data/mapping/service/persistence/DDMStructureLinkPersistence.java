@@ -306,20 +306,6 @@ public interface DDMStructureLinkPersistence
 	public int countByC_C_S(long classNameId, long classPK, long structureId);
 
 	/**
-	 * Caches the ddm structure link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLink the ddm structure link
-	 */
-	public void cacheResult(DDMStructureLink ddmStructureLink);
-
-	/**
-	 * Caches the ddm structure links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLinks the ddm structure links
-	 */
-	public void cacheResult(java.util.List<DDMStructureLink> ddmStructureLinks);
-
-	/**
 	 * Creates a new ddm structure link with the primary key. Does not add the ddm structure link to the database.
 	 *
 	 * @param structureLinkId the primary key for the new ddm structure link
@@ -358,4 +344,4 @@ public interface DDMStructureLinkPersistence
 	public DDMStructureLink fetchByPrimaryKey(long structureLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1080730039
+// LIFERAY-SERVICE-BUILDER-HASH:1368217827

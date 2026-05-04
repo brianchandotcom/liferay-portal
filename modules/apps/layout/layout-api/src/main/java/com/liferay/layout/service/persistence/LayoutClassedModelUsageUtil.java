@@ -36,6 +36,24 @@ public class LayoutClassedModelUsageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutClassedModelUsage> layoutClassedModelUsages) {
+
+		getPersistence().cacheResult(layoutClassedModelUsages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		LayoutClassedModelUsage layoutClassedModelUsage) {
+
+		getPersistence().cacheResult(layoutClassedModelUsage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1722,28 +1740,6 @@ public class LayoutClassedModelUsageUtil {
 	}
 
 	/**
-	 * Caches the layout classed model usage in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsage the layout classed model usage
-	 */
-	public static void cacheResult(
-		LayoutClassedModelUsage layoutClassedModelUsage) {
-
-		getPersistence().cacheResult(layoutClassedModelUsage);
-	}
-
-	/**
-	 * Caches the layout classed model usages in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsages the layout classed model usages
-	 */
-	public static void cacheResult(
-		List<LayoutClassedModelUsage> layoutClassedModelUsages) {
-
-		getPersistence().cacheResult(layoutClassedModelUsages);
-	}
-
-	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
 	 *
 	 * @param layoutClassedModelUsageId the primary key for the new layout classed model usage
@@ -1815,4 +1811,4 @@ public class LayoutClassedModelUsageUtil {
 	private static volatile LayoutClassedModelUsagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-737103115
+// LIFERAY-SERVICE-BUILDER-HASH:1835288111

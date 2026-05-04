@@ -14,7 +14,6 @@ import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryUtil;
 import com.liferay.commerce.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -624,97 +620,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp definition inventory in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventory the cp definition inventory
-	 */
-	@Override
-	public void cacheResult(CPDefinitionInventory cpDefinitionInventory) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionInventory.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPDefinitionInventoryImpl.class,
-				cpDefinitionInventory.getPrimaryKey(), cpDefinitionInventory);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpDefinitionInventory.getUuid(),
-					cpDefinitionInventory.getGroupId()
-				},
-				cpDefinitionInventory);
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId,
-				new Object[] {cpDefinitionInventory.getCPDefinitionId()},
-				cpDefinitionInventory);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp definition inventories in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventories the cp definition inventories
-	 */
-	@Override
-	public void cacheResult(
-		List<CPDefinitionInventory> cpDefinitionInventories) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDefinitionInventories.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDefinitionInventory cpDefinitionInventory :
-				cpDefinitionInventories) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpDefinitionInventory.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPDefinitionInventoryImpl.class,
-						cpDefinitionInventory.getPrimaryKey()) == null) {
-
-					cacheResult(cpDefinitionInventory);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDefinitionInventoryModelImpl cpDefinitionInventoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionInventoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpDefinitionInventoryModelImpl.getUuid(),
-				cpDefinitionInventoryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpDefinitionInventoryModelImpl);
-
-			args = new Object[] {
-				cpDefinitionInventoryModelImpl.getCPDefinitionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId, args,
-				cpDefinitionInventoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp definition inventory with the primary key. Does not add the cp definition inventory to the database.
 	 *
 	 * @param CPDefinitionInventoryId the primary key for the new cp definition inventory
@@ -871,11 +776,7 @@ public class CPDefinitionInventoryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDefinitionInventoryImpl.class, cpDefinitionInventoryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cpDefinitionInventoryModelImpl);
+		cacheUniqueFindersResult(cpDefinitionInventory, false);
 
 		if (isNew) {
 			cpDefinitionInventory.setNew(false);
@@ -1022,9 +923,6 @@ public class CPDefinitionInventoryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1053,10 +951,11 @@ public class CPDefinitionInventoryPersistenceImpl
 				"cpDefinitionInventory.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionInventory::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPDefinitionInventory::getUuid, CPDefinitionInventory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1104,10 +1003,11 @@ public class CPDefinitionInventoryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionInventory::getCompanyId));
 
-		_finderPathFetchByCPDefinitionId = new FinderPath(
+		_finderPathFetchByCPDefinitionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId",
 			new String[] {Long.class.getName()},
-			new String[] {"CPDefinitionId"}, true);
+			new String[] {"CPDefinitionId"}, false,
+			CPDefinitionInventory::getCPDefinitionId);
 
 		_uniquePersistenceFinderByCPDefinitionId =
 			new UniquePersistenceFinder<>(
@@ -1190,4 +1090,4 @@ public class CPDefinitionInventoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-986214162
+// LIFERAY-SERVICE-BUILDER-HASH:1514671470

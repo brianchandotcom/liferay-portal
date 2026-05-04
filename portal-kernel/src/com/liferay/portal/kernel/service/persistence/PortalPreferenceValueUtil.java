@@ -36,6 +36,24 @@ public class PortalPreferenceValueUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PortalPreferenceValue> portalPreferenceValues) {
+
+		getPersistence().cacheResult(portalPreferenceValues);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		PortalPreferenceValue portalPreferenceValue) {
+
+		getPersistence().cacheResult(portalPreferenceValue);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -874,28 +892,6 @@ public class PortalPreferenceValueUtil {
 	}
 
 	/**
-	 * Caches the portal preference value in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValue the portal preference value
-	 */
-	public static void cacheResult(
-		PortalPreferenceValue portalPreferenceValue) {
-
-		getPersistence().cacheResult(portalPreferenceValue);
-	}
-
-	/**
-	 * Caches the portal preference values in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValues the portal preference values
-	 */
-	public static void cacheResult(
-		List<PortalPreferenceValue> portalPreferenceValues) {
-
-		getPersistence().cacheResult(portalPreferenceValues);
-	}
-
-	/**
 	 * Creates a new portal preference value with the primary key. Does not add the portal preference value to the database.
 	 *
 	 * @param portalPreferenceValueId the primary key for the new portal preference value
@@ -965,4 +961,4 @@ public class PortalPreferenceValueUtil {
 	private static volatile PortalPreferenceValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2136859091
+// LIFERAY-SERVICE-BUILDER-HASH:-753166675

@@ -36,6 +36,22 @@ public class ObjectValidationRuleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectValidationRule> objectValidationRules) {
+
+		getPersistence().cacheResult(objectValidationRules);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectValidationRule objectValidationRule) {
+		getPersistence().cacheResult(objectValidationRule);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1125,26 +1141,6 @@ public class ObjectValidationRuleUtil {
 	}
 
 	/**
-	 * Caches the object validation rule in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRule the object validation rule
-	 */
-	public static void cacheResult(ObjectValidationRule objectValidationRule) {
-		getPersistence().cacheResult(objectValidationRule);
-	}
-
-	/**
-	 * Caches the object validation rules in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRules the object validation rules
-	 */
-	public static void cacheResult(
-		List<ObjectValidationRule> objectValidationRules) {
-
-		getPersistence().cacheResult(objectValidationRules);
-	}
-
-	/**
 	 * Creates a new object validation rule with the primary key. Does not add the object validation rule to the database.
 	 *
 	 * @param objectValidationRuleId the primary key for the new object validation rule
@@ -1214,4 +1210,4 @@ public class ObjectValidationRuleUtil {
 	private static volatile ObjectValidationRulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:906206734
+// LIFERAY-SERVICE-BUILDER-HASH:1596372034

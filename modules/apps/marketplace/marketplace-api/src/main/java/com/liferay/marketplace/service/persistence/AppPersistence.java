@@ -485,20 +485,6 @@ public interface AppPersistence extends BasePersistence<App> {
 	public int countByCategory(String category);
 
 	/**
-	 * Caches the app in the entity cache if it is enabled.
-	 *
-	 * @param app the app
-	 */
-	public void cacheResult(App app);
-
-	/**
-	 * Caches the apps in the entity cache if it is enabled.
-	 *
-	 * @param apps the apps
-	 */
-	public void cacheResult(java.util.List<App> apps);
-
-	/**
 	 * Creates a new app with the primary key. Does not add the app to the database.
 	 *
 	 * @param appId the primary key for the new app
@@ -535,4 +521,4 @@ public interface AppPersistence extends BasePersistence<App> {
 	public App fetchByPrimaryKey(long appId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1745932972
+// LIFERAY-SERVICE-BUILDER-HASH:-148773620

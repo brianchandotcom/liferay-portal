@@ -36,6 +36,24 @@ public class CPDefinitionLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionLocalization> cpDefinitionLocalizations) {
+
+		getPersistence().cacheResult(cpDefinitionLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionLocalization cpDefinitionLocalization) {
+
+		getPersistence().cacheResult(cpDefinitionLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -320,28 +338,6 @@ public class CPDefinitionLocalizationUtil {
 	}
 
 	/**
-	 * Caches the cp definition localization in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalization the cp definition localization
-	 */
-	public static void cacheResult(
-		CPDefinitionLocalization cpDefinitionLocalization) {
-
-		getPersistence().cacheResult(cpDefinitionLocalization);
-	}
-
-	/**
-	 * Caches the cp definition localizations in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalizations the cp definition localizations
-	 */
-	public static void cacheResult(
-		List<CPDefinitionLocalization> cpDefinitionLocalizations) {
-
-		getPersistence().cacheResult(cpDefinitionLocalizations);
-	}
-
-	/**
 	 * Creates a new cp definition localization with the primary key. Does not add the cp definition localization to the database.
 	 *
 	 * @param cpDefinitionLocalizationId the primary key for the new cp definition localization
@@ -414,4 +410,4 @@ public class CPDefinitionLocalizationUtil {
 	private static volatile CPDefinitionLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2008932033
+// LIFERAY-SERVICE-BUILDER-HASH:-1631219063

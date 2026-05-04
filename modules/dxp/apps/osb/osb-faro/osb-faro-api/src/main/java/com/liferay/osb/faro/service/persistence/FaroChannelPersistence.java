@@ -397,20 +397,6 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public int countByC_W(String channelId, long workspaceGroupId);
 
 	/**
-	 * Caches the faro channel in the entity cache if it is enabled.
-	 *
-	 * @param faroChannel the faro channel
-	 */
-	public void cacheResult(FaroChannel faroChannel);
-
-	/**
-	 * Caches the faro channels in the entity cache if it is enabled.
-	 *
-	 * @param faroChannels the faro channels
-	 */
-	public void cacheResult(java.util.List<FaroChannel> faroChannels);
-
-	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
 	 * @param faroChannelId the primary key for the new faro channel
@@ -449,4 +435,4 @@ public interface FaroChannelPersistence extends BasePersistence<FaroChannel> {
 	public FaroChannel fetchByPrimaryKey(long faroChannelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2016086109
+// LIFERAY-SERVICE-BUILDER-HASH:1150465359

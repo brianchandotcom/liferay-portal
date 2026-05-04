@@ -36,6 +36,20 @@ public class CTEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTEntry> ctEntries) {
+		getPersistence().cacheResult(ctEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTEntry ctEntry) {
+		getPersistence().cacheResult(ctEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1139,24 +1153,6 @@ public class CTEntryUtil {
 	}
 
 	/**
-	 * Caches the ct entry in the entity cache if it is enabled.
-	 *
-	 * @param ctEntry the ct entry
-	 */
-	public static void cacheResult(CTEntry ctEntry) {
-		getPersistence().cacheResult(ctEntry);
-	}
-
-	/**
-	 * Caches the ct entries in the entity cache if it is enabled.
-	 *
-	 * @param ctEntries the ct entries
-	 */
-	public static void cacheResult(List<CTEntry> ctEntries) {
-		getPersistence().cacheResult(ctEntries);
-	}
-
-	/**
 	 * Creates a new ct entry with the primary key. Does not add the ct entry to the database.
 	 *
 	 * @param ctEntryId the primary key for the new ct entry
@@ -1217,4 +1213,4 @@ public class CTEntryUtil {
 	private static volatile CTEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1200415478
+// LIFERAY-SERVICE-BUILDER-HASH:819532117

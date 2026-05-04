@@ -208,21 +208,6 @@ public interface UserNotificationDeliveryPersistence
 		int deliveryType);
 
 	/**
-	 * Caches the user notification delivery in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDelivery the user notification delivery
-	 */
-	public void cacheResult(UserNotificationDelivery userNotificationDelivery);
-
-	/**
-	 * Caches the user notification deliveries in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationDeliveries the user notification deliveries
-	 */
-	public void cacheResult(
-		java.util.List<UserNotificationDelivery> userNotificationDeliveries);
-
-	/**
 	 * Creates a new user notification delivery with the primary key. Does not add the user notification delivery to the database.
 	 *
 	 * @param userNotificationDeliveryId the primary key for the new user notification delivery
@@ -264,4 +249,4 @@ public interface UserNotificationDeliveryPersistence
 		long userNotificationDeliveryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2040272325
+// LIFERAY-SERVICE-BUILDER-HASH:109420379

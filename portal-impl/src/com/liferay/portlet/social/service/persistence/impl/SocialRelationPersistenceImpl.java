@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1823,80 +1819,6 @@ public class SocialRelationPersistenceImpl
 	}
 
 	/**
-	 * Caches the social relation in the entity cache if it is enabled.
-	 *
-	 * @param socialRelation the social relation
-	 */
-	@Override
-	public void cacheResult(SocialRelation socialRelation) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialRelation.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialRelationImpl.class, socialRelation.getPrimaryKey(),
-				socialRelation);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU1_U2_T,
-				new Object[] {
-					socialRelation.getUserId1(), socialRelation.getUserId2(),
-					socialRelation.getType()
-				},
-				socialRelation);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social relations in the entity cache if it is enabled.
-	 *
-	 * @param socialRelations the social relations
-	 */
-	@Override
-	public void cacheResult(List<SocialRelation> socialRelations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialRelations.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialRelation socialRelation : socialRelations) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialRelation.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialRelationImpl.class,
-						socialRelation.getPrimaryKey()) == null) {
-
-					cacheResult(socialRelation);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialRelationModelImpl socialRelationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialRelationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialRelationModelImpl.getUserId1(),
-				socialRelationModelImpl.getUserId2(),
-				socialRelationModelImpl.getType()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU1_U2_T, args, socialRelationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social relation with the primary key. Does not add the social relation to the database.
 	 *
 	 * @param relationId the primary key for the new social relation
@@ -2020,10 +1942,7 @@ public class SocialRelationPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialRelationImpl.class, socialRelationModelImpl, false, true);
-
-		cacheUniqueFindersCache(socialRelationModelImpl);
+		cacheUniqueFindersResult(socialRelation, false);
 
 		if (isNew) {
 			socialRelation.setNew(false);
@@ -2150,9 +2069,6 @@ public class SocialRelationPersistenceImpl
 	 * Initializes the social relation persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2451,13 +2367,15 @@ public class SocialRelationPersistenceImpl
 				"socialRelation.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SocialRelation::getType));
 
-		_finderPathFetchByU1_U2_T = new FinderPath(
+		_finderPathFetchByU1_U2_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU1_U2_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"userId1", "userId2", "type_"}, true);
+			new String[] {"userId1", "userId2", "type_"}, false,
+			SocialRelation::getUserId1, SocialRelation::getUserId2,
+			SocialRelation::getType);
 
 		_uniquePersistenceFinderByU1_U2_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU1_U2_T, _SQL_SELECT_SOCIALRELATION_WHERE,
@@ -2507,4 +2425,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1933315055
+// LIFERAY-SERVICE-BUILDER-HASH:1380189699

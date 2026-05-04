@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -351,70 +349,6 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the c term entry localization in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalization the c term entry localization
-	 */
-	@Override
-	public void cacheResult(CTermEntryLocalization cTermEntryLocalization) {
-		entityCache.putResult(
-			CTermEntryLocalizationImpl.class,
-			cTermEntryLocalization.getPrimaryKey(), cTermEntryLocalization);
-
-		finderCache.putResult(
-			_finderPathFetchByCommerceTermEntryId_LanguageId,
-			new Object[] {
-				cTermEntryLocalization.getCommerceTermEntryId(),
-				cTermEntryLocalization.getLanguageId()
-			},
-			cTermEntryLocalization);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the c term entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalizations the c term entry localizations
-	 */
-	@Override
-	public void cacheResult(
-		List<CTermEntryLocalization> cTermEntryLocalizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cTermEntryLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTermEntryLocalization cTermEntryLocalization :
-				cTermEntryLocalizations) {
-
-			if (entityCache.getResult(
-					CTermEntryLocalizationImpl.class,
-					cTermEntryLocalization.getPrimaryKey()) == null) {
-
-				cacheResult(cTermEntryLocalization);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CTermEntryLocalizationModelImpl cTermEntryLocalizationModelImpl) {
-
-		Object[] args = new Object[] {
-			cTermEntryLocalizationModelImpl.getCommerceTermEntryId(),
-			cTermEntryLocalizationModelImpl.getLanguageId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCommerceTermEntryId_LanguageId, args,
-			cTermEntryLocalizationModelImpl);
-	}
-
-	/**
 	 * Creates a new c term entry localization with the primary key. Does not add the c term entry localization to the database.
 	 *
 	 * @param cTermEntryLocalizationId the primary key for the new c term entry localization
@@ -564,11 +498,7 @@ public class CTermEntryLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTermEntryLocalizationImpl.class, cTermEntryLocalizationModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cTermEntryLocalizationModelImpl);
+		cacheUniqueFindersResult(cTermEntryLocalization, false);
 
 		if (isNew) {
 			cTermEntryLocalization.setNew(false);
@@ -632,9 +562,6 @@ public class CTermEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceTermEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTermEntryId",
 			new String[] {
@@ -667,10 +594,14 @@ public class CTermEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTermEntryLocalization::getCommerceTermEntryId));
 
-		_finderPathFetchByCommerceTermEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceTermEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commerceTermEntryId", "languageId"}, true);
+		_finderPathFetchByCommerceTermEntryId_LanguageId =
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY,
+				"fetchByCommerceTermEntryId_LanguageId",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"commerceTermEntryId", "languageId"}, false,
+				CTermEntryLocalization::getCommerceTermEntryId,
+				CTermEntryLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -751,4 +682,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1140349515
+// LIFERAY-SERVICE-BUILDER-HASH:-1485117503

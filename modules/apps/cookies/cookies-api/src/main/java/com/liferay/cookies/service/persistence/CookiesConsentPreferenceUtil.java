@@ -37,6 +37,24 @@ public class CookiesConsentPreferenceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CookiesConsentPreference> cookiesConsentPreferences) {
+
+		getPersistence().cacheResult(cookiesConsentPreferences);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CookiesConsentPreference cookiesConsentPreference) {
+
+		getPersistence().cacheResult(cookiesConsentPreference);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -576,28 +594,6 @@ public class CookiesConsentPreferenceUtil {
 	}
 
 	/**
-	 * Caches the cookies consent preference in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreference the cookies consent preference
-	 */
-	public static void cacheResult(
-		CookiesConsentPreference cookiesConsentPreference) {
-
-		getPersistence().cacheResult(cookiesConsentPreference);
-	}
-
-	/**
-	 * Caches the cookies consent preferences in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreferences the cookies consent preferences
-	 */
-	public static void cacheResult(
-		List<CookiesConsentPreference> cookiesConsentPreferences) {
-
-		getPersistence().cacheResult(cookiesConsentPreferences);
-	}
-
-	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
 	 *
 	 * @param cookiesConsentPreferenceId the primary key for the new cookies consent preference
@@ -670,4 +666,4 @@ public class CookiesConsentPreferenceUtil {
 	private static volatile CookiesConsentPreferencePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-330408914
+// LIFERAY-SERVICE-BUILDER-HASH:-1914341812

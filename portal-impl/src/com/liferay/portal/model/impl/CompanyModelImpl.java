@@ -990,6 +990,15 @@ public class CompanyModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(Company source) {
+		CompanyModelImpl sourceModelImpl = (CompanyModelImpl)source;
+
+		setGroupId(sourceModelImpl.getGroupId());
+
+		setVirtualHostname(sourceModelImpl.getVirtualHostname());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1481,4 +1490,4 @@ public class CompanyModelImpl
 	private Company _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1805343833
+// LIFERAY-SERVICE-BUILDER-HASH:1837531940

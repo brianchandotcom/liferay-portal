@@ -36,6 +36,22 @@ public class CommercePaymentEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePaymentEntry> commercePaymentEntries) {
+
+		getPersistence().cacheResult(commercePaymentEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommercePaymentEntry commercePaymentEntry) {
+		getPersistence().cacheResult(commercePaymentEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1096,26 +1112,6 @@ public class CommercePaymentEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce payment entry in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntry the commerce payment entry
-	 */
-	public static void cacheResult(CommercePaymentEntry commercePaymentEntry) {
-		getPersistence().cacheResult(commercePaymentEntry);
-	}
-
-	/**
-	 * Caches the commerce payment entries in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntries the commerce payment entries
-	 */
-	public static void cacheResult(
-		List<CommercePaymentEntry> commercePaymentEntries) {
-
-		getPersistence().cacheResult(commercePaymentEntries);
-	}
-
-	/**
 	 * Creates a new commerce payment entry with the primary key. Does not add the commerce payment entry to the database.
 	 *
 	 * @param commercePaymentEntryId the primary key for the new commerce payment entry
@@ -1185,4 +1181,4 @@ public class CommercePaymentEntryUtil {
 	private static volatile CommercePaymentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:903962797
+// LIFERAY-SERVICE-BUILDER-HASH:-524465272

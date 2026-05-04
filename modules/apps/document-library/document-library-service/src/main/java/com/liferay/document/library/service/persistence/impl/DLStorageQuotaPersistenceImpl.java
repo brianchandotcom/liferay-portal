@@ -25,16 +25,12 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -168,57 +164,6 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 	/**
-	 * Caches the dl storage quota in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuota the dl storage quota
-	 */
-	@Override
-	public void cacheResult(DLStorageQuota dlStorageQuota) {
-		entityCache.putResult(
-			DLStorageQuotaImpl.class, dlStorageQuota.getPrimaryKey(),
-			dlStorageQuota);
-
-		finderCache.putResult(
-			_finderPathFetchByCompanyId,
-			new Object[] {dlStorageQuota.getCompanyId()}, dlStorageQuota);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dl storage quotas in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuotas the dl storage quotas
-	 */
-	@Override
-	public void cacheResult(List<DLStorageQuota> dlStorageQuotas) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlStorageQuotas.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLStorageQuota dlStorageQuota : dlStorageQuotas) {
-			if (entityCache.getResult(
-					DLStorageQuotaImpl.class, dlStorageQuota.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(dlStorageQuota);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLStorageQuotaModelImpl dlStorageQuotaModelImpl) {
-
-		Object[] args = new Object[] {dlStorageQuotaModelImpl.getCompanyId()};
-
-		finderCache.putResult(
-			_finderPathFetchByCompanyId, args, dlStorageQuotaModelImpl);
-	}
-
-	/**
 	 * Creates a new dl storage quota with the primary key. Does not add the dl storage quota to the database.
 	 *
 	 * @param dlStorageQuotaId the primary key for the new dl storage quota
@@ -324,10 +269,7 @@ public class DLStorageQuotaPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DLStorageQuotaImpl.class, dlStorageQuotaModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlStorageQuotaModelImpl);
+		cacheUniqueFindersResult(dlStorageQuota, false);
 
 		if (isNew) {
 			dlStorageQuota.setNew(false);
@@ -388,13 +330,10 @@ public class DLStorageQuotaPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByCompanyId = new FinderPath(
+		_finderPathFetchByCompanyId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
+			false, DLStorageQuota::getCompanyId);
 
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCompanyId, _SQL_SELECT_DLSTORAGEQUOTA_WHERE,
@@ -465,4 +404,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:199791441
+// LIFERAY-SERVICE-BUILDER-HASH:-1247639046

@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -640,74 +637,6 @@ public class FaroProjectPersistenceImpl
 	}
 
 	/**
-	 * Caches the faro project in the entity cache if it is enabled.
-	 *
-	 * @param faroProject the faro project
-	 */
-	@Override
-	public void cacheResult(FaroProject faroProject) {
-		entityCache.putResult(
-			FaroProjectImpl.class, faroProject.getPrimaryKey(), faroProject);
-
-		finderCache.putResult(
-			_finderPathFetchByGroupId, new Object[] {faroProject.getGroupId()},
-			faroProject);
-
-		finderCache.putResult(
-			_finderPathFetchByCorpProjectUuid,
-			new Object[] {faroProject.getCorpProjectUuid()}, faroProject);
-
-		finderCache.putResult(
-			_finderPathFetchByWeDeployKey,
-			new Object[] {faroProject.getWeDeployKey()}, faroProject);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro projects in the entity cache if it is enabled.
-	 *
-	 * @param faroProjects the faro projects
-	 */
-	@Override
-	public void cacheResult(List<FaroProject> faroProjects) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroProjects.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroProject faroProject : faroProjects) {
-			if (entityCache.getResult(
-					FaroProjectImpl.class, faroProject.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(faroProject);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FaroProjectModelImpl faroProjectModelImpl) {
-
-		Object[] args = new Object[] {faroProjectModelImpl.getGroupId()};
-
-		finderCache.putResult(
-			_finderPathFetchByGroupId, args, faroProjectModelImpl);
-
-		args = new Object[] {faroProjectModelImpl.getCorpProjectUuid()};
-
-		finderCache.putResult(
-			_finderPathFetchByCorpProjectUuid, args, faroProjectModelImpl);
-
-		args = new Object[] {faroProjectModelImpl.getWeDeployKey()};
-
-		finderCache.putResult(
-			_finderPathFetchByWeDeployKey, args, faroProjectModelImpl);
-	}
-
-	/**
 	 * Creates a new faro project with the primary key. Does not add the faro project to the database.
 	 *
 	 * @param faroProjectId the primary key for the new faro project
@@ -811,10 +740,7 @@ public class FaroProjectPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroProjectImpl.class, faroProjectModelImpl, false, true);
-
-		cacheUniqueFindersCache(faroProjectModelImpl);
+		cacheUniqueFindersResult(faroProject, false);
 
 		if (isNew) {
 			faroProject.setNew(false);
@@ -880,13 +806,10 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByGroupId = new FinderPath(
+		_finderPathFetchByGroupId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
+			false, FaroProject::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByGroupId, _SQL_SELECT_FAROPROJECT_WHERE,
@@ -922,10 +845,11 @@ public class FaroProjectPersistenceImpl
 					"faroProject.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, FaroProject::getUserId));
 
-		_finderPathFetchByCorpProjectUuid = new FinderPath(
+		_finderPathFetchByCorpProjectUuid = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
 			new String[] {String.class.getName()},
-			new String[] {"corpProjectUuid"}, true);
+			new String[] {"corpProjectUuid"}, false,
+			FaroProject::getCorpProjectUuid);
 
 		_uniquePersistenceFinderByCorpProjectUuid =
 			new UniquePersistenceFinder<>(
@@ -964,10 +888,10 @@ public class FaroProjectPersistenceImpl
 					"faroProject.", "serverLocation", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getServerLocation));
 
-		_finderPathFetchByWeDeployKey = new FinderPath(
+		_finderPathFetchByWeDeployKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
 			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			true);
+			false, FaroProject::getWeDeployKey);
 
 		_uniquePersistenceFinderByWeDeployKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWeDeployKey, _SQL_SELECT_FAROPROJECT_WHERE,
@@ -1044,4 +968,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:361122265
+// LIFERAY-SERVICE-BUILDER-HASH:1208162292

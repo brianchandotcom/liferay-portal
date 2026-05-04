@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskFormException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskForm;
@@ -840,78 +836,6 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo task form in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskForm the kaleo task form
-	 */
-	@Override
-	public void cacheResult(KaleoTaskForm kaleoTaskForm) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTaskForm.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoTaskFormImpl.class, kaleoTaskForm.getPrimaryKey(),
-				kaleoTaskForm);
-
-			finderCache.putResult(
-				_finderPathFetchByFormUuid_KTI,
-				new Object[] {
-					kaleoTaskForm.getKaleoTaskId(), kaleoTaskForm.getFormUuid()
-				},
-				kaleoTaskForm);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo task forms in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskForms the kaleo task forms
-	 */
-	@Override
-	public void cacheResult(List<KaleoTaskForm> kaleoTaskForms) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoTaskForms.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoTaskForm kaleoTaskForm : kaleoTaskForms) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoTaskForm.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoTaskFormImpl.class,
-						kaleoTaskForm.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoTaskForm);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoTaskFormModelImpl kaleoTaskFormModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTaskFormModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoTaskFormModelImpl.getKaleoTaskId(),
-				kaleoTaskFormModelImpl.getFormUuid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByFormUuid_KTI, args, kaleoTaskFormModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo task form with the primary key. Does not add the kaleo task form to the database.
 	 *
 	 * @param kaleoTaskFormId the primary key for the new kaleo task form
@@ -1048,10 +972,7 @@ public class KaleoTaskFormPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoTaskFormImpl.class, kaleoTaskFormModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoTaskFormModelImpl);
+		cacheUniqueFindersResult(kaleoTaskForm, false);
 
 		if (isNew) {
 			kaleoTaskForm.setNew(false);
@@ -1189,9 +1110,6 @@ public class KaleoTaskFormPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1314,10 +1232,11 @@ public class KaleoTaskFormPersistenceImpl
 					"kaleoTaskForm.", "kaleoTaskId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTaskForm::getKaleoTaskId));
 
-		_finderPathFetchByFormUuid_KTI = new FinderPath(
+		_finderPathFetchByFormUuid_KTI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFormUuid_KTI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoTaskId", "formUuid"}, true);
+			new String[] {"kaleoTaskId", "formUuid"}, false,
+			KaleoTaskForm::getKaleoTaskId, KaleoTaskForm::getFormUuid);
 
 		_uniquePersistenceFinderByFormUuid_KTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByFormUuid_KTI,
@@ -1398,4 +1317,4 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1128323554
+// LIFERAY-SERVICE-BUILDER-HASH:126286550

@@ -36,6 +36,20 @@ public class UserIdMapperUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UserIdMapper> userIdMappers) {
+		getPersistence().cacheResult(userIdMappers);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UserIdMapper userIdMapper) {
+		getPersistence().cacheResult(userIdMapper);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -357,24 +371,6 @@ public class UserIdMapperUtil {
 	}
 
 	/**
-	 * Caches the user ID mapper in the entity cache if it is enabled.
-	 *
-	 * @param userIdMapper the user ID mapper
-	 */
-	public static void cacheResult(UserIdMapper userIdMapper) {
-		getPersistence().cacheResult(userIdMapper);
-	}
-
-	/**
-	 * Caches the user ID mappers in the entity cache if it is enabled.
-	 *
-	 * @param userIdMappers the user ID mappers
-	 */
-	public static void cacheResult(List<UserIdMapper> userIdMappers) {
-		getPersistence().cacheResult(userIdMappers);
-	}
-
-	/**
 	 * Creates a new user ID mapper with the primary key. Does not add the user ID mapper to the database.
 	 *
 	 * @param userIdMapperId the primary key for the new user ID mapper
@@ -435,4 +431,4 @@ public class UserIdMapperUtil {
 	private static volatile UserIdMapperPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2015111482
+// LIFERAY-SERVICE-BUILDER-HASH:149052624

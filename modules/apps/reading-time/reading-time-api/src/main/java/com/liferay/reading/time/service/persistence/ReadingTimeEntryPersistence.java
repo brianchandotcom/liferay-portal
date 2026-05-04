@@ -355,21 +355,6 @@ public interface ReadingTimeEntryPersistence
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
 	/**
-	 * Caches the reading time entry in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntry the reading time entry
-	 */
-	public void cacheResult(ReadingTimeEntry readingTimeEntry);
-
-	/**
-	 * Caches the reading time entries in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntries the reading time entries
-	 */
-	public void cacheResult(
-		java.util.List<ReadingTimeEntry> readingTimeEntries);
-
-	/**
 	 * Creates a new reading time entry with the primary key. Does not add the reading time entry to the database.
 	 *
 	 * @param readingTimeEntryId the primary key for the new reading time entry
@@ -408,4 +393,4 @@ public interface ReadingTimeEntryPersistence
 	public ReadingTimeEntry fetchByPrimaryKey(long readingTimeEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1178810375
+// LIFERAY-SERVICE-BUILDER-HASH:2039343727

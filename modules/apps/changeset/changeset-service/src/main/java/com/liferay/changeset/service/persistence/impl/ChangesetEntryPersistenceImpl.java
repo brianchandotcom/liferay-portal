@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -1086,84 +1083,6 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the changeset entry in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntry the changeset entry
-	 */
-	@Override
-	public void cacheResult(ChangesetEntry changesetEntry) {
-		entityCache.putResult(
-			ChangesetEntryImpl.class, changesetEntry.getPrimaryKey(),
-			changesetEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_CERC_C,
-			new Object[] {
-				changesetEntry.getChangesetCollectionId(),
-				changesetEntry.getClassExternalReferenceCode(),
-				changesetEntry.getClassNameId()
-			},
-			changesetEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C,
-			new Object[] {
-				changesetEntry.getChangesetCollectionId(),
-				changesetEntry.getClassNameId(), changesetEntry.getClassPK()
-			},
-			changesetEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the changeset entries in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntries the changeset entries
-	 */
-	@Override
-	public void cacheResult(List<ChangesetEntry> changesetEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (changesetEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ChangesetEntry changesetEntry : changesetEntries) {
-			if (entityCache.getResult(
-					ChangesetEntryImpl.class, changesetEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(changesetEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ChangesetEntryModelImpl changesetEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			changesetEntryModelImpl.getChangesetCollectionId(),
-			changesetEntryModelImpl.getClassExternalReferenceCode(),
-			changesetEntryModelImpl.getClassNameId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_CERC_C, args, changesetEntryModelImpl);
-
-		args = new Object[] {
-			changesetEntryModelImpl.getChangesetCollectionId(),
-			changesetEntryModelImpl.getClassNameId(),
-			changesetEntryModelImpl.getClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args, changesetEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
 	 * @param changesetEntryId the primary key for the new changeset entry
@@ -1294,10 +1213,7 @@ public class ChangesetEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ChangesetEntryImpl.class, changesetEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(changesetEntryModelImpl);
+		cacheUniqueFindersResult(changesetEntry, false);
 
 		if (isNew) {
 			changesetEntry.setNew(false);
@@ -1358,9 +1274,6 @@ public class ChangesetEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1516,7 +1429,7 @@ public class ChangesetEntryPersistenceImpl
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ChangesetEntry::getClassNameId));
 
-		_finderPathFetchByC_CERC_C = new FinderPath(
+		_finderPathFetchByC_CERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_CERC_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1526,7 +1439,9 @@ public class ChangesetEntryPersistenceImpl
 				"changesetCollectionId", "classExternalReferenceCode",
 				"classNameId"
 			},
-			true);
+			false, ChangesetEntry::getChangesetCollectionId,
+			ChangesetEntry::getClassExternalReferenceCode,
+			ChangesetEntry::getClassNameId);
 
 		_uniquePersistenceFinderByC_CERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_CERC_C, _SQL_SELECT_CHANGESETENTRY_WHERE,
@@ -1542,13 +1457,14 @@ public class ChangesetEntryPersistenceImpl
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ChangesetEntry::getClassNameId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"changesetCollectionId", "classNameId", "classPK"},
-			true);
+			false, ChangesetEntry::getChangesetCollectionId,
+			ChangesetEntry::getClassNameId, ChangesetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C, _SQL_SELECT_CHANGESETENTRY_WHERE,
@@ -1629,4 +1545,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1703768595
+// LIFERAY-SERVICE-BUILDER-HASH:-2110398383

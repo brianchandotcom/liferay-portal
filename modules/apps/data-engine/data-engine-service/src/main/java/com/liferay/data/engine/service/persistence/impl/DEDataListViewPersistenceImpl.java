@@ -14,7 +14,6 @@ import com.liferay.data.engine.service.persistence.DEDataListViewPersistence;
 import com.liferay.data.engine.service.persistence.DEDataListViewUtil;
 import com.liferay.data.engine.service.persistence.impl.constants.DEPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -868,78 +864,6 @@ public class DEDataListViewPersistenceImpl
 	}
 
 	/**
-	 * Caches the de data list view in the entity cache if it is enabled.
-	 *
-	 * @param deDataListView the de data list view
-	 */
-	@Override
-	public void cacheResult(DEDataListView deDataListView) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					deDataListView.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DEDataListViewImpl.class, deDataListView.getPrimaryKey(),
-				deDataListView);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					deDataListView.getUuid(), deDataListView.getGroupId()
-				},
-				deDataListView);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the de data list views in the entity cache if it is enabled.
-	 *
-	 * @param deDataListViews the de data list views
-	 */
-	@Override
-	public void cacheResult(List<DEDataListView> deDataListViews) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (deDataListViews.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DEDataListView deDataListView : deDataListViews) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						deDataListView.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DEDataListViewImpl.class,
-						deDataListView.getPrimaryKey()) == null) {
-
-					cacheResult(deDataListView);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DEDataListViewModelImpl deDataListViewModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					deDataListViewModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				deDataListViewModelImpl.getUuid(),
-				deDataListViewModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, deDataListViewModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.
 	 *
 	 * @param deDataListViewId the primary key for the new de data list view
@@ -1088,10 +1012,7 @@ public class DEDataListViewPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DEDataListViewImpl.class, deDataListViewModelImpl, false, true);
-
-		cacheUniqueFindersCache(deDataListViewModelImpl);
+		cacheUniqueFindersResult(deDataListView, false);
 
 		if (isNew) {
 			deDataListView.setNew(false);
@@ -1228,9 +1149,6 @@ public class DEDataListViewPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1258,10 +1176,11 @@ public class DEDataListViewPersistenceImpl
 				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DEDataListView::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DEDataListView::getUuid,
+			DEDataListView::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEDATALISTVIEW_WHERE,
@@ -1447,4 +1366,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:187286640
+// LIFERAY-SERVICE-BUILDER-HASH:-644580803

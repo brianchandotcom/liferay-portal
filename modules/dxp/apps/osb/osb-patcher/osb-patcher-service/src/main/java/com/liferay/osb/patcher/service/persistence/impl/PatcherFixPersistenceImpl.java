@@ -38,11 +38,8 @@ import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -4798,42 +4795,6 @@ public class PatcherFixPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher fix in the entity cache if it is enabled.
-	 *
-	 * @param patcherFix the patcher fix
-	 */
-	@Override
-	public void cacheResult(PatcherFix patcherFix) {
-		entityCache.putResult(
-			PatcherFixImpl.class, patcherFix.getPrimaryKey(), patcherFix);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher fixes in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixes the patcher fixes
-	 */
-	@Override
-	public void cacheResult(List<PatcherFix> patcherFixes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherFixes.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherFix patcherFix : patcherFixes) {
-			if (entityCache.getResult(
-					PatcherFixImpl.class, patcherFix.getPrimaryKey()) == null) {
-
-				cacheResult(patcherFix);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new patcher fix with the primary key. Does not add the patcher fix to the database.
 	 *
 	 * @param patcherFixId the primary key for the new patcher fix
@@ -4967,8 +4928,7 @@ public class PatcherFixPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherFixImpl.class, patcherFixModelImpl, false, true);
+		cacheUniqueFindersResult(patcherFix, false);
 
 		if (isNew) {
 			patcherFix.setNew(false);
@@ -5682,9 +5642,6 @@ public class PatcherFixPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		patcherFixToPatcherBuildTableMapper = TableMapperFactory.getTableMapper(
 			"OSBPatcher_PBuilds_PFixes#patcherFixId",
 			"OSBPatcher_PBuilds_PFixes", "companyId", "patcherFixId",
@@ -6127,4 +6084,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1090924121
+// LIFERAY-SERVICE-BUILDER-HASH:-1993782527

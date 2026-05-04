@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1999,81 +1997,6 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 	/**
-	 * Caches the object entry folder in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolder the object entry folder
-	 */
-	@Override
-	public void cacheResult(ObjectEntryFolder objectEntryFolder) {
-		entityCache.putResult(
-			ObjectEntryFolderImpl.class, objectEntryFolder.getPrimaryKey(),
-			objectEntryFolder);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				objectEntryFolder.getUuid(), objectEntryFolder.getGroupId()
-			},
-			objectEntryFolder);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G_C,
-			new Object[] {
-				objectEntryFolder.getExternalReferenceCode(),
-				objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId()
-			},
-			objectEntryFolder);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object entry folders in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolders the object entry folders
-	 */
-	@Override
-	public void cacheResult(List<ObjectEntryFolder> objectEntryFolders) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectEntryFolders.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
-			if (entityCache.getResult(
-					ObjectEntryFolderImpl.class,
-					objectEntryFolder.getPrimaryKey()) == null) {
-
-				cacheResult(objectEntryFolder);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectEntryFolderModelImpl objectEntryFolderModelImpl) {
-
-		Object[] args = new Object[] {
-			objectEntryFolderModelImpl.getUuid(),
-			objectEntryFolderModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, objectEntryFolderModelImpl);
-
-		args = new Object[] {
-			objectEntryFolderModelImpl.getExternalReferenceCode(),
-			objectEntryFolderModelImpl.getGroupId(),
-			objectEntryFolderModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G_C, args, objectEntryFolderModelImpl);
-	}
-
-	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
 	 * @param objectEntryFolderId the primary key for the new object entry folder
@@ -2257,11 +2180,7 @@ public class ObjectEntryFolderPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectEntryFolderImpl.class, objectEntryFolderModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(objectEntryFolderModelImpl);
+		cacheUniqueFindersResult(objectEntryFolder, false);
 
 		if (isNew) {
 			objectEntryFolder.setNew(false);
@@ -2327,9 +2246,6 @@ public class ObjectEntryFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2358,10 +2274,11 @@ public class ObjectEntryFolderPersistenceImpl
 				"objectEntryFolder.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectEntryFolder::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			ObjectEntryFolder::getUuid, ObjectEntryFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_OBJECTENTRYFOLDER_WHERE,
@@ -2405,14 +2322,15 @@ public class ObjectEntryFolderPersistenceImpl
 					"objectEntryFolder.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getCompanyId));
 
-		_finderPathFetchByERC_G_C = new FinderPath(
+		_finderPathFetchByERC_G_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			new String[] {"externalReferenceCode", "groupId", "companyId"},
-			true);
+			false, ObjectEntryFolder::getExternalReferenceCode,
+			ObjectEntryFolder::getGroupId, ObjectEntryFolder::getCompanyId);
 
 		_uniquePersistenceFinderByERC_G_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_C,
@@ -2648,4 +2566,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1065693249
+// LIFERAY-SERVICE-BUILDER-HASH:-656590827

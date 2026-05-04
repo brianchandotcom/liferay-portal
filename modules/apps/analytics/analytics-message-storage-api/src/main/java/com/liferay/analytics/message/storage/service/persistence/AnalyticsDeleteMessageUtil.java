@@ -37,6 +37,24 @@ public class AnalyticsDeleteMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AnalyticsDeleteMessage> analyticsDeleteMessages) {
+
+		getPersistence().cacheResult(analyticsDeleteMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AnalyticsDeleteMessage analyticsDeleteMessage) {
+
+		getPersistence().cacheResult(analyticsDeleteMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -513,28 +531,6 @@ public class AnalyticsDeleteMessageUtil {
 	}
 
 	/**
-	 * Caches the analytics delete message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessage the analytics delete message
-	 */
-	public static void cacheResult(
-		AnalyticsDeleteMessage analyticsDeleteMessage) {
-
-		getPersistence().cacheResult(analyticsDeleteMessage);
-	}
-
-	/**
-	 * Caches the analytics delete messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsDeleteMessages the analytics delete messages
-	 */
-	public static void cacheResult(
-		List<AnalyticsDeleteMessage> analyticsDeleteMessages) {
-
-		getPersistence().cacheResult(analyticsDeleteMessages);
-	}
-
-	/**
 	 * Creates a new analytics delete message with the primary key. Does not add the analytics delete message to the database.
 	 *
 	 * @param analyticsDeleteMessageId the primary key for the new analytics delete message
@@ -604,4 +600,4 @@ public class AnalyticsDeleteMessageUtil {
 	private static volatile AnalyticsDeleteMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1634761450
+// LIFERAY-SERVICE-BUILDER-HASH:674309352

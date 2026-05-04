@@ -2505,21 +2505,6 @@ public interface SegmentsExperiencePersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the segments experience in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperience the segments experience
-	 */
-	public void cacheResult(SegmentsExperience segmentsExperience);
-
-	/**
-	 * Caches the segments experiences in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiences the segments experiences
-	 */
-	public void cacheResult(
-		java.util.List<SegmentsExperience> segmentsExperiences);
-
-	/**
 	 * Creates a new segments experience with the primary key. Does not add the segments experience to the database.
 	 *
 	 * @param segmentsExperienceId the primary key for the new segments experience
@@ -2558,4 +2543,4 @@ public interface SegmentsExperiencePersistence
 	public SegmentsExperience fetchByPrimaryKey(long segmentsExperienceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-504798213
+// LIFERAY-SERVICE-BUILDER-HASH:-1411373201

@@ -348,20 +348,6 @@ public interface ERCGroupEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the erc group entry in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntry the erc group entry
-	 */
-	public void cacheResult(ERCGroupEntry ercGroupEntry);
-
-	/**
-	 * Caches the erc group entries in the entity cache if it is enabled.
-	 *
-	 * @param ercGroupEntries the erc group entries
-	 */
-	public void cacheResult(java.util.List<ERCGroupEntry> ercGroupEntries);
-
-	/**
 	 * Creates a new erc group entry with the primary key. Does not add the erc group entry to the database.
 	 *
 	 * @param ercGroupEntryId the primary key for the new erc group entry
@@ -400,4 +386,4 @@ public interface ERCGroupEntryPersistence
 	public ERCGroupEntry fetchByPrimaryKey(long ercGroupEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:593033135
+// LIFERAY-SERVICE-BUILDER-HASH:-1510953631

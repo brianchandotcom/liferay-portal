@@ -36,6 +36,24 @@ public class CommerceInventoryWarehouseRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryWarehouseRel> commerceInventoryWarehouseRels) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouseRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouseRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -486,28 +504,6 @@ public class CommerceInventoryWarehouseRelUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory warehouse rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRel the commerce inventory warehouse rel
-	 */
-	public static void cacheResult(
-		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouseRel);
-	}
-
-	/**
-	 * Caches the commerce inventory warehouse rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRels the commerce inventory warehouse rels
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryWarehouseRel> commerceInventoryWarehouseRels) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouseRels);
-	}
-
-	/**
 	 * Creates a new commerce inventory warehouse rel with the primary key. Does not add the commerce inventory warehouse rel to the database.
 	 *
 	 * @param commerceInventoryWarehouseRelId the primary key for the new commerce inventory warehouse rel
@@ -583,4 +579,4 @@ public class CommerceInventoryWarehouseRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1612235004
+// LIFERAY-SERVICE-BUILDER-HASH:1290528398

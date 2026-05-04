@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -711,45 +708,6 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 	/**
-	 * Caches the object view column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumn the object view column
-	 */
-	@Override
-	public void cacheResult(ObjectViewColumn objectViewColumn) {
-		entityCache.putResult(
-			ObjectViewColumnImpl.class, objectViewColumn.getPrimaryKey(),
-			objectViewColumn);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object view columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewColumns the object view columns
-	 */
-	@Override
-	public void cacheResult(List<ObjectViewColumn> objectViewColumns) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectViewColumns.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectViewColumn objectViewColumn : objectViewColumns) {
-			if (entityCache.getResult(
-					ObjectViewColumnImpl.class,
-					objectViewColumn.getPrimaryKey()) == null) {
-
-				cacheResult(objectViewColumn);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object view column with the primary key. Does not add the object view column to the database.
 	 *
 	 * @param objectViewColumnId the primary key for the new object view column
@@ -891,8 +849,7 @@ public class ObjectViewColumnPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectViewColumnImpl.class, objectViewColumnModelImpl, false, true);
+		cacheUniqueFindersResult(objectViewColumn, false);
 
 		if (isNew) {
 			objectViewColumn.setNew(false);
@@ -958,9 +915,6 @@ public class ObjectViewColumnPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1155,4 +1109,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1732978546
+// LIFERAY-SERVICE-BUILDER-HASH:-1134418344

@@ -554,20 +554,6 @@ public interface CPTaxCategoryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp tax category in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategory the cp tax category
-	 */
-	public void cacheResult(CPTaxCategory cpTaxCategory);
-
-	/**
-	 * Caches the cp tax categories in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategories the cp tax categories
-	 */
-	public void cacheResult(java.util.List<CPTaxCategory> cpTaxCategories);
-
-	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
 	 * @param CPTaxCategoryId the primary key for the new cp tax category
@@ -606,4 +592,4 @@ public interface CPTaxCategoryPersistence
 	public CPTaxCategory fetchByPrimaryKey(long CPTaxCategoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:321500256
+// LIFERAY-SERVICE-BUILDER-HASH:1027148412

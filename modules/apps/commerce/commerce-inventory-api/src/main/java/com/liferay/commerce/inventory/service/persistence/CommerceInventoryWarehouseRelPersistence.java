@@ -316,23 +316,6 @@ public interface CommerceInventoryWarehouseRelPersistence
 		long classNameId, long classPK, long commerceInventoryWarehouseId);
 
 	/**
-	 * Caches the commerce inventory warehouse rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRel the commerce inventory warehouse rel
-	 */
-	public void cacheResult(
-		CommerceInventoryWarehouseRel commerceInventoryWarehouseRel);
-
-	/**
-	 * Caches the commerce inventory warehouse rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseRels the commerce inventory warehouse rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceInventoryWarehouseRel>
-			commerceInventoryWarehouseRels);
-
-	/**
 	 * Creates a new commerce inventory warehouse rel with the primary key. Does not add the commerce inventory warehouse rel to the database.
 	 *
 	 * @param commerceInventoryWarehouseRelId the primary key for the new commerce inventory warehouse rel
@@ -376,4 +359,4 @@ public interface CommerceInventoryWarehouseRelPersistence
 		long commerceInventoryWarehouseRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1503655230
+// LIFERAY-SERVICE-BUILDER-HASH:439856602

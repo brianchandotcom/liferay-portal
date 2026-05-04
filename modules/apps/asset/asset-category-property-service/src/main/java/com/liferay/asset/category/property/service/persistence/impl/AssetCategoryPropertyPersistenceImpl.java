@@ -15,7 +15,6 @@ import com.liferay.asset.category.property.service.persistence.AssetCategoryProp
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyUtil;
 import com.liferay.asset.category.property.service.persistence.impl.constants.AssetPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -799,100 +796,6 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset category property in the entity cache if it is enabled.
-	 *
-	 * @param assetCategoryProperty the asset category property
-	 */
-	@Override
-	public void cacheResult(AssetCategoryProperty assetCategoryProperty) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetCategoryProperty.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetCategoryPropertyImpl.class,
-				assetCategoryProperty.getPrimaryKey(), assetCategoryProperty);
-
-			finderCache.putResult(
-				_finderPathFetchByCA_K,
-				new Object[] {
-					assetCategoryProperty.getCategoryId(),
-					assetCategoryProperty.getKey()
-				},
-				assetCategoryProperty);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					assetCategoryProperty.getExternalReferenceCode(),
-					assetCategoryProperty.getCompanyId()
-				},
-				assetCategoryProperty);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset category properties in the entity cache if it is enabled.
-	 *
-	 * @param assetCategoryProperties the asset category properties
-	 */
-	@Override
-	public void cacheResult(
-		List<AssetCategoryProperty> assetCategoryProperties) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetCategoryProperties.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetCategoryProperty assetCategoryProperty :
-				assetCategoryProperties) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetCategoryProperty.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetCategoryPropertyImpl.class,
-						assetCategoryProperty.getPrimaryKey()) == null) {
-
-					cacheResult(assetCategoryProperty);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetCategoryPropertyModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetCategoryPropertyModelImpl.getCategoryId(),
-				assetCategoryPropertyModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCA_K, args, assetCategoryPropertyModelImpl);
-
-			args = new Object[] {
-				assetCategoryPropertyModelImpl.getExternalReferenceCode(),
-				assetCategoryPropertyModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, assetCategoryPropertyModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset category property with the primary key. Does not add the asset category property to the database.
 	 *
 	 * @param categoryPropertyId the primary key for the new asset category property
@@ -1108,11 +1011,7 @@ public class AssetCategoryPropertyPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetCategoryPropertyImpl.class, assetCategoryPropertyModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(assetCategoryPropertyModelImpl);
+		cacheUniqueFindersResult(assetCategoryProperty, false);
 
 		if (isNew) {
 			assetCategoryProperty.setNew(false);
@@ -1249,9 +1148,6 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1348,10 +1244,12 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
 
-		_finderPathFetchByCA_K = new FinderPath(
+		_finderPathFetchByCA_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"categoryId", "key_"}, true);
+			new String[] {"categoryId", "key_"}, false,
+			AssetCategoryProperty::getCategoryId,
+			AssetCategoryProperty::getKey);
 
 		_uniquePersistenceFinderByCA_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCA_K,
@@ -1363,10 +1261,12 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			AssetCategoryProperty::getExternalReferenceCode,
+			AssetCategoryProperty::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1451,4 +1351,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1215821217
+// LIFERAY-SERVICE-BUILDER-HASH:-577802182

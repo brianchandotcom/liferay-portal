@@ -567,21 +567,6 @@ public interface ListTypeDefinitionPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the list type definition in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinition the list type definition
-	 */
-	public void cacheResult(ListTypeDefinition listTypeDefinition);
-
-	/**
-	 * Caches the list type definitions in the entity cache if it is enabled.
-	 *
-	 * @param listTypeDefinitions the list type definitions
-	 */
-	public void cacheResult(
-		java.util.List<ListTypeDefinition> listTypeDefinitions);
-
-	/**
 	 * Creates a new list type definition with the primary key. Does not add the list type definition to the database.
 	 *
 	 * @param listTypeDefinitionId the primary key for the new list type definition
@@ -620,4 +605,4 @@ public interface ListTypeDefinitionPersistence
 	public ListTypeDefinition fetchByPrimaryKey(long listTypeDefinitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:5103846
+// LIFERAY-SERVICE-BUILDER-HASH:-518409618

@@ -1178,4 +1178,4 @@ public class KBCommentModelImpl
 	private KBComment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:742112328
+// LIFERAY-SERVICE-BUILDER-HASH:178046536

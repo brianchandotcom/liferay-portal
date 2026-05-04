@@ -450,21 +450,6 @@ public interface JournalArticleResourcePersistence
 	public int countByG_A(long groupId, String articleId);
 
 	/**
-	 * Caches the journal article resource in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResource the journal article resource
-	 */
-	public void cacheResult(JournalArticleResource journalArticleResource);
-
-	/**
-	 * Caches the journal article resources in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResources the journal article resources
-	 */
-	public void cacheResult(
-		java.util.List<JournalArticleResource> journalArticleResources);
-
-	/**
 	 * Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new journal article resource
@@ -504,4 +489,4 @@ public interface JournalArticleResourcePersistence
 	public JournalArticleResource fetchByPrimaryKey(long resourcePrimKey);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-425532025
+// LIFERAY-SERVICE-BUILDER-HASH:62207967

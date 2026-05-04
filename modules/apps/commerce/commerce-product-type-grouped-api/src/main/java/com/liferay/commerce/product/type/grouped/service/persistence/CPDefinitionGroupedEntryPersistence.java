@@ -555,21 +555,6 @@ public interface CPDefinitionGroupedEntryPersistence
 	public int countByC_E(long CPDefinitionId, long entryCProductId);
 
 	/**
-	 * Caches the cp definition grouped entry in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
-	 */
-	public void cacheResult(CPDefinitionGroupedEntry cpDefinitionGroupedEntry);
-
-	/**
-	 * Caches the cp definition grouped entries in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntries the cp definition grouped entries
-	 */
-	public void cacheResult(
-		java.util.List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries);
-
-	/**
 	 * Creates a new cp definition grouped entry with the primary key. Does not add the cp definition grouped entry to the database.
 	 *
 	 * @param CPDefinitionGroupedEntryId the primary key for the new cp definition grouped entry
@@ -611,4 +596,4 @@ public interface CPDefinitionGroupedEntryPersistence
 		long CPDefinitionGroupedEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1458495626
+// LIFERAY-SERVICE-BUILDER-HASH:-1597462926

@@ -36,6 +36,22 @@ public class ContactsCardTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ContactsCardTemplate> contactsCardTemplates) {
+
+		getPersistence().cacheResult(contactsCardTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ContactsCardTemplate contactsCardTemplate) {
+		getPersistence().cacheResult(contactsCardTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -237,26 +253,6 @@ public class ContactsCardTemplateUtil {
 	}
 
 	/**
-	 * Caches the contacts card template in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplate the contacts card template
-	 */
-	public static void cacheResult(ContactsCardTemplate contactsCardTemplate) {
-		getPersistence().cacheResult(contactsCardTemplate);
-	}
-
-	/**
-	 * Caches the contacts card templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplates the contacts card templates
-	 */
-	public static void cacheResult(
-		List<ContactsCardTemplate> contactsCardTemplates) {
-
-		getPersistence().cacheResult(contactsCardTemplates);
-	}
-
-	/**
 	 * Creates a new contacts card template with the primary key. Does not add the contacts card template to the database.
 	 *
 	 * @param contactsCardTemplateId the primary key for the new contacts card template
@@ -326,4 +322,4 @@ public class ContactsCardTemplateUtil {
 	private static volatile ContactsCardTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1498525715
+// LIFERAY-SERVICE-BUILDER-HASH:1124150813

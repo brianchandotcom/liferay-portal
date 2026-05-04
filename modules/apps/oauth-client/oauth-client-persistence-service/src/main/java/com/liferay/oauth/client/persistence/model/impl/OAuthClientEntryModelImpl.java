@@ -1362,4 +1362,4 @@ public class OAuthClientEntryModelImpl
 	private OAuthClientEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1333709825
+// LIFERAY-SERVICE-BUILDER-HASH:-1071379799

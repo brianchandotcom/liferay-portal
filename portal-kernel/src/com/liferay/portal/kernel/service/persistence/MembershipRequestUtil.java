@@ -36,6 +36,20 @@ public class MembershipRequestUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MembershipRequest> membershipRequests) {
+		getPersistence().cacheResult(membershipRequests);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MembershipRequest membershipRequest) {
+		getPersistence().cacheResult(membershipRequest);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -633,24 +647,6 @@ public class MembershipRequestUtil {
 	}
 
 	/**
-	 * Caches the membership request in the entity cache if it is enabled.
-	 *
-	 * @param membershipRequest the membership request
-	 */
-	public static void cacheResult(MembershipRequest membershipRequest) {
-		getPersistence().cacheResult(membershipRequest);
-	}
-
-	/**
-	 * Caches the membership requests in the entity cache if it is enabled.
-	 *
-	 * @param membershipRequests the membership requests
-	 */
-	public static void cacheResult(List<MembershipRequest> membershipRequests) {
-		getPersistence().cacheResult(membershipRequests);
-	}
-
-	/**
 	 * Creates a new membership request with the primary key. Does not add the membership request to the database.
 	 *
 	 * @param membershipRequestId the primary key for the new membership request
@@ -719,4 +715,4 @@ public class MembershipRequestUtil {
 	private static volatile MembershipRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1536592949
+// LIFERAY-SERVICE-BUILDER-HASH:-353630285

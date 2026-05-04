@@ -570,20 +570,6 @@ public interface DDMStorageLinkPersistence
 	public int countByStructureVersionId(long[] structureVersionIds);
 
 	/**
-	 * Caches the ddm storage link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLink the ddm storage link
-	 */
-	public void cacheResult(DDMStorageLink ddmStorageLink);
-
-	/**
-	 * Caches the ddm storage links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLinks the ddm storage links
-	 */
-	public void cacheResult(java.util.List<DDMStorageLink> ddmStorageLinks);
-
-	/**
 	 * Creates a new ddm storage link with the primary key. Does not add the ddm storage link to the database.
 	 *
 	 * @param storageLinkId the primary key for the new ddm storage link
@@ -622,4 +608,4 @@ public interface DDMStorageLinkPersistence
 	public DDMStorageLink fetchByPrimaryKey(long storageLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:185204692
+// LIFERAY-SERVICE-BUILDER-HASH:-80138690

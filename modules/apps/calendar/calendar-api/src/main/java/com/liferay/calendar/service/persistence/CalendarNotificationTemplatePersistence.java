@@ -467,23 +467,6 @@ public interface CalendarNotificationTemplatePersistence
 		String notificationTemplateType);
 
 	/**
-	 * Caches the calendar notification template in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplate the calendar notification template
-	 */
-	public void cacheResult(
-		CalendarNotificationTemplate calendarNotificationTemplate);
-
-	/**
-	 * Caches the calendar notification templates in the entity cache if it is enabled.
-	 *
-	 * @param calendarNotificationTemplates the calendar notification templates
-	 */
-	public void cacheResult(
-		java.util.List<CalendarNotificationTemplate>
-			calendarNotificationTemplates);
-
-	/**
 	 * Creates a new calendar notification template with the primary key. Does not add the calendar notification template to the database.
 	 *
 	 * @param calendarNotificationTemplateId the primary key for the new calendar notification template
@@ -527,4 +510,4 @@ public interface CalendarNotificationTemplatePersistence
 		long calendarNotificationTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2099152814
+// LIFERAY-SERVICE-BUILDER-HASH:1096945880

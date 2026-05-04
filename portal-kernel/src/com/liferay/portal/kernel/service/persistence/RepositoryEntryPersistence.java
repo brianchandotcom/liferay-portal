@@ -449,20 +449,6 @@ public interface RepositoryEntryPersistence
 	public int countByR_M(long repositoryId, String mappedId);
 
 	/**
-	 * Caches the repository entry in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntry the repository entry
-	 */
-	public void cacheResult(RepositoryEntry repositoryEntry);
-
-	/**
-	 * Caches the repository entries in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntries the repository entries
-	 */
-	public void cacheResult(java.util.List<RepositoryEntry> repositoryEntries);
-
-	/**
 	 * Creates a new repository entry with the primary key. Does not add the repository entry to the database.
 	 *
 	 * @param repositoryEntryId the primary key for the new repository entry
@@ -501,4 +487,4 @@ public interface RepositoryEntryPersistence
 	public RepositoryEntry fetchByPrimaryKey(long repositoryEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1603920819
+// LIFERAY-SERVICE-BUILDER-HASH:-1580640517

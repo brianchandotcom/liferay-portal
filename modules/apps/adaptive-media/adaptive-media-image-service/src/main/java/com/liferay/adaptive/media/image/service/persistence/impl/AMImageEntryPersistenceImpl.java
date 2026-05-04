@@ -14,7 +14,6 @@ import com.liferay.adaptive.media.image.service.persistence.AMImageEntryPersiste
 import com.liferay.adaptive.media.image.service.persistence.AMImageEntryUtil;
 import com.liferay.adaptive.media.image.service.persistence.impl.constants.AMImageEntryPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1426,94 +1422,6 @@ public class AMImageEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the am image entry in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntry the am image entry
-	 */
-	@Override
-	public void cacheResult(AMImageEntry amImageEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					amImageEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AMImageEntryImpl.class, amImageEntry.getPrimaryKey(),
-				amImageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					amImageEntry.getUuid(), amImageEntry.getGroupId()
-				},
-				amImageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByC_F,
-				new Object[] {
-					amImageEntry.getConfigurationUuid(),
-					amImageEntry.getFileVersionId()
-				},
-				amImageEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the am image entries in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntries the am image entries
-	 */
-	@Override
-	public void cacheResult(List<AMImageEntry> amImageEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (amImageEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AMImageEntry amImageEntry : amImageEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						amImageEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AMImageEntryImpl.class, amImageEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(amImageEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AMImageEntryModelImpl amImageEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					amImageEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				amImageEntryModelImpl.getUuid(),
-				amImageEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, amImageEntryModelImpl);
-
-			args = new Object[] {
-				amImageEntryModelImpl.getConfigurationUuid(),
-				amImageEntryModelImpl.getFileVersionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_F, args, amImageEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new am image entry with the primary key. Does not add the am image entry to the database.
 	 *
 	 * @param amImageEntryId the primary key for the new am image entry
@@ -1650,10 +1558,7 @@ public class AMImageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AMImageEntryImpl.class, amImageEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(amImageEntryModelImpl);
+		cacheUniqueFindersResult(amImageEntry, false);
 
 		if (isNew) {
 			amImageEntry.setNew(false);
@@ -1787,9 +1692,6 @@ public class AMImageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1817,10 +1719,11 @@ public class AMImageEntryPersistenceImpl
 				"amImageEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AMImageEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, AMImageEntry::getUuid,
+			AMImageEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_AMIMAGEENTRY_WHERE,
@@ -2012,10 +1915,11 @@ public class AMImageEntryPersistenceImpl
 				"amImageEntry.", "configurationUuid", FinderColumn.Type.STRING,
 				"=", true, true, AMImageEntry::getConfigurationUuid));
 
-		_finderPathFetchByC_F = new FinderPath(
+		_finderPathFetchByC_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"configurationUuid", "fileVersionId"}, true);
+			new String[] {"configurationUuid", "fileVersionId"}, false,
+			AMImageEntry::getConfigurationUuid, AMImageEntry::getFileVersionId);
 
 		_uniquePersistenceFinderByC_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_F, _SQL_SELECT_AMIMAGEENTRY_WHERE,
@@ -2098,4 +2002,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:269368044
+// LIFERAY-SERVICE-BUILDER-HASH:1260513449

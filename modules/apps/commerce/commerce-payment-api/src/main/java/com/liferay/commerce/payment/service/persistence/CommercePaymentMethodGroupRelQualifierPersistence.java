@@ -322,24 +322,6 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 		long classNameId, long classPK, long commercePaymentMethodGroupRelId);
 
 	/**
-	 * Caches the commerce payment method group rel qualifier in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifier the commerce payment method group rel qualifier
-	 */
-	public void cacheResult(
-		CommercePaymentMethodGroupRelQualifier
-			commercePaymentMethodGroupRelQualifier);
-
-	/**
-	 * Caches the commerce payment method group rel qualifiers in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRelQualifiers the commerce payment method group rel qualifiers
-	 */
-	public void cacheResult(
-		java.util.List<CommercePaymentMethodGroupRelQualifier>
-			commercePaymentMethodGroupRelQualifiers);
-
-	/**
 	 * Creates a new commerce payment method group rel qualifier with the primary key. Does not add the commerce payment method group rel qualifier to the database.
 	 *
 	 * @param commercePaymentMethodGroupRelQualifierId the primary key for the new commerce payment method group rel qualifier
@@ -384,4 +366,4 @@ public interface CommercePaymentMethodGroupRelQualifierPersistence
 		long commercePaymentMethodGroupRelQualifierId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-354183198
+// LIFERAY-SERVICE-BUILDER-HASH:237887464

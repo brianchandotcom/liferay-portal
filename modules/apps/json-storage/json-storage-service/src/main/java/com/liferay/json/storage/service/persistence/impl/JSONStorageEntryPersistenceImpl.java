@@ -14,7 +14,6 @@ import com.liferay.json.storage.service.persistence.JSONStorageEntryPersistence;
 import com.liferay.json.storage.service.persistence.JSONStorageEntryUtil;
 import com.liferay.json.storage.service.persistence.impl.constants.JSONStorePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -832,86 +828,6 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the json storage entry in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntry the json storage entry
-	 */
-	@Override
-	public void cacheResult(JSONStorageEntry jsonStorageEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					jsonStorageEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JSONStorageEntryImpl.class, jsonStorageEntry.getPrimaryKey(),
-				jsonStorageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByCN_CPK_P_I_K,
-				new Object[] {
-					jsonStorageEntry.getClassNameId(),
-					jsonStorageEntry.getClassPK(),
-					jsonStorageEntry.getParentJSONStorageEntryId(),
-					jsonStorageEntry.getIndex(), jsonStorageEntry.getKey()
-				},
-				jsonStorageEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the json storage entries in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntries the json storage entries
-	 */
-	@Override
-	public void cacheResult(List<JSONStorageEntry> jsonStorageEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (jsonStorageEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JSONStorageEntry jsonStorageEntry : jsonStorageEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						jsonStorageEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JSONStorageEntryImpl.class,
-						jsonStorageEntry.getPrimaryKey()) == null) {
-
-					cacheResult(jsonStorageEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JSONStorageEntryModelImpl jsonStorageEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					jsonStorageEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				jsonStorageEntryModelImpl.getClassNameId(),
-				jsonStorageEntryModelImpl.getClassPK(),
-				jsonStorageEntryModelImpl.getParentJSONStorageEntryId(),
-				jsonStorageEntryModelImpl.getIndex(),
-				jsonStorageEntryModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCN_CPK_P_I_K, args,
-				jsonStorageEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new json storage entry with the primary key. Does not add the json storage entry to the database.
 	 *
 	 * @param jsonStorageEntryId the primary key for the new json storage entry
@@ -1026,10 +942,7 @@ public class JSONStorageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JSONStorageEntryImpl.class, jsonStorageEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(jsonStorageEntryModelImpl);
+		cacheUniqueFindersResult(jsonStorageEntry, false);
 
 		if (isNew) {
 			jsonStorageEntry.setNew(false);
@@ -1164,9 +1077,6 @@ public class JSONStorageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCN_CPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCN_CPK",
 			new String[] {
@@ -1322,7 +1232,7 @@ public class JSONStorageEntryPersistenceImpl
 					"jsonStorageEntry.", "valueLong", FinderColumn.Type.LONG,
 					"=", true, true, JSONStorageEntry::getValueLong));
 
-		_finderPathFetchByCN_CPK_P_I_K = new FinderPath(
+		_finderPathFetchByCN_CPK_P_I_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK_P_I_K",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1333,7 +1243,10 @@ public class JSONStorageEntryPersistenceImpl
 				"classNameId", "classPK", "parentJSONStorageEntryId", "index_",
 				"key_"
 			},
-			true);
+			false, JSONStorageEntry::getClassNameId,
+			JSONStorageEntry::getClassPK,
+			JSONStorageEntry::getParentJSONStorageEntryId,
+			JSONStorageEntry::getIndex, JSONStorageEntry::getKey);
 
 		_uniquePersistenceFinderByCN_CPK_P_I_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCN_CPK_P_I_K,
@@ -1427,4 +1340,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-336334241
+// LIFERAY-SERVICE-BUILDER-HASH:197721774

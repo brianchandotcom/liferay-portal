@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -664,66 +661,6 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the account group rel in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRel the account group rel
-	 */
-	@Override
-	public void cacheResult(AccountGroupRel accountGroupRel) {
-		entityCache.putResult(
-			AccountGroupRelImpl.class, accountGroupRel.getPrimaryKey(),
-			accountGroupRel);
-
-		finderCache.putResult(
-			_finderPathFetchByA_C_C,
-			new Object[] {
-				accountGroupRel.getAccountGroupId(),
-				accountGroupRel.getClassNameId(), accountGroupRel.getClassPK()
-			},
-			accountGroupRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account group rels in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRels the account group rels
-	 */
-	@Override
-	public void cacheResult(List<AccountGroupRel> accountGroupRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountGroupRel accountGroupRel : accountGroupRels) {
-			if (entityCache.getResult(
-					AccountGroupRelImpl.class,
-					accountGroupRel.getPrimaryKey()) == null) {
-
-				cacheResult(accountGroupRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountGroupRelModelImpl accountGroupRelModelImpl) {
-
-		Object[] args = new Object[] {
-			accountGroupRelModelImpl.getAccountGroupId(),
-			accountGroupRelModelImpl.getClassNameId(),
-			accountGroupRelModelImpl.getClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByA_C_C, args, accountGroupRelModelImpl);
-	}
-
-	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
 	 * @param accountGroupRelId the primary key for the new account group rel
@@ -855,10 +792,7 @@ public class AccountGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountGroupRelImpl.class, accountGroupRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(accountGroupRelModelImpl);
+		cacheUniqueFindersResult(accountGroupRel, false);
 
 		if (isNew) {
 			accountGroupRel.setNew(false);
@@ -919,9 +853,6 @@ public class AccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAccountGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountGroupId",
 			new String[] {
@@ -1015,12 +946,14 @@ public class AccountGroupRelPersistenceImpl
 				"accountGroupRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassPK));
 
-		_finderPathFetchByA_C_C = new FinderPath(
+		_finderPathFetchByA_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"accountGroupId", "classNameId", "classPK"}, true);
+			new String[] {"accountGroupId", "classNameId", "classPK"}, false,
+			AccountGroupRel::getAccountGroupId, AccountGroupRel::getClassNameId,
+			AccountGroupRel::getClassPK);
 
 		_uniquePersistenceFinderByA_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C_C, _SQL_SELECT_ACCOUNTGROUPREL_WHERE,
@@ -1100,4 +1033,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1301682727
+// LIFERAY-SERVICE-BUILDER-HASH:-505899560

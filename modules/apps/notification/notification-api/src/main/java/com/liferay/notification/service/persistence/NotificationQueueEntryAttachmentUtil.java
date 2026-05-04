@@ -36,6 +36,25 @@ public class NotificationQueueEntryAttachmentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationQueueEntryAttachment>
+			notificationQueueEntryAttachments) {
+
+		getPersistence().cacheResult(notificationQueueEntryAttachments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		NotificationQueueEntryAttachment notificationQueueEntryAttachment) {
+
+		getPersistence().cacheResult(notificationQueueEntryAttachment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -261,29 +280,6 @@ public class NotificationQueueEntryAttachmentUtil {
 	}
 
 	/**
-	 * Caches the notification queue entry attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachment the notification queue entry attachment
-	 */
-	public static void cacheResult(
-		NotificationQueueEntryAttachment notificationQueueEntryAttachment) {
-
-		getPersistence().cacheResult(notificationQueueEntryAttachment);
-	}
-
-	/**
-	 * Caches the notification queue entry attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachments the notification queue entry attachments
-	 */
-	public static void cacheResult(
-		List<NotificationQueueEntryAttachment>
-			notificationQueueEntryAttachments) {
-
-		getPersistence().cacheResult(notificationQueueEntryAttachments);
-	}
-
-	/**
 	 * Creates a new notification queue entry attachment with the primary key. Does not add the notification queue entry attachment to the database.
 	 *
 	 * @param notificationQueueEntryAttachmentId the primary key for the new notification queue entry attachment
@@ -359,4 +355,4 @@ public class NotificationQueueEntryAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1897962945
+// LIFERAY-SERVICE-BUILDER-HASH:1802134043

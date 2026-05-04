@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.saml.persistence.exception.NoSuchIdpSsoSessionException;
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
@@ -415,71 +412,6 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 	/**
-	 * Caches the saml idp sso session in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSession the saml idp sso session
-	 */
-	@Override
-	public void cacheResult(SamlIdpSsoSession samlIdpSsoSession) {
-		entityCache.putResult(
-			SamlIdpSsoSessionImpl.class, samlIdpSsoSession.getPrimaryKey(),
-			samlIdpSsoSession);
-
-		finderCache.putResult(
-			_finderPathFetchByUserId,
-			new Object[] {samlIdpSsoSession.getUserId()}, samlIdpSsoSession);
-
-		finderCache.putResult(
-			_finderPathFetchBySamlIdpSsoSessionKey,
-			new Object[] {samlIdpSsoSession.getSamlIdpSsoSessionKey()},
-			samlIdpSsoSession);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saml idp sso sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSessions the saml idp sso sessions
-	 */
-	@Override
-	public void cacheResult(List<SamlIdpSsoSession> samlIdpSsoSessions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (samlIdpSsoSessions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SamlIdpSsoSession samlIdpSsoSession : samlIdpSsoSessions) {
-			if (entityCache.getResult(
-					SamlIdpSsoSessionImpl.class,
-					samlIdpSsoSession.getPrimaryKey()) == null) {
-
-				cacheResult(samlIdpSsoSession);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SamlIdpSsoSessionModelImpl samlIdpSsoSessionModelImpl) {
-
-		Object[] args = new Object[] {samlIdpSsoSessionModelImpl.getUserId()};
-
-		finderCache.putResult(
-			_finderPathFetchByUserId, args, samlIdpSsoSessionModelImpl);
-
-		args = new Object[] {
-			samlIdpSsoSessionModelImpl.getSamlIdpSsoSessionKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchBySamlIdpSsoSessionKey, args,
-			samlIdpSsoSessionModelImpl);
-	}
-
-	/**
 	 * Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
 	 *
 	 * @param samlIdpSsoSessionId the primary key for the new saml idp sso session
@@ -613,11 +545,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SamlIdpSsoSessionImpl.class, samlIdpSsoSessionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(samlIdpSsoSessionModelImpl);
+		cacheUniqueFindersResult(samlIdpSsoSession, false);
 
 		if (isNew) {
 			samlIdpSsoSession.setNew(false);
@@ -678,12 +606,10 @@ public class SamlIdpSsoSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByUserId = new FinderPath(
+		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
+			SamlIdpSsoSession::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_SAMLIDPSSOSESSION_WHERE,
@@ -715,10 +641,11 @@ public class SamlIdpSsoSessionPersistenceImpl
 					"samlIdpSsoSession.", "createDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlIdpSsoSession::getCreateDate));
 
-		_finderPathFetchBySamlIdpSsoSessionKey = new FinderPath(
+		_finderPathFetchBySamlIdpSsoSessionKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSsoSessionKey",
 			new String[] {String.class.getName()},
-			new String[] {"samlIdpSsoSessionKey"}, true);
+			new String[] {"samlIdpSsoSessionKey"}, false,
+			SamlIdpSsoSession::getSamlIdpSsoSessionKey);
 
 		_uniquePersistenceFinderBySamlIdpSsoSessionKey =
 			new UniquePersistenceFinder<>(
@@ -795,4 +722,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:433535580
+// LIFERAY-SERVICE-BUILDER-HASH:-140434594

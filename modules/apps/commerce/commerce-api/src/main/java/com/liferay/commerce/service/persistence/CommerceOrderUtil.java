@@ -37,6 +37,20 @@ public class CommerceOrderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceOrder> commerceOrders) {
+		getPersistence().cacheResult(commerceOrders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceOrder commerceOrder) {
+		getPersistence().cacheResult(commerceOrder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2326,24 +2340,6 @@ public class CommerceOrderUtil {
 	}
 
 	/**
-	 * Caches the commerce order in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrder the commerce order
-	 */
-	public static void cacheResult(CommerceOrder commerceOrder) {
-		getPersistence().cacheResult(commerceOrder);
-	}
-
-	/**
-	 * Caches the commerce orders in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrders the commerce orders
-	 */
-	public static void cacheResult(List<CommerceOrder> commerceOrders) {
-		getPersistence().cacheResult(commerceOrders);
-	}
-
-	/**
 	 * Creates a new commerce order with the primary key. Does not add the commerce order to the database.
 	 *
 	 * @param commerceOrderId the primary key for the new commerce order
@@ -2404,4 +2400,4 @@ public class CommerceOrderUtil {
 	private static volatile CommerceOrderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-775581448
+// LIFERAY-SERVICE-BUILDER-HASH:1493772136

@@ -589,23 +589,6 @@ public interface CommerceNotificationQueueEntryPersistence
 		long groupId, long classNameId, long classPK, boolean sent);
 
 	/**
-	 * Caches the commerce notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntry the commerce notification queue entry
-	 */
-	public void cacheResult(
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry);
-
-	/**
-	 * Caches the commerce notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntries the commerce notification queue entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceNotificationQueueEntry>
-			commerceNotificationQueueEntries);
-
-	/**
 	 * Creates a new commerce notification queue entry with the primary key. Does not add the commerce notification queue entry to the database.
 	 *
 	 * @param commerceNotificationQueueEntryId the primary key for the new commerce notification queue entry
@@ -649,4 +632,4 @@ public interface CommerceNotificationQueueEntryPersistence
 		long commerceNotificationQueueEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1568141833
+// LIFERAY-SERVICE-BUILDER-HASH:-20539199

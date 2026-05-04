@@ -885,4 +885,4 @@ public class CTSContentModelImpl
 	private CTSContent _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1988881499
+// LIFERAY-SERVICE-BUILDER-HASH:1294892761

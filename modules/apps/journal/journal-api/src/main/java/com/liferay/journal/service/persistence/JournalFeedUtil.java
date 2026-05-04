@@ -36,6 +36,20 @@ public class JournalFeedUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<JournalFeed> journalFeeds) {
+		getPersistence().cacheResult(journalFeeds);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(JournalFeed journalFeed) {
+		getPersistence().cacheResult(journalFeed);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -665,24 +679,6 @@ public class JournalFeedUtil {
 	}
 
 	/**
-	 * Caches the journal feed in the entity cache if it is enabled.
-	 *
-	 * @param journalFeed the journal feed
-	 */
-	public static void cacheResult(JournalFeed journalFeed) {
-		getPersistence().cacheResult(journalFeed);
-	}
-
-	/**
-	 * Caches the journal feeds in the entity cache if it is enabled.
-	 *
-	 * @param journalFeeds the journal feeds
-	 */
-	public static void cacheResult(List<JournalFeed> journalFeeds) {
-		getPersistence().cacheResult(journalFeeds);
-	}
-
-	/**
 	 * Creates a new journal feed with the primary key. Does not add the journal feed to the database.
 	 *
 	 * @param id the primary key for the new journal feed
@@ -743,4 +739,4 @@ public class JournalFeedUtil {
 	private static volatile JournalFeedPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2046465618
+// LIFERAY-SERVICE-BUILDER-HASH:950075912

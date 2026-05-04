@@ -36,6 +36,20 @@ public class TemplateEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TemplateEntry> templateEntries) {
+		getPersistence().cacheResult(templateEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TemplateEntry templateEntry) {
+		getPersistence().cacheResult(templateEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1162,24 +1176,6 @@ public class TemplateEntryUtil {
 	}
 
 	/**
-	 * Caches the template entry in the entity cache if it is enabled.
-	 *
-	 * @param templateEntry the template entry
-	 */
-	public static void cacheResult(TemplateEntry templateEntry) {
-		getPersistence().cacheResult(templateEntry);
-	}
-
-	/**
-	 * Caches the template entries in the entity cache if it is enabled.
-	 *
-	 * @param templateEntries the template entries
-	 */
-	public static void cacheResult(List<TemplateEntry> templateEntries) {
-		getPersistence().cacheResult(templateEntries);
-	}
-
-	/**
 	 * Creates a new template entry with the primary key. Does not add the template entry to the database.
 	 *
 	 * @param templateEntryId the primary key for the new template entry
@@ -1240,4 +1236,4 @@ public class TemplateEntryUtil {
 	private static volatile TemplateEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1426080198
+// LIFERAY-SERVICE-BUILDER-HASH:815276047

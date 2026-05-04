@@ -36,6 +36,20 @@ public class LayoutRevisionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutRevision> layoutRevisions) {
+		getPersistence().cacheResult(layoutRevisions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutRevision layoutRevision) {
+		getPersistence().cacheResult(layoutRevision);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1898,24 +1912,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Caches the layout revision in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevision the layout revision
-	 */
-	public static void cacheResult(LayoutRevision layoutRevision) {
-		getPersistence().cacheResult(layoutRevision);
-	}
-
-	/**
-	 * Caches the layout revisions in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevisions the layout revisions
-	 */
-	public static void cacheResult(List<LayoutRevision> layoutRevisions) {
-		getPersistence().cacheResult(layoutRevisions);
-	}
-
-	/**
 	 * Creates a new layout revision with the primary key. Does not add the layout revision to the database.
 	 *
 	 * @param layoutRevisionId the primary key for the new layout revision
@@ -1978,4 +1974,4 @@ public class LayoutRevisionUtil {
 	private static volatile LayoutRevisionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1315118406
+// LIFERAY-SERVICE-BUILDER-HASH:-1586643900

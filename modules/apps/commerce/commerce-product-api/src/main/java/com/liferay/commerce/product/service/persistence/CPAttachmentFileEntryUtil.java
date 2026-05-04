@@ -37,6 +37,24 @@ public class CPAttachmentFileEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries) {
+
+		getPersistence().cacheResult(cpAttachmentFileEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPAttachmentFileEntry cpAttachmentFileEntry) {
+
+		getPersistence().cacheResult(cpAttachmentFileEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2185,28 +2203,6 @@ public class CPAttachmentFileEntryUtil {
 	}
 
 	/**
-	 * Caches the cp attachment file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntry the cp attachment file entry
-	 */
-	public static void cacheResult(
-		CPAttachmentFileEntry cpAttachmentFileEntry) {
-
-		getPersistence().cacheResult(cpAttachmentFileEntry);
-	}
-
-	/**
-	 * Caches the cp attachment file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntries the cp attachment file entries
-	 */
-	public static void cacheResult(
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries) {
-
-		getPersistence().cacheResult(cpAttachmentFileEntries);
-	}
-
-	/**
 	 * Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	 *
 	 * @param CPAttachmentFileEntryId the primary key for the new cp attachment file entry
@@ -2276,4 +2272,4 @@ public class CPAttachmentFileEntryUtil {
 	private static volatile CPAttachmentFileEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1941451297
+// LIFERAY-SERVICE-BUILDER-HASH:1755581088

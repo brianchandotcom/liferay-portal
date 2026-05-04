@@ -36,6 +36,20 @@ public class ObjectFolderItemUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectFolderItem> objectFolderItems) {
+		getPersistence().cacheResult(objectFolderItems);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectFolderItem objectFolderItem) {
+		getPersistence().cacheResult(objectFolderItem);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -688,24 +702,6 @@ public class ObjectFolderItemUtil {
 	}
 
 	/**
-	 * Caches the object folder item in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItem the object folder item
-	 */
-	public static void cacheResult(ObjectFolderItem objectFolderItem) {
-		getPersistence().cacheResult(objectFolderItem);
-	}
-
-	/**
-	 * Caches the object folder items in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItems the object folder items
-	 */
-	public static void cacheResult(List<ObjectFolderItem> objectFolderItems) {
-		getPersistence().cacheResult(objectFolderItems);
-	}
-
-	/**
 	 * Creates a new object folder item with the primary key. Does not add the object folder item to the database.
 	 *
 	 * @param objectFolderItemId the primary key for the new object folder item
@@ -768,4 +764,4 @@ public class ObjectFolderItemUtil {
 	private static volatile ObjectFolderItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1178807881
+// LIFERAY-SERVICE-BUILDER-HASH:-1319601595

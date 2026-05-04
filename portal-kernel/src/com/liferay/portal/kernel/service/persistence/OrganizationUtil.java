@@ -36,6 +36,20 @@ public class OrganizationUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Organization> organizations) {
+		getPersistence().cacheResult(organizations);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Organization organization) {
+		getPersistence().cacheResult(organization);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2217,24 +2231,6 @@ public class OrganizationUtil {
 	}
 
 	/**
-	 * Caches the organization in the entity cache if it is enabled.
-	 *
-	 * @param organization the organization
-	 */
-	public static void cacheResult(Organization organization) {
-		getPersistence().cacheResult(organization);
-	}
-
-	/**
-	 * Caches the organizations in the entity cache if it is enabled.
-	 *
-	 * @param organizations the organizations
-	 */
-	public static void cacheResult(List<Organization> organizations) {
-		getPersistence().cacheResult(organizations);
-	}
-
-	/**
 	 * Creates a new organization with the primary key. Does not add the organization to the database.
 	 *
 	 * @param organizationId the primary key for the new organization
@@ -2723,4 +2719,4 @@ public class OrganizationUtil {
 	private static volatile OrganizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1420157929
+// LIFERAY-SERVICE-BUILDER-HASH:1699095565

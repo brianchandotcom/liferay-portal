@@ -484,23 +484,6 @@ public interface CommerceDiscountUsageEntryPersistence
 		long commerceAccountId, long commerceOrderId, long commerceDiscountId);
 
 	/**
-	 * Caches the commerce discount usage entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntry the commerce discount usage entry
-	 */
-	public void cacheResult(
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry);
-
-	/**
-	 * Caches the commerce discount usage entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntries the commerce discount usage entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceDiscountUsageEntry>
-			commerceDiscountUsageEntries);
-
-	/**
 	 * Creates a new commerce discount usage entry with the primary key. Does not add the commerce discount usage entry to the database.
 	 *
 	 * @param commerceDiscountUsageEntryId the primary key for the new commerce discount usage entry
@@ -542,4 +525,4 @@ public interface CommerceDiscountUsageEntryPersistence
 		long commerceDiscountUsageEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-797130018
+// LIFERAY-SERVICE-BUILDER-HASH:1202366024

@@ -546,20 +546,6 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the source in the entity cache if it is enabled.
-	 *
-	 * @param source the source
-	 */
-	public void cacheResult(Source source);
-
-	/**
-	 * Caches the sources in the entity cache if it is enabled.
-	 *
-	 * @param sources the sources
-	 */
-	public void cacheResult(java.util.List<Source> sources);
-
-	/**
 	 * Creates a new source with the primary key. Does not add the source to the database.
 	 *
 	 * @param sourceId the primary key for the new source
@@ -596,4 +582,4 @@ public interface SourcePersistence extends BasePersistence<Source> {
 	public Source fetchByPrimaryKey(long sourceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-376057844
+// LIFERAY-SERVICE-BUILDER-HASH:221365972

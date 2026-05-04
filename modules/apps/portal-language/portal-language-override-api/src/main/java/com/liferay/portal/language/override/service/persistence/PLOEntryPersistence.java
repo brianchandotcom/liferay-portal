@@ -410,20 +410,6 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	public int countByC_K_L(long companyId, String key, String languageId);
 
 	/**
-	 * Caches the plo entry in the entity cache if it is enabled.
-	 *
-	 * @param ploEntry the plo entry
-	 */
-	public void cacheResult(PLOEntry ploEntry);
-
-	/**
-	 * Caches the plo entries in the entity cache if it is enabled.
-	 *
-	 * @param ploEntries the plo entries
-	 */
-	public void cacheResult(java.util.List<PLOEntry> ploEntries);
-
-	/**
 	 * Creates a new plo entry with the primary key. Does not add the plo entry to the database.
 	 *
 	 * @param ploEntryId the primary key for the new plo entry
@@ -461,4 +447,4 @@ public interface PLOEntryPersistence extends BasePersistence<PLOEntry> {
 	public PLOEntry fetchByPrimaryKey(long ploEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1199904538
+// LIFERAY-SERVICE-BUILDER-HASH:-523939716

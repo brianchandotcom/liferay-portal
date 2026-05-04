@@ -36,6 +36,24 @@ public class JournalArticleResourceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<JournalArticleResource> journalArticleResources) {
+
+		getPersistence().cacheResult(journalArticleResources);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		JournalArticleResource journalArticleResource) {
+
+		getPersistence().cacheResult(journalArticleResource);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -624,28 +642,6 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	 * Caches the journal article resource in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResource the journal article resource
-	 */
-	public static void cacheResult(
-		JournalArticleResource journalArticleResource) {
-
-		getPersistence().cacheResult(journalArticleResource);
-	}
-
-	/**
-	 * Caches the journal article resources in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResources the journal article resources
-	 */
-	public static void cacheResult(
-		List<JournalArticleResource> journalArticleResources) {
-
-		getPersistence().cacheResult(journalArticleResources);
-	}
-
-	/**
 	 * Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new journal article resource
@@ -712,4 +708,4 @@ public class JournalArticleResourceUtil {
 	private static volatile JournalArticleResourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-212194561
+// LIFERAY-SERVICE-BUILDER-HASH:-1528157181

@@ -36,6 +36,22 @@ public class CommerceTermEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceTermEntryRel> commerceTermEntryRels) {
+
+		getPersistence().cacheResult(commerceTermEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceTermEntryRel commerceTermEntryRel) {
+		getPersistence().cacheResult(commerceTermEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -455,26 +471,6 @@ public class CommerceTermEntryRelUtil {
 	}
 
 	/**
-	 * Caches the commerce term entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntryRel the commerce term entry rel
-	 */
-	public static void cacheResult(CommerceTermEntryRel commerceTermEntryRel) {
-		getPersistence().cacheResult(commerceTermEntryRel);
-	}
-
-	/**
-	 * Caches the commerce term entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntryRels the commerce term entry rels
-	 */
-	public static void cacheResult(
-		List<CommerceTermEntryRel> commerceTermEntryRels) {
-
-		getPersistence().cacheResult(commerceTermEntryRels);
-	}
-
-	/**
 	 * Creates a new commerce term entry rel with the primary key. Does not add the commerce term entry rel to the database.
 	 *
 	 * @param commerceTermEntryRelId the primary key for the new commerce term entry rel
@@ -542,4 +538,4 @@ public class CommerceTermEntryRelUtil {
 	private static volatile CommerceTermEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1538906235
+// LIFERAY-SERVICE-BUILDER-HASH:1464950013

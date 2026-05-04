@@ -36,6 +36,24 @@ public class AssetDisplayPageEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetDisplayPageEntry> assetDisplayPageEntries) {
+
+		getPersistence().cacheResult(assetDisplayPageEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AssetDisplayPageEntry assetDisplayPageEntry) {
+
+		getPersistence().cacheResult(assetDisplayPageEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -907,28 +925,6 @@ public class AssetDisplayPageEntryUtil {
 	}
 
 	/**
-	 * Caches the asset display page entry in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 */
-	public static void cacheResult(
-		AssetDisplayPageEntry assetDisplayPageEntry) {
-
-		getPersistence().cacheResult(assetDisplayPageEntry);
-	}
-
-	/**
-	 * Caches the asset display page entries in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntries the asset display page entries
-	 */
-	public static void cacheResult(
-		List<AssetDisplayPageEntry> assetDisplayPageEntries) {
-
-		getPersistence().cacheResult(assetDisplayPageEntries);
-	}
-
-	/**
 	 * Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
 	 *
 	 * @param assetDisplayPageEntryId the primary key for the new asset display page entry
@@ -998,4 +994,4 @@ public class AssetDisplayPageEntryUtil {
 	private static volatile AssetDisplayPageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:389633831
+// LIFERAY-SERVICE-BUILDER-HASH:974206822

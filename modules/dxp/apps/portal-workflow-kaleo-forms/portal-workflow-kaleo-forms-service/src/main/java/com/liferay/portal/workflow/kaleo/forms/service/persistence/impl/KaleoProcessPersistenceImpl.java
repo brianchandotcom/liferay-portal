@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -924,68 +921,6 @@ public class KaleoProcessPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo process in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcess the kaleo process
-	 */
-	@Override
-	public void cacheResult(KaleoProcess kaleoProcess) {
-		entityCache.putResult(
-			KaleoProcessImpl.class, kaleoProcess.getPrimaryKey(), kaleoProcess);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {kaleoProcess.getUuid(), kaleoProcess.getGroupId()},
-			kaleoProcess);
-
-		finderCache.putResult(
-			_finderPathFetchByDDLRecordSetId,
-			new Object[] {kaleoProcess.getDDLRecordSetId()}, kaleoProcess);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo processes in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcesses the kaleo processes
-	 */
-	@Override
-	public void cacheResult(List<KaleoProcess> kaleoProcesses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoProcesses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoProcess kaleoProcess : kaleoProcesses) {
-			if (entityCache.getResult(
-					KaleoProcessImpl.class, kaleoProcess.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(kaleoProcess);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoProcessModelImpl kaleoProcessModelImpl) {
-
-		Object[] args = new Object[] {
-			kaleoProcessModelImpl.getUuid(), kaleoProcessModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, kaleoProcessModelImpl);
-
-		args = new Object[] {kaleoProcessModelImpl.getDDLRecordSetId()};
-
-		finderCache.putResult(
-			_finderPathFetchByDDLRecordSetId, args, kaleoProcessModelImpl);
-	}
-
-	/**
 	 * Creates a new kaleo process with the primary key. Does not add the kaleo process to the database.
 	 *
 	 * @param kaleoProcessId the primary key for the new kaleo process
@@ -1124,10 +1059,7 @@ public class KaleoProcessPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoProcessImpl.class, kaleoProcessModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoProcessModelImpl);
+		cacheUniqueFindersResult(kaleoProcess, false);
 
 		if (isNew) {
 			kaleoProcess.setNew(false);
@@ -1193,9 +1125,6 @@ public class KaleoProcessPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1223,10 +1152,11 @@ public class KaleoProcessPersistenceImpl
 				"kaleoProcess.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KaleoProcess::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KaleoProcess::getUuid,
+			KaleoProcess::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KALEOPROCESS_WHERE,
@@ -1299,10 +1229,11 @@ public class KaleoProcessPersistenceImpl
 					"kaleoProcess.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoProcess::getGroupId));
 
-		_finderPathFetchByDDLRecordSetId = new FinderPath(
+		_finderPathFetchByDDLRecordSetId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByDDLRecordSetId",
 			new String[] {Long.class.getName()},
-			new String[] {"DDLRecordSetId"}, true);
+			new String[] {"DDLRecordSetId"}, false,
+			KaleoProcess::getDDLRecordSetId);
 
 		_uniquePersistenceFinderByDDLRecordSetId =
 			new UniquePersistenceFinder<>(
@@ -1404,4 +1335,4 @@ public class KaleoProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:540215387
+// LIFERAY-SERVICE-BUILDER-HASH:504042556

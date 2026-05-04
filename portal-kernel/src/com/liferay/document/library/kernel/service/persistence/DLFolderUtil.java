@@ -36,6 +36,20 @@ public class DLFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLFolder> dlFolders) {
+		getPersistence().cacheResult(dlFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFolder dlFolder) {
+		getPersistence().cacheResult(dlFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3437,24 +3451,6 @@ public class DLFolderUtil {
 	}
 
 	/**
-	 * Caches the document library folder in the entity cache if it is enabled.
-	 *
-	 * @param dlFolder the document library folder
-	 */
-	public static void cacheResult(DLFolder dlFolder) {
-		getPersistence().cacheResult(dlFolder);
-	}
-
-	/**
-	 * Caches the document library folders in the entity cache if it is enabled.
-	 *
-	 * @param dlFolders the document library folders
-	 */
-	public static void cacheResult(List<DLFolder> dlFolders) {
-		getPersistence().cacheResult(dlFolders);
-	}
-
-	/**
 	 * Creates a new document library folder with the primary key. Does not add the document library folder to the database.
 	 *
 	 * @param folderId the primary key for the new document library folder
@@ -3754,4 +3750,4 @@ public class DLFolderUtil {
 	private static volatile DLFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2096746332
+// LIFERAY-SERVICE-BUILDER-HASH:-735372748

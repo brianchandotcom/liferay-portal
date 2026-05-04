@@ -36,6 +36,20 @@ public class EmailAddressUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<EmailAddress> emailAddresses) {
+		getPersistence().cacheResult(emailAddresses);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(EmailAddress emailAddress) {
+		getPersistence().cacheResult(emailAddress);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1111,24 +1125,6 @@ public class EmailAddressUtil {
 	}
 
 	/**
-	 * Caches the email address in the entity cache if it is enabled.
-	 *
-	 * @param emailAddress the email address
-	 */
-	public static void cacheResult(EmailAddress emailAddress) {
-		getPersistence().cacheResult(emailAddress);
-	}
-
-	/**
-	 * Caches the email addresses in the entity cache if it is enabled.
-	 *
-	 * @param emailAddresses the email addresses
-	 */
-	public static void cacheResult(List<EmailAddress> emailAddresses) {
-		getPersistence().cacheResult(emailAddresses);
-	}
-
-	/**
 	 * Creates a new email address with the primary key. Does not add the email address to the database.
 	 *
 	 * @param emailAddressId the primary key for the new email address
@@ -1189,4 +1185,4 @@ public class EmailAddressUtil {
 	private static volatile EmailAddressPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:638429112
+// LIFERAY-SERVICE-BUILDER-HASH:1968769551

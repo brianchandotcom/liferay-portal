@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -578,53 +575,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce inventory booked quantity in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
-	 */
-	@Override
-	public void cacheResult(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
-
-		entityCache.putResult(
-			CommerceInventoryBookedQuantityImpl.class,
-			commerceInventoryBookedQuantity.getPrimaryKey(),
-			commerceInventoryBookedQuantity);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce inventory booked quantities in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantities the commerce inventory booked quantities
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceInventoryBookedQuantities.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
-				commerceInventoryBookedQuantities) {
-
-			if (entityCache.getResult(
-					CommerceInventoryBookedQuantityImpl.class,
-					commerceInventoryBookedQuantity.getPrimaryKey()) == null) {
-
-				cacheResult(commerceInventoryBookedQuantity);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce inventory booked quantity with the primary key. Does not add the commerce inventory booked quantity to the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key for the new commerce inventory booked quantity
@@ -776,9 +726,7 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceInventoryBookedQuantityImpl.class,
-			commerceInventoryBookedQuantityModelImpl, false, true);
+		cacheUniqueFindersResult(commerceInventoryBookedQuantity, false);
 
 		if (isNew) {
 			commerceInventoryBookedQuantity.setNew(false);
@@ -849,9 +797,6 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLtExpirationDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtExpirationDate",
 			new String[] {
@@ -1023,4 +968,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1602561442
+// LIFERAY-SERVICE-BUILDER-HASH:-1245772498

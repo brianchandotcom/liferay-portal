@@ -36,6 +36,24 @@ public class CommerceDiscountAccountRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountAccountRel> commerceDiscountAccountRels) {
+
+		getPersistence().cacheResult(commerceDiscountAccountRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceDiscountAccountRel commerceDiscountAccountRel) {
+
+		getPersistence().cacheResult(commerceDiscountAccountRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -703,28 +721,6 @@ public class CommerceDiscountAccountRelUtil {
 	}
 
 	/**
-	 * Caches the commerce discount account rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRel the commerce discount account rel
-	 */
-	public static void cacheResult(
-		CommerceDiscountAccountRel commerceDiscountAccountRel) {
-
-		getPersistence().cacheResult(commerceDiscountAccountRel);
-	}
-
-	/**
-	 * Caches the commerce discount account rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRels the commerce discount account rels
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountAccountRel> commerceDiscountAccountRels) {
-
-		getPersistence().cacheResult(commerceDiscountAccountRels);
-	}
-
-	/**
 	 * Creates a new commerce discount account rel with the primary key. Does not add the commerce discount account rel to the database.
 	 *
 	 * @param commerceDiscountAccountRelId the primary key for the new commerce discount account rel
@@ -797,4 +793,4 @@ public class CommerceDiscountAccountRelUtil {
 	private static volatile CommerceDiscountAccountRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1720830075
+// LIFERAY-SERVICE-BUILDER-HASH:1795921225

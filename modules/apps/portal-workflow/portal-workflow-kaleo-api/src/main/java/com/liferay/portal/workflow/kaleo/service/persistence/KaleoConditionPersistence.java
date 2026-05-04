@@ -284,20 +284,6 @@ public interface KaleoConditionPersistence
 	public int countByKaleoNodeId(long kaleoNodeId);
 
 	/**
-	 * Caches the kaleo condition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoCondition the kaleo condition
-	 */
-	public void cacheResult(KaleoCondition kaleoCondition);
-
-	/**
-	 * Caches the kaleo conditions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoConditions the kaleo conditions
-	 */
-	public void cacheResult(java.util.List<KaleoCondition> kaleoConditions);
-
-	/**
 	 * Creates a new kaleo condition with the primary key. Does not add the kaleo condition to the database.
 	 *
 	 * @param kaleoConditionId the primary key for the new kaleo condition
@@ -336,4 +322,4 @@ public interface KaleoConditionPersistence
 	public KaleoCondition fetchByPrimaryKey(long kaleoConditionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1397823783
+// LIFERAY-SERVICE-BUILDER-HASH:-187617537

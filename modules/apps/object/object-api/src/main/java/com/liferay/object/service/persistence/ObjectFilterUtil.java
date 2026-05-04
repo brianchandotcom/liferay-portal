@@ -36,6 +36,20 @@ public class ObjectFilterUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectFilter> objectFilters) {
+		getPersistence().cacheResult(objectFilters);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectFilter objectFilter) {
+		getPersistence().cacheResult(objectFilter);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -482,24 +496,6 @@ public class ObjectFilterUtil {
 	}
 
 	/**
-	 * Caches the object filter in the entity cache if it is enabled.
-	 *
-	 * @param objectFilter the object filter
-	 */
-	public static void cacheResult(ObjectFilter objectFilter) {
-		getPersistence().cacheResult(objectFilter);
-	}
-
-	/**
-	 * Caches the object filters in the entity cache if it is enabled.
-	 *
-	 * @param objectFilters the object filters
-	 */
-	public static void cacheResult(List<ObjectFilter> objectFilters) {
-		getPersistence().cacheResult(objectFilters);
-	}
-
-	/**
 	 * Creates a new object filter with the primary key. Does not add the object filter to the database.
 	 *
 	 * @param objectFilterId the primary key for the new object filter
@@ -560,4 +556,4 @@ public class ObjectFilterUtil {
 	private static volatile ObjectFilterPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1182919595
+// LIFERAY-SERVICE-BUILDER-HASH:-58260027

@@ -2318,20 +2318,6 @@ public interface DDMTemplatePersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the ddm template in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplate the ddm template
-	 */
-	public void cacheResult(DDMTemplate ddmTemplate);
-
-	/**
-	 * Caches the ddm templates in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplates the ddm templates
-	 */
-	public void cacheResult(java.util.List<DDMTemplate> ddmTemplates);
-
-	/**
 	 * Creates a new ddm template with the primary key. Does not add the ddm template to the database.
 	 *
 	 * @param templateId the primary key for the new ddm template
@@ -2369,4 +2355,4 @@ public interface DDMTemplatePersistence
 	public DDMTemplate fetchByPrimaryKey(long templateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1076392186
+// LIFERAY-SERVICE-BUILDER-HASH:224915102

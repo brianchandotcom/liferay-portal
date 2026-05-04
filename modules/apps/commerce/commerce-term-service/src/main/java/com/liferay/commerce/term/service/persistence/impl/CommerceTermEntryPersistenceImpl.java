@@ -43,8 +43,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3223,97 +3221,6 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce term entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntry the commerce term entry
-	 */
-	@Override
-	public void cacheResult(CommerceTermEntry commerceTermEntry) {
-		entityCache.putResult(
-			CommerceTermEntryImpl.class, commerceTermEntry.getPrimaryKey(),
-			commerceTermEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {
-				commerceTermEntry.getCompanyId(), commerceTermEntry.getName()
-			},
-			commerceTermEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_P_T,
-			new Object[] {
-				commerceTermEntry.getCompanyId(),
-				commerceTermEntry.getPriority(), commerceTermEntry.getType()
-			},
-			commerceTermEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceTermEntry.getExternalReferenceCode(),
-				commerceTermEntry.getCompanyId()
-			},
-			commerceTermEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce term entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntries the commerce term entries
-	 */
-	@Override
-	public void cacheResult(List<CommerceTermEntry> commerceTermEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTermEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTermEntry commerceTermEntry : commerceTermEntries) {
-			if (entityCache.getResult(
-					CommerceTermEntryImpl.class,
-					commerceTermEntry.getPrimaryKey()) == null) {
-
-				cacheResult(commerceTermEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceTermEntryModelImpl commerceTermEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceTermEntryModelImpl.getCompanyId(),
-			commerceTermEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, commerceTermEntryModelImpl);
-
-		args = new Object[] {
-			commerceTermEntryModelImpl.getCompanyId(),
-			commerceTermEntryModelImpl.getPriority(),
-			commerceTermEntryModelImpl.getType()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_P_T, args, commerceTermEntryModelImpl);
-
-		args = new Object[] {
-			commerceTermEntryModelImpl.getExternalReferenceCode(),
-			commerceTermEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceTermEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
 	 * @param commerceTermEntryId the primary key for the new commerce term entry
@@ -3526,11 +3433,7 @@ public class CommerceTermEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTermEntryImpl.class, commerceTermEntryModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commerceTermEntryModelImpl);
+		cacheUniqueFindersResult(commerceTermEntry, false);
 
 		if (isNew) {
 			commerceTermEntry.setNew(false);
@@ -3596,9 +3499,6 @@ public class CommerceTermEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3692,10 +3592,11 @@ public class CommerceTermEntryPersistenceImpl
 				"commerceTermEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceTermEntry::isActive));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			CommerceTermEntry::getCompanyId, CommerceTermEntry::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_COMMERCETERMENTRY_WHERE,
@@ -3822,13 +3723,15 @@ public class CommerceTermEntryPersistenceImpl
 					"commerceTermEntry.", "type", FinderColumn.Type.STRING,
 					"LIKE", true, true, CommerceTermEntry::getType));
 
-		_finderPathFetchByC_P_T = new FinderPath(
+		_finderPathFetchByC_P_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P_T",
 			new String[] {
 				Long.class.getName(), Double.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "priority", "type_"}, true);
+			new String[] {"companyId", "priority", "type_"}, false,
+			CommerceTermEntry::getCompanyId, CommerceTermEntry::getPriority,
+			CommerceTermEntry::getType);
 
 		_uniquePersistenceFinderByC_P_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_P_T, _SQL_SELECT_COMMERCETERMENTRY_WHERE,
@@ -3842,10 +3745,12 @@ public class CommerceTermEntryPersistenceImpl
 				"commerceTermEntry.", "type", FinderColumn.Type.STRING, "=",
 				true, true, CommerceTermEntry::getType));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceTermEntry::getExternalReferenceCode,
+			CommerceTermEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCETERMENTRY_WHERE,
@@ -3953,4 +3858,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1315622148
+// LIFERAY-SERVICE-BUILDER-HASH:1072089913

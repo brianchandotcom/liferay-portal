@@ -36,6 +36,24 @@ public class ContactsLayoutTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ContactsLayoutTemplate> contactsLayoutTemplates) {
+
+		getPersistence().cacheResult(contactsLayoutTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ContactsLayoutTemplate contactsLayoutTemplate) {
+
+		getPersistence().cacheResult(contactsLayoutTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -373,28 +391,6 @@ public class ContactsLayoutTemplateUtil {
 	}
 
 	/**
-	 * Caches the contacts layout template in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplate the contacts layout template
-	 */
-	public static void cacheResult(
-		ContactsLayoutTemplate contactsLayoutTemplate) {
-
-		getPersistence().cacheResult(contactsLayoutTemplate);
-	}
-
-	/**
-	 * Caches the contacts layout templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplates the contacts layout templates
-	 */
-	public static void cacheResult(
-		List<ContactsLayoutTemplate> contactsLayoutTemplates) {
-
-		getPersistence().cacheResult(contactsLayoutTemplates);
-	}
-
-	/**
 	 * Creates a new contacts layout template with the primary key. Does not add the contacts layout template to the database.
 	 *
 	 * @param contactsLayoutTemplateId the primary key for the new contacts layout template
@@ -464,4 +460,4 @@ public class ContactsLayoutTemplateUtil {
 	private static volatile ContactsLayoutTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1457919417
+// LIFERAY-SERVICE-BUILDER-HASH:338324805

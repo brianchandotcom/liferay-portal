@@ -36,6 +36,24 @@ public class CommerceDiscountOrderTypeRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels) {
+
+		getPersistence().cacheResult(commerceDiscountOrderTypeRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel) {
+
+		getPersistence().cacheResult(commerceDiscountOrderTypeRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -703,28 +721,6 @@ public class CommerceDiscountOrderTypeRelUtil {
 	}
 
 	/**
-	 * Caches the commerce discount order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRel the commerce discount order type rel
-	 */
-	public static void cacheResult(
-		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel) {
-
-		getPersistence().cacheResult(commerceDiscountOrderTypeRel);
-	}
-
-	/**
-	 * Caches the commerce discount order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRels the commerce discount order type rels
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels) {
-
-		getPersistence().cacheResult(commerceDiscountOrderTypeRels);
-	}
-
-	/**
 	 * Creates a new commerce discount order type rel with the primary key. Does not add the commerce discount order type rel to the database.
 	 *
 	 * @param commerceDiscountOrderTypeRelId the primary key for the new commerce discount order type rel
@@ -800,4 +796,4 @@ public class CommerceDiscountOrderTypeRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-523261964
+// LIFERAY-SERVICE-BUILDER-HASH:1282843196

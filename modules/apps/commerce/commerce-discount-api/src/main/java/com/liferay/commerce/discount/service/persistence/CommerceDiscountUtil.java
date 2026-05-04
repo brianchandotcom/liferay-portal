@@ -37,6 +37,20 @@ public class CommerceDiscountUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceDiscount> commerceDiscounts) {
+		getPersistence().cacheResult(commerceDiscounts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceDiscount commerceDiscount) {
+		getPersistence().cacheResult(commerceDiscount);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1649,24 +1663,6 @@ public class CommerceDiscountUtil {
 	}
 
 	/**
-	 * Caches the commerce discount in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscount the commerce discount
-	 */
-	public static void cacheResult(CommerceDiscount commerceDiscount) {
-		getPersistence().cacheResult(commerceDiscount);
-	}
-
-	/**
-	 * Caches the commerce discounts in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscounts the commerce discounts
-	 */
-	public static void cacheResult(List<CommerceDiscount> commerceDiscounts) {
-		getPersistence().cacheResult(commerceDiscounts);
-	}
-
-	/**
 	 * Creates a new commerce discount with the primary key. Does not add the commerce discount to the database.
 	 *
 	 * @param commerceDiscountId the primary key for the new commerce discount
@@ -1729,4 +1725,4 @@ public class CommerceDiscountUtil {
 	private static volatile CommerceDiscountPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930907515
+// LIFERAY-SERVICE-BUILDER-HASH:851746005

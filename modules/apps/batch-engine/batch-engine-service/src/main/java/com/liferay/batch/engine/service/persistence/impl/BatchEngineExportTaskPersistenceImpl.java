@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -812,69 +810,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch engine export task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTask the batch engine export task
-	 */
-	@Override
-	public void cacheResult(BatchEngineExportTask batchEngineExportTask) {
-		entityCache.putResult(
-			BatchEngineExportTaskImpl.class,
-			batchEngineExportTask.getPrimaryKey(), batchEngineExportTask);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				batchEngineExportTask.getExternalReferenceCode(),
-				batchEngineExportTask.getCompanyId()
-			},
-			batchEngineExportTask);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch engine export tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTasks the batch engine export tasks
-	 */
-	@Override
-	public void cacheResult(
-		List<BatchEngineExportTask> batchEngineExportTasks) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchEngineExportTasks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchEngineExportTask batchEngineExportTask :
-				batchEngineExportTasks) {
-
-			if (entityCache.getResult(
-					BatchEngineExportTaskImpl.class,
-					batchEngineExportTask.getPrimaryKey()) == null) {
-
-				cacheResult(batchEngineExportTask);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BatchEngineExportTaskModelImpl batchEngineExportTaskModelImpl) {
-
-		Object[] args = new Object[] {
-			batchEngineExportTaskModelImpl.getExternalReferenceCode(),
-			batchEngineExportTaskModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, batchEngineExportTaskModelImpl);
-	}
-
-	/**
 	 * Creates a new batch engine export task with the primary key. Does not add the batch engine export task to the database.
 	 *
 	 * @param batchEngineExportTaskId the primary key for the new batch engine export task
@@ -1099,11 +1034,7 @@ public class BatchEngineExportTaskPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchEngineExportTaskImpl.class, batchEngineExportTaskModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(batchEngineExportTaskModelImpl);
+		cacheUniqueFindersResult(batchEngineExportTask, false);
 
 		if (isNew) {
 			batchEngineExportTask.setNew(false);
@@ -1171,9 +1102,6 @@ public class BatchEngineExportTaskPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1302,10 +1230,12 @@ public class BatchEngineExportTaskPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					BatchEngineExportTask::getExecuteStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			BatchEngineExportTask::getExternalReferenceCode,
+			BatchEngineExportTask::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1387,4 +1317,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1123718742
+// LIFERAY-SERVICE-BUILDER-HASH:663318790

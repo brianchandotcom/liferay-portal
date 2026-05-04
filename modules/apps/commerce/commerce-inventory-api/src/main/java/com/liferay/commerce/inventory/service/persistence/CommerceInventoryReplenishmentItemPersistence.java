@@ -866,23 +866,6 @@ public interface CommerceInventoryReplenishmentItemPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce inventory replenishment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
-	 */
-	public void cacheResult(
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem);
-
-	/**
-	 * Caches the commerce inventory replenishment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItems the commerce inventory replenishment items
-	 */
-	public void cacheResult(
-		java.util.List<CommerceInventoryReplenishmentItem>
-			commerceInventoryReplenishmentItems);
-
-	/**
 	 * Creates a new commerce inventory replenishment item with the primary key. Does not add the commerce inventory replenishment item to the database.
 	 *
 	 * @param commerceInventoryReplenishmentItemId the primary key for the new commerce inventory replenishment item
@@ -926,4 +909,4 @@ public interface CommerceInventoryReplenishmentItemPersistence
 		long commerceInventoryReplenishmentItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1740872933
+// LIFERAY-SERVICE-BUILDER-HASH:-1838825327

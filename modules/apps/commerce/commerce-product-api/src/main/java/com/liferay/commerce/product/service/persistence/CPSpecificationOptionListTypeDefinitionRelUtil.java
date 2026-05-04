@@ -36,6 +36,28 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPSpecificationOptionListTypeDefinitionRel>
+			cpSpecificationOptionListTypeDefinitionRels) {
+
+		getPersistence().cacheResult(
+			cpSpecificationOptionListTypeDefinitionRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPSpecificationOptionListTypeDefinitionRel
+			cpSpecificationOptionListTypeDefinitionRel) {
+
+		getPersistence().cacheResult(
+			cpSpecificationOptionListTypeDefinitionRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -483,32 +505,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 	}
 
 	/**
-	 * Caches the cp specification option list type definition rel in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRel the cp specification option list type definition rel
-	 */
-	public static void cacheResult(
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel) {
-
-		getPersistence().cacheResult(
-			cpSpecificationOptionListTypeDefinitionRel);
-	}
-
-	/**
-	 * Caches the cp specification option list type definition rels in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRels the cp specification option list type definition rels
-	 */
-	public static void cacheResult(
-		List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels) {
-
-		getPersistence().cacheResult(
-			cpSpecificationOptionListTypeDefinitionRels);
-	}
-
-	/**
 	 * Creates a new cp specification option list type definition rel with the primary key. Does not add the cp specification option list type definition rel to the database.
 	 *
 	 * @param CPSpecificationOptionListTypeDefinitionRelId the primary key for the new cp specification option list type definition rel
@@ -590,4 +586,4 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 		CPSpecificationOptionListTypeDefinitionRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:927990618
+// LIFERAY-SERVICE-BUILDER-HASH:-1217975522

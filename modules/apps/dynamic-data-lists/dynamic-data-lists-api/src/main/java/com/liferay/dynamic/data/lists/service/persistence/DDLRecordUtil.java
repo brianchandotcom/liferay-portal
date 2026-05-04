@@ -36,6 +36,20 @@ public class DDLRecordUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDLRecord> ddlRecords) {
+		getPersistence().cacheResult(ddlRecords);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDLRecord ddlRecord) {
+		getPersistence().cacheResult(ddlRecord);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1060,24 +1074,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	 * Caches the ddl record in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecord the ddl record
-	 */
-	public static void cacheResult(DDLRecord ddlRecord) {
-		getPersistence().cacheResult(ddlRecord);
-	}
-
-	/**
-	 * Caches the ddl records in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecords the ddl records
-	 */
-	public static void cacheResult(List<DDLRecord> ddlRecords) {
-		getPersistence().cacheResult(ddlRecords);
-	}
-
-	/**
 	 * Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	 *
 	 * @param recordId the primary key for the new ddl record
@@ -1138,4 +1134,4 @@ public class DDLRecordUtil {
 	private static volatile DDLRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:949986043
+// LIFERAY-SERVICE-BUILDER-HASH:384854295

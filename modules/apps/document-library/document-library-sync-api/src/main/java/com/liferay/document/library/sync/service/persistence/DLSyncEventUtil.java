@@ -36,6 +36,20 @@ public class DLSyncEventUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLSyncEvent> dlSyncEvents) {
+		getPersistence().cacheResult(dlSyncEvents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLSyncEvent dlSyncEvent) {
+		getPersistence().cacheResult(dlSyncEvent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -293,24 +307,6 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	 * Caches the dl sync event in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvent the dl sync event
-	 */
-	public static void cacheResult(DLSyncEvent dlSyncEvent) {
-		getPersistence().cacheResult(dlSyncEvent);
-	}
-
-	/**
-	 * Caches the dl sync events in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvents the dl sync events
-	 */
-	public static void cacheResult(List<DLSyncEvent> dlSyncEvents) {
-		getPersistence().cacheResult(dlSyncEvents);
-	}
-
-	/**
 	 * Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
 	 *
 	 * @param syncEventId the primary key for the new dl sync event
@@ -373,4 +369,4 @@ public class DLSyncEventUtil {
 	private static volatile DLSyncEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:784151896
+// LIFERAY-SERVICE-BUILDER-HASH:93930392

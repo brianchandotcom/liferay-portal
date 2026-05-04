@@ -447,20 +447,6 @@ public interface CProductPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the c product in the entity cache if it is enabled.
-	 *
-	 * @param cProduct the c product
-	 */
-	public void cacheResult(CProduct cProduct);
-
-	/**
-	 * Caches the c products in the entity cache if it is enabled.
-	 *
-	 * @param cProducts the c products
-	 */
-	public void cacheResult(java.util.List<CProduct> cProducts);
-
-	/**
 	 * Creates a new c product with the primary key. Does not add the c product to the database.
 	 *
 	 * @param CProductId the primary key for the new c product
@@ -498,4 +484,4 @@ public interface CProductPersistence
 	public CProduct fetchByPrimaryKey(long CProductId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1272853329
+// LIFERAY-SERVICE-BUILDER-HASH:168048089

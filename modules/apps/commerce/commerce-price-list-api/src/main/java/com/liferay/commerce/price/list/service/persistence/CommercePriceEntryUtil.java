@@ -39,6 +39,22 @@ public class CommercePriceEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceEntry> commercePriceEntries) {
+
+		getPersistence().cacheResult(commercePriceEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommercePriceEntry commercePriceEntry) {
+		getPersistence().cacheResult(commercePriceEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1537,26 +1553,6 @@ public class CommercePriceEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce price entry in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceEntry the commerce price entry
-	 */
-	public static void cacheResult(CommercePriceEntry commercePriceEntry) {
-		getPersistence().cacheResult(commercePriceEntry);
-	}
-
-	/**
-	 * Caches the commerce price entries in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceEntries the commerce price entries
-	 */
-	public static void cacheResult(
-		List<CommercePriceEntry> commercePriceEntries) {
-
-		getPersistence().cacheResult(commercePriceEntries);
-	}
-
-	/**
 	 * Creates a new commerce price entry with the primary key. Does not add the commerce price entry to the database.
 	 *
 	 * @param commercePriceEntryId the primary key for the new commerce price entry
@@ -1625,4 +1621,4 @@ public class CommercePriceEntryUtil {
 	private static volatile CommercePriceEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1010305825
+// LIFERAY-SERVICE-BUILDER-HASH:557166826

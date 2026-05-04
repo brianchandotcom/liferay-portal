@@ -14,7 +14,6 @@ import com.liferay.document.library.service.persistence.DLFileVersionPreviewPers
 import com.liferay.document.library.service.persistence.DLFileVersionPreviewUtil;
 import com.liferay.document.library.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -629,100 +625,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 	/**
-	 * Caches the dl file version preview in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 */
-	@Override
-	public void cacheResult(DLFileVersionPreview dlFileVersionPreview) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileVersionPreview.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DLFileVersionPreviewImpl.class,
-				dlFileVersionPreview.getPrimaryKey(), dlFileVersionPreview);
-
-			finderCache.putResult(
-				_finderPathFetchByF_F,
-				new Object[] {
-					dlFileVersionPreview.getFileEntryId(),
-					dlFileVersionPreview.getFileVersionId()
-				},
-				dlFileVersionPreview);
-
-			finderCache.putResult(
-				_finderPathFetchByF_F_P,
-				new Object[] {
-					dlFileVersionPreview.getFileEntryId(),
-					dlFileVersionPreview.getFileVersionId(),
-					dlFileVersionPreview.getPreviewStatus()
-				},
-				dlFileVersionPreview);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dl file version previews in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreviews the dl file version previews
-	 */
-	@Override
-	public void cacheResult(List<DLFileVersionPreview> dlFileVersionPreviews) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlFileVersionPreviews.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLFileVersionPreview dlFileVersionPreview :
-				dlFileVersionPreviews) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlFileVersionPreview.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DLFileVersionPreviewImpl.class,
-						dlFileVersionPreview.getPrimaryKey()) == null) {
-
-					cacheResult(dlFileVersionPreview);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLFileVersionPreviewModelImpl dlFileVersionPreviewModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileVersionPreviewModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlFileVersionPreviewModelImpl.getFileEntryId(),
-				dlFileVersionPreviewModelImpl.getFileVersionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByF_F, args, dlFileVersionPreviewModelImpl);
-
-			args = new Object[] {
-				dlFileVersionPreviewModelImpl.getFileEntryId(),
-				dlFileVersionPreviewModelImpl.getFileVersionId(),
-				dlFileVersionPreviewModelImpl.getPreviewStatus()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByF_F_P, args, dlFileVersionPreviewModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new dl file version preview with the primary key. Does not add the dl file version preview to the database.
 	 *
 	 * @param dlFileVersionPreviewId the primary key for the new dl file version preview
@@ -842,11 +744,7 @@ public class DLFileVersionPreviewPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DLFileVersionPreviewImpl.class, dlFileVersionPreviewModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(dlFileVersionPreviewModelImpl);
+		cacheUniqueFindersResult(dlFileVersionPreview, false);
 
 		if (isNew) {
 			dlFileVersionPreview.setNew(false);
@@ -972,9 +870,6 @@ public class DLFileVersionPreviewPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
 			new String[] {
@@ -1039,10 +934,12 @@ public class DLFileVersionPreviewPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DLFileVersionPreview::getFileVersionId));
 
-		_finderPathFetchByF_F = new FinderPath(
+		_finderPathFetchByF_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"fileEntryId", "fileVersionId"}, true);
+			new String[] {"fileEntryId", "fileVersionId"}, false,
+			DLFileVersionPreview::getFileEntryId,
+			DLFileVersionPreview::getFileVersionId);
 
 		_uniquePersistenceFinderByF_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_F, _SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
@@ -1054,14 +951,16 @@ public class DLFileVersionPreviewPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				DLFileVersionPreview::getFileVersionId));
 
-		_finderPathFetchByF_F_P = new FinderPath(
+		_finderPathFetchByF_F_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_F_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
 			new String[] {"fileEntryId", "fileVersionId", "previewStatus"},
-			true);
+			false, DLFileVersionPreview::getFileEntryId,
+			DLFileVersionPreview::getFileVersionId,
+			DLFileVersionPreview::getPreviewStatus);
 
 		_uniquePersistenceFinderByF_F_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_F_P,
@@ -1147,4 +1046,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1127813242
+// LIFERAY-SERVICE-BUILDER-HASH:-822323394

@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -812,69 +810,6 @@ public class BatchEngineImportTaskPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch engine import task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTask the batch engine import task
-	 */
-	@Override
-	public void cacheResult(BatchEngineImportTask batchEngineImportTask) {
-		entityCache.putResult(
-			BatchEngineImportTaskImpl.class,
-			batchEngineImportTask.getPrimaryKey(), batchEngineImportTask);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				batchEngineImportTask.getExternalReferenceCode(),
-				batchEngineImportTask.getCompanyId()
-			},
-			batchEngineImportTask);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch engine import tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTasks the batch engine import tasks
-	 */
-	@Override
-	public void cacheResult(
-		List<BatchEngineImportTask> batchEngineImportTasks) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchEngineImportTasks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchEngineImportTask batchEngineImportTask :
-				batchEngineImportTasks) {
-
-			if (entityCache.getResult(
-					BatchEngineImportTaskImpl.class,
-					batchEngineImportTask.getPrimaryKey()) == null) {
-
-				cacheResult(batchEngineImportTask);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BatchEngineImportTaskModelImpl batchEngineImportTaskModelImpl) {
-
-		Object[] args = new Object[] {
-			batchEngineImportTaskModelImpl.getExternalReferenceCode(),
-			batchEngineImportTaskModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, batchEngineImportTaskModelImpl);
-	}
-
-	/**
 	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *
 	 * @param batchEngineImportTaskId the primary key for the new batch engine import task
@@ -1099,11 +1034,7 @@ public class BatchEngineImportTaskPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchEngineImportTaskImpl.class, batchEngineImportTaskModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(batchEngineImportTaskModelImpl);
+		cacheUniqueFindersResult(batchEngineImportTask, false);
 
 		if (isNew) {
 			batchEngineImportTask.setNew(false);
@@ -1171,9 +1102,6 @@ public class BatchEngineImportTaskPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1302,10 +1230,12 @@ public class BatchEngineImportTaskPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					BatchEngineImportTask::getExecuteStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			BatchEngineImportTask::getExternalReferenceCode,
+			BatchEngineImportTask::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1387,4 +1317,4 @@ public class BatchEngineImportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:346916773
+// LIFERAY-SERVICE-BUILDER-HASH:2058461007

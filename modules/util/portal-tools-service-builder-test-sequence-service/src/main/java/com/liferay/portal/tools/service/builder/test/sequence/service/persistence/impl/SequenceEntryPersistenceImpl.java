@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -396,44 +393,6 @@ public class SequenceEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the sequence entry in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntry the sequence entry
-	 */
-	@Override
-	public void cacheResult(SequenceEntry sequenceEntry) {
-		entityCache.putResult(
-			SequenceEntryImpl.class, sequenceEntry.getPrimaryKey(),
-			sequenceEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sequence entries in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntries the sequence entries
-	 */
-	@Override
-	public void cacheResult(List<SequenceEntry> sequenceEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sequenceEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SequenceEntry sequenceEntry : sequenceEntries) {
-			if (entityCache.getResult(
-					SequenceEntryImpl.class, sequenceEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(sequenceEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new sequence entry with the primary key. Does not add the sequence entry to the database.
 	 *
 	 * @param sequenceEntryId the primary key for the new sequence entry
@@ -548,8 +507,7 @@ public class SequenceEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SequenceEntryImpl.class, sequenceEntryModelImpl, false, true);
+		cacheUniqueFindersResult(sequenceEntry, false);
 
 		if (isNew) {
 			sequenceEntry.setNew(false);
@@ -615,9 +573,6 @@ public class SequenceEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -747,4 +702,4 @@ public class SequenceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1417390517
+// LIFERAY-SERVICE-BUILDER-HASH:-1358007194

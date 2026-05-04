@@ -15,7 +15,6 @@ import com.liferay.journal.service.persistence.JournalFeedUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -974,91 +970,6 @@ public class JournalFeedPersistenceImpl
 	}
 
 	/**
-	 * Caches the journal feed in the entity cache if it is enabled.
-	 *
-	 * @param journalFeed the journal feed
-	 */
-	@Override
-	public void cacheResult(JournalFeed journalFeed) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalFeed.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalFeedImpl.class, journalFeed.getPrimaryKey(),
-				journalFeed);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {journalFeed.getUuid(), journalFeed.getGroupId()},
-				journalFeed);
-
-			finderCache.putResult(
-				_finderPathFetchByG_F,
-				new Object[] {
-					journalFeed.getGroupId(), journalFeed.getFeedId()
-				},
-				journalFeed);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal feeds in the entity cache if it is enabled.
-	 *
-	 * @param journalFeeds the journal feeds
-	 */
-	@Override
-	public void cacheResult(List<JournalFeed> journalFeeds) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalFeeds.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalFeed journalFeed : journalFeeds) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalFeed.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalFeedImpl.class, journalFeed.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(journalFeed);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalFeedModelImpl journalFeedModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalFeedModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalFeedModelImpl.getUuid(),
-				journalFeedModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, journalFeedModelImpl);
-
-			args = new Object[] {
-				journalFeedModelImpl.getGroupId(),
-				journalFeedModelImpl.getFeedId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_F, args, journalFeedModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal feed with the primary key. Does not add the journal feed to the database.
 	 *
 	 * @param id the primary key for the new journal feed
@@ -1201,10 +1112,7 @@ public class JournalFeedPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalFeedImpl.class, journalFeedModelImpl, false, true);
-
-		cacheUniqueFindersCache(journalFeedModelImpl);
+		cacheUniqueFindersResult(journalFeed, false);
 
 		if (isNew) {
 			journalFeed.setNew(false);
@@ -1350,9 +1258,6 @@ public class JournalFeedPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1380,10 +1285,11 @@ public class JournalFeedPersistenceImpl
 				"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalFeed::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, JournalFeed::getUuid,
+			JournalFeed::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALFEED_WHERE,
@@ -1456,10 +1362,11 @@ public class JournalFeedPersistenceImpl
 					"journalFeed.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getGroupId));
 
-		_finderPathFetchByG_F = new FinderPath(
+		_finderPathFetchByG_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "feedId"}, true);
+			new String[] {"groupId", "feedId"}, false, JournalFeed::getGroupId,
+			JournalFeed::getFeedId);
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_F, _SQL_SELECT_JOURNALFEED_WHERE,
@@ -1565,4 +1472,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1964717064
+// LIFERAY-SERVICE-BUILDER-HASH:-1437403712

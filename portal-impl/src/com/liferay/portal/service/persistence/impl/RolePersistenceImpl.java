@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -52,8 +51,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5606,117 +5603,6 @@ public class RolePersistenceImpl
 	}
 
 	/**
-	 * Caches the role in the entity cache if it is enabled.
-	 *
-	 * @param role the role
-	 */
-	@Override
-	public void cacheResult(Role role) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					role.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RoleImpl.class, role.getPrimaryKey(), role);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N,
-				new Object[] {role.getCompanyId(), role.getName()}, role);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C,
-				new Object[] {
-					role.getCompanyId(), role.getClassNameId(),
-					role.getClassPK()
-				},
-				role);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C_T,
-				new Object[] {
-					role.getCompanyId(), role.getClassNameId(),
-					role.getClassPK(), role.getType()
-				},
-				role);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					role.getExternalReferenceCode(), role.getCompanyId()
-				},
-				role);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the roles in the entity cache if it is enabled.
-	 *
-	 * @param roles the roles
-	 */
-	@Override
-	public void cacheResult(List<Role> roles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (roles.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Role role : roles) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						role.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RoleImpl.class, role.getPrimaryKey()) == null) {
-
-					cacheResult(role);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(RoleModelImpl roleModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					roleModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				roleModelImpl.getCompanyId(), roleModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N, args, roleModelImpl);
-
-			args = new Object[] {
-				roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
-				roleModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C, args, roleModelImpl);
-
-			args = new Object[] {
-				roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
-				roleModelImpl.getClassPK(), roleModelImpl.getType()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C_T, args, roleModelImpl);
-
-			args = new Object[] {
-				roleModelImpl.getExternalReferenceCode(),
-				roleModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, roleModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new role with the primary key. Does not add the role to the database.
 	 *
 	 * @param roleId the primary key for the new role
@@ -5920,9 +5806,7 @@ public class RolePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(RoleImpl.class, roleModelImpl, false, true);
-
-		cacheUniqueFindersCache(roleModelImpl);
+		cacheUniqueFindersResult(role, false);
 
 		if (isNew) {
 			role.setNew(false);
@@ -6712,9 +6596,6 @@ public class RolePersistenceImpl
 	 * Initializes the role persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		roleToGroupTableMapper = TableMapperFactory.getTableMapper(
 			"Groups_Roles", "companyId", "roleId", "groupId", this,
 			groupPersistence);
@@ -6894,12 +6775,11 @@ public class RolePersistenceImpl
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
-
-		_finderPathFetchByC_N.touch();
+			new String[] {"companyId", "name"}, true, Role::getCompanyId,
+			Role::getName);
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
@@ -6972,12 +6852,13 @@ public class RolePersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "classPK"}, true);
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
+			new String[] {"companyId", "classNameId", "classPK"}, false,
+			Role::getCompanyId, Role::getClassNameId, Role::getClassPK);
 
 		_finderPathCountByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
@@ -7013,14 +6894,15 @@ public class RolePersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
 			true);
 
-		_finderPathFetchByC_C_C_T = new FinderPath(
+		_finderPathFetchByC_C_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName()
 			},
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
-			true);
+			false, Role::getCompanyId, Role::getClassNameId, Role::getClassPK,
+			Role::getType);
 
 		_finderPathCountByC_C_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
@@ -7040,10 +6922,11 @@ public class RolePersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
 			false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Role::getExternalReferenceCode, Role::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ROLE__WHERE,
@@ -7128,4 +7011,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-804725386
+// LIFERAY-SERVICE-BUILDER-HASH:1137614648

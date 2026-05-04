@@ -36,6 +36,20 @@ public class LayoutPrototypeUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutPrototype> layoutPrototypes) {
+		getPersistence().cacheResult(layoutPrototypes);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutPrototype layoutPrototype) {
+		getPersistence().cacheResult(layoutPrototype);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -869,24 +883,6 @@ public class LayoutPrototypeUtil {
 	}
 
 	/**
-	 * Caches the layout prototype in the entity cache if it is enabled.
-	 *
-	 * @param layoutPrototype the layout prototype
-	 */
-	public static void cacheResult(LayoutPrototype layoutPrototype) {
-		getPersistence().cacheResult(layoutPrototype);
-	}
-
-	/**
-	 * Caches the layout prototypes in the entity cache if it is enabled.
-	 *
-	 * @param layoutPrototypes the layout prototypes
-	 */
-	public static void cacheResult(List<LayoutPrototype> layoutPrototypes) {
-		getPersistence().cacheResult(layoutPrototypes);
-	}
-
-	/**
 	 * Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
 	 *
 	 * @param layoutPrototypeId the primary key for the new layout prototype
@@ -949,4 +945,4 @@ public class LayoutPrototypeUtil {
 	private static volatile LayoutPrototypePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-641392080
+// LIFERAY-SERVICE-BUILDER-HASH:1783534906

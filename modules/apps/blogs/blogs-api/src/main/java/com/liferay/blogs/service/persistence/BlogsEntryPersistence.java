@@ -3948,20 +3948,6 @@ public interface BlogsEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the blogs entry in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntry the blogs entry
-	 */
-	public void cacheResult(BlogsEntry blogsEntry);
-
-	/**
-	 * Caches the blogs entries in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntries the blogs entries
-	 */
-	public void cacheResult(java.util.List<BlogsEntry> blogsEntries);
-
-	/**
 	 * Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
 	 *
 	 * @param entryId the primary key for the new blogs entry
@@ -3999,4 +3985,4 @@ public interface BlogsEntryPersistence
 	public BlogsEntry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1952625138
+// LIFERAY-SERVICE-BUILDER-HASH:-1959357734

@@ -11,7 +11,6 @@ import com.liferay.expando.kernel.model.ExpandoRowTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.expando.model.impl.ExpandoRowImpl;
@@ -503,75 +499,6 @@ public class ExpandoRowPersistenceImpl
 	}
 
 	/**
-	 * Caches the expando row in the entity cache if it is enabled.
-	 *
-	 * @param expandoRow the expando row
-	 */
-	@Override
-	public void cacheResult(ExpandoRow expandoRow) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoRow.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				ExpandoRowImpl.class, expandoRow.getPrimaryKey(), expandoRow);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_C,
-				new Object[] {expandoRow.getTableId(), expandoRow.getClassPK()},
-				expandoRow);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the expando rows in the entity cache if it is enabled.
-	 *
-	 * @param expandoRows the expando rows
-	 */
-	@Override
-	public void cacheResult(List<ExpandoRow> expandoRows) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (expandoRows.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ExpandoRow expandoRow : expandoRows) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						expandoRow.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						ExpandoRowImpl.class, expandoRow.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(expandoRow);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ExpandoRowModelImpl expandoRowModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoRowModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				expandoRowModelImpl.getTableId(),
-				expandoRowModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_C, args, expandoRowModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new expando row with the primary key. Does not add the expando row to the database.
 	 *
 	 * @param rowId the primary key for the new expando row
@@ -695,10 +622,7 @@ public class ExpandoRowPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ExpandoRowImpl.class, expandoRowModelImpl, false, true);
-
-		cacheUniqueFindersCache(expandoRowModelImpl);
+		cacheUniqueFindersResult(expandoRow, false);
 
 		if (isNew) {
 			expandoRow.setNew(false);
@@ -821,9 +745,6 @@ public class ExpandoRowPersistenceImpl
 	 * Initializes the expando row persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByTableId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
 			new String[] {
@@ -882,10 +803,11 @@ public class ExpandoRowPersistenceImpl
 					"expandoRow.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, ExpandoRow::getClassPK));
 
-		_finderPathFetchByT_C = new FinderPath(
+		_finderPathFetchByT_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, true);
+			new String[] {"tableId", "classPK"}, false, ExpandoRow::getTableId,
+			ExpandoRow::getClassPK);
 
 		_uniquePersistenceFinderByT_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_C, _SQL_SELECT_EXPANDOROW_WHERE,
@@ -932,4 +854,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1546638708
+// LIFERAY-SERVICE-BUILDER-HASH:217676045

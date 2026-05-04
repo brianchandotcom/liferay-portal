@@ -36,6 +36,20 @@ public class PhoneUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Phone> phones) {
+		getPersistence().cacheResult(phones);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Phone phone) {
+		getPersistence().cacheResult(phone);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1095,24 +1109,6 @@ public class PhoneUtil {
 	}
 
 	/**
-	 * Caches the phone in the entity cache if it is enabled.
-	 *
-	 * @param phone the phone
-	 */
-	public static void cacheResult(Phone phone) {
-		getPersistence().cacheResult(phone);
-	}
-
-	/**
-	 * Caches the phones in the entity cache if it is enabled.
-	 *
-	 * @param phones the phones
-	 */
-	public static void cacheResult(List<Phone> phones) {
-		getPersistence().cacheResult(phones);
-	}
-
-	/**
 	 * Creates a new phone with the primary key. Does not add the phone to the database.
 	 *
 	 * @param phoneId the primary key for the new phone
@@ -1173,4 +1169,4 @@ public class PhoneUtil {
 	private static volatile PhonePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712277214
+// LIFERAY-SERVICE-BUILDER-HASH:1730019750

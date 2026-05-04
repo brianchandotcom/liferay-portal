@@ -760,21 +760,6 @@ public interface CPSpecificationOptionPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp specification option in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOption the cp specification option
-	 */
-	public void cacheResult(CPSpecificationOption cpSpecificationOption);
-
-	/**
-	 * Caches the cp specification options in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptions the cp specification options
-	 */
-	public void cacheResult(
-		java.util.List<CPSpecificationOption> cpSpecificationOptions);
-
-	/**
 	 * Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
 	 *
 	 * @param CPSpecificationOptionId the primary key for the new cp specification option
@@ -815,4 +800,4 @@ public interface CPSpecificationOptionPersistence
 		long CPSpecificationOptionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1634036654
+// LIFERAY-SERVICE-BUILDER-HASH:-129227930

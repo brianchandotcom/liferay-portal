@@ -36,6 +36,24 @@ public class CommerceInventoryWarehouseUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryWarehouse> commerceInventoryWarehouses) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryWarehouse commerceInventoryWarehouse) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouse);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1398,28 +1416,6 @@ public class CommerceInventoryWarehouseUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory warehouse in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouse the commerce inventory warehouse
-	 */
-	public static void cacheResult(
-		CommerceInventoryWarehouse commerceInventoryWarehouse) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouse);
-	}
-
-	/**
-	 * Caches the commerce inventory warehouses in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouses the commerce inventory warehouses
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryWarehouse> commerceInventoryWarehouses) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouses);
-	}
-
-	/**
 	 * Creates a new commerce inventory warehouse with the primary key. Does not add the commerce inventory warehouse to the database.
 	 *
 	 * @param commerceInventoryWarehouseId the primary key for the new commerce inventory warehouse
@@ -1492,4 +1488,4 @@ public class CommerceInventoryWarehouseUtil {
 	private static volatile CommerceInventoryWarehousePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1404191552
+// LIFERAY-SERVICE-BUILDER-HASH:1146963018

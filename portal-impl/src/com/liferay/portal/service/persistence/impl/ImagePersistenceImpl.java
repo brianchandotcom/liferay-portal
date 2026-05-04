@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -30,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.ImageImpl;
@@ -249,52 +245,6 @@ public class ImagePersistenceImpl
 	}
 
 	/**
-	 * Caches the image in the entity cache if it is enabled.
-	 *
-	 * @param image the image
-	 */
-	@Override
-	public void cacheResult(Image image) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					image.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				ImageImpl.class, image.getPrimaryKey(), image);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the images in the entity cache if it is enabled.
-	 *
-	 * @param images the images
-	 */
-	@Override
-	public void cacheResult(List<Image> images) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (images.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Image image : images) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						image.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						ImageImpl.class, image.getPrimaryKey()) == null) {
-
-					cacheResult(image);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
 	 * @param imageId the primary key for the new image
@@ -413,7 +363,7 @@ public class ImagePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(ImageImpl.class, image, false, true);
+		cacheUniqueFindersResult(image, false);
 
 		if (isNew) {
 			image.setNew(false);
@@ -538,9 +488,6 @@ public class ImagePersistenceImpl
 	 * Initializes the image persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLtSize = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSize",
 			new String[] {
@@ -600,4 +547,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-27985982
+// LIFERAY-SERVICE-BUILDER-HASH:754629728

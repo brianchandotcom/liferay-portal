@@ -139,22 +139,6 @@ public interface BatchEngineImportTaskErrorPersistence
 	public int countByBatchEngineImportTaskId(long batchEngineImportTaskId);
 
 	/**
-	 * Caches the batch engine import task error in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTaskError the batch engine import task error
-	 */
-	public void cacheResult(
-		BatchEngineImportTaskError batchEngineImportTaskError);
-
-	/**
-	 * Caches the batch engine import task errors in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTaskErrors the batch engine import task errors
-	 */
-	public void cacheResult(
-		java.util.List<BatchEngineImportTaskError> batchEngineImportTaskErrors);
-
-	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
 	 * @param batchEngineImportTaskErrorId the primary key for the new batch engine import task error
@@ -196,4 +180,4 @@ public interface BatchEngineImportTaskErrorPersistence
 		long batchEngineImportTaskErrorId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1330369297
+// LIFERAY-SERVICE-BUILDER-HASH:-978595245

@@ -240,20 +240,6 @@ public interface SamlIdpSpSessionPersistence
 	public int countBySamlIdpSsoSessionId(long samlIdpSsoSessionId);
 
 	/**
-	 * Caches the saml idp sp session in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSpSession the saml idp sp session
-	 */
-	public void cacheResult(SamlIdpSpSession samlIdpSpSession);
-
-	/**
-	 * Caches the saml idp sp sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSpSessions the saml idp sp sessions
-	 */
-	public void cacheResult(java.util.List<SamlIdpSpSession> samlIdpSpSessions);
-
-	/**
 	 * Creates a new saml idp sp session with the primary key. Does not add the saml idp sp session to the database.
 	 *
 	 * @param samlIdpSpSessionId the primary key for the new saml idp sp session
@@ -292,4 +278,4 @@ public interface SamlIdpSpSessionPersistence
 	public SamlIdpSpSession fetchByPrimaryKey(long samlIdpSpSessionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:436494994
+// LIFERAY-SERVICE-BUILDER-HASH:-159999400

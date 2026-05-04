@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityLimitModelImpl;
@@ -720,89 +716,6 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity limit in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimit the social activity limit
-	 */
-	@Override
-	public void cacheResult(SocialActivityLimit socialActivityLimit) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityLimit.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivityLimitImpl.class,
-				socialActivityLimit.getPrimaryKey(), socialActivityLimit);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_C_C_A_A,
-				new Object[] {
-					socialActivityLimit.getGroupId(),
-					socialActivityLimit.getUserId(),
-					socialActivityLimit.getClassNameId(),
-					socialActivityLimit.getClassPK(),
-					socialActivityLimit.getActivityType(),
-					socialActivityLimit.getActivityCounterName()
-				},
-				socialActivityLimit);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activity limits in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityLimits the social activity limits
-	 */
-	@Override
-	public void cacheResult(List<SocialActivityLimit> socialActivityLimits) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivityLimits.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivityLimit socialActivityLimit : socialActivityLimits) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivityLimit.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivityLimitImpl.class,
-						socialActivityLimit.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivityLimit);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialActivityLimitModelImpl socialActivityLimitModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityLimitModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialActivityLimitModelImpl.getGroupId(),
-				socialActivityLimitModelImpl.getUserId(),
-				socialActivityLimitModelImpl.getClassNameId(),
-				socialActivityLimitModelImpl.getClassPK(),
-				socialActivityLimitModelImpl.getActivityType(),
-				socialActivityLimitModelImpl.getActivityCounterName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_C_C_A_A, args,
-				socialActivityLimitModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social activity limit with the primary key. Does not add the social activity limit to the database.
 	 *
 	 * @param activityLimitId the primary key for the new social activity limit
@@ -921,11 +834,7 @@ public class SocialActivityLimitPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivityLimitImpl.class, socialActivityLimitModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(socialActivityLimitModelImpl);
+		cacheUniqueFindersResult(socialActivityLimit, false);
 
 		if (isNew) {
 			socialActivityLimit.setNew(false);
@@ -1053,9 +962,6 @@ public class SocialActivityLimitPersistenceImpl
 	 * Initializes the social activity limit persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1148,7 +1054,7 @@ public class SocialActivityLimitPersistenceImpl
 				"socialActivityLimit.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivityLimit::getClassPK));
 
-		_finderPathFetchByG_U_C_C_A_A = new FinderPath(
+		_finderPathFetchByG_U_C_C_A_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_C_C_A_A",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1159,7 +1065,11 @@ public class SocialActivityLimitPersistenceImpl
 				"groupId", "userId", "classNameId", "classPK", "activityType",
 				"activityCounterName"
 			},
-			true);
+			false, SocialActivityLimit::getGroupId,
+			SocialActivityLimit::getUserId, SocialActivityLimit::getClassNameId,
+			SocialActivityLimit::getClassPK,
+			SocialActivityLimit::getActivityType,
+			SocialActivityLimit::getActivityCounterName);
 
 		_uniquePersistenceFinderByG_U_C_C_A_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U_C_C_A_A,
@@ -1218,4 +1128,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1409647786
+// LIFERAY-SERVICE-BUILDER-HASH:2069176703

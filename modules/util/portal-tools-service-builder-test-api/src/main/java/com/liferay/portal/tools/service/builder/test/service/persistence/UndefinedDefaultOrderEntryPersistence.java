@@ -181,23 +181,6 @@ public interface UndefinedDefaultOrderEntryPersistence
 	public int countByName_Collection(String name);
 
 	/**
-	 * Caches the undefined default order entry in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntry the undefined default order entry
-	 */
-	public void cacheResult(
-		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry);
-
-	/**
-	 * Caches the undefined default order entries in the entity cache if it is enabled.
-	 *
-	 * @param undefinedDefaultOrderEntries the undefined default order entries
-	 */
-	public void cacheResult(
-		java.util.List<UndefinedDefaultOrderEntry>
-			undefinedDefaultOrderEntries);
-
-	/**
 	 * Creates a new undefined default order entry with the primary key. Does not add the undefined default order entry to the database.
 	 *
 	 * @param undefinedDefaultOrderEntryId the primary key for the new undefined default order entry
@@ -239,4 +222,4 @@ public interface UndefinedDefaultOrderEntryPersistence
 		long undefinedDefaultOrderEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-801877035
+// LIFERAY-SERVICE-BUILDER-HASH:425860369

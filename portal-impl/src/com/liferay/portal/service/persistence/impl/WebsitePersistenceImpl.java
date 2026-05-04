@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1299,59 +1297,6 @@ public class WebsitePersistenceImpl
 	}
 
 	/**
-	 * Caches the website in the entity cache if it is enabled.
-	 *
-	 * @param website the website
-	 */
-	@Override
-	public void cacheResult(Website website) {
-		EntityCacheUtil.putResult(
-			WebsiteImpl.class, website.getPrimaryKey(), website);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				website.getExternalReferenceCode(), website.getCompanyId()
-			},
-			website);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the websites in the entity cache if it is enabled.
-	 *
-	 * @param websites the websites
-	 */
-	@Override
-	public void cacheResult(List<Website> websites) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (websites.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Website website : websites) {
-			if (EntityCacheUtil.getResult(
-					WebsiteImpl.class, website.getPrimaryKey()) == null) {
-
-				cacheResult(website);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(WebsiteModelImpl websiteModelImpl) {
-		Object[] args = new Object[] {
-			websiteModelImpl.getExternalReferenceCode(),
-			websiteModelImpl.getCompanyId()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByERC_C, args, websiteModelImpl);
-	}
-
-	/**
 	 * Creates a new website with the primary key. Does not add the website to the database.
 	 *
 	 * @param websiteId the primary key for the new website
@@ -1545,10 +1490,7 @@ public class WebsitePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			WebsiteImpl.class, websiteModelImpl, false, true);
-
-		cacheUniqueFindersCache(websiteModelImpl);
+		cacheUniqueFindersResult(website, false);
 
 		if (isNew) {
 			website.setNew(false);
@@ -1613,9 +1555,6 @@ public class WebsitePersistenceImpl
 	 * Initializes the website persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1851,10 +1790,11 @@ public class WebsitePersistenceImpl
 					"website.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Website::isPrimary));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Website::getExternalReferenceCode, Website::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_WEBSITE_WHERE,
@@ -1901,4 +1841,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-836828368
+// LIFERAY-SERVICE-BUILDER-HASH:1861655702

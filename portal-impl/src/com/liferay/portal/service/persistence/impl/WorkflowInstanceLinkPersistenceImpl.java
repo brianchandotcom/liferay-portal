@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.WorkflowInstanceLinkImpl;
 import com.liferay.portal.model.impl.WorkflowInstanceLinkModelImpl;
@@ -748,79 +744,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the workflow instance link in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLink the workflow instance link
-	 */
-	@Override
-	public void cacheResult(WorkflowInstanceLink workflowInstanceLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					workflowInstanceLink.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				WorkflowInstanceLinkImpl.class,
-				workflowInstanceLink.getPrimaryKey(), workflowInstanceLink);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByWorkflowInstanceId,
-				new Object[] {workflowInstanceLink.getWorkflowInstanceId()},
-				workflowInstanceLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the workflow instance links in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLinks the workflow instance links
-	 */
-	@Override
-	public void cacheResult(List<WorkflowInstanceLink> workflowInstanceLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (workflowInstanceLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WorkflowInstanceLink workflowInstanceLink :
-				workflowInstanceLinks) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						workflowInstanceLink.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						WorkflowInstanceLinkImpl.class,
-						workflowInstanceLink.getPrimaryKey()) == null) {
-
-					cacheResult(workflowInstanceLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					workflowInstanceLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				workflowInstanceLinkModelImpl.getWorkflowInstanceId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByWorkflowInstanceId, args,
-				workflowInstanceLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
 	 *
 	 * @param workflowInstanceLinkId the primary key for the new workflow instance link
@@ -965,11 +888,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			WorkflowInstanceLinkImpl.class, workflowInstanceLinkModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(workflowInstanceLinkModelImpl);
+		cacheUniqueFindersResult(workflowInstanceLink, false);
 
 		if (isNew) {
 			workflowInstanceLink.setNew(false);
@@ -1097,13 +1016,11 @@ public class WorkflowInstanceLinkPersistenceImpl
 	 * Initializes the workflow instance link persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByWorkflowInstanceId = new FinderPath(
+		_finderPathFetchByWorkflowInstanceId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWorkflowInstanceId",
 			new String[] {Long.class.getName()},
-			new String[] {"workflowInstanceId"}, true);
+			new String[] {"workflowInstanceId"}, false,
+			WorkflowInstanceLink::getWorkflowInstanceId);
 
 		_uniquePersistenceFinderByWorkflowInstanceId =
 			new UniquePersistenceFinder<>(
@@ -1271,4 +1188,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2079970805
+// LIFERAY-SERVICE-BUILDER-HASH:2144102179

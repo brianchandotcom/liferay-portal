@@ -36,6 +36,20 @@ public class SegmentsEntryRoleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SegmentsEntryRole> segmentsEntryRoles) {
+		getPersistence().cacheResult(segmentsEntryRoles);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SegmentsEntryRole segmentsEntryRole) {
+		getPersistence().cacheResult(segmentsEntryRole);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -425,24 +439,6 @@ public class SegmentsEntryRoleUtil {
 	}
 
 	/**
-	 * Caches the segments entry role in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRole the segments entry role
-	 */
-	public static void cacheResult(SegmentsEntryRole segmentsEntryRole) {
-		getPersistence().cacheResult(segmentsEntryRole);
-	}
-
-	/**
-	 * Caches the segments entry roles in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRoles the segments entry roles
-	 */
-	public static void cacheResult(List<SegmentsEntryRole> segmentsEntryRoles) {
-		getPersistence().cacheResult(segmentsEntryRoles);
-	}
-
-	/**
 	 * Creates a new segments entry role with the primary key. Does not add the segments entry role to the database.
 	 *
 	 * @param segmentsEntryRoleId the primary key for the new segments entry role
@@ -509,4 +505,4 @@ public class SegmentsEntryRoleUtil {
 	private static volatile SegmentsEntryRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709141331
+// LIFERAY-SERVICE-BUILDER-HASH:1374298711

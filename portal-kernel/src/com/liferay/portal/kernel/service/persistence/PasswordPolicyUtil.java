@@ -36,6 +36,20 @@ public class PasswordPolicyUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PasswordPolicy> passwordPolicies) {
+		getPersistence().cacheResult(passwordPolicies);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PasswordPolicy passwordPolicy) {
+		getPersistence().cacheResult(passwordPolicy);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -734,24 +748,6 @@ public class PasswordPolicyUtil {
 	}
 
 	/**
-	 * Caches the password policy in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicy the password policy
-	 */
-	public static void cacheResult(PasswordPolicy passwordPolicy) {
-		getPersistence().cacheResult(passwordPolicy);
-	}
-
-	/**
-	 * Caches the password policies in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicies the password policies
-	 */
-	public static void cacheResult(List<PasswordPolicy> passwordPolicies) {
-		getPersistence().cacheResult(passwordPolicies);
-	}
-
-	/**
 	 * Creates a new password policy with the primary key. Does not add the password policy to the database.
 	 *
 	 * @param passwordPolicyId the primary key for the new password policy
@@ -814,4 +810,4 @@ public class PasswordPolicyUtil {
 	private static volatile PasswordPolicyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-342957475
+// LIFERAY-SERVICE-BUILDER-HASH:1678350582

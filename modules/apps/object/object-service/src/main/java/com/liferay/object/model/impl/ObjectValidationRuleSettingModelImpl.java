@@ -1028,4 +1028,4 @@ public class ObjectValidationRuleSettingModelImpl
 	private ObjectValidationRuleSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:655930469
+// LIFERAY-SERVICE-BUILDER-HASH:-1845709267

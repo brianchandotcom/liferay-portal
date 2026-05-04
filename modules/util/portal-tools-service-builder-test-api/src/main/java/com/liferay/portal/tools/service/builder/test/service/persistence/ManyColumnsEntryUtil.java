@@ -36,6 +36,20 @@ public class ManyColumnsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ManyColumnsEntry> manyColumnsEntries) {
+		getPersistence().cacheResult(manyColumnsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ManyColumnsEntry manyColumnsEntry) {
+		getPersistence().cacheResult(manyColumnsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class ManyColumnsEntryUtil {
 	}
 
 	/**
-	 * Caches the many columns entry in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntry the many columns entry
-	 */
-	public static void cacheResult(ManyColumnsEntry manyColumnsEntry) {
-		getPersistence().cacheResult(manyColumnsEntry);
-	}
-
-	/**
-	 * Caches the many columns entries in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntries the many columns entries
-	 */
-	public static void cacheResult(List<ManyColumnsEntry> manyColumnsEntries) {
-		getPersistence().cacheResult(manyColumnsEntries);
-	}
-
-	/**
 	 * Creates a new many columns entry with the primary key. Does not add the many columns entry to the database.
 	 *
 	 * @param manyColumnsEntryId the primary key for the new many columns entry
@@ -193,4 +189,4 @@ public class ManyColumnsEntryUtil {
 	private static volatile ManyColumnsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:54555464
+// LIFERAY-SERVICE-BUILDER-HASH:689993519

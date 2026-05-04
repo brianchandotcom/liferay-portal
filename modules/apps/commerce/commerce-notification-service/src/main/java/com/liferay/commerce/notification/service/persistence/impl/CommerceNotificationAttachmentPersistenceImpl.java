@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -684,74 +681,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce notification attachment in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachment the commerce notification attachment
-	 */
-	@Override
-	public void cacheResult(
-		CommerceNotificationAttachment commerceNotificationAttachment) {
-
-		entityCache.putResult(
-			CommerceNotificationAttachmentImpl.class,
-			commerceNotificationAttachment.getPrimaryKey(),
-			commerceNotificationAttachment);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceNotificationAttachment.getUuid(),
-				commerceNotificationAttachment.getGroupId()
-			},
-			commerceNotificationAttachment);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce notification attachments in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachments the commerce notification attachments
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceNotificationAttachment> commerceNotificationAttachments) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceNotificationAttachments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceNotificationAttachment commerceNotificationAttachment :
-				commerceNotificationAttachments) {
-
-			if (entityCache.getResult(
-					CommerceNotificationAttachmentImpl.class,
-					commerceNotificationAttachment.getPrimaryKey()) == null) {
-
-				cacheResult(commerceNotificationAttachment);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceNotificationAttachmentModelImpl
-			commerceNotificationAttachmentModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceNotificationAttachmentModelImpl.getUuid(),
-			commerceNotificationAttachmentModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			commerceNotificationAttachmentModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce notification attachment with the primary key. Does not add the commerce notification attachment to the database.
 	 *
 	 * @param commerceNotificationAttachmentId the primary key for the new commerce notification attachment
@@ -911,11 +840,7 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceNotificationAttachmentImpl.class,
-			commerceNotificationAttachmentModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceNotificationAttachmentModelImpl);
+		cacheUniqueFindersResult(commerceNotificationAttachment, false);
 
 		if (isNew) {
 			commerceNotificationAttachment.setNew(false);
@@ -985,9 +910,6 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1018,10 +940,12 @@ public class CommerceNotificationAttachmentPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationAttachment::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommerceNotificationAttachment::getUuid,
+			CommerceNotificationAttachment::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1187,4 +1111,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1506068141
+// LIFERAY-SERVICE-BUILDER-HASH:-279620431

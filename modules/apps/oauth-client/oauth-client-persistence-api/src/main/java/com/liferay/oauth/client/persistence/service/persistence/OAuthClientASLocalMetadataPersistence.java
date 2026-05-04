@@ -1030,22 +1030,6 @@ public interface OAuthClientASLocalMetadataPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the o auth client as local metadata in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadata the o auth client as local metadata
-	 */
-	public void cacheResult(
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata);
-
-	/**
-	 * Caches the o auth client as local metadatas in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientASLocalMetadatas the o auth client as local metadatas
-	 */
-	public void cacheResult(
-		java.util.List<OAuthClientASLocalMetadata> oAuthClientASLocalMetadatas);
-
-	/**
 	 * Creates a new o auth client as local metadata with the primary key. Does not add the o auth client as local metadata to the database.
 	 *
 	 * @param oAuthClientASLocalMetadataId the primary key for the new o auth client as local metadata
@@ -1087,4 +1071,4 @@ public interface OAuthClientASLocalMetadataPersistence
 		long oAuthClientASLocalMetadataId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:858849129
+// LIFERAY-SERVICE-BUILDER-HASH:1270144803

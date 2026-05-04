@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
 import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
@@ -335,73 +332,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	 */
-	@Override
-	public void cacheResult(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-
-		entityCache.putResult(
-			SharepointOAuth2TokenEntryImpl.class,
-			sharepointOAuth2TokenEntry.getPrimaryKey(),
-			sharepointOAuth2TokenEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByU_C,
-			new Object[] {
-				sharepointOAuth2TokenEntry.getUserId(),
-				sharepointOAuth2TokenEntry.getConfigurationPid()
-			},
-			sharepointOAuth2TokenEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntries the sharepoint o auth2 token entries
-	 */
-	@Override
-	public void cacheResult(
-		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sharepointOAuth2TokenEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry :
-				sharepointOAuth2TokenEntries) {
-
-			if (entityCache.getResult(
-					SharepointOAuth2TokenEntryImpl.class,
-					sharepointOAuth2TokenEntry.getPrimaryKey()) == null) {
-
-				cacheResult(sharepointOAuth2TokenEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SharepointOAuth2TokenEntryModelImpl
-			sharepointOAuth2TokenEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			sharepointOAuth2TokenEntryModelImpl.getUserId(),
-			sharepointOAuth2TokenEntryModelImpl.getConfigurationPid()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByU_C, args, sharepointOAuth2TokenEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
 	 *
 	 * @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
@@ -536,11 +466,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SharepointOAuth2TokenEntryImpl.class,
-			sharepointOAuth2TokenEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(sharepointOAuth2TokenEntryModelImpl);
+		cacheUniqueFindersResult(sharepointOAuth2TokenEntry, false);
 
 		if (isNew) {
 			sharepointOAuth2TokenEntry.setNew(false);
@@ -604,9 +530,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -638,10 +561,12 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SharepointOAuth2TokenEntry::getUserId));
 
-		_finderPathFetchByU_C = new FinderPath(
+		_finderPathFetchByU_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "configurationPid"}, true);
+			new String[] {"userId", "configurationPid"}, false,
+			SharepointOAuth2TokenEntry::getUserId,
+			SharepointOAuth2TokenEntry::getConfigurationPid);
 
 		_uniquePersistenceFinderByU_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_C,
@@ -720,4 +645,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1014791922
+// LIFERAY-SERVICE-BUILDER-HASH:741087564

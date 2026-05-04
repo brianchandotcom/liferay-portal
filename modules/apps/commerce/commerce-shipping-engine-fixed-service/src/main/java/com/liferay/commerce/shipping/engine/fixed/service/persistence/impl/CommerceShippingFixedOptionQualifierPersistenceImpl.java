@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -570,82 +567,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce shipping fixed option qualifier in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifier the commerce shipping fixed option qualifier
-	 */
-	@Override
-	public void cacheResult(
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier) {
-
-		entityCache.putResult(
-			CommerceShippingFixedOptionQualifierImpl.class,
-			commerceShippingFixedOptionQualifier.getPrimaryKey(),
-			commerceShippingFixedOptionQualifier);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C,
-			new Object[] {
-				commerceShippingFixedOptionQualifier.getClassNameId(),
-				commerceShippingFixedOptionQualifier.getClassPK(),
-				commerceShippingFixedOptionQualifier.
-					getCommerceShippingFixedOptionId()
-			},
-			commerceShippingFixedOptionQualifier);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce shipping fixed option qualifiers in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifiers the commerce shipping fixed option qualifiers
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceShippingFixedOptionQualifier>
-			commerceShippingFixedOptionQualifiers) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceShippingFixedOptionQualifiers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceShippingFixedOptionQualifier
-				commerceShippingFixedOptionQualifier :
-					commerceShippingFixedOptionQualifiers) {
-
-			if (entityCache.getResult(
-					CommerceShippingFixedOptionQualifierImpl.class,
-					commerceShippingFixedOptionQualifier.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(commerceShippingFixedOptionQualifier);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceShippingFixedOptionQualifierModelImpl
-			commerceShippingFixedOptionQualifierModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceShippingFixedOptionQualifierModelImpl.getClassNameId(),
-			commerceShippingFixedOptionQualifierModelImpl.getClassPK(),
-			commerceShippingFixedOptionQualifierModelImpl.
-				getCommerceShippingFixedOptionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args,
-			commerceShippingFixedOptionQualifierModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option qualifier with the primary key. Does not add the commerce shipping fixed option qualifier to the database.
 	 *
 	 * @param commerceShippingFixedOptionQualifierId the primary key for the new commerce shipping fixed option qualifier
@@ -803,11 +724,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceShippingFixedOptionQualifierImpl.class,
-			commerceShippingFixedOptionQualifierModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceShippingFixedOptionQualifierModelImpl);
+		cacheUniqueFindersResult(commerceShippingFixedOptionQualifier, false);
 
 		if (isNew) {
 			commerceShippingFixedOptionQualifier.setNew(false);
@@ -878,9 +795,6 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -961,7 +875,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 				CommerceShippingFixedOptionQualifier::
 					getCommerceShippingFixedOptionId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -969,7 +883,10 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			new String[] {
 				"classNameId", "classPK", "commerceShippingFixedOptionId"
 			},
-			true);
+			false, CommerceShippingFixedOptionQualifier::getClassNameId,
+			CommerceShippingFixedOptionQualifier::getClassPK,
+			CommerceShippingFixedOptionQualifier::
+				getCommerceShippingFixedOptionId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
@@ -1062,4 +979,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-298428475
+// LIFERAY-SERVICE-BUILDER-HASH:1032090619

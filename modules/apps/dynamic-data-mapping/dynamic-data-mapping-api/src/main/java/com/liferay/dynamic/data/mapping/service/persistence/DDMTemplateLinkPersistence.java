@@ -186,20 +186,6 @@ public interface DDMTemplateLinkPersistence
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the ddm template link in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLink the ddm template link
-	 */
-	public void cacheResult(DDMTemplateLink ddmTemplateLink);
-
-	/**
-	 * Caches the ddm template links in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLinks the ddm template links
-	 */
-	public void cacheResult(java.util.List<DDMTemplateLink> ddmTemplateLinks);
-
-	/**
 	 * Creates a new ddm template link with the primary key. Does not add the ddm template link to the database.
 	 *
 	 * @param templateLinkId the primary key for the new ddm template link
@@ -238,4 +224,4 @@ public interface DDMTemplateLinkPersistence
 	public DDMTemplateLink fetchByPrimaryKey(long templateLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1407208954
+// LIFERAY-SERVICE-BUILDER-HASH:-884543582

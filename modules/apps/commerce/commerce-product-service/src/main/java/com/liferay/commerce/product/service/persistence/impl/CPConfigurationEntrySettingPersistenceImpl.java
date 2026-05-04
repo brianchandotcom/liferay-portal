@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPConfigurationEntrySett
 import com.liferay.commerce.product.service.persistence.CPConfigurationEntrySettingUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -797,107 +793,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp configuration entry setting in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntrySetting the cp configuration entry setting
-	 */
-	@Override
-	public void cacheResult(
-		CPConfigurationEntrySetting cpConfigurationEntrySetting) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationEntrySetting.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPConfigurationEntrySettingImpl.class,
-				cpConfigurationEntrySetting.getPrimaryKey(),
-				cpConfigurationEntrySetting);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpConfigurationEntrySetting.getUuid(),
-					cpConfigurationEntrySetting.getGroupId()
-				},
-				cpConfigurationEntrySetting);
-
-			finderCache.putResult(
-				_finderPathFetchByC_T,
-				new Object[] {
-					cpConfigurationEntrySetting.getCPConfigurationEntryId(),
-					cpConfigurationEntrySetting.getType()
-				},
-				cpConfigurationEntrySetting);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp configuration entry settings in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntrySettings the cp configuration entry settings
-	 */
-	@Override
-	public void cacheResult(
-		List<CPConfigurationEntrySetting> cpConfigurationEntrySettings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpConfigurationEntrySettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPConfigurationEntrySetting cpConfigurationEntrySetting :
-				cpConfigurationEntrySettings) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpConfigurationEntrySetting.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPConfigurationEntrySettingImpl.class,
-						cpConfigurationEntrySetting.getPrimaryKey()) == null) {
-
-					cacheResult(cpConfigurationEntrySetting);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPConfigurationEntrySettingModelImpl
-			cpConfigurationEntrySettingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationEntrySettingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpConfigurationEntrySettingModelImpl.getUuid(),
-				cpConfigurationEntrySettingModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				cpConfigurationEntrySettingModelImpl);
-
-			args = new Object[] {
-				cpConfigurationEntrySettingModelImpl.
-					getCPConfigurationEntryId(),
-				cpConfigurationEntrySettingModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_T, args,
-				cpConfigurationEntrySettingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp configuration entry setting with the primary key. Does not add the cp configuration entry setting to the database.
 	 *
 	 * @param CPConfigurationEntrySettingId the primary key for the new cp configuration entry setting
@@ -1065,11 +960,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPConfigurationEntrySettingImpl.class,
-			cpConfigurationEntrySettingModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpConfigurationEntrySettingModelImpl);
+		cacheUniqueFindersResult(cpConfigurationEntrySetting, false);
 
 		if (isNew) {
 			cpConfigurationEntrySetting.setNew(false);
@@ -1210,9 +1101,6 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1243,10 +1131,12 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CPConfigurationEntrySetting::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPConfigurationEntrySetting::getUuid,
+			CPConfigurationEntrySetting::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1329,10 +1219,12 @@ public class CPConfigurationEntrySettingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPConfigurationEntrySetting::getCompanyId));
 
-		_finderPathFetchByC_T = new FinderPath(
+		_finderPathFetchByC_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CPConfigurationEntryId", "type_"}, true);
+			new String[] {"CPConfigurationEntryId", "type_"}, false,
+			CPConfigurationEntrySetting::getCPConfigurationEntryId,
+			CPConfigurationEntrySetting::getType);
 
 		_uniquePersistenceFinderByC_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_T,
@@ -1419,4 +1311,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:739202410
+// LIFERAY-SERVICE-BUILDER-HASH:2127650685

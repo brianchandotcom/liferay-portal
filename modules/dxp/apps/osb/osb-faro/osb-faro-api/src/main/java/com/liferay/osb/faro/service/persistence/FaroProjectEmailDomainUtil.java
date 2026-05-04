@@ -36,6 +36,24 @@ public class FaroProjectEmailDomainUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FaroProjectEmailDomain> faroProjectEmailDomains) {
+
+		getPersistence().cacheResult(faroProjectEmailDomains);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		FaroProjectEmailDomain faroProjectEmailDomain) {
+
+		getPersistence().cacheResult(faroProjectEmailDomain);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -365,28 +383,6 @@ public class FaroProjectEmailDomainUtil {
 	}
 
 	/**
-	 * Caches the faro project email domain in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectEmailDomain the faro project email domain
-	 */
-	public static void cacheResult(
-		FaroProjectEmailDomain faroProjectEmailDomain) {
-
-		getPersistence().cacheResult(faroProjectEmailDomain);
-	}
-
-	/**
-	 * Caches the faro project email domains in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectEmailDomains the faro project email domains
-	 */
-	public static void cacheResult(
-		List<FaroProjectEmailDomain> faroProjectEmailDomains) {
-
-		getPersistence().cacheResult(faroProjectEmailDomains);
-	}
-
-	/**
 	 * Creates a new faro project email domain with the primary key. Does not add the faro project email domain to the database.
 	 *
 	 * @param faroProjectEmailDomainId the primary key for the new faro project email domain
@@ -456,4 +452,4 @@ public class FaroProjectEmailDomainUtil {
 	private static volatile FaroProjectEmailDomainPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712401919
+// LIFERAY-SERVICE-BUILDER-HASH:-242820345

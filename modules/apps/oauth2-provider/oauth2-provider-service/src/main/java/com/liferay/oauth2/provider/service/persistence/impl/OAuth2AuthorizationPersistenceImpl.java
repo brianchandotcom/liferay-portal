@@ -32,11 +32,8 @@ import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -920,45 +917,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth2 authorization in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorization the o auth2 authorization
-	 */
-	@Override
-	public void cacheResult(OAuth2Authorization oAuth2Authorization) {
-		entityCache.putResult(
-			OAuth2AuthorizationImpl.class, oAuth2Authorization.getPrimaryKey(),
-			oAuth2Authorization);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth2 authorizations in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorizations the o auth2 authorizations
-	 */
-	@Override
-	public void cacheResult(List<OAuth2Authorization> oAuth2Authorizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuth2Authorizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
-			if (entityCache.getResult(
-					OAuth2AuthorizationImpl.class,
-					oAuth2Authorization.getPrimaryKey()) == null) {
-
-				cacheResult(oAuth2Authorization);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new o auth2 authorization with the primary key. Does not add the o auth2 authorization to the database.
 	 *
 	 * @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
@@ -1088,9 +1046,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuth2AuthorizationImpl.class, oAuth2AuthorizationModelImpl, false,
-			true);
+		cacheUniqueFindersResult(oAuth2Authorization, false);
 
 		if (isNew) {
 			oAuth2Authorization.setNew(false);
@@ -1500,9 +1456,6 @@ public class OAuth2AuthorizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		oAuth2AuthorizationToOAuth2ScopeGrantTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OA2Auths_OA2ScopeGrants#oAuth2AuthorizationId",
@@ -1767,4 +1720,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:250390509
+// LIFERAY-SERVICE-BUILDER-HASH:1717724663

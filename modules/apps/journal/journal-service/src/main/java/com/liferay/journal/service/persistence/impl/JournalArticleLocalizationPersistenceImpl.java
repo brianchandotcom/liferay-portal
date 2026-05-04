@@ -14,7 +14,6 @@ import com.liferay.journal.service.persistence.JournalArticleLocalizationPersist
 import com.liferay.journal.service.persistence.JournalArticleLocalizationUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -375,91 +371,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the journal article localization in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalization the journal article localization
-	 */
-	@Override
-	public void cacheResult(
-		JournalArticleLocalization journalArticleLocalization) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticleLocalization.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalArticleLocalizationImpl.class,
-				journalArticleLocalization.getPrimaryKey(),
-				journalArticleLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByC_A_L,
-				new Object[] {
-					journalArticleLocalization.getCompanyId(),
-					journalArticleLocalization.getArticlePK(),
-					journalArticleLocalization.getLanguageId()
-				},
-				journalArticleLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal article localizations in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalizations the journal article localizations
-	 */
-	@Override
-	public void cacheResult(
-		List<JournalArticleLocalization> journalArticleLocalizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalArticleLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalArticleLocalization journalArticleLocalization :
-				journalArticleLocalizations) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalArticleLocalization.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalArticleLocalizationImpl.class,
-						journalArticleLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(journalArticleLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalArticleLocalizationModelImpl
-			journalArticleLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticleLocalizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalArticleLocalizationModelImpl.getCompanyId(),
-				journalArticleLocalizationModelImpl.getArticlePK(),
-				journalArticleLocalizationModelImpl.getLanguageId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_A_L, args,
-				journalArticleLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal article localization with the primary key. Does not add the journal article localization to the database.
 	 *
 	 * @param articleLocalizationId the primary key for the new journal article localization
@@ -585,11 +496,7 @@ public class JournalArticleLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalArticleLocalizationImpl.class,
-			journalArticleLocalizationModelImpl, false, true);
-
-		cacheUniqueFindersCache(journalArticleLocalizationModelImpl);
+		cacheUniqueFindersResult(journalArticleLocalization, false);
 
 		if (isNew) {
 			journalArticleLocalization.setNew(false);
@@ -715,9 +622,6 @@ public class JournalArticleLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
 			new String[] {
@@ -753,13 +657,16 @@ public class JournalArticleLocalizationPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				JournalArticleLocalization::getArticlePK));
 
-		_finderPathFetchByC_A_L = new FinderPath(
+		_finderPathFetchByC_A_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_L",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "articlePK", "languageId"}, true);
+			new String[] {"companyId", "articlePK", "languageId"}, false,
+			JournalArticleLocalization::getCompanyId,
+			JournalArticleLocalization::getArticlePK,
+			JournalArticleLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByC_A_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A_L,
@@ -846,4 +753,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1755909163
+// LIFERAY-SERVICE-BUILDER-HASH:87563988

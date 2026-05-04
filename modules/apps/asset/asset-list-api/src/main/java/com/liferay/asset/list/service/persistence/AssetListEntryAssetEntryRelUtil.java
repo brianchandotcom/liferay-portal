@@ -36,6 +36,24 @@ public class AssetListEntryAssetEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
+
+		getPersistence().cacheResult(assetListEntryAssetEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
+
+		getPersistence().cacheResult(assetListEntryAssetEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1166,28 +1184,6 @@ public class AssetListEntryAssetEntryRelUtil {
 	}
 
 	/**
-	 * Caches the asset list entry asset entry rel in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryAssetEntryRel the asset list entry asset entry rel
-	 */
-	public static void cacheResult(
-		AssetListEntryAssetEntryRel assetListEntryAssetEntryRel) {
-
-		getPersistence().cacheResult(assetListEntryAssetEntryRel);
-	}
-
-	/**
-	 * Caches the asset list entry asset entry rels in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryAssetEntryRels the asset list entry asset entry rels
-	 */
-	public static void cacheResult(
-		List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
-
-		getPersistence().cacheResult(assetListEntryAssetEntryRels);
-	}
-
-	/**
 	 * Creates a new asset list entry asset entry rel with the primary key. Does not add the asset list entry asset entry rel to the database.
 	 *
 	 * @param assetListEntryAssetEntryRelId the primary key for the new asset list entry asset entry rel
@@ -1261,4 +1257,4 @@ public class AssetListEntryAssetEntryRelUtil {
 	private static volatile AssetListEntryAssetEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1028745888
+// LIFERAY-SERVICE-BUILDER-HASH:-1785530120

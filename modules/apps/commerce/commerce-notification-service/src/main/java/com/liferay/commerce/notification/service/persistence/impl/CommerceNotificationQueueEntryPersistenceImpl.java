@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -910,52 +907,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntry the commerce notification queue entry
-	 */
-	@Override
-	public void cacheResult(
-		CommerceNotificationQueueEntry commerceNotificationQueueEntry) {
-
-		entityCache.putResult(
-			CommerceNotificationQueueEntryImpl.class,
-			commerceNotificationQueueEntry.getPrimaryKey(),
-			commerceNotificationQueueEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationQueueEntries the commerce notification queue entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceNotificationQueueEntry> commerceNotificationQueueEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceNotificationQueueEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceNotificationQueueEntry commerceNotificationQueueEntry :
-				commerceNotificationQueueEntries) {
-
-			if (entityCache.getResult(
-					CommerceNotificationQueueEntryImpl.class,
-					commerceNotificationQueueEntry.getPrimaryKey()) == null) {
-
-				cacheResult(commerceNotificationQueueEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce notification queue entry with the primary key. Does not add the commerce notification queue entry to the database.
 	 *
 	 * @param commerceNotificationQueueEntryId the primary key for the new commerce notification queue entry
@@ -1105,9 +1056,7 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceNotificationQueueEntryImpl.class,
-			commerceNotificationQueueEntryModelImpl, false, true);
+		cacheUniqueFindersResult(commerceNotificationQueueEntry, false);
 
 		if (isNew) {
 			commerceNotificationQueueEntry.setNew(false);
@@ -1177,9 +1126,6 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1432,4 +1378,4 @@ public class CommerceNotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:141674705
+// LIFERAY-SERVICE-BUILDER-HASH:-1894872218

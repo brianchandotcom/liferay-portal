@@ -14,7 +14,6 @@ import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinPers
 import com.liferay.commerce.shop.by.diagram.service.persistence.CSDiagramPinUtil;
 import com.liferay.commerce.shop.by.diagram.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -256,54 +252,6 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 	/**
-	 * Caches the cs diagram pin in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPin the cs diagram pin
-	 */
-	@Override
-	public void cacheResult(CSDiagramPin csDiagramPin) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					csDiagramPin.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CSDiagramPinImpl.class, csDiagramPin.getPrimaryKey(),
-				csDiagramPin);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cs diagram pins in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPins the cs diagram pins
-	 */
-	@Override
-	public void cacheResult(List<CSDiagramPin> csDiagramPins) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (csDiagramPins.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CSDiagramPin csDiagramPin : csDiagramPins) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						csDiagramPin.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CSDiagramPinImpl.class, csDiagramPin.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(csDiagramPin);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new cs diagram pin with the primary key. Does not add the cs diagram pin to the database.
 	 *
 	 * @param CSDiagramPinId the primary key for the new cs diagram pin
@@ -440,8 +388,7 @@ public class CSDiagramPinPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CSDiagramPinImpl.class, csDiagramPinModelImpl, false, true);
+		cacheUniqueFindersResult(csDiagramPin, false);
 
 		if (isNew) {
 			csDiagramPin.setNew(false);
@@ -567,9 +514,6 @@ public class CSDiagramPinPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -668,4 +612,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-972587980
+// LIFERAY-SERVICE-BUILDER-HASH:186636274

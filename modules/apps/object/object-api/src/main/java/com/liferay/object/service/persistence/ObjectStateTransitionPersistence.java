@@ -555,21 +555,6 @@ public interface ObjectStateTransitionPersistence
 	public int countByTargetObjectStateId(long targetObjectStateId);
 
 	/**
-	 * Caches the object state transition in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransition the object state transition
-	 */
-	public void cacheResult(ObjectStateTransition objectStateTransition);
-
-	/**
-	 * Caches the object state transitions in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransitions the object state transitions
-	 */
-	public void cacheResult(
-		java.util.List<ObjectStateTransition> objectStateTransitions);
-
-	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
 	 * @param objectStateTransitionId the primary key for the new object state transition
@@ -610,4 +595,4 @@ public interface ObjectStateTransitionPersistence
 		long objectStateTransitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-187878643
+// LIFERAY-SERVICE-BUILDER-HASH:1067976805

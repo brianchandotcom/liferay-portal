@@ -36,6 +36,24 @@ public class MFAFIDO2CredentialEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<MFAFIDO2CredentialEntry> mfaFIDO2CredentialEntries) {
+
+		getPersistence().cacheResult(mfaFIDO2CredentialEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
+
+		getPersistence().cacheResult(mfaFIDO2CredentialEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -435,28 +453,6 @@ public class MFAFIDO2CredentialEntryUtil {
 	}
 
 	/**
-	 * Caches the mfafido2 credential entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntry the mfafido2 credential entry
-	 */
-	public static void cacheResult(
-		MFAFIDO2CredentialEntry mfaFIDO2CredentialEntry) {
-
-		getPersistence().cacheResult(mfaFIDO2CredentialEntry);
-	}
-
-	/**
-	 * Caches the mfafido2 credential entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaFIDO2CredentialEntries the mfafido2 credential entries
-	 */
-	public static void cacheResult(
-		List<MFAFIDO2CredentialEntry> mfaFIDO2CredentialEntries) {
-
-		getPersistence().cacheResult(mfaFIDO2CredentialEntries);
-	}
-
-	/**
 	 * Creates a new mfafido2 credential entry with the primary key. Does not add the mfafido2 credential entry to the database.
 	 *
 	 * @param mfaFIDO2CredentialEntryId the primary key for the new mfafido2 credential entry
@@ -528,4 +524,4 @@ public class MFAFIDO2CredentialEntryUtil {
 	private static volatile MFAFIDO2CredentialEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:807639956
+// LIFERAY-SERVICE-BUILDER-HASH:-1431876683

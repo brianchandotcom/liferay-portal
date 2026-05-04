@@ -7,7 +7,6 @@ package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1271,114 +1267,6 @@ public class SegmentsExperimentPersistenceImpl
 	}
 
 	/**
-	 * Caches the segments experiment in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiment the segments experiment
-	 */
-	@Override
-	public void cacheResult(SegmentsExperiment segmentsExperiment) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperiment.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SegmentsExperimentImpl.class,
-				segmentsExperiment.getPrimaryKey(), segmentsExperiment);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					segmentsExperiment.getUuid(),
-					segmentsExperiment.getGroupId()
-				},
-				segmentsExperiment);
-
-			finderCache.putResult(
-				_finderPathFetchByG_S,
-				new Object[] {
-					segmentsExperiment.getGroupId(),
-					segmentsExperiment.getSegmentsExperimentKey()
-				},
-				segmentsExperiment);
-
-			finderCache.putResult(
-				_finderPathFetchByG_S_P,
-				new Object[] {
-					segmentsExperiment.getGroupId(),
-					segmentsExperiment.getSegmentsExperienceId(),
-					segmentsExperiment.getPlid()
-				},
-				segmentsExperiment);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the segments experiments in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiments the segments experiments
-	 */
-	@Override
-	public void cacheResult(List<SegmentsExperiment> segmentsExperiments) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (segmentsExperiments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SegmentsExperiment segmentsExperiment : segmentsExperiments) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						segmentsExperiment.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SegmentsExperimentImpl.class,
-						segmentsExperiment.getPrimaryKey()) == null) {
-
-					cacheResult(segmentsExperiment);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SegmentsExperimentModelImpl segmentsExperimentModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperimentModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				segmentsExperimentModelImpl.getUuid(),
-				segmentsExperimentModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, segmentsExperimentModelImpl);
-
-			args = new Object[] {
-				segmentsExperimentModelImpl.getGroupId(),
-				segmentsExperimentModelImpl.getSegmentsExperimentKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_S, args, segmentsExperimentModelImpl);
-
-			args = new Object[] {
-				segmentsExperimentModelImpl.getGroupId(),
-				segmentsExperimentModelImpl.getSegmentsExperienceId(),
-				segmentsExperimentModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_S_P, args, segmentsExperimentModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new segments experiment with the primary key. Does not add the segments experiment to the database.
 	 *
 	 * @param segmentsExperimentId the primary key for the new segments experiment
@@ -1532,11 +1420,7 @@ public class SegmentsExperimentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SegmentsExperimentImpl.class, segmentsExperimentModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(segmentsExperimentModelImpl);
+		cacheUniqueFindersResult(segmentsExperiment, false);
 
 		if (isNew) {
 			segmentsExperiment.setNew(false);
@@ -1682,9 +1566,6 @@ public class SegmentsExperimentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1713,10 +1594,11 @@ public class SegmentsExperimentPersistenceImpl
 				"segmentsExperiment.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, SegmentsExperiment::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			SegmentsExperiment::getUuid, SegmentsExperiment::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1825,10 +1707,12 @@ public class SegmentsExperimentPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperiment::getSegmentsExperimentKey));
 
-		_finderPathFetchByG_S = new FinderPath(
+		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "segmentsExperimentKey"}, true);
+			new String[] {"groupId", "segmentsExperimentKey"}, false,
+			SegmentsExperiment::getGroupId,
+			SegmentsExperiment::getSegmentsExperimentKey);
 
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_S, _SQL_SELECT_SEGMENTSEXPERIMENT_WHERE,
@@ -1840,12 +1724,15 @@ public class SegmentsExperimentPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				SegmentsExperiment::getSegmentsExperimentKey));
 
-		_finderPathFetchByG_S_P = new FinderPath(
+		_finderPathFetchByG_S_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "segmentsExperienceId", "plid"}, true);
+			new String[] {"groupId", "segmentsExperienceId", "plid"}, false,
+			SegmentsExperiment::getGroupId,
+			SegmentsExperiment::getSegmentsExperienceId,
+			SegmentsExperiment::getPlid);
 
 		_uniquePersistenceFinderByG_S_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_S_P, _SQL_SELECT_SEGMENTSEXPERIMENT_WHERE,
@@ -1955,4 +1842,4 @@ public class SegmentsExperimentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:764331021
+// LIFERAY-SERVICE-BUILDER-HASH:843230815

@@ -36,6 +36,22 @@ public class CommerceDiscountRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountRel> commerceDiscountRels) {
+
+		getPersistence().cacheResult(commerceDiscountRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceDiscountRel commerceDiscountRel) {
+		getPersistence().cacheResult(commerceDiscountRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -667,26 +683,6 @@ public class CommerceDiscountRelUtil {
 	}
 
 	/**
-	 * Caches the commerce discount rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRel the commerce discount rel
-	 */
-	public static void cacheResult(CommerceDiscountRel commerceDiscountRel) {
-		getPersistence().cacheResult(commerceDiscountRel);
-	}
-
-	/**
-	 * Caches the commerce discount rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRels the commerce discount rels
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountRel> commerceDiscountRels) {
-
-		getPersistence().cacheResult(commerceDiscountRels);
-	}
-
-	/**
 	 * Creates a new commerce discount rel with the primary key. Does not add the commerce discount rel to the database.
 	 *
 	 * @param commerceDiscountRelId the primary key for the new commerce discount rel
@@ -756,4 +752,4 @@ public class CommerceDiscountRelUtil {
 	private static volatile CommerceDiscountRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1454688691
+// LIFERAY-SERVICE-BUILDER-HASH:-540798905

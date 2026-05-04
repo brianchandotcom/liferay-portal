@@ -36,6 +36,22 @@ public class ResourcePermissionUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ResourcePermission> resourcePermissions) {
+
+		getPersistence().cacheResult(resourcePermissions);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ResourcePermission resourcePermission) {
+		getPersistence().cacheResult(resourcePermission);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1914,26 +1930,6 @@ public class ResourcePermissionUtil {
 	}
 
 	/**
-	 * Caches the resource permission in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermission the resource permission
-	 */
-	public static void cacheResult(ResourcePermission resourcePermission) {
-		getPersistence().cacheResult(resourcePermission);
-	}
-
-	/**
-	 * Caches the resource permissions in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermissions the resource permissions
-	 */
-	public static void cacheResult(
-		List<ResourcePermission> resourcePermissions) {
-
-		getPersistence().cacheResult(resourcePermissions);
-	}
-
-	/**
 	 * Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	 *
 	 * @param resourcePermissionId the primary key for the new resource permission
@@ -2002,4 +1998,4 @@ public class ResourcePermissionUtil {
 	private static volatile ResourcePermissionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1905719650
+// LIFERAY-SERVICE-BUILDER-HASH:-603041304

@@ -36,6 +36,20 @@ public class SocialRelationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SocialRelation> socialRelations) {
+		getPersistence().cacheResult(socialRelations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SocialRelation socialRelation) {
+		getPersistence().cacheResult(socialRelation);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1438,24 +1452,6 @@ public class SocialRelationUtil {
 	}
 
 	/**
-	 * Caches the social relation in the entity cache if it is enabled.
-	 *
-	 * @param socialRelation the social relation
-	 */
-	public static void cacheResult(SocialRelation socialRelation) {
-		getPersistence().cacheResult(socialRelation);
-	}
-
-	/**
-	 * Caches the social relations in the entity cache if it is enabled.
-	 *
-	 * @param socialRelations the social relations
-	 */
-	public static void cacheResult(List<SocialRelation> socialRelations) {
-		getPersistence().cacheResult(socialRelations);
-	}
-
-	/**
 	 * Creates a new social relation with the primary key. Does not add the social relation to the database.
 	 *
 	 * @param relationId the primary key for the new social relation
@@ -1516,4 +1512,4 @@ public class SocialRelationUtil {
 	private static volatile SocialRelationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:769770485
+// LIFERAY-SERVICE-BUILDER-HASH:-1360834315

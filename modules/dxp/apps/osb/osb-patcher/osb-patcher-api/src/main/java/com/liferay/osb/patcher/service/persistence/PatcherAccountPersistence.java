@@ -394,20 +394,6 @@ public interface PatcherAccountPersistence
 	public int filterCountByC_LikeA(long companyId, String accountEntryCode);
 
 	/**
-	 * Caches the patcher account in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccount the patcher account
-	 */
-	public void cacheResult(PatcherAccount patcherAccount);
-
-	/**
-	 * Caches the patcher accounts in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccounts the patcher accounts
-	 */
-	public void cacheResult(java.util.List<PatcherAccount> patcherAccounts);
-
-	/**
 	 * Creates a new patcher account with the primary key. Does not add the patcher account to the database.
 	 *
 	 * @param patcherAccountId the primary key for the new patcher account
@@ -623,4 +609,4 @@ public interface PatcherAccountPersistence
 			patcherBuilds);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:774063126
+// LIFERAY-SERVICE-BUILDER-HASH:-1505964502

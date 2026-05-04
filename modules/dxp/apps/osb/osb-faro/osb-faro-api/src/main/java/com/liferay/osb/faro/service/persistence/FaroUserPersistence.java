@@ -818,20 +818,6 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	public int countByE_S(String emailAddress, int status);
 
 	/**
-	 * Caches the faro user in the entity cache if it is enabled.
-	 *
-	 * @param faroUser the faro user
-	 */
-	public void cacheResult(FaroUser faroUser);
-
-	/**
-	 * Caches the faro users in the entity cache if it is enabled.
-	 *
-	 * @param faroUsers the faro users
-	 */
-	public void cacheResult(java.util.List<FaroUser> faroUsers);
-
-	/**
 	 * Creates a new faro user with the primary key. Does not add the faro user to the database.
 	 *
 	 * @param faroUserId the primary key for the new faro user
@@ -869,4 +855,4 @@ public interface FaroUserPersistence extends BasePersistence<FaroUser> {
 	public FaroUser fetchByPrimaryKey(long faroUserId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:725409944
+// LIFERAY-SERVICE-BUILDER-HASH:-1784511290

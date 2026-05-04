@@ -36,6 +36,24 @@ public class WorkflowDefinitionLinkUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+
+		getPersistence().cacheResult(workflowDefinitionLinks);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		WorkflowDefinitionLink workflowDefinitionLink) {
+
+		getPersistence().cacheResult(workflowDefinitionLink);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1566,28 +1584,6 @@ public class WorkflowDefinitionLinkUtil {
 	}
 
 	/**
-	 * Caches the workflow definition link in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLink the workflow definition link
-	 */
-	public static void cacheResult(
-		WorkflowDefinitionLink workflowDefinitionLink) {
-
-		getPersistence().cacheResult(workflowDefinitionLink);
-	}
-
-	/**
-	 * Caches the workflow definition links in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLinks the workflow definition links
-	 */
-	public static void cacheResult(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
-
-		getPersistence().cacheResult(workflowDefinitionLinks);
-	}
-
-	/**
 	 * Creates a new workflow definition link with the primary key. Does not add the workflow definition link to the database.
 	 *
 	 * @param workflowDefinitionLinkId the primary key for the new workflow definition link
@@ -1657,4 +1653,4 @@ public class WorkflowDefinitionLinkUtil {
 	private static volatile WorkflowDefinitionLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-122439625
+// LIFERAY-SERVICE-BUILDER-HASH:39149457

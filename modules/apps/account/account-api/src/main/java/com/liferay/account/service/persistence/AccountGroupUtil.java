@@ -36,6 +36,20 @@ public class AccountGroupUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AccountGroup> accountGroups) {
+		getPersistence().cacheResult(accountGroups);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AccountGroup accountGroup) {
+		getPersistence().cacheResult(accountGroup);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1672,24 +1686,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Caches the account group in the entity cache if it is enabled.
-	 *
-	 * @param accountGroup the account group
-	 */
-	public static void cacheResult(AccountGroup accountGroup) {
-		getPersistence().cacheResult(accountGroup);
-	}
-
-	/**
-	 * Caches the account groups in the entity cache if it is enabled.
-	 *
-	 * @param accountGroups the account groups
-	 */
-	public static void cacheResult(List<AccountGroup> accountGroups) {
-		getPersistence().cacheResult(accountGroups);
-	}
-
-	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
 	 * @param accountGroupId the primary key for the new account group
@@ -1750,4 +1746,4 @@ public class AccountGroupUtil {
 	private static volatile AccountGroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:481106902
+// LIFERAY-SERVICE-BUILDER-HASH:592767630

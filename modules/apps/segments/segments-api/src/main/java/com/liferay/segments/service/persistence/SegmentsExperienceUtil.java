@@ -36,6 +36,22 @@ public class SegmentsExperienceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SegmentsExperience> segmentsExperiences) {
+
+		getPersistence().cacheResult(segmentsExperiences);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SegmentsExperience segmentsExperience) {
+		getPersistence().cacheResult(segmentsExperience);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3127,26 +3143,6 @@ public class SegmentsExperienceUtil {
 	}
 
 	/**
-	 * Caches the segments experience in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperience the segments experience
-	 */
-	public static void cacheResult(SegmentsExperience segmentsExperience) {
-		getPersistence().cacheResult(segmentsExperience);
-	}
-
-	/**
-	 * Caches the segments experiences in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiences the segments experiences
-	 */
-	public static void cacheResult(
-		List<SegmentsExperience> segmentsExperiences) {
-
-		getPersistence().cacheResult(segmentsExperiences);
-	}
-
-	/**
 	 * Creates a new segments experience with the primary key. Does not add the segments experience to the database.
 	 *
 	 * @param segmentsExperienceId the primary key for the new segments experience
@@ -3213,4 +3209,4 @@ public class SegmentsExperienceUtil {
 	private static volatile SegmentsExperiencePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-281124545
+// LIFERAY-SERVICE-BUILDER-HASH:-261612341

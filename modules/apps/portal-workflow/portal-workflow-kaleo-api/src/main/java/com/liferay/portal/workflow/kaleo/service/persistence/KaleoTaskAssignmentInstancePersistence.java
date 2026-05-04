@@ -895,23 +895,6 @@ public interface KaleoTaskAssignmentInstancePersistence
 	public int countByACN_ACPK(String assigneeClassName, long assigneeClassPK);
 
 	/**
-	 * Caches the kaleo task assignment instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
-	 */
-	public void cacheResult(
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance);
-
-	/**
-	 * Caches the kaleo task assignment instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstances the kaleo task assignment instances
-	 */
-	public void cacheResult(
-		java.util.List<KaleoTaskAssignmentInstance>
-			kaleoTaskAssignmentInstances);
-
-	/**
 	 * Creates a new kaleo task assignment instance with the primary key. Does not add the kaleo task assignment instance to the database.
 	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key for the new kaleo task assignment instance
@@ -955,4 +938,4 @@ public interface KaleoTaskAssignmentInstancePersistence
 		long kaleoTaskAssignmentInstanceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1998877563
+// LIFERAY-SERVICE-BUILDER-HASH:-1937577819

@@ -15,7 +15,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -35,10 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1337,72 +1333,6 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm storage link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLink the ddm storage link
-	 */
-	@Override
-	public void cacheResult(DDMStorageLink ddmStorageLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStorageLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMStorageLinkImpl.class, ddmStorageLink.getPrimaryKey(),
-				ddmStorageLink);
-
-			finderCache.putResult(
-				_finderPathFetchByClassPK,
-				new Object[] {ddmStorageLink.getClassPK()}, ddmStorageLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm storage links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLinks the ddm storage links
-	 */
-	@Override
-	public void cacheResult(List<DDMStorageLink> ddmStorageLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmStorageLinks.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMStorageLink ddmStorageLink : ddmStorageLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmStorageLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMStorageLinkImpl.class,
-						ddmStorageLink.getPrimaryKey()) == null) {
-
-					cacheResult(ddmStorageLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMStorageLinkModelImpl ddmStorageLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStorageLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {ddmStorageLinkModelImpl.getClassPK()};
-
-			finderCache.putResult(
-				_finderPathFetchByClassPK, args, ddmStorageLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm storage link with the primary key. Does not add the ddm storage link to the database.
 	 *
 	 * @param storageLinkId the primary key for the new ddm storage link
@@ -1526,10 +1456,7 @@ public class DDMStorageLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMStorageLinkImpl.class, ddmStorageLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmStorageLinkModelImpl);
+		cacheUniqueFindersResult(ddmStorageLink, false);
 
 		if (isNew) {
 			ddmStorageLink.setNew(false);
@@ -1656,9 +1583,6 @@ public class DDMStorageLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1719,10 +1643,10 @@ public class DDMStorageLinkPersistenceImpl
 					"ddmStorageLink.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStorageLink::getCompanyId));
 
-		_finderPathFetchByClassPK = new FinderPath(
+		_finderPathFetchByClassPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassPK",
 			new String[] {Long.class.getName()}, new String[] {"classPK"},
-			true);
+			false, DDMStorageLink::getClassPK);
 
 		_uniquePersistenceFinderByClassPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassPK, _SQL_SELECT_DDMSTORAGELINK_WHERE,
@@ -1854,4 +1778,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405548483
+// LIFERAY-SERVICE-BUILDER-HASH:1289220463

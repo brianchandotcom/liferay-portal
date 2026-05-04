@@ -638,21 +638,6 @@ public interface FriendlyURLEntryPersistence
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
 	/**
-	 * Caches the friendly url entry in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntry the friendly url entry
-	 */
-	public void cacheResult(FriendlyURLEntry friendlyURLEntry);
-
-	/**
-	 * Caches the friendly url entries in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntries the friendly url entries
-	 */
-	public void cacheResult(
-		java.util.List<FriendlyURLEntry> friendlyURLEntries);
-
-	/**
 	 * Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
 	 *
 	 * @param friendlyURLEntryId the primary key for the new friendly url entry
@@ -691,4 +676,4 @@ public interface FriendlyURLEntryPersistence
 	public FriendlyURLEntry fetchByPrimaryKey(long friendlyURLEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1824958025
+// LIFERAY-SERVICE-BUILDER-HASH:1490478375

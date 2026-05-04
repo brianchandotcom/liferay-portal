@@ -36,6 +36,20 @@ public class SocialRequestUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SocialRequest> socialRequests) {
+		getPersistence().cacheResult(socialRequests);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SocialRequest socialRequest) {
+		getPersistence().cacheResult(socialRequest);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1628,24 +1642,6 @@ public class SocialRequestUtil {
 	}
 
 	/**
-	 * Caches the social request in the entity cache if it is enabled.
-	 *
-	 * @param socialRequest the social request
-	 */
-	public static void cacheResult(SocialRequest socialRequest) {
-		getPersistence().cacheResult(socialRequest);
-	}
-
-	/**
-	 * Caches the social requests in the entity cache if it is enabled.
-	 *
-	 * @param socialRequests the social requests
-	 */
-	public static void cacheResult(List<SocialRequest> socialRequests) {
-		getPersistence().cacheResult(socialRequests);
-	}
-
-	/**
 	 * Creates a new social request with the primary key. Does not add the social request to the database.
 	 *
 	 * @param requestId the primary key for the new social request
@@ -1706,4 +1702,4 @@ public class SocialRequestUtil {
 	private static volatile SocialRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-957920843
+// LIFERAY-SERVICE-BUILDER-HASH:807592615

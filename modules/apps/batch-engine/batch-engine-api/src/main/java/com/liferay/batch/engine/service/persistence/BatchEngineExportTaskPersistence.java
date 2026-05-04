@@ -505,21 +505,6 @@ public interface BatchEngineExportTaskPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the batch engine export task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTask the batch engine export task
-	 */
-	public void cacheResult(BatchEngineExportTask batchEngineExportTask);
-
-	/**
-	 * Caches the batch engine export tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTasks the batch engine export tasks
-	 */
-	public void cacheResult(
-		java.util.List<BatchEngineExportTask> batchEngineExportTasks);
-
-	/**
 	 * Creates a new batch engine export task with the primary key. Does not add the batch engine export task to the database.
 	 *
 	 * @param batchEngineExportTaskId the primary key for the new batch engine export task
@@ -560,4 +545,4 @@ public interface BatchEngineExportTaskPersistence
 		long batchEngineExportTaskId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001863204
+// LIFERAY-SERVICE-BUILDER-HASH:261652384

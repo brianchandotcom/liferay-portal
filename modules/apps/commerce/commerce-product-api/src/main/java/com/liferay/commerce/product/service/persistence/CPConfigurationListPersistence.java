@@ -1381,21 +1381,6 @@ public interface CPConfigurationListPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp configuration list in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationList the cp configuration list
-	 */
-	public void cacheResult(CPConfigurationList cpConfigurationList);
-
-	/**
-	 * Caches the cp configuration lists in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationLists the cp configuration lists
-	 */
-	public void cacheResult(
-		java.util.List<CPConfigurationList> cpConfigurationLists);
-
-	/**
 	 * Creates a new cp configuration list with the primary key. Does not add the cp configuration list to the database.
 	 *
 	 * @param CPConfigurationListId the primary key for the new cp configuration list
@@ -1435,4 +1420,4 @@ public interface CPConfigurationListPersistence
 	public CPConfigurationList fetchByPrimaryKey(long CPConfigurationListId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818395693
+// LIFERAY-SERVICE-BUILDER-HASH:1968150539

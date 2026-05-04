@@ -912,4 +912,4 @@ public class CTRemoteModelImpl
 	private CTRemote _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2045900760
+// LIFERAY-SERVICE-BUILDER-HASH:713498640

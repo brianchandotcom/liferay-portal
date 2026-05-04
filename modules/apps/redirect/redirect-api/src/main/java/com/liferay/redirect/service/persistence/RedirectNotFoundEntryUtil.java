@@ -36,6 +36,24 @@ public class RedirectNotFoundEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RedirectNotFoundEntry> redirectNotFoundEntries) {
+
+		getPersistence().cacheResult(redirectNotFoundEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		RedirectNotFoundEntry redirectNotFoundEntry) {
+
+		getPersistence().cacheResult(redirectNotFoundEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -299,28 +317,6 @@ public class RedirectNotFoundEntryUtil {
 	}
 
 	/**
-	 * Caches the redirect not found entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntry the redirect not found entry
-	 */
-	public static void cacheResult(
-		RedirectNotFoundEntry redirectNotFoundEntry) {
-
-		getPersistence().cacheResult(redirectNotFoundEntry);
-	}
-
-	/**
-	 * Caches the redirect not found entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntries the redirect not found entries
-	 */
-	public static void cacheResult(
-		List<RedirectNotFoundEntry> redirectNotFoundEntries) {
-
-		getPersistence().cacheResult(redirectNotFoundEntries);
-	}
-
-	/**
 	 * Creates a new redirect not found entry with the primary key. Does not add the redirect not found entry to the database.
 	 *
 	 * @param redirectNotFoundEntryId the primary key for the new redirect not found entry
@@ -388,4 +384,4 @@ public class RedirectNotFoundEntryUtil {
 	private static volatile RedirectNotFoundEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1636700589
+// LIFERAY-SERVICE-BUILDER-HASH:170094886

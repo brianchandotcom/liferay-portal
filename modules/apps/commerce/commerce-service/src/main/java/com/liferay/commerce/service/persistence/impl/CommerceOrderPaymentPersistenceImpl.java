@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -240,47 +237,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce order payment in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayment the commerce order payment
-	 */
-	@Override
-	public void cacheResult(CommerceOrderPayment commerceOrderPayment) {
-		entityCache.putResult(
-			CommerceOrderPaymentImpl.class,
-			commerceOrderPayment.getPrimaryKey(), commerceOrderPayment);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce order payments in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayments the commerce order payments
-	 */
-	@Override
-	public void cacheResult(List<CommerceOrderPayment> commerceOrderPayments) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceOrderPayments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceOrderPayment commerceOrderPayment :
-				commerceOrderPayments) {
-
-			if (entityCache.getResult(
-					CommerceOrderPaymentImpl.class,
-					commerceOrderPayment.getPrimaryKey()) == null) {
-
-				cacheResult(commerceOrderPayment);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	 *
 	 * @param commerceOrderPaymentId the primary key for the new commerce order payment
@@ -417,9 +373,7 @@ public class CommerceOrderPaymentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceOrderPaymentImpl.class, commerceOrderPaymentModelImpl,
-			false, true);
+		cacheUniqueFindersResult(commerceOrderPayment, false);
 
 		if (isNew) {
 			commerceOrderPayment.setNew(false);
@@ -480,9 +434,6 @@ public class CommerceOrderPaymentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceOrderId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceOrderId",
 			new String[] {
@@ -581,4 +532,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1478269975
+// LIFERAY-SERVICE-BUILDER-HASH:1615248166

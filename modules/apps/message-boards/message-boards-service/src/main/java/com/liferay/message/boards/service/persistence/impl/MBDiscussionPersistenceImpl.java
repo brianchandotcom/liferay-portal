@@ -14,7 +14,6 @@ import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
 import com.liferay.message.boards.service.persistence.MBDiscussionUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -706,102 +702,6 @@ public class MBDiscussionPersistenceImpl
 	}
 
 	/**
-	 * Caches the message boards discussion in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussion the message boards discussion
-	 */
-	@Override
-	public void cacheResult(MBDiscussion mbDiscussion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbDiscussion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBDiscussionImpl.class, mbDiscussion.getPrimaryKey(),
-				mbDiscussion);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					mbDiscussion.getUuid(), mbDiscussion.getGroupId()
-				},
-				mbDiscussion);
-
-			finderCache.putResult(
-				_finderPathFetchByThreadId,
-				new Object[] {mbDiscussion.getThreadId()}, mbDiscussion);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					mbDiscussion.getClassNameId(), mbDiscussion.getClassPK()
-				},
-				mbDiscussion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message boards discussions in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussions the message boards discussions
-	 */
-	@Override
-	public void cacheResult(List<MBDiscussion> mbDiscussions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbDiscussions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBDiscussion mbDiscussion : mbDiscussions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbDiscussion.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBDiscussionImpl.class, mbDiscussion.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(mbDiscussion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MBDiscussionModelImpl mbDiscussionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbDiscussionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbDiscussionModelImpl.getUuid(),
-				mbDiscussionModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbDiscussionModelImpl);
-
-			args = new Object[] {mbDiscussionModelImpl.getThreadId()};
-
-			finderCache.putResult(
-				_finderPathFetchByThreadId, args, mbDiscussionModelImpl);
-
-			args = new Object[] {
-				mbDiscussionModelImpl.getClassNameId(),
-				mbDiscussionModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C, args, mbDiscussionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
 	 *
 	 * @param discussionId the primary key for the new message boards discussion
@@ -948,10 +848,7 @@ public class MBDiscussionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MBDiscussionImpl.class, mbDiscussionModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbDiscussionModelImpl);
+		cacheUniqueFindersResult(mbDiscussion, false);
 
 		if (isNew) {
 			mbDiscussion.setNew(false);
@@ -1090,9 +987,6 @@ public class MBDiscussionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1120,10 +1014,11 @@ public class MBDiscussionPersistenceImpl
 				"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBDiscussion::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBDiscussion::getUuid,
+			MBDiscussion::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBDISCUSSION_WHERE,
@@ -1167,10 +1062,10 @@ public class MBDiscussionPersistenceImpl
 					"mbDiscussion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBDiscussion::getCompanyId));
 
-		_finderPathFetchByThreadId = new FinderPath(
+		_finderPathFetchByThreadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByThreadId",
 			new String[] {Long.class.getName()}, new String[] {"threadId"},
-			true);
+			false, MBDiscussion::getThreadId);
 
 		_uniquePersistenceFinderByThreadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByThreadId, _SQL_SELECT_MBDISCUSSION_WHERE,
@@ -1178,10 +1073,11 @@ public class MBDiscussionPersistenceImpl
 				"mbDiscussion.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getThreadId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			MBDiscussion::getClassNameId, MBDiscussion::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_MBDISCUSSION_WHERE,
@@ -1264,4 +1160,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-546942775
+// LIFERAY-SERVICE-BUILDER-HASH:172148629

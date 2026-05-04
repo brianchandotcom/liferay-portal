@@ -36,6 +36,22 @@ public class CacheDisabledEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CacheDisabledEntry> cacheDisabledEntries) {
+
+		getPersistence().cacheResult(cacheDisabledEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CacheDisabledEntry cacheDisabledEntry) {
+		getPersistence().cacheResult(cacheDisabledEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -173,26 +189,6 @@ public class CacheDisabledEntryUtil {
 	}
 
 	/**
-	 * Caches the cache disabled entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntry the cache disabled entry
-	 */
-	public static void cacheResult(CacheDisabledEntry cacheDisabledEntry) {
-		getPersistence().cacheResult(cacheDisabledEntry);
-	}
-
-	/**
-	 * Caches the cache disabled entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheDisabledEntries the cache disabled entries
-	 */
-	public static void cacheResult(
-		List<CacheDisabledEntry> cacheDisabledEntries) {
-
-		getPersistence().cacheResult(cacheDisabledEntries);
-	}
-
-	/**
 	 * Creates a new cache disabled entry with the primary key. Does not add the cache disabled entry to the database.
 	 *
 	 * @param cacheDisabledEntryId the primary key for the new cache disabled entry
@@ -261,4 +257,4 @@ public class CacheDisabledEntryUtil {
 	private static volatile CacheDisabledEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1939556419
+// LIFERAY-SERVICE-BUILDER-HASH:690039406

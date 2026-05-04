@@ -36,6 +36,20 @@ public class GroupUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Group> groups) {
+		getPersistence().cacheResult(groups);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Group group) {
+		getPersistence().cacheResult(group);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3637,24 +3651,6 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Caches the group in the entity cache if it is enabled.
-	 *
-	 * @param group the group
-	 */
-	public static void cacheResult(Group group) {
-		getPersistence().cacheResult(group);
-	}
-
-	/**
-	 * Caches the groups in the entity cache if it is enabled.
-	 *
-	 * @param groups the groups
-	 */
-	public static void cacheResult(List<Group> groups) {
-		getPersistence().cacheResult(groups);
-	}
-
-	/**
 	 * Creates a new group with the primary key. Does not add the group to the database.
 	 *
 	 * @param groupId the primary key for the new group
@@ -4577,4 +4573,4 @@ public class GroupUtil {
 	private static volatile GroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1052195799
+// LIFERAY-SERVICE-BUILDER-HASH:-2010909021

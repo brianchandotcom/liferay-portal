@@ -7,7 +7,6 @@ package com.liferay.portlet.ratings.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1416,80 +1412,6 @@ public class RatingsEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the ratings entry in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntry the ratings entry
-	 */
-	@Override
-	public void cacheResult(RatingsEntry ratingsEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ratingsEntry.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RatingsEntryImpl.class, ratingsEntry.getPrimaryKey(),
-				ratingsEntry);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_C_C,
-				new Object[] {
-					ratingsEntry.getUserId(), ratingsEntry.getClassNameId(),
-					ratingsEntry.getClassPK()
-				},
-				ratingsEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ratings entries in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntries the ratings entries
-	 */
-	@Override
-	public void cacheResult(List<RatingsEntry> ratingsEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ratingsEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RatingsEntry ratingsEntry : ratingsEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ratingsEntry.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RatingsEntryImpl.class, ratingsEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ratingsEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RatingsEntryModelImpl ratingsEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ratingsEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ratingsEntryModelImpl.getUserId(),
-				ratingsEntryModelImpl.getClassNameId(),
-				ratingsEntryModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_C_C, args, ratingsEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
 	 *
 	 * @param entryId the primary key for the new ratings entry
@@ -1634,10 +1556,7 @@ public class RatingsEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RatingsEntryImpl.class, ratingsEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ratingsEntryModelImpl);
+		cacheUniqueFindersResult(ratingsEntry, false);
 
 		if (isNew) {
 			ratingsEntry.setNew(false);
@@ -1770,9 +1689,6 @@ public class RatingsEntryPersistenceImpl
 	 * Initializes the ratings entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1880,12 +1796,14 @@ public class RatingsEntryPersistenceImpl
 			},
 			new String[] {"userId", "classNameId", "classPK"}, true);
 
-		_finderPathFetchByU_C_C = new FinderPath(
+		_finderPathFetchByU_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"userId", "classNameId", "classPK"}, true);
+			new String[] {"userId", "classNameId", "classPK"}, false,
+			RatingsEntry::getUserId, RatingsEntry::getClassNameId,
+			RatingsEntry::getClassPK);
 
 		_finderPathCountByU_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_C",
@@ -1977,4 +1895,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:982139234
+// LIFERAY-SERVICE-BUILDER-HASH:847523096

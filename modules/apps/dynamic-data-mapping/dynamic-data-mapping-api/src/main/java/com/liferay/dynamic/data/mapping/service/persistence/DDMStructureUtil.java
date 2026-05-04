@@ -36,6 +36,20 @@ public class DDMStructureUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMStructure> ddmStructures) {
+		getPersistence().cacheResult(ddmStructures);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMStructure ddmStructure) {
+		getPersistence().cacheResult(ddmStructure);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2514,24 +2528,6 @@ public class DDMStructureUtil {
 	}
 
 	/**
-	 * Caches the ddm structure in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructure the ddm structure
-	 */
-	public static void cacheResult(DDMStructure ddmStructure) {
-		getPersistence().cacheResult(ddmStructure);
-	}
-
-	/**
-	 * Caches the ddm structures in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructures the ddm structures
-	 */
-	public static void cacheResult(List<DDMStructure> ddmStructures) {
-		getPersistence().cacheResult(ddmStructures);
-	}
-
-	/**
 	 * Creates a new ddm structure with the primary key. Does not add the ddm structure to the database.
 	 *
 	 * @param structureId the primary key for the new ddm structure
@@ -2594,4 +2590,4 @@ public class DDMStructureUtil {
 	private static volatile DDMStructurePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607927111
+// LIFERAY-SERVICE-BUILDER-HASH:-1737629917

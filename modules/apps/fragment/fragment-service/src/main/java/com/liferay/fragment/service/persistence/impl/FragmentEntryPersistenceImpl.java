@@ -15,7 +15,6 @@ import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -5055,123 +5052,6 @@ public class FragmentEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the fragment entry in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntry the fragment entry
-	 */
-	@Override
-	public void cacheResult(FragmentEntry fragmentEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FragmentEntryImpl.class, fragmentEntry.getPrimaryKey(),
-				fragmentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Head,
-				new Object[] {
-					fragmentEntry.getUuid(), fragmentEntry.getGroupId(),
-					fragmentEntry.isHead()
-				},
-				fragmentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_FEK_Head,
-				new Object[] {
-					fragmentEntry.getGroupId(),
-					fragmentEntry.getFragmentEntryKey(), fragmentEntry.isHead()
-				},
-				fragmentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_Head,
-				new Object[] {
-					fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getGroupId(), fragmentEntry.isHead()
-				},
-				fragmentEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByHeadId,
-				new Object[] {fragmentEntry.getHeadId()}, fragmentEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the fragment entries in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntries the fragment entries
-	 */
-	@Override
-	public void cacheResult(List<FragmentEntry> fragmentEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (fragmentEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						fragmentEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FragmentEntryImpl.class,
-						fragmentEntry.getPrimaryKey()) == null) {
-
-					cacheResult(fragmentEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FragmentEntryModelImpl fragmentEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				fragmentEntryModelImpl.getUuid(),
-				fragmentEntryModelImpl.getGroupId(),
-				fragmentEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Head, args, fragmentEntryModelImpl);
-
-			args = new Object[] {
-				fragmentEntryModelImpl.getGroupId(),
-				fragmentEntryModelImpl.getFragmentEntryKey(),
-				fragmentEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_FEK_Head, args, fragmentEntryModelImpl);
-
-			args = new Object[] {
-				fragmentEntryModelImpl.getExternalReferenceCode(),
-				fragmentEntryModelImpl.getGroupId(),
-				fragmentEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_Head, args, fragmentEntryModelImpl);
-
-			args = new Object[] {fragmentEntryModelImpl.getHeadId()};
-
-			finderCache.putResult(
-				_finderPathFetchByHeadId, args, fragmentEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
 	 *
 	 * @param fragmentEntryId the primary key for the new fragment entry
@@ -5381,10 +5261,7 @@ public class FragmentEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FragmentEntryImpl.class, fragmentEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(fragmentEntryModelImpl);
+		cacheUniqueFindersResult(fragmentEntry, false);
 
 		if (isNew) {
 			fragmentEntry.setNew(false);
@@ -5545,9 +5422,6 @@ public class FragmentEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -5641,13 +5515,15 @@ public class FragmentEntryPersistenceImpl
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = new FinderPath(
+		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "head"}, true);
+			new String[] {"uuid_", "groupId", "head"}, false,
+			FragmentEntry::getUuid, FragmentEntry::getGroupId,
+			FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
@@ -6035,13 +5911,15 @@ public class FragmentEntryPersistenceImpl
 				"fragmentEntry.", "fragmentEntryKey", FinderColumn.Type.STRING,
 				"=", true, true, FragmentEntry::getFragmentEntryKey));
 
-		_finderPathFetchByG_FEK_Head = new FinderPath(
+		_finderPathFetchByG_FEK_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_FEK_Head",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"groupId", "fragmentEntryKey", "head"}, true);
+			new String[] {"groupId", "fragmentEntryKey", "head"}, false,
+			FragmentEntry::getGroupId, FragmentEntry::getFragmentEntryKey,
+			FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByG_FEK_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_FEK_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
@@ -6546,13 +6424,15 @@ public class FragmentEntryPersistenceImpl
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntry::getGroupId));
 
-		_finderPathFetchByERC_G_Head = new FinderPath(
+		_finderPathFetchByERC_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, true);
+			new String[] {"externalReferenceCode", "groupId", "head"}, false,
+			FragmentEntry::getExternalReferenceCode, FragmentEntry::getGroupId,
+			FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
@@ -6567,9 +6447,10 @@ public class FragmentEntryPersistenceImpl
 				"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, FragmentEntry::isHead));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			FragmentEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_FRAGMENTENTRY_WHERE,
@@ -6649,4 +6530,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1012972025
+// LIFERAY-SERVICE-BUILDER-HASH:1294993658

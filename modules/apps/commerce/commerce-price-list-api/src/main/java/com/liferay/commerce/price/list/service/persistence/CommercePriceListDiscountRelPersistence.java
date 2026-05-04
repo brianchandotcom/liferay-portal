@@ -408,23 +408,6 @@ public interface CommercePriceListDiscountRelPersistence
 		long commerceDiscountId, long commercePriceListId);
 
 	/**
-	 * Caches the commerce price list discount rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListDiscountRel the commerce price list discount rel
-	 */
-	public void cacheResult(
-		CommercePriceListDiscountRel commercePriceListDiscountRel);
-
-	/**
-	 * Caches the commerce price list discount rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListDiscountRels the commerce price list discount rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceListDiscountRel>
-			commercePriceListDiscountRels);
-
-	/**
 	 * Creates a new commerce price list discount rel with the primary key. Does not add the commerce price list discount rel to the database.
 	 *
 	 * @param commercePriceListDiscountRelId the primary key for the new commerce price list discount rel
@@ -468,4 +451,4 @@ public interface CommercePriceListDiscountRelPersistence
 		long commercePriceListDiscountRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-986663627
+// LIFERAY-SERVICE-BUILDER-HASH:-1426932707

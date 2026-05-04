@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -868,49 +865,6 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the object state transition in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransition the object state transition
-	 */
-	@Override
-	public void cacheResult(ObjectStateTransition objectStateTransition) {
-		entityCache.putResult(
-			ObjectStateTransitionImpl.class,
-			objectStateTransition.getPrimaryKey(), objectStateTransition);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object state transitions in the entity cache if it is enabled.
-	 *
-	 * @param objectStateTransitions the object state transitions
-	 */
-	@Override
-	public void cacheResult(
-		List<ObjectStateTransition> objectStateTransitions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectStateTransitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectStateTransition objectStateTransition :
-				objectStateTransitions) {
-
-			if (entityCache.getResult(
-					ObjectStateTransitionImpl.class,
-					objectStateTransition.getPrimaryKey()) == null) {
-
-				cacheResult(objectStateTransition);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object state transition with the primary key. Does not add the object state transition to the database.
 	 *
 	 * @param objectStateTransitionId the primary key for the new object state transition
@@ -1059,9 +1013,7 @@ public class ObjectStateTransitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectStateTransitionImpl.class, objectStateTransitionModelImpl,
-			false, true);
+		cacheUniqueFindersResult(objectStateTransition, false);
 
 		if (isNew) {
 			objectStateTransition.setNew(false);
@@ -1129,9 +1081,6 @@ public class ObjectStateTransitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1361,4 +1310,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1648834097
+// LIFERAY-SERVICE-BUILDER-HASH:-612450510

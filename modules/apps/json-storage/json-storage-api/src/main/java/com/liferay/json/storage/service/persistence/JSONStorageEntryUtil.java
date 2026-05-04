@@ -36,6 +36,20 @@ public class JSONStorageEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<JSONStorageEntry> jsonStorageEntries) {
+		getPersistence().cacheResult(jsonStorageEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(JSONStorageEntry jsonStorageEntry) {
+		getPersistence().cacheResult(jsonStorageEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -690,24 +704,6 @@ public class JSONStorageEntryUtil {
 	}
 
 	/**
-	 * Caches the json storage entry in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntry the json storage entry
-	 */
-	public static void cacheResult(JSONStorageEntry jsonStorageEntry) {
-		getPersistence().cacheResult(jsonStorageEntry);
-	}
-
-	/**
-	 * Caches the json storage entries in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntries the json storage entries
-	 */
-	public static void cacheResult(List<JSONStorageEntry> jsonStorageEntries) {
-		getPersistence().cacheResult(jsonStorageEntries);
-	}
-
-	/**
 	 * Creates a new json storage entry with the primary key. Does not add the json storage entry to the database.
 	 *
 	 * @param jsonStorageEntryId the primary key for the new json storage entry
@@ -772,4 +768,4 @@ public class JSONStorageEntryUtil {
 	private static volatile JSONStorageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1229498637
+// LIFERAY-SERVICE-BUILDER-HASH:1176553842

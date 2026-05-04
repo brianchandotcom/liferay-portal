@@ -36,6 +36,22 @@ public class DDMStructureLayoutUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMStructureLayout> ddmStructureLayouts) {
+
+		getPersistence().cacheResult(ddmStructureLayouts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMStructureLayout ddmStructureLayout) {
+		getPersistence().cacheResult(ddmStructureLayout);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1116,26 +1132,6 @@ public class DDMStructureLayoutUtil {
 	}
 
 	/**
-	 * Caches the ddm structure layout in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLayout the ddm structure layout
-	 */
-	public static void cacheResult(DDMStructureLayout ddmStructureLayout) {
-		getPersistence().cacheResult(ddmStructureLayout);
-	}
-
-	/**
-	 * Caches the ddm structure layouts in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLayouts the ddm structure layouts
-	 */
-	public static void cacheResult(
-		List<DDMStructureLayout> ddmStructureLayouts) {
-
-		getPersistence().cacheResult(ddmStructureLayouts);
-	}
-
-	/**
 	 * Creates a new ddm structure layout with the primary key. Does not add the ddm structure layout to the database.
 	 *
 	 * @param structureLayoutId the primary key for the new ddm structure layout
@@ -1202,4 +1198,4 @@ public class DDMStructureLayoutUtil {
 	private static volatile DDMStructureLayoutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1231232606
+// LIFERAY-SERVICE-BUILDER-HASH:-1897645538

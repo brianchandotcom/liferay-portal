@@ -1246,4 +1246,4 @@ public class RegionModelImpl
 	private Region _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-169756687
+// LIFERAY-SERVICE-BUILDER-HASH:1678608119

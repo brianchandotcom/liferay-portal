@@ -36,6 +36,20 @@ public class ObjectFieldUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectField> objectFields) {
+		getPersistence().cacheResult(objectFields);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectField objectField) {
+		getPersistence().cacheResult(objectField);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2274,24 +2288,6 @@ public class ObjectFieldUtil {
 	}
 
 	/**
-	 * Caches the object field in the entity cache if it is enabled.
-	 *
-	 * @param objectField the object field
-	 */
-	public static void cacheResult(ObjectField objectField) {
-		getPersistence().cacheResult(objectField);
-	}
-
-	/**
-	 * Caches the object fields in the entity cache if it is enabled.
-	 *
-	 * @param objectFields the object fields
-	 */
-	public static void cacheResult(List<ObjectField> objectFields) {
-		getPersistence().cacheResult(objectFields);
-	}
-
-	/**
 	 * Creates a new object field with the primary key. Does not add the object field to the database.
 	 *
 	 * @param objectFieldId the primary key for the new object field
@@ -2352,4 +2348,4 @@ public class ObjectFieldUtil {
 	private static volatile ObjectFieldPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-514579219
+// LIFERAY-SERVICE-BUILDER-HASH:-1565878925

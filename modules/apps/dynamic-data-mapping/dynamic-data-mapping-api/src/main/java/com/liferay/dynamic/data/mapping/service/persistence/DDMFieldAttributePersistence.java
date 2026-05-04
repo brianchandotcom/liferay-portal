@@ -610,21 +610,6 @@ public interface DDMFieldAttributePersistence
 		long fieldId, String attributeName, String languageId);
 
 	/**
-	 * Caches the ddm field attribute in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttribute the ddm field attribute
-	 */
-	public void cacheResult(DDMFieldAttribute ddmFieldAttribute);
-
-	/**
-	 * Caches the ddm field attributes in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttributes the ddm field attributes
-	 */
-	public void cacheResult(
-		java.util.List<DDMFieldAttribute> ddmFieldAttributes);
-
-	/**
 	 * Creates a new ddm field attribute with the primary key. Does not add the ddm field attribute to the database.
 	 *
 	 * @param fieldAttributeId the primary key for the new ddm field attribute
@@ -663,4 +648,4 @@ public interface DDMFieldAttributePersistence
 	public DDMFieldAttribute fetchByPrimaryKey(long fieldAttributeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1997762812
+// LIFERAY-SERVICE-BUILDER-HASH:-1120051348

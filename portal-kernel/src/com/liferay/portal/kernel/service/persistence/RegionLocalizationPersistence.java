@@ -189,21 +189,6 @@ public interface RegionLocalizationPersistence
 	public int countByRegionId_LanguageId(long regionId, String languageId);
 
 	/**
-	 * Caches the region localization in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalization the region localization
-	 */
-	public void cacheResult(RegionLocalization regionLocalization);
-
-	/**
-	 * Caches the region localizations in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalizations the region localizations
-	 */
-	public void cacheResult(
-		java.util.List<RegionLocalization> regionLocalizations);
-
-	/**
 	 * Creates a new region localization with the primary key. Does not add the region localization to the database.
 	 *
 	 * @param regionLocalizationId the primary key for the new region localization
@@ -242,4 +227,4 @@ public interface RegionLocalizationPersistence
 	public RegionLocalization fetchByPrimaryKey(long regionLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802917448
+// LIFERAY-SERVICE-BUILDER-HASH:1209783080

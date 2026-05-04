@@ -618,20 +618,6 @@ public interface RatingsEntryPersistence
 	public int countByC_C_S(long classNameId, long classPK, double score);
 
 	/**
-	 * Caches the ratings entry in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntry the ratings entry
-	 */
-	public void cacheResult(RatingsEntry ratingsEntry);
-
-	/**
-	 * Caches the ratings entries in the entity cache if it is enabled.
-	 *
-	 * @param ratingsEntries the ratings entries
-	 */
-	public void cacheResult(java.util.List<RatingsEntry> ratingsEntries);
-
-	/**
 	 * Creates a new ratings entry with the primary key. Does not add the ratings entry to the database.
 	 *
 	 * @param entryId the primary key for the new ratings entry
@@ -669,4 +655,4 @@ public interface RatingsEntryPersistence
 	public RatingsEntry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:828475511
+// LIFERAY-SERVICE-BUILDER-HASH:-1445555295

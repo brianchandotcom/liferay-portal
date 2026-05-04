@@ -36,6 +36,20 @@ public class MBMailingListUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBMailingList> mbMailingLists) {
+		getPersistence().cacheResult(mbMailingLists);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBMailingList mbMailingList) {
+		getPersistence().cacheResult(mbMailingList);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -607,24 +621,6 @@ public class MBMailingListUtil {
 	}
 
 	/**
-	 * Caches the message boards mailing list in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 */
-	public static void cacheResult(MBMailingList mbMailingList) {
-		getPersistence().cacheResult(mbMailingList);
-	}
-
-	/**
-	 * Caches the message boards mailing lists in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingLists the message boards mailing lists
-	 */
-	public static void cacheResult(List<MBMailingList> mbMailingLists) {
-		getPersistence().cacheResult(mbMailingLists);
-	}
-
-	/**
 	 * Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	 *
 	 * @param mailingListId the primary key for the new message boards mailing list
@@ -685,4 +681,4 @@ public class MBMailingListUtil {
 	private static volatile MBMailingListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1637112372
+// LIFERAY-SERVICE-BUILDER-HASH:533304056

@@ -36,6 +36,20 @@ public class UserTrackerUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UserTracker> userTrackers) {
+		getPersistence().cacheResult(userTrackers);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UserTracker userTracker) {
+		getPersistence().cacheResult(userTracker);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -472,24 +486,6 @@ public class UserTrackerUtil {
 	}
 
 	/**
-	 * Caches the user tracker in the entity cache if it is enabled.
-	 *
-	 * @param userTracker the user tracker
-	 */
-	public static void cacheResult(UserTracker userTracker) {
-		getPersistence().cacheResult(userTracker);
-	}
-
-	/**
-	 * Caches the user trackers in the entity cache if it is enabled.
-	 *
-	 * @param userTrackers the user trackers
-	 */
-	public static void cacheResult(List<UserTracker> userTrackers) {
-		getPersistence().cacheResult(userTrackers);
-	}
-
-	/**
 	 * Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	 *
 	 * @param userTrackerId the primary key for the new user tracker
@@ -550,4 +546,4 @@ public class UserTrackerUtil {
 	private static volatile UserTrackerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2005369156
+// LIFERAY-SERVICE-BUILDER-HASH:-1240146912

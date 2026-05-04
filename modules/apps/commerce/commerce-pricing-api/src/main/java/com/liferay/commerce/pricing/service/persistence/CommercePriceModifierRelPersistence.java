@@ -423,21 +423,6 @@ public interface CommercePriceModifierRelPersistence
 		long commercePriceModifierId, long classNameId, long classPK);
 
 	/**
-	 * Caches the commerce price modifier rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifierRel the commerce price modifier rel
-	 */
-	public void cacheResult(CommercePriceModifierRel commercePriceModifierRel);
-
-	/**
-	 * Caches the commerce price modifier rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifierRels the commerce price modifier rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceModifierRel> commercePriceModifierRels);
-
-	/**
 	 * Creates a new commerce price modifier rel with the primary key. Does not add the commerce price modifier rel to the database.
 	 *
 	 * @param commercePriceModifierRelId the primary key for the new commerce price modifier rel
@@ -479,4 +464,4 @@ public interface CommercePriceModifierRelPersistence
 		long commercePriceModifierRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1785113232
+// LIFERAY-SERVICE-BUILDER-HASH:853106542

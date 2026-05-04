@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -817,74 +814,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRel the commerce discount order type rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel) {
-
-		entityCache.putResult(
-			CommerceDiscountOrderTypeRelImpl.class,
-			commerceDiscountOrderTypeRel.getPrimaryKey(),
-			commerceDiscountOrderTypeRel);
-
-		finderCache.putResult(
-			_finderPathFetchByCDI_COTI,
-			new Object[] {
-				commerceDiscountOrderTypeRel.getCommerceDiscountId(),
-				commerceDiscountOrderTypeRel.getCommerceOrderTypeId()
-			},
-			commerceDiscountOrderTypeRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountOrderTypeRels the commerce discount order type rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceDiscountOrderTypeRel> commerceDiscountOrderTypeRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountOrderTypeRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountOrderTypeRel commerceDiscountOrderTypeRel :
-				commerceDiscountOrderTypeRels) {
-
-			if (entityCache.getResult(
-					CommerceDiscountOrderTypeRelImpl.class,
-					commerceDiscountOrderTypeRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscountOrderTypeRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceDiscountOrderTypeRelModelImpl
-			commerceDiscountOrderTypeRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceDiscountOrderTypeRelModelImpl.getCommerceDiscountId(),
-			commerceDiscountOrderTypeRelModelImpl.getCommerceOrderTypeId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCDI_COTI, args,
-			commerceDiscountOrderTypeRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce discount order type rel with the primary key. Does not add the commerce discount order type rel to the database.
 	 *
 	 * @param commerceDiscountOrderTypeRelId the primary key for the new commerce discount order type rel
@@ -1044,11 +973,7 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountOrderTypeRelImpl.class,
-			commerceDiscountOrderTypeRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceDiscountOrderTypeRelModelImpl);
+		cacheUniqueFindersResult(commerceDiscountOrderTypeRel, false);
 
 		if (isNew) {
 			commerceDiscountOrderTypeRel.setNew(false);
@@ -1117,9 +1042,6 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1251,10 +1173,12 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountOrderTypeRel::getCommerceOrderTypeId));
 
-		_finderPathFetchByCDI_COTI = new FinderPath(
+		_finderPathFetchByCDI_COTI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_COTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commerceOrderTypeId"}, true);
+			new String[] {"commerceDiscountId", "commerceOrderTypeId"}, false,
+			CommerceDiscountOrderTypeRel::getCommerceDiscountId,
+			CommerceDiscountOrderTypeRel::getCommerceOrderTypeId);
 
 		_uniquePersistenceFinderByCDI_COTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_COTI,
@@ -1338,4 +1262,4 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:657702963
+// LIFERAY-SERVICE-BUILDER-HASH:231382165

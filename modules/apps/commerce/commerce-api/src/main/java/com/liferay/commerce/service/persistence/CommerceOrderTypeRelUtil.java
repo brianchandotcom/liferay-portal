@@ -36,6 +36,22 @@ public class CommerceOrderTypeRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceOrderTypeRel> commerceOrderTypeRels) {
+
+		getPersistence().cacheResult(commerceOrderTypeRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceOrderTypeRel commerceOrderTypeRel) {
+		getPersistence().cacheResult(commerceOrderTypeRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -778,26 +794,6 @@ public class CommerceOrderTypeRelUtil {
 	}
 
 	/**
-	 * Caches the commerce order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderTypeRel the commerce order type rel
-	 */
-	public static void cacheResult(CommerceOrderTypeRel commerceOrderTypeRel) {
-		getPersistence().cacheResult(commerceOrderTypeRel);
-	}
-
-	/**
-	 * Caches the commerce order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderTypeRels the commerce order type rels
-	 */
-	public static void cacheResult(
-		List<CommerceOrderTypeRel> commerceOrderTypeRels) {
-
-		getPersistence().cacheResult(commerceOrderTypeRels);
-	}
-
-	/**
 	 * Creates a new commerce order type rel with the primary key. Does not add the commerce order type rel to the database.
 	 *
 	 * @param commerceOrderTypeRelId the primary key for the new commerce order type rel
@@ -865,4 +861,4 @@ public class CommerceOrderTypeRelUtil {
 	private static volatile CommerceOrderTypeRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:588599411
+// LIFERAY-SERVICE-BUILDER-HASH:1452651663

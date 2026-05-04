@@ -15,7 +15,6 @@ import com.liferay.journal.service.persistence.JournalArticleUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -16852,131 +16849,6 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Caches the journal article in the entity cache if it is enabled.
-	 *
-	 * @param journalArticle the journal article
-	 */
-	@Override
-	public void cacheResult(JournalArticle journalArticle) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticle.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalArticleImpl.class, journalArticle.getPrimaryKey(),
-				journalArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					journalArticle.getUuid(), journalArticle.getGroupId()
-				},
-				journalArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V,
-				new Object[] {
-					journalArticle.getGroupId(),
-					journalArticle.getExternalReferenceCode(),
-					journalArticle.getVersion()
-				},
-				journalArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_DDMSI,
-				new Object[] {
-					journalArticle.getGroupId(),
-					journalArticle.getClassNameId(),
-					journalArticle.getDDMStructureId()
-				},
-				journalArticle);
-
-			finderCache.putResult(
-				_finderPathFetchByG_A_V,
-				new Object[] {
-					journalArticle.getGroupId(), journalArticle.getArticleId(),
-					journalArticle.getVersion()
-				},
-				journalArticle);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal articles in the entity cache if it is enabled.
-	 *
-	 * @param journalArticles the journal articles
-	 */
-	@Override
-	public void cacheResult(List<JournalArticle> journalArticles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalArticles.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalArticle journalArticle : journalArticles) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalArticle.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalArticleImpl.class,
-						journalArticle.getPrimaryKey()) == null) {
-
-					cacheResult(journalArticle);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalArticleModelImpl journalArticleModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticleModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalArticleModelImpl.getUuid(),
-				journalArticleModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, journalArticleModelImpl);
-
-			args = new Object[] {
-				journalArticleModelImpl.getGroupId(),
-				journalArticleModelImpl.getExternalReferenceCode(),
-				journalArticleModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V, args, journalArticleModelImpl);
-
-			args = new Object[] {
-				journalArticleModelImpl.getGroupId(),
-				journalArticleModelImpl.getClassNameId(),
-				journalArticleModelImpl.getDDMStructureId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_DDMSI, args, journalArticleModelImpl);
-
-			args = new Object[] {
-				journalArticleModelImpl.getGroupId(),
-				journalArticleModelImpl.getArticleId(),
-				journalArticleModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_A_V, args, journalArticleModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal article with the primary key. Does not add the journal article to the database.
 	 *
 	 * @param id the primary key for the new journal article
@@ -17162,10 +17034,7 @@ public class JournalArticlePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalArticleImpl.class, journalArticleModelImpl, false, true);
-
-		cacheUniqueFindersCache(journalArticleModelImpl);
+		cacheUniqueFindersResult(journalArticle, false);
 
 		if (isNew) {
 			journalArticle.setNew(false);
@@ -17328,9 +17197,6 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
 			new String[] {
@@ -17389,10 +17255,11 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalArticle::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, JournalArticle::getUuid,
+			JournalArticle::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALARTICLE_WHERE,
@@ -18134,13 +18001,16 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, JournalArticle::getClassNameId));
 
-		_finderPathFetchByG_ERC_V = new FinderPath(
+		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, true);
+			new String[] {"groupId", "externalReferenceCode", "version"}, false,
+			JournalArticle::getGroupId,
+			JournalArticle::getExternalReferenceCode,
+			JournalArticle::getVersion);
 
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_JOURNALARTICLE_WHERE,
@@ -18259,12 +18129,14 @@ public class JournalArticlePersistenceImpl
 				"journalArticle.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, JournalArticle::getClassPK));
 
-		_finderPathFetchByG_C_DDMSI = new FinderPath(
+		_finderPathFetchByG_C_DDMSI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_DDMSI",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "DDMStructureId"}, true);
+			new String[] {"groupId", "classNameId", "DDMStructureId"}, false,
+			JournalArticle::getGroupId, JournalArticle::getClassNameId,
+			JournalArticle::getDDMStructureId);
 
 		_uniquePersistenceFinderByG_C_DDMSI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_DDMSI, _SQL_SELECT_JOURNALARTICLE_WHERE,
@@ -18378,13 +18250,15 @@ public class JournalArticlePersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "layoutUuid"}, false);
 
-		_finderPathFetchByG_A_V = new FinderPath(
+		_finderPathFetchByG_A_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_A_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			},
-			new String[] {"groupId", "articleId", "version"}, true);
+			new String[] {"groupId", "articleId", "version"}, false,
+			JournalArticle::getGroupId, JournalArticle::getArticleId,
+			JournalArticle::getVersion);
 
 		_uniquePersistenceFinderByG_A_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_A_V, _SQL_SELECT_JOURNALARTICLE_WHERE,
@@ -18684,4 +18558,4 @@ public class JournalArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-365113722
+// LIFERAY-SERVICE-BUILDER-HASH:-1327366654

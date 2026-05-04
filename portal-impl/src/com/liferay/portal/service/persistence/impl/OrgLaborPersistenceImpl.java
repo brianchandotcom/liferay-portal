@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.OrgLaborUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.OrgLaborImpl;
 import com.liferay.portal.model.impl.OrgLaborModelImpl;
@@ -223,42 +220,6 @@ public class OrgLaborPersistenceImpl
 	}
 
 	/**
-	 * Caches the org labor in the entity cache if it is enabled.
-	 *
-	 * @param orgLabor the org labor
-	 */
-	@Override
-	public void cacheResult(OrgLabor orgLabor) {
-		EntityCacheUtil.putResult(
-			OrgLaborImpl.class, orgLabor.getPrimaryKey(), orgLabor);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the org labors in the entity cache if it is enabled.
-	 *
-	 * @param orgLabors the org labors
-	 */
-	@Override
-	public void cacheResult(List<OrgLabor> orgLabors) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (orgLabors.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OrgLabor orgLabor : orgLabors) {
-			if (EntityCacheUtil.getResult(
-					OrgLaborImpl.class, orgLabor.getPrimaryKey()) == null) {
-
-				cacheResult(orgLabor);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
 	 *
 	 * @param orgLaborId the primary key for the new org labor
@@ -359,8 +320,7 @@ public class OrgLaborPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			OrgLaborImpl.class, orgLaborModelImpl, false, true);
+		cacheUniqueFindersResult(orgLabor, false);
 
 		if (isNew) {
 			orgLabor.setNew(false);
@@ -420,9 +380,6 @@ public class OrgLaborPersistenceImpl
 	 * Initializes the org labor persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
 			new String[] {
@@ -485,4 +442,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:845719083
+// LIFERAY-SERVICE-BUILDER-HASH:-85303373

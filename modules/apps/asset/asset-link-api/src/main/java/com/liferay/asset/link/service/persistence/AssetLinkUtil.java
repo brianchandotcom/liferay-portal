@@ -36,6 +36,20 @@ public class AssetLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetLink> assetLinks) {
+		getPersistence().cacheResult(assetLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetLink assetLink) {
+		getPersistence().cacheResult(assetLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -818,24 +832,6 @@ public class AssetLinkUtil {
 	}
 
 	/**
-	 * Caches the asset link in the entity cache if it is enabled.
-	 *
-	 * @param assetLink the asset link
-	 */
-	public static void cacheResult(AssetLink assetLink) {
-		getPersistence().cacheResult(assetLink);
-	}
-
-	/**
-	 * Caches the asset links in the entity cache if it is enabled.
-	 *
-	 * @param assetLinks the asset links
-	 */
-	public static void cacheResult(List<AssetLink> assetLinks) {
-		getPersistence().cacheResult(assetLinks);
-	}
-
-	/**
 	 * Creates a new asset link with the primary key. Does not add the asset link to the database.
 	 *
 	 * @param linkId the primary key for the new asset link
@@ -896,4 +892,4 @@ public class AssetLinkUtil {
 	private static volatile AssetLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1126723446
+// LIFERAY-SERVICE-BUILDER-HASH:749886902

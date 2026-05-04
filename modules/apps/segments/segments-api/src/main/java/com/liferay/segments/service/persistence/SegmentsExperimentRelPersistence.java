@@ -295,21 +295,6 @@ public interface SegmentsExperimentRelPersistence
 	public int countByS_S(long segmentsExperimentId, long segmentsExperienceId);
 
 	/**
-	 * Caches the segments experiment rel in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperimentRel the segments experiment rel
-	 */
-	public void cacheResult(SegmentsExperimentRel segmentsExperimentRel);
-
-	/**
-	 * Caches the segments experiment rels in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperimentRels the segments experiment rels
-	 */
-	public void cacheResult(
-		java.util.List<SegmentsExperimentRel> segmentsExperimentRels);
-
-	/**
 	 * Creates a new segments experiment rel with the primary key. Does not add the segments experiment rel to the database.
 	 *
 	 * @param segmentsExperimentRelId the primary key for the new segments experiment rel
@@ -350,4 +335,4 @@ public interface SegmentsExperimentRelPersistence
 		long segmentsExperimentRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1324116995
+// LIFERAY-SERVICE-BUILDER-HASH:1059475925

@@ -1606,4 +1606,4 @@ public class CPConfigurationListModelImpl
 	private CPConfigurationList _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-174934333
+// LIFERAY-SERVICE-BUILDER-HASH:-796529493

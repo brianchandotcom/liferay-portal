@@ -509,21 +509,6 @@ public interface ChangesetCollectionPersistence
 	public int countByC_N(long companyId, String name);
 
 	/**
-	 * Caches the changeset collection in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollection the changeset collection
-	 */
-	public void cacheResult(ChangesetCollection changesetCollection);
-
-	/**
-	 * Caches the changeset collections in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollections the changeset collections
-	 */
-	public void cacheResult(
-		java.util.List<ChangesetCollection> changesetCollections);
-
-	/**
 	 * Creates a new changeset collection with the primary key. Does not add the changeset collection to the database.
 	 *
 	 * @param changesetCollectionId the primary key for the new changeset collection
@@ -563,4 +548,4 @@ public interface ChangesetCollectionPersistence
 	public ChangesetCollection fetchByPrimaryKey(long changesetCollectionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1142674755
+// LIFERAY-SERVICE-BUILDER-HASH:2120660567

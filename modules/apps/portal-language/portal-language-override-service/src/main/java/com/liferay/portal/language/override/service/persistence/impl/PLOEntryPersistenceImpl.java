@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.language.override.exception.NoSuchPLOEntryException;
@@ -657,61 +655,6 @@ public class PLOEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the plo entry in the entity cache if it is enabled.
-	 *
-	 * @param ploEntry the plo entry
-	 */
-	@Override
-	public void cacheResult(PLOEntry ploEntry) {
-		entityCache.putResult(
-			PLOEntryImpl.class, ploEntry.getPrimaryKey(), ploEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_K_L,
-			new Object[] {
-				ploEntry.getCompanyId(), ploEntry.getKey(),
-				ploEntry.getLanguageId()
-			},
-			ploEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the plo entries in the entity cache if it is enabled.
-	 *
-	 * @param ploEntries the plo entries
-	 */
-	@Override
-	public void cacheResult(List<PLOEntry> ploEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ploEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PLOEntry ploEntry : ploEntries) {
-			if (entityCache.getResult(
-					PLOEntryImpl.class, ploEntry.getPrimaryKey()) == null) {
-
-				cacheResult(ploEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PLOEntryModelImpl ploEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			ploEntryModelImpl.getCompanyId(), ploEntryModelImpl.getKey(),
-			ploEntryModelImpl.getLanguageId()
-		};
-
-		finderCache.putResult(_finderPathFetchByC_K_L, args, ploEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new plo entry with the primary key. Does not add the plo entry to the database.
 	 *
 	 * @param ploEntryId the primary key for the new plo entry
@@ -860,10 +803,7 @@ public class PLOEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PLOEntryImpl.class, ploEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(ploEntryModelImpl);
+		cacheUniqueFindersResult(ploEntry, false);
 
 		if (isNew) {
 			ploEntry.setNew(false);
@@ -929,9 +869,6 @@ public class PLOEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1023,13 +960,14 @@ public class PLOEntryPersistenceImpl
 				"ploEntry.", "languageId", FinderColumn.Type.STRING, "=", true,
 				true, PLOEntry::getLanguageId));
 
-		_finderPathFetchByC_K_L = new FinderPath(
+		_finderPathFetchByC_K_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K_L",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "key_", "languageId"}, true);
+			new String[] {"companyId", "key_", "languageId"}, false,
+			PLOEntry::getCompanyId, PLOEntry::getKey, PLOEntry::getLanguageId);
 
 		_uniquePersistenceFinderByC_K_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K_L, _SQL_SELECT_PLOENTRY_WHERE,
@@ -1112,4 +1050,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:816572082
+// LIFERAY-SERVICE-BUILDER-HASH:-1735432807

@@ -36,6 +36,20 @@ public class EntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Entry> entries) {
+		getPersistence().cacheResult(entries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Entry entry) {
+		getPersistence().cacheResult(entry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -107,24 +121,6 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Caches the entry in the entity cache if it is enabled.
-	 *
-	 * @param entry the entry
-	 */
-	public static void cacheResult(Entry entry) {
-		getPersistence().cacheResult(entry);
-	}
-
-	/**
-	 * Caches the entries in the entity cache if it is enabled.
-	 *
-	 * @param entries the entries
-	 */
-	public static void cacheResult(List<Entry> entries) {
-		getPersistence().cacheResult(entries);
-	}
-
-	/**
 	 * Creates a new entry with the primary key. Does not add the entry to the database.
 	 *
 	 * @param entryId the primary key for the new entry
@@ -187,4 +183,4 @@ public class EntryUtil {
 	private static volatile EntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-176143669
+// LIFERAY-SERVICE-BUILDER-HASH:-591407616

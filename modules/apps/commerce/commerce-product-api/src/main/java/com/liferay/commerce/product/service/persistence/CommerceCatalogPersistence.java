@@ -873,20 +873,6 @@ public interface CommerceCatalogPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce catalog in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalog the commerce catalog
-	 */
-	public void cacheResult(CommerceCatalog commerceCatalog);
-
-	/**
-	 * Caches the commerce catalogs in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalogs the commerce catalogs
-	 */
-	public void cacheResult(java.util.List<CommerceCatalog> commerceCatalogs);
-
-	/**
 	 * Creates a new commerce catalog with the primary key. Does not add the commerce catalog to the database.
 	 *
 	 * @param commerceCatalogId the primary key for the new commerce catalog
@@ -925,4 +911,4 @@ public interface CommerceCatalogPersistence
 	public CommerceCatalog fetchByPrimaryKey(long commerceCatalogId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1957709417
+// LIFERAY-SERVICE-BUILDER-HASH:-1267251671

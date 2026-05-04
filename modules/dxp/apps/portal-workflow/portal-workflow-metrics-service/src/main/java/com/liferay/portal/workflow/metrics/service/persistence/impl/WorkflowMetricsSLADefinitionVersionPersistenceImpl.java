@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -801,97 +798,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the workflow metrics sla definition version in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersion the workflow metrics sla definition version
-	 */
-	@Override
-	public void cacheResult(
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion) {
-
-		entityCache.putResult(
-			WorkflowMetricsSLADefinitionVersionImpl.class,
-			workflowMetricsSLADefinitionVersion.getPrimaryKey(),
-			workflowMetricsSLADefinitionVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				workflowMetricsSLADefinitionVersion.getUuid(),
-				workflowMetricsSLADefinitionVersion.getGroupId()
-			},
-			workflowMetricsSLADefinitionVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByV_WMSLAD,
-			new Object[] {
-				workflowMetricsSLADefinitionVersion.getVersion(),
-				workflowMetricsSLADefinitionVersion.
-					getWorkflowMetricsSLADefinitionId()
-			},
-			workflowMetricsSLADefinitionVersion);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the workflow metrics sla definition versions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersions the workflow metrics sla definition versions
-	 */
-	@Override
-	public void cacheResult(
-		List<WorkflowMetricsSLADefinitionVersion>
-			workflowMetricsSLADefinitionVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (workflowMetricsSLADefinitionVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WorkflowMetricsSLADefinitionVersion
-				workflowMetricsSLADefinitionVersion :
-					workflowMetricsSLADefinitionVersions) {
-
-			if (entityCache.getResult(
-					WorkflowMetricsSLADefinitionVersionImpl.class,
-					workflowMetricsSLADefinitionVersion.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(workflowMetricsSLADefinitionVersion);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WorkflowMetricsSLADefinitionVersionModelImpl
-			workflowMetricsSLADefinitionVersionModelImpl) {
-
-		Object[] args = new Object[] {
-			workflowMetricsSLADefinitionVersionModelImpl.getUuid(),
-			workflowMetricsSLADefinitionVersionModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			workflowMetricsSLADefinitionVersionModelImpl);
-
-		args = new Object[] {
-			workflowMetricsSLADefinitionVersionModelImpl.getVersion(),
-			workflowMetricsSLADefinitionVersionModelImpl.
-				getWorkflowMetricsSLADefinitionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByV_WMSLAD, args,
-			workflowMetricsSLADefinitionVersionModelImpl);
-	}
-
-	/**
 	 * Creates a new workflow metrics sla definition version with the primary key. Does not add the workflow metrics sla definition version to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionVersionId the primary key for the new workflow metrics sla definition version
@@ -1058,11 +964,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WorkflowMetricsSLADefinitionVersionImpl.class,
-			workflowMetricsSLADefinitionVersionModelImpl, false, true);
-
-		cacheUniqueFindersCache(workflowMetricsSLADefinitionVersionModelImpl);
+		cacheUniqueFindersResult(workflowMetricsSLADefinitionVersion, false);
 
 		if (isNew) {
 			workflowMetricsSLADefinitionVersion.setNew(false);
@@ -1133,9 +1035,6 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1166,10 +1065,12 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			WorkflowMetricsSLADefinitionVersion::getUuid,
+			WorkflowMetricsSLADefinitionVersion::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1260,10 +1161,13 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					WorkflowMetricsSLADefinitionVersion::
 						getWorkflowMetricsSLADefinitionId));
 
-		_finderPathFetchByV_WMSLAD = new FinderPath(
+		_finderPathFetchByV_WMSLAD = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByV_WMSLAD",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"version", "wmSLADefinitionId"}, true);
+			new String[] {"version", "wmSLADefinitionId"}, false,
+			WorkflowMetricsSLADefinitionVersion::getVersion,
+			WorkflowMetricsSLADefinitionVersion::
+				getWorkflowMetricsSLADefinitionId);
 
 		_uniquePersistenceFinderByV_WMSLAD = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByV_WMSLAD,
@@ -1355,4 +1259,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1922683831
+// LIFERAY-SERVICE-BUILDER-HASH:-1226328562

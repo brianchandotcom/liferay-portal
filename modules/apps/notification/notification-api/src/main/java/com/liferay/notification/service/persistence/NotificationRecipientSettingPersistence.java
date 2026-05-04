@@ -405,23 +405,6 @@ public interface NotificationRecipientSettingPersistence
 	public int countByNRI_N(long notificationRecipientId, String name);
 
 	/**
-	 * Caches the notification recipient setting in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipientSetting the notification recipient setting
-	 */
-	public void cacheResult(
-		NotificationRecipientSetting notificationRecipientSetting);
-
-	/**
-	 * Caches the notification recipient settings in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipientSettings the notification recipient settings
-	 */
-	public void cacheResult(
-		java.util.List<NotificationRecipientSetting>
-			notificationRecipientSettings);
-
-	/**
 	 * Creates a new notification recipient setting with the primary key. Does not add the notification recipient setting to the database.
 	 *
 	 * @param notificationRecipientSettingId the primary key for the new notification recipient setting
@@ -465,4 +448,4 @@ public interface NotificationRecipientSettingPersistence
 		long notificationRecipientSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1640121261
+// LIFERAY-SERVICE-BUILDER-HASH:-1473411111

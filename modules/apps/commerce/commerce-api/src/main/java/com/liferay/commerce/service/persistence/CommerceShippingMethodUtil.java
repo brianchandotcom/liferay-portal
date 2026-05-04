@@ -36,6 +36,24 @@ public class CommerceShippingMethodUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShippingMethod> commerceShippingMethods) {
+
+		getPersistence().cacheResult(commerceShippingMethods);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceShippingMethod commerceShippingMethod) {
+
+		getPersistence().cacheResult(commerceShippingMethod);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -438,28 +456,6 @@ public class CommerceShippingMethodUtil {
 	}
 
 	/**
-	 * Caches the commerce shipping method in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethod the commerce shipping method
-	 */
-	public static void cacheResult(
-		CommerceShippingMethod commerceShippingMethod) {
-
-		getPersistence().cacheResult(commerceShippingMethod);
-	}
-
-	/**
-	 * Caches the commerce shipping methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethods the commerce shipping methods
-	 */
-	public static void cacheResult(
-		List<CommerceShippingMethod> commerceShippingMethods) {
-
-		getPersistence().cacheResult(commerceShippingMethods);
-	}
-
-	/**
 	 * Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
 	 *
 	 * @param commerceShippingMethodId the primary key for the new commerce shipping method
@@ -527,4 +523,4 @@ public class CommerceShippingMethodUtil {
 	private static volatile CommerceShippingMethodPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1824165161
+// LIFERAY-SERVICE-BUILDER-HASH:-531361759

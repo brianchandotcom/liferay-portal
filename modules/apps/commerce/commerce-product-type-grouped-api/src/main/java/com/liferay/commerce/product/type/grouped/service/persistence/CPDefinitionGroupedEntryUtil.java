@@ -36,6 +36,24 @@ public class CPDefinitionGroupedEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries) {
+
+		getPersistence().cacheResult(cpDefinitionGroupedEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
+
+		getPersistence().cacheResult(cpDefinitionGroupedEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -765,28 +783,6 @@ public class CPDefinitionGroupedEntryUtil {
 	}
 
 	/**
-	 * Caches the cp definition grouped entry in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
-	 */
-	public static void cacheResult(
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-
-		getPersistence().cacheResult(cpDefinitionGroupedEntry);
-	}
-
-	/**
-	 * Caches the cp definition grouped entries in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntries the cp definition grouped entries
-	 */
-	public static void cacheResult(
-		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries) {
-
-		getPersistence().cacheResult(cpDefinitionGroupedEntries);
-	}
-
-	/**
 	 * Creates a new cp definition grouped entry with the primary key. Does not add the cp definition grouped entry to the database.
 	 *
 	 * @param CPDefinitionGroupedEntryId the primary key for the new cp definition grouped entry
@@ -859,4 +855,4 @@ public class CPDefinitionGroupedEntryUtil {
 	private static volatile CPDefinitionGroupedEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-466902883
+// LIFERAY-SERVICE-BUILDER-HASH:-1360628262

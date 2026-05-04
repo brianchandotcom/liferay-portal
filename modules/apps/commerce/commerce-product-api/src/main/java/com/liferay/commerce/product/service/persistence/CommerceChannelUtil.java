@@ -36,6 +36,20 @@ public class CommerceChannelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceChannel> commerceChannels) {
+		getPersistence().cacheResult(commerceChannels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceChannel commerceChannel) {
+		getPersistence().cacheResult(commerceChannel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1110,24 +1124,6 @@ public class CommerceChannelUtil {
 	}
 
 	/**
-	 * Caches the commerce channel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannel the commerce channel
-	 */
-	public static void cacheResult(CommerceChannel commerceChannel) {
-		getPersistence().cacheResult(commerceChannel);
-	}
-
-	/**
-	 * Caches the commerce channels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannels the commerce channels
-	 */
-	public static void cacheResult(List<CommerceChannel> commerceChannels) {
-		getPersistence().cacheResult(commerceChannels);
-	}
-
-	/**
 	 * Creates a new commerce channel with the primary key. Does not add the commerce channel to the database.
 	 *
 	 * @param commerceChannelId the primary key for the new commerce channel
@@ -1188,4 +1184,4 @@ public class CommerceChannelUtil {
 	private static volatile CommerceChannelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2040632454
+// LIFERAY-SERVICE-BUILDER-HASH:379717824

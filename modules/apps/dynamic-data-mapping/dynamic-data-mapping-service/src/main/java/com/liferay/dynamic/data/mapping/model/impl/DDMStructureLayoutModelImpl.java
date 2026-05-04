@@ -1191,6 +1191,14 @@ public class DDMStructureLayoutModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(DDMStructureLayout source) {
+		DDMStructureLayoutModelImpl sourceModelImpl =
+			(DDMStructureLayoutModelImpl)source;
+
+		setDDMFormLayout(sourceModelImpl.getDDMFormLayout());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1576,4 +1584,4 @@ public class DDMStructureLayoutModelImpl
 	private DDMStructureLayout _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:542283045
+// LIFERAY-SERVICE-BUILDER-HASH:-614250236

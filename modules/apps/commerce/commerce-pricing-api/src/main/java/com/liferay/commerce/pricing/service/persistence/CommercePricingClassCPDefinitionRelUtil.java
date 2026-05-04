@@ -36,6 +36,26 @@ public class CommercePricingClassCPDefinitionRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePricingClassCPDefinitionRel>
+			commercePricingClassCPDefinitionRels) {
+
+		getPersistence().cacheResult(commercePricingClassCPDefinitionRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePricingClassCPDefinitionRel
+			commercePricingClassCPDefinitionRel) {
+
+		getPersistence().cacheResult(commercePricingClassCPDefinitionRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -476,30 +496,6 @@ public class CommercePricingClassCPDefinitionRelUtil {
 	}
 
 	/**
-	 * Caches the commerce pricing class cp definition rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
-	 */
-	public static void cacheResult(
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel) {
-
-		getPersistence().cacheResult(commercePricingClassCPDefinitionRel);
-	}
-
-	/**
-	 * Caches the commerce pricing class cp definition rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRels the commerce pricing class cp definition rels
-	 */
-	public static void cacheResult(
-		List<CommercePricingClassCPDefinitionRel>
-			commercePricingClassCPDefinitionRels) {
-
-		getPersistence().cacheResult(commercePricingClassCPDefinitionRels);
-	}
-
-	/**
 	 * Creates a new commerce pricing class cp definition rel with the primary key. Does not add the commerce pricing class cp definition rel to the database.
 	 *
 	 * @param CommercePricingClassCPDefinitionRelId the primary key for the new commerce pricing class cp definition rel
@@ -578,4 +574,4 @@ public class CommercePricingClassCPDefinitionRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-898017191
+// LIFERAY-SERVICE-BUILDER-HASH:1993786505

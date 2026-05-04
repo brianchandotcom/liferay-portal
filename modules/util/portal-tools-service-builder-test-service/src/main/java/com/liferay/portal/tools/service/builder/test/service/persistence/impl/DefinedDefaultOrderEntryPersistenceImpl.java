@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchDefinedDefaultOrderEntryException;
@@ -312,65 +309,6 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the defined default order entry in the entity cache if it is enabled.
-	 *
-	 * @param definedDefaultOrderEntry the defined default order entry
-	 */
-	@Override
-	public void cacheResult(DefinedDefaultOrderEntry definedDefaultOrderEntry) {
-		entityCache.putResult(
-			DefinedDefaultOrderEntryImpl.class,
-			definedDefaultOrderEntry.getPrimaryKey(), definedDefaultOrderEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {definedDefaultOrderEntry.getName()},
-			definedDefaultOrderEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the defined default order entries in the entity cache if it is enabled.
-	 *
-	 * @param definedDefaultOrderEntries the defined default order entries
-	 */
-	@Override
-	public void cacheResult(
-		List<DefinedDefaultOrderEntry> definedDefaultOrderEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (definedDefaultOrderEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DefinedDefaultOrderEntry definedDefaultOrderEntry :
-				definedDefaultOrderEntries) {
-
-			if (entityCache.getResult(
-					DefinedDefaultOrderEntryImpl.class,
-					definedDefaultOrderEntry.getPrimaryKey()) == null) {
-
-				cacheResult(definedDefaultOrderEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DefinedDefaultOrderEntryModelImpl definedDefaultOrderEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			definedDefaultOrderEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, definedDefaultOrderEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new defined default order entry with the primary key. Does not add the defined default order entry to the database.
 	 *
 	 * @param definedDefaultOrderEntryId the primary key for the new defined default order entry
@@ -499,11 +437,7 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DefinedDefaultOrderEntryImpl.class,
-			definedDefaultOrderEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(definedDefaultOrderEntryModelImpl);
+		cacheUniqueFindersResult(definedDefaultOrderEntry, false);
 
 		if (isNew) {
 			definedDefaultOrderEntry.setNew(false);
@@ -566,12 +500,10 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	 * Initializes the defined default order entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			DefinedDefaultOrderEntry::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -650,4 +582,4 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-403328480
+// LIFERAY-SERVICE-BUILDER-HASH:872517575

@@ -36,6 +36,20 @@ public class CacheMissEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CacheMissEntry> cacheMissEntries) {
+		getPersistence().cacheResult(cacheMissEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CacheMissEntry cacheMissEntry) {
+		getPersistence().cacheResult(cacheMissEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class CacheMissEntryUtil {
 	}
 
 	/**
-	 * Caches the cache miss entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntry the cache miss entry
-	 */
-	public static void cacheResult(CacheMissEntry cacheMissEntry) {
-		getPersistence().cacheResult(cacheMissEntry);
-	}
-
-	/**
-	 * Caches the cache miss entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntries the cache miss entries
-	 */
-	public static void cacheResult(List<CacheMissEntry> cacheMissEntries) {
-		getPersistence().cacheResult(cacheMissEntries);
-	}
-
-	/**
 	 * Creates a new cache miss entry with the primary key. Does not add the cache miss entry to the database.
 	 *
 	 * @param cacheMissEntryId the primary key for the new cache miss entry
@@ -191,4 +187,4 @@ public class CacheMissEntryUtil {
 	private static volatile CacheMissEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1465211010
+// LIFERAY-SERVICE-BUILDER-HASH:720418733

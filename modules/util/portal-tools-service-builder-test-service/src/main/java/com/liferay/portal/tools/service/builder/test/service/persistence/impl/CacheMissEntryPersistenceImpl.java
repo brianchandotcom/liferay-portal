@@ -5,8 +5,6 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -15,9 +13,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchCacheMissEntryException;
 import com.liferay.portal.tools.service.builder.test.model.CacheMissEntry;
@@ -72,55 +67,6 @@ public class CacheMissEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(CacheMissEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the cache miss entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntry the cache miss entry
-	 */
-	@Override
-	public void cacheResult(CacheMissEntry cacheMissEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cacheMissEntry.getCtCollectionId())) {
-
-			dummyEntityCache.putResult(
-				CacheMissEntryImpl.class, cacheMissEntry.getPrimaryKey(),
-				cacheMissEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cache miss entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntries the cache miss entries
-	 */
-	@Override
-	public void cacheResult(List<CacheMissEntry> cacheMissEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cacheMissEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CacheMissEntry cacheMissEntry : cacheMissEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cacheMissEntry.getCtCollectionId())) {
-
-				if (dummyEntityCache.getResult(
-						CacheMissEntryImpl.class,
-						cacheMissEntry.getPrimaryKey()) == null) {
-
-					cacheResult(cacheMissEntry);
-				}
-			}
-		}
 	}
 
 	/**
@@ -215,8 +161,7 @@ public class CacheMissEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			CacheMissEntryImpl.class, cacheMissEntry, false, true);
+		cacheUniqueFindersResult(cacheMissEntry, false);
 
 		if (isNew) {
 			cacheMissEntry.setNew(false);
@@ -325,9 +270,6 @@ public class CacheMissEntryPersistenceImpl
 	 * Initializes the cache miss entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		CacheMissEntryUtil.setPersistence(this);
 	}
 
@@ -355,4 +297,4 @@ public class CacheMissEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:931962138
+// LIFERAY-SERVICE-BUILDER-HASH:-58748831

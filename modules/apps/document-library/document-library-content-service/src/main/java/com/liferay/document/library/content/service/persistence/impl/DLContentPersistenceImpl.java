@@ -14,7 +14,6 @@ import com.liferay.document.library.content.service.persistence.DLContentPersist
 import com.liferay.document.library.content.service.persistence.DLContentUtil;
 import com.liferay.document.library.content.service.persistence.impl.constants.DLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -755,79 +751,6 @@ public class DLContentPersistenceImpl
 	}
 
 	/**
-	 * Caches the document library content in the entity cache if it is enabled.
-	 *
-	 * @param dlContent the document library content
-	 */
-	@Override
-	public void cacheResult(DLContent dlContent) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlContent.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DLContentImpl.class, dlContent.getPrimaryKey(), dlContent);
-
-			finderCache.putResult(
-				_finderPathFetchByC_R_P_V,
-				new Object[] {
-					dlContent.getCompanyId(), dlContent.getRepositoryId(),
-					dlContent.getPath(), dlContent.getVersion()
-				},
-				dlContent);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the document library contents in the entity cache if it is enabled.
-	 *
-	 * @param dlContents the document library contents
-	 */
-	@Override
-	public void cacheResult(List<DLContent> dlContents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlContents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLContent dlContent : dlContents) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlContent.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DLContentImpl.class, dlContent.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(dlContent);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLContentModelImpl dlContentModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlContentModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlContentModelImpl.getCompanyId(),
-				dlContentModelImpl.getRepositoryId(),
-				dlContentModelImpl.getPath(), dlContentModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_R_P_V, args, dlContentModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new document library content with the primary key. Does not add the document library content to the database.
 	 *
 	 * @param contentId the primary key for the new document library content
@@ -941,10 +864,7 @@ public class DLContentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DLContentImpl.class, dlContentModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlContentModelImpl);
+		cacheUniqueFindersResult(dlContent, false);
 
 		if (isNew) {
 			dlContent.setNew(false);
@@ -1073,9 +993,6 @@ public class DLContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
 			new String[] {
@@ -1180,14 +1097,15 @@ public class DLContentPersistenceImpl
 					"dlContent.", "path", FinderColumn.Type.STRING, "LIKE",
 					true, true, DLContent::getPath));
 
-		_finderPathFetchByC_R_P_V = new FinderPath(
+		_finderPathFetchByC_R_P_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
 			new String[] {"companyId", "repositoryId", "path_", "version"},
-			true);
+			false, DLContent::getCompanyId, DLContent::getRepositoryId,
+			DLContent::getPath, DLContent::getVersion);
 
 		_uniquePersistenceFinderByC_R_P_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_R_P_V, _SQL_SELECT_DLCONTENT_WHERE,
@@ -1276,4 +1194,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1635627904
+// LIFERAY-SERVICE-BUILDER-HASH:-1747416761

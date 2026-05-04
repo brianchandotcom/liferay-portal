@@ -36,6 +36,20 @@ public class MBMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBMessage> mbMessages) {
+		getPersistence().cacheResult(mbMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBMessage mbMessage) {
+		getPersistence().cacheResult(mbMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -5028,24 +5042,6 @@ public class MBMessageUtil {
 	}
 
 	/**
-	 * Caches the message-boards message in the entity cache if it is enabled.
-	 *
-	 * @param mbMessage the message-boards message
-	 */
-	public static void cacheResult(MBMessage mbMessage) {
-		getPersistence().cacheResult(mbMessage);
-	}
-
-	/**
-	 * Caches the message-boards messages in the entity cache if it is enabled.
-	 *
-	 * @param mbMessages the message-boards messages
-	 */
-	public static void cacheResult(List<MBMessage> mbMessages) {
-		getPersistence().cacheResult(mbMessages);
-	}
-
-	/**
 	 * Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	 *
 	 * @param messageId the primary key for the new message-boards message
@@ -5106,4 +5102,4 @@ public class MBMessageUtil {
 	private static volatile MBMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:486092082
+// LIFERAY-SERVICE-BUILDER-HASH:1542259152

@@ -36,6 +36,20 @@ public class KaleoProcessUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoProcess> kaleoProcesses) {
+		getPersistence().cacheResult(kaleoProcesses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoProcess kaleoProcess) {
+		getPersistence().cacheResult(kaleoProcess);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -668,24 +682,6 @@ public class KaleoProcessUtil {
 	}
 
 	/**
-	 * Caches the kaleo process in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcess the kaleo process
-	 */
-	public static void cacheResult(KaleoProcess kaleoProcess) {
-		getPersistence().cacheResult(kaleoProcess);
-	}
-
-	/**
-	 * Caches the kaleo processes in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcesses the kaleo processes
-	 */
-	public static void cacheResult(List<KaleoProcess> kaleoProcesses) {
-		getPersistence().cacheResult(kaleoProcesses);
-	}
-
-	/**
 	 * Creates a new kaleo process with the primary key. Does not add the kaleo process to the database.
 	 *
 	 * @param kaleoProcessId the primary key for the new kaleo process
@@ -748,4 +744,4 @@ public class KaleoProcessUtil {
 	private static volatile KaleoProcessPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-661063659
+// LIFERAY-SERVICE-BUILDER-HASH:1637040370

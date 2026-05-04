@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -968,53 +965,6 @@ public class SourcePersistenceImpl
 	}
 
 	/**
-	 * Caches the source in the entity cache if it is enabled.
-	 *
-	 * @param source the source
-	 */
-	@Override
-	public void cacheResult(Source source) {
-		entityCache.putResult(SourceImpl.class, source.getPrimaryKey(), source);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {source.getUuid(), source.getGroupId()}, source);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sources in the entity cache if it is enabled.
-	 *
-	 * @param sources the sources
-	 */
-	@Override
-	public void cacheResult(List<Source> sources) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sources.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Source source : sources) {
-			if (entityCache.getResult(
-					SourceImpl.class, source.getPrimaryKey()) == null) {
-
-				cacheResult(source);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(SourceModelImpl sourceModelImpl) {
-		Object[] args = new Object[] {
-			sourceModelImpl.getUuid(), sourceModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(_finderPathFetchByUUID_G, args, sourceModelImpl);
-	}
-
-	/**
 	 * Creates a new source with the primary key. Does not add the source to the database.
 	 *
 	 * @param sourceId the primary key for the new source
@@ -1148,9 +1098,7 @@ public class SourcePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(SourceImpl.class, sourceModelImpl, false, true);
-
-		cacheUniqueFindersCache(sourceModelImpl);
+		cacheUniqueFindersResult(source, false);
 
 		if (isNew) {
 			source.setNew(false);
@@ -1214,9 +1162,6 @@ public class SourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1244,10 +1189,11 @@ public class SourcePersistenceImpl
 				"source.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Source::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Source::getUuid,
+			Source::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOURCE_WHERE,
@@ -1441,4 +1387,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:100031280
+// LIFERAY-SERVICE-BUILDER-HASH:-91896588

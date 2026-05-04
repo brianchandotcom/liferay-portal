@@ -6,7 +6,6 @@
 package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchEntryRoleException;
 import com.liferay.segments.model.SegmentsEntryRole;
@@ -511,80 +507,6 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 	/**
-	 * Caches the segments entry role in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRole the segments entry role
-	 */
-	@Override
-	public void cacheResult(SegmentsEntryRole segmentsEntryRole) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsEntryRole.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SegmentsEntryRoleImpl.class, segmentsEntryRole.getPrimaryKey(),
-				segmentsEntryRole);
-
-			finderCache.putResult(
-				_finderPathFetchByS_R,
-				new Object[] {
-					segmentsEntryRole.getSegmentsEntryId(),
-					segmentsEntryRole.getRoleId()
-				},
-				segmentsEntryRole);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the segments entry roles in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRoles the segments entry roles
-	 */
-	@Override
-	public void cacheResult(List<SegmentsEntryRole> segmentsEntryRoles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (segmentsEntryRoles.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						segmentsEntryRole.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SegmentsEntryRoleImpl.class,
-						segmentsEntryRole.getPrimaryKey()) == null) {
-
-					cacheResult(segmentsEntryRole);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SegmentsEntryRoleModelImpl segmentsEntryRoleModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsEntryRoleModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				segmentsEntryRoleModelImpl.getSegmentsEntryId(),
-				segmentsEntryRoleModelImpl.getRoleId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByS_R, args, segmentsEntryRoleModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new segments entry role with the primary key. Does not add the segments entry role to the database.
 	 *
 	 * @param segmentsEntryRoleId the primary key for the new segments entry role
@@ -726,11 +648,7 @@ public class SegmentsEntryRolePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SegmentsEntryRoleImpl.class, segmentsEntryRoleModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(segmentsEntryRoleModelImpl);
+		cacheUniqueFindersResult(segmentsEntryRole, false);
 
 		if (isNew) {
 			segmentsEntryRole.setNew(false);
@@ -857,9 +775,6 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
 			new String[] {
@@ -919,10 +834,12 @@ public class SegmentsEntryRolePersistenceImpl
 					"segmentsEntryRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRole::getRoleId));
 
-		_finderPathFetchByS_R = new FinderPath(
+		_finderPathFetchByS_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"segmentsEntryId", "roleId"}, true);
+			new String[] {"segmentsEntryId", "roleId"}, false,
+			SegmentsEntryRole::getSegmentsEntryId,
+			SegmentsEntryRole::getRoleId);
 
 		_uniquePersistenceFinderByS_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_R, _SQL_SELECT_SEGMENTSENTRYROLE_WHERE,
@@ -1002,4 +919,4 @@ public class SegmentsEntryRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1286995270
+// LIFERAY-SERVICE-BUILDER-HASH:-43810024

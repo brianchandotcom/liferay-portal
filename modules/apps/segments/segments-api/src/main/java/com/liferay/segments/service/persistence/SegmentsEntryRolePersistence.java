@@ -290,21 +290,6 @@ public interface SegmentsEntryRolePersistence
 	public int countByS_R(long segmentsEntryId, long roleId);
 
 	/**
-	 * Caches the segments entry role in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRole the segments entry role
-	 */
-	public void cacheResult(SegmentsEntryRole segmentsEntryRole);
-
-	/**
-	 * Caches the segments entry roles in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRoles the segments entry roles
-	 */
-	public void cacheResult(
-		java.util.List<SegmentsEntryRole> segmentsEntryRoles);
-
-	/**
 	 * Creates a new segments entry role with the primary key. Does not add the segments entry role to the database.
 	 *
 	 * @param segmentsEntryRoleId the primary key for the new segments entry role
@@ -343,4 +328,4 @@ public interface SegmentsEntryRolePersistence
 	public SegmentsEntryRole fetchByPrimaryKey(long segmentsEntryRoleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1139348244
+// LIFERAY-SERVICE-BUILDER-HASH:1245223812

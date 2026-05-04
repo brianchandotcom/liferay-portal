@@ -413,23 +413,6 @@ public interface CommerceNotificationAttachmentPersistence
 		long commerceNotificationQueueEntryId);
 
 	/**
-	 * Caches the commerce notification attachment in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachment the commerce notification attachment
-	 */
-	public void cacheResult(
-		CommerceNotificationAttachment commerceNotificationAttachment);
-
-	/**
-	 * Caches the commerce notification attachments in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachments the commerce notification attachments
-	 */
-	public void cacheResult(
-		java.util.List<CommerceNotificationAttachment>
-			commerceNotificationAttachments);
-
-	/**
 	 * Creates a new commerce notification attachment with the primary key. Does not add the commerce notification attachment to the database.
 	 *
 	 * @param commerceNotificationAttachmentId the primary key for the new commerce notification attachment
@@ -473,4 +456,4 @@ public interface CommerceNotificationAttachmentPersistence
 		long commerceNotificationAttachmentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1295996074
+// LIFERAY-SERVICE-BUILDER-HASH:42217778

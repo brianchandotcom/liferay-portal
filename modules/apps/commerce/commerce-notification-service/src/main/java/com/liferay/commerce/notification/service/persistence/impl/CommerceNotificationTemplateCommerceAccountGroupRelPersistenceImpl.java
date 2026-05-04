@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -576,84 +573,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce notification template commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRel the commerce notification template commerce account group rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceNotificationTemplateCommerceAccountGroupRel
-			commerceNotificationTemplateCommerceAccountGroupRel) {
-
-		entityCache.putResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-			commerceNotificationTemplateCommerceAccountGroupRel.getPrimaryKey(),
-			commerceNotificationTemplateCommerceAccountGroupRel);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				commerceNotificationTemplateCommerceAccountGroupRel.
-					getCommerceNotificationTemplateId(),
-				commerceNotificationTemplateCommerceAccountGroupRel.
-					getCommerceAccountGroupId()
-			},
-			commerceNotificationTemplateCommerceAccountGroupRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce notification template commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplateCommerceAccountGroupRels the commerce notification template commerce account group rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceNotificationTemplateCommerceAccountGroupRel>
-			commerceNotificationTemplateCommerceAccountGroupRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceNotificationTemplateCommerceAccountGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceNotificationTemplateCommerceAccountGroupRel
-				commerceNotificationTemplateCommerceAccountGroupRel :
-					commerceNotificationTemplateCommerceAccountGroupRels) {
-
-			if (entityCache.getResult(
-					CommerceNotificationTemplateCommerceAccountGroupRelImpl.
-						class,
-					commerceNotificationTemplateCommerceAccountGroupRel.
-						getPrimaryKey()) == null) {
-
-				cacheResult(
-					commerceNotificationTemplateCommerceAccountGroupRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceNotificationTemplateCommerceAccountGroupRelModelImpl
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				getCommerceNotificationTemplateId(),
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl.
-				getCommerceAccountGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args,
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce notification template commerce account group rel with the primary key. Does not add the commerce notification template commerce account group rel to the database.
 	 *
 	 * @param commerceNotificationTemplateCommerceAccountGroupRelId the primary key for the new commerce notification template commerce account group rel
@@ -825,13 +744,8 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceNotificationTemplateCommerceAccountGroupRelImpl.class,
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(
-			commerceNotificationTemplateCommerceAccountGroupRelModelImpl);
+		cacheUniqueFindersResult(
+			commerceNotificationTemplateCommerceAccountGroupRel, false);
 
 		if (isNew) {
 			commerceNotificationTemplateCommerceAccountGroupRel.setNew(false);
@@ -907,9 +821,6 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceNotificationTemplateId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -990,13 +901,17 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 					CommerceNotificationTemplateCommerceAccountGroupRel::
 						getCommerceAccountGroupId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {
 				"commerceNotificationTemplateId", "commerceAccountGroupId"
 			},
-			true);
+			false,
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getCommerceNotificationTemplateId,
+			CommerceNotificationTemplateCommerceAccountGroupRel::
+				getCommerceAccountGroupId);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
@@ -1092,4 +1007,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-688550674
+// LIFERAY-SERVICE-BUILDER-HASH:-1830907722

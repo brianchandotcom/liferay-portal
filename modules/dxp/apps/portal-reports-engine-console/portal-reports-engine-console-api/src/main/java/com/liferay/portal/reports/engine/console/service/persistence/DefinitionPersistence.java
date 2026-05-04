@@ -547,20 +547,6 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the definition in the entity cache if it is enabled.
-	 *
-	 * @param definition the definition
-	 */
-	public void cacheResult(Definition definition);
-
-	/**
-	 * Caches the definitions in the entity cache if it is enabled.
-	 *
-	 * @param definitions the definitions
-	 */
-	public void cacheResult(java.util.List<Definition> definitions);
-
-	/**
 	 * Creates a new definition with the primary key. Does not add the definition to the database.
 	 *
 	 * @param definitionId the primary key for the new definition
@@ -599,4 +585,4 @@ public interface DefinitionPersistence extends BasePersistence<Definition> {
 	public Definition fetchByPrimaryKey(long definitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-336710428
+// LIFERAY-SERVICE-BUILDER-HASH:-746777812

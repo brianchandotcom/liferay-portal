@@ -14,7 +14,6 @@ import com.liferay.asset.list.service.persistence.AssetListEntryUsagePersistence
 import com.liferay.asset.list.service.persistence.AssetListEntryUsageUtil;
 import com.liferay.asset.list.service.persistence.impl.constants.AssetListPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1729,104 +1725,6 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 	/**
-	 * Caches the asset list entry usage in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsage the asset list entry usage
-	 */
-	@Override
-	public void cacheResult(AssetListEntryUsage assetListEntryUsage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetListEntryUsage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetListEntryUsageImpl.class,
-				assetListEntryUsage.getPrimaryKey(), assetListEntryUsage);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetListEntryUsage.getUuid(),
-					assetListEntryUsage.getGroupId()
-				},
-				assetListEntryUsage);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_CK_CT_K_P,
-				new Object[] {
-					assetListEntryUsage.getGroupId(),
-					assetListEntryUsage.getClassNameId(),
-					assetListEntryUsage.getContainerKey(),
-					assetListEntryUsage.getContainerType(),
-					assetListEntryUsage.getKey(), assetListEntryUsage.getPlid()
-				},
-				assetListEntryUsage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset list entry usages in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntryUsages the asset list entry usages
-	 */
-	@Override
-	public void cacheResult(List<AssetListEntryUsage> assetListEntryUsages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetListEntryUsages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetListEntryUsage assetListEntryUsage : assetListEntryUsages) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetListEntryUsage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetListEntryUsageImpl.class,
-						assetListEntryUsage.getPrimaryKey()) == null) {
-
-					cacheResult(assetListEntryUsage);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetListEntryUsageModelImpl assetListEntryUsageModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetListEntryUsageModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetListEntryUsageModelImpl.getUuid(),
-				assetListEntryUsageModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, assetListEntryUsageModelImpl);
-
-			args = new Object[] {
-				assetListEntryUsageModelImpl.getGroupId(),
-				assetListEntryUsageModelImpl.getClassNameId(),
-				assetListEntryUsageModelImpl.getContainerKey(),
-				assetListEntryUsageModelImpl.getContainerType(),
-				assetListEntryUsageModelImpl.getKey(),
-				assetListEntryUsageModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_CK_CT_K_P, args,
-				assetListEntryUsageModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset list entry usage with the primary key. Does not add the asset list entry usage to the database.
 	 *
 	 * @param assetListEntryUsageId the primary key for the new asset list entry usage
@@ -1980,11 +1878,7 @@ public class AssetListEntryUsagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetListEntryUsageImpl.class, assetListEntryUsageModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(assetListEntryUsageModelImpl);
+		cacheUniqueFindersResult(assetListEntryUsage, false);
 
 		if (isNew) {
 			assetListEntryUsage.setNew(false);
@@ -2129,9 +2023,6 @@ public class AssetListEntryUsagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2160,10 +2051,11 @@ public class AssetListEntryUsagePersistenceImpl
 				"assetListEntryUsage.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetListEntryUsage::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			AssetListEntryUsage::getUuid, AssetListEntryUsage::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2444,7 +2336,7 @@ public class AssetListEntryUsagePersistenceImpl
 					"assetListEntryUsage.", "type", FinderColumn.Type.INTEGER,
 					"=", true, true, AssetListEntryUsage::getType));
 
-		_finderPathFetchByG_C_CK_CT_K_P = new FinderPath(
+		_finderPathFetchByG_C_CK_CT_K_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_CK_CT_K_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2455,7 +2347,11 @@ public class AssetListEntryUsagePersistenceImpl
 				"groupId", "classNameId", "containerKey", "containerType",
 				"key_", "plid"
 			},
-			true);
+			false, AssetListEntryUsage::getGroupId,
+			AssetListEntryUsage::getClassNameId,
+			AssetListEntryUsage::getContainerKey,
+			AssetListEntryUsage::getContainerType, AssetListEntryUsage::getKey,
+			AssetListEntryUsage::getPlid);
 
 		_uniquePersistenceFinderByG_C_CK_CT_K_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_CK_CT_K_P,
@@ -2552,4 +2448,4 @@ public class AssetListEntryUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1967660923
+// LIFERAY-SERVICE-BUILDER-HASH:-1178853207

@@ -1167,20 +1167,6 @@ public interface CalendarBookingPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the calendar booking in the entity cache if it is enabled.
-	 *
-	 * @param calendarBooking the calendar booking
-	 */
-	public void cacheResult(CalendarBooking calendarBooking);
-
-	/**
-	 * Caches the calendar bookings in the entity cache if it is enabled.
-	 *
-	 * @param calendarBookings the calendar bookings
-	 */
-	public void cacheResult(java.util.List<CalendarBooking> calendarBookings);
-
-	/**
 	 * Creates a new calendar booking with the primary key. Does not add the calendar booking to the database.
 	 *
 	 * @param calendarBookingId the primary key for the new calendar booking
@@ -1219,4 +1205,4 @@ public interface CalendarBookingPersistence
 	public CalendarBooking fetchByPrimaryKey(long calendarBookingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:705277603
+// LIFERAY-SERVICE-BUILDER-HASH:2130399951

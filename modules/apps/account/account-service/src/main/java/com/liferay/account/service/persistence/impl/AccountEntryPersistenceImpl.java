@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2101,63 +2099,6 @@ public class AccountEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the account entry in the entity cache if it is enabled.
-	 *
-	 * @param accountEntry the account entry
-	 */
-	@Override
-	public void cacheResult(AccountEntry accountEntry) {
-		entityCache.putResult(
-			AccountEntryImpl.class, accountEntry.getPrimaryKey(), accountEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				accountEntry.getExternalReferenceCode(),
-				accountEntry.getCompanyId()
-			},
-			accountEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the account entries in the entity cache if it is enabled.
-	 *
-	 * @param accountEntries the account entries
-	 */
-	@Override
-	public void cacheResult(List<AccountEntry> accountEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (accountEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AccountEntry accountEntry : accountEntries) {
-			if (entityCache.getResult(
-					AccountEntryImpl.class, accountEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(accountEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AccountEntryModelImpl accountEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			accountEntryModelImpl.getExternalReferenceCode(),
-			accountEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, accountEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new account entry with the primary key. Does not add the account entry to the database.
 	 *
 	 * @param accountEntryId the primary key for the new account entry
@@ -2358,10 +2299,7 @@ public class AccountEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AccountEntryImpl.class, accountEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(accountEntryModelImpl);
+		cacheUniqueFindersResult(accountEntry, false);
 
 		if (isNew) {
 			accountEntry.setNew(false);
@@ -2427,9 +2365,6 @@ public class AccountEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2581,10 +2516,11 @@ public class AccountEntryPersistenceImpl
 				"accountEntry.", "type", FinderColumn.Type.STRING, "=", true,
 				true, AccountEntry::getType));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			AccountEntry::getExternalReferenceCode, AccountEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTENTRY_WHERE,
@@ -2688,4 +2624,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1004891097
+// LIFERAY-SERVICE-BUILDER-HASH:447995141

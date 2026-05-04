@@ -36,6 +36,20 @@ public class IndexEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<IndexEntry> indexEntries) {
+		getPersistence().cacheResult(indexEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(IndexEntry indexEntry) {
+		getPersistence().cacheResult(indexEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1494,24 +1508,6 @@ public class IndexEntryUtil {
 	}
 
 	/**
-	 * Caches the index entry in the entity cache if it is enabled.
-	 *
-	 * @param indexEntry the index entry
-	 */
-	public static void cacheResult(IndexEntry indexEntry) {
-		getPersistence().cacheResult(indexEntry);
-	}
-
-	/**
-	 * Caches the index entries in the entity cache if it is enabled.
-	 *
-	 * @param indexEntries the index entries
-	 */
-	public static void cacheResult(List<IndexEntry> indexEntries) {
-		getPersistence().cacheResult(indexEntries);
-	}
-
-	/**
 	 * Creates a new index entry with the primary key. Does not add the index entry to the database.
 	 *
 	 * @param indexEntryId the primary key for the new index entry
@@ -1574,4 +1570,4 @@ public class IndexEntryUtil {
 	private static volatile IndexEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-221549230
+// LIFERAY-SERVICE-BUILDER-HASH:1030412763

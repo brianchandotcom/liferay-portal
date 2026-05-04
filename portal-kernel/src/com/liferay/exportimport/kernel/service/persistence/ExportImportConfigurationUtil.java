@@ -36,6 +36,24 @@ public class ExportImportConfigurationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ExportImportConfiguration> exportImportConfigurations) {
+
+		getPersistence().cacheResult(exportImportConfigurations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ExportImportConfiguration exportImportConfiguration) {
+
+		getPersistence().cacheResult(exportImportConfiguration);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -777,28 +795,6 @@ public class ExportImportConfigurationUtil {
 	}
 
 	/**
-	 * Caches the export import configuration in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfiguration the export import configuration
-	 */
-	public static void cacheResult(
-		ExportImportConfiguration exportImportConfiguration) {
-
-		getPersistence().cacheResult(exportImportConfiguration);
-	}
-
-	/**
-	 * Caches the export import configurations in the entity cache if it is enabled.
-	 *
-	 * @param exportImportConfigurations the export import configurations
-	 */
-	public static void cacheResult(
-		List<ExportImportConfiguration> exportImportConfigurations) {
-
-		getPersistence().cacheResult(exportImportConfigurations);
-	}
-
-	/**
 	 * Creates a new export import configuration with the primary key. Does not add the export import configuration to the database.
 	 *
 	 * @param exportImportConfigurationId the primary key for the new export import configuration
@@ -871,4 +867,4 @@ public class ExportImportConfigurationUtil {
 	private static volatile ExportImportConfigurationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1546343298
+// LIFERAY-SERVICE-BUILDER-HASH:1151494986

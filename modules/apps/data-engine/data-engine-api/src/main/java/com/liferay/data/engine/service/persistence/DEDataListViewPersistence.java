@@ -521,20 +521,6 @@ public interface DEDataListViewPersistence
 		long groupId, long companyId, long ddmStructureId);
 
 	/**
-	 * Caches the de data list view in the entity cache if it is enabled.
-	 *
-	 * @param deDataListView the de data list view
-	 */
-	public void cacheResult(DEDataListView deDataListView);
-
-	/**
-	 * Caches the de data list views in the entity cache if it is enabled.
-	 *
-	 * @param deDataListViews the de data list views
-	 */
-	public void cacheResult(java.util.List<DEDataListView> deDataListViews);
-
-	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.
 	 *
 	 * @param deDataListViewId the primary key for the new de data list view
@@ -573,4 +559,4 @@ public interface DEDataListViewPersistence
 	public DEDataListView fetchByPrimaryKey(long deDataListViewId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:406482046
+// LIFERAY-SERVICE-BUILDER-HASH:1147248922

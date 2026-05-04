@@ -1042,4 +1042,4 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private Team _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1427058532
+// LIFERAY-SERVICE-BUILDER-HASH:-151121050

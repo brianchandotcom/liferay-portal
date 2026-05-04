@@ -576,20 +576,6 @@ public interface SiteFriendlyURLPersistence
 		long companyId, String friendlyURL, String languageId);
 
 	/**
-	 * Caches the site friendly url in the entity cache if it is enabled.
-	 *
-	 * @param siteFriendlyURL the site friendly url
-	 */
-	public void cacheResult(SiteFriendlyURL siteFriendlyURL);
-
-	/**
-	 * Caches the site friendly urls in the entity cache if it is enabled.
-	 *
-	 * @param siteFriendlyURLs the site friendly urls
-	 */
-	public void cacheResult(java.util.List<SiteFriendlyURL> siteFriendlyURLs);
-
-	/**
 	 * Creates a new site friendly url with the primary key. Does not add the site friendly url to the database.
 	 *
 	 * @param siteFriendlyURLId the primary key for the new site friendly url
@@ -628,4 +614,4 @@ public interface SiteFriendlyURLPersistence
 	public SiteFriendlyURL fetchByPrimaryKey(long siteFriendlyURLId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:390809549
+// LIFERAY-SERVICE-BUILDER-HASH:1484580645

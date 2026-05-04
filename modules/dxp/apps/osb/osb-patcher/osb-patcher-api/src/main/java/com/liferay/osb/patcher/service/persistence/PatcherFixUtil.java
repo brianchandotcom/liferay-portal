@@ -37,6 +37,20 @@ public class PatcherFixUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherFix> patcherFixes) {
+		getPersistence().cacheResult(patcherFixes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherFix patcherFix) {
+		getPersistence().cacheResult(patcherFix);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2341,24 +2355,6 @@ public class PatcherFixUtil {
 	}
 
 	/**
-	 * Caches the patcher fix in the entity cache if it is enabled.
-	 *
-	 * @param patcherFix the patcher fix
-	 */
-	public static void cacheResult(PatcherFix patcherFix) {
-		getPersistence().cacheResult(patcherFix);
-	}
-
-	/**
-	 * Caches the patcher fixes in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixes the patcher fixes
-	 */
-	public static void cacheResult(List<PatcherFix> patcherFixes) {
-		getPersistence().cacheResult(patcherFixes);
-	}
-
-	/**
 	 * Creates a new patcher fix with the primary key. Does not add the patcher fix to the database.
 	 *
 	 * @param patcherFixId the primary key for the new patcher fix
@@ -2857,4 +2853,4 @@ public class PatcherFixUtil {
 	private static volatile PatcherFixPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:533844695
+// LIFERAY-SERVICE-BUILDER-HASH:1272791272

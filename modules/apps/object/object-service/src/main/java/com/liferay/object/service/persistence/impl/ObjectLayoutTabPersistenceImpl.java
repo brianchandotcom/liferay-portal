@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -703,45 +700,6 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 	/**
-	 * Caches the object layout tab in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTab the object layout tab
-	 */
-	@Override
-	public void cacheResult(ObjectLayoutTab objectLayoutTab) {
-		entityCache.putResult(
-			ObjectLayoutTabImpl.class, objectLayoutTab.getPrimaryKey(),
-			objectLayoutTab);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object layout tabs in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTabs the object layout tabs
-	 */
-	@Override
-	public void cacheResult(List<ObjectLayoutTab> objectLayoutTabs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectLayoutTabs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {
-			if (entityCache.getResult(
-					ObjectLayoutTabImpl.class,
-					objectLayoutTab.getPrimaryKey()) == null) {
-
-				cacheResult(objectLayoutTab);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
 	 * @param objectLayoutTabId the primary key for the new object layout tab
@@ -883,8 +841,7 @@ public class ObjectLayoutTabPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectLayoutTabImpl.class, objectLayoutTabModelImpl, false, true);
+		cacheUniqueFindersResult(objectLayoutTab, false);
 
 		if (isNew) {
 			objectLayoutTab.setNew(false);
@@ -950,9 +907,6 @@ public class ObjectLayoutTabPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1145,4 +1099,4 @@ public class ObjectLayoutTabPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237440387
+// LIFERAY-SERVICE-BUILDER-HASH:-2034559371

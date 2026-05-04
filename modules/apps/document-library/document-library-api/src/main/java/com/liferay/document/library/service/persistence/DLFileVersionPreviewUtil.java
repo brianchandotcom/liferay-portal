@@ -36,6 +36,22 @@ public class DLFileVersionPreviewUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DLFileVersionPreview> dlFileVersionPreviews) {
+
+		getPersistence().cacheResult(dlFileVersionPreviews);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileVersionPreview dlFileVersionPreview) {
+		getPersistence().cacheResult(dlFileVersionPreview);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -518,26 +534,6 @@ public class DLFileVersionPreviewUtil {
 	}
 
 	/**
-	 * Caches the dl file version preview in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 */
-	public static void cacheResult(DLFileVersionPreview dlFileVersionPreview) {
-		getPersistence().cacheResult(dlFileVersionPreview);
-	}
-
-	/**
-	 * Caches the dl file version previews in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreviews the dl file version previews
-	 */
-	public static void cacheResult(
-		List<DLFileVersionPreview> dlFileVersionPreviews) {
-
-		getPersistence().cacheResult(dlFileVersionPreviews);
-	}
-
-	/**
 	 * Creates a new dl file version preview with the primary key. Does not add the dl file version preview to the database.
 	 *
 	 * @param dlFileVersionPreviewId the primary key for the new dl file version preview
@@ -607,4 +603,4 @@ public class DLFileVersionPreviewUtil {
 	private static volatile DLFileVersionPreviewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2019389501
+// LIFERAY-SERVICE-BUILDER-HASH:131583597

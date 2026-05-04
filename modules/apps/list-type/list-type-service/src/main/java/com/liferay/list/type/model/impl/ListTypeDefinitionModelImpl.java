@@ -1211,4 +1211,4 @@ public class ListTypeDefinitionModelImpl
 	private ListTypeDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1602430341
+// LIFERAY-SERVICE-BUILDER-HASH:-1056242697

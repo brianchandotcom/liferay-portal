@@ -409,23 +409,6 @@ public interface CommercePriceListOrderTypeRelPersistence
 		long commercePriceListId, long commerceOrderTypeId);
 
 	/**
-	 * Caches the commerce price list order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRel the commerce price list order type rel
-	 */
-	public void cacheResult(
-		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel);
-
-	/**
-	 * Caches the commerce price list order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRels the commerce price list order type rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceListOrderTypeRel>
-			commercePriceListOrderTypeRels);
-
-	/**
 	 * Creates a new commerce price list order type rel with the primary key. Does not add the commerce price list order type rel to the database.
 	 *
 	 * @param commercePriceListOrderTypeRelId the primary key for the new commerce price list order type rel
@@ -469,4 +452,4 @@ public interface CommercePriceListOrderTypeRelPersistence
 		long commercePriceListOrderTypeRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-455967230
+// LIFERAY-SERVICE-BUILDER-HASH:1038215180

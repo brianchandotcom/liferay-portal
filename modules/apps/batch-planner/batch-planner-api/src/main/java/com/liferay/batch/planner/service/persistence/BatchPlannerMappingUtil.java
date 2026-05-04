@@ -36,6 +36,22 @@ public class BatchPlannerMappingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<BatchPlannerMapping> batchPlannerMappings) {
+
+		getPersistence().cacheResult(batchPlannerMappings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BatchPlannerMapping batchPlannerMapping) {
+		getPersistence().cacheResult(batchPlannerMapping);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -325,26 +341,6 @@ public class BatchPlannerMappingUtil {
 	}
 
 	/**
-	 * Caches the batch planner mapping in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMapping the batch planner mapping
-	 */
-	public static void cacheResult(BatchPlannerMapping batchPlannerMapping) {
-		getPersistence().cacheResult(batchPlannerMapping);
-	}
-
-	/**
-	 * Caches the batch planner mappings in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMappings the batch planner mappings
-	 */
-	public static void cacheResult(
-		List<BatchPlannerMapping> batchPlannerMappings) {
-
-		getPersistence().cacheResult(batchPlannerMappings);
-	}
-
-	/**
 	 * Creates a new batch planner mapping with the primary key. Does not add the batch planner mapping to the database.
 	 *
 	 * @param batchPlannerMappingId the primary key for the new batch planner mapping
@@ -412,4 +408,4 @@ public class BatchPlannerMappingUtil {
 	private static volatile BatchPlannerMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2037732261
+// LIFERAY-SERVICE-BUILDER-HASH:-1273220521

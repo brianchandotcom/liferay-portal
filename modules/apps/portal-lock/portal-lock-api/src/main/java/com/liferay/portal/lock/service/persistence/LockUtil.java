@@ -37,6 +37,20 @@ public class LockUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Lock> locks) {
+		getPersistence().cacheResult(locks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Lock lock) {
+		getPersistence().cacheResult(lock);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -934,24 +948,6 @@ public class LockUtil {
 	}
 
 	/**
-	 * Caches the lock in the entity cache if it is enabled.
-	 *
-	 * @param lock the lock
-	 */
-	public static void cacheResult(Lock lock) {
-		getPersistence().cacheResult(lock);
-	}
-
-	/**
-	 * Caches the locks in the entity cache if it is enabled.
-	 *
-	 * @param locks the locks
-	 */
-	public static void cacheResult(List<Lock> locks) {
-		getPersistence().cacheResult(locks);
-	}
-
-	/**
 	 * Creates a new lock with the primary key. Does not add the lock to the database.
 	 *
 	 * @param lockId the primary key for the new lock
@@ -1012,4 +1008,4 @@ public class LockUtil {
 	private static volatile LockPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-257000690
+// LIFERAY-SERVICE-BUILDER-HASH:2049688548

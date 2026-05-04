@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchLogException;
@@ -1137,52 +1133,6 @@ public class KaleoLogPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo log in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLog the kaleo log
-	 */
-	@Override
-	public void cacheResult(KaleoLog kaleoLog) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoLog.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoLogImpl.class, kaleoLog.getPrimaryKey(), kaleoLog);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo logs in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLogs the kaleo logs
-	 */
-	@Override
-	public void cacheResult(List<KaleoLog> kaleoLogs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoLogs.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoLog kaleoLog : kaleoLogs) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoLog.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoLogImpl.class, kaleoLog.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoLog);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
 	 *
 	 * @param kaleoLogId the primary key for the new kaleo log
@@ -1311,8 +1261,7 @@ public class KaleoLogPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoLogImpl.class, kaleoLogModelImpl, false, true);
+		cacheUniqueFindersResult(kaleoLog, false);
 
 		if (isNew) {
 			kaleoLog.setNew(false);
@@ -1464,9 +1413,6 @@ public class KaleoLogPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1758,4 +1704,4 @@ public class KaleoLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:269778166
+// LIFERAY-SERVICE-BUILDER-HASH:-515766422

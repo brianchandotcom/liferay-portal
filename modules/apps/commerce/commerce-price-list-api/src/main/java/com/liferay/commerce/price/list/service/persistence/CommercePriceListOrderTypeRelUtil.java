@@ -36,6 +36,24 @@ public class CommercePriceListOrderTypeRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels) {
+
+		getPersistence().cacheResult(commercePriceListOrderTypeRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel) {
+
+		getPersistence().cacheResult(commercePriceListOrderTypeRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -578,28 +596,6 @@ public class CommercePriceListOrderTypeRelUtil {
 	}
 
 	/**
-	 * Caches the commerce price list order type rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRel the commerce price list order type rel
-	 */
-	public static void cacheResult(
-		CommercePriceListOrderTypeRel commercePriceListOrderTypeRel) {
-
-		getPersistence().cacheResult(commercePriceListOrderTypeRel);
-	}
-
-	/**
-	 * Caches the commerce price list order type rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListOrderTypeRels the commerce price list order type rels
-	 */
-	public static void cacheResult(
-		List<CommercePriceListOrderTypeRel> commercePriceListOrderTypeRels) {
-
-		getPersistence().cacheResult(commercePriceListOrderTypeRels);
-	}
-
-	/**
 	 * Creates a new commerce price list order type rel with the primary key. Does not add the commerce price list order type rel to the database.
 	 *
 	 * @param commercePriceListOrderTypeRelId the primary key for the new commerce price list order type rel
@@ -675,4 +671,4 @@ public class CommercePriceListOrderTypeRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-825130651
+// LIFERAY-SERVICE-BUILDER-HASH:-259451245

@@ -24,11 +24,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2563,83 +2560,6 @@ public class LVEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the lv entry in the entity cache if it is enabled.
-	 *
-	 * @param lvEntry the lv entry
-	 */
-	@Override
-	public void cacheResult(LVEntry lvEntry) {
-		entityCache.putResult(
-			LVEntryImpl.class, lvEntry.getPrimaryKey(), lvEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Head,
-			new Object[] {
-				lvEntry.getUuid(), lvEntry.getGroupId(), lvEntry.isHead()
-			},
-			lvEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByG_UGK_Head,
-			new Object[] {
-				lvEntry.getGroupId(), lvEntry.getUniqueGroupKey(),
-				lvEntry.isHead()
-			},
-			lvEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId, new Object[] {lvEntry.getHeadId()},
-			lvEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the lv entries in the entity cache if it is enabled.
-	 *
-	 * @param lvEntries the lv entries
-	 */
-	@Override
-	public void cacheResult(List<LVEntry> lvEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (lvEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LVEntry lvEntry : lvEntries) {
-			if (entityCache.getResult(
-					LVEntryImpl.class, lvEntry.getPrimaryKey()) == null) {
-
-				cacheResult(lvEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(LVEntryModelImpl lvEntryModelImpl) {
-		Object[] args = new Object[] {
-			lvEntryModelImpl.getUuid(), lvEntryModelImpl.getGroupId(),
-			lvEntryModelImpl.isHead()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Head, args, lvEntryModelImpl);
-
-		args = new Object[] {
-			lvEntryModelImpl.getGroupId(), lvEntryModelImpl.getUniqueGroupKey(),
-			lvEntryModelImpl.isHead()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_UGK_Head, args, lvEntryModelImpl);
-
-		args = new Object[] {lvEntryModelImpl.getHeadId()};
-
-		finderCache.putResult(_finderPathFetchByHeadId, args, lvEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new lv entry with the primary key. Does not add the lv entry to the database.
 	 *
 	 * @param lvEntryId the primary key for the new lv entry
@@ -2756,9 +2676,7 @@ public class LVEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(LVEntryImpl.class, lvEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(lvEntryModelImpl);
+		cacheUniqueFindersResult(lvEntry, false);
 
 		if (isNew) {
 			lvEntry.setNew(false);
@@ -3179,9 +3097,6 @@ public class LVEntryPersistenceImpl
 	 * Initializes the lv entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		lvEntryToBigDecimalEntryTableMapper = TableMapperFactory.getTableMapper(
 			"BigDecimalEntries_LVEntries", "companyId", "lvEntryId",
 			"bigDecimalEntryId", this, bigDecimalEntryPersistence);
@@ -3279,13 +3194,14 @@ public class LVEntryPersistenceImpl
 					"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = new FinderPath(
+		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "head"}, true);
+			new String[] {"uuid_", "groupId", "head"}, false, LVEntry::getUuid,
+			LVEntry::getGroupId, LVEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head, _SQL_SELECT_LVENTRY_WHERE,
@@ -3452,13 +3368,14 @@ public class LVEntryPersistenceImpl
 				"lvEntry.", "uniqueGroupKey", FinderColumn.Type.STRING, "=",
 				true, true, LVEntry::getUniqueGroupKey));
 
-		_finderPathFetchByG_UGK_Head = new FinderPath(
+		_finderPathFetchByG_UGK_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_UGK_Head",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"groupId", "uniqueGroupKey", "head"}, true);
+			new String[] {"groupId", "uniqueGroupKey", "head"}, false,
+			LVEntry::getGroupId, LVEntry::getUniqueGroupKey, LVEntry::isHead);
 
 		_uniquePersistenceFinderByG_UGK_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_UGK_Head, _SQL_SELECT_LVENTRY_WHERE,
@@ -3472,9 +3389,10 @@ public class LVEntryPersistenceImpl
 				"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true, true,
 				LVEntry::isHead));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			LVEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_LVENTRY_WHERE,
@@ -3537,4 +3455,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-486946643
+// LIFERAY-SERVICE-BUILDER-HASH:-1197861044

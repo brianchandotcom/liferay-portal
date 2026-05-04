@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -39,7 +36,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -281,86 +277,6 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 	/**
-	 * Caches the dl opener file entry reference in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 */
-	@Override
-	public void cacheResult(
-		DLOpenerFileEntryReference dlOpenerFileEntryReference) {
-
-		entityCache.putResult(
-			DLOpenerFileEntryReferenceImpl.class,
-			dlOpenerFileEntryReference.getPrimaryKey(),
-			dlOpenerFileEntryReference);
-
-		finderCache.putResult(
-			_finderPathFetchByFileEntryId,
-			new Object[] {dlOpenerFileEntryReference.getFileEntryId()},
-			dlOpenerFileEntryReference);
-
-		finderCache.putResult(
-			_finderPathFetchByR_F,
-			new Object[] {
-				dlOpenerFileEntryReference.getReferenceType(),
-				dlOpenerFileEntryReference.getFileEntryId()
-			},
-			dlOpenerFileEntryReference);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dl opener file entry references in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReferences the dl opener file entry references
-	 */
-	@Override
-	public void cacheResult(
-		List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlOpenerFileEntryReferences.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLOpenerFileEntryReference dlOpenerFileEntryReference :
-				dlOpenerFileEntryReferences) {
-
-			if (entityCache.getResult(
-					DLOpenerFileEntryReferenceImpl.class,
-					dlOpenerFileEntryReference.getPrimaryKey()) == null) {
-
-				cacheResult(dlOpenerFileEntryReference);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLOpenerFileEntryReferenceModelImpl
-			dlOpenerFileEntryReferenceModelImpl) {
-
-		Object[] args = new Object[] {
-			dlOpenerFileEntryReferenceModelImpl.getFileEntryId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByFileEntryId, args,
-			dlOpenerFileEntryReferenceModelImpl);
-
-		args = new Object[] {
-			dlOpenerFileEntryReferenceModelImpl.getReferenceType(),
-			dlOpenerFileEntryReferenceModelImpl.getFileEntryId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByR_F, args, dlOpenerFileEntryReferenceModelImpl);
-	}
-
-	/**
 	 * Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	 *
 	 * @param dlOpenerFileEntryReferenceId the primary key for the new dl opener file entry reference
@@ -505,11 +421,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DLOpenerFileEntryReferenceImpl.class,
-			dlOpenerFileEntryReferenceModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlOpenerFileEntryReferenceModelImpl);
+		cacheUniqueFindersResult(dlOpenerFileEntryReference, false);
 
 		if (isNew) {
 			dlOpenerFileEntryReference.setNew(false);
@@ -578,13 +490,10 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByFileEntryId = new FinderPath(
+		_finderPathFetchByFileEntryId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFileEntryId",
 			new String[] {Long.class.getName()}, new String[] {"fileEntryId"},
-			true);
+			false, DLOpenerFileEntryReference::getFileEntryId);
 
 		_uniquePersistenceFinderByFileEntryId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByFileEntryId,
@@ -594,10 +503,12 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				DLOpenerFileEntryReference::getFileEntryId));
 
-		_finderPathFetchByR_F = new FinderPath(
+		_finderPathFetchByR_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_F",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"referenceType", "fileEntryId"}, true);
+			new String[] {"referenceType", "fileEntryId"}, false,
+			DLOpenerFileEntryReference::getReferenceType,
+			DLOpenerFileEntryReference::getFileEntryId);
 
 		_uniquePersistenceFinderByR_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_F,
@@ -677,4 +588,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1237115300
+// LIFERAY-SERVICE-BUILDER-HASH:-272543496

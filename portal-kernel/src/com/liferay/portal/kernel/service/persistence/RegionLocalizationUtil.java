@@ -36,6 +36,22 @@ public class RegionLocalizationUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RegionLocalization> regionLocalizations) {
+
+		getPersistence().cacheResult(regionLocalizations);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RegionLocalization regionLocalization) {
+		getPersistence().cacheResult(regionLocalization);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -312,26 +328,6 @@ public class RegionLocalizationUtil {
 	}
 
 	/**
-	 * Caches the region localization in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalization the region localization
-	 */
-	public static void cacheResult(RegionLocalization regionLocalization) {
-		getPersistence().cacheResult(regionLocalization);
-	}
-
-	/**
-	 * Caches the region localizations in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalizations the region localizations
-	 */
-	public static void cacheResult(
-		List<RegionLocalization> regionLocalizations) {
-
-		getPersistence().cacheResult(regionLocalizations);
-	}
-
-	/**
 	 * Creates a new region localization with the primary key. Does not add the region localization to the database.
 	 *
 	 * @param regionLocalizationId the primary key for the new region localization
@@ -400,4 +396,4 @@ public class RegionLocalizationUtil {
 	private static volatile RegionLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1026680101
+// LIFERAY-SERVICE-BUILDER-HASH:-15834169

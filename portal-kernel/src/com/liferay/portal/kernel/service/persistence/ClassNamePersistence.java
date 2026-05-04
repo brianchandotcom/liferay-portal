@@ -74,20 +74,6 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	public int countByValue(String value);
 
 	/**
-	 * Caches the class name in the entity cache if it is enabled.
-	 *
-	 * @param className the class name
-	 */
-	public void cacheResult(ClassName className);
-
-	/**
-	 * Caches the class names in the entity cache if it is enabled.
-	 *
-	 * @param classNames the class names
-	 */
-	public void cacheResult(java.util.List<ClassName> classNames);
-
-	/**
 	 * Creates a new class name with the primary key. Does not add the class name to the database.
 	 *
 	 * @param classNameId the primary key for the new class name
@@ -125,4 +111,4 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	public ClassName fetchByPrimaryKey(long classNameId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:153536075
+// LIFERAY-SERVICE-BUILDER-HASH:1603666387

@@ -466,24 +466,6 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		String version, long workflowMetricsSLADefinitionId);
 
 	/**
-	 * Caches the workflow metrics sla definition version in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersion the workflow metrics sla definition version
-	 */
-	public void cacheResult(
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion);
-
-	/**
-	 * Caches the workflow metrics sla definition versions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersions the workflow metrics sla definition versions
-	 */
-	public void cacheResult(
-		java.util.List<WorkflowMetricsSLADefinitionVersion>
-			workflowMetricsSLADefinitionVersions);
-
-	/**
 	 * Creates a new workflow metrics sla definition version with the primary key. Does not add the workflow metrics sla definition version to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionVersionId the primary key for the new workflow metrics sla definition version
@@ -528,4 +510,4 @@ public interface WorkflowMetricsSLADefinitionVersionPersistence
 		long workflowMetricsSLADefinitionVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1972890343
+// LIFERAY-SERVICE-BUILDER-HASH:255495473

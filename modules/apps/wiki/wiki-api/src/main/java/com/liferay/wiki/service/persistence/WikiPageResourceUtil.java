@@ -36,6 +36,20 @@ public class WikiPageResourceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<WikiPageResource> wikiPageResources) {
+		getPersistence().cacheResult(wikiPageResources);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WikiPageResource wikiPageResource) {
+		getPersistence().cacheResult(wikiPageResource);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -488,24 +502,6 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
-	 * Caches the wiki page resource in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResource the wiki page resource
-	 */
-	public static void cacheResult(WikiPageResource wikiPageResource) {
-		getPersistence().cacheResult(wikiPageResource);
-	}
-
-	/**
-	 * Caches the wiki page resources in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResources the wiki page resources
-	 */
-	public static void cacheResult(List<WikiPageResource> wikiPageResources) {
-		getPersistence().cacheResult(wikiPageResources);
-	}
-
-	/**
 	 * Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new wiki page resource
@@ -568,4 +564,4 @@ public class WikiPageResourceUtil {
 	private static volatile WikiPageResourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:892906637
+// LIFERAY-SERVICE-BUILDER-HASH:145530161

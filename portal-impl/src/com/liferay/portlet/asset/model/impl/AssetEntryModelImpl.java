@@ -2045,4 +2045,4 @@ public class AssetEntryModelImpl
 	private AssetEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1998742155
+// LIFERAY-SERVICE-BUILDER-HASH:-2120894617

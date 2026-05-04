@@ -185,21 +185,6 @@ public interface CTCollectionTemplatePersistence
 	public int filterCountByCompanyId(long companyId);
 
 	/**
-	 * Caches the ct collection template in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplate the ct collection template
-	 */
-	public void cacheResult(CTCollectionTemplate ctCollectionTemplate);
-
-	/**
-	 * Caches the ct collection templates in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplates the ct collection templates
-	 */
-	public void cacheResult(
-		java.util.List<CTCollectionTemplate> ctCollectionTemplates);
-
-	/**
 	 * Creates a new ct collection template with the primary key. Does not add the ct collection template to the database.
 	 *
 	 * @param ctCollectionTemplateId the primary key for the new ct collection template
@@ -239,4 +224,4 @@ public interface CTCollectionTemplatePersistence
 	public CTCollectionTemplate fetchByPrimaryKey(long ctCollectionTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:590525777
+// LIFERAY-SERVICE-BUILDER-HASH:-2002598599

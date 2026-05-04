@@ -36,6 +36,22 @@ public class AccountEntryUserRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AccountEntryUserRel> accountEntryUserRels) {
+
+		getPersistence().cacheResult(accountEntryUserRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AccountEntryUserRel accountEntryUserRel) {
+		getPersistence().cacheResult(accountEntryUserRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -433,26 +449,6 @@ public class AccountEntryUserRelUtil {
 	}
 
 	/**
-	 * Caches the account entry user rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRel the account entry user rel
-	 */
-	public static void cacheResult(AccountEntryUserRel accountEntryUserRel) {
-		getPersistence().cacheResult(accountEntryUserRel);
-	}
-
-	/**
-	 * Caches the account entry user rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRels the account entry user rels
-	 */
-	public static void cacheResult(
-		List<AccountEntryUserRel> accountEntryUserRels) {
-
-		getPersistence().cacheResult(accountEntryUserRels);
-	}
-
-	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
 	 * @param accountEntryUserRelId the primary key for the new account entry user rel
@@ -520,4 +516,4 @@ public class AccountEntryUserRelUtil {
 	private static volatile AccountEntryUserRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-418343556
+// LIFERAY-SERVICE-BUILDER-HASH:1146573626

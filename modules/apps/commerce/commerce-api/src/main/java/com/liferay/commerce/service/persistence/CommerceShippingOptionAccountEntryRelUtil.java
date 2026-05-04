@@ -36,6 +36,26 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShippingOptionAccountEntryRel>
+			commerceShippingOptionAccountEntryRels) {
+
+		getPersistence().cacheResult(commerceShippingOptionAccountEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceShippingOptionAccountEntryRel
+			commerceShippingOptionAccountEntryRel) {
+
+		getPersistence().cacheResult(commerceShippingOptionAccountEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -606,30 +626,6 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 	}
 
 	/**
-	 * Caches the commerce shipping option account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRel the commerce shipping option account entry rel
-	 */
-	public static void cacheResult(
-		CommerceShippingOptionAccountEntryRel
-			commerceShippingOptionAccountEntryRel) {
-
-		getPersistence().cacheResult(commerceShippingOptionAccountEntryRel);
-	}
-
-	/**
-	 * Caches the commerce shipping option account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingOptionAccountEntryRels the commerce shipping option account entry rels
-	 */
-	public static void cacheResult(
-		List<CommerceShippingOptionAccountEntryRel>
-			commerceShippingOptionAccountEntryRels) {
-
-		getPersistence().cacheResult(commerceShippingOptionAccountEntryRels);
-	}
-
-	/**
 	 * Creates a new commerce shipping option account entry rel with the primary key. Does not add the commerce shipping option account entry rel to the database.
 	 *
 	 * @param CommerceShippingOptionAccountEntryRelId the primary key for the new commerce shipping option account entry rel
@@ -709,4 +705,4 @@ public class CommerceShippingOptionAccountEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-895806898
+// LIFERAY-SERVICE-BUILDER-HASH:-856617638

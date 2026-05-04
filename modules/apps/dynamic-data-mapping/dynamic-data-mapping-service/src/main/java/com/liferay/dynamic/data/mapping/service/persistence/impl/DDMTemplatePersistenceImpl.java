@@ -16,7 +16,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5604,128 +5601,6 @@ public class DDMTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm template in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplate the ddm template
-	 */
-	@Override
-	public void cacheResult(DDMTemplate ddmTemplate) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplate.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(),
-				ddmTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {ddmTemplate.getUuid(), ddmTemplate.getGroupId()},
-				ddmTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchBySmallImageId,
-				new Object[] {ddmTemplate.getSmallImageId()}, ddmTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_T,
-				new Object[] {
-					ddmTemplate.getGroupId(), ddmTemplate.getClassNameId(),
-					ddmTemplate.getTemplateKey()
-				},
-				ddmTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					ddmTemplate.getExternalReferenceCode(),
-					ddmTemplate.getGroupId()
-				},
-				ddmTemplate);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm templates in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplates the ddm templates
-	 */
-	@Override
-	public void cacheResult(List<DDMTemplate> ddmTemplates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmTemplates.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmTemplate.getCtCollectionId())) {
-
-				DDMTemplate cachedDDMTemplate =
-					(DDMTemplate)entityCache.getResult(
-						DDMTemplateImpl.class, ddmTemplate.getPrimaryKey());
-
-				if (cachedDDMTemplate == null) {
-					cacheResult(ddmTemplate);
-				}
-				else {
-					DDMTemplateModelImpl ddmTemplateModelImpl =
-						(DDMTemplateModelImpl)ddmTemplate;
-					DDMTemplateModelImpl cachedDDMTemplateModelImpl =
-						(DDMTemplateModelImpl)cachedDDMTemplate;
-
-					ddmTemplateModelImpl.setResourceClassName(
-						cachedDDMTemplateModelImpl.getResourceClassName());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMTemplateModelImpl ddmTemplateModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplateModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmTemplateModelImpl.getUuid(),
-				ddmTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, ddmTemplateModelImpl);
-
-			args = new Object[] {ddmTemplateModelImpl.getSmallImageId()};
-
-			finderCache.putResult(
-				_finderPathFetchBySmallImageId, args, ddmTemplateModelImpl);
-
-			args = new Object[] {
-				ddmTemplateModelImpl.getGroupId(),
-				ddmTemplateModelImpl.getClassNameId(),
-				ddmTemplateModelImpl.getTemplateKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_T, args, ddmTemplateModelImpl);
-
-			args = new Object[] {
-				ddmTemplateModelImpl.getExternalReferenceCode(),
-				ddmTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, ddmTemplateModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm template with the primary key. Does not add the ddm template to the database.
 	 *
 	 * @param templateId the primary key for the new ddm template
@@ -5930,10 +5805,7 @@ public class DDMTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMTemplateImpl.class, ddmTemplateModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmTemplateModelImpl);
+		cacheUniqueFindersResult(ddmTemplate, false);
 
 		if (isNew) {
 			ddmTemplate.setNew(false);
@@ -6089,9 +5961,6 @@ public class DDMTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6119,10 +5988,11 @@ public class DDMTemplatePersistenceImpl
 				"ddmTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DDMTemplate::getUuid,
+			DDMTemplate::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMTEMPLATE_WHERE,
@@ -6309,10 +6179,10 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "language", FinderColumn.Type.STRING, "=",
 					true, true, DDMTemplate::getLanguage));
 
-		_finderPathFetchBySmallImageId = new FinderPath(
+		_finderPathFetchBySmallImageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySmallImageId",
 			new String[] {Long.class.getName()}, new String[] {"smallImageId"},
-			true);
+			false, DDMTemplate::getSmallImageId);
 
 		_uniquePersistenceFinderBySmallImageId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchBySmallImageId, _SQL_SELECT_DDMTEMPLATE_WHERE,
@@ -6405,13 +6275,15 @@ public class DDMTemplatePersistenceImpl
 			},
 			new String[] {"groupId", "classNameId", "classPK"}, false);
 
-		_finderPathFetchByG_C_T = new FinderPath(
+		_finderPathFetchByG_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "templateKey"}, true);
+			new String[] {"groupId", "classNameId", "templateKey"}, false,
+			DDMTemplate::getGroupId, DDMTemplate::getClassNameId,
+			DDMTemplate::getTemplateKey);
 
 		_uniquePersistenceFinderByG_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_T, _SQL_SELECT_DDMTEMPLATE_WHERE,
@@ -6571,10 +6443,11 @@ public class DDMTemplatePersistenceImpl
 					"ddmTemplate.", "mode", FinderColumn.Type.STRING, "=", true,
 					true, DDMTemplate::getMode));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			DDMTemplate::getExternalReferenceCode, DDMTemplate::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_DDMTEMPLATE_WHERE,
@@ -6681,4 +6554,4 @@ public class DDMTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1052306673
+// LIFERAY-SERVICE-BUILDER-HASH:-1071464610

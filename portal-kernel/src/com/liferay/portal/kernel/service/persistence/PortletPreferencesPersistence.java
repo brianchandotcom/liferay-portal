@@ -1116,21 +1116,6 @@ public interface PortletPreferencesPersistence
 		long ownerId, int ownerType, long plid, String portletId);
 
 	/**
-	 * Caches the portlet preferences in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferences the portlet preferences
-	 */
-	public void cacheResult(PortletPreferences portletPreferences);
-
-	/**
-	 * Caches the portlet preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferenceses the portlet preferenceses
-	 */
-	public void cacheResult(
-		java.util.List<PortletPreferences> portletPreferenceses);
-
-	/**
 	 * Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
 	 *
 	 * @param portletPreferencesId the primary key for the new portlet preferences
@@ -1169,4 +1154,4 @@ public interface PortletPreferencesPersistence
 	public PortletPreferences fetchByPrimaryKey(long portletPreferencesId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:882447724
+// LIFERAY-SERVICE-BUILDER-HASH:-1123652894

@@ -37,6 +37,20 @@ public class AkismetEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AkismetEntry> akismetEntries) {
+		getPersistence().cacheResult(akismetEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AkismetEntry akismetEntry) {
+		getPersistence().cacheResult(akismetEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -298,24 +312,6 @@ public class AkismetEntryUtil {
 	}
 
 	/**
-	 * Caches the akismet entry in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntry the akismet entry
-	 */
-	public static void cacheResult(AkismetEntry akismetEntry) {
-		getPersistence().cacheResult(akismetEntry);
-	}
-
-	/**
-	 * Caches the akismet entries in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntries the akismet entries
-	 */
-	public static void cacheResult(List<AkismetEntry> akismetEntries) {
-		getPersistence().cacheResult(akismetEntries);
-	}
-
-	/**
 	 * Creates a new akismet entry with the primary key. Does not add the akismet entry to the database.
 	 *
 	 * @param akismetEntryId the primary key for the new akismet entry
@@ -376,4 +372,4 @@ public class AkismetEntryUtil {
 	private static volatile AkismetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980457331
+// LIFERAY-SERVICE-BUILDER-HASH:613424650

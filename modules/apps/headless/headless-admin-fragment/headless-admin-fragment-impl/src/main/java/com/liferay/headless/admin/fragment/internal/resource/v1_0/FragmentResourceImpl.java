@@ -18,16 +18,15 @@ import com.liferay.headless.admin.fragment.dto.v1_0.Fragment;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentVersion;
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.FragmentSetUtil;
+import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -237,7 +236,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getReadOnly()),
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED,
-				_getServiceContext(groupId, fragment));
+				ServiceContextUtil.getServiceContext(
+					contextCompany.getCompanyId(), fragment.getDateCreated(),
+					groupId, contextHttpServletRequest,
+					fragment.getDateModified()));
 
 			if (draftFragmentVersion != null) {
 				_updateDraft(
@@ -256,7 +258,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getReadOnly()),
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_DRAFT,
-				_getServiceContext(groupId, fragment));
+				ServiceContextUtil.getServiceContext(
+					contextCompany.getCompanyId(), fragment.getDateCreated(),
+					groupId, contextHttpServletRequest,
+					fragment.getDateModified()));
 		}
 		else {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
@@ -268,7 +273,10 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				GetterUtil.getBoolean(fragment.getReadOnly()),
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_DRAFT,
-				_getServiceContext(groupId, fragment));
+				ServiceContextUtil.getServiceContext(
+					contextCompany.getCompanyId(), fragment.getDateCreated(),
+					groupId, contextHttpServletRequest,
+					fragment.getDateModified()));
 		}
 
 		return _toFragment(fragmentEntry);
@@ -325,18 +333,6 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 
 		return FragmentSetUtil.addFragmentCollection(
 			fragmentSet, groupId, contextHttpServletRequest);
-	}
-
-	private ServiceContext _getServiceContext(long groupId, Fragment fragment) {
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setCreateDate(fragment.getDateCreated());
-		serviceContext.setModifiedDate(fragment.getDateModified());
-
-		return serviceContext;
 	}
 
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {

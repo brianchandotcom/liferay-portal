@@ -580,15 +580,7 @@ public class SectionDisplayContextHelper {
 			).build(
 				"move"
 			),
-			FDSActionDropdownItemBuilder.setIcon(
-				"copy"
-			).setLabel(
-				_language.get(httpServletRequest, "copy-to")
-			).setPermissionKey(
-				"update"
-			).build(
-				"copy"
-			),
+			_getCopyFDSActionDropdownItem(httpServletRequest),
 			FDSActionDropdownItemBuilder.setHref(
 				PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(
@@ -847,6 +839,46 @@ public class SectionDisplayContextHelper {
 			).build(
 				"expire"
 			));
+	}
+
+	private FDSActionDropdownItem _getCopyFDSActionDropdownItem(
+		HttpServletRequest httpServletRequest) {
+
+		return FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+			FDSActionDropdownItemList.of(
+				FDSActionDropdownItemBuilder.setHref(
+					StringPool.BLANK
+				).setIcon(
+					"copy"
+				).setLabel(
+					_language.get(httpServletRequest, "copy-to")
+				).setPermissionKey(
+					"update"
+				).build(
+					"copy"
+				),
+				FDSActionDropdownItemBuilder.setHref(
+					StringPool.BLANK
+				).setIcon(
+					"copy"
+				).setLabel(
+					_language.get(httpServletRequest, "duplicate")
+				).setPermissionKey(
+					"update"
+				).build(
+					"duplicate"
+				))
+		).setIcon(
+			"copy"
+		).setLabel(
+			_language.get(httpServletRequest, "copy")
+		).setPermissionKey(
+			"update"
+		).setType(
+			"contextual"
+		).build(
+			"copy-menu"
+		);
 	}
 
 	private JSONArray _getDepotEntriesJSONArray(

@@ -16884,6 +16884,50 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-selenium-driver" />
 	</target>
 
+	<!--
+	LPD-88400 Make legacy Poshi tests use CKEditor 4 (enable LPD-11235 (CKEditor 4) per company)
+	-->
+
+	<target name="force-feature-flag-LPD-11235">
+		<exec executable="curl" failonerror="false" outputproperty="force.ff.company.json">
+			<arg value="-s" />
+			<arg value="-u" />
+			<arg value="test@liferay.com:${test.portal.default.admin.password}" />
+			<arg value="${default.portal.url}/o/headless-portal-instances/v1.0/portal-instances" />
+		</exec>
+
+		<beanshell>
+			<![CDATA[
+				String json = project.getProperty("force.ff.company.json");
+
+				if (json != null) {
+					java.util.regex.Matcher matcher =
+						java.util.regex.Pattern.compile("\"id\"\\s*:\\s*\"?(\\d+)").matcher(json);
+
+					if (matcher.find()) {
+						project.setProperty("force.ff.companyId", matcher.group(1));
+					}
+				}
+			]]>
+		</beanshell>
+
+		<if>
+			<isset property="force.ff.companyId" />
+			<then>
+				<exec executable="curl" failonerror="false">
+					<arg value="-s" />
+					<arg value="-X" />
+					<arg value="POST" />
+					<arg value="-u" />
+					<arg value="test@liferay.com:${test.portal.default.admin.password}" />
+					<arg value="-d" />
+					<arg value="companyId=${force.ff.companyId}&amp;key=LPD-11235&amp;enabled=true" />
+					<arg value="${default.portal.url}/o/com-liferay-feature-flag-web/set-enabled" />
+				</exec>
+			</then>
+		</if>
+	</target>
+
 	<target name="run-simple-server">
 		<if>
 			<not>
@@ -17657,6 +17701,8 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				</echo>
 			</then>
 		</if>
+
+		<antcall target="force-feature-flag-LPD-11235" />
 
 		<get-testcase-property property.name="skip.run.selenium.test" />
 

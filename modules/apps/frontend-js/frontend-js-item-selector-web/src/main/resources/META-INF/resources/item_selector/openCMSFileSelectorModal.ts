@@ -184,7 +184,6 @@ export default function openCMSFileSelectorModal({
 	allowDragAndDrop = false,
 	allowedExtensions,
 	config,
-	createItemURL,
 	fdsProps,
 	filters,
 	groupId,
@@ -195,7 +194,6 @@ export default function openCMSFileSelectorModal({
 	allowDragAndDrop?: boolean;
 	allowedExtensions?: string;
 	config?: Partial<CMSFileItemSelectorModalConfig>;
-	createItemURL?: string;
 	fdsProps?: Partial<CMSFileItemSelectorModalProps['fdsProps']>;
 	filters?: string[];
 	groupId: number;
@@ -224,7 +222,6 @@ export default function openCMSFileSelectorModal({
 		{
 			...finalConfig,
 			allowedExtensions,
-			createItemURL,
 			fdsProps: {
 				...FDS_PROPS,
 				emptyState: allowDragAndDrop

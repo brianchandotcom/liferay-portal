@@ -9,7 +9,6 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {InternalDispatch} from '@clayui/shared';
 import {
-	ACTION_ITEM_TARGETS,
 	FrontendDataSet,
 	IFileDropSettings,
 	IFrontendDataSetProps,
@@ -68,11 +67,6 @@ export interface IItemSelectorModalProps<T> {
 	 * If the @clayui/breadcrumb items label should be visible or not
 	 */
 	breadcrumbsLabel?: boolean;
-
-	/**
-	 * URL for item creation used to open a new tab.
-	 */
-	createItemURL?: string;
 
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
@@ -149,19 +143,11 @@ export interface IItemSelectorModalProps<T> {
 	title?: string;
 }
 
-const EMPTY_STATE_PROPS = {
-	description: Liferay.Language.get(
-		'fortunately-it-is-very-easy-to-add-new-ones'
-	),
-	title: Liferay.Language.get('no-items-were-found'),
-};
-
 function ItemSelectorModal<T extends Record<string, any>>({
 	allowedExtensions,
 	apiURL,
 	breadcrumbs,
 	breadcrumbsLabel = true,
-	createItemURL,
 	fdsProps,
 	filesUploaderComponent: FilesUploaderComponent,
 	groupId,
@@ -264,41 +250,21 @@ function ItemSelectorModal<T extends Record<string, any>>({
 						{...fdsProps}
 						apiURL={apiURL}
 						creationMenu={
-							FilesUploaderComponent || createItemURL
+							FilesUploaderComponent
 								? {
 										primaryItems: [
-											...(FilesUploaderComponent
-												? [
-														{
-															label: Liferay.Language.get(
-																'upload-files'
-															),
-															onClick: () =>
-																setViewType(
-																	'upload'
-																),
-														},
-													]
-												: []),
-											...(createItemURL
-												? [
-														{
-															href: createItemURL,
-															label: Liferay.Language.get(
-																'add-new-item'
-															),
-															target: ACTION_ITEM_TARGETS.BLANK,
-														},
-													]
-												: []),
+											{
+												label: Liferay.Language.get(
+													'upload-files'
+												),
+												onClick: () =>
+													setViewType('upload'),
+											},
 										],
 									}
 								: undefined
 						}
-						emptyState={
-							fdsProps.emptyState ||
-							(createItemURL ? EMPTY_STATE_PROPS : undefined)
-						}
+						emptyState={fdsProps.emptyState}
 						fileDropSettings={fileDropSettings}
 						key={fdsRefreshKey}
 						onSelectedItemsChange={setSelectedItems}

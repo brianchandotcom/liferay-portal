@@ -74,7 +74,7 @@ $cadmin-focus-ring-pulse-animation: $cadmin-focus-ring-pulse-animation-name
 	}
 
 	html#{$cadmin-selector} .c-prefers-focus-ring .cadmin {
-		:focus-visible,
+		:focus-visible:not(.toggle-switch-check),
 		.focus {
 			position: relative;
 			z-index: 1;
@@ -97,7 +97,7 @@ $cadmin-focus-ring-pulse-animation: $cadmin-focus-ring-pulse-animation-name
 	}
 
 	html#{$cadmin-selector} .c-prefers-focus-ring.c-tab-returning .cadmin {
-		:focus-visible,
+		:focus-visible:not(.toggle-switch-check),
 		.focus {
 			&::after {
 				animation-name: none;
@@ -112,7 +112,7 @@ $cadmin-focus-ring-pulse-animation: $cadmin-focus-ring-pulse-animation-name
 	html#{$cadmin-selector}
 		.c-prefers-reduced-motion.c-prefers-focus-ring
 		.cadmin {
-		:focus-visible,
+		:focus-visible:not(.toggle-switch-check),
 		.focus {
 			&::after {
 				animation: none;

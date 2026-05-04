@@ -56,6 +56,14 @@ public class WorkflowInstanceMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		if (message.contains("exception")) {
+			AgentUtil.completeExceptionally(
+				(Exception)message.get("exception"),
+				message.getLong("workflowInstanceId"));
+
+			return;
+		}
+
 		AgentUtil.complete(
 			(Map<String, Serializable>)message.get("workflowContext"),
 			message.getLong("workflowInstanceId"));

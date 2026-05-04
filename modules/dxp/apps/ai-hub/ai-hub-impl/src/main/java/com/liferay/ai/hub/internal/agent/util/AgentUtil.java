@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.internal.agent.util;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 
@@ -35,6 +36,22 @@ public class AgentUtil {
 		completableFuture.complete(workflowContext);
 	}
 
+	public static void completeExceptionally(
+		Exception exception, long workflowInstanceId) {
+
+		CompletableFuture<Map<String, Serializable>> completableFuture =
+			_completableFutures.get(workflowInstanceId);
+
+		if (completableFuture == null) {
+			return;
+		}
+
+		completableFuture.complete(
+			HashMapBuilder.<String, Serializable>put(
+				"exception", exception
+			).build());
+	}
+
 	public static String getOutput(WorkflowInstance workflowInstance)
 		throws Exception {
 
@@ -44,8 +61,14 @@ public class AgentUtil {
 		_completableFutures.put(
 			workflowInstance.getWorkflowInstanceId(), completableFuture);
 
-		return MapUtil.getString(
-			completableFuture.get(1, TimeUnit.MINUTES), "output");
+		Map<String, Serializable> workflowContext = completableFuture.get(
+			1, TimeUnit.MINUTES);
+
+		if (workflowContext.containsKey("exception")) {
+			throw (Exception)workflowContext.get("exception");
+		}
+
+		return MapUtil.getString(workflowContext, "output");
 	}
 
 	private static final ConcurrentMap

@@ -15,15 +15,14 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Application;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
 
@@ -33,13 +32,9 @@ import java.security.ProtectionDomain;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Objects;
 import java.util.Queue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -50,13 +45,8 @@ import org.junit.BeforeClass;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedServiceFactory;
 
 /**
  * @author Marta Medio
@@ -167,95 +157,15 @@ public abstract class BaseCORSClientTestCase {
 	protected void createFactoryConfiguration(
 		String configurationClassName, Dictionary<String, Object> properties) {
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		Dictionary<String, Object> registrationProperties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				Constants.SERVICE_PID, configurationClassName
-			).build();
-
-		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
-			_bundleContext.registerService(
-				ManagedServiceFactory.class,
-				new ManagedServiceFactory() {
-
-					@Override
-					public void deleted(String pid) {
-					}
-
-					@Override
-					public String getName() {
-						return "Test managed service factory for PID " +
-							configurationClassName;
-					}
-
-					@Override
-					public void updated(
-						String pid, Dictionary<String, ?> updatedProperties) {
-
-						if ((updatedProperties == null) ||
-							(properties.size() > updatedProperties.size())) {
-
-							return;
-						}
-
-						Enumeration<String> enumeration = properties.keys();
-
-						while (enumeration.hasMoreElements()) {
-							String key = enumeration.nextElement();
-
-							if (!Objects.deepEquals(
-									properties.get(key),
-									updatedProperties.get(key))) {
-
-								return;
-							}
-						}
-
-						countDownLatch.countDown();
-					}
-
-				},
-				registrationProperties);
-
 		try {
-			ServiceReference<ConfigurationAdmin> serviceReference =
-				_bundleContext.getServiceReference(ConfigurationAdmin.class);
+			String pid = ConfigurationTestUtil.createFactoryConfiguration(
+				configurationClassName, properties);
 
-			ConfigurationAdmin configurationAdmin = _bundleContext.getService(
-				serviceReference);
-
-			Configuration configuration = null;
-
-			try {
-				configuration = configurationAdmin.createFactoryConfiguration(
-					configurationClassName, StringPool.QUESTION);
-
-				configuration.update(properties);
-
-				countDownLatch.await(5, TimeUnit.MINUTES);
-
-				_autoCloseables.add(configuration::delete);
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-			catch (InterruptedException interruptedException) {
-				try {
-					configuration.delete();
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				throw new RuntimeException(interruptedException);
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
+			_autoCloseables.add(
+				() -> ConfigurationTestUtil.deleteConfiguration(pid));
 		}
-		finally {
-			serviceRegistration.unregister();
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

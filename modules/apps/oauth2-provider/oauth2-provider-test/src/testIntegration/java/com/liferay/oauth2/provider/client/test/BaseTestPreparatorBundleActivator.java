@@ -16,8 +16,8 @@ import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,30 +36,20 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 
 import jakarta.ws.rs.core.Application;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.cxf.rs.security.oauth2.utils.OAuthConstants;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedServiceFactory;
 
 /**
  * @author Carlos Sierra Andrés
@@ -182,98 +172,19 @@ public abstract class BaseTestPreparatorBundleActivator
 		return company;
 	}
 
-	protected Configuration createFactoryConfiguration(
-		BundleContext bundleContext, String factoryPid,
-		Dictionary<String, Object> properties) {
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		Dictionary<String, Object> registrationProperties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				Constants.SERVICE_PID, factoryPid
-			).build();
-
-		ServiceRegistration<ManagedServiceFactory> serviceRegistration =
-			bundleContext.registerService(
-				ManagedServiceFactory.class,
-				new ManagedServiceFactory() {
-
-					@Override
-					public void deleted(String pid) {
-					}
-
-					@Override
-					public String getName() {
-						return "Test managed service factory for PID " +
-							factoryPid;
-					}
-
-					@Override
-					public void updated(
-						String pid, Dictionary<String, ?> updatedProperties) {
-
-						if (updatedProperties == null) {
-							return;
-						}
-
-						if (isIncluded(properties, updatedProperties)) {
-							countDownLatch.countDown();
-						}
-					}
-
-				},
-				registrationProperties);
-
-		try {
-			ServiceReference<ConfigurationAdmin> serviceReference =
-				bundleContext.getServiceReference(ConfigurationAdmin.class);
-
-			ConfigurationAdmin configurationAdmin = bundleContext.getService(
-				serviceReference);
-
-			Configuration configuration = null;
-
-			try {
-				configuration = configurationAdmin.createFactoryConfiguration(
-					factoryPid, StringPool.QUESTION);
-
-				configuration.update(properties);
-
-				countDownLatch.await(5, TimeUnit.MINUTES);
-
-				return configuration;
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
-			}
-			catch (InterruptedException interruptedException) {
-				try {
-					configuration.delete();
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-
-				throw new RuntimeException(interruptedException);
-			}
-			finally {
-				bundleContext.ungetService(serviceReference);
-			}
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
-	}
-
-	protected Configuration createFactoryConfiguration(
+	protected void createFactoryConfiguration(
 		String factoryPid, Dictionary<String, Object> properties) {
 
-		Configuration configuration = createFactoryConfiguration(
-			bundleContext, factoryPid, properties);
+		try {
+			String pid = ConfigurationTestUtil.createFactoryConfiguration(
+				factoryPid, properties);
 
-		autoCloseables.add(configuration::delete);
-
-		return configuration;
+			autoCloseables.add(
+				() -> ConfigurationTestUtil.deleteConfiguration(pid));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	protected OAuth2Application createOAuth2Application(
@@ -472,28 +383,6 @@ public abstract class BaseTestPreparatorBundleActivator
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
-	}
-
-	protected boolean isIncluded(
-		Dictionary<String, ?> properties1, Dictionary<String, ?> properties2) {
-
-		if (properties1.size() > properties2.size()) {
-			return false;
-		}
-
-		Enumeration<String> enumeration = properties1.keys();
-
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
-
-			if (!Objects.deepEquals(
-					properties1.get(key), properties2.get(key))) {
-
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	protected abstract void prepareTest() throws Exception;

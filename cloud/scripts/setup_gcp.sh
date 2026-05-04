@@ -363,7 +363,20 @@ function _terraform_init_and_apply {
 
 	_pushd "${1}"
 
-	terraform init -upgrade
+	if [ -n "${bucket_name}" ]
+	then
+		terraform init \
+			-backend-config="bucket=${bucket_name}" \
+			-backend-config="prefix=${deployment_name}/${region}/${folder_separator}" \
+			-upgrade
+	else
+		cat > backend_override.tf <<EOF
+terraform {
+	backend "local" {}
+}
+EOF
+		terraform init -upgrade
+	fi
 
 	terraform apply "${@:6}"
 

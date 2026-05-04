@@ -664,7 +664,7 @@ definition {
 	@description = "Test Automation for LPS-130291: Validate if it's posible to create a segment based on User > Email Adress criteria"
 	@priority = 5
 	@uitest
-	test AddSegmentByUserEmailAddress {
+	test AddSegmentByUserEmailAddressOperators {
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

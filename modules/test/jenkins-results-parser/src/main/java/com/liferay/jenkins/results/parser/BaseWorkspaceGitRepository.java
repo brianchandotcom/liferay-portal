@@ -1530,6 +1530,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
+		gitWorkingDirectory.fetch(remoteGitRef);
+
 		if (!gitWorkingDirectory.localSHAExists(sha) ||
 			!gitWorkingDirectory.refContainsSHA(remoteGitRef.getSHA(), sha)) {
 

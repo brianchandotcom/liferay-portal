@@ -33,8 +33,6 @@ const ALLOWED_VIDEO_FILE_EXTENSIONS = [
 	'wmv',
 ];
 
-const CMS_CREATE_ITEM_URL = `${location.origin}/web/cms/files?com.liferay.site.cms.site.initializer-filesSection_fdsConfig=(view:gallery)`;
-
 class HeadlessItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -58,8 +56,8 @@ class HeadlessItemSelector extends Plugin {
 
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
+					allowDragAndDrop: true,
 					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.join(','),
-					createItemURL: CMS_CREATE_ITEM_URL,
 					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
 					itemTypeLabel: Liferay.Language.get('image'),
 					onSelect: (items) => {
@@ -96,7 +94,7 @@ class HeadlessItemSelector extends Plugin {
 
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
-					createItemURL: CMS_CREATE_ITEM_URL,
+					allowDragAndDrop: true,
 					filters: [
 						`((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL_VIDEO') or (extension in ('${ALLOWED_VIDEO_FILE_EXTENSIONS.join("','")}')))`,
 					],

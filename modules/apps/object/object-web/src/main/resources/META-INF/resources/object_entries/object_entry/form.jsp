@@ -143,9 +143,46 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 			);
 		}
 
+		const scheduleObjectFieldNames = [
+			'displayDate',
+			'expirationDate',
+			'reviewDate',
+		];
+
+		function convertDateToUTC(value) {
+			if (!value) {
+				return null;
+			}
+
+			const date = new Date(value);
+
+			return (
+				date.getFullYear() +
+				'-' +
+				`0${date.getMonth() + 1}`.slice(-2) +
+				'-' +
+				`0${date.getDate()}`.slice(-2) +
+				'T' +
+				`0${date.getHours()}`.slice(-2) +
+				':' +
+				`0${date.getMinutes()}`.slice(-2) +
+				'Z'
+			);
+		}
+
 		function <portlet:namespace />getValues(fields) {
 			return fields.reduce((obj, field) => {
 				if (field.readOnly) {
+					return obj;
+				}
+
+				if (scheduleObjectFieldNames.includes(field.fieldName)) {
+					if (field.value) {
+						return Object.assign(obj, {
+							[field.fieldName]: convertDateToUTC(field.value),
+						});
+					}
+
 					return obj;
 				}
 

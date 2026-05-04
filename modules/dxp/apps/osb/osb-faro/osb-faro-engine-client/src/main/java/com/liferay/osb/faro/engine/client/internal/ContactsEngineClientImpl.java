@@ -15,6 +15,7 @@ import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.osb.faro.engine.client.model.AccountDetails;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
@@ -565,7 +566,14 @@ public class ContactsEngineClientImpl
 	public Account getAccount(FaroProject faroProject, String id)
 		throws FaroEngineClientException {
 
-		return get(faroProject, Rels.ACCOUNTS, id, Account.class);
+		return get(faroProject, Rels.ACCOUNT, id, Account.class);
+	}
+
+	@Override
+	public AccountDetails getAccountDetails(FaroProject faroProject, String id)
+		throws FaroEngineClientException {
+
+		return get(faroProject, Rels.ACCOUNT_DETAILS, id, AccountDetails.class);
 	}
 
 	@Override

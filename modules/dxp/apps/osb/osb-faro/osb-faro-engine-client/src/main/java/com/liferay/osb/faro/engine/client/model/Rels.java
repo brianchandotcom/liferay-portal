@@ -12,6 +12,8 @@ public interface Rels {
 
 	public static final String ACCOUNT = "account";
 
+	public static final String ACCOUNT_DETAILS = "account-details";
+
 	public static final String ACCOUNT_LIFECYCLE_OVERVIEW =
 		"account-lifecycle-overview";
 

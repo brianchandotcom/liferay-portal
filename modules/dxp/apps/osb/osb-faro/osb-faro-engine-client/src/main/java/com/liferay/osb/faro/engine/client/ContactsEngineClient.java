@@ -7,6 +7,7 @@ package com.liferay.osb.faro.engine.client;
 
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.osb.faro.engine.client.model.AccountDetails;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
@@ -167,6 +168,9 @@ public interface ContactsEngineClient {
 		throws Exception;
 
 	public Account getAccount(FaroProject faroProject, String id)
+		throws FaroEngineClientException;
+
+	public AccountDetails getAccountDetails(FaroProject faroProject, String id)
 		throws FaroEngineClientException;
 
 	public Results<Object> getAccountFieldValues(

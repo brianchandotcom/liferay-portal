@@ -14,6 +14,7 @@ import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
+import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDetailsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.petra.string.StringPool;
@@ -43,6 +44,18 @@ import org.osgi.service.component.annotations.Component;
 @Path("/{groupId}/account")
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountController extends BaseFaroController {
+
+	@GET
+	@Path("/{id}/details")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public AccountDetailsDisplay getAccountDetailsDisplay(
+			@PathParam("groupId") long groupId, @PathParam("id") String id)
+		throws Exception {
+
+		return new AccountDetailsDisplay(
+			contactsEngineClient.getAccountDetails(
+				faroProjectLocalService.getFaroProjectByGroupId(groupId), id));
+	}
 
 	@GET
 	@Path("/{id}")

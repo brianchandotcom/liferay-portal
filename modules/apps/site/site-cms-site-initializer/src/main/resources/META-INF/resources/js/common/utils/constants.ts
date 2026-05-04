@@ -42,6 +42,15 @@ export const ASSET_STATUS_TO_DISPLAY_TYPE = {
 	[ASSET_STATUS.SCHEDULED]: 'info',
 } as const;
 
+export const COLLABORATOR_TYPE = {
+	EXTERNAL_USER: 'Email',
+	USER: 'User',
+	USER_GROUP: 'UserGroup',
+} as const;
+
+export type CollaboratorType =
+	(typeof COLLABORATOR_TYPE)[keyof typeof COLLABORATOR_TYPE];
+
 export const ROOT_FOLDER_ERC = {
 	CONTENTS: 'L_CONTENTS',
 	FILES: 'L_FILES',

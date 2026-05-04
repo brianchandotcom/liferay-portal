@@ -29,13 +29,11 @@ import {
 	UserAccount,
 	UserGroup,
 } from '../../../common/types/UserAccount';
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
-
-const COLLABORATOR_TYPE = {
-	EXTERNAL_USER: 'Email',
-	USER: 'User',
-	USER_GROUP: 'UserGroup',
-};
+import {
+	COLLABORATOR_TYPE,
+	CollaboratorType,
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+} from '../../../common/utils/constants';
 
 function isEmailAddressValid(email: string) {
 	const emailRegex = /.+@.+\..+/i;
@@ -49,10 +47,7 @@ export interface Collaborator {
 	error?: string;
 	share: boolean;
 	toBeShared?: boolean;
-	type:
-		| typeof COLLABORATOR_TYPE.EXTERNAL_USER
-		| typeof COLLABORATOR_TYPE.USER
-		| typeof COLLABORATOR_TYPE.USER_GROUP;
+	type: CollaboratorType;
 	user: ExternalUser | UserAccount | UserGroup;
 }
 
@@ -109,10 +104,7 @@ function CollaboratorListItem({
 	onRemoveUser: (user: ExternalUser | UserAccount | UserGroup) => void;
 	share: boolean;
 	toBeShared?: boolean;
-	type:
-		| typeof COLLABORATOR_TYPE.EXTERNAL_USER
-		| typeof COLLABORATOR_TYPE.USER
-		| typeof COLLABORATOR_TYPE.USER_GROUP;
+	type: CollaboratorType;
 	user: ExternalUser | UserAccount | UserGroup;
 }) {
 	const handleChangeUserProperties = (propertyObj: object) => {
@@ -306,7 +298,7 @@ export default function ShareModalContent({
 
 	const handleAddUser = (
 		user: ExternalUser | UserAccount | UserGroup,
-		type: string
+		type: CollaboratorType
 	) => {
 		setCollaborators((collaborators) => {
 			return collaborators.every(
@@ -536,8 +528,11 @@ export default function ShareModalContent({
 									type,
 									user,
 								}: {
-									type: string;
-									user: ExternalUser | UserAccount | UserGroup;
+									type: CollaboratorType;
+									user:
+										| ExternalUser
+										| UserAccount
+										| UserGroup;
 								}) => (
 									<ClayMultiSelect.Item
 										key={`autocomplete-${type}-${user.id}`}

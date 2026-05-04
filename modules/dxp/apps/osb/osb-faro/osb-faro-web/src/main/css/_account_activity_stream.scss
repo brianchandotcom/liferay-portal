@@ -1,0 +1,123 @@
+// Geometry shared between the rail/dots and the row-wrapper extension.
+// The wrapper expands left+right past the surrounding `.card-body`'s padding
+// so its background paints flush across the full card; the inner button and
+// attribute panels carry the visual indent via padding instead.
+$activity-stream-rail-left: 0.6875rem;
+$activity-stream-rail-padding-left: 1.9375rem;
+$activity-stream-rail-width: 0.125rem;
+$activity-stream-card-body-padding: 1.5rem;
+
+$activity-stream-session-dot-size: 1.125rem;
+$activity-stream-event-dot-size: 0.5rem;
+$activity-stream-rail-bottom-tail: 4rem;
+
+// Negative margins on the wrapper to reach the card's outer edges.
+$activity-stream-row-margin-left: -(
+	$activity-stream-rail-padding-left + $activity-stream-card-body-padding
+);
+$activity-stream-row-margin-right: -$activity-stream-card-body-padding;
+
+// Inner paddings restore the original visual indent for the button/attrs.
+$activity-stream-row-padding-left: $activity-stream-rail-padding-left +
+	$activity-stream-card-body-padding + 1rem;
+$activity-stream-row-padding-right: $activity-stream-card-body-padding + 1rem;
+$activity-stream-event-attributes-padding-left: $activity-stream-rail-padding-left +
+	$activity-stream-card-body-padding + 6.5rem;
+
+// Center of the rail measured from a row wrapper's left edge (negative because
+// the rail sits inside the rail-container's padding-left, to the left of the
+// wrapper's content box).
+$activity-stream-rail-center-offset: $activity-stream-rail-left -
+	$activity-stream-rail-padding-left + ($activity-stream-rail-width * 0.5);
+
+.account-activity-stream-timeline {
+	.timeline-rail-container {
+		padding-left: $activity-stream-rail-padding-left;
+		position: relative;
+	}
+
+	.timeline-rail {
+		background-color: var(--secondary-l1);
+		bottom: 0;
+		left: $activity-stream-rail-left;
+		position: absolute;
+		top: 0;
+		width: $activity-stream-rail-width;
+		z-index: 2;
+
+		&.is-capped {
+			bottom: $activity-stream-rail-bottom-tail;
+		}
+	}
+
+	.timeline-row {
+		position: relative;
+	}
+
+	.timeline-session-dot,
+	.timeline-event-dot {
+		border-radius: 50%;
+		position: absolute;
+		z-index: 3;
+	}
+
+	.timeline-session-dot {
+		background-color: #1f8be8;
+		border: 2px solid #fff;
+		height: $activity-stream-session-dot-size;
+		left: $activity-stream-rail-center-offset -
+			($activity-stream-session-dot-size * 0.5);
+		top: 0.5rem;
+		width: $activity-stream-session-dot-size;
+	}
+
+	.timeline-event-dot {
+		background-color: var(--secondary);
+		border: 1px solid #fff;
+		height: $activity-stream-event-dot-size;
+		left: $activity-stream-rail-center-offset -
+			($activity-stream-event-dot-size * 0.5);
+		top: 0.875rem;
+		width: $activity-stream-event-dot-size;
+	}
+
+	.timeline-row-wrapper {
+		margin-left: $activity-stream-row-margin-left;
+		margin-right: $activity-stream-row-margin-right;
+		overflow: hidden;
+
+		// Highlight the row when expanded OR when its header is being hovered.
+		// Hover lives via JS state so hovering the attributes panel below the
+		// header does not re-highlight the header.
+		&.is-expanded,
+		&.is-hovered {
+			background-color: var(--primary-l3);
+			position: relative;
+			z-index: 1;
+		}
+	}
+
+	.timeline-row-button {
+		background-color: transparent;
+		border: 0;
+		display: flex;
+		padding-bottom: 0.5rem;
+		padding-left: $activity-stream-row-padding-left;
+		padding-right: $activity-stream-row-padding-right;
+		padding-top: 0.5rem;
+		text-align: left;
+		width: 100%;
+	}
+
+	.timeline-attributes {
+		background-color: var(--gray-200);
+		padding: 0 $activity-stream-row-padding-right 1rem
+			$activity-stream-row-padding-left;
+	}
+
+	.timeline-event-attributes {
+		background-color: var(--gray-200);
+		padding: 0 $activity-stream-row-padding-right 1rem
+			$activity-stream-event-attributes-padding-left;
+	}
+}

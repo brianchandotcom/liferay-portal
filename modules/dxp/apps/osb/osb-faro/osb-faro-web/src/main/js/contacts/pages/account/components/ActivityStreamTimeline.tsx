@@ -65,72 +65,6 @@ const EVENT_ATTRIBUTE_KEYS: (keyof AccountUserSessionEvent)[] = [
 	'url'
 ];
 
-const RAIL_LEFT_REM = 0.6875;
-const RAIL_PADDING_LEFT_REM = 1.9375;
-const RAIL_WIDTH_PX = 2;
-const CARD_BODY_PADDING_REM = 1.5;
-
-const RAIL_CENTER_FROM_WRAPPER_REM =
-	RAIL_LEFT_REM - RAIL_PADDING_LEFT_REM + RAIL_WIDTH_PX / 2 / 16;
-
-const SESSION_DOT_SIZE_REM = 1.125;
-const EVENT_DOT_SIZE_REM = 0.5;
-
-const RAIL_BOTTOM_TAIL_REM = 4;
-
-const RAIL_STYLE: React.CSSProperties = {
-	backgroundColor: 'var(--secondary-l1)',
-	bottom: `${RAIL_BOTTOM_TAIL_REM}rem`,
-	left: `${RAIL_LEFT_REM}rem`,
-	position: 'absolute',
-	top: 0,
-	width: RAIL_WIDTH_PX,
-	zIndex: 2
-};
-
-const SESSION_DOT_STYLE: React.CSSProperties = {
-	backgroundColor: '#1f8be8',
-	border: '2px solid #fff',
-	borderRadius: '50%',
-	height: `${SESSION_DOT_SIZE_REM}rem`,
-	left: `${RAIL_CENTER_FROM_WRAPPER_REM - SESSION_DOT_SIZE_REM / 2}rem`,
-	position: 'absolute',
-	top: '0.5rem',
-	width: `${SESSION_DOT_SIZE_REM}rem`,
-	zIndex: 3
-};
-
-const EVENT_DOT_STYLE: React.CSSProperties = {
-	backgroundColor: 'var(--secondary)',
-	border: '1px solid #fff',
-	borderRadius: '50%',
-	height: `${EVENT_DOT_SIZE_REM}rem`,
-	left: `${RAIL_CENTER_FROM_WRAPPER_REM - EVENT_DOT_SIZE_REM / 2}rem`,
-	position: 'absolute',
-	top: '0.875rem',
-	width: `${EVENT_DOT_SIZE_REM}rem`,
-	zIndex: 3
-};
-
-const ROW_WRAPPER_BASE_STYLE: React.CSSProperties = {
-	marginLeft: `-${RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM}rem`,
-	marginRight: `-${CARD_BODY_PADDING_REM}rem`,
-	overflow: 'hidden'
-};
-
-const ROW_WRAPPER_HIGHLIGHTED_STYLE: React.CSSProperties = {
-	position: 'relative',
-	zIndex: 1
-};
-
-const ROW_INNER_PADDING_LEFT_REM =
-	RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM + 1;
-const ROW_INNER_PADDING_RIGHT_REM = CARD_BODY_PADDING_REM + 1;
-
-const RAIL_INDENT_STYLE: React.CSSProperties = {
-	paddingLeft: `${RAIL_PADDING_LEFT_REM}rem`
-};
-
 const ANONYMOUS_FALLBACK = (): string => Liferay.Language.get('anonymous');
 
 const formatDay = (dateKey: string, timeZoneId?: string): string =>
@@ -242,11 +176,6 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 
 	const isLastPage = page * delta >= totalEvents;
 
-	const railStyle: React.CSSProperties = {
-		...RAIL_STYLE,
-		bottom: isLastPage ? `${RAIL_BOTTOM_TAIL_REM}rem` : 0
-	};
-
 	if (loading) {
 		return <Loading />;
 	}
@@ -306,10 +235,7 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 
 					{userGroups.map(
 						({isAnonymous, sessions: userSessions, userName}) => (
-							<div
-								className='mb-4'
-								key={`${dateKey}-${userName}`}
-							>
+							<div className='mb-4' key={`${dateKey}-${userName}`}>
 								<div className='d-flex align-items-center'>
 									<ClaySticker
 										className='mr-2'
@@ -331,11 +257,12 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 									</Text>
 								</div>
 
-								<div
-									className='position-relative'
-									style={RAIL_INDENT_STYLE}
-								>
-									<div style={railStyle} />
+								<div className='timeline-rail-container'>
+									<div
+										className={`timeline-rail ${
+											isLastPage ? 'is-capped' : ''
+										}`}
+									/>
 
 									{userSessions.map((session, idx) => (
 										<SessionRow
@@ -378,31 +305,20 @@ const SessionRow: React.FC<ISessionRowProps> = ({session, timeZoneId}) => {
 
 	return (
 		<div>
-			<div className='position-relative'>
-				<span style={SESSION_DOT_STYLE} />
+			<div className='timeline-row'>
+				<span className='timeline-session-dot' />
 
 				<div
-					style={{
-						...ROW_WRAPPER_BASE_STYLE,
-						...(expanded || hovered
-							? ROW_WRAPPER_HIGHLIGHTED_STYLE
-							: {}),
-						backgroundColor:
-							expanded || hovered
-								? 'var(--primary-l3)'
-								: undefined
-					}}
+					className={`timeline-row-wrapper ${
+						expanded ? 'is-expanded' : ''
+					} ${hovered ? 'is-hovered' : ''}`}
 				>
 					<button
 						aria-expanded={expanded}
-						className='btn btn-unstyled border-0 d-flex align-items-center w-100 py-2 text-left'
+						className='timeline-row-button btn btn-unstyled align-items-center text-left'
 						onClick={() => setExpanded(prev => !prev)}
 						onMouseEnter={() => setHovered(true)}
 						onMouseLeave={() => setHovered(false)}
-						style={{
-							paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
-							paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
-						}}
 						type='button'
 					>
 						<Text weight='semi-bold'>
@@ -460,31 +376,20 @@ const EventRow: React.FC<IEventRowProps> = ({event, timeZoneId}) => {
 
 	return (
 		<li>
-			<div className='position-relative'>
-				<span style={EVENT_DOT_STYLE} />
+			<div className='timeline-row'>
+				<span className='timeline-event-dot' />
 
 				<div
-					style={{
-						...ROW_WRAPPER_BASE_STYLE,
-						...(expanded || hovered
-							? ROW_WRAPPER_HIGHLIGHTED_STYLE
-							: {}),
-						backgroundColor:
-							expanded || hovered
-								? 'var(--primary-l3)'
-								: undefined
-					}}
+					className={`timeline-row-wrapper ${
+						expanded ? 'is-expanded' : ''
+					} ${hovered ? 'is-hovered' : ''}`}
 				>
 					<button
 						aria-expanded={expanded}
-						className='btn btn-unstyled border-0 d-flex align-items-start w-100 py-2 text-left'
+						className='timeline-row-button btn btn-unstyled align-items-start text-left'
 						onClick={() => setExpanded(prev => !prev)}
 						onMouseEnter={() => setHovered(true)}
 						onMouseLeave={() => setHovered(false)}
-						style={{
-							paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
-							paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
-						}}
 						type='button'
 					>
 						<span
@@ -538,13 +443,7 @@ const SessionAttributes: React.FC<ISessionAttributesProps> = ({session}) => {
 	}
 
 	return (
-		<div
-			className='pb-3 bg-light'
-			style={{
-				paddingLeft: `${ROW_INNER_PADDING_LEFT_REM}rem`,
-				paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
-			}}
-		>
+		<div className='timeline-attributes'>
 			<div className='font-weight-semi-bold mb-2'>
 				{Liferay.Language.get('session-attributes')}
 			</div>
@@ -569,15 +468,7 @@ const EventAttributes: React.FC<IEventAttributesProps> = ({event}) => {
 	}
 
 	return (
-		<div
-			className='pb-3 bg-light'
-			style={{
-				paddingLeft: `${
-					RAIL_PADDING_LEFT_REM + CARD_BODY_PADDING_REM + 6.5
-				}rem`,
-				paddingRight: `${ROW_INNER_PADDING_RIGHT_REM}rem`
-			}}
-		>
+		<div className='timeline-event-attributes'>
 			<div className='font-weight-semi-bold text-secondary mb-2'>
 				{Liferay.Language.get('event-attributes')}
 			</div>

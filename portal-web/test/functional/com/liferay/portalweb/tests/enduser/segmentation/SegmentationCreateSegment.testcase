@@ -129,10 +129,15 @@ definition {
 		}
 
 		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
+			JSONOrganization.addOrganization(organizationName = "Parent Organization Name");
+
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				parentOrganizationName = "Parent Organization Name");
 
 			JSONOrganization.assignUserToOrganization(
 				organizationName = "Organization Name",
+				parentOrganizationName = "Parent Organization Name",
 				userEmailAddress = "userea@liferay.com");
 		}
 
@@ -217,39 +222,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Organization Name");
 		}
-	}
 
-	@description = "Test Automation for LPS-130279: Validate if it's posible to create a segment based on Organization > Parent Organization criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByOrganizationParentOrganization {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Parent Organization Name");
-
-			JSONOrganization.addOrganization(
-				organizationName = "Organization Name",
-				parentOrganizationName = "Parent Organization Name");
-
-			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
-				parentOrganizationName = "Parent Organization Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
+		task ("Add segment with Parent Organization property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Organization");
@@ -267,7 +241,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Parent Organization segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByOrganizationParentOrganization Test");
 
 			AssertValue(

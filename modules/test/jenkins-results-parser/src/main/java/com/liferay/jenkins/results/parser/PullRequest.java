@@ -260,10 +260,26 @@ public class PullRequest {
 			throw new RuntimeException("Unable to push branch to GitHub");
 		}
 
-		int commitCount = gitWorkingDirectory.getCommitCountBetweenBranches(
-			getUpstreamBranchSHA(), forwardLocalGitBranch.getSHA());
+		String compareApiUrl = JenkinsResultsParserUtil.getGitHubApiUrl(
+			getGitRepositoryName(), forwardReceiverUsername,
+			JenkinsResultsParserUtil.combine(
+				"compare/", getUpstreamRemoteGitBranchName(), "...",
+				forwardSenderUsername, ":", forwardBranchName));
 
-		if (commitCount == 0) {
+		int aheadBy = -1;
+
+		try {
+			JSONObject compareJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(compareApiUrl);
+
+			aheadBy = compareJSONObject.getInt("ahead_by");
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"Unable to compare branches: " + ioException.getMessage());
+		}
+
+		if (aheadBy == 0) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("`ci:forward` could not forward this pull ");

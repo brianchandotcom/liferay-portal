@@ -25,3 +25,9 @@ export interface UserGroup {
 	numberOfUserAccounts?: string;
 	roles: UserRole[];
 }
+
+export interface ExternalUser {
+	emailAddress: string;
+	id: string;
+	name: string;
+}

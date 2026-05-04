@@ -18,8 +18,9 @@ async function getCollaborators(collaboratorURL: string, itemId: number) {
 				name: string;
 			};
 			dateExpired?: string;
+			emailAddress?: string;
 			externalReferenceCode: string;
-			id: number;
+			id?: number;
 			name: string;
 			portrait?: string;
 			share: boolean;
@@ -44,7 +45,8 @@ async function updateCollaborators(
 	collaborators: {
 		actionIds: string[];
 		dateExpired?: string;
-		id: string | number;
+		emailAddress?: string;
+		id?: number;
 		share: boolean;
 		type: string;
 	}[]

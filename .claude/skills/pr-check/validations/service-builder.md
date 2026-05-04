@@ -8,7 +8,11 @@ A Service Builder *input* changed anywhere in the diff:
 - `META-INF/module-hbm.xml`, `META-INF/portlet-model-hints.xml`, `META-INF/sql/*.sql`
 - A developer-editable `*Impl.java` under `model/impl` (e.g. `FooImpl.java`) or `service/impl` (e.g. `FooLocalServiceImpl.java`, `FooServiceImpl.java`)
 
-OR (**Output-Only Catch-Up Regen**) the diff matches Service Builder output patterns (`*BaseImpl.java`, `*CacheModel.java`, `*ModelArgumentsResolver.java`, `*ModelImpl.java`, `*PersistenceConstants.java`, `*PersistenceImpl.java`, `*ServiceBaseImpl.java`, `*ServiceHttp.java`, `packageinfo` adjacent to those, `sql/indexes.sql`) and no `service.xml`/`service.properties`/HBM/model-hints/SQL input changed.
+OR (**Output-Only Catch-Up Regen**) the diff matches Service Builder output patterns and no `service.xml`/`service.properties`/HBM/model-hints/SQL input changed. Patterns:
+
+- Always-SB (no path qualifier needed): `*BaseImpl.java`, `*CacheModel.java`, `*LocalService.java`, `*LocalServiceUtil.java`, `*LocalServiceWrapper.java`, `*ModelArgumentsResolver.java`, `*ModelImpl.java`, `*Persistence.java`, `*PersistenceConstants.java`, `*PersistenceImpl.java`, `*ServiceBaseImpl.java`, `*ServiceHttp.java`.
+- Path-qualified (bare name has too many non-SB collisions like `SecurityPortletContainerWrapper.java`, `JSONWebService.java`, `BrowserSnifferUtil.java`): `**/model/*Wrapper.java`, `**/service/*Service.java`, `**/service/*ServiceUtil.java`, `**/service/*ServiceWrapper.java`, `**/service/persistence/*Util.java`.
+- Adjacent: `packageinfo` next to any of the above, `sql/indexes.sql`.
 
 `portal-impl` (portal-core) and OSGi `-service` modules are both in scope — the regen scans every `service.xml` it finds.
 

@@ -56,7 +56,7 @@ function _download_and_extract_files {
 	then
 		bucket_name="liferay-cloud-native-bootstrap-nonprd"
 
-		download_base_url="https://storage.googleapis.com/${bucket_name}"
+		download_base_url="https://cdn.liferay.sh"
 	fi
 
 	local prefix="bootstrap/liferay-${provider}-bootstrap"

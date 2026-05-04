@@ -6,6 +6,7 @@
 import {openToast} from 'frontend-js-components-web';
 
 import CollaboratorService from '../../../common/services/CollaboratorService';
+import {COLLABORATOR_TYPE} from '../../../common/utils/constants';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
 import ShareModalContent, {
 	Collaborator,
@@ -50,7 +51,7 @@ export default async function shareAction({
 				share,
 				type,
 			}) => {
-				const isExternalUser = type === 'Email';
+				const isExternalUser = type === COLLABORATOR_TYPE.EXTERNAL_USER;
 
 				return {
 					actionIds: isExternalUser

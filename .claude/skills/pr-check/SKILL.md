@@ -46,6 +46,8 @@ The procedure runs in two passes over the validations, in the order below. The o
 
 1. [Per-Module Deploy](validations/per-module-deploy.md)
 
+1. [JSP Compile](validations/jsp-compile.md)
+
 1. [Integration Test Compile](validations/integration-test-compile.md)
 
 1. [Workspace Build](validations/workspace-build.md)

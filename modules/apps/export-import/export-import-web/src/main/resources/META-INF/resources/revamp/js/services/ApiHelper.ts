@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {fetch} from 'frontend-js-web';
+
 export type RequestResult<T> =
 	| {data: null; error: string; status?: string | null}
 	| {data: T; error: null; status?: string | null};
@@ -17,10 +19,58 @@ const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
 );
 
 const HEADERS = {
-	'ACCEPT': 'application/json',
-	'ACCEPT-LANGUAGE': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+};
+
+const XHR_HEADERS = {
+	...HEADERS,
 	'X-CSRF-Token': Liferay.authToken,
 };
+
+async function get<T>(url: string): Promise<RequestResult<T>> {
+	try {
+		const response = await fetch(url, {
+			headers: HEADERS,
+		});
+
+		if (response.status === 401) {
+			window.location.reload();
+		}
+
+		if (response.status === 204) {
+			return {data: {} as T, error: null};
+		}
+
+		let responseData: T | ApiErrorResponse;
+
+		try {
+			responseData = await response.json();
+		}
+		catch (error) {
+			return {data: null, error: UNEXPECTED_ERROR_MESSAGE};
+		}
+
+		if (response.ok) {
+			return {data: responseData as T, error: null};
+		}
+
+		const errorResponse = responseData as ApiErrorResponse;
+
+		return {
+			data: null,
+			error:
+				errorResponse?.title ||
+				errorResponse?.message ||
+				errorResponse?.error ||
+				UNEXPECTED_ERROR_MESSAGE,
+			status: response.status.toString(),
+		};
+	}
+	catch (error) {
+		return {data: null, error: UNEXPECTED_ERROR_MESSAGE};
+	}
+}
 
 async function postFormDataWithProgress<T>(
 	url: string,
@@ -38,7 +88,7 @@ async function postFormDataWithProgress<T>(
 
 		xhr.open('POST', url);
 
-		Object.entries(HEADERS).forEach(([key, value]) => {
+		Object.entries(XHR_HEADERS).forEach(([key, value]) => {
 			xhr.setRequestHeader(key, value);
 		});
 
@@ -103,5 +153,6 @@ async function postFormDataWithProgress<T>(
 }
 
 export default {
+	get,
 	postFormDataWithProgress,
 };

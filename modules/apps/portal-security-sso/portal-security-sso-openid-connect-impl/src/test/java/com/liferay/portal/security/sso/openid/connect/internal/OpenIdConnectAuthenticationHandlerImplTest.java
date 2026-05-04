@@ -120,12 +120,7 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 				Throwable throwable = userInfoException.getCause();
 
 				Assert.assertTrue(throwable instanceof SocketTimeoutException);
-				Assert.assertTrue(
-					throwable.getMessage(),
-					throwable.getMessage(
-					).contains(
-						"Read timed out"
-					));
+				Assert.assertEquals("Read timed out", throwable.getMessage());
 			}
 		}
 	}

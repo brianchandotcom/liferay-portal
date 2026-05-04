@@ -21,7 +21,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	public FinderColumn(
 		String entityAlias, String columnName, Type type, String comparator,
-		boolean caseSensitive, boolean convertNull, boolean last,
+		boolean caseSensitive, boolean convertNull,
 		Function<T, Object> valueExtractor) {
 
 		_type = type;
@@ -39,34 +39,29 @@ public class FinderColumn<T extends BaseModel<T>> {
 			_keyFragment = columnName.substring(dotIndex + 1) + comparator;
 		}
 
-		String suffix = last ? "" : " AND ";
-
 		if ((type == Type.STRING) && !caseSensitive) {
 			_sqlBind = StringBundler.concat(
-				"lower(", entityAlias, columnName, ") ", comparator, " ?",
-				suffix);
+				"lower(", entityAlias, columnName, ") ", comparator, " ?");
 		}
 		else {
 			_sqlBind = StringBundler.concat(
-				entityAlias, columnName, " ", comparator, " ?", suffix);
+				entityAlias, columnName, " ", comparator, " ?");
 		}
 
 		if (type == Type.STRING) {
 			_sqlNull = StringBundler.concat(
 				"(", entityAlias, columnName, " IS NULL OR ", entityAlias,
-				columnName, " ", comparator, " '')", suffix);
+				columnName, " ", comparator, " '')");
 		}
 		else {
 			_sqlNull = null;
 		}
 
 		if (comparator.equals("<>") || comparator.equals("!=")) {
-			_sqlIsNull = StringBundler.concat(
-				entityAlias, columnName, " IS NOT NULL", suffix);
+			_sqlIsNull = entityAlias + columnName + " IS NOT NULL";
 		}
 		else {
-			_sqlIsNull = StringBundler.concat(
-				entityAlias, columnName, " IS NULL", suffix);
+			_sqlIsNull = entityAlias + columnName + " IS NULL";
 		}
 	}
 

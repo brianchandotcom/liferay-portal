@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import reactor.util.retry.Retry;
@@ -167,6 +169,25 @@ public class AnalyticsRestController extends BaseRestController {
 				"/o/faro/main/project/" + projectId
 			).build(
 			).toUri());
+	}
+
+	@GetMapping("project/{projectId}/data-source/token")
+	public String getProjectDataSourceToken(@PathVariable String projectId)
+		throws Exception {
+
+		return WebClient.builder(
+		).baseUrl(
+			_analyticsAuthUrl
+		).defaultHeader(
+			HttpHeaders.AUTHORIZATION, _analyticsService.getAuthorization()
+		).build(
+		).get(
+		).uri(
+			"/o/faro/contacts/" + projectId + "/data_source/token"
+		).retrieve(
+		).bodyToMono(
+			String.class
+		).block();
 	}
 
 	@Override

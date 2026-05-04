@@ -216,7 +216,6 @@
 	"environments-are-ready-go-to-the-product-console-to-view-lxc-sm-details": "環境の準備ができました。DXP Cloud の詳細を確認するには、製品コンソールに移動してください。",
 	"error": "エラー",
 	"error-fetching-high-priority-contacts": "Error fetching high priority contacts",
-	"error-high-priority-contacts": "Error high priority contacts",
 	"event-canceled": "イベントのキャンセル",
 	"event-created": "イベントの作成",
 	"event-description": "イベントの内容",

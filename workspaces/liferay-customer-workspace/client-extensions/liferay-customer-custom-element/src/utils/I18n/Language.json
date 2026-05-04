@@ -232,7 +232,6 @@
 	"error": "Error",
 	"error-downloading-attachment": "Error downloading attachment.",
 	"error-fetching-high-priority-contacts": "Error fetching high priority contacts",
-	"error-high-priority-contacts": "Error high priority contacts",
 	"event-canceled": "Event Canceled",
 	"event-created": "Event Created",
 	"event-description": "Event Description",

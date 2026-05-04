@@ -126,7 +126,7 @@ function PerformanceByAssigneeCard({routeParams}) {
 	}, [filtersError, routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
-		<ClayPanel className="mt-4 tabs-card">
+		<ClayPanel className="mt-4 tabs-card" displayType="secondary">
 			<PromisesResolver promises={promises}>
 				<PerformanceByAssigneeCard.Header
 					disableFilters={filtersError}

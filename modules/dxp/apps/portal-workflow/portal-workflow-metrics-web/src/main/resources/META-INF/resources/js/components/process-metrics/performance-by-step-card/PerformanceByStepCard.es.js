@@ -124,7 +124,7 @@ function PerformanceByStepCard({routeParams}) {
 	}, [filtersError, routeParams, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
-		<ClayPanel className="mt-4 tabs-card">
+		<ClayPanel className="mt-4 tabs-card" displayType="secondary">
 			<PromisesResolver promises={promises}>
 				<PerformanceByStepCard.Header
 					disableFilters={filtersError}

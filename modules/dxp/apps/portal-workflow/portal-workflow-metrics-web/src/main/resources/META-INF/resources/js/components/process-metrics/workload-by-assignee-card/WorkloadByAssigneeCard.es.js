@@ -88,7 +88,10 @@ function WorkloadByAssigneeCard({routeParams}) {
 
 	return (
 		<PromisesResolver promises={promises}>
-			<ClayPanel className="mt-4 workload-by-assignee-card">
+			<ClayPanel
+				className="mt-4 workload-by-assignee-card"
+				displayType="secondary"
+			>
 				<WorkloadByAssigneeCard.Header processId={processId} />
 
 				<div className="border-bottom container-nav">

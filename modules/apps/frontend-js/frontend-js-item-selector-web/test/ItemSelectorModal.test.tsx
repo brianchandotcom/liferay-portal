@@ -68,13 +68,11 @@ const mockedLoadClientExtensions = loadClientExtensions as jest.Mock;
 const mockedSub = sub as jest.Mock;
 
 const ItemSelectorModalWrapper = ({
-	createItemURL,
 	defaultOpen,
 	filesUploaderComponent,
 	onItemsChange,
 	selectedItems,
 }: {
-	createItemURL?: string;
 	defaultOpen: boolean;
 	filesUploaderComponent?: FilesUploaderComponent;
 	onItemsChange: (items: TestItem[]) => void;
@@ -88,7 +86,6 @@ const ItemSelectorModalWrapper = ({
 
 			<ItemSelectorModal<TestItem>
 				apiURL={`${location.origin}/o/headless-delivery/v1.0/test-api-url`}
-				createItemURL={createItemURL}
 				fdsProps={{
 					id: `itemSelectorModal-test-0001`,
 					pagination: {
@@ -176,29 +173,6 @@ describe('ItemSelectorModal component', () => {
 		expect(select).toBeInTheDocument();
 
 		expect(select).toBeDisabled();
-	});
-
-	it('renders an item selector modal with a create new item link that opens in a new tab', async () => {
-		const createItemURL = 'www.example.com';
-
-		const {findByRole} = render(
-			<ItemSelectorModalWrapper
-				createItemURL={createItemURL}
-				defaultOpen={true}
-				onItemsChange={jest.fn()}
-				selectedItems={[]}
-			/>
-		);
-
-		const modal = await findByRole('dialog');
-
-		const newItemLink = await within(modal).findByText('add-new-item');
-
-		expect(newItemLink).toBeInTheDocument();
-
-		expect(newItemLink.getAttribute('href')).toEqual(createItemURL);
-
-		expect(newItemLink.getAttribute('target')).toEqual('_blank');
 	});
 
 	it('renders items with radio for single selection type', async () => {

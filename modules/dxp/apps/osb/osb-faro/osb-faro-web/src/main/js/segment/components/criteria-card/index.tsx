@@ -62,6 +62,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 					criteria={translateQueryToCriteria(criteriaString)}
 					ref={_criteriaViewRef}
 					segmentType={segmentType}
+					sequential={sequential}
 					timeZoneId={timeZoneId}
 				/>
 			</Panel.Body>

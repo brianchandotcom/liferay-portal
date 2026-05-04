@@ -28,11 +28,14 @@ public class CMSObjectEntryReviewNotificationContributor
 		ObjectEntry objectEntry, JSONObject payloadJSONObject) {
 
 		payloadJSONObject.put(
+			"appendBackURL", true
+		).put(
 			"notificationLink",
 			StringBundler.concat(
 				_portal.getPathFriendlyURLPublic(),
 				GroupConstants.CMS_FRIENDLY_URL, "/view-asset?objectEntryId=",
-				objectEntry.getObjectEntryId()));
+				objectEntry.getObjectEntryId())
+		);
 	}
 
 	@Override

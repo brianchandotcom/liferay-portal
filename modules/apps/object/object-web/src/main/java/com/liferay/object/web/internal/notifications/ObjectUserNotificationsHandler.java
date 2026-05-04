@@ -14,16 +14,20 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
 import jakarta.portlet.WindowState;
 
 /**
@@ -67,6 +71,21 @@ public class ObjectUserNotificationsHandler
 		String notificationLink = jsonObject.getString("notificationLink");
 
 		if (Validator.isNotNull(notificationLink)) {
+			if (jsonObject.getBoolean("appendBackURL")) {
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+				if (themeDisplay != null) {
+					PortletURL portletURL = PortletURLFactoryUtil.create(
+						themeDisplay.getRequest(),
+						"com_liferay_notifications_web_portlet_" +
+							"NotificationsPortlet",
+						PortletRequest.RENDER_PHASE);
+
+					notificationLink = HttpComponentsUtil.addParameter(
+						notificationLink, "backURL", portletURL.toString());
+				}
+			}
+
 			return notificationLink;
 		}
 

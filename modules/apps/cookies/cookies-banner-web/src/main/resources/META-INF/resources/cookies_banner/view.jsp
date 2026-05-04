@@ -36,7 +36,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 	</c:choose>
 </c:if>
 
-<div aria-label="banner cookies" class="cookies-banner cookies-banner-bottom" role="dialog">
+<div aria-labelledby="<portlet:namespace />cookiesBannerTitle" aria-modal="true" class="cookies-banner cookies-banner-bottom" role="dialog">
 	<clay:container-fluid
 		cssClass="container-view"
 	>
@@ -49,9 +49,9 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<p class="mb-2 text-5 text-weight-semi-bold">
+					<h2 class="mb-2 text-5 text-weight-semi-bold" id="<portlet:namespace />cookiesBannerTitle">
 						<%= HtmlUtil.escape(cookiesBannerDisplayContext.getTitle(locale)) %>
-					</p>
+					</h2>
 
 					<p class="mb-0">
 						<%= HtmlUtil.escape(cookiesBannerDisplayContext.getContent(locale)) %>
@@ -65,6 +65,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 				<clay:content-col>
 					<clay:button
+						aria-label='<%= LanguageUtil.get(request, "cookie-configuration") %>'
 						displayType="link"
 						id='<%= liferayPortletResponse.getNamespace() + "configurationButton" %>'
 						label='<%= LanguageUtil.get(request, "configuration") %>'
@@ -74,6 +75,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 
 				<clay:content-col>
 					<clay:button
+						aria-label='<%= LanguageUtil.get(request, "accept-all-cookies") %>'
 						displayType="secondary"
 						id='<%= liferayPortletResponse.getNamespace() + "acceptAllButton" %>'
 						label='<%= LanguageUtil.get(request, "accept-all") %>'
@@ -84,6 +86,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				<c:if test="<%= cookiesBannerDisplayContext.isIncludeDeclineAllButton() %>">
 					<clay:content-col>
 						<clay:button
+							aria-label='<%= LanguageUtil.get(request, "decline-all-cookies") %>'
 							displayType="secondary"
 							id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
 							label='<%= LanguageUtil.get(request, "decline-all") %>'

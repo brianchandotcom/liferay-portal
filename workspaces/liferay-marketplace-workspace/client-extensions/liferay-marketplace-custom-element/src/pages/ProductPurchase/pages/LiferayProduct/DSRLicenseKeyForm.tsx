@@ -94,8 +94,8 @@ const DSRLicenseKeyForm = () => {
 
 		productPurchase.setForm({
 			...data,
-			productPurchaseKey: analyticsPlan?.productPurchaseKey,
 			productKey: analyticsPlan?.productKey,
+			productPurchaseKey: analyticsPlan?.productPurchaseKey,
 		});
 
 		productPurchase.setHasAnalyticsCloud(hasAnalyticsCloud);

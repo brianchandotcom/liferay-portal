@@ -74,6 +74,7 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 		await provisioningOAuth2.provisionDSR({
 			analyticsForm,
 			licenseEntry: {
+				description: 'Beta Access DSR',
 				hostName: dsrForm.hostName,
 				ipAddresses: dsrForm.ipAddresses?.replaceAll('\n', ','),
 				macAddresses: dsrForm.macAddresses?.replaceAll('\n', ','),

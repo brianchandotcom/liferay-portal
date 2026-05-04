@@ -20,10 +20,8 @@ import type {
 	ValueInputRenderer,
 } from './types';
 
-let condCounter = 0;
-
-export function generateConditionId() {
-	return `condition_${++condCounter}`;
+export function getRandomID() {
+	return crypto.randomUUID();
 }
 
 export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
@@ -216,12 +214,12 @@ export function ConditionBuilder({
 	showConjunctionPicker = true,
 }: ConditionBuilderProps) {
 	const handleAddCondition = () => {
-		onChange([...conditions, {id: generateConditionId()}], conditionType);
+		onChange([...conditions, {id: getRandomID()}], conditionType);
 	};
 
 	const handleDeleteCondition = (index: number) => {
 		if (conditions.length === 1) {
-			onChange([{id: generateConditionId()}], conditionType);
+			onChange([{id: getRandomID()}], conditionType);
 		}
 		else {
 			onChange(

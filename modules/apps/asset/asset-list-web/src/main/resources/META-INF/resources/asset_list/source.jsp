@@ -123,7 +123,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 		Arrays.sort(assetSelectedClassTypeIds);
 	%>
 
-		<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace /><%= className %>Options">
+		<div class='asset-subtype <%= (assetSelectedClassTypeIds.length < 1) ? StringPool.BLANK : "hide" %>' data-class-name="<%= className %>" id="<portlet:namespace /><%= className %>Options">
 			<aui:select helpMessage="changing-this-setting-will-reset-all-mappings-for-this-collection" label='<%= LanguageUtil.get(request, "item-subtype") %>' name='<%= "TypeSettingsProperties--anyClassType" + className + "--" %>'>
 				<aui:option label='<%= StringPool.DASH + LanguageUtil.get(request, "not-selected") + StringPool.DASH %>' selected="<%= editAssetListDisplayContext.isNoAssetTypeSelected() %>" value="" />
 
@@ -172,7 +172,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 						}
 					%>
 
-						<span class="asset-subtypefields hide" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
+						<span class="asset-subtypefields hide" data-class-name="<%= className %>" id="<portlet:namespace /><%= classType.getClassTypeId() %>_<%= className %>Options">
 							<portlet:renderURL var="selectStructureFieldURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="mvcPath" value="/asset_list/select_structure_field.jsp" />
 								<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />

@@ -407,6 +407,10 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 				return;
 			}
 
+			if (form.dataset.skipActiveWarning === 'true') {
+				return;
+			}
+
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 
 			if (

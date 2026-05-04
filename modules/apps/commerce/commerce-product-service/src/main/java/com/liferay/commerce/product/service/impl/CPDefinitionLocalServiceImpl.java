@@ -1172,11 +1172,11 @@ public class CPDefinitionLocalServiceImpl
 						continue;
 					}
 
-					long cpDefinitionOptionRelId =
+					long newCPDefinitionOptionRelId =
 						newCPDefinitionOptionRel.getCPDefinitionOptionRelId();
 
 					newCPInstanceOptionValueRel.setCPDefinitionOptionRelId(
-						cpDefinitionOptionRelId);
+						newCPDefinitionOptionRelId);
 
 					CPDefinitionOptionValueRel
 						sourceCPDefinitionOptionValueRel =
@@ -1187,15 +1187,26 @@ public class CPDefinitionLocalServiceImpl
 
 					CPDefinitionOptionValueRel newCPDefinitionOptionValueRel =
 						_cpDefinitionOptionValueRelPersistence.fetchByC_K(
-							cpDefinitionOptionRelId,
+							newCPDefinitionOptionRelId,
 							sourceCPDefinitionOptionValueRel.getKey());
 
-					if (newCPDefinitionOptionValueRel != null) {
-						newCPInstanceOptionValueRel.
-							setCPDefinitionOptionValueRelId(
-								newCPDefinitionOptionValueRel.
-									getCPDefinitionOptionValueRelId());
+					if (newCPDefinitionOptionValueRel == null) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								StringBundler.concat(
+									"Unable to find new CPDefinitionOptionValueRel for key ",
+									sourceCPDefinitionOptionValueRel.getKey(),
+									" under CPDefinitionOptionRel ",
+									newCPDefinitionOptionRelId));
+						}
+
+						break;
 					}
+
+					newCPInstanceOptionValueRel.
+						setCPDefinitionOptionValueRelId(
+							newCPDefinitionOptionValueRel.
+								getCPDefinitionOptionValueRelId());
 
 					break;
 				}

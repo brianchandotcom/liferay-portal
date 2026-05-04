@@ -13,6 +13,7 @@ export interface AccountEventMetricsData {
 export interface AccountEventMetricsVariables {
 	accountId: string;
 	channelId: string;
+	entityId: string;
 	entityType: SessionEntityTypes;
 	interval: string;
 	keywords?: string;
@@ -30,6 +31,7 @@ export default gql`
 	query AccountEventMetrics(
 		$accountId: String!
 		$channelId: String!
+		$entityId: String!
 		$entityType: EntityType!
 		$interval: String!
 		$keywords: String
@@ -40,6 +42,7 @@ export default gql`
 		eventMetric(
 			accountId: $accountId
 			channelId: $channelId
+			entityId: $entityId
 			entityType: $entityType
 			interval: $interval
 			keywords: $keywords

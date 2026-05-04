@@ -40,6 +40,7 @@ export interface AccountUserSessionData {
 export interface AccountUserSessionVariables {
 	accountId: string;
 	channelId: string;
+	entityId: string;
 	entityType: SessionEntityTypes;
 	keywords?: string;
 	page: number;
@@ -53,6 +54,7 @@ export default gql`
 	query AccountUserSessions(
 		$accountId: String!
 		$channelId: String!
+		$entityId: String!
 		$entityType: EntityType!
 		$keywords: String
 		$page: Int!
@@ -64,6 +66,7 @@ export default gql`
 		eventsByUserSessions(
 			accountId: $accountId
 			channelId: $channelId
+			entityId: $entityId
 			entityType: $entityType
 			keywords: $keywords
 			page: $page

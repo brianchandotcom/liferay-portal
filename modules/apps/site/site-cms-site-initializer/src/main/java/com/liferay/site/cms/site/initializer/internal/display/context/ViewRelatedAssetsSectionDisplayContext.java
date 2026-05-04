@@ -66,11 +66,6 @@ public class ViewRelatedAssetsSectionDisplayContext
 		Set<String> tagNames = getTagNames(objectDefinition, objectEntry);
 
 		_keywords = tagNames.toArray(new String[0]);
-
-		_sectionDisplayContextHelper = new SectionDisplayContextHelper(
-			depotEntryLocalService, groupLocalService, language,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal);
 	}
 
 	@Override
@@ -107,7 +102,7 @@ public class ViewRelatedAssetsSectionDisplayContext
 				"searchAPIURL",
 				() -> {
 					String additionalAPIURLParameters =
-						_sectionDisplayContextHelper.
+						sectionDisplayContextHelper.
 							getAdditionalAPIURLParameters(
 								appendStatus(
 									StringBundler.concat(
@@ -160,6 +155,5 @@ public class ViewRelatedAssetsSectionDisplayContext
 	}
 
 	private final String[] _keywords;
-	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 
 }

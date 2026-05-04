@@ -60,4 +60,30 @@ describe('Sidebar', () => {
 			container.querySelector('.sidebar-item-root.active').firstChild
 		).toHaveAttribute('href', activePathName);
 	});
+
+	it('should render lifecycle and accounts items when LDP is enabled', () => {
+		const {queryByText} = render(
+			<Provider store={mockStore(mockStoreDataLDP)}>
+				<StaticRouter>
+					<Sidebar {...defaultProps} />
+				</StaticRouter>
+			</Provider>
+		);
+
+		expect(queryByText('Lifecycles')).toBeTruthy();
+		expect(queryByText('Accounts')).toBeTruthy();
+	});
+
+	it('should not render lifecycle and accounts items when LDP is not enabled', () => {
+		const {queryByText} = render(
+			<Provider store={mockStore()}>
+				<StaticRouter>
+					<Sidebar {...defaultProps} />
+				</StaticRouter>
+			</Provider>
+		);
+
+		expect(queryByText('Lifecycles')).toBeNull();
+		expect(queryByText('Accounts')).toBeNull();
+	});
 });

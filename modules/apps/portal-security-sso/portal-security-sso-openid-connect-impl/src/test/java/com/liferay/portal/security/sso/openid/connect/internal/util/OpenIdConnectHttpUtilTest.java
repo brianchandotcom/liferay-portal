@@ -110,21 +110,20 @@ public class OpenIdConnectHttpUtilTest {
 		Assert.assertEquals(
 			"application/x-www-form-urlencoded", body.getContentType());
 
-		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(0, 0));
+		httpOptions = _toHttpOptions(_createHTTPRequest(0, 0));
 
 		Assert.assertEquals(0, httpOptions.getTimeout());
 
-		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(0, 3000));
+		httpOptions = _toHttpOptions(_createHTTPRequest(0, 3000));
 
 		Assert.assertEquals(3000, httpOptions.getTimeout());
 
-		httpOptions = _toHttpOptions(_buildTimeoutHttpRequest(1000, 5000));
+		httpOptions = _toHttpOptions(_createHTTPRequest(1000, 5000));
 
 		Assert.assertEquals(5000, httpOptions.getTimeout());
 	}
 
-	private HTTPRequest _buildTimeoutHttpRequest(
-			int connectTimeout, int readTimeout)
+	private HTTPRequest _createHTTPRequest(int connectTimeout, int readTimeout)
 		throws Exception {
 
 		HTTPRequest httpRequest = new HTTPRequest(

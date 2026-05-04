@@ -8,12 +8,15 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:application-list:application-list-api")
+	compileOnly project(":apps:client-extension:client-extension-type-api")
 	compileOnly project(":apps:depot:depot-api")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-api")
 	compileOnly project(":apps:frontend-data-set:frontend-data-set-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
+	compileOnly project(":apps:frontend-token:frontend-token-definition-api")
+	compileOnly project(":apps:style-book:style-book-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
 	compileOnly project(":core:petra:petra-lang")

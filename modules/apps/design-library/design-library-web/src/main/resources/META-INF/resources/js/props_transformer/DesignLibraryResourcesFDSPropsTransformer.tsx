@@ -4,7 +4,9 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {openModal} from 'frontend-js-components-web';
 import React from 'react';
+import {AddStyleBookModalContent} from 'style-book-web';
 
 import {TableCellContentType} from '../constants';
 import {
@@ -13,16 +15,50 @@ import {
 	createSetItemComponentProps,
 } from './cell_renderers';
 
+type FrontendTokenDefinitionProvider = {
+	name: string;
+	themeId: string;
+};
+
+interface DesignLibraryResourcesAdditionalProps {
+	addStyleBookEntryURL?: string;
+	canAddStyleBook: boolean;
+	frontendTokenDefinitionProviders?: Array<FrontendTokenDefinitionProvider>;
+	styleBookNamespace?: string;
+}
+
 export default function DesignLibraryResourcesFDSPropsTransformer(
-	props: IFrontendDataSetProps
+	props: IFrontendDataSetProps & {
+		additionalProps?: DesignLibraryResourcesAdditionalProps;
+	}
 ): IFrontendDataSetProps {
-	const creationMenu = {
-		primaryItems: [
-			{
-				label: Liferay.Language.get('new-style-book'),
-			},
-		],
-	};
+	const {
+		addStyleBookEntryURL,
+		canAddStyleBook = false,
+		frontendTokenDefinitionProviders = [],
+		styleBookNamespace = '',
+	} = props.additionalProps ?? {};
+
+	const creationMenu =
+		canAddStyleBook && addStyleBookEntryURL
+			? {
+					primaryItems: [
+						{
+							label: Liferay.Language.get('new-style-book'),
+							onClick: () =>
+								openModal({
+									contentComponent: ({closeModal}) =>
+										AddStyleBookModalContent({
+											addStyleBookEntryURL,
+											closeModal,
+											frontendTokenDefinitionProviders,
+											namespace: styleBookNamespace,
+										}),
+								}),
+						},
+					],
+				}
+			: undefined;
 
 	return {
 		...props,

@@ -17,7 +17,8 @@
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"style-book-web": "*"
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/design-library-web",

@@ -49,7 +49,8 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			StyleBookEntry styleBookEntry = _addStyleBookEntry(actionRequest);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			String redirect = _portal.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",

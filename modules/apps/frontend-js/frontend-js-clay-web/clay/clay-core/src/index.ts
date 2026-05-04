@@ -20,6 +20,8 @@ export type {Item} from './language-picker';
 export type {AnnouncerAPI} from './live-announcer';
 export {Nav} from './nav';
 export {OverlayMask} from './overlay-mask';
+export {PanelResizer} from './panel-resizer';
+export type {Position} from './panel-resizer';
 export {Picker, Option} from './picker';
 export {SidePanel} from './side-panel';
 export {SidePanelWithDrilldown} from './side-panel';

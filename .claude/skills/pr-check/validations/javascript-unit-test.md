@@ -24,7 +24,7 @@ Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `F
 
 1. **Consumer search.** For each deleted file, grep the surrounding module for `import` statements that reference the deleted basename or relative path. For every consumer found, queue the consumer's parallel-name spec (and the consumer's spec itself when it is the consumer). This catches direct-import breakage where a surviving spec imports a now-deleted source.
 
-1. **High-risk-deletion full suite.** When a deletion lands under `__mocks__`, `test`, or `tests`, fall back to the module's full Jest suite. Those locations are explicit Jest extension points (manual mocks, shared helpers, fixtures) whose removal can change runtime behavior for tests with no naming relationship to the deleted file.
+1. **High-risk-deletion full suite.** When a deletion lands under `__mocks__`, `__tests__`, `test`, or `tests`, fall back to the module's full Jest suite. Those locations are explicit Jest extension points (manual mocks, colocated specs, shared helpers, fixtures) whose removal can change runtime behavior for tests with no naming relationship to the deleted file.
 
 ## Command
 

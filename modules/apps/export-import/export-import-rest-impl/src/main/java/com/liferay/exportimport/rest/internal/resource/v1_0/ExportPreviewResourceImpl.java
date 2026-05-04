@@ -6,6 +6,7 @@
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -24,12 +25,16 @@ import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.staging.StagingGroupHelper;
 
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +55,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 	@Override
 	public ExportPreview getAssetLibraryExportPreview(
-			String assetLibraryExternalReferenceCode)
+			String assetLibraryExternalReferenceCode, Date endDate,
+			Integer last, String range, Date startDate)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -60,19 +66,26 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _getExportPreview(group.getGroupId());
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, range, startDate);
 	}
 
 	@Override
-	public ExportPreview getExportPreview() throws Exception {
+	public ExportPreview getExportPreview(
+			Date endDate, Integer last, String range, Date startDate)
+		throws Exception {
+
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			contextCompany.getCompanyId());
 
-		return _getExportPreview(group.getGroupId());
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, range, startDate);
 	}
 
 	@Override
-	public ExportPreview getSiteExportPreview(String siteExternalReferenceCode)
+	public ExportPreview getSiteExportPreview(
+			String siteExternalReferenceCode, Date endDate, Integer last,
+			String range, Date startDate)
 		throws Exception {
 
 		Group group = groupLocalService.getGroupByExternalReferenceCode(
@@ -82,12 +95,40 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			throw new NotFoundException();
 		}
 
-		return _getExportPreview(group.getGroupId());
+		return _getExportPreview(
+			endDate, group.getGroupId(), last, range, startDate);
 	}
 
-	private ExportPreview _getExportPreview(long groupId) throws Exception {
+	private DateRange _getDateRange(
+		Date endDate, Integer last, String range, Date startDate) {
+
+		if (range.equals(ExportImportDateUtil.RANGE_DATE_RANGE)) {
+			return new DateRange(startDate, endDate);
+		}
+
+		if (range.equals(ExportImportDateUtil.RANGE_LAST)) {
+			if (last == null) {
+				throw new BadRequestException();
+			}
+
+			Date now = new Date();
+
+			return new DateRange(
+				new Date(now.getTime() - (last * Time.HOUR)), now);
+		}
+
+		return new DateRange(null, null);
+	}
+
+	private ExportPreview _getExportPreview(
+			Date endDate, long groupId, Integer last, String range,
+			Date startDate)
+		throws Exception {
+
 		PermissionUtil.checkExportPermission(
 			contextCompany.getCompanyId(), groupId);
+
+		DateRange dateRange = _getDateRange(endDate, last, range, startDate);
 
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
@@ -110,7 +151,8 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 
 			PortletDataContext portletDataContext =
 				_portletDataContextFactory.createPreparePortletDataContext(
-					contextCompany.getCompanyId(), groupId, null, null);
+					contextCompany.getCompanyId(), groupId, range,
+					dateRange.getStartDate(), dateRange.getEndDate());
 
 			portletDataHandler.prepareManifestSummary(portletDataContext);
 

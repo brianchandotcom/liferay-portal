@@ -8,5 +8,5 @@
 <%@ include file="/init.jsp" %>
 
 <react:component
-	module="{ContentSiteGenerator} from ai-hub-cell-web"
+	module="{ContentSiteGenerator} from content-site-generator-web"
 />

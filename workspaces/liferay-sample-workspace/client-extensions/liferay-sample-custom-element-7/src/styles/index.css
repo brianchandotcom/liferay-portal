@@ -1,0 +1,10 @@
+.liferay-sample-custom-element-7-search {
+	display: flex;
+	gap: 0.5rem;
+	padding: 1rem;
+}
+
+.liferay-sample-custom-element-7-search input {
+	flex: 1;
+	padding: 0.375rem 0.75rem;
+}

@@ -6,6 +6,7 @@
 import {
 	API,
 	Card,
+	CountryInfo,
 	SidePanelForm,
 	openToast,
 	saveAndReload,
@@ -14,7 +15,6 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {EditObjectFieldContent} from './EditObjectFieldContent';
-import {CountryInfo} from './Tabs/BasicInfo/PhoneNumberProperties';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './EditObjectField.scss';

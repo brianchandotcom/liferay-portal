@@ -18,8 +18,6 @@ import {
 	updateFieldSettings,
 } from '../../../../utils/fieldSettings';
 
-export type {CountryInfo, PrefixType};
-
 interface IPhoneNumberPropertiesProps {
 	countries: CountryInfo[];
 	disabled?: boolean;

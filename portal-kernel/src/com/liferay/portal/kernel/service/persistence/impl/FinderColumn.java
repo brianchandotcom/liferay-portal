@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -20,10 +21,12 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	public FinderColumn(
 		String entityAlias, String columnName, Type type, String comparator,
-		boolean convertNull, boolean last, Function<T, Object> valueExtractor) {
+		boolean caseSensitive, boolean convertNull, boolean last,
+		Function<T, Object> valueExtractor) {
 
 		_type = type;
 		_comparator = comparator;
+		_caseSensitive = caseSensitive;
 		_convertNull = convertNull;
 		_valueExtractor = valueExtractor;
 
@@ -38,8 +41,15 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 		String suffix = last ? "" : " AND ";
 
-		_sqlBind = StringBundler.concat(
-			entityAlias, columnName, " ", comparator, " ?", suffix);
+		if ((type == Type.STRING) && !caseSensitive) {
+			_sqlBind = StringBundler.concat(
+				"lower(", entityAlias, columnName, ") ", comparator, " ?",
+				suffix);
+		}
+		else {
+			_sqlBind = StringBundler.concat(
+				entityAlias, columnName, " ", comparator, " ?", suffix);
+		}
 
 		if (type == Type.STRING) {
 			_sqlNull = StringBundler.concat(
@@ -58,6 +68,40 @@ public class FinderColumn<T extends BaseModel<T>> {
 			_sqlIsNull = StringBundler.concat(
 				entityAlias, columnName, " IS NULL", suffix);
 		}
+	}
+
+	public void bindValue(QueryPos queryPos, Object normalizedValue) {
+		if (_type.isPrimitive()) {
+			queryPos.add(normalizedValue);
+
+			return;
+		}
+
+		if ((_type == Type.STRING) && _convertNull) {
+			String stringValue = (String)normalizedValue;
+
+			if (stringValue.isEmpty()) {
+				return;
+			}
+
+			if (!_caseSensitive) {
+				stringValue = StringUtil.toLowerCase(stringValue);
+			}
+
+			queryPos.add(stringValue);
+
+			return;
+		}
+
+		if (normalizedValue == null) {
+			return;
+		}
+
+		if ((_type == Type.STRING) && !_caseSensitive) {
+			normalizedValue = StringUtil.toLowerCase((String)normalizedValue);
+		}
+
+		queryPos.add(normalizedValue);
 	}
 
 	public Object extractValue(T entity) {
@@ -108,7 +152,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 		if (_comparator.equals("LIKE")) {
 			return StringUtil.wildcardMatches(
 				(String)entityValue, (String)normalizedValue, '_', '%', '\\',
-				true);
+				_caseSensitive);
 		}
 
 		@SuppressWarnings("rawtypes")
@@ -160,24 +204,6 @@ public class FinderColumn<T extends BaseModel<T>> {
 		return value;
 	}
 
-	public boolean shouldBind(Object normalizedValue) {
-		if (_type.isPrimitive()) {
-			return true;
-		}
-
-		if ((_type == Type.STRING) && _convertNull) {
-			String stringValue = (String)normalizedValue;
-
-			return !stringValue.isEmpty();
-		}
-
-		if (normalizedValue != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	public Object toFinderArg(Object normalizedValue) {
 		if (normalizedValue instanceof Date) {
 			Date date = (Date)normalizedValue;
@@ -205,6 +231,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	}
 
+	private final boolean _caseSensitive;
 	private final String _comparator;
 	private final boolean _convertNull;
 	private final String _keyFragment;

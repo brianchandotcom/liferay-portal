@@ -45,9 +45,7 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 
 	protected void bindQueryParams(QueryPos queryPos, Object[] values) {
 		for (int i = 0; i < finderColumns.length; i++) {
-			if (finderColumns[i].shouldBind(values[i])) {
-				queryPos.add(values[i]);
-			}
+			finderColumns[i].bindValue(queryPos, values[i]);
 		}
 	}
 

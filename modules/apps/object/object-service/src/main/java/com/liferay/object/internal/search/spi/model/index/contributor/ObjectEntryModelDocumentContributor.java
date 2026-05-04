@@ -14,6 +14,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.internal.field.business.type.AssigneeObjectFieldBusinessType;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -81,12 +83,14 @@ public class ObjectEntryModelDocumentContributor
 			accountEntryOrganizationRelLocalService,
 		DLFileEntryLocalService dlFileEntryLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 	}
 
@@ -158,7 +162,39 @@ public class ObjectEntryModelDocumentContributor
 
 		if (StringUtil.equals(
 				objectField.getBusinessType(),
-				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE) &&
+			(fieldValue instanceof Map)) {
+
+			Map<String, Long> assigneeMap = (Map<String, Long>)fieldValue;
+
+			long classNameId = MapUtil.getLong(assigneeMap, "classNameId");
+			long classPK = MapUtil.getLong(assigneeMap, "classPK");
+
+			fieldValue = StringBundler.concat(
+				classNameId, StringPool.UNDERLINE, classPK);
+
+			AssigneeObjectFieldBusinessType assigneeObjectFieldBusinessType =
+				(AssigneeObjectFieldBusinessType)
+					_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE);
+
+			if (assigneeObjectFieldBusinessType != null) {
+				String assigneeName =
+					assigneeObjectFieldBusinessType.getDisplayName(
+						classNameId, classPK);
+
+				if (Validator.isNotNull(assigneeName)) {
+					_addField(
+						fieldArray, fieldName, "value_text", assigneeName);
+
+					_appendToContent(
+						objectContentHelper, locale, fieldName, assigneeName);
+				}
+			}
+		}
+		else if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			fieldValue = _getFileName(
 				GetterUtil.getLong(fieldValue), objectDefinition);
@@ -707,6 +743,8 @@ public class ObjectEntryModelDocumentContributor
 		_accountEntryOrganizationRelLocalService;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private final ObjectFieldBusinessTypeRegistry
+		_objectFieldBusinessTypeRegistry;
 	private final TextEmbeddingDocumentContributor
 		_textEmbeddingDocumentContributor;
 

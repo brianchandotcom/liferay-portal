@@ -69,6 +69,7 @@ import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
@@ -1086,12 +1087,12 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectActionLocalService, objectDefinitionLocalService,
 				_objectDefinitionSettingLocalService,
 				_objectEntryFolderLocalService, _objectEntryLocalService,
-				_objectEntryService, _objectFieldLocalService,
-				_objectFolderLocalService, _objectLayoutLocalService,
-				_objectLayoutTabLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, _objectViewLocalService,
-				_organizationLocalService, _portal, _portletLocalService,
-				_resourceActions, _userLocalService,
+				_objectEntryService, _objectFieldBusinessTypeRegistry,
+				_objectFieldLocalService, _objectFolderLocalService,
+				_objectLayoutLocalService, _objectLayoutTabLocalService,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_objectViewLocalService, _organizationLocalService, _portal,
+				_portletLocalService, _resourceActions, _userLocalService,
 				_resourcePermissionLocalService, _searchLocalizationHelper,
 				_sharingModelResourcePermissionConfigurator,
 				_systemEventLocalService, _textEmbeddingDocumentContributor,
@@ -4003,6 +4004,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
+
+	@Reference
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

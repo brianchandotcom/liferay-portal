@@ -41,6 +41,7 @@ const DEFAULT_PROPS = {
 		name: 'Test1 Test1',
 	},
 	entryClassName: '11111-className',
+	externalUserSharingEnabled: true,
 	initialCollaborators: [
 		{
 			actionIds: 'VIEW',
@@ -187,7 +188,7 @@ describe('ShareModalContent', () => {
 
 		expect(apiPostSpy).toHaveBeenCalledWith(
 			'/o/cms/basic-documents/20/collaborators',
-			[{actionIds: ['VIEW'], id: '2', share: true, type: 'User'}]
+			[{actionIds: ['VIEW'], id: 2, share: true, type: 'User'}]
 		);
 
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
@@ -274,8 +275,8 @@ describe('ShareModalContent', () => {
 		expect(queryByText('invite-external-user')).not.toBeInTheDocument();
 	});
 
-	it('adds an external user collaborator when pressing Enter on a valid email', async () => {
-		const {container} = renderComponent();
+	it('adds an external user collaborator when the invite suggestion is selected', async () => {
+		const {container, getByText} = renderComponent();
 
 		const input = container.querySelector<HTMLInputElement>(
 			'input#collaboratorAutocomplete'
@@ -291,8 +292,12 @@ describe('ShareModalContent', () => {
 			jest.advanceTimersByTime(300);
 		});
 
+		await waitFor(() => {
+			expect(getByText('invite-external-user')).toBeInTheDocument();
+		});
+
 		await act(async () => {
-			fireEvent.keyDown(input, {code: 'Enter', key: 'Enter'});
+			fireEvent.click(getByText('invite-external-user'));
 		});
 
 		expect(
@@ -417,6 +422,57 @@ describe('ShareModalContent', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('omits the id when saving a newly invited external user', async () => {
+		const apiPostSpy = jest
+			.spyOn(ApiHelper, 'post')
+			.mockResolvedValue({data: {}, error: null});
+
+		const {container, getByText} = renderComponent();
+
+		const input = container.querySelector<HTMLInputElement>(
+			'input#collaboratorAutocomplete'
+		)!;
+
+		await act(async () => {
+			fireEvent.change(input, {
+				target: {value: 'external@example.com'},
+			});
+		});
+
+		await act(async () => {
+			jest.advanceTimersByTime(300);
+		});
+
+		await waitFor(() => {
+			expect(getByText('invite-external-user')).toBeInTheDocument();
+		});
+
+		await act(async () => {
+			fireEvent.click(getByText('invite-external-user'));
+		});
+
+		await act(async () => {
+			fireEvent.click(getByText('save'));
+		});
+
+		expect(apiPostSpy).toHaveBeenCalledWith(
+			'/o/cms/basic-documents/20/collaborators',
+			expect.arrayContaining([
+				expect.objectContaining({
+					emailAddress: 'external@example.com',
+					type: 'Email',
+				}),
+			])
+		);
+
+		const payload = apiPostSpy.mock.calls[0][1] as Array<{id?: number}>;
+		const externalEntry = payload.find(
+			(entry: any) => entry.type === 'Email'
+		);
+
+		expect(externalEntry).not.toHaveProperty('id');
+	});
+
 	it('sends type="Email" and the email as id when saving an external user invite', async () => {
 		const apiPostSpy = jest
 			.spyOn(ApiHelper, 'post')
@@ -466,6 +522,56 @@ describe('ShareModalContent', () => {
 					type: 'Email',
 				},
 			]
+		);
+	});
+
+	it('does not offer the invite-external-user option when externalUserSharingEnabled is false', async () => {
+		const {container, queryByText} = renderComponent({
+			...DEFAULT_PROPS,
+			externalUserSharingEnabled: false,
+		});
+
+		const input = container.querySelector<HTMLInputElement>(
+			'input#collaboratorAutocomplete'
+		)!;
+
+		await act(async () => {
+			fireEvent.change(input, {
+				target: {value: 'external@example.com'},
+			});
+		});
+
+		await act(async () => {
+			jest.advanceTimersByTime(300);
+		});
+
+		expect(queryByText('invite-external-user')).not.toBeInTheDocument();
+	});
+
+	it('does not render existing external user collaborators when externalUserSharingEnabled is false', () => {
+		const {container, queryByText} = renderComponent({
+			...DEFAULT_PROPS,
+			externalUserSharingEnabled: false,
+			initialCollaborators: [
+				{
+					actionIds: 'VIEW',
+					share: false,
+					type: 'Email',
+					user: {
+						emailAddress: 'external@example.com',
+						name: 'external@example.com',
+					},
+				},
+			] as Collaborator[],
+		});
+
+		expect(queryByText('invited')).not.toBeInTheDocument();
+		expect(queryByText('external@example.com')).not.toBeInTheDocument();
+
+		// Only the creator/owner row remains.
+
+		expect(container.querySelectorAll('li.list-group-item')).toHaveLength(
+			1
 		);
 	});
 });

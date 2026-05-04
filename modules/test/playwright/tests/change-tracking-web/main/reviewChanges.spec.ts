@@ -896,9 +896,93 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 
 	await documentLibraryEditFilePage.publishButton.click();
 
+	await waitForAlert(page, 'Success:Your request completed successfully.');
+
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 	await changeTrackingPage.reviewChange('astronaut2');
+
+	const renderViewDropdown = page.locator(
+		'.publications-render-view-divider .dropdown'
+	);
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.locator('img[src*="astronaut"]')})
+			.first()
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Production'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.locator('img[src*="astronaut"]')})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {name: ctCollection.body.name})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-render-view-content')
+			.filter({has: page.locator('img[src*="astronaut"]')})
+	).toBeVisible();
+
 	await changeTrackingPage.selectTab('Data');
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Unified View'}).click();
+
+	await expect(
+		page.locator(
+			'td.publications-key-td:has-text("Title") + td .diff-html-added'
+		)
+	).toHaveText('astronaut2');
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Split View'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Title") + td')
+			.filter({has: page.getByText('astronaut.png', {exact: true})})
+	).toBeVisible();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Title") + td')
+			.filter({has: page.getByText('astronaut2', {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page.getByRole('menuitem', {name: 'Production'}).click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Title") + td')
+			.filter({has: page.getByText('astronaut.png', {exact: true})})
+	).toBeVisible();
+
+	await renderViewDropdown.click();
+
+	await page
+		.getByRole('menuitem', {name: ctCollection.body.name})
+		.click();
+
+	await expect(
+		page
+			.locator('td.publications-key-td:has-text("Title") + td')
+			.filter({has: page.getByText('astronaut2', {exact: true})})
+	).toBeVisible();
 
 	const downloadPromise = page.waitForEvent('download');
 

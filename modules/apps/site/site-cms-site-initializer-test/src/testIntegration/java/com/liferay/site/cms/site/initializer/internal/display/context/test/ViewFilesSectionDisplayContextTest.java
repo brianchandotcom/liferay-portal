@@ -109,12 +109,12 @@ public class ViewFilesSectionDisplayContextTest
 			"password-policies", "permissions", "Permissions", null,
 			bulkActionDropdownItems.get(7));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"password-policies", "default-permissions", "Default Permissions",
+			null, bulkActionDropdownItems.get(8));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "edit-default-permissions-by-role",
 			"Edit Default Permissions by Role", null,
-			bulkActionDropdownItems.get(8));
-		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"password-policies", "default-permissions", "Default Permissions",
-			null, bulkActionDropdownItems.get(9));
+			bulkActionDropdownItems.get(9));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"password-policies", "edit-permissions-by-role",
 			"Edit Permissions by Role", null, bulkActionDropdownItems.get(10));

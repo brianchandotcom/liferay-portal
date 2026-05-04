@@ -44,6 +44,8 @@ public class JIRAUtil {
 			}
 
 			if (commitMessageTitle.endsWith("/ci-merge.") ||
+				commitMessageTitle.matches(
+					"\\d(\\.\\d+)+ (GA|Update )\\d+ Release Apps:.+") ||
 				commitMessageTitle.startsWith("artifact:ignore") ||
 				commitMessageTitle.startsWith("build.gradle auto SF") ||
 				commitMessageTitle.startsWith("Reapply ") ||

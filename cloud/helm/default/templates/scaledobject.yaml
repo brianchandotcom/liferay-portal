@@ -15,25 +15,26 @@ spec:
         kind: StatefulSet
         name: {{ include "liferay.name" . }}
     {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
-    {{- $custom := .Values.autoscaling.keda.customTriggers | default dict }}
-    {{- $merged := mergeOverwrite (deepCopy (.Values.autoscaling.keda.triggers | default dict)) $custom }}
-    {{- range $k, $v := $custom }}
-        {{- if not $v }}
-            {{- $_ := unset $merged $k }}
-        {{- end }}
-    {{- end }}
+    {{- $merged := mergeOverwrite (deepCopy (.Values.autoscaling.keda.triggers | default dict)) (.Values.autoscaling.keda.customTriggers | default dict) }}
     {{- $triggers := list }}
     {{- range $k, $v := $merged }}
         {{- $trigger := deepCopy $v }}
-        {{- if not (hasKey $trigger "type") }}
-            {{- $_ := set $trigger "type" "prometheus" }}
+        {{- $enabled := true }}
+        {{- if hasKey $trigger "enabled" }}
+            {{- $enabled = $trigger.enabled }}
+            {{- $_ := unset $trigger "enabled" }}
         {{- end }}
-        {{- if eq $trigger.type "prometheus" }}
-            {{- if not (hasKey $trigger.metadata "serverAddress") }}
-                {{- $_ := set $trigger.metadata "serverAddress" $resolvedServerAddress }}
+        {{- if $enabled }}
+            {{- if not (hasKey $trigger "type") }}
+                {{- $_ := set $trigger "type" "prometheus" }}
             {{- end }}
+            {{- if eq $trigger.type "prometheus" }}
+                {{- if not (hasKey $trigger.metadata "serverAddress") }}
+                    {{- $_ := set $trigger.metadata "serverAddress" $resolvedServerAddress }}
+                {{- end }}
+            {{- end }}
+            {{- $triggers = append $triggers $trigger }}
         {{- end }}
-        {{- $triggers = append $triggers $trigger }}
     {{- end }}
     {{- with $triggers }}
     triggers:

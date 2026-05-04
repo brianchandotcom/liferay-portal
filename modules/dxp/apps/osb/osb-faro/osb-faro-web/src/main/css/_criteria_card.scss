@@ -65,6 +65,23 @@
 					padding-left: 8px;
 				}
 			}
+
+			.criteria-step {
+				align-items: center;
+				display: inline-flex;
+
+				.criteria-step-number {
+					align-items: center;
+					background-color: #e7e7ed;
+					border-radius: 100%;
+					display: inline-flex;
+					font-size: 10px;
+					font-weight: $fontWeightBold;
+					height: 1rem;
+					justify-content: center;
+					width: 1rem;
+				}
+			}
 		}
 
 		.criteria-row {

@@ -38,21 +38,6 @@ public class CommerceShipmentLocalServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #addDeliverySubscriptionCommerceShipment(long, long)}
-	 */
-	@Deprecated
-	public static CommerceShipment addCommerceDeliverySubscriptionShipment(
-			long userId, long commerceOrderId, String name, String description,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, String phoneNumber)
-		throws PortalException {
-
-		return getService().addCommerceDeliverySubscriptionShipment(
-			userId, commerceOrderId, name, description, street1, street2,
-			street3, city, zip, regionId, countryId, phoneNumber);
-	}
-
-	/**
 	 * Adds the commerce shipment to the database. Also notifies the appropriate model listeners.
 	 *
 	 * <p>
@@ -643,4 +628,4 @@ public class CommerceShipmentLocalServiceUtil {
 			CommerceShipmentLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2049266083
+// LIFERAY-SERVICE-BUILDER-HASH:-196440095

@@ -54,13 +54,6 @@ public interface CommerceShipmentService extends BaseService {
 			String commerceShippingOptionName, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	public void deleteCommerceShipment(long commerceShipmentId)
-		throws PortalException;
-
 	public void deleteCommerceShipment(
 			long commerceShipmentId, boolean restoreStockQuantity)
 		throws PortalException;
@@ -101,7 +94,8 @@ public interface CommerceShipmentService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShipment> getCommerceShipmentsByOrderId(
-		long commerceOrderId, int start, int end);
+			long commerceOrderId, int start, int end)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceShipmentsCount(long companyId) throws PortalException;
@@ -122,7 +116,8 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentsCountByOrderId(long commerceOrderId);
+	public int getCommerceShipmentsCountByOrderId(long commerceOrderId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -189,4 +184,4 @@ public interface CommerceShipmentService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1240790909
+// LIFERAY-SERVICE-BUILDER-HASH:652540385

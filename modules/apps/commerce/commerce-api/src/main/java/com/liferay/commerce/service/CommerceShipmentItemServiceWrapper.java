@@ -60,18 +60,6 @@ public class CommerceShipmentItemServiceWrapper
 			validateInventory, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	@Override
-	public void deleteCommerceShipmentItem(long commerceShipmentItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_commerceShipmentItemService.deleteCommerceShipmentItem(
-			commerceShipmentItemId);
-	}
-
 	@Override
 	public void deleteCommerceShipmentItem(
 			long commerceShipmentItemId, boolean restoreStockQuantity)
@@ -120,19 +108,6 @@ public class CommerceShipmentItemServiceWrapper
 
 		return _commerceShipmentItemService.getCommerceShipmentItem(
 			commerceShipmentItemId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem>
-			getCommerceShipmentItems(long commerceOrderItemId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShipmentItemService.getCommerceShipmentItems(
-			commerceOrderItemId);
 	}
 
 	@Override
@@ -199,23 +174,25 @@ public class CommerceShipmentItemServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			updateCommerceShipmentItem(
-				long commerceShipmentItemId, long commerceInventoryWarehouseId,
+				long commerceShipmentId, long commerceShipmentItemId,
+				long commerceInventoryWarehouseId,
 				java.math.BigDecimal quantity, boolean validateInventory)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.updateCommerceShipmentItem(
-			commerceShipmentItemId, commerceInventoryWarehouseId, quantity,
-			validateInventory);
+			commerceShipmentId, commerceShipmentItemId,
+			commerceInventoryWarehouseId, quantity, validateInventory);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			updateExternalReferenceCode(
-				long commerceShipmentItemId, String externalReferenceCode)
+				long commerceShipmentId, long commerceShipmentItemId,
+				String externalReferenceCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.updateExternalReferenceCode(
-			commerceShipmentItemId, externalReferenceCode);
+			commerceShipmentId, commerceShipmentItemId, externalReferenceCode);
 	}
 
 	@Override
@@ -233,4 +210,4 @@ public class CommerceShipmentItemServiceWrapper
 	private CommerceShipmentItemService _commerceShipmentItemService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1267216380
+// LIFERAY-SERVICE-BUILDER-HASH:-1809119223

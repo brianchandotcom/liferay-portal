@@ -60,13 +60,6 @@ public interface CommerceShipmentItemService extends BaseService {
 			boolean validateInventory, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), pass boolean for restoring stock
-	 */
-	@Deprecated
-	public void deleteCommerceShipmentItem(long commerceShipmentItemId)
-		throws PortalException;
-
 	public void deleteCommerceShipmentItem(
 			long commerceShipmentItemId, boolean restoreStockQuantity)
 		throws PortalException;
@@ -90,15 +83,6 @@ public interface CommerceShipmentItemService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShipmentItem getCommerceShipmentItem(
 			long commerceShipmentItemId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShipmentItem> getCommerceShipmentItems(
-			long commerceOrderItemId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -135,13 +119,15 @@ public interface CommerceShipmentItemService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CommerceShipmentItem updateCommerceShipmentItem(
-			long commerceShipmentItemId, long commerceInventoryWarehouseId,
-			BigDecimal quantity, boolean validateInventory)
+			long commerceShipmentId, long commerceShipmentItemId,
+			long commerceInventoryWarehouseId, BigDecimal quantity,
+			boolean validateInventory)
 		throws PortalException;
 
 	public CommerceShipmentItem updateExternalReferenceCode(
-			long commerceShipmentItemId, String externalReferenceCode)
+			long commerceShipmentId, long commerceShipmentItemId,
+			String externalReferenceCode)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:357941565
+// LIFERAY-SERVICE-BUILDER-HASH:943312753

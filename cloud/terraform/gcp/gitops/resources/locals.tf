@@ -102,4 +102,5 @@ locals {
 	secret_store_provider_default_enabled=var.external_secret_store_provider_hcl == null
 	secret_store_provider_hcl=local.secret_store_provider_default_enabled ? local.secret_store_provider_default : var.external_secret_store_provider_hcl
 	terraform_manager_name="liferay-cloud-native-terraform"
+	vpc_name="${var.deployment_name}-vpc"
 }

@@ -247,7 +247,7 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 								},
 								{
 									name="global.gcp.vpcName"
-									value=var.vpc_name
+									value=local.vpc_name
 								},
 							]
 							valueFiles=[

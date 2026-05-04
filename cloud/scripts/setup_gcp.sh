@@ -9,7 +9,6 @@ trap "_recover_kubectl_context \${?}" ERR
 
 _GCP_DEPLOYMENT_NAME=""
 _GCP_PROJECT_ID=""
-_GITOPS_RESOURCE_TF_VARS=()
 
 _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -200,8 +199,6 @@ function _set_up_gcp_gke {
 		"$(terraform output -raw membership_name)" \
 		--project "$(terraform output -raw project_id)"
 
-	_GITOPS_RESOURCE_TF_VARS+=(-var "vpc_name=$(terraform output -raw network_name)")
-
 	echo "Google GKE cluster setup complete."
 
 	_popd
@@ -214,7 +211,7 @@ function _set_up_gcp_gitops {
 
 	_terraform_init_and_apply "./platform" "$@"
 
-	_terraform_init_and_apply "./resources" "$@" "${_GITOPS_RESOURCE_TF_VARS[@]}"
+	_terraform_init_and_apply "./resources" "$@"
 
 	echo "Google GCP GitOps infrastructure setup complete."
 

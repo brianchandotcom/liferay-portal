@@ -27,10 +27,10 @@ components:
                     description:
                         The fragment's external reference code.
                     type: string
-                fragmentSetExternalReferenceCode:
+                fragmentSet:
+                    $ref: "#/components/schemas/FragmentSet"
                     description:
-                        The external reference code of the fragment set this fragment belongs to.
-                    type: string
+                        The fragment's set.
                 fragmentVersions:
                     description:
                         The fragment's versions. A fragment can have up to 2 versions, one draft and one published

@@ -66,7 +66,7 @@ $focus-ring-pulse-animation: $focus-ring-pulse-animation-name
 }
 
 .c-prefers-focus-ring {
-	:focus-visible,
+	:focus-visible:not(.toggle-switch-check),
 	.focus {
 		position: relative;
 		z-index: 1;
@@ -88,7 +88,7 @@ $focus-ring-pulse-animation: $focus-ring-pulse-animation-name
 	}
 
 	&.c-tab-returning {
-		:focus-visible,
+		:focus-visible:not(.toggle-switch-check),
 		.focus {
 			&::after {
 				animation-name: none;
@@ -101,7 +101,7 @@ $focus-ring-pulse-animation: $focus-ring-pulse-animation-name
 	}
 
 	&.c-prefers-reduced-motion {
-		:focus-visible,
+		:focus-visible:not(.toggle-switch-check),
 		.focus {
 			&::after {
 				animation: none;

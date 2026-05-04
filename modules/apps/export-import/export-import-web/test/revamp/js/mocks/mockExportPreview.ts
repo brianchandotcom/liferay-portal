@@ -6,7 +6,7 @@
 import {
 	ExportPreview,
 	PortletDataHandlerSection,
-} from '../types/portletDataHandlerSection';
+} from '../../../../src/main/resources/META-INF/resources/revamp/js/types/portletDataHandlerSection';
 
 const sections: PortletDataHandlerSection[] = [
 	{

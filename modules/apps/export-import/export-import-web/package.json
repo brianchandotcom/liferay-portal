@@ -22,6 +22,11 @@
 		"react": "18.2.0",
 		"react-dropzone": "11.4.2"
 	},
+	"jest": {
+		"modulePathIgnorePatterns": [
+			"test/revamp/js/mocks/*"
+		]
+	},
 	"main": "js/index.ts",
 	"name": "exportimport-web",
 	"scripts": {

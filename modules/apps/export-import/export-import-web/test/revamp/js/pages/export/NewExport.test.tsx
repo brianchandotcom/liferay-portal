@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
-import {mockExportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/utils/mockExportPreview';
+import {mockExportPreview} from '../../mocks/mockExportPreview';
 
 const renderComponent = () => {
 	return render(

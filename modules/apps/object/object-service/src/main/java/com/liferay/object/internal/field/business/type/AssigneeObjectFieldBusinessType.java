@@ -82,6 +82,32 @@ public class AssigneeObjectFieldBusinessType
 		return values.get(objectField.getName());
 	}
 
+	public String getDisplayName(long classNameId, long classPK) {
+		String className = _portal.fetchClassName(classNameId);
+
+		if (StringUtil.equals(className, Role.class.getName())) {
+			Role role = _roleLocalService.fetchRole(classPK);
+
+			if (role != null) {
+				return role.getName();
+			}
+
+			return null;
+		}
+
+		if (StringUtil.equals(className, User.class.getName())) {
+			User user = _userLocalService.fetchUser(classPK);
+
+			if (user != null) {
+				return user.getFullName();
+			}
+
+			return null;
+		}
+
+		return null;
+	}
+
 	@Override
 	public Serializable getDTOValue(
 			DTOConverterContext dtoConverterContext,

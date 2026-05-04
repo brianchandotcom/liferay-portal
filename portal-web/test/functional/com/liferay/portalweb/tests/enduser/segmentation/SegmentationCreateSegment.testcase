@@ -395,13 +395,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "ES");
 		}
-	}
 
-	@description = "Test Automation for LPS-130322: Validate if it's posible to create a segment based on Session > Referrer URL criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionReferrerURL {
-		task ("Add segment") {
+		task ("Add segment with Referrer URL property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Session");
@@ -417,7 +412,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Referrer URL segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentBySessionReferrerURL Test");
 
 			AssertValue(

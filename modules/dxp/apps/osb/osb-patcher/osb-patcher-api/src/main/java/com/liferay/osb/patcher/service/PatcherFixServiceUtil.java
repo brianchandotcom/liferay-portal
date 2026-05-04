@@ -5,6 +5,7 @@
 
 package com.liferay.osb.patcher.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
@@ -26,6 +27,14 @@ public class PatcherFixServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.osb.patcher.service.impl.PatcherFixServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.json.JSONObject
+			checkPatcherFixesByPatcherProjectVersionName(
+				String patcherProjectVersionName, String ticketList)
+		throws PortalException {
+
+		return getService().checkPatcherFixesByPatcherProjectVersionName(
+			patcherProjectVersionName, ticketList);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -44,4 +53,4 @@ public class PatcherFixServiceUtil {
 		new Snapshot<>(PatcherFixServiceUtil.class, PatcherFixService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-419110826
+// LIFERAY-SERVICE-BUILDER-HASH:-2009148765

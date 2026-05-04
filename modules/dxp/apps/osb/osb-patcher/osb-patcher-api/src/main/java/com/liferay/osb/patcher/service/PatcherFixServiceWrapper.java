@@ -25,6 +25,16 @@ public class PatcherFixServiceWrapper
 		_patcherFixService = patcherFixService;
 	}
 
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject
+			checkPatcherFixesByPatcherProjectVersionName(
+				String patcherProjectVersionName, String ticketList)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _patcherFixService.checkPatcherFixesByPatcherProjectVersionName(
+			patcherProjectVersionName, ticketList);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -48,4 +58,4 @@ public class PatcherFixServiceWrapper
 	private PatcherFixService _patcherFixService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-185665322
+// LIFERAY-SERVICE-BUILDER-HASH:1311080852

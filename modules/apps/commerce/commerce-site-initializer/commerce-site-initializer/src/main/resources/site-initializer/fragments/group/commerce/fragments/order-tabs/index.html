@@ -60,19 +60,19 @@
 			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
 		</div>
 
-		[#if (layouts?size > 0) || (layoutMode == "edit")]
+		[#if !(layouts??) || (layouts?has_content) || (layoutMode == "edit")]
 			<div aria-labelledby="tab2-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel2-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 				<lfr-drop-zone data-lfr-drop-zone-id="2" data-lfr-priority="2"></lfr-drop-zone>
 			</div>
 		[/#if]
 
-		[#if (layouts?size > 0) || (layoutMode == "edit")]
+		[#if !(layouts??) || (layouts?has_content) || (layoutMode == "edit")]
 			<div aria-labelledby="tab3-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel3-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 				<lfr-drop-zone data-lfr-drop-zone-id="3" data-lfr-priority="3"></lfr-drop-zone>
 			</div>
 		[/#if]
 
-		[#if (layouts?size > 0) || (layoutMode == "edit")]
+		[#if !(layouts??) || (layouts?has_content) || (layoutMode == "edit")]
 			<div aria-labelledby="tab4-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel4-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
 				<lfr-drop-zone data-lfr-drop-zone-id="4" data-lfr-priority="4"></lfr-drop-zone>
 			</div>

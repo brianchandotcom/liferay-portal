@@ -34,12 +34,7 @@ import {
 	CollaboratorType,
 	OBJECT_ENTRY_FOLDER_CLASS_NAME,
 } from '../../../common/utils/constants';
-
-function isEmailAddressValid(email: string) {
-	const emailRegex = /.+@.+\..+/i;
-
-	return emailRegex.test(email);
-}
+import isEmailAddressValid from '../../../common/utils/isEmailAddressValid';
 
 export interface Collaborator {
 	actionIds: string;

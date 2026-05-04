@@ -45,7 +45,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 %>
 
 <c:choose>
-	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82107") %>'>
+	<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-82107") %>'>
 		<div class="sheet-subtitle"><liferay-ui:message key="site-template-sync" /></div>
 	</c:when>
 	<c:otherwise>
@@ -106,7 +106,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						<liferay-ui:message key="this-site-does-not-have-any-pages" />
 					</p>
 				</c:when>
-				<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82107") %>'>
+				<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-82107") %>'>
 					<c:if test="<%= publicLayoutSetPrototype == null %>">
 						<p class="small text-secondary">
 							<liferay-ui:message key="this-site-is-not-related-to-a-site-template" />

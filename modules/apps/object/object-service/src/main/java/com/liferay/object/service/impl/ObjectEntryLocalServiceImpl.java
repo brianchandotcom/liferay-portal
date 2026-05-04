@@ -3829,31 +3829,8 @@ public class ObjectEntryLocalServiceImpl
 		Predicate searchPredicate = null;
 
 		for (ObjectField objectField : objectFields) {
-			Table<?> table = _objectFieldLocalService.getTable(
-				objectDefinitionId, objectField.getName());
-
-			Column<?, ?> column = table.getColumn(
-				objectField.getDBColumnName());
-
-			if (column == null) {
-				continue;
-			}
-
-			Predicate objectFieldPredicate = null;
-
-			if (Objects.equals(
-					objectField.getRelationshipType(),
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
-
-				objectFieldPredicate = _getRelationshipObjectFieldPredicate(
-					column, objectField, search);
-			}
-			else {
-				objectFieldPredicate =
-					ObjectEntrySearchUtil.getObjectFieldPredicate(
-						objectField.getBusinessType(), column,
-						objectField.getDBType(), search);
-			}
+			Predicate objectFieldPredicate = _getObjectFieldPredicate(
+				objectDefinitionId, objectField, search);
 
 			if (objectFieldPredicate == null) {
 				continue;
@@ -4795,6 +4772,32 @@ public class ObjectEntryLocalServiceImpl
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	private Predicate _getObjectFieldPredicate(
+			long objectDefinitionId, ObjectField objectField, String search)
+		throws PortalException {
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinitionId, objectField.getName());
+
+		Column<?, ?> column = table.getColumn(objectField.getDBColumnName());
+
+		if (column == null) {
+			return null;
+		}
+
+		if (Objects.equals(
+				objectField.getRelationshipType(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			return _getRelationshipObjectFieldPredicate(
+				column, objectField, search);
+		}
+
+		return ObjectEntrySearchUtil.getObjectFieldPredicate(
+			objectField.getBusinessType(), column, objectField.getDBType(),
+			search);
 	}
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(

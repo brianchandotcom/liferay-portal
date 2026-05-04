@@ -68,7 +68,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -167,7 +166,9 @@ public class ObjectEntryLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				Map.of("reviewDate", new Date()),
+				HashMapBuilder.<String, Serializable>put(
+					"reviewDate", new Date()
+				).build(),
 				ServiceContextTestUtil.getServiceContext(
 					_depotEntry.getGroupId()));
 

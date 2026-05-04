@@ -204,7 +204,7 @@ public class GetPreviewDataStrutsActionTest {
 			group2.getGroupId(), groupJSONObject.getLong("groupId"));
 
 		displayPageTemplatesJSONArray = groupJSONObject.getJSONArray(
-			"displayPages");
+			"displayPageTemplates");
 
 		Assert.assertEquals(1, displayPageTemplatesJSONArray.length());
 

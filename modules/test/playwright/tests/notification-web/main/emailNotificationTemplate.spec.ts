@@ -553,6 +553,8 @@ test.describe('Email notification template', () => {
 			'<h1>Hello World</h1>'
 		);
 
+		await emailNotificationTemplatePage.richTextSourceButton.click();
+
 		await emailNotificationTemplatePage.saveButton.click();
 
 		await notificationTemplatesPage
@@ -931,7 +933,7 @@ test.describe('Email notification template', () => {
 	});
 
 	test(
-		'Verify User Groups are now supported for Email Notification Templates',
+		'can use User Groups for Email Notification Templates',
 		{tag: '@LPD-57577'},
 		async ({
 			apiHelpers,

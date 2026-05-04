@@ -13,6 +13,7 @@ import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
+import SequentialEventOrderPopover from 'shared/components/SequentialEventOrderPopover';
 import ToThousandsCell from 'shared/components/table/cell-components/ToThousandsCell';
 import URLConstants from 'shared/util/url-constants';
 import UserCell from 'shared/components/table/cell-components/UserCell';
@@ -661,6 +662,7 @@ export const List: React.FC<IListProps> = ({
 									cellRenderer: (item: {
 										data: {
 											segmentType: 'BATCH' | 'REAL_TIME';
+											sequential: boolean;
 										};
 									}) => {
 										const segmentTypeMap = {
@@ -680,6 +682,12 @@ export const List: React.FC<IListProps> = ({
 														item.data.segmentType
 													]
 												}
+
+												{item.data.segmentType ===
+													SegmentTypes.RealTime &&
+													item.data.sequential && (
+														<SequentialEventOrderPopover />
+													)}
 											</td>
 										);
 									},

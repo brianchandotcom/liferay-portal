@@ -688,7 +688,7 @@ public class MarketplaceCommandLineRunner
 				}
 			});
 
-		_putReport(
+		_putReportByExternalReferenceCode(
 			new JSONObject(
 			).put(
 				"value",
@@ -837,11 +837,11 @@ public class MarketplaceCommandLineRunner
 					orderResource.patchOrder(order.getId(), order);
 				}
 
-				JSONArray koroneikiProjectsJSONArray = new JSONArray(
-					koroneikiProject);
-
-				JSONObject jsonObject =
-					koroneikiProjectsJSONArray.getJSONObject(0);
+				JSONObject jsonObject = new JSONArray(
+					koroneikiProject
+				).getJSONObject(
+					0
+				);
 
 				String key = jsonObject.getString("key");
 
@@ -873,7 +873,7 @@ public class MarketplaceCommandLineRunner
 						"orderTypeExternalReferenceCode",
 						order.getOrderTypeExternalReferenceCode()
 					).put(
-						"projects", koroneikiProjectsJSONArray
+						"projects", new JSONArray(koroneikiProject)
 					)
 				);
 			});
@@ -881,30 +881,29 @@ public class MarketplaceCommandLineRunner
 		for (Map.Entry<String, JSONObject> entry :
 				projectsUsingMarketplace.entrySet()) {
 
-			String koroneikiProjectKey = "KORONEIKI-PROJECT-" + entry.getKey();
+			String name = "KORONEIKI-PROJECT-" + entry.getKey();
 
 			try {
-				_putReport(
+				_putReportByExternalReferenceCode(
 					new JSONObject(
 					).put(
-						"name", koroneikiProjectKey
+						"name", name
 					).put(
 						"value",
 						entry.getValue(
 						).toString()
 					).toString(),
-					koroneikiProjectKey);
+					name);
 			}
 			catch (Exception exception) {
-				_log.error(
-					"Unable to write report " + koroneikiProjectKey, exception);
+				_log.error("Unable to put report " + name, exception);
 			}
 		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Wrote " + projectsUsingMarketplace.size() +
-					" KORONEIKI-PROJECT-* reports");
+				"There are " + projectsUsingMarketplace.size() +
+					" projects with Marketplace apps");
 		}
 	}
 
@@ -1025,7 +1024,9 @@ public class MarketplaceCommandLineRunner
 		}
 	}
 
-	private void _putReport(String data, String externalReferenceCode) {
+	private void _putReportByExternalReferenceCode(
+		String data, String externalReferenceCode) {
+
 		put(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),

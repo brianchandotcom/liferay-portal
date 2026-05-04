@@ -1964,7 +1964,7 @@ test(
 );
 
 test(
-	'Verify that form entry submission is blocked when an Object is inactivated and restored when reactivated',
+	'verify that form entry submission is blocked when an Object is inactivated and restored when reactivated',
 	{tag: '@LPS-139005'},
 	async ({
 		apiHelpers,
@@ -1976,13 +1976,8 @@ test(
 		viewObjectDefinitionsPage,
 		viewObjectEntriesPage,
 	}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
 		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
 				status: {code: 0},
 			});
 
@@ -1993,9 +1988,9 @@ test(
 
 		await formBuilderPage.goToNew();
 
-		const formName = 'Form' + getRandomInt();
+		const formTitle = 'Form' + getRandomInt();
 
-		await formBuilderPage.fillFormTitle(formName);
+		await formBuilderPage.fillFormTitle(formTitle);
 
 		await formBuilderPage.formSettingsButton.click();
 
@@ -2007,13 +2002,11 @@ test(
 
 		await formSettingsModalPage.clickDoneButton();
 
-		await formBuilderSidePanelPage.addTextButton.dblclick();
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
 
 		await formBuilderSidePanelPage.clickAdvancedTab();
 
-		await formBuilderSidePanelPage.selectObjectField(
-			objectFields[0].label!['en_US']
-		);
+		await formBuilderSidePanelPage.selectObjectField('textField');
 
 		await page.waitForTimeout(1000);
 
@@ -2036,7 +2029,12 @@ test(
 		await page.reload();
 
 		await expect(
-			page.locator('.lexicon-icon-exclamation-full').first()
+			page.getByRole('cell', {
+				exact: true,
+				name: `This form was created using an inactive object as storage type. 
+				Activate "${objectDefinition.name}" object to make it available for 
+				editing. ${formTitle}`,
+			})
 		).toBeVisible();
 
 		await viewObjectDefinitionsPage.goto();
@@ -2050,7 +2048,12 @@ test(
 		await page.reload();
 
 		await expect(
-			page.locator('.lexicon-icon-exclamation-full').first()
+			page.getByRole('cell', {
+				exact: true,
+				name: `This form was created using an inactive object as storage type. 
+				Activate "${objectDefinition.name}" object to make it available for 
+				editing. ${formTitle}`,
+			})
 		).toBeHidden();
 
 		await page.goto(formSubmissionURL);
@@ -2072,7 +2075,7 @@ test(
 );
 
 test(
-	'Verify that the Object visibility in the Form storage type changes according to activation status',
+	'verify that the Object visibility in the Form storage type changes according to activation status',
 	{tag: '@LPS-139005'},
 	async ({
 		apiHelpers,

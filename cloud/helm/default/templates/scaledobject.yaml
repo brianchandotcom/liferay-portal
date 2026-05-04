@@ -15,10 +15,16 @@ spec:
         kind: StatefulSet
         name: {{ include "liferay.name" . }}
     {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
-    {{- $rawTriggers := concat (.Values.autoscaling.keda.triggers | default list) (.Values.autoscaling.keda.customTriggers | default list) }}
+    {{- $custom := .Values.autoscaling.keda.customTriggers | default dict }}
+    {{- $merged := mergeOverwrite (deepCopy (.Values.autoscaling.keda.triggers | default dict)) $custom }}
+    {{- range $k, $v := $custom }}
+        {{- if not $v }}
+            {{- $_ := unset $merged $k }}
+        {{- end }}
+    {{- end }}
     {{- $triggers := list }}
-    {{- range $rawTriggers }}
-        {{- $trigger := deepCopy . }}
+    {{- range $k, $v := $merged }}
+        {{- $trigger := deepCopy $v }}
         {{- if not (hasKey $trigger "type") }}
             {{- $_ := set $trigger "type" "prometheus" }}
         {{- end }}

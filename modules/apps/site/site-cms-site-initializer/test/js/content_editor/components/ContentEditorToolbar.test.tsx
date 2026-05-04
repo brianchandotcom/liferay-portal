@@ -82,6 +82,9 @@ describe('ContentEditorToolbar', () => {
 					return key;
 				}),
 			},
+			ThemeDisplay: {
+				getDefaultLanguageId: jest.fn(() => 'en_US'),
+			},
 			Util: {
 				sub: jest.fn((key, ...args) => {
 					let result = key;

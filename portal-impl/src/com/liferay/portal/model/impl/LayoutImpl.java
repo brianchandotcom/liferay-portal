@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FriendlyURLKeywordsUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -123,7 +122,9 @@ import java.util.TreeSet;
 public class LayoutImpl extends LayoutBaseImpl {
 
 	public static boolean hasFriendlyURLKeyword(String friendlyURL) {
-		return FriendlyURLKeywordsUtil.hasFriendlyURLKeyword(friendlyURL);
+		String keyword = _getFriendlyURLKeyword(friendlyURL);
+
+		return Validator.isNotNull(keyword);
 	}
 
 	public static int validateFriendlyURL(String friendlyURL) {
@@ -183,20 +184,17 @@ public class LayoutImpl extends LayoutBaseImpl {
 	public static void validateFriendlyURLKeyword(String friendlyURL)
 		throws LayoutFriendlyURLException {
 
-		String keyword = FriendlyURLKeywordsUtil.getFriendlyURLKeyword(
-			friendlyURL);
+		String keyword = _getFriendlyURLKeyword(friendlyURL);
 
-		if (Validator.isNull(keyword)) {
-			return;
+		if (Validator.isNotNull(keyword)) {
+			LayoutFriendlyURLException layoutFriendlyURLException =
+				new LayoutFriendlyURLException(
+					LayoutFriendlyURLException.KEYWORD_CONFLICT);
+
+			layoutFriendlyURLException.setKeywordConflict(keyword);
+
+			throw layoutFriendlyURLException;
 		}
-
-		LayoutFriendlyURLException layoutFriendlyURLException =
-			new LayoutFriendlyURLException(
-				LayoutFriendlyURLException.KEYWORD_CONFLICT);
-
-		layoutFriendlyURLException.setKeywordConflict(keyword);
-
-		throw layoutFriendlyURLException;
 	}
 
 	@Override
@@ -1650,6 +1648,46 @@ public class LayoutImpl extends LayoutBaseImpl {
 		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
 	}
 
+	private static String _getFriendlyURLKeyword(String friendlyURL) {
+		friendlyURL = StringUtil.toLowerCase(friendlyURL);
+
+		for (String keyword : _friendlyURLKeywords) {
+			if (friendlyURL.startsWith(keyword)) {
+				return keyword;
+			}
+
+			if (keyword.equals(friendlyURL + StringPool.SLASH)) {
+				return friendlyURL;
+			}
+		}
+
+		return null;
+	}
+
+	private static void _initFriendlyURLKeywords() {
+		_friendlyURLKeywords =
+			new String[PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length];
+
+		for (int i = 0; i < PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS.length;
+			 i++) {
+
+			String keyword = PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS[i];
+
+			keyword = StringPool.SLASH + keyword;
+
+			if (!keyword.contains(StringPool.PERIOD)) {
+				if (keyword.endsWith(StringPool.STAR)) {
+					keyword = keyword.substring(0, keyword.length() - 1);
+				}
+				else {
+					keyword = keyword + StringPool.SLASH;
+				}
+			}
+
+			_friendlyURLKeywords[i] = StringUtil.toLowerCase(keyword);
+		}
+	}
+
 	private ColorScheme _getColorScheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
 			LayoutSet layoutSet = getLayoutSet();
@@ -1922,6 +1960,12 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LayoutImpl.class);
+
+	private static String[] _friendlyURLKeywords;
+
+	static {
+		_initFriendlyURLKeywords();
+	}
 
 	private ColorScheme _colorScheme;
 	private String _faviconURL;

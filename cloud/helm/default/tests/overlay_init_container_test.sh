@@ -41,10 +41,12 @@ function _run_test {
 function _test_init_container_absent_when_overlay_is_disabled {
 	local output
 
-	output=$(helm template test "${chart_directory}" \
-		--set 'overlay.enabled=false')
-
-	! echo "${output}" | grep --quiet "name: liferay-overlay"
+	if output=$(helm template test "${chart_directory}" --set 'overlay.enabled=false')
+	then
+		! echo "${output}" | grep --quiet "name: liferay-overlay"
+	else
+		return 1
+	fi
 }
 
 function _test_init_container_present_when_overlay_is_enabled {

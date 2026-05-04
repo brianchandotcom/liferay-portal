@@ -1,3 +1,6 @@
+import AccountEventMetricQuery from 'shared/queries/AccountEventMetricQuery';
+import AccountEventsTrendQuery from 'shared/queries/AccountEventsTrendQuery';
+import AccountUserSessionQuery from 'shared/queries/AccountUserSessionQuery';
 import AcquisitionsQuery from 'shared/queries/AcquisitionsQuery';
 import AssetAppearsOnQuery from 'shared/queries/AssetAppearsOnQuery';
 import BlockedCustomEventDefinitionsQuery from 'settings/definitions/events/queries/BlockedCustomEventDefinitionsQuery';
@@ -2300,6 +2303,203 @@ export const mockSessions = variables => ({
 							'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'
 					}
 				]
+			}
+		}
+	}
+});
+
+const ACCOUNT_HISTOGRAM_KEYS = [
+	'2024-04-01T00:00',
+	'2024-04-02T00:00',
+	'2024-04-03T00:00'
+];
+
+export const mockAccountEventMetricsReq = ({
+	accountId = 'abc',
+	channelId = '123123',
+	empty = false,
+	interval = 'D',
+	keywords = '',
+	rangeKey = 30
+} = {}) => {
+	const buildHistogram = value =>
+		ACCOUNT_HISTOGRAM_KEYS.map(key => ({
+			__typename: 'HistogramMetric',
+			key,
+			previousValue: 0,
+			previousValueKey: key,
+			trend: {
+				__typename: 'Trend',
+				percentage: 0,
+				trendClassification: 'NEUTRAL'
+			},
+			value,
+			valueKey: key
+		}));
+
+	return {
+		request: {
+			query: AccountEventMetricQuery,
+			variables: {
+				accountId,
+				channelId,
+				entityId: '',
+				entityType: 'INDIVIDUAL',
+				interval,
+				keywords,
+				rangeEnd: null,
+				rangeKey,
+				rangeStart: null
+			}
+		},
+		result: {
+			data: {
+				eventMetric: {
+					__typename: 'EventMetric',
+					totalEventsMetric: {
+						__typename: 'Metric',
+						histogram: {
+							__typename: 'HistogramMetricBag',
+							metrics: buildHistogram(empty ? 0 : 12),
+							total: empty ? 0 : 36
+						},
+						previousValue: 0,
+						trend: {
+							__typename: 'Trend',
+							percentage: 0,
+							trendClassification: 'NEUTRAL'
+						},
+						value: empty ? 0 : 36
+					},
+					totalSessionsMetric: {
+						__typename: 'Metric',
+						histogram: {
+							__typename: 'HistogramMetricBag',
+							metrics: buildHistogram(empty ? 0 : 4),
+							total: empty ? 0 : 12
+						},
+						previousValue: 0,
+						trend: {
+							__typename: 'Trend',
+							percentage: 0,
+							trendClassification: 'NEUTRAL'
+						},
+						value: empty ? 0 : 12
+					}
+				}
+			}
+		}
+	};
+};
+
+export const mockAccountEventsTrendReq = ({
+	accountId = 'abc',
+	channelId = '123123',
+	keywords = '',
+	percentage = 22.5,
+	rangeKey = 30,
+	trendClassification = 'POSITIVE',
+	value = 56
+} = {}) => ({
+	request: {
+		query: AccountEventsTrendQuery,
+		variables: {
+			accountId,
+			channelId,
+			entityId: '',
+			entityType: 'INDIVIDUAL',
+			keywords,
+			rangeEnd: null,
+			rangeKey,
+			rangeStart: null
+		}
+	},
+	result: {
+		data: {
+			eventsByUserSessions: {
+				__typename: 'EventsByUserSession',
+				totalEventsMetric: {
+					__typename: 'Metric',
+					previousValue: 45,
+					trend: {
+						__typename: 'Trend',
+						percentage,
+						trendClassification
+					},
+					value
+				}
+			}
+		}
+	}
+});
+
+const DEFAULT_ACCOUNT_USER_SESSIONS = [
+	{
+		__typename: 'UserSession',
+		browserName: 'Chrome',
+		completeDate: '2024-04-03T08:30:00.000Z',
+		contentLanguageId: 'en-US',
+		createDate: '2024-04-03T08:00:00.000Z',
+		devicePixelRatio: 1,
+		deviceType: 'Desktop',
+		events: [
+			{
+				__typename: 'Event',
+				applicationId: 'Page',
+				assetTitle: 'Home',
+				canonicalUrl: 'https://liferay.com/home',
+				createDate: '2024-04-03T08:05:00.000Z',
+				name: 'pageViewed',
+				pageDescription: '',
+				pageKeywords: '',
+				pageTitle: 'Home',
+				referrer: '',
+				url: 'https://liferay.com/home'
+			}
+		],
+		languageId: 'en-US',
+		screenHeight: 1080,
+		screenWidth: 1920,
+		timezoneOffset: '-03:00',
+		userAgent: 'Mozilla/5.0',
+		userName: 'Jane Doe'
+	}
+];
+
+export const mockAccountUserSessionsReq = ({
+	accountId = 'abc',
+	channelId = '123123',
+	keywords = '',
+	page = 0,
+	rangeKey = 30,
+	sessions = DEFAULT_ACCOUNT_USER_SESSIONS,
+	size = 2,
+	totalEvents = 1
+} = {}) => ({
+	request: {
+		query: AccountUserSessionQuery,
+		variables: {
+			accountId,
+			channelId,
+			entityId: '',
+			entityType: 'INDIVIDUAL',
+			keywords,
+			page,
+			rangeEnd: null,
+			rangeKey,
+			rangeStart: null,
+			size
+		}
+	},
+	result: {
+		data: {
+			eventsByUserSessions: {
+				__typename: 'EventsByUserSession',
+				totalEventsMetric: {
+					__typename: 'Metric',
+					value: totalEvents
+				},
+				userSessions: sessions
 			}
 		}
 	}

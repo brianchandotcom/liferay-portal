@@ -73,7 +73,7 @@ const formatDay = (dateKey: string, timeZoneId?: string): string =>
 const formatTime = (date: string, timeZoneId?: string): string =>
 	formatDateToTimeZone(date, 'h:mma', timeZoneId);
 
-const formatSessionTimeRange = (
+export const formatSessionTimeRange = (
 	{completeDate, createDate}: AccountUserSession,
 	timeZoneId?: string
 ): string => {
@@ -88,10 +88,10 @@ const formatSessionTimeRange = (
 	return `${start} - ${Liferay.Language.get('in-progress').toLowerCase()}`;
 };
 
-const isEmptyValue = (value: unknown): boolean =>
+export const isEmptyValue = (value: unknown): boolean =>
 	value === null || value === undefined || value === '';
 
-const formatAttributeValue = (value: unknown): string => {
+export const formatAttributeValue = (value: unknown): string => {
 	if (typeof value === 'string') {
 		return /^[\w-]+$/.test(value) ? value : `"${value}"`;
 	}
@@ -99,7 +99,7 @@ const formatAttributeValue = (value: unknown): string => {
 	return String(value);
 };
 
-const groupByDate = (
+export const groupByDate = (
 	sessions: AccountUserSession[],
 	timeZoneId?: string
 ): DateGroup[] => {
@@ -235,7 +235,10 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 
 					{userGroups.map(
 						({isAnonymous, sessions: userSessions, userName}) => (
-							<div className='mb-4' key={`${dateKey}-${userName}`}>
+							<div
+								className='mb-4'
+								key={`${dateKey}-${userName}`}
+							>
 								<div className='d-flex align-items-center'>
 									<ClaySticker
 										className='mr-2'

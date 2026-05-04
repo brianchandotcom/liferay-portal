@@ -80,12 +80,9 @@ public class OpenIdConnectHttpUtil {
 			httpOptions.setPost(true);
 		}
 
-		int connectTimeout = httpRequest.getConnectTimeout();
-		int readTimeout = httpRequest.getReadTimeout();
-
-		if ((connectTimeout > 0) || (readTimeout > 0)) {
-			httpOptions.setTimeout(Math.max(connectTimeout, readTimeout));
-		}
+		httpOptions.setTimeout(
+			Math.max(
+				httpRequest.getConnectTimeout(), httpRequest.getReadTimeout()));
 
 		return httpOptions;
 	}

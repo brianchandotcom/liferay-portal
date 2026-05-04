@@ -119,11 +119,3 @@ Functional tests are a last resort, reserved for complete UI flows that cannot b
 ### Format Source
 
 Run `/format-source` (the `format-source` skill). See `.claude/skills/format-source/SKILL.md` for details.
-
-# Skills
-
-When a request matches a skill's domain, always invoke the skill rather than working manually.
-
-- **pr-check** — Pre-merge validation against the current branch. Picks the minimum drift, build, format, structural-smoke, Java-unit, and JavaScript-unit checks for the diff; writes `tmp/pr-check/check.sh`, runs it in the background, auto-commits drift output and source-format changes, and reports the outcome. Integration tests, Playwright, and Poshi tests are out of scope (use `test-plan` for those). Invoked by the `pr` skill as a precondition; can also run standalone via `/pr-check`.
-
-- **worktree-setup** — Any operation involving Git worktrees: creating, configuring ports, listing, checking status, or tearing down. Use `/worktree-setup` with the appropriate argument (`new`, `status`, `list`, `cleanup`).

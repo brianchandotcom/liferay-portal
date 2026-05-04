@@ -197,7 +197,7 @@ public class OAuth2AuthorizationExpandoPortalInstanceLifecycleListener
 		},
 		{
 			"OAUTH2_" + ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE,
-			HubSpotWebhookController.class.getName() + "#postWebhook"
+			HubSpotWebhookController.class.getName() + "#postHubSpotWebhook"
 		},
 		{
 			"OAUTH2_" +

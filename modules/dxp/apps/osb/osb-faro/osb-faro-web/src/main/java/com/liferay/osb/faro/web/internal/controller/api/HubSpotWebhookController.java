@@ -49,7 +49,7 @@ public class HubSpotWebhookController extends BaseFaroController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{any:.*}")
 	@POST
-	public Response postWebhook(
+	public Response postHubSpotWebhook(
 			@Context GroupInfo groupInfo, String requestBody)
 		throws Exception {
 

@@ -1549,4 +1549,4 @@ public class DLFileEntryTypeModelImpl
 	private DLFileEntryType _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1635917013
+// LIFERAY-SERVICE-BUILDER-HASH:1779701401

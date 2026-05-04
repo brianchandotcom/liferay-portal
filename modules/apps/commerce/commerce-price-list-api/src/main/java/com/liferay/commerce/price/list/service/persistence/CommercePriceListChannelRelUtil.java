@@ -36,6 +36,24 @@ public class CommercePriceListChannelRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceListChannelRel> commercePriceListChannelRels) {
+
+		getPersistence().cacheResult(commercePriceListChannelRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePriceListChannelRel commercePriceListChannelRel) {
+
+		getPersistence().cacheResult(commercePriceListChannelRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -576,28 +594,6 @@ public class CommercePriceListChannelRelUtil {
 	}
 
 	/**
-	 * Caches the commerce price list channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRel the commerce price list channel rel
-	 */
-	public static void cacheResult(
-		CommercePriceListChannelRel commercePriceListChannelRel) {
-
-		getPersistence().cacheResult(commercePriceListChannelRel);
-	}
-
-	/**
-	 * Caches the commerce price list channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRels the commerce price list channel rels
-	 */
-	public static void cacheResult(
-		List<CommercePriceListChannelRel> commercePriceListChannelRels) {
-
-		getPersistence().cacheResult(commercePriceListChannelRels);
-	}
-
-	/**
 	 * Creates a new commerce price list channel rel with the primary key. Does not add the commerce price list channel rel to the database.
 	 *
 	 * @param CommercePriceListChannelRelId the primary key for the new commerce price list channel rel
@@ -671,4 +667,4 @@ public class CommercePriceListChannelRelUtil {
 	private static volatile CommercePriceListChannelRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-775670966
+// LIFERAY-SERVICE-BUILDER-HASH:-1829224420

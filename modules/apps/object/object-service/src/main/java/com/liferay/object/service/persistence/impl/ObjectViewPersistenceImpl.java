@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -718,42 +715,6 @@ public class ObjectViewPersistenceImpl
 	}
 
 	/**
-	 * Caches the object view in the entity cache if it is enabled.
-	 *
-	 * @param objectView the object view
-	 */
-	@Override
-	public void cacheResult(ObjectView objectView) {
-		entityCache.putResult(
-			ObjectViewImpl.class, objectView.getPrimaryKey(), objectView);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object views in the entity cache if it is enabled.
-	 *
-	 * @param objectViews the object views
-	 */
-	@Override
-	public void cacheResult(List<ObjectView> objectViews) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectViews.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectView objectView : objectViews) {
-			if (entityCache.getResult(
-					ObjectViewImpl.class, objectView.getPrimaryKey()) == null) {
-
-				cacheResult(objectView);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object view with the primary key. Does not add the object view to the database.
 	 *
 	 * @param objectViewId the primary key for the new object view
@@ -891,8 +852,7 @@ public class ObjectViewPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectViewImpl.class, objectViewModelImpl, false, true);
+		cacheUniqueFindersResult(objectView, false);
 
 		if (isNew) {
 			objectView.setNew(false);
@@ -958,9 +918,6 @@ public class ObjectViewPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1153,4 +1110,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:31432752
+// LIFERAY-SERVICE-BUILDER-HASH:-1398567938

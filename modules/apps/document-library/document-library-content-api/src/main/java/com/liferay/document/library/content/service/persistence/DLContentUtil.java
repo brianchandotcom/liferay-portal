@@ -36,6 +36,20 @@ public class DLContentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLContent> dlContents) {
+		getPersistence().cacheResult(dlContents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLContent dlContent) {
+		getPersistence().cacheResult(dlContent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -627,24 +641,6 @@ public class DLContentUtil {
 	}
 
 	/**
-	 * Caches the document library content in the entity cache if it is enabled.
-	 *
-	 * @param dlContent the document library content
-	 */
-	public static void cacheResult(DLContent dlContent) {
-		getPersistence().cacheResult(dlContent);
-	}
-
-	/**
-	 * Caches the document library contents in the entity cache if it is enabled.
-	 *
-	 * @param dlContents the document library contents
-	 */
-	public static void cacheResult(List<DLContent> dlContents) {
-		getPersistence().cacheResult(dlContents);
-	}
-
-	/**
 	 * Creates a new document library content with the primary key. Does not add the document library content to the database.
 	 *
 	 * @param contentId the primary key for the new document library content
@@ -707,4 +703,4 @@ public class DLContentUtil {
 	private static volatile DLContentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1239467708
+// LIFERAY-SERVICE-BUILDER-HASH:-529525256

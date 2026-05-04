@@ -1669,4 +1669,4 @@ public class SXPBlueprintModelImpl
 	private SXPBlueprint _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1920345881
+// LIFERAY-SERVICE-BUILDER-HASH:1353858031

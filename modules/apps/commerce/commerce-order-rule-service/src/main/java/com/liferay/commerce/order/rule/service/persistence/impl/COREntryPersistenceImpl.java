@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2951,60 +2949,6 @@ public class COREntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cor entry in the entity cache if it is enabled.
-	 *
-	 * @param corEntry the cor entry
-	 */
-	@Override
-	public void cacheResult(COREntry corEntry) {
-		entityCache.putResult(
-			COREntryImpl.class, corEntry.getPrimaryKey(), corEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				corEntry.getExternalReferenceCode(), corEntry.getCompanyId()
-			},
-			corEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cor entries in the entity cache if it is enabled.
-	 *
-	 * @param corEntries the cor entries
-	 */
-	@Override
-	public void cacheResult(List<COREntry> corEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (corEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (COREntry corEntry : corEntries) {
-			if (entityCache.getResult(
-					COREntryImpl.class, corEntry.getPrimaryKey()) == null) {
-
-				cacheResult(corEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		COREntryModelImpl corEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			corEntryModelImpl.getExternalReferenceCode(),
-			corEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(_finderPathFetchByERC_C, args, corEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new cor entry with the primary key. Does not add the cor entry to the database.
 	 *
 	 * @param COREntryId the primary key for the new cor entry
@@ -3198,10 +3142,7 @@ public class COREntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			COREntryImpl.class, corEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(corEntryModelImpl);
+		cacheUniqueFindersResult(corEntry, false);
 
 		if (isNew) {
 			corEntry.setNew(false);
@@ -3267,9 +3208,6 @@ public class COREntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3473,10 +3411,11 @@ public class COREntryPersistenceImpl
 					"corEntry.", "type", FinderColumn.Type.STRING, "LIKE", true,
 					true, COREntry::getType));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			COREntry::getExternalReferenceCode, COREntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CORENTRY_WHERE,
@@ -3579,4 +3518,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1847699163
+// LIFERAY-SERVICE-BUILDER-HASH:3762165

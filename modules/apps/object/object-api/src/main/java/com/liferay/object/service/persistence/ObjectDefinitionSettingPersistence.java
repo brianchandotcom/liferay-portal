@@ -632,21 +632,6 @@ public interface ObjectDefinitionSettingPersistence
 	public int countByC_N_V(long companyId, String name, String value);
 
 	/**
-	 * Caches the object definition setting in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSetting the object definition setting
-	 */
-	public void cacheResult(ObjectDefinitionSetting objectDefinitionSetting);
-
-	/**
-	 * Caches the object definition settings in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSettings the object definition settings
-	 */
-	public void cacheResult(
-		java.util.List<ObjectDefinitionSetting> objectDefinitionSettings);
-
-	/**
 	 * Creates a new object definition setting with the primary key. Does not add the object definition setting to the database.
 	 *
 	 * @param objectDefinitionSettingId the primary key for the new object definition setting
@@ -688,4 +673,4 @@ public interface ObjectDefinitionSettingPersistence
 		long objectDefinitionSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1638384887
+// LIFERAY-SERVICE-BUILDER-HASH:2105233007

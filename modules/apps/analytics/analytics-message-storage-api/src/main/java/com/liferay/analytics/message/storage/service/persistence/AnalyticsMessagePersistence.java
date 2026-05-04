@@ -136,20 +136,6 @@ public interface AnalyticsMessagePersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the analytics message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessage the analytics message
-	 */
-	public void cacheResult(AnalyticsMessage analyticsMessage);
-
-	/**
-	 * Caches the analytics messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessages the analytics messages
-	 */
-	public void cacheResult(java.util.List<AnalyticsMessage> analyticsMessages);
-
-	/**
 	 * Creates a new analytics message with the primary key. Does not add the analytics message to the database.
 	 *
 	 * @param analyticsMessageId the primary key for the new analytics message
@@ -188,4 +174,4 @@ public interface AnalyticsMessagePersistence
 	public AnalyticsMessage fetchByPrimaryKey(long analyticsMessageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1643631056
+// LIFERAY-SERVICE-BUILDER-HASH:-306571584

@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -980,58 +977,6 @@ public class DefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the definition in the entity cache if it is enabled.
-	 *
-	 * @param definition the definition
-	 */
-	@Override
-	public void cacheResult(Definition definition) {
-		entityCache.putResult(
-			DefinitionImpl.class, definition.getPrimaryKey(), definition);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {definition.getUuid(), definition.getGroupId()},
-			definition);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the definitions in the entity cache if it is enabled.
-	 *
-	 * @param definitions the definitions
-	 */
-	@Override
-	public void cacheResult(List<Definition> definitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (definitions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Definition definition : definitions) {
-			if (entityCache.getResult(
-					DefinitionImpl.class, definition.getPrimaryKey()) == null) {
-
-				cacheResult(definition);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DefinitionModelImpl definitionModelImpl) {
-
-		Object[] args = new Object[] {
-			definitionModelImpl.getUuid(), definitionModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, definitionModelImpl);
-	}
-
-	/**
 	 * Creates a new definition with the primary key. Does not add the definition to the database.
 	 *
 	 * @param definitionId the primary key for the new definition
@@ -1169,10 +1114,7 @@ public class DefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DefinitionImpl.class, definitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(definitionModelImpl);
+		cacheUniqueFindersResult(definition, false);
 
 		if (isNew) {
 			definition.setNew(false);
@@ -1238,9 +1180,6 @@ public class DefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1268,10 +1207,11 @@ public class DefinitionPersistenceImpl
 				"definition.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, Definition::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Definition::getUuid,
+			Definition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEFINITION_WHERE,
@@ -1465,4 +1405,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1956995144
+// LIFERAY-SERVICE-BUILDER-HASH:-1909920100

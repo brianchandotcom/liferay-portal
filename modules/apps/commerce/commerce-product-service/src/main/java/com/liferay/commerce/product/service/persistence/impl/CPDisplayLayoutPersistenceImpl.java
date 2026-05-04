@@ -15,7 +15,6 @@ import com.liferay.commerce.product.service.persistence.CPDisplayLayoutUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -36,10 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2127,97 +2123,6 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp display layout in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayout the cp display layout
-	 */
-	@Override
-	public void cacheResult(CPDisplayLayout cpDisplayLayout) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDisplayLayout.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPDisplayLayoutImpl.class, cpDisplayLayout.getPrimaryKey(),
-				cpDisplayLayout);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpDisplayLayout.getUuid(), cpDisplayLayout.getGroupId()
-				},
-				cpDisplayLayout);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C,
-				new Object[] {
-					cpDisplayLayout.getGroupId(),
-					cpDisplayLayout.getClassNameId(),
-					cpDisplayLayout.getClassPK()
-				},
-				cpDisplayLayout);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp display layouts in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayouts the cp display layouts
-	 */
-	@Override
-	public void cacheResult(List<CPDisplayLayout> cpDisplayLayouts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDisplayLayouts.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDisplayLayout cpDisplayLayout : cpDisplayLayouts) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpDisplayLayout.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPDisplayLayoutImpl.class,
-						cpDisplayLayout.getPrimaryKey()) == null) {
-
-					cacheResult(cpDisplayLayout);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDisplayLayoutModelImpl cpDisplayLayoutModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDisplayLayoutModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpDisplayLayoutModelImpl.getUuid(),
-				cpDisplayLayoutModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpDisplayLayoutModelImpl);
-
-			args = new Object[] {
-				cpDisplayLayoutModelImpl.getGroupId(),
-				cpDisplayLayoutModelImpl.getClassNameId(),
-				cpDisplayLayoutModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C, args, cpDisplayLayoutModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	 *
 	 * @param CPDisplayLayoutId the primary key for the new cp display layout
@@ -2367,10 +2272,7 @@ public class CPDisplayLayoutPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDisplayLayoutImpl.class, cpDisplayLayoutModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpDisplayLayoutModelImpl);
+		cacheUniqueFindersResult(cpDisplayLayout, false);
 
 		if (isNew) {
 			cpDisplayLayout.setNew(false);
@@ -2509,9 +2411,6 @@ public class CPDisplayLayoutPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2539,10 +2438,11 @@ public class CPDisplayLayoutPersistenceImpl
 				"cpDisplayLayout.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPDisplayLayout::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CPDisplayLayout::getUuid,
+			CPDisplayLayout::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
@@ -2780,12 +2680,14 @@ public class CPDisplayLayoutPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
-		_finderPathFetchByG_C_C = new FinderPath(
+		_finderPathFetchByG_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
+			new String[] {"groupId", "classNameId", "classPK"}, false,
+			CPDisplayLayout::getGroupId, CPDisplayLayout::getClassNameId,
+			CPDisplayLayout::getClassPK);
 
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C, _SQL_SELECT_CPDISPLAYLAYOUT_WHERE,
@@ -2871,4 +2773,4 @@ public class CPDisplayLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:470831749
+// LIFERAY-SERVICE-BUILDER-HASH:-204063337

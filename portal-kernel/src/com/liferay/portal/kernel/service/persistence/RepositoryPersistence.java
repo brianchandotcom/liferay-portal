@@ -604,20 +604,6 @@ public interface RepositoryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the repository in the entity cache if it is enabled.
-	 *
-	 * @param repository the repository
-	 */
-	public void cacheResult(Repository repository);
-
-	/**
-	 * Caches the repositories in the entity cache if it is enabled.
-	 *
-	 * @param repositories the repositories
-	 */
-	public void cacheResult(java.util.List<Repository> repositories);
-
-	/**
 	 * Creates a new repository with the primary key. Does not add the repository to the database.
 	 *
 	 * @param repositoryId the primary key for the new repository
@@ -656,4 +642,4 @@ public interface RepositoryPersistence
 	public Repository fetchByPrimaryKey(long repositoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1578135418
+// LIFERAY-SERVICE-BUILDER-HASH:-1156261604

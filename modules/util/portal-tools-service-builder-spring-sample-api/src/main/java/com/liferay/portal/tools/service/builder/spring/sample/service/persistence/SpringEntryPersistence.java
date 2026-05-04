@@ -347,20 +347,6 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the spring entry in the entity cache if it is enabled.
-	 *
-	 * @param springEntry the spring entry
-	 */
-	public void cacheResult(SpringEntry springEntry);
-
-	/**
-	 * Caches the spring entries in the entity cache if it is enabled.
-	 *
-	 * @param springEntries the spring entries
-	 */
-	public void cacheResult(java.util.List<SpringEntry> springEntries);
-
-	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
 	 * @param springEntryId the primary key for the new spring entry
@@ -399,4 +385,4 @@ public interface SpringEntryPersistence extends BasePersistence<SpringEntry> {
 	public SpringEntry fetchByPrimaryKey(long springEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1548803476
+// LIFERAY-SERVICE-BUILDER-HASH:451370458

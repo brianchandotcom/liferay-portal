@@ -733,21 +733,6 @@ public interface CPMeasurementUnitPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp measurement unit in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnit the cp measurement unit
-	 */
-	public void cacheResult(CPMeasurementUnit cpMeasurementUnit);
-
-	/**
-	 * Caches the cp measurement units in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnits the cp measurement units
-	 */
-	public void cacheResult(
-		java.util.List<CPMeasurementUnit> cpMeasurementUnits);
-
-	/**
 	 * Creates a new cp measurement unit with the primary key. Does not add the cp measurement unit to the database.
 	 *
 	 * @param CPMeasurementUnitId the primary key for the new cp measurement unit
@@ -786,4 +771,4 @@ public interface CPMeasurementUnitPersistence
 	public CPMeasurementUnit fetchByPrimaryKey(long CPMeasurementUnitId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-664430248
+// LIFERAY-SERVICE-BUILDER-HASH:1704566672

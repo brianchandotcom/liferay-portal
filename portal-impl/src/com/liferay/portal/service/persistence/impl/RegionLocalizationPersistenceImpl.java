@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.RegionLocalizationImpl;
 import com.liferay.portal.model.impl.RegionLocalizationModelImpl;
@@ -352,81 +348,6 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the region localization in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalization the region localization
-	 */
-	@Override
-	public void cacheResult(RegionLocalization regionLocalization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					regionLocalization.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RegionLocalizationImpl.class,
-				regionLocalization.getPrimaryKey(), regionLocalization);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByRegionId_LanguageId,
-				new Object[] {
-					regionLocalization.getRegionId(),
-					regionLocalization.getLanguageId()
-				},
-				regionLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the region localizations in the entity cache if it is enabled.
-	 *
-	 * @param regionLocalizations the region localizations
-	 */
-	@Override
-	public void cacheResult(List<RegionLocalization> regionLocalizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (regionLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RegionLocalization regionLocalization : regionLocalizations) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						regionLocalization.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RegionLocalizationImpl.class,
-						regionLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(regionLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RegionLocalizationModelImpl regionLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					regionLocalizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				regionLocalizationModelImpl.getRegionId(),
-				regionLocalizationModelImpl.getLanguageId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByRegionId_LanguageId, args,
-				regionLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new region localization with the primary key. Does not add the region localization to the database.
 	 *
 	 * @param regionLocalizationId the primary key for the new region localization
@@ -545,11 +466,7 @@ public class RegionLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RegionLocalizationImpl.class, regionLocalizationModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(regionLocalizationModelImpl);
+		cacheUniqueFindersResult(regionLocalization, false);
 
 		if (isNew) {
 			regionLocalization.setNew(false);
@@ -669,9 +586,6 @@ public class RegionLocalizationPersistenceImpl
 	 * Initializes the region localization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByRegionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRegionId",
 			new String[] {
@@ -702,10 +616,11 @@ public class RegionLocalizationPersistenceImpl
 					"regionLocalization.", "regionId", FinderColumn.Type.LONG,
 					"=", true, true, RegionLocalization::getRegionId));
 
-		_finderPathFetchByRegionId_LanguageId = new FinderPath(
+		_finderPathFetchByRegionId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRegionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"regionId", "languageId"}, true);
+			new String[] {"regionId", "languageId"}, false,
+			RegionLocalization::getRegionId, RegionLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByRegionId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -752,4 +667,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:85165518
+// LIFERAY-SERVICE-BUILDER-HASH:1759523085

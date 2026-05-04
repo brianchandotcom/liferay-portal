@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchUADPartialEntryException;
 import com.liferay.portal.tools.service.builder.test.model.UADPartialEntry;
@@ -25,7 +22,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.UADPart
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,45 +59,6 @@ public class UADPartialEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(UADPartialEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the uad partial entry in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntry the uad partial entry
-	 */
-	@Override
-	public void cacheResult(UADPartialEntry uadPartialEntry) {
-		entityCache.putResult(
-			UADPartialEntryImpl.class, uadPartialEntry.getPrimaryKey(),
-			uadPartialEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the uad partial entries in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntries the uad partial entries
-	 */
-	@Override
-	public void cacheResult(List<UADPartialEntry> uadPartialEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (uadPartialEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UADPartialEntry uadPartialEntry : uadPartialEntries) {
-			if (entityCache.getResult(
-					UADPartialEntryImpl.class,
-					uadPartialEntry.getPrimaryKey()) == null) {
-
-				cacheResult(uadPartialEntry);
-			}
-		}
 	}
 
 	/**
@@ -189,8 +146,7 @@ public class UADPartialEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			UADPartialEntryImpl.class, uadPartialEntry, false, true);
+		cacheUniqueFindersResult(uadPartialEntry, false);
 
 		if (isNew) {
 			uadPartialEntry.setNew(false);
@@ -250,9 +206,6 @@ public class UADPartialEntryPersistenceImpl
 	 * Initializes the uad partial entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		UADPartialEntryUtil.setPersistence(this);
 	}
 
@@ -283,4 +236,4 @@ public class UADPartialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:130471144
+// LIFERAY-SERVICE-BUILDER-HASH:-258197524

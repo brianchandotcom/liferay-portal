@@ -36,6 +36,24 @@ public class ClientExtensionEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ClientExtensionEntryRel> clientExtensionEntryRels) {
+
+		getPersistence().cacheResult(clientExtensionEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ClientExtensionEntryRel clientExtensionEntryRel) {
+
+		getPersistence().cacheResult(clientExtensionEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1056,28 +1074,6 @@ public class ClientExtensionEntryRelUtil {
 	}
 
 	/**
-	 * Caches the client extension entry rel in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRel the client extension entry rel
-	 */
-	public static void cacheResult(
-		ClientExtensionEntryRel clientExtensionEntryRel) {
-
-		getPersistence().cacheResult(clientExtensionEntryRel);
-	}
-
-	/**
-	 * Caches the client extension entry rels in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRels the client extension entry rels
-	 */
-	public static void cacheResult(
-		List<ClientExtensionEntryRel> clientExtensionEntryRels) {
-
-		getPersistence().cacheResult(clientExtensionEntryRels);
-	}
-
-	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
 	 * @param clientExtensionEntryRelId the primary key for the new client extension entry rel
@@ -1149,4 +1145,4 @@ public class ClientExtensionEntryRelUtil {
 	private static volatile ClientExtensionEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1291670455
+// LIFERAY-SERVICE-BUILDER-HASH:-964974015

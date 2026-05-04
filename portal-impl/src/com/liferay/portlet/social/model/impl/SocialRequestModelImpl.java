@@ -1181,4 +1181,4 @@ public class SocialRequestModelImpl
 	private SocialRequest _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-250338073
+// LIFERAY-SERVICE-BUILDER-HASH:1437478239

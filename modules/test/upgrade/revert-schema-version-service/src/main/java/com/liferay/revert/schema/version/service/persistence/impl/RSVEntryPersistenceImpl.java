@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.revert.schema.version.exception.NoSuchEntryException;
 import com.liferay.revert.schema.version.model.RSVEntry;
 import com.liferay.revert.schema.version.model.RSVEntryTable;
@@ -28,7 +25,6 @@ import com.liferay.revert.schema.version.service.persistence.impl.constants.RSVP
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -74,42 +70,6 @@ public class RSVEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(RSVEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the rsv entry in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntry the rsv entry
-	 */
-	@Override
-	public void cacheResult(RSVEntry rsvEntry) {
-		entityCache.putResult(
-			RSVEntryImpl.class, rsvEntry.getPrimaryKey(), rsvEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the rsv entries in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntries the rsv entries
-	 */
-	@Override
-	public void cacheResult(List<RSVEntry> rsvEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (rsvEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RSVEntry rsvEntry : rsvEntries) {
-			if (entityCache.getResult(
-					RSVEntryImpl.class, rsvEntry.getPrimaryKey()) == null) {
-
-				cacheResult(rsvEntry);
-			}
-		}
 	}
 
 	/**
@@ -195,7 +155,7 @@ public class RSVEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(RSVEntryImpl.class, rsvEntry, false, true);
+		cacheUniqueFindersResult(rsvEntry, false);
 
 		if (isNew) {
 			rsvEntry.setNew(false);
@@ -256,9 +216,6 @@ public class RSVEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		RSVEntryUtil.setPersistence(this);
 	}
 
@@ -316,4 +273,4 @@ public class RSVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1412519079
+// LIFERAY-SERVICE-BUILDER-HASH:301882179

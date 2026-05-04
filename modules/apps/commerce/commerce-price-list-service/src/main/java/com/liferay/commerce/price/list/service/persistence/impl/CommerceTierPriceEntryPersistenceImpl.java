@@ -15,7 +15,6 @@ import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntr
 import com.liferay.commerce.price.list.service.persistence.CommerceTierPriceEntryUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1855,100 +1852,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce tier price entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceTierPriceEntry the commerce tier price entry
-	 */
-	@Override
-	public void cacheResult(CommerceTierPriceEntry commerceTierPriceEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceTierPriceEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommerceTierPriceEntryImpl.class,
-				commerceTierPriceEntry.getPrimaryKey(), commerceTierPriceEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByC_M,
-				new Object[] {
-					commerceTierPriceEntry.getCommercePriceEntryId(),
-					commerceTierPriceEntry.getMinQuantity()
-				},
-				commerceTierPriceEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					commerceTierPriceEntry.getExternalReferenceCode(),
-					commerceTierPriceEntry.getCompanyId()
-				},
-				commerceTierPriceEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce tier price entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceTierPriceEntries the commerce tier price entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceTierPriceEntry> commerceTierPriceEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTierPriceEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTierPriceEntry commerceTierPriceEntry :
-				commerceTierPriceEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commerceTierPriceEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommerceTierPriceEntryImpl.class,
-						commerceTierPriceEntry.getPrimaryKey()) == null) {
-
-					cacheResult(commerceTierPriceEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceTierPriceEntryModelImpl commerceTierPriceEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceTierPriceEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commerceTierPriceEntryModelImpl.getCommercePriceEntryId(),
-				commerceTierPriceEntryModelImpl.getMinQuantity()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_M, args, commerceTierPriceEntryModelImpl);
-
-			args = new Object[] {
-				commerceTierPriceEntryModelImpl.getExternalReferenceCode(),
-				commerceTierPriceEntryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, commerceTierPriceEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	 *
 	 * @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
@@ -2175,11 +2078,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTierPriceEntryImpl.class, commerceTierPriceEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceTierPriceEntryModelImpl);
+		cacheUniqueFindersResult(commerceTierPriceEntry, false);
 
 		if (isNew) {
 			commerceTierPriceEntry.setNew(false);
@@ -2334,9 +2233,6 @@ public class CommerceTierPriceEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2466,10 +2362,12 @@ public class CommerceTierPriceEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTierPriceEntry::getCommercePriceEntryId));
 
-		_finderPathFetchByC_M = new FinderPath(
+		_finderPathFetchByC_M = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_M",
 			new String[] {Long.class.getName(), BigDecimal.class.getName()},
-			new String[] {"commercePriceEntryId", "minQuantity"}, true);
+			new String[] {"commercePriceEntryId", "minQuantity"}, false,
+			CommerceTierPriceEntry::getCommercePriceEntryId,
+			CommerceTierPriceEntry::getMinQuantity);
 
 		_uniquePersistenceFinderByC_M = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_M,
@@ -2643,10 +2541,12 @@ public class CommerceTierPriceEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CommerceTierPriceEntry::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceTierPriceEntry::getExternalReferenceCode,
+			CommerceTierPriceEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -2731,4 +2631,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1317901570
+// LIFERAY-SERVICE-BUILDER-HASH:-835442446

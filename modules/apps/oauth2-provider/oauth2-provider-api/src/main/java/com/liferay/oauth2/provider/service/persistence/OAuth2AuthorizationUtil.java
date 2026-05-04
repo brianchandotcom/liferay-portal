@@ -36,6 +36,22 @@ public class OAuth2AuthorizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<OAuth2Authorization> oAuth2Authorizations) {
+
+		getPersistence().cacheResult(oAuth2Authorizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OAuth2Authorization oAuth2Authorization) {
+		getPersistence().cacheResult(oAuth2Authorization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -802,26 +818,6 @@ public class OAuth2AuthorizationUtil {
 	}
 
 	/**
-	 * Caches the o auth2 authorization in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorization the o auth2 authorization
-	 */
-	public static void cacheResult(OAuth2Authorization oAuth2Authorization) {
-		getPersistence().cacheResult(oAuth2Authorization);
-	}
-
-	/**
-	 * Caches the o auth2 authorizations in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorizations the o auth2 authorizations
-	 */
-	public static void cacheResult(
-		List<OAuth2Authorization> oAuth2Authorizations) {
-
-		getPersistence().cacheResult(oAuth2Authorizations);
-	}
-
-	/**
 	 * Creates a new o auth2 authorization with the primary key. Does not add the o auth2 authorization to the database.
 	 *
 	 * @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
@@ -1129,4 +1125,4 @@ public class OAuth2AuthorizationUtil {
 	private static volatile OAuth2AuthorizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1602526616
+// LIFERAY-SERVICE-BUILDER-HASH:-1523835878

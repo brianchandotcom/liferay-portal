@@ -36,6 +36,24 @@ public class CPConfigurationListRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPConfigurationListRel> cpConfigurationListRels) {
+
+		getPersistence().cacheResult(cpConfigurationListRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPConfigurationListRel cpConfigurationListRel) {
+
+		getPersistence().cacheResult(cpConfigurationListRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -468,28 +486,6 @@ public class CPConfigurationListRelUtil {
 	}
 
 	/**
-	 * Caches the cp configuration list rel in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRel the cp configuration list rel
-	 */
-	public static void cacheResult(
-		CPConfigurationListRel cpConfigurationListRel) {
-
-		getPersistence().cacheResult(cpConfigurationListRel);
-	}
-
-	/**
-	 * Caches the cp configuration list rels in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRels the cp configuration list rels
-	 */
-	public static void cacheResult(
-		List<CPConfigurationListRel> cpConfigurationListRels) {
-
-		getPersistence().cacheResult(cpConfigurationListRels);
-	}
-
-	/**
 	 * Creates a new cp configuration list rel with the primary key. Does not add the cp configuration list rel to the database.
 	 *
 	 * @param CPConfigurationListRelId the primary key for the new cp configuration list rel
@@ -559,4 +555,4 @@ public class CPConfigurationListRelUtil {
 	private static volatile CPConfigurationListRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:523880091
+// LIFERAY-SERVICE-BUILDER-HASH:760241603

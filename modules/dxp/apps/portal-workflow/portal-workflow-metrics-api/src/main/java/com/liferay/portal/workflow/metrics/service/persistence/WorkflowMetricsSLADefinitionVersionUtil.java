@@ -36,6 +36,26 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<WorkflowMetricsSLADefinitionVersion>
+			workflowMetricsSLADefinitionVersions) {
+
+		getPersistence().cacheResult(workflowMetricsSLADefinitionVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		WorkflowMetricsSLADefinitionVersion
+			workflowMetricsSLADefinitionVersion) {
+
+		getPersistence().cacheResult(workflowMetricsSLADefinitionVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -677,30 +697,6 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 	}
 
 	/**
-	 * Caches the workflow metrics sla definition version in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersion the workflow metrics sla definition version
-	 */
-	public static void cacheResult(
-		WorkflowMetricsSLADefinitionVersion
-			workflowMetricsSLADefinitionVersion) {
-
-		getPersistence().cacheResult(workflowMetricsSLADefinitionVersion);
-	}
-
-	/**
-	 * Caches the workflow metrics sla definition versions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitionVersions the workflow metrics sla definition versions
-	 */
-	public static void cacheResult(
-		List<WorkflowMetricsSLADefinitionVersion>
-			workflowMetricsSLADefinitionVersions) {
-
-		getPersistence().cacheResult(workflowMetricsSLADefinitionVersions);
-	}
-
-	/**
 	 * Creates a new workflow metrics sla definition version with the primary key. Does not add the workflow metrics sla definition version to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionVersionId the primary key for the new workflow metrics sla definition version
@@ -779,4 +775,4 @@ public class WorkflowMetricsSLADefinitionVersionUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1876726920
+// LIFERAY-SERVICE-BUILDER-HASH:-1671575888

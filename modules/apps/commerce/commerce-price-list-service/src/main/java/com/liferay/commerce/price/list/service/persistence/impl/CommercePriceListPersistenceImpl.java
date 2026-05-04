@@ -16,7 +16,6 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListUtil
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -8220,95 +8217,6 @@ public class CommercePriceListPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price list in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceList the commerce price list
-	 */
-	@Override
-	public void cacheResult(CommercePriceList commercePriceList) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceList.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceListImpl.class, commercePriceList.getPrimaryKey(),
-				commercePriceList);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					commercePriceList.getUuid(), commercePriceList.getGroupId()
-				},
-				commercePriceList);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					commercePriceList.getExternalReferenceCode(),
-					commercePriceList.getCompanyId()
-				},
-				commercePriceList);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price lists in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceLists the commerce price lists
-	 */
-	@Override
-	public void cacheResult(List<CommercePriceList> commercePriceLists) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceLists.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceList commercePriceList : commercePriceLists) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceList.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceListImpl.class,
-						commercePriceList.getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceList);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceListModelImpl commercePriceListModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceListModelImpl.getUuid(),
-				commercePriceListModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, commercePriceListModelImpl);
-
-			args = new Object[] {
-				commercePriceListModelImpl.getExternalReferenceCode(),
-				commercePriceListModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, commercePriceListModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price list with the primary key. Does not add the commerce price list to the database.
 	 *
 	 * @param commercePriceListId the primary key for the new commerce price list
@@ -8526,11 +8434,7 @@ public class CommercePriceListPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceListImpl.class, commercePriceListModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commercePriceListModelImpl);
+		cacheUniqueFindersResult(commercePriceList, false);
 
 		if (isNew) {
 			commercePriceList.setNew(false);
@@ -8680,9 +8584,6 @@ public class CommercePriceListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -8711,10 +8612,11 @@ public class CommercePriceListPersistenceImpl
 				"commercePriceList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommercePriceList::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommercePriceList::getUuid, CommercePriceList::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
@@ -9087,10 +8989,12 @@ public class CommercePriceListPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "type_", "status"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommercePriceList::getExternalReferenceCode,
+			CommercePriceList::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEPRICELIST_WHERE,
@@ -9197,4 +9101,4 @@ public class CommercePriceListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:385482309
+// LIFERAY-SERVICE-BUILDER-HASH:516102792

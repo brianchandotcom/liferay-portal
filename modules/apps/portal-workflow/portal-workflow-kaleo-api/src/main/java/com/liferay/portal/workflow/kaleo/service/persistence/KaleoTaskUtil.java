@@ -36,6 +36,20 @@ public class KaleoTaskUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoTask> kaleoTasks) {
+		getPersistence().cacheResult(kaleoTasks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoTask kaleoTask) {
+		getPersistence().cacheResult(kaleoTask);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -424,24 +438,6 @@ public class KaleoTaskUtil {
 	}
 
 	/**
-	 * Caches the kaleo task in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTask the kaleo task
-	 */
-	public static void cacheResult(KaleoTask kaleoTask) {
-		getPersistence().cacheResult(kaleoTask);
-	}
-
-	/**
-	 * Caches the kaleo tasks in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTasks the kaleo tasks
-	 */
-	public static void cacheResult(List<KaleoTask> kaleoTasks) {
-		getPersistence().cacheResult(kaleoTasks);
-	}
-
-	/**
 	 * Creates a new kaleo task with the primary key. Does not add the kaleo task to the database.
 	 *
 	 * @param kaleoTaskId the primary key for the new kaleo task
@@ -502,4 +498,4 @@ public class KaleoTaskUtil {
 	private static volatile KaleoTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1591754385
+// LIFERAY-SERVICE-BUILDER-HASH:500959467

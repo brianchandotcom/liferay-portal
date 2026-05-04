@@ -75,20 +75,6 @@ public interface CompanyInfoPersistence extends BasePersistence<CompanyInfo> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the company info in the entity cache if it is enabled.
-	 *
-	 * @param companyInfo the company info
-	 */
-	public void cacheResult(CompanyInfo companyInfo);
-
-	/**
-	 * Caches the company infos in the entity cache if it is enabled.
-	 *
-	 * @param companyInfos the company infos
-	 */
-	public void cacheResult(java.util.List<CompanyInfo> companyInfos);
-
-	/**
 	 * Creates a new company info with the primary key. Does not add the company info to the database.
 	 *
 	 * @param companyInfoId the primary key for the new company info
@@ -127,4 +113,4 @@ public interface CompanyInfoPersistence extends BasePersistence<CompanyInfo> {
 	public CompanyInfo fetchByPrimaryKey(long companyInfoId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1405669027
+// LIFERAY-SERVICE-BUILDER-HASH:2001903859

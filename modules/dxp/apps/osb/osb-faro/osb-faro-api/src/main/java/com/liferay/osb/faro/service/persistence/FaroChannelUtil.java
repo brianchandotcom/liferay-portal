@@ -36,6 +36,20 @@ public class FaroChannelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FaroChannel> faroChannels) {
+		getPersistence().cacheResult(faroChannels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FaroChannel faroChannel) {
+		getPersistence().cacheResult(faroChannel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -555,24 +569,6 @@ public class FaroChannelUtil {
 	}
 
 	/**
-	 * Caches the faro channel in the entity cache if it is enabled.
-	 *
-	 * @param faroChannel the faro channel
-	 */
-	public static void cacheResult(FaroChannel faroChannel) {
-		getPersistence().cacheResult(faroChannel);
-	}
-
-	/**
-	 * Caches the faro channels in the entity cache if it is enabled.
-	 *
-	 * @param faroChannels the faro channels
-	 */
-	public static void cacheResult(List<FaroChannel> faroChannels) {
-		getPersistence().cacheResult(faroChannels);
-	}
-
-	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
 	 * @param faroChannelId the primary key for the new faro channel
@@ -633,4 +629,4 @@ public class FaroChannelUtil {
 	private static volatile FaroChannelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1747583645
+// LIFERAY-SERVICE-BUILDER-HASH:1446461319

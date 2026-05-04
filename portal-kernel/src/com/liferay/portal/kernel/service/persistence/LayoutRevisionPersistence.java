@@ -1499,20 +1499,6 @@ public interface LayoutRevisionPersistence
 	public int countByL_P_S(long layoutSetBranchId, long plid, int status);
 
 	/**
-	 * Caches the layout revision in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevision the layout revision
-	 */
-	public void cacheResult(LayoutRevision layoutRevision);
-
-	/**
-	 * Caches the layout revisions in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevisions the layout revisions
-	 */
-	public void cacheResult(java.util.List<LayoutRevision> layoutRevisions);
-
-	/**
 	 * Creates a new layout revision with the primary key. Does not add the layout revision to the database.
 	 *
 	 * @param layoutRevisionId the primary key for the new layout revision
@@ -1551,4 +1537,4 @@ public interface LayoutRevisionPersistence
 	public LayoutRevision fetchByPrimaryKey(long layoutRevisionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1262428535
+// LIFERAY-SERVICE-BUILDER-HASH:19354935

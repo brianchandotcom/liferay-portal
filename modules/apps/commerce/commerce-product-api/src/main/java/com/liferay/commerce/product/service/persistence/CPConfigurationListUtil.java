@@ -37,6 +37,22 @@ public class CPConfigurationListUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPConfigurationList> cpConfigurationLists) {
+
+		getPersistence().cacheResult(cpConfigurationLists);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPConfigurationList cpConfigurationList) {
+		getPersistence().cacheResult(cpConfigurationList);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1756,26 +1772,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Caches the cp configuration list in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationList the cp configuration list
-	 */
-	public static void cacheResult(CPConfigurationList cpConfigurationList) {
-		getPersistence().cacheResult(cpConfigurationList);
-	}
-
-	/**
-	 * Caches the cp configuration lists in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationLists the cp configuration lists
-	 */
-	public static void cacheResult(
-		List<CPConfigurationList> cpConfigurationLists) {
-
-		getPersistence().cacheResult(cpConfigurationLists);
-	}
-
-	/**
 	 * Creates a new cp configuration list with the primary key. Does not add the cp configuration list to the database.
 	 *
 	 * @param CPConfigurationListId the primary key for the new cp configuration list
@@ -1845,4 +1841,4 @@ public class CPConfigurationListUtil {
 	private static volatile CPConfigurationListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2124872484
+// LIFERAY-SERVICE-BUILDER-HASH:362858232

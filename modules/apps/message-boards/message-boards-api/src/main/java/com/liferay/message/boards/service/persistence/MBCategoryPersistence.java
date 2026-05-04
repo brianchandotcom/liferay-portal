@@ -2553,20 +2553,6 @@ public interface MBCategoryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the message boards category in the entity cache if it is enabled.
-	 *
-	 * @param mbCategory the message boards category
-	 */
-	public void cacheResult(MBCategory mbCategory);
-
-	/**
-	 * Caches the message boards categories in the entity cache if it is enabled.
-	 *
-	 * @param mbCategories the message boards categories
-	 */
-	public void cacheResult(java.util.List<MBCategory> mbCategories);
-
-	/**
 	 * Creates a new message boards category with the primary key. Does not add the message boards category to the database.
 	 *
 	 * @param categoryId the primary key for the new message boards category
@@ -2604,4 +2590,4 @@ public interface MBCategoryPersistence
 	public MBCategory fetchByPrimaryKey(long categoryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1257973136
+// LIFERAY-SERVICE-BUILDER-HASH:-1344607610

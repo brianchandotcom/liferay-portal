@@ -624,21 +624,6 @@ public interface CommerceWishListItemPersistence
 		long commerceWishListId, String CPInstanceUuid, long CProductId);
 
 	/**
-	 * Caches the commerce wish list item in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishListItem the commerce wish list item
-	 */
-	public void cacheResult(CommerceWishListItem commerceWishListItem);
-
-	/**
-	 * Caches the commerce wish list items in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishListItems the commerce wish list items
-	 */
-	public void cacheResult(
-		java.util.List<CommerceWishListItem> commerceWishListItems);
-
-	/**
 	 * Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	 *
 	 * @param commerceWishListItemId the primary key for the new commerce wish list item
@@ -678,4 +663,4 @@ public interface CommerceWishListItemPersistence
 	public CommerceWishListItem fetchByPrimaryKey(long commerceWishListItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2053919732
+// LIFERAY-SERVICE-BUILDER-HASH:-198656650

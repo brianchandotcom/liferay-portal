@@ -15,7 +15,6 @@ import com.liferay.knowledge.base.service.persistence.KBCommentUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2019,74 +2015,6 @@ public class KBCommentPersistenceImpl
 	}
 
 	/**
-	 * Caches the kb comment in the entity cache if it is enabled.
-	 *
-	 * @param kbComment the kb comment
-	 */
-	@Override
-	public void cacheResult(KBComment kbComment) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbComment.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KBCommentImpl.class, kbComment.getPrimaryKey(), kbComment);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {kbComment.getUuid(), kbComment.getGroupId()},
-				kbComment);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kb comments in the entity cache if it is enabled.
-	 *
-	 * @param kbComments the kb comments
-	 */
-	@Override
-	public void cacheResult(List<KBComment> kbComments) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kbComments.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KBComment kbComment : kbComments) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kbComment.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KBCommentImpl.class, kbComment.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(kbComment);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KBCommentModelImpl kbCommentModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbCommentModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kbCommentModelImpl.getUuid(), kbCommentModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, kbCommentModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kb comment with the primary key. Does not add the kb comment to the database.
 	 *
 	 * @param kbCommentId the primary key for the new kb comment
@@ -2227,10 +2155,7 @@ public class KBCommentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KBCommentImpl.class, kbCommentModelImpl, false, true);
-
-		cacheUniqueFindersCache(kbCommentModelImpl);
+		cacheUniqueFindersResult(kbComment, false);
 
 		if (isNew) {
 			kbComment.setNew(false);
@@ -2367,9 +2292,6 @@ public class KBCommentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2397,10 +2319,11 @@ public class KBCommentPersistenceImpl
 				"kbComment.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBComment::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KBComment::getUuid,
+			KBComment::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBCOMMENT_WHERE,
@@ -2709,4 +2632,4 @@ public class KBCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:703298045
+// LIFERAY-SERVICE-BUILDER-HASH:-321245574

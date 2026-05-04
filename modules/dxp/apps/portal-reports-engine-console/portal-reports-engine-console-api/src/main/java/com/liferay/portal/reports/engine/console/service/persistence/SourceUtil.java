@@ -36,6 +36,20 @@ public class SourceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Source> sources) {
+		getPersistence().cacheResult(sources);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Source source) {
+		getPersistence().cacheResult(source);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -717,24 +731,6 @@ public class SourceUtil {
 	}
 
 	/**
-	 * Caches the source in the entity cache if it is enabled.
-	 *
-	 * @param source the source
-	 */
-	public static void cacheResult(Source source) {
-		getPersistence().cacheResult(source);
-	}
-
-	/**
-	 * Caches the sources in the entity cache if it is enabled.
-	 *
-	 * @param sources the sources
-	 */
-	public static void cacheResult(List<Source> sources) {
-		getPersistence().cacheResult(sources);
-	}
-
-	/**
 	 * Creates a new source with the primary key. Does not add the source to the database.
 	 *
 	 * @param sourceId the primary key for the new source
@@ -797,4 +793,4 @@ public class SourceUtil {
 	private static volatile SourcePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:59657114
+// LIFERAY-SERVICE-BUILDER-HASH:-1862637732

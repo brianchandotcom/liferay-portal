@@ -36,6 +36,24 @@ public class SocialActivitySettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SocialActivitySetting> socialActivitySettings) {
+
+		getPersistence().cacheResult(socialActivitySettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		SocialActivitySetting socialActivitySetting) {
+
+		getPersistence().cacheResult(socialActivitySetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -743,28 +761,6 @@ public class SocialActivitySettingUtil {
 	}
 
 	/**
-	 * Caches the social activity setting in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySetting the social activity setting
-	 */
-	public static void cacheResult(
-		SocialActivitySetting socialActivitySetting) {
-
-		getPersistence().cacheResult(socialActivitySetting);
-	}
-
-	/**
-	 * Caches the social activity settings in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySettings the social activity settings
-	 */
-	public static void cacheResult(
-		List<SocialActivitySetting> socialActivitySettings) {
-
-		getPersistence().cacheResult(socialActivitySettings);
-	}
-
-	/**
 	 * Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
 	 *
 	 * @param activitySettingId the primary key for the new social activity setting
@@ -833,4 +829,4 @@ public class SocialActivitySettingUtil {
 	private static volatile SocialActivitySettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1106119669
+// LIFERAY-SERVICE-BUILDER-HASH:-1738700867

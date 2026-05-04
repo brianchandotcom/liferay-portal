@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CommerceChannelRelPersis
 import com.liferay.commerce.product.service.persistence.CommerceChannelRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -542,82 +538,6 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRel the commerce channel rel
-	 */
-	@Override
-	public void cacheResult(CommerceChannelRel commerceChannelRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannelRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommerceChannelRelImpl.class,
-				commerceChannelRel.getPrimaryKey(), commerceChannelRel);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_C,
-				new Object[] {
-					commerceChannelRel.getClassNameId(),
-					commerceChannelRel.getClassPK(),
-					commerceChannelRel.getCommerceChannelId()
-				},
-				commerceChannelRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRels the commerce channel rels
-	 */
-	@Override
-	public void cacheResult(List<CommerceChannelRel> commerceChannelRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceChannelRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceChannelRel commerceChannelRel : commerceChannelRels) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commerceChannelRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommerceChannelRelImpl.class,
-						commerceChannelRel.getPrimaryKey()) == null) {
-
-					cacheResult(commerceChannelRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceChannelRelModelImpl commerceChannelRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannelRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commerceChannelRelModelImpl.getClassNameId(),
-				commerceChannelRelModelImpl.getClassPK(),
-				commerceChannelRelModelImpl.getCommerceChannelId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_C, args, commerceChannelRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce channel rel with the primary key. Does not add the commerce channel rel to the database.
 	 *
 	 * @param commerceChannelRelId the primary key for the new commerce channel rel
@@ -761,11 +681,7 @@ public class CommerceChannelRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceChannelRelImpl.class, commerceChannelRelModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commerceChannelRelModelImpl);
+		cacheUniqueFindersResult(commerceChannelRel, false);
 
 		if (isNew) {
 			commerceChannelRel.setNew(false);
@@ -894,9 +810,6 @@ public class CommerceChannelRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceChannelId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceChannelId",
 			new String[] {
@@ -960,12 +873,14 @@ public class CommerceChannelRelPersistenceImpl
 				"commerceChannelRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, CommerceChannelRel::getClassPK));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "commerceChannelId"}, true);
+			new String[] {"classNameId", "classPK", "commerceChannelId"}, false,
+			CommerceChannelRel::getClassNameId, CommerceChannelRel::getClassPK,
+			CommerceChannelRel::getCommerceChannelId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C, _SQL_SELECT_COMMERCECHANNELREL_WHERE,
@@ -1049,4 +964,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-160977067
+// LIFERAY-SERVICE-BUILDER-HASH:558092334

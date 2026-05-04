@@ -36,6 +36,24 @@ public class DDMFormInstanceReportUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMFormInstanceReport> ddmFormInstanceReports) {
+
+		getPersistence().cacheResult(ddmFormInstanceReports);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DDMFormInstanceReport ddmFormInstanceReport) {
+
+		getPersistence().cacheResult(ddmFormInstanceReport);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -179,28 +197,6 @@ public class DDMFormInstanceReportUtil {
 	}
 
 	/**
-	 * Caches the ddm form instance report in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReport the ddm form instance report
-	 */
-	public static void cacheResult(
-		DDMFormInstanceReport ddmFormInstanceReport) {
-
-		getPersistence().cacheResult(ddmFormInstanceReport);
-	}
-
-	/**
-	 * Caches the ddm form instance reports in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReports the ddm form instance reports
-	 */
-	public static void cacheResult(
-		List<DDMFormInstanceReport> ddmFormInstanceReports) {
-
-		getPersistence().cacheResult(ddmFormInstanceReports);
-	}
-
-	/**
 	 * Creates a new ddm form instance report with the primary key. Does not add the ddm form instance report to the database.
 	 *
 	 * @param formInstanceReportId the primary key for the new ddm form instance report
@@ -270,4 +266,4 @@ public class DDMFormInstanceReportUtil {
 	private static volatile DDMFormInstanceReportPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1587007037
+// LIFERAY-SERVICE-BUILDER-HASH:-213565969

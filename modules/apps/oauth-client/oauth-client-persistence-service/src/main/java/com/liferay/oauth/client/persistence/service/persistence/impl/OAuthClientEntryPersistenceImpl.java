@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2207,83 +2205,6 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth client entry in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntry the o auth client entry
-	 */
-	@Override
-	public void cacheResult(OAuthClientEntry oAuthClientEntry) {
-		entityCache.putResult(
-			OAuthClientEntryImpl.class, oAuthClientEntry.getPrimaryKey(),
-			oAuthClientEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_A_C,
-			new Object[] {
-				oAuthClientEntry.getCompanyId(),
-				oAuthClientEntry.getAuthServerWellKnownURI(),
-				oAuthClientEntry.getClientId()
-			},
-			oAuthClientEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				oAuthClientEntry.getExternalReferenceCode(),
-				oAuthClientEntry.getCompanyId()
-			},
-			oAuthClientEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth client entries in the entity cache if it is enabled.
-	 *
-	 * @param oAuthClientEntries the o auth client entries
-	 */
-	@Override
-	public void cacheResult(List<OAuthClientEntry> oAuthClientEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuthClientEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuthClientEntry oAuthClientEntry : oAuthClientEntries) {
-			if (entityCache.getResult(
-					OAuthClientEntryImpl.class,
-					oAuthClientEntry.getPrimaryKey()) == null) {
-
-				cacheResult(oAuthClientEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuthClientEntryModelImpl oAuthClientEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			oAuthClientEntryModelImpl.getCompanyId(),
-			oAuthClientEntryModelImpl.getAuthServerWellKnownURI(),
-			oAuthClientEntryModelImpl.getClientId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_A_C, args, oAuthClientEntryModelImpl);
-
-		args = new Object[] {
-			oAuthClientEntryModelImpl.getExternalReferenceCode(),
-			oAuthClientEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, oAuthClientEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new o auth client entry with the primary key. Does not add the o auth client entry to the database.
 	 *
 	 * @param oAuthClientEntryId the primary key for the new o auth client entry
@@ -2491,10 +2412,7 @@ public class OAuthClientEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuthClientEntryImpl.class, oAuthClientEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(oAuthClientEntryModelImpl);
+		cacheUniqueFindersResult(oAuthClientEntry, false);
 
 		if (isNew) {
 			oAuthClientEntry.setNew(false);
@@ -2560,9 +2478,6 @@ public class OAuthClientEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2714,14 +2629,16 @@ public class OAuthClientEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientEntry::getAuthServerWellKnownURI));
 
-		_finderPathFetchByC_A_C = new FinderPath(
+		_finderPathFetchByC_A_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
 			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			true);
+			false, OAuthClientEntry::getCompanyId,
+			OAuthClientEntry::getAuthServerWellKnownURI,
+			OAuthClientEntry::getClientId);
 
 		_uniquePersistenceFinderByC_A_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A_C, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
@@ -2736,10 +2653,12 @@ public class OAuthClientEntryPersistenceImpl
 				"oAuthClientEntry.", "clientId", FinderColumn.Type.STRING, "=",
 				true, true, OAuthClientEntry::getClientId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			OAuthClientEntry::getExternalReferenceCode,
+			OAuthClientEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
@@ -2843,4 +2762,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1320292123
+// LIFERAY-SERVICE-BUILDER-HASH:-1137596655

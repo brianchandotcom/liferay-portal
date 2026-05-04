@@ -33,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -942,74 +939,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce payment method group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
-
-		entityCache.putResult(
-			CommercePaymentMethodGroupRelImpl.class,
-			commercePaymentMethodGroupRel.getPrimaryKey(),
-			commercePaymentMethodGroupRel);
-
-		finderCache.putResult(
-			_finderPathFetchByG_P,
-			new Object[] {
-				commercePaymentMethodGroupRel.getGroupId(),
-				commercePaymentMethodGroupRel.getPaymentIntegrationKey()
-			},
-			commercePaymentMethodGroupRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce payment method group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRels the commerce payment method group rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePaymentMethodGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
-				commercePaymentMethodGroupRels) {
-
-			if (entityCache.getResult(
-					CommercePaymentMethodGroupRelImpl.class,
-					commercePaymentMethodGroupRel.getPrimaryKey()) == null) {
-
-				cacheResult(commercePaymentMethodGroupRel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePaymentMethodGroupRelModelImpl
-			commercePaymentMethodGroupRelModelImpl) {
-
-		Object[] args = new Object[] {
-			commercePaymentMethodGroupRelModelImpl.getGroupId(),
-			commercePaymentMethodGroupRelModelImpl.getPaymentIntegrationKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_P, args,
-			commercePaymentMethodGroupRelModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce payment method group rel with the primary key. Does not add the commerce payment method group rel to the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the primary key for the new commerce payment method group rel
@@ -1159,11 +1088,7 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePaymentMethodGroupRelImpl.class,
-			commercePaymentMethodGroupRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePaymentMethodGroupRelModelImpl);
+		cacheUniqueFindersResult(commercePaymentMethodGroupRel, false);
 
 		if (isNew) {
 			commercePaymentMethodGroupRel.setNew(false);
@@ -1232,9 +1157,6 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1302,10 +1224,12 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				CommercePaymentMethodGroupRel::isActive));
 
-		_finderPathFetchByG_P = new FinderPath(
+		_finderPathFetchByG_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "paymentIntegrationKey"}, true);
+			new String[] {"groupId", "paymentIntegrationKey"}, false,
+			CommercePaymentMethodGroupRel::getGroupId,
+			CommercePaymentMethodGroupRel::getPaymentIntegrationKey);
 
 		_uniquePersistenceFinderByG_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P,
@@ -1418,4 +1342,4 @@ public class CommercePaymentMethodGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1556585879
+// LIFERAY-SERVICE-BUILDER-HASH:780208483

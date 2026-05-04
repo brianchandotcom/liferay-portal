@@ -36,6 +36,20 @@ public class OAuth2ApplicationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<OAuth2Application> oAuth2Applications) {
+		getPersistence().cacheResult(oAuth2Applications);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OAuth2Application oAuth2Application) {
+		getPersistence().cacheResult(oAuth2Application);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1016,24 +1030,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Caches the o auth2 application in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Application the o auth2 application
-	 */
-	public static void cacheResult(OAuth2Application oAuth2Application) {
-		getPersistence().cacheResult(oAuth2Application);
-	}
-
-	/**
-	 * Caches the o auth2 applications in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Applications the o auth2 applications
-	 */
-	public static void cacheResult(List<OAuth2Application> oAuth2Applications) {
-		getPersistence().cacheResult(oAuth2Applications);
-	}
-
-	/**
 	 * Creates a new o auth2 application with the primary key. Does not add the o auth2 application to the database.
 	 *
 	 * @param oAuth2ApplicationId the primary key for the new o auth2 application
@@ -1102,4 +1098,4 @@ public class OAuth2ApplicationUtil {
 	private static volatile OAuth2ApplicationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-961890406
+// LIFERAY-SERVICE-BUILDER-HASH:-2095516002

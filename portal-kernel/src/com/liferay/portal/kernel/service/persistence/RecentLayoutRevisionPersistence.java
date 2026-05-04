@@ -397,21 +397,6 @@ public interface RecentLayoutRevisionPersistence
 	public int countByU_L_P(long userId, long layoutSetBranchId, long plid);
 
 	/**
-	 * Caches the recent layout revision in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutRevision the recent layout revision
-	 */
-	public void cacheResult(RecentLayoutRevision recentLayoutRevision);
-
-	/**
-	 * Caches the recent layout revisions in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutRevisions the recent layout revisions
-	 */
-	public void cacheResult(
-		java.util.List<RecentLayoutRevision> recentLayoutRevisions);
-
-	/**
 	 * Creates a new recent layout revision with the primary key. Does not add the recent layout revision to the database.
 	 *
 	 * @param recentLayoutRevisionId the primary key for the new recent layout revision
@@ -451,4 +436,4 @@ public interface RecentLayoutRevisionPersistence
 	public RecentLayoutRevision fetchByPrimaryKey(long recentLayoutRevisionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1361353328
+// LIFERAY-SERVICE-BUILDER-HASH:-264677384

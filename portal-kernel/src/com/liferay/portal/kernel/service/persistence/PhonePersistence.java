@@ -858,20 +858,6 @@ public interface PhonePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the phone in the entity cache if it is enabled.
-	 *
-	 * @param phone the phone
-	 */
-	public void cacheResult(Phone phone);
-
-	/**
-	 * Caches the phones in the entity cache if it is enabled.
-	 *
-	 * @param phones the phones
-	 */
-	public void cacheResult(java.util.List<Phone> phones);
-
-	/**
 	 * Creates a new phone with the primary key. Does not add the phone to the database.
 	 *
 	 * @param phoneId the primary key for the new phone
@@ -908,4 +894,4 @@ public interface PhonePersistence
 	public Phone fetchByPrimaryKey(long phoneId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1863515721
+// LIFERAY-SERVICE-BUILDER-HASH:120427673

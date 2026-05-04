@@ -37,6 +37,20 @@ public class BlogsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BlogsEntry> blogsEntries) {
+		getPersistence().cacheResult(blogsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BlogsEntry blogsEntry) {
+		getPersistence().cacheResult(blogsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -4867,24 +4881,6 @@ public class BlogsEntryUtil {
 	}
 
 	/**
-	 * Caches the blogs entry in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntry the blogs entry
-	 */
-	public static void cacheResult(BlogsEntry blogsEntry) {
-		getPersistence().cacheResult(blogsEntry);
-	}
-
-	/**
-	 * Caches the blogs entries in the entity cache if it is enabled.
-	 *
-	 * @param blogsEntries the blogs entries
-	 */
-	public static void cacheResult(List<BlogsEntry> blogsEntries) {
-		getPersistence().cacheResult(blogsEntries);
-	}
-
-	/**
 	 * Creates a new blogs entry with the primary key. Does not add the blogs entry to the database.
 	 *
 	 * @param entryId the primary key for the new blogs entry
@@ -4945,4 +4941,4 @@ public class BlogsEntryUtil {
 	private static volatile BlogsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1142615488
+// LIFERAY-SERVICE-BUILDER-HASH:-1365092083

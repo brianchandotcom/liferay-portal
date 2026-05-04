@@ -444,21 +444,6 @@ public interface WorkflowInstanceLinkPersistence
 		long groupId, long companyId, long classNameId, long classPK);
 
 	/**
-	 * Caches the workflow instance link in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLink the workflow instance link
-	 */
-	public void cacheResult(WorkflowInstanceLink workflowInstanceLink);
-
-	/**
-	 * Caches the workflow instance links in the entity cache if it is enabled.
-	 *
-	 * @param workflowInstanceLinks the workflow instance links
-	 */
-	public void cacheResult(
-		java.util.List<WorkflowInstanceLink> workflowInstanceLinks);
-
-	/**
 	 * Creates a new workflow instance link with the primary key. Does not add the workflow instance link to the database.
 	 *
 	 * @param workflowInstanceLinkId the primary key for the new workflow instance link
@@ -498,4 +483,4 @@ public interface WorkflowInstanceLinkPersistence
 	public WorkflowInstanceLink fetchByPrimaryKey(long workflowInstanceLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:752656610
+// LIFERAY-SERVICE-BUILDER-HASH:-1547396310

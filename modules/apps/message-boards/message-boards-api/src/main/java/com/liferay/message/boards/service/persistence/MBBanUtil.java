@@ -36,6 +36,20 @@ public class MBBanUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBBan> mbBans) {
+		getPersistence().cacheResult(mbBans);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBBan mbBan) {
+		getPersistence().cacheResult(mbBan);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -831,24 +845,6 @@ public class MBBanUtil {
 	}
 
 	/**
-	 * Caches the message boards ban in the entity cache if it is enabled.
-	 *
-	 * @param mbBan the message boards ban
-	 */
-	public static void cacheResult(MBBan mbBan) {
-		getPersistence().cacheResult(mbBan);
-	}
-
-	/**
-	 * Caches the message boards bans in the entity cache if it is enabled.
-	 *
-	 * @param mbBans the message boards bans
-	 */
-	public static void cacheResult(List<MBBan> mbBans) {
-		getPersistence().cacheResult(mbBans);
-	}
-
-	/**
 	 * Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	 *
 	 * @param banId the primary key for the new message boards ban
@@ -909,4 +905,4 @@ public class MBBanUtil {
 	private static volatile MBBanPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:385994454
+// LIFERAY-SERVICE-BUILDER-HASH:-2036986408

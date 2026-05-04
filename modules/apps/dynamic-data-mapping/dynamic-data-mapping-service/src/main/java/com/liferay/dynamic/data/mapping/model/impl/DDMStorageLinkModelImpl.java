@@ -870,4 +870,4 @@ public class DDMStorageLinkModelImpl
 	private DDMStorageLink _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2118440533
+// LIFERAY-SERVICE-BUILDER-HASH:-929490349

@@ -4565,20 +4565,6 @@ public interface WikiPagePersistence
 		int status);
 
 	/**
-	 * Caches the wiki page in the entity cache if it is enabled.
-	 *
-	 * @param wikiPage the wiki page
-	 */
-	public void cacheResult(WikiPage wikiPage);
-
-	/**
-	 * Caches the wiki pages in the entity cache if it is enabled.
-	 *
-	 * @param wikiPages the wiki pages
-	 */
-	public void cacheResult(java.util.List<WikiPage> wikiPages);
-
-	/**
 	 * Creates a new wiki page with the primary key. Does not add the wiki page to the database.
 	 *
 	 * @param pageId the primary key for the new wiki page
@@ -4615,4 +4601,4 @@ public interface WikiPagePersistence
 	public WikiPage fetchByPrimaryKey(long pageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1129838386
+// LIFERAY-SERVICE-BUILDER-HASH:-1134882232

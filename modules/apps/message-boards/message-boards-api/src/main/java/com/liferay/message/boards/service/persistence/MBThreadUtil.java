@@ -37,6 +37,20 @@ public class MBThreadUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBThread> mbThreads) {
+		getPersistence().cacheResult(mbThreads);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBThread mbThread) {
+		getPersistence().cacheResult(mbThread);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3106,24 +3120,6 @@ public class MBThreadUtil {
 	}
 
 	/**
-	 * Caches the message boards thread in the entity cache if it is enabled.
-	 *
-	 * @param mbThread the message boards thread
-	 */
-	public static void cacheResult(MBThread mbThread) {
-		getPersistence().cacheResult(mbThread);
-	}
-
-	/**
-	 * Caches the message boards threads in the entity cache if it is enabled.
-	 *
-	 * @param mbThreads the message boards threads
-	 */
-	public static void cacheResult(List<MBThread> mbThreads) {
-		getPersistence().cacheResult(mbThreads);
-	}
-
-	/**
 	 * Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
 	 *
 	 * @param threadId the primary key for the new message boards thread
@@ -3184,4 +3180,4 @@ public class MBThreadUtil {
 	private static volatile MBThreadPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:887956390
+// LIFERAY-SERVICE-BUILDER-HASH:741860622

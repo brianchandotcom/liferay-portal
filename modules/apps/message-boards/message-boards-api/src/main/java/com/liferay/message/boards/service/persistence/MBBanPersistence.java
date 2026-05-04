@@ -650,20 +650,6 @@ public interface MBBanPersistence
 	public int countByG_B(long groupId, long banUserId);
 
 	/**
-	 * Caches the message boards ban in the entity cache if it is enabled.
-	 *
-	 * @param mbBan the message boards ban
-	 */
-	public void cacheResult(MBBan mbBan);
-
-	/**
-	 * Caches the message boards bans in the entity cache if it is enabled.
-	 *
-	 * @param mbBans the message boards bans
-	 */
-	public void cacheResult(java.util.List<MBBan> mbBans);
-
-	/**
 	 * Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	 *
 	 * @param banId the primary key for the new message boards ban
@@ -700,4 +686,4 @@ public interface MBBanPersistence
 	public MBBan fetchByPrimaryKey(long banId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1204581642
+// LIFERAY-SERVICE-BUILDER-HASH:-1869550970

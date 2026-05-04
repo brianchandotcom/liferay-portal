@@ -936,21 +936,6 @@ public interface ObjectEntryFolderPersistence
 		String name, int status);
 
 	/**
-	 * Caches the object entry folder in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolder the object entry folder
-	 */
-	public void cacheResult(ObjectEntryFolder objectEntryFolder);
-
-	/**
-	 * Caches the object entry folders in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryFolders the object entry folders
-	 */
-	public void cacheResult(
-		java.util.List<ObjectEntryFolder> objectEntryFolders);
-
-	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
 	 * @param objectEntryFolderId the primary key for the new object entry folder
@@ -989,4 +974,4 @@ public interface ObjectEntryFolderPersistence
 	public ObjectEntryFolder fetchByPrimaryKey(long objectEntryFolderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-649055221
+// LIFERAY-SERVICE-BUILDER-HASH:1956313251

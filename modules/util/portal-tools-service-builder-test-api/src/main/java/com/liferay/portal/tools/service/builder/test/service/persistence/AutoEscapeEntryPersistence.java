@@ -33,20 +33,6 @@ public interface AutoEscapeEntryPersistence
 	 */
 
 	/**
-	 * Caches the auto escape entry in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntry the auto escape entry
-	 */
-	public void cacheResult(AutoEscapeEntry autoEscapeEntry);
-
-	/**
-	 * Caches the auto escape entries in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntries the auto escape entries
-	 */
-	public void cacheResult(java.util.List<AutoEscapeEntry> autoEscapeEntries);
-
-	/**
 	 * Creates a new auto escape entry with the primary key. Does not add the auto escape entry to the database.
 	 *
 	 * @param autoEscapeEntryId the primary key for the new auto escape entry
@@ -85,4 +71,4 @@ public interface AutoEscapeEntryPersistence
 	public AutoEscapeEntry fetchByPrimaryKey(long autoEscapeEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-393936368
+// LIFERAY-SERVICE-BUILDER-HASH:-1259878970

@@ -16,7 +16,6 @@ import com.liferay.journal.service.persistence.JournalFolderUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2954,126 +2951,6 @@ public class JournalFolderPersistenceImpl
 	}
 
 	/**
-	 * Caches the journal folder in the entity cache if it is enabled.
-	 *
-	 * @param journalFolder the journal folder
-	 */
-	@Override
-	public void cacheResult(JournalFolder journalFolder) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalFolder.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalFolderImpl.class, journalFolder.getPrimaryKey(),
-				journalFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					journalFolder.getUuid(), journalFolder.getGroupId()
-				},
-				journalFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByG_N,
-				new Object[] {
-					journalFolder.getGroupId(), journalFolder.getName()
-				},
-				journalFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_N,
-				new Object[] {
-					journalFolder.getGroupId(),
-					journalFolder.getParentFolderId(), journalFolder.getName()
-				},
-				journalFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					journalFolder.getExternalReferenceCode(),
-					journalFolder.getGroupId()
-				},
-				journalFolder);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal folders in the entity cache if it is enabled.
-	 *
-	 * @param journalFolders the journal folders
-	 */
-	@Override
-	public void cacheResult(List<JournalFolder> journalFolders) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalFolders.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalFolder journalFolder : journalFolders) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalFolder.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalFolderImpl.class,
-						journalFolder.getPrimaryKey()) == null) {
-
-					cacheResult(journalFolder);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalFolderModelImpl journalFolderModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalFolderModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalFolderModelImpl.getUuid(),
-				journalFolderModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, journalFolderModelImpl);
-
-			args = new Object[] {
-				journalFolderModelImpl.getGroupId(),
-				journalFolderModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_N, args, journalFolderModelImpl);
-
-			args = new Object[] {
-				journalFolderModelImpl.getGroupId(),
-				journalFolderModelImpl.getParentFolderId(),
-				journalFolderModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_N, args, journalFolderModelImpl);
-
-			args = new Object[] {
-				journalFolderModelImpl.getExternalReferenceCode(),
-				journalFolderModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, journalFolderModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal folder with the primary key. Does not add the journal folder to the database.
 	 *
 	 * @param folderId the primary key for the new journal folder
@@ -3281,10 +3158,7 @@ public class JournalFolderPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalFolderImpl.class, journalFolderModelImpl, false, true);
-
-		cacheUniqueFindersCache(journalFolderModelImpl);
+		cacheUniqueFindersResult(journalFolder, false);
 
 		if (isNew) {
 			journalFolder.setNew(false);
@@ -3432,9 +3306,6 @@ public class JournalFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3462,10 +3333,11 @@ public class JournalFolderPersistenceImpl
 				"journalFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalFolder::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, JournalFolder::getUuid,
+			JournalFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALFOLDER_WHERE,
@@ -3598,10 +3470,11 @@ public class JournalFolderPersistenceImpl
 				"journalFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 				true, true, JournalFolder::getParentFolderId));
 
-		_finderPathFetchByG_N = new FinderPath(
+		_finderPathFetchByG_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, true);
+			new String[] {"groupId", "name"}, false, JournalFolder::getGroupId,
+			JournalFolder::getName);
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N, _SQL_SELECT_JOURNALFOLDER_WHERE,
@@ -3639,13 +3512,15 @@ public class JournalFolderPersistenceImpl
 					"journalFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, JournalFolder::getStatus));
 
-		_finderPathFetchByG_P_N = new FinderPath(
+		_finderPathFetchByG_P_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "parentFolderId", "name"}, true);
+			new String[] {"groupId", "parentFolderId", "name"}, false,
+			JournalFolder::getGroupId, JournalFolder::getParentFolderId,
+			JournalFolder::getName);
 
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_N, _SQL_SELECT_JOURNALFOLDER_WHERE,
@@ -3771,10 +3646,11 @@ public class JournalFolderPersistenceImpl
 					"journalFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, JournalFolder::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			JournalFolder::getExternalReferenceCode, JournalFolder::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_JOURNALFOLDER_WHERE,
@@ -3881,4 +3757,4 @@ public class JournalFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1742034525
+// LIFERAY-SERVICE-BUILDER-HASH:-145608866

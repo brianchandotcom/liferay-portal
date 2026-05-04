@@ -572,21 +572,6 @@ public interface CommerceQualifierEntryPersistence
 		long targetClassPK);
 
 	/**
-	 * Caches the commerce qualifier entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntry the commerce qualifier entry
-	 */
-	public void cacheResult(CommerceQualifierEntry commerceQualifierEntry);
-
-	/**
-	 * Caches the commerce qualifier entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceQualifierEntries the commerce qualifier entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceQualifierEntry> commerceQualifierEntries);
-
-	/**
 	 * Creates a new commerce qualifier entry with the primary key. Does not add the commerce qualifier entry to the database.
 	 *
 	 * @param commerceQualifierEntryId the primary key for the new commerce qualifier entry
@@ -628,4 +613,4 @@ public interface CommerceQualifierEntryPersistence
 		long commerceQualifierEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-618266920
+// LIFERAY-SERVICE-BUILDER-HASH:-2033939318

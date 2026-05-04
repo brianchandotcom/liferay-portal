@@ -36,6 +36,20 @@ public class CTSchemaVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTSchemaVersion> ctSchemaVersions) {
+		getPersistence().cacheResult(ctSchemaVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTSchemaVersion ctSchemaVersion) {
+		getPersistence().cacheResult(ctSchemaVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -234,24 +248,6 @@ public class CTSchemaVersionUtil {
 	}
 
 	/**
-	 * Caches the ct schema version in the entity cache if it is enabled.
-	 *
-	 * @param ctSchemaVersion the ct schema version
-	 */
-	public static void cacheResult(CTSchemaVersion ctSchemaVersion) {
-		getPersistence().cacheResult(ctSchemaVersion);
-	}
-
-	/**
-	 * Caches the ct schema versions in the entity cache if it is enabled.
-	 *
-	 * @param ctSchemaVersions the ct schema versions
-	 */
-	public static void cacheResult(List<CTSchemaVersion> ctSchemaVersions) {
-		getPersistence().cacheResult(ctSchemaVersions);
-	}
-
-	/**
 	 * Creates a new ct schema version with the primary key. Does not add the ct schema version to the database.
 	 *
 	 * @param schemaVersionId the primary key for the new ct schema version
@@ -314,4 +310,4 @@ public class CTSchemaVersionUtil {
 	private static volatile CTSchemaVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-297947772
+// LIFERAY-SERVICE-BUILDER-HASH:173569148

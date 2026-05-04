@@ -36,6 +36,24 @@ public class CPInstanceOptionValueRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
+
+		getPersistence().cacheResult(cpInstanceOptionValueRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPInstanceOptionValueRel cpInstanceOptionValueRel) {
+
+		getPersistence().cacheResult(cpInstanceOptionValueRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1014,28 +1032,6 @@ public class CPInstanceOptionValueRelUtil {
 	}
 
 	/**
-	 * Caches the cp instance option value rel in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRel the cp instance option value rel
-	 */
-	public static void cacheResult(
-		CPInstanceOptionValueRel cpInstanceOptionValueRel) {
-
-		getPersistence().cacheResult(cpInstanceOptionValueRel);
-	}
-
-	/**
-	 * Caches the cp instance option value rels in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRels the cp instance option value rels
-	 */
-	public static void cacheResult(
-		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
-
-		getPersistence().cacheResult(cpInstanceOptionValueRels);
-	}
-
-	/**
 	 * Creates a new cp instance option value rel with the primary key. Does not add the cp instance option value rel to the database.
 	 *
 	 * @param CPInstanceOptionValueRelId the primary key for the new cp instance option value rel
@@ -1108,4 +1104,4 @@ public class CPInstanceOptionValueRelUtil {
 	private static volatile CPInstanceOptionValueRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-738129657
+// LIFERAY-SERVICE-BUILDER-HASH:-1727675635

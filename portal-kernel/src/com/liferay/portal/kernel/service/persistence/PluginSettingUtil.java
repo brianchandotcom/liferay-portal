@@ -36,6 +36,20 @@ public class PluginSettingUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PluginSetting> pluginSettings) {
+		getPersistence().cacheResult(pluginSettings);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PluginSetting pluginSetting) {
+		getPersistence().cacheResult(pluginSetting);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -311,24 +325,6 @@ public class PluginSettingUtil {
 	}
 
 	/**
-	 * Caches the plugin setting in the entity cache if it is enabled.
-	 *
-	 * @param pluginSetting the plugin setting
-	 */
-	public static void cacheResult(PluginSetting pluginSetting) {
-		getPersistence().cacheResult(pluginSetting);
-	}
-
-	/**
-	 * Caches the plugin settings in the entity cache if it is enabled.
-	 *
-	 * @param pluginSettings the plugin settings
-	 */
-	public static void cacheResult(List<PluginSetting> pluginSettings) {
-		getPersistence().cacheResult(pluginSettings);
-	}
-
-	/**
 	 * Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
 	 *
 	 * @param pluginSettingId the primary key for the new plugin setting
@@ -391,4 +387,4 @@ public class PluginSettingUtil {
 	private static volatile PluginSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1153709721
+// LIFERAY-SERVICE-BUILDER-HASH:-885837821

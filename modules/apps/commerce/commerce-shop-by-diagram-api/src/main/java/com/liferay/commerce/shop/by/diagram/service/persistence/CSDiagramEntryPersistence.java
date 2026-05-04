@@ -444,20 +444,6 @@ public interface CSDiagramEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cs diagram entry in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntry the cs diagram entry
-	 */
-	public void cacheResult(CSDiagramEntry csDiagramEntry);
-
-	/**
-	 * Caches the cs diagram entries in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntries the cs diagram entries
-	 */
-	public void cacheResult(java.util.List<CSDiagramEntry> csDiagramEntries);
-
-	/**
 	 * Creates a new cs diagram entry with the primary key. Does not add the cs diagram entry to the database.
 	 *
 	 * @param CSDiagramEntryId the primary key for the new cs diagram entry
@@ -496,4 +482,4 @@ public interface CSDiagramEntryPersistence
 	public CSDiagramEntry fetchByPrimaryKey(long CSDiagramEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:195258068
+// LIFERAY-SERVICE-BUILDER-HASH:343085878

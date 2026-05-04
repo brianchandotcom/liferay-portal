@@ -1005,20 +1005,6 @@ public interface ExpandoValuePersistence
 	public int countByT_C_D(long tableId, long columnId, String data);
 
 	/**
-	 * Caches the expando value in the entity cache if it is enabled.
-	 *
-	 * @param expandoValue the expando value
-	 */
-	public void cacheResult(ExpandoValue expandoValue);
-
-	/**
-	 * Caches the expando values in the entity cache if it is enabled.
-	 *
-	 * @param expandoValues the expando values
-	 */
-	public void cacheResult(java.util.List<ExpandoValue> expandoValues);
-
-	/**
 	 * Creates a new expando value with the primary key. Does not add the expando value to the database.
 	 *
 	 * @param valueId the primary key for the new expando value
@@ -1056,4 +1042,4 @@ public interface ExpandoValuePersistence
 	public ExpandoValue fetchByPrimaryKey(long valueId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1732031388
+// LIFERAY-SERVICE-BUILDER-HASH:-917901616

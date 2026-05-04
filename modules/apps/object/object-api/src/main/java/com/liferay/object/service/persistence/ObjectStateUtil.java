@@ -36,6 +36,20 @@ public class ObjectStateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectState> objectStates) {
+		getPersistence().cacheResult(objectStates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectState objectState) {
+		getPersistence().cacheResult(objectState);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -686,24 +700,6 @@ public class ObjectStateUtil {
 	}
 
 	/**
-	 * Caches the object state in the entity cache if it is enabled.
-	 *
-	 * @param objectState the object state
-	 */
-	public static void cacheResult(ObjectState objectState) {
-		getPersistence().cacheResult(objectState);
-	}
-
-	/**
-	 * Caches the object states in the entity cache if it is enabled.
-	 *
-	 * @param objectStates the object states
-	 */
-	public static void cacheResult(List<ObjectState> objectStates) {
-		getPersistence().cacheResult(objectStates);
-	}
-
-	/**
 	 * Creates a new object state with the primary key. Does not add the object state to the database.
 	 *
 	 * @param objectStateId the primary key for the new object state
@@ -764,4 +760,4 @@ public class ObjectStateUtil {
 	private static volatile ObjectStatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:330873107
+// LIFERAY-SERVICE-BUILDER-HASH:-989617189

@@ -302,24 +302,6 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 	public int countByC_C(long commercePricingClassId, long CPDefinitionId);
 
 	/**
-	 * Caches the commerce pricing class cp definition rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
-	 */
-	public void cacheResult(
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel);
-
-	/**
-	 * Caches the commerce pricing class cp definition rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRels the commerce pricing class cp definition rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePricingClassCPDefinitionRel>
-			commercePricingClassCPDefinitionRels);
-
-	/**
 	 * Creates a new commerce pricing class cp definition rel with the primary key. Does not add the commerce pricing class cp definition rel to the database.
 	 *
 	 * @param CommercePricingClassCPDefinitionRelId the primary key for the new commerce pricing class cp definition rel
@@ -364,4 +346,4 @@ public interface CommercePricingClassCPDefinitionRelPersistence
 		long CommercePricingClassCPDefinitionRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1631333631
+// LIFERAY-SERVICE-BUILDER-HASH:1454127527

@@ -38,6 +38,24 @@ public class CommerceNotificationAttachmentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceNotificationAttachment> commerceNotificationAttachments) {
+
+		getPersistence().cacheResult(commerceNotificationAttachments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceNotificationAttachment commerceNotificationAttachment) {
+
+		getPersistence().cacheResult(commerceNotificationAttachment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -587,28 +605,6 @@ public class CommerceNotificationAttachmentUtil {
 	}
 
 	/**
-	 * Caches the commerce notification attachment in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachment the commerce notification attachment
-	 */
-	public static void cacheResult(
-		CommerceNotificationAttachment commerceNotificationAttachment) {
-
-		getPersistence().cacheResult(commerceNotificationAttachment);
-	}
-
-	/**
-	 * Caches the commerce notification attachments in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationAttachments the commerce notification attachments
-	 */
-	public static void cacheResult(
-		List<CommerceNotificationAttachment> commerceNotificationAttachments) {
-
-		getPersistence().cacheResult(commerceNotificationAttachments);
-	}
-
-	/**
 	 * Creates a new commerce notification attachment with the primary key. Does not add the commerce notification attachment to the database.
 	 *
 	 * @param commerceNotificationAttachmentId the primary key for the new commerce notification attachment
@@ -684,4 +680,4 @@ public class CommerceNotificationAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-273795417
+// LIFERAY-SERVICE-BUILDER-HASH:-112836889

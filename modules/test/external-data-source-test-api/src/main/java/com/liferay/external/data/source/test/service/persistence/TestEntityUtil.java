@@ -36,6 +36,20 @@ public class TestEntityUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TestEntity> testEntities) {
+		getPersistence().cacheResult(testEntities);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TestEntity testEntity) {
+		getPersistence().cacheResult(testEntity);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class TestEntityUtil {
 	}
 
 	/**
-	 * Caches the test entity in the entity cache if it is enabled.
-	 *
-	 * @param testEntity the test entity
-	 */
-	public static void cacheResult(TestEntity testEntity) {
-		getPersistence().cacheResult(testEntity);
-	}
-
-	/**
-	 * Caches the test entities in the entity cache if it is enabled.
-	 *
-	 * @param testEntities the test entities
-	 */
-	public static void cacheResult(List<TestEntity> testEntities) {
-		getPersistence().cacheResult(testEntities);
-	}
-
-	/**
 	 * Creates a new test entity with the primary key. Does not add the test entity to the database.
 	 *
 	 * @param id the primary key for the new test entity
@@ -191,4 +187,4 @@ public class TestEntityUtil {
 	private static volatile TestEntityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:933500246
+// LIFERAY-SERVICE-BUILDER-HASH:445860733

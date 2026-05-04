@@ -575,20 +575,6 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 		long objectDefinitionId, boolean defaultObjectLayout);
 
 	/**
-	 * Caches the object layout in the entity cache if it is enabled.
-	 *
-	 * @param objectLayout the object layout
-	 */
-	public void cacheResult(ObjectLayout objectLayout);
-
-	/**
-	 * Caches the object layouts in the entity cache if it is enabled.
-	 *
-	 * @param objectLayouts the object layouts
-	 */
-	public void cacheResult(java.util.List<ObjectLayout> objectLayouts);
-
-	/**
 	 * Creates a new object layout with the primary key. Does not add the object layout to the database.
 	 *
 	 * @param objectLayoutId the primary key for the new object layout
@@ -627,4 +613,4 @@ public interface ObjectLayoutPersistence extends BasePersistence<ObjectLayout> {
 	public ObjectLayout fetchByPrimaryKey(long objectLayoutId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1799022919
+// LIFERAY-SERVICE-BUILDER-HASH:1445247849

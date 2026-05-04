@@ -36,6 +36,20 @@ public class ClassNameUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ClassName> classNames) {
+		getPersistence().cacheResult(classNames);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ClassName className) {
+		getPersistence().cacheResult(className);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -167,24 +181,6 @@ public class ClassNameUtil {
 	}
 
 	/**
-	 * Caches the class name in the entity cache if it is enabled.
-	 *
-	 * @param className the class name
-	 */
-	public static void cacheResult(ClassName className) {
-		getPersistence().cacheResult(className);
-	}
-
-	/**
-	 * Caches the class names in the entity cache if it is enabled.
-	 *
-	 * @param classNames the class names
-	 */
-	public static void cacheResult(List<ClassName> classNames) {
-		getPersistence().cacheResult(classNames);
-	}
-
-	/**
 	 * Creates a new class name with the primary key. Does not add the class name to the database.
 	 *
 	 * @param classNameId the primary key for the new class name
@@ -245,4 +241,4 @@ public class ClassNameUtil {
 	private static volatile ClassNamePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1967973797
+// LIFERAY-SERVICE-BUILDER-HASH:-29757939

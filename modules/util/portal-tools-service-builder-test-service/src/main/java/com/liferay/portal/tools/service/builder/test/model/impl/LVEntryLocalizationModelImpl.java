@@ -885,4 +885,4 @@ public class LVEntryLocalizationModelImpl
 	private LVEntryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1951182815
+// LIFERAY-SERVICE-BUILDER-HASH:128155895

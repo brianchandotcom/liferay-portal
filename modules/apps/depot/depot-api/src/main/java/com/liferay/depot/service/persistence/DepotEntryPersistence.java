@@ -448,20 +448,6 @@ public interface DepotEntryPersistence
 	public int countByC_T(long companyId, int type);
 
 	/**
-	 * Caches the depot entry in the entity cache if it is enabled.
-	 *
-	 * @param depotEntry the depot entry
-	 */
-	public void cacheResult(DepotEntry depotEntry);
-
-	/**
-	 * Caches the depot entries in the entity cache if it is enabled.
-	 *
-	 * @param depotEntries the depot entries
-	 */
-	public void cacheResult(java.util.List<DepotEntry> depotEntries);
-
-	/**
 	 * Creates a new depot entry with the primary key. Does not add the depot entry to the database.
 	 *
 	 * @param depotEntryId the primary key for the new depot entry
@@ -499,4 +485,4 @@ public interface DepotEntryPersistence
 	public DepotEntry fetchByPrimaryKey(long depotEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:148926683
+// LIFERAY-SERVICE-BUILDER-HASH:1534548431

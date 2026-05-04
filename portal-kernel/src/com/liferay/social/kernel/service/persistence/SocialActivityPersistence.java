@@ -1293,20 +1293,6 @@ public interface SocialActivityPersistence
 		long classPK, int type, long receiverUserId);
 
 	/**
-	 * Caches the social activity in the entity cache if it is enabled.
-	 *
-	 * @param socialActivity the social activity
-	 */
-	public void cacheResult(SocialActivity socialActivity);
-
-	/**
-	 * Caches the social activities in the entity cache if it is enabled.
-	 *
-	 * @param socialActivities the social activities
-	 */
-	public void cacheResult(java.util.List<SocialActivity> socialActivities);
-
-	/**
 	 * Creates a new social activity with the primary key. Does not add the social activity to the database.
 	 *
 	 * @param activityId the primary key for the new social activity
@@ -1345,4 +1331,4 @@ public interface SocialActivityPersistence
 	public SocialActivity fetchByPrimaryKey(long activityId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-270992338
+// LIFERAY-SERVICE-BUILDER-HASH:1744205538

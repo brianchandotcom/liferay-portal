@@ -37,6 +37,20 @@ public class RememberMeTokenUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RememberMeToken> rememberMeTokens) {
+		getPersistence().cacheResult(rememberMeTokens);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RememberMeToken rememberMeToken) {
+		getPersistence().cacheResult(rememberMeToken);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -359,24 +373,6 @@ public class RememberMeTokenUtil {
 	}
 
 	/**
-	 * Caches the remember me token in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeToken the remember me token
-	 */
-	public static void cacheResult(RememberMeToken rememberMeToken) {
-		getPersistence().cacheResult(rememberMeToken);
-	}
-
-	/**
-	 * Caches the remember me tokens in the entity cache if it is enabled.
-	 *
-	 * @param rememberMeTokens the remember me tokens
-	 */
-	public static void cacheResult(List<RememberMeToken> rememberMeTokens) {
-		getPersistence().cacheResult(rememberMeTokens);
-	}
-
-	/**
 	 * Creates a new remember me token with the primary key. Does not add the remember me token to the database.
 	 *
 	 * @param rememberMeTokenId the primary key for the new remember me token
@@ -439,4 +435,4 @@ public class RememberMeTokenUtil {
 	private static volatile RememberMeTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1709575272
+// LIFERAY-SERVICE-BUILDER-HASH:-923425226

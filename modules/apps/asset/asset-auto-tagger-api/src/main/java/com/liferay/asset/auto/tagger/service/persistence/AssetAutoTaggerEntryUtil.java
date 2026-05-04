@@ -36,6 +36,22 @@ public class AssetAutoTaggerEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
+
+		getPersistence().cacheResult(assetAutoTaggerEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
+		getPersistence().cacheResult(assetAutoTaggerEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -430,26 +446,6 @@ public class AssetAutoTaggerEntryUtil {
 	}
 
 	/**
-	 * Caches the asset auto tagger entry in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntry the asset auto tagger entry
-	 */
-	public static void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
-		getPersistence().cacheResult(assetAutoTaggerEntry);
-	}
-
-	/**
-	 * Caches the asset auto tagger entries in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntries the asset auto tagger entries
-	 */
-	public static void cacheResult(
-		List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
-
-		getPersistence().cacheResult(assetAutoTaggerEntries);
-	}
-
-	/**
 	 * Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	 *
 	 * @param assetAutoTaggerEntryId the primary key for the new asset auto tagger entry
@@ -517,4 +513,4 @@ public class AssetAutoTaggerEntryUtil {
 	private static volatile AssetAutoTaggerEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:475299610
+// LIFERAY-SERVICE-BUILDER-HASH:-1568896391

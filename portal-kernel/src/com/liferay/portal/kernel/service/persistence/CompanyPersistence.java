@@ -175,20 +175,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public int countByLogoId(long logoId);
 
 	/**
-	 * Caches the company in the entity cache if it is enabled.
-	 *
-	 * @param company the company
-	 */
-	public void cacheResult(Company company);
-
-	/**
-	 * Caches the companies in the entity cache if it is enabled.
-	 *
-	 * @param companies the companies
-	 */
-	public void cacheResult(java.util.List<Company> companies);
-
-	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *
 	 * @param companyId the primary key for the new company
@@ -226,4 +212,4 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public Company fetchByPrimaryKey(long companyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1924557761
+// LIFERAY-SERVICE-BUILDER-HASH:-2050402559

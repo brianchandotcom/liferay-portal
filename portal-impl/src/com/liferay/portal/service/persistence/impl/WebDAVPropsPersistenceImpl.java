@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.service.persistence.WebDAVPropsUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.WebDAVPropsImpl;
 import com.liferay.portal.model.impl.WebDAVPropsModelImpl;
@@ -36,7 +33,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -169,62 +165,6 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 	/**
-	 * Caches the web dav props in the entity cache if it is enabled.
-	 *
-	 * @param webDAVProps the web dav props
-	 */
-	@Override
-	public void cacheResult(WebDAVProps webDAVProps) {
-		EntityCacheUtil.putResult(
-			WebDAVPropsImpl.class, webDAVProps.getPrimaryKey(), webDAVProps);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				webDAVProps.getClassNameId(), webDAVProps.getClassPK()
-			},
-			webDAVProps);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the web dav propses in the entity cache if it is enabled.
-	 *
-	 * @param webDAVPropses the web dav propses
-	 */
-	@Override
-	public void cacheResult(List<WebDAVProps> webDAVPropses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (webDAVPropses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WebDAVProps webDAVProps : webDAVPropses) {
-			if (EntityCacheUtil.getResult(
-					WebDAVPropsImpl.class, webDAVProps.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(webDAVProps);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WebDAVPropsModelImpl webDAVPropsModelImpl) {
-
-		Object[] args = new Object[] {
-			webDAVPropsModelImpl.getClassNameId(),
-			webDAVPropsModelImpl.getClassPK()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_C, args, webDAVPropsModelImpl);
-	}
-
-	/**
 	 * Creates a new web dav props with the primary key. Does not add the web dav props to the database.
 	 *
 	 * @param webDavPropsId the primary key for the new web dav props
@@ -352,10 +292,7 @@ public class WebDAVPropsPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			WebDAVPropsImpl.class, webDAVPropsModelImpl, false, true);
-
-		cacheUniqueFindersCache(webDAVPropsModelImpl);
+		cacheUniqueFindersResult(webDAVProps, false);
 
 		if (isNew) {
 			webDAVProps.setNew(false);
@@ -415,13 +352,11 @@ public class WebDAVPropsPersistenceImpl
 	 * Initializes the web dav props persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			WebDAVProps::getClassNameId, WebDAVProps::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_WEBDAVPROPS_WHERE,
@@ -462,4 +397,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1517834900
+// LIFERAY-SERVICE-BUILDER-HASH:-756203934

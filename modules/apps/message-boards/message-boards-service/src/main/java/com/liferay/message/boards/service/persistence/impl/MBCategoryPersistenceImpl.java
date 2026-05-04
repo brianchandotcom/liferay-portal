@@ -16,7 +16,6 @@ import com.liferay.message.boards.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -7671,105 +7668,6 @@ public class MBCategoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the message boards category in the entity cache if it is enabled.
-	 *
-	 * @param mbCategory the message boards category
-	 */
-	@Override
-	public void cacheResult(MBCategory mbCategory) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbCategory.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {mbCategory.getUuid(), mbCategory.getGroupId()},
-				mbCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByG_F,
-				new Object[] {
-					mbCategory.getGroupId(), mbCategory.getFriendlyURL()
-				},
-				mbCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					mbCategory.getExternalReferenceCode(),
-					mbCategory.getGroupId()
-				},
-				mbCategory);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message boards categories in the entity cache if it is enabled.
-	 *
-	 * @param mbCategories the message boards categories
-	 */
-	@Override
-	public void cacheResult(List<MBCategory> mbCategories) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbCategories.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBCategory mbCategory : mbCategories) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbCategory.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBCategoryImpl.class, mbCategory.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(mbCategory);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MBCategoryModelImpl mbCategoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbCategoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbCategoryModelImpl.getUuid(), mbCategoryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbCategoryModelImpl);
-
-			args = new Object[] {
-				mbCategoryModelImpl.getGroupId(),
-				mbCategoryModelImpl.getFriendlyURL()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_F, args, mbCategoryModelImpl);
-
-			args = new Object[] {
-				mbCategoryModelImpl.getExternalReferenceCode(),
-				mbCategoryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, mbCategoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message boards category with the primary key. Does not add the message boards category to the database.
 	 *
 	 * @param categoryId the primary key for the new message boards category
@@ -7973,10 +7871,7 @@ public class MBCategoryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MBCategoryImpl.class, mbCategoryModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbCategoryModelImpl);
+		cacheUniqueFindersResult(mbCategory, false);
 
 		if (isNew) {
 			mbCategory.setNew(false);
@@ -8123,9 +8018,6 @@ public class MBCategoryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -8153,10 +8045,11 @@ public class MBCategoryPersistenceImpl
 				"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBCategory::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBCategory::getUuid,
+			MBCategory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBCATEGORY_WHERE,
@@ -8282,10 +8175,11 @@ public class MBCategoryPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentCategoryId"}, false);
 
-		_finderPathFetchByG_F = new FinderPath(
+		_finderPathFetchByG_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "friendlyURL"}, true);
+			new String[] {"groupId", "friendlyURL"}, false,
+			MBCategory::getGroupId, MBCategory::getFriendlyURL);
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_F, _SQL_SELECT_MBCATEGORY_WHERE,
@@ -8448,10 +8342,11 @@ public class MBCategoryPersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			MBCategory::getExternalReferenceCode, MBCategory::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_MBCATEGORY_WHERE,
@@ -8558,4 +8453,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1064497841
+// LIFERAY-SERVICE-BUILDER-HASH:1057610856

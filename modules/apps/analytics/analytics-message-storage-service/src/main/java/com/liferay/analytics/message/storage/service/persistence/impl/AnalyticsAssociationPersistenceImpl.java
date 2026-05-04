@@ -14,7 +14,6 @@ import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssoci
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsAssociationUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -994,57 +990,6 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 	/**
-	 * Caches the analytics association in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociation the analytics association
-	 */
-	@Override
-	public void cacheResult(AnalyticsAssociation analyticsAssociation) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					analyticsAssociation.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AnalyticsAssociationImpl.class,
-				analyticsAssociation.getPrimaryKey(), analyticsAssociation);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the analytics associations in the entity cache if it is enabled.
-	 *
-	 * @param analyticsAssociations the analytics associations
-	 */
-	@Override
-	public void cacheResult(List<AnalyticsAssociation> analyticsAssociations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (analyticsAssociations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AnalyticsAssociation analyticsAssociation :
-				analyticsAssociations) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						analyticsAssociation.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AnalyticsAssociationImpl.class,
-						analyticsAssociation.getPrimaryKey()) == null) {
-
-					cacheResult(analyticsAssociation);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new analytics association with the primary key. Does not add the analytics association to the database.
 	 *
 	 * @param analyticsAssociationId the primary key for the new analytics association
@@ -1189,9 +1134,7 @@ public class AnalyticsAssociationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AnalyticsAssociationImpl.class, analyticsAssociationModelImpl,
-			false, true);
+		cacheUniqueFindersResult(analyticsAssociation, false);
 
 		if (isNew) {
 			analyticsAssociation.setNew(false);
@@ -1317,9 +1260,6 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1573,4 +1513,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-993555067
+// LIFERAY-SERVICE-BUILDER-HASH:-1076281348

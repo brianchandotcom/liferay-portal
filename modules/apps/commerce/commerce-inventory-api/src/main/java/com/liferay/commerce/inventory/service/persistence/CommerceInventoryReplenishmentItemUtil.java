@@ -37,6 +37,25 @@ public class CommerceInventoryReplenishmentItemUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryReplenishmentItem>
+			commerceInventoryReplenishmentItems) {
+
+		getPersistence().cacheResult(commerceInventoryReplenishmentItems);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
+
+		getPersistence().cacheResult(commerceInventoryReplenishmentItem);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1169,29 +1188,6 @@ public class CommerceInventoryReplenishmentItemUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory replenishment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItem the commerce inventory replenishment item
-	 */
-	public static void cacheResult(
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem) {
-
-		getPersistence().cacheResult(commerceInventoryReplenishmentItem);
-	}
-
-	/**
-	 * Caches the commerce inventory replenishment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryReplenishmentItems the commerce inventory replenishment items
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryReplenishmentItem>
-			commerceInventoryReplenishmentItems) {
-
-		getPersistence().cacheResult(commerceInventoryReplenishmentItems);
-	}
-
-	/**
 	 * Creates a new commerce inventory replenishment item with the primary key. Does not add the commerce inventory replenishment item to the database.
 	 *
 	 * @param commerceInventoryReplenishmentItemId the primary key for the new commerce inventory replenishment item
@@ -1269,4 +1265,4 @@ public class CommerceInventoryReplenishmentItemUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-897215064
+// LIFERAY-SERVICE-BUILDER-HASH:1908605612

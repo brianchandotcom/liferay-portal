@@ -36,6 +36,22 @@ public class CPConfigurationEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPConfigurationEntry> cpConfigurationEntries) {
+
+		getPersistence().cacheResult(cpConfigurationEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPConfigurationEntry cpConfigurationEntry) {
+		getPersistence().cacheResult(cpConfigurationEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -981,26 +997,6 @@ public class CPConfigurationEntryUtil {
 	}
 
 	/**
-	 * Caches the cp configuration entry in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntry the cp configuration entry
-	 */
-	public static void cacheResult(CPConfigurationEntry cpConfigurationEntry) {
-		getPersistence().cacheResult(cpConfigurationEntry);
-	}
-
-	/**
-	 * Caches the cp configuration entries in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntries the cp configuration entries
-	 */
-	public static void cacheResult(
-		List<CPConfigurationEntry> cpConfigurationEntries) {
-
-		getPersistence().cacheResult(cpConfigurationEntries);
-	}
-
-	/**
 	 * Creates a new cp configuration entry with the primary key. Does not add the cp configuration entry to the database.
 	 *
 	 * @param CPConfigurationEntryId the primary key for the new cp configuration entry
@@ -1070,4 +1066,4 @@ public class CPConfigurationEntryUtil {
 	private static volatile CPConfigurationEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-301412771
+// LIFERAY-SERVICE-BUILDER-HASH:1811305844

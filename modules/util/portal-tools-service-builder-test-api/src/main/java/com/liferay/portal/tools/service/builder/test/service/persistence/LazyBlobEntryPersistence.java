@@ -185,20 +185,6 @@ public interface LazyBlobEntryPersistence
 	public int countByUUID_G(String uuid, long groupId);
 
 	/**
-	 * Caches the lazy blob entry in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntry the lazy blob entry
-	 */
-	public void cacheResult(LazyBlobEntry lazyBlobEntry);
-
-	/**
-	 * Caches the lazy blob entries in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntries the lazy blob entries
-	 */
-	public void cacheResult(java.util.List<LazyBlobEntry> lazyBlobEntries);
-
-	/**
 	 * Creates a new lazy blob entry with the primary key. Does not add the lazy blob entry to the database.
 	 *
 	 * @param lazyBlobEntryId the primary key for the new lazy blob entry
@@ -237,4 +223,4 @@ public interface LazyBlobEntryPersistence
 	public LazyBlobEntry fetchByPrimaryKey(long lazyBlobEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:254821159
+// LIFERAY-SERVICE-BUILDER-HASH:-710353607

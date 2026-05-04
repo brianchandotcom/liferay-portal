@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -858,106 +856,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce tax category mapping in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMapping the commerce tax category mapping
-	 */
-	@Override
-	public void cacheResult(
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping) {
-
-		entityCache.putResult(
-			CommerceTaxCategoryMappingImpl.class,
-			commerceTaxCategoryMapping.getPrimaryKey(),
-			commerceTaxCategoryMapping);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceTaxCategoryMapping.getUuid(),
-				commerceTaxCategoryMapping.getGroupId()
-			},
-			commerceTaxCategoryMapping);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				commerceTaxCategoryMapping.getCommerceTaxMethodId(),
-				commerceTaxCategoryMapping.getCPTaxCategoryId()
-			},
-			commerceTaxCategoryMapping);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceTaxCategoryMapping.getExternalReferenceCode(),
-				commerceTaxCategoryMapping.getCompanyId()
-			},
-			commerceTaxCategoryMapping);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce tax category mappings in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMappings the commerce tax category mappings
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceTaxCategoryMapping> commerceTaxCategoryMappings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTaxCategoryMappings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTaxCategoryMapping commerceTaxCategoryMapping :
-				commerceTaxCategoryMappings) {
-
-			if (entityCache.getResult(
-					CommerceTaxCategoryMappingImpl.class,
-					commerceTaxCategoryMapping.getPrimaryKey()) == null) {
-
-				cacheResult(commerceTaxCategoryMapping);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceTaxCategoryMappingModelImpl
-			commerceTaxCategoryMappingModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceTaxCategoryMappingModelImpl.getUuid(),
-			commerceTaxCategoryMappingModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			commerceTaxCategoryMappingModelImpl);
-
-		args = new Object[] {
-			commerceTaxCategoryMappingModelImpl.getCommerceTaxMethodId(),
-			commerceTaxCategoryMappingModelImpl.getCPTaxCategoryId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, commerceTaxCategoryMappingModelImpl);
-
-		args = new Object[] {
-			commerceTaxCategoryMappingModelImpl.getExternalReferenceCode(),
-			commerceTaxCategoryMappingModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceTaxCategoryMappingModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce tax category mapping with the primary key. Does not add the commerce tax category mapping to the database.
 	 *
 	 * @param commerceTaxCategoryMappingId the primary key for the new commerce tax category mapping
@@ -1185,11 +1083,7 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTaxCategoryMappingImpl.class,
-			commerceTaxCategoryMappingModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceTaxCategoryMappingModelImpl);
+		cacheUniqueFindersResult(commerceTaxCategoryMapping, false);
 
 		if (isNew) {
 			commerceTaxCategoryMapping.setNew(false);
@@ -1258,9 +1152,6 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1290,10 +1181,12 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				"commerceTaxCategoryMapping.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTaxCategoryMapping::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommerceTaxCategoryMapping::getUuid,
+			CommerceTaxCategoryMapping::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1375,10 +1268,12 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTaxCategoryMapping::getCommerceTaxMethodId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceTaxMethodId", "CPTaxCategoryId"}, true);
+			new String[] {"commerceTaxMethodId", "CPTaxCategoryId"}, false,
+			CommerceTaxCategoryMapping::getCommerceTaxMethodId,
+			CommerceTaxCategoryMapping::getCPTaxCategoryId);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
@@ -1392,10 +1287,12 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTaxCategoryMapping::getCPTaxCategoryId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceTaxCategoryMapping::getExternalReferenceCode,
+			CommerceTaxCategoryMapping::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1478,4 +1375,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1213830452
+// LIFERAY-SERVICE-BUILDER-HASH:-1373971880

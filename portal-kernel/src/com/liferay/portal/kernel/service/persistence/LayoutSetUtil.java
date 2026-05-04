@@ -36,6 +36,20 @@ public class LayoutSetUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutSet> layoutSets) {
+		getPersistence().cacheResult(layoutSets);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutSet layoutSet) {
+		getPersistence().cacheResult(layoutSet);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -701,24 +715,6 @@ public class LayoutSetUtil {
 	}
 
 	/**
-	 * Caches the layout set in the entity cache if it is enabled.
-	 *
-	 * @param layoutSet the layout set
-	 */
-	public static void cacheResult(LayoutSet layoutSet) {
-		getPersistence().cacheResult(layoutSet);
-	}
-
-	/**
-	 * Caches the layout sets in the entity cache if it is enabled.
-	 *
-	 * @param layoutSets the layout sets
-	 */
-	public static void cacheResult(List<LayoutSet> layoutSets) {
-		getPersistence().cacheResult(layoutSets);
-	}
-
-	/**
 	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
 	 * @param layoutSetId the primary key for the new layout set
@@ -779,4 +775,4 @@ public class LayoutSetUtil {
 	private static volatile LayoutSetPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-699898286
+// LIFERAY-SERVICE-BUILDER-HASH:-131217960

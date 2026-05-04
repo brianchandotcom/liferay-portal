@@ -2187,21 +2187,6 @@ public interface ObjectRelationshipPersistence
 		boolean reverse, String type);
 
 	/**
-	 * Caches the object relationship in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationship the object relationship
-	 */
-	public void cacheResult(ObjectRelationship objectRelationship);
-
-	/**
-	 * Caches the object relationships in the entity cache if it is enabled.
-	 *
-	 * @param objectRelationships the object relationships
-	 */
-	public void cacheResult(
-		java.util.List<ObjectRelationship> objectRelationships);
-
-	/**
 	 * Creates a new object relationship with the primary key. Does not add the object relationship to the database.
 	 *
 	 * @param objectRelationshipId the primary key for the new object relationship
@@ -2240,4 +2225,4 @@ public interface ObjectRelationshipPersistence
 	public ObjectRelationship fetchByPrimaryKey(long objectRelationshipId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:585676038
+// LIFERAY-SERVICE-BUILDER-HASH:1539004514

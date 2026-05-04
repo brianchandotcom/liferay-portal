@@ -1351,21 +1351,6 @@ public interface CommerceTermEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce term entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntry the commerce term entry
-	 */
-	public void cacheResult(CommerceTermEntry commerceTermEntry);
-
-	/**
-	 * Caches the commerce term entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntries the commerce term entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTermEntry> commerceTermEntries);
-
-	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
 	 * @param commerceTermEntryId the primary key for the new commerce term entry
@@ -1404,4 +1389,4 @@ public interface CommerceTermEntryPersistence
 	public CommerceTermEntry fetchByPrimaryKey(long commerceTermEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1105010009
+// LIFERAY-SERVICE-BUILDER-HASH:-2017853485

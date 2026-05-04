@@ -36,6 +36,20 @@ public class SamlSpSessionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SamlSpSession> samlSpSessions) {
+		getPersistence().cacheResult(samlSpSessions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlSpSession samlSpSession) {
+		getPersistence().cacheResult(samlSpSession);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -491,24 +505,6 @@ public class SamlSpSessionUtil {
 	}
 
 	/**
-	 * Caches the saml sp session in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSession the saml sp session
-	 */
-	public static void cacheResult(SamlSpSession samlSpSession) {
-		getPersistence().cacheResult(samlSpSession);
-	}
-
-	/**
-	 * Caches the saml sp sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSessions the saml sp sessions
-	 */
-	public static void cacheResult(List<SamlSpSession> samlSpSessions) {
-		getPersistence().cacheResult(samlSpSessions);
-	}
-
-	/**
 	 * Creates a new saml sp session with the primary key. Does not add the saml sp session to the database.
 	 *
 	 * @param samlSpSessionId the primary key for the new saml sp session
@@ -569,4 +565,4 @@ public class SamlSpSessionUtil {
 	private static volatile SamlSpSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-663620356
+// LIFERAY-SERVICE-BUILDER-HASH:214220202

@@ -34,20 +34,6 @@ public interface CacheMissEntryPersistence
 	 */
 
 	/**
-	 * Caches the cache miss entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntry the cache miss entry
-	 */
-	public void cacheResult(CacheMissEntry cacheMissEntry);
-
-	/**
-	 * Caches the cache miss entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheMissEntries the cache miss entries
-	 */
-	public void cacheResult(java.util.List<CacheMissEntry> cacheMissEntries);
-
-	/**
 	 * Creates a new cache miss entry with the primary key. Does not add the cache miss entry to the database.
 	 *
 	 * @param cacheMissEntryId the primary key for the new cache miss entry
@@ -86,4 +72,4 @@ public interface CacheMissEntryPersistence
 	public CacheMissEntry fetchByPrimaryKey(long cacheMissEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1924495214
+// LIFERAY-SERVICE-BUILDER-HASH:-1421723344

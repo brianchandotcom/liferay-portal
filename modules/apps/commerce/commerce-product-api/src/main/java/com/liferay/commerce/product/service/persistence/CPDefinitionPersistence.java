@@ -1357,20 +1357,6 @@ public interface CPDefinitionPersistence
 	public int countByLtD_S(Date displayDate, int status);
 
 	/**
-	 * Caches the cp definition in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinition the cp definition
-	 */
-	public void cacheResult(CPDefinition cpDefinition);
-
-	/**
-	 * Caches the cp definitions in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitions the cp definitions
-	 */
-	public void cacheResult(java.util.List<CPDefinition> cpDefinitions);
-
-	/**
 	 * Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	 *
 	 * @param CPDefinitionId the primary key for the new cp definition
@@ -1409,4 +1395,4 @@ public interface CPDefinitionPersistence
 	public CPDefinition fetchByPrimaryKey(long CPDefinitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1028252256
+// LIFERAY-SERVICE-BUILDER-HASH:78523632

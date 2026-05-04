@@ -290,21 +290,6 @@ public interface AnnouncementsDeliveryPersistence
 	public int countByU_T(long userId, String type);
 
 	/**
-	 * Caches the announcements delivery in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDelivery the announcements delivery
-	 */
-	public void cacheResult(AnnouncementsDelivery announcementsDelivery);
-
-	/**
-	 * Caches the announcements deliveries in the entity cache if it is enabled.
-	 *
-	 * @param announcementsDeliveries the announcements deliveries
-	 */
-	public void cacheResult(
-		java.util.List<AnnouncementsDelivery> announcementsDeliveries);
-
-	/**
 	 * Creates a new announcements delivery with the primary key. Does not add the announcements delivery to the database.
 	 *
 	 * @param deliveryId the primary key for the new announcements delivery
@@ -344,4 +329,4 @@ public interface AnnouncementsDeliveryPersistence
 	public AnnouncementsDelivery fetchByPrimaryKey(long deliveryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1213406480
+// LIFERAY-SERVICE-BUILDER-HASH:2031059042

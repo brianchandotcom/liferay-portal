@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadataTable;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryMetadataUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -38,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -962,96 +959,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 	/**
-	 * Caches the document library file entry metadata in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadata the document library file entry metadata
-	 */
-	@Override
-	public void cacheResult(DLFileEntryMetadata dlFileEntryMetadata) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileEntryMetadata.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				DLFileEntryMetadataImpl.class,
-				dlFileEntryMetadata.getPrimaryKey(), dlFileEntryMetadata);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByD_F,
-				new Object[] {
-					dlFileEntryMetadata.getDDMStructureId(),
-					dlFileEntryMetadata.getFileVersionId()
-				},
-				dlFileEntryMetadata);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					dlFileEntryMetadata.getExternalReferenceCode(),
-					dlFileEntryMetadata.getCompanyId()
-				},
-				dlFileEntryMetadata);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the document library file entry metadatas in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryMetadatas the document library file entry metadatas
-	 */
-	@Override
-	public void cacheResult(List<DLFileEntryMetadata> dlFileEntryMetadatas) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlFileEntryMetadatas.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlFileEntryMetadata.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						DLFileEntryMetadataImpl.class,
-						dlFileEntryMetadata.getPrimaryKey()) == null) {
-
-					cacheResult(dlFileEntryMetadata);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileEntryMetadataModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlFileEntryMetadataModelImpl.getDDMStructureId(),
-				dlFileEntryMetadataModelImpl.getFileVersionId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByD_F, args, dlFileEntryMetadataModelImpl);
-
-			args = new Object[] {
-				dlFileEntryMetadataModelImpl.getExternalReferenceCode(),
-				dlFileEntryMetadataModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, dlFileEntryMetadataModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new document library file entry metadata with the primary key. Does not add the document library file entry metadata to the database.
 	 *
 	 * @param fileEntryMetadataId the primary key for the new document library file entry metadata
@@ -1246,11 +1153,7 @@ public class DLFileEntryMetadataPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			DLFileEntryMetadataImpl.class, dlFileEntryMetadataModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(dlFileEntryMetadataModelImpl);
+		cacheUniqueFindersResult(dlFileEntryMetadata, false);
 
 		if (isNew) {
 			dlFileEntryMetadata.setNew(false);
@@ -1382,9 +1285,6 @@ public class DLFileEntryMetadataPersistenceImpl
 	 * Initializes the document library file entry metadata persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1511,10 +1411,12 @@ public class DLFileEntryMetadataPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DLFileEntryMetadata::getFileVersionId));
 
-		_finderPathFetchByD_F = new FinderPath(
+		_finderPathFetchByD_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"DDMStructureId", "fileVersionId"}, true);
+			new String[] {"DDMStructureId", "fileVersionId"}, false,
+			DLFileEntryMetadata::getDDMStructureId,
+			DLFileEntryMetadata::getFileVersionId);
 
 		_uniquePersistenceFinderByD_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_F, _SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
@@ -1526,10 +1428,12 @@ public class DLFileEntryMetadataPersistenceImpl
 				"dlFileEntryMetadata.", "fileVersionId", FinderColumn.Type.LONG,
 				"=", true, true, DLFileEntryMetadata::getFileVersionId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			DLFileEntryMetadata::getExternalReferenceCode,
+			DLFileEntryMetadata::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1578,4 +1482,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:758449677
+// LIFERAY-SERVICE-BUILDER-HASH:-2146534442

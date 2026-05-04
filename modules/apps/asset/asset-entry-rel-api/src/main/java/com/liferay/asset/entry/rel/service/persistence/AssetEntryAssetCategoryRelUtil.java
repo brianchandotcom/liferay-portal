@@ -36,6 +36,24 @@ public class AssetEntryAssetCategoryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels) {
+
+		getPersistence().cacheResult(assetEntryAssetCategoryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
+
+		getPersistence().cacheResult(assetEntryAssetCategoryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -440,28 +458,6 @@ public class AssetEntryAssetCategoryRelUtil {
 	}
 
 	/**
-	 * Caches the asset entry asset category rel in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRel the asset entry asset category rel
-	 */
-	public static void cacheResult(
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-
-		getPersistence().cacheResult(assetEntryAssetCategoryRel);
-	}
-
-	/**
-	 * Caches the asset entry asset category rels in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRels the asset entry asset category rels
-	 */
-	public static void cacheResult(
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels) {
-
-		getPersistence().cacheResult(assetEntryAssetCategoryRels);
-	}
-
-	/**
 	 * Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	 *
 	 * @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
@@ -534,4 +530,4 @@ public class AssetEntryAssetCategoryRelUtil {
 	private static volatile AssetEntryAssetCategoryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:802156558
+// LIFERAY-SERVICE-BUILDER-HASH:-611616792

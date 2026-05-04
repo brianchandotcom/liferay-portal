@@ -36,6 +36,20 @@ public class ObjectLayoutTabUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectLayoutTab> objectLayoutTabs) {
+		getPersistence().cacheResult(objectLayoutTabs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectLayoutTab objectLayoutTab) {
+		getPersistence().cacheResult(objectLayoutTab);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -617,24 +631,6 @@ public class ObjectLayoutTabUtil {
 	}
 
 	/**
-	 * Caches the object layout tab in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTab the object layout tab
-	 */
-	public static void cacheResult(ObjectLayoutTab objectLayoutTab) {
-		getPersistence().cacheResult(objectLayoutTab);
-	}
-
-	/**
-	 * Caches the object layout tabs in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutTabs the object layout tabs
-	 */
-	public static void cacheResult(List<ObjectLayoutTab> objectLayoutTabs) {
-		getPersistence().cacheResult(objectLayoutTabs);
-	}
-
-	/**
 	 * Creates a new object layout tab with the primary key. Does not add the object layout tab to the database.
 	 *
 	 * @param objectLayoutTabId the primary key for the new object layout tab
@@ -695,4 +691,4 @@ public class ObjectLayoutTabUtil {
 	private static volatile ObjectLayoutTabPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1508088136
+// LIFERAY-SERVICE-BUILDER-HASH:685663912

@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -38,10 +37,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2560,93 +2556,6 @@ public class CPDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp definition in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinition the cp definition
-	 */
-	@Override
-	public void cacheResult(CPDefinition cpDefinition) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinition.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPDefinitionImpl.class, cpDefinition.getPrimaryKey(),
-				cpDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpDefinition.getUuid(), cpDefinition.getGroupId()
-				},
-				cpDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByC_V,
-				new Object[] {
-					cpDefinition.getCProductId(), cpDefinition.getVersion()
-				},
-				cpDefinition);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp definitions in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitions the cp definitions
-	 */
-	@Override
-	public void cacheResult(List<CPDefinition> cpDefinitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDefinitions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDefinition cpDefinition : cpDefinitions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpDefinition.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPDefinitionImpl.class, cpDefinition.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(cpDefinition);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDefinitionModelImpl cpDefinitionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpDefinitionModelImpl.getUuid(),
-				cpDefinitionModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpDefinitionModelImpl);
-
-			args = new Object[] {
-				cpDefinitionModelImpl.getCProductId(),
-				cpDefinitionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_V, args, cpDefinitionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp definition with the primary key. Does not add the cp definition to the database.
 	 *
 	 * @param CPDefinitionId the primary key for the new cp definition
@@ -2796,10 +2705,7 @@ public class CPDefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDefinitionImpl.class, cpDefinitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpDefinitionModelImpl);
+		cacheUniqueFindersResult(cpDefinition, false);
 
 		if (isNew) {
 			cpDefinition.setNew(false);
@@ -2970,9 +2876,6 @@ public class CPDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3000,10 +2903,11 @@ public class CPDefinitionPersistenceImpl
 				"cpDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPDefinition::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CPDefinition::getUuid,
+			CPDefinition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPDEFINITION_WHERE,
@@ -3226,10 +3130,11 @@ public class CPDefinitionPersistenceImpl
 				"cpDefinition.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, CPDefinition::getStatus));
 
-		_finderPathFetchByC_V = new FinderPath(
+		_finderPathFetchByC_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CProductId", "version"}, true);
+			new String[] {"CProductId", "version"}, false,
+			CPDefinition::getCProductId, CPDefinition::getVersion);
 
 		_uniquePersistenceFinderByC_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_V, _SQL_SELECT_CPDEFINITION_WHERE,
@@ -3396,4 +3301,4 @@ public class CPDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1461708956
+// LIFERAY-SERVICE-BUILDER-HASH:-1860959743

@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1350,76 +1348,6 @@ public class RedirectEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the redirect entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntry the redirect entry
-	 */
-	@Override
-	public void cacheResult(RedirectEntry redirectEntry) {
-		entityCache.putResult(
-			RedirectEntryImpl.class, redirectEntry.getPrimaryKey(),
-			redirectEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {redirectEntry.getUuid(), redirectEntry.getGroupId()},
-			redirectEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByG_S,
-			new Object[] {
-				redirectEntry.getGroupId(), redirectEntry.getSourceURL()
-			},
-			redirectEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the redirect entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntries the redirect entries
-	 */
-	@Override
-	public void cacheResult(List<RedirectEntry> redirectEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (redirectEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RedirectEntry redirectEntry : redirectEntries) {
-			if (entityCache.getResult(
-					RedirectEntryImpl.class, redirectEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(redirectEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RedirectEntryModelImpl redirectEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			redirectEntryModelImpl.getUuid(),
-			redirectEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, redirectEntryModelImpl);
-
-		args = new Object[] {
-			redirectEntryModelImpl.getGroupId(),
-			redirectEntryModelImpl.getSourceURL()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_S, args, redirectEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new redirect entry with the primary key. Does not add the redirect entry to the database.
 	 *
 	 * @param redirectEntryId the primary key for the new redirect entry
@@ -1591,10 +1519,7 @@ public class RedirectEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			RedirectEntryImpl.class, redirectEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(redirectEntryModelImpl);
+		cacheUniqueFindersResult(redirectEntry, false);
 
 		if (isNew) {
 			redirectEntry.setNew(false);
@@ -1660,9 +1585,6 @@ public class RedirectEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1690,10 +1612,11 @@ public class RedirectEntryPersistenceImpl
 				"redirectEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RedirectEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, RedirectEntry::getUuid,
+			RedirectEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_REDIRECTENTRY_WHERE,
@@ -1797,10 +1720,11 @@ public class RedirectEntryPersistenceImpl
 				"redirectEntry.", "destinationURL", FinderColumn.Type.STRING,
 				"=", true, true, RedirectEntry::getDestinationURL));
 
-		_finderPathFetchByG_S = new FinderPath(
+		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "sourceURL"}, true);
+			new String[] {"groupId", "sourceURL"}, false,
+			RedirectEntry::getGroupId, RedirectEntry::getSourceURL);
 
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_S, _SQL_SELECT_REDIRECTENTRY_WHERE,
@@ -1903,4 +1827,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1569495961
+// LIFERAY-SERVICE-BUILDER-HASH:-2068848180

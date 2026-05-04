@@ -31,11 +31,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -405,71 +402,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth2 scope grant in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrant the o auth2 scope grant
-	 */
-	@Override
-	public void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant) {
-		entityCache.putResult(
-			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey(),
-			oAuth2ScopeGrant);
-
-		finderCache.putResult(
-			_finderPathFetchByC_O_A_B_S,
-			new Object[] {
-				oAuth2ScopeGrant.getCompanyId(),
-				oAuth2ScopeGrant.getOAuth2ApplicationScopeAliasesId(),
-				oAuth2ScopeGrant.getApplicationName(),
-				oAuth2ScopeGrant.getBundleSymbolicName(),
-				oAuth2ScopeGrant.getScope()
-			},
-			oAuth2ScopeGrant);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth2 scope grants in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ScopeGrants the o auth2 scope grants
-	 */
-	@Override
-	public void cacheResult(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuth2ScopeGrants.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
-			if (entityCache.getResult(
-					OAuth2ScopeGrantImpl.class,
-					oAuth2ScopeGrant.getPrimaryKey()) == null) {
-
-				cacheResult(oAuth2ScopeGrant);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OAuth2ScopeGrantModelImpl oAuth2ScopeGrantModelImpl) {
-
-		Object[] args = new Object[] {
-			oAuth2ScopeGrantModelImpl.getCompanyId(),
-			oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId(),
-			oAuth2ScopeGrantModelImpl.getApplicationName(),
-			oAuth2ScopeGrantModelImpl.getBundleSymbolicName(),
-			oAuth2ScopeGrantModelImpl.getScope()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_O_A_B_S, args, oAuth2ScopeGrantModelImpl);
-	}
-
-	/**
 	 * Creates a new o auth2 scope grant with the primary key. Does not add the o auth2 scope grant to the database.
 	 *
 	 * @param oAuth2ScopeGrantId the primary key for the new o auth2 scope grant
@@ -579,10 +511,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrantModelImpl, false, true);
-
-		cacheUniqueFindersCache(oAuth2ScopeGrantModelImpl);
+		cacheUniqueFindersResult(oAuth2ScopeGrant, false);
 
 		if (isNew) {
 			oAuth2ScopeGrant.setNew(false);
@@ -1003,9 +932,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OA2Auths_OA2ScopeGrants#oAuth2ScopeGrantId",
@@ -1049,7 +975,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId));
 
-		_finderPathFetchByC_O_A_B_S = new FinderPath(
+		_finderPathFetchByC_O_A_B_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1060,7 +986,11 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"companyId", "oA2AScopeAliasesId", "applicationName",
 				"bundleSymbolicName", "scope"
 			},
-			true);
+			false, OAuth2ScopeGrant::getCompanyId,
+			OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
+			OAuth2ScopeGrant::getApplicationName,
+			OAuth2ScopeGrant::getBundleSymbolicName,
+			OAuth2ScopeGrant::getScope);
 
 		_uniquePersistenceFinderByC_O_A_B_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_O_A_B_S,
@@ -1159,4 +1089,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1834372207
+// LIFERAY-SERVICE-BUILDER-HASH:58363962

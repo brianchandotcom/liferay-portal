@@ -337,20 +337,6 @@ public interface SamlSpSessionPersistence
 	public int countByC_SI(long companyId, String sessionIndex);
 
 	/**
-	 * Caches the saml sp session in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSession the saml sp session
-	 */
-	public void cacheResult(SamlSpSession samlSpSession);
-
-	/**
-	 * Caches the saml sp sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSessions the saml sp sessions
-	 */
-	public void cacheResult(java.util.List<SamlSpSession> samlSpSessions);
-
-	/**
 	 * Creates a new saml sp session with the primary key. Does not add the saml sp session to the database.
 	 *
 	 * @param samlSpSessionId the primary key for the new saml sp session
@@ -389,4 +375,4 @@ public interface SamlSpSessionPersistence
 	public SamlSpSession fetchByPrimaryKey(long samlSpSessionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1243858568
+// LIFERAY-SERVICE-BUILDER-HASH:-897148912

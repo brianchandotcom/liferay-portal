@@ -77,20 +77,6 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
-	 * Caches the ct score in the entity cache if it is enabled.
-	 *
-	 * @param ctScore the ct score
-	 */
-	public void cacheResult(CTScore ctScore);
-
-	/**
-	 * Caches the ct scores in the entity cache if it is enabled.
-	 *
-	 * @param ctScores the ct scores
-	 */
-	public void cacheResult(java.util.List<CTScore> ctScores);
-
-	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
 	 * @param ctScoreId the primary key for the new ct score
@@ -127,4 +113,4 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 	public CTScore fetchByPrimaryKey(long ctScoreId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1397703573
+// LIFERAY-SERVICE-BUILDER-HASH:-1039365285

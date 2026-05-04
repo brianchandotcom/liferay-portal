@@ -37,6 +37,20 @@ public class PatcherBuildUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherBuild> patcherBuilds) {
+		getPersistence().cacheResult(patcherBuilds);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherBuild patcherBuild) {
+		getPersistence().cacheResult(patcherBuild);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3287,24 +3301,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Caches the patcher build in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuild the patcher build
-	 */
-	public static void cacheResult(PatcherBuild patcherBuild) {
-		getPersistence().cacheResult(patcherBuild);
-	}
-
-	/**
-	 * Caches the patcher builds in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuilds the patcher builds
-	 */
-	public static void cacheResult(List<PatcherBuild> patcherBuilds) {
-		getPersistence().cacheResult(patcherBuilds);
-	}
-
-	/**
 	 * Creates a new patcher build with the primary key. Does not add the patcher build to the database.
 	 *
 	 * @param patcherBuildId the primary key for the new patcher build
@@ -3800,4 +3796,4 @@ public class PatcherBuildUtil {
 	private static volatile PatcherBuildPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-688370092
+// LIFERAY-SERVICE-BUILDER-HASH:1695595234

@@ -32,20 +32,6 @@ public interface RSVEntryPersistence extends BasePersistence<RSVEntry> {
 	 */
 
 	/**
-	 * Caches the rsv entry in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntry the rsv entry
-	 */
-	public void cacheResult(RSVEntry rsvEntry);
-
-	/**
-	 * Caches the rsv entries in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntries the rsv entries
-	 */
-	public void cacheResult(java.util.List<RSVEntry> rsvEntries);
-
-	/**
 	 * Creates a new rsv entry with the primary key. Does not add the rsv entry to the database.
 	 *
 	 * @param rsvEntryId the primary key for the new rsv entry
@@ -83,4 +69,4 @@ public interface RSVEntryPersistence extends BasePersistence<RSVEntry> {
 	public RSVEntry fetchByPrimaryKey(long rsvEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1630095318
+// LIFERAY-SERVICE-BUILDER-HASH:1991600994

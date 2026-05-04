@@ -238,21 +238,6 @@ public interface FaroProjectEmailDomainPersistence
 	public int countByFaroProjectId(long faroProjectId);
 
 	/**
-	 * Caches the faro project email domain in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectEmailDomain the faro project email domain
-	 */
-	public void cacheResult(FaroProjectEmailDomain faroProjectEmailDomain);
-
-	/**
-	 * Caches the faro project email domains in the entity cache if it is enabled.
-	 *
-	 * @param faroProjectEmailDomains the faro project email domains
-	 */
-	public void cacheResult(
-		java.util.List<FaroProjectEmailDomain> faroProjectEmailDomains);
-
-	/**
 	 * Creates a new faro project email domain with the primary key. Does not add the faro project email domain to the database.
 	 *
 	 * @param faroProjectEmailDomainId the primary key for the new faro project email domain
@@ -294,4 +279,4 @@ public interface FaroProjectEmailDomainPersistence
 		long faroProjectEmailDomainId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1182505103
+// LIFERAY-SERVICE-BUILDER-HASH:-1120226537

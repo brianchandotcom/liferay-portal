@@ -573,23 +573,6 @@ public interface ObjectValidationRuleSettingPersistence
 		long objectValidationRuleId, String name, String value);
 
 	/**
-	 * Caches the object validation rule setting in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRuleSetting the object validation rule setting
-	 */
-	public void cacheResult(
-		ObjectValidationRuleSetting objectValidationRuleSetting);
-
-	/**
-	 * Caches the object validation rule settings in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRuleSettings the object validation rule settings
-	 */
-	public void cacheResult(
-		java.util.List<ObjectValidationRuleSetting>
-			objectValidationRuleSettings);
-
-	/**
 	 * Creates a new object validation rule setting with the primary key. Does not add the object validation rule setting to the database.
 	 *
 	 * @param objectValidationRuleSettingId the primary key for the new object validation rule setting
@@ -633,4 +616,4 @@ public interface ObjectValidationRuleSettingPersistence
 		long objectValidationRuleSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1810635449
+// LIFERAY-SERVICE-BUILDER-HASH:2114318767

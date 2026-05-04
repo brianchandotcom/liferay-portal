@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -746,45 +743,6 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce discount rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRel the commerce discount rel
-	 */
-	@Override
-	public void cacheResult(CommerceDiscountRel commerceDiscountRel) {
-		entityCache.putResult(
-			CommerceDiscountRelImpl.class, commerceDiscountRel.getPrimaryKey(),
-			commerceDiscountRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce discount rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRels the commerce discount rels
-	 */
-	@Override
-	public void cacheResult(List<CommerceDiscountRel> commerceDiscountRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceDiscountRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceDiscountRel commerceDiscountRel : commerceDiscountRels) {
-			if (entityCache.getResult(
-					CommerceDiscountRelImpl.class,
-					commerceDiscountRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceDiscountRel);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce discount rel with the primary key. Does not add the commerce discount rel to the database.
 	 *
 	 * @param commerceDiscountRelId the primary key for the new commerce discount rel
@@ -920,9 +878,7 @@ public class CommerceDiscountRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceDiscountRelImpl.class, commerceDiscountRelModelImpl, false,
-			true);
+		cacheUniqueFindersResult(commerceDiscountRel, false);
 
 		if (isNew) {
 			commerceDiscountRel.setNew(false);
@@ -983,9 +939,6 @@ public class CommerceDiscountRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
 			new String[] {
@@ -1199,4 +1152,4 @@ public class CommerceDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2110827586
+// LIFERAY-SERVICE-BUILDER-HASH:1893175219

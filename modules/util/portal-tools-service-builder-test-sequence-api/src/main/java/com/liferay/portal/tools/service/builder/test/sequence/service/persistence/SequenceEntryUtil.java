@@ -36,6 +36,20 @@ public class SequenceEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SequenceEntry> sequenceEntries) {
+		getPersistence().cacheResult(sequenceEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SequenceEntry sequenceEntry) {
+		getPersistence().cacheResult(sequenceEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -364,24 +378,6 @@ public class SequenceEntryUtil {
 	}
 
 	/**
-	 * Caches the sequence entry in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntry the sequence entry
-	 */
-	public static void cacheResult(SequenceEntry sequenceEntry) {
-		getPersistence().cacheResult(sequenceEntry);
-	}
-
-	/**
-	 * Caches the sequence entries in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntries the sequence entries
-	 */
-	public static void cacheResult(List<SequenceEntry> sequenceEntries) {
-		getPersistence().cacheResult(sequenceEntries);
-	}
-
-	/**
 	 * Creates a new sequence entry with the primary key. Does not add the sequence entry to the database.
 	 *
 	 * @param sequenceEntryId the primary key for the new sequence entry
@@ -444,4 +440,4 @@ public class SequenceEntryUtil {
 	private static volatile SequenceEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-158021390
+// LIFERAY-SERVICE-BUILDER-HASH:916868765

@@ -719,20 +719,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 		long appId, String bundleSymbolicName, String bundleVersion);
 
 	/**
-	 * Caches the module in the entity cache if it is enabled.
-	 *
-	 * @param module the module
-	 */
-	public void cacheResult(Module module);
-
-	/**
-	 * Caches the modules in the entity cache if it is enabled.
-	 *
-	 * @param modules the modules
-	 */
-	public void cacheResult(java.util.List<Module> modules);
-
-	/**
 	 * Creates a new module with the primary key. Does not add the module to the database.
 	 *
 	 * @param moduleId the primary key for the new module
@@ -769,4 +755,4 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	public Module fetchByPrimaryKey(long moduleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2027128373
+// LIFERAY-SERVICE-BUILDER-HASH:-1596996973

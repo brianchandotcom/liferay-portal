@@ -36,6 +36,20 @@ public class AddressUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Address> addresses) {
+		getPersistence().cacheResult(addresses);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Address address) {
+		getPersistence().cacheResult(address);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1901,24 +1915,6 @@ public class AddressUtil {
 	}
 
 	/**
-	 * Caches the address in the entity cache if it is enabled.
-	 *
-	 * @param address the address
-	 */
-	public static void cacheResult(Address address) {
-		getPersistence().cacheResult(address);
-	}
-
-	/**
-	 * Caches the addresses in the entity cache if it is enabled.
-	 *
-	 * @param addresses the addresses
-	 */
-	public static void cacheResult(List<Address> addresses) {
-		getPersistence().cacheResult(addresses);
-	}
-
-	/**
 	 * Creates a new address with the primary key. Does not add the address to the database.
 	 *
 	 * @param addressId the primary key for the new address
@@ -1979,4 +1975,4 @@ public class AddressUtil {
 	private static volatile AddressPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1152578793
+// LIFERAY-SERVICE-BUILDER-HASH:-1386304268

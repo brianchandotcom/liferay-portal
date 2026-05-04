@@ -134,20 +134,6 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	public int countByCtCollectionId(long ctCollectionId);
 
 	/**
-	 * Caches the ct message in the entity cache if it is enabled.
-	 *
-	 * @param ctMessage the ct message
-	 */
-	public void cacheResult(CTMessage ctMessage);
-
-	/**
-	 * Caches the ct messages in the entity cache if it is enabled.
-	 *
-	 * @param ctMessages the ct messages
-	 */
-	public void cacheResult(java.util.List<CTMessage> ctMessages);
-
-	/**
 	 * Creates a new ct message with the primary key. Does not add the ct message to the database.
 	 *
 	 * @param ctMessageId the primary key for the new ct message
@@ -185,4 +171,4 @@ public interface CTMessagePersistence extends BasePersistence<CTMessage> {
 	public CTMessage fetchByPrimaryKey(long ctMessageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-380921770
+// LIFERAY-SERVICE-BUILDER-HASH:-2127858172

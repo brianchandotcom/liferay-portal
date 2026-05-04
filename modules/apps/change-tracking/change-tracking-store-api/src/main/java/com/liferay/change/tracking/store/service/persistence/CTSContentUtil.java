@@ -36,6 +36,20 @@ public class CTSContentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTSContent> ctsContents) {
+		getPersistence().cacheResult(ctsContents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTSContent ctsContent) {
+		getPersistence().cacheResult(ctsContent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -811,24 +825,6 @@ public class CTSContentUtil {
 	}
 
 	/**
-	 * Caches the cts content in the entity cache if it is enabled.
-	 *
-	 * @param ctsContent the cts content
-	 */
-	public static void cacheResult(CTSContent ctsContent) {
-		getPersistence().cacheResult(ctsContent);
-	}
-
-	/**
-	 * Caches the cts contents in the entity cache if it is enabled.
-	 *
-	 * @param ctsContents the cts contents
-	 */
-	public static void cacheResult(List<CTSContent> ctsContents) {
-		getPersistence().cacheResult(ctsContents);
-	}
-
-	/**
 	 * Creates a new cts content with the primary key. Does not add the cts content to the database.
 	 *
 	 * @param ctsContentId the primary key for the new cts content
@@ -891,4 +887,4 @@ public class CTSContentUtil {
 	private static volatile CTSContentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-309619611
+// LIFERAY-SERVICE-BUILDER-HASH:-755847169

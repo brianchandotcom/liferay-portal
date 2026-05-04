@@ -349,20 +349,6 @@ public interface ObjectLayoutRowPersistence
 	public int countByObjectLayoutBoxId(long objectLayoutBoxId);
 
 	/**
-	 * Caches the object layout row in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRow the object layout row
-	 */
-	public void cacheResult(ObjectLayoutRow objectLayoutRow);
-
-	/**
-	 * Caches the object layout rows in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutRows the object layout rows
-	 */
-	public void cacheResult(java.util.List<ObjectLayoutRow> objectLayoutRows);
-
-	/**
 	 * Creates a new object layout row with the primary key. Does not add the object layout row to the database.
 	 *
 	 * @param objectLayoutRowId the primary key for the new object layout row
@@ -401,4 +387,4 @@ public interface ObjectLayoutRowPersistence
 	public ObjectLayoutRow fetchByPrimaryKey(long objectLayoutRowId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1911579463
+// LIFERAY-SERVICE-BUILDER-HASH:1259398879

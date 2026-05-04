@@ -36,6 +36,22 @@ public class ClientExtensionEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ClientExtensionEntry> clientExtensionEntries) {
+
+		getPersistence().cacheResult(clientExtensionEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ClientExtensionEntry clientExtensionEntry) {
+		getPersistence().cacheResult(clientExtensionEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -949,26 +965,6 @@ public class ClientExtensionEntryUtil {
 	}
 
 	/**
-	 * Caches the client extension entry in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntry the client extension entry
-	 */
-	public static void cacheResult(ClientExtensionEntry clientExtensionEntry) {
-		getPersistence().cacheResult(clientExtensionEntry);
-	}
-
-	/**
-	 * Caches the client extension entries in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntries the client extension entries
-	 */
-	public static void cacheResult(
-		List<ClientExtensionEntry> clientExtensionEntries) {
-
-		getPersistence().cacheResult(clientExtensionEntries);
-	}
-
-	/**
 	 * Creates a new client extension entry with the primary key. Does not add the client extension entry to the database.
 	 *
 	 * @param clientExtensionEntryId the primary key for the new client extension entry
@@ -1038,4 +1034,4 @@ public class ClientExtensionEntryUtil {
 	private static volatile ClientExtensionEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1879135052
+// LIFERAY-SERVICE-BUILDER-HASH:361901491

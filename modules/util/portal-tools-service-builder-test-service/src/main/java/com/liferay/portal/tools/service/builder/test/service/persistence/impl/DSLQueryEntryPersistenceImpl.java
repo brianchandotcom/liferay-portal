@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchDSLQueryEntryException;
 import com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry;
@@ -25,7 +22,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQuer
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,44 +59,6 @@ public class DSLQueryEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(DSLQueryEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the dsl query entry in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryEntry the dsl query entry
-	 */
-	@Override
-	public void cacheResult(DSLQueryEntry dslQueryEntry) {
-		entityCache.putResult(
-			DSLQueryEntryImpl.class, dslQueryEntry.getPrimaryKey(),
-			dslQueryEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dsl query entries in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryEntries the dsl query entries
-	 */
-	@Override
-	public void cacheResult(List<DSLQueryEntry> dslQueryEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dslQueryEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DSLQueryEntry dslQueryEntry : dslQueryEntries) {
-			if (entityCache.getResult(
-					DSLQueryEntryImpl.class, dslQueryEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(dslQueryEntry);
-			}
-		}
 	}
 
 	/**
@@ -186,8 +144,7 @@ public class DSLQueryEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DSLQueryEntryImpl.class, dslQueryEntry, false, true);
+		cacheUniqueFindersResult(dslQueryEntry, false);
 
 		if (isNew) {
 			dslQueryEntry.setNew(false);
@@ -247,9 +204,6 @@ public class DSLQueryEntryPersistenceImpl
 	 * Initializes the dsl query entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		DSLQueryEntryUtil.setPersistence(this);
 	}
 
@@ -280,4 +234,4 @@ public class DSLQueryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-95133714
+// LIFERAY-SERVICE-BUILDER-HASH:-1785813532

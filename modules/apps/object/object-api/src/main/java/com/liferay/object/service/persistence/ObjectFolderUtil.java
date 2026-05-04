@@ -36,6 +36,20 @@ public class ObjectFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectFolder> objectFolders) {
+		getPersistence().cacheResult(objectFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectFolder objectFolder) {
+		getPersistence().cacheResult(objectFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -797,24 +811,6 @@ public class ObjectFolderUtil {
 	}
 
 	/**
-	 * Caches the object folder in the entity cache if it is enabled.
-	 *
-	 * @param objectFolder the object folder
-	 */
-	public static void cacheResult(ObjectFolder objectFolder) {
-		getPersistence().cacheResult(objectFolder);
-	}
-
-	/**
-	 * Caches the object folders in the entity cache if it is enabled.
-	 *
-	 * @param objectFolders the object folders
-	 */
-	public static void cacheResult(List<ObjectFolder> objectFolders) {
-		getPersistence().cacheResult(objectFolders);
-	}
-
-	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
 	 * @param objectFolderId the primary key for the new object folder
@@ -875,4 +871,4 @@ public class ObjectFolderUtil {
 	private static volatile ObjectFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-562276177
+// LIFERAY-SERVICE-BUILDER-HASH:1439179801

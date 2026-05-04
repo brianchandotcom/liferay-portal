@@ -795,21 +795,6 @@ public interface ClientExtensionEntryRelPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the client extension entry rel in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRel the client extension entry rel
-	 */
-	public void cacheResult(ClientExtensionEntryRel clientExtensionEntryRel);
-
-	/**
-	 * Caches the client extension entry rels in the entity cache if it is enabled.
-	 *
-	 * @param clientExtensionEntryRels the client extension entry rels
-	 */
-	public void cacheResult(
-		java.util.List<ClientExtensionEntryRel> clientExtensionEntryRels);
-
-	/**
 	 * Creates a new client extension entry rel with the primary key. Does not add the client extension entry rel to the database.
 	 *
 	 * @param clientExtensionEntryRelId the primary key for the new client extension entry rel
@@ -851,4 +836,4 @@ public interface ClientExtensionEntryRelPersistence
 		long clientExtensionEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1281000311
+// LIFERAY-SERVICE-BUILDER-HASH:-1229416587

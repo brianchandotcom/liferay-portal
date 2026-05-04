@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -40,8 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1403,79 +1400,6 @@ public class EmailAddressPersistenceImpl
 	}
 
 	/**
-	 * Caches the email address in the entity cache if it is enabled.
-	 *
-	 * @param emailAddress the email address
-	 */
-	@Override
-	public void cacheResult(EmailAddress emailAddress) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					emailAddress.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				EmailAddressImpl.class, emailAddress.getPrimaryKey(),
-				emailAddress);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					emailAddress.getExternalReferenceCode(),
-					emailAddress.getCompanyId()
-				},
-				emailAddress);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the email addresses in the entity cache if it is enabled.
-	 *
-	 * @param emailAddresses the email addresses
-	 */
-	@Override
-	public void cacheResult(List<EmailAddress> emailAddresses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (emailAddresses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (EmailAddress emailAddress : emailAddresses) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						emailAddress.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						EmailAddressImpl.class, emailAddress.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(emailAddress);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		EmailAddressModelImpl emailAddressModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					emailAddressModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				emailAddressModelImpl.getExternalReferenceCode(),
-				emailAddressModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, emailAddressModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new email address with the primary key. Does not add the email address to the database.
 	 *
 	 * @param emailAddressId the primary key for the new email address
@@ -1684,10 +1608,7 @@ public class EmailAddressPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			EmailAddressImpl.class, emailAddressModelImpl, false, true);
-
-		cacheUniqueFindersCache(emailAddressModelImpl);
+		cacheUniqueFindersResult(emailAddress, false);
 
 		if (isNew) {
 			emailAddress.setNew(false);
@@ -1823,9 +1744,6 @@ public class EmailAddressPersistenceImpl
 	 * Initializes the email address persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2061,10 +1979,11 @@ public class EmailAddressPersistenceImpl
 					"emailAddress.", "primary", FinderColumn.Type.BOOLEAN, "=",
 					true, true, EmailAddress::isPrimary));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			EmailAddress::getExternalReferenceCode, EmailAddress::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_EMAILADDRESS_WHERE,
@@ -2112,4 +2031,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550000578
+// LIFERAY-SERVICE-BUILDER-HASH:566641247

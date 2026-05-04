@@ -543,21 +543,6 @@ public interface SocialActivitySettingPersistence
 		long groupId, long classNameId, int activityType, String name);
 
 	/**
-	 * Caches the social activity setting in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySetting the social activity setting
-	 */
-	public void cacheResult(SocialActivitySetting socialActivitySetting);
-
-	/**
-	 * Caches the social activity settings in the entity cache if it is enabled.
-	 *
-	 * @param socialActivitySettings the social activity settings
-	 */
-	public void cacheResult(
-		java.util.List<SocialActivitySetting> socialActivitySettings);
-
-	/**
 	 * Creates a new social activity setting with the primary key. Does not add the social activity setting to the database.
 	 *
 	 * @param activitySettingId the primary key for the new social activity setting
@@ -597,4 +582,4 @@ public interface SocialActivitySettingPersistence
 	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1184267456
+// LIFERAY-SERVICE-BUILDER-HASH:1308223660

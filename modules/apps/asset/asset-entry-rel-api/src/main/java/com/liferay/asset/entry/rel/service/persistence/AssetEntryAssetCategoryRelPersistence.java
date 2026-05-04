@@ -294,22 +294,6 @@ public interface AssetEntryAssetCategoryRelPersistence
 	public int countByA_A(long assetEntryId, long assetCategoryId);
 
 	/**
-	 * Caches the asset entry asset category rel in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRel the asset entry asset category rel
-	 */
-	public void cacheResult(
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel);
-
-	/**
-	 * Caches the asset entry asset category rels in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRels the asset entry asset category rels
-	 */
-	public void cacheResult(
-		java.util.List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels);
-
-	/**
 	 * Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	 *
 	 * @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
@@ -351,4 +335,4 @@ public interface AssetEntryAssetCategoryRelPersistence
 		long assetEntryAssetCategoryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1942120360
+// LIFERAY-SERVICE-BUILDER-HASH:-1310359248

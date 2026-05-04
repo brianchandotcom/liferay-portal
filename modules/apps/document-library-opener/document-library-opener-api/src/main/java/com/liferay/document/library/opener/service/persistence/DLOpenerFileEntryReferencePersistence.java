@@ -131,22 +131,6 @@ public interface DLOpenerFileEntryReferencePersistence
 	public int countByR_F(String referenceType, long fileEntryId);
 
 	/**
-	 * Caches the dl opener file entry reference in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReference the dl opener file entry reference
-	 */
-	public void cacheResult(
-		DLOpenerFileEntryReference dlOpenerFileEntryReference);
-
-	/**
-	 * Caches the dl opener file entry references in the entity cache if it is enabled.
-	 *
-	 * @param dlOpenerFileEntryReferences the dl opener file entry references
-	 */
-	public void cacheResult(
-		java.util.List<DLOpenerFileEntryReference> dlOpenerFileEntryReferences);
-
-	/**
 	 * Creates a new dl opener file entry reference with the primary key. Does not add the dl opener file entry reference to the database.
 	 *
 	 * @param dlOpenerFileEntryReferenceId the primary key for the new dl opener file entry reference
@@ -188,4 +172,4 @@ public interface DLOpenerFileEntryReferencePersistence
 		long dlOpenerFileEntryReferenceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-427055898
+// LIFERAY-SERVICE-BUILDER-HASH:-102046098

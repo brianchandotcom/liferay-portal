@@ -36,6 +36,24 @@ public class KaleoTaskAssignmentInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
+
+		getPersistence().cacheResult(kaleoTaskAssignmentInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) {
+
+		getPersistence().cacheResult(kaleoTaskAssignmentInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1204,28 +1222,6 @@ public class KaleoTaskAssignmentInstanceUtil {
 	}
 
 	/**
-	 * Caches the kaleo task assignment instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstance the kaleo task assignment instance
-	 */
-	public static void cacheResult(
-		KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) {
-
-		getPersistence().cacheResult(kaleoTaskAssignmentInstance);
-	}
-
-	/**
-	 * Caches the kaleo task assignment instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignmentInstances the kaleo task assignment instances
-	 */
-	public static void cacheResult(
-		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
-
-		getPersistence().cacheResult(kaleoTaskAssignmentInstances);
-	}
-
-	/**
 	 * Creates a new kaleo task assignment instance with the primary key. Does not add the kaleo task assignment instance to the database.
 	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key for the new kaleo task assignment instance
@@ -1299,4 +1295,4 @@ public class KaleoTaskAssignmentInstanceUtil {
 	private static volatile KaleoTaskAssignmentInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1063440320
+// LIFERAY-SERVICE-BUILDER-HASH:2087821396

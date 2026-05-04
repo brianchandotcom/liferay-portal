@@ -136,21 +136,6 @@ public interface CommerceDiscountRulePersistence
 	public int countByCommerceDiscountId(long commerceDiscountId);
 
 	/**
-	 * Caches the commerce discount rule in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRule the commerce discount rule
-	 */
-	public void cacheResult(CommerceDiscountRule commerceDiscountRule);
-
-	/**
-	 * Caches the commerce discount rules in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountRules the commerce discount rules
-	 */
-	public void cacheResult(
-		java.util.List<CommerceDiscountRule> commerceDiscountRules);
-
-	/**
 	 * Creates a new commerce discount rule with the primary key. Does not add the commerce discount rule to the database.
 	 *
 	 * @param commerceDiscountRuleId the primary key for the new commerce discount rule
@@ -190,4 +175,4 @@ public interface CommerceDiscountRulePersistence
 	public CommerceDiscountRule fetchByPrimaryKey(long commerceDiscountRuleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-53839446
+// LIFERAY-SERVICE-BUILDER-HASH:904486802

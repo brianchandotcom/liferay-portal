@@ -594,20 +594,6 @@ public interface TeamPersistence
 	public int countByG_N(long groupId, String name);
 
 	/**
-	 * Caches the team in the entity cache if it is enabled.
-	 *
-	 * @param team the team
-	 */
-	public void cacheResult(Team team);
-
-	/**
-	 * Caches the teams in the entity cache if it is enabled.
-	 *
-	 * @param teams the teams
-	 */
-	public void cacheResult(java.util.List<Team> teams);
-
-	/**
 	 * Creates a new team with the primary key. Does not add the team to the database.
 	 *
 	 * @param teamId the primary key for the new team
@@ -988,4 +974,4 @@ public interface TeamPersistence
 		java.util.List<com.liferay.portal.kernel.model.UserGroup> userGroups);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-116041592
+// LIFERAY-SERVICE-BUILDER-HASH:635404832

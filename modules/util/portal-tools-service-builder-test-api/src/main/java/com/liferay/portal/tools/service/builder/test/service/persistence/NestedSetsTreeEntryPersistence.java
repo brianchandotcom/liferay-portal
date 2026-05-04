@@ -33,21 +33,6 @@ public interface NestedSetsTreeEntryPersistence
 	 */
 
 	/**
-	 * Caches the nested sets tree entry in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntry the nested sets tree entry
-	 */
-	public void cacheResult(NestedSetsTreeEntry nestedSetsTreeEntry);
-
-	/**
-	 * Caches the nested sets tree entries in the entity cache if it is enabled.
-	 *
-	 * @param nestedSetsTreeEntries the nested sets tree entries
-	 */
-	public void cacheResult(
-		java.util.List<NestedSetsTreeEntry> nestedSetsTreeEntries);
-
-	/**
 	 * Creates a new nested sets tree entry with the primary key. Does not add the nested sets tree entry to the database.
 	 *
 	 * @param nestedSetsTreeEntryId the primary key for the new nested sets tree entry
@@ -111,4 +96,4 @@ public interface NestedSetsTreeEntryPersistence
 	public void setRebuildTreeEnabled(boolean rebuildTreeEnabled);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1000928244
+// LIFERAY-SERVICE-BUILDER-HASH:1175108406

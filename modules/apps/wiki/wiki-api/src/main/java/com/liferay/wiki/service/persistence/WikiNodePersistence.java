@@ -921,20 +921,6 @@ public interface WikiNodePersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the wiki node in the entity cache if it is enabled.
-	 *
-	 * @param wikiNode the wiki node
-	 */
-	public void cacheResult(WikiNode wikiNode);
-
-	/**
-	 * Caches the wiki nodes in the entity cache if it is enabled.
-	 *
-	 * @param wikiNodes the wiki nodes
-	 */
-	public void cacheResult(java.util.List<WikiNode> wikiNodes);
-
-	/**
 	 * Creates a new wiki node with the primary key. Does not add the wiki node to the database.
 	 *
 	 * @param nodeId the primary key for the new wiki node
@@ -971,4 +957,4 @@ public interface WikiNodePersistence
 	public WikiNode fetchByPrimaryKey(long nodeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1318753514
+// LIFERAY-SERVICE-BUILDER-HASH:-842231750

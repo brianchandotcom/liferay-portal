@@ -36,6 +36,20 @@ public class AnalyticsMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AnalyticsMessage> analyticsMessages) {
+		getPersistence().cacheResult(analyticsMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AnalyticsMessage analyticsMessage) {
+		getPersistence().cacheResult(analyticsMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -234,24 +248,6 @@ public class AnalyticsMessageUtil {
 	}
 
 	/**
-	 * Caches the analytics message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessage the analytics message
-	 */
-	public static void cacheResult(AnalyticsMessage analyticsMessage) {
-		getPersistence().cacheResult(analyticsMessage);
-	}
-
-	/**
-	 * Caches the analytics messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessages the analytics messages
-	 */
-	public static void cacheResult(List<AnalyticsMessage> analyticsMessages) {
-		getPersistence().cacheResult(analyticsMessages);
-	}
-
-	/**
 	 * Creates a new analytics message with the primary key. Does not add the analytics message to the database.
 	 *
 	 * @param analyticsMessageId the primary key for the new analytics message
@@ -316,4 +312,4 @@ public class AnalyticsMessageUtil {
 	private static volatile AnalyticsMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-447714601
+// LIFERAY-SERVICE-BUILDER-HASH:-1840552473

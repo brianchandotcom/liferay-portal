@@ -36,6 +36,20 @@ public class FragmentEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FragmentEntry> fragmentEntries) {
+		getPersistence().cacheResult(fragmentEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FragmentEntry fragmentEntry) {
+		getPersistence().cacheResult(fragmentEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -4001,24 +4015,6 @@ public class FragmentEntryUtil {
 	}
 
 	/**
-	 * Caches the fragment entry in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntry the fragment entry
-	 */
-	public static void cacheResult(FragmentEntry fragmentEntry) {
-		getPersistence().cacheResult(fragmentEntry);
-	}
-
-	/**
-	 * Caches the fragment entries in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntries the fragment entries
-	 */
-	public static void cacheResult(List<FragmentEntry> fragmentEntries) {
-		getPersistence().cacheResult(fragmentEntries);
-	}
-
-	/**
 	 * Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
 	 *
 	 * @param fragmentEntryId the primary key for the new fragment entry
@@ -4079,4 +4075,4 @@ public class FragmentEntryUtil {
 	private static volatile FragmentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-450995027
+// LIFERAY-SERVICE-BUILDER-HASH:-1209771080

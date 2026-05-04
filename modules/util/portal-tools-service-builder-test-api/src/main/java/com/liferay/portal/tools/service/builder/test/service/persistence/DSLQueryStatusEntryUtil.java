@@ -36,6 +36,22 @@ public class DSLQueryStatusEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DSLQueryStatusEntry> dslQueryStatusEntries) {
+
+		getPersistence().cacheResult(dslQueryStatusEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DSLQueryStatusEntry dslQueryStatusEntry) {
+		getPersistence().cacheResult(dslQueryStatusEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -114,26 +130,6 @@ public class DSLQueryStatusEntryUtil {
 	}
 
 	/**
-	 * Caches the dsl query status entry in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntry the dsl query status entry
-	 */
-	public static void cacheResult(DSLQueryStatusEntry dslQueryStatusEntry) {
-		getPersistence().cacheResult(dslQueryStatusEntry);
-	}
-
-	/**
-	 * Caches the dsl query status entries in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntries the dsl query status entries
-	 */
-	public static void cacheResult(
-		List<DSLQueryStatusEntry> dslQueryStatusEntries) {
-
-		getPersistence().cacheResult(dslQueryStatusEntries);
-	}
-
-	/**
 	 * Creates a new dsl query status entry with the primary key. Does not add the dsl query status entry to the database.
 	 *
 	 * @param dslQueryStatusEntryId the primary key for the new dsl query status entry
@@ -203,4 +199,4 @@ public class DSLQueryStatusEntryUtil {
 	private static volatile DSLQueryStatusEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1354233513
+// LIFERAY-SERVICE-BUILDER-HASH:-1227036366

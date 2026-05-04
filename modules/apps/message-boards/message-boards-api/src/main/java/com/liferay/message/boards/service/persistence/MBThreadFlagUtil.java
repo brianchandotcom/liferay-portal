@@ -36,6 +36,20 @@ public class MBThreadFlagUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBThreadFlag> mbThreadFlags) {
+		getPersistence().cacheResult(mbThreadFlags);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBThreadFlag mbThreadFlag) {
+		getPersistence().cacheResult(mbThreadFlag);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -726,24 +740,6 @@ public class MBThreadFlagUtil {
 	}
 
 	/**
-	 * Caches the message boards thread flag in the entity cache if it is enabled.
-	 *
-	 * @param mbThreadFlag the message boards thread flag
-	 */
-	public static void cacheResult(MBThreadFlag mbThreadFlag) {
-		getPersistence().cacheResult(mbThreadFlag);
-	}
-
-	/**
-	 * Caches the message boards thread flags in the entity cache if it is enabled.
-	 *
-	 * @param mbThreadFlags the message boards thread flags
-	 */
-	public static void cacheResult(List<MBThreadFlag> mbThreadFlags) {
-		getPersistence().cacheResult(mbThreadFlags);
-	}
-
-	/**
 	 * Creates a new message boards thread flag with the primary key. Does not add the message boards thread flag to the database.
 	 *
 	 * @param threadFlagId the primary key for the new message boards thread flag
@@ -804,4 +800,4 @@ public class MBThreadFlagUtil {
 	private static volatile MBThreadFlagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:991286694
+// LIFERAY-SERVICE-BUILDER-HASH:2122464684

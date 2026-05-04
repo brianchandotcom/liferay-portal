@@ -36,6 +36,20 @@ public class DepotEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DepotEntry> depotEntries) {
+		getPersistence().cacheResult(depotEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DepotEntry depotEntry) {
+		getPersistence().cacheResult(depotEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -610,24 +624,6 @@ public class DepotEntryUtil {
 	}
 
 	/**
-	 * Caches the depot entry in the entity cache if it is enabled.
-	 *
-	 * @param depotEntry the depot entry
-	 */
-	public static void cacheResult(DepotEntry depotEntry) {
-		getPersistence().cacheResult(depotEntry);
-	}
-
-	/**
-	 * Caches the depot entries in the entity cache if it is enabled.
-	 *
-	 * @param depotEntries the depot entries
-	 */
-	public static void cacheResult(List<DepotEntry> depotEntries) {
-		getPersistence().cacheResult(depotEntries);
-	}
-
-	/**
 	 * Creates a new depot entry with the primary key. Does not add the depot entry to the database.
 	 *
 	 * @param depotEntryId the primary key for the new depot entry
@@ -688,4 +684,4 @@ public class DepotEntryUtil {
 	private static volatile DepotEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1719360008
+// LIFERAY-SERVICE-BUILDER-HASH:-175890237

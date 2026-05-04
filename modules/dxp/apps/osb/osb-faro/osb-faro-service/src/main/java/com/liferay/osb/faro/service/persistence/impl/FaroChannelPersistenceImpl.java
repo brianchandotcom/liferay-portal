@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -627,62 +624,6 @@ public class FaroChannelPersistenceImpl
 	}
 
 	/**
-	 * Caches the faro channel in the entity cache if it is enabled.
-	 *
-	 * @param faroChannel the faro channel
-	 */
-	@Override
-	public void cacheResult(FaroChannel faroChannel) {
-		entityCache.putResult(
-			FaroChannelImpl.class, faroChannel.getPrimaryKey(), faroChannel);
-
-		finderCache.putResult(
-			_finderPathFetchByC_W,
-			new Object[] {
-				faroChannel.getChannelId(), faroChannel.getWorkspaceGroupId()
-			},
-			faroChannel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro channels in the entity cache if it is enabled.
-	 *
-	 * @param faroChannels the faro channels
-	 */
-	@Override
-	public void cacheResult(List<FaroChannel> faroChannels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroChannels.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroChannel faroChannel : faroChannels) {
-			if (entityCache.getResult(
-					FaroChannelImpl.class, faroChannel.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(faroChannel);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FaroChannelModelImpl faroChannelModelImpl) {
-
-		Object[] args = new Object[] {
-			faroChannelModelImpl.getChannelId(),
-			faroChannelModelImpl.getWorkspaceGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_W, args, faroChannelModelImpl);
-	}
-
-	/**
 	 * Creates a new faro channel with the primary key. Does not add the faro channel to the database.
 	 *
 	 * @param faroChannelId the primary key for the new faro channel
@@ -786,10 +727,7 @@ public class FaroChannelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroChannelImpl.class, faroChannelModelImpl, false, true);
-
-		cacheUniqueFindersCache(faroChannelModelImpl);
+		cacheUniqueFindersResult(faroChannel, false);
 
 		if (isNew) {
 			faroChannel.setNew(false);
@@ -850,9 +788,6 @@ public class FaroChannelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -942,10 +877,11 @@ public class FaroChannelPersistenceImpl
 				"faroChannel.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, FaroChannel::getUserId));
 
-		_finderPathFetchByC_W = new FinderPath(
+		_finderPathFetchByC_W = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_W",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"channelId", "workspaceGroupId"}, true);
+			new String[] {"channelId", "workspaceGroupId"}, false,
+			FaroChannel::getChannelId, FaroChannel::getWorkspaceGroupId);
 
 		_uniquePersistenceFinderByC_W = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_W, _SQL_SELECT_FAROCHANNEL_WHERE,
@@ -1022,4 +958,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2049298881
+// LIFERAY-SERVICE-BUILDER-HASH:-833682425

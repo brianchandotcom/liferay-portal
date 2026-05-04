@@ -909,20 +909,6 @@ public interface KBFolderPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the kb folder in the entity cache if it is enabled.
-	 *
-	 * @param kbFolder the kb folder
-	 */
-	public void cacheResult(KBFolder kbFolder);
-
-	/**
-	 * Caches the kb folders in the entity cache if it is enabled.
-	 *
-	 * @param kbFolders the kb folders
-	 */
-	public void cacheResult(java.util.List<KBFolder> kbFolders);
-
-	/**
 	 * Creates a new kb folder with the primary key. Does not add the kb folder to the database.
 	 *
 	 * @param kbFolderId the primary key for the new kb folder
@@ -960,4 +946,4 @@ public interface KBFolderPersistence
 	public KBFolder fetchByPrimaryKey(long kbFolderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-297407321
+// LIFERAY-SERVICE-BUILDER-HASH:2081595827

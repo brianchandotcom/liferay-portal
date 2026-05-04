@@ -30,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1312,64 +1309,6 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 	/**
-	 * Caches the password policy in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicy the password policy
-	 */
-	@Override
-	public void cacheResult(PasswordPolicy passwordPolicy) {
-		EntityCacheUtil.putResult(
-			PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey(),
-			passwordPolicy);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {
-				passwordPolicy.getCompanyId(), passwordPolicy.getName()
-			},
-			passwordPolicy);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the password policies in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicies the password policies
-	 */
-	@Override
-	public void cacheResult(List<PasswordPolicy> passwordPolicies) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (passwordPolicies.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PasswordPolicy passwordPolicy : passwordPolicies) {
-			if (EntityCacheUtil.getResult(
-					PasswordPolicyImpl.class, passwordPolicy.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(passwordPolicy);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PasswordPolicyModelImpl passwordPolicyModelImpl) {
-
-		Object[] args = new Object[] {
-			passwordPolicyModelImpl.getCompanyId(),
-			passwordPolicyModelImpl.getName()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_N, args, passwordPolicyModelImpl);
-	}
-
-	/**
 	 * Creates a new password policy with the primary key. Does not add the password policy to the database.
 	 *
 	 * @param passwordPolicyId the primary key for the new password policy
@@ -1510,10 +1449,7 @@ public class PasswordPolicyPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PasswordPolicyImpl.class, passwordPolicyModelImpl, false, true);
-
-		cacheUniqueFindersCache(passwordPolicyModelImpl);
+		cacheUniqueFindersResult(passwordPolicy, false);
 
 		if (isNew) {
 			passwordPolicy.setNew(false);
@@ -1578,9 +1514,6 @@ public class PasswordPolicyPersistenceImpl
 	 * Initializes the password policy persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1670,10 +1603,11 @@ public class PasswordPolicyPersistenceImpl
 					"passwordPolicy.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PasswordPolicy::getCompanyId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			PasswordPolicy::getCompanyId, PasswordPolicy::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_PASSWORDPOLICY_WHERE,
@@ -1743,4 +1677,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261997189
+// LIFERAY-SERVICE-BUILDER-HASH:783591641

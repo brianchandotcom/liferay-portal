@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListDisc
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListDiscountRelUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -708,90 +704,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price list discount rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListDiscountRel the commerce price list discount rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePriceListDiscountRel commercePriceListDiscountRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListDiscountRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceListDiscountRelImpl.class,
-				commercePriceListDiscountRel.getPrimaryKey(),
-				commercePriceListDiscountRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCDI_CPI,
-				new Object[] {
-					commercePriceListDiscountRel.getCommerceDiscountId(),
-					commercePriceListDiscountRel.getCommercePriceListId()
-				},
-				commercePriceListDiscountRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price list discount rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListDiscountRels the commerce price list discount rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceListDiscountRel> commercePriceListDiscountRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceListDiscountRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceListDiscountRel commercePriceListDiscountRel :
-				commercePriceListDiscountRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceListDiscountRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceListDiscountRelImpl.class,
-						commercePriceListDiscountRel.getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceListDiscountRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceListDiscountRelModelImpl
-			commercePriceListDiscountRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListDiscountRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceListDiscountRelModelImpl.getCommerceDiscountId(),
-				commercePriceListDiscountRelModelImpl.getCommercePriceListId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCDI_CPI, args,
-				commercePriceListDiscountRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price list discount rel with the primary key. Does not add the commerce price list discount rel to the database.
 	 *
 	 * @param commercePriceListDiscountRelId the primary key for the new commerce price list discount rel
@@ -959,11 +871,7 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceListDiscountRelImpl.class,
-			commercePriceListDiscountRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePriceListDiscountRelModelImpl);
+		cacheUniqueFindersResult(commercePriceListDiscountRel, false);
 
 		if (isNew) {
 			commercePriceListDiscountRel.setNew(false);
@@ -1102,9 +1010,6 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1204,10 +1109,12 @@ public class CommercePriceListDiscountRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceListDiscountRel::getCommercePriceListId));
 
-		_finderPathFetchByCDI_CPI = new FinderPath(
+		_finderPathFetchByCDI_CPI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commercePriceListId"}, true);
+			new String[] {"commerceDiscountId", "commercePriceListId"}, false,
+			CommercePriceListDiscountRel::getCommerceDiscountId,
+			CommercePriceListDiscountRel::getCommercePriceListId);
 
 		_uniquePersistenceFinderByCDI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_CPI,
@@ -1294,4 +1201,4 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-818486805
+// LIFERAY-SERVICE-BUILDER-HASH:-90137419

@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRepor
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,9 +30,6 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -196,81 +192,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm form instance report in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReport the ddm form instance report
-	 */
-	@Override
-	public void cacheResult(DDMFormInstanceReport ddmFormInstanceReport) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstanceReport.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMFormInstanceReportImpl.class,
-				ddmFormInstanceReport.getPrimaryKey(), ddmFormInstanceReport);
-
-			finderCache.putResult(
-				_finderPathFetchByFormInstanceId,
-				new Object[] {ddmFormInstanceReport.getFormInstanceId()},
-				ddmFormInstanceReport);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm form instance reports in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReports the ddm form instance reports
-	 */
-	@Override
-	public void cacheResult(
-		List<DDMFormInstanceReport> ddmFormInstanceReports) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmFormInstanceReports.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMFormInstanceReport ddmFormInstanceReport :
-				ddmFormInstanceReports) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmFormInstanceReport.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMFormInstanceReportImpl.class,
-						ddmFormInstanceReport.getPrimaryKey()) == null) {
-
-					cacheResult(ddmFormInstanceReport);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMFormInstanceReportModelImpl ddmFormInstanceReportModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstanceReportModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmFormInstanceReportModelImpl.getFormInstanceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByFormInstanceId, args,
-				ddmFormInstanceReportModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm form instance report with the primary key. Does not add the ddm form instance report to the database.
 	 *
 	 * @param formInstanceReportId the primary key for the new ddm form instance report
@@ -417,11 +338,7 @@ public class DDMFormInstanceReportPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMFormInstanceReportImpl.class, ddmFormInstanceReportModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(ddmFormInstanceReportModelImpl);
+		cacheUniqueFindersResult(ddmFormInstanceReport, false);
 
 		if (isNew) {
 			ddmFormInstanceReport.setNew(false);
@@ -550,13 +467,11 @@ public class DDMFormInstanceReportPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByFormInstanceId = new FinderPath(
+		_finderPathFetchByFormInstanceId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFormInstanceId",
 			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, true);
+			new String[] {"formInstanceId"}, false,
+			DDMFormInstanceReport::getFormInstanceId);
 
 		_uniquePersistenceFinderByFormInstanceId =
 			new UniquePersistenceFinder<>(
@@ -636,4 +551,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1106457086
+// LIFERAY-SERVICE-BUILDER-HASH:-1118156813

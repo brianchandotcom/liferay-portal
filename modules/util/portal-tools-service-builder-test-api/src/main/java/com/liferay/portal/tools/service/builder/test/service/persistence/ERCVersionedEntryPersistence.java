@@ -860,21 +860,6 @@ public interface ERCVersionedEntryPersistence
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the erc versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntry the erc versioned entry
-	 */
-	public void cacheResult(ERCVersionedEntry ercVersionedEntry);
-
-	/**
-	 * Caches the erc versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param ercVersionedEntries the erc versioned entries
-	 */
-	public void cacheResult(
-		java.util.List<ERCVersionedEntry> ercVersionedEntries);
-
-	/**
 	 * Creates a new erc versioned entry with the primary key. Does not add the erc versioned entry to the database.
 	 *
 	 * @param ercVersionedEntryId the primary key for the new erc versioned entry
@@ -913,4 +898,4 @@ public interface ERCVersionedEntryPersistence
 	public ERCVersionedEntry fetchByPrimaryKey(long ercVersionedEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-463340341
+// LIFERAY-SERVICE-BUILDER-HASH:1681579037

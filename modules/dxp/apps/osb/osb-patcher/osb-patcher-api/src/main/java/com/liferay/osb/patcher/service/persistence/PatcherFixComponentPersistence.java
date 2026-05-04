@@ -77,21 +77,6 @@ public interface PatcherFixComponentPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the patcher fix component in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponent the patcher fix component
-	 */
-	public void cacheResult(PatcherFixComponent patcherFixComponent);
-
-	/**
-	 * Caches the patcher fix components in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponents the patcher fix components
-	 */
-	public void cacheResult(
-		java.util.List<PatcherFixComponent> patcherFixComponents);
-
-	/**
 	 * Creates a new patcher fix component with the primary key. Does not add the patcher fix component to the database.
 	 *
 	 * @param patcherFixComponentId the primary key for the new patcher fix component
@@ -131,4 +116,4 @@ public interface PatcherFixComponentPersistence
 	public PatcherFixComponent fetchByPrimaryKey(long patcherFixComponentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2060568128
+// LIFERAY-SERVICE-BUILDER-HASH:-1521031348

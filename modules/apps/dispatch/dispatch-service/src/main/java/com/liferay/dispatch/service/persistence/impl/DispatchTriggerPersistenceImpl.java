@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3648,80 +3646,6 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 	/**
-	 * Caches the dispatch trigger in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTrigger the dispatch trigger
-	 */
-	@Override
-	public void cacheResult(DispatchTrigger dispatchTrigger) {
-		entityCache.putResult(
-			DispatchTriggerImpl.class, dispatchTrigger.getPrimaryKey(),
-			dispatchTrigger);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {
-				dispatchTrigger.getCompanyId(), dispatchTrigger.getName()
-			},
-			dispatchTrigger);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				dispatchTrigger.getExternalReferenceCode(),
-				dispatchTrigger.getCompanyId()
-			},
-			dispatchTrigger);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dispatch triggers in the entity cache if it is enabled.
-	 *
-	 * @param dispatchTriggers the dispatch triggers
-	 */
-	@Override
-	public void cacheResult(List<DispatchTrigger> dispatchTriggers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dispatchTriggers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DispatchTrigger dispatchTrigger : dispatchTriggers) {
-			if (entityCache.getResult(
-					DispatchTriggerImpl.class,
-					dispatchTrigger.getPrimaryKey()) == null) {
-
-				cacheResult(dispatchTrigger);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DispatchTriggerModelImpl dispatchTriggerModelImpl) {
-
-		Object[] args = new Object[] {
-			dispatchTriggerModelImpl.getCompanyId(),
-			dispatchTriggerModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, dispatchTriggerModelImpl);
-
-		args = new Object[] {
-			dispatchTriggerModelImpl.getExternalReferenceCode(),
-			dispatchTriggerModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, dispatchTriggerModelImpl);
-	}
-
-	/**
 	 * Creates a new dispatch trigger with the primary key. Does not add the dispatch trigger to the database.
 	 *
 	 * @param dispatchTriggerId the primary key for the new dispatch trigger
@@ -3928,10 +3852,7 @@ public class DispatchTriggerPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DispatchTriggerImpl.class, dispatchTriggerModelImpl, false, true);
-
-		cacheUniqueFindersCache(dispatchTriggerModelImpl);
+		cacheUniqueFindersResult(dispatchTrigger, false);
 
 		if (isNew) {
 			dispatchTrigger.setNew(false);
@@ -3997,9 +3918,6 @@ public class DispatchTriggerPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4183,10 +4101,11 @@ public class DispatchTriggerPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					DispatchTrigger::getDispatchTaskExecutorType));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			DispatchTrigger::getCompanyId, DispatchTrigger::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
@@ -4221,10 +4140,12 @@ public class DispatchTriggerPersistenceImpl
 			new String[] {Boolean.class.getName(), Integer.class.getName()},
 			new String[] {"active_", "dispatchTaskClusterMode"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			DispatchTrigger::getExternalReferenceCode,
+			DispatchTrigger::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
@@ -4328,4 +4249,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-452811771
+// LIFERAY-SERVICE-BUILDER-HASH:100124697

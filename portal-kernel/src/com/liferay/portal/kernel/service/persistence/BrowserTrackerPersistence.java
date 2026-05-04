@@ -76,20 +76,6 @@ public interface BrowserTrackerPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Caches the browser tracker in the entity cache if it is enabled.
-	 *
-	 * @param browserTracker the browser tracker
-	 */
-	public void cacheResult(BrowserTracker browserTracker);
-
-	/**
-	 * Caches the browser trackers in the entity cache if it is enabled.
-	 *
-	 * @param browserTrackers the browser trackers
-	 */
-	public void cacheResult(java.util.List<BrowserTracker> browserTrackers);
-
-	/**
 	 * Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
 	 *
 	 * @param browserTrackerId the primary key for the new browser tracker
@@ -128,4 +114,4 @@ public interface BrowserTrackerPersistence
 	public BrowserTracker fetchByPrimaryKey(long browserTrackerId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:299070334
+// LIFERAY-SERVICE-BUILDER-HASH:-325492942

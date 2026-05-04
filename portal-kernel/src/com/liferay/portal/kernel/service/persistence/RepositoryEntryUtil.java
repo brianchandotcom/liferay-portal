@@ -36,6 +36,20 @@ public class RepositoryEntryUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RepositoryEntry> repositoryEntries) {
+		getPersistence().cacheResult(repositoryEntries);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RepositoryEntry repositoryEntry) {
+		getPersistence().cacheResult(repositoryEntry);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -622,24 +636,6 @@ public class RepositoryEntryUtil {
 	}
 
 	/**
-	 * Caches the repository entry in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntry the repository entry
-	 */
-	public static void cacheResult(RepositoryEntry repositoryEntry) {
-		getPersistence().cacheResult(repositoryEntry);
-	}
-
-	/**
-	 * Caches the repository entries in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntries the repository entries
-	 */
-	public static void cacheResult(List<RepositoryEntry> repositoryEntries) {
-		getPersistence().cacheResult(repositoryEntries);
-	}
-
-	/**
 	 * Creates a new repository entry with the primary key. Does not add the repository entry to the database.
 	 *
 	 * @param repositoryEntryId the primary key for the new repository entry
@@ -702,4 +698,4 @@ public class RepositoryEntryUtil {
 	private static volatile RepositoryEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562179021
+// LIFERAY-SERVICE-BUILDER-HASH:-862226566

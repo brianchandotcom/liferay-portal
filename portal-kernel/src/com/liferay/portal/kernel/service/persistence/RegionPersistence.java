@@ -608,20 +608,6 @@ public interface RegionPersistence
 	public int countByC_R(long countryId, String regionCode);
 
 	/**
-	 * Caches the region in the entity cache if it is enabled.
-	 *
-	 * @param region the region
-	 */
-	public void cacheResult(Region region);
-
-	/**
-	 * Caches the regions in the entity cache if it is enabled.
-	 *
-	 * @param regions the regions
-	 */
-	public void cacheResult(java.util.List<Region> regions);
-
-	/**
 	 * Creates a new region with the primary key. Does not add the region to the database.
 	 *
 	 * @param regionId the primary key for the new region
@@ -658,4 +644,4 @@ public interface RegionPersistence
 	public Region fetchByPrimaryKey(long regionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-392166303
+// LIFERAY-SERVICE-BUILDER-HASH:854117353

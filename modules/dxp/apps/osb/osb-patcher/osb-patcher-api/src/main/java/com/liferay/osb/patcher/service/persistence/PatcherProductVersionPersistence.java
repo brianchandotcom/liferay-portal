@@ -231,21 +231,6 @@ public interface PatcherProductVersionPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the patcher product version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersion the patcher product version
-	 */
-	public void cacheResult(PatcherProductVersion patcherProductVersion);
-
-	/**
-	 * Caches the patcher product versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersions the patcher product versions
-	 */
-	public void cacheResult(
-		java.util.List<PatcherProductVersion> patcherProductVersions);
-
-	/**
 	 * Creates a new patcher product version with the primary key. Does not add the patcher product version to the database.
 	 *
 	 * @param patcherProductVersionId the primary key for the new patcher product version
@@ -286,4 +271,4 @@ public interface PatcherProductVersionPersistence
 		long patcherProductVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1844218948
+// LIFERAY-SERVICE-BUILDER-HASH:-261953518

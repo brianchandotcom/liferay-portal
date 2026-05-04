@@ -36,6 +36,20 @@ public class AssetVocabularyUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetVocabulary> assetVocabularies) {
+		getPersistence().cacheResult(assetVocabularies);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetVocabulary assetVocabulary) {
+		getPersistence().cacheResult(assetVocabulary);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1561,24 +1575,6 @@ public class AssetVocabularyUtil {
 	}
 
 	/**
-	 * Caches the asset vocabulary in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabulary the asset vocabulary
-	 */
-	public static void cacheResult(AssetVocabulary assetVocabulary) {
-		getPersistence().cacheResult(assetVocabulary);
-	}
-
-	/**
-	 * Caches the asset vocabularies in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularies the asset vocabularies
-	 */
-	public static void cacheResult(List<AssetVocabulary> assetVocabularies) {
-		getPersistence().cacheResult(assetVocabularies);
-	}
-
-	/**
 	 * Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
 	 *
 	 * @param vocabularyId the primary key for the new asset vocabulary
@@ -1639,4 +1635,4 @@ public class AssetVocabularyUtil {
 	private static volatile AssetVocabularyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1422691454
+// LIFERAY-SERVICE-BUILDER-HASH:-2081796899

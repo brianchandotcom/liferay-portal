@@ -36,6 +36,20 @@ public class ChangesetEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ChangesetEntry> changesetEntries) {
+		getPersistence().cacheResult(changesetEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ChangesetEntry changesetEntry) {
+		getPersistence().cacheResult(changesetEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -919,24 +933,6 @@ public class ChangesetEntryUtil {
 	}
 
 	/**
-	 * Caches the changeset entry in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntry the changeset entry
-	 */
-	public static void cacheResult(ChangesetEntry changesetEntry) {
-		getPersistence().cacheResult(changesetEntry);
-	}
-
-	/**
-	 * Caches the changeset entries in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntries the changeset entries
-	 */
-	public static void cacheResult(List<ChangesetEntry> changesetEntries) {
-		getPersistence().cacheResult(changesetEntries);
-	}
-
-	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
 	 * @param changesetEntryId the primary key for the new changeset entry
@@ -997,4 +993,4 @@ public class ChangesetEntryUtil {
 	private static volatile ChangesetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2111452079
+// LIFERAY-SERVICE-BUILDER-HASH:-615552572

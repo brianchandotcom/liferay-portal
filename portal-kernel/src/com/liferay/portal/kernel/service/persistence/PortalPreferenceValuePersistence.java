@@ -646,21 +646,6 @@ public interface PortalPreferenceValuePersistence
 		String smallValue);
 
 	/**
-	 * Caches the portal preference value in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValue the portal preference value
-	 */
-	public void cacheResult(PortalPreferenceValue portalPreferenceValue);
-
-	/**
-	 * Caches the portal preference values in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValues the portal preference values
-	 */
-	public void cacheResult(
-		java.util.List<PortalPreferenceValue> portalPreferenceValues);
-
-	/**
 	 * Creates a new portal preference value with the primary key. Does not add the portal preference value to the database.
 	 *
 	 * @param portalPreferenceValueId the primary key for the new portal preference value
@@ -701,4 +686,4 @@ public interface PortalPreferenceValuePersistence
 		long portalPreferenceValueId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-572970355
+// LIFERAY-SERVICE-BUILDER-HASH:271753639

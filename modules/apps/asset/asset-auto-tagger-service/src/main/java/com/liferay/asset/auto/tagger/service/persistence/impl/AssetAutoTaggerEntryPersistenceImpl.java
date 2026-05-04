@@ -14,7 +14,6 @@ import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryPer
 import com.liferay.asset.auto.tagger.service.persistence.AssetAutoTaggerEntryUtil;
 import com.liferay.asset.auto.tagger.service.persistence.impl.constants.AssetAutoTaggerPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -515,82 +511,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset auto tagger entry in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntry the asset auto tagger entry
-	 */
-	@Override
-	public void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetAutoTaggerEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetAutoTaggerEntryImpl.class,
-				assetAutoTaggerEntry.getPrimaryKey(), assetAutoTaggerEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByA_A,
-				new Object[] {
-					assetAutoTaggerEntry.getAssetEntryId(),
-					assetAutoTaggerEntry.getAssetTagId()
-				},
-				assetAutoTaggerEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset auto tagger entries in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntries the asset auto tagger entries
-	 */
-	@Override
-	public void cacheResult(List<AssetAutoTaggerEntry> assetAutoTaggerEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetAutoTaggerEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetAutoTaggerEntry assetAutoTaggerEntry :
-				assetAutoTaggerEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetAutoTaggerEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetAutoTaggerEntryImpl.class,
-						assetAutoTaggerEntry.getPrimaryKey()) == null) {
-
-					cacheResult(assetAutoTaggerEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetAutoTaggerEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetAutoTaggerEntryModelImpl.getAssetEntryId(),
-				assetAutoTaggerEntryModelImpl.getAssetTagId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByA_A, args, assetAutoTaggerEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	 *
 	 * @param assetAutoTaggerEntryId the primary key for the new asset auto tagger entry
@@ -735,11 +655,7 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetAutoTaggerEntryImpl.class, assetAutoTaggerEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(assetAutoTaggerEntryModelImpl);
+		cacheUniqueFindersResult(assetAutoTaggerEntry, false);
 
 		if (isNew) {
 			assetAutoTaggerEntry.setNew(false);
@@ -866,9 +782,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
 			new String[] {
@@ -933,10 +846,12 @@ public class AssetAutoTaggerEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetAutoTaggerEntry::getAssetTagId));
 
-		_finderPathFetchByA_A = new FinderPath(
+		_finderPathFetchByA_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetEntryId", "assetTagId"}, true);
+			new String[] {"assetEntryId", "assetTagId"}, false,
+			AssetAutoTaggerEntry::getAssetEntryId,
+			AssetAutoTaggerEntry::getAssetTagId);
 
 		_uniquePersistenceFinderByA_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_A, _SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
@@ -1016,4 +931,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1831930440
+// LIFERAY-SERVICE-BUILDER-HASH:-1713898245

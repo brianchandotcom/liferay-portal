@@ -36,6 +36,20 @@ public class FragmentEntryLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FragmentEntryLink> fragmentEntryLinks) {
+		getPersistence().cacheResult(fragmentEntryLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FragmentEntryLink fragmentEntryLink) {
+		getPersistence().cacheResult(fragmentEntryLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3676,24 +3690,6 @@ public class FragmentEntryLinkUtil {
 	}
 
 	/**
-	 * Caches the fragment entry link in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLink the fragment entry link
-	 */
-	public static void cacheResult(FragmentEntryLink fragmentEntryLink) {
-		getPersistence().cacheResult(fragmentEntryLink);
-	}
-
-	/**
-	 * Caches the fragment entry links in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLinks the fragment entry links
-	 */
-	public static void cacheResult(List<FragmentEntryLink> fragmentEntryLinks) {
-		getPersistence().cacheResult(fragmentEntryLinks);
-	}
-
-	/**
 	 * Creates a new fragment entry link with the primary key. Does not add the fragment entry link to the database.
 	 *
 	 * @param fragmentEntryLinkId the primary key for the new fragment entry link
@@ -3760,4 +3756,4 @@ public class FragmentEntryLinkUtil {
 	private static volatile FragmentEntryLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:439925245
+// LIFERAY-SERVICE-BUILDER-HASH:1592075129

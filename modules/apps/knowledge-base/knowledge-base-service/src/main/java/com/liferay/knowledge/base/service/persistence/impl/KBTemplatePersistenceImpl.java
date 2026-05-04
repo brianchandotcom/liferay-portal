@@ -15,7 +15,6 @@ import com.liferay.knowledge.base.service.persistence.KBTemplateUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -45,8 +44,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -883,74 +880,6 @@ public class KBTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the kb template in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplate the kb template
-	 */
-	@Override
-	public void cacheResult(KBTemplate kbTemplate) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbTemplate.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KBTemplateImpl.class, kbTemplate.getPrimaryKey(), kbTemplate);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {kbTemplate.getUuid(), kbTemplate.getGroupId()},
-				kbTemplate);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kb templates in the entity cache if it is enabled.
-	 *
-	 * @param kbTemplates the kb templates
-	 */
-	@Override
-	public void cacheResult(List<KBTemplate> kbTemplates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kbTemplates.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KBTemplate kbTemplate : kbTemplates) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kbTemplate.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KBTemplateImpl.class, kbTemplate.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(kbTemplate);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KBTemplateModelImpl kbTemplateModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbTemplateModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kbTemplateModelImpl.getUuid(), kbTemplateModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, kbTemplateModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kb template with the primary key. Does not add the kb template to the database.
 	 *
 	 * @param kbTemplateId the primary key for the new kb template
@@ -1118,10 +1047,7 @@ public class KBTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KBTemplateImpl.class, kbTemplateModelImpl, false, true);
-
-		cacheUniqueFindersCache(kbTemplateModelImpl);
+		cacheUniqueFindersResult(kbTemplate, false);
 
 		if (isNew) {
 			kbTemplate.setNew(false);
@@ -1255,9 +1181,6 @@ public class KBTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1285,10 +1208,11 @@ public class KBTemplatePersistenceImpl
 				"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KBTemplate::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KBTemplate::getUuid,
+			KBTemplate::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBTEMPLATE_WHERE,
@@ -1456,4 +1380,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:368510974
+// LIFERAY-SERVICE-BUILDER-HASH:556771526

@@ -1372,21 +1372,6 @@ public interface AnnouncementsEntryPersistence
 		long companyId, long classNameId, long classPK, boolean alert);
 
 	/**
-	 * Caches the announcements entry in the entity cache if it is enabled.
-	 *
-	 * @param announcementsEntry the announcements entry
-	 */
-	public void cacheResult(AnnouncementsEntry announcementsEntry);
-
-	/**
-	 * Caches the announcements entries in the entity cache if it is enabled.
-	 *
-	 * @param announcementsEntries the announcements entries
-	 */
-	public void cacheResult(
-		java.util.List<AnnouncementsEntry> announcementsEntries);
-
-	/**
 	 * Creates a new announcements entry with the primary key. Does not add the announcements entry to the database.
 	 *
 	 * @param entryId the primary key for the new announcements entry
@@ -1424,4 +1409,4 @@ public interface AnnouncementsEntryPersistence
 	public AnnouncementsEntry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1033606502
+// LIFERAY-SERVICE-BUILDER-HASH:-911943832

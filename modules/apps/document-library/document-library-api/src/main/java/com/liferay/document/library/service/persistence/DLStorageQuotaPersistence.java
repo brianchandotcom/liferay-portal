@@ -78,20 +78,6 @@ public interface DLStorageQuotaPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the dl storage quota in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuota the dl storage quota
-	 */
-	public void cacheResult(DLStorageQuota dlStorageQuota);
-
-	/**
-	 * Caches the dl storage quotas in the entity cache if it is enabled.
-	 *
-	 * @param dlStorageQuotas the dl storage quotas
-	 */
-	public void cacheResult(java.util.List<DLStorageQuota> dlStorageQuotas);
-
-	/**
 	 * Creates a new dl storage quota with the primary key. Does not add the dl storage quota to the database.
 	 *
 	 * @param dlStorageQuotaId the primary key for the new dl storage quota
@@ -130,4 +116,4 @@ public interface DLStorageQuotaPersistence
 	public DLStorageQuota fetchByPrimaryKey(long dlStorageQuotaId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:784587134
+// LIFERAY-SERVICE-BUILDER-HASH:195149432

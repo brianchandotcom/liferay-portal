@@ -135,21 +135,6 @@ public interface ContactsCardTemplatePersistence
 	public int countByGroupId(long groupId);
 
 	/**
-	 * Caches the contacts card template in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplate the contacts card template
-	 */
-	public void cacheResult(ContactsCardTemplate contactsCardTemplate);
-
-	/**
-	 * Caches the contacts card templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplates the contacts card templates
-	 */
-	public void cacheResult(
-		java.util.List<ContactsCardTemplate> contactsCardTemplates);
-
-	/**
 	 * Creates a new contacts card template with the primary key. Does not add the contacts card template to the database.
 	 *
 	 * @param contactsCardTemplateId the primary key for the new contacts card template
@@ -189,4 +174,4 @@ public interface ContactsCardTemplatePersistence
 	public ContactsCardTemplate fetchByPrimaryKey(long contactsCardTemplateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:324682195
+// LIFERAY-SERVICE-BUILDER-HASH:413739899

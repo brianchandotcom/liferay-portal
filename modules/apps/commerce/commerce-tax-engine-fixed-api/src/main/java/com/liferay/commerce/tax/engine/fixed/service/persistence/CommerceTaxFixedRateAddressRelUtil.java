@@ -36,6 +36,24 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels) {
+
+		getPersistence().cacheResult(commerceTaxFixedRateAddressRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
+
+		getPersistence().cacheResult(commerceTaxFixedRateAddressRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -505,28 +523,6 @@ public class CommerceTaxFixedRateAddressRelUtil {
 	}
 
 	/**
-	 * Caches the commerce tax fixed rate address rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRel the commerce tax fixed rate address rel
-	 */
-	public static void cacheResult(
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel) {
-
-		getPersistence().cacheResult(commerceTaxFixedRateAddressRel);
-	}
-
-	/**
-	 * Caches the commerce tax fixed rate address rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRateAddressRels the commerce tax fixed rate address rels
-	 */
-	public static void cacheResult(
-		List<CommerceTaxFixedRateAddressRel> commerceTaxFixedRateAddressRels) {
-
-		getPersistence().cacheResult(commerceTaxFixedRateAddressRels);
-	}
-
-	/**
 	 * Creates a new commerce tax fixed rate address rel with the primary key. Does not add the commerce tax fixed rate address rel to the database.
 	 *
 	 * @param commerceTaxFixedRateAddressRelId the primary key for the new commerce tax fixed rate address rel
@@ -602,4 +598,4 @@ public class CommerceTaxFixedRateAddressRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:203933038
+// LIFERAY-SERVICE-BUILDER-HASH:-950466526

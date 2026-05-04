@@ -1219,4 +1219,4 @@ public class KaleoTimerModelImpl
 	private KaleoTimer _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-383658719
+// LIFERAY-SERVICE-BUILDER-HASH:-1270558455

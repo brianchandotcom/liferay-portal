@@ -176,20 +176,6 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public int countByTypePK(long typePK);
 
 	/**
-	 * Caches the dl sync event in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvent the dl sync event
-	 */
-	public void cacheResult(DLSyncEvent dlSyncEvent);
-
-	/**
-	 * Caches the dl sync events in the entity cache if it is enabled.
-	 *
-	 * @param dlSyncEvents the dl sync events
-	 */
-	public void cacheResult(java.util.List<DLSyncEvent> dlSyncEvents);
-
-	/**
 	 * Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
 	 *
 	 * @param syncEventId the primary key for the new dl sync event
@@ -227,4 +213,4 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public DLSyncEvent fetchByPrimaryKey(long syncEventId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:344546542
+// LIFERAY-SERVICE-BUILDER-HASH:-37038042

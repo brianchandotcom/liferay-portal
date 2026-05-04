@@ -7,7 +7,6 @@ package com.liferay.wiki.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -38,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -10863,122 +10860,6 @@ public class WikiPagePersistenceImpl
 	}
 
 	/**
-	 * Caches the wiki page in the entity cache if it is enabled.
-	 *
-	 * @param wikiPage the wiki page
-	 */
-	@Override
-	public void cacheResult(WikiPage wikiPage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiPage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {wikiPage.getUuid(), wikiPage.getGroupId()},
-				wikiPage);
-
-			finderCache.putResult(
-				_finderPathFetchByR_N_V,
-				new Object[] {
-					wikiPage.getResourcePrimKey(), wikiPage.getNodeId(),
-					wikiPage.getVersion()
-				},
-				wikiPage);
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V,
-				new Object[] {
-					wikiPage.getGroupId(), wikiPage.getExternalReferenceCode(),
-					wikiPage.getVersion()
-				},
-				wikiPage);
-
-			finderCache.putResult(
-				_finderPathFetchByN_T_V,
-				new Object[] {
-					wikiPage.getNodeId(), wikiPage.getTitle(),
-					wikiPage.getVersion()
-				},
-				wikiPage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the wiki pages in the entity cache if it is enabled.
-	 *
-	 * @param wikiPages the wiki pages
-	 */
-	@Override
-	public void cacheResult(List<WikiPage> wikiPages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (wikiPages.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WikiPage wikiPage : wikiPages) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						wikiPage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						WikiPageImpl.class, wikiPage.getPrimaryKey()) == null) {
-
-					cacheResult(wikiPage);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WikiPageModelImpl wikiPageModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiPageModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				wikiPageModelImpl.getUuid(), wikiPageModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, wikiPageModelImpl);
-
-			args = new Object[] {
-				wikiPageModelImpl.getResourcePrimKey(),
-				wikiPageModelImpl.getNodeId(), wikiPageModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByR_N_V, args, wikiPageModelImpl);
-
-			args = new Object[] {
-				wikiPageModelImpl.getGroupId(),
-				wikiPageModelImpl.getExternalReferenceCode(),
-				wikiPageModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_ERC_V, args, wikiPageModelImpl);
-
-			args = new Object[] {
-				wikiPageModelImpl.getNodeId(), wikiPageModelImpl.getTitle(),
-				wikiPageModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByN_T_V, args, wikiPageModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new wiki page with the primary key. Does not add the wiki page to the database.
 	 *
 	 * @param pageId the primary key for the new wiki page
@@ -11180,10 +11061,7 @@ public class WikiPagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WikiPageImpl.class, wikiPageModelImpl, false, true);
-
-		cacheUniqueFindersCache(wikiPageModelImpl);
+		cacheUniqueFindersResult(wikiPage, false);
 
 		if (isNew) {
 			wikiPage.setNew(false);
@@ -11338,9 +11216,6 @@ public class WikiPagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
 			new String[] {
@@ -11397,10 +11272,11 @@ public class WikiPagePersistenceImpl
 				"wikiPage.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiPage::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, WikiPage::getUuid,
+			WikiPage::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKIPAGE_WHERE,
@@ -11742,13 +11618,15 @@ public class WikiPagePersistenceImpl
 				"wikiPage.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiPage::getStatus));
 
-		_finderPathFetchByR_N_V = new FinderPath(
+		_finderPathFetchByR_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_N_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Double.class.getName()
 			},
-			new String[] {"resourcePrimKey", "nodeId", "version"}, true);
+			new String[] {"resourcePrimKey", "nodeId", "version"}, false,
+			WikiPage::getResourcePrimKey, WikiPage::getNodeId,
+			WikiPage::getVersion);
 
 		_uniquePersistenceFinderByR_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_N_V, _SQL_SELECT_WIKIPAGE_WHERE,
@@ -11842,13 +11720,15 @@ public class WikiPagePersistenceImpl
 				"wikiPage.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiPage::getStatus));
 
-		_finderPathFetchByG_ERC_V = new FinderPath(
+		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, true);
+			new String[] {"groupId", "externalReferenceCode", "version"}, false,
+			WikiPage::getGroupId, WikiPage::getExternalReferenceCode,
+			WikiPage::getVersion);
 
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_WIKIPAGE_WHERE,
@@ -11982,13 +11862,14 @@ public class WikiPagePersistenceImpl
 				"wikiPage.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiPage::getStatus));
 
-		_finderPathFetchByN_T_V = new FinderPath(
+		_finderPathFetchByN_T_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_T_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Double.class.getName()
 			},
-			new String[] {"nodeId", "title", "version"}, true);
+			new String[] {"nodeId", "title", "version"}, false,
+			WikiPage::getNodeId, WikiPage::getTitle, WikiPage::getVersion);
 
 		_finderPathWithPaginationFindByN_T_H = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByN_T_H",
@@ -12495,4 +12376,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1517117022
+// LIFERAY-SERVICE-BUILDER-HASH:-1171860411

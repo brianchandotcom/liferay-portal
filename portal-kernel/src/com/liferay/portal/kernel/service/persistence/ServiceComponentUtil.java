@@ -36,6 +36,20 @@ public class ServiceComponentUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ServiceComponent> serviceComponents) {
+		getPersistence().cacheResult(serviceComponents);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ServiceComponent serviceComponent) {
+		getPersistence().cacheResult(serviceComponent);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -308,24 +322,6 @@ public class ServiceComponentUtil {
 	}
 
 	/**
-	 * Caches the service component in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponent the service component
-	 */
-	public static void cacheResult(ServiceComponent serviceComponent) {
-		getPersistence().cacheResult(serviceComponent);
-	}
-
-	/**
-	 * Caches the service components in the entity cache if it is enabled.
-	 *
-	 * @param serviceComponents the service components
-	 */
-	public static void cacheResult(List<ServiceComponent> serviceComponents) {
-		getPersistence().cacheResult(serviceComponents);
-	}
-
-	/**
 	 * Creates a new service component with the primary key. Does not add the service component to the database.
 	 *
 	 * @param serviceComponentId the primary key for the new service component
@@ -390,4 +386,4 @@ public class ServiceComponentUtil {
 	private static volatile ServiceComponentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1038927203
+// LIFERAY-SERVICE-BUILDER-HASH:-1468019015

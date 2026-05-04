@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -756,80 +754,6 @@ public class LaunchEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the launch entry in the entity cache if it is enabled.
-	 *
-	 * @param launchEntry the launch entry
-	 */
-	@Override
-	public void cacheResult(LaunchEntry launchEntry) {
-		entityCache.putResult(
-			LaunchEntryImpl.class, launchEntry.getPrimaryKey(), launchEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C,
-			new Object[] {
-				launchEntry.getClassNameId(), launchEntry.getClassPK(),
-				launchEntry.getClassVersion()
-			},
-			launchEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				launchEntry.getExternalReferenceCode(),
-				launchEntry.getCompanyId()
-			},
-			launchEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the launch entries in the entity cache if it is enabled.
-	 *
-	 * @param launchEntries the launch entries
-	 */
-	@Override
-	public void cacheResult(List<LaunchEntry> launchEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (launchEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LaunchEntry launchEntry : launchEntries) {
-			if (entityCache.getResult(
-					LaunchEntryImpl.class, launchEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(launchEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LaunchEntryModelImpl launchEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			launchEntryModelImpl.getClassNameId(),
-			launchEntryModelImpl.getClassPK(),
-			launchEntryModelImpl.getClassVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C_C, args, launchEntryModelImpl);
-
-		args = new Object[] {
-			launchEntryModelImpl.getExternalReferenceCode(),
-			launchEntryModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, launchEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new launch entry with the primary key. Does not add the launch entry to the database.
 	 *
 	 * @param launchEntryId the primary key for the new launch entry
@@ -1029,10 +953,7 @@ public class LaunchEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LaunchEntryImpl.class, launchEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(launchEntryModelImpl);
+		cacheUniqueFindersResult(launchEntry, false);
 
 		if (isNew) {
 			launchEntry.setNew(false);
@@ -1098,9 +1019,6 @@ public class LaunchEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1190,13 +1108,15 @@ public class LaunchEntryPersistenceImpl
 					"launchEntry.", "launchSetId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchEntry::getLaunchSetId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "classVersion"}, true);
+			new String[] {"classNameId", "classPK", "classVersion"}, false,
+			LaunchEntry::getClassNameId, LaunchEntry::getClassPK,
+			LaunchEntry::getClassVersion);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C, _SQL_SELECT_LAUNCHENTRY_WHERE,
@@ -1210,10 +1130,11 @@ public class LaunchEntryPersistenceImpl
 				"launchEntry.", "classVersion", FinderColumn.Type.STRING, "=",
 				true, true, LaunchEntry::getClassVersion));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			LaunchEntry::getExternalReferenceCode, LaunchEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_LAUNCHENTRY_WHERE,
@@ -1294,4 +1215,4 @@ public class LaunchEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:649277435
+// LIFERAY-SERVICE-BUILDER-HASH:-97808227

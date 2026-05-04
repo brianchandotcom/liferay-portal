@@ -134,20 +134,6 @@ public interface ImagePersistence
 	public int countByLtSize(int size);
 
 	/**
-	 * Caches the image in the entity cache if it is enabled.
-	 *
-	 * @param image the image
-	 */
-	public void cacheResult(Image image);
-
-	/**
-	 * Caches the images in the entity cache if it is enabled.
-	 *
-	 * @param images the images
-	 */
-	public void cacheResult(java.util.List<Image> images);
-
-	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
 	 * @param imageId the primary key for the new image
@@ -184,4 +170,4 @@ public interface ImagePersistence
 	public Image fetchByPrimaryKey(long imageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-297186744
+// LIFERAY-SERVICE-BUILDER-HASH:331658372

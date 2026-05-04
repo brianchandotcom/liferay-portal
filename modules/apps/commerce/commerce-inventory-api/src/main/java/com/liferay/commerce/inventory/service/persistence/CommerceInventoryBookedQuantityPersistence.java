@@ -365,23 +365,6 @@ public interface CommerceInventoryBookedQuantityPersistence
 		long companyId, String sku, String unitOfMeasureKey);
 
 	/**
-	 * Caches the commerce inventory booked quantity in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
-	 */
-	public void cacheResult(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity);
-
-	/**
-	 * Caches the commerce inventory booked quantities in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantities the commerce inventory booked quantities
-	 */
-	public void cacheResult(
-		java.util.List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities);
-
-	/**
 	 * Creates a new commerce inventory booked quantity with the primary key. Does not add the commerce inventory booked quantity to the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key for the new commerce inventory booked quantity
@@ -425,4 +408,4 @@ public interface CommerceInventoryBookedQuantityPersistence
 		long commerceInventoryBookedQuantityId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1421095248
+// LIFERAY-SERVICE-BUILDER-HASH:-508103646

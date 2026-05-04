@@ -855,21 +855,6 @@ public interface ObjectValidationRulePersistence
 		String externalReferenceCode, long companyId, long objectDefinitionId);
 
 	/**
-	 * Caches the object validation rule in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRule the object validation rule
-	 */
-	public void cacheResult(ObjectValidationRule objectValidationRule);
-
-	/**
-	 * Caches the object validation rules in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRules the object validation rules
-	 */
-	public void cacheResult(
-		java.util.List<ObjectValidationRule> objectValidationRules);
-
-	/**
 	 * Creates a new object validation rule with the primary key. Does not add the object validation rule to the database.
 	 *
 	 * @param objectValidationRuleId the primary key for the new object validation rule
@@ -909,4 +894,4 @@ public interface ObjectValidationRulePersistence
 	public ObjectValidationRule fetchByPrimaryKey(long objectValidationRuleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1544243845
+// LIFERAY-SERVICE-BUILDER-HASH:-1856111473

@@ -861,4 +861,4 @@ public class PatcherAccountModelImpl
 	private PatcherAccount _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:105206906
+// LIFERAY-SERVICE-BUILDER-HASH:1861107474

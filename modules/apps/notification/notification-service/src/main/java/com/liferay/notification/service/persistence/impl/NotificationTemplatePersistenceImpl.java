@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1350,67 +1348,6 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the notification template in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplate the notification template
-	 */
-	@Override
-	public void cacheResult(NotificationTemplate notificationTemplate) {
-		entityCache.putResult(
-			NotificationTemplateImpl.class,
-			notificationTemplate.getPrimaryKey(), notificationTemplate);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				notificationTemplate.getExternalReferenceCode(),
-				notificationTemplate.getCompanyId()
-			},
-			notificationTemplate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the notification templates in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplates the notification templates
-	 */
-	@Override
-	public void cacheResult(List<NotificationTemplate> notificationTemplates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (notificationTemplates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplates) {
-
-			if (entityCache.getResult(
-					NotificationTemplateImpl.class,
-					notificationTemplate.getPrimaryKey()) == null) {
-
-				cacheResult(notificationTemplate);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		NotificationTemplateModelImpl notificationTemplateModelImpl) {
-
-		Object[] args = new Object[] {
-			notificationTemplateModelImpl.getExternalReferenceCode(),
-			notificationTemplateModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, notificationTemplateModelImpl);
-	}
-
-	/**
 	 * Creates a new notification template with the primary key. Does not add the notification template to the database.
 	 *
 	 * @param notificationTemplateId the primary key for the new notification template
@@ -1623,11 +1560,7 @@ public class NotificationTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NotificationTemplateImpl.class, notificationTemplateModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(notificationTemplateModelImpl);
+		cacheUniqueFindersResult(notificationTemplate, false);
 
 		if (isNew) {
 			notificationTemplate.setNew(false);
@@ -1693,9 +1626,6 @@ public class NotificationTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1792,10 +1722,12 @@ public class NotificationTemplatePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationTemplate::getCompanyId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			NotificationTemplate::getExternalReferenceCode,
+			NotificationTemplate::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1901,4 +1833,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-394265675
+// LIFERAY-SERVICE-BUILDER-HASH:894699843

@@ -291,21 +291,6 @@ public interface NotificationRecipientPersistence
 	public int countByClassPK(long classPK);
 
 	/**
-	 * Caches the notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipient the notification recipient
-	 */
-	public void cacheResult(NotificationRecipient notificationRecipient);
-
-	/**
-	 * Caches the notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipients the notification recipients
-	 */
-	public void cacheResult(
-		java.util.List<NotificationRecipient> notificationRecipients);
-
-	/**
 	 * Creates a new notification recipient with the primary key. Does not add the notification recipient to the database.
 	 *
 	 * @param notificationRecipientId the primary key for the new notification recipient
@@ -346,4 +331,4 @@ public interface NotificationRecipientPersistence
 		long notificationRecipientId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1022161748
+// LIFERAY-SERVICE-BUILDER-HASH:-625945012

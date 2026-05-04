@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLocalization
 import com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -39,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -370,86 +367,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp definition localization in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalization the cp definition localization
-	 */
-	@Override
-	public void cacheResult(CPDefinitionLocalization cpDefinitionLocalization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionLocalization.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPDefinitionLocalizationImpl.class,
-				cpDefinitionLocalization.getPrimaryKey(),
-				cpDefinitionLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId_LanguageId,
-				new Object[] {
-					cpDefinitionLocalization.getCPDefinitionId(),
-					cpDefinitionLocalization.getLanguageId()
-				},
-				cpDefinitionLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp definition localizations in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLocalizations the cp definition localizations
-	 */
-	@Override
-	public void cacheResult(
-		List<CPDefinitionLocalization> cpDefinitionLocalizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDefinitionLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDefinitionLocalization cpDefinitionLocalization :
-				cpDefinitionLocalizations) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpDefinitionLocalization.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPDefinitionLocalizationImpl.class,
-						cpDefinitionLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(cpDefinitionLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDefinitionLocalizationModelImpl cpDefinitionLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionLocalizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpDefinitionLocalizationModelImpl.getCPDefinitionId(),
-				cpDefinitionLocalizationModelImpl.getLanguageId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCPDefinitionId_LanguageId, args,
-				cpDefinitionLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp definition localization with the primary key. Does not add the cp definition localization to the database.
 	 *
 	 * @param cpDefinitionLocalizationId the primary key for the new cp definition localization
@@ -642,11 +559,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDefinitionLocalizationImpl.class,
-			cpDefinitionLocalizationModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpDefinitionLocalizationModelImpl);
+		cacheUniqueFindersResult(cpDefinitionLocalization, false);
 
 		if (isNew) {
 			cpDefinitionLocalization.setNew(false);
@@ -777,9 +690,6 @@ public class CPDefinitionLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCPDefinitionId",
 			new String[] {
@@ -812,10 +722,12 @@ public class CPDefinitionLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionLocalization::getCPDefinitionId));
 
-		_finderPathFetchByCPDefinitionId_LanguageId = new FinderPath(
+		_finderPathFetchByCPDefinitionId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "languageId"}, true);
+			new String[] {"CPDefinitionId", "languageId"}, false,
+			CPDefinitionLocalization::getCPDefinitionId,
+			CPDefinitionLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByCPDefinitionId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -899,4 +811,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-836281669
+// LIFERAY-SERVICE-BUILDER-HASH:-512699704

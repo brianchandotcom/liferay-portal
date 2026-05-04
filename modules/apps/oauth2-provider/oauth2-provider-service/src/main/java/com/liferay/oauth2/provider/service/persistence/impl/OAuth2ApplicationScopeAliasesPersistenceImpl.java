@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -402,52 +399,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 	/**
-	 * Caches the o auth2 application scope aliases in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliases the o auth2 application scope aliases
-	 */
-	@Override
-	public void cacheResult(
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
-		entityCache.putResult(
-			OAuth2ApplicationScopeAliasesImpl.class,
-			oAuth2ApplicationScopeAliases.getPrimaryKey(),
-			oAuth2ApplicationScopeAliases);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the o auth2 application scope aliaseses in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliaseses the o auth2 application scope aliaseses
-	 */
-	@Override
-	public void cacheResult(
-		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (oAuth2ApplicationScopeAliaseses.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases :
-				oAuth2ApplicationScopeAliaseses) {
-
-			if (entityCache.getResult(
-					OAuth2ApplicationScopeAliasesImpl.class,
-					oAuth2ApplicationScopeAliases.getPrimaryKey()) == null) {
-
-				cacheResult(oAuth2ApplicationScopeAliases);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new o auth2 application scope aliases with the primary key. Does not add the o auth2 application scope aliases to the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the primary key for the new o auth2 application scope aliases
@@ -587,9 +538,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			OAuth2ApplicationScopeAliasesImpl.class,
-			oAuth2ApplicationScopeAliasesModelImpl, false, true);
+		cacheUniqueFindersResult(oAuth2ApplicationScopeAliases, false);
 
 		if (isNew) {
 			oAuth2ApplicationScopeAliases.setNew(false);
@@ -658,9 +607,6 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -796,4 +742,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1933465826
+// LIFERAY-SERVICE-BUILDER-HASH:2019227631

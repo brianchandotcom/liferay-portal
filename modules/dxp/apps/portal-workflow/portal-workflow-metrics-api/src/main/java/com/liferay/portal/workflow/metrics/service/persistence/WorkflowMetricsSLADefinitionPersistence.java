@@ -992,23 +992,6 @@ public interface WorkflowMetricsSLADefinitionPersistence
 		int status);
 
 	/**
-	 * Caches the workflow metrics sla definition in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinition the workflow metrics sla definition
-	 */
-	public void cacheResult(
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition);
-
-	/**
-	 * Caches the workflow metrics sla definitions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitions the workflow metrics sla definitions
-	 */
-	public void cacheResult(
-		java.util.List<WorkflowMetricsSLADefinition>
-			workflowMetricsSLADefinitions);
-
-	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionId the primary key for the new workflow metrics sla definition
@@ -1052,4 +1035,4 @@ public interface WorkflowMetricsSLADefinitionPersistence
 		long workflowMetricsSLADefinitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1059468891
+// LIFERAY-SERVICE-BUILDER-HASH:-1937694835

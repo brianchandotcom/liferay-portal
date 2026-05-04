@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpSessionException;
@@ -581,66 +578,6 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 	/**
-	 * Caches the saml sp session in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSession the saml sp session
-	 */
-	@Override
-	public void cacheResult(SamlSpSession samlSpSession) {
-		entityCache.putResult(
-			SamlSpSessionImpl.class, samlSpSession.getPrimaryKey(),
-			samlSpSession);
-
-		finderCache.putResult(
-			_finderPathFetchByJSessionId,
-			new Object[] {samlSpSession.getJSessionId()}, samlSpSession);
-
-		finderCache.putResult(
-			_finderPathFetchBySamlSpSessionKey,
-			new Object[] {samlSpSession.getSamlSpSessionKey()}, samlSpSession);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saml sp sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlSpSessions the saml sp sessions
-	 */
-	@Override
-	public void cacheResult(List<SamlSpSession> samlSpSessions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (samlSpSessions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SamlSpSession samlSpSession : samlSpSessions) {
-			if (entityCache.getResult(
-					SamlSpSessionImpl.class, samlSpSession.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(samlSpSession);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SamlSpSessionModelImpl samlSpSessionModelImpl) {
-
-		Object[] args = new Object[] {samlSpSessionModelImpl.getJSessionId()};
-
-		finderCache.putResult(
-			_finderPathFetchByJSessionId, args, samlSpSessionModelImpl);
-
-		args = new Object[] {samlSpSessionModelImpl.getSamlSpSessionKey()};
-
-		finderCache.putResult(
-			_finderPathFetchBySamlSpSessionKey, args, samlSpSessionModelImpl);
-	}
-
-	/**
 	 * Creates a new saml sp session with the primary key. Does not add the saml sp session to the database.
 	 *
 	 * @param samlSpSessionId the primary key for the new saml sp session
@@ -769,10 +706,7 @@ public class SamlSpSessionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SamlSpSessionImpl.class, samlSpSessionModelImpl, false, true);
-
-		cacheUniqueFindersCache(samlSpSessionModelImpl);
+		cacheUniqueFindersResult(samlSpSession, false);
 
 		if (isNew) {
 			samlSpSession.setNew(false);
@@ -838,9 +772,6 @@ public class SamlSpSessionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindBySamlPeerBindingId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySamlPeerBindingId",
 			new String[] {
@@ -871,10 +802,10 @@ public class SamlSpSessionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SamlSpSession::getSamlPeerBindingId));
 
-		_finderPathFetchByJSessionId = new FinderPath(
+		_finderPathFetchByJSessionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByJSessionId",
 			new String[] {String.class.getName()}, new String[] {"jSessionId"},
-			true);
+			false, SamlSpSession::getJSessionId);
 
 		_uniquePersistenceFinderByJSessionId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByJSessionId, _SQL_SELECT_SAMLSPSESSION_WHERE,
@@ -882,10 +813,11 @@ public class SamlSpSessionPersistenceImpl
 				"samlSpSession.", "jSessionId", FinderColumn.Type.STRING, "=",
 				true, true, SamlSpSession::getJSessionId));
 
-		_finderPathFetchBySamlSpSessionKey = new FinderPath(
+		_finderPathFetchBySamlSpSessionKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlSpSessionKey",
 			new String[] {String.class.getName()},
-			new String[] {"samlSpSessionKey"}, true);
+			new String[] {"samlSpSessionKey"}, false,
+			SamlSpSession::getSamlSpSessionKey);
 
 		_uniquePersistenceFinderBySamlSpSessionKey =
 			new UniquePersistenceFinder<>(
@@ -996,4 +928,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-755610404
+// LIFERAY-SERVICE-BUILDER-HASH:1453445546

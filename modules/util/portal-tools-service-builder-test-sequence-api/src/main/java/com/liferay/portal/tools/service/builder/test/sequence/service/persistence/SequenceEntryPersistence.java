@@ -246,20 +246,6 @@ public interface SequenceEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Caches the sequence entry in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntry the sequence entry
-	 */
-	public void cacheResult(SequenceEntry sequenceEntry);
-
-	/**
-	 * Caches the sequence entries in the entity cache if it is enabled.
-	 *
-	 * @param sequenceEntries the sequence entries
-	 */
-	public void cacheResult(java.util.List<SequenceEntry> sequenceEntries);
-
-	/**
 	 * Creates a new sequence entry with the primary key. Does not add the sequence entry to the database.
 	 *
 	 * @param sequenceEntryId the primary key for the new sequence entry
@@ -298,4 +284,4 @@ public interface SequenceEntryPersistence
 	public SequenceEntry fetchByPrimaryKey(long sequenceEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1819685327
+// LIFERAY-SERVICE-BUILDER-HASH:-367697437

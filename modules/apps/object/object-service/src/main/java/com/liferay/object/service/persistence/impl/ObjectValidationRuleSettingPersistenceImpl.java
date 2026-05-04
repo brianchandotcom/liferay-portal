@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -925,92 +922,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the object validation rule setting in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRuleSetting the object validation rule setting
-	 */
-	@Override
-	public void cacheResult(
-		ObjectValidationRuleSetting objectValidationRuleSetting) {
-
-		entityCache.putResult(
-			ObjectValidationRuleSettingImpl.class,
-			objectValidationRuleSetting.getPrimaryKey(),
-			objectValidationRuleSetting);
-
-		finderCache.putResult(
-			_finderPathFetchByN_V,
-			new Object[] {
-				objectValidationRuleSetting.getName(),
-				objectValidationRuleSetting.getValue()
-			},
-			objectValidationRuleSetting);
-
-		finderCache.putResult(
-			_finderPathFetchByOVRI_N_V,
-			new Object[] {
-				objectValidationRuleSetting.getObjectValidationRuleId(),
-				objectValidationRuleSetting.getName(),
-				objectValidationRuleSetting.getValue()
-			},
-			objectValidationRuleSetting);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object validation rule settings in the entity cache if it is enabled.
-	 *
-	 * @param objectValidationRuleSettings the object validation rule settings
-	 */
-	@Override
-	public void cacheResult(
-		List<ObjectValidationRuleSetting> objectValidationRuleSettings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectValidationRuleSettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectValidationRuleSetting objectValidationRuleSetting :
-				objectValidationRuleSettings) {
-
-			if (entityCache.getResult(
-					ObjectValidationRuleSettingImpl.class,
-					objectValidationRuleSetting.getPrimaryKey()) == null) {
-
-				cacheResult(objectValidationRuleSetting);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectValidationRuleSettingModelImpl
-			objectValidationRuleSettingModelImpl) {
-
-		Object[] args = new Object[] {
-			objectValidationRuleSettingModelImpl.getName(),
-			objectValidationRuleSettingModelImpl.getValue()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByN_V, args, objectValidationRuleSettingModelImpl);
-
-		args = new Object[] {
-			objectValidationRuleSettingModelImpl.getObjectValidationRuleId(),
-			objectValidationRuleSettingModelImpl.getName(),
-			objectValidationRuleSettingModelImpl.getValue()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByOVRI_N_V, args,
-			objectValidationRuleSettingModelImpl);
-	}
-
-	/**
 	 * Creates a new object validation rule setting with the primary key. Does not add the object validation rule setting to the database.
 	 *
 	 * @param objectValidationRuleSettingId the primary key for the new object validation rule setting
@@ -1170,11 +1081,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectValidationRuleSettingImpl.class,
-			objectValidationRuleSettingModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectValidationRuleSettingModelImpl);
+		cacheUniqueFindersResult(objectValidationRuleSetting, false);
 
 		if (isNew) {
 			objectValidationRuleSetting.setNew(false);
@@ -1243,9 +1150,6 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1386,10 +1290,12 @@ public class ObjectValidationRuleSettingPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					ObjectValidationRuleSetting::getName));
 
-		_finderPathFetchByN_V = new FinderPath(
+		_finderPathFetchByN_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_V",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "value"}, true);
+			new String[] {"name", "value"}, false,
+			ObjectValidationRuleSetting::getName,
+			ObjectValidationRuleSetting::getValue);
 
 		_uniquePersistenceFinderByN_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByN_V,
@@ -1403,13 +1309,16 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				ObjectValidationRuleSetting::getValue));
 
-		_finderPathFetchByOVRI_N_V = new FinderPath(
+		_finderPathFetchByOVRI_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByOVRI_N_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"objectValidationRuleId", "name", "value"}, true);
+			new String[] {"objectValidationRuleId", "name", "value"}, false,
+			ObjectValidationRuleSetting::getObjectValidationRuleId,
+			ObjectValidationRuleSetting::getName,
+			ObjectValidationRuleSetting::getValue);
 
 		_uniquePersistenceFinderByOVRI_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByOVRI_N_V,
@@ -1497,4 +1406,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:30758020
+// LIFERAY-SERVICE-BUILDER-HASH:-1762500764

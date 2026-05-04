@@ -36,6 +36,20 @@ public class CSDiagramSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CSDiagramSetting> csDiagramSettings) {
+		getPersistence().cacheResult(csDiagramSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CSDiagramSetting csDiagramSetting) {
+		getPersistence().cacheResult(csDiagramSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -425,24 +439,6 @@ public class CSDiagramSettingUtil {
 	}
 
 	/**
-	 * Caches the cs diagram setting in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSetting the cs diagram setting
-	 */
-	public static void cacheResult(CSDiagramSetting csDiagramSetting) {
-		getPersistence().cacheResult(csDiagramSetting);
-	}
-
-	/**
-	 * Caches the cs diagram settings in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramSettings the cs diagram settings
-	 */
-	public static void cacheResult(List<CSDiagramSetting> csDiagramSettings) {
-		getPersistence().cacheResult(csDiagramSettings);
-	}
-
-	/**
 	 * Creates a new cs diagram setting with the primary key. Does not add the cs diagram setting to the database.
 	 *
 	 * @param CSDiagramSettingId the primary key for the new cs diagram setting
@@ -507,4 +503,4 @@ public class CSDiagramSettingUtil {
 	private static volatile CSDiagramSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:382842657
+// LIFERAY-SERVICE-BUILDER-HASH:1815122859

@@ -449,20 +449,6 @@ public interface MBMailingListPersistence
 	public int countByG_C(long groupId, long categoryId);
 
 	/**
-	 * Caches the message boards mailing list in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingList the message boards mailing list
-	 */
-	public void cacheResult(MBMailingList mbMailingList);
-
-	/**
-	 * Caches the message boards mailing lists in the entity cache if it is enabled.
-	 *
-	 * @param mbMailingLists the message boards mailing lists
-	 */
-	public void cacheResult(java.util.List<MBMailingList> mbMailingLists);
-
-	/**
 	 * Creates a new message boards mailing list with the primary key. Does not add the message boards mailing list to the database.
 	 *
 	 * @param mailingListId the primary key for the new message boards mailing list
@@ -501,4 +487,4 @@ public interface MBMailingListPersistence
 	public MBMailingList fetchByPrimaryKey(long mailingListId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:44845849
+// LIFERAY-SERVICE-BUILDER-HASH:1559605361

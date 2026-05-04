@@ -1467,20 +1467,6 @@ public interface CPDefinitionLinkPersistence
 	public int countByCP_T_S(long CProductId, String type, int status);
 
 	/**
-	 * Caches the cp definition link in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLink the cp definition link
-	 */
-	public void cacheResult(CPDefinitionLink cpDefinitionLink);
-
-	/**
-	 * Caches the cp definition links in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLinks the cp definition links
-	 */
-	public void cacheResult(java.util.List<CPDefinitionLink> cpDefinitionLinks);
-
-	/**
 	 * Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	 *
 	 * @param CPDefinitionLinkId the primary key for the new cp definition link
@@ -1519,4 +1505,4 @@ public interface CPDefinitionLinkPersistence
 	public CPDefinitionLink fetchByPrimaryKey(long CPDefinitionLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-406054244
+// LIFERAY-SERVICE-BUILDER-HASH:-1145826668

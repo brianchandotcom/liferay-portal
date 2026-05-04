@@ -11,7 +11,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagTable;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagPersistence;
 import com.liferay.announcements.kernel.service.persistence.AnnouncementsFlagUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagImpl;
 import com.liferay.portlet.announcements.model.impl.AnnouncementsFlagModelImpl;
@@ -514,81 +510,6 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 	/**
-	 * Caches the announcements flag in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlag the announcements flag
-	 */
-	@Override
-	public void cacheResult(AnnouncementsFlag announcementsFlag) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					announcementsFlag.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey(),
-				announcementsFlag);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_E_V,
-				new Object[] {
-					announcementsFlag.getUserId(),
-					announcementsFlag.getEntryId(), announcementsFlag.getValue()
-				},
-				announcementsFlag);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the announcements flags in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlags the announcements flags
-	 */
-	@Override
-	public void cacheResult(List<AnnouncementsFlag> announcementsFlags) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (announcementsFlags.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						announcementsFlag.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AnnouncementsFlagImpl.class,
-						announcementsFlag.getPrimaryKey()) == null) {
-
-					cacheResult(announcementsFlag);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AnnouncementsFlagModelImpl announcementsFlagModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					announcementsFlagModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				announcementsFlagModelImpl.getUserId(),
-				announcementsFlagModelImpl.getEntryId(),
-				announcementsFlagModelImpl.getValue()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_E_V, args, announcementsFlagModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
 	 *
 	 * @param flagId the primary key for the new announcements flag
@@ -718,11 +639,7 @@ public class AnnouncementsFlagPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AnnouncementsFlagImpl.class, announcementsFlagModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(announcementsFlagModelImpl);
+		cacheUniqueFindersResult(announcementsFlag, false);
 
 		if (isNew) {
 			announcementsFlag.setNew(false);
@@ -840,9 +757,6 @@ public class AnnouncementsFlagPersistenceImpl
 	 * Initializes the announcements flag persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -902,13 +816,15 @@ public class AnnouncementsFlagPersistenceImpl
 					"announcementsFlag.", "entryId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getEntryId));
 
-		_finderPathFetchByU_E_V = new FinderPath(
+		_finderPathFetchByU_E_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_E_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"userId", "entryId", "value"}, true);
+			new String[] {"userId", "entryId", "value"}, false,
+			AnnouncementsFlag::getUserId, AnnouncementsFlag::getEntryId,
+			AnnouncementsFlag::getValue);
 
 		_uniquePersistenceFinderByU_E_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_E_V, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
@@ -955,4 +871,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1788557452
+// LIFERAY-SERVICE-BUILDER-HASH:272509585

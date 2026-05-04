@@ -36,6 +36,22 @@ public class JournalContentSearchUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<JournalContentSearch> journalContentSearchs) {
+
+		getPersistence().cacheResult(journalContentSearchs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(JournalContentSearch journalContentSearch) {
+		getPersistence().cacheResult(journalContentSearch);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1304,26 +1320,6 @@ public class JournalContentSearchUtil {
 	}
 
 	/**
-	 * Caches the journal content search in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearch the journal content search
-	 */
-	public static void cacheResult(JournalContentSearch journalContentSearch) {
-		getPersistence().cacheResult(journalContentSearch);
-	}
-
-	/**
-	 * Caches the journal content searches in the entity cache if it is enabled.
-	 *
-	 * @param journalContentSearchs the journal content searches
-	 */
-	public static void cacheResult(
-		List<JournalContentSearch> journalContentSearchs) {
-
-		getPersistence().cacheResult(journalContentSearchs);
-	}
-
-	/**
 	 * Creates a new journal content search with the primary key. Does not add the journal content search to the database.
 	 *
 	 * @param contentSearchId the primary key for the new journal content search
@@ -1388,4 +1384,4 @@ public class JournalContentSearchUtil {
 	private static volatile JournalContentSearchPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:620890955
+// LIFERAY-SERVICE-BUILDER-HASH:-343063191

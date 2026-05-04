@@ -963,21 +963,6 @@ public interface CommerceShipmentItemPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce shipment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItem the commerce shipment item
-	 */
-	public void cacheResult(CommerceShipmentItem commerceShipmentItem);
-
-	/**
-	 * Caches the commerce shipment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItems the commerce shipment items
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShipmentItem> commerceShipmentItems);
-
-	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *
 	 * @param commerceShipmentItemId the primary key for the new commerce shipment item
@@ -1017,4 +1002,4 @@ public interface CommerceShipmentItemPersistence
 	public CommerceShipmentItem fetchByPrimaryKey(long commerceShipmentItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1066909222
+// LIFERAY-SERVICE-BUILDER-HASH:-1052796364

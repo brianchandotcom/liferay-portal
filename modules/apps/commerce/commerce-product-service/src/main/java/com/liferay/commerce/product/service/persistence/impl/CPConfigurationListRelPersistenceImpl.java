@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPConfigurationListRelPe
 import com.liferay.commerce.product.service.persistence.CPConfigurationListRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -551,86 +547,6 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp configuration list rel in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRel the cp configuration list rel
-	 */
-	@Override
-	public void cacheResult(CPConfigurationListRel cpConfigurationListRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationListRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPConfigurationListRelImpl.class,
-				cpConfigurationListRel.getPrimaryKey(), cpConfigurationListRel);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_C,
-				new Object[] {
-					cpConfigurationListRel.getClassNameId(),
-					cpConfigurationListRel.getClassPK(),
-					cpConfigurationListRel.getCPConfigurationListId()
-				},
-				cpConfigurationListRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp configuration list rels in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRels the cp configuration list rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CPConfigurationListRel> cpConfigurationListRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpConfigurationListRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPConfigurationListRel cpConfigurationListRel :
-				cpConfigurationListRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpConfigurationListRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPConfigurationListRelImpl.class,
-						cpConfigurationListRel.getPrimaryKey()) == null) {
-
-					cacheResult(cpConfigurationListRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPConfigurationListRelModelImpl cpConfigurationListRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationListRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpConfigurationListRelModelImpl.getClassNameId(),
-				cpConfigurationListRelModelImpl.getClassPK(),
-				cpConfigurationListRelModelImpl.getCPConfigurationListId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_C, args, cpConfigurationListRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp configuration list rel with the primary key. Does not add the cp configuration list rel to the database.
 	 *
 	 * @param CPConfigurationListRelId the primary key for the new cp configuration list rel
@@ -777,11 +693,7 @@ public class CPConfigurationListRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPConfigurationListRelImpl.class, cpConfigurationListRelModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cpConfigurationListRelModelImpl);
+		cacheUniqueFindersResult(cpConfigurationListRel, false);
 
 		if (isNew) {
 			cpConfigurationListRel.setNew(false);
@@ -913,9 +825,6 @@ public class CPConfigurationListRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPConfigurationListId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCPConfigurationListId",
@@ -985,13 +894,15 @@ public class CPConfigurationListRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationListRel::getCPConfigurationListId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "CPConfigurationListId"},
-			true);
+			false, CPConfigurationListRel::getClassNameId,
+			CPConfigurationListRel::getClassPK,
+			CPConfigurationListRel::getCPConfigurationListId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
@@ -1077,4 +988,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:396962933
+// LIFERAY-SERVICE-BUILDER-HASH:-1636608261

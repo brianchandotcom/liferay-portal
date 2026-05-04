@@ -37,6 +37,20 @@ public class SamlSpAuthRequestUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SamlSpAuthRequest> samlSpAuthRequests) {
+		getPersistence().cacheResult(samlSpAuthRequests);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlSpAuthRequest samlSpAuthRequest) {
+		getPersistence().cacheResult(samlSpAuthRequest);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -315,24 +329,6 @@ public class SamlSpAuthRequestUtil {
 	}
 
 	/**
-	 * Caches the saml sp auth request in the entity cache if it is enabled.
-	 *
-	 * @param samlSpAuthRequest the saml sp auth request
-	 */
-	public static void cacheResult(SamlSpAuthRequest samlSpAuthRequest) {
-		getPersistence().cacheResult(samlSpAuthRequest);
-	}
-
-	/**
-	 * Caches the saml sp auth requests in the entity cache if it is enabled.
-	 *
-	 * @param samlSpAuthRequests the saml sp auth requests
-	 */
-	public static void cacheResult(List<SamlSpAuthRequest> samlSpAuthRequests) {
-		getPersistence().cacheResult(samlSpAuthRequests);
-	}
-
-	/**
 	 * Creates a new saml sp auth request with the primary key. Does not add the saml sp auth request to the database.
 	 *
 	 * @param samlSpAuthnRequestId the primary key for the new saml sp auth request
@@ -401,4 +397,4 @@ public class SamlSpAuthRequestUtil {
 	private static volatile SamlSpAuthRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:887486367
+// LIFERAY-SERVICE-BUILDER-HASH:447722791

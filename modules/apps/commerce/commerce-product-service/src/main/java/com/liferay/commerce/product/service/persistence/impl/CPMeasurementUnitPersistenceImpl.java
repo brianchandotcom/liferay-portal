@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -45,8 +44,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1349,110 +1346,6 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp measurement unit in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnit the cp measurement unit
-	 */
-	@Override
-	public void cacheResult(CPMeasurementUnit cpMeasurementUnit) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpMeasurementUnit.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPMeasurementUnitImpl.class, cpMeasurementUnit.getPrimaryKey(),
-				cpMeasurementUnit);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpMeasurementUnit.getUuid(), cpMeasurementUnit.getGroupId()
-				},
-				cpMeasurementUnit);
-
-			finderCache.putResult(
-				_finderPathFetchByC_K,
-				new Object[] {
-					cpMeasurementUnit.getCompanyId(), cpMeasurementUnit.getKey()
-				},
-				cpMeasurementUnit);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpMeasurementUnit.getExternalReferenceCode(),
-					cpMeasurementUnit.getCompanyId()
-				},
-				cpMeasurementUnit);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp measurement units in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnits the cp measurement units
-	 */
-	@Override
-	public void cacheResult(List<CPMeasurementUnit> cpMeasurementUnits) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpMeasurementUnits.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPMeasurementUnit cpMeasurementUnit : cpMeasurementUnits) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpMeasurementUnit.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPMeasurementUnitImpl.class,
-						cpMeasurementUnit.getPrimaryKey()) == null) {
-
-					cacheResult(cpMeasurementUnit);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPMeasurementUnitModelImpl cpMeasurementUnitModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpMeasurementUnitModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpMeasurementUnitModelImpl.getUuid(),
-				cpMeasurementUnitModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpMeasurementUnitModelImpl);
-
-			args = new Object[] {
-				cpMeasurementUnitModelImpl.getCompanyId(),
-				cpMeasurementUnitModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_K, args, cpMeasurementUnitModelImpl);
-
-			args = new Object[] {
-				cpMeasurementUnitModelImpl.getExternalReferenceCode(),
-				cpMeasurementUnitModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpMeasurementUnitModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp measurement unit with the primary key. Does not add the cp measurement unit to the database.
 	 *
 	 * @param CPMeasurementUnitId the primary key for the new cp measurement unit
@@ -1670,11 +1563,7 @@ public class CPMeasurementUnitPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPMeasurementUnitImpl.class, cpMeasurementUnitModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(cpMeasurementUnitModelImpl);
+		cacheUniqueFindersResult(cpMeasurementUnit, false);
 
 		if (isNew) {
 			cpMeasurementUnit.setNew(false);
@@ -1819,9 +1708,6 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1850,10 +1736,11 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPMeasurementUnit::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPMeasurementUnit::getUuid, CPMeasurementUnit::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
@@ -1927,10 +1814,11 @@ public class CPMeasurementUnitPersistenceImpl
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
 
-		_finderPathFetchByC_K = new FinderPath(
+		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, true);
+			new String[] {"companyId", "key_"}, false,
+			CPMeasurementUnit::getCompanyId, CPMeasurementUnit::getKey);
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
@@ -2005,10 +1893,12 @@ public class CPMeasurementUnitPersistenceImpl
 				"cpMeasurementUnit.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, CPMeasurementUnit::getType));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPMeasurementUnit::getExternalReferenceCode,
+			CPMeasurementUnit::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
@@ -2092,4 +1982,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-231170531
+// LIFERAY-SERVICE-BUILDER-HASH:-1653294895

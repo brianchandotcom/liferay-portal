@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPSpecificationOptionLis
 import com.liferay.commerce.product.service.persistence.CPSpecificationOptionListTypeDefinitionRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -578,100 +574,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp specification option list type definition rel in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRel the cp specification option list type definition rel
-	 */
-	@Override
-	public void cacheResult(
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpSpecificationOptionListTypeDefinitionRel.
-						getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPSpecificationOptionListTypeDefinitionRelImpl.class,
-				cpSpecificationOptionListTypeDefinitionRel.getPrimaryKey(),
-				cpSpecificationOptionListTypeDefinitionRel);
-
-			finderCache.putResult(
-				_finderPathFetchByC_L,
-				new Object[] {
-					cpSpecificationOptionListTypeDefinitionRel.
-						getCPSpecificationOptionId(),
-					cpSpecificationOptionListTypeDefinitionRel.
-						getListTypeDefinitionId()
-				},
-				cpSpecificationOptionListTypeDefinitionRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp specification option list type definition rels in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRels the cp specification option list type definition rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpSpecificationOptionListTypeDefinitionRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPSpecificationOptionListTypeDefinitionRel
-				cpSpecificationOptionListTypeDefinitionRel :
-					cpSpecificationOptionListTypeDefinitionRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpSpecificationOptionListTypeDefinitionRel.
-							getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPSpecificationOptionListTypeDefinitionRelImpl.class,
-						cpSpecificationOptionListTypeDefinitionRel.
-							getPrimaryKey()) == null) {
-
-					cacheResult(cpSpecificationOptionListTypeDefinitionRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPSpecificationOptionListTypeDefinitionRelModelImpl
-			cpSpecificationOptionListTypeDefinitionRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpSpecificationOptionListTypeDefinitionRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpSpecificationOptionListTypeDefinitionRelModelImpl.
-					getCPSpecificationOptionId(),
-				cpSpecificationOptionListTypeDefinitionRelModelImpl.
-					getListTypeDefinitionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_L, args,
-				cpSpecificationOptionListTypeDefinitionRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp specification option list type definition rel with the primary key. Does not add the cp specification option list type definition rel to the database.
 	 *
 	 * @param CPSpecificationOptionListTypeDefinitionRelId the primary key for the new cp specification option list type definition rel
@@ -813,12 +715,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPSpecificationOptionListTypeDefinitionRelImpl.class,
-			cpSpecificationOptionListTypeDefinitionRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(
-			cpSpecificationOptionListTypeDefinitionRelModelImpl);
+		cacheUniqueFindersResult(
+			cpSpecificationOptionListTypeDefinitionRel, false);
 
 		if (isNew) {
 			cpSpecificationOptionListTypeDefinitionRel.setNew(false);
@@ -950,9 +848,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCPSpecificationOptionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCPSpecificationOptionId",
@@ -1028,11 +923,15 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 					CPSpecificationOptionListTypeDefinitionRel::
 						getListTypeDefinitionId));
 
-		_finderPathFetchByC_L = new FinderPath(
+		_finderPathFetchByC_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"},
-			true);
+			false,
+			CPSpecificationOptionListTypeDefinitionRel::
+				getCPSpecificationOptionId,
+			CPSpecificationOptionListTypeDefinitionRel::
+				getListTypeDefinitionId);
 
 		_uniquePersistenceFinderByC_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_L,
@@ -1125,4 +1024,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-277215660
+// LIFERAY-SERVICE-BUILDER-HASH:1709037793

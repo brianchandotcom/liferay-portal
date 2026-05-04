@@ -36,6 +36,20 @@ public class MemberRequestUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MemberRequest> memberRequests) {
+		getPersistence().cacheResult(memberRequests);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MemberRequest memberRequest) {
+		getPersistence().cacheResult(memberRequest);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -508,24 +522,6 @@ public class MemberRequestUtil {
 	}
 
 	/**
-	 * Caches the member request in the entity cache if it is enabled.
-	 *
-	 * @param memberRequest the member request
-	 */
-	public static void cacheResult(MemberRequest memberRequest) {
-		getPersistence().cacheResult(memberRequest);
-	}
-
-	/**
-	 * Caches the member requests in the entity cache if it is enabled.
-	 *
-	 * @param memberRequests the member requests
-	 */
-	public static void cacheResult(List<MemberRequest> memberRequests) {
-		getPersistence().cacheResult(memberRequests);
-	}
-
-	/**
 	 * Creates a new member request with the primary key. Does not add the member request to the database.
 	 *
 	 * @param memberRequestId the primary key for the new member request
@@ -588,4 +584,4 @@ public class MemberRequestUtil {
 	private static volatile MemberRequestPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-860342754
+// LIFERAY-SERVICE-BUILDER-HASH:-451643618

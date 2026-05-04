@@ -36,6 +36,20 @@ public class WebsiteUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Website> websites) {
+		getPersistence().cacheResult(websites);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Website website) {
+		getPersistence().cacheResult(website);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1099,24 +1113,6 @@ public class WebsiteUtil {
 	}
 
 	/**
-	 * Caches the website in the entity cache if it is enabled.
-	 *
-	 * @param website the website
-	 */
-	public static void cacheResult(Website website) {
-		getPersistence().cacheResult(website);
-	}
-
-	/**
-	 * Caches the websites in the entity cache if it is enabled.
-	 *
-	 * @param websites the websites
-	 */
-	public static void cacheResult(List<Website> websites) {
-		getPersistence().cacheResult(websites);
-	}
-
-	/**
 	 * Creates a new website with the primary key. Does not add the website to the database.
 	 *
 	 * @param websiteId the primary key for the new website
@@ -1177,4 +1173,4 @@ public class WebsiteUtil {
 	private static volatile WebsitePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:743308696
+// LIFERAY-SERVICE-BUILDER-HASH:1116655120

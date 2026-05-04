@@ -953,4 +953,4 @@ public class DDMFieldModelImpl
 	private DDMField _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1416130739
+// LIFERAY-SERVICE-BUILDER-HASH:-1388316905

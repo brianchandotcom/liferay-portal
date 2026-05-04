@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPConfigurationListUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3234,96 +3231,6 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp configuration list in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationList the cp configuration list
-	 */
-	@Override
-	public void cacheResult(CPConfigurationList cpConfigurationList) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationList.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPConfigurationListImpl.class,
-				cpConfigurationList.getPrimaryKey(), cpConfigurationList);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpConfigurationList.getUuid(),
-					cpConfigurationList.getGroupId()
-				},
-				cpConfigurationList);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpConfigurationList.getExternalReferenceCode(),
-					cpConfigurationList.getCompanyId()
-				},
-				cpConfigurationList);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp configuration lists in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationLists the cp configuration lists
-	 */
-	@Override
-	public void cacheResult(List<CPConfigurationList> cpConfigurationLists) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpConfigurationLists.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPConfigurationList cpConfigurationList : cpConfigurationLists) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpConfigurationList.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPConfigurationListImpl.class,
-						cpConfigurationList.getPrimaryKey()) == null) {
-
-					cacheResult(cpConfigurationList);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPConfigurationListModelImpl cpConfigurationListModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpConfigurationListModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpConfigurationListModelImpl.getUuid(),
-				cpConfigurationListModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpConfigurationListModelImpl);
-
-			args = new Object[] {
-				cpConfigurationListModelImpl.getExternalReferenceCode(),
-				cpConfigurationListModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpConfigurationListModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp configuration list with the primary key. Does not add the cp configuration list to the database.
 	 *
 	 * @param CPConfigurationListId the primary key for the new cp configuration list
@@ -3543,11 +3450,7 @@ public class CPConfigurationListPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPConfigurationListImpl.class, cpConfigurationListModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(cpConfigurationListModelImpl);
+		cacheUniqueFindersResult(cpConfigurationList, false);
 
 		if (isNew) {
 			cpConfigurationList.setNew(false);
@@ -3694,9 +3597,6 @@ public class CPConfigurationListPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3725,10 +3625,11 @@ public class CPConfigurationListPersistenceImpl
 				"cpConfigurationList.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPConfigurationList::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPConfigurationList::getUuid, CPConfigurationList::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -3976,10 +3877,12 @@ public class CPConfigurationListPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "status"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPConfigurationList::getExternalReferenceCode,
+			CPConfigurationList::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -4064,4 +3967,4 @@ public class CPConfigurationListPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1820942657
+// LIFERAY-SERVICE-BUILDER-HASH:342174131

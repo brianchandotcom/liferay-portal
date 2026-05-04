@@ -497,20 +497,6 @@ public interface SystemEventPersistence
 		long groupId, long classNameId, long classPK, int type);
 
 	/**
-	 * Caches the system event in the entity cache if it is enabled.
-	 *
-	 * @param systemEvent the system event
-	 */
-	public void cacheResult(SystemEvent systemEvent);
-
-	/**
-	 * Caches the system events in the entity cache if it is enabled.
-	 *
-	 * @param systemEvents the system events
-	 */
-	public void cacheResult(java.util.List<SystemEvent> systemEvents);
-
-	/**
 	 * Creates a new system event with the primary key. Does not add the system event to the database.
 	 *
 	 * @param systemEventId the primary key for the new system event
@@ -549,4 +535,4 @@ public interface SystemEventPersistence
 	public SystemEvent fetchByPrimaryKey(long systemEventId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550259533
+// LIFERAY-SERVICE-BUILDER-HASH:-305117533

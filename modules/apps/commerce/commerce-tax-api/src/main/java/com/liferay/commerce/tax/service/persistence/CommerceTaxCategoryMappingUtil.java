@@ -36,6 +36,24 @@ public class CommerceTaxCategoryMappingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceTaxCategoryMapping> commerceTaxCategoryMappings) {
+
+		getPersistence().cacheResult(commerceTaxCategoryMappings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceTaxCategoryMapping commerceTaxCategoryMapping) {
+
+		getPersistence().cacheResult(commerceTaxCategoryMapping);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -716,28 +734,6 @@ public class CommerceTaxCategoryMappingUtil {
 	}
 
 	/**
-	 * Caches the commerce tax category mapping in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMapping the commerce tax category mapping
-	 */
-	public static void cacheResult(
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping) {
-
-		getPersistence().cacheResult(commerceTaxCategoryMapping);
-	}
-
-	/**
-	 * Caches the commerce tax category mappings in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMappings the commerce tax category mappings
-	 */
-	public static void cacheResult(
-		List<CommerceTaxCategoryMapping> commerceTaxCategoryMappings) {
-
-		getPersistence().cacheResult(commerceTaxCategoryMappings);
-	}
-
-	/**
 	 * Creates a new commerce tax category mapping with the primary key. Does not add the commerce tax category mapping to the database.
 	 *
 	 * @param commerceTaxCategoryMappingId the primary key for the new commerce tax category mapping
@@ -810,4 +806,4 @@ public class CommerceTaxCategoryMappingUtil {
 	private static volatile CommerceTaxCategoryMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:506374195
+// LIFERAY-SERVICE-BUILDER-HASH:1711172445

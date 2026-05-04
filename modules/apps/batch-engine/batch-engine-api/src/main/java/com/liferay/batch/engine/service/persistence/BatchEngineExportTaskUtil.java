@@ -36,6 +36,24 @@ public class BatchEngineExportTaskUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<BatchEngineExportTask> batchEngineExportTasks) {
+
+		getPersistence().cacheResult(batchEngineExportTasks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		BatchEngineExportTask batchEngineExportTask) {
+
+		getPersistence().cacheResult(batchEngineExportTask);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -685,28 +703,6 @@ public class BatchEngineExportTaskUtil {
 	}
 
 	/**
-	 * Caches the batch engine export task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTask the batch engine export task
-	 */
-	public static void cacheResult(
-		BatchEngineExportTask batchEngineExportTask) {
-
-		getPersistence().cacheResult(batchEngineExportTask);
-	}
-
-	/**
-	 * Caches the batch engine export tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineExportTasks the batch engine export tasks
-	 */
-	public static void cacheResult(
-		List<BatchEngineExportTask> batchEngineExportTasks) {
-
-		getPersistence().cacheResult(batchEngineExportTasks);
-	}
-
-	/**
 	 * Creates a new batch engine export task with the primary key. Does not add the batch engine export task to the database.
 	 *
 	 * @param batchEngineExportTaskId the primary key for the new batch engine export task
@@ -774,4 +770,4 @@ public class BatchEngineExportTaskUtil {
 	private static volatile BatchEngineExportTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2016694643
+// LIFERAY-SERVICE-BUILDER-HASH:-862807305

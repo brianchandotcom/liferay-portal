@@ -506,22 +506,6 @@ public interface CommerceDiscountAccountRelPersistence
 	public int countByCAI_CDI(long commerceAccountId, long commerceDiscountId);
 
 	/**
-	 * Caches the commerce discount account rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRel the commerce discount account rel
-	 */
-	public void cacheResult(
-		CommerceDiscountAccountRel commerceDiscountAccountRel);
-
-	/**
-	 * Caches the commerce discount account rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountAccountRels the commerce discount account rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceDiscountAccountRel> commerceDiscountAccountRels);
-
-	/**
 	 * Creates a new commerce discount account rel with the primary key. Does not add the commerce discount account rel to the database.
 	 *
 	 * @param commerceDiscountAccountRelId the primary key for the new commerce discount account rel
@@ -563,4 +547,4 @@ public interface CommerceDiscountAccountRelPersistence
 		long commerceDiscountAccountRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-61423999
+// LIFERAY-SERVICE-BUILDER-HASH:-977188491

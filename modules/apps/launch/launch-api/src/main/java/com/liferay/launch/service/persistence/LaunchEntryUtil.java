@@ -36,6 +36,20 @@ public class LaunchEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LaunchEntry> launchEntries) {
+		getPersistence().cacheResult(launchEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LaunchEntry launchEntry) {
+		getPersistence().cacheResult(launchEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -630,24 +644,6 @@ public class LaunchEntryUtil {
 	}
 
 	/**
-	 * Caches the launch entry in the entity cache if it is enabled.
-	 *
-	 * @param launchEntry the launch entry
-	 */
-	public static void cacheResult(LaunchEntry launchEntry) {
-		getPersistence().cacheResult(launchEntry);
-	}
-
-	/**
-	 * Caches the launch entries in the entity cache if it is enabled.
-	 *
-	 * @param launchEntries the launch entries
-	 */
-	public static void cacheResult(List<LaunchEntry> launchEntries) {
-		getPersistence().cacheResult(launchEntries);
-	}
-
-	/**
 	 * Creates a new launch entry with the primary key. Does not add the launch entry to the database.
 	 *
 	 * @param launchEntryId the primary key for the new launch entry
@@ -708,4 +704,4 @@ public class LaunchEntryUtil {
 	private static volatile LaunchEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-494382060
+// LIFERAY-SERVICE-BUILDER-HASH:-924217259

@@ -233,20 +233,6 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public int countByT_E(String type, String externalUserId);
 
 	/**
-	 * Caches the user ID mapper in the entity cache if it is enabled.
-	 *
-	 * @param userIdMapper the user ID mapper
-	 */
-	public void cacheResult(UserIdMapper userIdMapper);
-
-	/**
-	 * Caches the user ID mappers in the entity cache if it is enabled.
-	 *
-	 * @param userIdMappers the user ID mappers
-	 */
-	public void cacheResult(java.util.List<UserIdMapper> userIdMappers);
-
-	/**
 	 * Creates a new user ID mapper with the primary key. Does not add the user ID mapper to the database.
 	 *
 	 * @param userIdMapperId the primary key for the new user ID mapper
@@ -285,4 +271,4 @@ public interface UserIdMapperPersistence extends BasePersistence<UserIdMapper> {
 	public UserIdMapper fetchByPrimaryKey(long userIdMapperId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:20361548
+// LIFERAY-SERVICE-BUILDER-HASH:1008400820

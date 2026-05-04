@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -986,69 +983,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 	/**
-	 * Caches the object definition setting in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSetting the object definition setting
-	 */
-	@Override
-	public void cacheResult(ObjectDefinitionSetting objectDefinitionSetting) {
-		entityCache.putResult(
-			ObjectDefinitionSettingImpl.class,
-			objectDefinitionSetting.getPrimaryKey(), objectDefinitionSetting);
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N,
-			new Object[] {
-				objectDefinitionSetting.getObjectDefinitionId(),
-				objectDefinitionSetting.getName()
-			},
-			objectDefinitionSetting);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object definition settings in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitionSettings the object definition settings
-	 */
-	@Override
-	public void cacheResult(
-		List<ObjectDefinitionSetting> objectDefinitionSettings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectDefinitionSettings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectDefinitionSetting objectDefinitionSetting :
-				objectDefinitionSettings) {
-
-			if (entityCache.getResult(
-					ObjectDefinitionSettingImpl.class,
-					objectDefinitionSetting.getPrimaryKey()) == null) {
-
-				cacheResult(objectDefinitionSetting);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectDefinitionSettingModelImpl objectDefinitionSettingModelImpl) {
-
-		Object[] args = new Object[] {
-			objectDefinitionSettingModelImpl.getObjectDefinitionId(),
-			objectDefinitionSettingModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N, args, objectDefinitionSettingModelImpl);
-	}
-
-	/**
 	 * Creates a new object definition setting with the primary key. Does not add the object definition setting to the database.
 	 *
 	 * @param objectDefinitionSettingId the primary key for the new object definition setting
@@ -1198,11 +1132,7 @@ public class ObjectDefinitionSettingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectDefinitionSettingImpl.class, objectDefinitionSettingModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(objectDefinitionSettingModelImpl);
+		cacheUniqueFindersResult(objectDefinitionSetting, false);
 
 		if (isNew) {
 			objectDefinitionSetting.setNew(false);
@@ -1271,9 +1201,6 @@ public class ObjectDefinitionSettingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1405,10 +1332,12 @@ public class ObjectDefinitionSettingPersistenceImpl
 				"objectDefinitionSetting.", "name", FinderColumn.Type.STRING,
 				"=", true, true, ObjectDefinitionSetting::getName));
 
-		_finderPathFetchByODI_N = new FinderPath(
+		_finderPathFetchByODI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "name"}, true);
+			new String[] {"objectDefinitionId", "name"}, false,
+			ObjectDefinitionSetting::getObjectDefinitionId,
+			ObjectDefinitionSetting::getName);
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_N,
@@ -1532,4 +1461,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1945353073
+// LIFERAY-SERVICE-BUILDER-HASH:2049394902

@@ -200,21 +200,6 @@ public interface BatchPlannerMappingPersistence
 		String internalFieldName);
 
 	/**
-	 * Caches the batch planner mapping in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMapping the batch planner mapping
-	 */
-	public void cacheResult(BatchPlannerMapping batchPlannerMapping);
-
-	/**
-	 * Caches the batch planner mappings in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMappings the batch planner mappings
-	 */
-	public void cacheResult(
-		java.util.List<BatchPlannerMapping> batchPlannerMappings);
-
-	/**
 	 * Creates a new batch planner mapping with the primary key. Does not add the batch planner mapping to the database.
 	 *
 	 * @param batchPlannerMappingId the primary key for the new batch planner mapping
@@ -254,4 +239,4 @@ public interface BatchPlannerMappingPersistence
 	public BatchPlannerMapping fetchByPrimaryKey(long batchPlannerMappingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1438266984
+// LIFERAY-SERVICE-BUILDER-HASH:-899281896

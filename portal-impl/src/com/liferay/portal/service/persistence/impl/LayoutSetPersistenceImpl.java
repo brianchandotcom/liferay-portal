@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.LayoutSetImpl;
@@ -866,91 +862,6 @@ public class LayoutSetPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout set in the entity cache if it is enabled.
-	 *
-	 * @param layoutSet the layout set
-	 */
-	@Override
-	public void cacheResult(LayoutSet layoutSet) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutSet.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_P,
-				new Object[] {
-					layoutSet.getGroupId(), layoutSet.isPrivateLayout()
-				},
-				layoutSet);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout sets in the entity cache if it is enabled.
-	 *
-	 * @param layoutSets the layout sets
-	 */
-	@Override
-	public void cacheResult(List<LayoutSet> layoutSets) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutSets.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutSet layoutSet : layoutSets) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutSet.getCtCollectionId())) {
-
-				LayoutSet cachedLayoutSet =
-					(LayoutSet)EntityCacheUtil.getResult(
-						LayoutSetImpl.class, layoutSet.getPrimaryKey());
-
-				if (cachedLayoutSet == null) {
-					cacheResult(layoutSet);
-				}
-				else {
-					LayoutSetModelImpl layoutSetModelImpl =
-						(LayoutSetModelImpl)layoutSet;
-					LayoutSetModelImpl cachedLayoutSetModelImpl =
-						(LayoutSetModelImpl)cachedLayoutSet;
-
-					layoutSetModelImpl.setCompanyFallbackVirtualHostname(
-						cachedLayoutSetModelImpl.
-							getCompanyFallbackVirtualHostname());
-
-					layoutSetModelImpl.setVirtualHostnames(
-						cachedLayoutSetModelImpl.getVirtualHostnames());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutSetModelImpl layoutSetModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutSetModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutSetModelImpl.getGroupId(),
-				layoutSetModelImpl.isPrivateLayout()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_P, args, layoutSetModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout set with the primary key. Does not add the layout set to the database.
 	 *
 	 * @param layoutSetId the primary key for the new layout set
@@ -1081,10 +992,7 @@ public class LayoutSetPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutSetImpl.class, layoutSetModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutSetModelImpl);
+		cacheUniqueFindersResult(layoutSet, false);
 
 		if (isNew) {
 			layoutSet.setNew(false);
@@ -1220,9 +1128,6 @@ public class LayoutSetPersistenceImpl
 	 * Initializes the layout set persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1286,10 +1191,11 @@ public class LayoutSetPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutSet::getLayoutSetPrototypeUuid));
 
-		_finderPathFetchByG_P = new FinderPath(
+		_finderPathFetchByG_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, true);
+			new String[] {"groupId", "privateLayout"}, false,
+			LayoutSet::getGroupId, LayoutSet::isPrivateLayout);
 
 		_uniquePersistenceFinderByG_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P, _SQL_SELECT_LAYOUTSET_WHERE,
@@ -1399,4 +1305,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1235308542
+// LIFERAY-SERVICE-BUILDER-HASH:2071193089

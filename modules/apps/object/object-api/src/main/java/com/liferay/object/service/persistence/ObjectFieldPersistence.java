@@ -1800,20 +1800,6 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 		long objectDefinitionId, boolean localized, boolean system);
 
 	/**
-	 * Caches the object field in the entity cache if it is enabled.
-	 *
-	 * @param objectField the object field
-	 */
-	public void cacheResult(ObjectField objectField);
-
-	/**
-	 * Caches the object fields in the entity cache if it is enabled.
-	 *
-	 * @param objectFields the object fields
-	 */
-	public void cacheResult(java.util.List<ObjectField> objectFields);
-
-	/**
 	 * Creates a new object field with the primary key. Does not add the object field to the database.
 	 *
 	 * @param objectFieldId the primary key for the new object field
@@ -1852,4 +1838,4 @@ public interface ObjectFieldPersistence extends BasePersistence<ObjectField> {
 	public ObjectField fetchByPrimaryKey(long objectFieldId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1398289870
+// LIFERAY-SERVICE-BUILDER-HASH:2123889626

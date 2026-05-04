@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1793,57 +1790,6 @@ public class SAPEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the sap entry in the entity cache if it is enabled.
-	 *
-	 * @param sapEntry the sap entry
-	 */
-	@Override
-	public void cacheResult(SAPEntry sapEntry) {
-		entityCache.putResult(
-			SAPEntryImpl.class, sapEntry.getPrimaryKey(), sapEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {sapEntry.getCompanyId(), sapEntry.getName()},
-			sapEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sap entries in the entity cache if it is enabled.
-	 *
-	 * @param sapEntries the sap entries
-	 */
-	@Override
-	public void cacheResult(List<SAPEntry> sapEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sapEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SAPEntry sapEntry : sapEntries) {
-			if (entityCache.getResult(
-					SAPEntryImpl.class, sapEntry.getPrimaryKey()) == null) {
-
-				cacheResult(sapEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SAPEntryModelImpl sapEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			sapEntryModelImpl.getCompanyId(), sapEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(_finderPathFetchByC_N, args, sapEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new sap entry with the primary key. Does not add the sap entry to the database.
 	 *
 	 * @param sapEntryId the primary key for the new sap entry
@@ -1977,10 +1923,7 @@ public class SAPEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SAPEntryImpl.class, sapEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(sapEntryModelImpl);
+		cacheUniqueFindersResult(sapEntry, false);
 
 		if (isNew) {
 			sapEntry.setNew(false);
@@ -2046,9 +1989,6 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2169,10 +2109,11 @@ public class SAPEntryPersistenceImpl
 				"sapEntry.", "defaultSAPEntry", FinderColumn.Type.BOOLEAN, "=",
 				true, true, SAPEntry::isDefaultSAPEntry));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, SAPEntry::getCompanyId,
+			SAPEntry::getName);
 
 		SAPEntryUtil.setPersistence(this);
 	}
@@ -2266,4 +2207,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-287190393
+// LIFERAY-SERVICE-BUILDER-HASH:1074605381

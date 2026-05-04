@@ -291,21 +291,6 @@ public interface AssetAutoTaggerEntryPersistence
 	public int countByA_A(long assetEntryId, long assetTagId);
 
 	/**
-	 * Caches the asset auto tagger entry in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntry the asset auto tagger entry
-	 */
-	public void cacheResult(AssetAutoTaggerEntry assetAutoTaggerEntry);
-
-	/**
-	 * Caches the asset auto tagger entries in the entity cache if it is enabled.
-	 *
-	 * @param assetAutoTaggerEntries the asset auto tagger entries
-	 */
-	public void cacheResult(
-		java.util.List<AssetAutoTaggerEntry> assetAutoTaggerEntries);
-
-	/**
 	 * Creates a new asset auto tagger entry with the primary key. Does not add the asset auto tagger entry to the database.
 	 *
 	 * @param assetAutoTaggerEntryId the primary key for the new asset auto tagger entry
@@ -345,4 +330,4 @@ public interface AssetAutoTaggerEntryPersistence
 	public AssetAutoTaggerEntry fetchByPrimaryKey(long assetAutoTaggerEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1003928616
+// LIFERAY-SERVICE-BUILDER-HASH:-1966932316

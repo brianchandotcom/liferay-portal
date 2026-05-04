@@ -36,6 +36,20 @@ public class UADPartialEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UADPartialEntry> uadPartialEntries) {
+		getPersistence().cacheResult(uadPartialEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UADPartialEntry uadPartialEntry) {
+		getPersistence().cacheResult(uadPartialEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class UADPartialEntryUtil {
 	}
 
 	/**
-	 * Caches the uad partial entry in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntry the uad partial entry
-	 */
-	public static void cacheResult(UADPartialEntry uadPartialEntry) {
-		getPersistence().cacheResult(uadPartialEntry);
-	}
-
-	/**
-	 * Caches the uad partial entries in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntries the uad partial entries
-	 */
-	public static void cacheResult(List<UADPartialEntry> uadPartialEntries) {
-		getPersistence().cacheResult(uadPartialEntries);
-	}
-
-	/**
 	 * Creates a new uad partial entry with the primary key. Does not add the uad partial entry to the database.
 	 *
 	 * @param uadPartialEntryId the primary key for the new uad partial entry
@@ -191,4 +187,4 @@ public class UADPartialEntryUtil {
 	private static volatile UADPartialEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1735505033
+// LIFERAY-SERVICE-BUILDER-HASH:1051122448

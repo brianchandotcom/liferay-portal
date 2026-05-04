@@ -36,6 +36,20 @@ public class MBDiscussionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MBDiscussion> mbDiscussions) {
+		getPersistence().cacheResult(mbDiscussions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MBDiscussion mbDiscussion) {
+		getPersistence().cacheResult(mbDiscussion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -545,24 +559,6 @@ public class MBDiscussionUtil {
 	}
 
 	/**
-	 * Caches the message boards discussion in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussion the message boards discussion
-	 */
-	public static void cacheResult(MBDiscussion mbDiscussion) {
-		getPersistence().cacheResult(mbDiscussion);
-	}
-
-	/**
-	 * Caches the message boards discussions in the entity cache if it is enabled.
-	 *
-	 * @param mbDiscussions the message boards discussions
-	 */
-	public static void cacheResult(List<MBDiscussion> mbDiscussions) {
-		getPersistence().cacheResult(mbDiscussions);
-	}
-
-	/**
 	 * Creates a new message boards discussion with the primary key. Does not add the message boards discussion to the database.
 	 *
 	 * @param discussionId the primary key for the new message boards discussion
@@ -623,4 +619,4 @@ public class MBDiscussionUtil {
 	private static volatile MBDiscussionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-830847924
+// LIFERAY-SERVICE-BUILDER-HASH:485674036

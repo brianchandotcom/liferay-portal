@@ -7,7 +7,6 @@ package com.liferay.wiki.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1766,100 +1763,6 @@ public class WikiNodePersistenceImpl
 	}
 
 	/**
-	 * Caches the wiki node in the entity cache if it is enabled.
-	 *
-	 * @param wikiNode the wiki node
-	 */
-	@Override
-	public void cacheResult(WikiNode wikiNode) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiNode.getCtCollectionId())) {
-
-			entityCache.putResult(
-				WikiNodeImpl.class, wikiNode.getPrimaryKey(), wikiNode);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {wikiNode.getUuid(), wikiNode.getGroupId()},
-				wikiNode);
-
-			finderCache.putResult(
-				_finderPathFetchByG_N,
-				new Object[] {wikiNode.getGroupId(), wikiNode.getName()},
-				wikiNode);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					wikiNode.getExternalReferenceCode(), wikiNode.getGroupId()
-				},
-				wikiNode);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the wiki nodes in the entity cache if it is enabled.
-	 *
-	 * @param wikiNodes the wiki nodes
-	 */
-	@Override
-	public void cacheResult(List<WikiNode> wikiNodes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (wikiNodes.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WikiNode wikiNode : wikiNodes) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						wikiNode.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						WikiNodeImpl.class, wikiNode.getPrimaryKey()) == null) {
-
-					cacheResult(wikiNode);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WikiNodeModelImpl wikiNodeModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiNodeModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				wikiNodeModelImpl.getUuid(), wikiNodeModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, wikiNodeModelImpl);
-
-			args = new Object[] {
-				wikiNodeModelImpl.getGroupId(), wikiNodeModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_N, args, wikiNodeModelImpl);
-
-			args = new Object[] {
-				wikiNodeModelImpl.getExternalReferenceCode(),
-				wikiNodeModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, wikiNodeModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new wiki node with the primary key. Does not add the wiki node to the database.
 	 *
 	 * @param nodeId the primary key for the new wiki node
@@ -2058,10 +1961,7 @@ public class WikiNodePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WikiNodeImpl.class, wikiNodeModelImpl, false, true);
-
-		cacheUniqueFindersCache(wikiNodeModelImpl);
+		cacheUniqueFindersResult(wikiNode, false);
 
 		if (isNew) {
 			wikiNode.setNew(false);
@@ -2206,9 +2106,6 @@ public class WikiNodePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2236,10 +2133,11 @@ public class WikiNodePersistenceImpl
 				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, WikiNode::getUuid,
+			WikiNode::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKINODE_WHERE,
@@ -2341,10 +2239,11 @@ public class WikiNodePersistenceImpl
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
 
-		_finderPathFetchByG_N = new FinderPath(
+		_finderPathFetchByG_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, true);
+			new String[] {"groupId", "name"}, false, WikiNode::getGroupId,
+			WikiNode::getName);
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N, _SQL_SELECT_WIKINODE_WHERE,
@@ -2417,10 +2316,11 @@ public class WikiNodePersistenceImpl
 				"wikiNode.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiNode::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			WikiNode::getExternalReferenceCode, WikiNode::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_WIKINODE_WHERE,
@@ -2526,4 +2426,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1572051131
+// LIFERAY-SERVICE-BUILDER-HASH:277269212

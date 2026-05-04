@@ -36,6 +36,20 @@ public class KaleoNodeSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoNodeSetting> kaleoNodeSettings) {
+		getPersistence().cacheResult(kaleoNodeSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoNodeSetting kaleoNodeSetting) {
+		getPersistence().cacheResult(kaleoNodeSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -300,24 +314,6 @@ public class KaleoNodeSettingUtil {
 	}
 
 	/**
-	 * Caches the kaleo node setting in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSetting the kaleo node setting
-	 */
-	public static void cacheResult(KaleoNodeSetting kaleoNodeSetting) {
-		getPersistence().cacheResult(kaleoNodeSetting);
-	}
-
-	/**
-	 * Caches the kaleo node settings in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNodeSettings the kaleo node settings
-	 */
-	public static void cacheResult(List<KaleoNodeSetting> kaleoNodeSettings) {
-		getPersistence().cacheResult(kaleoNodeSettings);
-	}
-
-	/**
 	 * Creates a new kaleo node setting with the primary key. Does not add the kaleo node setting to the database.
 	 *
 	 * @param kaleoNodeSettingId the primary key for the new kaleo node setting
@@ -382,4 +378,4 @@ public class KaleoNodeSettingUtil {
 	private static volatile KaleoNodeSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1116388920
+// LIFERAY-SERVICE-BUILDER-HASH:-485721676

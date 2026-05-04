@@ -268,21 +268,6 @@ public interface PushNotificationsDevicePersistence
 	public int countByU_P(long[] userIds, String platform);
 
 	/**
-	 * Caches the push notifications device in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevice the push notifications device
-	 */
-	public void cacheResult(PushNotificationsDevice pushNotificationsDevice);
-
-	/**
-	 * Caches the push notifications devices in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevices the push notifications devices
-	 */
-	public void cacheResult(
-		java.util.List<PushNotificationsDevice> pushNotificationsDevices);
-
-	/**
 	 * Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	 *
 	 * @param pushNotificationsDeviceId the primary key for the new push notifications device
@@ -324,4 +309,4 @@ public interface PushNotificationsDevicePersistence
 		long pushNotificationsDeviceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1589663813
+// LIFERAY-SERVICE-BUILDER-HASH:906327011

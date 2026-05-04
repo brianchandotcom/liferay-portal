@@ -36,6 +36,20 @@ public class CTScoreUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTScore> ctScores) {
+		getPersistence().cacheResult(ctScores);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTScore ctScore) {
+		getPersistence().cacheResult(ctScore);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -170,24 +184,6 @@ public class CTScoreUtil {
 	}
 
 	/**
-	 * Caches the ct score in the entity cache if it is enabled.
-	 *
-	 * @param ctScore the ct score
-	 */
-	public static void cacheResult(CTScore ctScore) {
-		getPersistence().cacheResult(ctScore);
-	}
-
-	/**
-	 * Caches the ct scores in the entity cache if it is enabled.
-	 *
-	 * @param ctScores the ct scores
-	 */
-	public static void cacheResult(List<CTScore> ctScores) {
-		getPersistence().cacheResult(ctScores);
-	}
-
-	/**
 	 * Creates a new ct score with the primary key. Does not add the ct score to the database.
 	 *
 	 * @param ctScoreId the primary key for the new ct score
@@ -248,4 +244,4 @@ public class CTScoreUtil {
 	private static volatile CTScorePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1858209649
+// LIFERAY-SERVICE-BUILDER-HASH:514249349

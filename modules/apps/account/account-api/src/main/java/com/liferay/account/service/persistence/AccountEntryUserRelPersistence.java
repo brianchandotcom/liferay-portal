@@ -292,21 +292,6 @@ public interface AccountEntryUserRelPersistence
 	public int countByAEI_AUI(long accountEntryId, long accountUserId);
 
 	/**
-	 * Caches the account entry user rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRel the account entry user rel
-	 */
-	public void cacheResult(AccountEntryUserRel accountEntryUserRel);
-
-	/**
-	 * Caches the account entry user rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryUserRels the account entry user rels
-	 */
-	public void cacheResult(
-		java.util.List<AccountEntryUserRel> accountEntryUserRels);
-
-	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
 	 * @param accountEntryUserRelId the primary key for the new account entry user rel
@@ -346,4 +331,4 @@ public interface AccountEntryUserRelPersistence
 	public AccountEntryUserRel fetchByPrimaryKey(long accountEntryUserRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:146030969
+// LIFERAY-SERVICE-BUILDER-HASH:1775128961

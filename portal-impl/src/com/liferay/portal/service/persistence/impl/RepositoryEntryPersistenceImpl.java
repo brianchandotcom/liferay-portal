@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -778,95 +774,6 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the repository entry in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntry the repository entry
-	 */
-	@Override
-	public void cacheResult(RepositoryEntry repositoryEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					repositoryEntry.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RepositoryEntryImpl.class, repositoryEntry.getPrimaryKey(),
-				repositoryEntry);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					repositoryEntry.getUuid(), repositoryEntry.getGroupId()
-				},
-				repositoryEntry);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByR_M,
-				new Object[] {
-					repositoryEntry.getRepositoryId(),
-					repositoryEntry.getMappedId()
-				},
-				repositoryEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the repository entries in the entity cache if it is enabled.
-	 *
-	 * @param repositoryEntries the repository entries
-	 */
-	@Override
-	public void cacheResult(List<RepositoryEntry> repositoryEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (repositoryEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RepositoryEntry repositoryEntry : repositoryEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						repositoryEntry.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RepositoryEntryImpl.class,
-						repositoryEntry.getPrimaryKey()) == null) {
-
-					cacheResult(repositoryEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RepositoryEntryModelImpl repositoryEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					repositoryEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				repositoryEntryModelImpl.getUuid(),
-				repositoryEntryModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, repositoryEntryModelImpl);
-
-			args = new Object[] {
-				repositoryEntryModelImpl.getRepositoryId(),
-				repositoryEntryModelImpl.getMappedId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByR_M, args, repositoryEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new repository entry with the primary key. Does not add the repository entry to the database.
 	 *
 	 * @param repositoryEntryId the primary key for the new repository entry
@@ -1016,10 +923,7 @@ public class RepositoryEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RepositoryEntryImpl.class, repositoryEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(repositoryEntryModelImpl);
+		cacheUniqueFindersResult(repositoryEntry, false);
 
 		if (isNew) {
 			repositoryEntry.setNew(false);
@@ -1156,9 +1060,6 @@ public class RepositoryEntryPersistenceImpl
 	 * Initializes the repository entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1186,10 +1087,11 @@ public class RepositoryEntryPersistenceImpl
 				"repositoryEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RepositoryEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, RepositoryEntry::getUuid,
+			RepositoryEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_REPOSITORYENTRY_WHERE,
@@ -1263,10 +1165,11 @@ public class RepositoryEntryPersistenceImpl
 					"repositoryEntry.", "repositoryId", FinderColumn.Type.LONG,
 					"=", true, true, RepositoryEntry::getRepositoryId));
 
-		_finderPathFetchByR_M = new FinderPath(
+		_finderPathFetchByR_M = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "mappedId"}, true);
+			new String[] {"repositoryId", "mappedId"}, false,
+			RepositoryEntry::getRepositoryId, RepositoryEntry::getMappedId);
 
 		_uniquePersistenceFinderByR_M = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_M, _SQL_SELECT_REPOSITORYENTRY_WHERE,
@@ -1313,4 +1216,4 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1038439973
+// LIFERAY-SERVICE-BUILDER-HASH:269596672

@@ -825,20 +825,6 @@ public interface DLFileEntryTypePersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the document library file entry type in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryType the document library file entry type
-	 */
-	public void cacheResult(DLFileEntryType dlFileEntryType);
-
-	/**
-	 * Caches the document library file entry types in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryTypes the document library file entry types
-	 */
-	public void cacheResult(java.util.List<DLFileEntryType> dlFileEntryTypes);
-
-	/**
 	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	 *
 	 * @param fileEntryTypeId the primary key for the new document library file entry type
@@ -1056,4 +1042,4 @@ public interface DLFileEntryTypePersistence
 			dlFolders);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-501519281
+// LIFERAY-SERVICE-BUILDER-HASH:-1111725447

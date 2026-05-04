@@ -6,7 +6,6 @@
 package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -539,84 +535,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the segments experiment rel in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperimentRel the segments experiment rel
-	 */
-	@Override
-	public void cacheResult(SegmentsExperimentRel segmentsExperimentRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperimentRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SegmentsExperimentRelImpl.class,
-				segmentsExperimentRel.getPrimaryKey(), segmentsExperimentRel);
-
-			finderCache.putResult(
-				_finderPathFetchByS_S,
-				new Object[] {
-					segmentsExperimentRel.getSegmentsExperimentId(),
-					segmentsExperimentRel.getSegmentsExperienceId()
-				},
-				segmentsExperimentRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the segments experiment rels in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperimentRels the segments experiment rels
-	 */
-	@Override
-	public void cacheResult(
-		List<SegmentsExperimentRel> segmentsExperimentRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (segmentsExperimentRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SegmentsExperimentRel segmentsExperimentRel :
-				segmentsExperimentRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						segmentsExperimentRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SegmentsExperimentRelImpl.class,
-						segmentsExperimentRel.getPrimaryKey()) == null) {
-
-					cacheResult(segmentsExperimentRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SegmentsExperimentRelModelImpl segmentsExperimentRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperimentRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				segmentsExperimentRelModelImpl.getSegmentsExperimentId(),
-				segmentsExperimentRelModelImpl.getSegmentsExperienceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByS_S, args, segmentsExperimentRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new segments experiment rel with the primary key. Does not add the segments experiment rel to the database.
 	 *
 	 * @param segmentsExperimentRelId the primary key for the new segments experiment rel
@@ -763,11 +681,7 @@ public class SegmentsExperimentRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SegmentsExperimentRelImpl.class, segmentsExperimentRelModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(segmentsExperimentRelModelImpl);
+		cacheUniqueFindersResult(segmentsExperimentRel, false);
 
 		if (isNew) {
 			segmentsExperimentRel.setNew(false);
@@ -899,9 +813,6 @@ public class SegmentsExperimentRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindBySegmentsExperimentId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findBySegmentsExperimentId",
@@ -968,11 +879,12 @@ public class SegmentsExperimentRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SegmentsExperimentRel::getSegmentsExperienceId));
 
-		_finderPathFetchByS_S = new FinderPath(
+		_finderPathFetchByS_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
-			true);
+			false, SegmentsExperimentRel::getSegmentsExperimentId,
+			SegmentsExperimentRel::getSegmentsExperienceId);
 
 		_uniquePersistenceFinderByS_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_S,
@@ -1055,4 +967,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:442013172
+// LIFERAY-SERVICE-BUILDER-HASH:1224333071

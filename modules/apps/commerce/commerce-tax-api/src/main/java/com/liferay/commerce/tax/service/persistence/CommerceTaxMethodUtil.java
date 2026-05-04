@@ -36,6 +36,20 @@ public class CommerceTaxMethodUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceTaxMethod> commerceTaxMethods) {
+		getPersistence().cacheResult(commerceTaxMethods);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceTaxMethod commerceTaxMethod) {
+		getPersistence().cacheResult(commerceTaxMethod);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -430,24 +444,6 @@ public class CommerceTaxMethodUtil {
 	}
 
 	/**
-	 * Caches the commerce tax method in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethod the commerce tax method
-	 */
-	public static void cacheResult(CommerceTaxMethod commerceTaxMethod) {
-		getPersistence().cacheResult(commerceTaxMethod);
-	}
-
-	/**
-	 * Caches the commerce tax methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethods the commerce tax methods
-	 */
-	public static void cacheResult(List<CommerceTaxMethod> commerceTaxMethods) {
-		getPersistence().cacheResult(commerceTaxMethods);
-	}
-
-	/**
 	 * Creates a new commerce tax method with the primary key. Does not add the commerce tax method to the database.
 	 *
 	 * @param commerceTaxMethodId the primary key for the new commerce tax method
@@ -514,4 +510,4 @@ public class CommerceTaxMethodUtil {
 	private static volatile CommerceTaxMethodPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:338637817
+// LIFERAY-SERVICE-BUILDER-HASH:997424499

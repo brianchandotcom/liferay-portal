@@ -205,22 +205,6 @@ public interface JournalArticleLocalizationPersistence
 	public int countByC_A_L(long companyId, long articlePK, String languageId);
 
 	/**
-	 * Caches the journal article localization in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalization the journal article localization
-	 */
-	public void cacheResult(
-		JournalArticleLocalization journalArticleLocalization);
-
-	/**
-	 * Caches the journal article localizations in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalizations the journal article localizations
-	 */
-	public void cacheResult(
-		java.util.List<JournalArticleLocalization> journalArticleLocalizations);
-
-	/**
 	 * Creates a new journal article localization with the primary key. Does not add the journal article localization to the database.
 	 *
 	 * @param articleLocalizationId the primary key for the new journal article localization
@@ -262,4 +246,4 @@ public interface JournalArticleLocalizationPersistence
 		long articleLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1001302321
+// LIFERAY-SERVICE-BUILDER-HASH:-132300375

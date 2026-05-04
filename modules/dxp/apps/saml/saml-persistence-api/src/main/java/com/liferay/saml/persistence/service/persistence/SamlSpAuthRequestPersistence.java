@@ -193,21 +193,6 @@ public interface SamlSpAuthRequestPersistence
 		String samlIdpEntityId, String samlSpAuthRequestKey);
 
 	/**
-	 * Caches the saml sp auth request in the entity cache if it is enabled.
-	 *
-	 * @param samlSpAuthRequest the saml sp auth request
-	 */
-	public void cacheResult(SamlSpAuthRequest samlSpAuthRequest);
-
-	/**
-	 * Caches the saml sp auth requests in the entity cache if it is enabled.
-	 *
-	 * @param samlSpAuthRequests the saml sp auth requests
-	 */
-	public void cacheResult(
-		java.util.List<SamlSpAuthRequest> samlSpAuthRequests);
-
-	/**
 	 * Creates a new saml sp auth request with the primary key. Does not add the saml sp auth request to the database.
 	 *
 	 * @param samlSpAuthnRequestId the primary key for the new saml sp auth request
@@ -246,4 +231,4 @@ public interface SamlSpAuthRequestPersistence
 	public SamlSpAuthRequest fetchByPrimaryKey(long samlSpAuthnRequestId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1354208519
+// LIFERAY-SERVICE-BUILDER-HASH:407700445

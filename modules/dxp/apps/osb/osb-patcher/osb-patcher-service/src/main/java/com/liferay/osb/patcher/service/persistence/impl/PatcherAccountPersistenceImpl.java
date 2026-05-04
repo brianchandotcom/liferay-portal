@@ -37,11 +37,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -948,60 +945,6 @@ public class PatcherAccountPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher account in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccount the patcher account
-	 */
-	@Override
-	public void cacheResult(PatcherAccount patcherAccount) {
-		entityCache.putResult(
-			PatcherAccountImpl.class, patcherAccount.getPrimaryKey(),
-			patcherAccount);
-
-		finderCache.putResult(
-			_finderPathFetchByAccountEntryCode,
-			new Object[] {patcherAccount.getAccountEntryCode()},
-			patcherAccount);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher accounts in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccounts the patcher accounts
-	 */
-	@Override
-	public void cacheResult(List<PatcherAccount> patcherAccounts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherAccounts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherAccount patcherAccount : patcherAccounts) {
-			if (entityCache.getResult(
-					PatcherAccountImpl.class, patcherAccount.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(patcherAccount);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherAccountModelImpl patcherAccountModelImpl) {
-
-		Object[] args = new Object[] {
-			patcherAccountModelImpl.getAccountEntryCode()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByAccountEntryCode, args, patcherAccountModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher account with the primary key. Does not add the patcher account to the database.
 	 *
 	 * @param patcherAccountId the primary key for the new patcher account
@@ -1135,10 +1078,7 @@ public class PatcherAccountPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherAccountImpl.class, patcherAccountModelImpl, false, true);
-
-		cacheUniqueFindersCache(patcherAccountModelImpl);
+		cacheUniqueFindersResult(patcherAccount, false);
 
 		if (isNew) {
 			patcherAccount.setNew(false);
@@ -1521,9 +1461,6 @@ public class PatcherAccountPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		patcherAccountToPatcherBuildTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OSBPatcher_PAccounts_PBuilds#patcherAccountId",
@@ -1559,10 +1496,11 @@ public class PatcherAccountPersistenceImpl
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
 
-		_finderPathFetchByAccountEntryCode = new FinderPath(
+		_finderPathFetchByAccountEntryCode = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByAccountEntryCode",
 			new String[] {String.class.getName()},
-			new String[] {"accountEntryCode"}, true);
+			new String[] {"accountEntryCode"}, false,
+			PatcherAccount::getAccountEntryCode);
 
 		_uniquePersistenceFinderByAccountEntryCode =
 			new UniquePersistenceFinder<>(
@@ -1699,4 +1637,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:363801451
+// LIFERAY-SERVICE-BUILDER-HASH:-1849808785

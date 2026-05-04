@@ -36,6 +36,20 @@ public class SXPBlueprintUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SXPBlueprint> sxpBlueprints) {
+		getPersistence().cacheResult(sxpBlueprints);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SXPBlueprint sxpBlueprint) {
+		getPersistence().cacheResult(sxpBlueprint);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -739,24 +753,6 @@ public class SXPBlueprintUtil {
 	}
 
 	/**
-	 * Caches the sxp blueprint in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprint the sxp blueprint
-	 */
-	public static void cacheResult(SXPBlueprint sxpBlueprint) {
-		getPersistence().cacheResult(sxpBlueprint);
-	}
-
-	/**
-	 * Caches the sxp blueprints in the entity cache if it is enabled.
-	 *
-	 * @param sxpBlueprints the sxp blueprints
-	 */
-	public static void cacheResult(List<SXPBlueprint> sxpBlueprints) {
-		getPersistence().cacheResult(sxpBlueprints);
-	}
-
-	/**
 	 * Creates a new sxp blueprint with the primary key. Does not add the sxp blueprint to the database.
 	 *
 	 * @param sxpBlueprintId the primary key for the new sxp blueprint
@@ -819,4 +815,4 @@ public class SXPBlueprintUtil {
 	private static volatile SXPBlueprintPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704981767
+// LIFERAY-SERVICE-BUILDER-HASH:-1930504891

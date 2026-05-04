@@ -882,20 +882,6 @@ public interface KaleoInstancePersistence
 		Date completionDate);
 
 	/**
-	 * Caches the kaleo instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstance the kaleo instance
-	 */
-	public void cacheResult(KaleoInstance kaleoInstance);
-
-	/**
-	 * Caches the kaleo instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstances the kaleo instances
-	 */
-	public void cacheResult(java.util.List<KaleoInstance> kaleoInstances);
-
-	/**
 	 * Creates a new kaleo instance with the primary key. Does not add the kaleo instance to the database.
 	 *
 	 * @param kaleoInstanceId the primary key for the new kaleo instance
@@ -934,4 +920,4 @@ public interface KaleoInstancePersistence
 	public KaleoInstance fetchByPrimaryKey(long kaleoInstanceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1331519167
+// LIFERAY-SERVICE-BUILDER-HASH:-1116928027

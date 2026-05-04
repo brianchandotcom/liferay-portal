@@ -661,21 +661,6 @@ public interface NotificationQueueEntryPersistence
 	public int filterCountByT_S(String type, int status);
 
 	/**
-	 * Caches the notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntry the notification queue entry
-	 */
-	public void cacheResult(NotificationQueueEntry notificationQueueEntry);
-
-	/**
-	 * Caches the notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntries the notification queue entries
-	 */
-	public void cacheResult(
-		java.util.List<NotificationQueueEntry> notificationQueueEntries);
-
-	/**
 	 * Creates a new notification queue entry with the primary key. Does not add the notification queue entry to the database.
 	 *
 	 * @param notificationQueueEntryId the primary key for the new notification queue entry
@@ -717,4 +702,4 @@ public interface NotificationQueueEntryPersistence
 		long notificationQueueEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1149310187
+// LIFERAY-SERVICE-BUILDER-HASH:-1536290037

@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -37,7 +34,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -166,58 +162,6 @@ public class MFAEmailOTPEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(MFAEmailOTPEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the mfa email otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntry the mfa email otp entry
-	 */
-	@Override
-	public void cacheResult(MFAEmailOTPEntry mfaEmailOTPEntry) {
-		entityCache.putResult(
-			MFAEmailOTPEntryImpl.class, mfaEmailOTPEntry.getPrimaryKey(),
-			mfaEmailOTPEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUserId,
-			new Object[] {mfaEmailOTPEntry.getUserId()}, mfaEmailOTPEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the mfa email otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntries the mfa email otp entries
-	 */
-	@Override
-	public void cacheResult(List<MFAEmailOTPEntry> mfaEmailOTPEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mfaEmailOTPEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MFAEmailOTPEntry mfaEmailOTPEntry : mfaEmailOTPEntries) {
-			if (entityCache.getResult(
-					MFAEmailOTPEntryImpl.class,
-					mfaEmailOTPEntry.getPrimaryKey()) == null) {
-
-				cacheResult(mfaEmailOTPEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MFAEmailOTPEntryModelImpl mfaEmailOTPEntryModelImpl) {
-
-		Object[] args = new Object[] {mfaEmailOTPEntryModelImpl.getUserId()};
-
-		finderCache.putResult(
-			_finderPathFetchByUserId, args, mfaEmailOTPEntryModelImpl);
 	}
 
 	/**
@@ -352,10 +296,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MFAEmailOTPEntryImpl.class, mfaEmailOTPEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(mfaEmailOTPEntryModelImpl);
+		cacheUniqueFindersResult(mfaEmailOTPEntry, false);
 
 		if (isNew) {
 			mfaEmailOTPEntry.setNew(false);
@@ -416,12 +357,10 @@ public class MFAEmailOTPEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByUserId = new FinderPath(
+		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
+			MFAEmailOTPEntry::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_MFAEMAILOTPENTRY_WHERE,
@@ -492,4 +431,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1115306752
+// LIFERAY-SERVICE-BUILDER-HASH:-1999435387

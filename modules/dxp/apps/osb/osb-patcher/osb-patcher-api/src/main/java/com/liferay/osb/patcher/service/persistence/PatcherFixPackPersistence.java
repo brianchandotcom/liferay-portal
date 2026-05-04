@@ -1379,20 +1379,6 @@ public interface PatcherFixPackPersistence
 		int version);
 
 	/**
-	 * Caches the patcher fix pack in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPack the patcher fix pack
-	 */
-	public void cacheResult(PatcherFixPack patcherFixPack);
-
-	/**
-	 * Caches the patcher fix packs in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPacks the patcher fix packs
-	 */
-	public void cacheResult(java.util.List<PatcherFixPack> patcherFixPacks);
-
-	/**
 	 * Creates a new patcher fix pack with the primary key. Does not add the patcher fix pack to the database.
 	 *
 	 * @param patcherFixPackId the primary key for the new patcher fix pack
@@ -1604,4 +1590,4 @@ public interface PatcherFixPackPersistence
 		java.util.List<com.liferay.osb.patcher.model.PatcherFix> patcherFixes);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1556427282
+// LIFERAY-SERVICE-BUILDER-HASH:1981284794

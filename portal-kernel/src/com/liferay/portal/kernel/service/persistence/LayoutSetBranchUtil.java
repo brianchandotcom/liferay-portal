@@ -36,6 +36,20 @@ public class LayoutSetBranchUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutSetBranch> layoutSetBranchs) {
+		getPersistence().cacheResult(layoutSetBranchs);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutSetBranch layoutSetBranch) {
+		getPersistence().cacheResult(layoutSetBranch);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -794,24 +808,6 @@ public class LayoutSetBranchUtil {
 	}
 
 	/**
-	 * Caches the layout set branch in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranch the layout set branch
-	 */
-	public static void cacheResult(LayoutSetBranch layoutSetBranch) {
-		getPersistence().cacheResult(layoutSetBranch);
-	}
-
-	/**
-	 * Caches the layout set branches in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranchs the layout set branches
-	 */
-	public static void cacheResult(List<LayoutSetBranch> layoutSetBranchs) {
-		getPersistence().cacheResult(layoutSetBranchs);
-	}
-
-	/**
 	 * Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
 	 *
 	 * @param layoutSetBranchId the primary key for the new layout set branch
@@ -874,4 +870,4 @@ public class LayoutSetBranchUtil {
 	private static volatile LayoutSetBranchPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1172524115
+// LIFERAY-SERVICE-BUILDER-HASH:-577844737

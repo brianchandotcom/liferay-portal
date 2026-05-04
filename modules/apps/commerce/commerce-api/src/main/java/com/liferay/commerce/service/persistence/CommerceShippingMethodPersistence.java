@@ -296,21 +296,6 @@ public interface CommerceShippingMethodPersistence
 	public int countByG_E(long groupId, String engineKey);
 
 	/**
-	 * Caches the commerce shipping method in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethod the commerce shipping method
-	 */
-	public void cacheResult(CommerceShippingMethod commerceShippingMethod);
-
-	/**
-	 * Caches the commerce shipping methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethods the commerce shipping methods
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShippingMethod> commerceShippingMethods);
-
-	/**
 	 * Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
 	 *
 	 * @param commerceShippingMethodId the primary key for the new commerce shipping method
@@ -352,4 +337,4 @@ public interface CommerceShippingMethodPersistence
 		long commerceShippingMethodId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:630401929
+// LIFERAY-SERVICE-BUILDER-HASH:1504894303

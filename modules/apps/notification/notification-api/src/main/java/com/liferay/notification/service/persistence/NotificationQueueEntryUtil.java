@@ -37,6 +37,24 @@ public class NotificationQueueEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationQueueEntry> notificationQueueEntries) {
+
+		getPersistence().cacheResult(notificationQueueEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		NotificationQueueEntry notificationQueueEntry) {
+
+		getPersistence().cacheResult(notificationQueueEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -888,28 +906,6 @@ public class NotificationQueueEntryUtil {
 	}
 
 	/**
-	 * Caches the notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntry the notification queue entry
-	 */
-	public static void cacheResult(
-		NotificationQueueEntry notificationQueueEntry) {
-
-		getPersistence().cacheResult(notificationQueueEntry);
-	}
-
-	/**
-	 * Caches the notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntries the notification queue entries
-	 */
-	public static void cacheResult(
-		List<NotificationQueueEntry> notificationQueueEntries) {
-
-		getPersistence().cacheResult(notificationQueueEntries);
-	}
-
-	/**
 	 * Creates a new notification queue entry with the primary key. Does not add the notification queue entry to the database.
 	 *
 	 * @param notificationQueueEntryId the primary key for the new notification queue entry
@@ -979,4 +975,4 @@ public class NotificationQueueEntryUtil {
 	private static volatile NotificationQueueEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1691588019
+// LIFERAY-SERVICE-BUILDER-HASH:-1491171018

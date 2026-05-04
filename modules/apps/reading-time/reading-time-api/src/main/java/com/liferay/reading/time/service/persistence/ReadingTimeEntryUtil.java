@@ -36,6 +36,20 @@ public class ReadingTimeEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ReadingTimeEntry> readingTimeEntries) {
+		getPersistence().cacheResult(readingTimeEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ReadingTimeEntry readingTimeEntry) {
+		getPersistence().cacheResult(readingTimeEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -500,24 +514,6 @@ public class ReadingTimeEntryUtil {
 	}
 
 	/**
-	 * Caches the reading time entry in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntry the reading time entry
-	 */
-	public static void cacheResult(ReadingTimeEntry readingTimeEntry) {
-		getPersistence().cacheResult(readingTimeEntry);
-	}
-
-	/**
-	 * Caches the reading time entries in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntries the reading time entries
-	 */
-	public static void cacheResult(List<ReadingTimeEntry> readingTimeEntries) {
-		getPersistence().cacheResult(readingTimeEntries);
-	}
-
-	/**
 	 * Creates a new reading time entry with the primary key. Does not add the reading time entry to the database.
 	 *
 	 * @param readingTimeEntryId the primary key for the new reading time entry
@@ -580,4 +576,4 @@ public class ReadingTimeEntryUtil {
 	private static volatile ReadingTimeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1680200327
+// LIFERAY-SERVICE-BUILDER-HASH:-1966389258

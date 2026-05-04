@@ -36,6 +36,20 @@ public class KaleoTimerUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoTimer> kaleoTimers) {
+		getPersistence().cacheResult(kaleoTimers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoTimer kaleoTimer) {
+		getPersistence().cacheResult(kaleoTimer);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -404,24 +418,6 @@ public class KaleoTimerUtil {
 	}
 
 	/**
-	 * Caches the kaleo timer in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimer the kaleo timer
-	 */
-	public static void cacheResult(KaleoTimer kaleoTimer) {
-		getPersistence().cacheResult(kaleoTimer);
-	}
-
-	/**
-	 * Caches the kaleo timers in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimers the kaleo timers
-	 */
-	public static void cacheResult(List<KaleoTimer> kaleoTimers) {
-		getPersistence().cacheResult(kaleoTimers);
-	}
-
-	/**
 	 * Creates a new kaleo timer with the primary key. Does not add the kaleo timer to the database.
 	 *
 	 * @param kaleoTimerId the primary key for the new kaleo timer
@@ -484,4 +480,4 @@ public class KaleoTimerUtil {
 	private static volatile KaleoTimerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-323619818
+// LIFERAY-SERVICE-BUILDER-HASH:564121900

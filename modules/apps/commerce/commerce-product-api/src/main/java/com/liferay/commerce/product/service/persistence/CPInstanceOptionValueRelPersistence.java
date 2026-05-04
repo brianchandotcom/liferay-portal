@@ -739,21 +739,6 @@ public interface CPInstanceOptionValueRelPersistence
 		long CPInstanceId);
 
 	/**
-	 * Caches the cp instance option value rel in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRel the cp instance option value rel
-	 */
-	public void cacheResult(CPInstanceOptionValueRel cpInstanceOptionValueRel);
-
-	/**
-	 * Caches the cp instance option value rels in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRels the cp instance option value rels
-	 */
-	public void cacheResult(
-		java.util.List<CPInstanceOptionValueRel> cpInstanceOptionValueRels);
-
-	/**
 	 * Creates a new cp instance option value rel with the primary key. Does not add the cp instance option value rel to the database.
 	 *
 	 * @param CPInstanceOptionValueRelId the primary key for the new cp instance option value rel
@@ -795,4 +780,4 @@ public interface CPInstanceOptionValueRelPersistence
 		long CPInstanceOptionValueRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1955301230
+// LIFERAY-SERVICE-BUILDER-HASH:250472540

@@ -889,20 +889,6 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 		String objectActionTriggerKey);
 
 	/**
-	 * Caches the object action in the entity cache if it is enabled.
-	 *
-	 * @param objectAction the object action
-	 */
-	public void cacheResult(ObjectAction objectAction);
-
-	/**
-	 * Caches the object actions in the entity cache if it is enabled.
-	 *
-	 * @param objectActions the object actions
-	 */
-	public void cacheResult(java.util.List<ObjectAction> objectActions);
-
-	/**
 	 * Creates a new object action with the primary key. Does not add the object action to the database.
 	 *
 	 * @param objectActionId the primary key for the new object action
@@ -941,4 +927,4 @@ public interface ObjectActionPersistence extends BasePersistence<ObjectAction> {
 	public ObjectAction fetchByPrimaryKey(long objectActionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:262229007
+// LIFERAY-SERVICE-BUILDER-HASH:167935095

@@ -1188,4 +1188,4 @@ public class EmailAddressModelImpl
 	private EmailAddress _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-57613429
+// LIFERAY-SERVICE-BUILDER-HASH:-904350625

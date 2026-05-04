@@ -36,6 +36,26 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountCommerceAccountGroupRel>
+			commerceDiscountCommerceAccountGroupRels) {
+
+		getPersistence().cacheResult(commerceDiscountCommerceAccountGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceDiscountCommerceAccountGroupRel
+			commerceDiscountCommerceAccountGroupRel) {
+
+		getPersistence().cacheResult(commerceDiscountCommerceAccountGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -477,30 +497,6 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 	}
 
 	/**
-	 * Caches the commerce discount commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRel the commerce discount commerce account group rel
-	 */
-	public static void cacheResult(
-		CommerceDiscountCommerceAccountGroupRel
-			commerceDiscountCommerceAccountGroupRel) {
-
-		getPersistence().cacheResult(commerceDiscountCommerceAccountGroupRel);
-	}
-
-	/**
-	 * Caches the commerce discount commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountCommerceAccountGroupRels the commerce discount commerce account group rels
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountCommerceAccountGroupRel>
-			commerceDiscountCommerceAccountGroupRels) {
-
-		getPersistence().cacheResult(commerceDiscountCommerceAccountGroupRels);
-	}
-
-	/**
 	 * Creates a new commerce discount commerce account group rel with the primary key. Does not add the commerce discount commerce account group rel to the database.
 	 *
 	 * @param commerceDiscountCommerceAccountGroupRelId the primary key for the new commerce discount commerce account group rel
@@ -582,4 +578,4 @@ public class CommerceDiscountCommerceAccountGroupRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:321666248
+// LIFERAY-SERVICE-BUILDER-HASH:-178498304

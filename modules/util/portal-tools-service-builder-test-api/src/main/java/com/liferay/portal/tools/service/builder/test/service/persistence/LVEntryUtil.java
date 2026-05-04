@@ -36,6 +36,20 @@ public class LVEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LVEntry> lvEntries) {
+		getPersistence().cacheResult(lvEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LVEntry lvEntry) {
+		getPersistence().cacheResult(lvEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1546,24 +1560,6 @@ public class LVEntryUtil {
 	}
 
 	/**
-	 * Caches the lv entry in the entity cache if it is enabled.
-	 *
-	 * @param lvEntry the lv entry
-	 */
-	public static void cacheResult(LVEntry lvEntry) {
-		getPersistence().cacheResult(lvEntry);
-	}
-
-	/**
-	 * Caches the lv entries in the entity cache if it is enabled.
-	 *
-	 * @param lvEntries the lv entries
-	 */
-	public static void cacheResult(List<LVEntry> lvEntries) {
-		getPersistence().cacheResult(lvEntries);
-	}
-
-	/**
 	 * Creates a new lv entry with the primary key. Does not add the lv entry to the database.
 	 *
 	 * @param lvEntryId the primary key for the new lv entry
@@ -1868,4 +1864,4 @@ public class LVEntryUtil {
 	private static volatile LVEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1240147414
+// LIFERAY-SERVICE-BUILDER-HASH:268327969

@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -334,62 +331,6 @@ public class AkismetEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the akismet entry in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntry the akismet entry
-	 */
-	@Override
-	public void cacheResult(AkismetEntry akismetEntry) {
-		entityCache.putResult(
-			AkismetEntryImpl.class, akismetEntry.getPrimaryKey(), akismetEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				akismetEntry.getClassNameId(), akismetEntry.getClassPK()
-			},
-			akismetEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the akismet entries in the entity cache if it is enabled.
-	 *
-	 * @param akismetEntries the akismet entries
-	 */
-	@Override
-	public void cacheResult(List<AkismetEntry> akismetEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (akismetEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AkismetEntry akismetEntry : akismetEntries) {
-			if (entityCache.getResult(
-					AkismetEntryImpl.class, akismetEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(akismetEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AkismetEntryModelImpl akismetEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			akismetEntryModelImpl.getClassNameId(),
-			akismetEntryModelImpl.getClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, akismetEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new akismet entry with the primary key. Does not add the akismet entry to the database.
 	 *
 	 * @param akismetEntryId the primary key for the new akismet entry
@@ -507,10 +448,7 @@ public class AkismetEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AkismetEntryImpl.class, akismetEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(akismetEntryModelImpl);
+		cacheUniqueFindersResult(akismetEntry, false);
 
 		if (isNew) {
 			akismetEntry.setNew(false);
@@ -576,9 +514,6 @@ public class AkismetEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLtModifiedDate = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtModifiedDate",
 			new String[] {
@@ -602,10 +537,11 @@ public class AkismetEntryPersistenceImpl
 					"akismetEntry.", "modifiedDate", FinderColumn.Type.DATE,
 					"<", true, true, AkismetEntry::getModifiedDate));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			AkismetEntry::getClassNameId, AkismetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_AKISMETENTRY_WHERE,
@@ -685,4 +621,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-138852508
+// LIFERAY-SERVICE-BUILDER-HASH:1815054842

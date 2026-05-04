@@ -16,7 +16,6 @@ import com.liferay.knowledge.base.service.persistence.KBFolderUtil;
 import com.liferay.knowledge.base.service.persistence.impl.constants.KBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1793,122 +1790,6 @@ public class KBFolderPersistenceImpl
 	}
 
 	/**
-	 * Caches the kb folder in the entity cache if it is enabled.
-	 *
-	 * @param kbFolder the kb folder
-	 */
-	@Override
-	public void cacheResult(KBFolder kbFolder) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbFolder.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KBFolderImpl.class, kbFolder.getPrimaryKey(), kbFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {kbFolder.getUuid(), kbFolder.getGroupId()},
-				kbFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_N,
-				new Object[] {
-					kbFolder.getGroupId(), kbFolder.getParentKBFolderId(),
-					kbFolder.getName()
-				},
-				kbFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_UT,
-				new Object[] {
-					kbFolder.getGroupId(), kbFolder.getParentKBFolderId(),
-					kbFolder.getUrlTitle()
-				},
-				kbFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					kbFolder.getExternalReferenceCode(), kbFolder.getGroupId()
-				},
-				kbFolder);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kb folders in the entity cache if it is enabled.
-	 *
-	 * @param kbFolders the kb folders
-	 */
-	@Override
-	public void cacheResult(List<KBFolder> kbFolders) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kbFolders.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KBFolder kbFolder : kbFolders) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kbFolder.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KBFolderImpl.class, kbFolder.getPrimaryKey()) == null) {
-
-					cacheResult(kbFolder);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KBFolderModelImpl kbFolderModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kbFolderModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kbFolderModelImpl.getUuid(), kbFolderModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, kbFolderModelImpl);
-
-			args = new Object[] {
-				kbFolderModelImpl.getGroupId(),
-				kbFolderModelImpl.getParentKBFolderId(),
-				kbFolderModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_N, args, kbFolderModelImpl);
-
-			args = new Object[] {
-				kbFolderModelImpl.getGroupId(),
-				kbFolderModelImpl.getParentKBFolderId(),
-				kbFolderModelImpl.getUrlTitle()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_UT, args, kbFolderModelImpl);
-
-			args = new Object[] {
-				kbFolderModelImpl.getExternalReferenceCode(),
-				kbFolderModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, kbFolderModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kb folder with the primary key. Does not add the kb folder to the database.
 	 *
 	 * @param kbFolderId the primary key for the new kb folder
@@ -2107,10 +1988,7 @@ public class KBFolderPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KBFolderImpl.class, kbFolderModelImpl, false, true);
-
-		cacheUniqueFindersCache(kbFolderModelImpl);
+		cacheUniqueFindersResult(kbFolder, false);
 
 		if (isNew) {
 			kbFolder.setNew(false);
@@ -2254,9 +2132,6 @@ public class KBFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2284,10 +2159,11 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBFolder::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KBFolder::getUuid,
+			KBFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBFOLDER_WHERE,
@@ -2391,13 +2267,15 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "parentKBFolderId", FinderColumn.Type.LONG, "=",
 				true, true, KBFolder::getParentKBFolderId));
 
-		_finderPathFetchByG_P_N = new FinderPath(
+		_finderPathFetchByG_P_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "parentKBFolderId", "name"}, true);
+			new String[] {"groupId", "parentKBFolderId", "name"}, false,
+			KBFolder::getGroupId, KBFolder::getParentKBFolderId,
+			KBFolder::getName);
 
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_N, _SQL_SELECT_KBFOLDER_WHERE,
@@ -2411,13 +2289,15 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "name", FinderColumn.Type.STRING, "=", true, true,
 				KBFolder::getName));
 
-		_finderPathFetchByG_P_UT = new FinderPath(
+		_finderPathFetchByG_P_UT = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_UT",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "parentKBFolderId", "urlTitle"}, true);
+			new String[] {"groupId", "parentKBFolderId", "urlTitle"}, false,
+			KBFolder::getGroupId, KBFolder::getParentKBFolderId,
+			KBFolder::getUrlTitle);
 
 		_uniquePersistenceFinderByG_P_UT = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_UT, _SQL_SELECT_KBFOLDER_WHERE,
@@ -2471,10 +2351,11 @@ public class KBFolderPersistenceImpl
 				"kbFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBFolder::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			KBFolder::getExternalReferenceCode, KBFolder::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_KBFOLDER_WHERE,
@@ -2580,4 +2461,4 @@ public class KBFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-927025431
+// LIFERAY-SERVICE-BUILDER-HASH:-311434525

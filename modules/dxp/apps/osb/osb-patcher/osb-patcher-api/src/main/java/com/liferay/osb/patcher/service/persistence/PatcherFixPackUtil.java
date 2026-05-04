@@ -36,6 +36,20 @@ public class PatcherFixPackUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherFixPack> patcherFixPacks) {
+		getPersistence().cacheResult(patcherFixPacks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherFixPack patcherFixPack) {
+		getPersistence().cacheResult(patcherFixPack);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1800,24 +1814,6 @@ public class PatcherFixPackUtil {
 	}
 
 	/**
-	 * Caches the patcher fix pack in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPack the patcher fix pack
-	 */
-	public static void cacheResult(PatcherFixPack patcherFixPack) {
-		getPersistence().cacheResult(patcherFixPack);
-	}
-
-	/**
-	 * Caches the patcher fix packs in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPacks the patcher fix packs
-	 */
-	public static void cacheResult(List<PatcherFixPack> patcherFixPacks) {
-		getPersistence().cacheResult(patcherFixPacks);
-	}
-
-	/**
 	 * Creates a new patcher fix pack with the primary key. Does not add the patcher fix pack to the database.
 	 *
 	 * @param patcherFixPackId the primary key for the new patcher fix pack
@@ -2091,4 +2087,4 @@ public class PatcherFixPackUtil {
 	private static volatile PatcherFixPackPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1302726111
+// LIFERAY-SERVICE-BUILDER-HASH:665632361

@@ -422,6 +422,14 @@ public class CacheFieldEntryModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(CacheFieldEntry source) {
+		CacheFieldEntryModelImpl sourceModelImpl =
+			(CacheFieldEntryModelImpl)source;
+
+		setNickname(sourceModelImpl.getNickname());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -652,4 +660,4 @@ public class CacheFieldEntryModelImpl
 	private CacheFieldEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1830554645
+// LIFERAY-SERVICE-BUILDER-HASH:1642343844

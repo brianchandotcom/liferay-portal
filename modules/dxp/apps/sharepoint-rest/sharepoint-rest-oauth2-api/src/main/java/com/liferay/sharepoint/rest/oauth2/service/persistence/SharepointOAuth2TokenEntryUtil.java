@@ -36,6 +36,24 @@ public class SharepointOAuth2TokenEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
+
+		getPersistence().cacheResult(sharepointOAuth2TokenEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+
+		getPersistence().cacheResult(sharepointOAuth2TokenEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -309,28 +327,6 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	/**
-	 * Caches the sharepoint o auth2 token entry in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
-	 */
-	public static void cacheResult(
-		SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
-
-		getPersistence().cacheResult(sharepointOAuth2TokenEntry);
-	}
-
-	/**
-	 * Caches the sharepoint o auth2 token entries in the entity cache if it is enabled.
-	 *
-	 * @param sharepointOAuth2TokenEntries the sharepoint o auth2 token entries
-	 */
-	public static void cacheResult(
-		List<SharepointOAuth2TokenEntry> sharepointOAuth2TokenEntries) {
-
-		getPersistence().cacheResult(sharepointOAuth2TokenEntries);
-	}
-
-	/**
 	 * Creates a new sharepoint o auth2 token entry with the primary key. Does not add the sharepoint o auth2 token entry to the database.
 	 *
 	 * @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
@@ -403,4 +399,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:242246291
+// LIFERAY-SERVICE-BUILDER-HASH:-550592388

@@ -11837,20 +11837,6 @@ public interface KBArticlePersistence
 		long groupId, String[] sectionses, boolean main, int status);
 
 	/**
-	 * Caches the kb article in the entity cache if it is enabled.
-	 *
-	 * @param kbArticle the kb article
-	 */
-	public void cacheResult(KBArticle kbArticle);
-
-	/**
-	 * Caches the kb articles in the entity cache if it is enabled.
-	 *
-	 * @param kbArticles the kb articles
-	 */
-	public void cacheResult(java.util.List<KBArticle> kbArticles);
-
-	/**
 	 * Creates a new kb article with the primary key. Does not add the kb article to the database.
 	 *
 	 * @param kbArticleId the primary key for the new kb article
@@ -11888,4 +11874,4 @@ public interface KBArticlePersistence
 	public KBArticle fetchByPrimaryKey(long kbArticleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:675851534
+// LIFERAY-SERVICE-BUILDER-HASH:1655422986

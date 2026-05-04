@@ -824,20 +824,6 @@ public interface ListTypeEntryPersistence
 		long listTypeDefinitionId);
 
 	/**
-	 * Caches the list type entry in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntry the list type entry
-	 */
-	public void cacheResult(ListTypeEntry listTypeEntry);
-
-	/**
-	 * Caches the list type entries in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntries the list type entries
-	 */
-	public void cacheResult(java.util.List<ListTypeEntry> listTypeEntries);
-
-	/**
 	 * Creates a new list type entry with the primary key. Does not add the list type entry to the database.
 	 *
 	 * @param listTypeEntryId the primary key for the new list type entry
@@ -876,4 +862,4 @@ public interface ListTypeEntryPersistence
 	public ListTypeEntry fetchByPrimaryKey(long listTypeEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:987984450
+// LIFERAY-SERVICE-BUILDER-HASH:-455291656

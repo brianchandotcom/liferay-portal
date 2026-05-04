@@ -309,21 +309,6 @@ public interface CPConfigurationListRelPersistence
 		long classNameId, long classPK, long CPConfigurationListId);
 
 	/**
-	 * Caches the cp configuration list rel in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRel the cp configuration list rel
-	 */
-	public void cacheResult(CPConfigurationListRel cpConfigurationListRel);
-
-	/**
-	 * Caches the cp configuration list rels in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationListRels the cp configuration list rels
-	 */
-	public void cacheResult(
-		java.util.List<CPConfigurationListRel> cpConfigurationListRels);
-
-	/**
 	 * Creates a new cp configuration list rel with the primary key. Does not add the cp configuration list rel to the database.
 	 *
 	 * @param CPConfigurationListRelId the primary key for the new cp configuration list rel
@@ -365,4 +350,4 @@ public interface CPConfigurationListRelPersistence
 		long CPConfigurationListRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:918015275
+// LIFERAY-SERVICE-BUILDER-HASH:1315648223

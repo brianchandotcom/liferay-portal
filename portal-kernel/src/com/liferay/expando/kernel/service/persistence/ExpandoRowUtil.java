@@ -36,6 +36,20 @@ public class ExpandoRowUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ExpandoRow> expandoRows) {
+		getPersistence().cacheResult(expandoRows);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ExpandoRow expandoRow) {
+		getPersistence().cacheResult(expandoRow);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -414,24 +428,6 @@ public class ExpandoRowUtil {
 	}
 
 	/**
-	 * Caches the expando row in the entity cache if it is enabled.
-	 *
-	 * @param expandoRow the expando row
-	 */
-	public static void cacheResult(ExpandoRow expandoRow) {
-		getPersistence().cacheResult(expandoRow);
-	}
-
-	/**
-	 * Caches the expando rows in the entity cache if it is enabled.
-	 *
-	 * @param expandoRows the expando rows
-	 */
-	public static void cacheResult(List<ExpandoRow> expandoRows) {
-		getPersistence().cacheResult(expandoRows);
-	}
-
-	/**
 	 * Creates a new expando row with the primary key. Does not add the expando row to the database.
 	 *
 	 * @param rowId the primary key for the new expando row
@@ -492,4 +488,4 @@ public class ExpandoRowUtil {
 	private static volatile ExpandoRowPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1091044347
+// LIFERAY-SERVICE-BUILDER-HASH:286583271

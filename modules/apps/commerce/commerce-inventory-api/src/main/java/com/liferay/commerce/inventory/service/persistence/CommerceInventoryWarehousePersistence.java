@@ -1072,22 +1072,6 @@ public interface CommerceInventoryWarehousePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce inventory warehouse in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouse the commerce inventory warehouse
-	 */
-	public void cacheResult(
-		CommerceInventoryWarehouse commerceInventoryWarehouse);
-
-	/**
-	 * Caches the commerce inventory warehouses in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouses the commerce inventory warehouses
-	 */
-	public void cacheResult(
-		java.util.List<CommerceInventoryWarehouse> commerceInventoryWarehouses);
-
-	/**
 	 * Creates a new commerce inventory warehouse with the primary key. Does not add the commerce inventory warehouse to the database.
 	 *
 	 * @param commerceInventoryWarehouseId the primary key for the new commerce inventory warehouse
@@ -1129,4 +1113,4 @@ public interface CommerceInventoryWarehousePersistence
 		long commerceInventoryWarehouseId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1856716999
+// LIFERAY-SERVICE-BUILDER-HASH:1468594953

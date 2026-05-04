@@ -938,4 +938,4 @@ public class FaroChannelModelImpl
 	private FaroChannel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1368115570
+// LIFERAY-SERVICE-BUILDER-HASH:2035006266

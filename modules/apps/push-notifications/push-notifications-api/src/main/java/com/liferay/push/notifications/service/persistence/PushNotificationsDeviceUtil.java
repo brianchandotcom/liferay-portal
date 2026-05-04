@@ -36,6 +36,24 @@ public class PushNotificationsDeviceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PushNotificationsDevice> pushNotificationsDevices) {
+
+		getPersistence().cacheResult(pushNotificationsDevices);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		PushNotificationsDevice pushNotificationsDevice) {
+
+		getPersistence().cacheResult(pushNotificationsDevice);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -400,28 +418,6 @@ public class PushNotificationsDeviceUtil {
 	}
 
 	/**
-	 * Caches the push notifications device in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevice the push notifications device
-	 */
-	public static void cacheResult(
-		PushNotificationsDevice pushNotificationsDevice) {
-
-		getPersistence().cacheResult(pushNotificationsDevice);
-	}
-
-	/**
-	 * Caches the push notifications devices in the entity cache if it is enabled.
-	 *
-	 * @param pushNotificationsDevices the push notifications devices
-	 */
-	public static void cacheResult(
-		List<PushNotificationsDevice> pushNotificationsDevices) {
-
-		getPersistence().cacheResult(pushNotificationsDevices);
-	}
-
-	/**
 	 * Creates a new push notifications device with the primary key. Does not add the push notifications device to the database.
 	 *
 	 * @param pushNotificationsDeviceId the primary key for the new push notifications device
@@ -491,4 +487,4 @@ public class PushNotificationsDeviceUtil {
 	private static volatile PushNotificationsDevicePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1075822631
+// LIFERAY-SERVICE-BUILDER-HASH:1562751553

@@ -667,21 +667,6 @@ public interface LayoutSetPrototypePersistence
 	public int filterCountByC_A(long companyId, boolean active);
 
 	/**
-	 * Caches the layout set prototype in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetPrototype the layout set prototype
-	 */
-	public void cacheResult(LayoutSetPrototype layoutSetPrototype);
-
-	/**
-	 * Caches the layout set prototypes in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetPrototypes the layout set prototypes
-	 */
-	public void cacheResult(
-		java.util.List<LayoutSetPrototype> layoutSetPrototypes);
-
-	/**
 	 * Creates a new layout set prototype with the primary key. Does not add the layout set prototype to the database.
 	 *
 	 * @param layoutSetPrototypeId the primary key for the new layout set prototype
@@ -720,4 +705,4 @@ public interface LayoutSetPrototypePersistence
 	public LayoutSetPrototype fetchByPrimaryKey(long layoutSetPrototypeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1356098468
+// LIFERAY-SERVICE-BUILDER-HASH:964083372

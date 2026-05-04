@@ -977,4 +977,4 @@ public class CommerceAddressRestrictionModelImpl
 	private CommerceAddressRestriction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1965735713
+// LIFERAY-SERVICE-BUILDER-HASH:-1067026871

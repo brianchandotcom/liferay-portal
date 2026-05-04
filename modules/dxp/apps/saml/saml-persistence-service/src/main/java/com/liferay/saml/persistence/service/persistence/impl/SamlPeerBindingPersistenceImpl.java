@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.saml.persistence.exception.NoSuchPeerBindingException;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
@@ -457,45 +454,6 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 	/**
-	 * Caches the saml peer binding in the entity cache if it is enabled.
-	 *
-	 * @param samlPeerBinding the saml peer binding
-	 */
-	@Override
-	public void cacheResult(SamlPeerBinding samlPeerBinding) {
-		entityCache.putResult(
-			SamlPeerBindingImpl.class, samlPeerBinding.getPrimaryKey(),
-			samlPeerBinding);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saml peer bindings in the entity cache if it is enabled.
-	 *
-	 * @param samlPeerBindings the saml peer bindings
-	 */
-	@Override
-	public void cacheResult(List<SamlPeerBinding> samlPeerBindings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (samlPeerBindings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SamlPeerBinding samlPeerBinding : samlPeerBindings) {
-			if (entityCache.getResult(
-					SamlPeerBindingImpl.class,
-					samlPeerBinding.getPrimaryKey()) == null) {
-
-				cacheResult(samlPeerBinding);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new saml peer binding with the primary key. Does not add the saml peer binding to the database.
 	 *
 	 * @param samlPeerBindingId the primary key for the new saml peer binding
@@ -617,8 +575,7 @@ public class SamlPeerBindingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SamlPeerBindingImpl.class, samlPeerBindingModelImpl, false, true);
+		cacheUniqueFindersResult(samlPeerBinding, false);
 
 		if (isNew) {
 			samlPeerBinding.setNew(false);
@@ -679,9 +636,6 @@ public class SamlPeerBindingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_D_SNIV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_D_SNIV",
 			new String[] {
@@ -841,4 +795,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1304445437
+// LIFERAY-SERVICE-BUILDER-HASH:1945281765

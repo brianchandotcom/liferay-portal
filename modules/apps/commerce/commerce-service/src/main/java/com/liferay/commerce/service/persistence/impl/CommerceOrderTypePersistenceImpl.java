@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2523,65 +2521,6 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce order type in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderType the commerce order type
-	 */
-	@Override
-	public void cacheResult(CommerceOrderType commerceOrderType) {
-		entityCache.putResult(
-			CommerceOrderTypeImpl.class, commerceOrderType.getPrimaryKey(),
-			commerceOrderType);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceOrderType.getExternalReferenceCode(),
-				commerceOrderType.getCompanyId()
-			},
-			commerceOrderType);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce order types in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderTypes the commerce order types
-	 */
-	@Override
-	public void cacheResult(List<CommerceOrderType> commerceOrderTypes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceOrderTypes.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceOrderType commerceOrderType : commerceOrderTypes) {
-			if (entityCache.getResult(
-					CommerceOrderTypeImpl.class,
-					commerceOrderType.getPrimaryKey()) == null) {
-
-				cacheResult(commerceOrderType);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceOrderTypeModelImpl commerceOrderTypeModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceOrderTypeModelImpl.getExternalReferenceCode(),
-			commerceOrderTypeModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceOrderTypeModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce order type with the primary key. Does not add the commerce order type to the database.
 	 *
 	 * @param commerceOrderTypeId the primary key for the new commerce order type
@@ -2791,11 +2730,7 @@ public class CommerceOrderTypePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceOrderTypeImpl.class, commerceOrderTypeModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commerceOrderTypeModelImpl);
+		cacheUniqueFindersResult(commerceOrderType, false);
 
 		if (isNew) {
 			commerceOrderType.setNew(false);
@@ -2861,9 +2796,6 @@ public class CommerceOrderTypePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3041,10 +2973,12 @@ public class CommerceOrderTypePersistenceImpl
 				"commerceOrderType.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CommerceOrderType::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceOrderType::getExternalReferenceCode,
+			CommerceOrderType::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEORDERTYPE_WHERE,
@@ -3148,4 +3082,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1830340260
+// LIFERAY-SERVICE-BUILDER-HASH:2087503884

@@ -36,6 +36,24 @@ public class CommerceInventoryWarehouseItemUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouseItems);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
+
+		getPersistence().cacheResult(commerceInventoryWarehouseItem);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -949,28 +967,6 @@ public class CommerceInventoryWarehouseItemUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory warehouse item in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseItem the commerce inventory warehouse item
-	 */
-	public static void cacheResult(
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouseItem);
-	}
-
-	/**
-	 * Caches the commerce inventory warehouse items in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseItems the commerce inventory warehouse items
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems) {
-
-		getPersistence().cacheResult(commerceInventoryWarehouseItems);
-	}
-
-	/**
 	 * Creates a new commerce inventory warehouse item with the primary key. Does not add the commerce inventory warehouse item to the database.
 	 *
 	 * @param commerceInventoryWarehouseItemId the primary key for the new commerce inventory warehouse item
@@ -1046,4 +1042,4 @@ public class CommerceInventoryWarehouseItemUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1329910580
+// LIFERAY-SERVICE-BUILDER-HASH:-1117114510

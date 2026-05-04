@@ -15,7 +15,6 @@ import com.liferay.friendly.url.service.persistence.FriendlyURLEntryPersistence;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryUtil;
 import com.liferay.friendly.url.service.persistence.impl.constants.FURLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -34,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1042,79 +1038,6 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the friendly url entry in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntry the friendly url entry
-	 */
-	@Override
-	public void cacheResult(FriendlyURLEntry friendlyURLEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FriendlyURLEntryImpl.class, friendlyURLEntry.getPrimaryKey(),
-				friendlyURLEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					friendlyURLEntry.getUuid(), friendlyURLEntry.getGroupId()
-				},
-				friendlyURLEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the friendly url entries in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntries the friendly url entries
-	 */
-	@Override
-	public void cacheResult(List<FriendlyURLEntry> friendlyURLEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (friendlyURLEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FriendlyURLEntry friendlyURLEntry : friendlyURLEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						friendlyURLEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FriendlyURLEntryImpl.class,
-						friendlyURLEntry.getPrimaryKey()) == null) {
-
-					cacheResult(friendlyURLEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FriendlyURLEntryModelImpl friendlyURLEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				friendlyURLEntryModelImpl.getUuid(),
-				friendlyURLEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, friendlyURLEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new friendly url entry with the primary key. Does not add the friendly url entry to the database.
 	 *
 	 * @param friendlyURLEntryId the primary key for the new friendly url entry
@@ -1267,10 +1190,7 @@ public class FriendlyURLEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FriendlyURLEntryImpl.class, friendlyURLEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(friendlyURLEntryModelImpl);
+		cacheUniqueFindersResult(friendlyURLEntry, false);
 
 		if (isNew) {
 			friendlyURLEntry.setNew(false);
@@ -1401,9 +1321,6 @@ public class FriendlyURLEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1432,10 +1349,11 @@ public class FriendlyURLEntryPersistenceImpl
 				"friendlyURLEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FriendlyURLEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, FriendlyURLEntry::getUuid,
+			FriendlyURLEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_FRIENDLYURLENTRY_WHERE,
@@ -1658,4 +1576,4 @@ public class FriendlyURLEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1154540527
+// LIFERAY-SERVICE-BUILDER-HASH:783110628

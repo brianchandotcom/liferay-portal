@@ -36,6 +36,20 @@ public class PatcherTicketHintUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherTicketHint> patcherTicketHints) {
+		getPersistence().cacheResult(patcherTicketHints);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherTicketHint patcherTicketHint) {
+		getPersistence().cacheResult(patcherTicketHint);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -184,24 +198,6 @@ public class PatcherTicketHintUtil {
 	}
 
 	/**
-	 * Caches the patcher ticket hint in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHint the patcher ticket hint
-	 */
-	public static void cacheResult(PatcherTicketHint patcherTicketHint) {
-		getPersistence().cacheResult(patcherTicketHint);
-	}
-
-	/**
-	 * Caches the patcher ticket hints in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHints the patcher ticket hints
-	 */
-	public static void cacheResult(List<PatcherTicketHint> patcherTicketHints) {
-		getPersistence().cacheResult(patcherTicketHints);
-	}
-
-	/**
 	 * Creates a new patcher ticket hint with the primary key. Does not add the patcher ticket hint to the database.
 	 *
 	 * @param patcherTicketHintId the primary key for the new patcher ticket hint
@@ -270,4 +266,4 @@ public class PatcherTicketHintUtil {
 	private static volatile PatcherTicketHintPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-673206634
+// LIFERAY-SERVICE-BUILDER-HASH:420422194

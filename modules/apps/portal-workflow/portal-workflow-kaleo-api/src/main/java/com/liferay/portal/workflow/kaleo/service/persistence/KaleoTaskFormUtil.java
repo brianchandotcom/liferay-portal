@@ -36,6 +36,20 @@ public class KaleoTaskFormUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoTaskForm> kaleoTaskForms) {
+		getPersistence().cacheResult(kaleoTaskForms);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoTaskForm kaleoTaskForm) {
+		getPersistence().cacheResult(kaleoTaskForm);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -684,24 +698,6 @@ public class KaleoTaskFormUtil {
 	}
 
 	/**
-	 * Caches the kaleo task form in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskForm the kaleo task form
-	 */
-	public static void cacheResult(KaleoTaskForm kaleoTaskForm) {
-		getPersistence().cacheResult(kaleoTaskForm);
-	}
-
-	/**
-	 * Caches the kaleo task forms in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskForms the kaleo task forms
-	 */
-	public static void cacheResult(List<KaleoTaskForm> kaleoTaskForms) {
-		getPersistence().cacheResult(kaleoTaskForms);
-	}
-
-	/**
 	 * Creates a new kaleo task form with the primary key. Does not add the kaleo task form to the database.
 	 *
 	 * @param kaleoTaskFormId the primary key for the new kaleo task form
@@ -764,4 +760,4 @@ public class KaleoTaskFormUtil {
 	private static volatile KaleoTaskFormPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-83734946
+// LIFERAY-SERVICE-BUILDER-HASH:-1804588434

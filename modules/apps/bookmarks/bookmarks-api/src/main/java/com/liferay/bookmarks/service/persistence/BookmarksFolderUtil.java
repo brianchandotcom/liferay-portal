@@ -36,6 +36,20 @@ public class BookmarksFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BookmarksFolder> bookmarksFolders) {
+		getPersistence().cacheResult(bookmarksFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BookmarksFolder bookmarksFolder) {
+		getPersistence().cacheResult(bookmarksFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1664,24 +1678,6 @@ public class BookmarksFolderUtil {
 	}
 
 	/**
-	 * Caches the bookmarks folder in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolder the bookmarks folder
-	 */
-	public static void cacheResult(BookmarksFolder bookmarksFolder) {
-		getPersistence().cacheResult(bookmarksFolder);
-	}
-
-	/**
-	 * Caches the bookmarks folders in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolders the bookmarks folders
-	 */
-	public static void cacheResult(List<BookmarksFolder> bookmarksFolders) {
-		getPersistence().cacheResult(bookmarksFolders);
-	}
-
-	/**
 	 * Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
 	 *
 	 * @param folderId the primary key for the new bookmarks folder
@@ -1742,4 +1738,4 @@ public class BookmarksFolderUtil {
 	private static volatile BookmarksFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1872604931
+// LIFERAY-SERVICE-BUILDER-HASH:238963633

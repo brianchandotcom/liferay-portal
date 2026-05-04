@@ -305,22 +305,6 @@ public interface CommerceAddressRestrictionPersistence
 	public int countByC_C_C(long classNameId, long classPK, long countryId);
 
 	/**
-	 * Caches the commerce address restriction in the entity cache if it is enabled.
-	 *
-	 * @param commerceAddressRestriction the commerce address restriction
-	 */
-	public void cacheResult(
-		CommerceAddressRestriction commerceAddressRestriction);
-
-	/**
-	 * Caches the commerce address restrictions in the entity cache if it is enabled.
-	 *
-	 * @param commerceAddressRestrictions the commerce address restrictions
-	 */
-	public void cacheResult(
-		java.util.List<CommerceAddressRestriction> commerceAddressRestrictions);
-
-	/**
 	 * Creates a new commerce address restriction with the primary key. Does not add the commerce address restriction to the database.
 	 *
 	 * @param commerceAddressRestrictionId the primary key for the new commerce address restriction
@@ -362,4 +346,4 @@ public interface CommerceAddressRestrictionPersistence
 		long commerceAddressRestrictionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-320130038
+// LIFERAY-SERVICE-BUILDER-HASH:-1140660978

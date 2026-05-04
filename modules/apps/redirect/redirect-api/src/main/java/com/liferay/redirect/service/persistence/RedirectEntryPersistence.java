@@ -662,20 +662,6 @@ public interface RedirectEntryPersistence
 	public int countByG_S(long groupId, String sourceURL);
 
 	/**
-	 * Caches the redirect entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntry the redirect entry
-	 */
-	public void cacheResult(RedirectEntry redirectEntry);
-
-	/**
-	 * Caches the redirect entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntries the redirect entries
-	 */
-	public void cacheResult(java.util.List<RedirectEntry> redirectEntries);
-
-	/**
 	 * Creates a new redirect entry with the primary key. Does not add the redirect entry to the database.
 	 *
 	 * @param redirectEntryId the primary key for the new redirect entry
@@ -714,4 +700,4 @@ public interface RedirectEntryPersistence
 	public RedirectEntry fetchByPrimaryKey(long redirectEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1540163331
+// LIFERAY-SERVICE-BUILDER-HASH:-1584869333

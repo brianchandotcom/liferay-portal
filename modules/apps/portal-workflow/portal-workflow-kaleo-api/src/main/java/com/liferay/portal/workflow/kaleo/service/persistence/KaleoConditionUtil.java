@@ -36,6 +36,20 @@ public class KaleoConditionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoCondition> kaleoConditions) {
+		getPersistence().cacheResult(kaleoConditions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoCondition kaleoCondition) {
+		getPersistence().cacheResult(kaleoCondition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -428,24 +442,6 @@ public class KaleoConditionUtil {
 	}
 
 	/**
-	 * Caches the kaleo condition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoCondition the kaleo condition
-	 */
-	public static void cacheResult(KaleoCondition kaleoCondition) {
-		getPersistence().cacheResult(kaleoCondition);
-	}
-
-	/**
-	 * Caches the kaleo conditions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoConditions the kaleo conditions
-	 */
-	public static void cacheResult(List<KaleoCondition> kaleoConditions) {
-		getPersistence().cacheResult(kaleoConditions);
-	}
-
-	/**
 	 * Creates a new kaleo condition with the primary key. Does not add the kaleo condition to the database.
 	 *
 	 * @param kaleoConditionId the primary key for the new kaleo condition
@@ -508,4 +504,4 @@ public class KaleoConditionUtil {
 	private static volatile KaleoConditionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-655110541
+// LIFERAY-SERVICE-BUILDER-HASH:-427809757

@@ -36,6 +36,20 @@ public class PatcherAccountUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherAccount> patcherAccounts) {
+		getPersistence().cacheResult(patcherAccounts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherAccount patcherAccount) {
+		getPersistence().cacheResult(patcherAccount);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -560,24 +574,6 @@ public class PatcherAccountUtil {
 	}
 
 	/**
-	 * Caches the patcher account in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccount the patcher account
-	 */
-	public static void cacheResult(PatcherAccount patcherAccount) {
-		getPersistence().cacheResult(patcherAccount);
-	}
-
-	/**
-	 * Caches the patcher accounts in the entity cache if it is enabled.
-	 *
-	 * @param patcherAccounts the patcher accounts
-	 */
-	public static void cacheResult(List<PatcherAccount> patcherAccounts) {
-		getPersistence().cacheResult(patcherAccounts);
-	}
-
-	/**
 	 * Creates a new patcher account with the primary key. Does not add the patcher account to the database.
 	 *
 	 * @param patcherAccountId the primary key for the new patcher account
@@ -854,4 +850,4 @@ public class PatcherAccountUtil {
 	private static volatile PatcherAccountPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:70914099
+// LIFERAY-SERVICE-BUILDER-HASH:803436155

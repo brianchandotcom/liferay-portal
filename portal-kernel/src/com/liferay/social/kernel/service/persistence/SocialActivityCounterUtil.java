@@ -36,6 +36,24 @@ public class SocialActivityCounterUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SocialActivityCounter> socialActivityCounters) {
+
+		getPersistence().cacheResult(socialActivityCounters);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		SocialActivityCounter socialActivityCounter) {
+
+		getPersistence().cacheResult(socialActivityCounter);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -737,28 +755,6 @@ public class SocialActivityCounterUtil {
 	}
 
 	/**
-	 * Caches the social activity counter in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounter the social activity counter
-	 */
-	public static void cacheResult(
-		SocialActivityCounter socialActivityCounter) {
-
-		getPersistence().cacheResult(socialActivityCounter);
-	}
-
-	/**
-	 * Caches the social activity counters in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityCounters the social activity counters
-	 */
-	public static void cacheResult(
-		List<SocialActivityCounter> socialActivityCounters) {
-
-		getPersistence().cacheResult(socialActivityCounters);
-	}
-
-	/**
 	 * Creates a new social activity counter with the primary key. Does not add the social activity counter to the database.
 	 *
 	 * @param activityCounterId the primary key for the new social activity counter
@@ -827,4 +823,4 @@ public class SocialActivityCounterUtil {
 	private static volatile SocialActivityCounterPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1284515116
+// LIFERAY-SERVICE-BUILDER-HASH:181833096

@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -37,7 +34,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -168,63 +164,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(MFATimeBasedOTPEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the mfa time based otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
-	 */
-	@Override
-	public void cacheResult(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry) {
-		entityCache.putResult(
-			MFATimeBasedOTPEntryImpl.class,
-			mfaTimeBasedOTPEntry.getPrimaryKey(), mfaTimeBasedOTPEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUserId,
-			new Object[] {mfaTimeBasedOTPEntry.getUserId()},
-			mfaTimeBasedOTPEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the mfa time based otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntries the mfa time based otp entries
-	 */
-	@Override
-	public void cacheResult(List<MFATimeBasedOTPEntry> mfaTimeBasedOTPEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mfaTimeBasedOTPEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MFATimeBasedOTPEntry mfaTimeBasedOTPEntry :
-				mfaTimeBasedOTPEntries) {
-
-			if (entityCache.getResult(
-					MFATimeBasedOTPEntryImpl.class,
-					mfaTimeBasedOTPEntry.getPrimaryKey()) == null) {
-
-				cacheResult(mfaTimeBasedOTPEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		MFATimeBasedOTPEntryModelImpl mfaTimeBasedOTPEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			mfaTimeBasedOTPEntryModelImpl.getUserId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUserId, args, mfaTimeBasedOTPEntryModelImpl);
 	}
 
 	/**
@@ -364,11 +303,7 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MFATimeBasedOTPEntryImpl.class, mfaTimeBasedOTPEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(mfaTimeBasedOTPEntryModelImpl);
+		cacheUniqueFindersResult(mfaTimeBasedOTPEntry, false);
 
 		if (isNew) {
 			mfaTimeBasedOTPEntry.setNew(false);
@@ -429,12 +364,10 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByUserId = new FinderPath(
+		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
+			MFATimeBasedOTPEntry::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId,
@@ -506,4 +439,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1597646640
+// LIFERAY-SERVICE-BUILDER-HASH:-332937411

@@ -6,7 +6,6 @@
 package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchEntryRelException;
 import com.liferay.segments.model.SegmentsEntryRel;
@@ -717,82 +713,6 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the segments entry rel in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRel the segments entry rel
-	 */
-	@Override
-	public void cacheResult(SegmentsEntryRel segmentsEntryRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsEntryRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SegmentsEntryRelImpl.class, segmentsEntryRel.getPrimaryKey(),
-				segmentsEntryRel);
-
-			finderCache.putResult(
-				_finderPathFetchByS_CN_CPK,
-				new Object[] {
-					segmentsEntryRel.getSegmentsEntryId(),
-					segmentsEntryRel.getClassNameId(),
-					segmentsEntryRel.getClassPK()
-				},
-				segmentsEntryRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the segments entry rels in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRels the segments entry rels
-	 */
-	@Override
-	public void cacheResult(List<SegmentsEntryRel> segmentsEntryRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (segmentsEntryRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SegmentsEntryRel segmentsEntryRel : segmentsEntryRels) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						segmentsEntryRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SegmentsEntryRelImpl.class,
-						segmentsEntryRel.getPrimaryKey()) == null) {
-
-					cacheResult(segmentsEntryRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SegmentsEntryRelModelImpl segmentsEntryRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsEntryRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				segmentsEntryRelModelImpl.getSegmentsEntryId(),
-				segmentsEntryRelModelImpl.getClassNameId(),
-				segmentsEntryRelModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByS_CN_CPK, args, segmentsEntryRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
 	 * @param segmentsEntryRelId the primary key for the new segments entry rel
@@ -932,10 +852,7 @@ public class SegmentsEntryRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SegmentsEntryRelImpl.class, segmentsEntryRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(segmentsEntryRelModelImpl);
+		cacheUniqueFindersResult(segmentsEntryRel, false);
 
 		if (isNew) {
 			segmentsEntryRel.setNew(false);
@@ -1065,9 +982,6 @@ public class SegmentsEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
 			new String[] {
@@ -1172,12 +1086,14 @@ public class SegmentsEntryRelPersistenceImpl
 					"segmentsEntryRel.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRel::getClassPK));
 
-		_finderPathFetchByS_CN_CPK = new FinderPath(
+		_finderPathFetchByS_CN_CPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_CN_CPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"segmentsEntryId", "classNameId", "classPK"}, true);
+			new String[] {"segmentsEntryId", "classNameId", "classPK"}, false,
+			SegmentsEntryRel::getSegmentsEntryId,
+			SegmentsEntryRel::getClassNameId, SegmentsEntryRel::getClassPK);
 
 		_uniquePersistenceFinderByS_CN_CPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_CN_CPK,
@@ -1261,4 +1177,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1928294451
+// LIFERAY-SERVICE-BUILDER-HASH:523707506

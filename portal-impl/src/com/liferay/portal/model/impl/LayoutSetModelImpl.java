@@ -845,6 +845,16 @@ public class LayoutSetModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(LayoutSet source) {
+		LayoutSetModelImpl sourceModelImpl = (LayoutSetModelImpl)source;
+
+		setCompanyFallbackVirtualHostname(
+			sourceModelImpl.getCompanyFallbackVirtualHostname());
+
+		setVirtualHostnames(sourceModelImpl.getVirtualHostnames());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1251,4 +1261,4 @@ public class LayoutSetModelImpl
 	private LayoutSet _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-379735538
+// LIFERAY-SERVICE-BUILDER-HASH:1371047872

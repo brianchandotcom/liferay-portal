@@ -136,21 +136,6 @@ public interface FinderWhereClauseEntryPersistence
 	public int countByName_Nickname(String name);
 
 	/**
-	 * Caches the finder where clause entry in the entity cache if it is enabled.
-	 *
-	 * @param finderWhereClauseEntry the finder where clause entry
-	 */
-	public void cacheResult(FinderWhereClauseEntry finderWhereClauseEntry);
-
-	/**
-	 * Caches the finder where clause entries in the entity cache if it is enabled.
-	 *
-	 * @param finderWhereClauseEntries the finder where clause entries
-	 */
-	public void cacheResult(
-		java.util.List<FinderWhereClauseEntry> finderWhereClauseEntries);
-
-	/**
 	 * Creates a new finder where clause entry with the primary key. Does not add the finder where clause entry to the database.
 	 *
 	 * @param finderWhereClauseEntryId the primary key for the new finder where clause entry
@@ -192,4 +177,4 @@ public interface FinderWhereClauseEntryPersistence
 		long finderWhereClauseEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:797668649
+// LIFERAY-SERVICE-BUILDER-HASH:824846975

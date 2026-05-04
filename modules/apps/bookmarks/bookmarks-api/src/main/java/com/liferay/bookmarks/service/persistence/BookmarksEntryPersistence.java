@@ -2485,20 +2485,6 @@ public interface BookmarksEntryPersistence
 		long groupId, long userId, long[] folderIds, int status);
 
 	/**
-	 * Caches the bookmarks entry in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksEntry the bookmarks entry
-	 */
-	public void cacheResult(BookmarksEntry bookmarksEntry);
-
-	/**
-	 * Caches the bookmarks entries in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksEntries the bookmarks entries
-	 */
-	public void cacheResult(java.util.List<BookmarksEntry> bookmarksEntries);
-
-	/**
 	 * Creates a new bookmarks entry with the primary key. Does not add the bookmarks entry to the database.
 	 *
 	 * @param entryId the primary key for the new bookmarks entry
@@ -2536,4 +2522,4 @@ public interface BookmarksEntryPersistence
 	public BookmarksEntry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1901197836
+// LIFERAY-SERVICE-BUILDER-HASH:-1695407580

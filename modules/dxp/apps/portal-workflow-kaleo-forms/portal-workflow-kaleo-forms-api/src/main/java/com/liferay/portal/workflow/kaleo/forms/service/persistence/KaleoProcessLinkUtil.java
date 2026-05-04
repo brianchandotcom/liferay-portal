@@ -36,6 +36,20 @@ public class KaleoProcessLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoProcessLink> kaleoProcessLinks) {
+		getPersistence().cacheResult(kaleoProcessLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoProcessLink kaleoProcessLink) {
+		getPersistence().cacheResult(kaleoProcessLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -313,24 +327,6 @@ public class KaleoProcessLinkUtil {
 	}
 
 	/**
-	 * Caches the kaleo process link in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLink the kaleo process link
-	 */
-	public static void cacheResult(KaleoProcessLink kaleoProcessLink) {
-		getPersistence().cacheResult(kaleoProcessLink);
-	}
-
-	/**
-	 * Caches the kaleo process links in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLinks the kaleo process links
-	 */
-	public static void cacheResult(List<KaleoProcessLink> kaleoProcessLinks) {
-		getPersistence().cacheResult(kaleoProcessLinks);
-	}
-
-	/**
 	 * Creates a new kaleo process link with the primary key. Does not add the kaleo process link to the database.
 	 *
 	 * @param kaleoProcessLinkId the primary key for the new kaleo process link
@@ -395,4 +391,4 @@ public class KaleoProcessLinkUtil {
 	private static volatile KaleoProcessLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001442606
+// LIFERAY-SERVICE-BUILDER-HASH:940773930

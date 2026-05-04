@@ -344,21 +344,6 @@ public interface CommerceVirtualOrderItemPersistence
 	public int countByCommerceOrderItemId(long commerceOrderItemId);
 
 	/**
-	 * Caches the commerce virtual order item in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItem the commerce virtual order item
-	 */
-	public void cacheResult(CommerceVirtualOrderItem commerceVirtualOrderItem);
-
-	/**
-	 * Caches the commerce virtual order items in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItems the commerce virtual order items
-	 */
-	public void cacheResult(
-		java.util.List<CommerceVirtualOrderItem> commerceVirtualOrderItems);
-
-	/**
 	 * Creates a new commerce virtual order item with the primary key. Does not add the commerce virtual order item to the database.
 	 *
 	 * @param commerceVirtualOrderItemId the primary key for the new commerce virtual order item
@@ -400,4 +385,4 @@ public interface CommerceVirtualOrderItemPersistence
 		long commerceVirtualOrderItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1885069506
+// LIFERAY-SERVICE-BUILDER-HASH:-91469298

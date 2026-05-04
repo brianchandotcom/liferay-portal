@@ -36,6 +36,20 @@ public class DEDataListViewUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DEDataListView> deDataListViews) {
+		getPersistence().cacheResult(deDataListViews);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DEDataListView deDataListView) {
+		getPersistence().cacheResult(deDataListView);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -700,24 +714,6 @@ public class DEDataListViewUtil {
 	}
 
 	/**
-	 * Caches the de data list view in the entity cache if it is enabled.
-	 *
-	 * @param deDataListView the de data list view
-	 */
-	public static void cacheResult(DEDataListView deDataListView) {
-		getPersistence().cacheResult(deDataListView);
-	}
-
-	/**
-	 * Caches the de data list views in the entity cache if it is enabled.
-	 *
-	 * @param deDataListViews the de data list views
-	 */
-	public static void cacheResult(List<DEDataListView> deDataListViews) {
-		getPersistence().cacheResult(deDataListViews);
-	}
-
-	/**
 	 * Creates a new de data list view with the primary key. Does not add the de data list view to the database.
 	 *
 	 * @param deDataListViewId the primary key for the new de data list view
@@ -778,4 +774,4 @@ public class DEDataListViewUtil {
 	private static volatile DEDataListViewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2004284318
+// LIFERAY-SERVICE-BUILDER-HASH:808085780

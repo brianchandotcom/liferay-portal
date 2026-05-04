@@ -36,6 +36,20 @@ public class ObjectDefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectDefinition> objectDefinitions) {
+		getPersistence().cacheResult(objectDefinitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectDefinition objectDefinition) {
+		getPersistence().cacheResult(objectDefinition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3266,24 +3280,6 @@ public class ObjectDefinitionUtil {
 	}
 
 	/**
-	 * Caches the object definition in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinition the object definition
-	 */
-	public static void cacheResult(ObjectDefinition objectDefinition) {
-		getPersistence().cacheResult(objectDefinition);
-	}
-
-	/**
-	 * Caches the object definitions in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitions the object definitions
-	 */
-	public static void cacheResult(List<ObjectDefinition> objectDefinitions) {
-		getPersistence().cacheResult(objectDefinitions);
-	}
-
-	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
 	 * @param objectDefinitionId the primary key for the new object definition
@@ -3346,4 +3342,4 @@ public class ObjectDefinitionUtil {
 	private static volatile ObjectDefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-838230559
+// LIFERAY-SERVICE-BUILDER-HASH:-941236545

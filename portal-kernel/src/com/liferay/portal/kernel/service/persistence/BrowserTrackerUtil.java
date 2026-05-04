@@ -36,6 +36,20 @@ public class BrowserTrackerUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BrowserTracker> browserTrackers) {
+		getPersistence().cacheResult(browserTrackers);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BrowserTracker browserTracker) {
+		getPersistence().cacheResult(browserTracker);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -171,24 +185,6 @@ public class BrowserTrackerUtil {
 	}
 
 	/**
-	 * Caches the browser tracker in the entity cache if it is enabled.
-	 *
-	 * @param browserTracker the browser tracker
-	 */
-	public static void cacheResult(BrowserTracker browserTracker) {
-		getPersistence().cacheResult(browserTracker);
-	}
-
-	/**
-	 * Caches the browser trackers in the entity cache if it is enabled.
-	 *
-	 * @param browserTrackers the browser trackers
-	 */
-	public static void cacheResult(List<BrowserTracker> browserTrackers) {
-		getPersistence().cacheResult(browserTrackers);
-	}
-
-	/**
 	 * Creates a new browser tracker with the primary key. Does not add the browser tracker to the database.
 	 *
 	 * @param browserTrackerId the primary key for the new browser tracker
@@ -251,4 +247,4 @@ public class BrowserTrackerUtil {
 	private static volatile BrowserTrackerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1479621731
+// LIFERAY-SERVICE-BUILDER-HASH:-1743484491

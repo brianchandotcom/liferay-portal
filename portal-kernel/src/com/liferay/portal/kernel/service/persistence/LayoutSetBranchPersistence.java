@@ -589,20 +589,6 @@ public interface LayoutSetBranchPersistence
 		long groupId, boolean privateLayout, boolean master);
 
 	/**
-	 * Caches the layout set branch in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranch the layout set branch
-	 */
-	public void cacheResult(LayoutSetBranch layoutSetBranch);
-
-	/**
-	 * Caches the layout set branches in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranchs the layout set branches
-	 */
-	public void cacheResult(java.util.List<LayoutSetBranch> layoutSetBranchs);
-
-	/**
 	 * Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
 	 *
 	 * @param layoutSetBranchId the primary key for the new layout set branch
@@ -641,4 +627,4 @@ public interface LayoutSetBranchPersistence
 	public LayoutSetBranch fetchByPrimaryKey(long layoutSetBranchId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1809122505
+// LIFERAY-SERVICE-BUILDER-HASH:-1654088803

@@ -37,6 +37,22 @@ public class ObjectEntryVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectEntryVersion> objectEntryVersions) {
+
+		getPersistence().cacheResult(objectEntryVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectEntryVersion objectEntryVersion) {
+		getPersistence().cacheResult(objectEntryVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -953,26 +969,6 @@ public class ObjectEntryVersionUtil {
 	}
 
 	/**
-	 * Caches the object entry version in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryVersion the object entry version
-	 */
-	public static void cacheResult(ObjectEntryVersion objectEntryVersion) {
-		getPersistence().cacheResult(objectEntryVersion);
-	}
-
-	/**
-	 * Caches the object entry versions in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryVersions the object entry versions
-	 */
-	public static void cacheResult(
-		List<ObjectEntryVersion> objectEntryVersions) {
-
-		getPersistence().cacheResult(objectEntryVersions);
-	}
-
-	/**
 	 * Creates a new object entry version with the primary key. Does not add the object entry version to the database.
 	 *
 	 * @param objectEntryVersionId the primary key for the new object entry version
@@ -1039,4 +1035,4 @@ public class ObjectEntryVersionUtil {
 	private static volatile ObjectEntryVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1074432925
+// LIFERAY-SERVICE-BUILDER-HASH:565019261

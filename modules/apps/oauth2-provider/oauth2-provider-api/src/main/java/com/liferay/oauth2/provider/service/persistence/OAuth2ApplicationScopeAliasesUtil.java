@@ -36,6 +36,24 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses) {
+
+		getPersistence().cacheResult(oAuth2ApplicationScopeAliaseses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
+
+		getPersistence().cacheResult(oAuth2ApplicationScopeAliases);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -372,28 +390,6 @@ public class OAuth2ApplicationScopeAliasesUtil {
 	}
 
 	/**
-	 * Caches the o auth2 application scope aliases in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliases the o auth2 application scope aliases
-	 */
-	public static void cacheResult(
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases) {
-
-		getPersistence().cacheResult(oAuth2ApplicationScopeAliases);
-	}
-
-	/**
-	 * Caches the o auth2 application scope aliaseses in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliaseses the o auth2 application scope aliaseses
-	 */
-	public static void cacheResult(
-		List<OAuth2ApplicationScopeAliases> oAuth2ApplicationScopeAliaseses) {
-
-		getPersistence().cacheResult(oAuth2ApplicationScopeAliaseses);
-	}
-
-	/**
 	 * Creates a new o auth2 application scope aliases with the primary key. Does not add the o auth2 application scope aliases to the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the primary key for the new o auth2 application scope aliases
@@ -469,4 +465,4 @@ public class OAuth2ApplicationScopeAliasesUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:378337712
+// LIFERAY-SERVICE-BUILDER-HASH:-1924200803

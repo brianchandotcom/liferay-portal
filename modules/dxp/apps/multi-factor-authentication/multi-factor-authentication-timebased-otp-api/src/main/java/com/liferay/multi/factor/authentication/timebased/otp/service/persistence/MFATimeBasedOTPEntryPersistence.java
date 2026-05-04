@@ -78,21 +78,6 @@ public interface MFATimeBasedOTPEntryPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Caches the mfa time based otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntry the mfa time based otp entry
-	 */
-	public void cacheResult(MFATimeBasedOTPEntry mfaTimeBasedOTPEntry);
-
-	/**
-	 * Caches the mfa time based otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaTimeBasedOTPEntries the mfa time based otp entries
-	 */
-	public void cacheResult(
-		java.util.List<MFATimeBasedOTPEntry> mfaTimeBasedOTPEntries);
-
-	/**
 	 * Creates a new mfa time based otp entry with the primary key. Does not add the mfa time based otp entry to the database.
 	 *
 	 * @param mfaTimeBasedOTPEntryId the primary key for the new mfa time based otp entry
@@ -132,4 +117,4 @@ public interface MFATimeBasedOTPEntryPersistence
 	public MFATimeBasedOTPEntry fetchByPrimaryKey(long mfaTimeBasedOTPEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:874190530
+// LIFERAY-SERVICE-BUILDER-HASH:-453101978

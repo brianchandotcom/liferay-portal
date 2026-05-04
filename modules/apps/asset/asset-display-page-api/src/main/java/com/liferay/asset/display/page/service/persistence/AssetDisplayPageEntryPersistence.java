@@ -676,21 +676,6 @@ public interface AssetDisplayPageEntryPersistence
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
 	/**
-	 * Caches the asset display page entry in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 */
-	public void cacheResult(AssetDisplayPageEntry assetDisplayPageEntry);
-
-	/**
-	 * Caches the asset display page entries in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntries the asset display page entries
-	 */
-	public void cacheResult(
-		java.util.List<AssetDisplayPageEntry> assetDisplayPageEntries);
-
-	/**
 	 * Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
 	 *
 	 * @param assetDisplayPageEntryId the primary key for the new asset display page entry
@@ -731,4 +716,4 @@ public interface AssetDisplayPageEntryPersistence
 		long assetDisplayPageEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1429925606
+// LIFERAY-SERVICE-BUILDER-HASH:-1613619794

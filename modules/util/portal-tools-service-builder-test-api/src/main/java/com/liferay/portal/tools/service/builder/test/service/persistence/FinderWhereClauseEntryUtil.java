@@ -36,6 +36,24 @@ public class FinderWhereClauseEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FinderWhereClauseEntry> finderWhereClauseEntries) {
+
+		getPersistence().cacheResult(finderWhereClauseEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		FinderWhereClauseEntry finderWhereClauseEntry) {
+
+		getPersistence().cacheResult(finderWhereClauseEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -242,28 +260,6 @@ public class FinderWhereClauseEntryUtil {
 	}
 
 	/**
-	 * Caches the finder where clause entry in the entity cache if it is enabled.
-	 *
-	 * @param finderWhereClauseEntry the finder where clause entry
-	 */
-	public static void cacheResult(
-		FinderWhereClauseEntry finderWhereClauseEntry) {
-
-		getPersistence().cacheResult(finderWhereClauseEntry);
-	}
-
-	/**
-	 * Caches the finder where clause entries in the entity cache if it is enabled.
-	 *
-	 * @param finderWhereClauseEntries the finder where clause entries
-	 */
-	public static void cacheResult(
-		List<FinderWhereClauseEntry> finderWhereClauseEntries) {
-
-		getPersistence().cacheResult(finderWhereClauseEntries);
-	}
-
-	/**
 	 * Creates a new finder where clause entry with the primary key. Does not add the finder where clause entry to the database.
 	 *
 	 * @param finderWhereClauseEntryId the primary key for the new finder where clause entry
@@ -333,4 +329,4 @@ public class FinderWhereClauseEntryUtil {
 	private static volatile FinderWhereClauseEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2129849869
+// LIFERAY-SERVICE-BUILDER-HASH:641263344

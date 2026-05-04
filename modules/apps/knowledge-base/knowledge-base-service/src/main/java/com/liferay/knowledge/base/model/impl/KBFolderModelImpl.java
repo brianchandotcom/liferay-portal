@@ -1483,4 +1483,4 @@ public class KBFolderModelImpl
 	private KBFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1797624922
+// LIFERAY-SERVICE-BUILDER-HASH:-1704257678

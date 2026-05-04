@@ -1608,6 +1608,13 @@ public class DDMTemplateModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(DDMTemplate source) {
+		DDMTemplateModelImpl sourceModelImpl = (DDMTemplateModelImpl)source;
+
+		setResourceClassName(sourceModelImpl.getResourceClassName());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -2115,4 +2122,4 @@ public class DDMTemplateModelImpl
 	private DDMTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681162792
+// LIFERAY-SERVICE-BUILDER-HASH:-671953220

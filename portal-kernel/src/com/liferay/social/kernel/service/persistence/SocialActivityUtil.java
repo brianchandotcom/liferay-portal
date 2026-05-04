@@ -36,6 +36,20 @@ public class SocialActivityUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SocialActivity> socialActivities) {
+		getPersistence().cacheResult(socialActivities);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SocialActivity socialActivity) {
+		getPersistence().cacheResult(socialActivity);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1638,24 +1652,6 @@ public class SocialActivityUtil {
 	}
 
 	/**
-	 * Caches the social activity in the entity cache if it is enabled.
-	 *
-	 * @param socialActivity the social activity
-	 */
-	public static void cacheResult(SocialActivity socialActivity) {
-		getPersistence().cacheResult(socialActivity);
-	}
-
-	/**
-	 * Caches the social activities in the entity cache if it is enabled.
-	 *
-	 * @param socialActivities the social activities
-	 */
-	public static void cacheResult(List<SocialActivity> socialActivities) {
-		getPersistence().cacheResult(socialActivities);
-	}
-
-	/**
 	 * Creates a new social activity with the primary key. Does not add the social activity to the database.
 	 *
 	 * @param activityId the primary key for the new social activity
@@ -1716,4 +1712,4 @@ public class SocialActivityUtil {
 	private static volatile SocialActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:743768781
+// LIFERAY-SERVICE-BUILDER-HASH:1916450896

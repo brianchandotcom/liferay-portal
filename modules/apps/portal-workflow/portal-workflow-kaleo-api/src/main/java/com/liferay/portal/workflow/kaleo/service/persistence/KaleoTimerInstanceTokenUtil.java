@@ -36,6 +36,24 @@ public class KaleoTimerInstanceTokenUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens) {
+
+		getPersistence().cacheResult(kaleoTimerInstanceTokens);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoTimerInstanceToken kaleoTimerInstanceToken) {
+
+		getPersistence().cacheResult(kaleoTimerInstanceToken);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -614,28 +632,6 @@ public class KaleoTimerInstanceTokenUtil {
 	}
 
 	/**
-	 * Caches the kaleo timer instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceToken the kaleo timer instance token
-	 */
-	public static void cacheResult(
-		KaleoTimerInstanceToken kaleoTimerInstanceToken) {
-
-		getPersistence().cacheResult(kaleoTimerInstanceToken);
-	}
-
-	/**
-	 * Caches the kaleo timer instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceTokens the kaleo timer instance tokens
-	 */
-	public static void cacheResult(
-		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens) {
-
-		getPersistence().cacheResult(kaleoTimerInstanceTokens);
-	}
-
-	/**
 	 * Creates a new kaleo timer instance token with the primary key. Does not add the kaleo timer instance token to the database.
 	 *
 	 * @param kaleoTimerInstanceTokenId the primary key for the new kaleo timer instance token
@@ -707,4 +703,4 @@ public class KaleoTimerInstanceTokenUtil {
 	private static volatile KaleoTimerInstanceTokenPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:155074365
+// LIFERAY-SERVICE-BUILDER-HASH:-389858721

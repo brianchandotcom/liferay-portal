@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersi
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -350,80 +346,6 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm template link in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLink the ddm template link
-	 */
-	@Override
-	public void cacheResult(DDMTemplateLink ddmTemplateLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplateLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMTemplateLinkImpl.class, ddmTemplateLink.getPrimaryKey(),
-				ddmTemplateLink);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					ddmTemplateLink.getClassNameId(),
-					ddmTemplateLink.getClassPK()
-				},
-				ddmTemplateLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm template links in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLinks the ddm template links
-	 */
-	@Override
-	public void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmTemplateLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMTemplateLink ddmTemplateLink : ddmTemplateLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmTemplateLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMTemplateLinkImpl.class,
-						ddmTemplateLink.getPrimaryKey()) == null) {
-
-					cacheResult(ddmTemplateLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplateLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmTemplateLinkModelImpl.getClassNameId(),
-				ddmTemplateLinkModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C, args, ddmTemplateLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm template link with the primary key. Does not add the ddm template link to the database.
 	 *
 	 * @param templateLinkId the primary key for the new ddm template link
@@ -538,10 +460,7 @@ public class DDMTemplateLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMTemplateLinkImpl.class, ddmTemplateLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmTemplateLinkModelImpl);
+		cacheUniqueFindersResult(ddmTemplateLink, false);
 
 		if (isNew) {
 			ddmTemplateLink.setNew(false);
@@ -661,9 +580,6 @@ public class DDMTemplateLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByTemplateId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateId",
 			new String[] {
@@ -693,10 +609,11 @@ public class DDMTemplateLinkPersistenceImpl
 					"ddmTemplateLink.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateLink::getTemplateId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			DDMTemplateLink::getClassNameId, DDMTemplateLink::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
@@ -776,4 +693,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:665249365
+// LIFERAY-SERVICE-BUILDER-HASH:-2096762343

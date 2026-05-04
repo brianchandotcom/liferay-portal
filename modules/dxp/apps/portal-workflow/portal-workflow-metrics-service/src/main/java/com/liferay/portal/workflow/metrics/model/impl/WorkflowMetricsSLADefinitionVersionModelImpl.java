@@ -1719,4 +1719,4 @@ public class WorkflowMetricsSLADefinitionVersionModelImpl
 	private WorkflowMetricsSLADefinitionVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-705053957
+// LIFERAY-SERVICE-BUILDER-HASH:-1505145079

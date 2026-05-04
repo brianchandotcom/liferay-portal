@@ -347,20 +347,6 @@ public interface WikiPageResourcePersistence
 	public int countByN_T(long nodeId, String title);
 
 	/**
-	 * Caches the wiki page resource in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResource the wiki page resource
-	 */
-	public void cacheResult(WikiPageResource wikiPageResource);
-
-	/**
-	 * Caches the wiki page resources in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResources the wiki page resources
-	 */
-	public void cacheResult(java.util.List<WikiPageResource> wikiPageResources);
-
-	/**
 	 * Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new wiki page resource
@@ -399,4 +385,4 @@ public interface WikiPageResourcePersistence
 	public WikiPageResource fetchByPrimaryKey(long resourcePrimKey);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-573243876
+// LIFERAY-SERVICE-BUILDER-HASH:-1022984874

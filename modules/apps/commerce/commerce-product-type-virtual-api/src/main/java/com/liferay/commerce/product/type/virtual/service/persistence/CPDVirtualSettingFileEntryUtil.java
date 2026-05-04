@@ -36,6 +36,24 @@ public class CPDVirtualSettingFileEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries) {
+
+		getPersistence().cacheResult(cpdVirtualSettingFileEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
+
+		getPersistence().cacheResult(cpdVirtualSettingFileEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -707,28 +725,6 @@ public class CPDVirtualSettingFileEntryUtil {
 	}
 
 	/**
-	 * Caches the cpd virtual setting file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntry the cpd virtual setting file entry
-	 */
-	public static void cacheResult(
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
-
-		getPersistence().cacheResult(cpdVirtualSettingFileEntry);
-	}
-
-	/**
-	 * Caches the cpd virtual setting file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntries the cpd virtual setting file entries
-	 */
-	public static void cacheResult(
-		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries) {
-
-		getPersistence().cacheResult(cpdVirtualSettingFileEntries);
-	}
-
-	/**
 	 * Creates a new cpd virtual setting file entry with the primary key. Does not add the cpd virtual setting file entry to the database.
 	 *
 	 * @param CPDefinitionVirtualSettingFileEntryId the primary key for the new cpd virtual setting file entry
@@ -803,4 +799,4 @@ public class CPDVirtualSettingFileEntryUtil {
 	private static volatile CPDVirtualSettingFileEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1134215
+// LIFERAY-SERVICE-BUILDER-HASH:-834411566

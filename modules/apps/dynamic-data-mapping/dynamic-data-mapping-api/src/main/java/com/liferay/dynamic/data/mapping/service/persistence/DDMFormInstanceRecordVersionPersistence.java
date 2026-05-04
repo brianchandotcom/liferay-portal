@@ -664,23 +664,6 @@ public interface DDMFormInstanceRecordVersionPersistence
 		int status);
 
 	/**
-	 * Caches the ddm form instance record version in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceRecordVersion the ddm form instance record version
-	 */
-	public void cacheResult(
-		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion);
-
-	/**
-	 * Caches the ddm form instance record versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceRecordVersions the ddm form instance record versions
-	 */
-	public void cacheResult(
-		java.util.List<DDMFormInstanceRecordVersion>
-			ddmFormInstanceRecordVersions);
-
-	/**
 	 * Creates a new ddm form instance record version with the primary key. Does not add the ddm form instance record version to the database.
 	 *
 	 * @param formInstanceRecordVersionId the primary key for the new ddm form instance record version
@@ -723,4 +706,4 @@ public interface DDMFormInstanceRecordVersionPersistence
 		long formInstanceRecordVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1940813471
+// LIFERAY-SERVICE-BUILDER-HASH:578383421

@@ -869,20 +869,6 @@ public interface AMImageEntryPersistence
 	public int countByC_F(String configurationUuid, long fileVersionId);
 
 	/**
-	 * Caches the am image entry in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntry the am image entry
-	 */
-	public void cacheResult(AMImageEntry amImageEntry);
-
-	/**
-	 * Caches the am image entries in the entity cache if it is enabled.
-	 *
-	 * @param amImageEntries the am image entries
-	 */
-	public void cacheResult(java.util.List<AMImageEntry> amImageEntries);
-
-	/**
 	 * Creates a new am image entry with the primary key. Does not add the am image entry to the database.
 	 *
 	 * @param amImageEntryId the primary key for the new am image entry
@@ -921,4 +907,4 @@ public interface AMImageEntryPersistence
 	public AMImageEntry fetchByPrimaryKey(long amImageEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1853908039
+// LIFERAY-SERVICE-BUILDER-HASH:-745266631

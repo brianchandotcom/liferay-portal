@@ -36,6 +36,20 @@ public class RatingsStatsUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RatingsStats> ratingsStatses) {
+		getPersistence().cacheResult(ratingsStatses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RatingsStats ratingsStats) {
+		getPersistence().cacheResult(ratingsStats);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -269,24 +283,6 @@ public class RatingsStatsUtil {
 	}
 
 	/**
-	 * Caches the ratings stats in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStats the ratings stats
-	 */
-	public static void cacheResult(RatingsStats ratingsStats) {
-		getPersistence().cacheResult(ratingsStats);
-	}
-
-	/**
-	 * Caches the ratings statses in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStatses the ratings statses
-	 */
-	public static void cacheResult(List<RatingsStats> ratingsStatses) {
-		getPersistence().cacheResult(ratingsStatses);
-	}
-
-	/**
 	 * Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
 	 *
 	 * @param statsId the primary key for the new ratings stats
@@ -347,4 +343,4 @@ public class RatingsStatsUtil {
 	private static volatile RatingsStatsPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1802682543
+// LIFERAY-SERVICE-BUILDER-HASH:104134672

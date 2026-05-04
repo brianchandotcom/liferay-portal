@@ -400,21 +400,6 @@ public interface CPDAvailabilityEstimatePersistence
 	public int countByCProductId(long CProductId);
 
 	/**
-	 * Caches the cpd availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimate the cpd availability estimate
-	 */
-	public void cacheResult(CPDAvailabilityEstimate cpdAvailabilityEstimate);
-
-	/**
-	 * Caches the cpd availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimates the cpd availability estimates
-	 */
-	public void cacheResult(
-		java.util.List<CPDAvailabilityEstimate> cpdAvailabilityEstimates);
-
-	/**
 	 * Creates a new cpd availability estimate with the primary key. Does not add the cpd availability estimate to the database.
 	 *
 	 * @param CPDAvailabilityEstimateId the primary key for the new cpd availability estimate
@@ -456,4 +441,4 @@ public interface CPDAvailabilityEstimatePersistence
 		long CPDAvailabilityEstimateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:898259591
+// LIFERAY-SERVICE-BUILDER-HASH:-1568152129

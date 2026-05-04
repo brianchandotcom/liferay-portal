@@ -36,6 +36,20 @@ public class BookmarksEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BookmarksEntry> bookmarksEntries) {
+		getPersistence().cacheResult(bookmarksEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BookmarksEntry bookmarksEntry) {
+		getPersistence().cacheResult(bookmarksEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3062,24 +3076,6 @@ public class BookmarksEntryUtil {
 	}
 
 	/**
-	 * Caches the bookmarks entry in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksEntry the bookmarks entry
-	 */
-	public static void cacheResult(BookmarksEntry bookmarksEntry) {
-		getPersistence().cacheResult(bookmarksEntry);
-	}
-
-	/**
-	 * Caches the bookmarks entries in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksEntries the bookmarks entries
-	 */
-	public static void cacheResult(List<BookmarksEntry> bookmarksEntries) {
-		getPersistence().cacheResult(bookmarksEntries);
-	}
-
-	/**
 	 * Creates a new bookmarks entry with the primary key. Does not add the bookmarks entry to the database.
 	 *
 	 * @param entryId the primary key for the new bookmarks entry
@@ -3140,4 +3136,4 @@ public class BookmarksEntryUtil {
 	private static volatile BookmarksEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:689302222
+// LIFERAY-SERVICE-BUILDER-HASH:-804192197

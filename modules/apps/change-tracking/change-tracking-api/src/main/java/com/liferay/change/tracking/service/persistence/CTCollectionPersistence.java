@@ -1178,20 +1178,6 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the ct collection in the entity cache if it is enabled.
-	 *
-	 * @param ctCollection the ct collection
-	 */
-	public void cacheResult(CTCollection ctCollection);
-
-	/**
-	 * Caches the ct collections in the entity cache if it is enabled.
-	 *
-	 * @param ctCollections the ct collections
-	 */
-	public void cacheResult(java.util.List<CTCollection> ctCollections);
-
-	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
 	 * @param ctCollectionId the primary key for the new ct collection
@@ -1230,4 +1216,4 @@ public interface CTCollectionPersistence extends BasePersistence<CTCollection> {
 	public CTCollection fetchByPrimaryKey(long ctCollectionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-808455758
+// LIFERAY-SERVICE-BUILDER-HASH:826077130

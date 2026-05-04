@@ -1170,4 +1170,4 @@ public class WebsiteModelImpl
 	private Website _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:571805485
+// LIFERAY-SERVICE-BUILDER-HASH:1060562777

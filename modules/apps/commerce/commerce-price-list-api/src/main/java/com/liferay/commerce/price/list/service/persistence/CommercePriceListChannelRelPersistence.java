@@ -407,23 +407,6 @@ public interface CommercePriceListChannelRelPersistence
 	public int countByCCI_CPI(long commerceChannelId, long commercePriceListId);
 
 	/**
-	 * Caches the commerce price list channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRel the commerce price list channel rel
-	 */
-	public void cacheResult(
-		CommercePriceListChannelRel commercePriceListChannelRel);
-
-	/**
-	 * Caches the commerce price list channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRels the commerce price list channel rels
-	 */
-	public void cacheResult(
-		java.util.List<CommercePriceListChannelRel>
-			commercePriceListChannelRels);
-
-	/**
 	 * Creates a new commerce price list channel rel with the primary key. Does not add the commerce price list channel rel to the database.
 	 *
 	 * @param CommercePriceListChannelRelId the primary key for the new commerce price list channel rel
@@ -467,4 +450,4 @@ public interface CommercePriceListChannelRelPersistence
 		long CommercePriceListChannelRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-932857170
+// LIFERAY-SERVICE-BUILDER-HASH:-352061530

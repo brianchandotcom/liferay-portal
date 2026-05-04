@@ -2484,21 +2484,6 @@ public interface UserNotificationEventPersistence
 		boolean actionRequired, boolean archived);
 
 	/**
-	 * Caches the user notification event in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationEvent the user notification event
-	 */
-	public void cacheResult(UserNotificationEvent userNotificationEvent);
-
-	/**
-	 * Caches the user notification events in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationEvents the user notification events
-	 */
-	public void cacheResult(
-		java.util.List<UserNotificationEvent> userNotificationEvents);
-
-	/**
 	 * Creates a new user notification event with the primary key. Does not add the user notification event to the database.
 	 *
 	 * @param userNotificationEventId the primary key for the new user notification event
@@ -2539,4 +2524,4 @@ public interface UserNotificationEventPersistence
 		long userNotificationEventId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:246522270
+// LIFERAY-SERVICE-BUILDER-HASH:1640245228

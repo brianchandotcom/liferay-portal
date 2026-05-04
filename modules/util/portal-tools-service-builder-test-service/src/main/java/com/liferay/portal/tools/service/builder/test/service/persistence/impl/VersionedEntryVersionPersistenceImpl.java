@@ -16,10 +16,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryVersionException;
@@ -636,70 +633,6 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the versioned entry version in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntryVersion the versioned entry version
-	 */
-	@Override
-	public void cacheResult(VersionedEntryVersion versionedEntryVersion) {
-		entityCache.putResult(
-			VersionedEntryVersionImpl.class,
-			versionedEntryVersion.getPrimaryKey(), versionedEntryVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByVersionedEntryId_Version,
-			new Object[] {
-				versionedEntryVersion.getVersionedEntryId(),
-				versionedEntryVersion.getVersion()
-			},
-			versionedEntryVersion);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the versioned entry versions in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntryVersions the versioned entry versions
-	 */
-	@Override
-	public void cacheResult(
-		List<VersionedEntryVersion> versionedEntryVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (versionedEntryVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (VersionedEntryVersion versionedEntryVersion :
-				versionedEntryVersions) {
-
-			if (entityCache.getResult(
-					VersionedEntryVersionImpl.class,
-					versionedEntryVersion.getPrimaryKey()) == null) {
-
-				cacheResult(versionedEntryVersion);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		VersionedEntryVersionModelImpl versionedEntryVersionModelImpl) {
-
-		Object[] args = new Object[] {
-			versionedEntryVersionModelImpl.getVersionedEntryId(),
-			versionedEntryVersionModelImpl.getVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByVersionedEntryId_Version, args,
-			versionedEntryVersionModelImpl);
-	}
-
-	/**
 	 * Creates a new versioned entry version with the primary key. Does not add the versioned entry version to the database.
 	 *
 	 * @param versionedEntryVersionId the primary key for the new versioned entry version
@@ -811,11 +744,7 @@ public class VersionedEntryVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			VersionedEntryVersionImpl.class, versionedEntryVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(versionedEntryVersionModelImpl);
+		cacheUniqueFindersResult(versionedEntryVersion, false);
 
 		if (isNew) {
 			versionedEntryVersion.setNew(false);
@@ -877,9 +806,6 @@ public class VersionedEntryVersionPersistenceImpl
 	 * Initializes the versioned entry version persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByVersionedEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVersionedEntryId",
 			new String[] {
@@ -912,10 +838,12 @@ public class VersionedEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					VersionedEntryVersion::getVersionedEntryId));
 
-		_finderPathFetchByVersionedEntryId_Version = new FinderPath(
+		_finderPathFetchByVersionedEntryId_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByVersionedEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"versionedEntryId", "version"}, true);
+			new String[] {"versionedEntryId", "version"}, false,
+			VersionedEntryVersion::getVersionedEntryId,
+			VersionedEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByVersionedEntryId_Version =
 			new UniquePersistenceFinder<>(
@@ -1036,4 +964,4 @@ public class VersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:381247316
+// LIFERAY-SERVICE-BUILDER-HASH:1221614271

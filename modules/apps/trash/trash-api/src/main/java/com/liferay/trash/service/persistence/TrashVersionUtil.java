@@ -36,6 +36,20 @@ public class TrashVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<TrashVersion> trashVersions) {
+		getPersistence().cacheResult(trashVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(TrashVersion trashVersion) {
+		getPersistence().cacheResult(trashVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -429,24 +443,6 @@ public class TrashVersionUtil {
 	}
 
 	/**
-	 * Caches the trash version in the entity cache if it is enabled.
-	 *
-	 * @param trashVersion the trash version
-	 */
-	public static void cacheResult(TrashVersion trashVersion) {
-		getPersistence().cacheResult(trashVersion);
-	}
-
-	/**
-	 * Caches the trash versions in the entity cache if it is enabled.
-	 *
-	 * @param trashVersions the trash versions
-	 */
-	public static void cacheResult(List<TrashVersion> trashVersions) {
-		getPersistence().cacheResult(trashVersions);
-	}
-
-	/**
 	 * Creates a new trash version with the primary key. Does not add the trash version to the database.
 	 *
 	 * @param versionId the primary key for the new trash version
@@ -507,4 +503,4 @@ public class TrashVersionUtil {
 	private static volatile TrashVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2110055320
+// LIFERAY-SERVICE-BUILDER-HASH:703692634

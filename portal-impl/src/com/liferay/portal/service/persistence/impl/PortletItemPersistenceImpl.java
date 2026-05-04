@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.PortletItemUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.PortletItemImpl;
@@ -676,64 +673,6 @@ public class PortletItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the portlet item in the entity cache if it is enabled.
-	 *
-	 * @param portletItem the portlet item
-	 */
-	@Override
-	public void cacheResult(PortletItem portletItem) {
-		EntityCacheUtil.putResult(
-			PortletItemImpl.class, portletItem.getPrimaryKey(), portletItem);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_N_P_C,
-			new Object[] {
-				portletItem.getGroupId(), portletItem.getName(),
-				portletItem.getPortletId(), portletItem.getClassNameId()
-			},
-			portletItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the portlet items in the entity cache if it is enabled.
-	 *
-	 * @param portletItems the portlet items
-	 */
-	@Override
-	public void cacheResult(List<PortletItem> portletItems) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (portletItems.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PortletItem portletItem : portletItems) {
-			if (EntityCacheUtil.getResult(
-					PortletItemImpl.class, portletItem.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(portletItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PortletItemModelImpl portletItemModelImpl) {
-
-		Object[] args = new Object[] {
-			portletItemModelImpl.getGroupId(), portletItemModelImpl.getName(),
-			portletItemModelImpl.getPortletId(),
-			portletItemModelImpl.getClassNameId()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_N_P_C, args, portletItemModelImpl);
-	}
-
-	/**
 	 * Creates a new portlet item with the primary key. Does not add the portlet item to the database.
 	 *
 	 * @param portletItemId the primary key for the new portlet item
@@ -861,10 +800,7 @@ public class PortletItemPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PortletItemImpl.class, portletItemModelImpl, false, true);
-
-		cacheUniqueFindersCache(portletItemModelImpl);
+		cacheUniqueFindersResult(portletItem, false);
 
 		if (isNew) {
 			portletItem.setNew(false);
@@ -924,9 +860,6 @@ public class PortletItemPersistenceImpl
 	 * Initializes the portlet item persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByG_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
 			new String[] {
@@ -998,13 +931,15 @@ public class PortletItemPersistenceImpl
 				"portletItem.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, PortletItem::getClassNameId));
 
-		_finderPathFetchByG_N_P_C = new FinderPath(
+		_finderPathFetchByG_N_P_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P_C",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "name", "portletId", "classNameId"}, true);
+			new String[] {"groupId", "name", "portletId", "classNameId"}, false,
+			PortletItem::getGroupId, PortletItem::getName,
+			PortletItem::getPortletId, PortletItem::getClassNameId);
 
 		PortletItemUtil.setPersistence(this);
 	}
@@ -1039,4 +974,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1400351480
+// LIFERAY-SERVICE-BUILDER-HASH:2019323989

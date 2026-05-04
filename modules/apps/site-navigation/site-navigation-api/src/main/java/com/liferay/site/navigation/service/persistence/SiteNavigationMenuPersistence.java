@@ -1404,21 +1404,6 @@ public interface SiteNavigationMenuPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the site navigation menu in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenu the site navigation menu
-	 */
-	public void cacheResult(SiteNavigationMenu siteNavigationMenu);
-
-	/**
-	 * Caches the site navigation menus in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenus the site navigation menus
-	 */
-	public void cacheResult(
-		java.util.List<SiteNavigationMenu> siteNavigationMenus);
-
-	/**
 	 * Creates a new site navigation menu with the primary key. Does not add the site navigation menu to the database.
 	 *
 	 * @param siteNavigationMenuId the primary key for the new site navigation menu
@@ -1457,4 +1442,4 @@ public interface SiteNavigationMenuPersistence
 	public SiteNavigationMenu fetchByPrimaryKey(long siteNavigationMenuId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457654992
+// LIFERAY-SERVICE-BUILDER-HASH:2146641496

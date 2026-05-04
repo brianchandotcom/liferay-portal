@@ -14,7 +14,6 @@ import com.liferay.journal.service.persistence.JournalArticleResourcePersistence
 import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.journal.service.persistence.impl.constants.JournalPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -785,101 +781,6 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 	/**
-	 * Caches the journal article resource in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResource the journal article resource
-	 */
-	@Override
-	public void cacheResult(JournalArticleResource journalArticleResource) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticleResource.getCtCollectionId())) {
-
-			entityCache.putResult(
-				JournalArticleResourceImpl.class,
-				journalArticleResource.getPrimaryKey(), journalArticleResource);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					journalArticleResource.getUuid(),
-					journalArticleResource.getGroupId()
-				},
-				journalArticleResource);
-
-			finderCache.putResult(
-				_finderPathFetchByG_A,
-				new Object[] {
-					journalArticleResource.getGroupId(),
-					journalArticleResource.getArticleId()
-				},
-				journalArticleResource);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the journal article resources in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleResources the journal article resources
-	 */
-	@Override
-	public void cacheResult(
-		List<JournalArticleResource> journalArticleResources) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (journalArticleResources.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (JournalArticleResource journalArticleResource :
-				journalArticleResources) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						journalArticleResource.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						JournalArticleResourceImpl.class,
-						journalArticleResource.getPrimaryKey()) == null) {
-
-					cacheResult(journalArticleResource);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		JournalArticleResourceModelImpl journalArticleResourceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					journalArticleResourceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				journalArticleResourceModelImpl.getUuid(),
-				journalArticleResourceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				journalArticleResourceModelImpl);
-
-			args = new Object[] {
-				journalArticleResourceModelImpl.getGroupId(),
-				journalArticleResourceModelImpl.getArticleId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_A, args, journalArticleResourceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new journal article resource with the primary key. Does not add the journal article resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new journal article resource
@@ -1011,11 +912,7 @@ public class JournalArticleResourcePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			JournalArticleResourceImpl.class, journalArticleResourceModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(journalArticleResourceModelImpl);
+		cacheUniqueFindersResult(journalArticleResource, false);
 
 		if (isNew) {
 			journalArticleResource.setNew(false);
@@ -1143,9 +1040,6 @@ public class JournalArticleResourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1174,10 +1068,12 @@ public class JournalArticleResourcePersistenceImpl
 				"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, JournalArticleResource::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			JournalArticleResource::getUuid,
+			JournalArticleResource::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1257,10 +1153,12 @@ public class JournalArticleResourcePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					JournalArticleResource::getGroupId));
 
-		_finderPathFetchByG_A = new FinderPath(
+		_finderPathFetchByG_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, true);
+			new String[] {"groupId", "articleId"}, false,
+			JournalArticleResource::getGroupId,
+			JournalArticleResource::getArticleId);
 
 		_uniquePersistenceFinderByG_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_A,
@@ -1345,4 +1243,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:452617736
+// LIFERAY-SERVICE-BUILDER-HASH:1259977886

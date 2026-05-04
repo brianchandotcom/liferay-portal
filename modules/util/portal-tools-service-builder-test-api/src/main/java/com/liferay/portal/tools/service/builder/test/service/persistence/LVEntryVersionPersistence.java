@@ -1182,20 +1182,6 @@ public interface LVEntryVersionPersistence
 		long groupId, String uniqueGroupKey, int version);
 
 	/**
-	 * Caches the lv entry version in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersion the lv entry version
-	 */
-	public void cacheResult(LVEntryVersion lvEntryVersion);
-
-	/**
-	 * Caches the lv entry versions in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersions the lv entry versions
-	 */
-	public void cacheResult(java.util.List<LVEntryVersion> lvEntryVersions);
-
-	/**
 	 * Creates a new lv entry version with the primary key. Does not add the lv entry version to the database.
 	 *
 	 * @param lvEntryVersionId the primary key for the new lv entry version
@@ -1423,4 +1409,4 @@ public interface LVEntryVersionPersistence
 				BigDecimalEntry> bigDecimalEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1955336298
+// LIFERAY-SERVICE-BUILDER-HASH:-143840050

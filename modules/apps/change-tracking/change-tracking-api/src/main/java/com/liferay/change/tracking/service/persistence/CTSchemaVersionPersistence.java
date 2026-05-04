@@ -135,20 +135,6 @@ public interface CTSchemaVersionPersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the ct schema version in the entity cache if it is enabled.
-	 *
-	 * @param ctSchemaVersion the ct schema version
-	 */
-	public void cacheResult(CTSchemaVersion ctSchemaVersion);
-
-	/**
-	 * Caches the ct schema versions in the entity cache if it is enabled.
-	 *
-	 * @param ctSchemaVersions the ct schema versions
-	 */
-	public void cacheResult(java.util.List<CTSchemaVersion> ctSchemaVersions);
-
-	/**
 	 * Creates a new ct schema version with the primary key. Does not add the ct schema version to the database.
 	 *
 	 * @param schemaVersionId the primary key for the new ct schema version
@@ -187,4 +173,4 @@ public interface CTSchemaVersionPersistence
 	public CTSchemaVersion fetchByPrimaryKey(long schemaVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:192073370
+// LIFERAY-SERVICE-BUILDER-HASH:-1758768168

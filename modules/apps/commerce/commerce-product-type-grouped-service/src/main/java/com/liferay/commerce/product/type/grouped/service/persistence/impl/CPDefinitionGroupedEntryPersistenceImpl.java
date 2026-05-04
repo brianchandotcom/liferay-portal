@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -899,85 +896,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp definition grouped entry in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntry the cp definition grouped entry
-	 */
-	@Override
-	public void cacheResult(CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-		entityCache.putResult(
-			CPDefinitionGroupedEntryImpl.class,
-			cpDefinitionGroupedEntry.getPrimaryKey(), cpDefinitionGroupedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				cpDefinitionGroupedEntry.getUuid(),
-				cpDefinitionGroupedEntry.getGroupId()
-			},
-			cpDefinitionGroupedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_E,
-			new Object[] {
-				cpDefinitionGroupedEntry.getCPDefinitionId(),
-				cpDefinitionGroupedEntry.getEntryCProductId()
-			},
-			cpDefinitionGroupedEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp definition grouped entries in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionGroupedEntries the cp definition grouped entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CPDefinitionGroupedEntry> cpDefinitionGroupedEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDefinitionGroupedEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDefinitionGroupedEntry cpDefinitionGroupedEntry :
-				cpDefinitionGroupedEntries) {
-
-			if (entityCache.getResult(
-					CPDefinitionGroupedEntryImpl.class,
-					cpDefinitionGroupedEntry.getPrimaryKey()) == null) {
-
-				cacheResult(cpDefinitionGroupedEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDefinitionGroupedEntryModelImpl cpDefinitionGroupedEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			cpDefinitionGroupedEntryModelImpl.getUuid(),
-			cpDefinitionGroupedEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, cpDefinitionGroupedEntryModelImpl);
-
-		args = new Object[] {
-			cpDefinitionGroupedEntryModelImpl.getCPDefinitionId(),
-			cpDefinitionGroupedEntryModelImpl.getEntryCProductId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_E, args, cpDefinitionGroupedEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new cp definition grouped entry with the primary key. Does not add the cp definition grouped entry to the database.
 	 *
 	 * @param CPDefinitionGroupedEntryId the primary key for the new cp definition grouped entry
@@ -1129,11 +1047,7 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDefinitionGroupedEntryImpl.class,
-			cpDefinitionGroupedEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpDefinitionGroupedEntryModelImpl);
+		cacheUniqueFindersResult(cpDefinitionGroupedEntry, false);
 
 		if (isNew) {
 			cpDefinitionGroupedEntry.setNew(false);
@@ -1202,9 +1116,6 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1234,10 +1145,12 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 				"cpDefinitionGroupedEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDefinitionGroupedEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPDefinitionGroupedEntry::getUuid,
+			CPDefinitionGroupedEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1350,10 +1263,12 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionGroupedEntry::getEntryCProductId));
 
-		_finderPathFetchByC_E = new FinderPath(
+		_finderPathFetchByC_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_E",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPDefinitionId", "entryCProductId"}, true);
+			new String[] {"CPDefinitionId", "entryCProductId"}, false,
+			CPDefinitionGroupedEntry::getCPDefinitionId,
+			CPDefinitionGroupedEntry::getEntryCProductId);
 
 		_uniquePersistenceFinderByC_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_E,
@@ -1436,4 +1351,4 @@ public class CPDefinitionGroupedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361882894
+// LIFERAY-SERVICE-BUILDER-HASH:646951929

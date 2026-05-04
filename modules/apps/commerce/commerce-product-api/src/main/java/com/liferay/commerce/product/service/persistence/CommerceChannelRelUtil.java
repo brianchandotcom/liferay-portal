@@ -36,6 +36,22 @@ public class CommerceChannelRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceChannelRel> commerceChannelRels) {
+
+		getPersistence().cacheResult(commerceChannelRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceChannelRel commerceChannelRel) {
+		getPersistence().cacheResult(commerceChannelRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -457,26 +473,6 @@ public class CommerceChannelRelUtil {
 	}
 
 	/**
-	 * Caches the commerce channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRel the commerce channel rel
-	 */
-	public static void cacheResult(CommerceChannelRel commerceChannelRel) {
-		getPersistence().cacheResult(commerceChannelRel);
-	}
-
-	/**
-	 * Caches the commerce channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRels the commerce channel rels
-	 */
-	public static void cacheResult(
-		List<CommerceChannelRel> commerceChannelRels) {
-
-		getPersistence().cacheResult(commerceChannelRels);
-	}
-
-	/**
 	 * Creates a new commerce channel rel with the primary key. Does not add the commerce channel rel to the database.
 	 *
 	 * @param commerceChannelRelId the primary key for the new commerce channel rel
@@ -545,4 +541,4 @@ public class CommerceChannelRelUtil {
 	private static volatile CommerceChannelRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1207888759
+// LIFERAY-SERVICE-BUILDER-HASH:-1579249513

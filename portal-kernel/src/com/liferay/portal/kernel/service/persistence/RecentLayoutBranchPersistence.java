@@ -397,21 +397,6 @@ public interface RecentLayoutBranchPersistence
 	public int countByU_L_P(long userId, long layoutSetBranchId, long plid);
 
 	/**
-	 * Caches the recent layout branch in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutBranch the recent layout branch
-	 */
-	public void cacheResult(RecentLayoutBranch recentLayoutBranch);
-
-	/**
-	 * Caches the recent layout branches in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutBranchs the recent layout branches
-	 */
-	public void cacheResult(
-		java.util.List<RecentLayoutBranch> recentLayoutBranchs);
-
-	/**
 	 * Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
 	 *
 	 * @param recentLayoutBranchId the primary key for the new recent layout branch
@@ -450,4 +435,4 @@ public interface RecentLayoutBranchPersistence
 	public RecentLayoutBranch fetchByPrimaryKey(long recentLayoutBranchId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2014352444
+// LIFERAY-SERVICE-BUILDER-HASH:-731451814

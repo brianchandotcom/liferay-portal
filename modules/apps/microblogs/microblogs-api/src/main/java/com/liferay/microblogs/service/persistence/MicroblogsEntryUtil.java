@@ -37,6 +37,20 @@ public class MicroblogsEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<MicroblogsEntry> microblogsEntries) {
+		getPersistence().cacheResult(microblogsEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(MicroblogsEntry microblogsEntry) {
+		getPersistence().cacheResult(microblogsEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3184,24 +3198,6 @@ public class MicroblogsEntryUtil {
 	}
 
 	/**
-	 * Caches the microblogs entry in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntry the microblogs entry
-	 */
-	public static void cacheResult(MicroblogsEntry microblogsEntry) {
-		getPersistence().cacheResult(microblogsEntry);
-	}
-
-	/**
-	 * Caches the microblogs entries in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntries the microblogs entries
-	 */
-	public static void cacheResult(List<MicroblogsEntry> microblogsEntries) {
-		getPersistence().cacheResult(microblogsEntries);
-	}
-
-	/**
 	 * Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
 	 *
 	 * @param microblogsEntryId the primary key for the new microblogs entry
@@ -3262,4 +3258,4 @@ public class MicroblogsEntryUtil {
 	private static volatile MicroblogsEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:501653652
+// LIFERAY-SERVICE-BUILDER-HASH:-1868301665

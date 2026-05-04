@@ -1098,21 +1098,6 @@ public interface FragmentCompositionPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the fragment composition in the entity cache if it is enabled.
-	 *
-	 * @param fragmentComposition the fragment composition
-	 */
-	public void cacheResult(FragmentComposition fragmentComposition);
-
-	/**
-	 * Caches the fragment compositions in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCompositions the fragment compositions
-	 */
-	public void cacheResult(
-		java.util.List<FragmentComposition> fragmentCompositions);
-
-	/**
 	 * Creates a new fragment composition with the primary key. Does not add the fragment composition to the database.
 	 *
 	 * @param fragmentCompositionId the primary key for the new fragment composition
@@ -1152,4 +1137,4 @@ public interface FragmentCompositionPersistence
 	public FragmentComposition fetchByPrimaryKey(long fragmentCompositionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1819317572
+// LIFERAY-SERVICE-BUILDER-HASH:1878136468

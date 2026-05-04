@@ -887,4 +887,4 @@ public class AnnouncementsDeliveryModelImpl
 	private AnnouncementsDelivery _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-674324297
+// LIFERAY-SERVICE-BUILDER-HASH:-517705941

@@ -36,6 +36,24 @@ public class ObjectViewFilterColumnUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<ObjectViewFilterColumn> objectViewFilterColumns) {
+
+		getPersistence().cacheResult(objectViewFilterColumns);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		ObjectViewFilterColumn objectViewFilterColumn) {
+
+		getPersistence().cacheResult(objectViewFilterColumn);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -637,28 +655,6 @@ public class ObjectViewFilterColumnUtil {
 	}
 
 	/**
-	 * Caches the object view filter column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewFilterColumn the object view filter column
-	 */
-	public static void cacheResult(
-		ObjectViewFilterColumn objectViewFilterColumn) {
-
-		getPersistence().cacheResult(objectViewFilterColumn);
-	}
-
-	/**
-	 * Caches the object view filter columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewFilterColumns the object view filter columns
-	 */
-	public static void cacheResult(
-		List<ObjectViewFilterColumn> objectViewFilterColumns) {
-
-		getPersistence().cacheResult(objectViewFilterColumns);
-	}
-
-	/**
 	 * Creates a new object view filter column with the primary key. Does not add the object view filter column to the database.
 	 *
 	 * @param objectViewFilterColumnId the primary key for the new object view filter column
@@ -728,4 +724,4 @@ public class ObjectViewFilterColumnUtil {
 	private static volatile ObjectViewFilterColumnPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-488571008
+// LIFERAY-SERVICE-BUILDER-HASH:-1214519072

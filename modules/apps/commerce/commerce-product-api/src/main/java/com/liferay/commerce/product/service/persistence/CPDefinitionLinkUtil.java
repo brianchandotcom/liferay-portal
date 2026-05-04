@@ -37,6 +37,20 @@ public class CPDefinitionLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPDefinitionLink> cpDefinitionLinks) {
+		getPersistence().cacheResult(cpDefinitionLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPDefinitionLink cpDefinitionLink) {
+		getPersistence().cacheResult(cpDefinitionLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1860,24 +1874,6 @@ public class CPDefinitionLinkUtil {
 	}
 
 	/**
-	 * Caches the cp definition link in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLink the cp definition link
-	 */
-	public static void cacheResult(CPDefinitionLink cpDefinitionLink) {
-		getPersistence().cacheResult(cpDefinitionLink);
-	}
-
-	/**
-	 * Caches the cp definition links in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLinks the cp definition links
-	 */
-	public static void cacheResult(List<CPDefinitionLink> cpDefinitionLinks) {
-		getPersistence().cacheResult(cpDefinitionLinks);
-	}
-
-	/**
 	 * Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	 *
 	 * @param CPDefinitionLinkId the primary key for the new cp definition link
@@ -1942,4 +1938,4 @@ public class CPDefinitionLinkUtil {
 	private static volatile CPDefinitionLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1634409948
+// LIFERAY-SERVICE-BUILDER-HASH:1774834588

@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -244,47 +241,6 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the contacts card template in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplate the contacts card template
-	 */
-	@Override
-	public void cacheResult(ContactsCardTemplate contactsCardTemplate) {
-		entityCache.putResult(
-			ContactsCardTemplateImpl.class,
-			contactsCardTemplate.getPrimaryKey(), contactsCardTemplate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the contacts card templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsCardTemplates the contacts card templates
-	 */
-	@Override
-	public void cacheResult(List<ContactsCardTemplate> contactsCardTemplates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (contactsCardTemplates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ContactsCardTemplate contactsCardTemplate :
-				contactsCardTemplates) {
-
-			if (entityCache.getResult(
-					ContactsCardTemplateImpl.class,
-					contactsCardTemplate.getPrimaryKey()) == null) {
-
-				cacheResult(contactsCardTemplate);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new contacts card template with the primary key. Does not add the contacts card template to the database.
 	 *
 	 * @param contactsCardTemplateId the primary key for the new contacts card template
@@ -396,9 +352,7 @@ public class ContactsCardTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ContactsCardTemplateImpl.class, contactsCardTemplateModelImpl,
-			false, true);
+		cacheUniqueFindersResult(contactsCardTemplate, false);
 
 		if (isNew) {
 			contactsCardTemplate.setNew(false);
@@ -464,9 +418,6 @@ public class ContactsCardTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -567,4 +518,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:567603337
+// LIFERAY-SERVICE-BUILDER-HASH:-1020822466

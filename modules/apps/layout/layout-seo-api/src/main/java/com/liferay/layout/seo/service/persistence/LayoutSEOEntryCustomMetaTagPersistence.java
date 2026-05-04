@@ -146,23 +146,6 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 	public int countByG_L(long groupId, long layoutSEOEntryId);
 
 	/**
-	 * Caches the layout seo entry custom meta tag in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTag the layout seo entry custom meta tag
-	 */
-	public void cacheResult(
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag);
-
-	/**
-	 * Caches the layout seo entry custom meta tags in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTags the layout seo entry custom meta tags
-	 */
-	public void cacheResult(
-		java.util.List<LayoutSEOEntryCustomMetaTag>
-			layoutSEOEntryCustomMetaTags);
-
-	/**
 	 * Creates a new layout seo entry custom meta tag with the primary key. Does not add the layout seo entry custom meta tag to the database.
 	 *
 	 * @param layoutSEOEntryCustomMetaTagId the primary key for the new layout seo entry custom meta tag
@@ -206,4 +189,4 @@ public interface LayoutSEOEntryCustomMetaTagPersistence
 		long layoutSEOEntryCustomMetaTagId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-649089964
+// LIFERAY-SERVICE-BUILDER-HASH:466357680

@@ -845,21 +845,6 @@ public interface DDMStructureLayoutPersistence
 		long groupId, long classNameId, long structureVersionId);
 
 	/**
-	 * Caches the ddm structure layout in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLayout the ddm structure layout
-	 */
-	public void cacheResult(DDMStructureLayout ddmStructureLayout);
-
-	/**
-	 * Caches the ddm structure layouts in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLayouts the ddm structure layouts
-	 */
-	public void cacheResult(
-		java.util.List<DDMStructureLayout> ddmStructureLayouts);
-
-	/**
 	 * Creates a new ddm structure layout with the primary key. Does not add the ddm structure layout to the database.
 	 *
 	 * @param structureLayoutId the primary key for the new ddm structure layout
@@ -898,4 +883,4 @@ public interface DDMStructureLayoutPersistence
 	public DDMStructureLayout fetchByPrimaryKey(long structureLayoutId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:258284277
+// LIFERAY-SERVICE-BUILDER-HASH:2083224111

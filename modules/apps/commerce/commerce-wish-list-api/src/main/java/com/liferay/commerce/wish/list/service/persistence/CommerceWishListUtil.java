@@ -37,6 +37,20 @@ public class CommerceWishListUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceWishList> commerceWishLists) {
+		getPersistence().cacheResult(commerceWishLists);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceWishList commerceWishList) {
+		getPersistence().cacheResult(commerceWishList);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1086,24 +1100,6 @@ public class CommerceWishListUtil {
 	}
 
 	/**
-	 * Caches the commerce wish list in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishList the commerce wish list
-	 */
-	public static void cacheResult(CommerceWishList commerceWishList) {
-		getPersistence().cacheResult(commerceWishList);
-	}
-
-	/**
-	 * Caches the commerce wish lists in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishLists the commerce wish lists
-	 */
-	public static void cacheResult(List<CommerceWishList> commerceWishLists) {
-		getPersistence().cacheResult(commerceWishLists);
-	}
-
-	/**
 	 * Creates a new commerce wish list with the primary key. Does not add the commerce wish list to the database.
 	 *
 	 * @param commerceWishListId the primary key for the new commerce wish list
@@ -1168,4 +1164,4 @@ public class CommerceWishListUtil {
 	private static volatile CommerceWishListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1725172876
+// LIFERAY-SERVICE-BUILDER-HASH:1787785122

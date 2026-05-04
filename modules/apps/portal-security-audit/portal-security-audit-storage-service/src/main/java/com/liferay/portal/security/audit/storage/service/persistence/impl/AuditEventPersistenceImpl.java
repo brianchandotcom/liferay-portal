@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.audit.storage.exception.NoSuchEventException;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
@@ -234,42 +231,6 @@ public class AuditEventPersistenceImpl
 	}
 
 	/**
-	 * Caches the audit event in the entity cache if it is enabled.
-	 *
-	 * @param auditEvent the audit event
-	 */
-	@Override
-	public void cacheResult(AuditEvent auditEvent) {
-		dummyEntityCache.putResult(
-			AuditEventImpl.class, auditEvent.getPrimaryKey(), auditEvent);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the audit events in the entity cache if it is enabled.
-	 *
-	 * @param auditEvents the audit events
-	 */
-	@Override
-	public void cacheResult(List<AuditEvent> auditEvents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (auditEvents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AuditEvent auditEvent : auditEvents) {
-			if (dummyEntityCache.getResult(
-					AuditEventImpl.class, auditEvent.getPrimaryKey()) == null) {
-
-				cacheResult(auditEvent);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *
 	 * @param auditEventId the primary key for the new audit event
@@ -385,8 +346,7 @@ public class AuditEventPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			AuditEventImpl.class, auditEventModelImpl, false, true);
+		cacheUniqueFindersResult(auditEvent, false);
 
 		if (isNew) {
 			auditEvent.setNew(false);
@@ -447,9 +407,6 @@ public class AuditEventPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -539,4 +496,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1133330006
+// LIFERAY-SERVICE-BUILDER-HASH:-2031904749

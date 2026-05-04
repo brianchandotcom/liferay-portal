@@ -4117,20 +4117,6 @@ public interface MBMessagePersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the message-boards message in the entity cache if it is enabled.
-	 *
-	 * @param mbMessage the message-boards message
-	 */
-	public void cacheResult(MBMessage mbMessage);
-
-	/**
-	 * Caches the message-boards messages in the entity cache if it is enabled.
-	 *
-	 * @param mbMessages the message-boards messages
-	 */
-	public void cacheResult(java.util.List<MBMessage> mbMessages);
-
-	/**
 	 * Creates a new message-boards message with the primary key. Does not add the message-boards message to the database.
 	 *
 	 * @param messageId the primary key for the new message-boards message
@@ -4168,4 +4154,4 @@ public interface MBMessagePersistence
 	public MBMessage fetchByPrimaryKey(long messageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1673213891
+// LIFERAY-SERVICE-BUILDER-HASH:1989525811

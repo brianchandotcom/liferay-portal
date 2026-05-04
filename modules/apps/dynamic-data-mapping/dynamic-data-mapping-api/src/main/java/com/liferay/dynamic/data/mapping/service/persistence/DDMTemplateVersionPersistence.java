@@ -298,21 +298,6 @@ public interface DDMTemplateVersionPersistence
 	public int countByT_S(long templateId, int status);
 
 	/**
-	 * Caches the ddm template version in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersion the ddm template version
-	 */
-	public void cacheResult(DDMTemplateVersion ddmTemplateVersion);
-
-	/**
-	 * Caches the ddm template versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersions the ddm template versions
-	 */
-	public void cacheResult(
-		java.util.List<DDMTemplateVersion> ddmTemplateVersions);
-
-	/**
 	 * Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	 *
 	 * @param templateVersionId the primary key for the new ddm template version
@@ -351,4 +336,4 @@ public interface DDMTemplateVersionPersistence
 	public DDMTemplateVersion fetchByPrimaryKey(long templateVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1566944525
+// LIFERAY-SERVICE-BUILDER-HASH:-310436535

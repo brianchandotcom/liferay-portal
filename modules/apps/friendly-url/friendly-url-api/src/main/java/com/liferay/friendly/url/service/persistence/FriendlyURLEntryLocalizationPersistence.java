@@ -775,23 +775,6 @@ public interface FriendlyURLEntryLocalizationPersistence
 		long groupId, long classNameId, String languageId, String urlTitle);
 
 	/**
-	 * Caches the friendly url entry localization in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalization the friendly url entry localization
-	 */
-	public void cacheResult(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization);
-
-	/**
-	 * Caches the friendly url entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalizations the friendly url entry localizations
-	 */
-	public void cacheResult(
-		java.util.List<FriendlyURLEntryLocalization>
-			friendlyURLEntryLocalizations);
-
-	/**
 	 * Creates a new friendly url entry localization with the primary key. Does not add the friendly url entry localization to the database.
 	 *
 	 * @param friendlyURLEntryLocalizationId the primary key for the new friendly url entry localization
@@ -835,4 +818,4 @@ public interface FriendlyURLEntryLocalizationPersistence
 		long friendlyURLEntryLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1430955748
+// LIFERAY-SERVICE-BUILDER-HASH:1665258658

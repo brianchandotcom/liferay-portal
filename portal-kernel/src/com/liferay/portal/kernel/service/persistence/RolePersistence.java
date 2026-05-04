@@ -1846,20 +1846,6 @@ public interface RolePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the role in the entity cache if it is enabled.
-	 *
-	 * @param role the role
-	 */
-	public void cacheResult(Role role);
-
-	/**
-	 * Caches the roles in the entity cache if it is enabled.
-	 *
-	 * @param roles the roles
-	 */
-	public void cacheResult(java.util.List<Role> roles);
-
-	/**
 	 * Creates a new role with the primary key. Does not add the role to the database.
 	 *
 	 * @param roleId the primary key for the new role
@@ -2236,4 +2222,4 @@ public interface RolePersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2089000787
+// LIFERAY-SERVICE-BUILDER-HASH:280072485

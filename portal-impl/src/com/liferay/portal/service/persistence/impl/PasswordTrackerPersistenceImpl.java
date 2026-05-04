@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.PasswordTrackerUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.PasswordTrackerImpl;
@@ -232,45 +229,6 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 	/**
-	 * Caches the password tracker in the entity cache if it is enabled.
-	 *
-	 * @param passwordTracker the password tracker
-	 */
-	@Override
-	public void cacheResult(PasswordTracker passwordTracker) {
-		EntityCacheUtil.putResult(
-			PasswordTrackerImpl.class, passwordTracker.getPrimaryKey(),
-			passwordTracker);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the password trackers in the entity cache if it is enabled.
-	 *
-	 * @param passwordTrackers the password trackers
-	 */
-	@Override
-	public void cacheResult(List<PasswordTracker> passwordTrackers) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (passwordTrackers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PasswordTracker passwordTracker : passwordTrackers) {
-			if (EntityCacheUtil.getResult(
-					PasswordTrackerImpl.class,
-					passwordTracker.getPrimaryKey()) == null) {
-
-				cacheResult(passwordTracker);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new password tracker with the primary key. Does not add the password tracker to the database.
 	 *
 	 * @param passwordTrackerId the primary key for the new password tracker
@@ -392,8 +350,7 @@ public class PasswordTrackerPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PasswordTrackerImpl.class, passwordTrackerModelImpl, false, true);
+		cacheUniqueFindersResult(passwordTracker, false);
 
 		if (isNew) {
 			passwordTracker.setNew(false);
@@ -458,9 +415,6 @@ public class PasswordTrackerPersistenceImpl
 	 * Initializes the password tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -525,4 +479,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1984905692
+// LIFERAY-SERVICE-BUILDER-HASH:-230457953

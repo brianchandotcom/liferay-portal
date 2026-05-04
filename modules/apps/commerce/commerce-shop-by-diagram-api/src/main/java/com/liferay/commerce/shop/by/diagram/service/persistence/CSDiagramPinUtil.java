@@ -36,6 +36,20 @@ public class CSDiagramPinUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CSDiagramPin> csDiagramPins) {
+		getPersistence().cacheResult(csDiagramPins);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CSDiagramPin csDiagramPin) {
+		getPersistence().cacheResult(csDiagramPin);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -236,24 +250,6 @@ public class CSDiagramPinUtil {
 	}
 
 	/**
-	 * Caches the cs diagram pin in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPin the cs diagram pin
-	 */
-	public static void cacheResult(CSDiagramPin csDiagramPin) {
-		getPersistence().cacheResult(csDiagramPin);
-	}
-
-	/**
-	 * Caches the cs diagram pins in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPins the cs diagram pins
-	 */
-	public static void cacheResult(List<CSDiagramPin> csDiagramPins) {
-		getPersistence().cacheResult(csDiagramPins);
-	}
-
-	/**
 	 * Creates a new cs diagram pin with the primary key. Does not add the cs diagram pin to the database.
 	 *
 	 * @param CSDiagramPinId the primary key for the new cs diagram pin
@@ -316,4 +312,4 @@ public class CSDiagramPinUtil {
 	private static volatile CSDiagramPinPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:474901227
+// LIFERAY-SERVICE-BUILDER-HASH:1613583525

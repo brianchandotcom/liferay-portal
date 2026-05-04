@@ -36,6 +36,20 @@ public class CPTaxCategoryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPTaxCategory> cpTaxCategories) {
+		getPersistence().cacheResult(cpTaxCategories);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPTaxCategory cpTaxCategory) {
+		getPersistence().cacheResult(cpTaxCategory);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -741,24 +755,6 @@ public class CPTaxCategoryUtil {
 	}
 
 	/**
-	 * Caches the cp tax category in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategory the cp tax category
-	 */
-	public static void cacheResult(CPTaxCategory cpTaxCategory) {
-		getPersistence().cacheResult(cpTaxCategory);
-	}
-
-	/**
-	 * Caches the cp tax categories in the entity cache if it is enabled.
-	 *
-	 * @param cpTaxCategories the cp tax categories
-	 */
-	public static void cacheResult(List<CPTaxCategory> cpTaxCategories) {
-		getPersistence().cacheResult(cpTaxCategories);
-	}
-
-	/**
 	 * Creates a new cp tax category with the primary key. Does not add the cp tax category to the database.
 	 *
 	 * @param CPTaxCategoryId the primary key for the new cp tax category
@@ -821,4 +817,4 @@ public class CPTaxCategoryUtil {
 	private static volatile CPTaxCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-390231529
+// LIFERAY-SERVICE-BUILDER-HASH:1899920392

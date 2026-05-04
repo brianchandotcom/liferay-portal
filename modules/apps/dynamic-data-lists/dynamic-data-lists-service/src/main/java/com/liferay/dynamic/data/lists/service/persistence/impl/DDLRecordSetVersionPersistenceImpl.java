@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionPer
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetVersionUtil;
 import com.liferay.dynamic.data.lists.service.persistence.impl.constants.DDLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -532,80 +528,6 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddl record set version in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersion the ddl record set version
-	 */
-	@Override
-	public void cacheResult(DDLRecordSetVersion ddlRecordSetVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddlRecordSetVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDLRecordSetVersionImpl.class,
-				ddlRecordSetVersion.getPrimaryKey(), ddlRecordSetVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByRS_V,
-				new Object[] {
-					ddlRecordSetVersion.getRecordSetId(),
-					ddlRecordSetVersion.getVersion()
-				},
-				ddlRecordSetVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddl record set versions in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersions the ddl record set versions
-	 */
-	@Override
-	public void cacheResult(List<DDLRecordSetVersion> ddlRecordSetVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddlRecordSetVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDLRecordSetVersion ddlRecordSetVersion : ddlRecordSetVersions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddlRecordSetVersion.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDLRecordSetVersionImpl.class,
-						ddlRecordSetVersion.getPrimaryKey()) == null) {
-
-					cacheResult(ddlRecordSetVersion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDLRecordSetVersionModelImpl ddlRecordSetVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddlRecordSetVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddlRecordSetVersionModelImpl.getRecordSetId(),
-				ddlRecordSetVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByRS_V, args, ddlRecordSetVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddl record set version with the primary key. Does not add the ddl record set version to the database.
 	 *
 	 * @param recordSetVersionId the primary key for the new ddl record set version
@@ -739,11 +661,7 @@ public class DDLRecordSetVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDLRecordSetVersionImpl.class, ddlRecordSetVersionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(ddlRecordSetVersionModelImpl);
+		cacheUniqueFindersResult(ddlRecordSetVersion, false);
 
 		if (isNew) {
 			ddlRecordSetVersion.setNew(false);
@@ -880,9 +798,6 @@ public class DDLRecordSetVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByRecordSetId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRecordSetId",
 			new String[] {
@@ -915,10 +830,12 @@ public class DDLRecordSetVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDLRecordSetVersion::getRecordSetId));
 
-		_finderPathFetchByRS_V = new FinderPath(
+		_finderPathFetchByRS_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRS_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "version"}, true);
+			new String[] {"recordSetId", "version"}, false,
+			DDLRecordSetVersion::getRecordSetId,
+			DDLRecordSetVersion::getVersion);
 
 		_uniquePersistenceFinderByRS_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByRS_V, _SQL_SELECT_DDLRECORDSETVERSION_WHERE,
@@ -1033,4 +950,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1875009067
+// LIFERAY-SERVICE-BUILDER-HASH:1753723370

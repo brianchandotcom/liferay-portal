@@ -886,4 +886,4 @@ public class RatingsStatsModelImpl
 	private RatingsStats _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2139694151
+// LIFERAY-SERVICE-BUILDER-HASH:240135137

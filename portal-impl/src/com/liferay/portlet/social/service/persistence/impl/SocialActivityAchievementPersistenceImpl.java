@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityAchievementModelImpl;
@@ -1054,90 +1050,6 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity achievement in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievement the social activity achievement
-	 */
-	@Override
-	public void cacheResult(
-		SocialActivityAchievement socialActivityAchievement) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityAchievement.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivityAchievementImpl.class,
-				socialActivityAchievement.getPrimaryKey(),
-				socialActivityAchievement);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_N,
-				new Object[] {
-					socialActivityAchievement.getGroupId(),
-					socialActivityAchievement.getUserId(),
-					socialActivityAchievement.getName()
-				},
-				socialActivityAchievement);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activity achievements in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievements the social activity achievements
-	 */
-	@Override
-	public void cacheResult(
-		List<SocialActivityAchievement> socialActivityAchievements) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivityAchievements.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivityAchievement socialActivityAchievement :
-				socialActivityAchievements) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivityAchievement.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivityAchievementImpl.class,
-						socialActivityAchievement.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivityAchievement);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialActivityAchievementModelImpl socialActivityAchievementModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityAchievementModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialActivityAchievementModelImpl.getGroupId(),
-				socialActivityAchievementModelImpl.getUserId(),
-				socialActivityAchievementModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_N, args,
-				socialActivityAchievementModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
 	 *
 	 * @param activityAchievementId the primary key for the new social activity achievement
@@ -1262,11 +1174,7 @@ public class SocialActivityAchievementPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivityAchievementImpl.class,
-			socialActivityAchievementModelImpl, false, true);
-
-		cacheUniqueFindersCache(socialActivityAchievementModelImpl);
+		cacheUniqueFindersResult(socialActivityAchievement, false);
 
 		if (isNew) {
 			socialActivityAchievement.setNew(false);
@@ -1391,9 +1299,6 @@ public class SocialActivityAchievementPersistenceImpl
 	 * Initializes the social activity achievement persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1526,13 +1431,16 @@ public class SocialActivityAchievementPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				SocialActivityAchievement::isFirstInGroup));
 
-		_finderPathFetchByG_U_N = new FinderPath(
+		_finderPathFetchByG_U_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_N",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "userId", "name"}, true);
+			new String[] {"groupId", "userId", "name"}, false,
+			SocialActivityAchievement::getGroupId,
+			SocialActivityAchievement::getUserId,
+			SocialActivityAchievement::getName);
 
 		_uniquePersistenceFinderByG_U_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U_N,
@@ -1624,4 +1532,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-961459691
+// LIFERAY-SERVICE-BUILDER-HASH:-1302224597

@@ -508,21 +508,6 @@ public interface LayoutLocalizationPersistence
 	public int countByG_L_P(long groupId, String languageId, long plid);
 
 	/**
-	 * Caches the layout localization in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalization the layout localization
-	 */
-	public void cacheResult(LayoutLocalization layoutLocalization);
-
-	/**
-	 * Caches the layout localizations in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalizations the layout localizations
-	 */
-	public void cacheResult(
-		java.util.List<LayoutLocalization> layoutLocalizations);
-
-	/**
 	 * Creates a new layout localization with the primary key. Does not add the layout localization to the database.
 	 *
 	 * @param layoutLocalizationId the primary key for the new layout localization
@@ -561,4 +546,4 @@ public interface LayoutLocalizationPersistence
 	public LayoutLocalization fetchByPrimaryKey(long layoutLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:28465815
+// LIFERAY-SERVICE-BUILDER-HASH:-798326823

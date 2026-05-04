@@ -37,6 +37,25 @@ public class CommerceInventoryBookedQuantityUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryBookedQuantity>
+			commerceInventoryBookedQuantities) {
+
+		getPersistence().cacheResult(commerceInventoryBookedQuantities);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
+
+		getPersistence().cacheResult(commerceInventoryBookedQuantity);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -518,29 +537,6 @@ public class CommerceInventoryBookedQuantityUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory booked quantity in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantity the commerce inventory booked quantity
-	 */
-	public static void cacheResult(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
-
-		getPersistence().cacheResult(commerceInventoryBookedQuantity);
-	}
-
-	/**
-	 * Caches the commerce inventory booked quantities in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryBookedQuantities the commerce inventory booked quantities
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryBookedQuantity>
-			commerceInventoryBookedQuantities) {
-
-		getPersistence().cacheResult(commerceInventoryBookedQuantities);
-	}
-
-	/**
 	 * Creates a new commerce inventory booked quantity with the primary key. Does not add the commerce inventory booked quantity to the database.
 	 *
 	 * @param commerceInventoryBookedQuantityId the primary key for the new commerce inventory booked quantity
@@ -616,4 +612,4 @@ public class CommerceInventoryBookedQuantityUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1555240065
+// LIFERAY-SERVICE-BUILDER-HASH:1423514472

@@ -857,20 +857,6 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the website in the entity cache if it is enabled.
-	 *
-	 * @param website the website
-	 */
-	public void cacheResult(Website website);
-
-	/**
-	 * Caches the websites in the entity cache if it is enabled.
-	 *
-	 * @param websites the websites
-	 */
-	public void cacheResult(java.util.List<Website> websites);
-
-	/**
 	 * Creates a new website with the primary key. Does not add the website to the database.
 	 *
 	 * @param websiteId the primary key for the new website
@@ -908,4 +894,4 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	public Website fetchByPrimaryKey(long websiteId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2111920832
+// LIFERAY-SERVICE-BUILDER-HASH:821586428

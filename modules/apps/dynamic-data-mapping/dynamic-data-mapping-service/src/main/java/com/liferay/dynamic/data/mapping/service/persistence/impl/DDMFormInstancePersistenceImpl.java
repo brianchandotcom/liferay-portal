@@ -15,7 +15,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -39,10 +38,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1603,101 +1599,6 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm form instance in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstance the ddm form instance
-	 */
-	@Override
-	public void cacheResult(DDMFormInstance ddmFormInstance) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstance.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMFormInstanceImpl.class, ddmFormInstance.getPrimaryKey(),
-				ddmFormInstance);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					ddmFormInstance.getUuid(), ddmFormInstance.getGroupId()
-				},
-				ddmFormInstance);
-
-			finderCache.putResult(
-				_finderPathFetchByStructureId,
-				new Object[] {ddmFormInstance.getStructureId()},
-				ddmFormInstance);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm form instances in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstances the ddm form instances
-	 */
-	@Override
-	public void cacheResult(List<DDMFormInstance> ddmFormInstances) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmFormInstances.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMFormInstance ddmFormInstance : ddmFormInstances) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmFormInstance.getCtCollectionId())) {
-
-				DDMFormInstance cachedDDMFormInstance =
-					(DDMFormInstance)entityCache.getResult(
-						DDMFormInstanceImpl.class,
-						ddmFormInstance.getPrimaryKey());
-
-				if (cachedDDMFormInstance == null) {
-					cacheResult(ddmFormInstance);
-				}
-				else {
-					DDMFormInstanceModelImpl ddmFormInstanceModelImpl =
-						(DDMFormInstanceModelImpl)ddmFormInstance;
-					DDMFormInstanceModelImpl cachedDDMFormInstanceModelImpl =
-						(DDMFormInstanceModelImpl)cachedDDMFormInstance;
-
-					ddmFormInstanceModelImpl.setSettingsDDMFormValues(
-						cachedDDMFormInstanceModelImpl.
-							getSettingsDDMFormValues());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMFormInstanceModelImpl ddmFormInstanceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstanceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmFormInstanceModelImpl.getUuid(),
-				ddmFormInstanceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, ddmFormInstanceModelImpl);
-
-			args = new Object[] {ddmFormInstanceModelImpl.getStructureId()};
-
-			finderCache.putResult(
-				_finderPathFetchByStructureId, args, ddmFormInstanceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
 	 * @param formInstanceId the primary key for the new ddm form instance
@@ -1847,10 +1748,7 @@ public class DDMFormInstancePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMFormInstanceImpl.class, ddmFormInstanceModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmFormInstanceModelImpl);
+		cacheUniqueFindersResult(ddmFormInstance, false);
 
 		if (isNew) {
 			ddmFormInstance.setNew(false);
@@ -1991,9 +1889,6 @@ public class DDMFormInstancePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2021,10 +1916,11 @@ public class DDMFormInstancePersistenceImpl
 				"ddmFormInstance.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMFormInstance::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DDMFormInstance::getUuid,
+			DDMFormInstance::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMFORMINSTANCE_WHERE,
@@ -2091,10 +1987,10 @@ public class DDMFormInstancePersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathFetchByStructureId = new FinderPath(
+		_finderPathFetchByStructureId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByStructureId",
 			new String[] {Long.class.getName()}, new String[] {"structureId"},
-			true);
+			false, DDMFormInstance::getStructureId);
 
 		_uniquePersistenceFinderByStructureId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByStructureId,
@@ -2198,4 +2094,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:53937834
+// LIFERAY-SERVICE-BUILDER-HASH:-1567977418

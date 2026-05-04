@@ -36,6 +36,20 @@ public class CountryUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Country> countries) {
+		getPersistence().cacheResult(countries);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Country country) {
+		getPersistence().cacheResult(country);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2505,24 +2519,6 @@ public class CountryUtil {
 	}
 
 	/**
-	 * Caches the country in the entity cache if it is enabled.
-	 *
-	 * @param country the country
-	 */
-	public static void cacheResult(Country country) {
-		getPersistence().cacheResult(country);
-	}
-
-	/**
-	 * Caches the countries in the entity cache if it is enabled.
-	 *
-	 * @param countries the countries
-	 */
-	public static void cacheResult(List<Country> countries) {
-		getPersistence().cacheResult(countries);
-	}
-
-	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
 	 * @param countryId the primary key for the new country
@@ -2583,4 +2579,4 @@ public class CountryUtil {
 	private static volatile CountryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2064377086
+// LIFERAY-SERVICE-BUILDER-HASH:-738631477

@@ -551,20 +551,6 @@ public interface DepotEntryPinPersistence
 	public int countByU_D(long userId, long depotEntryId);
 
 	/**
-	 * Caches the depot entry pin in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryPin the depot entry pin
-	 */
-	public void cacheResult(DepotEntryPin depotEntryPin);
-
-	/**
-	 * Caches the depot entry pins in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryPins the depot entry pins
-	 */
-	public void cacheResult(java.util.List<DepotEntryPin> depotEntryPins);
-
-	/**
 	 * Creates a new depot entry pin with the primary key. Does not add the depot entry pin to the database.
 	 *
 	 * @param depotEntryPinId the primary key for the new depot entry pin
@@ -603,4 +589,4 @@ public interface DepotEntryPinPersistence
 	public DepotEntryPin fetchByPrimaryKey(long depotEntryPinId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1122944887
+// LIFERAY-SERVICE-BUILDER-HASH:215178649

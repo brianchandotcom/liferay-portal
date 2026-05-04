@@ -455,20 +455,6 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the contact in the entity cache if it is enabled.
-	 *
-	 * @param contact the contact
-	 */
-	public void cacheResult(Contact contact);
-
-	/**
-	 * Caches the contacts in the entity cache if it is enabled.
-	 *
-	 * @param contacts the contacts
-	 */
-	public void cacheResult(java.util.List<Contact> contacts);
-
-	/**
 	 * Creates a new contact with the primary key. Does not add the contact to the database.
 	 *
 	 * @param contactId the primary key for the new contact
@@ -506,4 +492,4 @@ public interface ContactPersistence extends BasePersistence<Contact> {
 	public Contact fetchByPrimaryKey(long contactId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:579316666
+// LIFERAY-SERVICE-BUILDER-HASH:256772928

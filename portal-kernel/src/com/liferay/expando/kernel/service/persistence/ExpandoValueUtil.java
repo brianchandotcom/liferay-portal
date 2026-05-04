@@ -36,6 +36,20 @@ public class ExpandoValueUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ExpandoValue> expandoValues) {
+		getPersistence().cacheResult(expandoValues);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ExpandoValue expandoValue) {
+		getPersistence().cacheResult(expandoValue);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1275,24 +1289,6 @@ public class ExpandoValueUtil {
 	}
 
 	/**
-	 * Caches the expando value in the entity cache if it is enabled.
-	 *
-	 * @param expandoValue the expando value
-	 */
-	public static void cacheResult(ExpandoValue expandoValue) {
-		getPersistence().cacheResult(expandoValue);
-	}
-
-	/**
-	 * Caches the expando values in the entity cache if it is enabled.
-	 *
-	 * @param expandoValues the expando values
-	 */
-	public static void cacheResult(List<ExpandoValue> expandoValues) {
-		getPersistence().cacheResult(expandoValues);
-	}
-
-	/**
 	 * Creates a new expando value with the primary key. Does not add the expando value to the database.
 	 *
 	 * @param valueId the primary key for the new expando value
@@ -1353,4 +1349,4 @@ public class ExpandoValueUtil {
 	private static volatile ExpandoValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1509280689
+// LIFERAY-SERVICE-BUILDER-HASH:-1118941451

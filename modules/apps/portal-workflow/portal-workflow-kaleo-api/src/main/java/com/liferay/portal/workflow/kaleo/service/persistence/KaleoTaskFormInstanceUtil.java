@@ -36,6 +36,24 @@ public class KaleoTaskFormInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoTaskFormInstance> kaleoTaskFormInstances) {
+
+		getPersistence().cacheResult(kaleoTaskFormInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoTaskFormInstance kaleoTaskFormInstance) {
+
+		getPersistence().cacheResult(kaleoTaskFormInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -826,28 +844,6 @@ public class KaleoTaskFormInstanceUtil {
 	}
 
 	/**
-	 * Caches the kaleo task form instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskFormInstance the kaleo task form instance
-	 */
-	public static void cacheResult(
-		KaleoTaskFormInstance kaleoTaskFormInstance) {
-
-		getPersistence().cacheResult(kaleoTaskFormInstance);
-	}
-
-	/**
-	 * Caches the kaleo task form instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskFormInstances the kaleo task form instances
-	 */
-	public static void cacheResult(
-		List<KaleoTaskFormInstance> kaleoTaskFormInstances) {
-
-		getPersistence().cacheResult(kaleoTaskFormInstances);
-	}
-
-	/**
 	 * Creates a new kaleo task form instance with the primary key. Does not add the kaleo task form instance to the database.
 	 *
 	 * @param kaleoTaskFormInstanceId the primary key for the new kaleo task form instance
@@ -917,4 +913,4 @@ public class KaleoTaskFormInstanceUtil {
 	private static volatile KaleoTaskFormInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:915429516
+// LIFERAY-SERVICE-BUILDER-HASH:-1638178684

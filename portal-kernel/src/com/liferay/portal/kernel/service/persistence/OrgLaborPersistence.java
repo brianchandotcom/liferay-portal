@@ -133,20 +133,6 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public int countByOrganizationId(long organizationId);
 
 	/**
-	 * Caches the org labor in the entity cache if it is enabled.
-	 *
-	 * @param orgLabor the org labor
-	 */
-	public void cacheResult(OrgLabor orgLabor);
-
-	/**
-	 * Caches the org labors in the entity cache if it is enabled.
-	 *
-	 * @param orgLabors the org labors
-	 */
-	public void cacheResult(java.util.List<OrgLabor> orgLabors);
-
-	/**
 	 * Creates a new org labor with the primary key. Does not add the org labor to the database.
 	 *
 	 * @param orgLaborId the primary key for the new org labor
@@ -184,4 +170,4 @@ public interface OrgLaborPersistence extends BasePersistence<OrgLabor> {
 	public OrgLabor fetchByPrimaryKey(long orgLaborId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:774254571
+// LIFERAY-SERVICE-BUILDER-HASH:-650301777

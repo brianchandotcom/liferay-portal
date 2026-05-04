@@ -6,7 +6,6 @@
 package com.liferay.site.navigation.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1668,101 +1665,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the site navigation menu item in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenuItem the site navigation menu item
-	 */
-	@Override
-	public void cacheResult(SiteNavigationMenuItem siteNavigationMenuItem) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					siteNavigationMenuItem.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SiteNavigationMenuItemImpl.class,
-				siteNavigationMenuItem.getPrimaryKey(), siteNavigationMenuItem);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					siteNavigationMenuItem.getUuid(),
-					siteNavigationMenuItem.getGroupId()
-				},
-				siteNavigationMenuItem);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					siteNavigationMenuItem.getExternalReferenceCode(),
-					siteNavigationMenuItem.getGroupId()
-				},
-				siteNavigationMenuItem);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the site navigation menu items in the entity cache if it is enabled.
-	 *
-	 * @param siteNavigationMenuItems the site navigation menu items
-	 */
-	@Override
-	public void cacheResult(
-		List<SiteNavigationMenuItem> siteNavigationMenuItems) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (siteNavigationMenuItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SiteNavigationMenuItem siteNavigationMenuItem :
-				siteNavigationMenuItems) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						siteNavigationMenuItem.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SiteNavigationMenuItemImpl.class,
-						siteNavigationMenuItem.getPrimaryKey()) == null) {
-
-					cacheResult(siteNavigationMenuItem);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SiteNavigationMenuItemModelImpl siteNavigationMenuItemModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					siteNavigationMenuItemModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				siteNavigationMenuItemModelImpl.getUuid(),
-				siteNavigationMenuItemModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				siteNavigationMenuItemModelImpl);
-
-			args = new Object[] {
-				siteNavigationMenuItemModelImpl.getExternalReferenceCode(),
-				siteNavigationMenuItemModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, siteNavigationMenuItemModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new site navigation menu item with the primary key. Does not add the site navigation menu item to the database.
 	 *
 	 * @param siteNavigationMenuItemId the primary key for the new site navigation menu item
@@ -1989,11 +1891,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SiteNavigationMenuItemImpl.class, siteNavigationMenuItemModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(siteNavigationMenuItemModelImpl);
+		cacheUniqueFindersResult(siteNavigationMenuItem, false);
 
 		if (isNew) {
 			siteNavigationMenuItem.setNew(false);
@@ -2139,9 +2037,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2170,10 +2065,12 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, SiteNavigationMenuItem::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			SiteNavigationMenuItem::getUuid,
+			SiteNavigationMenuItem::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2425,10 +2322,12 @@ public class SiteNavigationMenuItemPersistenceImpl
 					"siteNavigationMenuItem.", "name", FinderColumn.Type.STRING,
 					"LIKE", true, true, SiteNavigationMenuItem::getName));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			SiteNavigationMenuItem::getExternalReferenceCode,
+			SiteNavigationMenuItem::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G,
@@ -2513,4 +2412,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1387554574
+// LIFERAY-SERVICE-BUILDER-HASH:-809420246

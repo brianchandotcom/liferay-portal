@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -492,64 +489,6 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce tax method in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethod the commerce tax method
-	 */
-	@Override
-	public void cacheResult(CommerceTaxMethod commerceTaxMethod) {
-		entityCache.putResult(
-			CommerceTaxMethodImpl.class, commerceTaxMethod.getPrimaryKey(),
-			commerceTaxMethod);
-
-		finderCache.putResult(
-			_finderPathFetchByG_E,
-			new Object[] {
-				commerceTaxMethod.getGroupId(), commerceTaxMethod.getEngineKey()
-			},
-			commerceTaxMethod);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce tax methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethods the commerce tax methods
-	 */
-	@Override
-	public void cacheResult(List<CommerceTaxMethod> commerceTaxMethods) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceTaxMethods.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceTaxMethod commerceTaxMethod : commerceTaxMethods) {
-			if (entityCache.getResult(
-					CommerceTaxMethodImpl.class,
-					commerceTaxMethod.getPrimaryKey()) == null) {
-
-				cacheResult(commerceTaxMethod);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceTaxMethodModelImpl commerceTaxMethodModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceTaxMethodModelImpl.getGroupId(),
-			commerceTaxMethodModelImpl.getEngineKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_E, args, commerceTaxMethodModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce tax method with the primary key. Does not add the commerce tax method to the database.
 	 *
 	 * @param commerceTaxMethodId the primary key for the new commerce tax method
@@ -683,11 +622,7 @@ public class CommerceTaxMethodPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceTaxMethodImpl.class, commerceTaxMethodModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commerceTaxMethodModelImpl);
+		cacheUniqueFindersResult(commerceTaxMethod, false);
 
 		if (isNew) {
 			commerceTaxMethod.setNew(false);
@@ -753,9 +688,6 @@ public class CommerceTaxMethodPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -785,10 +717,11 @@ public class CommerceTaxMethodPersistenceImpl
 					"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTaxMethod::getGroupId));
 
-		_finderPathFetchByG_E = new FinderPath(
+		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, true);
+			new String[] {"groupId", "engineKey"}, false,
+			CommerceTaxMethod::getGroupId, CommerceTaxMethod::getEngineKey);
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_E, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
@@ -900,4 +833,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-346526
+// LIFERAY-SERVICE-BUILDER-HASH:57622854

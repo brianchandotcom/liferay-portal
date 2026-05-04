@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -40,8 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1040,106 +1037,6 @@ public class RepositoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the repository in the entity cache if it is enabled.
-	 *
-	 * @param repository the repository
-	 */
-	@Override
-	public void cacheResult(Repository repository) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					repository.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RepositoryImpl.class, repository.getPrimaryKey(), repository);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {repository.getUuid(), repository.getGroupId()},
-				repository);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_N_P,
-				new Object[] {
-					repository.getGroupId(), repository.getName(),
-					repository.getPortletId()
-				},
-				repository);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					repository.getExternalReferenceCode(),
-					repository.getGroupId()
-				},
-				repository);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the repositories in the entity cache if it is enabled.
-	 *
-	 * @param repositories the repositories
-	 */
-	@Override
-	public void cacheResult(List<Repository> repositories) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (repositories.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Repository repository : repositories) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						repository.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RepositoryImpl.class, repository.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(repository);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RepositoryModelImpl repositoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					repositoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				repositoryModelImpl.getUuid(), repositoryModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, repositoryModelImpl);
-
-			args = new Object[] {
-				repositoryModelImpl.getGroupId(), repositoryModelImpl.getName(),
-				repositoryModelImpl.getPortletId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_N_P, args, repositoryModelImpl);
-
-			args = new Object[] {
-				repositoryModelImpl.getExternalReferenceCode(),
-				repositoryModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, repositoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new repository with the primary key. Does not add the repository to the database.
 	 *
 	 * @param repositoryId the primary key for the new repository
@@ -1345,10 +1242,7 @@ public class RepositoryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RepositoryImpl.class, repositoryModelImpl, false, true);
-
-		cacheUniqueFindersCache(repositoryModelImpl);
+		cacheUniqueFindersResult(repository, false);
 
 		if (isNew) {
 			repository.setNew(false);
@@ -1492,9 +1386,6 @@ public class RepositoryPersistenceImpl
 	 * Initializes the repository persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1522,10 +1413,11 @@ public class RepositoryPersistenceImpl
 				"repository.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, Repository::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Repository::getUuid,
+			Repository::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_REPOSITORY_WHERE,
@@ -1627,13 +1519,15 @@ public class RepositoryPersistenceImpl
 					"repository.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, Repository::getPortletId));
 
-		_finderPathFetchByG_N_P = new FinderPath(
+		_finderPathFetchByG_N_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "name", "portletId"}, true);
+			new String[] {"groupId", "name", "portletId"}, false,
+			Repository::getGroupId, Repository::getName,
+			Repository::getPortletId);
 
 		_uniquePersistenceFinderByG_N_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N_P, _SQL_SELECT_REPOSITORY_WHERE,
@@ -1647,10 +1541,11 @@ public class RepositoryPersistenceImpl
 				"repository.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, Repository::getPortletId));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			Repository::getExternalReferenceCode, Repository::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_REPOSITORY_WHERE,
@@ -1698,4 +1593,4 @@ public class RepositoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-832500991
+// LIFERAY-SERVICE-BUILDER-HASH:283613350

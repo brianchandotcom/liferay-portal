@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -37,7 +34,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -169,58 +165,6 @@ public class PatcherFixComponentPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(PatcherFixComponentTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the patcher fix component in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponent the patcher fix component
-	 */
-	@Override
-	public void cacheResult(PatcherFixComponent patcherFixComponent) {
-		entityCache.putResult(
-			PatcherFixComponentImpl.class, patcherFixComponent.getPrimaryKey(),
-			patcherFixComponent);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {patcherFixComponent.getName()}, patcherFixComponent);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher fix components in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixComponents the patcher fix components
-	 */
-	@Override
-	public void cacheResult(List<PatcherFixComponent> patcherFixComponents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherFixComponents.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherFixComponent patcherFixComponent : patcherFixComponents) {
-			if (entityCache.getResult(
-					PatcherFixComponentImpl.class,
-					patcherFixComponent.getPrimaryKey()) == null) {
-
-				cacheResult(patcherFixComponent);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherFixComponentModelImpl patcherFixComponentModelImpl) {
-
-		Object[] args = new Object[] {patcherFixComponentModelImpl.getName()};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, patcherFixComponentModelImpl);
 	}
 
 	/**
@@ -359,11 +303,7 @@ public class PatcherFixComponentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherFixComponentImpl.class, patcherFixComponentModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(patcherFixComponentModelImpl);
+		cacheUniqueFindersResult(patcherFixComponent, false);
 
 		if (isNew) {
 			patcherFixComponent.setNew(false);
@@ -424,12 +364,10 @@ public class PatcherFixComponentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			PatcherFixComponent::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName, _SQL_SELECT_PATCHERFIXCOMPONENT_WHERE,
@@ -500,4 +438,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-623190157
+// LIFERAY-SERVICE-BUILDER-HASH:-2061297823

@@ -36,6 +36,24 @@ public class CPSpecificationOptionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPSpecificationOption> cpSpecificationOptions) {
+
+		getPersistence().cacheResult(cpSpecificationOptions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPSpecificationOption cpSpecificationOption) {
+
+		getPersistence().cacheResult(cpSpecificationOption);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1006,28 +1024,6 @@ public class CPSpecificationOptionUtil {
 	}
 
 	/**
-	 * Caches the cp specification option in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOption the cp specification option
-	 */
-	public static void cacheResult(
-		CPSpecificationOption cpSpecificationOption) {
-
-		getPersistence().cacheResult(cpSpecificationOption);
-	}
-
-	/**
-	 * Caches the cp specification options in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptions the cp specification options
-	 */
-	public static void cacheResult(
-		List<CPSpecificationOption> cpSpecificationOptions) {
-
-		getPersistence().cacheResult(cpSpecificationOptions);
-	}
-
-	/**
 	 * Creates a new cp specification option with the primary key. Does not add the cp specification option to the database.
 	 *
 	 * @param CPSpecificationOptionId the primary key for the new cp specification option
@@ -1097,4 +1093,4 @@ public class CPSpecificationOptionUtil {
 	private static volatile CPSpecificationOptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:701804420
+// LIFERAY-SERVICE-BUILDER-HASH:-397419534

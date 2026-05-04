@@ -36,6 +36,22 @@ public class DDMTemplateVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMTemplateVersion> ddmTemplateVersions) {
+
+		getPersistence().cacheResult(ddmTemplateVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMTemplateVersion ddmTemplateVersion) {
+		getPersistence().cacheResult(ddmTemplateVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -439,26 +455,6 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	 * Caches the ddm template version in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersion the ddm template version
-	 */
-	public static void cacheResult(DDMTemplateVersion ddmTemplateVersion) {
-		getPersistence().cacheResult(ddmTemplateVersion);
-	}
-
-	/**
-	 * Caches the ddm template versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersions the ddm template versions
-	 */
-	public static void cacheResult(
-		List<DDMTemplateVersion> ddmTemplateVersions) {
-
-		getPersistence().cacheResult(ddmTemplateVersions);
-	}
-
-	/**
 	 * Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	 *
 	 * @param templateVersionId the primary key for the new ddm template version
@@ -525,4 +521,4 @@ public class DDMTemplateVersionUtil {
 	private static volatile DDMTemplateVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-804838095
+// LIFERAY-SERVICE-BUILDER-HASH:-119572133

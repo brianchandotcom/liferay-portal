@@ -188,21 +188,6 @@ public interface SamlSpIdpConnectionPersistence
 	public int countByC_SIEI(long companyId, String samlIdpEntityId);
 
 	/**
-	 * Caches the saml sp idp connection in the entity cache if it is enabled.
-	 *
-	 * @param samlSpIdpConnection the saml sp idp connection
-	 */
-	public void cacheResult(SamlSpIdpConnection samlSpIdpConnection);
-
-	/**
-	 * Caches the saml sp idp connections in the entity cache if it is enabled.
-	 *
-	 * @param samlSpIdpConnections the saml sp idp connections
-	 */
-	public void cacheResult(
-		java.util.List<SamlSpIdpConnection> samlSpIdpConnections);
-
-	/**
 	 * Creates a new saml sp idp connection with the primary key. Does not add the saml sp idp connection to the database.
 	 *
 	 * @param samlSpIdpConnectionId the primary key for the new saml sp idp connection
@@ -242,4 +227,4 @@ public interface SamlSpIdpConnectionPersistence
 	public SamlSpIdpConnection fetchByPrimaryKey(long samlSpIdpConnectionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2138434191
+// LIFERAY-SERVICE-BUILDER-HASH:1387606245

@@ -36,6 +36,20 @@ public class ContactUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Contact> contacts) {
+		getPersistence().cacheResult(contacts);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Contact contact) {
+		getPersistence().cacheResult(contact);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -608,24 +622,6 @@ public class ContactUtil {
 	}
 
 	/**
-	 * Caches the contact in the entity cache if it is enabled.
-	 *
-	 * @param contact the contact
-	 */
-	public static void cacheResult(Contact contact) {
-		getPersistence().cacheResult(contact);
-	}
-
-	/**
-	 * Caches the contacts in the entity cache if it is enabled.
-	 *
-	 * @param contacts the contacts
-	 */
-	public static void cacheResult(List<Contact> contacts) {
-		getPersistence().cacheResult(contacts);
-	}
-
-	/**
 	 * Creates a new contact with the primary key. Does not add the contact to the database.
 	 *
 	 * @param contactId the primary key for the new contact
@@ -686,4 +682,4 @@ public class ContactUtil {
 	private static volatile ContactPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1162203228
+// LIFERAY-SERVICE-BUILDER-HASH:743122462

@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -1608,49 +1605,6 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the notification queue entry in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntry the notification queue entry
-	 */
-	@Override
-	public void cacheResult(NotificationQueueEntry notificationQueueEntry) {
-		entityCache.putResult(
-			NotificationQueueEntryImpl.class,
-			notificationQueueEntry.getPrimaryKey(), notificationQueueEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the notification queue entries in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntries the notification queue entries
-	 */
-	@Override
-	public void cacheResult(
-		List<NotificationQueueEntry> notificationQueueEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (notificationQueueEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntries) {
-
-			if (entityCache.getResult(
-					NotificationQueueEntryImpl.class,
-					notificationQueueEntry.getPrimaryKey()) == null) {
-
-				cacheResult(notificationQueueEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new notification queue entry with the primary key. Does not add the notification queue entry to the database.
 	 *
 	 * @param notificationQueueEntryId the primary key for the new notification queue entry
@@ -1789,9 +1743,7 @@ public class NotificationQueueEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NotificationQueueEntryImpl.class, notificationQueueEntryModelImpl,
-			false, true);
+		cacheUniqueFindersResult(notificationQueueEntry, false);
 
 		if (isNew) {
 			notificationQueueEntry.setNew(false);
@@ -1860,9 +1812,6 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2083,4 +2032,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1208738031
+// LIFERAY-SERVICE-BUILDER-HASH:-532464433

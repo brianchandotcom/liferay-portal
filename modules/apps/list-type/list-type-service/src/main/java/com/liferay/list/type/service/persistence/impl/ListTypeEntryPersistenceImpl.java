@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1899,81 +1897,6 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the list type entry in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntry the list type entry
-	 */
-	@Override
-	public void cacheResult(ListTypeEntry listTypeEntry) {
-		entityCache.putResult(
-			ListTypeEntryImpl.class, listTypeEntry.getPrimaryKey(),
-			listTypeEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByLTDI_K,
-			new Object[] {
-				listTypeEntry.getListTypeDefinitionId(), listTypeEntry.getKey()
-			},
-			listTypeEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_LTDI,
-			new Object[] {
-				listTypeEntry.getExternalReferenceCode(),
-				listTypeEntry.getCompanyId(),
-				listTypeEntry.getListTypeDefinitionId()
-			},
-			listTypeEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the list type entries in the entity cache if it is enabled.
-	 *
-	 * @param listTypeEntries the list type entries
-	 */
-	@Override
-	public void cacheResult(List<ListTypeEntry> listTypeEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (listTypeEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			if (entityCache.getResult(
-					ListTypeEntryImpl.class, listTypeEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(listTypeEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ListTypeEntryModelImpl listTypeEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			listTypeEntryModelImpl.getListTypeDefinitionId(),
-			listTypeEntryModelImpl.getKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByLTDI_K, args, listTypeEntryModelImpl);
-
-		args = new Object[] {
-			listTypeEntryModelImpl.getExternalReferenceCode(),
-			listTypeEntryModelImpl.getCompanyId(),
-			listTypeEntryModelImpl.getListTypeDefinitionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_LTDI, args, listTypeEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new list type entry with the primary key. Does not add the list type entry to the database.
 	 *
 	 * @param listTypeEntryId the primary key for the new list type entry
@@ -2151,10 +2074,7 @@ public class ListTypeEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ListTypeEntryImpl.class, listTypeEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(listTypeEntryModelImpl);
+		cacheUniqueFindersResult(listTypeEntry, false);
 
 		if (isNew) {
 			listTypeEntry.setNew(false);
@@ -2220,9 +2140,6 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2361,10 +2278,11 @@ public class ListTypeEntryPersistenceImpl
 				"listTypeEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, ListTypeEntry::getUserId));
 
-		_finderPathFetchByLTDI_K = new FinderPath(
+		_finderPathFetchByLTDI_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLTDI_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"listTypeDefinitionId", "key_"}, true);
+			new String[] {"listTypeDefinitionId", "key_"}, false,
+			ListTypeEntry::getListTypeDefinitionId, ListTypeEntry::getKey);
 
 		_uniquePersistenceFinderByLTDI_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByLTDI_K, _SQL_SELECT_LISTTYPEENTRY_WHERE,
@@ -2376,7 +2294,7 @@ public class ListTypeEntryPersistenceImpl
 				"listTypeEntry.", "key", FinderColumn.Type.STRING, "=", true,
 				true, ListTypeEntry::getKey));
 
-		_finderPathFetchByERC_C_LTDI = new FinderPath(
+		_finderPathFetchByERC_C_LTDI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_LTDI",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -2385,7 +2303,9 @@ public class ListTypeEntryPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "listTypeDefinitionId"
 			},
-			true);
+			false, ListTypeEntry::getExternalReferenceCode,
+			ListTypeEntry::getCompanyId,
+			ListTypeEntry::getListTypeDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_LTDI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_LTDI, _SQL_SELECT_LISTTYPEENTRY_WHERE,
@@ -2470,4 +2390,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1384526764
+// LIFERAY-SERVICE-BUILDER-HASH:1316923057

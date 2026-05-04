@@ -36,6 +36,20 @@ public class ExpandoTableUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ExpandoTable> expandoTables) {
+		getPersistence().cacheResult(expandoTables);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ExpandoTable expandoTable) {
+		getPersistence().cacheResult(expandoTable);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -320,24 +334,6 @@ public class ExpandoTableUtil {
 	}
 
 	/**
-	 * Caches the expando table in the entity cache if it is enabled.
-	 *
-	 * @param expandoTable the expando table
-	 */
-	public static void cacheResult(ExpandoTable expandoTable) {
-		getPersistence().cacheResult(expandoTable);
-	}
-
-	/**
-	 * Caches the expando tables in the entity cache if it is enabled.
-	 *
-	 * @param expandoTables the expando tables
-	 */
-	public static void cacheResult(List<ExpandoTable> expandoTables) {
-		getPersistence().cacheResult(expandoTables);
-	}
-
-	/**
 	 * Creates a new expando table with the primary key. Does not add the expando table to the database.
 	 *
 	 * @param tableId the primary key for the new expando table
@@ -398,4 +394,4 @@ public class ExpandoTableUtil {
 	private static volatile ExpandoTablePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2094904496
+// LIFERAY-SERVICE-BUILDER-HASH:1619567844

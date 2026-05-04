@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1425,97 +1423,6 @@ public class ObjectActionPersistenceImpl
 	}
 
 	/**
-	 * Caches the object action in the entity cache if it is enabled.
-	 *
-	 * @param objectAction the object action
-	 */
-	@Override
-	public void cacheResult(ObjectAction objectAction) {
-		entityCache.putResult(
-			ObjectActionImpl.class, objectAction.getPrimaryKey(), objectAction);
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N,
-			new Object[] {
-				objectAction.getObjectDefinitionId(), objectAction.getName()
-			},
-			objectAction);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI,
-			new Object[] {
-				objectAction.getExternalReferenceCode(),
-				objectAction.getCompanyId(),
-				objectAction.getObjectDefinitionId()
-			},
-			objectAction);
-
-		finderCache.putResult(
-			_finderPathFetchByODI_A_N_OATK,
-			new Object[] {
-				objectAction.getObjectDefinitionId(), objectAction.isActive(),
-				objectAction.getName(), objectAction.getObjectActionTriggerKey()
-			},
-			objectAction);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object actions in the entity cache if it is enabled.
-	 *
-	 * @param objectActions the object actions
-	 */
-	@Override
-	public void cacheResult(List<ObjectAction> objectActions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectActions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectAction objectAction : objectActions) {
-			if (entityCache.getResult(
-					ObjectActionImpl.class, objectAction.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(objectAction);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectActionModelImpl objectActionModelImpl) {
-
-		Object[] args = new Object[] {
-			objectActionModelImpl.getObjectDefinitionId(),
-			objectActionModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI_N, args, objectActionModelImpl);
-
-		args = new Object[] {
-			objectActionModelImpl.getExternalReferenceCode(),
-			objectActionModelImpl.getCompanyId(),
-			objectActionModelImpl.getObjectDefinitionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C_ODI, args, objectActionModelImpl);
-
-		args = new Object[] {
-			objectActionModelImpl.getObjectDefinitionId(),
-			objectActionModelImpl.isActive(), objectActionModelImpl.getName(),
-			objectActionModelImpl.getObjectActionTriggerKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI_A_N_OATK, args, objectActionModelImpl);
-	}
-
-	/**
 	 * Creates a new object action with the primary key. Does not add the object action to the database.
 	 *
 	 * @param objectActionId the primary key for the new object action
@@ -1692,10 +1599,7 @@ public class ObjectActionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectActionImpl.class, objectActionModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectActionModelImpl);
+		cacheUniqueFindersResult(objectAction, false);
 
 		if (isNew) {
 			objectAction.setNew(false);
@@ -1761,9 +1665,6 @@ public class ObjectActionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1854,10 +1755,11 @@ public class ObjectActionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectAction::getObjectDefinitionId));
 
-		_finderPathFetchByODI_N = new FinderPath(
+		_finderPathFetchByODI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "name"}, true);
+			new String[] {"objectDefinitionId", "name"}, false,
+			ObjectAction::getObjectDefinitionId, ObjectAction::getName);
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTACTION_WHERE,
@@ -1902,7 +1804,7 @@ public class ObjectActionPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					ObjectAction::getObjectActionExecutorKey));
 
-		_finderPathFetchByERC_C_ODI = new FinderPath(
+		_finderPathFetchByERC_C_ODI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
@@ -1911,7 +1813,8 @@ public class ObjectActionPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			true);
+			false, ObjectAction::getExternalReferenceCode,
+			ObjectAction::getCompanyId, ObjectAction::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI, _SQL_SELECT_OBJECTACTION_WHERE,
@@ -2025,7 +1928,7 @@ public class ObjectActionPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					ObjectAction::getObjectActionTriggerKey));
 
-		_finderPathFetchByODI_A_N_OATK = new FinderPath(
+		_finderPathFetchByODI_A_N_OATK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_A_N_OATK",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
@@ -2035,7 +1938,8 @@ public class ObjectActionPersistenceImpl
 				"objectDefinitionId", "active_", "name",
 				"objectActionTriggerKey"
 			},
-			true);
+			false, ObjectAction::getObjectDefinitionId, ObjectAction::isActive,
+			ObjectAction::getName, ObjectAction::getObjectActionTriggerKey);
 
 		_uniquePersistenceFinderByODI_A_N_OATK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_A_N_OATK,
@@ -2123,4 +2027,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:268412674
+// LIFERAY-SERVICE-BUILDER-HASH:2084428625

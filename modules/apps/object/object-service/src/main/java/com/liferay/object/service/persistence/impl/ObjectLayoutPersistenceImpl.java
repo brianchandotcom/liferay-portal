@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -885,43 +882,6 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 	/**
-	 * Caches the object layout in the entity cache if it is enabled.
-	 *
-	 * @param objectLayout the object layout
-	 */
-	@Override
-	public void cacheResult(ObjectLayout objectLayout) {
-		entityCache.putResult(
-			ObjectLayoutImpl.class, objectLayout.getPrimaryKey(), objectLayout);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object layouts in the entity cache if it is enabled.
-	 *
-	 * @param objectLayouts the object layouts
-	 */
-	@Override
-	public void cacheResult(List<ObjectLayout> objectLayouts) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectLayouts.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectLayout objectLayout : objectLayouts) {
-			if (entityCache.getResult(
-					ObjectLayoutImpl.class, objectLayout.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(objectLayout);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object layout with the primary key. Does not add the object layout to the database.
 	 *
 	 * @param objectLayoutId the primary key for the new object layout
@@ -1060,8 +1020,7 @@ public class ObjectLayoutPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectLayoutImpl.class, objectLayoutModelImpl, false, true);
+		cacheUniqueFindersResult(objectLayout, false);
 
 		if (isNew) {
 			objectLayout.setNew(false);
@@ -1127,9 +1086,6 @@ public class ObjectLayoutPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1356,4 +1312,4 @@ public class ObjectLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1743688576
+// LIFERAY-SERVICE-BUILDER-HASH:-1201341991

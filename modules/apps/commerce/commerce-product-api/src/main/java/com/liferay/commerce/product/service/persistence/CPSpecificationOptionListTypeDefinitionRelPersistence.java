@@ -308,24 +308,6 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 		long CPSpecificationOptionId, long listTypeDefinitionId);
 
 	/**
-	 * Caches the cp specification option list type definition rel in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRel the cp specification option list type definition rel
-	 */
-	public void cacheResult(
-		CPSpecificationOptionListTypeDefinitionRel
-			cpSpecificationOptionListTypeDefinitionRel);
-
-	/**
-	 * Caches the cp specification option list type definition rels in the entity cache if it is enabled.
-	 *
-	 * @param cpSpecificationOptionListTypeDefinitionRels the cp specification option list type definition rels
-	 */
-	public void cacheResult(
-		java.util.List<CPSpecificationOptionListTypeDefinitionRel>
-			cpSpecificationOptionListTypeDefinitionRels);
-
-	/**
 	 * Creates a new cp specification option list type definition rel with the primary key. Does not add the cp specification option list type definition rel to the database.
 	 *
 	 * @param CPSpecificationOptionListTypeDefinitionRelId the primary key for the new cp specification option list type definition rel
@@ -370,4 +352,4 @@ public interface CPSpecificationOptionListTypeDefinitionRelPersistence
 		long CPSpecificationOptionListTypeDefinitionRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1037431291
+// LIFERAY-SERVICE-BUILDER-HASH:-1270176725

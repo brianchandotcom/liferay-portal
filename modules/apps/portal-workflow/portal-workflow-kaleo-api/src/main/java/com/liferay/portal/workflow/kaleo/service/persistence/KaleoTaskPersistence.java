@@ -284,20 +284,6 @@ public interface KaleoTaskPersistence
 	public int countByKaleoNodeId(long kaleoNodeId);
 
 	/**
-	 * Caches the kaleo task in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTask the kaleo task
-	 */
-	public void cacheResult(KaleoTask kaleoTask);
-
-	/**
-	 * Caches the kaleo tasks in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTasks the kaleo tasks
-	 */
-	public void cacheResult(java.util.List<KaleoTask> kaleoTasks);
-
-	/**
 	 * Creates a new kaleo task with the primary key. Does not add the kaleo task to the database.
 	 *
 	 * @param kaleoTaskId the primary key for the new kaleo task
@@ -335,4 +321,4 @@ public interface KaleoTaskPersistence
 	public KaleoTask fetchByPrimaryKey(long kaleoTaskId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1975457041
+// LIFERAY-SERVICE-BUILDER-HASH:-1683888875

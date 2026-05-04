@@ -36,6 +36,24 @@ public class CPInstanceUnitOfMeasureUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures) {
+
+		getPersistence().cacheResult(cpInstanceUnitOfMeasures);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
+
+		getPersistence().cacheResult(cpInstanceUnitOfMeasure);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1112,28 +1130,6 @@ public class CPInstanceUnitOfMeasureUtil {
 	}
 
 	/**
-	 * Caches the cp instance unit of measure in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasure the cp instance unit of measure
-	 */
-	public static void cacheResult(
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
-
-		getPersistence().cacheResult(cpInstanceUnitOfMeasure);
-	}
-
-	/**
-	 * Caches the cp instance unit of measures in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceUnitOfMeasures the cp instance unit of measures
-	 */
-	public static void cacheResult(
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures) {
-
-		getPersistence().cacheResult(cpInstanceUnitOfMeasures);
-	}
-
-	/**
 	 * Creates a new cp instance unit of measure with the primary key. Does not add the cp instance unit of measure to the database.
 	 *
 	 * @param CPInstanceUnitOfMeasureId the primary key for the new cp instance unit of measure
@@ -1205,4 +1201,4 @@ public class CPInstanceUnitOfMeasureUtil {
 	private static volatile CPInstanceUnitOfMeasurePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1855403299
+// LIFERAY-SERVICE-BUILDER-HASH:-1290909755

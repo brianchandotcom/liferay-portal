@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
@@ -782,95 +778,6 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo transition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransition the kaleo transition
-	 */
-	@Override
-	public void cacheResult(KaleoTransition kaleoTransition) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTransition.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoTransitionImpl.class, kaleoTransition.getPrimaryKey(),
-				kaleoTransition);
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_N,
-				new Object[] {
-					kaleoTransition.getKaleoNodeId(), kaleoTransition.getName()
-				},
-				kaleoTransition);
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_DT,
-				new Object[] {
-					kaleoTransition.getKaleoNodeId(),
-					kaleoTransition.isDefaultTransition()
-				},
-				kaleoTransition);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo transitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTransitions the kaleo transitions
-	 */
-	@Override
-	public void cacheResult(List<KaleoTransition> kaleoTransitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoTransitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoTransition kaleoTransition : kaleoTransitions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoTransition.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoTransitionImpl.class,
-						kaleoTransition.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoTransition);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoTransitionModelImpl kaleoTransitionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTransitionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoTransitionModelImpl.getKaleoNodeId(),
-				kaleoTransitionModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_N, args, kaleoTransitionModelImpl);
-
-			args = new Object[] {
-				kaleoTransitionModelImpl.getKaleoNodeId(),
-				kaleoTransitionModelImpl.isDefaultTransition()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByKNI_DT, args, kaleoTransitionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo transition with the primary key. Does not add the kaleo transition to the database.
 	 *
 	 * @param kaleoTransitionId the primary key for the new kaleo transition
@@ -1010,10 +917,7 @@ public class KaleoTransitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoTransitionImpl.class, kaleoTransitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoTransitionModelImpl);
+		cacheUniqueFindersResult(kaleoTransition, false);
 
 		if (isNew) {
 			kaleoTransition.setNew(false);
@@ -1148,9 +1052,6 @@ public class KaleoTransitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1246,10 +1147,11 @@ public class KaleoTransitionPersistenceImpl
 					"kaleoTransition.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTransition::getKaleoNodeId));
 
-		_finderPathFetchByKNI_N = new FinderPath(
+		_finderPathFetchByKNI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoNodeId", "name"}, true);
+			new String[] {"kaleoNodeId", "name"}, false,
+			KaleoTransition::getKaleoNodeId, KaleoTransition::getName);
 
 		_uniquePersistenceFinderByKNI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKNI_N, _SQL_SELECT_KALEOTRANSITION_WHERE,
@@ -1260,10 +1162,12 @@ public class KaleoTransitionPersistenceImpl
 				"kaleoTransition.", "name", FinderColumn.Type.STRING, "=", true,
 				true, KaleoTransition::getName));
 
-		_finderPathFetchByKNI_DT = new FinderPath(
+		_finderPathFetchByKNI_DT = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_DT",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"kaleoNodeId", "defaultTransition"}, true);
+			new String[] {"kaleoNodeId", "defaultTransition"}, false,
+			KaleoTransition::getKaleoNodeId,
+			KaleoTransition::isDefaultTransition);
 
 		_uniquePersistenceFinderByKNI_DT = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKNI_DT, _SQL_SELECT_KALEOTRANSITION_WHERE,
@@ -1344,4 +1248,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1452146460
+// LIFERAY-SERVICE-BUILDER-HASH:475198365

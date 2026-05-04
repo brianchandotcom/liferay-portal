@@ -6,7 +6,6 @@
 package com.liferay.reading.time.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -631,97 +627,6 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the reading time entry in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntry the reading time entry
-	 */
-	@Override
-	public void cacheResult(ReadingTimeEntry readingTimeEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					readingTimeEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				ReadingTimeEntryImpl.class, readingTimeEntry.getPrimaryKey(),
-				readingTimeEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					readingTimeEntry.getUuid(), readingTimeEntry.getGroupId()
-				},
-				readingTimeEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C,
-				new Object[] {
-					readingTimeEntry.getGroupId(),
-					readingTimeEntry.getClassNameId(),
-					readingTimeEntry.getClassPK()
-				},
-				readingTimeEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the reading time entries in the entity cache if it is enabled.
-	 *
-	 * @param readingTimeEntries the reading time entries
-	 */
-	@Override
-	public void cacheResult(List<ReadingTimeEntry> readingTimeEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (readingTimeEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ReadingTimeEntry readingTimeEntry : readingTimeEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						readingTimeEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						ReadingTimeEntryImpl.class,
-						readingTimeEntry.getPrimaryKey()) == null) {
-
-					cacheResult(readingTimeEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ReadingTimeEntryModelImpl readingTimeEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					readingTimeEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				readingTimeEntryModelImpl.getUuid(),
-				readingTimeEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, readingTimeEntryModelImpl);
-
-			args = new Object[] {
-				readingTimeEntryModelImpl.getGroupId(),
-				readingTimeEntryModelImpl.getClassNameId(),
-				readingTimeEntryModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C, args, readingTimeEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new reading time entry with the primary key. Does not add the reading time entry to the database.
 	 *
 	 * @param readingTimeEntryId the primary key for the new reading time entry
@@ -871,10 +776,7 @@ public class ReadingTimeEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ReadingTimeEntryImpl.class, readingTimeEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(readingTimeEntryModelImpl);
+		cacheUniqueFindersResult(readingTimeEntry, false);
 
 		if (isNew) {
 			readingTimeEntry.setNew(false);
@@ -1010,9 +912,6 @@ public class ReadingTimeEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1041,10 +940,11 @@ public class ReadingTimeEntryPersistenceImpl
 				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ReadingTimeEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, ReadingTimeEntry::getUuid,
+			ReadingTimeEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_READINGTIMEENTRY_WHERE,
@@ -1088,12 +988,14 @@ public class ReadingTimeEntryPersistenceImpl
 					"readingTimeEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ReadingTimeEntry::getCompanyId));
 
-		_finderPathFetchByG_C_C = new FinderPath(
+		_finderPathFetchByG_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
+			new String[] {"groupId", "classNameId", "classPK"}, false,
+			ReadingTimeEntry::getGroupId, ReadingTimeEntry::getClassNameId,
+			ReadingTimeEntry::getClassPK);
 
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C, _SQL_SELECT_READINGTIMEENTRY_WHERE,
@@ -1179,4 +1081,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-576356283
+// LIFERAY-SERVICE-BUILDER-HASH:291482745

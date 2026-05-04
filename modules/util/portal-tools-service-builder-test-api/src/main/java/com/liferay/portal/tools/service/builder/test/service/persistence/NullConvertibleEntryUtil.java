@@ -36,6 +36,22 @@ public class NullConvertibleEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NullConvertibleEntry> nullConvertibleEntries) {
+
+		getPersistence().cacheResult(nullConvertibleEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(NullConvertibleEntry nullConvertibleEntry) {
+		getPersistence().cacheResult(nullConvertibleEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -174,26 +190,6 @@ public class NullConvertibleEntryUtil {
 	}
 
 	/**
-	 * Caches the null convertible entry in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntry the null convertible entry
-	 */
-	public static void cacheResult(NullConvertibleEntry nullConvertibleEntry) {
-		getPersistence().cacheResult(nullConvertibleEntry);
-	}
-
-	/**
-	 * Caches the null convertible entries in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntries the null convertible entries
-	 */
-	public static void cacheResult(
-		List<NullConvertibleEntry> nullConvertibleEntries) {
-
-		getPersistence().cacheResult(nullConvertibleEntries);
-	}
-
-	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
 	 * @param nullConvertibleEntryId the primary key for the new null convertible entry
@@ -263,4 +259,4 @@ public class NullConvertibleEntryUtil {
 	private static volatile NullConvertibleEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-207883837
+// LIFERAY-SERVICE-BUILDER-HASH:735163850

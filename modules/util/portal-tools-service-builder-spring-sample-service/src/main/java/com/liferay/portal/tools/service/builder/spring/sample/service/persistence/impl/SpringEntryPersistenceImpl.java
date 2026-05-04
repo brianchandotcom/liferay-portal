@@ -18,10 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -534,43 +531,6 @@ public class SpringEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the spring entry in the entity cache if it is enabled.
-	 *
-	 * @param springEntry the spring entry
-	 */
-	@Override
-	public void cacheResult(SpringEntry springEntry) {
-		entityCache.putResult(
-			SpringEntryImpl.class, springEntry.getPrimaryKey(), springEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the spring entries in the entity cache if it is enabled.
-	 *
-	 * @param springEntries the spring entries
-	 */
-	@Override
-	public void cacheResult(List<SpringEntry> springEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (springEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SpringEntry springEntry : springEntries) {
-			if (entityCache.getResult(
-					SpringEntryImpl.class, springEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(springEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
 	 * @param springEntryId the primary key for the new spring entry
@@ -698,8 +658,7 @@ public class SpringEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SpringEntryImpl.class, springEntryModelImpl, false, true);
+		cacheUniqueFindersResult(springEntry, false);
 
 		if (isNew) {
 			springEntry.setNew(false);
@@ -764,9 +723,6 @@ public class SpringEntryPersistenceImpl
 	 * Initializes the spring entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -898,4 +854,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:541936287
+// LIFERAY-SERVICE-BUILDER-HASH:-97708492

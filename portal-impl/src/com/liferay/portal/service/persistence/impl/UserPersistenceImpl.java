@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -53,8 +52,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3791,131 +3788,6 @@ public class UserPersistenceImpl
 	}
 
 	/**
-	 * Caches the user in the entity cache if it is enabled.
-	 *
-	 * @param user the user
-	 */
-	@Override
-	public void cacheResult(User user) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					user.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				UserImpl.class, user.getPrimaryKey(), user);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByContactId, new Object[] {user.getContactId()},
-				user);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_U,
-				new Object[] {user.getCompanyId(), user.getUserId()}, user);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_SN,
-				new Object[] {user.getCompanyId(), user.getScreenName()}, user);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_EA,
-				new Object[] {user.getCompanyId(), user.getEmailAddress()},
-				user);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					user.getExternalReferenceCode(), user.getCompanyId()
-				},
-				user);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the users in the entity cache if it is enabled.
-	 *
-	 * @param users the users
-	 */
-	@Override
-	public void cacheResult(List<User> users) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (users.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (User user : users) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						user.getCtCollectionId())) {
-
-				User cachedUser = (User)EntityCacheUtil.getResult(
-					UserImpl.class, user.getPrimaryKey());
-
-				if (cachedUser == null) {
-					cacheResult(user);
-				}
-				else {
-					UserModelImpl userModelImpl = (UserModelImpl)user;
-					UserModelImpl cachedUserModelImpl =
-						(UserModelImpl)cachedUser;
-
-					userModelImpl.setGroupId(cachedUserModelImpl.getGroupId());
-
-					userModelImpl.setLayoutsUpdated(
-						cachedUserModelImpl.getLayoutsUpdated());
-
-					userModelImpl.setUserGroupIds(
-						cachedUserModelImpl.getUserGroupIds());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(UserModelImpl userModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					userModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {userModelImpl.getContactId()};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByContactId, args, userModelImpl);
-
-			args = new Object[] {
-				userModelImpl.getCompanyId(), userModelImpl.getUserId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_U, args, userModelImpl);
-
-			args = new Object[] {
-				userModelImpl.getCompanyId(), userModelImpl.getScreenName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_SN, args, userModelImpl);
-
-			args = new Object[] {
-				userModelImpl.getCompanyId(), userModelImpl.getEmailAddress()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_EA, args, userModelImpl);
-
-			args = new Object[] {
-				userModelImpl.getExternalReferenceCode(),
-				userModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, userModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new user with the primary key. Does not add the user to the database.
 	 *
 	 * @param userId the primary key for the new user
@@ -4128,9 +4000,7 @@ public class UserPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(UserImpl.class, userModelImpl, false, true);
-
-		cacheUniqueFindersCache(userModelImpl);
+		cacheUniqueFindersResult(user, false);
 
 		if (isNew) {
 			user.setNew(false);
@@ -5934,9 +5804,6 @@ public class UserPersistenceImpl
 	 * Initializes the user persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		userToGroupTableMapper = TableMapperFactory.getTableMapper(
 			"Users_Groups", "companyId", "userId", "groupId", this,
 			groupPersistence);
@@ -6035,10 +5902,10 @@ public class UserPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"companyId"},
 			false);
 
-		_finderPathFetchByContactId = new FinderPath(
+		_finderPathFetchByContactId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByContactId",
 			new String[] {Long.class.getName()}, new String[] {"contactId"},
-			true);
+			false, User::getContactId);
 
 		_uniquePersistenceFinderByContactId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByContactId, _SQL_SELECT_USER_WHERE,
@@ -6118,10 +5985,11 @@ public class UserPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"userId", "companyId"}, false);
 
-		_finderPathFetchByC_U = new FinderPath(
+		_finderPathFetchByC_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
+			new String[] {"companyId", "userId"}, false, User::getCompanyId,
+			User::getUserId);
 
 		_uniquePersistenceFinderByC_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_U, _SQL_SELECT_USER_WHERE,
@@ -6170,10 +6038,11 @@ public class UserPersistenceImpl
 			new String[] {Long.class.getName(), Date.class.getName()},
 			new String[] {"companyId", "modifiedDate"}, false);
 
-		_finderPathFetchByC_SN = new FinderPath(
+		_finderPathFetchByC_SN = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_SN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "screenName"}, true);
+			new String[] {"companyId", "screenName"}, false, User::getCompanyId,
+			User::getScreenName);
 
 		_uniquePersistenceFinderByC_SN = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_SN, _SQL_SELECT_USER_WHERE,
@@ -6184,10 +6053,11 @@ public class UserPersistenceImpl
 				"user.", "screenName", FinderColumn.Type.STRING, "=", true,
 				true, User::getScreenName));
 
-		_finderPathFetchByC_EA = new FinderPath(
+		_finderPathFetchByC_EA = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "emailAddress"}, true);
+			new String[] {"companyId", "emailAddress"}, false,
+			User::getCompanyId, User::getEmailAddress);
 
 		_uniquePersistenceFinderByC_EA = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_EA, _SQL_SELECT_USER_WHERE,
@@ -6342,10 +6212,11 @@ public class UserPersistenceImpl
 				"user.", "status", FinderColumn.Type.INTEGER, "=", true, true,
 				User::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			User::getExternalReferenceCode, User::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_USER_WHERE,
@@ -6435,4 +6306,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1596115596
+// LIFERAY-SERVICE-BUILDER-HASH:-403967975

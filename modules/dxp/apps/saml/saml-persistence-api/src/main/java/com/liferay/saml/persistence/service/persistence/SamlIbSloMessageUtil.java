@@ -36,6 +36,20 @@ public class SamlIbSloMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SamlIbSloMessage> samlIbSloMessages) {
+		getPersistence().cacheResult(samlIbSloMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlIbSloMessage samlIbSloMessage) {
+		getPersistence().cacheResult(samlIbSloMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -177,24 +191,6 @@ public class SamlIbSloMessageUtil {
 	}
 
 	/**
-	 * Caches the saml ib slo message in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessage the saml ib slo message
-	 */
-	public static void cacheResult(SamlIbSloMessage samlIbSloMessage) {
-		getPersistence().cacheResult(samlIbSloMessage);
-	}
-
-	/**
-	 * Caches the saml ib slo messages in the entity cache if it is enabled.
-	 *
-	 * @param samlIbSloMessages the saml ib slo messages
-	 */
-	public static void cacheResult(List<SamlIbSloMessage> samlIbSloMessages) {
-		getPersistence().cacheResult(samlIbSloMessages);
-	}
-
-	/**
 	 * Creates a new saml ib slo message with the primary key. Does not add the saml ib slo message to the database.
 	 *
 	 * @param samlIbSloMessageId the primary key for the new saml ib slo message
@@ -259,4 +255,4 @@ public class SamlIbSloMessageUtil {
 	private static volatile SamlIbSloMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1677501923
+// LIFERAY-SERVICE-BUILDER-HASH:-2051680475

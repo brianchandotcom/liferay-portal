@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -907,80 +905,6 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce order note in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderNote the commerce order note
-	 */
-	@Override
-	public void cacheResult(CommerceOrderNote commerceOrderNote) {
-		entityCache.putResult(
-			CommerceOrderNoteImpl.class, commerceOrderNote.getPrimaryKey(),
-			commerceOrderNote);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				commerceOrderNote.getUuid(), commerceOrderNote.getGroupId()
-			},
-			commerceOrderNote);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceOrderNote.getExternalReferenceCode(),
-				commerceOrderNote.getCompanyId()
-			},
-			commerceOrderNote);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce order notes in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderNotes the commerce order notes
-	 */
-	@Override
-	public void cacheResult(List<CommerceOrderNote> commerceOrderNotes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceOrderNotes.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceOrderNote commerceOrderNote : commerceOrderNotes) {
-			if (entityCache.getResult(
-					CommerceOrderNoteImpl.class,
-					commerceOrderNote.getPrimaryKey()) == null) {
-
-				cacheResult(commerceOrderNote);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceOrderNoteModelImpl commerceOrderNoteModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceOrderNoteModelImpl.getUuid(),
-			commerceOrderNoteModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, commerceOrderNoteModelImpl);
-
-		args = new Object[] {
-			commerceOrderNoteModelImpl.getExternalReferenceCode(),
-			commerceOrderNoteModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceOrderNoteModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	 *
 	 * @param commerceOrderNoteId the primary key for the new commerce order note
@@ -1190,11 +1114,7 @@ public class CommerceOrderNotePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceOrderNoteImpl.class, commerceOrderNoteModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(commerceOrderNoteModelImpl);
+		cacheUniqueFindersResult(commerceOrderNote, false);
 
 		if (isNew) {
 			commerceOrderNote.setNew(false);
@@ -1260,9 +1180,6 @@ public class CommerceOrderNotePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1291,10 +1208,11 @@ public class CommerceOrderNotePersistenceImpl
 				"commerceOrderNote.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceOrderNote::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommerceOrderNote::getUuid, CommerceOrderNote::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEORDERNOTE_WHERE,
@@ -1401,10 +1319,12 @@ public class CommerceOrderNotePersistenceImpl
 				"commerceOrderNote.", "restricted", FinderColumn.Type.BOOLEAN,
 				"=", true, true, CommerceOrderNote::isRestricted));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceOrderNote::getExternalReferenceCode,
+			CommerceOrderNote::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEORDERNOTE_WHERE,
@@ -1485,4 +1405,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-449311561
+// LIFERAY-SERVICE-BUILDER-HASH:-1650698557

@@ -36,6 +36,20 @@ public class BatchPlannerPlanUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BatchPlannerPlan> batchPlannerPlans) {
+		getPersistence().cacheResult(batchPlannerPlans);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BatchPlannerPlan batchPlannerPlan) {
+		getPersistence().cacheResult(batchPlannerPlan);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1304,24 +1318,6 @@ public class BatchPlannerPlanUtil {
 	}
 
 	/**
-	 * Caches the batch planner plan in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPlan the batch planner plan
-	 */
-	public static void cacheResult(BatchPlannerPlan batchPlannerPlan) {
-		getPersistence().cacheResult(batchPlannerPlan);
-	}
-
-	/**
-	 * Caches the batch planner plans in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPlans the batch planner plans
-	 */
-	public static void cacheResult(List<BatchPlannerPlan> batchPlannerPlans) {
-		getPersistence().cacheResult(batchPlannerPlans);
-	}
-
-	/**
 	 * Creates a new batch planner plan with the primary key. Does not add the batch planner plan to the database.
 	 *
 	 * @param batchPlannerPlanId the primary key for the new batch planner plan
@@ -1384,4 +1380,4 @@ public class BatchPlannerPlanUtil {
 	private static volatile BatchPlannerPlanPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1006744859
+// LIFERAY-SERVICE-BUILDER-HASH:-756750771

@@ -36,6 +36,24 @@ public class CPDAvailabilityEstimateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDAvailabilityEstimate> cpdAvailabilityEstimates) {
+
+		getPersistence().cacheResult(cpdAvailabilityEstimates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
+
+		getPersistence().cacheResult(cpdAvailabilityEstimate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -572,28 +590,6 @@ public class CPDAvailabilityEstimateUtil {
 	}
 
 	/**
-	 * Caches the cpd availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimate the cpd availability estimate
-	 */
-	public static void cacheResult(
-		CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-
-		getPersistence().cacheResult(cpdAvailabilityEstimate);
-	}
-
-	/**
-	 * Caches the cpd availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimates the cpd availability estimates
-	 */
-	public static void cacheResult(
-		List<CPDAvailabilityEstimate> cpdAvailabilityEstimates) {
-
-		getPersistence().cacheResult(cpdAvailabilityEstimates);
-	}
-
-	/**
 	 * Creates a new cpd availability estimate with the primary key. Does not add the cpd availability estimate to the database.
 	 *
 	 * @param CPDAvailabilityEstimateId the primary key for the new cpd availability estimate
@@ -665,4 +661,4 @@ public class CPDAvailabilityEstimateUtil {
 	private static volatile CPDAvailabilityEstimatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-202816693
+// LIFERAY-SERVICE-BUILDER-HASH:1998790311

@@ -15,7 +15,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -47,8 +46,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5607,128 +5604,6 @@ public class DDMStructurePersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm structure in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructure the ddm structure
-	 */
-	@Override
-	public void cacheResult(DDMStructure ddmStructure) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructure.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMStructureImpl.class, ddmStructure.getPrimaryKey(),
-				ddmStructure);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					ddmStructure.getUuid(), ddmStructure.getGroupId()
-				},
-				ddmStructure);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_C,
-				new Object[] {
-					ddmStructure.getExternalReferenceCode(),
-					ddmStructure.getGroupId(), ddmStructure.getClassNameId()
-				},
-				ddmStructure);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_S,
-				new Object[] {
-					ddmStructure.getGroupId(), ddmStructure.getClassNameId(),
-					ddmStructure.getStructureKey()
-				},
-				ddmStructure);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm structures in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructures the ddm structures
-	 */
-	@Override
-	public void cacheResult(List<DDMStructure> ddmStructures) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmStructures.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmStructure.getCtCollectionId())) {
-
-				DDMStructure cachedDDMStructure =
-					(DDMStructure)entityCache.getResult(
-						DDMStructureImpl.class, ddmStructure.getPrimaryKey());
-
-				if (cachedDDMStructure == null) {
-					cacheResult(ddmStructure);
-				}
-				else {
-					DDMStructureModelImpl ddmStructureModelImpl =
-						(DDMStructureModelImpl)ddmStructure;
-					DDMStructureModelImpl cachedDDMStructureModelImpl =
-						(DDMStructureModelImpl)cachedDDMStructure;
-
-					ddmStructureModelImpl.setClassName(
-						cachedDDMStructureModelImpl.getClassName());
-
-					ddmStructureModelImpl.setDDMForm(
-						cachedDDMStructureModelImpl.getDDMForm());
-
-					ddmStructureModelImpl.setDDMFormFieldsMap(
-						cachedDDMStructureModelImpl.getDDMFormFieldsMap());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMStructureModelImpl ddmStructureModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructureModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmStructureModelImpl.getUuid(),
-				ddmStructureModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, ddmStructureModelImpl);
-
-			args = new Object[] {
-				ddmStructureModelImpl.getExternalReferenceCode(),
-				ddmStructureModelImpl.getGroupId(),
-				ddmStructureModelImpl.getClassNameId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_C, args, ddmStructureModelImpl);
-
-			args = new Object[] {
-				ddmStructureModelImpl.getGroupId(),
-				ddmStructureModelImpl.getClassNameId(),
-				ddmStructureModelImpl.getStructureKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_S, args, ddmStructureModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm structure with the primary key. Does not add the ddm structure to the database.
 	 *
 	 * @param structureId the primary key for the new ddm structure
@@ -5913,10 +5788,7 @@ public class DDMStructurePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMStructureImpl.class, ddmStructureModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmStructureModelImpl);
+		cacheUniqueFindersResult(ddmStructure, false);
 
 		if (isNew) {
 			ddmStructure.setNew(false);
@@ -6066,9 +5938,6 @@ public class DDMStructurePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6096,10 +5965,11 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMStructure::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DDMStructure::getUuid,
+			DDMStructure::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMSTRUCTURE_WHERE,
@@ -6311,14 +6181,15 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructure::getClassNameId));
 
-		_finderPathFetchByERC_G_C = new FinderPath(
+		_finderPathFetchByERC_G_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
 			new String[] {"externalReferenceCode", "groupId", "classNameId"},
-			true);
+			false, DDMStructure::getExternalReferenceCode,
+			DDMStructure::getGroupId, DDMStructure::getClassNameId);
 
 		_uniquePersistenceFinderByERC_G_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_C, _SQL_SELECT_DDMSTRUCTURE_WHERE,
@@ -6333,13 +6204,15 @@ public class DDMStructurePersistenceImpl
 				"ddmStructure.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructure::getClassNameId));
 
-		_finderPathFetchByG_C_S = new FinderPath(
+		_finderPathFetchByG_C_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "structureKey"}, true);
+			new String[] {"groupId", "classNameId", "structureKey"}, false,
+			DDMStructure::getGroupId, DDMStructure::getClassNameId,
+			DDMStructure::getStructureKey);
 
 		_uniquePersistenceFinderByG_C_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_S, _SQL_SELECT_DDMSTRUCTURE_WHERE,
@@ -6526,4 +6399,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1032396413
+// LIFERAY-SERVICE-BUILDER-HASH:-632898762

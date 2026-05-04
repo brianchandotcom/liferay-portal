@@ -36,6 +36,20 @@ public class PatcherFixRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherFixRel> patcherFixRels) {
+		getPersistence().cacheResult(patcherFixRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherFixRel patcherFixRel) {
+		getPersistence().cacheResult(patcherFixRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -363,24 +377,6 @@ public class PatcherFixRelUtil {
 	}
 
 	/**
-	 * Caches the patcher fix rel in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRel the patcher fix rel
-	 */
-	public static void cacheResult(PatcherFixRel patcherFixRel) {
-		getPersistence().cacheResult(patcherFixRel);
-	}
-
-	/**
-	 * Caches the patcher fix rels in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRels the patcher fix rels
-	 */
-	public static void cacheResult(List<PatcherFixRel> patcherFixRels) {
-		getPersistence().cacheResult(patcherFixRels);
-	}
-
-	/**
 	 * Creates a new patcher fix rel with the primary key. Does not add the patcher fix rel to the database.
 	 *
 	 * @param patcherFixRelId the primary key for the new patcher fix rel
@@ -441,4 +437,4 @@ public class PatcherFixRelUtil {
 	private static volatile PatcherFixRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1274347111
+// LIFERAY-SERVICE-BUILDER-HASH:-226120017

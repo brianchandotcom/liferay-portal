@@ -1172,4 +1172,4 @@ public class AssetDisplayPageEntryModelImpl
 	private AssetDisplayPageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1897505328
+// LIFERAY-SERVICE-BUILDER-HASH:1392666780

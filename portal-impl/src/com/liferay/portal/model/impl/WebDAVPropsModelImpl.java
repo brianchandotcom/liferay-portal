@@ -803,4 +803,4 @@ public class WebDAVPropsModelImpl
 	private WebDAVProps _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1667525726
+// LIFERAY-SERVICE-BUILDER-HASH:106971286

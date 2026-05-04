@@ -36,6 +36,20 @@ public class PatcherBuildRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PatcherBuildRel> patcherBuildRels) {
+		getPersistence().cacheResult(patcherBuildRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PatcherBuildRel patcherBuildRel) {
+		getPersistence().cacheResult(patcherBuildRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -368,24 +382,6 @@ public class PatcherBuildRelUtil {
 	}
 
 	/**
-	 * Caches the patcher build rel in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuildRel the patcher build rel
-	 */
-	public static void cacheResult(PatcherBuildRel patcherBuildRel) {
-		getPersistence().cacheResult(patcherBuildRel);
-	}
-
-	/**
-	 * Caches the patcher build rels in the entity cache if it is enabled.
-	 *
-	 * @param patcherBuildRels the patcher build rels
-	 */
-	public static void cacheResult(List<PatcherBuildRel> patcherBuildRels) {
-		getPersistence().cacheResult(patcherBuildRels);
-	}
-
-	/**
 	 * Creates a new patcher build rel with the primary key. Does not add the patcher build rel to the database.
 	 *
 	 * @param patcherBuildRelId the primary key for the new patcher build rel
@@ -448,4 +444,4 @@ public class PatcherBuildRelUtil {
 	private static volatile PatcherBuildRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-979536578
+// LIFERAY-SERVICE-BUILDER-HASH:-1318594984

@@ -36,6 +36,20 @@ public class DDMStructureLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
+		getPersistence().cacheResult(ddmStructureLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMStructureLink ddmStructureLink) {
+		getPersistence().cacheResult(ddmStructureLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -449,24 +463,6 @@ public class DDMStructureLinkUtil {
 	}
 
 	/**
-	 * Caches the ddm structure link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLink the ddm structure link
-	 */
-	public static void cacheResult(DDMStructureLink ddmStructureLink) {
-		getPersistence().cacheResult(ddmStructureLink);
-	}
-
-	/**
-	 * Caches the ddm structure links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureLinks the ddm structure links
-	 */
-	public static void cacheResult(List<DDMStructureLink> ddmStructureLinks) {
-		getPersistence().cacheResult(ddmStructureLinks);
-	}
-
-	/**
 	 * Creates a new ddm structure link with the primary key. Does not add the ddm structure link to the database.
 	 *
 	 * @param structureLinkId the primary key for the new ddm structure link
@@ -531,4 +527,4 @@ public class DDMStructureLinkUtil {
 	private static volatile DDMStructureLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2129776696
+// LIFERAY-SERVICE-BUILDER-HASH:-894176574

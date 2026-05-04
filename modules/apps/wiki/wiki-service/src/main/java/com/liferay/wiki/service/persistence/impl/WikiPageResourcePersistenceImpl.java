@@ -6,7 +6,6 @@
 package com.liferay.wiki.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -23,10 +22,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -615,94 +611,6 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 	/**
-	 * Caches the wiki page resource in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResource the wiki page resource
-	 */
-	@Override
-	public void cacheResult(WikiPageResource wikiPageResource) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiPageResource.getCtCollectionId())) {
-
-			entityCache.putResult(
-				WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
-				wikiPageResource);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					wikiPageResource.getUuid(), wikiPageResource.getGroupId()
-				},
-				wikiPageResource);
-
-			finderCache.putResult(
-				_finderPathFetchByN_T,
-				new Object[] {
-					wikiPageResource.getNodeId(), wikiPageResource.getTitle()
-				},
-				wikiPageResource);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the wiki page resources in the entity cache if it is enabled.
-	 *
-	 * @param wikiPageResources the wiki page resources
-	 */
-	@Override
-	public void cacheResult(List<WikiPageResource> wikiPageResources) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (wikiPageResources.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WikiPageResource wikiPageResource : wikiPageResources) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						wikiPageResource.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						WikiPageResourceImpl.class,
-						wikiPageResource.getPrimaryKey()) == null) {
-
-					cacheResult(wikiPageResource);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WikiPageResourceModelImpl wikiPageResourceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					wikiPageResourceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				wikiPageResourceModelImpl.getUuid(),
-				wikiPageResourceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, wikiPageResourceModelImpl);
-
-			args = new Object[] {
-				wikiPageResourceModelImpl.getNodeId(),
-				wikiPageResourceModelImpl.getTitle()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByN_T, args, wikiPageResourceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new wiki page resource with the primary key. Does not add the wiki page resource to the database.
 	 *
 	 * @param resourcePrimKey the primary key for the new wiki page resource
@@ -827,10 +735,7 @@ public class WikiPageResourcePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WikiPageResourceImpl.class, wikiPageResourceModelImpl, false, true);
-
-		cacheUniqueFindersCache(wikiPageResourceModelImpl);
+		cacheUniqueFindersResult(wikiPageResource, false);
 
 		if (isNew) {
 			wikiPageResource.setNew(false);
@@ -959,9 +864,6 @@ public class WikiPageResourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -990,10 +892,11 @@ public class WikiPageResourcePersistenceImpl
 				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, WikiPageResource::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, WikiPageResource::getUuid,
+			WikiPageResource::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
@@ -1037,10 +940,11 @@ public class WikiPageResourcePersistenceImpl
 					"wikiPageResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, WikiPageResource::getCompanyId));
 
-		_finderPathFetchByN_T = new FinderPath(
+		_finderPathFetchByN_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"nodeId", "title"}, true);
+			new String[] {"nodeId", "title"}, false,
+			WikiPageResource::getNodeId, WikiPageResource::getTitle);
 
 		_uniquePersistenceFinderByN_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByN_T, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
@@ -1123,4 +1027,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:78373828
+// LIFERAY-SERVICE-BUILDER-HASH:-871823646

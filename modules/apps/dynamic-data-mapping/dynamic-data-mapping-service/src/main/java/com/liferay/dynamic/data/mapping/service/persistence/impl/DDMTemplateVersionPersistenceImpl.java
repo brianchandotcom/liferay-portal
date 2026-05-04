@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionPe
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -522,80 +518,6 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm template version in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersion the ddm template version
-	 */
-	@Override
-	public void cacheResult(DDMTemplateVersion ddmTemplateVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplateVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMTemplateVersionImpl.class,
-				ddmTemplateVersion.getPrimaryKey(), ddmTemplateVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByT_V,
-				new Object[] {
-					ddmTemplateVersion.getTemplateId(),
-					ddmTemplateVersion.getVersion()
-				},
-				ddmTemplateVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm template versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateVersions the ddm template versions
-	 */
-	@Override
-	public void cacheResult(List<DDMTemplateVersion> ddmTemplateVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmTemplateVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMTemplateVersion ddmTemplateVersion : ddmTemplateVersions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmTemplateVersion.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMTemplateVersionImpl.class,
-						ddmTemplateVersion.getPrimaryKey()) == null) {
-
-					cacheResult(ddmTemplateVersion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmTemplateVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmTemplateVersionModelImpl.getTemplateId(),
-				ddmTemplateVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByT_V, args, ddmTemplateVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	 *
 	 * @param templateVersionId the primary key for the new ddm template version
@@ -729,11 +651,7 @@ public class DDMTemplateVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMTemplateVersionImpl.class, ddmTemplateVersionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(ddmTemplateVersionModelImpl);
+		cacheUniqueFindersResult(ddmTemplateVersion, false);
 
 		if (isNew) {
 			ddmTemplateVersion.setNew(false);
@@ -867,9 +785,6 @@ public class DDMTemplateVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByTemplateId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTemplateId",
 			new String[] {
@@ -900,10 +815,11 @@ public class DDMTemplateVersionPersistenceImpl
 					"ddmTemplateVersion.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateVersion::getTemplateId));
 
-		_finderPathFetchByT_V = new FinderPath(
+		_finderPathFetchByT_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"templateId", "version"}, true);
+			new String[] {"templateId", "version"}, false,
+			DDMTemplateVersion::getTemplateId, DDMTemplateVersion::getVersion);
 
 		_uniquePersistenceFinderByT_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_V, _SQL_SELECT_DDMTEMPLATEVERSION_WHERE,
@@ -1015,4 +931,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2103960388
+// LIFERAY-SERVICE-BUILDER-HASH:44108246

@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListComm
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListCommerceAccountGroupRelUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -740,100 +736,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price list commerce account group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRel the commerce price list commerce account group rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListCommerceAccountGroupRel.
-						getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceListCommerceAccountGroupRelImpl.class,
-				commercePriceListCommerceAccountGroupRel.getPrimaryKey(),
-				commercePriceListCommerceAccountGroupRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCAGI_CPI,
-				new Object[] {
-					commercePriceListCommerceAccountGroupRel.
-						getCommercePriceListId(),
-					commercePriceListCommerceAccountGroupRel.
-						getCommerceAccountGroupId()
-				},
-				commercePriceListCommerceAccountGroupRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price list commerce account group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListCommerceAccountGroupRels the commerce price list commerce account group rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceListCommerceAccountGroupRel>
-			commercePriceListCommerceAccountGroupRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceListCommerceAccountGroupRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceListCommerceAccountGroupRel
-				commercePriceListCommerceAccountGroupRel :
-					commercePriceListCommerceAccountGroupRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceListCommerceAccountGroupRel.
-							getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceListCommerceAccountGroupRelImpl.class,
-						commercePriceListCommerceAccountGroupRel.
-							getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceListCommerceAccountGroupRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceListCommerceAccountGroupRelModelImpl
-			commercePriceListCommerceAccountGroupRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListCommerceAccountGroupRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceListCommerceAccountGroupRelModelImpl.
-					getCommercePriceListId(),
-				commercePriceListCommerceAccountGroupRelModelImpl.
-					getCommerceAccountGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCAGI_CPI, args,
-				commercePriceListCommerceAccountGroupRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price list commerce account group rel with the primary key. Does not add the commerce price list commerce account group rel to the database.
 	 *
 	 * @param commercePriceListCommerceAccountGroupRelId the primary key for the new commerce price list commerce account group rel
@@ -1016,12 +918,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceListCommerceAccountGroupRelImpl.class,
-			commercePriceListCommerceAccountGroupRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(
-			commercePriceListCommerceAccountGroupRelModelImpl);
+		cacheUniqueFindersResult(
+			commercePriceListCommerceAccountGroupRel, false);
 
 		if (isNew) {
 			commercePriceListCommerceAccountGroupRel.setNew(false);
@@ -1163,9 +1061,6 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1267,11 +1162,14 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 					CommercePriceListCommerceAccountGroupRel::
 						getCommercePriceListId));
 
-		_finderPathFetchByCAGI_CPI = new FinderPath(
+		_finderPathFetchByCAGI_CPI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCAGI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"commercePriceListId", "commerceAccountGroupId"},
-			true);
+			false,
+			CommercePriceListCommerceAccountGroupRel::getCommercePriceListId,
+			CommercePriceListCommerceAccountGroupRel::
+				getCommerceAccountGroupId);
 
 		_uniquePersistenceFinderByCAGI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCAGI_CPI,
@@ -1366,4 +1264,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1296281663
+// LIFERAY-SERVICE-BUILDER-HASH:-1260756054

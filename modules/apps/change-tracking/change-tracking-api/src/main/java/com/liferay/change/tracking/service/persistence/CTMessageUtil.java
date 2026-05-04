@@ -36,6 +36,20 @@ public class CTMessageUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTMessage> ctMessages) {
+		getPersistence().cacheResult(ctMessages);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTMessage ctMessage) {
+		getPersistence().cacheResult(ctMessage);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -233,24 +247,6 @@ public class CTMessageUtil {
 	}
 
 	/**
-	 * Caches the ct message in the entity cache if it is enabled.
-	 *
-	 * @param ctMessage the ct message
-	 */
-	public static void cacheResult(CTMessage ctMessage) {
-		getPersistence().cacheResult(ctMessage);
-	}
-
-	/**
-	 * Caches the ct messages in the entity cache if it is enabled.
-	 *
-	 * @param ctMessages the ct messages
-	 */
-	public static void cacheResult(List<CTMessage> ctMessages) {
-		getPersistence().cacheResult(ctMessages);
-	}
-
-	/**
 	 * Creates a new ct message with the primary key. Does not add the ct message to the database.
 	 *
 	 * @param ctMessageId the primary key for the new ct message
@@ -311,4 +307,4 @@ public class CTMessageUtil {
 	private static volatile CTMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1105283380
+// LIFERAY-SERVICE-BUILDER-HASH:1867979178

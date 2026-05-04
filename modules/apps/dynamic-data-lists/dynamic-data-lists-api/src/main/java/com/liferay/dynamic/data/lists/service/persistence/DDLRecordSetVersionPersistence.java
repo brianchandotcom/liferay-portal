@@ -299,21 +299,6 @@ public interface DDLRecordSetVersionPersistence
 	public int countByRS_S(long recordSetId, int status);
 
 	/**
-	 * Caches the ddl record set version in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersion the ddl record set version
-	 */
-	public void cacheResult(DDLRecordSetVersion ddlRecordSetVersion);
-
-	/**
-	 * Caches the ddl record set versions in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersions the ddl record set versions
-	 */
-	public void cacheResult(
-		java.util.List<DDLRecordSetVersion> ddlRecordSetVersions);
-
-	/**
 	 * Creates a new ddl record set version with the primary key. Does not add the ddl record set version to the database.
 	 *
 	 * @param recordSetVersionId the primary key for the new ddl record set version
@@ -353,4 +338,4 @@ public interface DDLRecordSetVersionPersistence
 	public DDLRecordSetVersion fetchByPrimaryKey(long recordSetVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-24326521
+// LIFERAY-SERVICE-BUILDER-HASH:133962683

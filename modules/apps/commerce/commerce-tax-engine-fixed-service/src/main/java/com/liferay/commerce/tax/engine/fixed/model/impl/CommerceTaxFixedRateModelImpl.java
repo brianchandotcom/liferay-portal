@@ -929,4 +929,4 @@ public class CommerceTaxFixedRateModelImpl
 	private CommerceTaxFixedRate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-653887784
+// LIFERAY-SERVICE-BUILDER-HASH:192220160

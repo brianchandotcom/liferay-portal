@@ -1093,4 +1093,4 @@ public class CommercePriceListDiscountRelModelImpl
 	private CommercePriceListDiscountRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-186910589
+// LIFERAY-SERVICE-BUILDER-HASH:-890349575

@@ -452,21 +452,6 @@ public interface ObjectLayoutColumnPersistence
 	public int countByObjectLayoutRowId(long objectLayoutRowId);
 
 	/**
-	 * Caches the object layout column in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutColumn the object layout column
-	 */
-	public void cacheResult(ObjectLayoutColumn objectLayoutColumn);
-
-	/**
-	 * Caches the object layout columns in the entity cache if it is enabled.
-	 *
-	 * @param objectLayoutColumns the object layout columns
-	 */
-	public void cacheResult(
-		java.util.List<ObjectLayoutColumn> objectLayoutColumns);
-
-	/**
 	 * Creates a new object layout column with the primary key. Does not add the object layout column to the database.
 	 *
 	 * @param objectLayoutColumnId the primary key for the new object layout column
@@ -505,4 +490,4 @@ public interface ObjectLayoutColumnPersistence
 	public ObjectLayoutColumn fetchByPrimaryKey(long objectLayoutColumnId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1523099929
+// LIFERAY-SERVICE-BUILDER-HASH:-1519505125

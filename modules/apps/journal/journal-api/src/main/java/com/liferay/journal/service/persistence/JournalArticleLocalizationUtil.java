@@ -36,6 +36,24 @@ public class JournalArticleLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<JournalArticleLocalization> journalArticleLocalizations) {
+
+		getPersistence().cacheResult(journalArticleLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		JournalArticleLocalization journalArticleLocalization) {
+
+		getPersistence().cacheResult(journalArticleLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -330,28 +348,6 @@ public class JournalArticleLocalizationUtil {
 	}
 
 	/**
-	 * Caches the journal article localization in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalization the journal article localization
-	 */
-	public static void cacheResult(
-		JournalArticleLocalization journalArticleLocalization) {
-
-		getPersistence().cacheResult(journalArticleLocalization);
-	}
-
-	/**
-	 * Caches the journal article localizations in the entity cache if it is enabled.
-	 *
-	 * @param journalArticleLocalizations the journal article localizations
-	 */
-	public static void cacheResult(
-		List<JournalArticleLocalization> journalArticleLocalizations) {
-
-		getPersistence().cacheResult(journalArticleLocalizations);
-	}
-
-	/**
 	 * Creates a new journal article localization with the primary key. Does not add the journal article localization to the database.
 	 *
 	 * @param articleLocalizationId the primary key for the new journal article localization
@@ -423,4 +419,4 @@ public class JournalArticleLocalizationUtil {
 	private static volatile JournalArticleLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-237419508
+// LIFERAY-SERVICE-BUILDER-HASH:-627557718

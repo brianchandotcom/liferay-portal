@@ -14,7 +14,6 @@ import com.liferay.asset.link.service.persistence.AssetLinkPersistence;
 import com.liferay.asset.link.service.persistence.AssetLinkUtil;
 import com.liferay.asset.link.service.persistence.impl.constants.AssetPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -1014,78 +1010,6 @@ public class AssetLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset link in the entity cache if it is enabled.
-	 *
-	 * @param assetLink the asset link
-	 */
-	@Override
-	public void cacheResult(AssetLink assetLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink);
-
-			finderCache.putResult(
-				_finderPathFetchByE_E_T,
-				new Object[] {
-					assetLink.getEntryId1(), assetLink.getEntryId2(),
-					assetLink.getType()
-				},
-				assetLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset links in the entity cache if it is enabled.
-	 *
-	 * @param assetLinks the asset links
-	 */
-	@Override
-	public void cacheResult(List<AssetLink> assetLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetLinks.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetLink assetLink : assetLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetLinkImpl.class, assetLink.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(assetLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetLinkModelImpl assetLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetLinkModelImpl.getEntryId1(),
-				assetLinkModelImpl.getEntryId2(), assetLinkModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByE_E_T, args, assetLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset link with the primary key. Does not add the asset link to the database.
 	 *
 	 * @param linkId the primary key for the new asset link
@@ -1207,10 +1131,7 @@ public class AssetLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetLinkImpl.class, assetLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetLinkModelImpl);
+		cacheUniqueFindersResult(assetLink, false);
 
 		if (isNew) {
 			assetLink.setNew(false);
@@ -1338,9 +1259,6 @@ public class AssetLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByEntryId1 = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId1",
 			new String[] {
@@ -1492,13 +1410,14 @@ public class AssetLinkPersistenceImpl
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
 
-		_finderPathFetchByE_E_T = new FinderPath(
+		_finderPathFetchByE_E_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByE_E_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"entryId1", "entryId2", "type_"}, true);
+			new String[] {"entryId1", "entryId2", "type_"}, false,
+			AssetLink::getEntryId1, AssetLink::getEntryId2, AssetLink::getType);
 
 		_uniquePersistenceFinderByE_E_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByE_E_T, _SQL_SELECT_ASSETLINK_WHERE,
@@ -1584,4 +1503,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1093401824
+// LIFERAY-SERVICE-BUILDER-HASH:1947735586

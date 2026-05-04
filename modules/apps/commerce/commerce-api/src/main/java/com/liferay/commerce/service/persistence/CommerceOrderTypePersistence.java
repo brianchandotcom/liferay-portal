@@ -1051,21 +1051,6 @@ public interface CommerceOrderTypePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce order type in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderType the commerce order type
-	 */
-	public void cacheResult(CommerceOrderType commerceOrderType);
-
-	/**
-	 * Caches the commerce order types in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderTypes the commerce order types
-	 */
-	public void cacheResult(
-		java.util.List<CommerceOrderType> commerceOrderTypes);
-
-	/**
 	 * Creates a new commerce order type with the primary key. Does not add the commerce order type to the database.
 	 *
 	 * @param commerceOrderTypeId the primary key for the new commerce order type
@@ -1104,4 +1089,4 @@ public interface CommerceOrderTypePersistence
 	public CommerceOrderType fetchByPrimaryKey(long commerceOrderTypeId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-610802153
+// LIFERAY-SERVICE-BUILDER-HASH:-715233937

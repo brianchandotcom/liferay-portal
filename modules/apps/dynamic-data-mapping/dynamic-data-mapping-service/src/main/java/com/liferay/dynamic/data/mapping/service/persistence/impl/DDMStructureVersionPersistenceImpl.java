@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionP
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -532,93 +528,6 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm structure version in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersion the ddm structure version
-	 */
-	@Override
-	public void cacheResult(DDMStructureVersion ddmStructureVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructureVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMStructureVersionImpl.class,
-				ddmStructureVersion.getPrimaryKey(), ddmStructureVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByS_V,
-				new Object[] {
-					ddmStructureVersion.getStructureId(),
-					ddmStructureVersion.getVersion()
-				},
-				ddmStructureVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm structure versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmStructureVersions the ddm structure versions
-	 */
-	@Override
-	public void cacheResult(List<DDMStructureVersion> ddmStructureVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmStructureVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMStructureVersion ddmStructureVersion : ddmStructureVersions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmStructureVersion.getCtCollectionId())) {
-
-				DDMStructureVersion cachedDDMStructureVersion =
-					(DDMStructureVersion)entityCache.getResult(
-						DDMStructureVersionImpl.class,
-						ddmStructureVersion.getPrimaryKey());
-
-				if (cachedDDMStructureVersion == null) {
-					cacheResult(ddmStructureVersion);
-				}
-				else {
-					DDMStructureVersionModelImpl ddmStructureVersionModelImpl =
-						(DDMStructureVersionModelImpl)ddmStructureVersion;
-					DDMStructureVersionModelImpl
-						cachedDDMStructureVersionModelImpl =
-							(DDMStructureVersionModelImpl)
-								cachedDDMStructureVersion;
-
-					ddmStructureVersionModelImpl.setDDMForm(
-						cachedDDMStructureVersionModelImpl.getDDMForm());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMStructureVersionModelImpl ddmStructureVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmStructureVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmStructureVersionModelImpl.getStructureId(),
-				ddmStructureVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByS_V, args, ddmStructureVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	 *
 	 * @param structureVersionId the primary key for the new ddm structure version
@@ -752,11 +661,7 @@ public class DDMStructureVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMStructureVersionImpl.class, ddmStructureVersionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(ddmStructureVersionModelImpl);
+		cacheUniqueFindersResult(ddmStructureVersion, false);
 
 		if (isNew) {
 			ddmStructureVersion.setNew(false);
@@ -895,9 +800,6 @@ public class DDMStructureVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureId",
 			new String[] {
@@ -930,10 +832,12 @@ public class DDMStructureVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMStructureVersion::getStructureId));
 
-		_finderPathFetchByS_V = new FinderPath(
+		_finderPathFetchByS_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"structureId", "version"}, true);
+			new String[] {"structureId", "version"}, false,
+			DDMStructureVersion::getStructureId,
+			DDMStructureVersion::getVersion);
 
 		_uniquePersistenceFinderByS_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_V, _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
@@ -1048,4 +952,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1790202943
+// LIFERAY-SERVICE-BUILDER-HASH:-622061298

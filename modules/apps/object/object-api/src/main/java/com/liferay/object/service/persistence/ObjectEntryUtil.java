@@ -37,6 +37,20 @@ public class ObjectEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectEntry> objectEntries) {
+		getPersistence().cacheResult(objectEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectEntry objectEntry) {
+		getPersistence().cacheResult(objectEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1827,24 +1841,6 @@ public class ObjectEntryUtil {
 	}
 
 	/**
-	 * Caches the object entry in the entity cache if it is enabled.
-	 *
-	 * @param objectEntry the object entry
-	 */
-	public static void cacheResult(ObjectEntry objectEntry) {
-		getPersistence().cacheResult(objectEntry);
-	}
-
-	/**
-	 * Caches the object entries in the entity cache if it is enabled.
-	 *
-	 * @param objectEntries the object entries
-	 */
-	public static void cacheResult(List<ObjectEntry> objectEntries) {
-		getPersistence().cacheResult(objectEntries);
-	}
-
-	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *
 	 * @param objectEntryId the primary key for the new object entry
@@ -1905,4 +1901,4 @@ public class ObjectEntryUtil {
 	private static volatile ObjectEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:591147560
+// LIFERAY-SERVICE-BUILDER-HASH:-1243862411

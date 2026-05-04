@@ -36,6 +36,20 @@ public class SegmentsEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SegmentsEntryRel> segmentsEntryRels) {
+		getPersistence().cacheResult(segmentsEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SegmentsEntryRel segmentsEntryRel) {
+		getPersistence().cacheResult(segmentsEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -598,24 +612,6 @@ public class SegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Caches the segments entry rel in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRel the segments entry rel
-	 */
-	public static void cacheResult(SegmentsEntryRel segmentsEntryRel) {
-		getPersistence().cacheResult(segmentsEntryRel);
-	}
-
-	/**
-	 * Caches the segments entry rels in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRels the segments entry rels
-	 */
-	public static void cacheResult(List<SegmentsEntryRel> segmentsEntryRels) {
-		getPersistence().cacheResult(segmentsEntryRels);
-	}
-
-	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
 	 * @param segmentsEntryRelId the primary key for the new segments entry rel
@@ -678,4 +674,4 @@ public class SegmentsEntryRelUtil {
 	private static volatile SegmentsEntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1022540725
+// LIFERAY-SERVICE-BUILDER-HASH:-923367373

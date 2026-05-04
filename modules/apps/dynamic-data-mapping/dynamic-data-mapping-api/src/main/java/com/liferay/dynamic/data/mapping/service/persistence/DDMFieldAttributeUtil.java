@@ -36,6 +36,20 @@ public class DDMFieldAttributeUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMFieldAttribute> ddmFieldAttributes) {
+		getPersistence().cacheResult(ddmFieldAttributes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMFieldAttribute ddmFieldAttribute) {
+		getPersistence().cacheResult(ddmFieldAttribute);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -826,24 +840,6 @@ public class DDMFieldAttributeUtil {
 	}
 
 	/**
-	 * Caches the ddm field attribute in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttribute the ddm field attribute
-	 */
-	public static void cacheResult(DDMFieldAttribute ddmFieldAttribute) {
-		getPersistence().cacheResult(ddmFieldAttribute);
-	}
-
-	/**
-	 * Caches the ddm field attributes in the entity cache if it is enabled.
-	 *
-	 * @param ddmFieldAttributes the ddm field attributes
-	 */
-	public static void cacheResult(List<DDMFieldAttribute> ddmFieldAttributes) {
-		getPersistence().cacheResult(ddmFieldAttributes);
-	}
-
-	/**
 	 * Creates a new ddm field attribute with the primary key. Does not add the ddm field attribute to the database.
 	 *
 	 * @param fieldAttributeId the primary key for the new ddm field attribute
@@ -910,4 +906,4 @@ public class DDMFieldAttributeUtil {
 	private static volatile DDMFieldAttributePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1693500229
+// LIFERAY-SERVICE-BUILDER-HASH:2106594971

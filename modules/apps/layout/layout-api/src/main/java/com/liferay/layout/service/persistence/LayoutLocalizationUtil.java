@@ -36,6 +36,22 @@ public class LayoutLocalizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<LayoutLocalization> layoutLocalizations) {
+
+		getPersistence().cacheResult(layoutLocalizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutLocalization layoutLocalization) {
+		getPersistence().cacheResult(layoutLocalization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -682,26 +698,6 @@ public class LayoutLocalizationUtil {
 	}
 
 	/**
-	 * Caches the layout localization in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalization the layout localization
-	 */
-	public static void cacheResult(LayoutLocalization layoutLocalization) {
-		getPersistence().cacheResult(layoutLocalization);
-	}
-
-	/**
-	 * Caches the layout localizations in the entity cache if it is enabled.
-	 *
-	 * @param layoutLocalizations the layout localizations
-	 */
-	public static void cacheResult(
-		List<LayoutLocalization> layoutLocalizations) {
-
-		getPersistence().cacheResult(layoutLocalizations);
-	}
-
-	/**
 	 * Creates a new layout localization with the primary key. Does not add the layout localization to the database.
 	 *
 	 * @param layoutLocalizationId the primary key for the new layout localization
@@ -768,4 +764,4 @@ public class LayoutLocalizationUtil {
 	private static volatile LayoutLocalizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:666404951
+// LIFERAY-SERVICE-BUILDER-HASH:-1408361127

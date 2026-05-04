@@ -36,6 +36,20 @@ public class CalendarBookingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CalendarBooking> calendarBookings) {
+		getPersistence().cacheResult(calendarBookings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CalendarBooking calendarBooking) {
+		getPersistence().cacheResult(calendarBooking);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1506,24 +1520,6 @@ public class CalendarBookingUtil {
 	}
 
 	/**
-	 * Caches the calendar booking in the entity cache if it is enabled.
-	 *
-	 * @param calendarBooking the calendar booking
-	 */
-	public static void cacheResult(CalendarBooking calendarBooking) {
-		getPersistence().cacheResult(calendarBooking);
-	}
-
-	/**
-	 * Caches the calendar bookings in the entity cache if it is enabled.
-	 *
-	 * @param calendarBookings the calendar bookings
-	 */
-	public static void cacheResult(List<CalendarBooking> calendarBookings) {
-		getPersistence().cacheResult(calendarBookings);
-	}
-
-	/**
 	 * Creates a new calendar booking with the primary key. Does not add the calendar booking to the database.
 	 *
 	 * @param calendarBookingId the primary key for the new calendar booking
@@ -1584,4 +1580,4 @@ public class CalendarBookingUtil {
 	private static volatile CalendarBookingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:676915075
+// LIFERAY-SERVICE-BUILDER-HASH:-1504294887

@@ -37,6 +37,24 @@ public class CommerceInventoryAuditUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceInventoryAudit> commerceInventoryAudits) {
+
+		getPersistence().cacheResult(commerceInventoryAudits);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceInventoryAudit commerceInventoryAudit) {
+
+		getPersistence().cacheResult(commerceInventoryAudit);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -392,28 +410,6 @@ public class CommerceInventoryAuditUtil {
 	}
 
 	/**
-	 * Caches the commerce inventory audit in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudit the commerce inventory audit
-	 */
-	public static void cacheResult(
-		CommerceInventoryAudit commerceInventoryAudit) {
-
-		getPersistence().cacheResult(commerceInventoryAudit);
-	}
-
-	/**
-	 * Caches the commerce inventory audits in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryAudits the commerce inventory audits
-	 */
-	public static void cacheResult(
-		List<CommerceInventoryAudit> commerceInventoryAudits) {
-
-		getPersistence().cacheResult(commerceInventoryAudits);
-	}
-
-	/**
 	 * Creates a new commerce inventory audit with the primary key. Does not add the commerce inventory audit to the database.
 	 *
 	 * @param commerceInventoryAuditId the primary key for the new commerce inventory audit
@@ -483,4 +479,4 @@ public class CommerceInventoryAuditUtil {
 	private static volatile CommerceInventoryAuditPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1260413055
+// LIFERAY-SERVICE-BUILDER-HASH:1134444539

@@ -36,6 +36,20 @@ public class FaroPreferencesUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FaroPreferences> faroPreferenceses) {
+		getPersistence().cacheResult(faroPreferenceses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FaroPreferences faroPreferences) {
+		getPersistence().cacheResult(faroPreferences);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -294,24 +308,6 @@ public class FaroPreferencesUtil {
 	}
 
 	/**
-	 * Caches the faro preferences in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferences the faro preferences
-	 */
-	public static void cacheResult(FaroPreferences faroPreferences) {
-		getPersistence().cacheResult(faroPreferences);
-	}
-
-	/**
-	 * Caches the faro preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param faroPreferenceses the faro preferenceses
-	 */
-	public static void cacheResult(List<FaroPreferences> faroPreferenceses) {
-		getPersistence().cacheResult(faroPreferenceses);
-	}
-
-	/**
 	 * Creates a new faro preferences with the primary key. Does not add the faro preferences to the database.
 	 *
 	 * @param faroPreferencesId the primary key for the new faro preferences
@@ -372,4 +368,4 @@ public class FaroPreferencesUtil {
 	private static volatile FaroPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607781431
+// LIFERAY-SERVICE-BUILDER-HASH:44035190

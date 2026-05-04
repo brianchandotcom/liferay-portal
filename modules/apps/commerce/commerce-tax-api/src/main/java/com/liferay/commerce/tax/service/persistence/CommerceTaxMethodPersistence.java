@@ -296,21 +296,6 @@ public interface CommerceTaxMethodPersistence
 	public int countByG_A(long groupId, boolean active);
 
 	/**
-	 * Caches the commerce tax method in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethod the commerce tax method
-	 */
-	public void cacheResult(CommerceTaxMethod commerceTaxMethod);
-
-	/**
-	 * Caches the commerce tax methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxMethods the commerce tax methods
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTaxMethod> commerceTaxMethods);
-
-	/**
 	 * Creates a new commerce tax method with the primary key. Does not add the commerce tax method to the database.
 	 *
 	 * @param commerceTaxMethodId the primary key for the new commerce tax method
@@ -349,4 +334,4 @@ public interface CommerceTaxMethodPersistence
 	public CommerceTaxMethod fetchByPrimaryKey(long commerceTaxMethodId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1724525034
+// LIFERAY-SERVICE-BUILDER-HASH:-1719966130

@@ -556,21 +556,6 @@ public interface CommercePricingClassPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce pricing class in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClass the commerce pricing class
-	 */
-	public void cacheResult(CommercePricingClass commercePricingClass);
-
-	/**
-	 * Caches the commerce pricing classes in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClasses the commerce pricing classes
-	 */
-	public void cacheResult(
-		java.util.List<CommercePricingClass> commercePricingClasses);
-
-	/**
 	 * Creates a new commerce pricing class with the primary key. Does not add the commerce pricing class to the database.
 	 *
 	 * @param commercePricingClassId the primary key for the new commerce pricing class
@@ -610,4 +595,4 @@ public interface CommercePricingClassPersistence
 	public CommercePricingClass fetchByPrimaryKey(long commercePricingClassId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-616771827
+// LIFERAY-SERVICE-BUILDER-HASH:1640026055

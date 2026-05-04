@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1797,155 +1794,6 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo definition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 */
-	@Override
-	public void cacheResult(KaleoDefinition kaleoDefinition) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoDefinition.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoDefinitionImpl.class, kaleoDefinition.getPrimaryKey(),
-				kaleoDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					kaleoDefinition.getUuid(), kaleoDefinition.getGroupId()
-				},
-				kaleoDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByC_N,
-				new Object[] {
-					kaleoDefinition.getCompanyId(), kaleoDefinition.getName()
-				},
-				kaleoDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_V,
-				new Object[] {
-					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-					kaleoDefinition.getVersion()
-				},
-				kaleoDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_A,
-				new Object[] {
-					kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
-					kaleoDefinition.isActive()
-				},
-				kaleoDefinition);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					kaleoDefinition.getExternalReferenceCode(),
-					kaleoDefinition.getCompanyId()
-				},
-				kaleoDefinition);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo definitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitions the kaleo definitions
-	 */
-	@Override
-	public void cacheResult(List<KaleoDefinition> kaleoDefinitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoDefinitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoDefinition kaleoDefinition : kaleoDefinitions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoDefinition.getCtCollectionId())) {
-
-				KaleoDefinition cachedKaleoDefinition =
-					(KaleoDefinition)entityCache.getResult(
-						KaleoDefinitionImpl.class,
-						kaleoDefinition.getPrimaryKey());
-
-				if (cachedKaleoDefinition == null) {
-					cacheResult(kaleoDefinition);
-				}
-				else {
-					KaleoDefinitionModelImpl kaleoDefinitionModelImpl =
-						(KaleoDefinitionModelImpl)kaleoDefinition;
-					KaleoDefinitionModelImpl cachedKaleoDefinitionModelImpl =
-						(KaleoDefinitionModelImpl)cachedKaleoDefinition;
-
-					kaleoDefinitionModelImpl.setContentAsXML(
-						cachedKaleoDefinitionModelImpl.getContentAsXML());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoDefinitionModelImpl kaleoDefinitionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoDefinitionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoDefinitionModelImpl.getUuid(),
-				kaleoDefinitionModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, kaleoDefinitionModelImpl);
-
-			args = new Object[] {
-				kaleoDefinitionModelImpl.getCompanyId(),
-				kaleoDefinitionModelImpl.getName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_N, args, kaleoDefinitionModelImpl);
-
-			args = new Object[] {
-				kaleoDefinitionModelImpl.getCompanyId(),
-				kaleoDefinitionModelImpl.getName(),
-				kaleoDefinitionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_V, args, kaleoDefinitionModelImpl);
-
-			args = new Object[] {
-				kaleoDefinitionModelImpl.getCompanyId(),
-				kaleoDefinitionModelImpl.getName(),
-				kaleoDefinitionModelImpl.isActive()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_A, args, kaleoDefinitionModelImpl);
-
-			args = new Object[] {
-				kaleoDefinitionModelImpl.getExternalReferenceCode(),
-				kaleoDefinitionModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, kaleoDefinitionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
 	 *
 	 * @param kaleoDefinitionId the primary key for the new kaleo definition
@@ -2160,10 +2008,7 @@ public class KaleoDefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoDefinitionImpl.class, kaleoDefinitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoDefinitionModelImpl);
+		cacheUniqueFindersResult(kaleoDefinition, false);
 
 		if (isNew) {
 			kaleoDefinition.setNew(false);
@@ -2307,9 +2152,6 @@ public class KaleoDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2337,10 +2179,11 @@ public class KaleoDefinitionPersistenceImpl
 				"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KaleoDefinition::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, KaleoDefinition::getUuid,
+			KaleoDefinition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KALEODEFINITION_WHERE,
@@ -2442,10 +2285,11 @@ public class KaleoDefinitionPersistenceImpl
 					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, KaleoDefinition::isActive));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			KaleoDefinition::getCompanyId, KaleoDefinition::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_KALEODEFINITION_WHERE,
@@ -2527,13 +2371,15 @@ public class KaleoDefinitionPersistenceImpl
 				"kaleoDefinition.", "scope", FinderColumn.Type.STRING, "=",
 				true, true, KaleoDefinition::getScope));
 
-		_finderPathFetchByC_N_V = new FinderPath(
+		_finderPathFetchByC_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"companyId", "name", "version"}, true);
+			new String[] {"companyId", "name", "version"}, false,
+			KaleoDefinition::getCompanyId, KaleoDefinition::getName,
+			KaleoDefinition::getVersion);
 
 		_uniquePersistenceFinderByC_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_V, _SQL_SELECT_KALEODEFINITION_WHERE,
@@ -2547,13 +2393,15 @@ public class KaleoDefinitionPersistenceImpl
 				"kaleoDefinition.", "version", FinderColumn.Type.INTEGER, "=",
 				true, true, KaleoDefinition::getVersion));
 
-		_finderPathFetchByC_N_A = new FinderPath(
+		_finderPathFetchByC_N_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"companyId", "name", "active_"}, true);
+			new String[] {"companyId", "name", "active_"}, false,
+			KaleoDefinition::getCompanyId, KaleoDefinition::getName,
+			KaleoDefinition::isActive);
 
 		_uniquePersistenceFinderByC_N_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_A, _SQL_SELECT_KALEODEFINITION_WHERE,
@@ -2613,10 +2461,12 @@ public class KaleoDefinitionPersistenceImpl
 					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, KaleoDefinition::isActive));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			KaleoDefinition::getExternalReferenceCode,
+			KaleoDefinition::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_KALEODEFINITION_WHERE,
@@ -2700,4 +2550,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1577145607
+// LIFERAY-SERVICE-BUILDER-HASH:1195842812

@@ -36,6 +36,20 @@ public class PasswordPolicyRelUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PasswordPolicyRel> passwordPolicyRels) {
+		getPersistence().cacheResult(passwordPolicyRels);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PasswordPolicyRel passwordPolicyRel) {
+		getPersistence().cacheResult(passwordPolicyRel);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -306,24 +320,6 @@ public class PasswordPolicyRelUtil {
 	}
 
 	/**
-	 * Caches the password policy rel in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRel the password policy rel
-	 */
-	public static void cacheResult(PasswordPolicyRel passwordPolicyRel) {
-		getPersistence().cacheResult(passwordPolicyRel);
-	}
-
-	/**
-	 * Caches the password policy rels in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRels the password policy rels
-	 */
-	public static void cacheResult(List<PasswordPolicyRel> passwordPolicyRels) {
-		getPersistence().cacheResult(passwordPolicyRels);
-	}
-
-	/**
 	 * Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
 	 *
 	 * @param passwordPolicyRelId the primary key for the new password policy rel
@@ -392,4 +388,4 @@ public class PasswordPolicyRelUtil {
 	private static volatile PasswordPolicyRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1841086207
+// LIFERAY-SERVICE-BUILDER-HASH:643405653

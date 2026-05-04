@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.PortletPreferenceValueImpl;
@@ -925,86 +921,6 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Caches the portlet preference value in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferenceValue the portlet preference value
-	 */
-	@Override
-	public void cacheResult(PortletPreferenceValue portletPreferenceValue) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					portletPreferenceValue.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				PortletPreferenceValueImpl.class,
-				portletPreferenceValue.getPrimaryKey(), portletPreferenceValue);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_I_N,
-				new Object[] {
-					portletPreferenceValue.getPortletPreferencesId(),
-					portletPreferenceValue.getIndex(),
-					portletPreferenceValue.getName()
-				},
-				portletPreferenceValue);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the portlet preference values in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferenceValues the portlet preference values
-	 */
-	@Override
-	public void cacheResult(
-		List<PortletPreferenceValue> portletPreferenceValues) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (portletPreferenceValues.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PortletPreferenceValue portletPreferenceValue :
-				portletPreferenceValues) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						portletPreferenceValue.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						PortletPreferenceValueImpl.class,
-						portletPreferenceValue.getPrimaryKey()) == null) {
-
-					cacheResult(portletPreferenceValue);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PortletPreferenceValueModelImpl portletPreferenceValueModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					portletPreferenceValueModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				portletPreferenceValueModelImpl.getPortletPreferencesId(),
-				portletPreferenceValueModelImpl.getIndex(),
-				portletPreferenceValueModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByP_I_N, args, portletPreferenceValueModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new portlet preference value with the primary key. Does not add the portlet preference value to the database.
 	 *
 	 * @param portletPreferenceValueId the primary key for the new portlet preference value
@@ -1126,11 +1042,7 @@ public class PortletPreferenceValuePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			PortletPreferenceValueImpl.class, portletPreferenceValueModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(portletPreferenceValueModelImpl);
+		cacheUniqueFindersResult(portletPreferenceValue, false);
 
 		if (isNew) {
 			portletPreferenceValue.setNew(false);
@@ -1262,9 +1174,6 @@ public class PortletPreferenceValuePersistenceImpl
 	 * Initializes the portlet preference value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByPortletPreferencesId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByPortletPreferencesId",
@@ -1377,13 +1286,15 @@ public class PortletPreferenceValuePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					PortletPreferenceValue::getSmallValue));
 
-		_finderPathFetchByP_I_N = new FinderPath(
+		_finderPathFetchByP_I_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_N",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"portletPreferencesId", "index_", "name"}, true);
+			new String[] {"portletPreferencesId", "index_", "name"}, false,
+			PortletPreferenceValue::getPortletPreferencesId,
+			PortletPreferenceValue::getIndex, PortletPreferenceValue::getName);
 
 		_uniquePersistenceFinderByP_I_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByP_I_N,
@@ -1481,4 +1392,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-301445725
+// LIFERAY-SERVICE-BUILDER-HASH:169597840

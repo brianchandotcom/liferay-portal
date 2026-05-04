@@ -36,6 +36,22 @@ public class SavedContentEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SavedContentEntry> savedContentEntries) {
+
+		getPersistence().cacheResult(savedContentEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SavedContentEntry savedContentEntry) {
+		getPersistence().cacheResult(savedContentEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1921,26 +1937,6 @@ public class SavedContentEntryUtil {
 	}
 
 	/**
-	 * Caches the saved content entry in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntry the saved content entry
-	 */
-	public static void cacheResult(SavedContentEntry savedContentEntry) {
-		getPersistence().cacheResult(savedContentEntry);
-	}
-
-	/**
-	 * Caches the saved content entries in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntries the saved content entries
-	 */
-	public static void cacheResult(
-		List<SavedContentEntry> savedContentEntries) {
-
-		getPersistence().cacheResult(savedContentEntries);
-	}
-
-	/**
 	 * Creates a new saved content entry with the primary key. Does not add the saved content entry to the database.
 	 *
 	 * @param savedContentEntryId the primary key for the new saved content entry
@@ -2009,4 +2005,4 @@ public class SavedContentEntryUtil {
 	private static volatile SavedContentEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-642733340
+// LIFERAY-SERVICE-BUILDER-HASH:-745658421

@@ -36,6 +36,20 @@ public class ModuleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Module> modules) {
+		getPersistence().cacheResult(modules);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Module module) {
+		getPersistence().cacheResult(module);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -923,24 +937,6 @@ public class ModuleUtil {
 	}
 
 	/**
-	 * Caches the module in the entity cache if it is enabled.
-	 *
-	 * @param module the module
-	 */
-	public static void cacheResult(Module module) {
-		getPersistence().cacheResult(module);
-	}
-
-	/**
-	 * Caches the modules in the entity cache if it is enabled.
-	 *
-	 * @param modules the modules
-	 */
-	public static void cacheResult(List<Module> modules) {
-		getPersistence().cacheResult(modules);
-	}
-
-	/**
 	 * Creates a new module with the primary key. Does not add the module to the database.
 	 *
 	 * @param moduleId the primary key for the new module
@@ -1001,4 +997,4 @@ public class ModuleUtil {
 	private static volatile ModulePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2055732262
+// LIFERAY-SERVICE-BUILDER-HASH:-861541180

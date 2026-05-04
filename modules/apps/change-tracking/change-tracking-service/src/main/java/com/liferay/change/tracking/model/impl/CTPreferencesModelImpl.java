@@ -789,4 +789,4 @@ public class CTPreferencesModelImpl
 	private CTPreferences _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:455226730
+// LIFERAY-SERVICE-BUILDER-HASH:473689820

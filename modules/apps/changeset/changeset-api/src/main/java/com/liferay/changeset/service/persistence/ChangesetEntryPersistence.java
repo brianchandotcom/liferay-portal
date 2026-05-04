@@ -686,20 +686,6 @@ public interface ChangesetEntryPersistence
 		long changesetCollectionId, long classNameId, long classPK);
 
 	/**
-	 * Caches the changeset entry in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntry the changeset entry
-	 */
-	public void cacheResult(ChangesetEntry changesetEntry);
-
-	/**
-	 * Caches the changeset entries in the entity cache if it is enabled.
-	 *
-	 * @param changesetEntries the changeset entries
-	 */
-	public void cacheResult(java.util.List<ChangesetEntry> changesetEntries);
-
-	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
 	 * @param changesetEntryId the primary key for the new changeset entry
@@ -738,4 +724,4 @@ public interface ChangesetEntryPersistence
 	public ChangesetEntry fetchByPrimaryKey(long changesetEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-468265903
+// LIFERAY-SERVICE-BUILDER-HASH:-1766055619

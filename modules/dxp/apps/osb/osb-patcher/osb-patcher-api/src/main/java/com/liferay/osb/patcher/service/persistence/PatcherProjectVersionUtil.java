@@ -36,6 +36,24 @@ public class PatcherProjectVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PatcherProjectVersion> patcherProjectVersions) {
+
+		getPersistence().cacheResult(patcherProjectVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		PatcherProjectVersion patcherProjectVersion) {
+
+		getPersistence().cacheResult(patcherProjectVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1080,28 +1098,6 @@ public class PatcherProjectVersionUtil {
 	}
 
 	/**
-	 * Caches the patcher project version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersion the patcher project version
-	 */
-	public static void cacheResult(
-		PatcherProjectVersion patcherProjectVersion) {
-
-		getPersistence().cacheResult(patcherProjectVersion);
-	}
-
-	/**
-	 * Caches the patcher project versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersions the patcher project versions
-	 */
-	public static void cacheResult(
-		List<PatcherProjectVersion> patcherProjectVersions) {
-
-		getPersistence().cacheResult(patcherProjectVersions);
-	}
-
-	/**
 	 * Creates a new patcher project version with the primary key. Does not add the patcher project version to the database.
 	 *
 	 * @param patcherProjectVersionId the primary key for the new patcher project version
@@ -1171,4 +1167,4 @@ public class PatcherProjectVersionUtil {
 	private static volatile PatcherProjectVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1389345190
+// LIFERAY-SERVICE-BUILDER-HASH:257202288

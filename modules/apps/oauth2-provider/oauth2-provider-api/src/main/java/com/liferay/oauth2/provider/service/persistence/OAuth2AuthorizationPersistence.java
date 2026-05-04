@@ -584,21 +584,6 @@ public interface OAuth2AuthorizationPersistence
 		long userId, long oAuth2ApplicationId, String rememberDeviceContent);
 
 	/**
-	 * Caches the o auth2 authorization in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorization the o auth2 authorization
-	 */
-	public void cacheResult(OAuth2Authorization oAuth2Authorization);
-
-	/**
-	 * Caches the o auth2 authorizations in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Authorizations the o auth2 authorizations
-	 */
-	public void cacheResult(
-		java.util.List<OAuth2Authorization> oAuth2Authorizations);
-
-	/**
 	 * Creates a new o auth2 authorization with the primary key. Does not add the o auth2 authorization to the database.
 	 *
 	 * @param oAuth2AuthorizationId the primary key for the new o auth2 authorization
@@ -818,4 +803,4 @@ public interface OAuth2AuthorizationPersistence
 			oAuth2ScopeGrants);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:483207656
+// LIFERAY-SERVICE-BUILDER-HASH:92754332

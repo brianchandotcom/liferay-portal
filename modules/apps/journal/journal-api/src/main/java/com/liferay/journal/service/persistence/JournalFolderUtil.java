@@ -36,6 +36,20 @@ public class JournalFolderUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<JournalFolder> journalFolders) {
+		getPersistence().cacheResult(journalFolders);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(JournalFolder journalFolder) {
+		getPersistence().cacheResult(journalFolder);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1867,24 +1881,6 @@ public class JournalFolderUtil {
 	}
 
 	/**
-	 * Caches the journal folder in the entity cache if it is enabled.
-	 *
-	 * @param journalFolder the journal folder
-	 */
-	public static void cacheResult(JournalFolder journalFolder) {
-		getPersistence().cacheResult(journalFolder);
-	}
-
-	/**
-	 * Caches the journal folders in the entity cache if it is enabled.
-	 *
-	 * @param journalFolders the journal folders
-	 */
-	public static void cacheResult(List<JournalFolder> journalFolders) {
-		getPersistence().cacheResult(journalFolders);
-	}
-
-	/**
 	 * Creates a new journal folder with the primary key. Does not add the journal folder to the database.
 	 *
 	 * @param folderId the primary key for the new journal folder
@@ -1945,4 +1941,4 @@ public class JournalFolderUtil {
 	private static volatile JournalFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1150967316
+// LIFERAY-SERVICE-BUILDER-HASH:-1945054438

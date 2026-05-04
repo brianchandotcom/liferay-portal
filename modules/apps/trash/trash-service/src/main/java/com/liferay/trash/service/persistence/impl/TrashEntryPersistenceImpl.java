@@ -6,7 +6,6 @@
 package com.liferay.trash.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.trash.exception.NoSuchEntryException;
 import com.liferay.trash.model.TrashEntry;
@@ -1008,77 +1004,6 @@ public class TrashEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the trash entry in the entity cache if it is enabled.
-	 *
-	 * @param trashEntry the trash entry
-	 */
-	@Override
-	public void cacheResult(TrashEntry trashEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					trashEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByCN_CPK,
-				new Object[] {
-					trashEntry.getClassNameId(), trashEntry.getClassPK()
-				},
-				trashEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the trash entries in the entity cache if it is enabled.
-	 *
-	 * @param trashEntries the trash entries
-	 */
-	@Override
-	public void cacheResult(List<TrashEntry> trashEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (trashEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TrashEntry trashEntry : trashEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						trashEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						TrashEntryImpl.class, trashEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(trashEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		TrashEntryModelImpl trashEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					trashEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				trashEntryModelImpl.getClassNameId(),
-				trashEntryModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCN_CPK, args, trashEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new trash entry with the primary key. Does not add the trash entry to the database.
 	 *
 	 * @param entryId the primary key for the new trash entry
@@ -1201,10 +1126,7 @@ public class TrashEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			TrashEntryImpl.class, trashEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(trashEntryModelImpl);
+		cacheUniqueFindersResult(trashEntry, false);
 
 		if (isNew) {
 			trashEntry.setNew(false);
@@ -1330,9 +1252,6 @@ public class TrashEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1480,10 +1399,11 @@ public class TrashEntryPersistenceImpl
 				"trashEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getClassNameId));
 
-		_finderPathFetchByCN_CPK = new FinderPath(
+		_finderPathFetchByCN_CPK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCN_CPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			TrashEntry::getClassNameId, TrashEntry::getClassPK);
 
 		_uniquePersistenceFinderByCN_CPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHENTRY_WHERE,
@@ -1563,4 +1483,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1739412445
+// LIFERAY-SERVICE-BUILDER-HASH:-772368684

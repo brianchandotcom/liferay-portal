@@ -2375,21 +2375,6 @@ public interface StyleBookEntryVersionPersistence
 		int version);
 
 	/**
-	 * Caches the style book entry version in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntryVersion the style book entry version
-	 */
-	public void cacheResult(StyleBookEntryVersion styleBookEntryVersion);
-
-	/**
-	 * Caches the style book entry versions in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntryVersions the style book entry versions
-	 */
-	public void cacheResult(
-		java.util.List<StyleBookEntryVersion> styleBookEntryVersions);
-
-	/**
 	 * Creates a new style book entry version with the primary key. Does not add the style book entry version to the database.
 	 *
 	 * @param styleBookEntryVersionId the primary key for the new style book entry version
@@ -2430,4 +2415,4 @@ public interface StyleBookEntryVersionPersistence
 		long styleBookEntryVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:333318861
+// LIFERAY-SERVICE-BUILDER-HASH:-1702446763

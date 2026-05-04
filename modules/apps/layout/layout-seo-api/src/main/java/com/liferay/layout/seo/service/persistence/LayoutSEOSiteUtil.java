@@ -36,6 +36,20 @@ public class LayoutSEOSiteUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutSEOSite> layoutSEOSites) {
+		getPersistence().cacheResult(layoutSEOSites);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutSEOSite layoutSEOSite) {
+		getPersistence().cacheResult(layoutSEOSite);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -483,24 +497,6 @@ public class LayoutSEOSiteUtil {
 	}
 
 	/**
-	 * Caches the layout seo site in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSite the layout seo site
-	 */
-	public static void cacheResult(LayoutSEOSite layoutSEOSite) {
-		getPersistence().cacheResult(layoutSEOSite);
-	}
-
-	/**
-	 * Caches the layout seo sites in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSites the layout seo sites
-	 */
-	public static void cacheResult(List<LayoutSEOSite> layoutSEOSites) {
-		getPersistence().cacheResult(layoutSEOSites);
-	}
-
-	/**
 	 * Creates a new layout seo site with the primary key. Does not add the layout seo site to the database.
 	 *
 	 * @param layoutSEOSiteId the primary key for the new layout seo site
@@ -561,4 +557,4 @@ public class LayoutSEOSiteUtil {
 	private static volatile LayoutSEOSitePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1891709560
+// LIFERAY-SERVICE-BUILDER-HASH:1632510570

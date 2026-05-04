@@ -648,22 +648,6 @@ public interface SocialActivityAchievementPersistence
 	public int countByG_U_F(long groupId, long userId, boolean firstInGroup);
 
 	/**
-	 * Caches the social activity achievement in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievement the social activity achievement
-	 */
-	public void cacheResult(
-		SocialActivityAchievement socialActivityAchievement);
-
-	/**
-	 * Caches the social activity achievements in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievements the social activity achievements
-	 */
-	public void cacheResult(
-		java.util.List<SocialActivityAchievement> socialActivityAchievements);
-
-	/**
 	 * Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
 	 *
 	 * @param activityAchievementId the primary key for the new social activity achievement
@@ -705,4 +689,4 @@ public interface SocialActivityAchievementPersistence
 		long activityAchievementId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1514516827
+// LIFERAY-SERVICE-BUILDER-HASH:937065989

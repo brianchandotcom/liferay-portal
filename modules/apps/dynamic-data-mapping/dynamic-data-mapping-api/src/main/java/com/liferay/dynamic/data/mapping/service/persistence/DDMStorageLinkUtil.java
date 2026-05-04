@@ -36,6 +36,20 @@ public class DDMStorageLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMStorageLink> ddmStorageLinks) {
+		getPersistence().cacheResult(ddmStorageLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMStorageLink ddmStorageLink) {
+		getPersistence().cacheResult(ddmStorageLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -763,24 +777,6 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
-	 * Caches the ddm storage link in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLink the ddm storage link
-	 */
-	public static void cacheResult(DDMStorageLink ddmStorageLink) {
-		getPersistence().cacheResult(ddmStorageLink);
-	}
-
-	/**
-	 * Caches the ddm storage links in the entity cache if it is enabled.
-	 *
-	 * @param ddmStorageLinks the ddm storage links
-	 */
-	public static void cacheResult(List<DDMStorageLink> ddmStorageLinks) {
-		getPersistence().cacheResult(ddmStorageLinks);
-	}
-
-	/**
 	 * Creates a new ddm storage link with the primary key. Does not add the ddm storage link to the database.
 	 *
 	 * @param storageLinkId the primary key for the new ddm storage link
@@ -843,4 +839,4 @@ public class DDMStorageLinkUtil {
 	private static volatile DDMStorageLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1728615819
+// LIFERAY-SERVICE-BUILDER-HASH:598100293

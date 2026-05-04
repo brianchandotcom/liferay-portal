@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -231,44 +228,6 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 	/**
-	 * Caches the cts grand parent in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParent the cts grand parent
-	 */
-	@Override
-	public void cacheResult(CTSGrandParent ctsGrandParent) {
-		entityCache.putResult(
-			CTSGrandParentImpl.class, ctsGrandParent.getPrimaryKey(),
-			ctsGrandParent);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cts grand parents in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParents the cts grand parents
-	 */
-	@Override
-	public void cacheResult(List<CTSGrandParent> ctsGrandParents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctsGrandParents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTSGrandParent ctsGrandParent : ctsGrandParents) {
-			if (entityCache.getResult(
-					CTSGrandParentImpl.class, ctsGrandParent.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(ctsGrandParent);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new cts grand parent with the primary key. Does not add the cts grand parent to the database.
 	 *
 	 * @param ctsGrandParentId the primary key for the new cts grand parent
@@ -374,8 +333,7 @@ public class CTSGrandParentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTSGrandParentImpl.class, ctsGrandParentModelImpl, false, true);
+		cacheUniqueFindersResult(ctsGrandParent, false);
 
 		if (isNew) {
 			ctsGrandParent.setNew(false);
@@ -436,9 +394,6 @@ public class CTSGrandParentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -534,4 +489,4 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:984788934
+// LIFERAY-SERVICE-BUILDER-HASH:97072506

@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -5369,44 +5366,6 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 	/**
-	 * Caches the background task in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTask the background task
-	 */
-	@Override
-	public void cacheResult(BackgroundTask backgroundTask) {
-		entityCache.putResult(
-			BackgroundTaskImpl.class, backgroundTask.getPrimaryKey(),
-			backgroundTask);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the background tasks in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTasks the background tasks
-	 */
-	@Override
-	public void cacheResult(List<BackgroundTask> backgroundTasks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (backgroundTasks.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BackgroundTask backgroundTask : backgroundTasks) {
-			if (entityCache.getResult(
-					BackgroundTaskImpl.class, backgroundTask.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(backgroundTask);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new background task with the primary key. Does not add the background task to the database.
 	 *
 	 * @param backgroundTaskId the primary key for the new background task
@@ -5537,8 +5496,7 @@ public class BackgroundTaskPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BackgroundTaskImpl.class, backgroundTaskModelImpl, false, true);
+		cacheUniqueFindersResult(backgroundTask, false);
 
 		if (isNew) {
 			backgroundTask.setNew(false);
@@ -5599,9 +5557,6 @@ public class BackgroundTaskPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -6012,4 +5967,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:463854229
+// LIFERAY-SERVICE-BUILDER-HASH:-2063860520

@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1393,61 +1391,6 @@ public class LaunchSetPersistenceImpl
 	}
 
 	/**
-	 * Caches the launch set in the entity cache if it is enabled.
-	 *
-	 * @param launchSet the launch set
-	 */
-	@Override
-	public void cacheResult(LaunchSet launchSet) {
-		entityCache.putResult(
-			LaunchSetImpl.class, launchSet.getPrimaryKey(), launchSet);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				launchSet.getExternalReferenceCode(), launchSet.getCompanyId()
-			},
-			launchSet);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the launch sets in the entity cache if it is enabled.
-	 *
-	 * @param launchSets the launch sets
-	 */
-	@Override
-	public void cacheResult(List<LaunchSet> launchSets) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (launchSets.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LaunchSet launchSet : launchSets) {
-			if (entityCache.getResult(
-					LaunchSetImpl.class, launchSet.getPrimaryKey()) == null) {
-
-				cacheResult(launchSet);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LaunchSetModelImpl launchSetModelImpl) {
-
-		Object[] args = new Object[] {
-			launchSetModelImpl.getExternalReferenceCode(),
-			launchSetModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, launchSetModelImpl);
-	}
-
-	/**
 	 * Creates a new launch set with the primary key. Does not add the launch set to the database.
 	 *
 	 * @param launchSetId the primary key for the new launch set
@@ -1642,10 +1585,7 @@ public class LaunchSetPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LaunchSetImpl.class, launchSetModelImpl, false, true);
-
-		cacheUniqueFindersCache(launchSetModelImpl);
+		cacheUniqueFindersResult(launchSet, false);
 
 		if (isNew) {
 			launchSet.setNew(false);
@@ -1711,9 +1651,6 @@ public class LaunchSetPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1858,10 +1795,11 @@ public class LaunchSetPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			LaunchSet::getExternalReferenceCode, LaunchSet::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_LAUNCHSET_WHERE,
@@ -1941,4 +1879,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-713137242
+// LIFERAY-SERVICE-BUILDER-HASH:-2001738712

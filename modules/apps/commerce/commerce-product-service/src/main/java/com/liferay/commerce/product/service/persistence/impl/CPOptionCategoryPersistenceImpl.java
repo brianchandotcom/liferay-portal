@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CPOptionCategoryUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1477,95 +1474,6 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp option category in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategory the cp option category
-	 */
-	@Override
-	public void cacheResult(CPOptionCategory cpOptionCategory) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpOptionCategory.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPOptionCategoryImpl.class, cpOptionCategory.getPrimaryKey(),
-				cpOptionCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByC_K,
-				new Object[] {
-					cpOptionCategory.getCompanyId(), cpOptionCategory.getKey()
-				},
-				cpOptionCategory);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpOptionCategory.getExternalReferenceCode(),
-					cpOptionCategory.getCompanyId()
-				},
-				cpOptionCategory);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp option categories in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategories the cp option categories
-	 */
-	@Override
-	public void cacheResult(List<CPOptionCategory> cpOptionCategories) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpOptionCategories.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPOptionCategory cpOptionCategory : cpOptionCategories) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpOptionCategory.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPOptionCategoryImpl.class,
-						cpOptionCategory.getPrimaryKey()) == null) {
-
-					cacheResult(cpOptionCategory);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPOptionCategoryModelImpl cpOptionCategoryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpOptionCategoryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpOptionCategoryModelImpl.getCompanyId(),
-				cpOptionCategoryModelImpl.getKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_K, args, cpOptionCategoryModelImpl);
-
-			args = new Object[] {
-				cpOptionCategoryModelImpl.getExternalReferenceCode(),
-				cpOptionCategoryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpOptionCategoryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp option category with the primary key. Does not add the cp option category to the database.
 	 *
 	 * @param CPOptionCategoryId the primary key for the new cp option category
@@ -1781,10 +1689,7 @@ public class CPOptionCategoryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPOptionCategoryImpl.class, cpOptionCategoryModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpOptionCategoryModelImpl);
+		cacheUniqueFindersResult(cpOptionCategory, false);
 
 		if (isNew) {
 			cpOptionCategory.setNew(false);
@@ -1924,9 +1829,6 @@ public class CPOptionCategoryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2017,10 +1919,11 @@ public class CPOptionCategoryPersistenceImpl
 					"cpOptionCategory.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPOptionCategory::getCompanyId));
 
-		_finderPathFetchByC_K = new FinderPath(
+		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, true);
+			new String[] {"companyId", "key_"}, false,
+			CPOptionCategory::getCompanyId, CPOptionCategory::getKey);
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K, _SQL_SELECT_CPOPTIONCATEGORY_WHERE,
@@ -2031,10 +1934,12 @@ public class CPOptionCategoryPersistenceImpl
 				"cpOptionCategory.", "key", FinderColumn.Type.STRING, "=", true,
 				true, CPOptionCategory::getKey));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPOptionCategory::getExternalReferenceCode,
+			CPOptionCategory::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPOPTIONCATEGORY_WHERE,
@@ -2141,4 +2046,4 @@ public class CPOptionCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-652191548
+// LIFERAY-SERVICE-BUILDER-HASH:-980564677

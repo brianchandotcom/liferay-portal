@@ -36,6 +36,20 @@ public class CommerceCatalogUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CommerceCatalog> commerceCatalogs) {
+		getPersistence().cacheResult(commerceCatalogs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceCatalog commerceCatalog) {
+		getPersistence().cacheResult(commerceCatalog);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1123,24 +1137,6 @@ public class CommerceCatalogUtil {
 	}
 
 	/**
-	 * Caches the commerce catalog in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalog the commerce catalog
-	 */
-	public static void cacheResult(CommerceCatalog commerceCatalog) {
-		getPersistence().cacheResult(commerceCatalog);
-	}
-
-	/**
-	 * Caches the commerce catalogs in the entity cache if it is enabled.
-	 *
-	 * @param commerceCatalogs the commerce catalogs
-	 */
-	public static void cacheResult(List<CommerceCatalog> commerceCatalogs) {
-		getPersistence().cacheResult(commerceCatalogs);
-	}
-
-	/**
 	 * Creates a new commerce catalog with the primary key. Does not add the commerce catalog to the database.
 	 *
 	 * @param commerceCatalogId the primary key for the new commerce catalog
@@ -1201,4 +1197,4 @@ public class CommerceCatalogUtil {
 	private static volatile CommerceCatalogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-304173276
+// LIFERAY-SERVICE-BUILDER-HASH:-966963730

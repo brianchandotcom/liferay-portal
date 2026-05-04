@@ -1202,6 +1202,14 @@ public class DDMFormInstanceModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(DDMFormInstance source) {
+		DDMFormInstanceModelImpl sourceModelImpl =
+			(DDMFormInstanceModelImpl)source;
+
+		setSettingsDDMFormValues(sourceModelImpl.getSettingsDDMFormValues());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1607,4 +1615,4 @@ public class DDMFormInstanceModelImpl
 	private DDMFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-994715769
+// LIFERAY-SERVICE-BUILDER-HASH:-1038359170

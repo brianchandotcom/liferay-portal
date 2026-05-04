@@ -14,7 +14,6 @@ import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRe
 import com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelUtil;
 import com.liferay.asset.entry.rel.service.persistence.impl.constants.AssetPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -521,89 +517,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset entry asset category rel in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRel the asset entry asset category rel
-	 */
-	@Override
-	public void cacheResult(
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetEntryAssetCategoryRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetEntryAssetCategoryRelImpl.class,
-				assetEntryAssetCategoryRel.getPrimaryKey(),
-				assetEntryAssetCategoryRel);
-
-			finderCache.putResult(
-				_finderPathFetchByA_A,
-				new Object[] {
-					assetEntryAssetCategoryRel.getAssetEntryId(),
-					assetEntryAssetCategoryRel.getAssetCategoryId()
-				},
-				assetEntryAssetCategoryRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset entry asset category rels in the entity cache if it is enabled.
-	 *
-	 * @param assetEntryAssetCategoryRels the asset entry asset category rels
-	 */
-	@Override
-	public void cacheResult(
-		List<AssetEntryAssetCategoryRel> assetEntryAssetCategoryRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetEntryAssetCategoryRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel :
-				assetEntryAssetCategoryRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetEntryAssetCategoryRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetEntryAssetCategoryRelImpl.class,
-						assetEntryAssetCategoryRel.getPrimaryKey()) == null) {
-
-					cacheResult(assetEntryAssetCategoryRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetEntryAssetCategoryRelModelImpl
-			assetEntryAssetCategoryRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetEntryAssetCategoryRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetEntryAssetCategoryRelModelImpl.getAssetEntryId(),
-				assetEntryAssetCategoryRelModelImpl.getAssetCategoryId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByA_A, args,
-				assetEntryAssetCategoryRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	 *
 	 * @param assetEntryAssetCategoryRelId the primary key for the new asset entry asset category rel
@@ -731,11 +644,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetEntryAssetCategoryRelImpl.class,
-			assetEntryAssetCategoryRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetEntryAssetCategoryRelModelImpl);
+		cacheUniqueFindersResult(assetEntryAssetCategoryRel, false);
 
 		if (isNew) {
 			assetEntryAssetCategoryRel.setNew(false);
@@ -860,9 +769,6 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
 			new String[] {
@@ -927,10 +833,12 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetEntryAssetCategoryRel::getAssetCategoryId));
 
-		_finderPathFetchByA_A = new FinderPath(
+		_finderPathFetchByA_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetEntryId", "assetCategoryId"}, true);
+			new String[] {"assetEntryId", "assetCategoryId"}, false,
+			AssetEntryAssetCategoryRel::getAssetEntryId,
+			AssetEntryAssetCategoryRel::getAssetCategoryId);
 
 		_uniquePersistenceFinderByA_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_A,
@@ -1013,4 +921,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1984358507
+// LIFERAY-SERVICE-BUILDER-HASH:550264348

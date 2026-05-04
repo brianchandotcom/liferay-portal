@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1230,80 +1228,6 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce currency in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrency the commerce currency
-	 */
-	@Override
-	public void cacheResult(CommerceCurrency commerceCurrency) {
-		entityCache.putResult(
-			CommerceCurrencyImpl.class, commerceCurrency.getPrimaryKey(),
-			commerceCurrency);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				commerceCurrency.getCompanyId(), commerceCurrency.getCode()
-			},
-			commerceCurrency);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceCurrency.getExternalReferenceCode(),
-				commerceCurrency.getCompanyId()
-			},
-			commerceCurrency);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce currencies in the entity cache if it is enabled.
-	 *
-	 * @param commerceCurrencies the commerce currencies
-	 */
-	@Override
-	public void cacheResult(List<CommerceCurrency> commerceCurrencies) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceCurrencies.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			if (entityCache.getResult(
-					CommerceCurrencyImpl.class,
-					commerceCurrency.getPrimaryKey()) == null) {
-
-				cacheResult(commerceCurrency);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceCurrencyModelImpl commerceCurrencyModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceCurrencyModelImpl.getCompanyId(),
-			commerceCurrencyModelImpl.getCode()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, commerceCurrencyModelImpl);
-
-		args = new Object[] {
-			commerceCurrencyModelImpl.getExternalReferenceCode(),
-			commerceCurrencyModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, commerceCurrencyModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce currency with the primary key. Does not add the commerce currency to the database.
 	 *
 	 * @param commerceCurrencyId the primary key for the new commerce currency
@@ -1511,10 +1435,7 @@ public class CommerceCurrencyPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceCurrencyImpl.class, commerceCurrencyModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceCurrencyModelImpl);
+		cacheUniqueFindersResult(commerceCurrency, false);
 
 		if (isNew) {
 			commerceCurrency.setNew(false);
@@ -1580,9 +1501,6 @@ public class CommerceCurrencyPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1673,10 +1591,11 @@ public class CommerceCurrencyPersistenceImpl
 					"commerceCurrency.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCurrency::getCompanyId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "code_"}, true);
+			new String[] {"companyId", "code_"}, false,
+			CommerceCurrency::getCompanyId, CommerceCurrency::getCode);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_COMMERCECURRENCY_WHERE,
@@ -1792,10 +1711,12 @@ public class CommerceCurrencyPersistenceImpl
 				"commerceCurrency.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCurrency::isActive));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceCurrency::getExternalReferenceCode,
+			CommerceCurrency::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECURRENCY_WHERE,
@@ -1876,4 +1797,4 @@ public class CommerceCurrencyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2031946824
+// LIFERAY-SERVICE-BUILDER-HASH:-694667254

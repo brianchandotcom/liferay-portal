@@ -455,21 +455,6 @@ public interface AssetCategoryPropertyPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the asset category property in the entity cache if it is enabled.
-	 *
-	 * @param assetCategoryProperty the asset category property
-	 */
-	public void cacheResult(AssetCategoryProperty assetCategoryProperty);
-
-	/**
-	 * Caches the asset category properties in the entity cache if it is enabled.
-	 *
-	 * @param assetCategoryProperties the asset category properties
-	 */
-	public void cacheResult(
-		java.util.List<AssetCategoryProperty> assetCategoryProperties);
-
-	/**
 	 * Creates a new asset category property with the primary key. Does not add the asset category property to the database.
 	 *
 	 * @param categoryPropertyId the primary key for the new asset category property
@@ -509,4 +494,4 @@ public interface AssetCategoryPropertyPersistence
 	public AssetCategoryProperty fetchByPrimaryKey(long categoryPropertyId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-728019880
+// LIFERAY-SERVICE-BUILDER-HASH:-1937371138

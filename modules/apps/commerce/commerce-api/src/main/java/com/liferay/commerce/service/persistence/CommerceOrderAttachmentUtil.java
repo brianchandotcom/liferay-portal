@@ -36,6 +36,24 @@ public class CommerceOrderAttachmentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceOrderAttachment> commerceOrderAttachments) {
+
+		getPersistence().cacheResult(commerceOrderAttachments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceOrderAttachment commerceOrderAttachment) {
+
+		getPersistence().cacheResult(commerceOrderAttachment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -767,28 +785,6 @@ public class CommerceOrderAttachmentUtil {
 	}
 
 	/**
-	 * Caches the commerce order attachment in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderAttachment the commerce order attachment
-	 */
-	public static void cacheResult(
-		CommerceOrderAttachment commerceOrderAttachment) {
-
-		getPersistence().cacheResult(commerceOrderAttachment);
-	}
-
-	/**
-	 * Caches the commerce order attachments in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderAttachments the commerce order attachments
-	 */
-	public static void cacheResult(
-		List<CommerceOrderAttachment> commerceOrderAttachments) {
-
-		getPersistence().cacheResult(commerceOrderAttachments);
-	}
-
-	/**
 	 * Creates a new commerce order attachment with the primary key. Does not add the commerce order attachment to the database.
 	 *
 	 * @param commerceOrderAttachmentId the primary key for the new commerce order attachment
@@ -858,4 +854,4 @@ public class CommerceOrderAttachmentUtil {
 	private static volatile CommerceOrderAttachmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1283671544
+// LIFERAY-SERVICE-BUILDER-HASH:478671354

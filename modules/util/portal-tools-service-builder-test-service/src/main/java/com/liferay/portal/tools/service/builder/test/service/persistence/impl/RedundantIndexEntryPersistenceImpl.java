@@ -15,9 +15,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchRedundantIndexEntryException;
@@ -32,7 +29,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -164,65 +160,6 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the redundant index entry in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntry the redundant index entry
-	 */
-	@Override
-	public void cacheResult(RedundantIndexEntry redundantIndexEntry) {
-		entityCache.putResult(
-			RedundantIndexEntryImpl.class, redundantIndexEntry.getPrimaryKey(),
-			redundantIndexEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {
-				redundantIndexEntry.getCompanyId(),
-				redundantIndexEntry.getName()
-			},
-			redundantIndexEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the redundant index entries in the entity cache if it is enabled.
-	 *
-	 * @param redundantIndexEntries the redundant index entries
-	 */
-	@Override
-	public void cacheResult(List<RedundantIndexEntry> redundantIndexEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (redundantIndexEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RedundantIndexEntry redundantIndexEntry : redundantIndexEntries) {
-			if (entityCache.getResult(
-					RedundantIndexEntryImpl.class,
-					redundantIndexEntry.getPrimaryKey()) == null) {
-
-				cacheResult(redundantIndexEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RedundantIndexEntryModelImpl redundantIndexEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			redundantIndexEntryModelImpl.getCompanyId(),
-			redundantIndexEntryModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, redundantIndexEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new redundant index entry with the primary key. Does not add the redundant index entry to the database.
 	 *
 	 * @param redundantIndexEntryId the primary key for the new redundant index entry
@@ -333,11 +270,7 @@ public class RedundantIndexEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			RedundantIndexEntryImpl.class, redundantIndexEntryModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(redundantIndexEntryModelImpl);
+		cacheUniqueFindersResult(redundantIndexEntry, false);
 
 		if (isNew) {
 			redundantIndexEntry.setNew(false);
@@ -397,13 +330,11 @@ public class RedundantIndexEntryPersistenceImpl
 	 * Initializes the redundant index entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			RedundantIndexEntry::getCompanyId, RedundantIndexEntry::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_REDUNDANTINDEXENTRY_WHERE,
@@ -450,4 +381,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-155690292
+// LIFERAY-SERVICE-BUILDER-HASH:-1273665394

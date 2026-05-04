@@ -36,6 +36,20 @@ public class RedirectEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RedirectEntry> redirectEntries) {
+		getPersistence().cacheResult(redirectEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RedirectEntry redirectEntry) {
+		getPersistence().cacheResult(redirectEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -867,24 +881,6 @@ public class RedirectEntryUtil {
 	}
 
 	/**
-	 * Caches the redirect entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntry the redirect entry
-	 */
-	public static void cacheResult(RedirectEntry redirectEntry) {
-		getPersistence().cacheResult(redirectEntry);
-	}
-
-	/**
-	 * Caches the redirect entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectEntries the redirect entries
-	 */
-	public static void cacheResult(List<RedirectEntry> redirectEntries) {
-		getPersistence().cacheResult(redirectEntries);
-	}
-
-	/**
 	 * Creates a new redirect entry with the primary key. Does not add the redirect entry to the database.
 	 *
 	 * @param redirectEntryId the primary key for the new redirect entry
@@ -945,4 +941,4 @@ public class RedirectEntryUtil {
 	private static volatile RedirectEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1919666246
+// LIFERAY-SERVICE-BUILDER-HASH:2014760849

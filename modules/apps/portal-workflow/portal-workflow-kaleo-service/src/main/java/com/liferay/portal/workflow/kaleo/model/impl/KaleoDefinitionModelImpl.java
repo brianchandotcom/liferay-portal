@@ -1163,6 +1163,14 @@ public class KaleoDefinitionModelImpl
 	}
 
 	@Override
+	public void copyCacheFields(KaleoDefinition source) {
+		KaleoDefinitionModelImpl sourceModelImpl =
+			(KaleoDefinitionModelImpl)source;
+
+		setContentAsXML(sourceModelImpl.getContentAsXML());
+	}
+
+	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
@@ -1572,4 +1580,4 @@ public class KaleoDefinitionModelImpl
 	private KaleoDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1887023503
+// LIFERAY-SERVICE-BUILDER-HASH:1437214713

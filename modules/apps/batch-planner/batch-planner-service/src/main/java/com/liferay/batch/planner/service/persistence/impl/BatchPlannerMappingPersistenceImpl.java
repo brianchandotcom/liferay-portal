@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -362,67 +359,6 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch planner mapping in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMapping the batch planner mapping
-	 */
-	@Override
-	public void cacheResult(BatchPlannerMapping batchPlannerMapping) {
-		entityCache.putResult(
-			BatchPlannerMappingImpl.class, batchPlannerMapping.getPrimaryKey(),
-			batchPlannerMapping);
-
-		finderCache.putResult(
-			_finderPathFetchByBPPI_EFN_IFN,
-			new Object[] {
-				batchPlannerMapping.getBatchPlannerPlanId(),
-				batchPlannerMapping.getExternalFieldName(),
-				batchPlannerMapping.getInternalFieldName()
-			},
-			batchPlannerMapping);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch planner mappings in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerMappings the batch planner mappings
-	 */
-	@Override
-	public void cacheResult(List<BatchPlannerMapping> batchPlannerMappings) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchPlannerMappings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchPlannerMapping batchPlannerMapping : batchPlannerMappings) {
-			if (entityCache.getResult(
-					BatchPlannerMappingImpl.class,
-					batchPlannerMapping.getPrimaryKey()) == null) {
-
-				cacheResult(batchPlannerMapping);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BatchPlannerMappingModelImpl batchPlannerMappingModelImpl) {
-
-		Object[] args = new Object[] {
-			batchPlannerMappingModelImpl.getBatchPlannerPlanId(),
-			batchPlannerMappingModelImpl.getExternalFieldName(),
-			batchPlannerMappingModelImpl.getInternalFieldName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByBPPI_EFN_IFN, args, batchPlannerMappingModelImpl);
-	}
-
-	/**
 	 * Creates a new batch planner mapping with the primary key. Does not add the batch planner mapping to the database.
 	 *
 	 * @param batchPlannerMappingId the primary key for the new batch planner mapping
@@ -558,11 +494,7 @@ public class BatchPlannerMappingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchPlannerMappingImpl.class, batchPlannerMappingModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(batchPlannerMappingModelImpl);
+		cacheUniqueFindersResult(batchPlannerMapping, false);
 
 		if (isNew) {
 			batchPlannerMapping.setNew(false);
@@ -623,9 +555,6 @@ public class BatchPlannerMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByBatchPlannerPlanId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBatchPlannerPlanId",
 			new String[] {
@@ -658,7 +587,7 @@ public class BatchPlannerMappingPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					BatchPlannerMapping::getBatchPlannerPlanId));
 
-		_finderPathFetchByBPPI_EFN_IFN = new FinderPath(
+		_finderPathFetchByBPPI_EFN_IFN = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_EFN_IFN",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -667,7 +596,9 @@ public class BatchPlannerMappingPersistenceImpl
 			new String[] {
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
-			true);
+			false, BatchPlannerMapping::getBatchPlannerPlanId,
+			BatchPlannerMapping::getExternalFieldName,
+			BatchPlannerMapping::getInternalFieldName);
 
 		_uniquePersistenceFinderByBPPI_EFN_IFN = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByBPPI_EFN_IFN,
@@ -751,4 +682,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:858874344
+// LIFERAY-SERVICE-BUILDER-HASH:2074634634

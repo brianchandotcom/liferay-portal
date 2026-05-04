@@ -36,6 +36,20 @@ public class CSDiagramEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CSDiagramEntry> csDiagramEntries) {
+		getPersistence().cacheResult(csDiagramEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CSDiagramEntry csDiagramEntry) {
+		getPersistence().cacheResult(csDiagramEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -627,24 +641,6 @@ public class CSDiagramEntryUtil {
 	}
 
 	/**
-	 * Caches the cs diagram entry in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntry the cs diagram entry
-	 */
-	public static void cacheResult(CSDiagramEntry csDiagramEntry) {
-		getPersistence().cacheResult(csDiagramEntry);
-	}
-
-	/**
-	 * Caches the cs diagram entries in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramEntries the cs diagram entries
-	 */
-	public static void cacheResult(List<CSDiagramEntry> csDiagramEntries) {
-		getPersistence().cacheResult(csDiagramEntries);
-	}
-
-	/**
 	 * Creates a new cs diagram entry with the primary key. Does not add the cs diagram entry to the database.
 	 *
 	 * @param CSDiagramEntryId the primary key for the new cs diagram entry
@@ -707,4 +703,4 @@ public class CSDiagramEntryUtil {
 	private static volatile CSDiagramEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1963957369
+// LIFERAY-SERVICE-BUILDER-HASH:-754364200

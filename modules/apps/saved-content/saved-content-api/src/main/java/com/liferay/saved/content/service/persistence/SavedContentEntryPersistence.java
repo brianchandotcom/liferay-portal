@@ -1511,21 +1511,6 @@ public interface SavedContentEntryPersistence
 		long companyId, long userId, long classNameId, long[] classPKs);
 
 	/**
-	 * Caches the saved content entry in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntry the saved content entry
-	 */
-	public void cacheResult(SavedContentEntry savedContentEntry);
-
-	/**
-	 * Caches the saved content entries in the entity cache if it is enabled.
-	 *
-	 * @param savedContentEntries the saved content entries
-	 */
-	public void cacheResult(
-		java.util.List<SavedContentEntry> savedContentEntries);
-
-	/**
 	 * Creates a new saved content entry with the primary key. Does not add the saved content entry to the database.
 	 *
 	 * @param savedContentEntryId the primary key for the new saved content entry
@@ -1564,4 +1549,4 @@ public interface SavedContentEntryPersistence
 	public SavedContentEntry fetchByPrimaryKey(long savedContentEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-711182725
+// LIFERAY-SERVICE-BUILDER-HASH:-141101687

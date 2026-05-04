@@ -365,23 +365,6 @@ public interface CommerceShippingFixedOptionRelPersistence
 		long commerceShippingFixedOptionId, long commerceShippingMethodId);
 
 	/**
-	 * Caches the commerce shipping fixed option rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
-	 */
-	public void cacheResult(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel);
-
-	/**
-	 * Caches the commerce shipping fixed option rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRels the commerce shipping fixed option rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceShippingFixedOptionRel>
-			commerceShippingFixedOptionRels);
-
-	/**
 	 * Creates a new commerce shipping fixed option rel with the primary key. Does not add the commerce shipping fixed option rel to the database.
 	 *
 	 * @param commerceShippingFixedOptionRelId the primary key for the new commerce shipping fixed option rel
@@ -425,4 +408,4 @@ public interface CommerceShippingFixedOptionRelPersistence
 		long commerceShippingFixedOptionRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1075283920
+// LIFERAY-SERVICE-BUILDER-HASH:-1370219716

@@ -78,21 +78,6 @@ public interface NullConvertibleEntryPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the null convertible entry in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntry the null convertible entry
-	 */
-	public void cacheResult(NullConvertibleEntry nullConvertibleEntry);
-
-	/**
-	 * Caches the null convertible entries in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntries the null convertible entries
-	 */
-	public void cacheResult(
-		java.util.List<NullConvertibleEntry> nullConvertibleEntries);
-
-	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
 	 * @param nullConvertibleEntryId the primary key for the new null convertible entry
@@ -132,4 +117,4 @@ public interface NullConvertibleEntryPersistence
 	public NullConvertibleEntry fetchByPrimaryKey(long nullConvertibleEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-38414734
+// LIFERAY-SERVICE-BUILDER-HASH:-351739276

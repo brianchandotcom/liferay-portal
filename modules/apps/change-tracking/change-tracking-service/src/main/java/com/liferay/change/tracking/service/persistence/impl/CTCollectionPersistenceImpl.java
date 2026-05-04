@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -3119,63 +3117,6 @@ public class CTCollectionPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct collection in the entity cache if it is enabled.
-	 *
-	 * @param ctCollection the ct collection
-	 */
-	@Override
-	public void cacheResult(CTCollection ctCollection) {
-		entityCache.putResult(
-			CTCollectionImpl.class, ctCollection.getPrimaryKey(), ctCollection);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				ctCollection.getExternalReferenceCode(),
-				ctCollection.getCompanyId()
-			},
-			ctCollection);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct collections in the entity cache if it is enabled.
-	 *
-	 * @param ctCollections the ct collections
-	 */
-	@Override
-	public void cacheResult(List<CTCollection> ctCollections) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctCollections.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTCollection ctCollection : ctCollections) {
-			if (entityCache.getResult(
-					CTCollectionImpl.class, ctCollection.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(ctCollection);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CTCollectionModelImpl ctCollectionModelImpl) {
-
-		Object[] args = new Object[] {
-			ctCollectionModelImpl.getExternalReferenceCode(),
-			ctCollectionModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, ctCollectionModelImpl);
-	}
-
-	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
 	 * @param ctCollectionId the primary key for the new ct collection
@@ -3376,10 +3317,7 @@ public class CTCollectionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTCollectionImpl.class, ctCollectionModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctCollectionModelImpl);
+		cacheUniqueFindersResult(ctCollection, false);
 
 		if (isNew) {
 			ctCollection.setNew(false);
@@ -3445,9 +3383,6 @@ public class CTCollectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3623,10 +3558,11 @@ public class CTCollectionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "status"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CTCollection::getExternalReferenceCode, CTCollection::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CTCOLLECTION_WHERE,
@@ -3730,4 +3666,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:33572435
+// LIFERAY-SERVICE-BUILDER-HASH:484600061

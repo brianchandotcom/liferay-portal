@@ -3225,20 +3225,6 @@ public interface FragmentEntryPersistence
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the fragment entry in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntry the fragment entry
-	 */
-	public void cacheResult(FragmentEntry fragmentEntry);
-
-	/**
-	 * Caches the fragment entries in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntries the fragment entries
-	 */
-	public void cacheResult(java.util.List<FragmentEntry> fragmentEntries);
-
-	/**
 	 * Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
 	 *
 	 * @param fragmentEntryId the primary key for the new fragment entry
@@ -3277,4 +3263,4 @@ public interface FragmentEntryPersistence
 	public FragmentEntry fetchByPrimaryKey(long fragmentEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:700611220
+// LIFERAY-SERVICE-BUILDER-HASH:-715903492

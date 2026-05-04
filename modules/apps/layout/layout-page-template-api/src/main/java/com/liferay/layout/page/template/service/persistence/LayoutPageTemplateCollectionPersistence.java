@@ -1512,23 +1512,6 @@ public interface LayoutPageTemplateCollectionPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the layout page template collection in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateCollection the layout page template collection
-	 */
-	public void cacheResult(
-		LayoutPageTemplateCollection layoutPageTemplateCollection);
-
-	/**
-	 * Caches the layout page template collections in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateCollections the layout page template collections
-	 */
-	public void cacheResult(
-		java.util.List<LayoutPageTemplateCollection>
-			layoutPageTemplateCollections);
-
-	/**
 	 * Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
 	 *
 	 * @param layoutPageTemplateCollectionId the primary key for the new layout page template collection
@@ -1572,4 +1555,4 @@ public interface LayoutPageTemplateCollectionPersistence
 		long layoutPageTemplateCollectionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1501928062
+// LIFERAY-SERVICE-BUILDER-HASH:-129549994

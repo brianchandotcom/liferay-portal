@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -787,64 +784,6 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 	/**
-	 * Caches the changeset collection in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollection the changeset collection
-	 */
-	@Override
-	public void cacheResult(ChangesetCollection changesetCollection) {
-		entityCache.putResult(
-			ChangesetCollectionImpl.class, changesetCollection.getPrimaryKey(),
-			changesetCollection);
-
-		finderCache.putResult(
-			_finderPathFetchByG_N,
-			new Object[] {
-				changesetCollection.getGroupId(), changesetCollection.getName()
-			},
-			changesetCollection);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the changeset collections in the entity cache if it is enabled.
-	 *
-	 * @param changesetCollections the changeset collections
-	 */
-	@Override
-	public void cacheResult(List<ChangesetCollection> changesetCollections) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (changesetCollections.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ChangesetCollection changesetCollection : changesetCollections) {
-			if (entityCache.getResult(
-					ChangesetCollectionImpl.class,
-					changesetCollection.getPrimaryKey()) == null) {
-
-				cacheResult(changesetCollection);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ChangesetCollectionModelImpl changesetCollectionModelImpl) {
-
-		Object[] args = new Object[] {
-			changesetCollectionModelImpl.getGroupId(),
-			changesetCollectionModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_N, args, changesetCollectionModelImpl);
-	}
-
-	/**
 	 * Creates a new changeset collection with the primary key. Does not add the changeset collection to the database.
 	 *
 	 * @param changesetCollectionId the primary key for the new changeset collection
@@ -980,11 +919,7 @@ public class ChangesetCollectionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ChangesetCollectionImpl.class, changesetCollectionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(changesetCollectionModelImpl);
+		cacheUniqueFindersResult(changesetCollection, false);
 
 		if (isNew) {
 			changesetCollection.setNew(false);
@@ -1045,9 +980,6 @@ public class ChangesetCollectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1142,10 +1074,11 @@ public class ChangesetCollectionPersistenceImpl
 				"changesetCollection.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, ChangesetCollection::getUserId));
 
-		_finderPathFetchByG_N = new FinderPath(
+		_finderPathFetchByG_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, true);
+			new String[] {"groupId", "name"}, false,
+			ChangesetCollection::getGroupId, ChangesetCollection::getName);
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N, _SQL_SELECT_CHANGESETCOLLECTION_WHERE,
@@ -1254,4 +1187,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-752412037
+// LIFERAY-SERVICE-BUILDER-HASH:1426013055

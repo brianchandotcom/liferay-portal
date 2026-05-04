@@ -37,11 +37,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -3161,94 +3158,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher fix pack in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPack the patcher fix pack
-	 */
-	@Override
-	public void cacheResult(PatcherFixPack patcherFixPack) {
-		entityCache.putResult(
-			PatcherFixPackImpl.class, patcherFixPack.getPrimaryKey(),
-			patcherFixPack);
-
-		finderCache.putResult(
-			_finderPathFetchByPatcherBuildId,
-			new Object[] {patcherFixPack.getPatcherBuildId()}, patcherFixPack);
-
-		finderCache.putResult(
-			_finderPathFetchByPFCI_N,
-			new Object[] {
-				patcherFixPack.getPatcherProjectVersionId(),
-				patcherFixPack.getName()
-			},
-			patcherFixPack);
-
-		finderCache.putResult(
-			_finderPathFetchByPFCI_PPVI_N_V,
-			new Object[] {
-				patcherFixPack.getPatcherFixComponentId(),
-				patcherFixPack.getPatcherProjectVersionId(),
-				patcherFixPack.getName(), patcherFixPack.getVersion()
-			},
-			patcherFixPack);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher fix packs in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixPacks the patcher fix packs
-	 */
-	@Override
-	public void cacheResult(List<PatcherFixPack> patcherFixPacks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherFixPacks.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherFixPack patcherFixPack : patcherFixPacks) {
-			if (entityCache.getResult(
-					PatcherFixPackImpl.class, patcherFixPack.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(patcherFixPack);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherFixPackModelImpl patcherFixPackModelImpl) {
-
-		Object[] args = new Object[] {
-			patcherFixPackModelImpl.getPatcherBuildId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByPatcherBuildId, args, patcherFixPackModelImpl);
-
-		args = new Object[] {
-			patcherFixPackModelImpl.getPatcherProjectVersionId(),
-			patcherFixPackModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByPFCI_N, args, patcherFixPackModelImpl);
-
-		args = new Object[] {
-			patcherFixPackModelImpl.getPatcherFixComponentId(),
-			patcherFixPackModelImpl.getPatcherProjectVersionId(),
-			patcherFixPackModelImpl.getName(),
-			patcherFixPackModelImpl.getVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByPFCI_PPVI_N_V, args, patcherFixPackModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher fix pack with the primary key. Does not add the patcher fix pack to the database.
 	 *
 	 * @param patcherFixPackId the primary key for the new patcher fix pack
@@ -3382,10 +3291,7 @@ public class PatcherFixPackPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherFixPackImpl.class, patcherFixPackModelImpl, false, true);
-
-		cacheUniqueFindersCache(patcherFixPackModelImpl);
+		cacheUniqueFindersResult(patcherFixPack, false);
 
 		if (isNew) {
 			patcherFixPack.setNew(false);
@@ -3767,19 +3673,17 @@ public class PatcherFixPackPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		patcherFixPackToPatcherFixTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OSBPatcher_PFixes_PFixPacks#patcherFixPackId",
 				"OSBPatcher_PFixes_PFixPacks", "companyId", "patcherFixPackId",
 				"patcherFixId", this, PatcherFix.class);
 
-		_finderPathFetchByPatcherBuildId = new FinderPath(
+		_finderPathFetchByPatcherBuildId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPatcherBuildId",
 			new String[] {Long.class.getName()},
-			new String[] {"patcherBuildId"}, true);
+			new String[] {"patcherBuildId"}, false,
+			PatcherFixPack::getPatcherBuildId);
 
 		_uniquePersistenceFinderByPatcherBuildId =
 			new UniquePersistenceFinder<>(
@@ -3924,10 +3828,12 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, PatcherFixPack::getVersion));
 
-		_finderPathFetchByPFCI_N = new FinderPath(
+		_finderPathFetchByPFCI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"patcherProjectVersionId", "name"}, true);
+			new String[] {"patcherProjectVersionId", "name"}, false,
+			PatcherFixPack::getPatcherProjectVersionId,
+			PatcherFixPack::getName);
 
 		_uniquePersistenceFinderByPFCI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByPFCI_N, _SQL_SELECT_PATCHERFIXPACK_WHERE,
@@ -4057,7 +3963,7 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"<", true, true, PatcherFixPack::getVersion));
 
-		_finderPathFetchByPFCI_PPVI_N_V = new FinderPath(
+		_finderPathFetchByPFCI_PPVI_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_PPVI_N_V",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -4067,7 +3973,9 @@ public class PatcherFixPackPersistenceImpl
 				"patcherFixComponentId", "patcherProjectVersionId", "name",
 				"version"
 			},
-			true);
+			false, PatcherFixPack::getPatcherFixComponentId,
+			PatcherFixPack::getPatcherProjectVersionId, PatcherFixPack::getName,
+			PatcherFixPack::getVersion);
 
 		_uniquePersistenceFinderByPFCI_PPVI_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByPFCI_PPVI_N_V,
@@ -4184,4 +4092,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-227981827
+// LIFERAY-SERVICE-BUILDER-HASH:-983651150

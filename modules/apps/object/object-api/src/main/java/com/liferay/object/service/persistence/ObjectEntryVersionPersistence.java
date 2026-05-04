@@ -726,21 +726,6 @@ public interface ObjectEntryVersionPersistence
 	public int countByOEI_S(long objectEntryId, int status);
 
 	/**
-	 * Caches the object entry version in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryVersion the object entry version
-	 */
-	public void cacheResult(ObjectEntryVersion objectEntryVersion);
-
-	/**
-	 * Caches the object entry versions in the entity cache if it is enabled.
-	 *
-	 * @param objectEntryVersions the object entry versions
-	 */
-	public void cacheResult(
-		java.util.List<ObjectEntryVersion> objectEntryVersions);
-
-	/**
 	 * Creates a new object entry version with the primary key. Does not add the object entry version to the database.
 	 *
 	 * @param objectEntryVersionId the primary key for the new object entry version
@@ -779,4 +764,4 @@ public interface ObjectEntryVersionPersistence
 	public ObjectEntryVersion fetchByPrimaryKey(long objectEntryVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1631638907
+// LIFERAY-SERVICE-BUILDER-HASH:575125997

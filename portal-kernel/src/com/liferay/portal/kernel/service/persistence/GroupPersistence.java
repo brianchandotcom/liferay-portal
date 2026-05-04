@@ -2937,20 +2937,6 @@ public interface GroupPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the group in the entity cache if it is enabled.
-	 *
-	 * @param group the group
-	 */
-	public void cacheResult(Group group);
-
-	/**
-	 * Caches the groups in the entity cache if it is enabled.
-	 *
-	 * @param groups the groups
-	 */
-	public void cacheResult(java.util.List<Group> groups);
-
-	/**
 	 * Creates a new group with the primary key. Does not add the group to the database.
 	 *
 	 * @param groupId the primary key for the new group
@@ -3679,4 +3665,4 @@ public interface GroupPersistence
 		long pk, java.util.List<com.liferay.portal.kernel.model.User> users);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:603551235
+// LIFERAY-SERVICE-BUILDER-HASH:-814333313

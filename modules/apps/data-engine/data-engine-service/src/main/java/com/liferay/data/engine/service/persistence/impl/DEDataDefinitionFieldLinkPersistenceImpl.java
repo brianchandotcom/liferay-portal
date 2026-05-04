@@ -15,7 +15,6 @@ import com.liferay.data.engine.service.persistence.DEDataDefinitionFieldLinkUtil
 import com.liferay.data.engine.service.persistence.impl.constants.DEPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2860,109 +2856,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the de data definition field link in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLink the de data definition field link
-	 */
-	@Override
-	public void cacheResult(
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					deDataDefinitionFieldLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DEDataDefinitionFieldLinkImpl.class,
-				deDataDefinitionFieldLink.getPrimaryKey(),
-				deDataDefinitionFieldLink);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					deDataDefinitionFieldLink.getUuid(),
-					deDataDefinitionFieldLink.getGroupId()
-				},
-				deDataDefinitionFieldLink);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_DDMSI_F,
-				new Object[] {
-					deDataDefinitionFieldLink.getClassNameId(),
-					deDataDefinitionFieldLink.getClassPK(),
-					deDataDefinitionFieldLink.getDdmStructureId(),
-					deDataDefinitionFieldLink.getFieldName()
-				},
-				deDataDefinitionFieldLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the de data definition field links in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLinks the de data definition field links
-	 */
-	@Override
-	public void cacheResult(
-		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (deDataDefinitionFieldLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DEDataDefinitionFieldLink deDataDefinitionFieldLink :
-				deDataDefinitionFieldLinks) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						deDataDefinitionFieldLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DEDataDefinitionFieldLinkImpl.class,
-						deDataDefinitionFieldLink.getPrimaryKey()) == null) {
-
-					cacheResult(deDataDefinitionFieldLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DEDataDefinitionFieldLinkModelImpl deDataDefinitionFieldLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					deDataDefinitionFieldLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				deDataDefinitionFieldLinkModelImpl.getUuid(),
-				deDataDefinitionFieldLinkModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				deDataDefinitionFieldLinkModelImpl);
-
-			args = new Object[] {
-				deDataDefinitionFieldLinkModelImpl.getClassNameId(),
-				deDataDefinitionFieldLinkModelImpl.getClassPK(),
-				deDataDefinitionFieldLinkModelImpl.getDdmStructureId(),
-				deDataDefinitionFieldLinkModelImpl.getFieldName()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_DDMSI_F, args,
-				deDataDefinitionFieldLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new de data definition field link with the primary key. Does not add the de data definition field link to the database.
 	 *
 	 * @param deDataDefinitionFieldLinkId the primary key for the new de data definition field link
@@ -3122,11 +3015,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DEDataDefinitionFieldLinkImpl.class,
-			deDataDefinitionFieldLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(deDataDefinitionFieldLinkModelImpl);
+		cacheUniqueFindersResult(deDataDefinitionFieldLink, false);
 
 		if (isNew) {
 			deDataDefinitionFieldLink.setNew(false);
@@ -3269,9 +3158,6 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3301,10 +3187,12 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 				"deDataDefinitionFieldLink.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, DEDataDefinitionFieldLink::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			DEDataDefinitionFieldLink::getUuid,
+			DEDataDefinitionFieldLink::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -3513,7 +3401,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			},
 			new String[] {"classNameId", "ddmStructureId", "fieldName"}, false);
 
-		_finderPathFetchByC_C_DDMSI_F = new FinderPath(
+		_finderPathFetchByC_C_DDMSI_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_DDMSI_F",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -3522,7 +3410,10 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			new String[] {
 				"classNameId", "classPK", "ddmStructureId", "fieldName"
 			},
-			true);
+			false, DEDataDefinitionFieldLink::getClassNameId,
+			DEDataDefinitionFieldLink::getClassPK,
+			DEDataDefinitionFieldLink::getDdmStructureId,
+			DEDataDefinitionFieldLink::getFieldName);
 
 		_finderPathWithPaginationCountByC_C_DDMSI_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_DDMSI_F",
@@ -3607,4 +3498,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:729505729
+// LIFERAY-SERVICE-BUILDER-HASH:81348444

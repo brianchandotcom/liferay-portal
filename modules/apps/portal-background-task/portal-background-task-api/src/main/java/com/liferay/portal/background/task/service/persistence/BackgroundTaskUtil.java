@@ -36,6 +36,20 @@ public class BackgroundTaskUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<BackgroundTask> backgroundTasks) {
+		getPersistence().cacheResult(backgroundTasks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(BackgroundTask backgroundTask) {
+		getPersistence().cacheResult(backgroundTask);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -2255,24 +2269,6 @@ public class BackgroundTaskUtil {
 	}
 
 	/**
-	 * Caches the background task in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTask the background task
-	 */
-	public static void cacheResult(BackgroundTask backgroundTask) {
-		getPersistence().cacheResult(backgroundTask);
-	}
-
-	/**
-	 * Caches the background tasks in the entity cache if it is enabled.
-	 *
-	 * @param backgroundTasks the background tasks
-	 */
-	public static void cacheResult(List<BackgroundTask> backgroundTasks) {
-		getPersistence().cacheResult(backgroundTasks);
-	}
-
-	/**
 	 * Creates a new background task with the primary key. Does not add the background task to the database.
 	 *
 	 * @param backgroundTaskId the primary key for the new background task
@@ -2335,4 +2331,4 @@ public class BackgroundTaskUtil {
 	private static volatile BackgroundTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1676791210
+// LIFERAY-SERVICE-BUILDER-HASH:1849979240

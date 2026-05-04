@@ -36,6 +36,20 @@ public class DDMContentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMContent> ddmContents) {
+		getPersistence().cacheResult(ddmContents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMContent ddmContent) {
+		getPersistence().cacheResult(ddmContent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -668,24 +682,6 @@ public class DDMContentUtil {
 	}
 
 	/**
-	 * Caches the ddm content in the entity cache if it is enabled.
-	 *
-	 * @param ddmContent the ddm content
-	 */
-	public static void cacheResult(DDMContent ddmContent) {
-		getPersistence().cacheResult(ddmContent);
-	}
-
-	/**
-	 * Caches the ddm contents in the entity cache if it is enabled.
-	 *
-	 * @param ddmContents the ddm contents
-	 */
-	public static void cacheResult(List<DDMContent> ddmContents) {
-		getPersistence().cacheResult(ddmContents);
-	}
-
-	/**
 	 * Creates a new ddm content with the primary key. Does not add the ddm content to the database.
 	 *
 	 * @param contentId the primary key for the new ddm content
@@ -748,4 +744,4 @@ public class DDMContentUtil {
 	private static volatile DDMContentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1826888541
+// LIFERAY-SERVICE-BUILDER-HASH:-1246774163

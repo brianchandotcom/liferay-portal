@@ -230,21 +230,6 @@ public interface SamlIdpSsoSessionPersistence
 	public int countBySamlIdpSsoSessionKey(String samlIdpSsoSessionKey);
 
 	/**
-	 * Caches the saml idp sso session in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSession the saml idp sso session
-	 */
-	public void cacheResult(SamlIdpSsoSession samlIdpSsoSession);
-
-	/**
-	 * Caches the saml idp sso sessions in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSsoSessions the saml idp sso sessions
-	 */
-	public void cacheResult(
-		java.util.List<SamlIdpSsoSession> samlIdpSsoSessions);
-
-	/**
 	 * Creates a new saml idp sso session with the primary key. Does not add the saml idp sso session to the database.
 	 *
 	 * @param samlIdpSsoSessionId the primary key for the new saml idp sso session
@@ -283,4 +268,4 @@ public interface SamlIdpSsoSessionPersistence
 	public SamlIdpSsoSession fetchByPrimaryKey(long samlIdpSsoSessionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:633409791
+// LIFERAY-SERVICE-BUILDER-HASH:-1149894437

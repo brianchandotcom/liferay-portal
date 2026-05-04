@@ -80,21 +80,6 @@ public interface DDMFormInstanceReportPersistence
 	public int countByFormInstanceId(long formInstanceId);
 
 	/**
-	 * Caches the ddm form instance report in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReport the ddm form instance report
-	 */
-	public void cacheResult(DDMFormInstanceReport ddmFormInstanceReport);
-
-	/**
-	 * Caches the ddm form instance reports in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceReports the ddm form instance reports
-	 */
-	public void cacheResult(
-		java.util.List<DDMFormInstanceReport> ddmFormInstanceReports);
-
-	/**
 	 * Creates a new ddm form instance report with the primary key. Does not add the ddm form instance report to the database.
 	 *
 	 * @param formInstanceReportId the primary key for the new ddm form instance report
@@ -134,4 +119,4 @@ public interface DDMFormInstanceReportPersistence
 	public DDMFormInstanceReport fetchByPrimaryKey(long formInstanceReportId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1529520372
+// LIFERAY-SERVICE-BUILDER-HASH:1785736196

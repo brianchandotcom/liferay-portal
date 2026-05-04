@@ -36,6 +36,20 @@ public class FaroNotificationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<FaroNotification> faroNotifications) {
+		getPersistence().cacheResult(faroNotifications);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FaroNotification faroNotification) {
+		getPersistence().cacheResult(faroNotification);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1105,24 +1119,6 @@ public class FaroNotificationUtil {
 	}
 
 	/**
-	 * Caches the faro notification in the entity cache if it is enabled.
-	 *
-	 * @param faroNotification the faro notification
-	 */
-	public static void cacheResult(FaroNotification faroNotification) {
-		getPersistence().cacheResult(faroNotification);
-	}
-
-	/**
-	 * Caches the faro notifications in the entity cache if it is enabled.
-	 *
-	 * @param faroNotifications the faro notifications
-	 */
-	public static void cacheResult(List<FaroNotification> faroNotifications) {
-		getPersistence().cacheResult(faroNotifications);
-	}
-
-	/**
 	 * Creates a new faro notification with the primary key. Does not add the faro notification to the database.
 	 *
 	 * @param faroNotificationId the primary key for the new faro notification
@@ -1185,4 +1181,4 @@ public class FaroNotificationUtil {
 	private static volatile FaroNotificationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1166487073
+// LIFERAY-SERVICE-BUILDER-HASH:711548143

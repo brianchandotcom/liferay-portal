@@ -36,6 +36,20 @@ public class CTCommentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTComment> ctComments) {
+		getPersistence().cacheResult(ctComments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTComment ctComment) {
+		getPersistence().cacheResult(ctComment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -354,24 +368,6 @@ public class CTCommentUtil {
 	}
 
 	/**
-	 * Caches the ct comment in the entity cache if it is enabled.
-	 *
-	 * @param ctComment the ct comment
-	 */
-	public static void cacheResult(CTComment ctComment) {
-		getPersistence().cacheResult(ctComment);
-	}
-
-	/**
-	 * Caches the ct comments in the entity cache if it is enabled.
-	 *
-	 * @param ctComments the ct comments
-	 */
-	public static void cacheResult(List<CTComment> ctComments) {
-		getPersistence().cacheResult(ctComments);
-	}
-
-	/**
 	 * Creates a new ct comment with the primary key. Does not add the ct comment to the database.
 	 *
 	 * @param ctCommentId the primary key for the new ct comment
@@ -432,4 +428,4 @@ public class CTCommentUtil {
 	private static volatile CTCommentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1193946448
+// LIFERAY-SERVICE-BUILDER-HASH:32244486

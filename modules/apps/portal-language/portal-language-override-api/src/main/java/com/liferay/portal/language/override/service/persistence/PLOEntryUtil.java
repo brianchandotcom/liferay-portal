@@ -36,6 +36,20 @@ public class PLOEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PLOEntry> ploEntries) {
+		getPersistence().cacheResult(ploEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PLOEntry ploEntry) {
+		getPersistence().cacheResult(ploEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -572,24 +586,6 @@ public class PLOEntryUtil {
 	}
 
 	/**
-	 * Caches the plo entry in the entity cache if it is enabled.
-	 *
-	 * @param ploEntry the plo entry
-	 */
-	public static void cacheResult(PLOEntry ploEntry) {
-		getPersistence().cacheResult(ploEntry);
-	}
-
-	/**
-	 * Caches the plo entries in the entity cache if it is enabled.
-	 *
-	 * @param ploEntries the plo entries
-	 */
-	public static void cacheResult(List<PLOEntry> ploEntries) {
-		getPersistence().cacheResult(ploEntries);
-	}
-
-	/**
 	 * Creates a new plo entry with the primary key. Does not add the plo entry to the database.
 	 *
 	 * @param ploEntryId the primary key for the new plo entry
@@ -652,4 +648,4 @@ public class PLOEntryUtil {
 	private static volatile PLOEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1246632254
+// LIFERAY-SERVICE-BUILDER-HASH:-792063031

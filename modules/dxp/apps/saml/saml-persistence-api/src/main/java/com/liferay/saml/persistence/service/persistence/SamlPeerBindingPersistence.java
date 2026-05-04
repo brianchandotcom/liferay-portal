@@ -290,20 +290,6 @@ public interface SamlPeerBindingPersistence
 		long companyId, long userId, String samlPeerEntityId, boolean deleted);
 
 	/**
-	 * Caches the saml peer binding in the entity cache if it is enabled.
-	 *
-	 * @param samlPeerBinding the saml peer binding
-	 */
-	public void cacheResult(SamlPeerBinding samlPeerBinding);
-
-	/**
-	 * Caches the saml peer bindings in the entity cache if it is enabled.
-	 *
-	 * @param samlPeerBindings the saml peer bindings
-	 */
-	public void cacheResult(java.util.List<SamlPeerBinding> samlPeerBindings);
-
-	/**
 	 * Creates a new saml peer binding with the primary key. Does not add the saml peer binding to the database.
 	 *
 	 * @param samlPeerBindingId the primary key for the new saml peer binding
@@ -342,4 +328,4 @@ public interface SamlPeerBindingPersistence
 	public SamlPeerBinding fetchByPrimaryKey(long samlPeerBindingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1300433632
+// LIFERAY-SERVICE-BUILDER-HASH:-558749640

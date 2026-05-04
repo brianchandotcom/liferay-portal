@@ -692,20 +692,6 @@ public interface KaleoLogPersistence
 		String type);
 
 	/**
-	 * Caches the kaleo log in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLog the kaleo log
-	 */
-	public void cacheResult(KaleoLog kaleoLog);
-
-	/**
-	 * Caches the kaleo logs in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLogs the kaleo logs
-	 */
-	public void cacheResult(java.util.List<KaleoLog> kaleoLogs);
-
-	/**
 	 * Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
 	 *
 	 * @param kaleoLogId the primary key for the new kaleo log
@@ -742,4 +728,4 @@ public interface KaleoLogPersistence
 	public KaleoLog fetchByPrimaryKey(long kaleoLogId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1924915200
+// LIFERAY-SERVICE-BUILDER-HASH:-478191780

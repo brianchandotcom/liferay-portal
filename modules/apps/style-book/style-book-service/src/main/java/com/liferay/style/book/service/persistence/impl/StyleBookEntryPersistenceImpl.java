@@ -6,7 +6,6 @@
 package com.liferay.style.book.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,8 +32,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -3818,125 +3815,6 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the style book entry in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntry the style book entry
-	 */
-	@Override
-	public void cacheResult(StyleBookEntry styleBookEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					styleBookEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				StyleBookEntryImpl.class, styleBookEntry.getPrimaryKey(),
-				styleBookEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Head,
-				new Object[] {
-					styleBookEntry.getUuid(), styleBookEntry.getGroupId(),
-					styleBookEntry.isHead()
-				},
-				styleBookEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_SBEK_Head,
-				new Object[] {
-					styleBookEntry.getGroupId(),
-					styleBookEntry.getStyleBookEntryKey(),
-					styleBookEntry.isHead()
-				},
-				styleBookEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_Head,
-				new Object[] {
-					styleBookEntry.getExternalReferenceCode(),
-					styleBookEntry.getGroupId(), styleBookEntry.isHead()
-				},
-				styleBookEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByHeadId,
-				new Object[] {styleBookEntry.getHeadId()}, styleBookEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the style book entries in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntries the style book entries
-	 */
-	@Override
-	public void cacheResult(List<StyleBookEntry> styleBookEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (styleBookEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (StyleBookEntry styleBookEntry : styleBookEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						styleBookEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						StyleBookEntryImpl.class,
-						styleBookEntry.getPrimaryKey()) == null) {
-
-					cacheResult(styleBookEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		StyleBookEntryModelImpl styleBookEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					styleBookEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				styleBookEntryModelImpl.getUuid(),
-				styleBookEntryModelImpl.getGroupId(),
-				styleBookEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G_Head, args, styleBookEntryModelImpl);
-
-			args = new Object[] {
-				styleBookEntryModelImpl.getGroupId(),
-				styleBookEntryModelImpl.getStyleBookEntryKey(),
-				styleBookEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_SBEK_Head, args, styleBookEntryModelImpl);
-
-			args = new Object[] {
-				styleBookEntryModelImpl.getExternalReferenceCode(),
-				styleBookEntryModelImpl.getGroupId(),
-				styleBookEntryModelImpl.isHead()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G_Head, args, styleBookEntryModelImpl);
-
-			args = new Object[] {styleBookEntryModelImpl.getHeadId()};
-
-			finderCache.putResult(
-				_finderPathFetchByHeadId, args, styleBookEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new style book entry with the primary key. Does not add the style book entry to the database.
 	 *
 	 * @param styleBookEntryId the primary key for the new style book entry
@@ -4148,10 +4026,7 @@ public class StyleBookEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			StyleBookEntryImpl.class, styleBookEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(styleBookEntryModelImpl);
+		cacheUniqueFindersResult(styleBookEntry, false);
 
 		if (isNew) {
 			styleBookEntry.setNew(false);
@@ -4299,9 +4174,6 @@ public class StyleBookEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -4395,13 +4267,15 @@ public class StyleBookEntryPersistenceImpl
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = new FinderPath(
+		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "head"}, true);
+			new String[] {"uuid_", "groupId", "head"}, false,
+			StyleBookEntry::getUuid, StyleBookEntry::getGroupId,
+			StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
@@ -4798,13 +4672,15 @@ public class StyleBookEntryPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntry::getStyleBookEntryKey));
 
-		_finderPathFetchByG_SBEK_Head = new FinderPath(
+		_finderPathFetchByG_SBEK_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK_Head",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"groupId", "styleBookEntryKey", "head"}, true);
+			new String[] {"groupId", "styleBookEntryKey", "head"}, false,
+			StyleBookEntry::getGroupId, StyleBookEntry::getStyleBookEntryKey,
+			StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByG_SBEK_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_SBEK_Head,
@@ -5023,13 +4899,15 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getGroupId));
 
-		_finderPathFetchByERC_G_Head = new FinderPath(
+		_finderPathFetchByERC_G_Head = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, true);
+			new String[] {"externalReferenceCode", "groupId", "head"}, false,
+			StyleBookEntry::getExternalReferenceCode,
+			StyleBookEntry::getGroupId, StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_Head,
@@ -5045,9 +4923,10 @@ public class StyleBookEntryPersistenceImpl
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			StyleBookEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
@@ -5127,4 +5006,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-466404782
+// LIFERAY-SERVICE-BUILDER-HASH:1886153261

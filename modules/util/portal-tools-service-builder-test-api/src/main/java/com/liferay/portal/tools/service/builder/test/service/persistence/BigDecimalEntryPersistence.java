@@ -344,20 +344,6 @@ public interface BigDecimalEntryPersistence
 	public int countByLtBigDecimalValue(BigDecimal bigDecimalValue);
 
 	/**
-	 * Caches the big decimal entry in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntry the big decimal entry
-	 */
-	public void cacheResult(BigDecimalEntry bigDecimalEntry);
-
-	/**
-	 * Caches the big decimal entries in the entity cache if it is enabled.
-	 *
-	 * @param bigDecimalEntries the big decimal entries
-	 */
-	public void cacheResult(java.util.List<BigDecimalEntry> bigDecimalEntries);
-
-	/**
 	 * Creates a new big decimal entry with the primary key. Does not add the big decimal entry to the database.
 	 *
 	 * @param bigDecimalEntryId the primary key for the new big decimal entry
@@ -583,4 +569,4 @@ public interface BigDecimalEntryPersistence
 				lvEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-322615161
+// LIFERAY-SERVICE-BUILDER-HASH:-556855719

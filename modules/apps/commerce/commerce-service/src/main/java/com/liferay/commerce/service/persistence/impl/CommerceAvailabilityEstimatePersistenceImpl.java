@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1254,52 +1251,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimate the commerce availability estimate
-	 */
-	@Override
-	public void cacheResult(
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
-
-		entityCache.putResult(
-			CommerceAvailabilityEstimateImpl.class,
-			commerceAvailabilityEstimate.getPrimaryKey(),
-			commerceAvailabilityEstimate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimates the commerce availability estimates
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceAvailabilityEstimate> commerceAvailabilityEstimates) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceAvailabilityEstimates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceAvailabilityEstimate commerceAvailabilityEstimate :
-				commerceAvailabilityEstimates) {
-
-			if (entityCache.getResult(
-					CommerceAvailabilityEstimateImpl.class,
-					commerceAvailabilityEstimate.getPrimaryKey()) == null) {
-
-				cacheResult(commerceAvailabilityEstimate);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce availability estimate with the primary key. Does not add the commerce availability estimate to the database.
 	 *
 	 * @param commerceAvailabilityEstimateId the primary key for the new commerce availability estimate
@@ -1459,9 +1410,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceAvailabilityEstimateImpl.class,
-			commerceAvailabilityEstimateModelImpl, false, true);
+		cacheUniqueFindersResult(commerceAvailabilityEstimate, false);
 
 		if (isNew) {
 			commerceAvailabilityEstimate.setNew(false);
@@ -1530,9 +1479,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1730,4 +1676,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1709971290
+// LIFERAY-SERVICE-BUILDER-HASH:-1387552294

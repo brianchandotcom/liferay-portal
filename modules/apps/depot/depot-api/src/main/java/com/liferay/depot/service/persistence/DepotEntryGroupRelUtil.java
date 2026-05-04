@@ -36,6 +36,22 @@ public class DepotEntryGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DepotEntryGroupRel> depotEntryGroupRels) {
+
+		getPersistence().cacheResult(depotEntryGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DepotEntryGroupRel depotEntryGroupRel) {
+		getPersistence().cacheResult(depotEntryGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1152,26 +1168,6 @@ public class DepotEntryGroupRelUtil {
 	}
 
 	/**
-	 * Caches the depot entry group rel in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRel the depot entry group rel
-	 */
-	public static void cacheResult(DepotEntryGroupRel depotEntryGroupRel) {
-		getPersistence().cacheResult(depotEntryGroupRel);
-	}
-
-	/**
-	 * Caches the depot entry group rels in the entity cache if it is enabled.
-	 *
-	 * @param depotEntryGroupRels the depot entry group rels
-	 */
-	public static void cacheResult(
-		List<DepotEntryGroupRel> depotEntryGroupRels) {
-
-		getPersistence().cacheResult(depotEntryGroupRels);
-	}
-
-	/**
 	 * Creates a new depot entry group rel with the primary key. Does not add the depot entry group rel to the database.
 	 *
 	 * @param depotEntryGroupRelId the primary key for the new depot entry group rel
@@ -1238,4 +1234,4 @@ public class DepotEntryGroupRelUtil {
 	private static volatile DepotEntryGroupRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505674450
+// LIFERAY-SERVICE-BUILDER-HASH:1334340268

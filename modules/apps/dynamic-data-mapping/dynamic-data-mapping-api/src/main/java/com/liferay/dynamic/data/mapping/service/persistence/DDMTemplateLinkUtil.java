@@ -36,6 +36,20 @@ public class DDMTemplateLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
+		getPersistence().cacheResult(ddmTemplateLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMTemplateLink ddmTemplateLink) {
+		getPersistence().cacheResult(ddmTemplateLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -300,24 +314,6 @@ public class DDMTemplateLinkUtil {
 	}
 
 	/**
-	 * Caches the ddm template link in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLink the ddm template link
-	 */
-	public static void cacheResult(DDMTemplateLink ddmTemplateLink) {
-		getPersistence().cacheResult(ddmTemplateLink);
-	}
-
-	/**
-	 * Caches the ddm template links in the entity cache if it is enabled.
-	 *
-	 * @param ddmTemplateLinks the ddm template links
-	 */
-	public static void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
-		getPersistence().cacheResult(ddmTemplateLinks);
-	}
-
-	/**
 	 * Creates a new ddm template link with the primary key. Does not add the ddm template link to the database.
 	 *
 	 * @param templateLinkId the primary key for the new ddm template link
@@ -380,4 +376,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2142021000
+// LIFERAY-SERVICE-BUILDER-HASH:1920680540

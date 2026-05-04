@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
 import com.liferay.portal.kernel.service.persistence.ReleaseUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -276,53 +273,6 @@ public class ReleasePersistenceImpl
 	}
 
 	/**
-	 * Caches the release in the entity cache if it is enabled.
-	 *
-	 * @param release the release
-	 */
-	@Override
-	public void cacheResult(Release release) {
-		EntityCacheUtil.putResult(
-			ReleaseImpl.class, release.getPrimaryKey(), release);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByServletContextName,
-			new Object[] {release.getServletContextName()}, release);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the releases in the entity cache if it is enabled.
-	 *
-	 * @param releases the releases
-	 */
-	@Override
-	public void cacheResult(List<Release> releases) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (releases.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Release release : releases) {
-			if (EntityCacheUtil.getResult(
-					ReleaseImpl.class, release.getPrimaryKey()) == null) {
-
-				cacheResult(release);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(ReleaseModelImpl releaseModelImpl) {
-		Object[] args = new Object[] {releaseModelImpl.getServletContextName()};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByServletContextName, args, releaseModelImpl);
-	}
-
-	/**
 	 * Creates a new release with the primary key. Does not add the release to the database.
 	 *
 	 * @param releaseId the primary key for the new release
@@ -444,10 +394,7 @@ public class ReleasePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ReleaseImpl.class, releaseModelImpl, false, true);
-
-		cacheUniqueFindersCache(releaseModelImpl);
+		cacheUniqueFindersResult(release, false);
 
 		if (isNew) {
 			release.setNew(false);
@@ -512,15 +459,11 @@ public class ReleasePersistenceImpl
 	 * Initializes the release persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByServletContextName = new FinderPath(
+		_finderPathFetchByServletContextName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
 			new String[] {String.class.getName()},
-			new String[] {"servletContextName"}, true);
-
-		_finderPathFetchByServletContextName.touch();
+			new String[] {"servletContextName"}, true,
+			Release::getServletContextName);
 
 		ReleaseUtil.setPersistence(this);
 	}
@@ -555,4 +498,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-329196872
+// LIFERAY-SERVICE-BUILDER-HASH:-268010463

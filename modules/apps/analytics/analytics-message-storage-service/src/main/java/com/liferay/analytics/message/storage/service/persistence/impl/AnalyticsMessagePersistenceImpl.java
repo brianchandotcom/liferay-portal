@@ -14,7 +14,6 @@ import com.liferay.analytics.message.storage.service.persistence.AnalyticsMessag
 import com.liferay.analytics.message.storage.service.persistence.AnalyticsMessageUtil;
 import com.liferay.analytics.message.storage.service.persistence.impl.constants.AnalyticsPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -254,55 +250,6 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 	/**
-	 * Caches the analytics message in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessage the analytics message
-	 */
-	@Override
-	public void cacheResult(AnalyticsMessage analyticsMessage) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					analyticsMessage.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AnalyticsMessageImpl.class, analyticsMessage.getPrimaryKey(),
-				analyticsMessage);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the analytics messages in the entity cache if it is enabled.
-	 *
-	 * @param analyticsMessages the analytics messages
-	 */
-	@Override
-	public void cacheResult(List<AnalyticsMessage> analyticsMessages) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (analyticsMessages.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AnalyticsMessage analyticsMessage : analyticsMessages) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						analyticsMessage.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AnalyticsMessageImpl.class,
-						analyticsMessage.getPrimaryKey()) == null) {
-
-					cacheResult(analyticsMessage);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new analytics message with the primary key. Does not add the analytics message to the database.
 	 *
 	 * @param analyticsMessageId the primary key for the new analytics message
@@ -438,8 +385,7 @@ public class AnalyticsMessagePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AnalyticsMessageImpl.class, analyticsMessageModelImpl, false, true);
+		cacheUniqueFindersResult(analyticsMessage, false);
 
 		if (isNew) {
 			analyticsMessage.setNew(false);
@@ -559,9 +505,6 @@ public class AnalyticsMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -660,4 +603,4 @@ public class AnalyticsMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1574108728
+// LIFERAY-SERVICE-BUILDER-HASH:-1698740719

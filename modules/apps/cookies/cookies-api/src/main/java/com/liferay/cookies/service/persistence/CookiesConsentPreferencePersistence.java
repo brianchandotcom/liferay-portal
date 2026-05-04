@@ -409,21 +409,6 @@ public interface CookiesConsentPreferencePersistence
 	public int countByU_D_N(long userId, String domain, String name);
 
 	/**
-	 * Caches the cookies consent preference in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreference the cookies consent preference
-	 */
-	public void cacheResult(CookiesConsentPreference cookiesConsentPreference);
-
-	/**
-	 * Caches the cookies consent preferences in the entity cache if it is enabled.
-	 *
-	 * @param cookiesConsentPreferences the cookies consent preferences
-	 */
-	public void cacheResult(
-		java.util.List<CookiesConsentPreference> cookiesConsentPreferences);
-
-	/**
 	 * Creates a new cookies consent preference with the primary key. Does not add the cookies consent preference to the database.
 	 *
 	 * @param cookiesConsentPreferenceId the primary key for the new cookies consent preference
@@ -465,4 +450,4 @@ public interface CookiesConsentPreferencePersistence
 		long cookiesConsentPreferenceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:993381910
+// LIFERAY-SERVICE-BUILDER-HASH:92355102

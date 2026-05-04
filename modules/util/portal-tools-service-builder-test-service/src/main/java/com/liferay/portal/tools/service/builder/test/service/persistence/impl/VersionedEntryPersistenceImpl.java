@@ -16,10 +16,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchVersionedEntryException;
@@ -461,58 +458,6 @@ public class VersionedEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the versioned entry in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntry the versioned entry
-	 */
-	@Override
-	public void cacheResult(VersionedEntry versionedEntry) {
-		entityCache.putResult(
-			VersionedEntryImpl.class, versionedEntry.getPrimaryKey(),
-			versionedEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId, new Object[] {versionedEntry.getHeadId()},
-			versionedEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the versioned entries in the entity cache if it is enabled.
-	 *
-	 * @param versionedEntries the versioned entries
-	 */
-	@Override
-	public void cacheResult(List<VersionedEntry> versionedEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (versionedEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (VersionedEntry versionedEntry : versionedEntries) {
-			if (entityCache.getResult(
-					VersionedEntryImpl.class, versionedEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(versionedEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		VersionedEntryModelImpl versionedEntryModelImpl) {
-
-		Object[] args = new Object[] {versionedEntryModelImpl.getHeadId()};
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId, args, versionedEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new versioned entry with the primary key. Does not add the versioned entry to the database.
 	 *
 	 * @param versionedEntryId the primary key for the new versioned entry
@@ -616,10 +561,7 @@ public class VersionedEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			VersionedEntryImpl.class, versionedEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(versionedEntryModelImpl);
+		cacheUniqueFindersResult(versionedEntry, false);
 
 		if (isNew) {
 			versionedEntry.setNew(false);
@@ -679,9 +621,6 @@ public class VersionedEntryPersistenceImpl
 	 * Initializes the versioned entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -745,9 +684,10 @@ public class VersionedEntryPersistenceImpl
 					"versionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, VersionedEntry::isHead));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			VersionedEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
@@ -794,4 +734,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1032802878
+// LIFERAY-SERVICE-BUILDER-HASH:-440368326

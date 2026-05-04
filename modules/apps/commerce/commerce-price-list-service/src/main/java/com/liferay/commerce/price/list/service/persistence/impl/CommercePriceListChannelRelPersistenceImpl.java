@@ -14,7 +14,6 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceListChan
 import com.liferay.commerce.price.list.service.persistence.CommercePriceListChannelRelUtil;
 import com.liferay.commerce.price.list.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -707,89 +703,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price list channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRel the commerce price list channel rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePriceListChannelRel commercePriceListChannelRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListChannelRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceListChannelRelImpl.class,
-				commercePriceListChannelRel.getPrimaryKey(),
-				commercePriceListChannelRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCCI_CPI,
-				new Object[] {
-					commercePriceListChannelRel.getCommerceChannelId(),
-					commercePriceListChannelRel.getCommercePriceListId()
-				},
-				commercePriceListChannelRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price list channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListChannelRels the commerce price list channel rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceListChannelRel> commercePriceListChannelRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceListChannelRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceListChannelRel commercePriceListChannelRel :
-				commercePriceListChannelRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceListChannelRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceListChannelRelImpl.class,
-						commercePriceListChannelRel.getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceListChannelRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceListChannelRelModelImpl
-			commercePriceListChannelRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceListChannelRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceListChannelRelModelImpl.getCommerceChannelId(),
-				commercePriceListChannelRelModelImpl.getCommercePriceListId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCCI_CPI, args,
-				commercePriceListChannelRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price list channel rel with the primary key. Does not add the commerce price list channel rel to the database.
 	 *
 	 * @param CommercePriceListChannelRelId the primary key for the new commerce price list channel rel
@@ -957,11 +870,7 @@ public class CommercePriceListChannelRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceListChannelRelImpl.class,
-			commercePriceListChannelRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePriceListChannelRelModelImpl);
+		cacheUniqueFindersResult(commercePriceListChannelRel, false);
 
 		if (isNew) {
 			commercePriceListChannelRel.setNew(false);
@@ -1100,9 +1009,6 @@ public class CommercePriceListChannelRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1202,10 +1108,12 @@ public class CommercePriceListChannelRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceListChannelRel::getCommercePriceListId));
 
-		_finderPathFetchByCCI_CPI = new FinderPath(
+		_finderPathFetchByCCI_CPI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceChannelId", "commercePriceListId"}, true);
+			new String[] {"commerceChannelId", "commercePriceListId"}, false,
+			CommercePriceListChannelRel::getCommerceChannelId,
+			CommercePriceListChannelRel::getCommercePriceListId);
 
 		_uniquePersistenceFinderByCCI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCCI_CPI,
@@ -1292,4 +1200,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:515510278
+// LIFERAY-SERVICE-BUILDER-HASH:-552216372

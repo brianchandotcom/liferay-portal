@@ -36,6 +36,20 @@ public class AssetTagGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetTagGroupRel> assetTagGroupRels) {
+		getPersistence().cacheResult(assetTagGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetTagGroupRel assetTagGroupRel) {
+		getPersistence().cacheResult(assetTagGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -727,24 +741,6 @@ public class AssetTagGroupRelUtil {
 	}
 
 	/**
-	 * Caches the asset tag group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRel the asset tag group rel
-	 */
-	public static void cacheResult(AssetTagGroupRel assetTagGroupRel) {
-		getPersistence().cacheResult(assetTagGroupRel);
-	}
-
-	/**
-	 * Caches the asset tag group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRels the asset tag group rels
-	 */
-	public static void cacheResult(List<AssetTagGroupRel> assetTagGroupRels) {
-		getPersistence().cacheResult(assetTagGroupRels);
-	}
-
-	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
 	 * @param assetTagGroupRelId the primary key for the new asset tag group rel
@@ -807,4 +803,4 @@ public class AssetTagGroupRelUtil {
 	private static volatile AssetTagGroupRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1461045228
+// LIFERAY-SERVICE-BUILDER-HASH:-690217374

@@ -36,6 +36,20 @@ public class PasswordTrackerUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<PasswordTracker> passwordTrackers) {
+		getPersistence().cacheResult(passwordTrackers);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PasswordTracker passwordTracker) {
+		getPersistence().cacheResult(passwordTracker);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -231,24 +245,6 @@ public class PasswordTrackerUtil {
 	}
 
 	/**
-	 * Caches the password tracker in the entity cache if it is enabled.
-	 *
-	 * @param passwordTracker the password tracker
-	 */
-	public static void cacheResult(PasswordTracker passwordTracker) {
-		getPersistence().cacheResult(passwordTracker);
-	}
-
-	/**
-	 * Caches the password trackers in the entity cache if it is enabled.
-	 *
-	 * @param passwordTrackers the password trackers
-	 */
-	public static void cacheResult(List<PasswordTracker> passwordTrackers) {
-		getPersistence().cacheResult(passwordTrackers);
-	}
-
-	/**
 	 * Creates a new password tracker with the primary key. Does not add the password tracker to the database.
 	 *
 	 * @param passwordTrackerId the primary key for the new password tracker
@@ -311,4 +307,4 @@ public class PasswordTrackerUtil {
 	private static volatile PasswordTrackerPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-723441258
+// LIFERAY-SERVICE-BUILDER-HASH:-550297146

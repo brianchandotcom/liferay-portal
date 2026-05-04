@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -982,69 +979,6 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce wish list item in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishListItem the commerce wish list item
-	 */
-	@Override
-	public void cacheResult(CommerceWishListItem commerceWishListItem) {
-		entityCache.putResult(
-			CommerceWishListItemImpl.class,
-			commerceWishListItem.getPrimaryKey(), commerceWishListItem);
-
-		finderCache.putResult(
-			_finderPathFetchByCW_CPI_CP,
-			new Object[] {
-				commerceWishListItem.getCommerceWishListId(),
-				commerceWishListItem.getCPInstanceUuid(),
-				commerceWishListItem.getCProductId()
-			},
-			commerceWishListItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce wish list items in the entity cache if it is enabled.
-	 *
-	 * @param commerceWishListItems the commerce wish list items
-	 */
-	@Override
-	public void cacheResult(List<CommerceWishListItem> commerceWishListItems) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceWishListItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceWishListItem commerceWishListItem :
-				commerceWishListItems) {
-
-			if (entityCache.getResult(
-					CommerceWishListItemImpl.class,
-					commerceWishListItem.getPrimaryKey()) == null) {
-
-				cacheResult(commerceWishListItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceWishListItemModelImpl commerceWishListItemModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceWishListItemModelImpl.getCommerceWishListId(),
-			commerceWishListItemModelImpl.getCPInstanceUuid(),
-			commerceWishListItemModelImpl.getCProductId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCW_CPI_CP, args, commerceWishListItemModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce wish list item with the primary key. Does not add the commerce wish list item to the database.
 	 *
 	 * @param commerceWishListItemId the primary key for the new commerce wish list item
@@ -1181,11 +1115,7 @@ public class CommerceWishListItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceWishListItemImpl.class, commerceWishListItemModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceWishListItemModelImpl);
+		cacheUniqueFindersResult(commerceWishListItem, false);
 
 		if (isNew) {
 			commerceWishListItem.setNew(false);
@@ -1246,9 +1176,6 @@ public class CommerceWishListItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceWishListId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceWishListId",
 			new String[] {
@@ -1415,14 +1342,16 @@ public class CommerceWishListItemPersistenceImpl
 				"commerceWishListItem.", "CProductId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceWishListItem::getCProductId));
 
-		_finderPathFetchByCW_CPI_CP = new FinderPath(
+		_finderPathFetchByCW_CPI_CP = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCW_CPI_CP",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
 			new String[] {"commerceWishListId", "CPInstanceUuid", "CProductId"},
-			true);
+			false, CommerceWishListItem::getCommerceWishListId,
+			CommerceWishListItem::getCPInstanceUuid,
+			CommerceWishListItem::getCProductId);
 
 		_uniquePersistenceFinderByCW_CPI_CP = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCW_CPI_CP,
@@ -1505,4 +1434,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-579771860
+// LIFERAY-SERVICE-BUILDER-HASH:654839704

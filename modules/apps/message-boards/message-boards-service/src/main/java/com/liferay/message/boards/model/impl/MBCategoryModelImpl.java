@@ -1547,4 +1547,4 @@ public class MBCategoryModelImpl
 	private MBCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:330017462
+// LIFERAY-SERVICE-BUILDER-HASH:462271848

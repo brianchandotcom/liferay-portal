@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1523,93 +1520,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the workflow metrics sla definition in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinition the workflow metrics sla definition
-	 */
-	@Override
-	public void cacheResult(
-		WorkflowMetricsSLADefinition workflowMetricsSLADefinition) {
-
-		entityCache.putResult(
-			WorkflowMetricsSLADefinitionImpl.class,
-			workflowMetricsSLADefinition.getPrimaryKey(),
-			workflowMetricsSLADefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				workflowMetricsSLADefinition.getUuid(),
-				workflowMetricsSLADefinition.getGroupId()
-			},
-			workflowMetricsSLADefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByWMSLAD_A,
-			new Object[] {
-				workflowMetricsSLADefinition.
-					getWorkflowMetricsSLADefinitionId(),
-				workflowMetricsSLADefinition.isActive()
-			},
-			workflowMetricsSLADefinition);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the workflow metrics sla definitions in the entity cache if it is enabled.
-	 *
-	 * @param workflowMetricsSLADefinitions the workflow metrics sla definitions
-	 */
-	@Override
-	public void cacheResult(
-		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (workflowMetricsSLADefinitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WorkflowMetricsSLADefinition workflowMetricsSLADefinition :
-				workflowMetricsSLADefinitions) {
-
-			if (entityCache.getResult(
-					WorkflowMetricsSLADefinitionImpl.class,
-					workflowMetricsSLADefinition.getPrimaryKey()) == null) {
-
-				cacheResult(workflowMetricsSLADefinition);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WorkflowMetricsSLADefinitionModelImpl
-			workflowMetricsSLADefinitionModelImpl) {
-
-		Object[] args = new Object[] {
-			workflowMetricsSLADefinitionModelImpl.getUuid(),
-			workflowMetricsSLADefinitionModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			workflowMetricsSLADefinitionModelImpl);
-
-		args = new Object[] {
-			workflowMetricsSLADefinitionModelImpl.
-				getWorkflowMetricsSLADefinitionId(),
-			workflowMetricsSLADefinitionModelImpl.isActive()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByWMSLAD_A, args,
-			workflowMetricsSLADefinitionModelImpl);
-	}
-
-	/**
 	 * Creates a new workflow metrics sla definition with the primary key. Does not add the workflow metrics sla definition to the database.
 	 *
 	 * @param workflowMetricsSLADefinitionId the primary key for the new workflow metrics sla definition
@@ -1769,11 +1679,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			WorkflowMetricsSLADefinitionImpl.class,
-			workflowMetricsSLADefinitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(workflowMetricsSLADefinitionModelImpl);
+		cacheUniqueFindersResult(workflowMetricsSLADefinition, false);
 
 		if (isNew) {
 			workflowMetricsSLADefinition.setNew(false);
@@ -1842,9 +1748,6 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1875,10 +1778,12 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinition::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			WorkflowMetricsSLADefinition::getUuid,
+			WorkflowMetricsSLADefinition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1929,10 +1834,12 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId));
 
-		_finderPathFetchByWMSLAD_A = new FinderPath(
+		_finderPathFetchByWMSLAD_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWMSLAD_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"wmSLADefinitionId", "active_"}, true);
+			new String[] {"wmSLADefinitionId", "active_"}, false,
+			WorkflowMetricsSLADefinition::getWorkflowMetricsSLADefinitionId,
+			WorkflowMetricsSLADefinition::isActive);
 
 		_uniquePersistenceFinderByWMSLAD_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWMSLAD_A,
@@ -2257,4 +2164,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1704488189
+// LIFERAY-SERVICE-BUILDER-HASH:-1808320728

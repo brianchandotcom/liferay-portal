@@ -36,6 +36,24 @@ public class PatcherProductVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PatcherProductVersion> patcherProductVersions) {
+
+		getPersistence().cacheResult(patcherProductVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		PatcherProductVersion patcherProductVersion) {
+
+		getPersistence().cacheResult(patcherProductVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -365,28 +383,6 @@ public class PatcherProductVersionUtil {
 	}
 
 	/**
-	 * Caches the patcher product version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersion the patcher product version
-	 */
-	public static void cacheResult(
-		PatcherProductVersion patcherProductVersion) {
-
-		getPersistence().cacheResult(patcherProductVersion);
-	}
-
-	/**
-	 * Caches the patcher product versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersions the patcher product versions
-	 */
-	public static void cacheResult(
-		List<PatcherProductVersion> patcherProductVersions) {
-
-		getPersistence().cacheResult(patcherProductVersions);
-	}
-
-	/**
 	 * Creates a new patcher product version with the primary key. Does not add the patcher product version to the database.
 	 *
 	 * @param patcherProductVersionId the primary key for the new patcher product version
@@ -456,4 +452,4 @@ public class PatcherProductVersionUtil {
 	private static volatile PatcherProductVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-288140938
+// LIFERAY-SERVICE-BUILDER-HASH:353011382

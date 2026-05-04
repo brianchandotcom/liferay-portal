@@ -690,4 +690,4 @@ public class SpringEntryModelImpl
 	private SpringEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-489859036
+// LIFERAY-SERVICE-BUILDER-HASH:-871520616

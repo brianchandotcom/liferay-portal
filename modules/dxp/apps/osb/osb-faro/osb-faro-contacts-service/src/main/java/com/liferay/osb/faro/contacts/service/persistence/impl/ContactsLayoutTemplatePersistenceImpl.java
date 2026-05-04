@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -400,49 +397,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the contacts layout template in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplate the contacts layout template
-	 */
-	@Override
-	public void cacheResult(ContactsLayoutTemplate contactsLayoutTemplate) {
-		entityCache.putResult(
-			ContactsLayoutTemplateImpl.class,
-			contactsLayoutTemplate.getPrimaryKey(), contactsLayoutTemplate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the contacts layout templates in the entity cache if it is enabled.
-	 *
-	 * @param contactsLayoutTemplates the contacts layout templates
-	 */
-	@Override
-	public void cacheResult(
-		List<ContactsLayoutTemplate> contactsLayoutTemplates) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (contactsLayoutTemplates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ContactsLayoutTemplate contactsLayoutTemplate :
-				contactsLayoutTemplates) {
-
-			if (entityCache.getResult(
-					ContactsLayoutTemplateImpl.class,
-					contactsLayoutTemplate.getPrimaryKey()) == null) {
-
-				cacheResult(contactsLayoutTemplate);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new contacts layout template with the primary key. Does not add the contacts layout template to the database.
 	 *
 	 * @param contactsLayoutTemplateId the primary key for the new contacts layout template
@@ -556,9 +510,7 @@ public class ContactsLayoutTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ContactsLayoutTemplateImpl.class, contactsLayoutTemplateModelImpl,
-			false, true);
+		cacheUniqueFindersResult(contactsLayoutTemplate, false);
 
 		if (isNew) {
 			contactsLayoutTemplate.setNew(false);
@@ -627,9 +579,6 @@ public class ContactsLayoutTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -763,4 +712,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-54401796
+// LIFERAY-SERVICE-BUILDER-HASH:-1911361789

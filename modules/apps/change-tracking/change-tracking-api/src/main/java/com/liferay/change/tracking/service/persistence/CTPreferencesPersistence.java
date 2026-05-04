@@ -289,20 +289,6 @@ public interface CTPreferencesPersistence
 	public int countByC_U(long companyId, long userId);
 
 	/**
-	 * Caches the ct preferences in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferences the ct preferences
-	 */
-	public void cacheResult(CTPreferences ctPreferences);
-
-	/**
-	 * Caches the ct preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param ctPreferenceses the ct preferenceses
-	 */
-	public void cacheResult(java.util.List<CTPreferences> ctPreferenceses);
-
-	/**
 	 * Creates a new ct preferences with the primary key. Does not add the ct preferences to the database.
 	 *
 	 * @param ctPreferencesId the primary key for the new ct preferences
@@ -341,4 +327,4 @@ public interface CTPreferencesPersistence
 	public CTPreferences fetchByPrimaryKey(long ctPreferencesId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-903149073
+// LIFERAY-SERVICE-BUILDER-HASH:-1032833775

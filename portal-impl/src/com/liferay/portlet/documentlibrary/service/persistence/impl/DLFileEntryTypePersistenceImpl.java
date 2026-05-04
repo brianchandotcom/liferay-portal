@@ -15,7 +15,6 @@ import com.liferay.document.library.kernel.service.persistence.DLFolderPersisten
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -51,8 +50,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1982,127 +1979,6 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 	/**
-	 * Caches the document library file entry type in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryType the document library file entry type
-	 */
-	@Override
-	public void cacheResult(DLFileEntryType dlFileEntryType) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileEntryType.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				DLFileEntryTypeImpl.class, dlFileEntryType.getPrimaryKey(),
-				dlFileEntryType);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
-				},
-				dlFileEntryType);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_DDI,
-				new Object[] {
-					dlFileEntryType.getGroupId(),
-					dlFileEntryType.getDataDefinitionId()
-				},
-				dlFileEntryType);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_F,
-				new Object[] {
-					dlFileEntryType.getGroupId(),
-					dlFileEntryType.getFileEntryTypeKey()
-				},
-				dlFileEntryType);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					dlFileEntryType.getExternalReferenceCode(),
-					dlFileEntryType.getGroupId()
-				},
-				dlFileEntryType);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the document library file entry types in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntryTypes the document library file entry types
-	 */
-	@Override
-	public void cacheResult(List<DLFileEntryType> dlFileEntryTypes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dlFileEntryTypes.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						dlFileEntryType.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						DLFileEntryTypeImpl.class,
-						dlFileEntryType.getPrimaryKey()) == null) {
-
-					cacheResult(dlFileEntryType);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					dlFileEntryTypeModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				dlFileEntryTypeModelImpl.getUuid(),
-				dlFileEntryTypeModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, dlFileEntryTypeModelImpl);
-
-			args = new Object[] {
-				dlFileEntryTypeModelImpl.getGroupId(),
-				dlFileEntryTypeModelImpl.getDataDefinitionId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_DDI, args, dlFileEntryTypeModelImpl);
-
-			args = new Object[] {
-				dlFileEntryTypeModelImpl.getGroupId(),
-				dlFileEntryTypeModelImpl.getFileEntryTypeKey()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_F, args, dlFileEntryTypeModelImpl);
-
-			args = new Object[] {
-				dlFileEntryTypeModelImpl.getExternalReferenceCode(),
-				dlFileEntryTypeModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, dlFileEntryTypeModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
 	 *
 	 * @param fileEntryTypeId the primary key for the new document library file entry type
@@ -2318,10 +2194,7 @@ public class DLFileEntryTypePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			DLFileEntryTypeImpl.class, dlFileEntryTypeModelImpl, false, true);
-
-		cacheUniqueFindersCache(dlFileEntryTypeModelImpl);
+		cacheUniqueFindersResult(dlFileEntryType, false);
 
 		if (isNew) {
 			dlFileEntryType.setNew(false);
@@ -2812,9 +2685,6 @@ public class DLFileEntryTypePersistenceImpl
 	 * Initializes the document library file entry type persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		dlFileEntryTypeToDLFolderTableMapper =
 			TableMapperFactory.getTableMapper(
 				"DLFileEntryTypes_DLFolders", "companyId", "fileEntryTypeId",
@@ -2847,10 +2717,11 @@ public class DLFileEntryTypePersistenceImpl
 				"dlFileEntryType.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntryType::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DLFileEntryType::getUuid,
+			DLFileEntryType::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
@@ -2946,10 +2817,11 @@ public class DLFileEntryTypePersistenceImpl
 					"dlFileEntryType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntryType::getCompanyId));
 
-		_finderPathFetchByG_DDI = new FinderPath(
+		_finderPathFetchByG_DDI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_DDI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "dataDefinitionId"}, true);
+			new String[] {"groupId", "dataDefinitionId"}, false,
+			DLFileEntryType::getGroupId, DLFileEntryType::getDataDefinitionId);
 
 		_uniquePersistenceFinderByG_DDI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_DDI, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
@@ -2960,10 +2832,11 @@ public class DLFileEntryTypePersistenceImpl
 				"dlFileEntryType.", "dataDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, DLFileEntryType::getDataDefinitionId));
 
-		_finderPathFetchByG_F = new FinderPath(
+		_finderPathFetchByG_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "fileEntryTypeKey"}, true);
+			new String[] {"groupId", "fileEntryTypeKey"}, false,
+			DLFileEntryType::getGroupId, DLFileEntryType::getFileEntryTypeKey);
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_F, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
@@ -2975,10 +2848,12 @@ public class DLFileEntryTypePersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				DLFileEntryType::getFileEntryTypeKey));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			DLFileEntryType::getExternalReferenceCode,
+			DLFileEntryType::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
@@ -3058,4 +2933,4 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1721815237
+// LIFERAY-SERVICE-BUILDER-HASH:1063311095

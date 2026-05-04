@@ -443,20 +443,6 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 		long companyId, long classNameId, long classPK, int type);
 
 	/**
-	 * Caches the ticket in the entity cache if it is enabled.
-	 *
-	 * @param ticket the ticket
-	 */
-	public void cacheResult(Ticket ticket);
-
-	/**
-	 * Caches the tickets in the entity cache if it is enabled.
-	 *
-	 * @param tickets the tickets
-	 */
-	public void cacheResult(java.util.List<Ticket> tickets);
-
-	/**
 	 * Creates a new ticket with the primary key. Does not add the ticket to the database.
 	 *
 	 * @param ticketId the primary key for the new ticket
@@ -493,4 +479,4 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	public Ticket fetchByPrimaryKey(long ticketId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2117601529
+// LIFERAY-SERVICE-BUILDER-HASH:-369207423

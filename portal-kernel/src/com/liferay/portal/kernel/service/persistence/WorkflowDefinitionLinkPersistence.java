@@ -1208,21 +1208,6 @@ public interface WorkflowDefinitionLinkPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the workflow definition link in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLink the workflow definition link
-	 */
-	public void cacheResult(WorkflowDefinitionLink workflowDefinitionLink);
-
-	/**
-	 * Caches the workflow definition links in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLinks the workflow definition links
-	 */
-	public void cacheResult(
-		java.util.List<WorkflowDefinitionLink> workflowDefinitionLinks);
-
-	/**
 	 * Creates a new workflow definition link with the primary key. Does not add the workflow definition link to the database.
 	 *
 	 * @param workflowDefinitionLinkId the primary key for the new workflow definition link
@@ -1264,4 +1249,4 @@ public interface WorkflowDefinitionLinkPersistence
 		long workflowDefinitionLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1621256794
+// LIFERAY-SERVICE-BUILDER-HASH:-1563132946

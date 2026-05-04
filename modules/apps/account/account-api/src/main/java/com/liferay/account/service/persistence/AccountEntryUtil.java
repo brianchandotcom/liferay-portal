@@ -36,6 +36,20 @@ public class AccountEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AccountEntry> accountEntries) {
+		getPersistence().cacheResult(accountEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AccountEntry accountEntry) {
+		getPersistence().cacheResult(accountEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1124,24 +1138,6 @@ public class AccountEntryUtil {
 	}
 
 	/**
-	 * Caches the account entry in the entity cache if it is enabled.
-	 *
-	 * @param accountEntry the account entry
-	 */
-	public static void cacheResult(AccountEntry accountEntry) {
-		getPersistence().cacheResult(accountEntry);
-	}
-
-	/**
-	 * Caches the account entries in the entity cache if it is enabled.
-	 *
-	 * @param accountEntries the account entries
-	 */
-	public static void cacheResult(List<AccountEntry> accountEntries) {
-		getPersistence().cacheResult(accountEntries);
-	}
-
-	/**
 	 * Creates a new account entry with the primary key. Does not add the account entry to the database.
 	 *
 	 * @param accountEntryId the primary key for the new account entry
@@ -1202,4 +1198,4 @@ public class AccountEntryUtil {
 	private static volatile AccountEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:222266776
+// LIFERAY-SERVICE-BUILDER-HASH:1870772293

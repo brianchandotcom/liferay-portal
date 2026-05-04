@@ -906,23 +906,6 @@ public interface CommerceChannelAccountEntryRelPersistence
 		long commerceChannelId, int type);
 
 	/**
-	 * Caches the commerce channel account entry rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRel the commerce channel account entry rel
-	 */
-	public void cacheResult(
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel);
-
-	/**
-	 * Caches the commerce channel account entry rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelAccountEntryRels the commerce channel account entry rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceChannelAccountEntryRel>
-			commerceChannelAccountEntryRels);
-
-	/**
 	 * Creates a new commerce channel account entry rel with the primary key. Does not add the commerce channel account entry rel to the database.
 	 *
 	 * @param commerceChannelAccountEntryRelId the primary key for the new commerce channel account entry rel
@@ -966,4 +949,4 @@ public interface CommerceChannelAccountEntryRelPersistence
 		long commerceChannelAccountEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:697639977
+// LIFERAY-SERVICE-BUILDER-HASH:492787133

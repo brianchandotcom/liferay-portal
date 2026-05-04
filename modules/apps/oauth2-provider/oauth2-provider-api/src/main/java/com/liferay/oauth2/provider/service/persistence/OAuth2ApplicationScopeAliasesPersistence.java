@@ -241,23 +241,6 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 	public int countByOAuth2ApplicationId(long oAuth2ApplicationId);
 
 	/**
-	 * Caches the o auth2 application scope aliases in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliases the o auth2 application scope aliases
-	 */
-	public void cacheResult(
-		OAuth2ApplicationScopeAliases oAuth2ApplicationScopeAliases);
-
-	/**
-	 * Caches the o auth2 application scope aliaseses in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2ApplicationScopeAliaseses the o auth2 application scope aliaseses
-	 */
-	public void cacheResult(
-		java.util.List<OAuth2ApplicationScopeAliases>
-			oAuth2ApplicationScopeAliaseses);
-
-	/**
 	 * Creates a new o auth2 application scope aliases with the primary key. Does not add the o auth2 application scope aliases to the database.
 	 *
 	 * @param oAuth2ApplicationScopeAliasesId the primary key for the new o auth2 application scope aliases
@@ -301,4 +284,4 @@ public interface OAuth2ApplicationScopeAliasesPersistence
 		long oAuth2ApplicationScopeAliasesId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-974881943
+// LIFERAY-SERVICE-BUILDER-HASH:-2119294413

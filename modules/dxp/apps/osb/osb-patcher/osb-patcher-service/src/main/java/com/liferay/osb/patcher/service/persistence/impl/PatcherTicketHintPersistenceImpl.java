@@ -27,9 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -37,7 +34,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -181,62 +177,6 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher ticket hint in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHint the patcher ticket hint
-	 */
-	@Override
-	public void cacheResult(PatcherTicketHint patcherTicketHint) {
-		entityCache.putResult(
-			PatcherTicketHintImpl.class, patcherTicketHint.getPrimaryKey(),
-			patcherTicketHint);
-
-		finderCache.putResult(
-			_finderPathFetchByPatcherProductVersionId,
-			new Object[] {patcherTicketHint.getPatcherProductVersionId()},
-			patcherTicketHint);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher ticket hints in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHints the patcher ticket hints
-	 */
-	@Override
-	public void cacheResult(List<PatcherTicketHint> patcherTicketHints) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherTicketHints.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherTicketHint patcherTicketHint : patcherTicketHints) {
-			if (entityCache.getResult(
-					PatcherTicketHintImpl.class,
-					patcherTicketHint.getPrimaryKey()) == null) {
-
-				cacheResult(patcherTicketHint);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherTicketHintModelImpl patcherTicketHintModelImpl) {
-
-		Object[] args = new Object[] {
-			patcherTicketHintModelImpl.getPatcherProductVersionId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByPatcherProductVersionId, args,
-			patcherTicketHintModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher ticket hint with the primary key. Does not add the patcher ticket hint to the database.
 	 *
 	 * @param patcherTicketHintId the primary key for the new patcher ticket hint
@@ -370,11 +310,7 @@ public class PatcherTicketHintPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherTicketHintImpl.class, patcherTicketHintModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(patcherTicketHintModelImpl);
+		cacheUniqueFindersResult(patcherTicketHint, false);
 
 		if (isNew) {
 			patcherTicketHint.setNew(false);
@@ -435,13 +371,11 @@ public class PatcherTicketHintPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByPatcherProductVersionId = new FinderPath(
+		_finderPathFetchByPatcherProductVersionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPatcherProductVersionId",
 			new String[] {Long.class.getName()},
-			new String[] {"patcherProductVersionId"}, true);
+			new String[] {"patcherProductVersionId"}, false,
+			PatcherTicketHint::getPatcherProductVersionId);
 
 		_uniquePersistenceFinderByPatcherProductVersionId =
 			new UniquePersistenceFinder<>(
@@ -515,4 +449,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1218286168
+// LIFERAY-SERVICE-BUILDER-HASH:-102170691

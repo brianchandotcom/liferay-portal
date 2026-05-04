@@ -30,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -2687,45 +2684,6 @@ public class FaroNotificationPersistenceImpl
 	}
 
 	/**
-	 * Caches the faro notification in the entity cache if it is enabled.
-	 *
-	 * @param faroNotification the faro notification
-	 */
-	@Override
-	public void cacheResult(FaroNotification faroNotification) {
-		entityCache.putResult(
-			FaroNotificationImpl.class, faroNotification.getPrimaryKey(),
-			faroNotification);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the faro notifications in the entity cache if it is enabled.
-	 *
-	 * @param faroNotifications the faro notifications
-	 */
-	@Override
-	public void cacheResult(List<FaroNotification> faroNotifications) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (faroNotifications.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FaroNotification faroNotification : faroNotifications) {
-			if (entityCache.getResult(
-					FaroNotificationImpl.class,
-					faroNotification.getPrimaryKey()) == null) {
-
-				cacheResult(faroNotification);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new faro notification with the primary key. Does not add the faro notification to the database.
 	 *
 	 * @param faroNotificationId the primary key for the new faro notification
@@ -2812,8 +2770,7 @@ public class FaroNotificationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FaroNotificationImpl.class, faroNotification, false, true);
+		cacheUniqueFindersResult(faroNotification, false);
 
 		if (isNew) {
 			faroNotification.setNew(false);
@@ -2879,9 +2836,6 @@ public class FaroNotificationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLtCreateTime = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateTime",
 			new String[] {
@@ -3044,4 +2998,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1442055595
+// LIFERAY-SERVICE-BUILDER-HASH:-879931205

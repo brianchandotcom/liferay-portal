@@ -36,6 +36,20 @@ public class DataLimitEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DataLimitEntry> dataLimitEntries) {
+		getPersistence().cacheResult(dataLimitEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DataLimitEntry dataLimitEntry) {
+		getPersistence().cacheResult(dataLimitEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class DataLimitEntryUtil {
 	}
 
 	/**
-	 * Caches the data limit entry in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntry the data limit entry
-	 */
-	public static void cacheResult(DataLimitEntry dataLimitEntry) {
-		getPersistence().cacheResult(dataLimitEntry);
-	}
-
-	/**
-	 * Caches the data limit entries in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntries the data limit entries
-	 */
-	public static void cacheResult(List<DataLimitEntry> dataLimitEntries) {
-		getPersistence().cacheResult(dataLimitEntries);
-	}
-
-	/**
 	 * Creates a new data limit entry with the primary key. Does not add the data limit entry to the database.
 	 *
 	 * @param dataLimitEntryId the primary key for the new data limit entry
@@ -191,4 +187,4 @@ public class DataLimitEntryUtil {
 	private static volatile DataLimitEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-734685265
+// LIFERAY-SERVICE-BUILDER-HASH:2065799120

@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -485,60 +482,6 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 	/**
-	 * Caches the object state flow in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlow the object state flow
-	 */
-	@Override
-	public void cacheResult(ObjectStateFlow objectStateFlow) {
-		entityCache.putResult(
-			ObjectStateFlowImpl.class, objectStateFlow.getPrimaryKey(),
-			objectStateFlow);
-
-		finderCache.putResult(
-			_finderPathFetchByObjectFieldId,
-			new Object[] {objectStateFlow.getObjectFieldId()}, objectStateFlow);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object state flows in the entity cache if it is enabled.
-	 *
-	 * @param objectStateFlows the object state flows
-	 */
-	@Override
-	public void cacheResult(List<ObjectStateFlow> objectStateFlows) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectStateFlows.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectStateFlow objectStateFlow : objectStateFlows) {
-			if (entityCache.getResult(
-					ObjectStateFlowImpl.class,
-					objectStateFlow.getPrimaryKey()) == null) {
-
-				cacheResult(objectStateFlow);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectStateFlowModelImpl objectStateFlowModelImpl) {
-
-		Object[] args = new Object[] {
-			objectStateFlowModelImpl.getObjectFieldId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByObjectFieldId, args, objectStateFlowModelImpl);
-	}
-
-	/**
 	 * Creates a new object state flow with the primary key. Does not add the object state flow to the database.
 	 *
 	 * @param objectStateFlowId the primary key for the new object state flow
@@ -680,10 +623,7 @@ public class ObjectStateFlowPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectStateFlowImpl.class, objectStateFlowModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectStateFlowModelImpl);
+		cacheUniqueFindersResult(objectStateFlow, false);
 
 		if (isNew) {
 			objectStateFlow.setNew(false);
@@ -749,9 +689,6 @@ public class ObjectStateFlowPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -812,10 +749,10 @@ public class ObjectStateFlowPersistenceImpl
 					"objectStateFlow.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectStateFlow::getCompanyId));
 
-		_finderPathFetchByObjectFieldId = new FinderPath(
+		_finderPathFetchByObjectFieldId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId",
 			new String[] {Long.class.getName()}, new String[] {"objectFieldId"},
-			true);
+			false, ObjectStateFlow::getObjectFieldId);
 
 		_uniquePersistenceFinderByObjectFieldId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByObjectFieldId,
@@ -893,4 +830,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1155424574
+// LIFERAY-SERVICE-BUILDER-HASH:1620000992

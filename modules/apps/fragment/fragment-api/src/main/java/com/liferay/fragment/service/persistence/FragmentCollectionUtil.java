@@ -36,6 +36,22 @@ public class FragmentCollectionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<FragmentCollection> fragmentCollections) {
+
+		getPersistence().cacheResult(fragmentCollections);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(FragmentCollection fragmentCollection) {
+		getPersistence().cacheResult(fragmentCollection);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1474,26 +1490,6 @@ public class FragmentCollectionUtil {
 	}
 
 	/**
-	 * Caches the fragment collection in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollection the fragment collection
-	 */
-	public static void cacheResult(FragmentCollection fragmentCollection) {
-		getPersistence().cacheResult(fragmentCollection);
-	}
-
-	/**
-	 * Caches the fragment collections in the entity cache if it is enabled.
-	 *
-	 * @param fragmentCollections the fragment collections
-	 */
-	public static void cacheResult(
-		List<FragmentCollection> fragmentCollections) {
-
-		getPersistence().cacheResult(fragmentCollections);
-	}
-
-	/**
 	 * Creates a new fragment collection with the primary key. Does not add the fragment collection to the database.
 	 *
 	 * @param fragmentCollectionId the primary key for the new fragment collection
@@ -1560,4 +1556,4 @@ public class FragmentCollectionUtil {
 	private static volatile FragmentCollectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:550991763
+// LIFERAY-SERVICE-BUILDER-HASH:-1899685687

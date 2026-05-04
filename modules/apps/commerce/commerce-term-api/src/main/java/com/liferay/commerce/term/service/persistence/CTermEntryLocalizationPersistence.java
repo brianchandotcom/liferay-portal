@@ -190,21 +190,6 @@ public interface CTermEntryLocalizationPersistence
 		long commerceTermEntryId, String languageId);
 
 	/**
-	 * Caches the c term entry localization in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalization the c term entry localization
-	 */
-	public void cacheResult(CTermEntryLocalization cTermEntryLocalization);
-
-	/**
-	 * Caches the c term entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param cTermEntryLocalizations the c term entry localizations
-	 */
-	public void cacheResult(
-		java.util.List<CTermEntryLocalization> cTermEntryLocalizations);
-
-	/**
 	 * Creates a new c term entry localization with the primary key. Does not add the c term entry localization to the database.
 	 *
 	 * @param cTermEntryLocalizationId the primary key for the new c term entry localization
@@ -246,4 +231,4 @@ public interface CTermEntryLocalizationPersistence
 		long cTermEntryLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1132885771
+// LIFERAY-SERVICE-BUILDER-HASH:1071030585

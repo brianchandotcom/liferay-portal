@@ -14,7 +14,6 @@ import com.liferay.change.tracking.store.service.persistence.CTSContentPersisten
 import com.liferay.change.tracking.store.service.persistence.CTSContentUtil;
 import com.liferay.change.tracking.store.service.persistence.impl.constants.CTSPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -988,81 +984,6 @@ public class CTSContentPersistenceImpl
 	}
 
 	/**
-	 * Caches the cts content in the entity cache if it is enabled.
-	 *
-	 * @param ctsContent the cts content
-	 */
-	@Override
-	public void cacheResult(CTSContent ctsContent) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctsContent.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CTSContentImpl.class, ctsContent.getPrimaryKey(), ctsContent);
-
-			finderCache.putResult(
-				_finderPathFetchByC_R_P_V_S,
-				new Object[] {
-					ctsContent.getCompanyId(), ctsContent.getRepositoryId(),
-					ctsContent.getPath(), ctsContent.getVersion(),
-					ctsContent.getStoreType()
-				},
-				ctsContent);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cts contents in the entity cache if it is enabled.
-	 *
-	 * @param ctsContents the cts contents
-	 */
-	@Override
-	public void cacheResult(List<CTSContent> ctsContents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctsContents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTSContent ctsContent : ctsContents) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctsContent.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CTSContentImpl.class, ctsContent.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ctsContent);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CTSContentModelImpl ctsContentModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctsContentModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ctsContentModelImpl.getCompanyId(),
-				ctsContentModelImpl.getRepositoryId(),
-				ctsContentModelImpl.getPath(), ctsContentModelImpl.getVersion(),
-				ctsContentModelImpl.getStoreType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_R_P_V_S, args, ctsContentModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cts content with the primary key. Does not add the cts content to the database.
 	 *
 	 * @param ctsContentId the primary key for the new cts content
@@ -1177,10 +1098,7 @@ public class CTSContentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTSContentImpl.class, ctsContentModelImpl, false, true);
-
-		cacheUniqueFindersCache(ctsContentModelImpl);
+		cacheUniqueFindersResult(ctsContent, false);
 
 		if (isNew) {
 			ctsContent.setNew(false);
@@ -1311,9 +1229,6 @@ public class CTSContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
 			new String[] {
@@ -1473,7 +1388,7 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
 
-		_finderPathFetchByC_R_P_V_S = new FinderPath(
+		_finderPathFetchByC_R_P_V_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -1483,7 +1398,9 @@ public class CTSContentPersistenceImpl
 			new String[] {
 				"companyId", "repositoryId", "path_", "version", "storeType"
 			},
-			true);
+			false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
+			CTSContent::getPath, CTSContent::getVersion,
+			CTSContent::getStoreType);
 
 		_uniquePersistenceFinderByC_R_P_V_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_R_P_V_S, _SQL_SELECT_CTSCONTENT_WHERE,
@@ -1575,4 +1492,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-234541911
+// LIFERAY-SERVICE-BUILDER-HASH:366998225

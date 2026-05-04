@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -660,66 +657,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 	/**
-	 * Caches the cpd availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimate the cpd availability estimate
-	 */
-	@Override
-	public void cacheResult(CPDAvailabilityEstimate cpdAvailabilityEstimate) {
-		entityCache.putResult(
-			CPDAvailabilityEstimateImpl.class,
-			cpdAvailabilityEstimate.getPrimaryKey(), cpdAvailabilityEstimate);
-
-		finderCache.putResult(
-			_finderPathFetchByCProductId,
-			new Object[] {cpdAvailabilityEstimate.getCProductId()},
-			cpdAvailabilityEstimate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cpd availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param cpdAvailabilityEstimates the cpd availability estimates
-	 */
-	@Override
-	public void cacheResult(
-		List<CPDAvailabilityEstimate> cpdAvailabilityEstimates) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpdAvailabilityEstimates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDAvailabilityEstimate cpdAvailabilityEstimate :
-				cpdAvailabilityEstimates) {
-
-			if (entityCache.getResult(
-					CPDAvailabilityEstimateImpl.class,
-					cpdAvailabilityEstimate.getPrimaryKey()) == null) {
-
-				cacheResult(cpdAvailabilityEstimate);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDAvailabilityEstimateModelImpl cpdAvailabilityEstimateModelImpl) {
-
-		Object[] args = new Object[] {
-			cpdAvailabilityEstimateModelImpl.getCProductId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCProductId, args,
-			cpdAvailabilityEstimateModelImpl);
-	}
-
-	/**
 	 * Creates a new cpd availability estimate with the primary key. Does not add the cpd availability estimate to the database.
 	 *
 	 * @param CPDAvailabilityEstimateId the primary key for the new cpd availability estimate
@@ -869,11 +806,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDAvailabilityEstimateImpl.class, cpdAvailabilityEstimateModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cpdAvailabilityEstimateModelImpl);
+		cacheUniqueFindersResult(cpdAvailabilityEstimate, false);
 
 		if (isNew) {
 			cpdAvailabilityEstimate.setNew(false);
@@ -942,9 +875,6 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1051,10 +981,10 @@ public class CPDAvailabilityEstimatePersistenceImpl
 					CPDAvailabilityEstimate::
 						getCommerceAvailabilityEstimateId));
 
-		_finderPathFetchByCProductId = new FinderPath(
+		_finderPathFetchByCProductId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCProductId",
 			new String[] {Long.class.getName()}, new String[] {"CProductId"},
-			true);
+			false, CPDAvailabilityEstimate::getCProductId);
 
 		_uniquePersistenceFinderByCProductId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCProductId,
@@ -1133,4 +1063,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-202258729
+// LIFERAY-SERVICE-BUILDER-HASH:-1122702210

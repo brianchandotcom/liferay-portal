@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2061,98 +2057,6 @@ public class SocialRequestPersistenceImpl
 	}
 
 	/**
-	 * Caches the social request in the entity cache if it is enabled.
-	 *
-	 * @param socialRequest the social request
-	 */
-	@Override
-	public void cacheResult(SocialRequest socialRequest) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialRequest.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialRequestImpl.class, socialRequest.getPrimaryKey(),
-				socialRequest);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					socialRequest.getUuid(), socialRequest.getGroupId()
-				},
-				socialRequest);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_C_C_T_R,
-				new Object[] {
-					socialRequest.getUserId(), socialRequest.getClassNameId(),
-					socialRequest.getClassPK(), socialRequest.getType(),
-					socialRequest.getReceiverUserId()
-				},
-				socialRequest);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social requests in the entity cache if it is enabled.
-	 *
-	 * @param socialRequests the social requests
-	 */
-	@Override
-	public void cacheResult(List<SocialRequest> socialRequests) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialRequests.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialRequest socialRequest : socialRequests) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialRequest.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialRequestImpl.class,
-						socialRequest.getPrimaryKey()) == null) {
-
-					cacheResult(socialRequest);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialRequestModelImpl socialRequestModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialRequestModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialRequestModelImpl.getUuid(),
-				socialRequestModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, socialRequestModelImpl);
-
-			args = new Object[] {
-				socialRequestModelImpl.getUserId(),
-				socialRequestModelImpl.getClassNameId(),
-				socialRequestModelImpl.getClassPK(),
-				socialRequestModelImpl.getType(),
-				socialRequestModelImpl.getReceiverUserId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_C_C_T_R, args, socialRequestModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social request with the primary key. Does not add the social request to the database.
 	 *
 	 * @param requestId the primary key for the new social request
@@ -2273,10 +2177,7 @@ public class SocialRequestPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialRequestImpl.class, socialRequestModelImpl, false, true);
-
-		cacheUniqueFindersCache(socialRequestModelImpl);
+		cacheUniqueFindersResult(socialRequest, false);
 
 		if (isNew) {
 			socialRequest.setNew(false);
@@ -2413,9 +2314,6 @@ public class SocialRequestPersistenceImpl
 	 * Initializes the social request persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2443,10 +2341,11 @@ public class SocialRequestPersistenceImpl
 				"socialRequest.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SocialRequest::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, SocialRequest::getUuid,
+			SocialRequest::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOCIALREQUEST_WHERE,
@@ -2669,7 +2568,7 @@ public class SocialRequestPersistenceImpl
 				"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, SocialRequest::getStatus));
 
-		_finderPathFetchByU_C_C_T_R = new FinderPath(
+		_finderPathFetchByU_C_C_T_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C_C_T_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2679,7 +2578,9 @@ public class SocialRequestPersistenceImpl
 			new String[] {
 				"userId", "classNameId", "classPK", "type_", "receiverUserId"
 			},
-			true);
+			false, SocialRequest::getUserId, SocialRequest::getClassNameId,
+			SocialRequest::getClassPK, SocialRequest::getType,
+			SocialRequest::getReceiverUserId);
 
 		_uniquePersistenceFinderByU_C_C_T_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_C_C_T_R, _SQL_SELECT_SOCIALREQUEST_WHERE,
@@ -2855,4 +2756,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1285578147
+// LIFERAY-SERVICE-BUILDER-HASH:-2040300096

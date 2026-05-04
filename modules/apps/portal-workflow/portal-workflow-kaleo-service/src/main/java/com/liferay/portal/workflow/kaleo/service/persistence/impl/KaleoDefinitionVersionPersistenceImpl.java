@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -531,102 +527,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo definition version in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersion the kaleo definition version
-	 */
-	@Override
-	public void cacheResult(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoDefinitionVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoDefinitionVersionImpl.class,
-				kaleoDefinitionVersion.getPrimaryKey(), kaleoDefinitionVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_V,
-				new Object[] {
-					kaleoDefinitionVersion.getCompanyId(),
-					kaleoDefinitionVersion.getName(),
-					kaleoDefinitionVersion.getVersion()
-				},
-				kaleoDefinitionVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo definition versions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitionVersions the kaleo definition versions
-	 */
-	@Override
-	public void cacheResult(
-		List<KaleoDefinitionVersion> kaleoDefinitionVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoDefinitionVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoDefinitionVersion kaleoDefinitionVersion :
-				kaleoDefinitionVersions) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoDefinitionVersion.getCtCollectionId())) {
-
-				KaleoDefinitionVersion cachedKaleoDefinitionVersion =
-					(KaleoDefinitionVersion)entityCache.getResult(
-						KaleoDefinitionVersionImpl.class,
-						kaleoDefinitionVersion.getPrimaryKey());
-
-				if (cachedKaleoDefinitionVersion == null) {
-					cacheResult(kaleoDefinitionVersion);
-				}
-				else {
-					KaleoDefinitionVersionModelImpl
-						kaleoDefinitionVersionModelImpl =
-							(KaleoDefinitionVersionModelImpl)
-								kaleoDefinitionVersion;
-					KaleoDefinitionVersionModelImpl
-						cachedKaleoDefinitionVersionModelImpl =
-							(KaleoDefinitionVersionModelImpl)
-								cachedKaleoDefinitionVersion;
-
-					kaleoDefinitionVersionModelImpl.setContentAsXML(
-						cachedKaleoDefinitionVersionModelImpl.
-							getContentAsXML());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoDefinitionVersionModelImpl kaleoDefinitionVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoDefinitionVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoDefinitionVersionModelImpl.getCompanyId(),
-				kaleoDefinitionVersionModelImpl.getName(),
-				kaleoDefinitionVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_N_V, args, kaleoDefinitionVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo definition version with the primary key. Does not add the kaleo definition version to the database.
 	 *
 	 * @param kaleoDefinitionVersionId the primary key for the new kaleo definition version
@@ -773,11 +673,7 @@ public class KaleoDefinitionVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoDefinitionVersionImpl.class, kaleoDefinitionVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(kaleoDefinitionVersionModelImpl);
+		cacheUniqueFindersResult(kaleoDefinitionVersion, false);
 
 		if (isNew) {
 			kaleoDefinitionVersion.setNew(false);
@@ -918,9 +814,6 @@ public class KaleoDefinitionVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -985,13 +878,16 @@ public class KaleoDefinitionVersionPersistenceImpl
 				"kaleoDefinitionVersion.", "name", FinderColumn.Type.STRING,
 				"=", true, true, KaleoDefinitionVersion::getName));
 
-		_finderPathFetchByC_N_V = new FinderPath(
+		_finderPathFetchByC_N_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_V",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "version"}, true);
+			new String[] {"companyId", "name", "version"}, false,
+			KaleoDefinitionVersion::getCompanyId,
+			KaleoDefinitionVersion::getName,
+			KaleoDefinitionVersion::getVersion);
 
 		_uniquePersistenceFinderByC_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_V,
@@ -1075,4 +971,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-983167635
+// LIFERAY-SERVICE-BUILDER-HASH:1384754514

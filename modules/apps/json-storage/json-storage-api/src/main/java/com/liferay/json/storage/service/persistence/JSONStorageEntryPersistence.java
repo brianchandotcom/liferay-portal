@@ -501,21 +501,6 @@ public interface JSONStorageEntryPersistence
 		int index, String key);
 
 	/**
-	 * Caches the json storage entry in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntry the json storage entry
-	 */
-	public void cacheResult(JSONStorageEntry jsonStorageEntry);
-
-	/**
-	 * Caches the json storage entries in the entity cache if it is enabled.
-	 *
-	 * @param jsonStorageEntries the json storage entries
-	 */
-	public void cacheResult(
-		java.util.List<JSONStorageEntry> jsonStorageEntries);
-
-	/**
 	 * Creates a new json storage entry with the primary key. Does not add the json storage entry to the database.
 	 *
 	 * @param jsonStorageEntryId the primary key for the new json storage entry
@@ -554,4 +539,4 @@ public interface JSONStorageEntryPersistence
 	public JSONStorageEntry fetchByPrimaryKey(long jsonStorageEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-604941381
+// LIFERAY-SERVICE-BUILDER-HASH:-834057571

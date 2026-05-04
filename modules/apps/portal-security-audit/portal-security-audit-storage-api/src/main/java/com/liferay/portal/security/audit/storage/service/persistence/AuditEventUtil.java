@@ -36,6 +36,20 @@ public class AuditEventUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AuditEvent> auditEvents) {
+		getPersistence().cacheResult(auditEvents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AuditEvent auditEvent) {
+		getPersistence().cacheResult(auditEvent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -233,24 +247,6 @@ public class AuditEventUtil {
 	}
 
 	/**
-	 * Caches the audit event in the entity cache if it is enabled.
-	 *
-	 * @param auditEvent the audit event
-	 */
-	public static void cacheResult(AuditEvent auditEvent) {
-		getPersistence().cacheResult(auditEvent);
-	}
-
-	/**
-	 * Caches the audit events in the entity cache if it is enabled.
-	 *
-	 * @param auditEvents the audit events
-	 */
-	public static void cacheResult(List<AuditEvent> auditEvents) {
-		getPersistence().cacheResult(auditEvents);
-	}
-
-	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *
 	 * @param auditEventId the primary key for the new audit event
@@ -313,4 +309,4 @@ public class AuditEventUtil {
 	private static volatile AuditEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:397180032
+// LIFERAY-SERVICE-BUILDER-HASH:1400441528

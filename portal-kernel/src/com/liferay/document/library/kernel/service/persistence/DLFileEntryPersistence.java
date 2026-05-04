@@ -3070,20 +3070,6 @@ public interface DLFileEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the document library file entry in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntry the document library file entry
-	 */
-	public void cacheResult(DLFileEntry dlFileEntry);
-
-	/**
-	 * Caches the document library file entries in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntries the document library file entries
-	 */
-	public void cacheResult(java.util.List<DLFileEntry> dlFileEntries);
-
-	/**
 	 * Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
 	 *
 	 * @param fileEntryId the primary key for the new document library file entry
@@ -3121,4 +3107,4 @@ public interface DLFileEntryPersistence
 	public DLFileEntry fetchByPrimaryKey(long fileEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1614163275
+// LIFERAY-SERVICE-BUILDER-HASH:-1883953871

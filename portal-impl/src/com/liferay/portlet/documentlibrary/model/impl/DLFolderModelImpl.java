@@ -1780,4 +1780,4 @@ public class DLFolderModelImpl
 	private DLFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1083677276
+// LIFERAY-SERVICE-BUILDER-HASH:-550516070

@@ -553,21 +553,6 @@ public interface AssetVocabularyGroupRelPersistence
 	public int countByG_V(long groupId, long vocabularyId);
 
 	/**
-	 * Caches the asset vocabulary group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRel the asset vocabulary group rel
-	 */
-	public void cacheResult(AssetVocabularyGroupRel assetVocabularyGroupRel);
-
-	/**
-	 * Caches the asset vocabulary group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetVocabularyGroupRels the asset vocabulary group rels
-	 */
-	public void cacheResult(
-		java.util.List<AssetVocabularyGroupRel> assetVocabularyGroupRels);
-
-	/**
 	 * Creates a new asset vocabulary group rel with the primary key. Does not add the asset vocabulary group rel to the database.
 	 *
 	 * @param assetVocabularyGroupRelId the primary key for the new asset vocabulary group rel
@@ -609,4 +594,4 @@ public interface AssetVocabularyGroupRelPersistence
 		long assetVocabularyGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:290145905
+// LIFERAY-SERVICE-BUILDER-HASH:-66517863

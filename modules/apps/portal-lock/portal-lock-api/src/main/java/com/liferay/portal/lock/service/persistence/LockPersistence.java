@@ -728,20 +728,6 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public int countByC_U_C(long companyId, long userId, String className);
 
 	/**
-	 * Caches the lock in the entity cache if it is enabled.
-	 *
-	 * @param lock the lock
-	 */
-	public void cacheResult(Lock lock);
-
-	/**
-	 * Caches the locks in the entity cache if it is enabled.
-	 *
-	 * @param locks the locks
-	 */
-	public void cacheResult(java.util.List<Lock> locks);
-
-	/**
 	 * Creates a new lock with the primary key. Does not add the lock to the database.
 	 *
 	 * @param lockId the primary key for the new lock
@@ -778,4 +764,4 @@ public interface LockPersistence extends BasePersistence<Lock> {
 	public Lock fetchByPrimaryKey(long lockId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:62559281
+// LIFERAY-SERVICE-BUILDER-HASH:-627184871

@@ -573,23 +573,6 @@ public interface LayoutPageTemplateStructureRelPersistence
 		long layoutPageTemplateStructureId, long segmentsExperienceId);
 
 	/**
-	 * Caches the layout page template structure rel in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRel the layout page template structure rel
-	 */
-	public void cacheResult(
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel);
-
-	/**
-	 * Caches the layout page template structure rels in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateStructureRels the layout page template structure rels
-	 */
-	public void cacheResult(
-		java.util.List<LayoutPageTemplateStructureRel>
-			layoutPageTemplateStructureRels);
-
-	/**
 	 * Creates a new layout page template structure rel with the primary key. Does not add the layout page template structure rel to the database.
 	 *
 	 * @param layoutPageTemplateStructureRelId the primary key for the new layout page template structure rel
@@ -633,4 +616,4 @@ public interface LayoutPageTemplateStructureRelPersistence
 		long layoutPageTemplateStructureRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1775656905
+// LIFERAY-SERVICE-BUILDER-HASH:-701202187

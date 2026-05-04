@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -29,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.UserGroupGroupRoleImpl;
 import com.liferay.portal.model.impl.UserGroupGroupRoleModelImpl;
@@ -1012,82 +1008,6 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 	/**
-	 * Caches the user group group role in the entity cache if it is enabled.
-	 *
-	 * @param userGroupGroupRole the user group group role
-	 */
-	@Override
-	public void cacheResult(UserGroupGroupRole userGroupGroupRole) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					userGroupGroupRole.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				UserGroupGroupRoleImpl.class,
-				userGroupGroupRole.getPrimaryKey(), userGroupGroupRole);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_G_R,
-				new Object[] {
-					userGroupGroupRole.getUserGroupId(),
-					userGroupGroupRole.getGroupId(),
-					userGroupGroupRole.getRoleId()
-				},
-				userGroupGroupRole);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the user group group roles in the entity cache if it is enabled.
-	 *
-	 * @param userGroupGroupRoles the user group group roles
-	 */
-	@Override
-	public void cacheResult(List<UserGroupGroupRole> userGroupGroupRoles) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (userGroupGroupRoles.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						userGroupGroupRole.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						UserGroupGroupRoleImpl.class,
-						userGroupGroupRole.getPrimaryKey()) == null) {
-
-					cacheResult(userGroupGroupRole);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UserGroupGroupRoleModelImpl userGroupGroupRoleModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					userGroupGroupRoleModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				userGroupGroupRoleModelImpl.getUserGroupId(),
-				userGroupGroupRoleModelImpl.getGroupId(),
-				userGroupGroupRoleModelImpl.getRoleId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByU_G_R, args, userGroupGroupRoleModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	 *
 	 * @param userGroupGroupRoleId the primary key for the new user group group role
@@ -1206,11 +1126,7 @@ public class UserGroupGroupRolePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			UserGroupGroupRoleImpl.class, userGroupGroupRoleModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(userGroupGroupRoleModelImpl);
+		cacheUniqueFindersResult(userGroupGroupRole, false);
 
 		if (isNew) {
 			userGroupGroupRole.setNew(false);
@@ -1331,9 +1247,6 @@ public class UserGroupGroupRolePersistenceImpl
 	 * Initializes the user group group role persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserGroupId",
 			new String[] {
@@ -1486,12 +1399,14 @@ public class UserGroupGroupRolePersistenceImpl
 				"userGroupGroupRole.", "roleId", FinderColumn.Type.LONG, "=",
 				true, true, UserGroupGroupRole::getRoleId));
 
-		_finderPathFetchByU_G_R = new FinderPath(
+		_finderPathFetchByU_G_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_G_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"userGroupId", "groupId", "roleId"}, true);
+			new String[] {"userGroupId", "groupId", "roleId"}, false,
+			UserGroupGroupRole::getUserGroupId, UserGroupGroupRole::getGroupId,
+			UserGroupGroupRole::getRoleId);
 
 		_uniquePersistenceFinderByU_G_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_G_R, _SQL_SELECT_USERGROUPGROUPROLE_WHERE,
@@ -1538,4 +1453,4 @@ public class UserGroupGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2147102169
+// LIFERAY-SERVICE-BUILDER-HASH:-23468066

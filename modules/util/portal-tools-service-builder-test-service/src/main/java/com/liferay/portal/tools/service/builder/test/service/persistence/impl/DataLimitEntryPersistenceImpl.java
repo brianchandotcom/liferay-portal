@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchDataLimitEntryException;
@@ -32,7 +29,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -70,45 +66,6 @@ public class DataLimitEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(DataLimitEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the data limit entry in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntry the data limit entry
-	 */
-	@Override
-	public void cacheResult(DataLimitEntry dataLimitEntry) {
-		entityCache.putResult(
-			DataLimitEntryImpl.class, dataLimitEntry.getPrimaryKey(),
-			dataLimitEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the data limit entries in the entity cache if it is enabled.
-	 *
-	 * @param dataLimitEntries the data limit entries
-	 */
-	@Override
-	public void cacheResult(List<DataLimitEntry> dataLimitEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dataLimitEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DataLimitEntry dataLimitEntry : dataLimitEntries) {
-			if (entityCache.getResult(
-					DataLimitEntryImpl.class, dataLimitEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(dataLimitEntry);
-			}
-		}
 	}
 
 	/**
@@ -242,8 +199,7 @@ public class DataLimitEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DataLimitEntryImpl.class, dataLimitEntry, false, true);
+		cacheUniqueFindersResult(dataLimitEntry, false);
 
 		if (isNew) {
 			dataLimitEntry.setNew(false);
@@ -303,9 +259,6 @@ public class DataLimitEntryPersistenceImpl
 	 * Initializes the data limit entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		DataLimitEntryUtil.setPersistence(this);
 	}
 
@@ -336,4 +289,4 @@ public class DataLimitEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-614959408
+// LIFERAY-SERVICE-BUILDER-HASH:-2087909326

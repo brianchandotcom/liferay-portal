@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -34,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1656,55 +1652,6 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 	/**
-	 * Caches the layout prototype in the entity cache if it is enabled.
-	 *
-	 * @param layoutPrototype the layout prototype
-	 */
-	@Override
-	public void cacheResult(LayoutPrototype layoutPrototype) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutPrototype.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				LayoutPrototypeImpl.class, layoutPrototype.getPrimaryKey(),
-				layoutPrototype);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout prototypes in the entity cache if it is enabled.
-	 *
-	 * @param layoutPrototypes the layout prototypes
-	 */
-	@Override
-	public void cacheResult(List<LayoutPrototype> layoutPrototypes) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutPrototypes.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutPrototype.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						LayoutPrototypeImpl.class,
-						layoutPrototype.getPrimaryKey()) == null) {
-
-					cacheResult(layoutPrototype);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new layout prototype with the primary key. Does not add the layout prototype to the database.
 	 *
 	 * @param layoutPrototypeId the primary key for the new layout prototype
@@ -1854,8 +1801,7 @@ public class LayoutPrototypePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutPrototypeImpl.class, layoutPrototypeModelImpl, false, true);
+		cacheUniqueFindersResult(layoutPrototype, false);
 
 		if (isNew) {
 			layoutPrototype.setNew(false);
@@ -1987,9 +1933,6 @@ public class LayoutPrototypePersistenceImpl
 	 * Initializes the layout prototype persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2169,4 +2112,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-381632394
+// LIFERAY-SERVICE-BUILDER-HASH:1237715914

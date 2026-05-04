@@ -852,20 +852,6 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the account role in the entity cache if it is enabled.
-	 *
-	 * @param accountRole the account role
-	 */
-	public void cacheResult(AccountRole accountRole);
-
-	/**
-	 * Caches the account roles in the entity cache if it is enabled.
-	 *
-	 * @param accountRoles the account roles
-	 */
-	public void cacheResult(java.util.List<AccountRole> accountRoles);
-
-	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
 	 * @param accountRoleId the primary key for the new account role
@@ -903,4 +889,4 @@ public interface AccountRolePersistence extends BasePersistence<AccountRole> {
 	public AccountRole fetchByPrimaryKey(long accountRoleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1109716946
+// LIFERAY-SERVICE-BUILDER-HASH:1360988502

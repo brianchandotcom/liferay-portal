@@ -865,20 +865,6 @@ public interface EmailAddressPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the email address in the entity cache if it is enabled.
-	 *
-	 * @param emailAddress the email address
-	 */
-	public void cacheResult(EmailAddress emailAddress);
-
-	/**
-	 * Caches the email addresses in the entity cache if it is enabled.
-	 *
-	 * @param emailAddresses the email addresses
-	 */
-	public void cacheResult(java.util.List<EmailAddress> emailAddresses);
-
-	/**
 	 * Creates a new email address with the primary key. Does not add the email address to the database.
 	 *
 	 * @param emailAddressId the primary key for the new email address
@@ -917,4 +903,4 @@ public interface EmailAddressPersistence
 	public EmailAddress fetchByPrimaryKey(long emailAddressId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1119334998
+// LIFERAY-SERVICE-BUILDER-HASH:-735633920

@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersiste
 import com.liferay.commerce.product.service.persistence.CPDefinitionLinkUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2319,96 +2315,6 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp definition link in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLink the cp definition link
-	 */
-	@Override
-	public void cacheResult(CPDefinitionLink cpDefinitionLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPDefinitionLinkImpl.class, cpDefinitionLink.getPrimaryKey(),
-				cpDefinitionLink);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpDefinitionLink.getUuid(), cpDefinitionLink.getGroupId()
-				},
-				cpDefinitionLink);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_T,
-				new Object[] {
-					cpDefinitionLink.getCPDefinitionId(),
-					cpDefinitionLink.getCProductId(), cpDefinitionLink.getType()
-				},
-				cpDefinitionLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp definition links in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionLinks the cp definition links
-	 */
-	@Override
-	public void cacheResult(List<CPDefinitionLink> cpDefinitionLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpDefinitionLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpDefinitionLink.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPDefinitionLinkImpl.class,
-						cpDefinitionLink.getPrimaryKey()) == null) {
-
-					cacheResult(cpDefinitionLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDefinitionLinkModelImpl cpDefinitionLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpDefinitionLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpDefinitionLinkModelImpl.getUuid(),
-				cpDefinitionLinkModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpDefinitionLinkModelImpl);
-
-			args = new Object[] {
-				cpDefinitionLinkModelImpl.getCPDefinitionId(),
-				cpDefinitionLinkModelImpl.getCProductId(),
-				cpDefinitionLinkModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C_T, args, cpDefinitionLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp definition link with the primary key. Does not add the cp definition link to the database.
 	 *
 	 * @param CPDefinitionLinkId the primary key for the new cp definition link
@@ -2558,10 +2464,7 @@ public class CPDefinitionLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDefinitionLinkImpl.class, cpDefinitionLinkModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpDefinitionLinkModelImpl);
+		cacheUniqueFindersResult(cpDefinitionLink, false);
 
 		if (isNew) {
 			cpDefinitionLink.setNew(false);
@@ -2707,9 +2610,6 @@ public class CPDefinitionLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2738,10 +2638,11 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPDefinitionLink::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CPDefinitionLink::getUuid,
+			CPDefinitionLink::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
@@ -3028,13 +2929,15 @@ public class CPDefinitionLinkPersistenceImpl
 				"cpDefinitionLink.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CPDefinitionLink::getStatus));
 
-		_finderPathFetchByC_C_T = new FinderPath(
+		_finderPathFetchByC_C_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"CPDefinitionId", "CProductId", "type_"}, true);
+			new String[] {"CPDefinitionId", "CProductId", "type_"}, false,
+			CPDefinitionLink::getCPDefinitionId,
+			CPDefinitionLink::getCProductId, CPDefinitionLink::getType);
 
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_T, _SQL_SELECT_CPDEFINITIONLINK_WHERE,
@@ -3205,4 +3108,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:815439437
+// LIFERAY-SERVICE-BUILDER-HASH:1425614258

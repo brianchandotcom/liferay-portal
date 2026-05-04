@@ -16,7 +16,6 @@ import com.liferay.asset.list.service.persistence.AssetListEntryUtil;
 import com.liferay.asset.list.service.persistence.impl.constants.AssetListPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -9093,126 +9090,6 @@ public class AssetListEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset list entry in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntry the asset list entry
-	 */
-	@Override
-	public void cacheResult(AssetListEntry assetListEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetListEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetListEntryImpl.class, assetListEntry.getPrimaryKey(),
-				assetListEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetListEntry.getUuid(), assetListEntry.getGroupId()
-				},
-				assetListEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_ALEK,
-				new Object[] {
-					assetListEntry.getGroupId(),
-					assetListEntry.getAssetListEntryKey()
-				},
-				assetListEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_T,
-				new Object[] {
-					assetListEntry.getGroupId(), assetListEntry.getTitle()
-				},
-				assetListEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					assetListEntry.getExternalReferenceCode(),
-					assetListEntry.getGroupId()
-				},
-				assetListEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset list entries in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntries the asset list entries
-	 */
-	@Override
-	public void cacheResult(List<AssetListEntry> assetListEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetListEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetListEntry assetListEntry : assetListEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetListEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetListEntryImpl.class,
-						assetListEntry.getPrimaryKey()) == null) {
-
-					cacheResult(assetListEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetListEntryModelImpl assetListEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetListEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetListEntryModelImpl.getUuid(),
-				assetListEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, assetListEntryModelImpl);
-
-			args = new Object[] {
-				assetListEntryModelImpl.getGroupId(),
-				assetListEntryModelImpl.getAssetListEntryKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_ALEK, args, assetListEntryModelImpl);
-
-			args = new Object[] {
-				assetListEntryModelImpl.getGroupId(),
-				assetListEntryModelImpl.getTitle()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_T, args, assetListEntryModelImpl);
-
-			args = new Object[] {
-				assetListEntryModelImpl.getExternalReferenceCode(),
-				assetListEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, assetListEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset list entry with the primary key. Does not add the asset list entry to the database.
 	 *
 	 * @param assetListEntryId the primary key for the new asset list entry
@@ -9424,10 +9301,7 @@ public class AssetListEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetListEntryImpl.class, assetListEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(assetListEntryModelImpl);
+		cacheUniqueFindersResult(assetListEntry, false);
 
 		if (isNew) {
 			assetListEntry.setNew(false);
@@ -9574,9 +9448,6 @@ public class AssetListEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -9604,10 +9475,11 @@ public class AssetListEntryPersistenceImpl
 				"assetListEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetListEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, AssetListEntry::getUuid,
+			AssetListEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETLISTENTRY_WHERE,
@@ -9674,10 +9546,11 @@ public class AssetListEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathFetchByG_ALEK = new FinderPath(
+		_finderPathFetchByG_ALEK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_ALEK",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "assetListEntryKey"}, true);
+			new String[] {"groupId", "assetListEntryKey"}, false,
+			AssetListEntry::getGroupId, AssetListEntry::getAssetListEntryKey);
 
 		_uniquePersistenceFinderByG_ALEK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_ALEK, _SQL_SELECT_ASSETLISTENTRY_WHERE,
@@ -9689,10 +9562,11 @@ public class AssetListEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				AssetListEntry::getAssetListEntryKey));
 
-		_finderPathFetchByG_T = new FinderPath(
+		_finderPathFetchByG_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "title"}, true);
+			new String[] {"groupId", "title"}, false,
+			AssetListEntry::getGroupId, AssetListEntry::getTitle);
 
 		_uniquePersistenceFinderByG_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_T, _SQL_SELECT_ASSETLISTENTRY_WHERE,
@@ -9850,10 +9724,12 @@ public class AssetListEntryPersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			AssetListEntry::getExternalReferenceCode,
+			AssetListEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETLISTENTRY_WHERE,
@@ -9960,4 +9836,4 @@ public class AssetListEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-497181466
+// LIFERAY-SERVICE-BUILDER-HASH:1102834408

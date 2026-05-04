@@ -36,6 +36,20 @@ public class DefinitionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Definition> definitions) {
+		getPersistence().cacheResult(definitions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Definition definition) {
+		getPersistence().cacheResult(definition);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -727,24 +741,6 @@ public class DefinitionUtil {
 	}
 
 	/**
-	 * Caches the definition in the entity cache if it is enabled.
-	 *
-	 * @param definition the definition
-	 */
-	public static void cacheResult(Definition definition) {
-		getPersistence().cacheResult(definition);
-	}
-
-	/**
-	 * Caches the definitions in the entity cache if it is enabled.
-	 *
-	 * @param definitions the definitions
-	 */
-	public static void cacheResult(List<Definition> definitions) {
-		getPersistence().cacheResult(definitions);
-	}
-
-	/**
 	 * Creates a new definition with the primary key. Does not add the definition to the database.
 	 *
 	 * @param definitionId the primary key for the new definition
@@ -807,4 +803,4 @@ public class DefinitionUtil {
 	private static volatile DefinitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1496111926
+// LIFERAY-SERVICE-BUILDER-HASH:-1919408708

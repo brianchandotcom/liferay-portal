@@ -36,6 +36,20 @@ public class RSVEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<RSVEntry> rsvEntries) {
+		getPersistence().cacheResult(rsvEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RSVEntry rsvEntry) {
+		getPersistence().cacheResult(rsvEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class RSVEntryUtil {
 	}
 
 	/**
-	 * Caches the rsv entry in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntry the rsv entry
-	 */
-	public static void cacheResult(RSVEntry rsvEntry) {
-		getPersistence().cacheResult(rsvEntry);
-	}
-
-	/**
-	 * Caches the rsv entries in the entity cache if it is enabled.
-	 *
-	 * @param rsvEntries the rsv entries
-	 */
-	public static void cacheResult(List<RSVEntry> rsvEntries) {
-		getPersistence().cacheResult(rsvEntries);
-	}
-
-	/**
 	 * Creates a new rsv entry with the primary key. Does not add the rsv entry to the database.
 	 *
 	 * @param rsvEntryId the primary key for the new rsv entry
@@ -191,4 +187,4 @@ public class RSVEntryUtil {
 	private static volatile RSVEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1555620596
+// LIFERAY-SERVICE-BUILDER-HASH:-1516114485

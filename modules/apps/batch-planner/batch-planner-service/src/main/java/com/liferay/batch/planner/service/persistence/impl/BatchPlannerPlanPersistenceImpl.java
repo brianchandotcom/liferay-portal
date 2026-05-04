@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -2391,45 +2388,6 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch planner plan in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPlan the batch planner plan
-	 */
-	@Override
-	public void cacheResult(BatchPlannerPlan batchPlannerPlan) {
-		entityCache.putResult(
-			BatchPlannerPlanImpl.class, batchPlannerPlan.getPrimaryKey(),
-			batchPlannerPlan);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch planner plans in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPlans the batch planner plans
-	 */
-	@Override
-	public void cacheResult(List<BatchPlannerPlan> batchPlannerPlans) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchPlannerPlans.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchPlannerPlan batchPlannerPlan : batchPlannerPlans) {
-			if (entityCache.getResult(
-					BatchPlannerPlanImpl.class,
-					batchPlannerPlan.getPrimaryKey()) == null) {
-
-				cacheResult(batchPlannerPlan);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new batch planner plan with the primary key. Does not add the batch planner plan to the database.
 	 *
 	 * @param batchPlannerPlanId the primary key for the new batch planner plan
@@ -2561,8 +2519,7 @@ public class BatchPlannerPlanPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchPlannerPlanImpl.class, batchPlannerPlanModelImpl, false, true);
+		cacheUniqueFindersResult(batchPlannerPlan, false);
 
 		if (isNew) {
 			batchPlannerPlan.setNew(false);
@@ -2628,9 +2585,6 @@ public class BatchPlannerPlanPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -2921,4 +2875,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1111675920
+// LIFERAY-SERVICE-BUILDER-HASH:-1739690191

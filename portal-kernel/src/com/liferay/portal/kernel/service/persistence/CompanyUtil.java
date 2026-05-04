@@ -36,6 +36,20 @@ public class CompanyUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Company> companies) {
+		getPersistence().cacheResult(companies);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Company company) {
+		getPersistence().cacheResult(company);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -283,24 +297,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * Caches the company in the entity cache if it is enabled.
-	 *
-	 * @param company the company
-	 */
-	public static void cacheResult(Company company) {
-		getPersistence().cacheResult(company);
-	}
-
-	/**
-	 * Caches the companies in the entity cache if it is enabled.
-	 *
-	 * @param companies the companies
-	 */
-	public static void cacheResult(List<Company> companies) {
-		getPersistence().cacheResult(companies);
-	}
-
-	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *
 	 * @param companyId the primary key for the new company
@@ -361,4 +357,4 @@ public class CompanyUtil {
 	private static volatile CompanyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2108744394
+// LIFERAY-SERVICE-BUILDER-HASH:-1158315145

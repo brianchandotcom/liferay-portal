@@ -36,6 +36,20 @@ public class LayoutFriendlyURLUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LayoutFriendlyURL> layoutFriendlyURLs) {
+		getPersistence().cacheResult(layoutFriendlyURLs);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LayoutFriendlyURL layoutFriendlyURL) {
+		getPersistence().cacheResult(layoutFriendlyURL);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1465,24 +1479,6 @@ public class LayoutFriendlyURLUtil {
 	}
 
 	/**
-	 * Caches the layout friendly url in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURL the layout friendly url
-	 */
-	public static void cacheResult(LayoutFriendlyURL layoutFriendlyURL) {
-		getPersistence().cacheResult(layoutFriendlyURL);
-	}
-
-	/**
-	 * Caches the layout friendly urls in the entity cache if it is enabled.
-	 *
-	 * @param layoutFriendlyURLs the layout friendly urls
-	 */
-	public static void cacheResult(List<LayoutFriendlyURL> layoutFriendlyURLs) {
-		getPersistence().cacheResult(layoutFriendlyURLs);
-	}
-
-	/**
 	 * Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
 	 *
 	 * @param layoutFriendlyURLId the primary key for the new layout friendly url
@@ -1551,4 +1547,4 @@ public class LayoutFriendlyURLUtil {
 	private static volatile LayoutFriendlyURLPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-24823262
+// LIFERAY-SERVICE-BUILDER-HASH:852949764

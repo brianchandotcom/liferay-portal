@@ -36,6 +36,24 @@ public class RenameFinderColumnEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RenameFinderColumnEntry> renameFinderColumnEntries) {
+
+		getPersistence().cacheResult(renameFinderColumnEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		RenameFinderColumnEntry renameFinderColumnEntry) {
+
+		getPersistence().cacheResult(renameFinderColumnEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -181,28 +199,6 @@ public class RenameFinderColumnEntryUtil {
 	}
 
 	/**
-	 * Caches the rename finder column entry in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntry the rename finder column entry
-	 */
-	public static void cacheResult(
-		RenameFinderColumnEntry renameFinderColumnEntry) {
-
-		getPersistence().cacheResult(renameFinderColumnEntry);
-	}
-
-	/**
-	 * Caches the rename finder column entries in the entity cache if it is enabled.
-	 *
-	 * @param renameFinderColumnEntries the rename finder column entries
-	 */
-	public static void cacheResult(
-		List<RenameFinderColumnEntry> renameFinderColumnEntries) {
-
-		getPersistence().cacheResult(renameFinderColumnEntries);
-	}
-
-	/**
 	 * Creates a new rename finder column entry with the primary key. Does not add the rename finder column entry to the database.
 	 *
 	 * @param renameFinderColumnEntryId the primary key for the new rename finder column entry
@@ -274,4 +270,4 @@ public class RenameFinderColumnEntryUtil {
 	private static volatile RenameFinderColumnEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-335294145
+// LIFERAY-SERVICE-BUILDER-HASH:462770234

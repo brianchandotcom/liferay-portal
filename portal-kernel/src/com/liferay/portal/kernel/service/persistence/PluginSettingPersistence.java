@@ -193,20 +193,6 @@ public interface PluginSettingPersistence
 	public int countByC_P_P(long companyId, String pluginId, String pluginType);
 
 	/**
-	 * Caches the plugin setting in the entity cache if it is enabled.
-	 *
-	 * @param pluginSetting the plugin setting
-	 */
-	public void cacheResult(PluginSetting pluginSetting);
-
-	/**
-	 * Caches the plugin settings in the entity cache if it is enabled.
-	 *
-	 * @param pluginSettings the plugin settings
-	 */
-	public void cacheResult(java.util.List<PluginSetting> pluginSettings);
-
-	/**
 	 * Creates a new plugin setting with the primary key. Does not add the plugin setting to the database.
 	 *
 	 * @param pluginSettingId the primary key for the new plugin setting
@@ -245,4 +231,4 @@ public interface PluginSettingPersistence
 	public PluginSetting fetchByPrimaryKey(long pluginSettingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1644502137
+// LIFERAY-SERVICE-BUILDER-HASH:2094361269

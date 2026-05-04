@@ -910,4 +910,4 @@ public class PortalPreferenceValueModelImpl
 	private PortalPreferenceValue _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-56318302
+// LIFERAY-SERVICE-BUILDER-HASH:976069320

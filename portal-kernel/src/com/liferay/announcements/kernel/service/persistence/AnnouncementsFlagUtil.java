@@ -36,6 +36,20 @@ public class AnnouncementsFlagUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AnnouncementsFlag> announcementsFlags) {
+		getPersistence().cacheResult(announcementsFlags);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AnnouncementsFlag announcementsFlag) {
+		getPersistence().cacheResult(announcementsFlag);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -430,24 +444,6 @@ public class AnnouncementsFlagUtil {
 	}
 
 	/**
-	 * Caches the announcements flag in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlag the announcements flag
-	 */
-	public static void cacheResult(AnnouncementsFlag announcementsFlag) {
-		getPersistence().cacheResult(announcementsFlag);
-	}
-
-	/**
-	 * Caches the announcements flags in the entity cache if it is enabled.
-	 *
-	 * @param announcementsFlags the announcements flags
-	 */
-	public static void cacheResult(List<AnnouncementsFlag> announcementsFlags) {
-		getPersistence().cacheResult(announcementsFlags);
-	}
-
-	/**
 	 * Creates a new announcements flag with the primary key. Does not add the announcements flag to the database.
 	 *
 	 * @param flagId the primary key for the new announcements flag
@@ -512,4 +508,4 @@ public class AnnouncementsFlagUtil {
 	private static volatile AnnouncementsFlagPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:868766502
+// LIFERAY-SERVICE-BUILDER-HASH:549055588

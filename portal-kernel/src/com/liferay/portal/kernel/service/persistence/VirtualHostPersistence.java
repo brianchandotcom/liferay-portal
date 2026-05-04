@@ -480,20 +480,6 @@ public interface VirtualHostPersistence
 	public int countByNotL_H(long layoutSetId, String[] hostnames);
 
 	/**
-	 * Caches the virtual host in the entity cache if it is enabled.
-	 *
-	 * @param virtualHost the virtual host
-	 */
-	public void cacheResult(VirtualHost virtualHost);
-
-	/**
-	 * Caches the virtual hosts in the entity cache if it is enabled.
-	 *
-	 * @param virtualHosts the virtual hosts
-	 */
-	public void cacheResult(java.util.List<VirtualHost> virtualHosts);
-
-	/**
 	 * Creates a new virtual host with the primary key. Does not add the virtual host to the database.
 	 *
 	 * @param virtualHostId the primary key for the new virtual host
@@ -532,4 +518,4 @@ public interface VirtualHostPersistence
 	public VirtualHost fetchByPrimaryKey(long virtualHostId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1062162021
+// LIFERAY-SERVICE-BUILDER-HASH:1811658869

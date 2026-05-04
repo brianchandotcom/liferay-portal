@@ -1323,20 +1323,6 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the account group in the entity cache if it is enabled.
-	 *
-	 * @param accountGroup the account group
-	 */
-	public void cacheResult(AccountGroup accountGroup);
-
-	/**
-	 * Caches the account groups in the entity cache if it is enabled.
-	 *
-	 * @param accountGroups the account groups
-	 */
-	public void cacheResult(java.util.List<AccountGroup> accountGroups);
-
-	/**
 	 * Creates a new account group with the primary key. Does not add the account group to the database.
 	 *
 	 * @param accountGroupId the primary key for the new account group
@@ -1374,4 +1360,4 @@ public interface AccountGroupPersistence extends BasePersistence<AccountGroup> {
 	public AccountGroup fetchByPrimaryKey(long accountGroupId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2042315655
+// LIFERAY-SERVICE-BUILDER-HASH:-1048954533

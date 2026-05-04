@@ -36,6 +36,24 @@ public class KaleoNotificationRecipientUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<KaleoNotificationRecipient> kaleoNotificationRecipients) {
+
+		getPersistence().cacheResult(kaleoNotificationRecipients);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		KaleoNotificationRecipient kaleoNotificationRecipient) {
+
+		getPersistence().cacheResult(kaleoNotificationRecipient);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -510,28 +528,6 @@ public class KaleoNotificationRecipientUtil {
 	}
 
 	/**
-	 * Caches the kaleo notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipient the kaleo notification recipient
-	 */
-	public static void cacheResult(
-		KaleoNotificationRecipient kaleoNotificationRecipient) {
-
-		getPersistence().cacheResult(kaleoNotificationRecipient);
-	}
-
-	/**
-	 * Caches the kaleo notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param kaleoNotificationRecipients the kaleo notification recipients
-	 */
-	public static void cacheResult(
-		List<KaleoNotificationRecipient> kaleoNotificationRecipients) {
-
-		getPersistence().cacheResult(kaleoNotificationRecipients);
-	}
-
-	/**
 	 * Creates a new kaleo notification recipient with the primary key. Does not add the kaleo notification recipient to the database.
 	 *
 	 * @param kaleoNotificationRecipientId the primary key for the new kaleo notification recipient
@@ -604,4 +600,4 @@ public class KaleoNotificationRecipientUtil {
 	private static volatile KaleoNotificationRecipientPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1348027863
+// LIFERAY-SERVICE-BUILDER-HASH:1111050805

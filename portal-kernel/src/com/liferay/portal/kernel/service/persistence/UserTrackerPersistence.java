@@ -337,20 +337,6 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	public int countBySessionId(String sessionId);
 
 	/**
-	 * Caches the user tracker in the entity cache if it is enabled.
-	 *
-	 * @param userTracker the user tracker
-	 */
-	public void cacheResult(UserTracker userTracker);
-
-	/**
-	 * Caches the user trackers in the entity cache if it is enabled.
-	 *
-	 * @param userTrackers the user trackers
-	 */
-	public void cacheResult(java.util.List<UserTracker> userTrackers);
-
-	/**
 	 * Creates a new user tracker with the primary key. Does not add the user tracker to the database.
 	 *
 	 * @param userTrackerId the primary key for the new user tracker
@@ -389,4 +375,4 @@ public interface UserTrackerPersistence extends BasePersistence<UserTracker> {
 	public UserTracker fetchByPrimaryKey(long userTrackerId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:135704733
+// LIFERAY-SERVICE-BUILDER-HASH:1628978937

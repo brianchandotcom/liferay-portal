@@ -292,21 +292,6 @@ public interface CommerceTaxFixedRatePersistence
 	public int countByC_C(long CPTaxCategoryId, long commerceTaxMethodId);
 
 	/**
-	 * Caches the commerce tax fixed rate in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRate the commerce tax fixed rate
-	 */
-	public void cacheResult(CommerceTaxFixedRate commerceTaxFixedRate);
-
-	/**
-	 * Caches the commerce tax fixed rates in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRates the commerce tax fixed rates
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTaxFixedRate> commerceTaxFixedRates);
-
-	/**
 	 * Creates a new commerce tax fixed rate with the primary key. Does not add the commerce tax fixed rate to the database.
 	 *
 	 * @param commerceTaxFixedRateId the primary key for the new commerce tax fixed rate
@@ -346,4 +331,4 @@ public interface CommerceTaxFixedRatePersistence
 	public CommerceTaxFixedRate fetchByPrimaryKey(long commerceTaxFixedRateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1057870259
+// LIFERAY-SERVICE-BUILDER-HASH:789848465

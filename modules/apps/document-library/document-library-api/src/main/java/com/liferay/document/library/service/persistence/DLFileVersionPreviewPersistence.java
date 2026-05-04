@@ -353,21 +353,6 @@ public interface DLFileVersionPreviewPersistence
 		long fileEntryId, long fileVersionId, int previewStatus);
 
 	/**
-	 * Caches the dl file version preview in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreview the dl file version preview
-	 */
-	public void cacheResult(DLFileVersionPreview dlFileVersionPreview);
-
-	/**
-	 * Caches the dl file version previews in the entity cache if it is enabled.
-	 *
-	 * @param dlFileVersionPreviews the dl file version previews
-	 */
-	public void cacheResult(
-		java.util.List<DLFileVersionPreview> dlFileVersionPreviews);
-
-	/**
 	 * Creates a new dl file version preview with the primary key. Does not add the dl file version preview to the database.
 	 *
 	 * @param dlFileVersionPreviewId the primary key for the new dl file version preview
@@ -407,4 +392,4 @@ public interface DLFileVersionPreviewPersistence
 	public DLFileVersionPreview fetchByPrimaryKey(long dlFileVersionPreviewId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2106838666
+// LIFERAY-SERVICE-BUILDER-HASH:1006914642

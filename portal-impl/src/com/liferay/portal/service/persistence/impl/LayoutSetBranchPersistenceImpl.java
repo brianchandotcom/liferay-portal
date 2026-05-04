@@ -30,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.LayoutSetBranchImpl;
@@ -1355,66 +1352,6 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout set branch in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranch the layout set branch
-	 */
-	@Override
-	public void cacheResult(LayoutSetBranch layoutSetBranch) {
-		EntityCacheUtil.putResult(
-			LayoutSetBranchImpl.class, layoutSetBranch.getPrimaryKey(),
-			layoutSetBranch);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_N,
-			new Object[] {
-				layoutSetBranch.getGroupId(), layoutSetBranch.isPrivateLayout(),
-				layoutSetBranch.getName()
-			},
-			layoutSetBranch);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout set branches in the entity cache if it is enabled.
-	 *
-	 * @param layoutSetBranchs the layout set branches
-	 */
-	@Override
-	public void cacheResult(List<LayoutSetBranch> layoutSetBranchs) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutSetBranchs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutSetBranch layoutSetBranch : layoutSetBranchs) {
-			if (EntityCacheUtil.getResult(
-					LayoutSetBranchImpl.class,
-					layoutSetBranch.getPrimaryKey()) == null) {
-
-				cacheResult(layoutSetBranch);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutSetBranchModelImpl layoutSetBranchModelImpl) {
-
-		Object[] args = new Object[] {
-			layoutSetBranchModelImpl.getGroupId(),
-			layoutSetBranchModelImpl.isPrivateLayout(),
-			layoutSetBranchModelImpl.getName()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByG_P_N, args, layoutSetBranchModelImpl);
-	}
-
-	/**
 	 * Creates a new layout set branch with the primary key. Does not add the layout set branch to the database.
 	 *
 	 * @param layoutSetBranchId the primary key for the new layout set branch
@@ -1546,10 +1483,7 @@ public class LayoutSetBranchPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutSetBranchImpl.class, layoutSetBranchModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutSetBranchModelImpl);
+		cacheUniqueFindersResult(layoutSetBranch, false);
 
 		if (isNew) {
 			layoutSetBranch.setNew(false);
@@ -1614,9 +1548,6 @@ public class LayoutSetBranchPersistenceImpl
 	 * Initializes the layout set branch persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -1677,13 +1608,15 @@ public class LayoutSetBranchPersistenceImpl
 				"layoutSetBranch.", "privateLayout", FinderColumn.Type.BOOLEAN,
 				"=", true, true, LayoutSetBranch::isPrivateLayout));
 
-		_finderPathFetchByG_P_N = new FinderPath(
+		_finderPathFetchByG_P_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "name"}, true);
+			new String[] {"groupId", "privateLayout", "name"}, false,
+			LayoutSetBranch::getGroupId, LayoutSetBranch::isPrivateLayout,
+			LayoutSetBranch::getName);
 
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_N, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
@@ -1796,4 +1729,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2039039253
+// LIFERAY-SERVICE-BUILDER-HASH:968969527

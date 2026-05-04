@@ -36,6 +36,24 @@ public class DEDataDefinitionFieldLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks) {
+
+		getPersistence().cacheResult(deDataDefinitionFieldLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DEDataDefinitionFieldLink deDataDefinitionFieldLink) {
+
+		getPersistence().cacheResult(deDataDefinitionFieldLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1437,28 +1455,6 @@ public class DEDataDefinitionFieldLinkUtil {
 	}
 
 	/**
-	 * Caches the de data definition field link in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLink the de data definition field link
-	 */
-	public static void cacheResult(
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink) {
-
-		getPersistence().cacheResult(deDataDefinitionFieldLink);
-	}
-
-	/**
-	 * Caches the de data definition field links in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLinks the de data definition field links
-	 */
-	public static void cacheResult(
-		List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks) {
-
-		getPersistence().cacheResult(deDataDefinitionFieldLinks);
-	}
-
-	/**
 	 * Creates a new de data definition field link with the primary key. Does not add the de data definition field link to the database.
 	 *
 	 * @param deDataDefinitionFieldLinkId the primary key for the new de data definition field link
@@ -1531,4 +1527,4 @@ public class DEDataDefinitionFieldLinkUtil {
 	private static volatile DEDataDefinitionFieldLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1279051696
+// LIFERAY-SERVICE-BUILDER-HASH:1945019522

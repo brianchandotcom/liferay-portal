@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -379,42 +376,6 @@ public class CTCommentPersistenceImpl
 	}
 
 	/**
-	 * Caches the ct comment in the entity cache if it is enabled.
-	 *
-	 * @param ctComment the ct comment
-	 */
-	@Override
-	public void cacheResult(CTComment ctComment) {
-		entityCache.putResult(
-			CTCommentImpl.class, ctComment.getPrimaryKey(), ctComment);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct comments in the entity cache if it is enabled.
-	 *
-	 * @param ctComments the ct comments
-	 */
-	@Override
-	public void cacheResult(List<CTComment> ctComments) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctComments.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTComment ctComment : ctComments) {
-			if (entityCache.getResult(
-					CTCommentImpl.class, ctComment.getPrimaryKey()) == null) {
-
-				cacheResult(ctComment);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new ct comment with the primary key. Does not add the ct comment to the database.
 	 *
 	 * @param ctCommentId the primary key for the new ct comment
@@ -538,8 +499,7 @@ public class CTCommentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTCommentImpl.class, ctCommentModelImpl, false, true);
+		cacheUniqueFindersResult(ctComment, false);
 
 		if (isNew) {
 			ctComment.setNew(false);
@@ -600,9 +560,6 @@ public class CTCommentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
 			new String[] {
@@ -727,4 +684,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1921985502
+// LIFERAY-SERVICE-BUILDER-HASH:-1338852424

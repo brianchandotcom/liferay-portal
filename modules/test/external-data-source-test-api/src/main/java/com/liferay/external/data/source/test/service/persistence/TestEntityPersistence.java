@@ -32,20 +32,6 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	 */
 
 	/**
-	 * Caches the test entity in the entity cache if it is enabled.
-	 *
-	 * @param testEntity the test entity
-	 */
-	public void cacheResult(TestEntity testEntity);
-
-	/**
-	 * Caches the test entities in the entity cache if it is enabled.
-	 *
-	 * @param testEntities the test entities
-	 */
-	public void cacheResult(java.util.List<TestEntity> testEntities);
-
-	/**
 	 * Creates a new test entity with the primary key. Does not add the test entity to the database.
 	 *
 	 * @param id the primary key for the new test entity
@@ -83,4 +69,4 @@ public interface TestEntityPersistence extends BasePersistence<TestEntity> {
 	public TestEntity fetchByPrimaryKey(long id);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:485883213
+// LIFERAY-SERVICE-BUILDER-HASH:-161581209

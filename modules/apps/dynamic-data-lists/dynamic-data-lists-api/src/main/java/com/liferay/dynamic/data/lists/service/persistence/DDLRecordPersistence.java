@@ -831,20 +831,6 @@ public interface DDLRecordPersistence
 	public int countByC_C(String className, long classPK);
 
 	/**
-	 * Caches the ddl record in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecord the ddl record
-	 */
-	public void cacheResult(DDLRecord ddlRecord);
-
-	/**
-	 * Caches the ddl records in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecords the ddl records
-	 */
-	public void cacheResult(java.util.List<DDLRecord> ddlRecords);
-
-	/**
 	 * Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	 *
 	 * @param recordId the primary key for the new ddl record
@@ -882,4 +868,4 @@ public interface DDLRecordPersistence
 	public DDLRecord fetchByPrimaryKey(long recordId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1424869118
+// LIFERAY-SERVICE-BUILDER-HASH:-1172376038

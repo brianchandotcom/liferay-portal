@@ -36,6 +36,24 @@ public class CommerceDiscountUsageEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceDiscountUsageEntry> commerceDiscountUsageEntries) {
+
+		getPersistence().cacheResult(commerceDiscountUsageEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
+
+		getPersistence().cacheResult(commerceDiscountUsageEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -687,28 +705,6 @@ public class CommerceDiscountUsageEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce discount usage entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntry the commerce discount usage entry
-	 */
-	public static void cacheResult(
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry) {
-
-		getPersistence().cacheResult(commerceDiscountUsageEntry);
-	}
-
-	/**
-	 * Caches the commerce discount usage entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceDiscountUsageEntries the commerce discount usage entries
-	 */
-	public static void cacheResult(
-		List<CommerceDiscountUsageEntry> commerceDiscountUsageEntries) {
-
-		getPersistence().cacheResult(commerceDiscountUsageEntries);
-	}
-
-	/**
 	 * Creates a new commerce discount usage entry with the primary key. Does not add the commerce discount usage entry to the database.
 	 *
 	 * @param commerceDiscountUsageEntryId the primary key for the new commerce discount usage entry
@@ -781,4 +777,4 @@ public class CommerceDiscountUsageEntryUtil {
 	private static volatile CommerceDiscountUsageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1768529936
+// LIFERAY-SERVICE-BUILDER-HASH:-1342358907

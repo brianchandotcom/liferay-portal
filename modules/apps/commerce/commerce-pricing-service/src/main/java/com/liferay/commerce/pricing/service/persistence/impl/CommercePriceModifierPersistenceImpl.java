@@ -16,7 +16,6 @@ import com.liferay.commerce.pricing.service.persistence.CommercePriceModifierUti
 import com.liferay.commerce.pricing.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2790,100 +2787,6 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce price modifier in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifier the commerce price modifier
-	 */
-	@Override
-	public void cacheResult(CommercePriceModifier commercePriceModifier) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceModifier.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePriceModifierImpl.class,
-				commercePriceModifier.getPrimaryKey(), commercePriceModifier);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					commercePriceModifier.getUuid(),
-					commercePriceModifier.getGroupId()
-				},
-				commercePriceModifier);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					commercePriceModifier.getExternalReferenceCode(),
-					commercePriceModifier.getCompanyId()
-				},
-				commercePriceModifier);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce price modifiers in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceModifiers the commerce price modifiers
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePriceModifier> commercePriceModifiers) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePriceModifiers.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePriceModifier commercePriceModifier :
-				commercePriceModifiers) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePriceModifier.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePriceModifierImpl.class,
-						commercePriceModifier.getPrimaryKey()) == null) {
-
-					cacheResult(commercePriceModifier);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePriceModifierModelImpl commercePriceModifierModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePriceModifierModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePriceModifierModelImpl.getUuid(),
-				commercePriceModifierModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, commercePriceModifierModelImpl);
-
-			args = new Object[] {
-				commercePriceModifierModelImpl.getExternalReferenceCode(),
-				commercePriceModifierModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, commercePriceModifierModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce price modifier with the primary key. Does not add the commerce price modifier to the database.
 	 *
 	 * @param commercePriceModifierId the primary key for the new commerce price modifier
@@ -3110,11 +3013,7 @@ public class CommercePriceModifierPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePriceModifierImpl.class, commercePriceModifierModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commercePriceModifierModelImpl);
+		cacheUniqueFindersResult(commercePriceModifier, false);
 
 		if (isNew) {
 			commercePriceModifier.setNew(false);
@@ -3266,9 +3165,6 @@ public class CommercePriceModifierPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3297,10 +3193,11 @@ public class CommercePriceModifierPersistenceImpl
 				"commercePriceModifier.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommercePriceModifier::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CommercePriceModifier::getUuid, CommercePriceModifier::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -3549,10 +3446,12 @@ public class CommercePriceModifierPersistenceImpl
 			},
 			new String[] {"groupId", "companyId", "status"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommercePriceModifier::getExternalReferenceCode,
+			CommercePriceModifier::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -3637,4 +3536,4 @@ public class CommercePriceModifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1160996306
+// LIFERAY-SERVICE-BUILDER-HASH:790860236

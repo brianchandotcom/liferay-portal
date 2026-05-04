@@ -994,4 +994,4 @@ public class ResourcePermissionModelImpl
 	private ResourcePermission _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:915193560
+// LIFERAY-SERVICE-BUILDER-HASH:-916917776

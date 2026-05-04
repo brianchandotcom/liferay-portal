@@ -491,20 +491,6 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public int countByDDLRecordSetId(long DDLRecordSetId);
 
 	/**
-	 * Caches the kaleo process in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcess the kaleo process
-	 */
-	public void cacheResult(KaleoProcess kaleoProcess);
-
-	/**
-	 * Caches the kaleo processes in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcesses the kaleo processes
-	 */
-	public void cacheResult(java.util.List<KaleoProcess> kaleoProcesses);
-
-	/**
 	 * Creates a new kaleo process with the primary key. Does not add the kaleo process to the database.
 	 *
 	 * @param kaleoProcessId the primary key for the new kaleo process
@@ -543,4 +529,4 @@ public interface KaleoProcessPersistence extends BasePersistence<KaleoProcess> {
 	public KaleoProcess fetchByPrimaryKey(long kaleoProcessId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-488471821
+// LIFERAY-SERVICE-BUILDER-HASH:1969526305

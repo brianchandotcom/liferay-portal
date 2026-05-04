@@ -297,20 +297,6 @@ public interface TrashVersionPersistence
 	public int countByCN_CPK(long classNameId, long classPK);
 
 	/**
-	 * Caches the trash version in the entity cache if it is enabled.
-	 *
-	 * @param trashVersion the trash version
-	 */
-	public void cacheResult(TrashVersion trashVersion);
-
-	/**
-	 * Caches the trash versions in the entity cache if it is enabled.
-	 *
-	 * @param trashVersions the trash versions
-	 */
-	public void cacheResult(java.util.List<TrashVersion> trashVersions);
-
-	/**
 	 * Creates a new trash version with the primary key. Does not add the trash version to the database.
 	 *
 	 * @param versionId the primary key for the new trash version
@@ -348,4 +334,4 @@ public interface TrashVersionPersistence
 	public TrashVersion fetchByPrimaryKey(long versionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:201098534
+// LIFERAY-SERVICE-BUILDER-HASH:7702674

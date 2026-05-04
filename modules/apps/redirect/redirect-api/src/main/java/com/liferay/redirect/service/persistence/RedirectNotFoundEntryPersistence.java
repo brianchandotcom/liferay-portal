@@ -185,21 +185,6 @@ public interface RedirectNotFoundEntryPersistence
 	public int countByG_U(long groupId, String url);
 
 	/**
-	 * Caches the redirect not found entry in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntry the redirect not found entry
-	 */
-	public void cacheResult(RedirectNotFoundEntry redirectNotFoundEntry);
-
-	/**
-	 * Caches the redirect not found entries in the entity cache if it is enabled.
-	 *
-	 * @param redirectNotFoundEntries the redirect not found entries
-	 */
-	public void cacheResult(
-		java.util.List<RedirectNotFoundEntry> redirectNotFoundEntries);
-
-	/**
 	 * Creates a new redirect not found entry with the primary key. Does not add the redirect not found entry to the database.
 	 *
 	 * @param redirectNotFoundEntryId the primary key for the new redirect not found entry
@@ -240,4 +225,4 @@ public interface RedirectNotFoundEntryPersistence
 		long redirectNotFoundEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1798640974
+// LIFERAY-SERVICE-BUILDER-HASH:348879828

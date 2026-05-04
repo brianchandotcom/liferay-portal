@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -247,52 +244,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch engine import task error in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTaskError the batch engine import task error
-	 */
-	@Override
-	public void cacheResult(
-		BatchEngineImportTaskError batchEngineImportTaskError) {
-
-		entityCache.putResult(
-			BatchEngineImportTaskErrorImpl.class,
-			batchEngineImportTaskError.getPrimaryKey(),
-			batchEngineImportTaskError);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch engine import task errors in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTaskErrors the batch engine import task errors
-	 */
-	@Override
-	public void cacheResult(
-		List<BatchEngineImportTaskError> batchEngineImportTaskErrors) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchEngineImportTaskErrors.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchEngineImportTaskError batchEngineImportTaskError :
-				batchEngineImportTaskErrors) {
-
-			if (entityCache.getResult(
-					BatchEngineImportTaskErrorImpl.class,
-					batchEngineImportTaskError.getPrimaryKey()) == null) {
-
-				cacheResult(batchEngineImportTaskError);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new batch engine import task error with the primary key. Does not add the batch engine import task error to the database.
 	 *
 	 * @param batchEngineImportTaskErrorId the primary key for the new batch engine import task error
@@ -437,9 +388,7 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchEngineImportTaskErrorImpl.class,
-			batchEngineImportTaskErrorModelImpl, false, true);
+		cacheUniqueFindersResult(batchEngineImportTaskError, false);
 
 		if (isNew) {
 			batchEngineImportTaskError.setNew(false);
@@ -503,9 +452,6 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByBatchEngineImportTaskId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByBatchEngineImportTaskId",
@@ -608,4 +554,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-326478561
+// LIFERAY-SERVICE-BUILDER-HASH:-414956717

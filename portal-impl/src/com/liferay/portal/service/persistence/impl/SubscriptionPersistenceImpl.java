@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.SubscriptionImpl;
@@ -1318,65 +1315,6 @@ public class SubscriptionPersistenceImpl
 	}
 
 	/**
-	 * Caches the subscription in the entity cache if it is enabled.
-	 *
-	 * @param subscription the subscription
-	 */
-	@Override
-	public void cacheResult(Subscription subscription) {
-		EntityCacheUtil.putResult(
-			SubscriptionImpl.class, subscription.getPrimaryKey(), subscription);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_U_C_C,
-			new Object[] {
-				subscription.getCompanyId(), subscription.getUserId(),
-				subscription.getClassNameId(), subscription.getClassPK()
-			},
-			subscription);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the subscriptions in the entity cache if it is enabled.
-	 *
-	 * @param subscriptions the subscriptions
-	 */
-	@Override
-	public void cacheResult(List<Subscription> subscriptions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (subscriptions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Subscription subscription : subscriptions) {
-			if (EntityCacheUtil.getResult(
-					SubscriptionImpl.class, subscription.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(subscription);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SubscriptionModelImpl subscriptionModelImpl) {
-
-		Object[] args = new Object[] {
-			subscriptionModelImpl.getCompanyId(),
-			subscriptionModelImpl.getUserId(),
-			subscriptionModelImpl.getClassNameId(),
-			subscriptionModelImpl.getClassPK()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByC_U_C_C, args, subscriptionModelImpl);
-	}
-
-	/**
 	 * Creates a new subscription with the primary key. Does not add the subscription to the database.
 	 *
 	 * @param subscriptionId the primary key for the new subscription
@@ -1505,10 +1443,7 @@ public class SubscriptionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SubscriptionImpl.class, subscriptionModelImpl, false, true);
-
-		cacheUniqueFindersCache(subscriptionModelImpl);
+		cacheUniqueFindersResult(subscription, false);
 
 		if (isNew) {
 			subscription.setNew(false);
@@ -1568,9 +1503,6 @@ public class SubscriptionPersistenceImpl
 	 * Initializes the subscription persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
@@ -1719,14 +1651,15 @@ public class SubscriptionPersistenceImpl
 			new String[] {"companyId", "userId", "classNameId", "classPK"},
 			true);
 
-		_finderPathFetchByC_U_C_C = new FinderPath(
+		_finderPathFetchByC_U_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "userId", "classNameId", "classPK"},
-			true);
+			false, Subscription::getCompanyId, Subscription::getUserId,
+			Subscription::getClassNameId, Subscription::getClassPK);
 
 		_finderPathCountByC_U_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_C_C",
@@ -1779,4 +1712,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-660872515
+// LIFERAY-SERVICE-BUILDER-HASH:1675136403

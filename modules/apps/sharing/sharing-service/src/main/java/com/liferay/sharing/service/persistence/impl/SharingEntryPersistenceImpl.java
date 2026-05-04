@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1938,95 +1936,6 @@ public class SharingEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the sharing entry in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntry the sharing entry
-	 */
-	@Override
-	public void cacheResult(SharingEntry sharingEntry) {
-		entityCache.putResult(
-			SharingEntryImpl.class, sharingEntry.getPrimaryKey(), sharingEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {sharingEntry.getUuid(), sharingEntry.getGroupId()},
-			sharingEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByTT_TUG_TU_C_C,
-			new Object[] {
-				sharingEntry.getToTicketId(), sharingEntry.getToUserGroupId(),
-				sharingEntry.getToUserId(), sharingEntry.getClassNameId(),
-				sharingEntry.getClassPK()
-			},
-			sharingEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G,
-			new Object[] {
-				sharingEntry.getExternalReferenceCode(),
-				sharingEntry.getGroupId()
-			},
-			sharingEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sharing entries in the entity cache if it is enabled.
-	 *
-	 * @param sharingEntries the sharing entries
-	 */
-	@Override
-	public void cacheResult(List<SharingEntry> sharingEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sharingEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SharingEntry sharingEntry : sharingEntries) {
-			if (entityCache.getResult(
-					SharingEntryImpl.class, sharingEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(sharingEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SharingEntryModelImpl sharingEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			sharingEntryModelImpl.getUuid(), sharingEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, sharingEntryModelImpl);
-
-		args = new Object[] {
-			sharingEntryModelImpl.getToTicketId(),
-			sharingEntryModelImpl.getToUserGroupId(),
-			sharingEntryModelImpl.getToUserId(),
-			sharingEntryModelImpl.getClassNameId(),
-			sharingEntryModelImpl.getClassPK()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByTT_TUG_TU_C_C, args, sharingEntryModelImpl);
-
-		args = new Object[] {
-			sharingEntryModelImpl.getExternalReferenceCode(),
-			sharingEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_G, args, sharingEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new sharing entry with the primary key. Does not add the sharing entry to the database.
 	 *
 	 * @param sharingEntryId the primary key for the new sharing entry
@@ -2227,10 +2136,7 @@ public class SharingEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SharingEntryImpl.class, sharingEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(sharingEntryModelImpl);
+		cacheUniqueFindersResult(sharingEntry, false);
 
 		if (isNew) {
 			sharingEntry.setNew(false);
@@ -2296,9 +2202,6 @@ public class SharingEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2326,10 +2229,11 @@ public class SharingEntryPersistenceImpl
 				"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SharingEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, SharingEntry::getUuid,
+			SharingEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_SHARINGENTRY_WHERE,
@@ -2606,7 +2510,7 @@ public class SharingEntryPersistenceImpl
 				"sharingEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getClassPK));
 
-		_finderPathFetchByTT_TUG_TU_C_C = new FinderPath(
+		_finderPathFetchByTT_TUG_TU_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByTT_TUG_TU_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2616,7 +2520,9 @@ public class SharingEntryPersistenceImpl
 				"toTicketId", "toUserGroupId", "toUserId", "classNameId",
 				"classPK"
 			},
-			true);
+			false, SharingEntry::getToTicketId, SharingEntry::getToUserGroupId,
+			SharingEntry::getToUserId, SharingEntry::getClassNameId,
+			SharingEntry::getClassPK);
 
 		_uniquePersistenceFinderByTT_TUG_TU_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByTT_TUG_TU_C_C,
@@ -2637,10 +2543,11 @@ public class SharingEntryPersistenceImpl
 				"sharingEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getClassPK));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			SharingEntry::getExternalReferenceCode, SharingEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_SHARINGENTRY_WHERE,
@@ -2721,4 +2628,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1772236288
+// LIFERAY-SERVICE-BUILDER-HASH:-1035219468

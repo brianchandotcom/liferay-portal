@@ -36,6 +36,24 @@ public class CommerceShippingFixedOptionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions) {
+
+		getPersistence().cacheResult(commerceShippingFixedOptions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceShippingFixedOption commerceShippingFixedOption) {
+
+		getPersistence().cacheResult(commerceShippingFixedOption);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -327,28 +345,6 @@ public class CommerceShippingFixedOptionUtil {
 	}
 
 	/**
-	 * Caches the commerce shipping fixed option in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOption the commerce shipping fixed option
-	 */
-	public static void cacheResult(
-		CommerceShippingFixedOption commerceShippingFixedOption) {
-
-		getPersistence().cacheResult(commerceShippingFixedOption);
-	}
-
-	/**
-	 * Caches the commerce shipping fixed options in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptions the commerce shipping fixed options
-	 */
-	public static void cacheResult(
-		List<CommerceShippingFixedOption> commerceShippingFixedOptions) {
-
-		getPersistence().cacheResult(commerceShippingFixedOptions);
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option with the primary key. Does not add the commerce shipping fixed option to the database.
 	 *
 	 * @param commerceShippingFixedOptionId the primary key for the new commerce shipping fixed option
@@ -422,4 +418,4 @@ public class CommerceShippingFixedOptionUtil {
 	private static volatile CommerceShippingFixedOptionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1373983825
+// LIFERAY-SERVICE-BUILDER-HASH:-1577140905

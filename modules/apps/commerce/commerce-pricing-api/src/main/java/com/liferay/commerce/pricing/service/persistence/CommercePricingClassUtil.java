@@ -36,6 +36,22 @@ public class CommercePricingClassUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePricingClass> commercePricingClasses) {
+
+		getPersistence().cacheResult(commercePricingClasses);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommercePricingClass commercePricingClass) {
+		getPersistence().cacheResult(commercePricingClass);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -750,26 +766,6 @@ public class CommercePricingClassUtil {
 	}
 
 	/**
-	 * Caches the commerce pricing class in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClass the commerce pricing class
-	 */
-	public static void cacheResult(CommercePricingClass commercePricingClass) {
-		getPersistence().cacheResult(commercePricingClass);
-	}
-
-	/**
-	 * Caches the commerce pricing classes in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClasses the commerce pricing classes
-	 */
-	public static void cacheResult(
-		List<CommercePricingClass> commercePricingClasses) {
-
-		getPersistence().cacheResult(commercePricingClasses);
-	}
-
-	/**
 	 * Creates a new commerce pricing class with the primary key. Does not add the commerce pricing class to the database.
 	 *
 	 * @param commercePricingClassId the primary key for the new commerce pricing class
@@ -839,4 +835,4 @@ public class CommercePricingClassUtil {
 	private static volatile CommercePricingClassPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-730058077
+// LIFERAY-SERVICE-BUILDER-HASH:-1164030268

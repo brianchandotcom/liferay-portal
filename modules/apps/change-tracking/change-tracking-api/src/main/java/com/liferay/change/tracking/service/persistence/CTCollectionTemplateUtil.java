@@ -36,6 +36,22 @@ public class CTCollectionTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CTCollectionTemplate> ctCollectionTemplates) {
+
+		getPersistence().cacheResult(ctCollectionTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTCollectionTemplate ctCollectionTemplate) {
+		getPersistence().cacheResult(ctCollectionTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -299,26 +315,6 @@ public class CTCollectionTemplateUtil {
 	}
 
 	/**
-	 * Caches the ct collection template in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplate the ct collection template
-	 */
-	public static void cacheResult(CTCollectionTemplate ctCollectionTemplate) {
-		getPersistence().cacheResult(ctCollectionTemplate);
-	}
-
-	/**
-	 * Caches the ct collection templates in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplates the ct collection templates
-	 */
-	public static void cacheResult(
-		List<CTCollectionTemplate> ctCollectionTemplates) {
-
-		getPersistence().cacheResult(ctCollectionTemplates);
-	}
-
-	/**
 	 * Creates a new ct collection template with the primary key. Does not add the ct collection template to the database.
 	 *
 	 * @param ctCollectionTemplateId the primary key for the new ct collection template
@@ -388,4 +384,4 @@ public class CTCollectionTemplateUtil {
 	private static volatile CTCollectionTemplatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:342139774
+// LIFERAY-SERVICE-BUILDER-HASH:1145665378

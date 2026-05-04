@@ -36,6 +36,26 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues) {
+
+		getPersistence().cacheResult(cpDefinitionSpecificationOptionValues);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionSpecificationOptionValue
+			cpDefinitionSpecificationOptionValue) {
+
+		getPersistence().cacheResult(cpDefinitionSpecificationOptionValue);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1510,30 +1530,6 @@ public class CPDefinitionSpecificationOptionValueUtil {
 	}
 
 	/**
-	 * Caches the cp definition specification option value in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionSpecificationOptionValue the cp definition specification option value
-	 */
-	public static void cacheResult(
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue) {
-
-		getPersistence().cacheResult(cpDefinitionSpecificationOptionValue);
-	}
-
-	/**
-	 * Caches the cp definition specification option values in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionSpecificationOptionValues the cp definition specification option values
-	 */
-	public static void cacheResult(
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues) {
-
-		getPersistence().cacheResult(cpDefinitionSpecificationOptionValues);
-	}
-
-	/**
 	 * Creates a new cp definition specification option value with the primary key. Does not add the cp definition specification option value to the database.
 	 *
 	 * @param CPDefinitionSpecificationOptionValueId the primary key for the new cp definition specification option value
@@ -1613,4 +1609,4 @@ public class CPDefinitionSpecificationOptionValueUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1275620558
+// LIFERAY-SERVICE-BUILDER-HASH:-1420411304

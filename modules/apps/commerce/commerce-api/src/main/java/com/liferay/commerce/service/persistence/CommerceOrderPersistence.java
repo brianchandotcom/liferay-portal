@@ -1848,20 +1848,6 @@ public interface CommerceOrderPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce order in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrder the commerce order
-	 */
-	public void cacheResult(CommerceOrder commerceOrder);
-
-	/**
-	 * Caches the commerce orders in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrders the commerce orders
-	 */
-	public void cacheResult(java.util.List<CommerceOrder> commerceOrders);
-
-	/**
 	 * Creates a new commerce order with the primary key. Does not add the commerce order to the database.
 	 *
 	 * @param commerceOrderId the primary key for the new commerce order
@@ -1900,4 +1886,4 @@ public interface CommerceOrderPersistence
 	public CommerceOrder fetchByPrimaryKey(long commerceOrderId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2032609656
+// LIFERAY-SERVICE-BUILDER-HASH:-686313228

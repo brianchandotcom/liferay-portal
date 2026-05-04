@@ -309,21 +309,6 @@ public interface CommerceChannelRelPersistence
 		long classNameId, long classPK, long commerceChannelId);
 
 	/**
-	 * Caches the commerce channel rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRel the commerce channel rel
-	 */
-	public void cacheResult(CommerceChannelRel commerceChannelRel);
-
-	/**
-	 * Caches the commerce channel rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannelRels the commerce channel rels
-	 */
-	public void cacheResult(
-		java.util.List<CommerceChannelRel> commerceChannelRels);
-
-	/**
 	 * Creates a new commerce channel rel with the primary key. Does not add the commerce channel rel to the database.
 	 *
 	 * @param commerceChannelRelId the primary key for the new commerce channel rel
@@ -362,4 +347,4 @@ public interface CommerceChannelRelPersistence
 	public CommerceChannelRel fetchByPrimaryKey(long commerceChannelRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-430960697
+// LIFERAY-SERVICE-BUILDER-HASH:338550417

@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -389,44 +386,6 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher fix rel in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRel the patcher fix rel
-	 */
-	@Override
-	public void cacheResult(PatcherFixRel patcherFixRel) {
-		entityCache.putResult(
-			PatcherFixRelImpl.class, patcherFixRel.getPrimaryKey(),
-			patcherFixRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher fix rels in the entity cache if it is enabled.
-	 *
-	 * @param patcherFixRels the patcher fix rels
-	 */
-	@Override
-	public void cacheResult(List<PatcherFixRel> patcherFixRels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherFixRels.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherFixRel patcherFixRel : patcherFixRels) {
-			if (entityCache.getResult(
-					PatcherFixRelImpl.class, patcherFixRel.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(patcherFixRel);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new patcher fix rel with the primary key. Does not add the patcher fix rel to the database.
 	 *
 	 * @param patcherFixRelId the primary key for the new patcher fix rel
@@ -531,8 +490,7 @@ public class PatcherFixRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherFixRelImpl.class, patcherFixRelModelImpl, false, true);
+		cacheUniqueFindersResult(patcherFixRel, false);
 
 		if (isNew) {
 			patcherFixRel.setNew(false);
@@ -593,9 +551,6 @@ public class PatcherFixRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByChildPatcherFixId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByChildPatcherFixId",
 			new String[] {
@@ -722,4 +677,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1794562005
+// LIFERAY-SERVICE-BUILDER-HASH:676853620

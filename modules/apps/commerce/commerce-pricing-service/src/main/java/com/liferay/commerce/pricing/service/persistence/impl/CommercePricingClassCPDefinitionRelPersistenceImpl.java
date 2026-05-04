@@ -14,7 +14,6 @@ import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDe
 import com.liferay.commerce.pricing.service.persistence.CommercePricingClassCPDefinitionRelUtil;
 import com.liferay.commerce.pricing.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -559,97 +555,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce pricing class cp definition rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRel the commerce pricing class cp definition rel
-	 */
-	@Override
-	public void cacheResult(
-		CommercePricingClassCPDefinitionRel
-			commercePricingClassCPDefinitionRel) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePricingClassCPDefinitionRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommercePricingClassCPDefinitionRelImpl.class,
-				commercePricingClassCPDefinitionRel.getPrimaryKey(),
-				commercePricingClassCPDefinitionRel);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					commercePricingClassCPDefinitionRel.
-						getCommercePricingClassId(),
-					commercePricingClassCPDefinitionRel.getCPDefinitionId()
-				},
-				commercePricingClassCPDefinitionRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce pricing class cp definition rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePricingClassCPDefinitionRels the commerce pricing class cp definition rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommercePricingClassCPDefinitionRel>
-			commercePricingClassCPDefinitionRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commercePricingClassCPDefinitionRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommercePricingClassCPDefinitionRel
-				commercePricingClassCPDefinitionRel :
-					commercePricingClassCPDefinitionRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commercePricingClassCPDefinitionRel.
-							getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommercePricingClassCPDefinitionRelImpl.class,
-						commercePricingClassCPDefinitionRel.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(commercePricingClassCPDefinitionRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommercePricingClassCPDefinitionRelModelImpl
-			commercePricingClassCPDefinitionRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commercePricingClassCPDefinitionRelModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commercePricingClassCPDefinitionRelModelImpl.
-					getCommercePricingClassId(),
-				commercePricingClassCPDefinitionRelModelImpl.getCPDefinitionId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C, args,
-				commercePricingClassCPDefinitionRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce pricing class cp definition rel with the primary key. Does not add the commerce pricing class cp definition rel to the database.
 	 *
 	 * @param CommercePricingClassCPDefinitionRelId the primary key for the new commerce pricing class cp definition rel
@@ -817,11 +722,7 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommercePricingClassCPDefinitionRelImpl.class,
-			commercePricingClassCPDefinitionRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commercePricingClassCPDefinitionRelModelImpl);
+		cacheUniqueFindersResult(commercePricingClassCPDefinitionRel, false);
 
 		if (isNew) {
 			commercePricingClassCPDefinitionRel.setNew(false);
@@ -959,9 +860,6 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommercePricingClassId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByCommercePricingClassId",
@@ -1032,10 +930,12 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommercePricingClassCPDefinitionRel::getCPDefinitionId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commercePricingClassId", "CPDefinitionId"}, true);
+			new String[] {"commercePricingClassId", "CPDefinitionId"}, false,
+			CommercePricingClassCPDefinitionRel::getCommercePricingClassId,
+			CommercePricingClassCPDefinitionRel::getCPDefinitionId);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
@@ -1126,4 +1026,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:34153971
+// LIFERAY-SERVICE-BUILDER-HASH:690259074

@@ -134,20 +134,6 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the audit event in the entity cache if it is enabled.
-	 *
-	 * @param auditEvent the audit event
-	 */
-	public void cacheResult(AuditEvent auditEvent);
-
-	/**
-	 * Caches the audit events in the entity cache if it is enabled.
-	 *
-	 * @param auditEvents the audit events
-	 */
-	public void cacheResult(java.util.List<AuditEvent> auditEvents);
-
-	/**
 	 * Creates a new audit event with the primary key. Does not add the audit event to the database.
 	 *
 	 * @param auditEventId the primary key for the new audit event
@@ -185,4 +171,4 @@ public interface AuditEventPersistence extends BasePersistence<AuditEvent> {
 	public AuditEvent fetchByPrimaryKey(long auditEventId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-151421487
+// LIFERAY-SERVICE-BUILDER-HASH:792168537

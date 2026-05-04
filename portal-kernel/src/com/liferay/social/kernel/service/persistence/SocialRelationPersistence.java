@@ -1151,20 +1151,6 @@ public interface SocialRelationPersistence
 	public int countByU1_U2_T(long userId1, long userId2, int type);
 
 	/**
-	 * Caches the social relation in the entity cache if it is enabled.
-	 *
-	 * @param socialRelation the social relation
-	 */
-	public void cacheResult(SocialRelation socialRelation);
-
-	/**
-	 * Caches the social relations in the entity cache if it is enabled.
-	 *
-	 * @param socialRelations the social relations
-	 */
-	public void cacheResult(java.util.List<SocialRelation> socialRelations);
-
-	/**
 	 * Creates a new social relation with the primary key. Does not add the social relation to the database.
 	 *
 	 * @param relationId the primary key for the new social relation
@@ -1203,4 +1189,4 @@ public interface SocialRelationPersistence
 	public SocialRelation fetchByPrimaryKey(long relationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2022126377
+// LIFERAY-SERVICE-BUILDER-HASH:447254265

@@ -16,7 +16,6 @@ import com.liferay.commerce.product.service.persistence.CommerceChannelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2106,80 +2103,6 @@ public class CommerceChannelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce channel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannel the commerce channel
-	 */
-	@Override
-	public void cacheResult(CommerceChannel commerceChannel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CommerceChannelImpl.class, commerceChannel.getPrimaryKey(),
-				commerceChannel);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					commerceChannel.getExternalReferenceCode(),
-					commerceChannel.getCompanyId()
-				},
-				commerceChannel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce channels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannels the commerce channels
-	 */
-	@Override
-	public void cacheResult(List<CommerceChannel> commerceChannels) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceChannels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceChannel commerceChannel : commerceChannels) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						commerceChannel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CommerceChannelImpl.class,
-						commerceChannel.getPrimaryKey()) == null) {
-
-					cacheResult(commerceChannel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceChannelModelImpl commerceChannelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					commerceChannelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				commerceChannelModelImpl.getExternalReferenceCode(),
-				commerceChannelModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, commerceChannelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new commerce channel with the primary key. Does not add the commerce channel to the database.
 	 *
 	 * @param commerceChannelId the primary key for the new commerce channel
@@ -2394,10 +2317,7 @@ public class CommerceChannelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceChannelImpl.class, commerceChannelModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceChannelModelImpl);
+		cacheUniqueFindersResult(commerceChannel, false);
 
 		if (isNew) {
 			commerceChannel.setNew(false);
@@ -2538,9 +2458,6 @@ public class CommerceChannelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2691,10 +2608,12 @@ public class CommerceChannelPersistenceImpl
 					"commerceChannel.", "siteGroupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getSiteGroupId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceChannel::getExternalReferenceCode,
+			CommerceChannel::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECHANNEL_WHERE,
@@ -2801,4 +2720,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:567718543
+// LIFERAY-SERVICE-BUILDER-HASH:646820828

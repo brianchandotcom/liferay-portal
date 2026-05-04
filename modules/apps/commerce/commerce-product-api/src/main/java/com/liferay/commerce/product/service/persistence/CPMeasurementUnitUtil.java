@@ -36,6 +36,20 @@ public class CPMeasurementUnitUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPMeasurementUnit> cpMeasurementUnits) {
+		getPersistence().cacheResult(cpMeasurementUnits);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPMeasurementUnit cpMeasurementUnit) {
+		getPersistence().cacheResult(cpMeasurementUnit);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -970,24 +984,6 @@ public class CPMeasurementUnitUtil {
 	}
 
 	/**
-	 * Caches the cp measurement unit in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnit the cp measurement unit
-	 */
-	public static void cacheResult(CPMeasurementUnit cpMeasurementUnit) {
-		getPersistence().cacheResult(cpMeasurementUnit);
-	}
-
-	/**
-	 * Caches the cp measurement units in the entity cache if it is enabled.
-	 *
-	 * @param cpMeasurementUnits the cp measurement units
-	 */
-	public static void cacheResult(List<CPMeasurementUnit> cpMeasurementUnits) {
-		getPersistence().cacheResult(cpMeasurementUnits);
-	}
-
-	/**
 	 * Creates a new cp measurement unit with the primary key. Does not add the cp measurement unit to the database.
 	 *
 	 * @param CPMeasurementUnitId the primary key for the new cp measurement unit
@@ -1056,4 +1052,4 @@ public class CPMeasurementUnitUtil {
 	private static volatile CPMeasurementUnitPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:456928326
+// LIFERAY-SERVICE-BUILDER-HASH:98990002

@@ -36,6 +36,24 @@ public class BatchEngineImportTaskUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<BatchEngineImportTask> batchEngineImportTasks) {
+
+		getPersistence().cacheResult(batchEngineImportTasks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		BatchEngineImportTask batchEngineImportTask) {
+
+		getPersistence().cacheResult(batchEngineImportTask);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -685,28 +703,6 @@ public class BatchEngineImportTaskUtil {
 	}
 
 	/**
-	 * Caches the batch engine import task in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTask the batch engine import task
-	 */
-	public static void cacheResult(
-		BatchEngineImportTask batchEngineImportTask) {
-
-		getPersistence().cacheResult(batchEngineImportTask);
-	}
-
-	/**
-	 * Caches the batch engine import tasks in the entity cache if it is enabled.
-	 *
-	 * @param batchEngineImportTasks the batch engine import tasks
-	 */
-	public static void cacheResult(
-		List<BatchEngineImportTask> batchEngineImportTasks) {
-
-		getPersistence().cacheResult(batchEngineImportTasks);
-	}
-
-	/**
 	 * Creates a new batch engine import task with the primary key. Does not add the batch engine import task to the database.
 	 *
 	 * @param batchEngineImportTaskId the primary key for the new batch engine import task
@@ -774,4 +770,4 @@ public class BatchEngineImportTaskUtil {
 	private static volatile BatchEngineImportTaskPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-197046685
+// LIFERAY-SERVICE-BUILDER-HASH:1535050697

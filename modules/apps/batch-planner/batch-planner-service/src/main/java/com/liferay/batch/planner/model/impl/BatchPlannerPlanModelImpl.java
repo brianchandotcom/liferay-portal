@@ -1269,4 +1269,4 @@ public class BatchPlannerPlanModelImpl
 	private BatchPlannerPlan _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1865345620
+// LIFERAY-SERVICE-BUILDER-HASH:619485000

@@ -36,6 +36,24 @@ public class NotificationRecipientSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationRecipientSetting> notificationRecipientSettings) {
+
+		getPersistence().cacheResult(notificationRecipientSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		NotificationRecipientSetting notificationRecipientSetting) {
+
+		getPersistence().cacheResult(notificationRecipientSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -583,28 +601,6 @@ public class NotificationRecipientSettingUtil {
 	}
 
 	/**
-	 * Caches the notification recipient setting in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipientSetting the notification recipient setting
-	 */
-	public static void cacheResult(
-		NotificationRecipientSetting notificationRecipientSetting) {
-
-		getPersistence().cacheResult(notificationRecipientSetting);
-	}
-
-	/**
-	 * Caches the notification recipient settings in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipientSettings the notification recipient settings
-	 */
-	public static void cacheResult(
-		List<NotificationRecipientSetting> notificationRecipientSettings) {
-
-		getPersistence().cacheResult(notificationRecipientSettings);
-	}
-
-	/**
 	 * Creates a new notification recipient setting with the primary key. Does not add the notification recipient setting to the database.
 	 *
 	 * @param notificationRecipientSettingId the primary key for the new notification recipient setting
@@ -680,4 +676,4 @@ public class NotificationRecipientSettingUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1633011910
+// LIFERAY-SERVICE-BUILDER-HASH:212995064

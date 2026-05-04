@@ -36,6 +36,20 @@ public class CTRemoteUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTRemote> ctRemotes) {
+		getPersistence().cacheResult(ctRemotes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTRemote ctRemote) {
+		getPersistence().cacheResult(ctRemote);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -290,24 +304,6 @@ public class CTRemoteUtil {
 	}
 
 	/**
-	 * Caches the ct remote in the entity cache if it is enabled.
-	 *
-	 * @param ctRemote the ct remote
-	 */
-	public static void cacheResult(CTRemote ctRemote) {
-		getPersistence().cacheResult(ctRemote);
-	}
-
-	/**
-	 * Caches the ct remotes in the entity cache if it is enabled.
-	 *
-	 * @param ctRemotes the ct remotes
-	 */
-	public static void cacheResult(List<CTRemote> ctRemotes) {
-		getPersistence().cacheResult(ctRemotes);
-	}
-
-	/**
 	 * Creates a new ct remote with the primary key. Does not add the ct remote to the database.
 	 *
 	 * @param ctRemoteId the primary key for the new ct remote
@@ -368,4 +364,4 @@ public class CTRemoteUtil {
 	private static volatile CTRemotePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:215210864
+// LIFERAY-SERVICE-BUILDER-HASH:-324688754

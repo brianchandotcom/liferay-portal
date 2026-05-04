@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -52,8 +51,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5457,166 +5454,6 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Caches the group in the entity cache if it is enabled.
-	 *
-	 * @param group the group
-	 */
-	@Override
-	public void cacheResult(Group group) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					group.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				GroupImpl.class, group.getPrimaryKey(), group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {group.getUuid(), group.getGroupId()}, group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_GK,
-				new Object[] {group.getCompanyId(), group.getGroupKey()},
-				group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_F,
-				new Object[] {group.getCompanyId(), group.getFriendlyURL()},
-				group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C,
-				new Object[] {
-					group.getCompanyId(), group.getClassNameId(),
-					group.getClassPK()
-				},
-				group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_L_GK,
-				new Object[] {
-					group.getCompanyId(), group.getLiveGroupId(),
-					group.getGroupKey()
-				},
-				group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_L_GK,
-				new Object[] {
-					group.getCompanyId(), group.getClassNameId(),
-					group.getLiveGroupId(), group.getGroupKey()
-				},
-				group);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					group.getExternalReferenceCode(), group.getCompanyId()
-				},
-				group);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the groups in the entity cache if it is enabled.
-	 *
-	 * @param groups the groups
-	 */
-	@Override
-	public void cacheResult(List<Group> groups) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (groups.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Group group : groups) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						group.getCtCollectionId())) {
-
-				Group cachedGroup = (Group)EntityCacheUtil.getResult(
-					GroupImpl.class, group.getPrimaryKey());
-
-				if (cachedGroup == null) {
-					cacheResult(group);
-				}
-				else {
-					GroupModelImpl groupModelImpl = (GroupModelImpl)group;
-					GroupModelImpl cachedGroupModelImpl =
-						(GroupModelImpl)cachedGroup;
-
-					groupModelImpl.setClassName(
-						cachedGroupModelImpl.getClassName());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(GroupModelImpl groupModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					groupModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				groupModelImpl.getUuid(), groupModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getCompanyId(), groupModelImpl.getGroupKey()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_GK, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getCompanyId(), groupModelImpl.getFriendlyURL()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_F, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getCompanyId(), groupModelImpl.getClassNameId(),
-				groupModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_C, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getCompanyId(), groupModelImpl.getLiveGroupId(),
-				groupModelImpl.getGroupKey()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_L_GK, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getCompanyId(), groupModelImpl.getClassNameId(),
-				groupModelImpl.getLiveGroupId(), groupModelImpl.getGroupKey()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C_L_GK, args, groupModelImpl);
-
-			args = new Object[] {
-				groupModelImpl.getExternalReferenceCode(),
-				groupModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, groupModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new group with the primary key. Does not add the group to the database.
 	 *
 	 * @param groupId the primary key for the new group
@@ -5817,9 +5654,7 @@ public class GroupPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(GroupImpl.class, groupModelImpl, false, true);
-
-		cacheUniqueFindersCache(groupModelImpl);
+		cacheUniqueFindersResult(group, false);
 
 		if (isNew) {
 			group.setNew(false);
@@ -7289,9 +7124,6 @@ public class GroupPersistenceImpl
 	 * Initializes the group persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		groupToOrganizationTableMapper = TableMapperFactory.getTableMapper(
 			"Groups_Orgs", "companyId", "groupId", "organizationId", this,
 			organizationPersistence);
@@ -7335,10 +7167,11 @@ public class GroupPersistenceImpl
 				"group_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Group::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Group::getUuid,
+			Group::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_GROUP__WHERE,
@@ -7516,10 +7349,11 @@ public class GroupPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "groupKey"}, true);
 
-		_finderPathFetchByC_GK = new FinderPath(
+		_finderPathFetchByC_GK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_GK",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "groupKey"}, true);
+			new String[] {"companyId", "groupKey"}, false, Group::getCompanyId,
+			Group::getGroupKey);
 
 		_finderPathCountByC_GK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_GK",
@@ -7531,10 +7365,11 @@ public class GroupPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "groupKey"}, false);
 
-		_finderPathFetchByC_F = new FinderPath(
+		_finderPathFetchByC_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, true);
+			new String[] {"companyId", "friendlyURL"}, false,
+			Group::getCompanyId, Group::getFriendlyURL);
 
 		_uniquePersistenceFinderByC_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_F, _SQL_SELECT_GROUP__WHERE,
@@ -7701,12 +7536,13 @@ public class GroupPersistenceImpl
 					"group_.", "parentGroupId", FinderColumn.Type.LONG, "=",
 					true, true, Group::getParentGroupId));
 
-		_finderPathFetchByC_C_C = new FinderPath(
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK"}, true);
+			new String[] {"companyId", "classNameId", "classPK"}, false,
+			Group::getCompanyId, Group::getClassNameId, Group::getClassPK);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C, _SQL_SELECT_GROUP__WHERE,
@@ -7838,13 +7674,14 @@ public class GroupPersistenceImpl
 				"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isSite));
 
-		_finderPathFetchByC_L_GK = new FinderPath(
+		_finderPathFetchByC_L_GK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L_GK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "liveGroupId", "groupKey"}, true);
+			new String[] {"companyId", "liveGroupId", "groupKey"}, false,
+			Group::getCompanyId, Group::getLiveGroupId, Group::getGroupKey);
 
 		_uniquePersistenceFinderByC_L_GK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_L_GK, _SQL_SELECT_GROUP__WHERE,
@@ -8030,7 +7867,7 @@ public class GroupPersistenceImpl
 					"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Group::isSite));
 
-		_finderPathFetchByC_C_L_GK = new FinderPath(
+		_finderPathFetchByC_C_L_GK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_L_GK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -8039,7 +7876,8 @@ public class GroupPersistenceImpl
 			new String[] {
 				"companyId", "classNameId", "liveGroupId", "groupKey"
 			},
-			true);
+			false, Group::getCompanyId, Group::getClassNameId,
+			Group::getLiveGroupId, Group::getGroupKey);
 
 		_uniquePersistenceFinderByC_C_L_GK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_L_GK, _SQL_SELECT_GROUP__WHERE,
@@ -8129,10 +7967,11 @@ public class GroupPersistenceImpl
 					"group_.", "inheritContent", FinderColumn.Type.BOOLEAN, "=",
 					true, true, Group::isInheritContent));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Group::getExternalReferenceCode, Group::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_GROUP__WHERE,
@@ -8208,4 +8047,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-502704260
+// LIFERAY-SERVICE-BUILDER-HASH:1592056119

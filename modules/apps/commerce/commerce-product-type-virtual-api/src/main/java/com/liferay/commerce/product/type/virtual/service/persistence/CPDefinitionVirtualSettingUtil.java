@@ -36,6 +36,24 @@ public class CPDefinitionVirtualSettingUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionVirtualSetting> cpDefinitionVirtualSettings) {
+
+		getPersistence().cacheResult(cpDefinitionVirtualSettings);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
+
+		getPersistence().cacheResult(cpDefinitionVirtualSetting);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -511,28 +529,6 @@ public class CPDefinitionVirtualSettingUtil {
 	}
 
 	/**
-	 * Caches the cp definition virtual setting in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionVirtualSetting the cp definition virtual setting
-	 */
-	public static void cacheResult(
-		CPDefinitionVirtualSetting cpDefinitionVirtualSetting) {
-
-		getPersistence().cacheResult(cpDefinitionVirtualSetting);
-	}
-
-	/**
-	 * Caches the cp definition virtual settings in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionVirtualSettings the cp definition virtual settings
-	 */
-	public static void cacheResult(
-		List<CPDefinitionVirtualSetting> cpDefinitionVirtualSettings) {
-
-		getPersistence().cacheResult(cpDefinitionVirtualSettings);
-	}
-
-	/**
 	 * Creates a new cp definition virtual setting with the primary key. Does not add the cp definition virtual setting to the database.
 	 *
 	 * @param CPDefinitionVirtualSettingId the primary key for the new cp definition virtual setting
@@ -605,4 +601,4 @@ public class CPDefinitionVirtualSettingUtil {
 	private static volatile CPDefinitionVirtualSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1058555027
+// LIFERAY-SERVICE-BUILDER-HASH:-1628236227

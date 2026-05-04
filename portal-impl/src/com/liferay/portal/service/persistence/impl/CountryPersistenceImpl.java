@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -4656,107 +4652,6 @@ public class CountryPersistenceImpl
 	}
 
 	/**
-	 * Caches the country in the entity cache if it is enabled.
-	 *
-	 * @param country the country
-	 */
-	@Override
-	public void cacheResult(Country country) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					country.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				CountryImpl.class, country.getPrimaryKey(), country);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_A2,
-				new Object[] {country.getCompanyId(), country.getA2()},
-				country);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_A3,
-				new Object[] {country.getCompanyId(), country.getA3()},
-				country);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_Name,
-				new Object[] {country.getCompanyId(), country.getName()},
-				country);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_Number,
-				new Object[] {country.getCompanyId(), country.getNumber()},
-				country);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the countries in the entity cache if it is enabled.
-	 *
-	 * @param countries the countries
-	 */
-	@Override
-	public void cacheResult(List<Country> countries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (countries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Country country : countries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						country.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						CountryImpl.class, country.getPrimaryKey()) == null) {
-
-					cacheResult(country);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CountryModelImpl countryModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					countryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				countryModelImpl.getCompanyId(), countryModelImpl.getA2()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_A2, args, countryModelImpl);
-
-			args = new Object[] {
-				countryModelImpl.getCompanyId(), countryModelImpl.getA3()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_A3, args, countryModelImpl);
-
-			args = new Object[] {
-				countryModelImpl.getCompanyId(), countryModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_Name, args, countryModelImpl);
-
-			args = new Object[] {
-				countryModelImpl.getCompanyId(), countryModelImpl.getNumber()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_Number, args, countryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new country with the primary key. Does not add the country to the database.
 	 *
 	 * @param countryId the primary key for the new country
@@ -4900,10 +4795,7 @@ public class CountryPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			CountryImpl.class, countryModelImpl, false, true);
-
-		cacheUniqueFindersCache(countryModelImpl);
+		cacheUniqueFindersResult(country, false);
 
 		if (isNew) {
 			country.setNew(false);
@@ -5052,9 +4944,6 @@ public class CountryPersistenceImpl
 	 * Initializes the country persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -5173,10 +5062,11 @@ public class CountryPersistenceImpl
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
 
-		_finderPathFetchByC_A2 = new FinderPath(
+		_finderPathFetchByC_A2 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a2"}, true);
+			new String[] {"companyId", "a2"}, false, Country::getCompanyId,
+			Country::getA2);
 
 		_uniquePersistenceFinderByC_A2 = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A2, _SQL_SELECT_COUNTRY_WHERE,
@@ -5187,10 +5077,11 @@ public class CountryPersistenceImpl
 				"country.", "a2", FinderColumn.Type.STRING, "=", true, true,
 				Country::getA2));
 
-		_finderPathFetchByC_A3 = new FinderPath(
+		_finderPathFetchByC_A3 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a3"}, true);
+			new String[] {"companyId", "a3"}, false, Country::getCompanyId,
+			Country::getA3);
 
 		_uniquePersistenceFinderByC_A3 = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A3, _SQL_SELECT_COUNTRY_WHERE,
@@ -5234,10 +5125,11 @@ public class CountryPersistenceImpl
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
 
-		_finderPathFetchByC_Name = new FinderPath(
+		_finderPathFetchByC_Name = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Name",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, Country::getCompanyId,
+			Country::getName);
 
 		_uniquePersistenceFinderByC_Name = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_Name, _SQL_SELECT_COUNTRY_WHERE,
@@ -5248,10 +5140,11 @@ public class CountryPersistenceImpl
 				"country.", "name", FinderColumn.Type.STRING, "=", true, true,
 				Country::getName));
 
-		_finderPathFetchByC_Number = new FinderPath(
+		_finderPathFetchByC_Number = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "number_"}, true);
+			new String[] {"companyId", "number_"}, false, Country::getCompanyId,
+			Country::getNumber);
 
 		_uniquePersistenceFinderByC_Number = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_Number, _SQL_SELECT_COUNTRY_WHERE,
@@ -5577,4 +5470,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2126679268
+// LIFERAY-SERVICE-BUILDER-HASH:-147260370

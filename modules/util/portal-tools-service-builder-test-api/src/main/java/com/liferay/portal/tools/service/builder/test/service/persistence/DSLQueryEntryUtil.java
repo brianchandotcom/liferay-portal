@@ -36,6 +36,20 @@ public class DSLQueryEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DSLQueryEntry> dslQueryEntries) {
+		getPersistence().cacheResult(dslQueryEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DSLQueryEntry dslQueryEntry) {
+		getPersistence().cacheResult(dslQueryEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -111,24 +125,6 @@ public class DSLQueryEntryUtil {
 	}
 
 	/**
-	 * Caches the dsl query entry in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryEntry the dsl query entry
-	 */
-	public static void cacheResult(DSLQueryEntry dslQueryEntry) {
-		getPersistence().cacheResult(dslQueryEntry);
-	}
-
-	/**
-	 * Caches the dsl query entries in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryEntries the dsl query entries
-	 */
-	public static void cacheResult(List<DSLQueryEntry> dslQueryEntries) {
-		getPersistence().cacheResult(dslQueryEntries);
-	}
-
-	/**
 	 * Creates a new dsl query entry with the primary key. Does not add the dsl query entry to the database.
 	 *
 	 * @param dslQueryEntryId the primary key for the new dsl query entry
@@ -191,4 +187,4 @@ public class DSLQueryEntryUtil {
 	private static volatile DSLQueryEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1060273393
+// LIFERAY-SERVICE-BUILDER-HASH:-1435575532

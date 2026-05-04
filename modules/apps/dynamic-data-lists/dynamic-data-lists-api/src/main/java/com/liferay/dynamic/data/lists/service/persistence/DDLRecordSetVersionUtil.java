@@ -36,6 +36,22 @@ public class DDLRecordSetVersionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDLRecordSetVersion> ddlRecordSetVersions) {
+
+		getPersistence().cacheResult(ddlRecordSetVersions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDLRecordSetVersion ddlRecordSetVersion) {
+		getPersistence().cacheResult(ddlRecordSetVersion);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -444,26 +460,6 @@ public class DDLRecordSetVersionUtil {
 	}
 
 	/**
-	 * Caches the ddl record set version in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersion the ddl record set version
-	 */
-	public static void cacheResult(DDLRecordSetVersion ddlRecordSetVersion) {
-		getPersistence().cacheResult(ddlRecordSetVersion);
-	}
-
-	/**
-	 * Caches the ddl record set versions in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSetVersions the ddl record set versions
-	 */
-	public static void cacheResult(
-		List<DDLRecordSetVersion> ddlRecordSetVersions) {
-
-		getPersistence().cacheResult(ddlRecordSetVersions);
-	}
-
-	/**
 	 * Creates a new ddl record set version with the primary key. Does not add the ddl record set version to the database.
 	 *
 	 * @param recordSetVersionId the primary key for the new ddl record set version
@@ -532,4 +528,4 @@ public class DDLRecordSetVersionUtil {
 	private static volatile DDLRecordSetVersionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1705088886
+// LIFERAY-SERVICE-BUILDER-HASH:-884212432

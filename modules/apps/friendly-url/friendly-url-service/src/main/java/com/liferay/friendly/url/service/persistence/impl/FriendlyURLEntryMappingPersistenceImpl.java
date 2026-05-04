@@ -14,7 +14,6 @@ import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersi
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingUtil;
 import com.liferay.friendly.url.service.persistence.impl.constants.FURLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -29,9 +28,6 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -192,85 +188,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 	/**
-	 * Caches the friendly url entry mapping in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMapping the friendly url entry mapping
-	 */
-	@Override
-	public void cacheResult(FriendlyURLEntryMapping friendlyURLEntryMapping) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntryMapping.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FriendlyURLEntryMappingImpl.class,
-				friendlyURLEntryMapping.getPrimaryKey(),
-				friendlyURLEntryMapping);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					friendlyURLEntryMapping.getClassNameId(),
-					friendlyURLEntryMapping.getClassPK()
-				},
-				friendlyURLEntryMapping);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the friendly url entry mappings in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMappings the friendly url entry mappings
-	 */
-	@Override
-	public void cacheResult(
-		List<FriendlyURLEntryMapping> friendlyURLEntryMappings) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (friendlyURLEntryMappings.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FriendlyURLEntryMapping friendlyURLEntryMapping :
-				friendlyURLEntryMappings) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						friendlyURLEntryMapping.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FriendlyURLEntryMappingImpl.class,
-						friendlyURLEntryMapping.getPrimaryKey()) == null) {
-
-					cacheResult(friendlyURLEntryMapping);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FriendlyURLEntryMappingModelImpl friendlyURLEntryMappingModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntryMappingModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				friendlyURLEntryMappingModelImpl.getClassNameId(),
-				friendlyURLEntryMappingModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C, args, friendlyURLEntryMappingModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
 	 *
 	 * @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
@@ -393,11 +310,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FriendlyURLEntryMappingImpl.class, friendlyURLEntryMappingModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(friendlyURLEntryMappingModelImpl);
+		cacheUniqueFindersResult(friendlyURLEntryMapping, false);
 
 		if (isNew) {
 			friendlyURLEntryMapping.setNew(false);
@@ -521,13 +434,12 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			FriendlyURLEntryMapping::getClassNameId,
+			FriendlyURLEntryMapping::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
@@ -606,4 +518,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1500667891
+// LIFERAY-SERVICE-BUILDER-HASH:844636442

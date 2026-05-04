@@ -7,7 +7,6 @@ package com.liferay.template.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,8 +36,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2278,103 +2275,6 @@ public class TemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the template entry in the entity cache if it is enabled.
-	 *
-	 * @param templateEntry the template entry
-	 */
-	@Override
-	public void cacheResult(TemplateEntry templateEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					templateEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				TemplateEntryImpl.class, templateEntry.getPrimaryKey(),
-				templateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					templateEntry.getUuid(), templateEntry.getGroupId()
-				},
-				templateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByDDMTemplateId,
-				new Object[] {templateEntry.getDDMTemplateId()}, templateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					templateEntry.getExternalReferenceCode(),
-					templateEntry.getGroupId()
-				},
-				templateEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the template entries in the entity cache if it is enabled.
-	 *
-	 * @param templateEntries the template entries
-	 */
-	@Override
-	public void cacheResult(List<TemplateEntry> templateEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (templateEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (TemplateEntry templateEntry : templateEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						templateEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						TemplateEntryImpl.class,
-						templateEntry.getPrimaryKey()) == null) {
-
-					cacheResult(templateEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		TemplateEntryModelImpl templateEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					templateEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				templateEntryModelImpl.getUuid(),
-				templateEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, templateEntryModelImpl);
-
-			args = new Object[] {templateEntryModelImpl.getDDMTemplateId()};
-
-			finderCache.putResult(
-				_finderPathFetchByDDMTemplateId, args, templateEntryModelImpl);
-
-			args = new Object[] {
-				templateEntryModelImpl.getExternalReferenceCode(),
-				templateEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, templateEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new template entry with the primary key. Does not add the template entry to the database.
 	 *
 	 * @param templateEntryId the primary key for the new template entry
@@ -2584,10 +2484,7 @@ public class TemplateEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			TemplateEntryImpl.class, templateEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(templateEntryModelImpl);
+		cacheUniqueFindersResult(templateEntry, false);
 
 		if (isNew) {
 			templateEntry.setNew(false);
@@ -2727,9 +2624,6 @@ public class TemplateEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2757,10 +2651,11 @@ public class TemplateEntryPersistenceImpl
 				"templateEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, TemplateEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, TemplateEntry::getUuid,
+			TemplateEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_TEMPLATEENTRY_WHERE,
@@ -2827,10 +2722,10 @@ public class TemplateEntryPersistenceImpl
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
 
-		_finderPathFetchByDDMTemplateId = new FinderPath(
+		_finderPathFetchByDDMTemplateId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByDDMTemplateId",
 			new String[] {Long.class.getName()}, new String[] {"ddmTemplateId"},
-			true);
+			false, TemplateEntry::getDDMTemplateId);
 
 		_uniquePersistenceFinderByDDMTemplateId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByDDMTemplateId,
@@ -2918,10 +2813,11 @@ public class TemplateEntryPersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			TemplateEntry::getExternalReferenceCode, TemplateEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_TEMPLATEENTRY_WHERE,
@@ -3005,4 +2901,4 @@ public class TemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1293071124
+// LIFERAY-SERVICE-BUILDER-HASH:-2121961785

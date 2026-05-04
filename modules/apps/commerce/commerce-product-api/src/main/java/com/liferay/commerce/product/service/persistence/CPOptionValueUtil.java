@@ -36,6 +36,20 @@ public class CPOptionValueUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPOptionValue> cpOptionValues) {
+		getPersistence().cacheResult(cpOptionValues);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPOptionValue cpOptionValue) {
+		getPersistence().cacheResult(cpOptionValue);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -745,24 +759,6 @@ public class CPOptionValueUtil {
 	}
 
 	/**
-	 * Caches the cp option value in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionValue the cp option value
-	 */
-	public static void cacheResult(CPOptionValue cpOptionValue) {
-		getPersistence().cacheResult(cpOptionValue);
-	}
-
-	/**
-	 * Caches the cp option values in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionValues the cp option values
-	 */
-	public static void cacheResult(List<CPOptionValue> cpOptionValues) {
-		getPersistence().cacheResult(cpOptionValues);
-	}
-
-	/**
 	 * Creates a new cp option value with the primary key. Does not add the cp option value to the database.
 	 *
 	 * @param CPOptionValueId the primary key for the new cp option value
@@ -825,4 +821,4 @@ public class CPOptionValueUtil {
 	private static volatile CPOptionValuePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1812695497
+// LIFERAY-SERVICE-BUILDER-HASH:-350125681

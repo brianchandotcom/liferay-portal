@@ -595,21 +595,6 @@ public interface KaleoTaskFormInstancePersistence
 	public int countByKaleoTaskFormId(long kaleoTaskFormId);
 
 	/**
-	 * Caches the kaleo task form instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskFormInstance the kaleo task form instance
-	 */
-	public void cacheResult(KaleoTaskFormInstance kaleoTaskFormInstance);
-
-	/**
-	 * Caches the kaleo task form instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskFormInstances the kaleo task form instances
-	 */
-	public void cacheResult(
-		java.util.List<KaleoTaskFormInstance> kaleoTaskFormInstances);
-
-	/**
 	 * Creates a new kaleo task form instance with the primary key. Does not add the kaleo task form instance to the database.
 	 *
 	 * @param kaleoTaskFormInstanceId the primary key for the new kaleo task form instance
@@ -650,4 +635,4 @@ public interface KaleoTaskFormInstancePersistence
 		long kaleoTaskFormInstanceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886138808
+// LIFERAY-SERVICE-BUILDER-HASH:2122791894

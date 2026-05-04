@@ -36,6 +36,25 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceVirtualOrderItemFileEntry>
+			commerceVirtualOrderItemFileEntries) {
+
+		getPersistence().cacheResult(commerceVirtualOrderItemFileEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry) {
+
+		getPersistence().cacheResult(commerceVirtualOrderItemFileEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -740,29 +759,6 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce virtual order item file entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntry the commerce virtual order item file entry
-	 */
-	public static void cacheResult(
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry) {
-
-		getPersistence().cacheResult(commerceVirtualOrderItemFileEntry);
-	}
-
-	/**
-	 * Caches the commerce virtual order item file entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntries the commerce virtual order item file entries
-	 */
-	public static void cacheResult(
-		List<CommerceVirtualOrderItemFileEntry>
-			commerceVirtualOrderItemFileEntries) {
-
-		getPersistence().cacheResult(commerceVirtualOrderItemFileEntries);
-	}
-
-	/**
 	 * Creates a new commerce virtual order item file entry with the primary key. Does not add the commerce virtual order item file entry to the database.
 	 *
 	 * @param commerceVirtualOrderItemFileEntryId the primary key for the new commerce virtual order item file entry
@@ -840,4 +836,4 @@ public class CommerceVirtualOrderItemFileEntryUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:371895295
+// LIFERAY-SERVICE-BUILDER-HASH:555665026

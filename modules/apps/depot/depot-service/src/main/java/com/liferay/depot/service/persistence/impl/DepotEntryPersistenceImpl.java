@@ -14,7 +14,6 @@ import com.liferay.depot.service.persistence.DepotEntryPersistence;
 import com.liferay.depot.service.persistence.DepotEntryUtil;
 import com.liferay.depot.service.persistence.impl.constants.DepotPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -775,83 +771,6 @@ public class DepotEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the depot entry in the entity cache if it is enabled.
-	 *
-	 * @param depotEntry the depot entry
-	 */
-	@Override
-	public void cacheResult(DepotEntry depotEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DepotEntryImpl.class, depotEntry.getPrimaryKey(), depotEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {depotEntry.getUuid(), depotEntry.getGroupId()},
-				depotEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByGroupId,
-				new Object[] {depotEntry.getGroupId()}, depotEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the depot entries in the entity cache if it is enabled.
-	 *
-	 * @param depotEntries the depot entries
-	 */
-	@Override
-	public void cacheResult(List<DepotEntry> depotEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (depotEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DepotEntry depotEntry : depotEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						depotEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DepotEntryImpl.class, depotEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(depotEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DepotEntryModelImpl depotEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					depotEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				depotEntryModelImpl.getUuid(), depotEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, depotEntryModelImpl);
-
-			args = new Object[] {depotEntryModelImpl.getGroupId()};
-
-			finderCache.putResult(
-				_finderPathFetchByGroupId, args, depotEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new depot entry with the primary key. Does not add the depot entry to the database.
 	 *
 	 * @param depotEntryId the primary key for the new depot entry
@@ -994,10 +913,7 @@ public class DepotEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DepotEntryImpl.class, depotEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(depotEntryModelImpl);
+		cacheUniqueFindersResult(depotEntry, false);
 
 		if (isNew) {
 			depotEntry.setNew(false);
@@ -1131,9 +1047,6 @@ public class DepotEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1161,10 +1074,11 @@ public class DepotEntryPersistenceImpl
 				"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DepotEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DepotEntry::getUuid,
+			DepotEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEPOTENTRY_WHERE,
@@ -1208,10 +1122,10 @@ public class DepotEntryPersistenceImpl
 					"depotEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntry::getCompanyId));
 
-		_finderPathFetchByGroupId = new FinderPath(
+		_finderPathFetchByGroupId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
+			false, DepotEntry::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByGroupId, _SQL_SELECT_DEPOTENTRY_WHERE,
@@ -1322,4 +1236,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1960540545
+// LIFERAY-SERVICE-BUILDER-HASH:-457011914

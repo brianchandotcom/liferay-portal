@@ -193,23 +193,6 @@ public interface NotificationTemplateAttachmentPersistence
 	public int countByNTI_OFI(long notificationTemplateId, long objectFieldId);
 
 	/**
-	 * Caches the notification template attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachment the notification template attachment
-	 */
-	public void cacheResult(
-		NotificationTemplateAttachment notificationTemplateAttachment);
-
-	/**
-	 * Caches the notification template attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachments the notification template attachments
-	 */
-	public void cacheResult(
-		java.util.List<NotificationTemplateAttachment>
-			notificationTemplateAttachments);
-
-	/**
 	 * Creates a new notification template attachment with the primary key. Does not add the notification template attachment to the database.
 	 *
 	 * @param notificationTemplateAttachmentId the primary key for the new notification template attachment
@@ -253,4 +236,4 @@ public interface NotificationTemplateAttachmentPersistence
 		long notificationTemplateAttachmentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1378370568
+// LIFERAY-SERVICE-BUILDER-HASH:189671362

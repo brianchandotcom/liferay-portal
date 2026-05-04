@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -53,8 +52,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2956,90 +2953,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Caches the user group in the entity cache if it is enabled.
-	 *
-	 * @param userGroup the user group
-	 */
-	@Override
-	public void cacheResult(UserGroup userGroup) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					userGroup.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N,
-				new Object[] {userGroup.getCompanyId(), userGroup.getName()},
-				userGroup);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					userGroup.getExternalReferenceCode(),
-					userGroup.getCompanyId()
-				},
-				userGroup);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the user groups in the entity cache if it is enabled.
-	 *
-	 * @param userGroups the user groups
-	 */
-	@Override
-	public void cacheResult(List<UserGroup> userGroups) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (userGroups.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (UserGroup userGroup : userGroups) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						userGroup.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						UserGroupImpl.class, userGroup.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(userGroup);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		UserGroupModelImpl userGroupModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					userGroupModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				userGroupModelImpl.getCompanyId(), userGroupModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N, args, userGroupModelImpl);
-
-			args = new Object[] {
-				userGroupModelImpl.getExternalReferenceCode(),
-				userGroupModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, userGroupModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new user group with the primary key. Does not add the user group to the database.
 	 *
 	 * @param userGroupId the primary key for the new user group
@@ -3250,10 +3163,7 @@ public class UserGroupPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			UserGroupImpl.class, userGroupModelImpl, false, true);
-
-		cacheUniqueFindersCache(userGroupModelImpl);
+		cacheUniqueFindersResult(userGroup, false);
 
 		if (isNew) {
 			userGroup.setNew(false);
@@ -4355,9 +4265,6 @@ public class UserGroupPersistenceImpl
 	 * Initializes the user group persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		userGroupToGroupTableMapper = TableMapperFactory.getTableMapper(
 			"Groups_UserGroups", "companyId", "userGroupId", "groupId", this,
 			groupPersistence);
@@ -4490,10 +4397,11 @@ public class UserGroupPersistenceImpl
 				"userGroup.", "parentUserGroupId", FinderColumn.Type.LONG, "=",
 				true, true, UserGroup::getParentUserGroupId));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false, UserGroup::getCompanyId,
+			UserGroup::getName);
 
 		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
@@ -4543,10 +4451,11 @@ public class UserGroupPersistenceImpl
 					"userGroup.", "parentUserGroupId", FinderColumn.Type.LONG,
 					"=", true, true, UserGroup::getParentUserGroupId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			UserGroup::getExternalReferenceCode, UserGroup::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_USERGROUP_WHERE,
@@ -4638,4 +4547,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2103058948
+// LIFERAY-SERVICE-BUILDER-HASH:-1073510775

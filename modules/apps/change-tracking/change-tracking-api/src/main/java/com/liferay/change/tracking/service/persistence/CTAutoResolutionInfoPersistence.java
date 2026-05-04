@@ -348,21 +348,6 @@ public interface CTAutoResolutionInfoPersistence
 		long ctCollectionId, long modelClassNameId, long[] sourceModelClassPKs);
 
 	/**
-	 * Caches the ct auto resolution info in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfo the ct auto resolution info
-	 */
-	public void cacheResult(CTAutoResolutionInfo ctAutoResolutionInfo);
-
-	/**
-	 * Caches the ct auto resolution infos in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfos the ct auto resolution infos
-	 */
-	public void cacheResult(
-		java.util.List<CTAutoResolutionInfo> ctAutoResolutionInfos);
-
-	/**
 	 * Creates a new ct auto resolution info with the primary key. Does not add the ct auto resolution info to the database.
 	 *
 	 * @param ctAutoResolutionInfoId the primary key for the new ct auto resolution info
@@ -402,4 +387,4 @@ public interface CTAutoResolutionInfoPersistence
 	public CTAutoResolutionInfo fetchByPrimaryKey(long ctAutoResolutionInfoId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:33977067
+// LIFERAY-SERVICE-BUILDER-HASH:508409975

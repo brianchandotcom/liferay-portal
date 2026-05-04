@@ -706,4 +706,4 @@ public class NotificationQueueEntryAttachmentModelImpl
 	private NotificationQueueEntryAttachment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1242560115
+// LIFERAY-SERVICE-BUILDER-HASH:404386739

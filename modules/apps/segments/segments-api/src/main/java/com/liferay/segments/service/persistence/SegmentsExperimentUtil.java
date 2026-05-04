@@ -36,6 +36,22 @@ public class SegmentsExperimentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SegmentsExperiment> segmentsExperiments) {
+
+		getPersistence().cacheResult(segmentsExperiments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SegmentsExperiment segmentsExperiment) {
+		getPersistence().cacheResult(segmentsExperiment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -889,26 +905,6 @@ public class SegmentsExperimentUtil {
 	}
 
 	/**
-	 * Caches the segments experiment in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiment the segments experiment
-	 */
-	public static void cacheResult(SegmentsExperiment segmentsExperiment) {
-		getPersistence().cacheResult(segmentsExperiment);
-	}
-
-	/**
-	 * Caches the segments experiments in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiments the segments experiments
-	 */
-	public static void cacheResult(
-		List<SegmentsExperiment> segmentsExperiments) {
-
-		getPersistence().cacheResult(segmentsExperiments);
-	}
-
-	/**
 	 * Creates a new segments experiment with the primary key. Does not add the segments experiment to the database.
 	 *
 	 * @param segmentsExperimentId the primary key for the new segments experiment
@@ -975,4 +971,4 @@ public class SegmentsExperimentUtil {
 	private static volatile SegmentsExperimentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-347577645
+// LIFERAY-SERVICE-BUILDER-HASH:474370949

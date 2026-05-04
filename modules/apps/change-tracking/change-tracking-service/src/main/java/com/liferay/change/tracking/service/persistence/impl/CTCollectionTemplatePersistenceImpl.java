@@ -32,10 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -444,47 +441,6 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 	/**
-	 * Caches the ct collection template in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplate the ct collection template
-	 */
-	@Override
-	public void cacheResult(CTCollectionTemplate ctCollectionTemplate) {
-		entityCache.putResult(
-			CTCollectionTemplateImpl.class,
-			ctCollectionTemplate.getPrimaryKey(), ctCollectionTemplate);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ct collection templates in the entity cache if it is enabled.
-	 *
-	 * @param ctCollectionTemplates the ct collection templates
-	 */
-	@Override
-	public void cacheResult(List<CTCollectionTemplate> ctCollectionTemplates) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctCollectionTemplates.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTCollectionTemplate ctCollectionTemplate :
-				ctCollectionTemplates) {
-
-			if (entityCache.getResult(
-					CTCollectionTemplateImpl.class,
-					ctCollectionTemplate.getPrimaryKey()) == null) {
-
-				cacheResult(ctCollectionTemplate);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new ct collection template with the primary key. Does not add the ct collection template to the database.
 	 *
 	 * @param ctCollectionTemplateId the primary key for the new ct collection template
@@ -621,9 +577,7 @@ public class CTCollectionTemplatePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTCollectionTemplateImpl.class, ctCollectionTemplateModelImpl,
-			false, true);
+		cacheUniqueFindersResult(ctCollectionTemplate, false);
 
 		if (isNew) {
 			ctCollectionTemplate.setNew(false);
@@ -684,9 +638,6 @@ public class CTCollectionTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -809,4 +760,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-697171756
+// LIFERAY-SERVICE-BUILDER-HASH:-1606600015

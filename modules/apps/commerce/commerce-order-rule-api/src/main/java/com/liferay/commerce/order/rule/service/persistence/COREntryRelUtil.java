@@ -36,6 +36,20 @@ public class COREntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<COREntryRel> corEntryRels) {
+		getPersistence().cacheResult(corEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(COREntryRel corEntryRel) {
+		getPersistence().cacheResult(corEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -446,24 +460,6 @@ public class COREntryRelUtil {
 	}
 
 	/**
-	 * Caches the cor entry rel in the entity cache if it is enabled.
-	 *
-	 * @param corEntryRel the cor entry rel
-	 */
-	public static void cacheResult(COREntryRel corEntryRel) {
-		getPersistence().cacheResult(corEntryRel);
-	}
-
-	/**
-	 * Caches the cor entry rels in the entity cache if it is enabled.
-	 *
-	 * @param corEntryRels the cor entry rels
-	 */
-	public static void cacheResult(List<COREntryRel> corEntryRels) {
-		getPersistence().cacheResult(corEntryRels);
-	}
-
-	/**
 	 * Creates a new cor entry rel with the primary key. Does not add the cor entry rel to the database.
 	 *
 	 * @param COREntryRelId the primary key for the new cor entry rel
@@ -526,4 +522,4 @@ public class COREntryRelUtil {
 	private static volatile COREntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1220848923
+// LIFERAY-SERVICE-BUILDER-HASH:-798478271

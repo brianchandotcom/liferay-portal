@@ -25,10 +25,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.model.impl.CompanyImpl;
@@ -311,65 +308,6 @@ public class CompanyPersistenceImpl
 	}
 
 	/**
-	 * Caches the company in the entity cache if it is enabled.
-	 *
-	 * @param company the company
-	 */
-	@Override
-	public void cacheResult(Company company) {
-		EntityCacheUtil.putResult(
-			CompanyImpl.class, company.getPrimaryKey(), company);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByWebId, new Object[] {company.getWebId()},
-			company);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the companies in the entity cache if it is enabled.
-	 *
-	 * @param companies the companies
-	 */
-	@Override
-	public void cacheResult(List<Company> companies) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (companies.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Company company : companies) {
-			Company cachedCompany = (Company)EntityCacheUtil.getResult(
-				CompanyImpl.class, company.getPrimaryKey());
-
-			if (cachedCompany == null) {
-				cacheResult(company);
-			}
-			else {
-				CompanyModelImpl companyModelImpl = (CompanyModelImpl)company;
-				CompanyModelImpl cachedCompanyModelImpl =
-					(CompanyModelImpl)cachedCompany;
-
-				companyModelImpl.setGroupId(
-					cachedCompanyModelImpl.getGroupId());
-
-				companyModelImpl.setVirtualHostname(
-					cachedCompanyModelImpl.getVirtualHostname());
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CompanyModelImpl companyModelImpl) {
-		Object[] args = new Object[] {companyModelImpl.getWebId()};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByWebId, args, companyModelImpl);
-	}
-
-	/**
 	 * Creates a new company with the primary key. Does not add the company to the database.
 	 *
 	 * @param companyId the primary key for the new company
@@ -491,10 +429,7 @@ public class CompanyPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			CompanyImpl.class, companyModelImpl, false, true);
-
-		cacheUniqueFindersCache(companyModelImpl);
+		cacheUniqueFindersResult(company, false);
 
 		if (isNew) {
 			company.setNew(false);
@@ -559,13 +494,10 @@ public class CompanyPersistenceImpl
 	 * Initializes the company persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByWebId = new FinderPath(
+		_finderPathFetchByWebId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
 			new String[] {String.class.getName()}, new String[] {"webId"},
-			true);
+			false, Company::getWebId);
 
 		_uniquePersistenceFinderByWebId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWebId, _SQL_SELECT_COMPANY_WHERE,
@@ -637,4 +569,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-961424961
+// LIFERAY-SERVICE-BUILDER-HASH:-1540732871

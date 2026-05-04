@@ -1653,20 +1653,6 @@ public interface CPInstancePersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp instance in the entity cache if it is enabled.
-	 *
-	 * @param cpInstance the cp instance
-	 */
-	public void cacheResult(CPInstance cpInstance);
-
-	/**
-	 * Caches the cp instances in the entity cache if it is enabled.
-	 *
-	 * @param cpInstances the cp instances
-	 */
-	public void cacheResult(java.util.List<CPInstance> cpInstances);
-
-	/**
 	 * Creates a new cp instance with the primary key. Does not add the cp instance to the database.
 	 *
 	 * @param CPInstanceId the primary key for the new cp instance
@@ -1705,4 +1691,4 @@ public interface CPInstancePersistence
 	public CPInstance fetchByPrimaryKey(long CPInstanceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1819948992
+// LIFERAY-SERVICE-BUILDER-HASH:145074308

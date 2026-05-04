@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistenc
 import com.liferay.dynamic.data.mapping.service.persistence.DDMContentUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -833,74 +829,6 @@ public class DDMContentPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm content in the entity cache if it is enabled.
-	 *
-	 * @param ddmContent the ddm content
-	 */
-	@Override
-	public void cacheResult(DDMContent ddmContent) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmContent.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMContentImpl.class, ddmContent.getPrimaryKey(), ddmContent);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {ddmContent.getUuid(), ddmContent.getGroupId()},
-				ddmContent);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm contents in the entity cache if it is enabled.
-	 *
-	 * @param ddmContents the ddm contents
-	 */
-	@Override
-	public void cacheResult(List<DDMContent> ddmContents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmContents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMContent ddmContent : ddmContents) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmContent.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMContentImpl.class, ddmContent.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ddmContent);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMContentModelImpl ddmContentModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmContentModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmContentModelImpl.getUuid(), ddmContentModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, ddmContentModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm content with the primary key. Does not add the ddm content to the database.
 	 *
 	 * @param contentId the primary key for the new ddm content
@@ -1043,10 +971,7 @@ public class DDMContentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMContentImpl.class, ddmContentModelImpl, false, true);
-
-		cacheUniqueFindersCache(ddmContentModelImpl);
+		cacheUniqueFindersResult(ddmContent, false);
 
 		if (isNew) {
 			ddmContent.setNew(false);
@@ -1180,9 +1105,6 @@ public class DDMContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1210,10 +1132,11 @@ public class DDMContentPersistenceImpl
 				"ddmContent.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMContent::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, DDMContent::getUuid,
+			DDMContent::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMCONTENT_WHERE,
@@ -1387,4 +1310,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1239069040
+// LIFERAY-SERVICE-BUILDER-HASH:-922870015

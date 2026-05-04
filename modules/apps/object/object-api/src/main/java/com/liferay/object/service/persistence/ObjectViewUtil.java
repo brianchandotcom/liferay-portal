@@ -36,6 +36,20 @@ public class ObjectViewUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ObjectView> objectViews) {
+		getPersistence().cacheResult(objectViews);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ObjectView objectView) {
+		getPersistence().cacheResult(objectView);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -627,24 +641,6 @@ public class ObjectViewUtil {
 	}
 
 	/**
-	 * Caches the object view in the entity cache if it is enabled.
-	 *
-	 * @param objectView the object view
-	 */
-	public static void cacheResult(ObjectView objectView) {
-		getPersistence().cacheResult(objectView);
-	}
-
-	/**
-	 * Caches the object views in the entity cache if it is enabled.
-	 *
-	 * @param objectViews the object views
-	 */
-	public static void cacheResult(List<ObjectView> objectViews) {
-		getPersistence().cacheResult(objectViews);
-	}
-
-	/**
 	 * Creates a new object view with the primary key. Does not add the object view to the database.
 	 *
 	 * @param objectViewId the primary key for the new object view
@@ -705,4 +701,4 @@ public class ObjectViewUtil {
 	private static volatile ObjectViewPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:78150418
+// LIFERAY-SERVICE-BUILDER-HASH:1846406450

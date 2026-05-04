@@ -137,20 +137,6 @@ public interface CSDiagramPinPersistence
 	public int countByCPDefinitionId(long CPDefinitionId);
 
 	/**
-	 * Caches the cs diagram pin in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPin the cs diagram pin
-	 */
-	public void cacheResult(CSDiagramPin csDiagramPin);
-
-	/**
-	 * Caches the cs diagram pins in the entity cache if it is enabled.
-	 *
-	 * @param csDiagramPins the cs diagram pins
-	 */
-	public void cacheResult(java.util.List<CSDiagramPin> csDiagramPins);
-
-	/**
 	 * Creates a new cs diagram pin with the primary key. Does not add the cs diagram pin to the database.
 	 *
 	 * @param CSDiagramPinId the primary key for the new cs diagram pin
@@ -189,4 +175,4 @@ public interface CSDiagramPinPersistence
 	public CSDiagramPin fetchByPrimaryKey(long CSDiagramPinId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1597365986
+// LIFERAY-SERVICE-BUILDER-HASH:-1017492560

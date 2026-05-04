@@ -36,6 +36,24 @@ public class AccountEntryOrganizationRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AccountEntryOrganizationRel> accountEntryOrganizationRels) {
+
+		getPersistence().cacheResult(accountEntryOrganizationRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AccountEntryOrganizationRel accountEntryOrganizationRel) {
+
+		getPersistence().cacheResult(accountEntryOrganizationRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -441,28 +459,6 @@ public class AccountEntryOrganizationRelUtil {
 	}
 
 	/**
-	 * Caches the account entry organization rel in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRel the account entry organization rel
-	 */
-	public static void cacheResult(
-		AccountEntryOrganizationRel accountEntryOrganizationRel) {
-
-		getPersistence().cacheResult(accountEntryOrganizationRel);
-	}
-
-	/**
-	 * Caches the account entry organization rels in the entity cache if it is enabled.
-	 *
-	 * @param accountEntryOrganizationRels the account entry organization rels
-	 */
-	public static void cacheResult(
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels) {
-
-		getPersistence().cacheResult(accountEntryOrganizationRels);
-	}
-
-	/**
 	 * Creates a new account entry organization rel with the primary key. Does not add the account entry organization rel to the database.
 	 *
 	 * @param accountEntryOrganizationRelId the primary key for the new account entry organization rel
@@ -536,4 +532,4 @@ public class AccountEntryOrganizationRelUtil {
 	private static volatile AccountEntryOrganizationRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1954907277
+// LIFERAY-SERVICE-BUILDER-HASH:1587368771

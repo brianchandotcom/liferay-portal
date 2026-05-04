@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -40,8 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1969,101 +1966,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the workflow definition link in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLink the workflow definition link
-	 */
-	@Override
-	public void cacheResult(WorkflowDefinitionLink workflowDefinitionLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					workflowDefinitionLink.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				WorkflowDefinitionLinkImpl.class,
-				workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					workflowDefinitionLink.getUuid(),
-					workflowDefinitionLink.getGroupId()
-				},
-				workflowDefinitionLink);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					workflowDefinitionLink.getExternalReferenceCode(),
-					workflowDefinitionLink.getGroupId()
-				},
-				workflowDefinitionLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the workflow definition links in the entity cache if it is enabled.
-	 *
-	 * @param workflowDefinitionLinks the workflow definition links
-	 */
-	@Override
-	public void cacheResult(
-		List<WorkflowDefinitionLink> workflowDefinitionLinks) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (workflowDefinitionLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (WorkflowDefinitionLink workflowDefinitionLink :
-				workflowDefinitionLinks) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						workflowDefinitionLink.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						WorkflowDefinitionLinkImpl.class,
-						workflowDefinitionLink.getPrimaryKey()) == null) {
-
-					cacheResult(workflowDefinitionLink);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					workflowDefinitionLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				workflowDefinitionLinkModelImpl.getUuid(),
-				workflowDefinitionLinkModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args,
-				workflowDefinitionLinkModelImpl);
-
-			args = new Object[] {
-				workflowDefinitionLinkModelImpl.getExternalReferenceCode(),
-				workflowDefinitionLinkModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_G, args, workflowDefinitionLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new workflow definition link with the primary key. Does not add the workflow definition link to the database.
 	 *
 	 * @param workflowDefinitionLinkId the primary key for the new workflow definition link
@@ -2290,11 +2192,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			WorkflowDefinitionLinkImpl.class, workflowDefinitionLinkModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(workflowDefinitionLinkModelImpl);
+		cacheUniqueFindersResult(workflowDefinitionLink, false);
 
 		if (isNew) {
 			workflowDefinitionLink.setNew(false);
@@ -2437,9 +2335,6 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * Initializes the workflow definition link persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2468,10 +2363,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, WorkflowDefinitionLink::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			WorkflowDefinitionLink::getUuid,
+			WorkflowDefinitionLink::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -2843,10 +2740,12 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					"workflowDefinitionLink.", "typePK", FinderColumn.Type.LONG,
 					"=", true, true, WorkflowDefinitionLink::getTypePK));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			WorkflowDefinitionLink::getExternalReferenceCode,
+			WorkflowDefinitionLink::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G,
@@ -2895,4 +2794,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1014746009
+// LIFERAY-SERVICE-BUILDER-HASH:-1542428356

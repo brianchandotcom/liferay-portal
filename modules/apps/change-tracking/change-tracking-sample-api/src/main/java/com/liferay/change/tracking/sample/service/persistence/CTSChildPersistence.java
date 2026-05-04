@@ -358,20 +358,6 @@ public interface CTSChildPersistence
 	public int countByC_P(long companyId, long parentCTSChildId);
 
 	/**
-	 * Caches the cts child in the entity cache if it is enabled.
-	 *
-	 * @param ctsChild the cts child
-	 */
-	public void cacheResult(CTSChild ctsChild);
-
-	/**
-	 * Caches the cts childs in the entity cache if it is enabled.
-	 *
-	 * @param ctsChilds the cts childs
-	 */
-	public void cacheResult(java.util.List<CTSChild> ctsChilds);
-
-	/**
 	 * Creates a new cts child with the primary key. Does not add the cts child to the database.
 	 *
 	 * @param ctsChildId the primary key for the new cts child
@@ -409,4 +395,4 @@ public interface CTSChildPersistence
 	public CTSChild fetchByPrimaryKey(long ctsChildId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1342754805
+// LIFERAY-SERVICE-BUILDER-HASH:1228586047

@@ -621,21 +621,6 @@ public interface UserGroupGroupRolePersistence
 	public int countByU_G_R(long userGroupId, long groupId, long roleId);
 
 	/**
-	 * Caches the user group group role in the entity cache if it is enabled.
-	 *
-	 * @param userGroupGroupRole the user group group role
-	 */
-	public void cacheResult(UserGroupGroupRole userGroupGroupRole);
-
-	/**
-	 * Caches the user group group roles in the entity cache if it is enabled.
-	 *
-	 * @param userGroupGroupRoles the user group group roles
-	 */
-	public void cacheResult(
-		java.util.List<UserGroupGroupRole> userGroupGroupRoles);
-
-	/**
 	 * Creates a new user group group role with the primary key. Does not add the user group group role to the database.
 	 *
 	 * @param userGroupGroupRoleId the primary key for the new user group group role
@@ -674,4 +659,4 @@ public interface UserGroupGroupRolePersistence
 	public UserGroupGroupRole fetchByPrimaryKey(long userGroupGroupRoleId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1447955627
+// LIFERAY-SERVICE-BUILDER-HASH:1756647931

@@ -15,7 +15,6 @@ import com.liferay.calendar.service.persistence.CalendarResourceUtil;
 import com.liferay.calendar.service.persistence.impl.constants.CalendarPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -39,10 +38,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2893,95 +2889,6 @@ public class CalendarResourcePersistenceImpl
 	}
 
 	/**
-	 * Caches the calendar resource in the entity cache if it is enabled.
-	 *
-	 * @param calendarResource the calendar resource
-	 */
-	@Override
-	public void cacheResult(CalendarResource calendarResource) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarResource.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CalendarResourceImpl.class, calendarResource.getPrimaryKey(),
-				calendarResource);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					calendarResource.getUuid(), calendarResource.getGroupId()
-				},
-				calendarResource);
-
-			finderCache.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					calendarResource.getClassNameId(),
-					calendarResource.getClassPK()
-				},
-				calendarResource);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the calendar resources in the entity cache if it is enabled.
-	 *
-	 * @param calendarResources the calendar resources
-	 */
-	@Override
-	public void cacheResult(List<CalendarResource> calendarResources) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (calendarResources.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CalendarResource calendarResource : calendarResources) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						calendarResource.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CalendarResourceImpl.class,
-						calendarResource.getPrimaryKey()) == null) {
-
-					cacheResult(calendarResource);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CalendarResourceModelImpl calendarResourceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					calendarResourceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				calendarResourceModelImpl.getUuid(),
-				calendarResourceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, calendarResourceModelImpl);
-
-			args = new Object[] {
-				calendarResourceModelImpl.getClassNameId(),
-				calendarResourceModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByC_C, args, calendarResourceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new calendar resource with the primary key. Does not add the calendar resource to the database.
 	 *
 	 * @param calendarResourceId the primary key for the new calendar resource
@@ -3131,10 +3038,7 @@ public class CalendarResourcePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CalendarResourceImpl.class, calendarResourceModelImpl, false, true);
-
-		cacheUniqueFindersCache(calendarResourceModelImpl);
+		cacheUniqueFindersResult(calendarResource, false);
 
 		if (isNew) {
 			calendarResource.setNew(false);
@@ -3276,9 +3180,6 @@ public class CalendarResourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3307,10 +3208,11 @@ public class CalendarResourcePersistenceImpl
 				"calendarResource.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CalendarResource::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, CalendarResource::getUuid,
+			CalendarResource::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDARRESOURCE_WHERE,
@@ -3468,10 +3370,11 @@ public class CalendarResourcePersistenceImpl
 				"calendarResource.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CalendarResource::isActive));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			CalendarResource::getClassNameId, CalendarResource::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_CALENDARRESOURCE_WHERE,
@@ -3611,4 +3514,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1538454601
+// LIFERAY-SERVICE-BUILDER-HASH:1211915188

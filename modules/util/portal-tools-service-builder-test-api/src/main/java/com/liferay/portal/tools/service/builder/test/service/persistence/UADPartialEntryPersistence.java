@@ -33,20 +33,6 @@ public interface UADPartialEntryPersistence
 	 */
 
 	/**
-	 * Caches the uad partial entry in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntry the uad partial entry
-	 */
-	public void cacheResult(UADPartialEntry uadPartialEntry);
-
-	/**
-	 * Caches the uad partial entries in the entity cache if it is enabled.
-	 *
-	 * @param uadPartialEntries the uad partial entries
-	 */
-	public void cacheResult(java.util.List<UADPartialEntry> uadPartialEntries);
-
-	/**
 	 * Creates a new uad partial entry with the primary key. Does not add the uad partial entry to the database.
 	 *
 	 * @param uadPartialEntryId the primary key for the new uad partial entry
@@ -85,4 +71,4 @@ public interface UADPartialEntryPersistence
 	public UADPartialEntry fetchByPrimaryKey(long uadPartialEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1312379474
+// LIFERAY-SERVICE-BUILDER-HASH:1707717828

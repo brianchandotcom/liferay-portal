@@ -7,7 +7,6 @@ package com.liferay.portlet.ratings.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -27,10 +26,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.ratings.model.impl.RatingsStatsImpl;
@@ -684,78 +680,6 @@ public class RatingsStatsPersistenceImpl
 	}
 
 	/**
-	 * Caches the ratings stats in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStats the ratings stats
-	 */
-	@Override
-	public void cacheResult(RatingsStats ratingsStats) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ratingsStats.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				RatingsStatsImpl.class, ratingsStats.getPrimaryKey(),
-				ratingsStats);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C,
-				new Object[] {
-					ratingsStats.getClassNameId(), ratingsStats.getClassPK()
-				},
-				ratingsStats);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ratings statses in the entity cache if it is enabled.
-	 *
-	 * @param ratingsStatses the ratings statses
-	 */
-	@Override
-	public void cacheResult(List<RatingsStats> ratingsStatses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ratingsStatses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RatingsStats ratingsStats : ratingsStatses) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ratingsStats.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						RatingsStatsImpl.class, ratingsStats.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ratingsStats);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RatingsStatsModelImpl ratingsStatsModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ratingsStatsModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ratingsStatsModelImpl.getClassNameId(),
-				ratingsStatsModelImpl.getClassPK()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_C, args, ratingsStatsModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ratings stats with the primary key. Does not add the ratings stats to the database.
 	 *
 	 * @param statsId the primary key for the new ratings stats
@@ -890,10 +814,7 @@ public class RatingsStatsPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RatingsStatsImpl.class, ratingsStatsModelImpl, false, true);
-
-		cacheUniqueFindersCache(ratingsStatsModelImpl);
+		cacheUniqueFindersResult(ratingsStats, false);
 
 		if (isNew) {
 			ratingsStats.setNew(false);
@@ -1019,9 +940,6 @@ public class RatingsStatsPersistenceImpl
 	 * Initializes the ratings stats persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
@@ -1036,10 +954,11 @@ public class RatingsStatsPersistenceImpl
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, true);
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
+			new String[] {"classNameId", "classPK"}, false,
+			RatingsStats::getClassNameId, RatingsStats::getClassPK);
 
 		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
@@ -1084,4 +1003,4 @@ public class RatingsStatsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:171356397
+// LIFERAY-SERVICE-BUILDER-HASH:1076282159

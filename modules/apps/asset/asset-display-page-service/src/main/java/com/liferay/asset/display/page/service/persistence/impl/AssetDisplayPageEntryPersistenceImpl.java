@@ -14,7 +14,6 @@ import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryP
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryUtil;
 import com.liferay.asset.display.page.service.persistence.impl.constants.AssetPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1142,102 +1138,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the asset display page entry in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntry the asset display page entry
-	 */
-	@Override
-	public void cacheResult(AssetDisplayPageEntry assetDisplayPageEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetDisplayPageEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				AssetDisplayPageEntryImpl.class,
-				assetDisplayPageEntry.getPrimaryKey(), assetDisplayPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					assetDisplayPageEntry.getUuid(),
-					assetDisplayPageEntry.getGroupId()
-				},
-				assetDisplayPageEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C,
-				new Object[] {
-					assetDisplayPageEntry.getGroupId(),
-					assetDisplayPageEntry.getClassNameId(),
-					assetDisplayPageEntry.getClassPK()
-				},
-				assetDisplayPageEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the asset display page entries in the entity cache if it is enabled.
-	 *
-	 * @param assetDisplayPageEntries the asset display page entries
-	 */
-	@Override
-	public void cacheResult(
-		List<AssetDisplayPageEntry> assetDisplayPageEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (assetDisplayPageEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AssetDisplayPageEntry assetDisplayPageEntry :
-				assetDisplayPageEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						assetDisplayPageEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						AssetDisplayPageEntryImpl.class,
-						assetDisplayPageEntry.getPrimaryKey()) == null) {
-
-					cacheResult(assetDisplayPageEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		AssetDisplayPageEntryModelImpl assetDisplayPageEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					assetDisplayPageEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				assetDisplayPageEntryModelImpl.getUuid(),
-				assetDisplayPageEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, assetDisplayPageEntryModelImpl);
-
-			args = new Object[] {
-				assetDisplayPageEntryModelImpl.getGroupId(),
-				assetDisplayPageEntryModelImpl.getClassNameId(),
-				assetDisplayPageEntryModelImpl.getClassPK()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_C, args, assetDisplayPageEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new asset display page entry with the primary key. Does not add the asset display page entry to the database.
 	 *
 	 * @param assetDisplayPageEntryId the primary key for the new asset display page entry
@@ -1394,11 +1294,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AssetDisplayPageEntryImpl.class, assetDisplayPageEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(assetDisplayPageEntryModelImpl);
+		cacheUniqueFindersResult(assetDisplayPageEntry, false);
 
 		if (isNew) {
 			assetDisplayPageEntry.setNew(false);
@@ -1540,9 +1436,6 @@ public class AssetDisplayPageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1571,10 +1464,11 @@ public class AssetDisplayPageEntryPersistenceImpl
 				"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetDisplayPageEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			AssetDisplayPageEntry::getUuid, AssetDisplayPageEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1722,12 +1616,15 @@ public class AssetDisplayPageEntryPersistenceImpl
 				"assetDisplayPageEntry.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getClassNameId));
 
-		_finderPathFetchByG_C_C = new FinderPath(
+		_finderPathFetchByG_C_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
+			new String[] {"groupId", "classNameId", "classPK"}, false,
+			AssetDisplayPageEntry::getGroupId,
+			AssetDisplayPageEntry::getClassNameId,
+			AssetDisplayPageEntry::getClassPK);
 
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C,
@@ -1814,4 +1711,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-728750206
+// LIFERAY-SERVICE-BUILDER-HASH:-82818890

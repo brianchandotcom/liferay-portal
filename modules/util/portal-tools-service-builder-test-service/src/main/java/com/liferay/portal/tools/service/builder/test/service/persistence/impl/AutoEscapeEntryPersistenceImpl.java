@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchAutoEscapeEntryException;
 import com.liferay.portal.tools.service.builder.test.model.AutoEscapeEntry;
@@ -25,7 +22,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.AutoEsc
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,45 +59,6 @@ public class AutoEscapeEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(AutoEscapeEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the auto escape entry in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntry the auto escape entry
-	 */
-	@Override
-	public void cacheResult(AutoEscapeEntry autoEscapeEntry) {
-		entityCache.putResult(
-			AutoEscapeEntryImpl.class, autoEscapeEntry.getPrimaryKey(),
-			autoEscapeEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the auto escape entries in the entity cache if it is enabled.
-	 *
-	 * @param autoEscapeEntries the auto escape entries
-	 */
-	@Override
-	public void cacheResult(List<AutoEscapeEntry> autoEscapeEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (autoEscapeEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (AutoEscapeEntry autoEscapeEntry : autoEscapeEntries) {
-			if (entityCache.getResult(
-					AutoEscapeEntryImpl.class,
-					autoEscapeEntry.getPrimaryKey()) == null) {
-
-				cacheResult(autoEscapeEntry);
-			}
-		}
 	}
 
 	/**
@@ -189,8 +146,7 @@ public class AutoEscapeEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			AutoEscapeEntryImpl.class, autoEscapeEntry, false, true);
+		cacheUniqueFindersResult(autoEscapeEntry, false);
 
 		if (isNew) {
 			autoEscapeEntry.setNew(false);
@@ -250,9 +206,6 @@ public class AutoEscapeEntryPersistenceImpl
 	 * Initializes the auto escape entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		AutoEscapeEntryUtil.setPersistence(this);
 	}
 
@@ -283,4 +236,4 @@ public class AutoEscapeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1172609378
+// LIFERAY-SERVICE-BUILDER-HASH:1314301423

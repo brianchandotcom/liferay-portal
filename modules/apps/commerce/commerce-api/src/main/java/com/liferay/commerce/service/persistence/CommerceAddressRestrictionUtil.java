@@ -36,6 +36,24 @@ public class CommerceAddressRestrictionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceAddressRestriction> commerceAddressRestrictions) {
+
+		getPersistence().cacheResult(commerceAddressRestrictions);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceAddressRestriction commerceAddressRestriction) {
+
+		getPersistence().cacheResult(commerceAddressRestriction);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -456,28 +474,6 @@ public class CommerceAddressRestrictionUtil {
 	}
 
 	/**
-	 * Caches the commerce address restriction in the entity cache if it is enabled.
-	 *
-	 * @param commerceAddressRestriction the commerce address restriction
-	 */
-	public static void cacheResult(
-		CommerceAddressRestriction commerceAddressRestriction) {
-
-		getPersistence().cacheResult(commerceAddressRestriction);
-	}
-
-	/**
-	 * Caches the commerce address restrictions in the entity cache if it is enabled.
-	 *
-	 * @param commerceAddressRestrictions the commerce address restrictions
-	 */
-	public static void cacheResult(
-		List<CommerceAddressRestriction> commerceAddressRestrictions) {
-
-		getPersistence().cacheResult(commerceAddressRestrictions);
-	}
-
-	/**
 	 * Creates a new commerce address restriction with the primary key. Does not add the commerce address restriction to the database.
 	 *
 	 * @param commerceAddressRestrictionId the primary key for the new commerce address restriction
@@ -550,4 +546,4 @@ public class CommerceAddressRestrictionUtil {
 	private static volatile CommerceAddressRestrictionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1866653381
+// LIFERAY-SERVICE-BUILDER-HASH:1257062765

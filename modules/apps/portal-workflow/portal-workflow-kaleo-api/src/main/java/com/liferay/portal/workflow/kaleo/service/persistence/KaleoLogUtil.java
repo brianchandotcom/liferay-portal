@@ -36,6 +36,20 @@ public class KaleoLogUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<KaleoLog> kaleoLogs) {
+		getPersistence().cacheResult(kaleoLogs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(KaleoLog kaleoLog) {
+		getPersistence().cacheResult(kaleoLog);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -919,24 +933,6 @@ public class KaleoLogUtil {
 	}
 
 	/**
-	 * Caches the kaleo log in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLog the kaleo log
-	 */
-	public static void cacheResult(KaleoLog kaleoLog) {
-		getPersistence().cacheResult(kaleoLog);
-	}
-
-	/**
-	 * Caches the kaleo logs in the entity cache if it is enabled.
-	 *
-	 * @param kaleoLogs the kaleo logs
-	 */
-	public static void cacheResult(List<KaleoLog> kaleoLogs) {
-		getPersistence().cacheResult(kaleoLogs);
-	}
-
-	/**
 	 * Creates a new kaleo log with the primary key. Does not add the kaleo log to the database.
 	 *
 	 * @param kaleoLogId the primary key for the new kaleo log
@@ -997,4 +993,4 @@ public class KaleoLogUtil {
 	private static volatile KaleoLogPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1885492509
+// LIFERAY-SERVICE-BUILDER-HASH:-1387097487

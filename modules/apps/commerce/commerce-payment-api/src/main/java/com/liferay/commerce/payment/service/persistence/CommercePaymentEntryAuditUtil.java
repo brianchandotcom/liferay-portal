@@ -36,6 +36,24 @@ public class CommercePaymentEntryAuditUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePaymentEntryAudit> commercePaymentEntryAudits) {
+
+		getPersistence().cacheResult(commercePaymentEntryAudits);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePaymentEntryAudit commercePaymentEntryAudit) {
+
+		getPersistence().cacheResult(commercePaymentEntryAudit);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -319,28 +337,6 @@ public class CommercePaymentEntryAuditUtil {
 	}
 
 	/**
-	 * Caches the commerce payment entry audit in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudit the commerce payment entry audit
-	 */
-	public static void cacheResult(
-		CommercePaymentEntryAudit commercePaymentEntryAudit) {
-
-		getPersistence().cacheResult(commercePaymentEntryAudit);
-	}
-
-	/**
-	 * Caches the commerce payment entry audits in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntryAudits the commerce payment entry audits
-	 */
-	public static void cacheResult(
-		List<CommercePaymentEntryAudit> commercePaymentEntryAudits) {
-
-		getPersistence().cacheResult(commercePaymentEntryAudits);
-	}
-
-	/**
 	 * Creates a new commerce payment entry audit with the primary key. Does not add the commerce payment entry audit to the database.
 	 *
 	 * @param commercePaymentEntryAuditId the primary key for the new commerce payment entry audit
@@ -413,4 +409,4 @@ public class CommercePaymentEntryAuditUtil {
 	private static volatile CommercePaymentEntryAuditPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1567623642
+// LIFERAY-SERVICE-BUILDER-HASH:1865098982

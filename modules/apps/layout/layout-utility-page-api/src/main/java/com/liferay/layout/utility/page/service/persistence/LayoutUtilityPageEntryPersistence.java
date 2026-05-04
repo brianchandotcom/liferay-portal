@@ -1409,21 +1409,6 @@ public interface LayoutUtilityPageEntryPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the layout utility page entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntry the layout utility page entry
-	 */
-	public void cacheResult(LayoutUtilityPageEntry layoutUtilityPageEntry);
-
-	/**
-	 * Caches the layout utility page entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutUtilityPageEntries the layout utility page entries
-	 */
-	public void cacheResult(
-		java.util.List<LayoutUtilityPageEntry> layoutUtilityPageEntries);
-
-	/**
 	 * Creates a new layout utility page entry with the primary key. Does not add the layout utility page entry to the database.
 	 *
 	 * @param LayoutUtilityPageEntryId the primary key for the new layout utility page entry
@@ -1465,4 +1450,4 @@ public interface LayoutUtilityPageEntryPersistence
 		long LayoutUtilityPageEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-228373836
+// LIFERAY-SERVICE-BUILDER-HASH:-387416124

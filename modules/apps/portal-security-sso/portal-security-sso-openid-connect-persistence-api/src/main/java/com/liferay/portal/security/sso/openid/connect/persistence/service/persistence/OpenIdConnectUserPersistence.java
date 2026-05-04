@@ -202,21 +202,6 @@ public interface OpenIdConnectUserPersistence
 	public int countByC_I_S(long companyId, String issuer, String subject);
 
 	/**
-	 * Caches the open ID connect user in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUser the open ID connect user
-	 */
-	public void cacheResult(OpenIdConnectUser openIdConnectUser);
-
-	/**
-	 * Caches the open ID connect users in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUsers the open ID connect users
-	 */
-	public void cacheResult(
-		java.util.List<OpenIdConnectUser> openIdConnectUsers);
-
-	/**
 	 * Creates a new open ID connect user with the primary key. Does not add the open ID connect user to the database.
 	 *
 	 * @param openIdConnectUserId the primary key for the new open ID connect user
@@ -255,4 +240,4 @@ public interface OpenIdConnectUserPersistence
 	public OpenIdConnectUser fetchByPrimaryKey(long openIdConnectUserId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1363091099
+// LIFERAY-SERVICE-BUILDER-HASH:-1607715389

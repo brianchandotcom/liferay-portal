@@ -36,6 +36,20 @@ public class SpringEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SpringEntry> springEntries) {
+		getPersistence().cacheResult(springEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SpringEntry springEntry) {
+		getPersistence().cacheResult(springEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -484,24 +498,6 @@ public class SpringEntryUtil {
 	}
 
 	/**
-	 * Caches the spring entry in the entity cache if it is enabled.
-	 *
-	 * @param springEntry the spring entry
-	 */
-	public static void cacheResult(SpringEntry springEntry) {
-		getPersistence().cacheResult(springEntry);
-	}
-
-	/**
-	 * Caches the spring entries in the entity cache if it is enabled.
-	 *
-	 * @param springEntries the spring entries
-	 */
-	public static void cacheResult(List<SpringEntry> springEntries) {
-		getPersistence().cacheResult(springEntries);
-	}
-
-	/**
 	 * Creates a new spring entry with the primary key. Does not add the spring entry to the database.
 	 *
 	 * @param springEntryId the primary key for the new spring entry
@@ -564,4 +560,4 @@ public class SpringEntryUtil {
 	private static volatile SpringEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-316699505
+// LIFERAY-SERVICE-BUILDER-HASH:738077036

@@ -36,6 +36,24 @@ public class UserNotificationEventUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<UserNotificationEvent> userNotificationEvents) {
+
+		getPersistence().cacheResult(userNotificationEvents);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		UserNotificationEvent userNotificationEvent) {
+
+		getPersistence().cacheResult(userNotificationEvent);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3101,28 +3119,6 @@ public class UserNotificationEventUtil {
 	}
 
 	/**
-	 * Caches the user notification event in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationEvent the user notification event
-	 */
-	public static void cacheResult(
-		UserNotificationEvent userNotificationEvent) {
-
-		getPersistence().cacheResult(userNotificationEvent);
-	}
-
-	/**
-	 * Caches the user notification events in the entity cache if it is enabled.
-	 *
-	 * @param userNotificationEvents the user notification events
-	 */
-	public static void cacheResult(
-		List<UserNotificationEvent> userNotificationEvents) {
-
-		getPersistence().cacheResult(userNotificationEvents);
-	}
-
-	/**
 	 * Creates a new user notification event with the primary key. Does not add the user notification event to the database.
 	 *
 	 * @param userNotificationEventId the primary key for the new user notification event
@@ -3192,4 +3188,4 @@ public class UserNotificationEventUtil {
 	private static volatile UserNotificationEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:348957906
+// LIFERAY-SERVICE-BUILDER-HASH:304430476

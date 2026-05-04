@@ -1164,4 +1164,4 @@ public class UserGroupModelImpl
 	private UserGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-305291597
+// LIFERAY-SERVICE-BUILDER-HASH:-834916533

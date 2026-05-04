@@ -1007,4 +1007,4 @@ public class CPDAvailabilityEstimateModelImpl
 	private CPDAvailabilityEstimate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-238667607
+// LIFERAY-SERVICE-BUILDER-HASH:1860453549

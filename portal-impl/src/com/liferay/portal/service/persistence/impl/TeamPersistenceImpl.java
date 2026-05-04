@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -41,11 +40,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1120,81 +1116,6 @@ public class TeamPersistenceImpl
 	}
 
 	/**
-	 * Caches the team in the entity cache if it is enabled.
-	 *
-	 * @param team the team
-	 */
-	@Override
-	public void cacheResult(Team team) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					team.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				TeamImpl.class, team.getPrimaryKey(), team);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {team.getUuid(), team.getGroupId()}, team);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_N,
-				new Object[] {team.getGroupId(), team.getName()}, team);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the teams in the entity cache if it is enabled.
-	 *
-	 * @param teams the teams
-	 */
-	@Override
-	public void cacheResult(List<Team> teams) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (teams.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Team team : teams) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						team.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						TeamImpl.class, team.getPrimaryKey()) == null) {
-
-					cacheResult(team);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(TeamModelImpl teamModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					teamModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				teamModelImpl.getUuid(), teamModelImpl.getGroupId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByUUID_G, args, teamModelImpl);
-
-			args = new Object[] {
-				teamModelImpl.getGroupId(), teamModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_N, args, teamModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new team with the primary key. Does not add the team to the database.
 	 *
 	 * @param teamId the primary key for the new team
@@ -1338,9 +1259,7 @@ public class TeamPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(TeamImpl.class, teamModelImpl, false, true);
-
-		cacheUniqueFindersCache(teamModelImpl);
+		cacheUniqueFindersResult(team, false);
 
 		if (isNew) {
 			team.setNew(false);
@@ -2125,9 +2044,6 @@ public class TeamPersistenceImpl
 	 * Initializes the team persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		teamToUserTableMapper = TableMapperFactory.getTableMapper(
 			"Users_Teams", "companyId", "teamId", "userId", this,
 			userPersistence);
@@ -2163,10 +2079,11 @@ public class TeamPersistenceImpl
 				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Team::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, Team::getUuid,
+			Team::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_TEAM_WHERE,
@@ -2268,10 +2185,11 @@ public class TeamPersistenceImpl
 					"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 					Team::getGroupId));
 
-		_finderPathFetchByG_N = new FinderPath(
+		_finderPathFetchByG_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, true);
+			new String[] {"groupId", "name"}, false, Team::getGroupId,
+			Team::getName);
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_N, _SQL_SELECT_TEAM_WHERE,
@@ -2355,4 +2273,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-508911284
+// LIFERAY-SERVICE-BUILDER-HASH:76664826

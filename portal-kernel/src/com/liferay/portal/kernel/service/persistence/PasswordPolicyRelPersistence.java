@@ -185,21 +185,6 @@ public interface PasswordPolicyRelPersistence
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the password policy rel in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRel the password policy rel
-	 */
-	public void cacheResult(PasswordPolicyRel passwordPolicyRel);
-
-	/**
-	 * Caches the password policy rels in the entity cache if it is enabled.
-	 *
-	 * @param passwordPolicyRels the password policy rels
-	 */
-	public void cacheResult(
-		java.util.List<PasswordPolicyRel> passwordPolicyRels);
-
-	/**
 	 * Creates a new password policy rel with the primary key. Does not add the password policy rel to the database.
 	 *
 	 * @param passwordPolicyRelId the primary key for the new password policy rel
@@ -238,4 +223,4 @@ public interface PasswordPolicyRelPersistence
 	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-641414697
+// LIFERAY-SERVICE-BUILDER-HASH:-1746654027

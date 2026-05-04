@@ -36,6 +36,24 @@ public class DepotAppCustomizationUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DepotAppCustomization> depotAppCustomizations) {
+
+		getPersistence().cacheResult(depotAppCustomizations);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DepotAppCustomization depotAppCustomization) {
+
+		getPersistence().cacheResult(depotAppCustomization);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -375,28 +393,6 @@ public class DepotAppCustomizationUtil {
 	}
 
 	/**
-	 * Caches the depot app customization in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomization the depot app customization
-	 */
-	public static void cacheResult(
-		DepotAppCustomization depotAppCustomization) {
-
-		getPersistence().cacheResult(depotAppCustomization);
-	}
-
-	/**
-	 * Caches the depot app customizations in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomizations the depot app customizations
-	 */
-	public static void cacheResult(
-		List<DepotAppCustomization> depotAppCustomizations) {
-
-		getPersistence().cacheResult(depotAppCustomizations);
-	}
-
-	/**
 	 * Creates a new depot app customization with the primary key. Does not add the depot app customization to the database.
 	 *
 	 * @param depotAppCustomizationId the primary key for the new depot app customization
@@ -464,4 +460,4 @@ public class DepotAppCustomizationUtil {
 	private static volatile DepotAppCustomizationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:878250011
+// LIFERAY-SERVICE-BUILDER-HASH:1512788311

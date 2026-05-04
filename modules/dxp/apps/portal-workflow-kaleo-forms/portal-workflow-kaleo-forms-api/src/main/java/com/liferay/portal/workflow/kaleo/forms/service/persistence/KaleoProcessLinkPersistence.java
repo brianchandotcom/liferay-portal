@@ -189,20 +189,6 @@ public interface KaleoProcessLinkPersistence
 	public int countByKPI_WTN(long kaleoProcessId, String workflowTaskName);
 
 	/**
-	 * Caches the kaleo process link in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLink the kaleo process link
-	 */
-	public void cacheResult(KaleoProcessLink kaleoProcessLink);
-
-	/**
-	 * Caches the kaleo process links in the entity cache if it is enabled.
-	 *
-	 * @param kaleoProcessLinks the kaleo process links
-	 */
-	public void cacheResult(java.util.List<KaleoProcessLink> kaleoProcessLinks);
-
-	/**
 	 * Creates a new kaleo process link with the primary key. Does not add the kaleo process link to the database.
 	 *
 	 * @param kaleoProcessLinkId the primary key for the new kaleo process link
@@ -241,4 +227,4 @@ public interface KaleoProcessLinkPersistence
 	public KaleoProcessLink fetchByPrimaryKey(long kaleoProcessLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-94083307
+// LIFERAY-SERVICE-BUILDER-HASH:-60853411

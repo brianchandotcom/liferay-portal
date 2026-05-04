@@ -1593,4 +1593,4 @@ public class MBThreadModelImpl
 	private MBThread _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-417036542
+// LIFERAY-SERVICE-BUILDER-HASH:-228778548

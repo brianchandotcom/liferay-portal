@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2446,61 +2444,6 @@ public class SXPElementPersistenceImpl
 	}
 
 	/**
-	 * Caches the sxp element in the entity cache if it is enabled.
-	 *
-	 * @param sxpElement the sxp element
-	 */
-	@Override
-	public void cacheResult(SXPElement sxpElement) {
-		entityCache.putResult(
-			SXPElementImpl.class, sxpElement.getPrimaryKey(), sxpElement);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				sxpElement.getExternalReferenceCode(), sxpElement.getCompanyId()
-			},
-			sxpElement);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the sxp elements in the entity cache if it is enabled.
-	 *
-	 * @param sxpElements the sxp elements
-	 */
-	@Override
-	public void cacheResult(List<SXPElement> sxpElements) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (sxpElements.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SXPElement sxpElement : sxpElements) {
-			if (entityCache.getResult(
-					SXPElementImpl.class, sxpElement.getPrimaryKey()) == null) {
-
-				cacheResult(sxpElement);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SXPElementModelImpl sxpElementModelImpl) {
-
-		Object[] args = new Object[] {
-			sxpElementModelImpl.getExternalReferenceCode(),
-			sxpElementModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, sxpElementModelImpl);
-	}
-
-	/**
 	 * Creates a new sxp element with the primary key. Does not add the sxp element to the database.
 	 *
 	 * @param sxpElementId the primary key for the new sxp element
@@ -2725,10 +2668,7 @@ public class SXPElementPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SXPElementImpl.class, sxpElementModelImpl, false, true);
-
-		cacheUniqueFindersCache(sxpElementModelImpl);
+		cacheUniqueFindersResult(sxpElement, false);
 
 		if (isNew) {
 			sxpElement.setNew(false);
@@ -2794,9 +2734,6 @@ public class SXPElementPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2988,10 +2925,11 @@ public class SXPElementPersistenceImpl
 				"sxpElement.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, SXPElement::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			SXPElement::getExternalReferenceCode, SXPElement::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPELEMENT_WHERE,
@@ -3095,4 +3033,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1587023279
+// LIFERAY-SERVICE-BUILDER-HASH:1777978331

@@ -36,6 +36,20 @@ public class ReleaseUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Release> releases) {
+		getPersistence().cacheResult(releases);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Release release) {
+		getPersistence().cacheResult(release);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -170,24 +184,6 @@ public class ReleaseUtil {
 	}
 
 	/**
-	 * Caches the release in the entity cache if it is enabled.
-	 *
-	 * @param release the release
-	 */
-	public static void cacheResult(Release release) {
-		getPersistence().cacheResult(release);
-	}
-
-	/**
-	 * Caches the releases in the entity cache if it is enabled.
-	 *
-	 * @param releases the releases
-	 */
-	public static void cacheResult(List<Release> releases) {
-		getPersistence().cacheResult(releases);
-	}
-
-	/**
 	 * Creates a new release with the primary key. Does not add the release to the database.
 	 *
 	 * @param releaseId the primary key for the new release
@@ -248,4 +244,4 @@ public class ReleaseUtil {
 	private static volatile ReleasePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1640994075
+// LIFERAY-SERVICE-BUILDER-HASH:-1001398893

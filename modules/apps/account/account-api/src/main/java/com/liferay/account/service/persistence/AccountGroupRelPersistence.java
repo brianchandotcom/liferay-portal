@@ -418,20 +418,6 @@ public interface AccountGroupRelPersistence
 		long accountGroupId, long classNameId, long classPK);
 
 	/**
-	 * Caches the account group rel in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRel the account group rel
-	 */
-	public void cacheResult(AccountGroupRel accountGroupRel);
-
-	/**
-	 * Caches the account group rels in the entity cache if it is enabled.
-	 *
-	 * @param accountGroupRels the account group rels
-	 */
-	public void cacheResult(java.util.List<AccountGroupRel> accountGroupRels);
-
-	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *
 	 * @param accountGroupRelId the primary key for the new account group rel
@@ -470,4 +456,4 @@ public interface AccountGroupRelPersistence
 	public AccountGroupRel fetchByPrimaryKey(long accountGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1015697160
+// LIFERAY-SERVICE-BUILDER-HASH:550330328

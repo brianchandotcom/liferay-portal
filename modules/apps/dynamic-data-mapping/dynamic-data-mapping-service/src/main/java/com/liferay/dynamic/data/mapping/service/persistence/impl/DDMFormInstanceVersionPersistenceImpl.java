@@ -14,7 +14,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersi
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionUtil;
 import com.liferay.dynamic.data.mapping.service.persistence.impl.constants.DDMPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -541,84 +537,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the ddm form instance version in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceVersion the ddm form instance version
-	 */
-	@Override
-	public void cacheResult(DDMFormInstanceVersion ddmFormInstanceVersion) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstanceVersion.getCtCollectionId())) {
-
-			entityCache.putResult(
-				DDMFormInstanceVersionImpl.class,
-				ddmFormInstanceVersion.getPrimaryKey(), ddmFormInstanceVersion);
-
-			finderCache.putResult(
-				_finderPathFetchByF_V,
-				new Object[] {
-					ddmFormInstanceVersion.getFormInstanceId(),
-					ddmFormInstanceVersion.getVersion()
-				},
-				ddmFormInstanceVersion);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the ddm form instance versions in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstanceVersions the ddm form instance versions
-	 */
-	@Override
-	public void cacheResult(
-		List<DDMFormInstanceVersion> ddmFormInstanceVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ddmFormInstanceVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DDMFormInstanceVersion ddmFormInstanceVersion :
-				ddmFormInstanceVersions) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ddmFormInstanceVersion.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						DDMFormInstanceVersionImpl.class,
-						ddmFormInstanceVersion.getPrimaryKey()) == null) {
-
-					cacheResult(ddmFormInstanceVersion);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		DDMFormInstanceVersionModelImpl ddmFormInstanceVersionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ddmFormInstanceVersionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				ddmFormInstanceVersionModelImpl.getFormInstanceId(),
-				ddmFormInstanceVersionModelImpl.getVersion()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByF_V, args, ddmFormInstanceVersionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new ddm form instance version with the primary key. Does not add the ddm form instance version to the database.
 	 *
 	 * @param formInstanceVersionId the primary key for the new ddm form instance version
@@ -755,11 +673,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DDMFormInstanceVersionImpl.class, ddmFormInstanceVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(ddmFormInstanceVersionModelImpl);
+		cacheUniqueFindersResult(ddmFormInstanceVersion, false);
 
 		if (isNew) {
 			ddmFormInstanceVersion.setNew(false);
@@ -898,9 +812,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByFormInstanceId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFormInstanceId",
 			new String[] {
@@ -933,10 +844,12 @@ public class DDMFormInstanceVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMFormInstanceVersion::getFormInstanceId));
 
-		_finderPathFetchByF_V = new FinderPath(
+		_finderPathFetchByF_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "version"}, true);
+			new String[] {"formInstanceId", "version"}, false,
+			DDMFormInstanceVersion::getFormInstanceId,
+			DDMFormInstanceVersion::getVersion);
 
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_V,
@@ -1054,4 +967,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1657762090
+// LIFERAY-SERVICE-BUILDER-HASH:-576116160

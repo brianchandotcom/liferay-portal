@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -44,8 +43,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2779,74 +2776,6 @@ public class AddressPersistenceImpl
 	}
 
 	/**
-	 * Caches the address in the entity cache if it is enabled.
-	 *
-	 * @param address the address
-	 */
-	@Override
-	public void cacheResult(Address address) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					address.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				AddressImpl.class, address.getPrimaryKey(), address);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					address.getExternalReferenceCode(), address.getCompanyId()
-				},
-				address);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the addresses in the entity cache if it is enabled.
-	 *
-	 * @param addresses the addresses
-	 */
-	@Override
-	public void cacheResult(List<Address> addresses) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (addresses.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Address address : addresses) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						address.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						AddressImpl.class, address.getPrimaryKey()) == null) {
-
-					cacheResult(address);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(AddressModelImpl addressModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					addressModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				addressModelImpl.getExternalReferenceCode(),
-				addressModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, addressModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new address with the primary key. Does not add the address to the database.
 	 *
 	 * @param addressId the primary key for the new address
@@ -3047,10 +2976,7 @@ public class AddressPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			AddressImpl.class, addressModelImpl, false, true);
-
-		cacheUniqueFindersCache(addressModelImpl);
+		cacheUniqueFindersResult(address, false);
 
 		if (isNew) {
 			address.setNew(false);
@@ -3201,9 +3127,6 @@ public class AddressPersistenceImpl
 	 * Initializes the address persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3617,10 +3540,11 @@ public class AddressPersistenceImpl
 					"address.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Address::isPrimary));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Address::getExternalReferenceCode, Address::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ADDRESS_WHERE,
@@ -3667,4 +3591,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1682922096
+// LIFERAY-SERVICE-BUILDER-HASH:-341126433

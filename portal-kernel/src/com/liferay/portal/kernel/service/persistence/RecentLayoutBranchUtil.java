@@ -36,6 +36,22 @@ public class RecentLayoutBranchUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<RecentLayoutBranch> recentLayoutBranchs) {
+
+		getPersistence().cacheResult(recentLayoutBranchs);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(RecentLayoutBranch recentLayoutBranch) {
+		getPersistence().cacheResult(recentLayoutBranch);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -561,26 +577,6 @@ public class RecentLayoutBranchUtil {
 	}
 
 	/**
-	 * Caches the recent layout branch in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutBranch the recent layout branch
-	 */
-	public static void cacheResult(RecentLayoutBranch recentLayoutBranch) {
-		getPersistence().cacheResult(recentLayoutBranch);
-	}
-
-	/**
-	 * Caches the recent layout branches in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutBranchs the recent layout branches
-	 */
-	public static void cacheResult(
-		List<RecentLayoutBranch> recentLayoutBranchs) {
-
-		getPersistence().cacheResult(recentLayoutBranchs);
-	}
-
-	/**
 	 * Creates a new recent layout branch with the primary key. Does not add the recent layout branch to the database.
 	 *
 	 * @param recentLayoutBranchId the primary key for the new recent layout branch
@@ -649,4 +645,4 @@ public class RecentLayoutBranchUtil {
 	private static volatile RecentLayoutBranchPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:423853723
+// LIFERAY-SERVICE-BUILDER-HASH:435558063

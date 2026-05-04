@@ -580,22 +580,6 @@ public interface LVEntryLocalizationVersionPersistence
 		long lvEntryId, String languageId, int version);
 
 	/**
-	 * Caches the lv entry localization version in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizationVersion the lv entry localization version
-	 */
-	public void cacheResult(
-		LVEntryLocalizationVersion lvEntryLocalizationVersion);
-
-	/**
-	 * Caches the lv entry localization versions in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizationVersions the lv entry localization versions
-	 */
-	public void cacheResult(
-		java.util.List<LVEntryLocalizationVersion> lvEntryLocalizationVersions);
-
-	/**
 	 * Creates a new lv entry localization version with the primary key. Does not add the lv entry localization version to the database.
 	 *
 	 * @param lvEntryLocalizationVersionId the primary key for the new lv entry localization version
@@ -637,4 +621,4 @@ public interface LVEntryLocalizationVersionPersistence
 		long lvEntryLocalizationVersionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-174261369
+// LIFERAY-SERVICE-BUILDER-HASH:652483775

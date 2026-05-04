@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -717,47 +714,6 @@ public class ObjectViewSortColumnPersistenceImpl
 	}
 
 	/**
-	 * Caches the object view sort column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumn the object view sort column
-	 */
-	@Override
-	public void cacheResult(ObjectViewSortColumn objectViewSortColumn) {
-		entityCache.putResult(
-			ObjectViewSortColumnImpl.class,
-			objectViewSortColumn.getPrimaryKey(), objectViewSortColumn);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object view sort columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewSortColumns the object view sort columns
-	 */
-	@Override
-	public void cacheResult(List<ObjectViewSortColumn> objectViewSortColumns) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectViewSortColumns.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectViewSortColumn objectViewSortColumn :
-				objectViewSortColumns) {
-
-			if (entityCache.getResult(
-					ObjectViewSortColumnImpl.class,
-					objectViewSortColumn.getPrimaryKey()) == null) {
-
-				cacheResult(objectViewSortColumn);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new object view sort column with the primary key. Does not add the object view sort column to the database.
 	 *
 	 * @param objectViewSortColumnId the primary key for the new object view sort column
@@ -904,9 +860,7 @@ public class ObjectViewSortColumnPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectViewSortColumnImpl.class, objectViewSortColumnModelImpl,
-			false, true);
+		cacheUniqueFindersResult(objectViewSortColumn, false);
 
 		if (isNew) {
 			objectViewSortColumn.setNew(false);
@@ -972,9 +926,6 @@ public class ObjectViewSortColumnPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1177,4 +1128,4 @@ public class ObjectViewSortColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1435670700
+// LIFERAY-SERVICE-BUILDER-HASH:658658578

@@ -12,9 +12,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLocalizedEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LocalizedEntry;
@@ -27,7 +24,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.Localiz
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,45 +61,6 @@ public class LocalizedEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(LocalizedEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the localized entry in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntry the localized entry
-	 */
-	@Override
-	public void cacheResult(LocalizedEntry localizedEntry) {
-		entityCache.putResult(
-			LocalizedEntryImpl.class, localizedEntry.getPrimaryKey(),
-			localizedEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the localized entries in the entity cache if it is enabled.
-	 *
-	 * @param localizedEntries the localized entries
-	 */
-	@Override
-	public void cacheResult(List<LocalizedEntry> localizedEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (localizedEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LocalizedEntry localizedEntry : localizedEntries) {
-			if (entityCache.getResult(
-					LocalizedEntryImpl.class, localizedEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(localizedEntry);
-			}
-		}
 	}
 
 	/**
@@ -193,8 +150,7 @@ public class LocalizedEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LocalizedEntryImpl.class, localizedEntry, false, true);
+		cacheUniqueFindersResult(localizedEntry, false);
 
 		if (isNew) {
 			localizedEntry.setNew(false);
@@ -254,9 +210,6 @@ public class LocalizedEntryPersistenceImpl
 	 * Initializes the localized entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		LocalizedEntryUtil.setPersistence(this);
 	}
 
@@ -291,4 +244,4 @@ public class LocalizedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:631646993
+// LIFERAY-SERVICE-BUILDER-HASH:1721616453

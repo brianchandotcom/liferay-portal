@@ -14,7 +14,6 @@ import com.liferay.message.boards.service.persistence.MBBanPersistence;
 import com.liferay.message.boards.service.persistence.MBBanUtil;
 import com.liferay.message.boards.service.persistence.impl.constants.MBPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1068,80 +1064,6 @@ public class MBBanPersistenceImpl
 	}
 
 	/**
-	 * Caches the message boards ban in the entity cache if it is enabled.
-	 *
-	 * @param mbBan the message boards ban
-	 */
-	@Override
-	public void cacheResult(MBBan mbBan) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbBan.getCtCollectionId())) {
-
-			entityCache.putResult(
-				MBBanImpl.class, mbBan.getPrimaryKey(), mbBan);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {mbBan.getUuid(), mbBan.getGroupId()}, mbBan);
-
-			finderCache.putResult(
-				_finderPathFetchByG_B,
-				new Object[] {mbBan.getGroupId(), mbBan.getBanUserId()}, mbBan);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the message boards bans in the entity cache if it is enabled.
-	 *
-	 * @param mbBans the message boards bans
-	 */
-	@Override
-	public void cacheResult(List<MBBan> mbBans) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (mbBans.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MBBan mbBan : mbBans) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						mbBan.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						MBBanImpl.class, mbBan.getPrimaryKey()) == null) {
-
-					cacheResult(mbBan);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(MBBanModelImpl mbBanModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					mbBanModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				mbBanModelImpl.getUuid(), mbBanModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, mbBanModelImpl);
-
-			args = new Object[] {
-				mbBanModelImpl.getGroupId(), mbBanModelImpl.getBanUserId()
-			};
-
-			finderCache.putResult(_finderPathFetchByG_B, args, mbBanModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new message boards ban with the primary key. Does not add the message boards ban to the database.
 	 *
 	 * @param banId the primary key for the new message boards ban
@@ -1279,9 +1201,7 @@ public class MBBanPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(MBBanImpl.class, mbBanModelImpl, false, true);
-
-		cacheUniqueFindersCache(mbBanModelImpl);
+		cacheUniqueFindersResult(mbBan, false);
 
 		if (isNew) {
 			mbBan.setNew(false);
@@ -1414,9 +1334,6 @@ public class MBBanPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1444,10 +1361,11 @@ public class MBBanPersistenceImpl
 				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBBan::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, MBBan::getUuid,
+			MBBan::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBBAN_WHERE,
@@ -1577,10 +1495,11 @@ public class MBBanPersistenceImpl
 					"mbBan.", "banUserId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getBanUserId));
 
-		_finderPathFetchByG_B = new FinderPath(
+		_finderPathFetchByG_B = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_B",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "banUserId"}, true);
+			new String[] {"groupId", "banUserId"}, false, MBBan::getGroupId,
+			MBBan::getBanUserId);
 
 		_uniquePersistenceFinderByG_B = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_B, _SQL_SELECT_MBBAN_WHERE,
@@ -1663,4 +1582,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1329235809
+// LIFERAY-SERVICE-BUILDER-HASH:1875799182

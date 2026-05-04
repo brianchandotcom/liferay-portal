@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -339,65 +336,6 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 	/**
-	 * Caches the batch planner policy in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPolicy the batch planner policy
-	 */
-	@Override
-	public void cacheResult(BatchPlannerPolicy batchPlannerPolicy) {
-		entityCache.putResult(
-			BatchPlannerPolicyImpl.class, batchPlannerPolicy.getPrimaryKey(),
-			batchPlannerPolicy);
-
-		finderCache.putResult(
-			_finderPathFetchByBPPI_N,
-			new Object[] {
-				batchPlannerPolicy.getBatchPlannerPlanId(),
-				batchPlannerPolicy.getName()
-			},
-			batchPlannerPolicy);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the batch planner policies in the entity cache if it is enabled.
-	 *
-	 * @param batchPlannerPolicies the batch planner policies
-	 */
-	@Override
-	public void cacheResult(List<BatchPlannerPolicy> batchPlannerPolicies) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (batchPlannerPolicies.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BatchPlannerPolicy batchPlannerPolicy : batchPlannerPolicies) {
-			if (entityCache.getResult(
-					BatchPlannerPolicyImpl.class,
-					batchPlannerPolicy.getPrimaryKey()) == null) {
-
-				cacheResult(batchPlannerPolicy);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BatchPlannerPolicyModelImpl batchPlannerPolicyModelImpl) {
-
-		Object[] args = new Object[] {
-			batchPlannerPolicyModelImpl.getBatchPlannerPlanId(),
-			batchPlannerPolicyModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByBPPI_N, args, batchPlannerPolicyModelImpl);
-	}
-
-	/**
 	 * Creates a new batch planner policy with the primary key. Does not add the batch planner policy to the database.
 	 *
 	 * @param batchPlannerPolicyId the primary key for the new batch planner policy
@@ -533,11 +471,7 @@ public class BatchPlannerPolicyPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BatchPlannerPolicyImpl.class, batchPlannerPolicyModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(batchPlannerPolicyModelImpl);
+		cacheUniqueFindersResult(batchPlannerPolicy, false);
 
 		if (isNew) {
 			batchPlannerPolicy.setNew(false);
@@ -598,9 +532,6 @@ public class BatchPlannerPolicyPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByBatchPlannerPlanId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByBatchPlannerPlanId",
 			new String[] {
@@ -632,10 +563,12 @@ public class BatchPlannerPolicyPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					BatchPlannerPolicy::getBatchPlannerPlanId));
 
-		_finderPathFetchByBPPI_N = new FinderPath(
+		_finderPathFetchByBPPI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "name"}, true);
+			new String[] {"batchPlannerPlanId", "name"}, false,
+			BatchPlannerPolicy::getBatchPlannerPlanId,
+			BatchPlannerPolicy::getName);
 
 		_uniquePersistenceFinderByBPPI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByBPPI_N,
@@ -714,4 +647,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2041914871
+// LIFERAY-SERVICE-BUILDER-HASH:-434361537

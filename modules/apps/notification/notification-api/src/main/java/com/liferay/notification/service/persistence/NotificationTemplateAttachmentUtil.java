@@ -36,6 +36,24 @@ public class NotificationTemplateAttachmentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationTemplateAttachment> notificationTemplateAttachments) {
+
+		getPersistence().cacheResult(notificationTemplateAttachments);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		NotificationTemplateAttachment notificationTemplateAttachment) {
+
+		getPersistence().cacheResult(notificationTemplateAttachment);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -336,28 +354,6 @@ public class NotificationTemplateAttachmentUtil {
 	}
 
 	/**
-	 * Caches the notification template attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachment the notification template attachment
-	 */
-	public static void cacheResult(
-		NotificationTemplateAttachment notificationTemplateAttachment) {
-
-		getPersistence().cacheResult(notificationTemplateAttachment);
-	}
-
-	/**
-	 * Caches the notification template attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachments the notification template attachments
-	 */
-	public static void cacheResult(
-		List<NotificationTemplateAttachment> notificationTemplateAttachments) {
-
-		getPersistence().cacheResult(notificationTemplateAttachments);
-	}
-
-	/**
 	 * Creates a new notification template attachment with the primary key. Does not add the notification template attachment to the database.
 	 *
 	 * @param notificationTemplateAttachmentId the primary key for the new notification template attachment
@@ -433,4 +429,4 @@ public class NotificationTemplateAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-196421327
+// LIFERAY-SERVICE-BUILDER-HASH:1247285185

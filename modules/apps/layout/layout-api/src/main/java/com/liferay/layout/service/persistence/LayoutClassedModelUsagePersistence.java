@@ -1332,21 +1332,6 @@ public interface LayoutClassedModelUsagePersistence
 		long classPK, String containerKey, long containerType, long plid);
 
 	/**
-	 * Caches the layout classed model usage in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsage the layout classed model usage
-	 */
-	public void cacheResult(LayoutClassedModelUsage layoutClassedModelUsage);
-
-	/**
-	 * Caches the layout classed model usages in the entity cache if it is enabled.
-	 *
-	 * @param layoutClassedModelUsages the layout classed model usages
-	 */
-	public void cacheResult(
-		java.util.List<LayoutClassedModelUsage> layoutClassedModelUsages);
-
-	/**
 	 * Creates a new layout classed model usage with the primary key. Does not add the layout classed model usage to the database.
 	 *
 	 * @param layoutClassedModelUsageId the primary key for the new layout classed model usage
@@ -1388,4 +1373,4 @@ public interface LayoutClassedModelUsagePersistence
 		long layoutClassedModelUsageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1893785245
+// LIFERAY-SERVICE-BUILDER-HASH:1030232679

@@ -184,20 +184,6 @@ public interface ResourceActionPersistence
 	public int countByN_A(String name, String actionId);
 
 	/**
-	 * Caches the resource action in the entity cache if it is enabled.
-	 *
-	 * @param resourceAction the resource action
-	 */
-	public void cacheResult(ResourceAction resourceAction);
-
-	/**
-	 * Caches the resource actions in the entity cache if it is enabled.
-	 *
-	 * @param resourceActions the resource actions
-	 */
-	public void cacheResult(java.util.List<ResourceAction> resourceActions);
-
-	/**
 	 * Creates a new resource action with the primary key. Does not add the resource action to the database.
 	 *
 	 * @param resourceActionId the primary key for the new resource action
@@ -236,4 +222,4 @@ public interface ResourceActionPersistence
 	public ResourceAction fetchByPrimaryKey(long resourceActionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1866926994
+// LIFERAY-SERVICE-BUILDER-HASH:-1393640238

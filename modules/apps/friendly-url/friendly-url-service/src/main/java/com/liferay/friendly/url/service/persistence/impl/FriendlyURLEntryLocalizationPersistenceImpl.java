@@ -14,7 +14,6 @@ import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalization
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationUtil;
 import com.liferay.friendly.url.service.persistence.impl.constants.FURLPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -31,10 +30,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -1284,111 +1280,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the friendly url entry localization in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalization the friendly url entry localization
-	 */
-	@Override
-	public void cacheResult(
-		FriendlyURLEntryLocalization friendlyURLEntryLocalization) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntryLocalization.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FriendlyURLEntryLocalizationImpl.class,
-				friendlyURLEntryLocalization.getPrimaryKey(),
-				friendlyURLEntryLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByFriendlyURLEntryId_LanguageId,
-				new Object[] {
-					friendlyURLEntryLocalization.getFriendlyURLEntryId(),
-					friendlyURLEntryLocalization.getLanguageId()
-				},
-				friendlyURLEntryLocalization);
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_L_U,
-				new Object[] {
-					friendlyURLEntryLocalization.getGroupId(),
-					friendlyURLEntryLocalization.getClassNameId(),
-					friendlyURLEntryLocalization.getLanguageId(),
-					friendlyURLEntryLocalization.getUrlTitle()
-				},
-				friendlyURLEntryLocalization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the friendly url entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryLocalizations the friendly url entry localizations
-	 */
-	@Override
-	public void cacheResult(
-		List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (friendlyURLEntryLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
-				friendlyURLEntryLocalizations) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						friendlyURLEntryLocalization.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						FriendlyURLEntryLocalizationImpl.class,
-						friendlyURLEntryLocalization.getPrimaryKey()) == null) {
-
-					cacheResult(friendlyURLEntryLocalization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FriendlyURLEntryLocalizationModelImpl
-			friendlyURLEntryLocalizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					friendlyURLEntryLocalizationModelImpl.
-						getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				friendlyURLEntryLocalizationModelImpl.getFriendlyURLEntryId(),
-				friendlyURLEntryLocalizationModelImpl.getLanguageId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByFriendlyURLEntryId_LanguageId, args,
-				friendlyURLEntryLocalizationModelImpl);
-
-			args = new Object[] {
-				friendlyURLEntryLocalizationModelImpl.getGroupId(),
-				friendlyURLEntryLocalizationModelImpl.getClassNameId(),
-				friendlyURLEntryLocalizationModelImpl.getLanguageId(),
-				friendlyURLEntryLocalizationModelImpl.getUrlTitle()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_C_L_U, args,
-				friendlyURLEntryLocalizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new friendly url entry localization with the primary key. Does not add the friendly url entry localization to the database.
 	 *
 	 * @param friendlyURLEntryLocalizationId the primary key for the new friendly url entry localization
@@ -1521,11 +1412,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FriendlyURLEntryLocalizationImpl.class,
-			friendlyURLEntryLocalizationModelImpl, false, true);
-
-		cacheUniqueFindersCache(friendlyURLEntryLocalizationModelImpl);
+		cacheUniqueFindersResult(friendlyURLEntryLocalization, false);
 
 		if (isNew) {
 			friendlyURLEntryLocalization.setNew(false);
@@ -1656,9 +1543,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByFriendlyURLEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFriendlyURLEntryId",
 			new String[] {
@@ -1691,10 +1575,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getFriendlyURLEntryId));
 
-		_finderPathFetchByFriendlyURLEntryId_LanguageId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByFriendlyURLEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"friendlyURLEntryId", "languageId"}, true);
+		_finderPathFetchByFriendlyURLEntryId_LanguageId =
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY,
+				"fetchByFriendlyURLEntryId_LanguageId",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"friendlyURLEntryId", "languageId"}, false,
+				FriendlyURLEntryLocalization::getFriendlyURLEntryId,
+				FriendlyURLEntryLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -1870,14 +1758,17 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FriendlyURLEntryLocalization::getLanguageId));
 
-		_finderPathFetchByG_C_L_U = new FinderPath(
+		_finderPathFetchByG_C_L_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_L_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
-			true);
+			false, FriendlyURLEntryLocalization::getGroupId,
+			FriendlyURLEntryLocalization::getClassNameId,
+			FriendlyURLEntryLocalization::getLanguageId,
+			FriendlyURLEntryLocalization::getUrlTitle);
 
 		_uniquePersistenceFinderByG_C_L_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_L_U,
@@ -2014,4 +1905,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1031058070
+// LIFERAY-SERVICE-BUILDER-HASH:-155609238

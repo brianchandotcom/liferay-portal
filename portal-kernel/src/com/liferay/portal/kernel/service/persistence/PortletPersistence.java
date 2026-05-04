@@ -183,20 +183,6 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	public int countByC_P(long companyId, String portletId);
 
 	/**
-	 * Caches the portlet in the entity cache if it is enabled.
-	 *
-	 * @param portlet the portlet
-	 */
-	public void cacheResult(Portlet portlet);
-
-	/**
-	 * Caches the portlets in the entity cache if it is enabled.
-	 *
-	 * @param portlets the portlets
-	 */
-	public void cacheResult(java.util.List<Portlet> portlets);
-
-	/**
 	 * Creates a new portlet with the primary key. Does not add the portlet to the database.
 	 *
 	 * @param id the primary key for the new portlet
@@ -233,4 +219,4 @@ public interface PortletPersistence extends BasePersistence<Portlet> {
 	public Portlet fetchByPrimaryKey(long id);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:177504523
+// LIFERAY-SERVICE-BUILDER-HASH:-1071630651

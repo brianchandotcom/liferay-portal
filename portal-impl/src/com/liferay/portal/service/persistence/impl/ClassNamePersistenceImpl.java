@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.model.impl.ClassNameModelImpl;
@@ -32,7 +29,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -154,55 +150,6 @@ public class ClassNamePersistenceImpl
 	}
 
 	/**
-	 * Caches the class name in the entity cache if it is enabled.
-	 *
-	 * @param className the class name
-	 */
-	@Override
-	public void cacheResult(ClassName className) {
-		EntityCacheUtil.putResult(
-			ClassNameImpl.class, className.getPrimaryKey(), className);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByValue, new Object[] {className.getValue()},
-			className);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the class names in the entity cache if it is enabled.
-	 *
-	 * @param classNames the class names
-	 */
-	@Override
-	public void cacheResult(List<ClassName> classNames) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (classNames.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ClassName className : classNames) {
-			if (EntityCacheUtil.getResult(
-					ClassNameImpl.class, className.getPrimaryKey()) == null) {
-
-				cacheResult(className);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ClassNameModelImpl classNameModelImpl) {
-
-		Object[] args = new Object[] {classNameModelImpl.getValue()};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByValue, args, classNameModelImpl);
-	}
-
-	/**
 	 * Creates a new class name with the primary key. Does not add the class name to the database.
 	 *
 	 * @param classNameId the primary key for the new class name
@@ -301,10 +248,7 @@ public class ClassNamePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ClassNameImpl.class, classNameModelImpl, false, true);
-
-		cacheUniqueFindersCache(classNameModelImpl);
+		cacheUniqueFindersResult(className, false);
 
 		if (isNew) {
 			className.setNew(false);
@@ -364,13 +308,10 @@ public class ClassNamePersistenceImpl
 	 * Initializes the class name persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByValue = new FinderPath(
+		_finderPathFetchByValue = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
 			new String[] {String.class.getName()}, new String[] {"value"},
-			true);
+			false, ClassName::getValue);
 
 		_uniquePersistenceFinderByValue = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByValue, _SQL_SELECT_CLASSNAME_WHERE,
@@ -408,4 +349,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1419510226
+// LIFERAY-SERVICE-BUILDER-HASH:-90318642

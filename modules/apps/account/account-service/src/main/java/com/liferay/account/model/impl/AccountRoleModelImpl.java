@@ -740,4 +740,4 @@ public class AccountRoleModelImpl
 	private AccountRole _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:480481177
+// LIFERAY-SERVICE-BUILDER-HASH:1584537519

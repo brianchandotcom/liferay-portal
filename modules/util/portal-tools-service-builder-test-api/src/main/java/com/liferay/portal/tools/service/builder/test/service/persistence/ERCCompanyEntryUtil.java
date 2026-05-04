@@ -36,6 +36,20 @@ public class ERCCompanyEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ERCCompanyEntry> ercCompanyEntries) {
+		getPersistence().cacheResult(ercCompanyEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ERCCompanyEntry ercCompanyEntry) {
+		getPersistence().cacheResult(ercCompanyEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -436,24 +450,6 @@ public class ERCCompanyEntryUtil {
 	}
 
 	/**
-	 * Caches the erc company entry in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntry the erc company entry
-	 */
-	public static void cacheResult(ERCCompanyEntry ercCompanyEntry) {
-		getPersistence().cacheResult(ercCompanyEntry);
-	}
-
-	/**
-	 * Caches the erc company entries in the entity cache if it is enabled.
-	 *
-	 * @param ercCompanyEntries the erc company entries
-	 */
-	public static void cacheResult(List<ERCCompanyEntry> ercCompanyEntries) {
-		getPersistence().cacheResult(ercCompanyEntries);
-	}
-
-	/**
 	 * Creates a new erc company entry with the primary key. Does not add the erc company entry to the database.
 	 *
 	 * @param ercCompanyEntryId the primary key for the new erc company entry
@@ -516,4 +512,4 @@ public class ERCCompanyEntryUtil {
 	private static volatile ERCCompanyEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:271309883
+// LIFERAY-SERVICE-BUILDER-HASH:-100031512

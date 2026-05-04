@@ -36,6 +36,20 @@ public class AccountRoleUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AccountRole> accountRoles) {
+		getPersistence().cacheResult(accountRoles);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AccountRole accountRole) {
+		getPersistence().cacheResult(accountRole);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1117,24 +1131,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Caches the account role in the entity cache if it is enabled.
-	 *
-	 * @param accountRole the account role
-	 */
-	public static void cacheResult(AccountRole accountRole) {
-		getPersistence().cacheResult(accountRole);
-	}
-
-	/**
-	 * Caches the account roles in the entity cache if it is enabled.
-	 *
-	 * @param accountRoles the account roles
-	 */
-	public static void cacheResult(List<AccountRole> accountRoles) {
-		getPersistence().cacheResult(accountRoles);
-	}
-
-	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *
 	 * @param accountRoleId the primary key for the new account role
@@ -1195,4 +1191,4 @@ public class AccountRoleUtil {
 	private static volatile AccountRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:26702709
+// LIFERAY-SERVICE-BUILDER-HASH:-1244313401

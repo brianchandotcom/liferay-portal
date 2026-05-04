@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchDSLQueryStatusEntryException;
 import com.liferay.portal.tools.service.builder.test.model.DSLQueryStatusEntry;
@@ -25,7 +22,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.DSLQuer
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,45 +60,6 @@ public class DSLQueryStatusEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(DSLQueryStatusEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the dsl query status entry in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntry the dsl query status entry
-	 */
-	@Override
-	public void cacheResult(DSLQueryStatusEntry dslQueryStatusEntry) {
-		entityCache.putResult(
-			DSLQueryStatusEntryImpl.class, dslQueryStatusEntry.getPrimaryKey(),
-			dslQueryStatusEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the dsl query status entries in the entity cache if it is enabled.
-	 *
-	 * @param dslQueryStatusEntries the dsl query status entries
-	 */
-	@Override
-	public void cacheResult(List<DSLQueryStatusEntry> dslQueryStatusEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (dslQueryStatusEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (DSLQueryStatusEntry dslQueryStatusEntry : dslQueryStatusEntries) {
-			if (entityCache.getResult(
-					DSLQueryStatusEntryImpl.class,
-					dslQueryStatusEntry.getPrimaryKey()) == null) {
-
-				cacheResult(dslQueryStatusEntry);
-			}
-		}
 	}
 
 	/**
@@ -194,8 +151,7 @@ public class DSLQueryStatusEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			DSLQueryStatusEntryImpl.class, dslQueryStatusEntry, false, true);
+		cacheUniqueFindersResult(dslQueryStatusEntry, false);
 
 		if (isNew) {
 			dslQueryStatusEntry.setNew(false);
@@ -255,9 +211,6 @@ public class DSLQueryStatusEntryPersistenceImpl
 	 * Initializes the dsl query status entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		DSLQueryStatusEntryUtil.setPersistence(this);
 	}
 
@@ -288,4 +241,4 @@ public class DSLQueryStatusEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1092776172
+// LIFERAY-SERVICE-BUILDER-HASH:1318852814

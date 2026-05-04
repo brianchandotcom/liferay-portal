@@ -136,21 +136,6 @@ public interface CommerceOrderPaymentPersistence
 	public int countByCommerceOrderId(long commerceOrderId);
 
 	/**
-	 * Caches the commerce order payment in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayment the commerce order payment
-	 */
-	public void cacheResult(CommerceOrderPayment commerceOrderPayment);
-
-	/**
-	 * Caches the commerce order payments in the entity cache if it is enabled.
-	 *
-	 * @param commerceOrderPayments the commerce order payments
-	 */
-	public void cacheResult(
-		java.util.List<CommerceOrderPayment> commerceOrderPayments);
-
-	/**
 	 * Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	 *
 	 * @param commerceOrderPaymentId the primary key for the new commerce order payment
@@ -190,4 +175,4 @@ public interface CommerceOrderPaymentPersistence
 	public CommerceOrderPayment fetchByPrimaryKey(long commerceOrderPaymentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1214842210
+// LIFERAY-SERVICE-BUILDER-HASH:1012822310

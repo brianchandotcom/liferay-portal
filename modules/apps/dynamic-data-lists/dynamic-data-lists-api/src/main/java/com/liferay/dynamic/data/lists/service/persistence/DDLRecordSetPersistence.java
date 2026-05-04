@@ -797,20 +797,6 @@ public interface DDLRecordSetPersistence
 	public int countByG_R(long groupId, String recordSetKey);
 
 	/**
-	 * Caches the ddl record set in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSet the ddl record set
-	 */
-	public void cacheResult(DDLRecordSet ddlRecordSet);
-
-	/**
-	 * Caches the ddl record sets in the entity cache if it is enabled.
-	 *
-	 * @param ddlRecordSets the ddl record sets
-	 */
-	public void cacheResult(java.util.List<DDLRecordSet> ddlRecordSets);
-
-	/**
 	 * Creates a new ddl record set with the primary key. Does not add the ddl record set to the database.
 	 *
 	 * @param recordSetId the primary key for the new ddl record set
@@ -849,4 +835,4 @@ public interface DDLRecordSetPersistence
 	public DDLRecordSet fetchByPrimaryKey(long recordSetId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1411768405
+// LIFERAY-SERVICE-BUILDER-HASH:-539377493

@@ -14,7 +14,6 @@ import com.liferay.change.tracking.sample.service.persistence.CTSParentPersisten
 import com.liferay.change.tracking.sample.service.persistence.CTSParentUtil;
 import com.liferay.change.tracking.sample.service.persistence.impl.constants.CTSPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -30,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -418,53 +414,6 @@ public class CTSParentPersistenceImpl
 	}
 
 	/**
-	 * Caches the cts parent in the entity cache if it is enabled.
-	 *
-	 * @param ctsParent the cts parent
-	 */
-	@Override
-	public void cacheResult(CTSParent ctsParent) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					ctsParent.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CTSParentImpl.class, ctsParent.getPrimaryKey(), ctsParent);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cts parents in the entity cache if it is enabled.
-	 *
-	 * @param ctsParents the cts parents
-	 */
-	@Override
-	public void cacheResult(List<CTSParent> ctsParents) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (ctsParents.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CTSParent ctsParent : ctsParents) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						ctsParent.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CTSParentImpl.class, ctsParent.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(ctsParent);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new cts parent with the primary key. Does not add the cts parent to the database.
 	 *
 	 * @param ctsParentId the primary key for the new cts parent
@@ -572,8 +521,7 @@ public class CTSParentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CTSParentImpl.class, ctsParentModelImpl, false, true);
+		cacheUniqueFindersResult(ctsParent, false);
 
 		if (isNew) {
 			ctsParent.setNew(false);
@@ -690,9 +638,6 @@ public class CTSParentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -822,4 +767,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1773498185
+// LIFERAY-SERVICE-BUILDER-HASH:-406047957

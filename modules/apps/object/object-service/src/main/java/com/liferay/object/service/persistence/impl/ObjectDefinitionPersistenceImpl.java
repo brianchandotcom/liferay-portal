@@ -44,8 +44,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -6551,104 +6549,6 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 	/**
-	 * Caches the object definition in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinition the object definition
-	 */
-	@Override
-	public void cacheResult(ObjectDefinition objectDefinition) {
-		entityCache.putResult(
-			ObjectDefinitionImpl.class, objectDefinition.getPrimaryKey(),
-			objectDefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByClassName,
-			new Object[] {objectDefinition.getClassName()}, objectDefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByC_C,
-			new Object[] {
-				objectDefinition.getCompanyId(), objectDefinition.getClassName()
-			},
-			objectDefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByC_N,
-			new Object[] {
-				objectDefinition.getCompanyId(), objectDefinition.getName()
-			},
-			objectDefinition);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				objectDefinition.getExternalReferenceCode(),
-				objectDefinition.getCompanyId()
-			},
-			objectDefinition);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object definitions in the entity cache if it is enabled.
-	 *
-	 * @param objectDefinitions the object definitions
-	 */
-	@Override
-	public void cacheResult(List<ObjectDefinition> objectDefinitions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectDefinitions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			if (entityCache.getResult(
-					ObjectDefinitionImpl.class,
-					objectDefinition.getPrimaryKey()) == null) {
-
-				cacheResult(objectDefinition);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectDefinitionModelImpl objectDefinitionModelImpl) {
-
-		Object[] args = new Object[] {objectDefinitionModelImpl.getClassName()};
-
-		finderCache.putResult(
-			_finderPathFetchByClassName, args, objectDefinitionModelImpl);
-
-		args = new Object[] {
-			objectDefinitionModelImpl.getCompanyId(),
-			objectDefinitionModelImpl.getClassName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_C, args, objectDefinitionModelImpl);
-
-		args = new Object[] {
-			objectDefinitionModelImpl.getCompanyId(),
-			objectDefinitionModelImpl.getName()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_N, args, objectDefinitionModelImpl);
-
-		args = new Object[] {
-			objectDefinitionModelImpl.getExternalReferenceCode(),
-			objectDefinitionModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args, objectDefinitionModelImpl);
-	}
-
-	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
 	 * @param objectDefinitionId the primary key for the new object definition
@@ -6856,10 +6756,7 @@ public class ObjectDefinitionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectDefinitionImpl.class, objectDefinitionModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectDefinitionModelImpl);
+		cacheUniqueFindersResult(objectDefinition, false);
 
 		if (isNew) {
 			objectDefinition.setNew(false);
@@ -6925,9 +6822,6 @@ public class ObjectDefinitionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -7084,10 +6978,10 @@ public class ObjectDefinitionPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					ObjectDefinition::isAccountEntryRestricted));
 
-		_finderPathFetchByClassName = new FinderPath(
+		_finderPathFetchByClassName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassName",
 			new String[] {String.class.getName()}, new String[] {"className"},
-			true);
+			false, ObjectDefinition::getClassName);
 
 		_uniquePersistenceFinderByClassName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassName,
@@ -7157,10 +7051,11 @@ public class ObjectDefinitionPersistenceImpl
 				"objectDefinition.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectDefinition::getUserId));
 
-		_finderPathFetchByC_C = new FinderPath(
+		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "className"}, true);
+			new String[] {"companyId", "className"}, false,
+			ObjectDefinition::getCompanyId, ObjectDefinition::getClassName);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_OBJECTDEFINITION_WHERE,
@@ -7171,12 +7066,11 @@ public class ObjectDefinitionPersistenceImpl
 				"objectDefinition.", "className", FinderColumn.Type.STRING, "=",
 				true, true, ObjectDefinition::getClassName));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
-
-		_finderPathFetchByC_N.touch();
+			new String[] {"companyId", "name"}, true,
+			ObjectDefinition::getCompanyId, ObjectDefinition::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_OBJECTDEFINITION_WHERE,
@@ -7433,10 +7327,12 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			ObjectDefinition::getExternalReferenceCode,
+			ObjectDefinition::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OBJECTDEFINITION_WHERE,
@@ -7542,4 +7438,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1083426987
+// LIFERAY-SERVICE-BUILDER-HASH:990381970

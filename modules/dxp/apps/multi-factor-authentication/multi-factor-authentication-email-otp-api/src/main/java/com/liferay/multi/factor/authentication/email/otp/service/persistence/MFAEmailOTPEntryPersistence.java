@@ -77,21 +77,6 @@ public interface MFAEmailOTPEntryPersistence
 	public int countByUserId(long userId);
 
 	/**
-	 * Caches the mfa email otp entry in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntry the mfa email otp entry
-	 */
-	public void cacheResult(MFAEmailOTPEntry mfaEmailOTPEntry);
-
-	/**
-	 * Caches the mfa email otp entries in the entity cache if it is enabled.
-	 *
-	 * @param mfaEmailOTPEntries the mfa email otp entries
-	 */
-	public void cacheResult(
-		java.util.List<MFAEmailOTPEntry> mfaEmailOTPEntries);
-
-	/**
 	 * Creates a new mfa email otp entry with the primary key. Does not add the mfa email otp entry to the database.
 	 *
 	 * @param mfaEmailOTPEntryId the primary key for the new mfa email otp entry
@@ -130,4 +115,4 @@ public interface MFAEmailOTPEntryPersistence
 	public MFAEmailOTPEntry fetchByPrimaryKey(long mfaEmailOTPEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1687507806
+// LIFERAY-SERVICE-BUILDER-HASH:1409748558

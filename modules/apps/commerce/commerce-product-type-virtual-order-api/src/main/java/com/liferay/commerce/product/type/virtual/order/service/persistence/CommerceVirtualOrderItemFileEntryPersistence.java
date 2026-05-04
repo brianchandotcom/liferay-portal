@@ -521,23 +521,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public int countByC_F(long commerceVirtualOrderItemId, long fileEntryId);
 
 	/**
-	 * Caches the commerce virtual order item file entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntry the commerce virtual order item file entry
-	 */
-	public void cacheResult(
-		CommerceVirtualOrderItemFileEntry commerceVirtualOrderItemFileEntry);
-
-	/**
-	 * Caches the commerce virtual order item file entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceVirtualOrderItemFileEntries the commerce virtual order item file entries
-	 */
-	public void cacheResult(
-		java.util.List<CommerceVirtualOrderItemFileEntry>
-			commerceVirtualOrderItemFileEntries);
-
-	/**
 	 * Creates a new commerce virtual order item file entry with the primary key. Does not add the commerce virtual order item file entry to the database.
 	 *
 	 * @param commerceVirtualOrderItemFileEntryId the primary key for the new commerce virtual order item file entry
@@ -581,4 +564,4 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 		long commerceVirtualOrderItemFileEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-97941669
+// LIFERAY-SERVICE-BUILDER-HASH:286021941

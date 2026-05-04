@@ -233,21 +233,6 @@ public interface LVEntryLocalizationPersistence
 	public int countByHeadId(long headId);
 
 	/**
-	 * Caches the lv entry localization in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalization the lv entry localization
-	 */
-	public void cacheResult(LVEntryLocalization lvEntryLocalization);
-
-	/**
-	 * Caches the lv entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizations the lv entry localizations
-	 */
-	public void cacheResult(
-		java.util.List<LVEntryLocalization> lvEntryLocalizations);
-
-	/**
 	 * Creates a new lv entry localization with the primary key. Does not add the lv entry localization to the database.
 	 *
 	 * @param lvEntryLocalizationId the primary key for the new lv entry localization
@@ -287,4 +272,4 @@ public interface LVEntryLocalizationPersistence
 	public LVEntryLocalization fetchByPrimaryKey(long lvEntryLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2065306642
+// LIFERAY-SERVICE-BUILDER-HASH:-1353082878

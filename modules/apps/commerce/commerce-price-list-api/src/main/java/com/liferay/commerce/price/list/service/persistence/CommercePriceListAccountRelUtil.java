@@ -36,6 +36,24 @@ public class CommercePriceListAccountRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePriceListAccountRel> commercePriceListAccountRels) {
+
+		getPersistence().cacheResult(commercePriceListAccountRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePriceListAccountRel commercePriceListAccountRel) {
+
+		getPersistence().cacheResult(commercePriceListAccountRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -576,28 +594,6 @@ public class CommercePriceListAccountRelUtil {
 	}
 
 	/**
-	 * Caches the commerce price list account rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListAccountRel the commerce price list account rel
-	 */
-	public static void cacheResult(
-		CommercePriceListAccountRel commercePriceListAccountRel) {
-
-		getPersistence().cacheResult(commercePriceListAccountRel);
-	}
-
-	/**
-	 * Caches the commerce price list account rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePriceListAccountRels the commerce price list account rels
-	 */
-	public static void cacheResult(
-		List<CommercePriceListAccountRel> commercePriceListAccountRels) {
-
-		getPersistence().cacheResult(commercePriceListAccountRels);
-	}
-
-	/**
 	 * Creates a new commerce price list account rel with the primary key. Does not add the commerce price list account rel to the database.
 	 *
 	 * @param commercePriceListAccountRelId the primary key for the new commerce price list account rel
@@ -671,4 +667,4 @@ public class CommercePriceListAccountRelUtil {
 	private static volatile CommercePriceListAccountRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-790304044
+// LIFERAY-SERVICE-BUILDER-HASH:-373157990

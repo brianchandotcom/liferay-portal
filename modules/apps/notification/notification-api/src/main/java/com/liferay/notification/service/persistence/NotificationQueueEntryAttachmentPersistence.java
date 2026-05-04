@@ -141,23 +141,6 @@ public interface NotificationQueueEntryAttachmentPersistence
 	public int countByNotificationQueueEntryId(long notificationQueueEntryId);
 
 	/**
-	 * Caches the notification queue entry attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachment the notification queue entry attachment
-	 */
-	public void cacheResult(
-		NotificationQueueEntryAttachment notificationQueueEntryAttachment);
-
-	/**
-	 * Caches the notification queue entry attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationQueueEntryAttachments the notification queue entry attachments
-	 */
-	public void cacheResult(
-		java.util.List<NotificationQueueEntryAttachment>
-			notificationQueueEntryAttachments);
-
-	/**
 	 * Creates a new notification queue entry attachment with the primary key. Does not add the notification queue entry attachment to the database.
 	 *
 	 * @param notificationQueueEntryAttachmentId the primary key for the new notification queue entry attachment
@@ -201,4 +184,4 @@ public interface NotificationQueueEntryAttachmentPersistence
 		long notificationQueueEntryAttachmentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-710824533
+// LIFERAY-SERVICE-BUILDER-HASH:1608383

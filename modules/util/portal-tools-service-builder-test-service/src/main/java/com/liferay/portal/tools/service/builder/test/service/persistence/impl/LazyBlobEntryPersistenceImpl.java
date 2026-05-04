@@ -16,10 +16,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -319,61 +316,6 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the lazy blob entry in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntry the lazy blob entry
-	 */
-	@Override
-	public void cacheResult(LazyBlobEntry lazyBlobEntry) {
-		entityCache.putResult(
-			LazyBlobEntryImpl.class, lazyBlobEntry.getPrimaryKey(),
-			lazyBlobEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {lazyBlobEntry.getUuid(), lazyBlobEntry.getGroupId()},
-			lazyBlobEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the lazy blob entries in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntries the lazy blob entries
-	 */
-	@Override
-	public void cacheResult(List<LazyBlobEntry> lazyBlobEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (lazyBlobEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LazyBlobEntry lazyBlobEntry : lazyBlobEntries) {
-			if (entityCache.getResult(
-					LazyBlobEntryImpl.class, lazyBlobEntry.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(lazyBlobEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LazyBlobEntryModelImpl lazyBlobEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			lazyBlobEntryModelImpl.getUuid(),
-			lazyBlobEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args, lazyBlobEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new lazy blob entry with the primary key. Does not add the lazy blob entry to the database.
 	 *
 	 * @param lazyBlobEntryId the primary key for the new lazy blob entry
@@ -492,10 +434,7 @@ public class LazyBlobEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LazyBlobEntryImpl.class, lazyBlobEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(lazyBlobEntryModelImpl);
+		cacheUniqueFindersResult(lazyBlobEntry, false);
 
 		if (isNew) {
 			lazyBlobEntry.setNew(false);
@@ -560,9 +499,6 @@ public class LazyBlobEntryPersistenceImpl
 	 * Initializes the lazy blob entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -590,10 +526,11 @@ public class LazyBlobEntryPersistenceImpl
 				"lazyBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LazyBlobEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, LazyBlobEntry::getUuid,
+			LazyBlobEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAZYBLOBENTRY_WHERE,
@@ -646,4 +583,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-133785815
+// LIFERAY-SERVICE-BUILDER-HASH:1898623103

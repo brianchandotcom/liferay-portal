@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1130,95 +1128,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce inventory warehouse item in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseItem the commerce inventory warehouse item
-	 */
-	@Override
-	public void cacheResult(
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem) {
-
-		entityCache.putResult(
-			CommerceInventoryWarehouseItemImpl.class,
-			commerceInventoryWarehouseItem.getPrimaryKey(),
-			commerceInventoryWarehouseItem);
-
-		finderCache.putResult(
-			_finderPathFetchByCIWI_S_U,
-			new Object[] {
-				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItem.getSku(),
-				commerceInventoryWarehouseItem.getUnitOfMeasureKey()
-			},
-			commerceInventoryWarehouseItem);
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C,
-			new Object[] {
-				commerceInventoryWarehouseItem.getExternalReferenceCode(),
-				commerceInventoryWarehouseItem.getCompanyId()
-			},
-			commerceInventoryWarehouseItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce inventory warehouse items in the entity cache if it is enabled.
-	 *
-	 * @param commerceInventoryWarehouseItems the commerce inventory warehouse items
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceInventoryWarehouseItem> commerceInventoryWarehouseItems) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceInventoryWarehouseItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceInventoryWarehouseItem commerceInventoryWarehouseItem :
-				commerceInventoryWarehouseItems) {
-
-			if (entityCache.getResult(
-					CommerceInventoryWarehouseItemImpl.class,
-					commerceInventoryWarehouseItem.getPrimaryKey()) == null) {
-
-				cacheResult(commerceInventoryWarehouseItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceInventoryWarehouseItemModelImpl
-			commerceInventoryWarehouseItemModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceInventoryWarehouseItemModelImpl.
-				getCommerceInventoryWarehouseId(),
-			commerceInventoryWarehouseItemModelImpl.getSku(),
-			commerceInventoryWarehouseItemModelImpl.getUnitOfMeasureKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCIWI_S_U, args,
-			commerceInventoryWarehouseItemModelImpl);
-
-		args = new Object[] {
-			commerceInventoryWarehouseItemModelImpl.getExternalReferenceCode(),
-			commerceInventoryWarehouseItemModelImpl.getCompanyId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByERC_C, args,
-			commerceInventoryWarehouseItemModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce inventory warehouse item with the primary key. Does not add the commerce inventory warehouse item to the database.
 	 *
 	 * @param commerceInventoryWarehouseItemId the primary key for the new commerce inventory warehouse item
@@ -1456,11 +1365,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceInventoryWarehouseItemImpl.class,
-			commerceInventoryWarehouseItemModelImpl, false, true);
-
-		cacheUniqueFindersCache(commerceInventoryWarehouseItemModelImpl);
+		cacheUniqueFindersResult(commerceInventoryWarehouseItem, false);
 
 		if (isNew) {
 			commerceInventoryWarehouseItem.setNew(false);
@@ -1530,9 +1435,6 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1717,7 +1619,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByCIWI_S_U = new FinderPath(
+		_finderPathFetchByCIWI_S_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCIWI_S_U",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -1726,7 +1628,10 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 			new String[] {
 				"commerceInventoryWarehouseId", "sku", "unitOfMeasureKey"
 			},
-			true);
+			false,
+			CommerceInventoryWarehouseItem::getCommerceInventoryWarehouseId,
+			CommerceInventoryWarehouseItem::getSku,
+			CommerceInventoryWarehouseItem::getUnitOfMeasureKey);
 
 		_uniquePersistenceFinderByCIWI_S_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCIWI_S_U,
@@ -1746,10 +1651,12 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouseItem::getUnitOfMeasureKey));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CommerceInventoryWarehouseItem::getExternalReferenceCode,
+			CommerceInventoryWarehouseItem::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -1835,4 +1742,4 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:717208288
+// LIFERAY-SERVICE-BUILDER-HASH:533217139

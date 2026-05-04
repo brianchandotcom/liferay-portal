@@ -37,6 +37,20 @@ public class AssetEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<AssetEntry> assetEntries) {
+		getPersistence().cacheResult(assetEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(AssetEntry assetEntry) {
+		getPersistence().cacheResult(assetEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1530,24 +1544,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	 * Caches the asset entry in the entity cache if it is enabled.
-	 *
-	 * @param assetEntry the asset entry
-	 */
-	public static void cacheResult(AssetEntry assetEntry) {
-		getPersistence().cacheResult(assetEntry);
-	}
-
-	/**
-	 * Caches the asset entries in the entity cache if it is enabled.
-	 *
-	 * @param assetEntries the asset entries
-	 */
-	public static void cacheResult(List<AssetEntry> assetEntries) {
-		getPersistence().cacheResult(assetEntries);
-	}
-
-	/**
 	 * Creates a new asset entry with the primary key. Does not add the asset entry to the database.
 	 *
 	 * @param entryId the primary key for the new asset entry
@@ -1823,4 +1819,4 @@ public class AssetEntryUtil {
 	private static volatile AssetEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1938655618
+// LIFERAY-SERVICE-BUILDER-HASH:1832007953

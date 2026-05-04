@@ -499,20 +499,6 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	public int filterCountByC_T(long ctCollectionId, int type);
 
 	/**
-	 * Caches the ct process in the entity cache if it is enabled.
-	 *
-	 * @param ctProcess the ct process
-	 */
-	public void cacheResult(CTProcess ctProcess);
-
-	/**
-	 * Caches the ct processes in the entity cache if it is enabled.
-	 *
-	 * @param ctProcesses the ct processes
-	 */
-	public void cacheResult(java.util.List<CTProcess> ctProcesses);
-
-	/**
 	 * Creates a new ct process with the primary key. Does not add the ct process to the database.
 	 *
 	 * @param ctProcessId the primary key for the new ct process
@@ -550,4 +536,4 @@ public interface CTProcessPersistence extends BasePersistence<CTProcess> {
 	public CTProcess fetchByPrimaryKey(long ctProcessId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:373315002
+// LIFERAY-SERVICE-BUILDER-HASH:-1709806184

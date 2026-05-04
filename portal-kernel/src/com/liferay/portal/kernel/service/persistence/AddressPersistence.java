@@ -1530,20 +1530,6 @@ public interface AddressPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the address in the entity cache if it is enabled.
-	 *
-	 * @param address the address
-	 */
-	public void cacheResult(Address address);
-
-	/**
-	 * Caches the addresses in the entity cache if it is enabled.
-	 *
-	 * @param addresses the addresses
-	 */
-	public void cacheResult(java.util.List<Address> addresses);
-
-	/**
 	 * Creates a new address with the primary key. Does not add the address to the database.
 	 *
 	 * @param addressId the primary key for the new address
@@ -1581,4 +1567,4 @@ public interface AddressPersistence
 	public Address fetchByPrimaryKey(long addressId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:823857792
+// LIFERAY-SERVICE-BUILDER-HASH:-470957858

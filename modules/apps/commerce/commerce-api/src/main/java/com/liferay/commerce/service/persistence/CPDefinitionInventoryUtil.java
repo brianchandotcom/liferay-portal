@@ -36,6 +36,24 @@ public class CPDefinitionInventoryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionInventory> cpDefinitionInventories) {
+
+		getPersistence().cacheResult(cpDefinitionInventories);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionInventory cpDefinitionInventory) {
+
+		getPersistence().cacheResult(cpDefinitionInventory);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -502,28 +520,6 @@ public class CPDefinitionInventoryUtil {
 	}
 
 	/**
-	 * Caches the cp definition inventory in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventory the cp definition inventory
-	 */
-	public static void cacheResult(
-		CPDefinitionInventory cpDefinitionInventory) {
-
-		getPersistence().cacheResult(cpDefinitionInventory);
-	}
-
-	/**
-	 * Caches the cp definition inventories in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionInventories the cp definition inventories
-	 */
-	public static void cacheResult(
-		List<CPDefinitionInventory> cpDefinitionInventories) {
-
-		getPersistence().cacheResult(cpDefinitionInventories);
-	}
-
-	/**
 	 * Creates a new cp definition inventory with the primary key. Does not add the cp definition inventory to the database.
 	 *
 	 * @param CPDefinitionInventoryId the primary key for the new cp definition inventory
@@ -593,4 +589,4 @@ public class CPDefinitionInventoryUtil {
 	private static volatile CPDefinitionInventoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:584019057
+// LIFERAY-SERVICE-BUILDER-HASH:2055084270

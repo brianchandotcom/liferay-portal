@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -498,69 +495,6 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce shipping method in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethod the commerce shipping method
-	 */
-	@Override
-	public void cacheResult(CommerceShippingMethod commerceShippingMethod) {
-		entityCache.putResult(
-			CommerceShippingMethodImpl.class,
-			commerceShippingMethod.getPrimaryKey(), commerceShippingMethod);
-
-		finderCache.putResult(
-			_finderPathFetchByG_E,
-			new Object[] {
-				commerceShippingMethod.getGroupId(),
-				commerceShippingMethod.getEngineKey()
-			},
-			commerceShippingMethod);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce shipping methods in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingMethods the commerce shipping methods
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceShippingMethod> commerceShippingMethods) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceShippingMethods.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceShippingMethod commerceShippingMethod :
-				commerceShippingMethods) {
-
-			if (entityCache.getResult(
-					CommerceShippingMethodImpl.class,
-					commerceShippingMethod.getPrimaryKey()) == null) {
-
-				cacheResult(commerceShippingMethod);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CommerceShippingMethodModelImpl commerceShippingMethodModelImpl) {
-
-		Object[] args = new Object[] {
-			commerceShippingMethodModelImpl.getGroupId(),
-			commerceShippingMethodModelImpl.getEngineKey()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_E, args, commerceShippingMethodModelImpl);
-	}
-
-	/**
 	 * Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
 	 *
 	 * @param commerceShippingMethodId the primary key for the new commerce shipping method
@@ -699,11 +633,7 @@ public class CommerceShippingMethodPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceShippingMethodImpl.class, commerceShippingMethodModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(commerceShippingMethodModelImpl);
+		cacheUniqueFindersResult(commerceShippingMethod, false);
 
 		if (isNew) {
 			commerceShippingMethod.setNew(false);
@@ -772,9 +702,6 @@ public class CommerceShippingMethodPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -839,10 +766,12 @@ public class CommerceShippingMethodPersistenceImpl
 				"commerceShippingMethod.", "active", FinderColumn.Type.BOOLEAN,
 				"=", true, true, CommerceShippingMethod::isActive));
 
-		_finderPathFetchByG_E = new FinderPath(
+		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, true);
+			new String[] {"groupId", "engineKey"}, false,
+			CommerceShippingMethod::getGroupId,
+			CommerceShippingMethod::getEngineKey);
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_E,
@@ -924,4 +853,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1139995620
+// LIFERAY-SERVICE-BUILDER-HASH:-566872100

@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1098,53 +1095,6 @@ public class LockPersistenceImpl
 	}
 
 	/**
-	 * Caches the lock in the entity cache if it is enabled.
-	 *
-	 * @param lock the lock
-	 */
-	@Override
-	public void cacheResult(Lock lock) {
-		entityCache.putResult(LockImpl.class, lock.getPrimaryKey(), lock);
-
-		finderCache.putResult(
-			_finderPathFetchByC_K,
-			new Object[] {lock.getClassName(), lock.getKey()}, lock);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the locks in the entity cache if it is enabled.
-	 *
-	 * @param locks the locks
-	 */
-	@Override
-	public void cacheResult(List<Lock> locks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (locks.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Lock lock : locks) {
-			if (entityCache.getResult(LockImpl.class, lock.getPrimaryKey()) ==
-					null) {
-
-				cacheResult(lock);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(LockModelImpl lockModelImpl) {
-		Object[] args = new Object[] {
-			lockModelImpl.getClassName(), lockModelImpl.getKey()
-		};
-
-		finderCache.putResult(_finderPathFetchByC_K, args, lockModelImpl);
-	}
-
-	/**
 	 * Creates a new lock with the primary key. Does not add the lock to the database.
 	 *
 	 * @param lockId the primary key for the new lock
@@ -1269,9 +1219,7 @@ public class LockPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(LockImpl.class, lockModelImpl, false, true);
-
-		cacheUniqueFindersCache(lockModelImpl);
+		cacheUniqueFindersResult(lock, false);
 
 		if (isNew) {
 			lock.setNew(false);
@@ -1335,9 +1283,6 @@ public class LockPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1481,10 +1426,11 @@ public class LockPersistenceImpl
 				"lock_.", "className", FinderColumn.Type.STRING, "=", true,
 				true, Lock::getClassName));
 
-		_finderPathFetchByC_K = new FinderPath(
+		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"className", "key_"}, true);
+			new String[] {"className", "key_"}, false, Lock::getClassName,
+			Lock::getKey);
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K, _SQL_SELECT_LOCK__WHERE,
@@ -1604,4 +1550,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1188489744
+// LIFERAY-SERVICE-BUILDER-HASH:-783711251

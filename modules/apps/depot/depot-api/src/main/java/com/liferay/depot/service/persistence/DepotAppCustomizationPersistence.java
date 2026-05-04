@@ -240,21 +240,6 @@ public interface DepotAppCustomizationPersistence
 	public int countByD_P(long depotEntryId, String portletId);
 
 	/**
-	 * Caches the depot app customization in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomization the depot app customization
-	 */
-	public void cacheResult(DepotAppCustomization depotAppCustomization);
-
-	/**
-	 * Caches the depot app customizations in the entity cache if it is enabled.
-	 *
-	 * @param depotAppCustomizations the depot app customizations
-	 */
-	public void cacheResult(
-		java.util.List<DepotAppCustomization> depotAppCustomizations);
-
-	/**
 	 * Creates a new depot app customization with the primary key. Does not add the depot app customization to the database.
 	 *
 	 * @param depotAppCustomizationId the primary key for the new depot app customization
@@ -295,4 +280,4 @@ public interface DepotAppCustomizationPersistence
 		long depotAppCustomizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1609706693
+// LIFERAY-SERVICE-BUILDER-HASH:-1576235329

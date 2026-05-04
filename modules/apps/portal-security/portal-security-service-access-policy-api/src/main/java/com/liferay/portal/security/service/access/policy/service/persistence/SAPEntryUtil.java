@@ -36,6 +36,20 @@ public class SAPEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SAPEntry> sapEntries) {
+		getPersistence().cacheResult(sapEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SAPEntry sapEntry) {
+		getPersistence().cacheResult(sapEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -930,24 +944,6 @@ public class SAPEntryUtil {
 	}
 
 	/**
-	 * Caches the sap entry in the entity cache if it is enabled.
-	 *
-	 * @param sapEntry the sap entry
-	 */
-	public static void cacheResult(SAPEntry sapEntry) {
-		getPersistence().cacheResult(sapEntry);
-	}
-
-	/**
-	 * Caches the sap entries in the entity cache if it is enabled.
-	 *
-	 * @param sapEntries the sap entries
-	 */
-	public static void cacheResult(List<SAPEntry> sapEntries) {
-		getPersistence().cacheResult(sapEntries);
-	}
-
-	/**
 	 * Creates a new sap entry with the primary key. Does not add the sap entry to the database.
 	 *
 	 * @param sapEntryId the primary key for the new sap entry
@@ -1010,4 +1006,4 @@ public class SAPEntryUtil {
 	private static volatile SAPEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2108705417
+// LIFERAY-SERVICE-BUILDER-HASH:498044902

@@ -36,6 +36,20 @@ public class ViewCountEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<ViewCountEntry> viewCountEntries) {
+		getPersistence().cacheResult(viewCountEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(ViewCountEntry viewCountEntry) {
+		getPersistence().cacheResult(viewCountEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -245,24 +259,6 @@ public class ViewCountEntryUtil {
 	}
 
 	/**
-	 * Caches the view count entry in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntry the view count entry
-	 */
-	public static void cacheResult(ViewCountEntry viewCountEntry) {
-		getPersistence().cacheResult(viewCountEntry);
-	}
-
-	/**
-	 * Caches the view count entries in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntries the view count entries
-	 */
-	public static void cacheResult(List<ViewCountEntry> viewCountEntries) {
-		getPersistence().cacheResult(viewCountEntries);
-	}
-
-	/**
 	 * Creates a new view count entry with the primary key. Does not add the view count entry to the database.
 	 *
 	 * @param viewCountEntryPK the primary key for the new view count entry
@@ -330,4 +326,4 @@ public class ViewCountEntryUtil {
 	private static volatile ViewCountEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-511679346
+// LIFERAY-SERVICE-BUILDER-HASH:-1508436015

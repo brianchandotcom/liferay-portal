@@ -1124,20 +1124,6 @@ public interface CPDisplayLayoutPersistence
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
 
 	/**
-	 * Caches the cp display layout in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayout the cp display layout
-	 */
-	public void cacheResult(CPDisplayLayout cpDisplayLayout);
-
-	/**
-	 * Caches the cp display layouts in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayouts the cp display layouts
-	 */
-	public void cacheResult(java.util.List<CPDisplayLayout> cpDisplayLayouts);
-
-	/**
 	 * Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	 *
 	 * @param CPDisplayLayoutId the primary key for the new cp display layout
@@ -1176,4 +1162,4 @@ public interface CPDisplayLayoutPersistence
 	public CPDisplayLayout fetchByPrimaryKey(long CPDisplayLayoutId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:821035689
+// LIFERAY-SERVICE-BUILDER-HASH:-1083686175

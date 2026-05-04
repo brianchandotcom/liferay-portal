@@ -6,7 +6,6 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.social.model.impl.SocialActivityImpl;
@@ -2080,102 +2076,6 @@ public class SocialActivityPersistenceImpl
 	}
 
 	/**
-	 * Caches the social activity in the entity cache if it is enabled.
-	 *
-	 * @param socialActivity the social activity
-	 */
-	@Override
-	public void cacheResult(SocialActivity socialActivity) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivity.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				SocialActivityImpl.class, socialActivity.getPrimaryKey(),
-				socialActivity);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByMirrorActivityId,
-				new Object[] {socialActivity.getMirrorActivityId()},
-				socialActivity);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_CD_C_C_T_R,
-				new Object[] {
-					socialActivity.getGroupId(), socialActivity.getUserId(),
-					socialActivity.getCreateDate(),
-					socialActivity.getClassNameId(),
-					socialActivity.getClassPK(), socialActivity.getType(),
-					socialActivity.getReceiverUserId()
-				},
-				socialActivity);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the social activities in the entity cache if it is enabled.
-	 *
-	 * @param socialActivities the social activities
-	 */
-	@Override
-	public void cacheResult(List<SocialActivity> socialActivities) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (socialActivities.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SocialActivity socialActivity : socialActivities) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						socialActivity.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						SocialActivityImpl.class,
-						socialActivity.getPrimaryKey()) == null) {
-
-					cacheResult(socialActivity);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SocialActivityModelImpl socialActivityModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					socialActivityModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				socialActivityModelImpl.getMirrorActivityId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByMirrorActivityId, args,
-				socialActivityModelImpl);
-
-			args = new Object[] {
-				socialActivityModelImpl.getGroupId(),
-				socialActivityModelImpl.getUserId(),
-				socialActivityModelImpl.getCreateDate(),
-				socialActivityModelImpl.getClassNameId(),
-				socialActivityModelImpl.getClassPK(),
-				socialActivityModelImpl.getType(),
-				socialActivityModelImpl.getReceiverUserId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByG_U_CD_C_C_T_R, args,
-				socialActivityModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new social activity with the primary key. Does not add the social activity to the database.
 	 *
 	 * @param activityId the primary key for the new social activity
@@ -2289,10 +2189,7 @@ public class SocialActivityPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			SocialActivityImpl.class, socialActivityModelImpl, false, true);
-
-		cacheUniqueFindersCache(socialActivityModelImpl);
+		cacheUniqueFindersResult(socialActivity, false);
 
 		if (isNew) {
 			socialActivity.setNew(false);
@@ -2429,9 +2326,6 @@ public class SocialActivityPersistenceImpl
 	 * Initializes the social activity persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -2548,10 +2442,11 @@ public class SocialActivityPersistenceImpl
 					"socialActivity.", "activitySetId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getActivitySetId));
 
-		_finderPathFetchByMirrorActivityId = new FinderPath(
+		_finderPathFetchByMirrorActivityId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByMirrorActivityId",
 			new String[] {Long.class.getName()},
-			new String[] {"mirrorActivityId"}, true);
+			new String[] {"mirrorActivityId"}, false,
+			SocialActivity::getMirrorActivityId);
 
 		_uniquePersistenceFinderByMirrorActivityId =
 			new UniquePersistenceFinder<>(
@@ -2799,7 +2694,7 @@ public class SocialActivityPersistenceImpl
 					"socialActivity.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivity::getReceiverUserId));
 
-		_finderPathFetchByG_U_CD_C_C_T_R = new FinderPath(
+		_finderPathFetchByG_U_CD_C_C_T_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U_CD_C_C_T_R",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -2811,7 +2706,10 @@ public class SocialActivityPersistenceImpl
 				"groupId", "userId", "createDate", "classNameId", "classPK",
 				"type_", "receiverUserId"
 			},
-			true);
+			false, SocialActivity::getGroupId, SocialActivity::getUserId,
+			SocialActivity::getCreateDate, SocialActivity::getClassNameId,
+			SocialActivity::getClassPK, SocialActivity::getType,
+			SocialActivity::getReceiverUserId);
 
 		_uniquePersistenceFinderByG_U_CD_C_C_T_R =
 			new UniquePersistenceFinder<>(
@@ -2875,4 +2773,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1046331320
+// LIFERAY-SERVICE-BUILDER-HASH:1264910332

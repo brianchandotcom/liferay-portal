@@ -505,20 +505,6 @@ public interface ObjectFolderItemPersistence
 	public int countByODI_OFI(long objectDefinitionId, long objectFolderId);
 
 	/**
-	 * Caches the object folder item in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItem the object folder item
-	 */
-	public void cacheResult(ObjectFolderItem objectFolderItem);
-
-	/**
-	 * Caches the object folder items in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItems the object folder items
-	 */
-	public void cacheResult(java.util.List<ObjectFolderItem> objectFolderItems);
-
-	/**
 	 * Creates a new object folder item with the primary key. Does not add the object folder item to the database.
 	 *
 	 * @param objectFolderItemId the primary key for the new object folder item
@@ -557,4 +543,4 @@ public interface ObjectFolderItemPersistence
 	public ObjectFolderItem fetchByPrimaryKey(long objectFolderItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:420091890
+// LIFERAY-SERVICE-BUILDER-HASH:-434176540

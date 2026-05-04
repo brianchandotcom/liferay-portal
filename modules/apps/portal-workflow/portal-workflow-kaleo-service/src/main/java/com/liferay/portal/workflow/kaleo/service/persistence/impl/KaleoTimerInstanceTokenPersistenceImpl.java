@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTimerInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
@@ -729,86 +725,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo timer instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceToken the kaleo timer instance token
-	 */
-	@Override
-	public void cacheResult(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTimerInstanceToken.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoTimerInstanceTokenImpl.class,
-				kaleoTimerInstanceToken.getPrimaryKey(),
-				kaleoTimerInstanceToken);
-
-			finderCache.putResult(
-				_finderPathFetchByKITI_KTI,
-				new Object[] {
-					kaleoTimerInstanceToken.getKaleoInstanceTokenId(),
-					kaleoTimerInstanceToken.getKaleoTimerId()
-				},
-				kaleoTimerInstanceToken);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo timer instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTimerInstanceTokens the kaleo timer instance tokens
-	 */
-	@Override
-	public void cacheResult(
-		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoTimerInstanceTokens.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoTimerInstanceToken kaleoTimerInstanceToken :
-				kaleoTimerInstanceTokens) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoTimerInstanceToken.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoTimerInstanceTokenImpl.class,
-						kaleoTimerInstanceToken.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoTimerInstanceToken);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTimerInstanceTokenModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
-				kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByKITI_KTI, args,
-				kaleoTimerInstanceTokenModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo timer instance token with the primary key. Does not add the kaleo timer instance token to the database.
 	 *
 	 * @param kaleoTimerInstanceTokenId the primary key for the new kaleo timer instance token
@@ -956,11 +872,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoTimerInstanceTokenImpl.class, kaleoTimerInstanceTokenModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(kaleoTimerInstanceTokenModelImpl);
+		cacheUniqueFindersResult(kaleoTimerInstanceToken, false);
 
 		if (isNew) {
 			kaleoTimerInstanceToken.setNew(false);
@@ -1101,9 +1013,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByKaleoInstanceId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoInstanceId",
 			new String[] {
@@ -1136,10 +1045,12 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTimerInstanceToken::getKaleoInstanceId));
 
-		_finderPathFetchByKITI_KTI = new FinderPath(
+		_finderPathFetchByKITI_KTI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKITI_KTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"kaleoInstanceTokenId", "kaleoTimerId"}, true);
+			new String[] {"kaleoInstanceTokenId", "kaleoTimerId"}, false,
+			KaleoTimerInstanceToken::getKaleoInstanceTokenId,
+			KaleoTimerInstanceToken::getKaleoTimerId);
 
 		_uniquePersistenceFinderByKITI_KTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKITI_KTI,
@@ -1309,4 +1220,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1848232270
+// LIFERAY-SERVICE-BUILDER-HASH:-1193737332

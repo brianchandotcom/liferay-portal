@@ -36,6 +36,22 @@ public class CommerceTaxFixedRateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceTaxFixedRate> commerceTaxFixedRates) {
+
+		getPersistence().cacheResult(commerceTaxFixedRates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceTaxFixedRate commerceTaxFixedRate) {
+		getPersistence().cacheResult(commerceTaxFixedRate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -444,26 +460,6 @@ public class CommerceTaxFixedRateUtil {
 	}
 
 	/**
-	 * Caches the commerce tax fixed rate in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRate the commerce tax fixed rate
-	 */
-	public static void cacheResult(CommerceTaxFixedRate commerceTaxFixedRate) {
-		getPersistence().cacheResult(commerceTaxFixedRate);
-	}
-
-	/**
-	 * Caches the commerce tax fixed rates in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxFixedRates the commerce tax fixed rates
-	 */
-	public static void cacheResult(
-		List<CommerceTaxFixedRate> commerceTaxFixedRates) {
-
-		getPersistence().cacheResult(commerceTaxFixedRates);
-	}
-
-	/**
 	 * Creates a new commerce tax fixed rate with the primary key. Does not add the commerce tax fixed rate to the database.
 	 *
 	 * @param commerceTaxFixedRateId the primary key for the new commerce tax fixed rate
@@ -533,4 +529,4 @@ public class CommerceTaxFixedRateUtil {
 	private static volatile CommerceTaxFixedRatePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1646996399
+// LIFERAY-SERVICE-BUILDER-HASH:699665053

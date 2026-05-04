@@ -1797,4 +1797,4 @@ public class PasswordPolicyModelImpl
 	private PasswordPolicy _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1181217515
+// LIFERAY-SERVICE-BUILDER-HASH:1866654999

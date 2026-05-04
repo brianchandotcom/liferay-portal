@@ -36,6 +36,22 @@ public class CTAutoResolutionInfoUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CTAutoResolutionInfo> ctAutoResolutionInfos) {
+
+		getPersistence().cacheResult(ctAutoResolutionInfos);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTAutoResolutionInfo ctAutoResolutionInfo) {
+		getPersistence().cacheResult(ctAutoResolutionInfo);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -508,26 +524,6 @@ public class CTAutoResolutionInfoUtil {
 	}
 
 	/**
-	 * Caches the ct auto resolution info in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfo the ct auto resolution info
-	 */
-	public static void cacheResult(CTAutoResolutionInfo ctAutoResolutionInfo) {
-		getPersistence().cacheResult(ctAutoResolutionInfo);
-	}
-
-	/**
-	 * Caches the ct auto resolution infos in the entity cache if it is enabled.
-	 *
-	 * @param ctAutoResolutionInfos the ct auto resolution infos
-	 */
-	public static void cacheResult(
-		List<CTAutoResolutionInfo> ctAutoResolutionInfos) {
-
-		getPersistence().cacheResult(ctAutoResolutionInfos);
-	}
-
-	/**
 	 * Creates a new ct auto resolution info with the primary key. Does not add the ct auto resolution info to the database.
 	 *
 	 * @param ctAutoResolutionInfoId the primary key for the new ct auto resolution info
@@ -597,4 +593,4 @@ public class CTAutoResolutionInfoUtil {
 	private static volatile CTAutoResolutionInfoPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1605944399
+// LIFERAY-SERVICE-BUILDER-HASH:-1970007885

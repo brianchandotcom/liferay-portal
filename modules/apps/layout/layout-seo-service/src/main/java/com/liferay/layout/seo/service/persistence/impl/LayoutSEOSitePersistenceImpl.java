@@ -14,7 +14,6 @@ import com.liferay.layout.seo.service.persistence.LayoutSEOSitePersistence;
 import com.liferay.layout.seo.service.persistence.LayoutSEOSiteUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -611,87 +607,6 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 	/**
-	 * Caches the layout seo site in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSite the layout seo site
-	 */
-	@Override
-	public void cacheResult(LayoutSEOSite layoutSEOSite) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutSEOSite.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutSEOSiteImpl.class, layoutSEOSite.getPrimaryKey(),
-				layoutSEOSite);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutSEOSite.getUuid(), layoutSEOSite.getGroupId()
-				},
-				layoutSEOSite);
-
-			finderCache.putResult(
-				_finderPathFetchByGroupId,
-				new Object[] {layoutSEOSite.getGroupId()}, layoutSEOSite);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout seo sites in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOSites the layout seo sites
-	 */
-	@Override
-	public void cacheResult(List<LayoutSEOSite> layoutSEOSites) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutSEOSites.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutSEOSite layoutSEOSite : layoutSEOSites) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutSEOSite.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutSEOSiteImpl.class,
-						layoutSEOSite.getPrimaryKey()) == null) {
-
-					cacheResult(layoutSEOSite);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutSEOSiteModelImpl layoutSEOSiteModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutSEOSiteModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutSEOSiteModelImpl.getUuid(),
-				layoutSEOSiteModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, layoutSEOSiteModelImpl);
-
-			args = new Object[] {layoutSEOSiteModelImpl.getGroupId()};
-
-			finderCache.putResult(
-				_finderPathFetchByGroupId, args, layoutSEOSiteModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout seo site with the primary key. Does not add the layout seo site to the database.
 	 *
 	 * @param layoutSEOSiteId the primary key for the new layout seo site
@@ -838,10 +753,7 @@ public class LayoutSEOSitePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutSEOSiteImpl.class, layoutSEOSiteModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutSEOSiteModelImpl);
+		cacheUniqueFindersResult(layoutSEOSite, false);
 
 		if (isNew) {
 			layoutSEOSite.setNew(false);
@@ -978,9 +890,6 @@ public class LayoutSEOSitePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1008,10 +917,11 @@ public class LayoutSEOSitePersistenceImpl
 				"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSEOSite::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, LayoutSEOSite::getUuid,
+			LayoutSEOSite::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
@@ -1055,10 +965,10 @@ public class LayoutSEOSitePersistenceImpl
 					"layoutSEOSite.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSEOSite::getCompanyId));
 
-		_finderPathFetchByGroupId = new FinderPath(
+		_finderPathFetchByGroupId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
+			false, LayoutSEOSite::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByGroupId, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
@@ -1138,4 +1048,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1214429062
+// LIFERAY-SERVICE-BUILDER-HASH:-2085384229

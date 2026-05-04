@@ -36,6 +36,24 @@ public class CommercePaymentMethodGroupRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels) {
+
+		getPersistence().cacheResult(commercePaymentMethodGroupRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
+
+		getPersistence().cacheResult(commercePaymentMethodGroupRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -572,28 +590,6 @@ public class CommercePaymentMethodGroupRelUtil {
 	}
 
 	/**
-	 * Caches the commerce payment method group rel in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRel the commerce payment method group rel
-	 */
-	public static void cacheResult(
-		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel) {
-
-		getPersistence().cacheResult(commercePaymentMethodGroupRel);
-	}
-
-	/**
-	 * Caches the commerce payment method group rels in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentMethodGroupRels the commerce payment method group rels
-	 */
-	public static void cacheResult(
-		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels) {
-
-		getPersistence().cacheResult(commercePaymentMethodGroupRels);
-	}
-
-	/**
 	 * Creates a new commerce payment method group rel with the primary key. Does not add the commerce payment method group rel to the database.
 	 *
 	 * @param commercePaymentMethodGroupRelId the primary key for the new commerce payment method group rel
@@ -669,4 +665,4 @@ public class CommercePaymentMethodGroupRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-496696788
+// LIFERAY-SERVICE-BUILDER-HASH:-1869806868

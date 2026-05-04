@@ -36,6 +36,20 @@ public class CPOptionCategoryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPOptionCategory> cpOptionCategories) {
+		getPersistence().cacheResult(cpOptionCategories);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPOptionCategory cpOptionCategory) {
+		getPersistence().cacheResult(cpOptionCategory);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -807,24 +821,6 @@ public class CPOptionCategoryUtil {
 	}
 
 	/**
-	 * Caches the cp option category in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategory the cp option category
-	 */
-	public static void cacheResult(CPOptionCategory cpOptionCategory) {
-		getPersistence().cacheResult(cpOptionCategory);
-	}
-
-	/**
-	 * Caches the cp option categories in the entity cache if it is enabled.
-	 *
-	 * @param cpOptionCategories the cp option categories
-	 */
-	public static void cacheResult(List<CPOptionCategory> cpOptionCategories) {
-		getPersistence().cacheResult(cpOptionCategories);
-	}
-
-	/**
 	 * Creates a new cp option category with the primary key. Does not add the cp option category to the database.
 	 *
 	 * @param CPOptionCategoryId the primary key for the new cp option category
@@ -889,4 +885,4 @@ public class CPOptionCategoryUtil {
 	private static volatile CPOptionCategoryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1846632174
+// LIFERAY-SERVICE-BUILDER-HASH:-1934940959

@@ -769,21 +769,6 @@ public interface OAuth2ApplicationPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the o auth2 application in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Application the o auth2 application
-	 */
-	public void cacheResult(OAuth2Application oAuth2Application);
-
-	/**
-	 * Caches the o auth2 applications in the entity cache if it is enabled.
-	 *
-	 * @param oAuth2Applications the o auth2 applications
-	 */
-	public void cacheResult(
-		java.util.List<OAuth2Application> oAuth2Applications);
-
-	/**
 	 * Creates a new o auth2 application with the primary key. Does not add the o auth2 application to the database.
 	 *
 	 * @param oAuth2ApplicationId the primary key for the new o auth2 application
@@ -822,4 +807,4 @@ public interface OAuth2ApplicationPersistence
 	public OAuth2Application fetchByPrimaryKey(long oAuth2ApplicationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1168250990
+// LIFERAY-SERVICE-BUILDER-HASH:324808232

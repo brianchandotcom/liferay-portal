@@ -36,6 +36,22 @@ public class SamlIdpSpConnectionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SamlIdpSpConnection> samlIdpSpConnections) {
+
+		getPersistence().cacheResult(samlIdpSpConnections);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SamlIdpSpConnection samlIdpSpConnection) {
+		getPersistence().cacheResult(samlIdpSpConnection);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -308,26 +324,6 @@ public class SamlIdpSpConnectionUtil {
 	}
 
 	/**
-	 * Caches the saml idp sp connection in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSpConnection the saml idp sp connection
-	 */
-	public static void cacheResult(SamlIdpSpConnection samlIdpSpConnection) {
-		getPersistence().cacheResult(samlIdpSpConnection);
-	}
-
-	/**
-	 * Caches the saml idp sp connections in the entity cache if it is enabled.
-	 *
-	 * @param samlIdpSpConnections the saml idp sp connections
-	 */
-	public static void cacheResult(
-		List<SamlIdpSpConnection> samlIdpSpConnections) {
-
-		getPersistence().cacheResult(samlIdpSpConnections);
-	}
-
-	/**
 	 * Creates a new saml idp sp connection with the primary key. Does not add the saml idp sp connection to the database.
 	 *
 	 * @param samlIdpSpConnectionId the primary key for the new saml idp sp connection
@@ -397,4 +393,4 @@ public class SamlIdpSpConnectionUtil {
 	private static volatile SamlIdpSpConnectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1522475768
+// LIFERAY-SERVICE-BUILDER-HASH:381641292

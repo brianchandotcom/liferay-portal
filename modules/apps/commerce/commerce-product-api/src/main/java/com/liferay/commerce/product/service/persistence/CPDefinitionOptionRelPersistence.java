@@ -1033,21 +1033,6 @@ public interface CPDefinitionOptionRelPersistence
 	public int countByC_K(long CPDefinitionId, String key);
 
 	/**
-	 * Caches the cp definition option rel in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionOptionRel the cp definition option rel
-	 */
-	public void cacheResult(CPDefinitionOptionRel cpDefinitionOptionRel);
-
-	/**
-	 * Caches the cp definition option rels in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionOptionRels the cp definition option rels
-	 */
-	public void cacheResult(
-		java.util.List<CPDefinitionOptionRel> cpDefinitionOptionRels);
-
-	/**
 	 * Creates a new cp definition option rel with the primary key. Does not add the cp definition option rel to the database.
 	 *
 	 * @param CPDefinitionOptionRelId the primary key for the new cp definition option rel
@@ -1088,4 +1073,4 @@ public interface CPDefinitionOptionRelPersistence
 		long CPDefinitionOptionRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:492117342
+// LIFERAY-SERVICE-BUILDER-HASH:-204933690

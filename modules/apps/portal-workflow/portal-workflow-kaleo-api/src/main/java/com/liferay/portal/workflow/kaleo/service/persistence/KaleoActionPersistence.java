@@ -735,20 +735,6 @@ public interface KaleoActionPersistence
 		String executionType);
 
 	/**
-	 * Caches the kaleo action in the entity cache if it is enabled.
-	 *
-	 * @param kaleoAction the kaleo action
-	 */
-	public void cacheResult(KaleoAction kaleoAction);
-
-	/**
-	 * Caches the kaleo actions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoActions the kaleo actions
-	 */
-	public void cacheResult(java.util.List<KaleoAction> kaleoActions);
-
-	/**
 	 * Creates a new kaleo action with the primary key. Does not add the kaleo action to the database.
 	 *
 	 * @param kaleoActionId the primary key for the new kaleo action
@@ -786,4 +772,4 @@ public interface KaleoActionPersistence
 	public KaleoAction fetchByPrimaryKey(long kaleoActionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1981303742
+// LIFERAY-SERVICE-BUILDER-HASH:355287264

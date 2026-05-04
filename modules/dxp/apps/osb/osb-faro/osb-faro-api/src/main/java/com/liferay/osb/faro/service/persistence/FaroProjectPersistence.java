@@ -371,20 +371,6 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	public int countByWeDeployKey(String weDeployKey);
 
 	/**
-	 * Caches the faro project in the entity cache if it is enabled.
-	 *
-	 * @param faroProject the faro project
-	 */
-	public void cacheResult(FaroProject faroProject);
-
-	/**
-	 * Caches the faro projects in the entity cache if it is enabled.
-	 *
-	 * @param faroProjects the faro projects
-	 */
-	public void cacheResult(java.util.List<FaroProject> faroProjects);
-
-	/**
 	 * Creates a new faro project with the primary key. Does not add the faro project to the database.
 	 *
 	 * @param faroProjectId the primary key for the new faro project
@@ -423,4 +409,4 @@ public interface FaroProjectPersistence extends BasePersistence<FaroProject> {
 	public FaroProject fetchByPrimaryKey(long faroProjectId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2134736260
+// LIFERAY-SERVICE-BUILDER-HASH:-1790807464

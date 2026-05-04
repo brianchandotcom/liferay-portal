@@ -36,6 +36,24 @@ public class DDMDataProviderInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMDataProviderInstance> ddmDataProviderInstances) {
+
+		getPersistence().cacheResult(ddmDataProviderInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DDMDataProviderInstance ddmDataProviderInstance) {
+
+		getPersistence().cacheResult(ddmDataProviderInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -897,28 +915,6 @@ public class DDMDataProviderInstanceUtil {
 	}
 
 	/**
-	 * Caches the ddm data provider instance in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstance the ddm data provider instance
-	 */
-	public static void cacheResult(
-		DDMDataProviderInstance ddmDataProviderInstance) {
-
-		getPersistence().cacheResult(ddmDataProviderInstance);
-	}
-
-	/**
-	 * Caches the ddm data provider instances in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstances the ddm data provider instances
-	 */
-	public static void cacheResult(
-		List<DDMDataProviderInstance> ddmDataProviderInstances) {
-
-		getPersistence().cacheResult(ddmDataProviderInstances);
-	}
-
-	/**
 	 * Creates a new ddm data provider instance with the primary key. Does not add the ddm data provider instance to the database.
 	 *
 	 * @param dataProviderInstanceId the primary key for the new ddm data provider instance
@@ -988,4 +984,4 @@ public class DDMDataProviderInstanceUtil {
 	private static volatile DDMDataProviderInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-157453199
+// LIFERAY-SERVICE-BUILDER-HASH:1563876117

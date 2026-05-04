@@ -236,20 +236,6 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public int countByCtEntryId(long ctEntryId);
 
 	/**
-	 * Caches the ct comment in the entity cache if it is enabled.
-	 *
-	 * @param ctComment the ct comment
-	 */
-	public void cacheResult(CTComment ctComment);
-
-	/**
-	 * Caches the ct comments in the entity cache if it is enabled.
-	 *
-	 * @param ctComments the ct comments
-	 */
-	public void cacheResult(java.util.List<CTComment> ctComments);
-
-	/**
 	 * Creates a new ct comment with the primary key. Does not add the ct comment to the database.
 	 *
 	 * @param ctCommentId the primary key for the new ct comment
@@ -287,4 +273,4 @@ public interface CTCommentPersistence extends BasePersistence<CTComment> {
 	public CTComment fetchByPrimaryKey(long ctCommentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:417150730
+// LIFERAY-SERVICE-BUILDER-HASH:-423558968

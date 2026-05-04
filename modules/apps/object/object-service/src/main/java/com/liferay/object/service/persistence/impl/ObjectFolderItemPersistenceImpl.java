@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -801,65 +798,6 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 	/**
-	 * Caches the object folder item in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItem the object folder item
-	 */
-	@Override
-	public void cacheResult(ObjectFolderItem objectFolderItem) {
-		entityCache.putResult(
-			ObjectFolderItemImpl.class, objectFolderItem.getPrimaryKey(),
-			objectFolderItem);
-
-		finderCache.putResult(
-			_finderPathFetchByODI_OFI,
-			new Object[] {
-				objectFolderItem.getObjectDefinitionId(),
-				objectFolderItem.getObjectFolderId()
-			},
-			objectFolderItem);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the object folder items in the entity cache if it is enabled.
-	 *
-	 * @param objectFolderItems the object folder items
-	 */
-	@Override
-	public void cacheResult(List<ObjectFolderItem> objectFolderItems) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (objectFolderItems.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ObjectFolderItem objectFolderItem : objectFolderItems) {
-			if (entityCache.getResult(
-					ObjectFolderItemImpl.class,
-					objectFolderItem.getPrimaryKey()) == null) {
-
-				cacheResult(objectFolderItem);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ObjectFolderItemModelImpl objectFolderItemModelImpl) {
-
-		Object[] args = new Object[] {
-			objectFolderItemModelImpl.getObjectDefinitionId(),
-			objectFolderItemModelImpl.getObjectFolderId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByODI_OFI, args, objectFolderItemModelImpl);
-	}
-
-	/**
 	 * Creates a new object folder item with the primary key. Does not add the object folder item to the database.
 	 *
 	 * @param objectFolderItemId the primary key for the new object folder item
@@ -1001,10 +939,7 @@ public class ObjectFolderItemPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ObjectFolderItemImpl.class, objectFolderItemModelImpl, false, true);
-
-		cacheUniqueFindersCache(objectFolderItemModelImpl);
+		cacheUniqueFindersResult(objectFolderItem, false);
 
 		if (isNew) {
 			objectFolderItem.setNew(false);
@@ -1070,9 +1005,6 @@ public class ObjectFolderItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1196,10 +1128,12 @@ public class ObjectFolderItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectFolderItem::getObjectFolderId));
 
-		_finderPathFetchByODI_OFI = new FinderPath(
+		_finderPathFetchByODI_OFI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"objectDefinitionId", "objectFolderId"}, true);
+			new String[] {"objectDefinitionId", "objectFolderId"}, false,
+			ObjectFolderItem::getObjectDefinitionId,
+			ObjectFolderItem::getObjectFolderId);
 
 		_uniquePersistenceFinderByODI_OFI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_OFI, _SQL_SELECT_OBJECTFOLDERITEM_WHERE,
@@ -1280,4 +1214,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:516515741
+// LIFERAY-SERVICE-BUILDER-HASH:918617411

@@ -36,6 +36,20 @@ public class UserTrackerPathUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<UserTrackerPath> userTrackerPaths) {
+		getPersistence().cacheResult(userTrackerPaths);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(UserTrackerPath userTrackerPath) {
+		getPersistence().cacheResult(userTrackerPath);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -237,24 +251,6 @@ public class UserTrackerPathUtil {
 	}
 
 	/**
-	 * Caches the user tracker path in the entity cache if it is enabled.
-	 *
-	 * @param userTrackerPath the user tracker path
-	 */
-	public static void cacheResult(UserTrackerPath userTrackerPath) {
-		getPersistence().cacheResult(userTrackerPath);
-	}
-
-	/**
-	 * Caches the user tracker paths in the entity cache if it is enabled.
-	 *
-	 * @param userTrackerPaths the user tracker paths
-	 */
-	public static void cacheResult(List<UserTrackerPath> userTrackerPaths) {
-		getPersistence().cacheResult(userTrackerPaths);
-	}
-
-	/**
 	 * Creates a new user tracker path with the primary key. Does not add the user tracker path to the database.
 	 *
 	 * @param userTrackerPathId the primary key for the new user tracker path
@@ -317,4 +313,4 @@ public class UserTrackerPathUtil {
 	private static volatile UserTrackerPathPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1489713843
+// LIFERAY-SERVICE-BUILDER-HASH:-1612171635

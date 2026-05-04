@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
@@ -794,55 +790,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo task assignment in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignment the kaleo task assignment
-	 */
-	@Override
-	public void cacheResult(KaleoTaskAssignment kaleoTaskAssignment) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoTaskAssignment.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoTaskAssignmentImpl.class,
-				kaleoTaskAssignment.getPrimaryKey(), kaleoTaskAssignment);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo task assignments in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignments the kaleo task assignments
-	 */
-	@Override
-	public void cacheResult(List<KaleoTaskAssignment> kaleoTaskAssignments) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoTaskAssignments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoTaskAssignment kaleoTaskAssignment : kaleoTaskAssignments) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoTaskAssignment.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoTaskAssignmentImpl.class,
-						kaleoTaskAssignment.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoTaskAssignment);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
 	 *
 	 * @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
@@ -986,9 +933,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoTaskAssignmentImpl.class, kaleoTaskAssignmentModelImpl, false,
-			true);
+		cacheUniqueFindersResult(kaleoTaskAssignment, false);
 
 		if (isNew) {
 			kaleoTaskAssignment.setNew(false);
@@ -1123,9 +1068,6 @@ public class KaleoTaskAssignmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1356,4 +1298,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2089615937
+// LIFERAY-SERVICE-BUILDER-HASH:-18127251

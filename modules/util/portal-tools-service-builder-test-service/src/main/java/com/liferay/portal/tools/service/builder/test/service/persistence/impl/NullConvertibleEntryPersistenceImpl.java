@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchNullConvertibleEntryException;
 import com.liferay.portal.tools.service.builder.test.model.NullConvertibleEntry;
@@ -30,7 +27,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -157,61 +153,6 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the null convertible entry in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntry the null convertible entry
-	 */
-	@Override
-	public void cacheResult(NullConvertibleEntry nullConvertibleEntry) {
-		dummyEntityCache.putResult(
-			NullConvertibleEntryImpl.class,
-			nullConvertibleEntry.getPrimaryKey(), nullConvertibleEntry);
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {nullConvertibleEntry.getName()},
-			nullConvertibleEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the null convertible entries in the entity cache if it is enabled.
-	 *
-	 * @param nullConvertibleEntries the null convertible entries
-	 */
-	@Override
-	public void cacheResult(List<NullConvertibleEntry> nullConvertibleEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (nullConvertibleEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NullConvertibleEntry nullConvertibleEntry :
-				nullConvertibleEntries) {
-
-			if (dummyEntityCache.getResult(
-					NullConvertibleEntryImpl.class,
-					nullConvertibleEntry.getPrimaryKey()) == null) {
-
-				cacheResult(nullConvertibleEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		NullConvertibleEntryModelImpl nullConvertibleEntryModelImpl) {
-
-		Object[] args = new Object[] {nullConvertibleEntryModelImpl.getName()};
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByName, args, nullConvertibleEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new null convertible entry with the primary key. Does not add the null convertible entry to the database.
 	 *
 	 * @param nullConvertibleEntryId the primary key for the new null convertible entry
@@ -321,11 +262,7 @@ public class NullConvertibleEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			NullConvertibleEntryImpl.class, nullConvertibleEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(nullConvertibleEntryModelImpl);
+		cacheUniqueFindersResult(nullConvertibleEntry, false);
 
 		if (isNew) {
 			nullConvertibleEntry.setNew(false);
@@ -385,12 +322,10 @@ public class NullConvertibleEntryPersistenceImpl
 	 * Initializes the null convertible entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			NullConvertibleEntry::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -429,4 +364,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:818752918
+// LIFERAY-SERVICE-BUILDER-HASH:716135265

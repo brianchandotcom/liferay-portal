@@ -38,6 +38,22 @@ public class CommerceShipmentItemUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShipmentItem> commerceShipmentItems) {
+
+		getPersistence().cacheResult(commerceShipmentItems);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceShipmentItem commerceShipmentItem) {
+		getPersistence().cacheResult(commerceShipmentItem);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1271,26 +1287,6 @@ public class CommerceShipmentItemUtil {
 	}
 
 	/**
-	 * Caches the commerce shipment item in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItem the commerce shipment item
-	 */
-	public static void cacheResult(CommerceShipmentItem commerceShipmentItem) {
-		getPersistence().cacheResult(commerceShipmentItem);
-	}
-
-	/**
-	 * Caches the commerce shipment items in the entity cache if it is enabled.
-	 *
-	 * @param commerceShipmentItems the commerce shipment items
-	 */
-	public static void cacheResult(
-		List<CommerceShipmentItem> commerceShipmentItems) {
-
-		getPersistence().cacheResult(commerceShipmentItems);
-	}
-
-	/**
 	 * Creates a new commerce shipment item with the primary key. Does not add the commerce shipment item to the database.
 	 *
 	 * @param commerceShipmentItemId the primary key for the new commerce shipment item
@@ -1358,4 +1354,4 @@ public class CommerceShipmentItemUtil {
 	private static volatile CommerceShipmentItemPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-573159385
+// LIFERAY-SERVICE-BUILDER-HASH:125334695

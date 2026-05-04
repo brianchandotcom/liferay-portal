@@ -36,6 +36,20 @@ public class LazyBlobEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<LazyBlobEntry> lazyBlobEntries) {
+		getPersistence().cacheResult(lazyBlobEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(LazyBlobEntry lazyBlobEntry) {
+		getPersistence().cacheResult(lazyBlobEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -295,24 +309,6 @@ public class LazyBlobEntryUtil {
 	}
 
 	/**
-	 * Caches the lazy blob entry in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntry the lazy blob entry
-	 */
-	public static void cacheResult(LazyBlobEntry lazyBlobEntry) {
-		getPersistence().cacheResult(lazyBlobEntry);
-	}
-
-	/**
-	 * Caches the lazy blob entries in the entity cache if it is enabled.
-	 *
-	 * @param lazyBlobEntries the lazy blob entries
-	 */
-	public static void cacheResult(List<LazyBlobEntry> lazyBlobEntries) {
-		getPersistence().cacheResult(lazyBlobEntries);
-	}
-
-	/**
 	 * Creates a new lazy blob entry with the primary key. Does not add the lazy blob entry to the database.
 	 *
 	 * @param lazyBlobEntryId the primary key for the new lazy blob entry
@@ -375,4 +371,4 @@ public class LazyBlobEntryUtil {
 	private static volatile LazyBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1099972978
+// LIFERAY-SERVICE-BUILDER-HASH:-1495013591

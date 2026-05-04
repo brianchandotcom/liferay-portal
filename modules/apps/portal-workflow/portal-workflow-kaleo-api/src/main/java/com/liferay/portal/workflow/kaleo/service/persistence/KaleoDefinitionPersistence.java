@@ -1081,20 +1081,6 @@ public interface KaleoDefinitionPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the kaleo definition in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinition the kaleo definition
-	 */
-	public void cacheResult(KaleoDefinition kaleoDefinition);
-
-	/**
-	 * Caches the kaleo definitions in the entity cache if it is enabled.
-	 *
-	 * @param kaleoDefinitions the kaleo definitions
-	 */
-	public void cacheResult(java.util.List<KaleoDefinition> kaleoDefinitions);
-
-	/**
 	 * Creates a new kaleo definition with the primary key. Does not add the kaleo definition to the database.
 	 *
 	 * @param kaleoDefinitionId the primary key for the new kaleo definition
@@ -1133,4 +1119,4 @@ public interface KaleoDefinitionPersistence
 	public KaleoDefinition fetchByPrimaryKey(long kaleoDefinitionId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:589834933
+// LIFERAY-SERVICE-BUILDER-HASH:1343247077

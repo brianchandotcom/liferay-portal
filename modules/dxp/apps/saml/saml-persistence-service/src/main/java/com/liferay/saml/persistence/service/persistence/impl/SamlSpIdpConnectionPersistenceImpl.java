@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.saml.persistence.exception.NoSuchSpIdpConnectionException;
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
@@ -336,65 +333,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 	/**
-	 * Caches the saml sp idp connection in the entity cache if it is enabled.
-	 *
-	 * @param samlSpIdpConnection the saml sp idp connection
-	 */
-	@Override
-	public void cacheResult(SamlSpIdpConnection samlSpIdpConnection) {
-		entityCache.putResult(
-			SamlSpIdpConnectionImpl.class, samlSpIdpConnection.getPrimaryKey(),
-			samlSpIdpConnection);
-
-		finderCache.putResult(
-			_finderPathFetchByC_SIEI,
-			new Object[] {
-				samlSpIdpConnection.getCompanyId(),
-				samlSpIdpConnection.getSamlIdpEntityId()
-			},
-			samlSpIdpConnection);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the saml sp idp connections in the entity cache if it is enabled.
-	 *
-	 * @param samlSpIdpConnections the saml sp idp connections
-	 */
-	@Override
-	public void cacheResult(List<SamlSpIdpConnection> samlSpIdpConnections) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (samlSpIdpConnections.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SamlSpIdpConnection samlSpIdpConnection : samlSpIdpConnections) {
-			if (entityCache.getResult(
-					SamlSpIdpConnectionImpl.class,
-					samlSpIdpConnection.getPrimaryKey()) == null) {
-
-				cacheResult(samlSpIdpConnection);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SamlSpIdpConnectionModelImpl samlSpIdpConnectionModelImpl) {
-
-		Object[] args = new Object[] {
-			samlSpIdpConnectionModelImpl.getCompanyId(),
-			samlSpIdpConnectionModelImpl.getSamlIdpEntityId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByC_SIEI, args, samlSpIdpConnectionModelImpl);
-	}
-
-	/**
 	 * Creates a new saml sp idp connection with the primary key. Does not add the saml sp idp connection to the database.
 	 *
 	 * @param samlSpIdpConnectionId the primary key for the new saml sp idp connection
@@ -530,11 +468,7 @@ public class SamlSpIdpConnectionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SamlSpIdpConnectionImpl.class, samlSpIdpConnectionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(samlSpIdpConnectionModelImpl);
+		cacheUniqueFindersResult(samlSpIdpConnection, false);
 
 		if (isNew) {
 			samlSpIdpConnection.setNew(false);
@@ -595,9 +529,6 @@ public class SamlSpIdpConnectionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -629,10 +560,12 @@ public class SamlSpIdpConnectionPersistenceImpl
 					"samlSpIdpConnection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlSpIdpConnection::getCompanyId));
 
-		_finderPathFetchByC_SIEI = new FinderPath(
+		_finderPathFetchByC_SIEI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_SIEI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "samlIdpEntityId"}, true);
+			new String[] {"companyId", "samlIdpEntityId"}, false,
+			SamlSpIdpConnection::getCompanyId,
+			SamlSpIdpConnection::getSamlIdpEntityId);
 
 		_uniquePersistenceFinderByC_SIEI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_SIEI,
@@ -711,4 +644,4 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:239026498
+// LIFERAY-SERVICE-BUILDER-HASH:1902240629

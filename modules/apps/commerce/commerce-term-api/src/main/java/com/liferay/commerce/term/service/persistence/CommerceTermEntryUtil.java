@@ -37,6 +37,22 @@ public class CommerceTermEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceTermEntry> commerceTermEntries) {
+
+		getPersistence().cacheResult(commerceTermEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CommerceTermEntry commerceTermEntry) {
+		getPersistence().cacheResult(commerceTermEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1714,26 +1730,6 @@ public class CommerceTermEntryUtil {
 	}
 
 	/**
-	 * Caches the commerce term entry in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntry the commerce term entry
-	 */
-	public static void cacheResult(CommerceTermEntry commerceTermEntry) {
-		getPersistence().cacheResult(commerceTermEntry);
-	}
-
-	/**
-	 * Caches the commerce term entries in the entity cache if it is enabled.
-	 *
-	 * @param commerceTermEntries the commerce term entries
-	 */
-	public static void cacheResult(
-		List<CommerceTermEntry> commerceTermEntries) {
-
-		getPersistence().cacheResult(commerceTermEntries);
-	}
-
-	/**
 	 * Creates a new commerce term entry with the primary key. Does not add the commerce term entry to the database.
 	 *
 	 * @param commerceTermEntryId the primary key for the new commerce term entry
@@ -1800,4 +1796,4 @@ public class CommerceTermEntryUtil {
 	private static volatile CommerceTermEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1627767599
+// LIFERAY-SERVICE-BUILDER-HASH:-566598714

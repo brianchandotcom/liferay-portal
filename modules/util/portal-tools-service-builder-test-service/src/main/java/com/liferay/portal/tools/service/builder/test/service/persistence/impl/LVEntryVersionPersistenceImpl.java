@@ -21,11 +21,8 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1795,97 +1792,6 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the lv entry version in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersion the lv entry version
-	 */
-	@Override
-	public void cacheResult(LVEntryVersion lvEntryVersion) {
-		entityCache.putResult(
-			LVEntryVersionImpl.class, lvEntryVersion.getPrimaryKey(),
-			lvEntryVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByLvEntryId_Version,
-			new Object[] {
-				lvEntryVersion.getLvEntryId(), lvEntryVersion.getVersion()
-			},
-			lvEntryVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Version,
-			new Object[] {
-				lvEntryVersion.getUuid(), lvEntryVersion.getGroupId(),
-				lvEntryVersion.getVersion()
-			},
-			lvEntryVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByG_UGK_Version,
-			new Object[] {
-				lvEntryVersion.getGroupId(), lvEntryVersion.getUniqueGroupKey(),
-				lvEntryVersion.getVersion()
-			},
-			lvEntryVersion);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the lv entry versions in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryVersions the lv entry versions
-	 */
-	@Override
-	public void cacheResult(List<LVEntryVersion> lvEntryVersions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (lvEntryVersions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LVEntryVersion lvEntryVersion : lvEntryVersions) {
-			if (entityCache.getResult(
-					LVEntryVersionImpl.class, lvEntryVersion.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(lvEntryVersion);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LVEntryVersionModelImpl lvEntryVersionModelImpl) {
-
-		Object[] args = new Object[] {
-			lvEntryVersionModelImpl.getLvEntryId(),
-			lvEntryVersionModelImpl.getVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByLvEntryId_Version, args, lvEntryVersionModelImpl);
-
-		args = new Object[] {
-			lvEntryVersionModelImpl.getUuid(),
-			lvEntryVersionModelImpl.getGroupId(),
-			lvEntryVersionModelImpl.getVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G_Version, args, lvEntryVersionModelImpl);
-
-		args = new Object[] {
-			lvEntryVersionModelImpl.getGroupId(),
-			lvEntryVersionModelImpl.getUniqueGroupKey(),
-			lvEntryVersionModelImpl.getVersion()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByG_UGK_Version, args, lvEntryVersionModelImpl);
-	}
-
-	/**
 	 * Creates a new lv entry version with the primary key. Does not add the lv entry version to the database.
 	 *
 	 * @param lvEntryVersionId the primary key for the new lv entry version
@@ -1998,10 +1904,7 @@ public class LVEntryVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LVEntryVersionImpl.class, lvEntryVersionModelImpl, false, true);
-
-		cacheUniqueFindersCache(lvEntryVersionModelImpl);
+		cacheUniqueFindersResult(lvEntryVersion, false);
 
 		if (isNew) {
 			lvEntryVersion.setNew(false);
@@ -2424,9 +2327,6 @@ public class LVEntryVersionPersistenceImpl
 	 * Initializes the lv entry version persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		lvEntryVersionToBigDecimalEntryTableMapper =
 			TableMapperFactory.getTableMapper(
 				"BigDecimalEntries_LVEntries", "companyId", "lvEntryVersionId",
@@ -2461,10 +2361,11 @@ public class LVEntryVersionPersistenceImpl
 					"lvEntryVersion.", "lvEntryId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getLvEntryId));
 
-		_finderPathFetchByLvEntryId_Version = new FinderPath(
+		_finderPathFetchByLvEntryId_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"lvEntryId", "version"}, true);
+			new String[] {"lvEntryId", "version"}, false,
+			LVEntryVersion::getLvEntryId, LVEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByLvEntryId_Version =
 			new UniquePersistenceFinder<>(
@@ -2571,13 +2472,15 @@ public class LVEntryVersionPersistenceImpl
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getGroupId));
 
-		_finderPathFetchByUUID_G_Version = new FinderPath(
+		_finderPathFetchByUUID_G_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Version",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "version"}, true);
+			new String[] {"uuid_", "groupId", "version"}, false,
+			LVEntryVersion::getUuid, LVEntryVersion::getGroupId,
+			LVEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByUUID_G_Version =
 			new UniquePersistenceFinder<>(
@@ -2763,13 +2666,15 @@ public class LVEntryVersionPersistenceImpl
 				"lvEntryVersion.", "uniqueGroupKey", FinderColumn.Type.STRING,
 				"=", true, true, LVEntryVersion::getUniqueGroupKey));
 
-		_finderPathFetchByG_UGK_Version = new FinderPath(
+		_finderPathFetchByG_UGK_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_UGK_Version",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "uniqueGroupKey", "version"}, true);
+			new String[] {"groupId", "uniqueGroupKey", "version"}, false,
+			LVEntryVersion::getGroupId, LVEntryVersion::getUniqueGroupKey,
+			LVEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByG_UGK_Version = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_UGK_Version,
@@ -2840,4 +2745,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-836511223
+// LIFERAY-SERVICE-BUILDER-HASH:668257107

@@ -15,7 +15,6 @@ import com.liferay.bookmarks.service.persistence.BookmarksFolderUtil;
 import com.liferay.bookmarks.service.persistence.impl.constants.BookmarksPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -37,10 +36,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2648,79 +2644,6 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 	/**
-	 * Caches the bookmarks folder in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolder the bookmarks folder
-	 */
-	@Override
-	public void cacheResult(BookmarksFolder bookmarksFolder) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					bookmarksFolder.getCtCollectionId())) {
-
-			entityCache.putResult(
-				BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey(),
-				bookmarksFolder);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					bookmarksFolder.getUuid(), bookmarksFolder.getGroupId()
-				},
-				bookmarksFolder);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the bookmarks folders in the entity cache if it is enabled.
-	 *
-	 * @param bookmarksFolders the bookmarks folders
-	 */
-	@Override
-	public void cacheResult(List<BookmarksFolder> bookmarksFolders) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (bookmarksFolders.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (BookmarksFolder bookmarksFolder : bookmarksFolders) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						bookmarksFolder.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						BookmarksFolderImpl.class,
-						bookmarksFolder.getPrimaryKey()) == null) {
-
-					cacheResult(bookmarksFolder);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		BookmarksFolderModelImpl bookmarksFolderModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					bookmarksFolderModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				bookmarksFolderModelImpl.getUuid(),
-				bookmarksFolderModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, bookmarksFolderModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new bookmarks folder with the primary key. Does not add the bookmarks folder to the database.
 	 *
 	 * @param folderId the primary key for the new bookmarks folder
@@ -2868,10 +2791,7 @@ public class BookmarksFolderPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			BookmarksFolderImpl.class, bookmarksFolderModelImpl, false, true);
-
-		cacheUniqueFindersCache(bookmarksFolderModelImpl);
+		cacheUniqueFindersResult(bookmarksFolder, false);
 
 		if (isNew) {
 			bookmarksFolder.setNew(false);
@@ -3011,9 +2931,6 @@ public class BookmarksFolderPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3041,10 +2958,11 @@ public class BookmarksFolderPersistenceImpl
 				"bookmarksFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, BookmarksFolder::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false, BookmarksFolder::getUuid,
+			BookmarksFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_BOOKMARKSFOLDER_WHERE,
@@ -3416,4 +3334,4 @@ public class BookmarksFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1601610252
+// LIFERAY-SERVICE-BUILDER-HASH:1689879162

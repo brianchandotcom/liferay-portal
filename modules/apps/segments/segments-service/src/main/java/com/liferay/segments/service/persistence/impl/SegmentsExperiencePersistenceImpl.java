@@ -7,7 +7,6 @@ package com.liferay.segments.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -39,8 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -6793,132 +6790,6 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 	/**
-	 * Caches the segments experience in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperience the segments experience
-	 */
-	@Override
-	public void cacheResult(SegmentsExperience segmentsExperience) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperience.getCtCollectionId())) {
-
-			entityCache.putResult(
-				SegmentsExperienceImpl.class,
-				segmentsExperience.getPrimaryKey(), segmentsExperience);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					segmentsExperience.getUuid(),
-					segmentsExperience.getGroupId()
-				},
-				segmentsExperience);
-
-			finderCache.putResult(
-				_finderPathFetchByG_SEK_P,
-				new Object[] {
-					segmentsExperience.getGroupId(),
-					segmentsExperience.getSegmentsExperienceKey(),
-					segmentsExperience.getPlid()
-				},
-				segmentsExperience);
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_P,
-				new Object[] {
-					segmentsExperience.getGroupId(),
-					segmentsExperience.getPlid(),
-					segmentsExperience.getPriority()
-				},
-				segmentsExperience);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					segmentsExperience.getExternalReferenceCode(),
-					segmentsExperience.getGroupId()
-				},
-				segmentsExperience);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the segments experiences in the entity cache if it is enabled.
-	 *
-	 * @param segmentsExperiences the segments experiences
-	 */
-	@Override
-	public void cacheResult(List<SegmentsExperience> segmentsExperiences) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (segmentsExperiences.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						segmentsExperience.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						SegmentsExperienceImpl.class,
-						segmentsExperience.getPrimaryKey()) == null) {
-
-					cacheResult(segmentsExperience);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		SegmentsExperienceModelImpl segmentsExperienceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					segmentsExperienceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				segmentsExperienceModelImpl.getUuid(),
-				segmentsExperienceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, segmentsExperienceModelImpl);
-
-			args = new Object[] {
-				segmentsExperienceModelImpl.getGroupId(),
-				segmentsExperienceModelImpl.getSegmentsExperienceKey(),
-				segmentsExperienceModelImpl.getPlid()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_SEK_P, args, segmentsExperienceModelImpl);
-
-			args = new Object[] {
-				segmentsExperienceModelImpl.getGroupId(),
-				segmentsExperienceModelImpl.getPlid(),
-				segmentsExperienceModelImpl.getPriority()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_P_P, args, segmentsExperienceModelImpl);
-
-			args = new Object[] {
-				segmentsExperienceModelImpl.getExternalReferenceCode(),
-				segmentsExperienceModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, segmentsExperienceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new segments experience with the primary key. Does not add the segments experience to the database.
 	 *
 	 * @param segmentsExperienceId the primary key for the new segments experience
@@ -7138,11 +7009,7 @@ public class SegmentsExperiencePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			SegmentsExperienceImpl.class, segmentsExperienceModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(segmentsExperienceModelImpl);
+		cacheUniqueFindersResult(segmentsExperience, false);
 
 		if (isNew) {
 			segmentsExperience.setNew(false);
@@ -7293,9 +7160,6 @@ public class SegmentsExperiencePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -7324,10 +7188,11 @@ public class SegmentsExperiencePersistenceImpl
 				"segmentsExperience.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, SegmentsExperience::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			SegmentsExperience::getUuid, SegmentsExperience::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -7547,13 +7412,16 @@ public class SegmentsExperiencePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperience::getSegmentsEntryScopeERC));
 
-		_finderPathFetchByG_SEK_P = new FinderPath(
+		_finderPathFetchByG_SEK_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_SEK_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"groupId", "segmentsExperienceKey", "plid"}, true);
+			new String[] {"groupId", "segmentsExperienceKey", "plid"}, false,
+			SegmentsExperience::getGroupId,
+			SegmentsExperience::getSegmentsExperienceKey,
+			SegmentsExperience::getPlid);
 
 		_uniquePersistenceFinderByG_SEK_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_SEK_P,
@@ -7569,13 +7437,15 @@ public class SegmentsExperiencePersistenceImpl
 				"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, SegmentsExperience::getPlid));
 
-		_finderPathFetchByG_P_P = new FinderPath(
+		_finderPathFetchByG_P_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "plid", "priority"}, true);
+			new String[] {"groupId", "plid", "priority"}, false,
+			SegmentsExperience::getGroupId, SegmentsExperience::getPlid,
+			SegmentsExperience::getPriority);
 
 		_uniquePersistenceFinderByG_P_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_P, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
@@ -7814,10 +7684,12 @@ public class SegmentsExperiencePersistenceImpl
 			},
 			false);
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			SegmentsExperience::getExternalReferenceCode,
+			SegmentsExperience::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
@@ -7924,4 +7796,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:16422335
+// LIFERAY-SERVICE-BUILDER-HASH:-1491575911

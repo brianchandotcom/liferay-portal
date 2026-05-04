@@ -36,6 +36,24 @@ public class DDMDataProviderInstanceLinkUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks) {
+
+		getPersistence().cacheResult(ddmDataProviderInstanceLinks);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
+
+		getPersistence().cacheResult(ddmDataProviderInstanceLink);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -456,28 +474,6 @@ public class DDMDataProviderInstanceLinkUtil {
 	}
 
 	/**
-	 * Caches the ddm data provider instance link in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
-	 */
-	public static void cacheResult(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink) {
-
-		getPersistence().cacheResult(ddmDataProviderInstanceLink);
-	}
-
-	/**
-	 * Caches the ddm data provider instance links in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLinks the ddm data provider instance links
-	 */
-	public static void cacheResult(
-		List<DDMDataProviderInstanceLink> ddmDataProviderInstanceLinks) {
-
-		getPersistence().cacheResult(ddmDataProviderInstanceLinks);
-	}
-
-	/**
 	 * Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
 	 *
 	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
@@ -550,4 +546,4 @@ public class DDMDataProviderInstanceLinkUtil {
 	private static volatile DDMDataProviderInstanceLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2108283312
+// LIFERAY-SERVICE-BUILDER-HASH:844705330

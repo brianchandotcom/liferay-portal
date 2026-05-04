@@ -460,21 +460,6 @@ public interface ObjectViewFilterColumnPersistence
 	public int countByOVI_OFN(long objectViewId, String objectFieldName);
 
 	/**
-	 * Caches the object view filter column in the entity cache if it is enabled.
-	 *
-	 * @param objectViewFilterColumn the object view filter column
-	 */
-	public void cacheResult(ObjectViewFilterColumn objectViewFilterColumn);
-
-	/**
-	 * Caches the object view filter columns in the entity cache if it is enabled.
-	 *
-	 * @param objectViewFilterColumns the object view filter columns
-	 */
-	public void cacheResult(
-		java.util.List<ObjectViewFilterColumn> objectViewFilterColumns);
-
-	/**
 	 * Creates a new object view filter column with the primary key. Does not add the object view filter column to the database.
 	 *
 	 * @param objectViewFilterColumnId the primary key for the new object view filter column
@@ -516,4 +501,4 @@ public interface ObjectViewFilterColumnPersistence
 		long objectViewFilterColumnId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:802123023
+// LIFERAY-SERVICE-BUILDER-HASH:1207033225

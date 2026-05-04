@@ -36,6 +36,20 @@ public class ImageUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Image> images) {
+		getPersistence().cacheResult(images);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Image image) {
+		getPersistence().cacheResult(image);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -223,24 +237,6 @@ public class ImageUtil {
 	}
 
 	/**
-	 * Caches the image in the entity cache if it is enabled.
-	 *
-	 * @param image the image
-	 */
-	public static void cacheResult(Image image) {
-		getPersistence().cacheResult(image);
-	}
-
-	/**
-	 * Caches the images in the entity cache if it is enabled.
-	 *
-	 * @param images the images
-	 */
-	public static void cacheResult(List<Image> images) {
-		getPersistence().cacheResult(images);
-	}
-
-	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *
 	 * @param imageId the primary key for the new image
@@ -301,4 +297,4 @@ public class ImageUtil {
 	private static volatile ImagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:482962424
+// LIFERAY-SERVICE-BUILDER-HASH:-1133751890

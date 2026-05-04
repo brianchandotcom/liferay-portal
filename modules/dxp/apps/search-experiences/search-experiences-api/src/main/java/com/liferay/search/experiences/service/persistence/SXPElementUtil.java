@@ -36,6 +36,20 @@ public class SXPElementUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SXPElement> sxpElements) {
+		getPersistence().cacheResult(sxpElements);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SXPElement sxpElement) {
+		getPersistence().cacheResult(sxpElement);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1344,24 +1358,6 @@ public class SXPElementUtil {
 	}
 
 	/**
-	 * Caches the sxp element in the entity cache if it is enabled.
-	 *
-	 * @param sxpElement the sxp element
-	 */
-	public static void cacheResult(SXPElement sxpElement) {
-		getPersistence().cacheResult(sxpElement);
-	}
-
-	/**
-	 * Caches the sxp elements in the entity cache if it is enabled.
-	 *
-	 * @param sxpElements the sxp elements
-	 */
-	public static void cacheResult(List<SXPElement> sxpElements) {
-		getPersistence().cacheResult(sxpElements);
-	}
-
-	/**
 	 * Creates a new sxp element with the primary key. Does not add the sxp element to the database.
 	 *
 	 * @param sxpElementId the primary key for the new sxp element
@@ -1424,4 +1420,4 @@ public class SXPElementUtil {
 	private static volatile SXPElementPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1817303544
+// LIFERAY-SERVICE-BUILDER-HASH:1032030378

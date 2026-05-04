@@ -36,6 +36,24 @@ public class CPDefinitionOptionRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels) {
+
+		getPersistence().cacheResult(cpDefinitionOptionRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CPDefinitionOptionRel cpDefinitionOptionRel) {
+
+		getPersistence().cacheResult(cpDefinitionOptionRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1350,28 +1368,6 @@ public class CPDefinitionOptionRelUtil {
 	}
 
 	/**
-	 * Caches the cp definition option rel in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionOptionRel the cp definition option rel
-	 */
-	public static void cacheResult(
-		CPDefinitionOptionRel cpDefinitionOptionRel) {
-
-		getPersistence().cacheResult(cpDefinitionOptionRel);
-	}
-
-	/**
-	 * Caches the cp definition option rels in the entity cache if it is enabled.
-	 *
-	 * @param cpDefinitionOptionRels the cp definition option rels
-	 */
-	public static void cacheResult(
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels) {
-
-		getPersistence().cacheResult(cpDefinitionOptionRels);
-	}
-
-	/**
 	 * Creates a new cp definition option rel with the primary key. Does not add the cp definition option rel to the database.
 	 *
 	 * @param CPDefinitionOptionRelId the primary key for the new cp definition option rel
@@ -1441,4 +1437,4 @@ public class CPDefinitionOptionRelUtil {
 	private static volatile CPDefinitionOptionRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1378084983
+// LIFERAY-SERVICE-BUILDER-HASH:-2060678747

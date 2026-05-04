@@ -16,7 +16,6 @@ import com.liferay.fragment.service.persistence.FragmentEntryLinkUtil;
 import com.liferay.fragment.service.persistence.impl.constants.FragmentPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -46,8 +45,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -5813,115 +5810,6 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the fragment entry link in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLink the fragment entry link
-	 */
-	@Override
-	public void cacheResult(FragmentEntryLink fragmentEntryLink) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntryLink.getCtCollectionId())) {
-
-			entityCache.putResult(
-				FragmentEntryLinkImpl.class, fragmentEntryLink.getPrimaryKey(),
-				fragmentEntryLink);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					fragmentEntryLink.getUuid(), fragmentEntryLink.getGroupId()
-				},
-				fragmentEntryLink);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					fragmentEntryLink.getExternalReferenceCode(),
-					fragmentEntryLink.getGroupId()
-				},
-				fragmentEntryLink);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the fragment entry links in the entity cache if it is enabled.
-	 *
-	 * @param fragmentEntryLinks the fragment entry links
-	 */
-	@Override
-	public void cacheResult(List<FragmentEntryLink> fragmentEntryLinks) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (fragmentEntryLinks.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						fragmentEntryLink.getCtCollectionId())) {
-
-				FragmentEntryLink cachedFragmentEntryLink =
-					(FragmentEntryLink)entityCache.getResult(
-						FragmentEntryLinkImpl.class,
-						fragmentEntryLink.getPrimaryKey());
-
-				if (cachedFragmentEntryLink == null) {
-					cacheResult(fragmentEntryLink);
-				}
-				else {
-					FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl =
-						(FragmentEntryLinkModelImpl)fragmentEntryLink;
-					FragmentEntryLinkModelImpl
-						cachedFragmentEntryLinkModelImpl =
-							(FragmentEntryLinkModelImpl)cachedFragmentEntryLink;
-
-					fragmentEntryLinkModelImpl.setConfigurationJSONObject(
-						cachedFragmentEntryLinkModelImpl.
-							getConfigurationJSONObject());
-
-					fragmentEntryLinkModelImpl.setEditableValuesJSONObject(
-						cachedFragmentEntryLinkModelImpl.
-							getEditableValuesJSONObject());
-
-					fragmentEntryLinkModelImpl.setFragmentEntry(
-						cachedFragmentEntryLinkModelImpl.getFragmentEntry());
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					fragmentEntryLinkModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				fragmentEntryLinkModelImpl.getUuid(),
-				fragmentEntryLinkModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, fragmentEntryLinkModelImpl);
-
-			args = new Object[] {
-				fragmentEntryLinkModelImpl.getExternalReferenceCode(),
-				fragmentEntryLinkModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args, fragmentEntryLinkModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new fragment entry link with the primary key. Does not add the fragment entry link to the database.
 	 *
 	 * @param fragmentEntryLinkId the primary key for the new fragment entry link
@@ -6137,11 +6025,7 @@ public class FragmentEntryLinkPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			FragmentEntryLinkImpl.class, fragmentEntryLinkModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(fragmentEntryLinkModelImpl);
+		cacheUniqueFindersResult(fragmentEntryLink, false);
 
 		if (isNew) {
 			fragmentEntryLink.setNew(false);
@@ -6296,9 +6180,6 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -6327,10 +6208,11 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentEntryLink::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			FragmentEntryLink::getUuid, FragmentEntryLink::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
@@ -7221,10 +7103,12 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassPK));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			FragmentEntryLink::getExternalReferenceCode,
+			FragmentEntryLink::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
@@ -7308,4 +7192,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1262318363
+// LIFERAY-SERVICE-BUILDER-HASH:101115507

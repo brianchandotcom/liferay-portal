@@ -36,6 +36,24 @@ public class SocialActivityAchievementUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<SocialActivityAchievement> socialActivityAchievements) {
+
+		getPersistence().cacheResult(socialActivityAchievements);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		SocialActivityAchievement socialActivityAchievement) {
+
+		getPersistence().cacheResult(socialActivityAchievement);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -866,28 +884,6 @@ public class SocialActivityAchievementUtil {
 	}
 
 	/**
-	 * Caches the social activity achievement in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievement the social activity achievement
-	 */
-	public static void cacheResult(
-		SocialActivityAchievement socialActivityAchievement) {
-
-		getPersistence().cacheResult(socialActivityAchievement);
-	}
-
-	/**
-	 * Caches the social activity achievements in the entity cache if it is enabled.
-	 *
-	 * @param socialActivityAchievements the social activity achievements
-	 */
-	public static void cacheResult(
-		List<SocialActivityAchievement> socialActivityAchievements) {
-
-		getPersistence().cacheResult(socialActivityAchievements);
-	}
-
-	/**
 	 * Creates a new social activity achievement with the primary key. Does not add the social activity achievement to the database.
 	 *
 	 * @param activityAchievementId the primary key for the new social activity achievement
@@ -957,4 +953,4 @@ public class SocialActivityAchievementUtil {
 	private static volatile SocialActivityAchievementPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:9403304
+// LIFERAY-SERVICE-BUILDER-HASH:2010706832

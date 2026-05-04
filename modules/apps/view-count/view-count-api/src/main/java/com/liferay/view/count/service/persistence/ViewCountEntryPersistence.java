@@ -146,20 +146,6 @@ public interface ViewCountEntryPersistence
 	public int countByC_CN(long companyId, long classNameId);
 
 	/**
-	 * Caches the view count entry in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntry the view count entry
-	 */
-	public void cacheResult(ViewCountEntry viewCountEntry);
-
-	/**
-	 * Caches the view count entries in the entity cache if it is enabled.
-	 *
-	 * @param viewCountEntries the view count entries
-	 */
-	public void cacheResult(java.util.List<ViewCountEntry> viewCountEntries);
-
-	/**
 	 * Creates a new view count entry with the primary key. Does not add the view count entry to the database.
 	 *
 	 * @param viewCountEntryPK the primary key for the new view count entry
@@ -200,4 +186,4 @@ public interface ViewCountEntryPersistence
 	public Set<String> getCompoundPKColumnNames();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-113898927
+// LIFERAY-SERVICE-BUILDER-HASH:-1961820137

@@ -6,7 +6,6 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -40,8 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1386,74 +1383,6 @@ public class PhonePersistenceImpl
 	}
 
 	/**
-	 * Caches the phone in the entity cache if it is enabled.
-	 *
-	 * @param phone the phone
-	 */
-	@Override
-	public void cacheResult(Phone phone) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					phone.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				PhoneImpl.class, phone.getPrimaryKey(), phone);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					phone.getExternalReferenceCode(), phone.getCompanyId()
-				},
-				phone);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the phones in the entity cache if it is enabled.
-	 *
-	 * @param phones the phones
-	 */
-	@Override
-	public void cacheResult(List<Phone> phones) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (phones.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Phone phone : phones) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						phone.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						PhoneImpl.class, phone.getPrimaryKey()) == null) {
-
-					cacheResult(phone);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(PhoneModelImpl phoneModelImpl) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					phoneModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				phoneModelImpl.getExternalReferenceCode(),
-				phoneModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, phoneModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new phone with the primary key. Does not add the phone to the database.
 	 *
 	 * @param phoneId the primary key for the new phone
@@ -1651,9 +1580,7 @@ public class PhonePersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(PhoneImpl.class, phoneModelImpl, false, true);
-
-		cacheUniqueFindersCache(phoneModelImpl);
+		cacheUniqueFindersResult(phone, false);
 
 		if (isNew) {
 			phone.setNew(false);
@@ -1788,9 +1715,6 @@ public class PhonePersistenceImpl
 	 * Initializes the phone persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -2026,10 +1950,11 @@ public class PhonePersistenceImpl
 					"phone.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Phone::isPrimary));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Phone::getExternalReferenceCode, Phone::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_PHONE_WHERE,
@@ -2076,4 +2001,4 @@ public class PhonePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2077927085
+// LIFERAY-SERVICE-BUILDER-HASH:1367587294

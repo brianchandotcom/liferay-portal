@@ -14,7 +14,6 @@ import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRel
 import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRelUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -33,10 +32,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1284,124 +1280,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp instance option value rel in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRel the cp instance option value rel
-	 */
-	@Override
-	public void cacheResult(CPInstanceOptionValueRel cpInstanceOptionValueRel) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpInstanceOptionValueRel.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPInstanceOptionValueRelImpl.class,
-				cpInstanceOptionValueRel.getPrimaryKey(),
-				cpInstanceOptionValueRel);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpInstanceOptionValueRel.getUuid(),
-					cpInstanceOptionValueRel.getGroupId()
-				},
-				cpInstanceOptionValueRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCDOVRI_CII,
-				new Object[] {
-					cpInstanceOptionValueRel.getCPDefinitionOptionValueRelId(),
-					cpInstanceOptionValueRel.getCPInstanceId()
-				},
-				cpInstanceOptionValueRel);
-
-			finderCache.putResult(
-				_finderPathFetchByCDORI_CDOVRI_CII,
-				new Object[] {
-					cpInstanceOptionValueRel.getCPDefinitionOptionRelId(),
-					cpInstanceOptionValueRel.getCPDefinitionOptionValueRelId(),
-					cpInstanceOptionValueRel.getCPInstanceId()
-				},
-				cpInstanceOptionValueRel);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp instance option value rels in the entity cache if it is enabled.
-	 *
-	 * @param cpInstanceOptionValueRels the cp instance option value rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CPInstanceOptionValueRel> cpInstanceOptionValueRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpInstanceOptionValueRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPInstanceOptionValueRel cpInstanceOptionValueRel :
-				cpInstanceOptionValueRels) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpInstanceOptionValueRel.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPInstanceOptionValueRelImpl.class,
-						cpInstanceOptionValueRel.getPrimaryKey()) == null) {
-
-					cacheResult(cpInstanceOptionValueRel);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPInstanceOptionValueRelModelImpl cpInstanceOptionValueRelModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpInstanceOptionValueRelModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpInstanceOptionValueRelModelImpl.getUuid(),
-				cpInstanceOptionValueRelModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				cpInstanceOptionValueRelModelImpl);
-
-			args = new Object[] {
-				cpInstanceOptionValueRelModelImpl.
-					getCPDefinitionOptionValueRelId(),
-				cpInstanceOptionValueRelModelImpl.getCPInstanceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCDOVRI_CII, args,
-				cpInstanceOptionValueRelModelImpl);
-
-			args = new Object[] {
-				cpInstanceOptionValueRelModelImpl.getCPDefinitionOptionRelId(),
-				cpInstanceOptionValueRelModelImpl.
-					getCPDefinitionOptionValueRelId(),
-				cpInstanceOptionValueRelModelImpl.getCPInstanceId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByCDORI_CDOVRI_CII, args,
-				cpInstanceOptionValueRelModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp instance option value rel with the primary key. Does not add the cp instance option value rel to the database.
 	 *
 	 * @param CPInstanceOptionValueRelId the primary key for the new cp instance option value rel
@@ -1561,11 +1439,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPInstanceOptionValueRelImpl.class,
-			cpInstanceOptionValueRelModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpInstanceOptionValueRelModelImpl);
+		cacheUniqueFindersResult(cpInstanceOptionValueRel, false);
 
 		if (isNew) {
 			cpInstanceOptionValueRel.setNew(false);
@@ -1712,9 +1586,6 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1744,10 +1615,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				"cpInstanceOptionValueRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPInstanceOptionValueRel::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPInstanceOptionValueRel::getUuid,
+			CPInstanceOptionValueRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1901,11 +1774,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CPInstanceOptionValueRel::getCPInstanceId));
 
-		_finderPathFetchByCDOVRI_CII = new FinderPath(
+		_finderPathFetchByCDOVRI_CII = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDOVRI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"CPDefinitionOptionValueRelId", "CPInstanceId"},
-			true);
+			false, CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId,
+			CPInstanceOptionValueRel::getCPInstanceId);
 
 		_uniquePersistenceFinderByCDOVRI_CII = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDOVRI_CII,
@@ -1919,7 +1793,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CPInstanceOptionValueRel::getCPInstanceId));
 
-		_finderPathFetchByCDORI_CDOVRI_CII = new FinderPath(
+		_finderPathFetchByCDORI_CDOVRI_CII = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDORI_CDOVRI_CII",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -1928,7 +1802,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				"CPDefinitionOptionRelId", "CPDefinitionOptionValueRelId",
 				"CPInstanceId"
 			},
-			true);
+			false, CPInstanceOptionValueRel::getCPDefinitionOptionRelId,
+			CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId,
+			CPInstanceOptionValueRel::getCPInstanceId);
 
 		_uniquePersistenceFinderByCDORI_CDOVRI_CII =
 			new UniquePersistenceFinder<>(
@@ -2019,4 +1895,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1685533714
+// LIFERAY-SERVICE-BUILDER-HASH:-1673116677

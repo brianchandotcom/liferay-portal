@@ -829,21 +829,6 @@ public interface CommercePaymentEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce payment entry in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntry the commerce payment entry
-	 */
-	public void cacheResult(CommercePaymentEntry commercePaymentEntry);
-
-	/**
-	 * Caches the commerce payment entries in the entity cache if it is enabled.
-	 *
-	 * @param commercePaymentEntries the commerce payment entries
-	 */
-	public void cacheResult(
-		java.util.List<CommercePaymentEntry> commercePaymentEntries);
-
-	/**
 	 * Creates a new commerce payment entry with the primary key. Does not add the commerce payment entry to the database.
 	 *
 	 * @param commercePaymentEntryId the primary key for the new commerce payment entry
@@ -883,4 +868,4 @@ public interface CommercePaymentEntryPersistence
 	public CommercePaymentEntry fetchByPrimaryKey(long commercePaymentEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:354991286
+// LIFERAY-SERVICE-BUILDER-HASH:-519451912

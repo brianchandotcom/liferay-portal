@@ -1295,20 +1295,6 @@ public interface SocialRequestPersistence
 		int status);
 
 	/**
-	 * Caches the social request in the entity cache if it is enabled.
-	 *
-	 * @param socialRequest the social request
-	 */
-	public void cacheResult(SocialRequest socialRequest);
-
-	/**
-	 * Caches the social requests in the entity cache if it is enabled.
-	 *
-	 * @param socialRequests the social requests
-	 */
-	public void cacheResult(java.util.List<SocialRequest> socialRequests);
-
-	/**
 	 * Creates a new social request with the primary key. Does not add the social request to the database.
 	 *
 	 * @param requestId the primary key for the new social request
@@ -1346,4 +1332,4 @@ public interface SocialRequestPersistence
 	public SocialRequest fetchByPrimaryKey(long requestId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1850267460
+// LIFERAY-SERVICE-BUILDER-HASH:-109704284

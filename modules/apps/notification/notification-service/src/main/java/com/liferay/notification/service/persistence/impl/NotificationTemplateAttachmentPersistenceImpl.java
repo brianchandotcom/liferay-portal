@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -353,74 +350,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 	/**
-	 * Caches the notification template attachment in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachment the notification template attachment
-	 */
-	@Override
-	public void cacheResult(
-		NotificationTemplateAttachment notificationTemplateAttachment) {
-
-		entityCache.putResult(
-			NotificationTemplateAttachmentImpl.class,
-			notificationTemplateAttachment.getPrimaryKey(),
-			notificationTemplateAttachment);
-
-		finderCache.putResult(
-			_finderPathFetchByNTI_OFI,
-			new Object[] {
-				notificationTemplateAttachment.getNotificationTemplateId(),
-				notificationTemplateAttachment.getObjectFieldId()
-			},
-			notificationTemplateAttachment);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the notification template attachments in the entity cache if it is enabled.
-	 *
-	 * @param notificationTemplateAttachments the notification template attachments
-	 */
-	@Override
-	public void cacheResult(
-		List<NotificationTemplateAttachment> notificationTemplateAttachments) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (notificationTemplateAttachments.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (NotificationTemplateAttachment notificationTemplateAttachment :
-				notificationTemplateAttachments) {
-
-			if (entityCache.getResult(
-					NotificationTemplateAttachmentImpl.class,
-					notificationTemplateAttachment.getPrimaryKey()) == null) {
-
-				cacheResult(notificationTemplateAttachment);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		NotificationTemplateAttachmentModelImpl
-			notificationTemplateAttachmentModelImpl) {
-
-		Object[] args = new Object[] {
-			notificationTemplateAttachmentModelImpl.getNotificationTemplateId(),
-			notificationTemplateAttachmentModelImpl.getObjectFieldId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByNTI_OFI, args,
-			notificationTemplateAttachmentModelImpl);
-	}
-
-	/**
 	 * Creates a new notification template attachment with the primary key. Does not add the notification template attachment to the database.
 	 *
 	 * @param notificationTemplateAttachmentId the primary key for the new notification template attachment
@@ -545,11 +474,7 @@ public class NotificationTemplateAttachmentPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			NotificationTemplateAttachmentImpl.class,
-			notificationTemplateAttachmentModelImpl, false, true);
-
-		cacheUniqueFindersCache(notificationTemplateAttachmentModelImpl);
+		cacheUniqueFindersResult(notificationTemplateAttachment, false);
 
 		if (isNew) {
 			notificationTemplateAttachment.setNew(false);
@@ -619,9 +544,6 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByNotificationTemplateId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByNotificationTemplateId",
@@ -658,10 +580,12 @@ public class NotificationTemplateAttachmentPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationTemplateAttachment::getNotificationTemplateId));
 
-		_finderPathFetchByNTI_OFI = new FinderPath(
+		_finderPathFetchByNTI_OFI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"notificationTemplateId", "objectFieldId"}, true);
+			new String[] {"notificationTemplateId", "objectFieldId"}, false,
+			NotificationTemplateAttachment::getNotificationTemplateId,
+			NotificationTemplateAttachment::getObjectFieldId);
 
 		_uniquePersistenceFinderByNTI_OFI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByNTI_OFI,
@@ -747,4 +671,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1257513146
+// LIFERAY-SERVICE-BUILDER-HASH:-124729357

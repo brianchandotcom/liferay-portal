@@ -427,20 +427,6 @@ public interface SegmentsEntryRelPersistence
 		long segmentsEntryId, long classNameId, long classPK);
 
 	/**
-	 * Caches the segments entry rel in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRel the segments entry rel
-	 */
-	public void cacheResult(SegmentsEntryRel segmentsEntryRel);
-
-	/**
-	 * Caches the segments entry rels in the entity cache if it is enabled.
-	 *
-	 * @param segmentsEntryRels the segments entry rels
-	 */
-	public void cacheResult(java.util.List<SegmentsEntryRel> segmentsEntryRels);
-
-	/**
 	 * Creates a new segments entry rel with the primary key. Does not add the segments entry rel to the database.
 	 *
 	 * @param segmentsEntryRelId the primary key for the new segments entry rel
@@ -479,4 +465,4 @@ public interface SegmentsEntryRelPersistence
 	public SegmentsEntryRel fetchByPrimaryKey(long segmentsEntryRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1559152717
+// LIFERAY-SERVICE-BUILDER-HASH:1566093145

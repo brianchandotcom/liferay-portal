@@ -326,20 +326,6 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 		long groupId, String name, String portletId, long classNameId);
 
 	/**
-	 * Caches the portlet item in the entity cache if it is enabled.
-	 *
-	 * @param portletItem the portlet item
-	 */
-	public void cacheResult(PortletItem portletItem);
-
-	/**
-	 * Caches the portlet items in the entity cache if it is enabled.
-	 *
-	 * @param portletItems the portlet items
-	 */
-	public void cacheResult(java.util.List<PortletItem> portletItems);
-
-	/**
 	 * Creates a new portlet item with the primary key. Does not add the portlet item to the database.
 	 *
 	 * @param portletItemId the primary key for the new portlet item
@@ -378,4 +364,4 @@ public interface PortletItemPersistence extends BasePersistence<PortletItem> {
 	public PortletItem fetchByPrimaryKey(long portletItemId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-493231183
+// LIFERAY-SERVICE-BUILDER-HASH:-1654876059

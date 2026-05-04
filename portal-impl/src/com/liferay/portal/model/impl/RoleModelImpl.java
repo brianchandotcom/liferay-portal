@@ -1570,4 +1570,4 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private Role _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:541194149
+// LIFERAY-SERVICE-BUILDER-HASH:1030067829

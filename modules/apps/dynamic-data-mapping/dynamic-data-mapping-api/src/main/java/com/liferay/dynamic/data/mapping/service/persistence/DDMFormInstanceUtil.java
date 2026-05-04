@@ -36,6 +36,20 @@ public class DDMFormInstanceUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DDMFormInstance> ddmFormInstances) {
+		getPersistence().cacheResult(ddmFormInstances);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DDMFormInstance ddmFormInstance) {
+		getPersistence().cacheResult(ddmFormInstance);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -814,24 +828,6 @@ public class DDMFormInstanceUtil {
 	}
 
 	/**
-	 * Caches the ddm form instance in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstance the ddm form instance
-	 */
-	public static void cacheResult(DDMFormInstance ddmFormInstance) {
-		getPersistence().cacheResult(ddmFormInstance);
-	}
-
-	/**
-	 * Caches the ddm form instances in the entity cache if it is enabled.
-	 *
-	 * @param ddmFormInstances the ddm form instances
-	 */
-	public static void cacheResult(List<DDMFormInstance> ddmFormInstances) {
-		getPersistence().cacheResult(ddmFormInstances);
-	}
-
-	/**
 	 * Creates a new ddm form instance with the primary key. Does not add the ddm form instance to the database.
 	 *
 	 * @param formInstanceId the primary key for the new ddm form instance
@@ -894,4 +890,4 @@ public class DDMFormInstanceUtil {
 	private static volatile DDMFormInstancePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:612889868
+// LIFERAY-SERVICE-BUILDER-HASH:-228304120

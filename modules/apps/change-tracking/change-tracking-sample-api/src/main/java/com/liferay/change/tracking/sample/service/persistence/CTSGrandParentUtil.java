@@ -36,6 +36,20 @@ public class CTSGrandParentUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTSGrandParent> ctsGrandParents) {
+		getPersistence().cacheResult(ctsGrandParents);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTSGrandParent ctsGrandParent) {
+		getPersistence().cacheResult(ctsGrandParent);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -233,24 +247,6 @@ public class CTSGrandParentUtil {
 	}
 
 	/**
-	 * Caches the cts grand parent in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParent the cts grand parent
-	 */
-	public static void cacheResult(CTSGrandParent ctsGrandParent) {
-		getPersistence().cacheResult(ctsGrandParent);
-	}
-
-	/**
-	 * Caches the cts grand parents in the entity cache if it is enabled.
-	 *
-	 * @param ctsGrandParents the cts grand parents
-	 */
-	public static void cacheResult(List<CTSGrandParent> ctsGrandParents) {
-		getPersistence().cacheResult(ctsGrandParents);
-	}
-
-	/**
 	 * Creates a new cts grand parent with the primary key. Does not add the cts grand parent to the database.
 	 *
 	 * @param ctsGrandParentId the primary key for the new cts grand parent
@@ -313,4 +309,4 @@ public class CTSGrandParentUtil {
 	private static volatile CTSGrandParentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-398735548
+// LIFERAY-SERVICE-BUILDER-HASH:-419273666

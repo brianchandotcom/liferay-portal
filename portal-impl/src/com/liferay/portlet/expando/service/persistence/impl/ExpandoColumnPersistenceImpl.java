@@ -12,7 +12,6 @@ import com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence;
 import com.liferay.expando.kernel.service.persistence.ExpandoColumnUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -36,10 +35,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1224,78 +1220,6 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 	/**
-	 * Caches the expando column in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumn the expando column
-	 */
-	@Override
-	public void cacheResult(ExpandoColumn expandoColumn) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoColumn.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				ExpandoColumnImpl.class, expandoColumn.getPrimaryKey(),
-				expandoColumn);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_N,
-				new Object[] {
-					expandoColumn.getTableId(), expandoColumn.getName()
-				},
-				expandoColumn);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the expando columns in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumns the expando columns
-	 */
-	@Override
-	public void cacheResult(List<ExpandoColumn> expandoColumns) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (expandoColumns.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ExpandoColumn expandoColumn : expandoColumns) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						expandoColumn.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						ExpandoColumnImpl.class,
-						expandoColumn.getPrimaryKey()) == null) {
-
-					cacheResult(expandoColumn);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ExpandoColumnModelImpl expandoColumnModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					expandoColumnModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				expandoColumnModelImpl.getTableId(),
-				expandoColumnModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByT_N, args, expandoColumnModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
 	 *
 	 * @param columnId the primary key for the new expando column
@@ -1421,10 +1345,7 @@ public class ExpandoColumnPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ExpandoColumnImpl.class, expandoColumnModelImpl, false, true);
-
-		cacheUniqueFindersCache(expandoColumnModelImpl);
+		cacheUniqueFindersResult(expandoColumn, false);
 
 		if (isNew) {
 			expandoColumn.setNew(false);
@@ -1554,9 +1475,6 @@ public class ExpandoColumnPersistenceImpl
 	 * Initializes the expando column persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByTableId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
 			new String[] {
@@ -1600,10 +1518,11 @@ public class ExpandoColumnPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"tableId", "name"}, true);
 
-		_finderPathFetchByT_N = new FinderPath(
+		_finderPathFetchByT_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"tableId", "name"}, true);
+			new String[] {"tableId", "name"}, false, ExpandoColumn::getTableId,
+			ExpandoColumn::getName);
 
 		_finderPathCountByT_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_N",
@@ -1674,4 +1593,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1297262046
+// LIFERAY-SERVICE-BUILDER-HASH:160189785

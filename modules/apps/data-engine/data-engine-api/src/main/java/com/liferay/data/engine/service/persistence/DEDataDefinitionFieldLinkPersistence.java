@@ -1105,22 +1105,6 @@ public interface DEDataDefinitionFieldLinkPersistence
 		String[] fieldNames);
 
 	/**
-	 * Caches the de data definition field link in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLink the de data definition field link
-	 */
-	public void cacheResult(
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink);
-
-	/**
-	 * Caches the de data definition field links in the entity cache if it is enabled.
-	 *
-	 * @param deDataDefinitionFieldLinks the de data definition field links
-	 */
-	public void cacheResult(
-		java.util.List<DEDataDefinitionFieldLink> deDataDefinitionFieldLinks);
-
-	/**
 	 * Creates a new de data definition field link with the primary key. Does not add the de data definition field link to the database.
 	 *
 	 * @param deDataDefinitionFieldLinkId the primary key for the new de data definition field link
@@ -1162,4 +1146,4 @@ public interface DEDataDefinitionFieldLinkPersistence
 		long deDataDefinitionFieldLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1444791563
+// LIFERAY-SERVICE-BUILDER-HASH:-1774152373

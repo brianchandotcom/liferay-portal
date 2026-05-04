@@ -2509,20 +2509,6 @@ public interface MBThreadPersistence
 		long groupId, long categoryId, int status);
 
 	/**
-	 * Caches the message boards thread in the entity cache if it is enabled.
-	 *
-	 * @param mbThread the message boards thread
-	 */
-	public void cacheResult(MBThread mbThread);
-
-	/**
-	 * Caches the message boards threads in the entity cache if it is enabled.
-	 *
-	 * @param mbThreads the message boards threads
-	 */
-	public void cacheResult(java.util.List<MBThread> mbThreads);
-
-	/**
 	 * Creates a new message boards thread with the primary key. Does not add the message boards thread to the database.
 	 *
 	 * @param threadId the primary key for the new message boards thread
@@ -2560,4 +2546,4 @@ public interface MBThreadPersistence
 	public MBThread fetchByPrimaryKey(long threadId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1387190220
+// LIFERAY-SERVICE-BUILDER-HASH:504149910

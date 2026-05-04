@@ -36,6 +36,22 @@ public class PortletPreferencesUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PortletPreferences> portletPreferenceses) {
+
+		getPersistence().cacheResult(portletPreferenceses);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PortletPreferences portletPreferences) {
+		getPersistence().cacheResult(portletPreferences);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1435,26 +1451,6 @@ public class PortletPreferencesUtil {
 	}
 
 	/**
-	 * Caches the portlet preferences in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferences the portlet preferences
-	 */
-	public static void cacheResult(PortletPreferences portletPreferences) {
-		getPersistence().cacheResult(portletPreferences);
-	}
-
-	/**
-	 * Caches the portlet preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param portletPreferenceses the portlet preferenceses
-	 */
-	public static void cacheResult(
-		List<PortletPreferences> portletPreferenceses) {
-
-		getPersistence().cacheResult(portletPreferenceses);
-	}
-
-	/**
 	 * Creates a new portlet preferences with the primary key. Does not add the portlet preferences to the database.
 	 *
 	 * @param portletPreferencesId the primary key for the new portlet preferences
@@ -1523,4 +1519,4 @@ public class PortletPreferencesUtil {
 	private static volatile PortletPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:553176987
+// LIFERAY-SERVICE-BUILDER-HASH:276996334

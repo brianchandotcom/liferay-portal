@@ -36,6 +36,22 @@ public class PortalPreferencesUtil {
 	 */
 
 	/**
+	 * @see BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<PortalPreferences> portalPreferenceses) {
+
+		getPersistence().cacheResult(portalPreferenceses);
+	}
+
+	/**
+	 * @see BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(PortalPreferences portalPreferences) {
+		getPersistence().cacheResult(portalPreferences);
+	}
+
+	/**
 	 * @see BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -298,26 +314,6 @@ public class PortalPreferencesUtil {
 	}
 
 	/**
-	 * Caches the portal preferences in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferences the portal preferences
-	 */
-	public static void cacheResult(PortalPreferences portalPreferences) {
-		getPersistence().cacheResult(portalPreferences);
-	}
-
-	/**
-	 * Caches the portal preferenceses in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceses the portal preferenceses
-	 */
-	public static void cacheResult(
-		List<PortalPreferences> portalPreferenceses) {
-
-		getPersistence().cacheResult(portalPreferenceses);
-	}
-
-	/**
 	 * Creates a new portal preferences with the primary key. Does not add the portal preferences to the database.
 	 *
 	 * @param portalPreferencesId the primary key for the new portal preferences
@@ -384,4 +380,4 @@ public class PortalPreferencesUtil {
 	private static volatile PortalPreferencesPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:94154500
+// LIFERAY-SERVICE-BUILDER-HASH:1550548665

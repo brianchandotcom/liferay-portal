@@ -503,23 +503,6 @@ public interface CommerceAvailabilityEstimatePersistence
 	public int filterCountByCompanyId(long companyId);
 
 	/**
-	 * Caches the commerce availability estimate in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimate the commerce availability estimate
-	 */
-	public void cacheResult(
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate);
-
-	/**
-	 * Caches the commerce availability estimates in the entity cache if it is enabled.
-	 *
-	 * @param commerceAvailabilityEstimates the commerce availability estimates
-	 */
-	public void cacheResult(
-		java.util.List<CommerceAvailabilityEstimate>
-			commerceAvailabilityEstimates);
-
-	/**
 	 * Creates a new commerce availability estimate with the primary key. Does not add the commerce availability estimate to the database.
 	 *
 	 * @param commerceAvailabilityEstimateId the primary key for the new commerce availability estimate
@@ -563,4 +546,4 @@ public interface CommerceAvailabilityEstimatePersistence
 		long commerceAvailabilityEstimateId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1735397151
+// LIFERAY-SERVICE-BUILDER-HASH:-1219143281

@@ -8,7 +8,6 @@ package com.liferay.portal.service.persistence.impl;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -52,8 +51,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -4800,94 +4797,6 @@ public class OrganizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the organization in the entity cache if it is enabled.
-	 *
-	 * @param organization the organization
-	 */
-	@Override
-	public void cacheResult(Organization organization) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					organization.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				OrganizationImpl.class, organization.getPrimaryKey(),
-				organization);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N,
-				new Object[] {
-					organization.getCompanyId(), organization.getName()
-				},
-				organization);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					organization.getExternalReferenceCode(),
-					organization.getCompanyId()
-				},
-				organization);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the organizations in the entity cache if it is enabled.
-	 *
-	 * @param organizations the organizations
-	 */
-	@Override
-	public void cacheResult(List<Organization> organizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (organizations.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (Organization organization : organizations) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						organization.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						OrganizationImpl.class, organization.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(organization);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		OrganizationModelImpl organizationModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					organizationModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				organizationModelImpl.getCompanyId(),
-				organizationModelImpl.getName()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N, args, organizationModelImpl);
-
-			args = new Object[] {
-				organizationModelImpl.getExternalReferenceCode(),
-				organizationModelImpl.getCompanyId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByERC_C, args, organizationModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new organization with the primary key. Does not add the organization to the database.
 	 *
 	 * @param organizationId the primary key for the new organization
@@ -5102,10 +5011,7 @@ public class OrganizationPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			OrganizationImpl.class, organizationModelImpl, false, true);
-
-		cacheUniqueFindersCache(organizationModelImpl);
+		cacheUniqueFindersResult(organization, false);
 
 		if (isNew) {
 			organization.setNew(false);
@@ -5896,9 +5802,6 @@ public class OrganizationPersistenceImpl
 	 * Initializes the organization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		organizationToGroupTableMapper = TableMapperFactory.getTableMapper(
 			"Groups_Orgs", "companyId", "organizationId", "groupId", this,
 			groupPersistence);
@@ -6100,10 +6003,11 @@ public class OrganizationPersistenceImpl
 					"organization.", "treePath", FinderColumn.Type.STRING,
 					"LIKE", true, true, Organization::getTreePath));
 
-		_finderPathFetchByC_N = new FinderPath(
+		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, false,
+			Organization::getCompanyId, Organization::getName);
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_ORGANIZATION_WHERE,
@@ -6184,10 +6088,11 @@ public class OrganizationPersistenceImpl
 			},
 			new String[] {"companyId", "parentOrganizationId", "name"}, false);
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			Organization::getExternalReferenceCode, Organization::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ORGANIZATION_WHERE,
@@ -6273,4 +6178,4 @@ public class OrganizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-9770159
+// LIFERAY-SERVICE-BUILDER-HASH:-197660791

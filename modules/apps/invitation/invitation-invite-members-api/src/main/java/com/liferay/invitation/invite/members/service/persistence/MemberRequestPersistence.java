@@ -349,20 +349,6 @@ public interface MemberRequestPersistence
 	public int countByG_R_S(long groupId, long receiverUserId, int status);
 
 	/**
-	 * Caches the member request in the entity cache if it is enabled.
-	 *
-	 * @param memberRequest the member request
-	 */
-	public void cacheResult(MemberRequest memberRequest);
-
-	/**
-	 * Caches the member requests in the entity cache if it is enabled.
-	 *
-	 * @param memberRequests the member requests
-	 */
-	public void cacheResult(java.util.List<MemberRequest> memberRequests);
-
-	/**
 	 * Creates a new member request with the primary key. Does not add the member request to the database.
 	 *
 	 * @param memberRequestId the primary key for the new member request
@@ -401,4 +387,4 @@ public interface MemberRequestPersistence
 	public MemberRequest fetchByPrimaryKey(long memberRequestId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1533605047
+// LIFERAY-SERVICE-BUILDER-HASH:132777825

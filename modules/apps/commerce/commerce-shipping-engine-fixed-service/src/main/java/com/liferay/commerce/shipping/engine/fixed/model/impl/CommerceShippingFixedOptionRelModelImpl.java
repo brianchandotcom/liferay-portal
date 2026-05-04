@@ -1259,4 +1259,4 @@ public class CommerceShippingFixedOptionRelModelImpl
 	private CommerceShippingFixedOptionRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-418483528
+// LIFERAY-SERVICE-BUILDER-HASH:995430536

@@ -551,20 +551,6 @@ public interface AssetTagGroupRelPersistence
 	public int countByG_T(long groupId, long tagId);
 
 	/**
-	 * Caches the asset tag group rel in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRel the asset tag group rel
-	 */
-	public void cacheResult(AssetTagGroupRel assetTagGroupRel);
-
-	/**
-	 * Caches the asset tag group rels in the entity cache if it is enabled.
-	 *
-	 * @param assetTagGroupRels the asset tag group rels
-	 */
-	public void cacheResult(java.util.List<AssetTagGroupRel> assetTagGroupRels);
-
-	/**
 	 * Creates a new asset tag group rel with the primary key. Does not add the asset tag group rel to the database.
 	 *
 	 * @param assetTagGroupRelId the primary key for the new asset tag group rel
@@ -603,4 +589,4 @@ public interface AssetTagGroupRelPersistence
 	public AssetTagGroupRel fetchByPrimaryKey(long assetTagGroupRelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-77235415
+// LIFERAY-SERVICE-BUILDER-HASH:-407981229

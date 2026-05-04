@@ -36,6 +36,20 @@ public class CTCollectionUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CTCollection> ctCollections) {
+		getPersistence().cacheResult(ctCollections);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CTCollection ctCollection) {
+		getPersistence().cacheResult(ctCollection);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1484,24 +1498,6 @@ public class CTCollectionUtil {
 	}
 
 	/**
-	 * Caches the ct collection in the entity cache if it is enabled.
-	 *
-	 * @param ctCollection the ct collection
-	 */
-	public static void cacheResult(CTCollection ctCollection) {
-		getPersistence().cacheResult(ctCollection);
-	}
-
-	/**
-	 * Caches the ct collections in the entity cache if it is enabled.
-	 *
-	 * @param ctCollections the ct collections
-	 */
-	public static void cacheResult(List<CTCollection> ctCollections) {
-		getPersistence().cacheResult(ctCollections);
-	}
-
-	/**
 	 * Creates a new ct collection with the primary key. Does not add the ct collection to the database.
 	 *
 	 * @param ctCollectionId the primary key for the new ct collection
@@ -1562,4 +1558,4 @@ public class CTCollectionUtil {
 	private static volatile CTCollectionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:328190015
+// LIFERAY-SERVICE-BUILDER-HASH:1066268457

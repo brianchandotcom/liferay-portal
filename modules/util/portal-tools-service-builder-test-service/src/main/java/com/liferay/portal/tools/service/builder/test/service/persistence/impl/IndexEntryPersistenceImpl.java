@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -29,8 +28,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -1843,96 +1840,6 @@ public class IndexEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the index entry in the entity cache if it is enabled.
-	 *
-	 * @param indexEntry the index entry
-	 */
-	@Override
-	public void cacheResult(IndexEntry indexEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					indexEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				IndexEntryImpl.class, indexEntry.getPrimaryKey(), indexEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByO_O_P_P,
-				new Object[] {
-					indexEntry.getOwnerId(), indexEntry.getOwnerType(),
-					indexEntry.getPlid(), indexEntry.getPortletId()
-				},
-				indexEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					indexEntry.getExternalReferenceCode(),
-					indexEntry.getCompanyId()
-				},
-				indexEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the index entries in the entity cache if it is enabled.
-	 *
-	 * @param indexEntries the index entries
-	 */
-	@Override
-	public void cacheResult(List<IndexEntry> indexEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (indexEntries.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (IndexEntry indexEntry : indexEntries) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						indexEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						IndexEntryImpl.class, indexEntry.getPrimaryKey()) ==
-							null) {
-
-					cacheResult(indexEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		IndexEntryModelImpl indexEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					indexEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				indexEntryModelImpl.getOwnerId(),
-				indexEntryModelImpl.getOwnerType(),
-				indexEntryModelImpl.getPlid(),
-				indexEntryModelImpl.getPortletId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByO_O_P_P, args, indexEntryModelImpl);
-
-			args = new Object[] {
-				indexEntryModelImpl.getExternalReferenceCode(),
-				indexEntryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, indexEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new index entry with the primary key. Does not add the index entry to the database.
 	 *
 	 * @param indexEntryId the primary key for the new index entry
@@ -2106,10 +2013,7 @@ public class IndexEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			IndexEntryImpl.class, indexEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(indexEntryModelImpl);
+		cacheUniqueFindersResult(indexEntry, false);
 
 		if (isNew) {
 			indexEntry.setNew(false);
@@ -2234,9 +2138,6 @@ public class IndexEntryPersistenceImpl
 	 * Initializes the index entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByOwnerId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerId",
 			new String[] {
@@ -2543,13 +2444,15 @@ public class IndexEntryPersistenceImpl
 					"indexEntry.", "portletId", FinderColumn.Type.STRING,
 					"LIKE", true, true, IndexEntry::getPortletId));
 
-		_finderPathFetchByO_O_P_P = new FinderPath(
+		_finderPathFetchByO_O_P_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByO_O_P_P",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Long.class.getName(), String.class.getName()
 			},
-			new String[] {"ownerId", "ownerType", "plid", "portletId"}, true);
+			new String[] {"ownerId", "ownerType", "plid", "portletId"}, false,
+			IndexEntry::getOwnerId, IndexEntry::getOwnerType,
+			IndexEntry::getPlid, IndexEntry::getPortletId);
 
 		_uniquePersistenceFinderByO_O_P_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O_P_P, _SQL_SELECT_INDEXENTRY_WHERE,
@@ -2566,10 +2469,11 @@ public class IndexEntryPersistenceImpl
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			IndexEntry::getExternalReferenceCode, IndexEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_INDEXENTRY_WHERE,
@@ -2623,4 +2527,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1440638858
+// LIFERAY-SERVICE-BUILDER-HASH:464212999

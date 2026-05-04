@@ -860,20 +860,6 @@ public interface CommerceChannelPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce channel in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannel the commerce channel
-	 */
-	public void cacheResult(CommerceChannel commerceChannel);
-
-	/**
-	 * Caches the commerce channels in the entity cache if it is enabled.
-	 *
-	 * @param commerceChannels the commerce channels
-	 */
-	public void cacheResult(java.util.List<CommerceChannel> commerceChannels);
-
-	/**
 	 * Creates a new commerce channel with the primary key. Does not add the commerce channel to the database.
 	 *
 	 * @param commerceChannelId the primary key for the new commerce channel
@@ -912,4 +898,4 @@ public interface CommerceChannelPersistence
 	public CommerceChannel fetchByPrimaryKey(long commerceChannelId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1496724227
+// LIFERAY-SERVICE-BUILDER-HASH:-1316899237

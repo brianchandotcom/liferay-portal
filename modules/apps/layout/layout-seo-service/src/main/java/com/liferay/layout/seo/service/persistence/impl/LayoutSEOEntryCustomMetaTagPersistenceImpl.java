@@ -14,7 +14,6 @@ import com.liferay.layout.seo.service.persistence.LayoutSEOEntryCustomMetaTagPer
 import com.liferay.layout.seo.service.persistence.LayoutSEOEntryCustomMetaTagUtil;
 import com.liferay.layout.seo.service.persistence.impl.constants.LayoutSEOPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -30,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPe
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -267,62 +263,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout seo entry custom meta tag in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTag the layout seo entry custom meta tag
-	 */
-	@Override
-	public void cacheResult(
-		LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutSEOEntryCustomMetaTag.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutSEOEntryCustomMetaTagImpl.class,
-				layoutSEOEntryCustomMetaTag.getPrimaryKey(),
-				layoutSEOEntryCustomMetaTag);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout seo entry custom meta tags in the entity cache if it is enabled.
-	 *
-	 * @param layoutSEOEntryCustomMetaTags the layout seo entry custom meta tags
-	 */
-	@Override
-	public void cacheResult(
-		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutSEOEntryCustomMetaTags.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag :
-				layoutSEOEntryCustomMetaTags) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutSEOEntryCustomMetaTag.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutSEOEntryCustomMetaTagImpl.class,
-						layoutSEOEntryCustomMetaTag.getPrimaryKey()) == null) {
-
-					cacheResult(layoutSEOEntryCustomMetaTag);
-				}
-			}
-		}
-	}
-
-	/**
 	 * Creates a new layout seo entry custom meta tag with the primary key. Does not add the layout seo entry custom meta tag to the database.
 	 *
 	 * @param layoutSEOEntryCustomMetaTagId the primary key for the new layout seo entry custom meta tag
@@ -455,9 +395,7 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutSEOEntryCustomMetaTagImpl.class,
-			layoutSEOEntryCustomMetaTagModelImpl, false, true);
+		cacheUniqueFindersResult(layoutSEOEntryCustomMetaTag, false);
 
 		if (isNew) {
 			layoutSEOEntryCustomMetaTag.setNew(false);
@@ -580,9 +518,6 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByG_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
 			new String[] {
@@ -688,4 +623,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704849495
+// LIFERAY-SERVICE-BUILDER-HASH:1770316684

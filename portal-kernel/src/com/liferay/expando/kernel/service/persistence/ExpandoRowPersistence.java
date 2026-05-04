@@ -288,20 +288,6 @@ public interface ExpandoRowPersistence
 	public int countByT_C(long tableId, long classPK);
 
 	/**
-	 * Caches the expando row in the entity cache if it is enabled.
-	 *
-	 * @param expandoRow the expando row
-	 */
-	public void cacheResult(ExpandoRow expandoRow);
-
-	/**
-	 * Caches the expando rows in the entity cache if it is enabled.
-	 *
-	 * @param expandoRows the expando rows
-	 */
-	public void cacheResult(java.util.List<ExpandoRow> expandoRows);
-
-	/**
 	 * Creates a new expando row with the primary key. Does not add the expando row to the database.
 	 *
 	 * @param rowId the primary key for the new expando row
@@ -338,4 +324,4 @@ public interface ExpandoRowPersistence
 	public ExpandoRow fetchByPrimaryKey(long rowId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1987986200
+// LIFERAY-SERVICE-BUILDER-HASH:-1470183278

@@ -24,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.RecentLayoutSetBranchImpl;
 import com.liferay.portal.model.impl.RecentLayoutSetBranchModelImpl;
@@ -625,69 +622,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 	/**
-	 * Caches the recent layout set branch in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutSetBranch the recent layout set branch
-	 */
-	@Override
-	public void cacheResult(RecentLayoutSetBranch recentLayoutSetBranch) {
-		EntityCacheUtil.putResult(
-			RecentLayoutSetBranchImpl.class,
-			recentLayoutSetBranch.getPrimaryKey(), recentLayoutSetBranch);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_L,
-			new Object[] {
-				recentLayoutSetBranch.getUserId(),
-				recentLayoutSetBranch.getLayoutSetId()
-			},
-			recentLayoutSetBranch);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the recent layout set branches in the entity cache if it is enabled.
-	 *
-	 * @param recentLayoutSetBranchs the recent layout set branches
-	 */
-	@Override
-	public void cacheResult(
-		List<RecentLayoutSetBranch> recentLayoutSetBranchs) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (recentLayoutSetBranchs.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (RecentLayoutSetBranch recentLayoutSetBranch :
-				recentLayoutSetBranchs) {
-
-			if (EntityCacheUtil.getResult(
-					RecentLayoutSetBranchImpl.class,
-					recentLayoutSetBranch.getPrimaryKey()) == null) {
-
-				cacheResult(recentLayoutSetBranch);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		RecentLayoutSetBranchModelImpl recentLayoutSetBranchModelImpl) {
-
-		Object[] args = new Object[] {
-			recentLayoutSetBranchModelImpl.getUserId(),
-			recentLayoutSetBranchModelImpl.getLayoutSetId()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByU_L, args, recentLayoutSetBranchModelImpl);
-	}
-
-	/**
 	 * Creates a new recent layout set branch with the primary key. Does not add the recent layout set branch to the database.
 	 *
 	 * @param recentLayoutSetBranchId the primary key for the new recent layout set branch
@@ -801,11 +735,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			RecentLayoutSetBranchImpl.class, recentLayoutSetBranchModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(recentLayoutSetBranchModelImpl);
+		cacheUniqueFindersResult(recentLayoutSetBranch, false);
 
 		if (isNew) {
 			recentLayoutSetBranch.setNew(false);
@@ -867,9 +797,6 @@ public class RecentLayoutSetBranchPersistenceImpl
 	 * Initializes the recent layout set branch persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
 			new String[] {
@@ -963,10 +890,12 @@ public class RecentLayoutSetBranchPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					RecentLayoutSetBranch::getLayoutSetBranchId));
 
-		_finderPathFetchByU_L = new FinderPath(
+		_finderPathFetchByU_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "layoutSetId"}, true);
+			new String[] {"userId", "layoutSetId"}, false,
+			RecentLayoutSetBranch::getUserId,
+			RecentLayoutSetBranch::getLayoutSetId);
 
 		_uniquePersistenceFinderByU_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_L,
@@ -1011,4 +940,4 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1083082840
+// LIFERAY-SERVICE-BUILDER-HASH:1854358066

@@ -36,6 +36,20 @@ public class OpenIdConnectUserUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<OpenIdConnectUser> openIdConnectUsers) {
+		getPersistence().cacheResult(openIdConnectUsers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(OpenIdConnectUser openIdConnectUser) {
+		getPersistence().cacheResult(openIdConnectUser);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -324,24 +338,6 @@ public class OpenIdConnectUserUtil {
 	}
 
 	/**
-	 * Caches the open ID connect user in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUser the open ID connect user
-	 */
-	public static void cacheResult(OpenIdConnectUser openIdConnectUser) {
-		getPersistence().cacheResult(openIdConnectUser);
-	}
-
-	/**
-	 * Caches the open ID connect users in the entity cache if it is enabled.
-	 *
-	 * @param openIdConnectUsers the open ID connect users
-	 */
-	public static void cacheResult(List<OpenIdConnectUser> openIdConnectUsers) {
-		getPersistence().cacheResult(openIdConnectUsers);
-	}
-
-	/**
 	 * Creates a new open ID connect user with the primary key. Does not add the open ID connect user to the database.
 	 *
 	 * @param openIdConnectUserId the primary key for the new open ID connect user
@@ -410,4 +406,4 @@ public class OpenIdConnectUserUtil {
 	private static volatile OpenIdConnectUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-482041316
+// LIFERAY-SERVICE-BUILDER-HASH:2092709082

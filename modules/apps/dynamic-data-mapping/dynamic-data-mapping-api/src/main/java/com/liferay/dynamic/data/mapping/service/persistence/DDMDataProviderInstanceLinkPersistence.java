@@ -297,23 +297,6 @@ public interface DDMDataProviderInstanceLinkPersistence
 	public int countByD_S(long dataProviderInstanceId, long structureId);
 
 	/**
-	 * Caches the ddm data provider instance link in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
-	 */
-	public void cacheResult(
-		DDMDataProviderInstanceLink ddmDataProviderInstanceLink);
-
-	/**
-	 * Caches the ddm data provider instance links in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstanceLinks the ddm data provider instance links
-	 */
-	public void cacheResult(
-		java.util.List<DDMDataProviderInstanceLink>
-			ddmDataProviderInstanceLinks);
-
-	/**
 	 * Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
 	 *
 	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
@@ -355,4 +338,4 @@ public interface DDMDataProviderInstanceLinkPersistence
 		long dataProviderInstanceLinkId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:394956275
+// LIFERAY-SERVICE-BUILDER-HASH:-1373188325

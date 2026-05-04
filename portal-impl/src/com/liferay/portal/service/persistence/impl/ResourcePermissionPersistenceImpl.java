@@ -7,7 +7,6 @@ package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -32,10 +31,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
@@ -4257,85 +4253,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Caches the resource permission in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermission the resource permission
-	 */
-	@Override
-	public void cacheResult(ResourcePermission resourcePermission) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					resourcePermission.getCtCollectionId())) {
-
-			EntityCacheUtil.putResult(
-				ResourcePermissionImpl.class,
-				resourcePermission.getPrimaryKey(), resourcePermission);
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N_S_P_R,
-				new Object[] {
-					resourcePermission.getCompanyId(),
-					resourcePermission.getName(), resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId()
-				},
-				resourcePermission);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the resource permissions in the entity cache if it is enabled.
-	 *
-	 * @param resourcePermissions the resource permissions
-	 */
-	@Override
-	public void cacheResult(List<ResourcePermission> resourcePermissions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (resourcePermissions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						resourcePermission.getCtCollectionId())) {
-
-				if (EntityCacheUtil.getResult(
-						ResourcePermissionImpl.class,
-						resourcePermission.getPrimaryKey()) == null) {
-
-					cacheResult(resourcePermission);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ResourcePermissionModelImpl resourcePermissionModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					resourcePermissionModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				resourcePermissionModelImpl.getCompanyId(),
-				resourcePermissionModelImpl.getName(),
-				resourcePermissionModelImpl.getScope(),
-				resourcePermissionModelImpl.getPrimKey(),
-				resourcePermissionModelImpl.getRoleId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_N_S_P_R, args, resourcePermissionModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new resource permission with the primary key. Does not add the resource permission to the database.
 	 *
 	 * @param resourcePermissionId the primary key for the new resource permission
@@ -4454,11 +4371,7 @@ public class ResourcePermissionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ResourcePermissionImpl.class, resourcePermissionModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(resourcePermissionModelImpl);
+		cacheUniqueFindersResult(resourcePermission, false);
 
 		if (isNew) {
 			resourcePermission.setNew(false);
@@ -4584,9 +4497,6 @@ public class ResourcePermissionPersistenceImpl
 	 * Initializes the resource permission persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
 			new String[] {
@@ -4876,7 +4786,7 @@ public class ResourcePermissionPersistenceImpl
 			new String[] {"companyId", "name", "scope", "primKey", "roleId"},
 			true);
 
-		_finderPathFetchByC_N_S_P_R = new FinderPath(
+		_finderPathFetchByC_N_S_P_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N_S_P_R",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -4884,7 +4794,9 @@ public class ResourcePermissionPersistenceImpl
 				Long.class.getName()
 			},
 			new String[] {"companyId", "name", "scope", "primKey", "roleId"},
-			true);
+			false, ResourcePermission::getCompanyId,
+			ResourcePermission::getName, ResourcePermission::getScope,
+			ResourcePermission::getPrimKey, ResourcePermission::getRoleId);
 
 		_finderPathCountByC_N_S_P_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S_P_R",
@@ -4988,4 +4900,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1296782562
+// LIFERAY-SERVICE-BUILDER-HASH:-1295104218

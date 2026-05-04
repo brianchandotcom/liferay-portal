@@ -505,22 +505,6 @@ public interface CommerceTaxCategoryMappingPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the commerce tax category mapping in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMapping the commerce tax category mapping
-	 */
-	public void cacheResult(
-		CommerceTaxCategoryMapping commerceTaxCategoryMapping);
-
-	/**
-	 * Caches the commerce tax category mappings in the entity cache if it is enabled.
-	 *
-	 * @param commerceTaxCategoryMappings the commerce tax category mappings
-	 */
-	public void cacheResult(
-		java.util.List<CommerceTaxCategoryMapping> commerceTaxCategoryMappings);
-
-	/**
 	 * Creates a new commerce tax category mapping with the primary key. Does not add the commerce tax category mapping to the database.
 	 *
 	 * @param commerceTaxCategoryMappingId the primary key for the new commerce tax category mapping
@@ -562,4 +546,4 @@ public interface CommerceTaxCategoryMappingPersistence
 		long commerceTaxCategoryMappingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:707248770
+// LIFERAY-SERVICE-BUILDER-HASH:-129354294

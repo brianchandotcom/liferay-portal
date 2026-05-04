@@ -34,10 +34,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -7462,45 +7459,6 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the microblogs entry in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntry the microblogs entry
-	 */
-	@Override
-	public void cacheResult(MicroblogsEntry microblogsEntry) {
-		entityCache.putResult(
-			MicroblogsEntryImpl.class, microblogsEntry.getPrimaryKey(),
-			microblogsEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the microblogs entries in the entity cache if it is enabled.
-	 *
-	 * @param microblogsEntries the microblogs entries
-	 */
-	@Override
-	public void cacheResult(List<MicroblogsEntry> microblogsEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (microblogsEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (MicroblogsEntry microblogsEntry : microblogsEntries) {
-			if (entityCache.getResult(
-					MicroblogsEntryImpl.class,
-					microblogsEntry.getPrimaryKey()) == null) {
-
-				cacheResult(microblogsEntry);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new microblogs entry with the primary key. Does not add the microblogs entry to the database.
 	 *
 	 * @param microblogsEntryId the primary key for the new microblogs entry
@@ -7632,8 +7590,7 @@ public class MicroblogsEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			MicroblogsEntryImpl.class, microblogsEntryModelImpl, false, true);
+		cacheUniqueFindersResult(microblogsEntry, false);
 
 		if (isNew) {
 			microblogsEntry.setNew(false);
@@ -7699,9 +7656,6 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -8188,4 +8142,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1236738698
+// LIFERAY-SERVICE-BUILDER-HASH:-290522077

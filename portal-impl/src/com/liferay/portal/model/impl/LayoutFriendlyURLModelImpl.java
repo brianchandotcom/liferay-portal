@@ -1173,4 +1173,4 @@ public class LayoutFriendlyURLModelImpl
 	private LayoutFriendlyURL _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1908925369
+// LIFERAY-SERVICE-BUILDER-HASH:316988579

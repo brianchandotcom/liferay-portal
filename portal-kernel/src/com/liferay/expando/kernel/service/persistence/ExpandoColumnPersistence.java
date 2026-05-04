@@ -332,20 +332,6 @@ public interface ExpandoColumnPersistence
 	public int filterCountByT_N(long tableId, String[] names);
 
 	/**
-	 * Caches the expando column in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumn the expando column
-	 */
-	public void cacheResult(ExpandoColumn expandoColumn);
-
-	/**
-	 * Caches the expando columns in the entity cache if it is enabled.
-	 *
-	 * @param expandoColumns the expando columns
-	 */
-	public void cacheResult(java.util.List<ExpandoColumn> expandoColumns);
-
-	/**
 	 * Creates a new expando column with the primary key. Does not add the expando column to the database.
 	 *
 	 * @param columnId the primary key for the new expando column
@@ -383,4 +369,4 @@ public interface ExpandoColumnPersistence
 	public ExpandoColumn fetchByPrimaryKey(long columnId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1909679409
+// LIFERAY-SERVICE-BUILDER-HASH:-457243515

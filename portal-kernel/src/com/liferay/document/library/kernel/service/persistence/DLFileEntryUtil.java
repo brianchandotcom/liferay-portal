@@ -36,6 +36,20 @@ public class DLFileEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<DLFileEntry> dlFileEntries) {
+		getPersistence().cacheResult(dlFileEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(DLFileEntry dlFileEntry) {
+		getPersistence().cacheResult(dlFileEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3815,24 +3829,6 @@ public class DLFileEntryUtil {
 	}
 
 	/**
-	 * Caches the document library file entry in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntry the document library file entry
-	 */
-	public static void cacheResult(DLFileEntry dlFileEntry) {
-		getPersistence().cacheResult(dlFileEntry);
-	}
-
-	/**
-	 * Caches the document library file entries in the entity cache if it is enabled.
-	 *
-	 * @param dlFileEntries the document library file entries
-	 */
-	public static void cacheResult(List<DLFileEntry> dlFileEntries) {
-		getPersistence().cacheResult(dlFileEntries);
-	}
-
-	/**
 	 * Creates a new document library file entry with the primary key. Does not add the document library file entry to the database.
 	 *
 	 * @param fileEntryId the primary key for the new document library file entry
@@ -3895,4 +3891,4 @@ public class DLFileEntryUtil {
 	private static volatile DLFileEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:76743444
+// LIFERAY-SERVICE-BUILDER-HASH:1619478813

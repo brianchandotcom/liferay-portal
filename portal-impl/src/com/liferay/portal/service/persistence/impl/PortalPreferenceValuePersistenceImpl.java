@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceF
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1311,73 +1308,6 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Caches the portal preference value in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValue the portal preference value
-	 */
-	@Override
-	public void cacheResult(PortalPreferenceValue portalPreferenceValue) {
-		dummyEntityCache.putResult(
-			PortalPreferenceValueImpl.class,
-			portalPreferenceValue.getPrimaryKey(), portalPreferenceValue);
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByP_I_K_N,
-			new Object[] {
-				portalPreferenceValue.getPortalPreferencesId(),
-				portalPreferenceValue.getIndex(),
-				portalPreferenceValue.getKey(),
-				portalPreferenceValue.getNamespace()
-			},
-			portalPreferenceValue);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the portal preference values in the entity cache if it is enabled.
-	 *
-	 * @param portalPreferenceValues the portal preference values
-	 */
-	@Override
-	public void cacheResult(
-		List<PortalPreferenceValue> portalPreferenceValues) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (portalPreferenceValues.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PortalPreferenceValue portalPreferenceValue :
-				portalPreferenceValues) {
-
-			if (dummyEntityCache.getResult(
-					PortalPreferenceValueImpl.class,
-					portalPreferenceValue.getPrimaryKey()) == null) {
-
-				cacheResult(portalPreferenceValue);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PortalPreferenceValueModelImpl portalPreferenceValueModelImpl) {
-
-		Object[] args = new Object[] {
-			portalPreferenceValueModelImpl.getPortalPreferencesId(),
-			portalPreferenceValueModelImpl.getIndex(),
-			portalPreferenceValueModelImpl.getKey(),
-			portalPreferenceValueModelImpl.getNamespace()
-		};
-
-		dummyFinderCache.putResult(
-			_finderPathFetchByP_I_K_N, args, portalPreferenceValueModelImpl);
-	}
-
-	/**
 	 * Creates a new portal preference value with the primary key. Does not add the portal preference value to the database.
 	 *
 	 * @param portalPreferenceValueId the primary key for the new portal preference value
@@ -1491,11 +1421,7 @@ public class PortalPreferenceValuePersistenceImpl
 			closeSession(session);
 		}
 
-		dummyEntityCache.putResult(
-			PortalPreferenceValueImpl.class, portalPreferenceValueModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(portalPreferenceValueModelImpl);
+		cacheUniqueFindersResult(portalPreferenceValue, false);
 
 		if (isNew) {
 			portalPreferenceValue.setNew(false);
@@ -1562,9 +1488,6 @@ public class PortalPreferenceValuePersistenceImpl
 	 * Initializes the portal preference value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByPortalPreferencesId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortalPreferencesId",
 			new String[] {
@@ -1663,14 +1586,16 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathFetchByP_I_K_N = new FinderPath(
+		_finderPathFetchByP_I_K_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
 			new String[] {"portalPreferencesId", "index_", "key_", "namespace"},
-			true);
+			false, PortalPreferenceValue::getPortalPreferencesId,
+			PortalPreferenceValue::getIndex, PortalPreferenceValue::getKey,
+			PortalPreferenceValue::getNamespace);
 
 		_uniquePersistenceFinderByP_I_K_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByP_I_K_N,
@@ -1785,4 +1710,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1132397328
+// LIFERAY-SERVICE-BUILDER-HASH:524497222

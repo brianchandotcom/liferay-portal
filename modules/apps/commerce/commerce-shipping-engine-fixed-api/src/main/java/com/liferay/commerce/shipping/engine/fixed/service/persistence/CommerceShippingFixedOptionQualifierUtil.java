@@ -36,6 +36,26 @@ public class CommerceShippingFixedOptionQualifierUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceShippingFixedOptionQualifier>
+			commerceShippingFixedOptionQualifiers) {
+
+		getPersistence().cacheResult(commerceShippingFixedOptionQualifiers);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceShippingFixedOptionQualifier
+			commerceShippingFixedOptionQualifier) {
+
+		getPersistence().cacheResult(commerceShippingFixedOptionQualifier);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -501,30 +521,6 @@ public class CommerceShippingFixedOptionQualifierUtil {
 	}
 
 	/**
-	 * Caches the commerce shipping fixed option qualifier in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifier the commerce shipping fixed option qualifier
-	 */
-	public static void cacheResult(
-		CommerceShippingFixedOptionQualifier
-			commerceShippingFixedOptionQualifier) {
-
-		getPersistence().cacheResult(commerceShippingFixedOptionQualifier);
-	}
-
-	/**
-	 * Caches the commerce shipping fixed option qualifiers in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionQualifiers the commerce shipping fixed option qualifiers
-	 */
-	public static void cacheResult(
-		List<CommerceShippingFixedOptionQualifier>
-			commerceShippingFixedOptionQualifiers) {
-
-		getPersistence().cacheResult(commerceShippingFixedOptionQualifiers);
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option qualifier with the primary key. Does not add the commerce shipping fixed option qualifier to the database.
 	 *
 	 * @param commerceShippingFixedOptionQualifierId the primary key for the new commerce shipping fixed option qualifier
@@ -604,4 +600,4 @@ public class CommerceShippingFixedOptionQualifierUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-997757803
+// LIFERAY-SERVICE-BUILDER-HASH:549500571

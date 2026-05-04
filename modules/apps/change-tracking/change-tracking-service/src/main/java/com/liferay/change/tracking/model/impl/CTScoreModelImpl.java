@@ -628,4 +628,4 @@ public class CTScoreModelImpl
 	private CTScore _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-83396451
+// LIFERAY-SERVICE-BUILDER-HASH:1603418885

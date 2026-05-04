@@ -507,23 +507,6 @@ public interface CPDVirtualSettingFileEntryPersistence
 	public int countByFileEntryId(long fileEntryId);
 
 	/**
-	 * Caches the cpd virtual setting file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntry the cpd virtual setting file entry
-	 */
-	public void cacheResult(
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry);
-
-	/**
-	 * Caches the cpd virtual setting file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntries the cpd virtual setting file entries
-	 */
-	public void cacheResult(
-		java.util.List<CPDVirtualSettingFileEntry>
-			cpdVirtualSettingFileEntries);
-
-	/**
 	 * Creates a new cpd virtual setting file entry with the primary key. Does not add the cpd virtual setting file entry to the database.
 	 *
 	 * @param CPDefinitionVirtualSettingFileEntryId the primary key for the new cpd virtual setting file entry
@@ -567,4 +550,4 @@ public interface CPDVirtualSettingFileEntryPersistence
 		long CPDefinitionVirtualSettingFileEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-763999487
+// LIFERAY-SERVICE-BUILDER-HASH:-1017183261

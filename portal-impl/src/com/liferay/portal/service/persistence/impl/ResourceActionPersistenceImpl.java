@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.ResourceActionImpl;
 import com.liferay.portal.model.impl.ResourceActionModelImpl;
@@ -311,63 +308,6 @@ public class ResourceActionPersistenceImpl
 	}
 
 	/**
-	 * Caches the resource action in the entity cache if it is enabled.
-	 *
-	 * @param resourceAction the resource action
-	 */
-	@Override
-	public void cacheResult(ResourceAction resourceAction) {
-		EntityCacheUtil.putResult(
-			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
-			resourceAction);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByN_A,
-			new Object[] {
-				resourceAction.getName(), resourceAction.getActionId()
-			},
-			resourceAction);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the resource actions in the entity cache if it is enabled.
-	 *
-	 * @param resourceActions the resource actions
-	 */
-	@Override
-	public void cacheResult(List<ResourceAction> resourceActions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (resourceActions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ResourceAction resourceAction : resourceActions) {
-			if (EntityCacheUtil.getResult(
-					ResourceActionImpl.class, resourceAction.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(resourceAction);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		ResourceActionModelImpl resourceActionModelImpl) {
-
-		Object[] args = new Object[] {
-			resourceActionModelImpl.getName(),
-			resourceActionModelImpl.getActionId()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByN_A, args, resourceActionModelImpl);
-	}
-
-	/**
 	 * Creates a new resource action with the primary key. Does not add the resource action to the database.
 	 *
 	 * @param resourceActionId the primary key for the new resource action
@@ -471,10 +411,7 @@ public class ResourceActionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			ResourceActionImpl.class, resourceActionModelImpl, false, true);
-
-		cacheUniqueFindersCache(resourceActionModelImpl);
+		cacheUniqueFindersResult(resourceAction, false);
 
 		if (isNew) {
 			resourceAction.setNew(false);
@@ -534,9 +471,6 @@ public class ResourceActionPersistenceImpl
 	 * Initializes the resource action persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
 			new String[] {
@@ -563,10 +497,11 @@ public class ResourceActionPersistenceImpl
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ResourceAction::getName));
 
-		_finderPathFetchByN_A = new FinderPath(
+		_finderPathFetchByN_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "actionId"}, true);
+			new String[] {"name", "actionId"}, false, ResourceAction::getName,
+			ResourceAction::getActionId);
 
 		_uniquePersistenceFinderByN_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByN_A, _SQL_SELECT_RESOURCEACTION_WHERE,
@@ -610,4 +545,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-583002870
+// LIFERAY-SERVICE-BUILDER-HASH:-1152182733

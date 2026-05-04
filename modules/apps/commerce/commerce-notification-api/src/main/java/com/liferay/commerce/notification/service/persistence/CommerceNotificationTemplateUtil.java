@@ -38,6 +38,24 @@ public class CommerceNotificationTemplateUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<CommerceNotificationTemplate> commerceNotificationTemplates) {
+
+		getPersistence().cacheResult(commerceNotificationTemplates);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		CommerceNotificationTemplate commerceNotificationTemplate) {
+
+		getPersistence().cacheResult(commerceNotificationTemplate);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1045,28 +1063,6 @@ public class CommerceNotificationTemplateUtil {
 	}
 
 	/**
-	 * Caches the commerce notification template in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplate the commerce notification template
-	 */
-	public static void cacheResult(
-		CommerceNotificationTemplate commerceNotificationTemplate) {
-
-		getPersistence().cacheResult(commerceNotificationTemplate);
-	}
-
-	/**
-	 * Caches the commerce notification templates in the entity cache if it is enabled.
-	 *
-	 * @param commerceNotificationTemplates the commerce notification templates
-	 */
-	public static void cacheResult(
-		List<CommerceNotificationTemplate> commerceNotificationTemplates) {
-
-		getPersistence().cacheResult(commerceNotificationTemplates);
-	}
-
-	/**
 	 * Creates a new commerce notification template with the primary key. Does not add the commerce notification template to the database.
 	 *
 	 * @param commerceNotificationTemplateId the primary key for the new commerce notification template
@@ -1142,4 +1138,4 @@ public class CommerceNotificationTemplateUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:817979542
+// LIFERAY-SERVICE-BUILDER-HASH:-2145412240

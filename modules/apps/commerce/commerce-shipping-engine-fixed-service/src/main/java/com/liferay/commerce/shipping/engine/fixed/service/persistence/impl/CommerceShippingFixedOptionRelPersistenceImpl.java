@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
@@ -621,52 +618,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 	/**
-	 * Caches the commerce shipping fixed option rel in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRel the commerce shipping fixed option rel
-	 */
-	@Override
-	public void cacheResult(
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
-
-		entityCache.putResult(
-			CommerceShippingFixedOptionRelImpl.class,
-			commerceShippingFixedOptionRel.getPrimaryKey(),
-			commerceShippingFixedOptionRel);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the commerce shipping fixed option rels in the entity cache if it is enabled.
-	 *
-	 * @param commerceShippingFixedOptionRels the commerce shipping fixed option rels
-	 */
-	@Override
-	public void cacheResult(
-		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (commerceShippingFixedOptionRels.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
-				commerceShippingFixedOptionRels) {
-
-			if (entityCache.getResult(
-					CommerceShippingFixedOptionRelImpl.class,
-					commerceShippingFixedOptionRel.getPrimaryKey()) == null) {
-
-				cacheResult(commerceShippingFixedOptionRel);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new commerce shipping fixed option rel with the primary key. Does not add the commerce shipping fixed option rel to the database.
 	 *
 	 * @param commerceShippingFixedOptionRelId the primary key for the new commerce shipping fixed option rel
@@ -816,9 +767,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CommerceShippingFixedOptionRelImpl.class,
-			commerceShippingFixedOptionRelModelImpl, false, true);
+		cacheUniqueFindersResult(commerceShippingFixedOptionRel, false);
 
 		if (isNew) {
 			commerceShippingFixedOptionRel.setNew(false);
@@ -888,9 +837,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1088,4 +1034,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:562656611
+// LIFERAY-SERVICE-BUILDER-HASH:-1953682442

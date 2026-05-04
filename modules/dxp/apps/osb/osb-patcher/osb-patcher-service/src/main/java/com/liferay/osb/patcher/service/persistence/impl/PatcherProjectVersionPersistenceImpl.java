@@ -33,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -1861,75 +1858,6 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher project version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersion the patcher project version
-	 */
-	@Override
-	public void cacheResult(PatcherProjectVersion patcherProjectVersion) {
-		entityCache.putResult(
-			PatcherProjectVersionImpl.class,
-			patcherProjectVersion.getPrimaryKey(), patcherProjectVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByCommittish,
-			new Object[] {patcherProjectVersion.getCommittish()},
-			patcherProjectVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {patcherProjectVersion.getName()},
-			patcherProjectVersion);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher project versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProjectVersions the patcher project versions
-	 */
-	@Override
-	public void cacheResult(
-		List<PatcherProjectVersion> patcherProjectVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherProjectVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherProjectVersion patcherProjectVersion :
-				patcherProjectVersions) {
-
-			if (entityCache.getResult(
-					PatcherProjectVersionImpl.class,
-					patcherProjectVersion.getPrimaryKey()) == null) {
-
-				cacheResult(patcherProjectVersion);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherProjectVersionModelImpl patcherProjectVersionModelImpl) {
-
-		Object[] args = new Object[] {
-			patcherProjectVersionModelImpl.getCommittish()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByCommittish, args, patcherProjectVersionModelImpl);
-
-		args = new Object[] {patcherProjectVersionModelImpl.getName()};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, patcherProjectVersionModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher project version with the primary key. Does not add the patcher project version to the database.
 	 *
 	 * @param patcherProjectVersionId the primary key for the new patcher project version
@@ -2068,11 +1996,7 @@ public class PatcherProjectVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherProjectVersionImpl.class, patcherProjectVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(patcherProjectVersionModelImpl);
+		cacheUniqueFindersResult(patcherProjectVersion, false);
 
 		if (isNew) {
 			patcherProjectVersion.setNew(false);
@@ -2135,9 +2059,6 @@ public class PatcherProjectVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByPatcherProductVersionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByPatcherProductVersionId",
@@ -2212,10 +2133,10 @@ public class PatcherProjectVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PatcherProjectVersion::getRootPatcherProjectVersionId));
 
-		_finderPathFetchByCommittish = new FinderPath(
+		_finderPathFetchByCommittish = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommittish",
 			new String[] {String.class.getName()}, new String[] {"committish"},
-			true);
+			false, PatcherProjectVersion::getCommittish);
 
 		_uniquePersistenceFinderByCommittish = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCommittish,
@@ -2225,9 +2146,10 @@ public class PatcherProjectVersionPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				PatcherProjectVersion::getCommittish));
 
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			PatcherProjectVersion::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -2404,4 +2326,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1407716382
+// LIFERAY-SERVICE-BUILDER-HASH:-2084397754

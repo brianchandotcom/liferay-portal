@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.service.persistence.LayoutRevisionUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.LayoutRevisionImpl;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
@@ -2397,44 +2394,6 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout revision in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevision the layout revision
-	 */
-	@Override
-	public void cacheResult(LayoutRevision layoutRevision) {
-		EntityCacheUtil.putResult(
-			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey(),
-			layoutRevision);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout revisions in the entity cache if it is enabled.
-	 *
-	 * @param layoutRevisions the layout revisions
-	 */
-	@Override
-	public void cacheResult(List<LayoutRevision> layoutRevisions) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutRevisions.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutRevision layoutRevision : layoutRevisions) {
-			if (EntityCacheUtil.getResult(
-					LayoutRevisionImpl.class, layoutRevision.getPrimaryKey()) ==
-						null) {
-
-				cacheResult(layoutRevision);
-			}
-		}
-	}
-
-	/**
 	 * Creates a new layout revision with the primary key. Does not add the layout revision to the database.
 	 *
 	 * @param layoutRevisionId the primary key for the new layout revision
@@ -2565,8 +2524,7 @@ public class LayoutRevisionPersistenceImpl
 			closeSession(session);
 		}
 
-		EntityCacheUtil.putResult(
-			LayoutRevisionImpl.class, layoutRevisionModelImpl, false, true);
+		cacheUniqueFindersResult(layoutRevision, false);
 
 		if (isNew) {
 			layoutRevision.setNew(false);
@@ -2626,9 +2584,6 @@ public class LayoutRevisionPersistenceImpl
 	 * Initializes the layout revision persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLayoutSetBranchId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutSetBranchId",
 			new String[] {
@@ -3096,4 +3051,4 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:422371765
+// LIFERAY-SERVICE-BUILDER-HASH:1483160396

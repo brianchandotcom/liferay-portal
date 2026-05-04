@@ -36,6 +36,20 @@ public class WikiNodeUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<WikiNode> wikiNodes) {
+		getPersistence().cacheResult(wikiNodes);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(WikiNode wikiNode) {
+		getPersistence().cacheResult(wikiNode);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1171,24 +1185,6 @@ public class WikiNodeUtil {
 	}
 
 	/**
-	 * Caches the wiki node in the entity cache if it is enabled.
-	 *
-	 * @param wikiNode the wiki node
-	 */
-	public static void cacheResult(WikiNode wikiNode) {
-		getPersistence().cacheResult(wikiNode);
-	}
-
-	/**
-	 * Caches the wiki nodes in the entity cache if it is enabled.
-	 *
-	 * @param wikiNodes the wiki nodes
-	 */
-	public static void cacheResult(List<WikiNode> wikiNodes) {
-		getPersistence().cacheResult(wikiNodes);
-	}
-
-	/**
 	 * Creates a new wiki node with the primary key. Does not add the wiki node to the database.
 	 *
 	 * @param nodeId the primary key for the new wiki node
@@ -1249,4 +1245,4 @@ public class WikiNodeUtil {
 	private static volatile WikiNodePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1689613821
+// LIFERAY-SERVICE-BUILDER-HASH:146427693

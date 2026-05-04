@@ -81,21 +81,6 @@ public interface PatcherTicketHintPersistence
 	public int countByPatcherProductVersionId(long patcherProductVersionId);
 
 	/**
-	 * Caches the patcher ticket hint in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHint the patcher ticket hint
-	 */
-	public void cacheResult(PatcherTicketHint patcherTicketHint);
-
-	/**
-	 * Caches the patcher ticket hints in the entity cache if it is enabled.
-	 *
-	 * @param patcherTicketHints the patcher ticket hints
-	 */
-	public void cacheResult(
-		java.util.List<PatcherTicketHint> patcherTicketHints);
-
-	/**
 	 * Creates a new patcher ticket hint with the primary key. Does not add the patcher ticket hint to the database.
 	 *
 	 * @param patcherTicketHintId the primary key for the new patcher ticket hint
@@ -134,4 +119,4 @@ public interface PatcherTicketHintPersistence
 	public PatcherTicketHint fetchByPrimaryKey(long patcherTicketHintId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:38727110
+// LIFERAY-SERVICE-BUILDER-HASH:-256672984

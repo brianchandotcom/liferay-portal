@@ -15,7 +15,6 @@ import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPer
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -42,8 +41,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -2718,100 +2715,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cp attachment file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntry the cp attachment file entry
-	 */
-	@Override
-	public void cacheResult(CPAttachmentFileEntry cpAttachmentFileEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpAttachmentFileEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				CPAttachmentFileEntryImpl.class,
-				cpAttachmentFileEntry.getPrimaryKey(), cpAttachmentFileEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					cpAttachmentFileEntry.getUuid(),
-					cpAttachmentFileEntry.getGroupId()
-				},
-				cpAttachmentFileEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C,
-				new Object[] {
-					cpAttachmentFileEntry.getExternalReferenceCode(),
-					cpAttachmentFileEntry.getCompanyId()
-				},
-				cpAttachmentFileEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cp attachment file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpAttachmentFileEntries the cp attachment file entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpAttachmentFileEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPAttachmentFileEntry cpAttachmentFileEntry :
-				cpAttachmentFileEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						cpAttachmentFileEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						CPAttachmentFileEntryImpl.class,
-						cpAttachmentFileEntry.getPrimaryKey()) == null) {
-
-					cacheResult(cpAttachmentFileEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPAttachmentFileEntryModelImpl cpAttachmentFileEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					cpAttachmentFileEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				cpAttachmentFileEntryModelImpl.getUuid(),
-				cpAttachmentFileEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args, cpAttachmentFileEntryModelImpl);
-
-			args = new Object[] {
-				cpAttachmentFileEntryModelImpl.getExternalReferenceCode(),
-				cpAttachmentFileEntryModelImpl.getCompanyId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_C, args, cpAttachmentFileEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new cp attachment file entry with the primary key. Does not add the cp attachment file entry to the database.
 	 *
 	 * @param CPAttachmentFileEntryId the primary key for the new cp attachment file entry
@@ -3038,11 +2941,7 @@ public class CPAttachmentFileEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPAttachmentFileEntryImpl.class, cpAttachmentFileEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cpAttachmentFileEntryModelImpl);
+		cacheUniqueFindersResult(cpAttachmentFileEntry, false);
 
 		if (isNew) {
 			cpAttachmentFileEntry.setNew(false);
@@ -3197,9 +3096,6 @@ public class CPAttachmentFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3228,10 +3124,11 @@ public class CPAttachmentFileEntryPersistenceImpl
 				"cpAttachmentFileEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPAttachmentFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPAttachmentFileEntry::getUuid, CPAttachmentFileEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -3741,10 +3638,12 @@ public class CPAttachmentFileEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "!=", true, true,
 					CPAttachmentFileEntry::getStatus));
 
-		_finderPathFetchByERC_C = new FinderPath(
+		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, true);
+			new String[] {"externalReferenceCode", "companyId"}, false,
+			CPAttachmentFileEntry::getExternalReferenceCode,
+			CPAttachmentFileEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
@@ -3829,4 +3728,4 @@ public class CPAttachmentFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1350078026
+// LIFERAY-SERVICE-BUILDER-HASH:1536799527

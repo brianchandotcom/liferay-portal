@@ -11,9 +11,6 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchManyColumnsEntryException;
 import com.liferay.portal.tools.service.builder.test.model.ManyColumnsEntry;
@@ -25,7 +22,6 @@ import com.liferay.portal.tools.service.builder.test.service.persistence.ManyCol
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,45 +60,6 @@ public class ManyColumnsEntryPersistenceImpl
 		setModelPKClass(long.class);
 
 		setTable(ManyColumnsEntryTable.INSTANCE);
-	}
-
-	/**
-	 * Caches the many columns entry in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntry the many columns entry
-	 */
-	@Override
-	public void cacheResult(ManyColumnsEntry manyColumnsEntry) {
-		entityCache.putResult(
-			ManyColumnsEntryImpl.class, manyColumnsEntry.getPrimaryKey(),
-			manyColumnsEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the many columns entries in the entity cache if it is enabled.
-	 *
-	 * @param manyColumnsEntries the many columns entries
-	 */
-	@Override
-	public void cacheResult(List<ManyColumnsEntry> manyColumnsEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (manyColumnsEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (ManyColumnsEntry manyColumnsEntry : manyColumnsEntries) {
-			if (entityCache.getResult(
-					ManyColumnsEntryImpl.class,
-					manyColumnsEntry.getPrimaryKey()) == null) {
-
-				cacheResult(manyColumnsEntry);
-			}
-		}
 	}
 
 	/**
@@ -190,8 +147,7 @@ public class ManyColumnsEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			ManyColumnsEntryImpl.class, manyColumnsEntry, false, true);
+		cacheUniqueFindersResult(manyColumnsEntry, false);
 
 		if (isNew) {
 			manyColumnsEntry.setNew(false);
@@ -251,9 +207,6 @@ public class ManyColumnsEntryPersistenceImpl
 	 * Initializes the many columns entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		ManyColumnsEntryUtil.setPersistence(this);
 	}
 
@@ -284,4 +237,4 @@ public class ManyColumnsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1356961572
+// LIFERAY-SERVICE-BUILDER-HASH:848061999

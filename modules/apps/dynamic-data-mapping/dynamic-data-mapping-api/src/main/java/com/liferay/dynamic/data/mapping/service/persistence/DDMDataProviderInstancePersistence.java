@@ -677,21 +677,6 @@ public interface DDMDataProviderInstancePersistence
 	public int countByCompanyId(long companyId);
 
 	/**
-	 * Caches the ddm data provider instance in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstance the ddm data provider instance
-	 */
-	public void cacheResult(DDMDataProviderInstance ddmDataProviderInstance);
-
-	/**
-	 * Caches the ddm data provider instances in the entity cache if it is enabled.
-	 *
-	 * @param ddmDataProviderInstances the ddm data provider instances
-	 */
-	public void cacheResult(
-		java.util.List<DDMDataProviderInstance> ddmDataProviderInstances);
-
-	/**
 	 * Creates a new ddm data provider instance with the primary key. Does not add the ddm data provider instance to the database.
 	 *
 	 * @param dataProviderInstanceId the primary key for the new ddm data provider instance
@@ -732,4 +717,4 @@ public interface DDMDataProviderInstancePersistence
 		long dataProviderInstanceId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-120571331
+// LIFERAY-SERVICE-BUILDER-HASH:-239296967

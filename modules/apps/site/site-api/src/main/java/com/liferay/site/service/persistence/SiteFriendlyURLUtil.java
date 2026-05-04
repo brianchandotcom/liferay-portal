@@ -36,6 +36,20 @@ public class SiteFriendlyURLUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<SiteFriendlyURL> siteFriendlyURLs) {
+		getPersistence().cacheResult(siteFriendlyURLs);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(SiteFriendlyURL siteFriendlyURL) {
+		getPersistence().cacheResult(siteFriendlyURL);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -780,24 +794,6 @@ public class SiteFriendlyURLUtil {
 	}
 
 	/**
-	 * Caches the site friendly url in the entity cache if it is enabled.
-	 *
-	 * @param siteFriendlyURL the site friendly url
-	 */
-	public static void cacheResult(SiteFriendlyURL siteFriendlyURL) {
-		getPersistence().cacheResult(siteFriendlyURL);
-	}
-
-	/**
-	 * Caches the site friendly urls in the entity cache if it is enabled.
-	 *
-	 * @param siteFriendlyURLs the site friendly urls
-	 */
-	public static void cacheResult(List<SiteFriendlyURL> siteFriendlyURLs) {
-		getPersistence().cacheResult(siteFriendlyURLs);
-	}
-
-	/**
 	 * Creates a new site friendly url with the primary key. Does not add the site friendly url to the database.
 	 *
 	 * @param siteFriendlyURLId the primary key for the new site friendly url
@@ -858,4 +854,4 @@ public class SiteFriendlyURLUtil {
 	private static volatile SiteFriendlyURLPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1507830097
+// LIFERAY-SERVICE-BUILDER-HASH:-1355756693

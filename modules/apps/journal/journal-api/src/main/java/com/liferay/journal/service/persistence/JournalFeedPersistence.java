@@ -498,20 +498,6 @@ public interface JournalFeedPersistence
 	public int countByG_F(long groupId, String feedId);
 
 	/**
-	 * Caches the journal feed in the entity cache if it is enabled.
-	 *
-	 * @param journalFeed the journal feed
-	 */
-	public void cacheResult(JournalFeed journalFeed);
-
-	/**
-	 * Caches the journal feeds in the entity cache if it is enabled.
-	 *
-	 * @param journalFeeds the journal feeds
-	 */
-	public void cacheResult(java.util.List<JournalFeed> journalFeeds);
-
-	/**
 	 * Creates a new journal feed with the primary key. Does not add the journal feed to the database.
 	 *
 	 * @param id the primary key for the new journal feed
@@ -548,4 +534,4 @@ public interface JournalFeedPersistence
 	public JournalFeed fetchByPrimaryKey(long id);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2014920527
+// LIFERAY-SERVICE-BUILDER-HASH:1533605859

@@ -36,6 +36,20 @@ public class CPDisplayLayoutUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<CPDisplayLayout> cpDisplayLayouts) {
+		getPersistence().cacheResult(cpDisplayLayouts);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(CPDisplayLayout cpDisplayLayout) {
+		getPersistence().cacheResult(cpDisplayLayout);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1445,24 +1459,6 @@ public class CPDisplayLayoutUtil {
 	}
 
 	/**
-	 * Caches the cp display layout in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayout the cp display layout
-	 */
-	public static void cacheResult(CPDisplayLayout cpDisplayLayout) {
-		getPersistence().cacheResult(cpDisplayLayout);
-	}
-
-	/**
-	 * Caches the cp display layouts in the entity cache if it is enabled.
-	 *
-	 * @param cpDisplayLayouts the cp display layouts
-	 */
-	public static void cacheResult(List<CPDisplayLayout> cpDisplayLayouts) {
-		getPersistence().cacheResult(cpDisplayLayouts);
-	}
-
-	/**
 	 * Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	 *
 	 * @param CPDisplayLayoutId the primary key for the new cp display layout
@@ -1525,4 +1521,4 @@ public class CPDisplayLayoutUtil {
 	private static volatile CPDisplayLayoutPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1424288841
+// LIFERAY-SERVICE-BUILDER-HASH:774557241

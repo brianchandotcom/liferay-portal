@@ -727,21 +727,6 @@ public interface CPConfigurationEntryPersistence
 	public int countByERC_C(String externalReferenceCode, long companyId);
 
 	/**
-	 * Caches the cp configuration entry in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntry the cp configuration entry
-	 */
-	public void cacheResult(CPConfigurationEntry cpConfigurationEntry);
-
-	/**
-	 * Caches the cp configuration entries in the entity cache if it is enabled.
-	 *
-	 * @param cpConfigurationEntries the cp configuration entries
-	 */
-	public void cacheResult(
-		java.util.List<CPConfigurationEntry> cpConfigurationEntries);
-
-	/**
 	 * Creates a new cp configuration entry with the primary key. Does not add the cp configuration entry to the database.
 	 *
 	 * @param CPConfigurationEntryId the primary key for the new cp configuration entry
@@ -781,4 +766,4 @@ public interface CPConfigurationEntryPersistence
 	public CPConfigurationEntry fetchByPrimaryKey(long CPConfigurationEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1845168411
+// LIFERAY-SERVICE-BUILDER-HASH:1984552207

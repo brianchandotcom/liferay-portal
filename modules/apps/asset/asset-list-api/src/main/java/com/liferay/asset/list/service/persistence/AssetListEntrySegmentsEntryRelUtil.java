@@ -36,6 +36,24 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels) {
+
+		getPersistence().cacheResult(assetListEntrySegmentsEntryRels);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
+
+		getPersistence().cacheResult(assetListEntrySegmentsEntryRel);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -1003,28 +1021,6 @@ public class AssetListEntrySegmentsEntryRelUtil {
 	}
 
 	/**
-	 * Caches the asset list entry segments entry rel in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntrySegmentsEntryRel the asset list entry segments entry rel
-	 */
-	public static void cacheResult(
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel) {
-
-		getPersistence().cacheResult(assetListEntrySegmentsEntryRel);
-	}
-
-	/**
-	 * Caches the asset list entry segments entry rels in the entity cache if it is enabled.
-	 *
-	 * @param assetListEntrySegmentsEntryRels the asset list entry segments entry rels
-	 */
-	public static void cacheResult(
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels) {
-
-		getPersistence().cacheResult(assetListEntrySegmentsEntryRels);
-	}
-
-	/**
 	 * Creates a new asset list entry segments entry rel with the primary key. Does not add the asset list entry segments entry rel to the database.
 	 *
 	 * @param assetListEntrySegmentsEntryRelId the primary key for the new asset list entry segments entry rel
@@ -1100,4 +1096,4 @@ public class AssetListEntrySegmentsEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-436438280
+// LIFERAY-SERVICE-BUILDER-HASH:-1763087502

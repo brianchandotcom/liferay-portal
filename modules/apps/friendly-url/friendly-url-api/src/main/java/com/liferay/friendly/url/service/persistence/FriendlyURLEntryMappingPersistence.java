@@ -85,21 +85,6 @@ public interface FriendlyURLEntryMappingPersistence
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	 * Caches the friendly url entry mapping in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMapping the friendly url entry mapping
-	 */
-	public void cacheResult(FriendlyURLEntryMapping friendlyURLEntryMapping);
-
-	/**
-	 * Caches the friendly url entry mappings in the entity cache if it is enabled.
-	 *
-	 * @param friendlyURLEntryMappings the friendly url entry mappings
-	 */
-	public void cacheResult(
-		java.util.List<FriendlyURLEntryMapping> friendlyURLEntryMappings);
-
-	/**
 	 * Creates a new friendly url entry mapping with the primary key. Does not add the friendly url entry mapping to the database.
 	 *
 	 * @param friendlyURLEntryMappingId the primary key for the new friendly url entry mapping
@@ -141,4 +126,4 @@ public interface FriendlyURLEntryMappingPersistence
 		long friendlyURLEntryMappingId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-393428555
+// LIFERAY-SERVICE-BUILDER-HASH:1969617901

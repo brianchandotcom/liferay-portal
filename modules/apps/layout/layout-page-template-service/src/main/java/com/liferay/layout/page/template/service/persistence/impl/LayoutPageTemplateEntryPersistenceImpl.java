@@ -16,7 +16,6 @@ import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEn
 import com.liferay.layout.page.template.service.persistence.impl.constants.LayoutPersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -48,8 +47,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -13946,152 +13943,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the layout page template entry in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateEntry the layout page template entry
-	 */
-	@Override
-	public void cacheResult(LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutPageTemplateEntry.getCtCollectionId())) {
-
-			entityCache.putResult(
-				LayoutPageTemplateEntryImpl.class,
-				layoutPageTemplateEntry.getPrimaryKey(),
-				layoutPageTemplateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G,
-				new Object[] {
-					layoutPageTemplateEntry.getUuid(),
-					layoutPageTemplateEntry.getGroupId()
-				},
-				layoutPageTemplateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByPlid,
-				new Object[] {layoutPageTemplateEntry.getPlid()},
-				layoutPageTemplateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_LPTEK,
-				new Object[] {
-					layoutPageTemplateEntry.getGroupId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey()
-				},
-				layoutPageTemplateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByG_L_N_T,
-				new Object[] {
-					layoutPageTemplateEntry.getGroupId(),
-					layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
-					layoutPageTemplateEntry.getName(),
-					layoutPageTemplateEntry.getType()
-				},
-				layoutPageTemplateEntry);
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G,
-				new Object[] {
-					layoutPageTemplateEntry.getExternalReferenceCode(),
-					layoutPageTemplateEntry.getGroupId()
-				},
-				layoutPageTemplateEntry);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the layout page template entries in the entity cache if it is enabled.
-	 *
-	 * @param layoutPageTemplateEntries the layout page template entries
-	 */
-	@Override
-	public void cacheResult(
-		List<LayoutPageTemplateEntry> layoutPageTemplateEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (layoutPageTemplateEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
-				layoutPageTemplateEntries) {
-
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						layoutPageTemplateEntry.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						LayoutPageTemplateEntryImpl.class,
-						layoutPageTemplateEntry.getPrimaryKey()) == null) {
-
-					cacheResult(layoutPageTemplateEntry);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutPageTemplateEntryModelImpl layoutPageTemplateEntryModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					layoutPageTemplateEntryModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				layoutPageTemplateEntryModelImpl.getUuid(),
-				layoutPageTemplateEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByUUID_G, args,
-				layoutPageTemplateEntryModelImpl);
-
-			args = new Object[] {layoutPageTemplateEntryModelImpl.getPlid()};
-
-			finderCache.putResult(
-				_finderPathFetchByPlid, args, layoutPageTemplateEntryModelImpl);
-
-			args = new Object[] {
-				layoutPageTemplateEntryModelImpl.getGroupId(),
-				layoutPageTemplateEntryModelImpl.getLayoutPageTemplateEntryKey()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_LPTEK, args,
-				layoutPageTemplateEntryModelImpl);
-
-			args = new Object[] {
-				layoutPageTemplateEntryModelImpl.getGroupId(),
-				layoutPageTemplateEntryModelImpl.
-					getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateEntryModelImpl.getName(),
-				layoutPageTemplateEntryModelImpl.getType()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByG_L_N_T, args,
-				layoutPageTemplateEntryModelImpl);
-
-			args = new Object[] {
-				layoutPageTemplateEntryModelImpl.getExternalReferenceCode(),
-				layoutPageTemplateEntryModelImpl.getGroupId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByERC_G, args,
-				layoutPageTemplateEntryModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new layout page template entry with the primary key. Does not add the layout page template entry to the database.
 	 *
 	 * @param layoutPageTemplateEntryId the primary key for the new layout page template entry
@@ -14320,11 +14171,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LayoutPageTemplateEntryImpl.class, layoutPageTemplateEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(layoutPageTemplateEntryModelImpl);
+		cacheUniqueFindersResult(layoutPageTemplateEntry, false);
 
 		if (isNew) {
 			layoutPageTemplateEntry.setNew(false);
@@ -14489,9 +14336,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -14521,10 +14365,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"layoutPageTemplateEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutPageTemplateEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			LayoutPageTemplateEntry::getUuid,
+			LayoutPageTemplateEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -14637,9 +14483,10 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getLayoutPrototypeId));
 
-		_finderPathFetchByPlid = new FinderPath(
+		_finderPathFetchByPlid = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, true);
+			new String[] {Long.class.getName()}, new String[] {"plid"}, false,
+			LayoutPageTemplateEntry::getPlid);
 
 		_uniquePersistenceFinderByPlid = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByPlid,
@@ -14682,10 +14529,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				LayoutPageTemplateEntry::getLayoutPageTemplateCollectionId));
 
-		_finderPathFetchByG_LPTEK = new FinderPath(
+		_finderPathFetchByG_LPTEK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_LPTEK",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateEntryKey"}, true);
+			new String[] {"groupId", "layoutPageTemplateEntryKey"}, false,
+			LayoutPageTemplateEntry::getGroupId,
+			LayoutPageTemplateEntry::getLayoutPageTemplateEntryKey);
 
 		_uniquePersistenceFinderByG_LPTEK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_LPTEK,
@@ -15019,7 +14868,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			},
 			new String[] {"groupId", "type_", "status"}, false);
 
-		_finderPathFetchByG_L_N_T = new FinderPath(
+		_finderPathFetchByG_L_N_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_L_N_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -15028,7 +14877,9 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			new String[] {
 				"groupId", "layoutPageTemplateCollectionId", "name", "type_"
 			},
-			true);
+			false, LayoutPageTemplateEntry::getGroupId,
+			LayoutPageTemplateEntry::getLayoutPageTemplateCollectionId,
+			LayoutPageTemplateEntry::getName, LayoutPageTemplateEntry::getType);
 
 		_uniquePersistenceFinderByG_L_N_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_L_N_T,
@@ -15593,10 +15444,12 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathFetchByERC_G = new FinderPath(
+		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, true);
+			new String[] {"externalReferenceCode", "groupId"}, false,
+			LayoutPageTemplateEntry::getExternalReferenceCode,
+			LayoutPageTemplateEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G,
@@ -15709,4 +15562,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:90427422
+// LIFERAY-SERVICE-BUILDER-HASH:-1154160617

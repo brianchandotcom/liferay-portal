@@ -17,10 +17,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryLocalizationException;
@@ -408,76 +405,6 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 	/**
-	 * Caches the lv entry localization in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalization the lv entry localization
-	 */
-	@Override
-	public void cacheResult(LVEntryLocalization lvEntryLocalization) {
-		entityCache.putResult(
-			LVEntryLocalizationImpl.class, lvEntryLocalization.getPrimaryKey(),
-			lvEntryLocalization);
-
-		finderCache.putResult(
-			_finderPathFetchByLvEntryId_LanguageId,
-			new Object[] {
-				lvEntryLocalization.getLvEntryId(),
-				lvEntryLocalization.getLanguageId()
-			},
-			lvEntryLocalization);
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId,
-			new Object[] {lvEntryLocalization.getHeadId()},
-			lvEntryLocalization);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the lv entry localizations in the entity cache if it is enabled.
-	 *
-	 * @param lvEntryLocalizations the lv entry localizations
-	 */
-	@Override
-	public void cacheResult(List<LVEntryLocalization> lvEntryLocalizations) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (lvEntryLocalizations.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (LVEntryLocalization lvEntryLocalization : lvEntryLocalizations) {
-			if (entityCache.getResult(
-					LVEntryLocalizationImpl.class,
-					lvEntryLocalization.getPrimaryKey()) == null) {
-
-				cacheResult(lvEntryLocalization);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LVEntryLocalizationModelImpl lvEntryLocalizationModelImpl) {
-
-		Object[] args = new Object[] {
-			lvEntryLocalizationModelImpl.getLvEntryId(),
-			lvEntryLocalizationModelImpl.getLanguageId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByLvEntryId_LanguageId, args,
-			lvEntryLocalizationModelImpl);
-
-		args = new Object[] {lvEntryLocalizationModelImpl.getHeadId()};
-
-		finderCache.putResult(
-			_finderPathFetchByHeadId, args, lvEntryLocalizationModelImpl);
-	}
-
-	/**
 	 * Creates a new lv entry localization with the primary key. Does not add the lv entry localization to the database.
 	 *
 	 * @param lvEntryLocalizationId the primary key for the new lv entry localization
@@ -588,11 +515,7 @@ public class LVEntryLocalizationPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			LVEntryLocalizationImpl.class, lvEntryLocalizationModelImpl, false,
-			true);
-
-		cacheUniqueFindersCache(lvEntryLocalizationModelImpl);
+		cacheUniqueFindersResult(lvEntryLocalization, false);
 
 		if (isNew) {
 			lvEntryLocalization.setNew(false);
@@ -652,9 +575,6 @@ public class LVEntryLocalizationPersistenceImpl
 	 * Initializes the lv entry localization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByLvEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLvEntryId",
 			new String[] {
@@ -686,10 +606,12 @@ public class LVEntryLocalizationPersistenceImpl
 					"lvEntryLocalization.", "lvEntryId", FinderColumn.Type.LONG,
 					"=", true, true, LVEntryLocalization::getLvEntryId));
 
-		_finderPathFetchByLvEntryId_LanguageId = new FinderPath(
+		_finderPathFetchByLvEntryId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, true);
+			new String[] {"lvEntryId", "languageId"}, false,
+			LVEntryLocalization::getLvEntryId,
+			LVEntryLocalization::getLanguageId);
 
 		_uniquePersistenceFinderByLvEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -703,9 +625,10 @@ public class LVEntryLocalizationPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					LVEntryLocalization::getLanguageId));
 
-		_finderPathFetchByHeadId = new FinderPath(
+		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, true);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
+			LVEntryLocalization::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId,
@@ -753,4 +676,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:35761370
+// LIFERAY-SERVICE-BUILDER-HASH:-1834119017

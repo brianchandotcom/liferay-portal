@@ -4241,20 +4241,6 @@ public interface LayoutPersistence
 	public int countByERC_G(String externalReferenceCode, long groupId);
 
 	/**
-	 * Caches the layout in the entity cache if it is enabled.
-	 *
-	 * @param layout the layout
-	 */
-	public void cacheResult(Layout layout);
-
-	/**
-	 * Caches the layouts in the entity cache if it is enabled.
-	 *
-	 * @param layouts the layouts
-	 */
-	public void cacheResult(java.util.List<Layout> layouts);
-
-	/**
 	 * Creates a new layout with the primary key. Does not add the layout to the database.
 	 *
 	 * @param plid the primary key for the new layout
@@ -4291,4 +4277,4 @@ public interface LayoutPersistence
 	public Layout fetchByPrimaryKey(long plid);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-726969411
+// LIFERAY-SERVICE-BUILDER-HASH:-511884155

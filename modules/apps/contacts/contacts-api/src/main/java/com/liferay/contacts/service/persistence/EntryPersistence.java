@@ -183,20 +183,6 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public int countByU_EA(long userId, String emailAddress);
 
 	/**
-	 * Caches the entry in the entity cache if it is enabled.
-	 *
-	 * @param entry the entry
-	 */
-	public void cacheResult(Entry entry);
-
-	/**
-	 * Caches the entries in the entity cache if it is enabled.
-	 *
-	 * @param entries the entries
-	 */
-	public void cacheResult(java.util.List<Entry> entries);
-
-	/**
 	 * Creates a new entry with the primary key. Does not add the entry to the database.
 	 *
 	 * @param entryId the primary key for the new entry
@@ -233,4 +219,4 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	public Entry fetchByPrimaryKey(long entryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:552104337
+// LIFERAY-SERVICE-BUILDER-HASH:-1244303469

@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -25,10 +24,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchInstanceException;
@@ -1449,80 +1445,6 @@ public class KaleoInstancePersistenceImpl
 	}
 
 	/**
-	 * Caches the kaleo instance in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstance the kaleo instance
-	 */
-	@Override
-	public void cacheResult(KaleoInstance kaleoInstance) {
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoInstance.getCtCollectionId())) {
-
-			entityCache.putResult(
-				KaleoInstanceImpl.class, kaleoInstance.getPrimaryKey(),
-				kaleoInstance);
-
-			finderCache.putResult(
-				_finderPathFetchByKII_C_U,
-				new Object[] {
-					kaleoInstance.getKaleoInstanceId(),
-					kaleoInstance.getCompanyId(), kaleoInstance.getUserId()
-				},
-				kaleoInstance);
-		}
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the kaleo instances in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstances the kaleo instances
-	 */
-	@Override
-	public void cacheResult(List<KaleoInstance> kaleoInstances) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (kaleoInstances.size() > _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (KaleoInstance kaleoInstance : kaleoInstances) {
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-						kaleoInstance.getCtCollectionId())) {
-
-				if (entityCache.getResult(
-						KaleoInstanceImpl.class,
-						kaleoInstance.getPrimaryKey()) == null) {
-
-					cacheResult(kaleoInstance);
-				}
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		KaleoInstanceModelImpl kaleoInstanceModelImpl) {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					kaleoInstanceModelImpl.getCtCollectionId())) {
-
-			Object[] args = new Object[] {
-				kaleoInstanceModelImpl.getKaleoInstanceId(),
-				kaleoInstanceModelImpl.getCompanyId(),
-				kaleoInstanceModelImpl.getUserId()
-			};
-
-			finderCache.putResult(
-				_finderPathFetchByKII_C_U, args, kaleoInstanceModelImpl);
-		}
-	}
-
-	/**
 	 * Creates a new kaleo instance with the primary key. Does not add the kaleo instance to the database.
 	 *
 	 * @param kaleoInstanceId the primary key for the new kaleo instance
@@ -1659,10 +1581,7 @@ public class KaleoInstancePersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			KaleoInstanceImpl.class, kaleoInstanceModelImpl, false, true);
-
-		cacheUniqueFindersCache(kaleoInstanceModelImpl);
+		cacheUniqueFindersResult(kaleoInstance, false);
 
 		if (isNew) {
 			kaleoInstance.setNew(false);
@@ -1802,9 +1721,6 @@ public class KaleoInstancePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -1998,12 +1914,14 @@ public class KaleoInstancePersistenceImpl
 					"kaleoInstance.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, KaleoInstance::getClassPK));
 
-		_finderPathFetchByKII_C_U = new FinderPath(
+		_finderPathFetchByKII_C_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKII_C_U",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"kaleoInstanceId", "companyId", "userId"}, true);
+			new String[] {"kaleoInstanceId", "companyId", "userId"}, false,
+			KaleoInstance::getKaleoInstanceId, KaleoInstance::getCompanyId,
+			KaleoInstance::getUserId);
 
 		_uniquePersistenceFinderByKII_C_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKII_C_U, _SQL_SELECT_KALEOINSTANCE_WHERE,
@@ -2149,4 +2067,4 @@ public class KaleoInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:521253267
+// LIFERAY-SERVICE-BUILDER-HASH:856252410

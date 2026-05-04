@@ -36,6 +36,20 @@ public class StyleBookEntryUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<StyleBookEntry> styleBookEntries) {
+		getPersistence().cacheResult(styleBookEntries);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(StyleBookEntry styleBookEntry) {
+		getPersistence().cacheResult(styleBookEntry);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -3026,24 +3040,6 @@ public class StyleBookEntryUtil {
 	}
 
 	/**
-	 * Caches the style book entry in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntry the style book entry
-	 */
-	public static void cacheResult(StyleBookEntry styleBookEntry) {
-		getPersistence().cacheResult(styleBookEntry);
-	}
-
-	/**
-	 * Caches the style book entries in the entity cache if it is enabled.
-	 *
-	 * @param styleBookEntries the style book entries
-	 */
-	public static void cacheResult(List<StyleBookEntry> styleBookEntries) {
-		getPersistence().cacheResult(styleBookEntries);
-	}
-
-	/**
 	 * Creates a new style book entry with the primary key. Does not add the style book entry to the database.
 	 *
 	 * @param styleBookEntryId the primary key for the new style book entry
@@ -3104,4 +3100,4 @@ public class StyleBookEntryUtil {
 	private static volatile StyleBookEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-188636157
+// LIFERAY-SERVICE-BUILDER-HASH:-1158123414

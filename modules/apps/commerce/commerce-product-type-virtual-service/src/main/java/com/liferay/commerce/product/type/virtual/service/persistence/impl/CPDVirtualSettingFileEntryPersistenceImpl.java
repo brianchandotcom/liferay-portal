@@ -29,10 +29,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -817,74 +814,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cpd virtual setting file entry in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntry the cpd virtual setting file entry
-	 */
-	@Override
-	public void cacheResult(
-		CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry) {
-
-		entityCache.putResult(
-			CPDVirtualSettingFileEntryImpl.class,
-			cpdVirtualSettingFileEntry.getPrimaryKey(),
-			cpdVirtualSettingFileEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G,
-			new Object[] {
-				cpdVirtualSettingFileEntry.getUuid(),
-				cpdVirtualSettingFileEntry.getGroupId()
-			},
-			cpdVirtualSettingFileEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cpd virtual setting file entries in the entity cache if it is enabled.
-	 *
-	 * @param cpdVirtualSettingFileEntries the cpd virtual setting file entries
-	 */
-	@Override
-	public void cacheResult(
-		List<CPDVirtualSettingFileEntry> cpdVirtualSettingFileEntries) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cpdVirtualSettingFileEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CPDVirtualSettingFileEntry cpdVirtualSettingFileEntry :
-				cpdVirtualSettingFileEntries) {
-
-			if (entityCache.getResult(
-					CPDVirtualSettingFileEntryImpl.class,
-					cpdVirtualSettingFileEntry.getPrimaryKey()) == null) {
-
-				cacheResult(cpdVirtualSettingFileEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CPDVirtualSettingFileEntryModelImpl
-			cpdVirtualSettingFileEntryModelImpl) {
-
-		Object[] args = new Object[] {
-			cpdVirtualSettingFileEntryModelImpl.getUuid(),
-			cpdVirtualSettingFileEntryModelImpl.getGroupId()
-		};
-
-		finderCache.putResult(
-			_finderPathFetchByUUID_G, args,
-			cpdVirtualSettingFileEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new cpd virtual setting file entry with the primary key. Does not add the cpd virtual setting file entry to the database.
 	 *
 	 * @param CPDefinitionVirtualSettingFileEntryId the primary key for the new cpd virtual setting file entry
@@ -1041,11 +970,7 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CPDVirtualSettingFileEntryImpl.class,
-			cpdVirtualSettingFileEntryModelImpl, false, true);
-
-		cacheUniqueFindersCache(cpdVirtualSettingFileEntryModelImpl);
+		cacheUniqueFindersResult(cpdVirtualSettingFileEntry, false);
 
 		if (isNew) {
 			cpdVirtualSettingFileEntry.setNew(false);
@@ -1116,9 +1041,6 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -1148,10 +1070,12 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 				"cpdVirtualSettingFileEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDVirtualSettingFileEntry::getUuid));
 
-		_finderPathFetchByUUID_G = new FinderPath(
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, false,
+			CPDVirtualSettingFileEntry::getUuid,
+			CPDVirtualSettingFileEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
@@ -1342,4 +1266,4 @@ public class CPDVirtualSettingFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1566008008
+// LIFERAY-SERVICE-BUILDER-HASH:-977745514

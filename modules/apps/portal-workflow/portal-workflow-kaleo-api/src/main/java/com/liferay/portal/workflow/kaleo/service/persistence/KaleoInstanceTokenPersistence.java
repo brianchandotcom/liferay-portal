@@ -582,21 +582,6 @@ public interface KaleoInstanceTokenPersistence
 		long companyId, long parentKaleoInstanceTokenId, Date completionDate);
 
 	/**
-	 * Caches the kaleo instance token in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceToken the kaleo instance token
-	 */
-	public void cacheResult(KaleoInstanceToken kaleoInstanceToken);
-
-	/**
-	 * Caches the kaleo instance tokens in the entity cache if it is enabled.
-	 *
-	 * @param kaleoInstanceTokens the kaleo instance tokens
-	 */
-	public void cacheResult(
-		java.util.List<KaleoInstanceToken> kaleoInstanceTokens);
-
-	/**
 	 * Creates a new kaleo instance token with the primary key. Does not add the kaleo instance token to the database.
 	 *
 	 * @param kaleoInstanceTokenId the primary key for the new kaleo instance token
@@ -635,4 +620,4 @@ public interface KaleoInstanceTokenPersistence
 	public KaleoInstanceToken fetchByPrimaryKey(long kaleoInstanceTokenId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:584747478
+// LIFERAY-SERVICE-BUILDER-HASH:-625133938

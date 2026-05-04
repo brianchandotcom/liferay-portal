@@ -36,6 +36,24 @@ public class NotificationRecipientUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(
+		List<NotificationRecipient> notificationRecipients) {
+
+		getPersistence().cacheResult(notificationRecipients);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(
+		NotificationRecipient notificationRecipient) {
+
+		getPersistence().cacheResult(notificationRecipient);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -429,28 +447,6 @@ public class NotificationRecipientUtil {
 	}
 
 	/**
-	 * Caches the notification recipient in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipient the notification recipient
-	 */
-	public static void cacheResult(
-		NotificationRecipient notificationRecipient) {
-
-		getPersistence().cacheResult(notificationRecipient);
-	}
-
-	/**
-	 * Caches the notification recipients in the entity cache if it is enabled.
-	 *
-	 * @param notificationRecipients the notification recipients
-	 */
-	public static void cacheResult(
-		List<NotificationRecipient> notificationRecipients) {
-
-		getPersistence().cacheResult(notificationRecipients);
-	}
-
-	/**
 	 * Creates a new notification recipient with the primary key. Does not add the notification recipient to the database.
 	 *
 	 * @param notificationRecipientId the primary key for the new notification recipient
@@ -520,4 +516,4 @@ public class NotificationRecipientUtil {
 	private static volatile NotificationRecipientPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1466374480
+// LIFERAY-SERVICE-BUILDER-HASH:-374237124

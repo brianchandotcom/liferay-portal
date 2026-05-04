@@ -475,21 +475,6 @@ public interface KaleoTaskAssignmentPersistence
 		String kaleoClassName, long kaleoClassPK, String assigneeClassName);
 
 	/**
-	 * Caches the kaleo task assignment in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignment the kaleo task assignment
-	 */
-	public void cacheResult(KaleoTaskAssignment kaleoTaskAssignment);
-
-	/**
-	 * Caches the kaleo task assignments in the entity cache if it is enabled.
-	 *
-	 * @param kaleoTaskAssignments the kaleo task assignments
-	 */
-	public void cacheResult(
-		java.util.List<KaleoTaskAssignment> kaleoTaskAssignments);
-
-	/**
 	 * Creates a new kaleo task assignment with the primary key. Does not add the kaleo task assignment to the database.
 	 *
 	 * @param kaleoTaskAssignmentId the primary key for the new kaleo task assignment
@@ -529,4 +514,4 @@ public interface KaleoTaskAssignmentPersistence
 	public KaleoTaskAssignment fetchByPrimaryKey(long kaleoTaskAssignmentId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:115710834
+// LIFERAY-SERVICE-BUILDER-HASH:1235066272

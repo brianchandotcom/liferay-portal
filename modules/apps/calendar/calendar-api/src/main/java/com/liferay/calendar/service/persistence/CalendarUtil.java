@@ -36,6 +36,20 @@ public class CalendarUtil {
 	 */
 
 	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(List)
+	 */
+	public static void cacheResult(List<Calendar> calendars) {
+		getPersistence().cacheResult(calendars);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#cacheResult(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void cacheResult(Calendar calendar) {
+		getPersistence().cacheResult(calendar);
+	}
+
+	/**
 	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
 	 */
 	public static void clearCache() {
@@ -847,24 +861,6 @@ public class CalendarUtil {
 	}
 
 	/**
-	 * Caches the calendar in the entity cache if it is enabled.
-	 *
-	 * @param calendar the calendar
-	 */
-	public static void cacheResult(Calendar calendar) {
-		getPersistence().cacheResult(calendar);
-	}
-
-	/**
-	 * Caches the calendars in the entity cache if it is enabled.
-	 *
-	 * @param calendars the calendars
-	 */
-	public static void cacheResult(List<Calendar> calendars) {
-		getPersistence().cacheResult(calendars);
-	}
-
-	/**
 	 * Creates a new calendar with the primary key. Does not add the calendar to the database.
 	 *
 	 * @param calendarId the primary key for the new calendar
@@ -925,4 +921,4 @@ public class CalendarUtil {
 	private static volatile CalendarPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-835986833
+// LIFERAY-SERVICE-BUILDER-HASH:1377861019

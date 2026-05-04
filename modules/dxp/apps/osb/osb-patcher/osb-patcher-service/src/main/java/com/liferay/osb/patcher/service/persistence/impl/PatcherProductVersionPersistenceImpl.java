@@ -33,10 +33,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -542,63 +539,6 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 	/**
-	 * Caches the patcher product version in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersion the patcher product version
-	 */
-	@Override
-	public void cacheResult(PatcherProductVersion patcherProductVersion) {
-		entityCache.putResult(
-			PatcherProductVersionImpl.class,
-			patcherProductVersion.getPrimaryKey(), patcherProductVersion);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {patcherProductVersion.getName()},
-			patcherProductVersion);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the patcher product versions in the entity cache if it is enabled.
-	 *
-	 * @param patcherProductVersions the patcher product versions
-	 */
-	@Override
-	public void cacheResult(
-		List<PatcherProductVersion> patcherProductVersions) {
-
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (patcherProductVersions.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (PatcherProductVersion patcherProductVersion :
-				patcherProductVersions) {
-
-			if (entityCache.getResult(
-					PatcherProductVersionImpl.class,
-					patcherProductVersion.getPrimaryKey()) == null) {
-
-				cacheResult(patcherProductVersion);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		PatcherProductVersionModelImpl patcherProductVersionModelImpl) {
-
-		Object[] args = new Object[] {patcherProductVersionModelImpl.getName()};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, patcherProductVersionModelImpl);
-	}
-
-	/**
 	 * Creates a new patcher product version with the primary key. Does not add the patcher product version to the database.
 	 *
 	 * @param patcherProductVersionId the primary key for the new patcher product version
@@ -737,11 +677,7 @@ public class PatcherProductVersionPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			PatcherProductVersionImpl.class, patcherProductVersionModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(patcherProductVersionModelImpl);
+		cacheUniqueFindersResult(patcherProductVersion, false);
 
 		if (isNew) {
 			patcherProductVersion.setNew(false);
@@ -804,9 +740,6 @@ public class PatcherProductVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByFixDeliveryMethod = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFixDeliveryMethod",
 			new String[] {
@@ -839,9 +772,10 @@ public class PatcherProductVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					PatcherProductVersion::getFixDeliveryMethod));
 
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, false,
+			PatcherProductVersion::getName);
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -941,4 +875,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1752740538
+// LIFERAY-SERVICE-BUILDER-HASH:1712598537

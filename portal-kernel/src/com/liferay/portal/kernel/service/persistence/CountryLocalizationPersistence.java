@@ -189,21 +189,6 @@ public interface CountryLocalizationPersistence
 	public int countByCountryId_LanguageId(long countryId, String languageId);
 
 	/**
-	 * Caches the country localization in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalization the country localization
-	 */
-	public void cacheResult(CountryLocalization countryLocalization);
-
-	/**
-	 * Caches the country localizations in the entity cache if it is enabled.
-	 *
-	 * @param countryLocalizations the country localizations
-	 */
-	public void cacheResult(
-		java.util.List<CountryLocalization> countryLocalizations);
-
-	/**
 	 * Creates a new country localization with the primary key. Does not add the country localization to the database.
 	 *
 	 * @param countryLocalizationId the primary key for the new country localization
@@ -243,4 +228,4 @@ public interface CountryLocalizationPersistence
 	public CountryLocalization fetchByPrimaryKey(long countryLocalizationId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1669158676
+// LIFERAY-SERVICE-BUILDER-HASH:1943399988

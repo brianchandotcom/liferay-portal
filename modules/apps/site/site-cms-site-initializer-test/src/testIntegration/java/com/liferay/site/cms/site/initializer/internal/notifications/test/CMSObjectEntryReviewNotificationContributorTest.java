@@ -89,6 +89,7 @@ public class CMSObjectEntryReviewNotificationContributorTest {
 				GroupConstants.CMS_FRIENDLY_URL, "/view-asset?objectEntryId=",
 				objectEntry.getObjectEntryId()),
 			payloadJSONObject.getString("notificationLink"));
+		Assert.assertTrue(payloadJSONObject.getBoolean("appendBackURL"));
 	}
 
 	@Test

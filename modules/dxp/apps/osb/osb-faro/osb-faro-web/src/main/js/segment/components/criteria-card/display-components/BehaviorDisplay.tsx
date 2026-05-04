@@ -1,7 +1,6 @@
 import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 import OccurenceConjunctionDisplay from './OccurenceConjunctionDisplay';
 import React from 'react';
-import RealTimePeriodDisplay from './RealTimePeriodDisplay';
 import ReferencedEntityDisplay from './ReferencedEntityDisplay';
 import {ASSET_TYPE_LANG_MAP} from 'shared/util/lang';
 import {CustomValue} from 'shared/util/records';
@@ -62,19 +61,17 @@ const BehaviorDisplay: React.FC<IDisplayComponentProps> = ({
 				type={EntityType.Assets}
 			/>
 
-			<OccurenceConjunctionDisplay
-				operatorName={eventOperator}
-				value={occurenceCount}
-			/>
+			{segmentType === SegmentTypes.Batch && (
+				<>
+					<OccurenceConjunctionDisplay
+						operatorName={eventOperator}
+						value={occurenceCount}
+					/>
 
-			{segmentType === SegmentTypes.RealTime ? (
-				<RealTimePeriodDisplay
-					conjunctionCriterion={conjunctionCriterion}
-				/>
-			) : (
-				<DateFilterConjunctionDisplay
-					conjunctionCriterion={conjunctionCriterion}
-				/>
+					<DateFilterConjunctionDisplay
+						conjunctionCriterion={conjunctionCriterion}
+					/>
+				</>
 			)}
 		</>
 	);

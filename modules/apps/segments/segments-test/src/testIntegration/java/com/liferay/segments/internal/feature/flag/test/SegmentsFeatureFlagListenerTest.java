@@ -7,6 +7,7 @@ package com.liferay.segments.internal.feature.flag.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -60,7 +60,7 @@ public class SegmentsFeatureFlagListenerTest {
 			false, SegmentsEntryConstants.SOURCE_REFERRED);
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-78863");
+			CompanyConstants.SYSTEM, true, "LPD-78863");
 
 		defaultSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
 			defaultSegmentsEntry.getSegmentsEntryId());
@@ -81,8 +81,7 @@ public class SegmentsFeatureFlagListenerTest {
 		SegmentsEntry asahFaroSegmentsEntry = _addSegmentsEntry(
 			false, SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND);
 
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-78863");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(0, true, "LPD-78863");
 
 		asahFaroSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
 			asahFaroSegmentsEntry.getSegmentsEntryId());
@@ -99,7 +98,7 @@ public class SegmentsFeatureFlagListenerTest {
 			true, SegmentsEntryConstants.SOURCE_REFERRED);
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-78863");
+			CompanyConstants.SYSTEM, false, "LPD-78863");
 
 		defaultSegmentsEntry = _segmentsEntryLocalService.getSegmentsEntry(
 			defaultSegmentsEntry.getSegmentsEntryId());
@@ -134,7 +133,7 @@ public class SegmentsFeatureFlagListenerTest {
 				_group.getExternalReferenceCode(), layout.getPlid());
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-78863");
+			CompanyConstants.SYSTEM, false, "LPD-78863");
 
 		SegmentsExperience defaultSegmentsExperience =
 			_segmentsExperienceLocalService.getSegmentsExperience(

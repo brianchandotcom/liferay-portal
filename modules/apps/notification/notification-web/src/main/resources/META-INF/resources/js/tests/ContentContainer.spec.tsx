@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,8 +10,10 @@ import React, {useState} from 'react';
 
 import ContentContainer from '../components/ContentContainer/ContentContainer';
 
-// Holds the props received by RichTextLocalized on each render so tests
-// can call onTranslationsChange / onSelectedLocaleChange directly.
+/**
+ * Holds the props received by RichTextLocalized on each render so tests
+ * can call onTranslationsChange / onSelectedLocaleChange directly.
+ */
 
 let richTextProps: {
 	onSelectedLocaleChange: (locale: {
@@ -19,6 +21,7 @@ let richTextProps: {
 		symbol: string;
 	}) => void;
 	onTranslationsChange: (translations: LocalizedValue<string>) => void;
+	selectedLocale: Liferay.Language.Locale;
 };
 
 jest.mock('@liferay/object-js-components-web', () => ({
@@ -76,8 +79,8 @@ function ContentContainerWrapper() {
 	);
 }
 
-describe('ContentContainer: subject persistence on locale switch', () => {
-	it('pre-fills the new locale subject with the current locale value on locale switch', () => {
+describe('ContentContainer: subject is independent from template locale', () => {
+	it('does not copy the subject across locales when the template locale switches', () => {
 		const mockSetValues = jest.fn();
 
 		render(
@@ -100,12 +103,10 @@ describe('ContentContainer: subject persistence on locale switch', () => {
 			});
 		});
 
-		expect(mockSetValues).toHaveBeenCalledWith({
-			subject: {en_US: 'Hello', pt_BR: 'Hello'},
-		});
+		expect(mockSetValues).not.toHaveBeenCalled();
 	});
 
-	it('preserves subject value when the template locale is switched', async () => {
+	it('preserves the subject value when the template locale is switched', async () => {
 		render(<ContentContainerWrapper />);
 
 		const subjectInput = screen.getByRole('textbox');
@@ -121,24 +122,7 @@ describe('ContentContainer: subject persistence on locale switch', () => {
 			});
 		});
 
-		expect(subjectInput).toHaveValue('Hello');
-	});
-
-	it('does not overwrite subject when body and locale change together', async () => {
-		render(<ContentContainerWrapper />);
-
-		const subjectInput = screen.getByRole('textbox');
-
-		await userEvent.type(subjectInput, 'Hello');
-
-		act(() => {
-			richTextProps.onTranslationsChange({en_US: 'body content'});
-			richTextProps.onSelectedLocaleChange({
-				label: 'pt_BR',
-				symbol: 'pt-br',
-			});
-		});
-
+		expect(richTextProps.selectedLocale).toBe('pt_BR');
 		expect(subjectInput).toHaveValue('Hello');
 	});
 });

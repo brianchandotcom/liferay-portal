@@ -8,15 +8,15 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {
+	PortletDataHandlerBoolean,
+	PortletDataHandlerSection as PortletDataHandlerSectionType,
+} from '../../../types/portletDataHandlerSection';
+import {
 	HandlerSelection,
 	getInitialSelection,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
-import {
-	PortletDataHandlerBoolean,
-	PortletDataHandlerSection as PortletDataHandlerSectionType,
-} from '../../../utils/mockPortletDataHandlerSections';
 import PortletDataControl from './PortletDataControl';
 
 export type SectionSelection = Record<string, HandlerSelection>;

@@ -8,7 +8,7 @@ import React from 'react';
 
 import DateFilter, {DateFilterValues} from '../../../components/date_filter';
 import {FormikFieldContentSelector} from '../../../components/forms/formik';
-import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
+import {PortletDataHandlerSection} from '../../../types/portletDataHandlerSection';
 
 const LABEL_ID = 'dataSelection-label';
 

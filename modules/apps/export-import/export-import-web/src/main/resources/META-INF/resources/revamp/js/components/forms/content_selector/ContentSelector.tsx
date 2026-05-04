@@ -6,8 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
+import {PortletDataHandlerSection} from '../../../types/portletDataHandlerSection';
 import {updateSelection} from '../../../utils/contentSelection';
-import {PortletDataHandlerSection} from '../../../utils/mockPortletDataHandlerSections';
 import ContentSection, {SectionSelection} from './ContentSection';
 
 export type ContentSelection = Record<string, SectionSelection>;

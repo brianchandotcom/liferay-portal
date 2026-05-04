@@ -4,11 +4,11 @@
  */
 
 import {ContentSelection} from '../components/forms/content_selector/ContentSelector';
-import {HandlerSelection} from './contentSelection';
 import {
 	PortletDataHandlerControl,
 	PortletDataHandlerSection,
-} from './mockPortletDataHandlerSections';
+} from '../types/portletDataHandlerSection';
+import {HandlerSelection} from './contentSelection';
 
 interface FlattenContentSelectionInput {
 	additionalFields?: Record<string, string>;

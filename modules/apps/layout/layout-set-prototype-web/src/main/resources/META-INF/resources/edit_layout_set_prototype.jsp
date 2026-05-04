@@ -42,7 +42,7 @@ if (layoutSetPrototype == null) {
 
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
-String layoutsUpdateableHelpMessage = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-82107") ? "allow-site-administrators-to-modify-pages-associated-with-this-site-template-sync-help" : "allow-site-administrators-to-modify-pages-associated-with-this-site-template-help";
+String layoutsUpdateableHelpMessage = FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-82107") ? "allow-site-administrators-to-modify-pages-associated-with-this-site-template-sync-help" : "allow-site-administrators-to-modify-pages-associated-with-this-site-template-help";
 
 Group group = themeDisplay.getSiteGroup();
 

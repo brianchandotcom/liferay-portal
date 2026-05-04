@@ -5,14 +5,9 @@
 
 package com.liferay.exportimport.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -24,7 +19,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -41,63 +35,46 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PortletDataHandlerControl")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"type"})
+@GraphQLName("PortletDataHandlerSetting")
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "Boolean", value = PortletDataHandlerBoolean.class
-		),
-		@JsonSubTypes.Type(
-			name = "Choice", value = PortletDataHandlerChoice.class
-		),
-		@JsonSubTypes.Type(
-			name = "Setting", value = PortletDataHandlerSetting.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "PortletDataHandlerControl")
-public abstract class PortletDataHandlerControl implements Serializable {
+@XmlRootElement(name = "PortletDataHandlerSetting")
+public class PortletDataHandlerSetting
+	extends PortletDataHandlerControl implements Serializable {
 
-	public static PortletDataHandlerControl toDTO(String json) {
+	public static PortletDataHandlerSetting toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			PortletDataHandlerControl.class, json);
+			PortletDataHandlerSetting.class, json);
 	}
 
-	public static PortletDataHandlerControl unsafeToDTO(String json) {
+	public static PortletDataHandlerSetting unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			PortletDataHandlerControl.class, json);
+			PortletDataHandlerSetting.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getDisabled() {
-		if (_disabledSupplier != null) {
-			disabled = _disabledSupplier.get();
+	public Boolean getDefaultState() {
+		if (_defaultStateSupplier != null) {
+			defaultState = _defaultStateSupplier.get();
 
-			_disabledSupplier = null;
+			_defaultStateSupplier = null;
 		}
 
-		return disabled;
+		return defaultState;
 	}
 
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
+	public void setDefaultState(Boolean defaultState) {
+		this.defaultState = defaultState;
 
-		_disabledSupplier = null;
+		_defaultStateSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setDisabled(
-		UnsafeSupplier<Boolean, Exception> disabledUnsafeSupplier) {
+	public void setDefaultState(
+		UnsafeSupplier<Boolean, Exception> defaultStateUnsafeSupplier) {
 
-		_disabledSupplier = () -> {
+		_defaultStateSupplier = () -> {
 			try {
-				return disabledUnsafeSupplier.get();
+				return defaultStateUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -110,126 +87,40 @@ public abstract class PortletDataHandlerControl implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Boolean disabled;
+	protected Boolean defaultState;
 
 	@JsonIgnore
-	private Supplier<Boolean> _disabledSupplier;
+	private Supplier<Boolean> _defaultStateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getLabel() {
-		if (_labelSupplier != null) {
-			label = _labelSupplier.get();
-
-			_labelSupplier = null;
-		}
-
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-
-		_labelSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLabel(
-		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
-
-		_labelSupplier = () -> {
-			try {
-				return labelUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String label;
-
-	@JsonIgnore
-	private Supplier<String> _labelSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
-
-			_nameSupplier = null;
-		}
-
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-
-		_nameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
-			try {
-				return nameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String name;
-
-	@JsonIgnore
-	private Supplier<String> _nameSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public PortletDataHandlerControl[] getPortletDataHandlerControls() {
+		if (_portletDataHandlerControlsSupplier != null) {
+			portletDataHandlerControls =
+				_portletDataHandlerControlsSupplier.get();
 
-			_typeSupplier = null;
+			_portletDataHandlerControlsSupplier = null;
 		}
 
-		return type;
+		return portletDataHandlerControls;
+	}
+
+	public void setPortletDataHandlerControls(
+		PortletDataHandlerControl[] portletDataHandlerControls) {
+
+		this.portletDataHandlerControls = portletDataHandlerControls;
+
+		_portletDataHandlerControlsSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setPortletDataHandlerControls(
+		UnsafeSupplier<PortletDataHandlerControl[], Exception>
+			portletDataHandlerControlsUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_portletDataHandlerControlsSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return portletDataHandlerControlsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -242,11 +133,11 @@ public abstract class PortletDataHandlerControl implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@NotNull
-	protected Type type;
+	protected PortletDataHandlerControl[] portletDataHandlerControls;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<PortletDataHandlerControl[]>
+		_portletDataHandlerControlsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -254,14 +145,14 @@ public abstract class PortletDataHandlerControl implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PortletDataHandlerControl)) {
+		if (!(object instanceof PortletDataHandlerSetting)) {
 			return false;
 		}
 
-		PortletDataHandlerControl portletDataHandlerControl =
-			(PortletDataHandlerControl)object;
+		PortletDataHandlerSetting portletDataHandlerSetting =
+			(PortletDataHandlerSetting)object;
 
-		return Objects.equals(toString(), portletDataHandlerControl.toString());
+		return Objects.equals(toString(), portletDataHandlerSetting.toString());
 	}
 
 	@Override
@@ -275,6 +166,41 @@ public abstract class PortletDataHandlerControl implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Boolean defaultState = getDefaultState();
+
+		if (defaultState != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"defaultState\": ");
+
+			sb.append(defaultState);
+		}
+
+		PortletDataHandlerControl[] portletDataHandlerControls =
+			getPortletDataHandlerControls();
+
+		if (portletDataHandlerControls != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portletDataHandlerControls\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < portletDataHandlerControls.length; i++) {
+				sb.append(String.valueOf(portletDataHandlerControls[i]));
+
+				if ((i + 1) < portletDataHandlerControls.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		Boolean disabled = getDisabled();
 
@@ -341,48 +267,10 @@ public abstract class PortletDataHandlerControl implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerControl",
+		defaultValue = "com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerSetting",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		BOOLEAN("Boolean"), CHOICE("Choice"), SETTING("Setting");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -473,4 +361,4 @@ public abstract class PortletDataHandlerControl implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2096814214
+// LIFERAY-REST-BUILDER-HASH:-1892274140

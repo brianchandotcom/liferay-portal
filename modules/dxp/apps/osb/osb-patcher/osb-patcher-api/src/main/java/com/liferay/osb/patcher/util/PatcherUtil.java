@@ -358,21 +358,20 @@ public class PatcherUtil {
 				defaultUserId, lockClassName, companyId, lockClassName, false,
 				Time.HOUR);
 
-			String jenkinsStatusJSONString = getNextPatcherBuilderStatusMsg(
+			String jenkinsStatusJSON = getNextPatcherBuilderStatusMsg(
 				companyId);
 
-			if (Validator.isNotNull(jenkinsStatusJSONString) &&
+			if (Validator.isNotNull(jenkinsStatusJSON) &&
 				_log.isInfoEnabled()) {
 
-				_log.info(
-					"Received PubSub message: " + jenkinsStatusJSONString);
+				_log.info("Received PubSub message: " + jenkinsStatusJSON);
 			}
 			else {
 				return;
 			}
 
 			JSONObject jenkinsStatusJSONObject =
-				JSONFactoryUtil.createJSONObject(jenkinsStatusJSONString);
+				JSONFactoryUtil.createJSONObject(jenkinsStatusJSON);
 
 			String patcherId = jenkinsStatusJSONObject.getString(
 				"patcherBuildId");
@@ -386,7 +385,7 @@ public class PatcherUtil {
 			PatcherBuildUtil.processOSBPatcherBuildCompileJenkinsStatus(
 				UserLocalServiceUtil.fetchUser(
 					jenkinsStatusJSONObject.getLong("patcherUserId")),
-				GetterUtil.getLong(patcherId), jenkinsStatusJSONString);
+				GetterUtil.getLong(patcherId), jenkinsStatusJSON);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -472,16 +471,16 @@ public class PatcherUtil {
 				File patcherFile = new File(
 					path + StringPool.SLASH + patcherFileName);
 
-				String jenkinsStatusJSONString = FileUtil.read(patcherFile);
+				String jenkinsStatusJSON = FileUtil.read(patcherFile);
 
 				FileUtil.delete(patcherFile);
 
-				if (Validator.isNull(jenkinsStatusJSONString)) {
+				if (Validator.isNull(jenkinsStatusJSON)) {
 					continue;
 				}
 
 				JSONObject jenkinsStatusJSONObject =
-					JSONFactoryUtil.createJSONObject(jenkinsStatusJSONString);
+					JSONFactoryUtil.createJSONObject(jenkinsStatusJSON);
 
 				long userId = jenkinsStatusJSONObject.getLong("patcherUserId");
 
@@ -492,7 +491,7 @@ public class PatcherUtil {
 						PatcherBuildUtil.
 							processOSBPatcherBuildCompileJenkinsStatus(
 								user, GetterUtil.getLong(patcherId),
-								jenkinsStatusJSONString);
+								jenkinsStatusJSON);
 					}
 					else if (Objects.equals(
 								path, patcherStatusBuildJenkinsTestPath)) {
@@ -500,18 +499,18 @@ public class PatcherUtil {
 						PatcherBuildUtil.
 							processOSBPatcherBuildTestJenkinsStatus(
 								user, GetterUtil.getLong(patcherId),
-								jenkinsStatusJSONString);
+								jenkinsStatusJSON);
 					}
 					else if (Objects.equals(path, patcherStatusBuildPath)) {
 						PatcherBuildUtil.
 							processOSBPatcherBuildMergeJenkinsStatus(
 								user, GetterUtil.getLong(patcherId),
-								jenkinsStatusJSONString);
+								jenkinsStatusJSON);
 					}
 					else {
 						PatcherFixUtil.processOSBPatcherFixAddJenkinsStatus(
-							GetterUtil.getLong(patcherId),
-							jenkinsStatusJSONString, user);
+							GetterUtil.getLong(patcherId), jenkinsStatusJSON,
+							user);
 					}
 				}
 				catch (Exception exception) {

@@ -1033,7 +1033,7 @@ public class PatcherFixUtil {
 	}
 
 	protected static void validateOSBPatcherFixAddJenkinsStatus(
-			PatcherFix patcherFix, String jenkinsStatusJSONString)
+			PatcherFix patcherFix, String jenkinsStatusJSON)
 		throws Exception {
 
 		if (patcherFix == null) {
@@ -1041,7 +1041,7 @@ public class PatcherFixUtil {
 		}
 
 		JenkinsUtil.validateJenkinsRequestKey(
-			patcherFix, jenkinsStatusJSONString, patcherFix.getRequestKey());
+			patcherFix, jenkinsStatusJSON, patcherFix.getRequestKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherFixUtil.class);

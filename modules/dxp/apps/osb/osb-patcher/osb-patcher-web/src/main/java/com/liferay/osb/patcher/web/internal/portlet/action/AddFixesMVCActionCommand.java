@@ -78,7 +78,7 @@ public class AddFixesMVCActionCommand extends BaseMVCActionCommand {
 		patcherFixValidator.validateAdd();
 
 		int type = PatcherFixConstants.TYPE_PATCH;
-	
+
 		if (autoFix) {
 			type = PatcherFixConstants.TYPE_AUTO_FIX;
 		}

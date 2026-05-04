@@ -83,8 +83,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 	@Override
 	public PatcherFix addPatcherFix(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String committish, String gitRemoteURL,
-			String name, int type, int status)
+			long patcherProjectVersionId, String committish,
+			String gitRemoteURL, String name, int type, int status)
 		throws Exception {
 
 		PatcherFix patcherFix = patcherFixPersistence.create(

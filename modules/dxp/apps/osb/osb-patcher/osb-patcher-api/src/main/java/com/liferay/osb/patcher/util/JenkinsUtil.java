@@ -904,8 +904,7 @@ public class JenkinsUtil {
 	}
 
 	protected static void validateJenkinsRequestKey(
-			BaseModel<?> baseModel, String jenkinsStatusJSONString,
-			String requestKey)
+			BaseModel<?> baseModel, String jenkinsStatusJSON, String requestKey)
 		throws Exception {
 
 		if (Validator.isNull(requestKey)) {
@@ -916,7 +915,7 @@ public class JenkinsUtil {
 		}
 
 		JSONObject jenkinsStatusJSONObject = JSONFactoryUtil.createJSONObject(
-			jenkinsStatusJSONString);
+			jenkinsStatusJSON);
 
 		String jenkinsStatusRequestKey = jenkinsStatusJSONObject.getString(
 			"patcherRequestKey");
@@ -931,7 +930,7 @@ public class JenkinsUtil {
 			sb.append(" with request key ");
 			sb.append(requestKey);
 			sb.append(" is not contained in the status file ");
-			sb.append(jenkinsStatusJSONString);
+			sb.append(jenkinsStatusJSON);
 
 			throw new Exception(sb.toString());
 		}

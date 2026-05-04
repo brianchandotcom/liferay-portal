@@ -4,6 +4,7 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
@@ -197,5 +198,148 @@ test(
 		).toBeVisible();
 		await expect(page.getByText('png', {exact: true})).toBeVisible();
 		await expect(page.getByText('Invoice', {exact: true})).toBeVisible();
+	}
+);
+
+test(
+	'Verify that the purchase order document is visible in the attachments tab',
+	{tag: '@LPD-83041'},
+	async ({
+		apiHelpers,
+		commerceAdminOrderAttachmentsPage,
+		commerceAdminOrdersPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+	}) => {
+		test.setTimeout(180000);
+
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			`B2B_${getRandomString()}`
+		);
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{phoneNumber: '1234567890', regionISOCode: 'AL'}
+			);
+
+		const sku =
+			await apiHelpers.headlessCommerceAdminCatalog.getSkuByName(
+				'CLSC55861'
+			);
+
+		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					quantity: 1,
+					skuId: sku.id,
+				},
+			],
+			orderStatus: '2',
+			shippingAddressId: address.id,
+		});
+
+		await test.step('Open the order details', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Order',
+				name: displayPageTemplateName,
+			});
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment('Order', 'Info Box');
+
+			const infoBoxFragmentId =
+				await pageEditorPage.getFragmentId('Info Box');
+
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Field',
+				fragmentId: infoBoxFragmentId,
+				tab: 'General',
+				value: 'purchaseOrderDocument',
+			});
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Label',
+				fragmentId: infoBoxFragmentId,
+				tab: 'General',
+				value: 'Purchase Order Document',
+			});
+			await pageEditorPage.changeFragmentConfiguration({
+				fieldLabel: 'Read Only',
+				fragmentId: infoBoxFragmentId,
+				tab: 'General',
+				value: false,
+			});
+
+			await pageEditorPage.waitForChangesSaved();
+
+			await displayPageTemplatesPage.publishTemplate();
+			await displayPageTemplatesPage.markAsDefault(
+				displayPageTemplateName
+			);
+
+			await page.goto(
+				liferayConfig.environment.baseUrl +
+					`/web/${site.name}/order/${order.id}`
+			);
+
+			await expect(
+				commerceLayoutsPage.infoBoxButton('purchaseOrderDocument')
+			).toBeVisible();
+		});
+
+		await test.step('Add the Purchase Order Document', async () => {
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await commerceLayoutsPage
+				.infoBoxButton('purchaseOrderDocument')
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/image1.jpg')
+			);
+
+			await expect(
+				commerceLayoutsPage.infoBoxValue('image1.jpg')
+			).toBeVisible();
+		});
+
+		await test.step('Check the presence of the purchaseOrderDocument in the order admin attachment page', async () => {
+			await commerceAdminOrdersPage.goto();
+
+			await (
+				await commerceAdminOrdersPage.tableRowLink({
+					colIndex: 1,
+					rowValue: order.id,
+				})
+			).click();
+
+			await commerceAdminOrderAttachmentsPage.attachmentsTab.click();
+
+			await expect(
+				page.getByText('image1.jpg', {exact: true})
+			).toBeVisible();
+			await expect(page.getByText('jpg', {exact: true})).toBeVisible();
+			await expect(
+				page.getByText('Purchase Order Document', {exact: true})
+			).toBeVisible();
+		});
 	}
 );

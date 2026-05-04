@@ -49,4 +49,7 @@ public class PatcherConstants {
 	public static final String TICKET_NAME_ALL_REGEX =
 		"^([A-Z]+[0-9]*-[0-9]+)$";
 
+	public static final String TICKET_NAME_LPD_LPE_LPS_REGEX =
+		"^(LP[DES]-[0-9]+)$";
+
 }

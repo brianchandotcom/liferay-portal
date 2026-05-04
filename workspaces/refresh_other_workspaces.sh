@@ -14,7 +14,10 @@ function main {
 		rsync \
 			-a --delete \
 			--exclude "build.gradle" \
+			--exclude "docker-compose.yaml" \
+			--exclude "gradle-local.properties" \
 			--exclude "package.json" \
+			--exclude "portal-env.properties" \
 			--exclude "README.md" \
 			--exclude "test.properties" \
 			--exclude "yarn.lock" \

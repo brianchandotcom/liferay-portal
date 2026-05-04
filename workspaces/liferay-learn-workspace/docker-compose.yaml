@@ -1,4 +1,4 @@
-name: liferay-sample-workspace
+name: liferay-learn-workspace
 services:
     database:
         command: >
@@ -11,7 +11,7 @@ services:
             --innodb-flush-method=O_DIRECT
             --lower_case_table_names=1
             --sync-binlog=0
-        container_name: liferay-sample-workspace-database
+        container_name: liferay-learn-workspace-database
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
             MYSQL_DATABASE: lportal
@@ -25,7 +25,7 @@ services:
         ports:
             -   3306:3306
     liferay:
-        container_name: liferay-sample-workspace-liferay
+        container_name: liferay-learn-workspace-liferay
         depends_on:
             database:
                 condition: service_healthy
@@ -40,7 +40,7 @@ services:
             start_period: 40s
             test: ["CMD", "curl", "-s", "--fail", "http://localhost:8080/c/portal/status"]
             timeout: 10s
-        image: liferay-sample-workspace-liferay:local
+        image: liferay-learn-workspace-liferay:local
         mem_limit: 10g
         mem_reservation: 8g
         ports:

@@ -8,6 +8,7 @@ package com.liferay.exportimport.rest.client.serdes.v1_0;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerBoolean;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerChoice;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerControl;
+import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerSetting;
 import com.liferay.exportimport.rest.client.dto.v1_0.Type;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
@@ -63,6 +64,11 @@ public class PortletDataHandlerControlSerDes {
 			if (typeString.equals("Choice")) {
 				return PortletDataHandlerChoiceSerDes.toJSON(
 					(PortletDataHandlerChoice)portletDataHandlerControl);
+			}
+
+			if (typeString.equals("Setting")) {
+				return PortletDataHandlerSettingSerDes.toJSON(
+					(PortletDataHandlerSetting)portletDataHandlerControl);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -171,6 +177,10 @@ public class PortletDataHandlerControlSerDes {
 
 				if (typeString.equals("Choice")) {
 					return PortletDataHandlerChoice.toDTO(json);
+				}
+
+				if (typeString.equals("Setting")) {
+					return PortletDataHandlerSetting.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(
@@ -292,4 +302,4 @@ public class PortletDataHandlerControlSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-336703724
+// LIFERAY-REST-BUILDER-HASH:-2001146587

@@ -11,6 +11,18 @@ import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 
+jest.mock('frontend-js-web', () => {
+	const actual = jest.requireActual('frontend-js-web');
+
+	return {
+		...actual,
+		dateUtils: {
+			...actual.dateUtils,
+			fromNow: jest.fn(() => '5 days ago'),
+		},
+	};
+});
+
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview',
 	() => ({
@@ -187,5 +199,27 @@ describe('NewImport', () => {
 		await user.clear(nameInput);
 
 		expect(nameInput).toHaveValue('');
+	});
+
+	it('forwards the upload metadata to the FileSummary card on the Data Selection step', async () => {
+		renderComponent();
+
+		await user.type(screen.getByLabelText(/^name/i), 'My import');
+
+		await uploadFile('site.lar');
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {name: /continue/i})
+			).toBeEnabled();
+		});
+
+		await user.click(screen.getByRole('button', {name: /continue/i}));
+
+		expect(screen.getByText('file-summary')).toBeInTheDocument();
+		expect(screen.getAllByText('site.lar').length).toBeGreaterThan(0);
+		expect(screen.getByText('Test User')).toBeInTheDocument();
+		expect(screen.getByText('5 days ago')).toBeInTheDocument();
+		expect(screen.getByText('4 B')).toBeInTheDocument();
 	});
 });

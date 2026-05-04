@@ -356,6 +356,10 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getExpirationDate()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.externalReferenceCodeInfoField,
+				objectEntry.getExternalReferenceCode()));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.modifiedDateInfoField,
 				objectEntry.getDateModified()));
 		objectEntryFieldValues.add(

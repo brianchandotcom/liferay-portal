@@ -239,7 +239,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				ServiceContextUtil.getServiceContext(
 					contextCompany.getCompanyId(), fragment.getDateCreated(),
 					groupId, contextHttpServletRequest,
-					fragment.getDateModified()));
+					fragment.getDateModified(), contextUser.getUserId()));
 
 			if (draftFragmentVersion != null) {
 				_updateDraft(
@@ -261,7 +261,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				ServiceContextUtil.getServiceContext(
 					contextCompany.getCompanyId(), fragment.getDateCreated(),
 					groupId, contextHttpServletRequest,
-					fragment.getDateModified()));
+					fragment.getDateModified(), contextUser.getUserId()));
 		}
 		else {
 			fragmentEntry = _fragmentEntryService.addFragmentEntry(
@@ -276,7 +276,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 				ServiceContextUtil.getServiceContext(
 					contextCompany.getCompanyId(), fragment.getDateCreated(),
 					groupId, contextHttpServletRequest,
-					fragment.getDateModified()));
+					fragment.getDateModified(), contextUser.getUserId()));
 		}
 
 		return _toFragment(fragmentEntry);
@@ -336,7 +336,7 @@ public class FragmentResourceImpl extends BaseFragmentResourceImpl {
 			ServiceContextUtil.getServiceContext(
 				contextCompany.getCompanyId(), fragmentSet.getDateCreated(),
 				groupId, contextHttpServletRequest,
-				fragmentSet.getDateModified()));
+				fragmentSet.getDateModified(), contextUser.getUserId()));
 	}
 
 	private Fragment _toFragment(FragmentEntry fragmentEntry) throws Exception {

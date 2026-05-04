@@ -111,62 +111,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-130275: Validate if it's posible to create a segment based on Organization > Date modified criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByOrganizationDateModified {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add organization and add the user to the organization") {
-			JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-			JSONOrganization.assignUserToOrganization(
-				organizationName = "Organization Name",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			Segmentation.addProperties(propertyOption = "Date Modified");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Greater Than");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationDateModified Test");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
-
-			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd", "UTC");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = ${currentDate});
-		}
-	}
-
 	@description = "Test Automation for LPS-130276: Validate if it's posible to create a segment based on Organization > Hierarchy path criteria"
 	@priority = 5
 	@uitest
@@ -268,6 +212,36 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "Organization Name");
+		}
+
+		task ("Add segment with Date Modified property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			Segmentation.addProperties(propertyOption = "Date Modified");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Greater Than");
+
+			Segmentation.fillTitle(titleField = "AddSegmentByOrganizationDateModified Test");
+
+			Segmentation.viewMembers(memberName = "userfn userln");
+
+			WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the Date Modified segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentByOrganizationDateModified Test");
+
+			var currentDate = DateUtil.getFormattedCurrentDate("yyyy/MM/dd", "UTC");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = ${currentDate});
 		}
 	}
 

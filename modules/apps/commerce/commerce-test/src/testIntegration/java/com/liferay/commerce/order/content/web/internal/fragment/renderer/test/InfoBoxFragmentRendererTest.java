@@ -66,8 +66,6 @@ public class InfoBoxFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
-		CommerceOrderAttachmentTestUtil.initialize(getClass());
-
 		_group = GroupTestUtil.addGroup();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -113,6 +111,8 @@ public class InfoBoxFragmentRendererTest {
 				new PropsTemporarySwapper(
 					FeatureFlagConstants.getKey("LPD-6252"),
 					Boolean.TRUE.toString())) {
+
+			CommerceOrderAttachmentTestUtil.initialize(getClass());
 
 			additionalProps = _getPurchaseOrderDocumentAdditionalProps(
 				PermissionThreadLocal.getPermissionChecker());

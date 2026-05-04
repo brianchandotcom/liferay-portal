@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "feature.flag.LPD-11235=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -58,7 +59,7 @@ definition {
 	@priority = 3
 	test CanAssertEmptyProductChannelsVisibilityWithProductsAndCatalogsViewPermissions {
 		property browser.chrome.version = "139.0";
-		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {
@@ -137,7 +138,7 @@ definition {
 	@description = "This is a test for COMMERCE-11927. As an admin, I want to be able to search for an account group in the Visibility page of a product"
 	@priority = 5
 	test CanSearchProductAccountGroup {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given account groups are created") {

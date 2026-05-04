@@ -2,6 +2,7 @@
 definition {
 
 	property browser.chrome.version = "139.0";
+	property custom.properties = "feature.flag.LPD-11235=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -554,7 +555,7 @@ definition {
 	@description = "COMMERCE-12627 Verify that the product details is using the adaptive media"
 	@priority = 5
 	test CanProductDetailsUseAdaptiveMedia {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -663,7 +664,7 @@ definition {
 	@description = "COMMERCE-12773 | Verify that it is possible to use the toggle Shopping Experience Image Gallery to decide which image shows on the storefront product details"
 	@priority = 5
 	test CanViewImagesCorrectlyByUsingTheShoppingExperienceImageGalleryToggle {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium Site") {

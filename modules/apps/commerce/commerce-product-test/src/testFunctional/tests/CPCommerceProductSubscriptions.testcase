@@ -2,6 +2,7 @@
 definition {
 
 	property browser.chrome.version = "139.0";
+	property custom.properties = "feature.flag.LPD-11235=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -170,7 +171,7 @@ definition {
 	@description = "This is a test for COMMERCE-9743, As a buyer I can view Payment Subscription field on the Product Details page with multiple SKUs"
 	@priority = 3
 	test CanViewPaymentSubscriptionOnProductDetailsPageWithMultipleSKU {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property custom.properties = "feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {

@@ -421,10 +421,9 @@ public class DataSourceController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
 	public FaroResultsDisplay getChannelDataSourceDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("cur") int cur,
-			@DefaultValue("20") @QueryParam("delta") int delta,
 			@QueryParam("enabled") Boolean enabled,
-			@QueryParam("name") String name,
+			@QueryParam("name") String name, @QueryParam("cur") int cur,
+			@DefaultValue("20") @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
@@ -908,10 +907,10 @@ public class DataSourceController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay getGroups(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("name") String name,
 			@DefaultValue("-1") @QueryParam("parentGroupId") long parentGroupId,
-			@DefaultValue("true") @QueryParam("site") boolean site)
+			@DefaultValue("true") @QueryParam("site") boolean site,
+			@QueryParam("cur") int cur, @QueryParam("delta") int delta)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -997,10 +996,10 @@ public class DataSourceController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay getOrganizations(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("name") String name,
 			@DefaultValue("-1") @QueryParam("parentOrganizationId") long
-				parentOrganizationId)
+				parentOrganizationId,
+			@QueryParam("cur") int cur, @QueryParam("delta") int delta)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -1057,8 +1056,8 @@ public class DataSourceController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay getUserGroups(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
-			@QueryParam("name") String name)
+			@QueryParam("name") String name, @QueryParam("cur") int cur,
+			@QueryParam("delta") int delta)
 		throws Exception {
 
 		Results<DXPUserGroup> results =
@@ -1324,15 +1323,14 @@ public class DataSourceController extends BaseFaroController {
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay search(
-			@PathParam("groupId") long groupId, @QueryParam("cur") int cur,
-			@QueryParam("delta") int delta,
+			@PathParam("groupId") long groupId,
 			@QueryParam("faroEntityId") String faroEntityId,
-			@QueryParam("name") String name,
-			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam,
-			@QueryParam("query") String query,
+			@QueryParam("name") String name, @QueryParam("query") String query,
 			@DefaultValue(StringPool.BLANK) @QueryParam("states") FaroParam
-				<List<String>> statesFaroParam)
+				<List<String>> statesFaroParam,
+			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
+			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		return search(
@@ -1370,15 +1368,14 @@ public class DataSourceController extends BaseFaroController {
 	@POST
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroResultsDisplay searchByForm(
-			@PathParam("groupId") long groupId, @FormParam("cur") int cur,
-			@FormParam("delta") int delta,
+			@PathParam("groupId") long groupId,
 			@FormParam("faroEntityId") String faroEntityId,
-			@FormParam("name") String name,
-			@DefaultValue(StringPool.BLANK) @FormParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam,
-			@FormParam("query") String query,
+			@FormParam("name") String name, @FormParam("query") String query,
 			@DefaultValue(StringPool.BLANK) @FormParam("states") FaroParam
-				<List<String>> statesFaroParam)
+				<List<String>> statesFaroParam,
+			@FormParam("cur") int cur, @FormParam("delta") int delta,
+			@DefaultValue(StringPool.BLANK) @FormParam("orderByFields")
+				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		return search(

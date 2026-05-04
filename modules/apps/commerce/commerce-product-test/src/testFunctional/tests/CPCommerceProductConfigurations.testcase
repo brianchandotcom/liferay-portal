@@ -2,7 +2,7 @@
 definition {
 
 	property browser.chrome.version = "139.0";
-	property custom.properties = "jsonws.web.service.paths.excludes=";
+	property custom.properties = "feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -1060,7 +1060,7 @@ definition {
 	@description = "This is a test for COMMERCE-11706. Verify that only one "/" is shown in the URLs inside the sitemap when Virtual Host is enabled."
 	@priority = 5
 	test CanLocaleBePrependedForProductOnSiteMapPageWhenVirtualHostIsEnabled {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property custom.properties = "feature.flag.LPD-11235=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

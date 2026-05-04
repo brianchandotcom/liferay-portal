@@ -2,6 +2,7 @@
 definition {
 
 	property browser.chrome.version = "139.0";
+	property custom.properties = "feature.flag.LPD-11235=true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Product Info Management";
@@ -217,7 +218,7 @@ definition {
 	@description = "This is a test for the bug COMMERCE-9088, with the ticket COMMERCE-10006 | When the user select a shipping/payment option which eligible term description contains bold, italic, etc... text the checkout portlet breaks"
 	@priority = 5
 	test CanCompleteCheckoutWithRichTextTermDescription {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.LPD-11235=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer users") {

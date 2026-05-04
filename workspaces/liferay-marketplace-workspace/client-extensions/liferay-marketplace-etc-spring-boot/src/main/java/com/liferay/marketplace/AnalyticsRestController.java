@@ -9,6 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.AnalyticsService;
 import com.liferay.marketplace.service.KoroneikiService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
@@ -56,9 +57,15 @@ public class AnalyticsRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			if (!_koroneikiService.hasEntitlement(
-					_koroneikiService.getKoroneikiAccount(accountKey),
-					MarketplaceConstants.KORONEIKI_DXP_ENTITLEMENTS)) {
+			Account koroneikiAccount = _koroneikiService.getKoroneikiAccount(
+				accountKey);
+
+			if (!(_koroneikiService.hasEntitlement(
+					koroneikiAccount,
+					MarketplaceConstants.KORONEIKI_AC_ENTITLEMENTS) ||
+				  _koroneikiService.hasEntitlement(
+					  koroneikiAccount,
+					  MarketplaceConstants.KORONEIKI_DXP_ENTITLEMENTS))) {
 
 				throw new Exception(
 					"DXP entitlements not found for account " + accountKey);

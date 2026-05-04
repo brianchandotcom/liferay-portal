@@ -2,7 +2,7 @@
 
 allowed-tools: [Bash, Glob, Grep, Read, Skill]
 argument-hint: "[optional target-org/repo, message hint, or --skip-pr-check]"
-description: Validate the branch via pr-check, then create a GitHub pull request for the current branch, transition the corresponding Jira ticket to review, and record the PR link on the ticket. Use when the user asks to create a PR, send a PR, or invokes /pr.
+description: Create a GitHub pull request for the current branch. Use when the user asks to create a PR, send a PR, or invokes /pr.
 name: pr
 
 ---
@@ -16,8 +16,6 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 - At least one commit adds tests. When none do, ask the user for a rationale and refuse to proceed without one. The only exceptions are pull requests with no code changes (e.g., language key updates or markdown changes).
 
 - The current branch is a development branch, not `master` or any other protected branch.
-
-- The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first (suggest `/commit`); do not stash or discard their work.
 
 - The `pr-check` skill must pass. Skip only if `${ARGUMENTS}` contains `--skip-pr-check`.
 
@@ -70,7 +68,7 @@ The pull request head is `<github-username>:<branch-name>` (the GitHub username 
 
 ### Pushed Branch
 
-Push the current branch to the user's remote when it has not been pushed yet or when new local commits exist (including any auto-commits from **Run pr-check**).
+Push the current branch to the user's remote when it has not been pushed yet or when new local commits exist.
 
 ### Pull Request
 

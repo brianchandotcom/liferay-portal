@@ -731,13 +731,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_OPERATOR",
 				value1 = "eq");
 		}
-	}
 
-	@description = "Validate if the user can create a segment with Properties User and Email Segment with Not Contains Option"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserEmailAddressNotContains {
-		task ("Add segment") {
+		task ("Add segment with Not Contains operator") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Email Address");
@@ -753,7 +748,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Not Contains segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentUserEmailAddressNotContains Test");
 
 			AssertValue(

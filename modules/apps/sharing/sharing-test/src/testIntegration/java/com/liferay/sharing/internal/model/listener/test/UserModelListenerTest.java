@@ -152,6 +152,22 @@ public class UserModelListenerTest {
 		_addToTicketIdSharingEntry(_group1.getGroupId(), ticket1.getTicketId());
 		_addToTicketIdSharingEntry(_group1.getGroupId(), ticket2.getTicketId());
 
+		List<SharingEntry> toTicketSharingEntries =
+			_sharingEntryLocalService.getToTicketSharingEntries(
+				ticket1.getTicketId());
+
+		Assert.assertEquals(
+			toTicketSharingEntries.toString(), 1,
+			toTicketSharingEntries.size());
+
+		toTicketSharingEntries =
+			_sharingEntryLocalService.getToTicketSharingEntries(
+				ticket2.getTicketId());
+
+		Assert.assertEquals(
+			toTicketSharingEntries.toString(), 1,
+			toTicketSharingEntries.size());
+
 		User user3 = _addUser(emailAddress1);
 
 		Assert.assertNull(
@@ -169,6 +185,22 @@ public class UserModelListenerTest {
 		sharingEntry1 = toUserSharingEntries.get(0);
 
 		Assert.assertEquals(0, sharingEntry1.getToTicketId());
+
+		toTicketSharingEntries =
+			_sharingEntryLocalService.getToTicketSharingEntries(
+				ticket1.getTicketId());
+
+		Assert.assertEquals(
+			toTicketSharingEntries.toString(), 0,
+			toTicketSharingEntries.size());
+
+		toTicketSharingEntries =
+			_sharingEntryLocalService.getToTicketSharingEntries(
+				ticket2.getTicketId());
+
+		Assert.assertEquals(
+			toTicketSharingEntries.toString(), 0,
+			toTicketSharingEntries.size());
 	}
 
 	@Test

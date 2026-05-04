@@ -99,6 +99,8 @@ public class UserModelListener extends BaseModelListener<User> {
 							sharingEntry.getClassPK()));
 				}
 
+				_sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+
 				continue;
 			}
 

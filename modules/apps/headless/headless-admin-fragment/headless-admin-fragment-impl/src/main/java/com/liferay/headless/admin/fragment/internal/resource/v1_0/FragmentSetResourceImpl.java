@@ -10,13 +10,12 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentCollectionService;
 import com.liferay.headless.admin.fragment.dto.v1_0.FragmentSet;
 import com.liferay.headless.admin.fragment.internal.odata.entity.v1_0.FragmentSetEntityModel;
+import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentSetResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -125,7 +124,10 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 				fragmentSet.getKey(), fragmentSet.getName(),
 				fragmentSet.getDescription(),
 				GetterUtil.getBoolean(fragmentSet.getMarketplace()),
-				_getServiceContext(groupId, fragmentSet)));
+				ServiceContextUtil.getServiceContext(
+					contextCompany.getCompanyId(), fragmentSet.getDateCreated(),
+					groupId, contextHttpServletRequest,
+					fragmentSet.getDateModified())));
 	}
 
 	@Override
@@ -151,27 +153,17 @@ public class FragmentSetResourceImpl extends BaseFragmentSetResourceImpl {
 					fragmentSet.getKey(), fragmentSet.getName(),
 					fragmentSet.getDescription(),
 					GetterUtil.getBoolean(fragmentSet.getMarketplace()),
-					_getServiceContext(groupId, fragmentSet)));
+					ServiceContextUtil.getServiceContext(
+						contextCompany.getCompanyId(),
+						fragmentSet.getDateCreated(), groupId,
+						contextHttpServletRequest,
+						fragmentSet.getDateModified())));
 		}
 
 		return _toFragmentSet(
 			_fragmentCollectionService.updateFragmentCollection(
 				fragmentCollection.getFragmentCollectionId(),
 				fragmentSet.getName(), fragmentSet.getDescription()));
-	}
-
-	private ServiceContext _getServiceContext(
-		long groupId, FragmentSet fragmentSet) {
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
-
-		serviceContext.setCompanyId(contextCompany.getCompanyId());
-		serviceContext.setCreateDate(fragmentSet.getDateCreated());
-		serviceContext.setModifiedDate(fragmentSet.getDateModified());
-
-		return serviceContext;
 	}
 
 	private FragmentSet _toFragmentSet(FragmentCollection fragmentCollection)

@@ -148,7 +148,7 @@ public abstract class PortletDataHandlerControl
 
 	public static enum Type {
 
-		BOOLEAN("Boolean"), CHOICE("Choice");
+		BOOLEAN("Boolean"), CHOICE("Choice"), SETTING("Setting");
 
 		public static Type create(String value) {
 			for (Type type : values()) {
@@ -180,4 +180,4 @@ public abstract class PortletDataHandlerControl
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-595631118
+// LIFERAY-REST-BUILDER-HASH:-728790544

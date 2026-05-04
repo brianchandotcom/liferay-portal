@@ -51,6 +51,13 @@ export class CommerceDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly tableRows: () => Promise<Locator[]>;
+	readonly tableRowButton: ({
+		colIndex,
+		rowValue,
+	}: {
+		colIndex?: number;
+		rowValue: number | string;
+	}) => Promise<Locator>;
 	readonly tableRowLink: ({colIndex, rowValue}) => Promise<Locator>;
 
 	constructor(page: Page, tableIdentifier: string) {
@@ -96,6 +103,28 @@ export class CommerceDNDTablePage {
 			await this.table.elementHandle();
 
 			return await this.table.locator('tbody tr').all();
+		};
+		this.tableRowButton = async ({
+			colIndex = 1,
+			rowValue,
+		}: {
+			colIndex?: number;
+			rowValue: number | string;
+		}) => {
+			const tableRow = await searchTableRowByValue(
+				this.table,
+				colIndex,
+				String(rowValue),
+				true
+			);
+
+			if (tableRow && tableRow.column) {
+				return tableRow.column.getByRole('button', {
+					name: String(rowValue),
+				});
+			}
+
+			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
 		};
 		this.tableRowLink = async ({
 			colIndex = 1,

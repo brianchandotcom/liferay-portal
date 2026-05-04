@@ -726,6 +726,30 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "userfn");
 		}
+
+		task ("Add segment with Last Name property") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.fillTitle(titleField = "AddSegmentByUserLastName Test");
+
+			Segmentation.fillProperty(criterionValue = "userln");
+
+			Segmentation.viewMembers(memberName = "userfn userln");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the Last Name segment is correctly created") {
+			Segmentation.editSegment(entry = "AddSegmentByUserLastName Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "userln");
+		}
 	}
 
 	@description = "Test Automation for LPS-130287: Validate if it's posible to create a segment based on User > Job Title criteria"
@@ -768,48 +792,6 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "QA");
-		}
-	}
-
-	@description = "Test Automation for LPS-130288: Validate if it's posible to create a segment based on User > Last Name criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserLastName {
-		task ("Add user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Last Name");
-
-			Segmentation.fillTitle(titleField = "AddSegmentByUserLastName Test");
-
-			Segmentation.fillProperty(criterionValue = "userln");
-
-			Segmentation.viewMembers(memberName = "userfn userln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Assert the segment is correctly created") {
-			Segmentation.editSegment(entry = "AddSegmentByUserLastName Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "userln");
 		}
 	}
 

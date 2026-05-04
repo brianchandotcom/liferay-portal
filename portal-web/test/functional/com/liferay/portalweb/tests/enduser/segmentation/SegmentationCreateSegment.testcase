@@ -692,6 +692,7 @@ definition {
 	test AddSegmentByUserStringProperties {
 		task ("Add user") {
 			JSONUser.addUser(
+				jobTitle = "QA",
 				userEmailAddress = "userea@liferay.com",
 				userFirstName = "userfn",
 				userLastName = "userln",
@@ -798,27 +799,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "usersn");
 		}
-	}
 
-	@description = "Test Automation for LPS-130287: Validate if it's posible to create a segment based on User > Job Title criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentByUserJobTitle {
-		task ("Add user") {
-			JSONUser.addUser(
-				jobTitle = "QA",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
+		task ("Add segment with Job Title property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.addProperties(propertyOption = "Job Title");
@@ -834,7 +816,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Job Title segment is correctly created") {
 			Segmentation.editSegment(entry = "AddSegmentByUserJobTitle Test");
 
 			AssertValue(

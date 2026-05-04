@@ -239,24 +239,27 @@ public interface ContactsEngineClient {
 		String keywords, int rangeKey, int cur, int delta, String sortString);
 
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta);
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta);
 
 	public Results<AssetSummaryMimeType> getAssetSummaryMimeTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
 		String rangeStart, int cur, int delta);
 
 	public Results<AssetSummaryTag> getAssetSummaryTags(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta);
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta);
 
 	public Results<AssetSummaryType> getAssetSummaryTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
 		String rangeStart, int cur, int delta);
 
 	public Results<AssetSummaryVocabulary> getAssetSummaryVocabularies(
-		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
-		String rangeStart, int cur, int delta);
+		FaroProject faroProject, long channelId, String keywords,
+		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
+		int delta);
 
 	public DataSource getAvailableTokenDataSource(FaroProject faroProject);
 

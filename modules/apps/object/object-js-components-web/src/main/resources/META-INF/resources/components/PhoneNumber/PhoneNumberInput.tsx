@@ -56,7 +56,9 @@ export function PhoneNumberInput({
 	const handleValueChange = (country: CountryInfo, number: string) => {
 		if (onChange) {
 			const resolvedPrefix =
-				prefixType === PREFIX_TYPE.FIXED ? prefix || '' : `+${country.idd}`;
+				prefixType === PREFIX_TYPE.FIXED
+					? prefix || ''
+					: `+${country.idd}`;
 
 			onChange({
 				target: {
@@ -101,7 +103,10 @@ export function PhoneNumberInput({
 
 	return (
 		<>
-			<ClayInput.GroupItem prepend={prefixType === PREFIX_TYPE.FIXED} shrink>
+			<ClayInput.GroupItem
+				prepend={prefixType === PREFIX_TYPE.FIXED}
+				shrink
+			>
 				{prefixType === PREFIX_TYPE.FIXED ? (
 					<ClayInput.GroupText>
 						{fixedFlagSymbol && (

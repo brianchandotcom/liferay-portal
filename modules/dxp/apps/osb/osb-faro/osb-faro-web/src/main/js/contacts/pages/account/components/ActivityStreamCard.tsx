@@ -6,11 +6,18 @@ import AccountEventsTrendQuery, {
 	AccountEventsTrendData,
 	AccountEventsTrendVariables
 } from 'shared/queries/AccountEventsTrendQuery';
+import AccountUserSessionQuery, {
+	AccountUserSession,
+	AccountUserSessionData,
+	AccountUserSessionVariables
+} from 'shared/queries/AccountUserSessionQuery';
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
+import ActivityStreamTimeline from './ActivityStreamTimeline';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import moment from 'moment';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import SearchInput from 'shared/components/SearchInput';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {getDateRangeLabel} from 'shared/util/date';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
@@ -25,6 +32,7 @@ import {toRounded, toThousands} from 'shared/util/numbers';
 import {TrendClassification} from 'segment/types';
 import {useQuery} from '@apollo/client';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
+import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {WrapSafeResults} from 'shared/hoc/util';
 
 // TODO LPD-85735: remove when backend is deployed.
@@ -193,6 +201,175 @@ const buildMockTrendResponse = (): {
 	}
 });
 
+const MOCK_EVENT_NAMES = [
+	'pageViewed',
+	'pageLoaded',
+	'pageDepthReached',
+	'identity',
+	'assetClicked'
+];
+
+interface MockSessionDef {
+	dayOffset: number;
+	deviceType: string;
+	eventCount: number;
+	hour: number;
+	inProgress?: boolean;
+	userName: string | null;
+}
+
+const MOCK_SESSION_DEFS: MockSessionDef[] = [
+	{
+		dayOffset: 0,
+		deviceType: 'mobile',
+		eventCount: 51,
+		hour: 20,
+		inProgress: true,
+		userName: 'Michelle de Rue'
+	},
+	{
+		dayOffset: 0,
+		deviceType: 'desktop',
+		eventCount: 8,
+		hour: 19,
+		userName: 'Sarah Chen'
+	},
+	{
+		dayOffset: 1,
+		deviceType: 'desktop',
+		eventCount: 12,
+		hour: 14,
+		userName: 'David Kim'
+	},
+	{
+		dayOffset: 1,
+		deviceType: 'mobile',
+		eventCount: 5,
+		hour: 11,
+		userName: null
+	},
+	{
+		dayOffset: 1,
+		deviceType: 'tablet',
+		eventCount: 7,
+		hour: 9,
+		userName: 'Priya Patel'
+	}
+];
+
+interface MockSession {
+	events: AccountUserSession['events'];
+	meta: Omit<AccountUserSession, 'events'>;
+}
+
+const buildMockDataset = (keywords: string): MockSession[] =>
+	MOCK_SESSION_DEFS.map(def => {
+		const sessionStart = moment
+			.utc()
+			.subtract(def.dayOffset, 'days')
+			.startOf('day')
+			.add(def.hour, 'hours');
+
+		const events = Array.from({length: def.eventCount}, (_, eventIdx) => ({
+			applicationId: 'WebContent',
+			assetTitle: '',
+			canonicalUrl: 'www.liferay.com',
+			createDate: sessionStart
+				.clone()
+				.add(eventIdx * 2, 'minutes')
+				.toISOString(),
+			name: MOCK_EVENT_NAMES[eventIdx % MOCK_EVENT_NAMES.length],
+			pageDescription: '',
+			pageKeywords: '',
+			pageTitle: keywords
+				? `Search: ${keywords} – event ${eventIdx + 1}`
+				: 'Liferay: Digital experience software tailored to your needs',
+			referrer: '',
+			url: 'www.liferay.com'
+		}));
+
+		return {
+			events,
+			meta: {
+				browserName: 'Chrome',
+				completeDate: def.inProgress
+					? null
+					: sessionStart
+							.clone()
+							.add(def.eventCount * 2 + 5, 'minutes')
+							.toISOString(),
+				contentLanguageId: 'en-GB',
+				createDate: sessionStart.toISOString(),
+				devicePixelRatio: 2,
+				deviceType: def.deviceType,
+				languageId: 'en-US',
+				screenHeight: 774,
+				screenWidth: 2518,
+				timezoneOffset: '-07:00',
+				userAgent:
+					'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36',
+				userName: def.userName
+			}
+		};
+	});
+
+const buildMockUserSessionResponse = (
+	page: number,
+	size: number,
+	keywords: string
+): {
+	data: AccountUserSessionData;
+	error: undefined;
+	loading: false;
+	refetch: () => Promise<unknown>;
+} => {
+	const dataset = buildMockDataset(keywords);
+
+	// Pagination is event-based per the LPD-85735 contract: `size` is the max
+	// events per page, not sessions, and a session can appear on consecutive
+	// pages with its metadata duplicated. Flatten events with their session
+	// reference, slice by page, then re-group by session preserving order.
+	const flatEvents: {eventInSessionIdx: number; session: MockSession}[] = [];
+
+	dataset.forEach(session => {
+		session.events.forEach((_, eventInSessionIdx) => {
+			flatEvents.push({eventInSessionIdx, session});
+		});
+	});
+
+	const totalEvents = flatEvents.length;
+
+	const start = page * size;
+	const end = Math.min(start + size, totalEvents);
+	const pageEvents = flatEvents.slice(start, end);
+
+	const userSessions: AccountUserSession[] = [];
+	let lastSession: MockSession | null = null;
+
+	pageEvents.forEach(({eventInSessionIdx, session}) => {
+		if (lastSession !== session) {
+			userSessions.push({...session.meta, events: []});
+			lastSession = session;
+		}
+
+		userSessions[userSessions.length - 1].events.push(
+			session.events[eventInSessionIdx]
+		);
+	});
+
+	return {
+		data: {
+			eventsByUserSessions: {
+				totalEventsMetric: {value: totalEvents},
+				userSessions
+			}
+		},
+		error: undefined,
+		loading: false,
+		refetch: () => Promise.resolve()
+	};
+};
+
 interface IActivityStreamCardProps {
 	accountId: string;
 	channelId: string;
@@ -208,7 +385,15 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 }) => {
 	const {hasSelectedPoint, onPointSelect, selectedPoint} = useSelectedPoint();
 
-	const [keywords] = useState<string>('');
+	const [keywords, setKeywords] = useState<string>('');
+	const [searchValue, setSearchValue] = useState<string>('');
+
+	const {delta, onDeltaChange, onPageChange, page, resetPage} =
+		useStatefulPagination();
+
+	useEffect(() => {
+		resetPage();
+	}, [rangeSelectors.rangeKey]);
 
 	const safeRangeSelectors = getSafeRangeSelectors(rangeSelectors);
 
@@ -282,8 +467,45 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		? buildMockTrendResponse()
 		: realTrendResponse;
 
+	const realSessionsResponse = useQuery<
+		AccountUserSessionData,
+		AccountUserSessionVariables
+	>(AccountUserSessionQuery, {
+		fetchPolicy: fetchPolicyDefinition(rangeSelectors),
+		skip: USE_MOCK_DATA,
+		variables: {
+			accountId,
+			channelId,
+			entityType: SessionEntityTypes.Individual,
+			keywords,
+			page: page - 1,
+			size: delta,
+			...safeRangeSelectors
+		}
+	});
+
+	const sessionsResponse = USE_MOCK_DATA
+		? buildMockUserSessionResponse(page - 1, delta, keywords)
+		: realSessionsResponse;
+
+	const sessionsData = sessionsResponse.data?.eventsByUserSessions;
+	const userSessions = sessionsData?.userSessions ?? [];
+	const totalSessionEvents = sessionsData?.totalEventsMetric?.value ?? 0;
+
 	const handleChangeSelection = (index: number | null) => {
 		onPointSelect(index ?? undefined);
+	};
+
+	const handleQuerySubmit = (value: string) => {
+		setKeywords(value);
+		setSearchValue(value);
+		resetPage();
+	};
+
+	const handleClearSearch = () => {
+		setKeywords('');
+		setSearchValue('');
+		resetPage();
 	};
 
 	const trendMetric =
@@ -410,6 +632,27 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 						</div>
 					</div>
 				</div>
+			</Card.Body>
+
+			<Card.Body className='pt-0'>
+				<SearchInput
+					onChange={setSearchValue}
+					onSubmit={handleQuerySubmit}
+					placeholder={Liferay.Language.get('search')}
+					value={searchValue}
+				/>
+
+				<ActivityStreamTimeline
+					delta={delta}
+					hasQuery={!!keywords}
+					loading={sessionsResponse.loading ?? false}
+					onClearQuery={handleClearSearch}
+					onDeltaChange={onDeltaChange}
+					onPageChange={onPageChange}
+					page={page}
+					sessions={userSessions}
+					totalEvents={totalSessionEvents}
+				/>
 			</Card.Body>
 		</WrapSafeResults>
 	);

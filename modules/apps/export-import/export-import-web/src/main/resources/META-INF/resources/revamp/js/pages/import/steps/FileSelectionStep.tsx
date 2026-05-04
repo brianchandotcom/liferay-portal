@@ -10,11 +10,16 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
 import {postImportPreview} from '../../../services/postImportPreview';
-import {useWizard} from '../NewImport';
+import {ImportPreview} from '../../../types/exportImportPreview';
 
-export default function FileSelectionStep() {
+export default function FileSelectionStep({
+	importPreviewAPIURL,
+	setImportPreview,
+}: {
+	importPreviewAPIURL: string;
+	setImportPreview: (importPreview?: ImportPreview) => void;
+}) {
 	const [progress, setProgress] = useState<number>();
-	const {importPreviewAPIURL} = useWizard();
 
 	const {setFieldValue, values} = useFormikContext<{
 		fileSelector?: File;
@@ -34,15 +39,26 @@ export default function FileSelectionStep() {
 		if (currentFile instanceof File && !values.name) {
 			setFieldValue('name', currentFile.name.replace(/\.lar$/i, ''));
 		}
-	}, [values.fileSelector, values.name, setFieldValue]);
 
-	const postPreview = (file: File, signal?: AbortSignal) =>
-		postImportPreview({
+		if (!currentFile) {
+			setImportPreview(undefined);
+		}
+	}, [values.fileSelector, values.name, setFieldValue, setImportPreview]);
+
+	const handleUpload = async (file: File, signal?: AbortSignal) => {
+		const result = await postImportPreview({
 			file,
 			onProgress: setProgress,
 			signal,
 			url: importPreviewAPIURL,
 		});
+
+		if (result.data) {
+			setImportPreview(result.data);
+		}
+
+		return result;
+	};
 
 	return (
 		<>
@@ -93,7 +109,7 @@ export default function FileSelectionStep() {
 					aria-labelledby="fileSelector-label"
 					name="fileSelector"
 					progress={progress}
-					uploadRequest={postPreview}
+					uploadRequest={handleUpload}
 					validExtensions=".lar"
 				/>
 			</ClayLayout.Sheet>

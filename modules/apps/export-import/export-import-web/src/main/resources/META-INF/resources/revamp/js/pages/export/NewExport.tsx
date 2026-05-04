@@ -11,11 +11,9 @@ import React from 'react';
 import Footer from '../../components/Footer';
 import {DateFilterValues} from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
+import {ExportPreview} from '../../types/portletDataHandlerSection';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
-import {
-	ExportPreview,
-	mockExportPreview,
-} from '../../utils/mockPortletDataHandlerSections';
+import {mockExportPreview} from '../../utils/mockExportPreview';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
 

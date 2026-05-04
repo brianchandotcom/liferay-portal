@@ -1,0 +1,29 @@
+# Full Portal Build
+
+## Trigger
+
+- portal-core changed: `portal-impl/**`, `portal-kernel/**`, `portal-test/**`, `portal-web/**`, `support-tomcat/**`, `util-bridges/**`, `util-java/**`, `util-slf4j/**`, `util-taglib/**`. Mandatory in this case — no Gradle deploy path covers these sources.
+
+- OR the deploy set is large enough that one full build is cheaper than per-module deploys. Compare:
+
+	- **Full Portal Build cost** = 8 min (the `ant all` baseline).
+
+	- **Per-Module Deploy cost** = 3 min setup + 1 min × ⌈N/4⌉ (4 approximates Gradle's effective parallelism on a dev box).
+
+	N is the deploy set size as defined in [per-module-deploy.md](per-module-deploy.md). Show the cost math when picking this branch so the developer can override.
+
+## Command
+
+```bash
+ant all -Dgradle.stop.daemon.enabled=false
+```
+
+`ant all` is `clean` + `compile` + `deploy`; the deploy target's marketplace branch deploys every project with a `.lfrbuild-portal` marker.
+
+## Notes
+
+When this fires, **Per-Module Deploy** still runs for any non-`.lfrbuild-portal` modules in the touched set (`ant all`'s marketplace branch only deploys modules with the marker), and **Integration Test Compile** is obviated for `.lfrbuild-portal` modules.
+
+## Time Estimate
+
+~8 min.

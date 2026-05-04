@@ -1,0 +1,41 @@
+# Per-Module Deploy
+
+## Trigger
+
+A module is in the deploy set AND **Full Portal Build** did not deploy it. The latter holds when:
+
+- **Full Portal Build** did not fire.
+
+- OR **Full Portal Build** fired but the module lacks `.lfrbuild-portal` (so `ant all` did not deploy it).
+
+A module is in the deploy set when it has changed sources or resources — Java, JS, TS, frontend resources (`*.{css,sass,scss}`, `*.ftl`, `*.jsp`, `*.jspf`), lockfiles (`package-lock.json`, `yarn.lock`), module `*.properties`, or OSGi configuration (`bnd.bnd`, `gradle.properties`, non-`test` `package.json` keys).
+
+Expand by API consumers: for each `*-api/**/*.java` with added or removed `public` method signatures (`^[-+]\s*(public|protected).*\(.*\)`), grep `modules/**/build.gradle` for `project(":<api-path>")` and add those modules. The deploy set size N is used by [full-portal-build.md](full-portal-build.md)'s cost comparison.
+
+Both behavior-change and surface-only edits fire this validation — the build verifies compile and resource bundling regardless of intent.
+
+## Command
+
+Setup once, then deploy each module:
+
+```bash
+(cd "${REPO_ROOT}/portal-impl" && ant compile install-portal-snapshots)
+```
+
+```bash
+("${REPO_ROOT}/gradlew" \
+	--parallel \
+	--project-dir "${REPO_ROOT}/modules" \
+	:<path>:deploy)
+```
+
+## Checklist
+
+```
+- [ ] Setup: ant compile install-portal-snapshots
+- [ ] (One sub-item per deploy-set module:) Deploy <module path>
+```
+
+## Time Estimate
+
+3 min setup + 1 min × ⌈N/4⌉.

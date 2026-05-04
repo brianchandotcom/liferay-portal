@@ -108,10 +108,18 @@ test(
 			label: 'Repeatable Group 3',
 		});
 
-		await structureBuilderPage.clickFieldAction(
+		// Assert keyboard behavior
+
+		await structureBuilderPage.selectFields([
 			{label: 'Repeatable Group 3'},
-			'Ungroup'
-		);
+		]);
+
+		await page
+			.getByRole('treeitem', {name: 'Repeatable Group 3'})
+			.getByRole('button', {name: 'Field Options'})
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Ungroup'}).press('Enter');
 
 		await expect(
 			page.locator('.treeview-link', {hasText: 'Repeatable Group 2'})

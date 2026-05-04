@@ -80,6 +80,7 @@ function CollaboratorListItem({
 	dateExpired,
 	entryClassName,
 	error,
+	externalUserSharingEnabled = false,
 	onChangeUser,
 	onRemoveUser,
 	share,
@@ -92,6 +93,7 @@ function CollaboratorListItem({
 	dateExpired?: string;
 	entryClassName: string;
 	error?: string;
+	externalUserSharingEnabled?: boolean;
 	onChangeUser: (
 		user: ExternalUser | UserAccount | UserGroup,
 		property: object
@@ -106,7 +108,8 @@ function CollaboratorListItem({
 		onChangeUser(user, propertyObj);
 	};
 
-	const isExternalUser = type === COLLABORATOR_TYPE.EXTERNAL_USER;
+	const isExternalUser =
+		externalUserSharingEnabled && type === COLLABORATOR_TYPE.EXTERNAL_USER;
 
 	return (
 		<li
@@ -251,6 +254,7 @@ export default function ShareModalContent({
 	collaboratorURL = '',
 	creator,
 	entryClassName = '',
+	externalUserSharingEnabled = false,
 	initialCollaborators = [],
 	itemId,
 	title = '',
@@ -266,6 +270,7 @@ export default function ShareModalContent({
 		name: string;
 	};
 	entryClassName?: string;
+	externalUserSharingEnabled?: boolean;
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	title: string;
@@ -273,8 +278,13 @@ export default function ShareModalContent({
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
 		useState(4);
-	const [collaborators, setCollaborators] =
-		useState<Collaborator[]>(initialCollaborators);
+	const [collaborators, setCollaborators] = useState<Collaborator[]>(
+		externalUserSharingEnabled
+			? initialCollaborators
+			: initialCollaborators.filter(
+					({type}) => type !== COLLABORATOR_TYPE.EXTERNAL_USER
+				)
+	);
 	const [loading, setLoading] = useState(false);
 
 	const {resource: users} = useResource({
@@ -355,8 +365,13 @@ export default function ShareModalContent({
 		const {error} = await CollaboratorService.updateCollaborators(
 			collaboratorURL,
 			itemId,
-			collaborators.map(
-				({actionIds, dateExpired, share, type, user}) => ({
+			collaborators
+				.filter(
+					({type}) =>
+						externalUserSharingEnabled ||
+						type !== COLLABORATOR_TYPE.EXTERNAL_USER
+				)
+				.map(({actionIds, dateExpired, share, type, user}) => ({
 					actionIds: actionIds.split(','),
 					...(!!dateExpired && {
 						dateExpired: formatDateToISO(dateExpired),
@@ -368,8 +383,7 @@ export default function ShareModalContent({
 							: {}),
 					share,
 					type,
-				})
-			)
+				}))
 		);
 
 		setLoading(false);
@@ -434,6 +448,7 @@ export default function ShareModalContent({
 		const trimmedValue = autocompleteValue.trim();
 
 		const shouldOfferExternalUserInvite =
+			externalUserSharingEnabled &&
 			!_isFolder &&
 			isEmailAddressValid(trimmedValue) &&
 			!resultItems.some(
@@ -455,7 +470,7 @@ export default function ShareModalContent({
 		}
 
 		return resultItems;
-	}, [autocompleteValue, users, _isFolder]);
+	}, [autocompleteValue, externalUserSharingEnabled, users, _isFolder]);
 
 	return (
 		<div className="share-modal-content">
@@ -491,7 +506,13 @@ export default function ShareModalContent({
 										  }
 										| undefined;
 
-									if (lastItem?.type && lastItem.user) {
+									if (
+										lastItem?.type &&
+										lastItem.user &&
+										(externalUserSharingEnabled ||
+											lastItem.type !==
+												COLLABORATOR_TYPE.EXTERNAL_USER)
+									) {
 										handleAddUser(
 											lastItem.user,
 											lastItem.type
@@ -613,6 +634,9 @@ export default function ShareModalContent({
 											canManageCollaborators
 										}
 										entryClassName={entryClassName}
+										externalUserSharingEnabled={
+											externalUserSharingEnabled
+										}
 										key={`listItem-${item.type}-${item.user.id}`}
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}

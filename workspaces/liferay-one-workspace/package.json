@@ -12,14 +12,15 @@
 	},
 	"private": true,
 	"scripts": {
-		"bootstrap:tests": "./tests/scripts/bootstrap.sh",
-		"test:e2e": "yarn workspace @liferay/liferay-one-workspace-tests playwright:e2e",
-		"test:integration": "yarn workspace @liferay/liferay-one-workspace-tests playwright:integration",
+		"bootstrap:tests": "{ test -f .env || cp .env.example .env; } && yarn install && yarn workspace @liferay/liferay-one-workspace-tests install:browsers",
+		"test:e2e": "yarn workspace @liferay/liferay-one-workspace-tests playwright:e2e --",
+		"test:integration": "yarn workspace @liferay/liferay-one-workspace-tests playwright:integration --",
 		"test:unit": "yarn workspace @liferay/liferay-one-custom-element test"
 	},
 	"workspaces": {
 		"packages": [
-			"client-extensions/liferay-one-custom-element"
+			"client-extensions/liferay-one-custom-element",
+			"tests"
 		]
 	}
 }

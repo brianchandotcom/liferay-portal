@@ -1,5 +1,5 @@
 {
-	"@generated": "90341bbead805bc1c03fe3749ac1cf4be38f6b70",
+	"@generated": "511e969ca659c87d1090cd3e1f0d6c8575a31259",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -25,6 +25,9 @@
 			],
 			"frontend-js-web/legacy": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/legacy/index.ts"
+			],
+			"style-book-web": [
+				"../../../../../../../style-book/style-book-web/src/main/resources/META-INF/resources/js/index.d.ts"
 			]
 		},
 		"rootDir": "../../../../../../../..",
@@ -54,6 +57,9 @@
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../style-book/style-book-web/src/main/resources/META-INF/resources/tsconfig.json"
 		}
 	]
 }

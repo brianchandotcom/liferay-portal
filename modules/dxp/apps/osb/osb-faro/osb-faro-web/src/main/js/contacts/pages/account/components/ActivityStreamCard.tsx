@@ -15,9 +15,11 @@ import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import ActivityStreamTimeline from './ActivityStreamTimeline';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import SearchInput from 'shared/components/SearchInput';
+import URLConstants from 'shared/util/url-constants';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {getDateRangeLabel} from 'shared/util/date';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
@@ -515,6 +517,10 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 	const trendPercentage = trendMetric?.trend?.percentage ?? 0;
 	const trendClassification = trendMetric?.trend?.trendClassification;
 
+	const isChartEmpty =
+		!activityHistory.length ||
+		activityHistory.every(({totalEvents}) => !totalEvents);
+
 	const dateRangeLabel = getDateRangeLabel(
 		activityHistory,
 		interval,
@@ -582,33 +588,77 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 						</div>
 					</div>
 
-					<ActivitiesChart
-						alwaysShowSelectedTooltip
-						hasSelectedPoint={hasSelectedPoint}
-						history={activityHistory}
-						interval={interval}
-						onPointSelect={handleChangeSelection}
-						rangeSelectors={rangeSelectors}
-						selectedPoint={selectedPoint}
-						tooltipRenderRows={({
-							totalEvents,
-							totalSessions,
-							uniqueVisitors
-						}) => [
-							{
-								label: Liferay.Language.get('unique-visitors'),
-								value: (uniqueVisitors ?? 0).toLocaleString()
-							},
-							{
-								label: Liferay.Language.get('events'),
-								value: totalEvents.toLocaleString()
-							},
-							{
-								label: Liferay.Language.get('sessions'),
-								value: (totalSessions ?? 0).toLocaleString()
-							}
-						]}
-					/>
+					<div className='position-relative'>
+						<ActivitiesChart
+							alwaysShowSelectedTooltip
+							hasSelectedPoint={hasSelectedPoint}
+							hideGrid={isChartEmpty}
+							history={activityHistory}
+							interval={interval}
+							onPointSelect={handleChangeSelection}
+							rangeSelectors={rangeSelectors}
+							selectedPoint={selectedPoint}
+							tooltipRenderRows={({
+								totalEvents,
+								totalSessions,
+								uniqueVisitors
+							}) => [
+								{
+									label: Liferay.Language.get('unique-visitors'),
+									value: (uniqueVisitors ?? 0).toLocaleString()
+								},
+								{
+									label: Liferay.Language.get('events'),
+									value: totalEvents.toLocaleString()
+								},
+								{
+									label: Liferay.Language.get('sessions'),
+									value: (totalSessions ?? 0).toLocaleString()
+								}
+							]}
+						/>
+
+						{isChartEmpty && (
+							<div
+								className='position-absolute d-flex flex-column align-items-center justify-content-center text-center px-3'
+								style={{
+									inset: 0,
+									pointerEvents: 'none'
+								}}
+							>
+								<div
+									className='font-weight-semi-bold mb-2'
+									style={{pointerEvents: 'auto'}}
+								>
+									{Liferay.Language.get(
+										'there-is-no-data-for-account-activities'
+									)}
+								</div>
+
+								<div
+									className='text-secondary mb-2'
+									style={{pointerEvents: 'auto'}}
+								>
+									{Liferay.Language.get(
+										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+									)}
+								</div>
+
+								<ClayLink
+									decoration='underline'
+									href={
+										URLConstants.AccountActivitiesDocumentationLink
+									}
+									style={{pointerEvents: 'auto'}}
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'learn-more-about-account-activities'
+									)}
+								</ClayLink>
+							</div>
+						)}
+					</div>
 
 					<div className='chart-footer mt-3'>
 						<Text color='secondary' size={3} weight='semi-bold'>

@@ -7,6 +7,7 @@
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {render, screen, waitFor, within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
@@ -16,17 +17,21 @@ const renderComponent = () => {
 	return render(
 		<NewExport
 			backURL="/some/back/url"
-			exportPreview={mockExportPreview}
 			exportPreviewAPIURL="/o/export-import/v1.0/export-preview"
 		/>
 	);
 };
 
 describe('NewExport', () => {
+	beforeEach(() => {
+		fetch.resetMocks();
+		fetch.mockResponse(JSON.stringify(mockExportPreview));
+	});
+
 	it('renders the export form', async () => {
 		const {container} = renderComponent();
 
-		const fileNameInput = screen.getByRole('textbox', {
+		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,
 		});
 		expect(fileNameInput).toBeInTheDocument();
@@ -39,6 +44,15 @@ describe('NewExport', () => {
 				include: [container],
 			},
 		});
+	});
+
+	it('renders the error alert when the API fails', async () => {
+		fetch.resetMocks();
+		fetch.mockResponseOnce(JSON.stringify({title: 'boom'}), {status: 500});
+
+		renderComponent();
+
+		expect(await screen.findByText('boom')).toBeInTheDocument();
 	});
 
 	it('shows a required error on filename when blurred empty', async () => {
@@ -57,7 +71,9 @@ describe('NewExport', () => {
 	it('keeps the export button disabled while the form is invalid', async () => {
 		renderComponent();
 
-		const exportButton = screen.getByRole('button', {name: /^export$/i});
+		const exportButton = await screen.findByRole('button', {
+			name: /^export$/i,
+		});
 
 		await waitFor(() => {
 			expect(exportButton).toBeDisabled();
@@ -100,8 +116,6 @@ describe('NewExport', () => {
 	it('enables the export button once filename and contentSelection are set', async () => {
 		renderComponent();
 
-		const exportButton = screen.getByRole('button', {name: /^export$/i});
-
 		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,
 		});
@@ -115,6 +129,8 @@ describe('NewExport', () => {
 		await userEvent.click(
 			within(dataSelectionGroup).getAllByRole('checkbox')[0]
 		);
+
+		const exportButton = screen.getByRole('button', {name: /^export$/i});
 
 		await waitFor(() => {
 			expect(exportButton).toBeEnabled();

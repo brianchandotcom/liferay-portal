@@ -2657,6 +2657,7 @@
 		<column accessor="true" name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="addedByLDAPImport" type="boolean" />
+		<column name="status" type="int" />
 
 		<!-- Relationships -->
 

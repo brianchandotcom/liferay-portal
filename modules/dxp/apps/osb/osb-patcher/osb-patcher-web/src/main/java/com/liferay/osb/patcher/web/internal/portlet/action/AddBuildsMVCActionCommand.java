@@ -75,9 +75,9 @@ public class AddBuildsMVCActionCommand extends BaseMVCActionCommand {
 		PatcherBuild patcherBuild =
 			_patcherBuildLocalService.preparePatcherBuild(
 				themeDisplay.getUserId(), patcherProductVersionId,
-				patcherProjectVersionId, accountEntryCode, patcherBuildName,
-				type, ParamUtil.getBoolean(actionRequest, "useExistingHotfix"),
-				themeDisplay.getLocale());
+				patcherProjectVersionId, accountEntryCode, type,
+				themeDisplay.getLocale(), patcherBuildName,
+				ParamUtil.getBoolean(actionRequest, "useExistingHotfix"));
 
 		PatcherBuildUtil.savePatcherBuild(
 			themeDisplay.getUser(), patcherBuild, accountEntryCode,

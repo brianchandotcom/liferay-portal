@@ -179,8 +179,8 @@ public class PatcherBuildLocalServiceImpl
 	public PatcherBuild preparePatcherBuild(
 			long userId, long patcherProductVersionId,
 			long patcherProjectVersionId, String accountEntryCode,
-			String patcherBuildName, int type, boolean useExistingHotfix,
-			Locale locale)
+			int type, Locale locale, String patcherBuildName,
+			boolean useExistingHotfix)
 		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.create(

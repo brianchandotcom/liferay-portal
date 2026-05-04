@@ -1,11 +1,10 @@
 dependencies {
 	compileInclude group: "com.jayway.jsonpath", name: "json-path", version: "2.9.0"
-	compileInclude group: "com.liferay", name: "org.hdrhistogram", version: "2.1.9.JAKARTA-LIFERAY-PATCHED-1"
 	compileInclude group: "com.netflix.archaius", name: "archaius-core", version: "0.4.1"
 	compileInclude group: "com.netflix.hystrix", name: "hystrix-core", version: "1.5.18"
 	compileInclude group: "io.reactivex", name: "rxjava", version: "1.2.0"
+	compileInclude group: "org.hdrhistogram", name: "HdrHistogram", version: "2.2.2"
 	compileOnly group: "com.liferay", name: "org.apache.commons.configuration", version: "1.10.LIFERAY-PATCHED-2"
-	compileOnly group: "com.liferay", name: "org.osgi.service.http.whiteboard", version: "1.1.1.JAKARTA-LIFERAY-PATCHED-1"
 	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
@@ -15,6 +14,7 @@ dependencies {
 	compileOnly group: "net.minidev", name: "json-smart", version: "2.4.10"
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.servlet", version: "2.0.0"
 	compileOnly group: "org.ow2.asm", name: "asm", version: "9.7"
 	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

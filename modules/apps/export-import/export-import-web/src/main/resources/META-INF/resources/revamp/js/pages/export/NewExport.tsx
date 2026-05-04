@@ -13,22 +13,24 @@ import {DateFilterValues} from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import {
-	PortletDataHandlerSection,
-	mockPortletDataHandlerSections,
+	ExportPreview,
+	mockExportPreview,
 } from '../../utils/mockPortletDataHandlerSections';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
 
 interface NewExportProps {
 	backURL: string;
+	exportPreview?: ExportPreview;
 	exportPreviewAPIURL: string;
-	sections?: PortletDataHandlerSection[];
 }
 
 export function NewExport({
 	backURL,
-	sections = mockPortletDataHandlerSections,
+	exportPreview = mockExportPreview,
 }: NewExportProps) {
+	const sections = exportPreview.portletDataHandlerSections;
+
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 
 		// eslint-disable-next-line no-console

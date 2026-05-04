@@ -29,7 +29,11 @@ export interface PortletDataHandlerSection {
 	portletDataHandlers: PortletDataHandler[];
 }
 
-export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
+export interface ExportPreview {
+	portletDataHandlerSections: PortletDataHandlerSection[];
+}
+
+const sections: PortletDataHandlerSection[] = [
 	{
 		label: 'Design',
 		name: 'category.site_administration.design',
@@ -163,3 +167,7 @@ export const mockPortletDataHandlerSections: PortletDataHandlerSection[] = [
 		],
 	},
 ];
+
+export const mockExportPreview: ExportPreview = {
+	portletDataHandlerSections: sections,
+};

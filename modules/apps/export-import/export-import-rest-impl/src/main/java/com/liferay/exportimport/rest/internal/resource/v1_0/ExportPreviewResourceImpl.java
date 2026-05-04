@@ -20,6 +20,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerControl;
 import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerSection;
+import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandlerSetting;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.language.Language;
@@ -286,18 +287,38 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		if (portletDataHandlerControl instanceof
 				PortletDataHandlerBoolean portletDataHandlerBoolean) {
 
+			if (portletDataHandlerBoolean.getClassName() == null) {
+				return new PortletDataHandlerSetting() {
+					{
+						setDefaultState(
+							portletDataHandlerBoolean::getDefaultState);
+						setDisabled(portletDataHandlerControl::isDisabled);
+						setLabel(
+							() -> _language.get(
+								locale, portletDataHandlerControl.getLabel()));
+						setName(portletDataHandlerControl::getName);
+						setPortletDataHandlerControls(
+							() -> transform(
+								portletDataHandlerBoolean.
+									getChildrenPortletDataHandlerControls(),
+								childPortletDataHandlerControl ->
+									_toPortletDataHandlerControl(
+										locale, manifestSummary,
+										childPortletDataHandlerControl),
+								PortletDataHandlerControl.class));
+						setType(() -> Type.SETTING);
+					}
+				};
+			}
+
+			StagedModelType stagedModelType = new StagedModelType(
+				portletDataHandlerBoolean.getClassName(),
+				portletDataHandlerBoolean.getReferrerClassName());
+
 			long modelAdditionCount = Math.max(
-				0L,
-				manifestSummary.getModelAdditionCount(
-					new StagedModelType(
-						portletDataHandlerBoolean.getClassName(),
-						portletDataHandlerBoolean.getReferrerClassName())));
+				0L, manifestSummary.getModelAdditionCount(stagedModelType));
 			long modelDeletionCount = Math.max(
-				0L,
-				manifestSummary.getModelDeletionCount(
-					new StagedModelType(
-						portletDataHandlerBoolean.getClassName(),
-						portletDataHandlerBoolean.getReferrerClassName())));
+				0L, manifestSummary.getModelDeletionCount(stagedModelType));
 
 			if ((modelAdditionCount == 0) && (modelDeletionCount == 0)) {
 				return null;

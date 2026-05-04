@@ -18,6 +18,7 @@ import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.internal.layout.tab.screen.navigation.category.ObjectLayoutTabScreenNavigationCategory;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -141,6 +142,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryService objectEntryService,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFolderLocalService objectFolderLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
@@ -177,6 +179,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryService = objectEntryService;
+		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFolderLocalService = objectFolderLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
@@ -324,6 +327,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_accountEntryOrganizationRelLocalService,
 						_dlFileEntryLocalService,
 						_objectEntryFolderLocalService,
+						_objectFieldBusinessTypeRegistry,
 						_textEmbeddingDocumentContributor),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"indexer.class.name", objectDefinition.getClassName()
@@ -649,6 +653,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryService _objectEntryService;
+	private final ObjectFieldBusinessTypeRegistry
+		_objectFieldBusinessTypeRegistry;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFolderLocalService _objectFolderLocalService;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;

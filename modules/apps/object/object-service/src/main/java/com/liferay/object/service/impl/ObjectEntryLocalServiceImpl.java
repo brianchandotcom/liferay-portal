@@ -4781,6 +4781,13 @@ public class ObjectEntryLocalServiceImpl
 		Table<?> table = _objectFieldLocalService.getTable(
 			objectDefinitionId, objectField.getName());
 
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE)) {
+
+			return ObjectEntrySearchUtil.getAssigneeFieldPredicate(
+				table, objectField.getDBColumnName(), search);
+		}
+
 		Column<?, ?> column = table.getColumn(objectField.getDBColumnName());
 
 		if (column == null) {

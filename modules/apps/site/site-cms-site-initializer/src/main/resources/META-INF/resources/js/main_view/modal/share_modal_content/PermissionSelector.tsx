@@ -9,6 +9,13 @@ import React from 'react';
 import {SharingPermission} from '../../../common/types/SharingPermission';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 
+const EXTERNAL_USER_PERMISSION_OPTIONS = [
+	{
+		label: Liferay.Language.get('view-and-download'),
+		value: SharingPermission.View,
+	},
+];
+
 const FOLDER_PERMISSION_OPTIONS = [
 	{
 		label: Liferay.Language.get('view-and-download'),
@@ -38,21 +45,28 @@ const PERMISSION_OPTIONS = [
 export default function PermissionSelector({
 	actionIds,
 	entryClassName,
+	isExternalUser = false,
 	onChange,
 }: {
 	actionIds?: string;
 	entryClassName: string;
+	isExternalUser?: boolean;
 	onChange: (value: object) => void;
 }) {
+	let items = PERMISSION_OPTIONS;
+
+	if (isExternalUser) {
+		items = EXTERNAL_USER_PERMISSION_OPTIONS;
+	}
+	else if (entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
+		items = FOLDER_PERMISSION_OPTIONS;
+	}
+
 	return (
 		<Picker
 			aria-label={Liferay.Language.get('edit-permissions')}
 			className="border-0 c-py-0 permissions-picker text-2 text-secondary text-weight-semi-bold"
-			items={
-				entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
-					? FOLDER_PERMISSION_OPTIONS
-					: PERMISSION_OPTIONS
-			}
+			items={items}
 			messages={{
 				itemDescribedby: Liferay.Language.get(
 					'you-are-currently-on-a-text-element,-inside-of-a-list-box'

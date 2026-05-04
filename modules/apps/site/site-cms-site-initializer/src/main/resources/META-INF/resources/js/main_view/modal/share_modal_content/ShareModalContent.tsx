@@ -14,7 +14,7 @@ import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import ExpirationDateSelector, {
 	formatDateForView,
@@ -400,7 +400,7 @@ export default function ShareModalContent({
 
 	const _isFolder = entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME;
 
-	const _buildSourceItems = () => {
+	const sourceItems = useMemo(() => {
 		const resultItems = users?.items?.length
 			? users.items.map((item: any) => {
 					if (
@@ -453,7 +453,7 @@ export default function ShareModalContent({
 		}
 
 		return resultItems;
-	};
+	}, [autocompleteValue, users, _isFolder]);
 
 	return (
 		<div className="share-modal-content">
@@ -516,7 +516,7 @@ export default function ShareModalContent({
 								placeholder={Liferay.Language.get(
 									'enter-name-email-or-groups'
 								)}
-								sourceItems={_buildSourceItems()}
+								sourceItems={sourceItems}
 								value={autocompleteValue}
 							>
 								{({

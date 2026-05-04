@@ -103,21 +103,13 @@ test(
 
 			await userNotificationTimeoutInput.waitFor({state: 'visible'});
 
-			let warningWasDisplayed = false;
-
-			page.on('request', () => {
-				if (
-					page.getByText(
-						'It looks like this is taking longer than expected.'
-					)
-				) {
-					warningWasDisplayed = true;
-				}
-			});
-
 			await saveButton.click();
 
-			expect(warningWasDisplayed).toBe(true);
+			await expect(
+				page.getByText(
+					'It looks like this is taking longer than expected.'
+				)
+			).toBeVisible();
 		});
 
 		await test.step('Change the timeout back to 30000ms', async () => {

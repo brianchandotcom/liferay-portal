@@ -19,7 +19,7 @@ Create a GitHub pull request for the current branch, transition the linked Jira 
 
 - The working tree has no uncommitted changes. When dirty, abort and ask the user to commit first (suggest `/commit`); do not stash or discard their work.
 
-- Unless `${ARGUMENTS}` contains `--skip-pr-check`, the `pr-check` skill must pass. See **Run pr-check** below.
+- Unless `${ARGUMENTS}` contains `--skip-pr-check`, the `pr-check` skill must pass.
 
 ## Input
 
@@ -65,16 +65,6 @@ The following short aliases resolve to a target repository:
 - `brian` → `brianchandotcom/liferay-portal`
 
 The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
-
-## Run pr-check
-
-When `${ARGUMENTS}` contains `--skip-pr-check`, skip this step. Note the skip in the plan summary so the developer is aware that **Pushed Branch** will not post a `pr-check` commit status and **Pull Request** will not apply the `pr-check - success` label.
-
-Otherwise, invoke the `pr-check` skill, passing the ticket resolved in **Jira Ticket** as its argument so pr-check does not have to re-resolve it. pr-check validates the branch, executes the validation script in the background, evaluates the outcome, and may auto-commit drift output (Service Builder, REST Builder, Instance Wrapper Build) and source-format changes — those commits land before the push, so the pushed branch already includes them.
-
-When pr-check reports failure, stop. Do not push or open a PR; the developer needs to address the failure before retrying `/pr`.
-
-When pr-check reports success, proceed to **Expected Output**.
 
 ## Expected Output
 

@@ -78,7 +78,7 @@ export class EditDigitalSalesRoomPage {
 		this.page = page;
 		this.publishButton = page.getByRole('button', {name: 'Publish'});
 		this.replyButton = page.getByRole('button', {name: 'reply'});
-		this.roleKeyButton = page.getByRole('button', {name: 'Viewer'});
+		this.roleKeyButton = page.locator('[data-testid="roleKeyButton"]');
 		this.roomCommentsText = page.getByText('Room Comments');
 		this.roomNameInput = page.getByLabel('Room Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});

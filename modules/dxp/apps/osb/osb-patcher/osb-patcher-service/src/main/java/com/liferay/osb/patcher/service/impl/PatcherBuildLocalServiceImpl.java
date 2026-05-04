@@ -337,8 +337,8 @@ public class PatcherBuildLocalServiceImpl
 		int oldQaStatus = patcherBuild.getQaStatus();
 		int oldStatus = patcherBuild.getStatus();
 
-		patcherBuild.setFileName(fileName);
 		patcherBuild.setModifiedDate(new Date());
+		patcherBuild.setFileName(fileName);
 		patcherBuild.setQaStatus(qaStatus);
 		patcherBuild.setSourceName(sourceName);
 		patcherBuild.setStatus(status);

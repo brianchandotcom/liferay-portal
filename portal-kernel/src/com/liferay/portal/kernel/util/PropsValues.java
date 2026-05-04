@@ -2134,6 +2134,9 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SITES_CONTROL_PANEL_MEMBERS_VISIBLE));
 
+	public static final String[] SITES_FRIENDLY_URL_KEYWORDS =
+		PropsUtil.getArray(PropsKeys.SITES_FRIENDLY_URL_KEYWORDS);
+
 	public static final String SITES_FRIENDLY_URL_PAGE_NOT_FOUND =
 		PropsUtil.get(PropsKeys.SITES_FRIENDLY_URL_PAGE_NOT_FOUND);
 

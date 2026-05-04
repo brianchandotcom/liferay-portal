@@ -57,7 +57,8 @@ export enum CompositionTypes {
 
 export enum ConjunctionKey {
 	And = 'and',
-	Or = 'or'
+	Or = 'or',
+	Then = 'then'
 }
 
 export enum CredentialTypes {

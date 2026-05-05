@@ -286,6 +286,7 @@ public class AgentInstanceResourceTest
 		_testPostAgentInstanceWithTypeLLMNodeWithRAGWorkflowDefinitionWithRestrictedUser();
 		_testPostAgentInstanceWithTypeLLMNodeWithToolWorkflowDefinition();
 		_testPostAgentInstanceWithTypeMakeShorter();
+		_testPostAgentInstanceWithTypeMakeShorterAndExhaustedQuota();
 		_testPostAgentInstanceWithTypePageBuilder();
 	}
 
@@ -958,6 +959,52 @@ public class AgentInstanceResourceTest
 
 				return null;
 			});
+
+		SseUtil.closeAll();
+	}
+
+	private void _testPostAgentInstanceWithTypeMakeShorterAndExhaustedQuota()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", TestPropsValues.getCompanyId());
+
+		_objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), 0,
+			LocaleUtil.toLanguageId(LocaleUtil.getDefault()),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode",
+				"quota-" + _accountEntry.getAccountEntryId()
+			).put(
+				"limit", 0
+			).put(
+				"r_accountToAIHubQuotas_accountEntryId",
+				_accountEntry.getAccountEntryId()
+			).put(
+				"usage", 0
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		CountDownLatch countDownLatch = new CountDownLatch(3);
+		List<String> lines = new ArrayList<>();
+
+		String sseEventSinkKey = SseEventSourceTestUtil.open(
+			List.of(countDownLatch), lines, "agent-instances/subscribe");
+
+		_postAgentInstance(
+			"L_MAKE_SHORTER", "This is a long text.", "text", sseEventSinkKey);
+
+		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+
+		String line = lines.get(3);
+
+		Assert.assertTrue(
+			line, line.contains("You have exceeded your token quota"));
 
 		SseUtil.closeAll();
 	}

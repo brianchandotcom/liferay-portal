@@ -6,11 +6,12 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import {useFormik} from 'formik';
-import {openToast, useId} from 'frontend-js-components-web';
+import {openConfirmModal, openToast, useId} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldText} from '../../common/components/forms';
+import FieldWrapper from '../../common/components/forms/FieldWrapper';
 import {
 	Errors,
 	invalidCharacters,
@@ -39,6 +40,9 @@ export default function SpaceGeneralSettings({
 	space: Space;
 }) {
 	const [initialERC, setInitialERC] = useState(space.externalReferenceCode);
+	const [initialFriendlyURL, setInitialFriendlyURL] = useState(
+		space.friendlyURL ?? ''
+	);
 
 	const id = useId();
 
@@ -47,6 +51,7 @@ export default function SpaceGeneralSettings({
 		handleBlur,
 		handleChange,
 		handleSubmit,
+		setFieldError,
 		setFieldValue,
 		submitForm,
 		touched,
@@ -55,6 +60,7 @@ export default function SpaceGeneralSettings({
 		initialValues: {
 			description: space.description,
 			erc: initialERC,
+			friendlyURL: initialFriendlyURL,
 			logoColor: space.settings?.logoColor as LogoColor,
 			name: space.name,
 			sharingEnabled: space.settings?.sharingEnabled ?? false,
@@ -67,6 +73,7 @@ export default function SpaceGeneralSettings({
 			const {
 				description,
 				erc,
+				friendlyURL,
 				logoColor = 'outline-0',
 				name,
 				sharingEnabled,
@@ -74,28 +81,39 @@ export default function SpaceGeneralSettings({
 				trashEntriesMaxAge,
 			} = values;
 
-			const {data, error} = await SpaceService.updateSpace(initialERC, {
-				description,
-				externalReferenceCode: erc,
-				name,
-				settings: {
-					logoColor,
-					sharingEnabled,
-					trashEnabled,
-					trashEntriesMaxAge: Number(trashEntriesMaxAge),
-				},
-			});
+			const {data, error, type} = await SpaceService.updateSpace(
+				initialERC,
+				{
+					description,
+					externalReferenceCode: erc,
+					friendlyURL,
+					name,
+					settings: {
+						logoColor,
+						sharingEnabled,
+						trashEnabled,
+						trashEntriesMaxAge: Number(trashEntriesMaxAge),
+					},
+				}
+			);
 
 			if (error) {
-				openToast({
-					message:
-						typeof error === 'string'
-							? error
-							: Liferay.Language.get(
-									'an-unexpected-error-occurred-while-saving-the-space'
-								),
-					type: 'danger',
-				});
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Language.get(
+								'an-unexpected-error-occurred-while-saving-the-space'
+							);
+
+				if (type?.startsWith('FRIENDLY_URL_')) {
+					setFieldError('friendlyURL', message);
+				}
+				else {
+					openToast({
+						message,
+						type: 'danger',
+					});
+				}
 			}
 			else if (data) {
 				openToast({
@@ -108,9 +126,12 @@ export default function SpaceGeneralSettings({
 
 				const updatedSpace = data as Space;
 
+				setFieldValue('friendlyURL', updatedSpace.friendlyURL ?? '');
+
 				if (setSpace) {
 					setSpace(updatedSpace);
 					setInitialERC(updatedSpace.externalReferenceCode);
+					setInitialFriendlyURL(updatedSpace.friendlyURL ?? '');
 				}
 			}
 		},
@@ -118,6 +139,14 @@ export default function SpaceGeneralSettings({
 			validate(
 				{
 					erc: [required],
+					friendlyURL: [
+						(value) =>
+							!value
+								? Liferay.Language.get(
+										'please-enter-a-friendly-url'
+									)
+								: undefined,
+					],
 					name: [
 						required,
 						nonNumeric,
@@ -137,6 +166,23 @@ export default function SpaceGeneralSettings({
 	const onSave = () => {
 		if (Object.keys(errors).length) {
 			focusInvalidElement();
+
+			return;
+		}
+
+		if (values.friendlyURL !== initialFriendlyURL) {
+			openConfirmModal({
+				message: Liferay.Language.get(
+					'changing-the-friendly-url-will-break-existing-inbound-links-bookmarks-and-redirects-pointing-to-this-space.-make-sure-to-set-up-redirects-and-update-any-references-before-saving'
+				),
+				onConfirm: (isConfirm: boolean) => {
+					if (isConfirm) {
+						submitForm();
+					}
+				},
+				status: 'warning',
+				title: Liferay.Language.get('save-custom-friendly-url'),
+			});
 
 			return;
 		}
@@ -184,6 +230,35 @@ export default function SpaceGeneralSettings({
 								value={groupId}
 							/>
 						</ClayForm.Group>
+
+						<FieldWrapper
+							errorMessage={
+								touched.friendlyURL
+									? (errors?.friendlyURL as string)
+									: undefined
+							}
+							feedbackId={`feedback-${id}friendlyURL`}
+							fieldId={`${id}friendlyURL`}
+							helpIcon={Liferay.Language.get(
+								'this-value-determines-display-pages-urls-for-this-space.-affects-seo-and-cross-environment-portability'
+							)}
+							label={Liferay.Language.get('friendly-url')}
+							required
+						>
+							<ClayInput
+								aria-describedby={
+									errors?.friendlyURL
+										? `feedback-${id}friendlyURL`
+										: undefined
+								}
+								id={`${id}friendlyURL`}
+								name="friendlyURL"
+								onBlur={handleBlur}
+								onChange={handleChange}
+								required
+								value={values.friendlyURL}
+							/>
+						</FieldWrapper>
 
 						<FieldText
 							errorMessage={touched.erc ? errors?.erc : undefined}

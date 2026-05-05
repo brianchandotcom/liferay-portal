@@ -134,14 +134,14 @@ export default function ContentEditorPreview({
 			) : null}
 
 			<ResizeHandle
-				onPanelWidthChange={(width) => {
+				maxWidth={previewWidthMax}
+				minWidth={PREVIEW_WIDTH_MIN}
+				onWidthChange={(width: number) => {
 					setResizeWidth(width);
 					setResizing(true);
 				}}
-				panelWidth={previewWidth}
-				panelWidthMax={previewWidthMax}
-				panelWidthMin={PREVIEW_WIDTH_MIN}
 				position="right"
+				width={previewWidth}
 			/>
 		</div>
 	);

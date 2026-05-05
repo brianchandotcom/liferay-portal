@@ -130,11 +130,11 @@ export function Panel({children, keyValue = null, tabIndex}: Props) {
 				{resize && (
 					<ResizeHandle
 						aria-controls={`${id}-tabpanel-${keyValue}`}
-						onPanelWidthChange={onPanelWidthChange}
-						panelWidth={panelWidth}
-						panelWidthMax={panelWidthMax}
-						panelWidthMin={panelWidthMin}
+						maxWidth={panelWidthMax}
+						minWidth={panelWidthMin}
+						onWidthChange={onPanelWidthChange}
 						position={position}
+						width={panelWidth}
 					/>
 				)}
 			</div>

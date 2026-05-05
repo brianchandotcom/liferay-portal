@@ -8,7 +8,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {CountryInfo, getFlagSymbol} from './phoneNumberUtil';
+import {CountryInfo, getDefaultCountry, getFlagSymbol} from './phoneNumberUtil';
 
 type CountryCodePickerProps = Omit<
 	React.ComponentProps<typeof Picker>,
@@ -45,7 +45,8 @@ export function CountryCodePicker({
 	...otherProps
 }: CountryCodePickerProps) {
 	const selectedCountry =
-		countries.find((country) => country.a2 === selectedKey) || countries[0];
+		countries.find((country) => country.a2 === selectedKey) ||
+		getDefaultCountry(countries);
 
 	return (
 		<Picker

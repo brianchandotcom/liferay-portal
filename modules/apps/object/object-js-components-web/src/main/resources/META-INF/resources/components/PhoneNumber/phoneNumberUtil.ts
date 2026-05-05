@@ -136,6 +136,16 @@ export function getCombinedValue(
 	return localNumber;
 }
 
+export function getDefaultCountry(countries: CountryInfo[]): CountryInfo {
+	const defaultLanguageCountryA2 =
+		Liferay.ThemeDisplay.getDefaultLanguageId().split('_')[1] ?? '';
+
+	return (
+		countries.find((country) => country.a2 === defaultLanguageCountryA2) ||
+		countries[0]
+	);
+}
+
 export function getFlagSymbol(a2: string): string {
 	return FLAG_ICON_MAP[a2.toUpperCase()] || '';
 }

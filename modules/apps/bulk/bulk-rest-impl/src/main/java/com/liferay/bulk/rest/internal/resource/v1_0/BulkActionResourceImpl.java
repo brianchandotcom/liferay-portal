@@ -472,6 +472,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _dueDateObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.DUPLICATE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return _duplicateObjectBulkSelectionAction;
+		}
 		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
 					equals(type)) {
 
@@ -627,6 +632,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return hashMapWrapper.put(
 				"dueDate", dueDateBulkAction.getDueDate()
 			).build();
+		}
+		else if (BulkAction.Type.DUPLICATE_OBJECT_BULK_SELECTION_ACTION.equals(
+					type)) {
+
+			return hashMapWrapper.build();
 		}
 		else if (BulkAction.Type.EDIT_OBJECT_CATEGORIES_BULK_SELECTION_ACTION.
 					equals(type)) {
@@ -1135,6 +1145,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference(target = "(bulk.selection.action.key=due.date.object)")
 	private BulkSelectionAction<Object> _dueDateObjectBulkSelectionAction;
+
+	@Reference(target = "(bulk.selection.action.key=duplicate.object)")
+	private BulkSelectionAction<Object> _duplicateObjectBulkSelectionAction;
 
 	@Reference(target = "(bulk.selection.action.key=edit.object.categories)")
 	private BulkSelectionAction<Object>

@@ -1116,11 +1116,12 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		userGroup.setExternalReferenceCode(externalReferenceCode);
 		userGroup.setName(name);
 		userGroup.setDescription(description);
-		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		if (userGroup.getStatus() == WorkflowConstants.STATUS_EMPTY) {
 			userGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
+
+		userGroup.setExpandoBridgeAttributes(serviceContext);
 
 		userGroup = userGroupPersistence.update(userGroup);
 

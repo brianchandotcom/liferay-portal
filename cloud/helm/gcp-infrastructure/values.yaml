@@ -89,7 +89,7 @@ search:
                     -   ALL
             privileged: false
             readOnlyRootFilesystem: false
-        version: 8.12.0
+        version: 8.19.11
         volumeSize: 10Gi
 secretNames: []
 secretStoreName: ""

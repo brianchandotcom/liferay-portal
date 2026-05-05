@@ -158,6 +158,6 @@ public class LanguageImplWhenFormattingFromRequestTest {
 	}
 
 	@Inject
-	private static Language _language;
+	private Language _language;
 
 }

@@ -332,10 +332,11 @@ public class LanguageResourcesTest {
 
 	private static final String _VALUE_3 = "value 3";
 
-	@Inject
-	private static Language _language;
-
 	private BundleContext _bundleContext;
+
+	@Inject
+	private Language _language;
+
 	private String _languageId;
 	private Locale _locale;
 

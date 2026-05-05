@@ -218,4 +218,4 @@ public class OrderRuleAccountGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-906847579
+// LIFERAY-REST-BUILDER-HASH:1660370051

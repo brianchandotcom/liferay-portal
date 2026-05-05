@@ -214,4 +214,4 @@ public class OrderRuleOrderType implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:773703831
+// LIFERAY-REST-BUILDER-HASH:-2115831691

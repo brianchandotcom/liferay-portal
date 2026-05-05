@@ -214,4 +214,4 @@ public class OrderTypeChannel implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:754314839
+// LIFERAY-REST-BUILDER-HASH:-974110667

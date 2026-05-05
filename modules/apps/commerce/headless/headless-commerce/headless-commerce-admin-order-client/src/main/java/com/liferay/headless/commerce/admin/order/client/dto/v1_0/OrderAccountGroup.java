@@ -95,4 +95,4 @@ public class OrderAccountGroup implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1385011122
+// LIFERAY-REST-BUILDER-HASH:725001872

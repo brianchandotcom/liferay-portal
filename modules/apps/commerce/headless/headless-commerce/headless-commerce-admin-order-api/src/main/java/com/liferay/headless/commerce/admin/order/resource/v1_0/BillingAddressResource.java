@@ -144,4 +144,4 @@ public interface BillingAddressResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1286799310
+// LIFERAY-REST-BUILDER-HASH:1798208781

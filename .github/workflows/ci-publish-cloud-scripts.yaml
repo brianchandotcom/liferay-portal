@@ -72,24 +72,33 @@ jobs:
                     project_id: ${{secrets.GCP_PROJECT_ID}}
             -   name: Set up variables
                 run: |
-                    CURRENT_VERSION="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"
+                    function main {
+                        local bucket
+                        local current_version
 
-                    if [[ "${IS_PR}" == "true" ]]
-                    then
-                        SHORT_SHA=$(git rev-parse --short HEAD)
+                        current_version="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"
 
-                        CURRENT_VERSION="${CURRENT_VERSION}-pr-${{github.event.pull_request.number}}-g${SHORT_SHA}"
+                        if [[ "${IS_PR}" == "true" ]]
+                        then
+                            local short_sha
 
-                        BUCKET="liferay-cloud-native-bootstrap-nonprd"
-                    else
-                        BUCKET="liferay-cloud-native-bootstrap"
-                    fi
+                            short_sha=$(git rev-parse --short HEAD)
 
-                    echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
+                            current_version="${current_version}-pr-${{github.event.pull_request.number}}-g${short_sha}"
 
-                    GCS_PATH="gs://${BUCKET}/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
+                            bucket="liferay-cloud-native-bootstrap-nonprd"
+                        else
+                            bucket="liferay-cloud-native-bootstrap"
+                        fi
 
-                    echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
+                        echo "CURRENT_VERSION=${current_version}" >> ${GITHUB_ENV}
+
+                        local gcs_path="gs://${bucket}/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${current_version}.tar.gz"
+
+                        echo "GCS_PATH=${gcs_path}" >> ${GITHUB_ENV}
+                    }
+
+                    main "${@}"
             -   id: verify_version
                 name: Verify version
                 run: |
@@ -104,9 +113,9 @@ jobs:
 
                         echo "should_publish=true" >> ${GITHUB_OUTPUT}
                     else
-                        echo "::warning::Bootstrap liferay-aws-bootstrap@${CURRENT_VERSION} already exists."
+                        echo "Bootstrap liferay-aws-bootstrap@${CURRENT_VERSION} already exists."
 
-                        echo "- **liferay-aws-bootstrap**: \`${CURRENT_VERSION}\` already published." >> ${GITHUB_STEP_SUMMARY}
+                        echo "liferay-aws-bootstrap ${CURRENT_VERSION} already published." >> ${GITHUB_STEP_SUMMARY}
                     fi
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push AWS bootstrap scripts
@@ -152,24 +161,28 @@ jobs:
                     project_id: ${{secrets.GCP_PROJECT_ID}}
             -   name: Set up variables
                 run: |
-                    CURRENT_VERSION="$(jq -r '."liferay-gcp-bootstrap"' ./cloud/scripts/versions.json)"
+                    function main {
+                        CURRENT_VERSION="$(jq -r '."liferay-gcp-bootstrap"' ./cloud/scripts/versions.json)"
 
-                    if [[ "${IS_PR}" == "true" ]]
-                    then
-                        SHORT_SHA=$(git rev-parse --short HEAD)
+                        if [[ "${IS_PR}" == "true" ]]
+                        then
+                            SHORT_SHA=$(git rev-parse --short HEAD)
 
-                        CURRENT_VERSION="${CURRENT_VERSION}-pr-${{github.event.pull_request.number}}-g${SHORT_SHA}"
+                            CURRENT_VERSION="${CURRENT_VERSION}-pr-${{github.event.pull_request.number}}-g${SHORT_SHA}"
 
-                        BUCKET="liferay-cloud-native-bootstrap-nonprd"
-                    else
-                        BUCKET="liferay-cloud-native-bootstrap"
-                    fi
+                            BUCKET="liferay-cloud-native-bootstrap-nonprd"
+                        else
+                            BUCKET="liferay-cloud-native-bootstrap"
+                        fi
 
-                    echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
+                        echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
-                    GCS_PATH="gs://${BUCKET}/bootstrap/liferay-gcp-bootstrap/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz"
+                        GCS_PATH="gs://${BUCKET}/bootstrap/liferay-gcp-bootstrap/liferay-gcp-bootstrap-${CURRENT_VERSION}.tar.gz"
 
-                    echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
+                        echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
+                    }
+
+                    main "${@}"
             -   id: verify_version
                 name: Verify version
                 run: |

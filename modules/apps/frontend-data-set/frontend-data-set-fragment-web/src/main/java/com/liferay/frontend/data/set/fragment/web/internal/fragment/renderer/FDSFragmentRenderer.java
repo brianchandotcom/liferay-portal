@@ -297,11 +297,11 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						tokenValue = "{" + tokenName + "}";
 					}
 
-					String tokenMarkup =
+					String tokenHTML =
 						"<span><strong>" + HtmlUtil.escape(tokenValue) +
 							"</strong></span>";
 
-					return Matcher.quoteReplacement(tokenMarkup);
+					return Matcher.quoteReplacement(tokenHTML);
 				}));
 
 		sb.append("</div>");

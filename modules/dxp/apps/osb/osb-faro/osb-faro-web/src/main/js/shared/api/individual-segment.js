@@ -58,6 +58,7 @@ export function fetchMembershipMetrics({groupId, individualSegmentId}) {
 export function create({
 	channelId = '',
 	criteriaString = '',
+	externalReferenceCode = '',
 	groupId,
 	includeAnonymousUsers = false,
 	name,
@@ -66,6 +67,7 @@ export function create({
 }) {
 	const data = {
 		channelId,
+		externalReferenceCode,
 		filter: criteriaString,
 		includeAnonymousUsers,
 		name,
@@ -83,6 +85,7 @@ export function create({
 export function update({
 	channelId = '',
 	criteriaString = '',
+	externalReferenceCode = '',
 	groupId,
 	id,
 	includeAnonymousUsers = false,
@@ -92,6 +95,7 @@ export function update({
 }) {
 	const data = {
 		channelId,
+		externalReferenceCode,
 		filter: criteriaString,
 		includeAnonymousUsers,
 		name,

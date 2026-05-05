@@ -18,7 +18,9 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -125,9 +127,18 @@ public class QuotaUtil {
 			return null;
 		}
 
+		User user = UserLocalServiceUtil.getUser(userId);
+
+		String externalReferenceCode =
+			"quota-" + accountEntry.getAccountEntryId();
+
+		if (user.isServiceAccountUser()) {
+			externalReferenceCode =
+				"guest-quota-" + accountEntry.getAccountEntryId();
+		}
+
 		return ObjectEntryLocalServiceUtil.fetchObjectEntry(
-			"quota-" + accountEntry.getAccountEntryId(), 0,
-			objectDefinition.getObjectDefinitionId());
+			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
 	}
 
 }

@@ -78,20 +78,13 @@ public class ProvisioningRequestResourceImpl
 			},
 			new long[0], serviceAccountUser.getUserId());
 
-		_addQuota(customerAccountEntry, serviceContext);
+		_addQuotas(customerAccountEntry, serviceContext);
 	}
 
-	private void _addQuota(
-			AccountEntry accountEntry, ServiceContext serviceContext)
+	private void _addQuotaObjectEntry(
+			AccountEntry accountEntry, String externalReferenceCode,
+			ObjectDefinition objectDefinition, ServiceContext serviceContext)
 		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_QUOTA", contextCompany.getCompanyId());
-
-		String externalReferenceCode =
-			"quota-" + accountEntry.getAccountEntryId();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
@@ -107,7 +100,7 @@ public class ProvisioningRequestResourceImpl
 			HashMapBuilder.<String, Serializable>put(
 				"externalReferenceCode", externalReferenceCode
 			).put(
-				"limit", 1000000
+				"limit", _QUOTA_TOKEN_LIMIT
 			).put(
 				"r_accountToAIHubQuotas_accountEntryId",
 				accountEntry.getAccountEntryId()
@@ -115,6 +108,23 @@ public class ProvisioningRequestResourceImpl
 				"usage", 0
 			).build(),
 			serviceContext);
+	}
+
+	private void _addQuotas(
+			AccountEntry accountEntry, ServiceContext serviceContext)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", contextCompany.getCompanyId());
+
+		_addQuotaObjectEntry(
+			accountEntry, "guest-quota-" + accountEntry.getAccountEntryId(),
+			objectDefinition, serviceContext);
+		_addQuotaObjectEntry(
+			accountEntry, "quota-" + accountEntry.getAccountEntryId(),
+			objectDefinition, serviceContext);
 	}
 
 	private AccountEntry _getOrAddAccountEntry(
@@ -160,6 +170,8 @@ public class ProvisioningRequestResourceImpl
 
 		return _userLocalService.updateUser(user);
 	}
+
+	private static final int _QUOTA_TOKEN_LIMIT = 33333333;
 
 	@Reference
 	private AccountEntryService _accountEntryService;

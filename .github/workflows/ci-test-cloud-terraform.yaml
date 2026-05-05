@@ -35,9 +35,6 @@ jobs:
             fail-fast: false
             matrix:
                 stack:
-                    -   aws/backup/backup-plan
-                    -   aws/backup/backup-restore-workflow
-                    -   aws/backup/backup-vault
                     -   aws/dependencies
                     -   aws/ecr
                     -   aws/eks

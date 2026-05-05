@@ -35,6 +35,7 @@ Immutable.Record {
   "criteriaString": "",
   "dateCreated": null,
   "dateModified": null,
+  "externalReferenceCode": "",
   "id": "",
   "includeAnonymousUsers": false,
   "individualCount": 0,

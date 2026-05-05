@@ -106,7 +106,7 @@ public class CommerceShipmentLocalServiceImpl
 			String commerceShippingOptionName, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Commerce Shipment
+		// Commerce shipment
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
 
@@ -201,7 +201,7 @@ public class CommerceShipmentLocalServiceImpl
 			CommerceShipment commerceShipment, boolean restoreStockQuantity)
 		throws PortalException {
 
-		// Commerce Shipment
+		// Commerce shipment
 
 		commerceShipment = commerceShipmentPersistence.remove(commerceShipment);
 
@@ -210,7 +210,7 @@ public class CommerceShipmentLocalServiceImpl
 		_resourceLocalService.deleteResource(
 			commerceShipment, ResourceConstants.SCOPE_INDIVIDUAL);
 
-		// Commerce Shipment Items
+		// Commerce shipment items
 
 		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(
 			commerceShipment.getCommerceShipmentId(), restoreStockQuantity);

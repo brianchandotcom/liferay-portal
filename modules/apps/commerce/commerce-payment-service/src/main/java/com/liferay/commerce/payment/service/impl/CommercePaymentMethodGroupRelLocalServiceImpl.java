@@ -11,6 +11,7 @@ import com.liferay.commerce.payment.exception.CommercePaymentMethodGroupRelNameE
 import com.liferay.commerce.payment.exception.NoSuchPaymentMethodGroupRelException;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.base.CommercePaymentMethodGroupRelLocalServiceBaseImpl;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.aop.AopService;
@@ -168,6 +169,16 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 				CommercePaymentMethodGroupRel.class.getName(),
 				commercePaymentMethodGroupRel.
 					getCommercePaymentMethodGroupRelId());
+
+		// Commerce channel account entry rels
+
+		_commerceChannelAccountEntryRelLocalService.
+			deleteCommerceChannelAccountEntryRels(
+				CommercePaymentMethodGroupRel.class.getName(),
+				commercePaymentMethodGroupRel.
+					getCommercePaymentMethodGroupRelId());
+
+		// Resources
 
 		_resourceLocalService.deleteResource(
 			commercePaymentMethodGroupRel, ResourceConstants.SCOPE_INDIVIDUAL);
@@ -415,6 +426,10 @@ public class CommercePaymentMethodGroupRelLocalServiceImpl
 	@Reference
 	private CommerceAddressRestrictionLocalService
 		_commerceAddressRestrictionLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
 
 	@Reference
 	private ImageLocalService _imageLocalService;

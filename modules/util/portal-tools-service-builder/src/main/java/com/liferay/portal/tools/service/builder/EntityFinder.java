@@ -171,7 +171,7 @@ public class EntityFinder {
 	}
 
 	public boolean isFinderDelegationEnabled() {
-		if (!_serviceBuilder.isVersionGTE_7_4_0() || hasArrayableOperator()) {
+		if (!_serviceBuilder.isVersionGTE_7_4_0() || hasArrayablePagination()) {
 			return false;
 		}
 

@@ -9,7 +9,7 @@
 <#list entityColumns as entityColumn>
 	<#assign entityColumnName = entityColumn.name finderFieldSuffix = "" />
 
-	<#if !entityFinder.finderDelegationEnabled || (entity.isPermissionCheckEnabled(entityFinder) && !entity.isPermissionedModel() && (entityColumn.name == entityColumn.DBName) && !entityFinderDBWhere)>
+	<#if !entityFinder.finderDelegationEnabled || entityFinder.hasArrayableOperator() || (entity.isPermissionCheckEnabled(entityFinder) && !entity.isPermissionedModel() && (entityColumn.name == entityColumn.DBName) && !entityFinderDBWhere)>
 		<#include "persistence_impl_finder_field.ftl">
 	</#if>
 

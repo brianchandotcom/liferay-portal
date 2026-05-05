@@ -107,6 +107,31 @@
 				"scope": 1
 			},
 			{
+				"actionId": "ADD_LIST_TYPE_DEFINITION",
+				"resource": "com.liferay.list.type",
+				"scope": 1
+			},
+			{
+				"actionId": "DELETE",
+				"resource": "com.liferay.list.type.model.ListTypeDefinition",
+				"scope": 1
+			},
+			{
+				"actionId": "PERMISSIONS",
+				"resource": "com.liferay.list.type.model.ListTypeDefinition",
+				"scope": 1
+			},
+			{
+				"actionId": "UPDATE",
+				"resource": "com.liferay.list.type.model.ListTypeDefinition",
+				"scope": 1
+			},
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.list.type.model.ListTypeDefinition",
+				"scope": 1
+			},
+			{
 				"actionId": "ADD_OBJECT_DEFINITION",
 				"resource": "com.liferay.object",
 				"scope": 1

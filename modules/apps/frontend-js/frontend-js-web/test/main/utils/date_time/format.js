@@ -6,6 +6,14 @@
 import {format} from '../../../../src/main/resources/META-INF/resources/main/utils/date_time/format';
 
 describe('format', () => {
+	beforeEach(() => {
+		jest.spyOn(console, 'warn');
+	});
+
+	afterEach(() => {
+		jest.restoreAllMocks();
+	});
+
 	it('formats date as "MM/dd/yyyy"', () => {
 		const date = new Date(2025, 0, 1);
 		const formattedDate = format(date, 'MM/dd/yyyy', 'en-US');
@@ -50,7 +58,6 @@ describe('format', () => {
 
 	it('warns and default to "yyyy-MM-ddThh:mm:ssZ" if format is not found', () => {
 		const date = new Date(2025, 0, 1);
-		console.warn = jest.fn();
 		const formattedDate = format(date, 'unknown-format', 'en-US');
 
 		expect(console.warn).toHaveBeenCalledWith(
@@ -60,10 +67,14 @@ describe('format', () => {
 		expect(formattedDate).toBe('2025-01-01T00:00:00Z');
 	});
 
-	it('returns the date unchanged if no format is provided', () => {
+	it('warns and defaults to "yyyy-MM-ddThh:mm:ssZ" if no format is provided', () => {
 		const date = new Date(2025, 0, 1);
 		const formattedDate = format(date, '', 'en-US');
 
-		expect(formattedDate).toBe(date);
+		expect(console.warn).toHaveBeenCalledWith(
+			"No formatter found for ''. Defaulting to use 'yyyy-MM-ddThh:mm:ssZ'."
+		);
+
+		expect(formattedDate).toBe('2025-01-01T00:00:00Z');
 	});
 });

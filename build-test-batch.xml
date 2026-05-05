@@ -331,10 +331,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="deploy-and-execute-builder-ant-target">
+	<macrodef name="deploy-and-execute-rest-or-service-builder-ant-target">
 		<attribute name="ant.target.file" />
 		<attribute name="ant.target.name" />
-		<attribute name="builder.type" />
+		<attribute name="rest.or.service.builder" />
 		<attribute name="tooling.dir" />
 
 		<sequential>
@@ -352,10 +352,10 @@ mariadb.executable=${mariadb.executable}]]></echo>
 				<arg value="--all" />
 			</exec>
 
-			<execute-builder-ant-target
+			<execute-rest-or-service-builder-ant-target
 				ant.target.file="@{ant.target.file}"
 				ant.target.name="@{ant.target.name}"
-				builder.type="@{builder.type}"
+				rest.or.service.builder="@{rest.or.service.builder}"
 			/>
 		</sequential>
 	</macrodef>
@@ -422,137 +422,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 				</then>
 			</if>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="execute-builder-ant-target">
-		<attribute name="ant.target.name" />
-		<attribute name="ant.target.file" />
-		<attribute name="builder.type" />
-
-		<sequential>
-			<trycatch property="ant.target.failure" reference="ant.target.failure.ref">
-				<try>
-					<beanshell>
-						project.setProperty("ant.target.start.time", String.valueOf(System.currentTimeMillis()));
-					</beanshell>
-
-					<generate-backend-batch-junit-report-ant-target
-						ant.target.failure.count="1"
-						ant.target.file="@{ant.target.file}"
-						ant.target.name="@{ant.target.name}"
-						ant.target.start.time="${ant.target.start.time}"
-					/>
-
-					<local name="ant.target.dir" />
-					<local name="ant.target.file.name" />
-
-					<propertyregex
-						input="@{ant.target.file}"
-						override="true"
-						property="ant.target.dir"
-						regexp="(.+)/(.+.xml)"
-						replace="\1"
-					/>
-
-					<propertyregex
-						input="@{ant.target.file}"
-						override="true"
-						property="ant.target.file.name"
-						regexp="(.+)/(.+.xml)"
-						replace="\2"
-					/>
-
-					<record action="start" name="${project.dir}/execute.ant.target.log" />
-
-					<record-git-diffs builder.type="@{builder.type}">
-						<action>
-							<ant antfile="${ant.target.file.name}" dir="${ant.target.dir}" target="@{ant.target.name}" />
-						</action>
-					</record-git-diffs>
-
-					<generate-backend-batch-junit-report-ant-target
-						ant.target.failure.count="0"
-						ant.target.file="@{ant.target.file}"
-						ant.target.name="@{ant.target.name}"
-						ant.target.start.time="${ant.target.start.time}"
-					/>
-				</try>
-				<catch>
-					<var name="ant.target.failure.full.stack" unset="true" />
-
-					<beanshell>
-						<![CDATA[
-							import java.io.PrintWriter;
-							import java.io.StringWriter;
-
-							Object reference = project.getReference("ant.target.failure.ref");
-
-							if (!(reference instanceof Throwable)) {
-								return;
-							}
-
-							Throwable throwable = (Throwable)reference;
-
-							StringWriter stringWriter = new StringWriter();
-							PrintWriter printWriter = new PrintWriter(stringWriter);
-
-							throwable.printStackTrace(printWriter);
-
-							project.setProperty("ant.target.failure.full.stack", stringWriter.toString());
-						]]>
-					</beanshell>
-
-					<record action="stop" name="${project.dir}/execute.ant.target.log" />
-
-					<echo>${ant.target.failure.full.stack}</echo>
-
-					<local name="execute.ant.target.log" />
-
-					<loadfile
-						property="execute.ant.target.log"
-						srcfile="${project.dir}/execute.ant.target.log"
-					/>
-
-					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
-
-					<get-console-log-failure-message console.log="${execute.ant.target.log}" />
-
-					<local name="ant.target.failure.stacktrace" />
-
-					<condition else="${ant.target.failure.full.stack}" property="ant.target.failure.stacktrace" value="${console.log.failure.message}">
-						<isset property="console.log.failure.message" />
-					</condition>
-
-					<generate-backend-batch-junit-report-ant-target
-						ant.target.failure.count="1"
-						ant.target.failure.message="Detected @{builder.type} compilation error. Please check the logs for details."
-						ant.target.failure.stacktrace="${ant.target.failure.stacktrace}"
-						ant.target.file="@{ant.target.file}"
-						ant.target.name="@{ant.target.name}"
-						ant.target.start.time="${ant.target.start.time}"
-					/>
-				</catch>
-				<finally>
-					<record action="stop" name="${project.dir}/execute.ant.target.log" />
-
-					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
-
-					<if>
-						<isset property="git.diffs" />
-						<then>
-							<generate-backend-batch-junit-report-ant-target
-								ant.target.failure.count="1"
-								ant.target.failure.message="Detected @{builder.type} changes. Please check the logs for details. Make sure to commit in all @{builder.type} results."
-								ant.target.failure.stacktrace="${git.diffs}"
-								ant.target.file="@{ant.target.file}"
-								ant.target.name="@{ant.target.name}"
-								ant.target.start.time="${ant.target.start.time}"
-							/>
-						</then>
-					</if>
-				</finally>
-			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -637,7 +506,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<execute-gradle-task gradle.task.module.dir="@{gradle.module.dir}" gradle.task.name="@{gradle.task.name}">
 				<action>
-					<record-git-diffs builder.type="build services">
+					<record-git-diffs rest.or.service.builder="service">
 						<action>
 							<gradle-execute dir="@{gradle.module.dir}" forcedcacheenabled="false" task="@{gradle.task.name}">
 								<arg value="-Pcom.liferay.portal.tools.service.builder.ignore.local=false" />
@@ -671,7 +540,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<sequential>
 			<execute-gradle-task gradle.task.module.dir="@{gradle.module.dir}" gradle.task.name="@{gradle.task.name}">
 				<action>
-					<record-git-diffs builder.type="REST builder">
+					<record-git-diffs rest.or.service.builder="rest">
 						<action>
 							<gradle-execute dir="@{gradle.module.dir}" forcedcacheenabled="false" task="@{gradle.task.name}">
 								<arg value="-DbuildREST.forceClientVersionDescription=false" />
@@ -696,6 +565,143 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</if>
 				</action-fail>
 			</execute-gradle-task>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="execute-rest-or-service-builder-ant-target">
+		<attribute name="ant.target.name" />
+		<attribute name="ant.target.file" />
+		<attribute name="rest.or.service.builder" />
+
+		<sequential>
+			<local name="rest.or.service.builder.label" />
+
+			<condition else="REST builder" property="rest.or.service.builder.label" value="build services">
+				<equals arg1="@{rest.or.service.builder}" arg2="service" />
+			</condition>
+
+			<trycatch property="ant.target.failure" reference="ant.target.failure.ref">
+				<try>
+					<beanshell>
+						project.setProperty("ant.target.start.time", String.valueOf(System.currentTimeMillis()));
+					</beanshell>
+
+					<generate-backend-batch-junit-report-ant-target
+						ant.target.failure.count="1"
+						ant.target.file="@{ant.target.file}"
+						ant.target.name="@{ant.target.name}"
+						ant.target.start.time="${ant.target.start.time}"
+					/>
+
+					<local name="ant.target.dir" />
+					<local name="ant.target.file.name" />
+
+					<propertyregex
+						input="@{ant.target.file}"
+						override="true"
+						property="ant.target.dir"
+						regexp="(.+)/(.+.xml)"
+						replace="\1"
+					/>
+
+					<propertyregex
+						input="@{ant.target.file}"
+						override="true"
+						property="ant.target.file.name"
+						regexp="(.+)/(.+.xml)"
+						replace="\2"
+					/>
+
+					<record action="start" name="${project.dir}/execute.ant.target.log" />
+
+					<record-git-diffs rest.or.service.builder="@{rest.or.service.builder}">
+						<action>
+							<ant antfile="${ant.target.file.name}" dir="${ant.target.dir}" target="@{ant.target.name}" />
+						</action>
+					</record-git-diffs>
+
+					<generate-backend-batch-junit-report-ant-target
+						ant.target.failure.count="0"
+						ant.target.file="@{ant.target.file}"
+						ant.target.name="@{ant.target.name}"
+						ant.target.start.time="${ant.target.start.time}"
+					/>
+				</try>
+				<catch>
+					<var name="ant.target.failure.full.stack" unset="true" />
+
+					<beanshell>
+						<![CDATA[
+							import java.io.PrintWriter;
+							import java.io.StringWriter;
+
+							Object reference = project.getReference("ant.target.failure.ref");
+
+							if (!(reference instanceof Throwable)) {
+								return;
+							}
+
+							Throwable throwable = (Throwable)reference;
+
+							StringWriter stringWriter = new StringWriter();
+							PrintWriter printWriter = new PrintWriter(stringWriter);
+
+							throwable.printStackTrace(printWriter);
+
+							project.setProperty("ant.target.failure.full.stack", stringWriter.toString());
+						]]>
+					</beanshell>
+
+					<record action="stop" name="${project.dir}/execute.ant.target.log" />
+
+					<echo>${ant.target.failure.full.stack}</echo>
+
+					<local name="execute.ant.target.log" />
+
+					<loadfile
+						property="execute.ant.target.log"
+						srcfile="${project.dir}/execute.ant.target.log"
+					/>
+
+					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
+
+					<get-console-log-failure-message console.log="${execute.ant.target.log}" />
+
+					<local name="ant.target.failure.stacktrace" />
+
+					<condition else="${ant.target.failure.full.stack}" property="ant.target.failure.stacktrace" value="${console.log.failure.message}">
+						<isset property="console.log.failure.message" />
+					</condition>
+
+					<generate-backend-batch-junit-report-ant-target
+						ant.target.failure.count="1"
+						ant.target.failure.message="Detected ${rest.or.service.builder.label} compilation error. Please check the logs for details."
+						ant.target.failure.stacktrace="${ant.target.failure.stacktrace}"
+						ant.target.file="@{ant.target.file}"
+						ant.target.name="@{ant.target.name}"
+						ant.target.start.time="${ant.target.start.time}"
+					/>
+				</catch>
+				<finally>
+					<record action="stop" name="${project.dir}/execute.ant.target.log" />
+
+					<delete failonerror="false" file="${project.dir}/execute.ant.target.log" />
+
+					<if>
+						<isset property="git.diffs" />
+						<then>
+							<generate-backend-batch-junit-report-ant-target
+								ant.target.failure.count="1"
+								ant.target.failure.message="Detected ${rest.or.service.builder.label} changes. Please check the logs for details. Make sure to commit in all ${rest.or.service.builder.label} results."
+								ant.target.failure.stacktrace="${git.diffs}"
+								ant.target.file="@{ant.target.file}"
+								ant.target.name="@{ant.target.name}"
+								ant.target.start.time="${ant.target.start.time}"
+							/>
+						</then>
+					</if>
+				</finally>
+			</trycatch>
 		</sequential>
 	</macrodef>
 
@@ -1617,7 +1623,7 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="record-git-diffs">
-		<attribute name="builder.type" />
+		<attribute name="rest.or.service.builder" />
 		<element name="action" />
 
 		<sequential>
@@ -1632,7 +1638,7 @@ app.server.type=@{app.server.type}]]></echo>
 			</tstamp>
 
 			<if>
-				<equals arg1="@{builder.type}" arg2="build services" />
+				<equals arg1="@{rest.or.service.builder}" arg2="service" />
 				<then>
 					<if>
 						<and>
@@ -10187,10 +10193,10 @@ ${output.content}</echo>
 	<target name="rest-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-builder-ant-target
+				<deploy-and-execute-rest-or-service-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-rests"
-					builder.type="REST builder"
+					rest.or.service.builder="rest"
 					tooling.dir="modules/util/portal-tools-rest-builder"
 				/>
 			</test-action>
@@ -10204,17 +10210,17 @@ ${output.content}</echo>
 	<target name="rest-builder-and-service-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-builder-ant-target
+				<deploy-and-execute-rest-or-service-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-services"
-					builder.type="build services"
+					rest.or.service.builder="service"
 					tooling.dir="modules/util/portal-tools-service-builder"
 				/>
 
-				<deploy-and-execute-builder-ant-target
+				<deploy-and-execute-rest-or-service-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-rests"
-					builder.type="REST builder"
+					rest.or.service.builder="rest"
 					tooling.dir="modules/util/portal-tools-rest-builder"
 				/>
 			</test-action>
@@ -10326,10 +10332,10 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 	<target name="service-builder">
 		<run-batch-test>
 			<test-action>
-				<deploy-and-execute-builder-ant-target
+				<deploy-and-execute-rest-or-service-builder-ant-target
 					ant.target.file="portal-impl/build.xml"
 					ant.target.name="build-services"
-					builder.type="build services"
+					rest.or.service.builder="service"
 					tooling.dir="modules/util/portal-tools-service-builder"
 				/>
 			</test-action>

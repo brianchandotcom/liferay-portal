@@ -52,6 +52,12 @@ public class CacheReplicatorEntryLocalServiceUtil {
 		return getService().addCacheReplicatorEntry(cacheReplicatorEntry);
 	}
 
+	public static CacheReplicatorEntry addCacheReplicatorEntry(
+		long companyId, String name) {
+
+		return getService().addCacheReplicatorEntry(companyId, name);
+	}
+
 	/**
 	 * Creates a new cache replicator entry with the primary key. Does not add the cache replicator entry to the database.
 	 *
@@ -209,6 +215,12 @@ public class CacheReplicatorEntryLocalServiceUtil {
 		return getService().fetchCacheReplicatorEntry(cacheReplicatorEntryId);
 	}
 
+	public static CacheReplicatorEntry fetchCacheReplicatorEntryByName(
+		String name) {
+
+		return getService().fetchCacheReplicatorEntryByName(name);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -232,6 +244,20 @@ public class CacheReplicatorEntryLocalServiceUtil {
 		return getService().getCacheReplicatorEntries(start, end);
 	}
 
+	public static List<CacheReplicatorEntry>
+		getCacheReplicatorEntriesByCompanyId(long companyId) {
+
+		return getService().getCacheReplicatorEntriesByCompanyId(companyId);
+	}
+
+	public static List<CacheReplicatorEntry>
+		getCacheReplicatorEntriesByCompanyId(
+			long companyId, int start, int end) {
+
+		return getService().getCacheReplicatorEntriesByCompanyId(
+			companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of cache replicator entries.
 	 *
@@ -239,6 +265,12 @@ public class CacheReplicatorEntryLocalServiceUtil {
 	 */
 	public static int getCacheReplicatorEntriesCount() {
 		return getService().getCacheReplicatorEntriesCount();
+	}
+
+	public static int getCacheReplicatorEntriesCountByCompanyId(
+		long companyId) {
+
+		return getService().getCacheReplicatorEntriesCountByCompanyId(companyId);
 	}
 
 	/**
@@ -307,4 +339,4 @@ public class CacheReplicatorEntryLocalServiceUtil {
 	private static volatile CacheReplicatorEntryLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2039684021
+// LIFERAY-SERVICE-BUILDER-HASH:-1862749269

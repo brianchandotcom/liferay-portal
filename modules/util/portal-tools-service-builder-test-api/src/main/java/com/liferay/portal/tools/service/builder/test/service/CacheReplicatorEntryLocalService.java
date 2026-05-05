@@ -73,6 +73,9 @@ public interface CacheReplicatorEntryLocalService
 	public CacheReplicatorEntry addCacheReplicatorEntry(
 		CacheReplicatorEntry cacheReplicatorEntry);
 
+	public CacheReplicatorEntry addCacheReplicatorEntry(
+		long companyId, String name);
+
 	/**
 	 * Creates a new cache replicator entry with the primary key. Does not add the cache replicator entry to the database.
 	 *
@@ -203,6 +206,9 @@ public interface CacheReplicatorEntryLocalService
 		long cacheReplicatorEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CacheReplicatorEntry fetchCacheReplicatorEntryByName(String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -220,6 +226,14 @@ public interface CacheReplicatorEntryLocalService
 	public List<CacheReplicatorEntry> getCacheReplicatorEntries(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+		long companyId, int start, int end);
+
 	/**
 	 * Returns the number of cache replicator entries.
 	 *
@@ -227,6 +241,9 @@ public interface CacheReplicatorEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCacheReplicatorEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCacheReplicatorEntriesCountByCompanyId(long companyId);
 
 	/**
 	 * Returns the cache replicator entry with the primary key.
@@ -273,4 +290,4 @@ public interface CacheReplicatorEntryLocalService
 		CacheReplicatorEntry cacheReplicatorEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:285098865
+// LIFERAY-SERVICE-BUILDER-HASH:-730570211

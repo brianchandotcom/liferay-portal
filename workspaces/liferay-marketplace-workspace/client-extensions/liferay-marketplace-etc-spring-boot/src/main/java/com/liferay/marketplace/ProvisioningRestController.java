@@ -184,20 +184,20 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	@PostMapping("cmp-beta-license-key")
-	public AppLicenseKey postCMPBetaLicenseKey(
+	public void postCMPBetaLicenseKey(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
 		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(json);
 
-		return _postBetaLicenseKey(
+		_postAppLicenseKey(
 			appLicenseKey, jwt,
 			_marketplaceService.getOrder(
 				GetterUtil.getLong(appLicenseKey.getOrderId())));
 	}
 
 	@PostMapping("dsr-beta-license-key")
-	public AppLicenseKey postDSRBetaLicenseKey(
+	public void postDSRBetaLicenseKey(
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
@@ -211,9 +211,9 @@ public class ProvisioningRestController extends BaseRestController {
 		Order order = _marketplaceService.getOrder(
 			GetterUtil.getLong(appLicenseKey.getOrderId()));
 
-		_postAnalyticsProject(new JSONObject(json), jwt, order);
+		_postAppLicenseKey(appLicenseKey, jwt, order);
 
-		return _postBetaLicenseKey(appLicenseKey, jwt, order);
+		_provisionAnalyticsWorkspace(new JSONObject(json), jwt, order);
 	}
 
 	@PostMapping("license-key-type-free")
@@ -321,7 +321,50 @@ public class ProvisioningRestController extends BaseRestController {
 		return new ResponseEntity<>(content, httpHeaders, HttpStatus.OK);
 	}
 
-	private void _postAnalyticsProject(
+	private void _postAppLicenseKey(
+			AppLicenseKey appLicenseKey, Jwt jwt, Order order)
+		throws Exception {
+
+		if (Objects.equals(appLicenseKey.getHostName(), null) &&
+			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
+			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
+
+			throw new ResponseStatusException(
+				HttpStatus.BAD_REQUEST,
+				"At least one of the following fields is required: host " +
+					"name, IP addresses, or MAC addresses");
+		}
+
+		ProductPurchase[] productPurchases =
+			_koroneikiService.postAccountProductPurchases(
+				jwt, "3 Months Limited Beta", order);
+
+		ProductPurchase productPurchase = productPurchases[0];
+
+		if (productPurchase == null) {
+			return;
+		}
+
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
+		if (Validator.isNotNull(
+				productSpecificationsMap.get("app-entry-uuid"))) {
+
+			appLicenseKey.setProductId(
+				productSpecificationsMap.get("app-entry-uuid"));
+		}
+
+		_provisioningService.postAppLicenseKey(
+			appLicenseKey, jwt, productPurchase);
+
+		_marketplaceService.completeOrder(
+			order.getId(),
+			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
+	}
+
+	private void _provisionAnalyticsWorkspace(
 			JSONObject jsonObject, Jwt jwt, Order order)
 		throws Exception {
 
@@ -366,51 +409,6 @@ public class ProvisioningRestController extends BaseRestController {
 				).toString()
 			).build(),
 			order.getId(), MarketplaceConstants.ORDER_STATUS_COMPLETED);
-	}
-
-	private AppLicenseKey _postBetaLicenseKey(
-			AppLicenseKey appLicenseKey, Jwt jwt, Order order)
-		throws Exception {
-
-		if (Objects.equals(appLicenseKey.getHostName(), null) &&
-			Objects.equals(appLicenseKey.getIpAddresses(), null) &&
-			Objects.equals(appLicenseKey.getMacAddresses(), null)) {
-
-			throw new ResponseStatusException(
-				HttpStatus.BAD_REQUEST,
-				"At least one of the following fields is required: host " +
-					"name, IP addresses, or MAC addresses");
-		}
-
-		ProductPurchase[] productPurchases =
-			_koroneikiService.postAccountProductPurchases(
-				jwt, "3 Months Limited Beta", order);
-
-		ProductPurchase productPurchase = productPurchases[0];
-
-		if (productPurchase == null) {
-			return null;
-		}
-
-		Map<String, String> productSpecificationsMap =
-			_marketplaceService.getProductSpecificationsMap(
-				_marketplaceService.getOrderProductId(order));
-
-		if (Validator.isNotNull(
-				productSpecificationsMap.get("app-entry-uuid"))) {
-
-			appLicenseKey.setProductId(
-				productSpecificationsMap.get("app-entry-uuid"));
-		}
-
-		appLicenseKey = _provisioningService.postAppLicenseKey(
-			appLicenseKey, jwt, productPurchase);
-
-		_marketplaceService.completeOrder(
-			order.getId(),
-			MarketplaceConstants.ORDER_PAYMENT_STATUS_NOT_REQUIRED);
-
-		return appLicenseKey;
 	}
 
 	@Autowired

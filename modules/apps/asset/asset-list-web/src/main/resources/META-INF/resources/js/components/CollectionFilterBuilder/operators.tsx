@@ -18,6 +18,7 @@ const COMPARISON_OPERATORS: GenericOperator[] = [
 	{label: Liferay.Language.get('greater-than-or-equals'), value: 'ge'},
 	{label: Liferay.Language.get('less-than'), value: 'lt'},
 	{label: Liferay.Language.get('less-than-or-equals'), value: 'le'},
+	{label: Liferay.Language.get('between'), value: 'between'},
 ];
 
 const DEFAULT_OPERATORS: GenericOperator[] = [
@@ -33,8 +34,9 @@ export function getCollectionOperators(
 			return BOOLEAN_OPERATORS;
 		case 'date':
 		case 'date-time':
-		case 'double':
+		case 'decimal':
 		case 'integer':
+		case 'numeric':
 			return COMPARISON_OPERATORS;
 		case 'picklist':
 		case 'string':

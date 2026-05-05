@@ -2458,34 +2458,36 @@ that may or may not be enforced with a unique index at the database level. Case
 		return ${entity.variableName};
 	}
 
-	/**
-	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
-	 */
-	@Override
-	public ${entity.name} fetchBy${entityFinder.name}(
-
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name}
-
-		<#if entityColumn_has_next>
-			,
-		</#if>
-	</#list>
-
-	) {
-		return fetchBy${entityFinder.name}(
+	<#if !serviceBuilder.isVersionGTE_7_4_0()>
+		/**
+		 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found. Uses the finder cache.
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+		 */
+		@Override
+		public ${entity.name} fetchBy${entityFinder.name}(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.type} ${entityColumn.name}
+
+			<#if entityColumn_has_next>
+				,
+			</#if>
 		</#list>
 
-		true);
-	}
+		) {
+			return fetchBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
+
+			true);
+		}
+	</#if>
 
 	/**
 	 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found, optionally using the finder cache.

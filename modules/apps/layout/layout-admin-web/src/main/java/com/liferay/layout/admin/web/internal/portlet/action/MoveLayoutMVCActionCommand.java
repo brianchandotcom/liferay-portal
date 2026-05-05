@@ -11,6 +11,7 @@ import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplay
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandlerUtil;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
+import com.liferay.layout.seo.provider.LayoutSetSEORobotsProvider;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -95,8 +96,8 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutService,
-					_layoutSetPrototypeHelper, liferayPortletRequest,
-					liferayPortletResponse);
+					_layoutSetPrototypeHelper, _layoutSetRobotsProvider,
+					liferayPortletRequest, liferayPortletResponse);
 
 			JSONPortletResponseUtil.writeJSON(
 				liferayPortletRequest, liferayPortletResponse,
@@ -139,6 +140,9 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
 
 	@Reference
 	private Portal _portal;

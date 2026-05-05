@@ -32,6 +32,7 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.layout.seo.web.internal.helper.LayoutSEOMetaRobotsHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,6 +91,7 @@ public class LayoutsSEODisplayContext {
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
+		LayoutSEOMetaRobotsHelper layoutSEOMetaRobotsHelper,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
@@ -103,6 +105,7 @@ public class LayoutsSEODisplayContext {
 			layoutPageTemplateEntryLocalService;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
+		_layoutSEOMetaRobotsHelper = layoutSEOMetaRobotsHelper;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -275,6 +278,17 @@ public class LayoutsSEODisplayContext {
 		}
 
 		return _layoutId;
+	}
+
+	public List<String> getMetaRobotsProviderPortletTitles() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return Collections.emptyList();
+		}
+
+		return _layoutSEOMetaRobotsHelper.getProviderPortletTitles(
+			selLayout, _themeDisplay.getLocale());
 	}
 
 	public String getOpenGraphImageTitle() {
@@ -778,6 +792,7 @@ public class LayoutsSEODisplayContext {
 		_layoutPageTemplateEntryLocalService;
 	private final LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
+	private final LayoutSEOMetaRobotsHelper _layoutSEOMetaRobotsHelper;
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -19,6 +19,7 @@ import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys;
 import com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayContext;
+import com.liferay.layout.seo.web.internal.helper.LayoutSEOMetaRobotsHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -97,7 +98,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 				itemSelector, layoutLocalService,
 				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
-				layoutSEOSiteLocalService,
+				layoutSEOMetaRobotsHelper, layoutSEOSiteLocalService,
 				portal.getLiferayPortletRequest(
 					(PortletRequest)httpServletRequest.getAttribute(
 						JavaConstants.JAKARTA_PORTLET_REQUEST)),
@@ -139,6 +140,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected LayoutSEOLinkManager layoutSEOLinkManager;
+
+	@Reference
+	protected LayoutSEOMetaRobotsHelper layoutSEOMetaRobotsHelper;
 
 	@Reference
 	protected LayoutSEOSiteLocalService layoutSEOSiteLocalService;

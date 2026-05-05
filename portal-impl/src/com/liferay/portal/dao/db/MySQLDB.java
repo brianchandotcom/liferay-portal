@@ -29,7 +29,6 @@ import java.sql.Types;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 
 /**
@@ -152,54 +151,6 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	public List<QueryInfo> getLockedQueryInfos(Connection connection)
-		throws SQLException {
-
-		List<QueryInfo> lockedQueryInfos = new ArrayList<>();
-
-		String sql = StringBundler.concat(
-			"select information_schema.processlist.time as duration, ",
-			"information_schema.processlist.id as id, ",
-			"information_schema.processlist.info as query, ",
-			"information_schema.processlist.db as schema_, ",
-			"coalesce(information_schema.innodb_trx.trx_state, ",
-			"information_schema.processlist.state) as state from ",
-			"information_schema.processlist left join ",
-			"information_schema.innodb_trx on ",
-			"information_schema.processlist.id = ",
-			"information_schema.innodb_trx.trx_mysql_thread_id where ",
-			"information_schema.processlist.command != 'Sleep' and ",
-			"information_schema.processlist.id != connection_id() and ",
-			"information_schema.processlist.info is not null and ",
-			"information_schema.processlist.time >= ? and (",
-			"information_schema.innodb_trx.trx_state = 'LOCK WAIT' or ",
-			"information_schema.processlist.state like '%lock%')");
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				sql)) {
-
-			preparedStatement.setLong(
-				1, PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD / 1000);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					long duration = TimeUnit.SECONDS.toMillis(
-						resultSet.getLong("duration"));
-					String id = resultSet.getString("id");
-					String query = resultSet.getString("query");
-					String schema = resultSet.getString("schema_");
-					String state = resultSet.getString("state");
-
-					lockedQueryInfos.add(
-						new QueryInfo(duration, id, query, schema, state));
-				}
-			}
-		}
-
-		return lockedQueryInfos;
-	}
-
-	@Override
 	public String getNewUuidFunctionName() {
 		return "UUID()";
 	}
@@ -266,6 +217,27 @@ public class MySQLDB extends BaseDB {
 		}
 
 		runSQL(connection, sb.toString());
+	}
+
+	@Override
+	protected String getLockedQueryInfosSQL() {
+		return StringBundler.concat(
+			"select information_schema.processlist.time * 1000 as duration, ",
+			"information_schema.processlist.id as id, ",
+			"substring(information_schema.processlist.info, 1, 4000) as ",
+			"query, information_schema.processlist.db as schema_, ",
+			"coalesce(information_schema.innodb_trx.trx_state, ",
+			"information_schema.processlist.state) as state from ",
+			"information_schema.processlist left join ",
+			"information_schema.innodb_trx on ",
+			"information_schema.processlist.id = ",
+			"information_schema.innodb_trx.trx_mysql_thread_id where ",
+			"information_schema.processlist.command != 'Sleep' and ",
+			"information_schema.processlist.id != connection_id() and ",
+			"information_schema.processlist.info is not null and ",
+			"information_schema.processlist.time * 1000 >= ? and (",
+			"information_schema.innodb_trx.trx_state = 'LOCK WAIT' or ",
+			"lower(information_schema.processlist.state) like '%lock%')");
 	}
 
 	@Override

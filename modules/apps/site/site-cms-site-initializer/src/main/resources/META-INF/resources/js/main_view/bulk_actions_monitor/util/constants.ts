@@ -22,6 +22,7 @@ export const BULK_ACTION_DELETE_ASSET_VERSION =
 export const BULK_ACTION_DELETE_TASK = 'DeleteTaskBulkAction';
 export const BULK_ACTION_DOWNLOAD = 'DownloadBulkAction';
 export const BULK_ACTION_DUE_DATE = 'DueDateObjectBulkSelectionAction';
+export const BULK_ACTION_DUPLICATE = 'DuplicateObjectBulkSelectionAction';
 export const BULK_ACTION_EXPIRE = 'ExpireObjectBulkSelectionAction';
 export const BULK_ACTION_EXPORT_TRANSLATION = 'ExportTranslationBulkAction';
 export const BULK_ACTION_MOVE = 'MoveObjectBulkSelectionAction';
@@ -53,6 +54,7 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 		[BULK_ACTION_DELETE_TASK]: Liferay.Language.get('tasks-deletion'),
 		[BULK_ACTION_DOWNLOAD]: Liferay.Language.get('assets-download'),
 		[BULK_ACTION_DUE_DATE]: Liferay.Language.get('due-date-update'),
+		[BULK_ACTION_DUPLICATE]: Liferay.Language.get('assets-duplication'),
 		[BULK_ACTION_EXPIRE]: Liferay.Language.get('expire'),
 		[BULK_ACTION_EXPORT_TRANSLATION]: Liferay.Language.get(
 			'export-for-translation'

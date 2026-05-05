@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
@@ -151,7 +152,7 @@ public class OpenIdConnectTokenRequestUtilTest {
 		).thenAnswer(
 			answer
 		).thenThrow(
-			new SocketTimeoutException("Read timed out")
+			new SocketTimeoutException(RandomTestUtil.randomString())
 		);
 
 		_openIdConnectRequestParametersUtilMockedStatic.when(

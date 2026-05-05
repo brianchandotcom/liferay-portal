@@ -6,7 +6,9 @@
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -43,13 +45,18 @@ public class OpenIdConnectHttpUtilTest {
 
 	@Test
 	public void testSend() throws Exception {
+		String subject = RandomTestUtil.randomString();
+
 		HTTPResponse httpResponse = _send(
-			"application/json", 200, "{\"sub\":\"subject\"}");
+			"application/json", 200,
+			JSONUtil.put(
+				"sub", subject
+			).toString());
 
 		Map<String, Object> bodyMap = JSONObjectUtils.parse(
 			httpResponse.getBody());
 
-		Assert.assertEquals("subject", bodyMap.get("sub"));
+		Assert.assertEquals(subject, bodyMap.get("sub"));
 
 		Assert.assertEquals(
 			"application/json",
@@ -64,31 +71,43 @@ public class OpenIdConnectHttpUtilTest {
 
 	@Test
 	public void testToHttpOptions() throws Exception {
-		HTTPRequest httpRequest = new HTTPRequest(
-			HTTPRequest.Method.GET, new URL("http://localhost:63636/userinfo"));
+		URL userInfoURL = new URL(
+			"http://" + RandomTestUtil.randomString() + "/userinfo");
 
-		httpRequest.setAuthorization("Bearer token");
+		HTTPRequest httpRequest = new HTTPRequest(
+			HTTPRequest.Method.GET, userInfoURL);
+
+		String authorization = "Bearer " + RandomTestUtil.randomString();
+
+		httpRequest.setAuthorization(authorization);
 
 		Http.Options httpOptions = _toHttpOptions(httpRequest);
 
 		Assert.assertNull(httpOptions.getBody());
 		Assert.assertEquals(
-			"Bearer token", httpOptions.getHeader("Authorization"));
-		Assert.assertEquals(
-			"http://localhost:63636/userinfo", httpOptions.getLocation());
+			authorization, httpOptions.getHeader("Authorization"));
+		Assert.assertEquals(userInfoURL.toString(), httpOptions.getLocation());
 		Assert.assertFalse(httpOptions.isPost());
 
-		httpRequest = new HTTPRequest(
-			HTTPRequest.Method.POST, new URL("http://localhost:63636/token"));
+		String tokenURL = "http://" + RandomTestUtil.randomString() + "/token";
 
-		httpRequest.setBody("grant_type=authorization_code&code=xyz");
+		httpRequest = new HTTPRequest(
+			HTTPRequest.Method.POST, new URL(tokenURL));
+
+		String code = RandomTestUtil.randomString();
+
+		httpRequest.setBody("grant_type=authorization_code&code=" + code);
+
 		httpRequest.setEntityContentType(ContentType.APPLICATION_URLENCODED);
-		httpRequest.setHeader("X-Custom", "value");
+
+		String headerName = "X-" + RandomTestUtil.randomString();
+		String headerValue = RandomTestUtil.randomString();
+
+		httpRequest.setHeader(headerName, headerValue);
 
 		httpOptions = _toHttpOptions(httpRequest);
 
-		Assert.assertEquals(
-			"http://localhost:63636/token", httpOptions.getLocation());
+		Assert.assertEquals(tokenURL, httpOptions.getLocation());
 		Assert.assertTrue(httpOptions.isPost());
 
 		Http.Body body = httpOptions.getBody();
@@ -99,7 +118,7 @@ public class OpenIdConnectHttpUtilTest {
 			body.getContent());
 
 		Assert.assertEquals(
-			Collections.singletonList("xyz"), bodyParameters.get("code"));
+			Collections.singletonList(code), bodyParameters.get("code"));
 		Assert.assertEquals(
 			Collections.singletonList("authorization_code"),
 			bodyParameters.get("grant_type"));
@@ -110,10 +129,10 @@ public class OpenIdConnectHttpUtilTest {
 
 		Map<String, String> headers = httpOptions.getHeaders();
 
-		Assert.assertEquals("value", headers.get("X-Custom"));
+		Assert.assertEquals(headerValue, headers.get(headerName));
 
 		httpRequest = new HTTPRequest(
-			HTTPRequest.Method.POST, new URL("http://localhost:63636/token"));
+			HTTPRequest.Method.POST, new URL(tokenURL));
 
 		httpRequest.setBody("a=1");
 
@@ -137,7 +156,8 @@ public class OpenIdConnectHttpUtilTest {
 		throws Exception {
 
 		HTTPRequest httpRequest = new HTTPRequest(
-			HTTPRequest.Method.GET, new URL("http://localhost:63636/userinfo"));
+			HTTPRequest.Method.GET,
+			new URL("http://" + RandomTestUtil.randomString() + "/userinfo"));
 
 		httpRequest.setConnectTimeout(connectTimeout);
 		httpRequest.setReadTimeout(readTimeout);
@@ -171,7 +191,8 @@ public class OpenIdConnectHttpUtilTest {
 
 			HTTPRequest httpRequest = new HTTPRequest(
 				HTTPRequest.Method.GET,
-				new URL("http://localhost:63636/userinfo"));
+				new URL(
+					"http://" + RandomTestUtil.randomString() + "/userinfo"));
 
 			return OpenIdConnectHttpUtil.send(httpRequest);
 		}

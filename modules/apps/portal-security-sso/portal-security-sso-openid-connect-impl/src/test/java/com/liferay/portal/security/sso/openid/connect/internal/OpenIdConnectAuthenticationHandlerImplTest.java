@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
@@ -66,6 +67,9 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 	@Test
 	public void testRequestUserInfoJSON() throws Exception {
+		String email = RandomTestUtil.randomString() + "@liferay.com";
+		String subject = RandomTestUtil.randomString();
+
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
 				HttpUtil.class)) {
 
@@ -83,9 +87,9 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 					httpOptions.setResponse(httpResponse);
 
 					return JSONUtil.put(
-						"email", "test@example.com"
+						"email", email
 					).put(
-						"sub", "subject"
+						"sub", subject
 					).toString();
 				}
 			);
@@ -96,8 +100,8 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 			Map<String, Object> userInfo = JSONObjectUtils.parse(userInfoJSON);
 
-			Assert.assertEquals("test@example.com", userInfo.get("email"));
-			Assert.assertEquals("subject", userInfo.get("sub"));
+			Assert.assertEquals(email, userInfo.get("email"));
+			Assert.assertEquals(subject, userInfo.get("sub"));
 		}
 
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
@@ -155,12 +159,16 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 		Mockito.when(
 			oidcProviderMetadata.getUserInfoEndpointURI()
 		).thenReturn(
-			new URI("http://172.17.0.3:18080/")
+			new URI("http://" + RandomTestUtil.randomString() + "/")
 		);
 
 		AccessToken accessToken = AccessToken.parse(
 			JSONObjectUtils.parse(
-				"{\"access_token\": \"test\", \"token_type\":\"Bearer\"}"));
+				JSONUtil.put(
+					"access_token", RandomTestUtil.randomString()
+				).put(
+					"token_type", "Bearer"
+				).toString()));
 
 		return ReflectionTestUtil.invoke(
 			openIdConnectAuthenticationHandlerImpl, "_requestUserInfoJSON",

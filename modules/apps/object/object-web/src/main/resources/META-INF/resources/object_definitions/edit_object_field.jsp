@@ -27,7 +27,7 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 		).put(
 			"ckEditor5Config", objectDefinitionsFieldsDisplayContext.getEditorConfig()
 		).put(
-			"countries", objectDefinitionsFieldsDisplayContext.getCountries()
+			"countries", objectDefinitionsFieldsDisplayContext.getCountries(objectField)
 		).put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(

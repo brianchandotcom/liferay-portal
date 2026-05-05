@@ -39,9 +39,11 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Marco Leo
@@ -77,6 +79,18 @@ public class ObjectDefinitionsFieldsDisplayContext
 			phoneNumberObjectFieldBusinessType.getRenderingProperties();
 
 		return (List<Map<String, String>>)renderingProperties.get("countries");
+	}
+
+	public List<Map<String, String>> getCountries(ObjectField objectField) {
+		if ((objectField == null) ||
+			!Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_PHONE_NUMBER)) {
+
+			return Collections.emptyList();
+		}
+
+		return getCountries();
 	}
 
 	public CreationMenu getCreationMenu(ObjectDefinition objectDefinition)

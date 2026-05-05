@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.Account;
+import com.liferay.osb.faro.engine.client.model.AccountDetails;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleStatus;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Individual;
@@ -15,7 +16,6 @@ import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
-import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDetailsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AccountDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
@@ -48,13 +48,20 @@ public class AccountController extends BaseFaroController {
 	@GET
 	@Path("/{id}/details")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public AccountDetailsDisplay getAccountDetailsDisplay(
-			@PathParam("groupId") long groupId, @PathParam("id") String id)
+	public FaroFDSResultsDisplay getAccountDetailsDisplay(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize)
 		throws Exception {
 
-		return new AccountDetailsDisplay(
-			contactsEngineClient.getAccountDetails(
-				faroProjectLocalService.getFaroProjectByGroupId(groupId), id));
+		AccountDetails accountDetails = contactsEngineClient.getAccountDetails(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), id);
+
+		List<AccountDetails.Field> fields = accountDetails.getFields();
+
+		Results<AccountDetails.Field> results = new Results<>(
+			fields, fields.size());
+
+		return new FaroFDSResultsDisplay(results, page, pageSize);
 	}
 
 	@GET

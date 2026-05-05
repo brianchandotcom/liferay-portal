@@ -18,9 +18,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * @author Joshua Cords
@@ -32,8 +30,6 @@ public class AssetListTypePropertiesUtil {
 		Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		Set<String> seenFieldNames = new HashSet<>();
 
 		for (int i = 0; i < classNameIds.length; i++) {
 			long classTypeId = 0;
@@ -59,13 +55,14 @@ public class AssetListTypePropertiesUtil {
 
 				String type = _toFilterType(objectField.getBusinessType());
 
-				if ((type == null) ||
-					!seenFieldNames.add(objectField.getName())) {
-
+				if (type == null) {
 					continue;
 				}
 
-				jsonArray.put(_toPropertyJSONObject(objectField, locale, type));
+				jsonArray.put(
+					_toPropertyJSONObject(
+						classNameIds[i], classTypeId, locale, objectField,
+						type));
 			}
 		}
 
@@ -141,9 +138,14 @@ public class AssetListTypePropertiesUtil {
 	}
 
 	private static JSONObject _toPropertyJSONObject(
-		ObjectField objectField, Locale locale, String type) {
+		long classNameId, long classTypeId, Locale locale,
+		ObjectField objectField, String type) {
 
 		JSONObject jsonObject = JSONUtil.put(
+			"classNameId", classNameId
+		).put(
+			"classTypeId", classTypeId
+		).put(
 			"label", objectField.getLabel(locale, true)
 		).put(
 			"name", objectField.getName()

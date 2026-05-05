@@ -44,7 +44,7 @@ export function RedirectToEditObjectDetailsModal({
 
 					<ClayModal.Footer
 						last={
-							<ClayButton.Group key={1} spaced>
+							<ClayButton.Group spaced>
 								<ClayButton
 									displayType="secondary"
 									onClick={onClose}

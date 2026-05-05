@@ -20,6 +20,7 @@ import {
 	BULK_ACTION_DELETE_TASK,
 	BULK_ACTION_DOWNLOAD,
 	BULK_ACTION_DUE_DATE,
+	BULK_ACTION_DUPLICATE,
 	BULK_ACTION_EXPIRE,
 	BULK_ACTION_EXPORT_TRANSLATION,
 	BULK_ACTION_MOVE,
@@ -232,6 +233,26 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			singular: Liferay.Language.get(
 				'due-date-was-successfully-updated-for-one-task'
 			),
+		},
+	},
+	[BULK_ACTION_DUPLICATE]: {
+		info: {
+			all: Liferay.Language.get(
+				'duplicate-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'duplicate-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'duplicate-action-started-for-one-asset'
+			),
+		},
+		success: {
+			all: Liferay.Language.get('all-items-were-successfully-duplicated'),
+			plural: Liferay.Language.get(
+				'x-assets-were-successfully-duplicated'
+			),
+			singular: Liferay.Language.get('x-was-successfully-duplicated'),
 		},
 	},
 	[BULK_ACTION_EXPIRE]: {

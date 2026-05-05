@@ -40,6 +40,7 @@ import deleteAssetEntriesBulkAction, {
 	executeBulkDeleteAction,
 } from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
+import duplicateBulkAction from './actions/duplicateBulkAction';
 import executeResetPermissionObjectBulkSelectionAction from './actions/executeResetPermissionObjectBulkSelectionAction';
 import expireEntriesBulkAction from './actions/expireEntriesBulkAction';
 import exportTranslationBulkAction from './actions/exportTranslationBulkAction';
@@ -730,6 +731,13 @@ export default function AssetsFDSPropsTransformer({
 						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 					selectedData,
 					singleRoleMode: true,
+				});
+			}
+			else if (action?.data.id === 'duplicate') {
+				duplicateBulkAction({
+					apiURL: otherProps.apiURL,
+					dataSetId: otherProps.id,
+					selectedData,
 				});
 			}
 			else if (action?.data.id === 'expire') {

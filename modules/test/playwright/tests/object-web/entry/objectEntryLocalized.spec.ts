@@ -1025,12 +1025,35 @@ test.describe('Localized object entries are saved correctly', () => {
 			const enLocalNumber = '11987654321';
 			const ptLocalNumber = '11912345678';
 
-			const fixedFieldLabel = `phoneNumberFixed${getRandomInt()}`;
 			const fixedPrefix = '+1';
-
 			const enUserPrefix = '+1';
 			const ptUserPrefix = '+55';
-			const userFieldLabel = `phoneNumberUser${getRandomInt()}`;
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'PhoneNumber',
+						localized: true,
+						objectFieldSettings: [
+							{
+								name: 'prefixType',
+								value: 'fixed',
+							},
+							{
+								name: 'prefix',
+								value: fixedPrefix,
+							},
+						],
+					},
+					{
+						businessType: 'PhoneNumber',
+						localized: true,
+					},
+				],
+			});
+
+			const fixedFieldLabel = objectFields[0].label!['en_US'];
+			const userFieldLabel = objectFields[1].label!['en_US'];
 
 			const fixedFieldContainer = page.getByRole('group', {
 				name: fixedFieldLabel,
@@ -1045,7 +1068,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 			const userPhoneInput =
 				userFieldContainer.getByLabel('Phone Number');
-			const userPrefixCombobox =
+			const userPrefixDropdown =
 				userFieldContainer.getByLabel('Country Code');
 
 			let objectDefinition: ObjectDefinition;
@@ -1054,77 +1077,20 @@ test.describe('Localized object entries are saved correctly', () => {
 				const objectDefinitionAPIClient =
 					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
-				const response =
+				const {body} =
 					await objectDefinitionAPIClient.postObjectDefinition({
 						active: true,
 						enableLocalization: true,
-						externalReferenceCode: getRandomString(),
-						label: {
-							en_US: getRandomString(),
-						},
+						label: {en_US: getRandomString()},
 						name: 'ObjectDefinitionName' + getRandomInt(),
-						objectFields: [
-							{
-								DBType: 'String' as const,
-								businessType: 'PhoneNumber' as const,
-								indexedAsKeyword: false,
-								indexedLanguageId: '',
-								label: {en_US: fixedFieldLabel},
-								localized: true,
-								name: fixedFieldLabel,
-								objectFieldSettings: [
-									{
-										name: 'prefixType',
-										value: 'fixed',
-									},
-									{
-										name: 'prefix',
-										value: fixedPrefix,
-									},
-								] as any,
-								readOnly: 'false',
-								readOnlyConditionExpression: '',
-								required: false,
-								state: false,
-								system: false,
-								type: 'String' as const,
-								unique: false,
-							},
-							{
-								DBType: 'String' as const,
-								businessType: 'PhoneNumber' as const,
-								indexedAsKeyword: false,
-								indexedLanguageId: '',
-								label: {en_US: userFieldLabel},
-								localized: true,
-								name: userFieldLabel,
-								objectFieldSettings: [
-									{
-										name: 'prefixType',
-										value: 'definedByUser',
-									},
-								] as any,
-								readOnly: 'false',
-								readOnlyConditionExpression: '',
-								required: false,
-								state: false,
-								system: false,
-								type: 'String' as const,
-								unique: false,
-							},
-						],
-						panelCategoryKey: 'control_panel.object',
-						pluralLabel: {
-							en_US: 'NewObject',
-						},
+						objectFields,
+						pluralLabel: {en_US: 'NewObject'},
 						portlet: true,
 						scope: 'company',
-						status: {
-							code: 0,
-						},
+						status: {code: 0},
 					});
 
-				objectDefinition = response.body;
+				objectDefinition = body;
 
 				apiHelpers.data.push({
 					id: objectDefinition.id,
@@ -1147,11 +1113,11 @@ test.describe('Localized object entries are saved correctly', () => {
 
 				await fixedPhoneInput.fill(enLocalNumber);
 
-				await userPrefixCombobox.click();
+				await userPrefixDropdown.click();
 
 				await page.getByRole('option', {name: /United States/}).click();
 
-				await expect(userPrefixCombobox).toHaveText(enUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(enUserPrefix);
 
 				await userPhoneInput.fill(enLocalNumber);
 			});
@@ -1165,11 +1131,11 @@ test.describe('Localized object entries are saved correctly', () => {
 
 				await fixedPhoneInput.fill(ptLocalNumber);
 
-				await userPrefixCombobox.click();
+				await userPrefixDropdown.click();
 
 				await page.getByRole('option', {name: /Brazil/}).click();
 
-				await expect(userPrefixCombobox).toHaveText(ptUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(ptUserPrefix);
 
 				await userPhoneInput.fill(ptLocalNumber);
 			});
@@ -1182,7 +1148,7 @@ test.describe('Localized object entries are saved correctly', () => {
 					.click();
 
 				await expect(fixedPhoneInput).toHaveValue(enLocalNumber);
-				await expect(userPrefixCombobox).toHaveText(enUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(enUserPrefix);
 				await expect(userPhoneInput).toHaveValue(enLocalNumber);
 			});
 
@@ -1194,7 +1160,7 @@ test.describe('Localized object entries are saved correctly', () => {
 					.click();
 
 				await expect(fixedPhoneInput).toHaveValue(ptLocalNumber);
-				await expect(userPrefixCombobox).toHaveText(ptUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(ptUserPrefix);
 				await expect(userPhoneInput).toHaveValue(ptLocalNumber);
 			});
 
@@ -1208,7 +1174,7 @@ test.describe('Localized object entries are saved correctly', () => {
 
 			await test.step('Verify the en_US values persist after save', async () => {
 				await expect(fixedPhoneInput).toHaveValue(enLocalNumber);
-				await expect(userPrefixCombobox).toHaveText(enUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(enUserPrefix);
 				await expect(userPhoneInput).toHaveValue(enLocalNumber);
 			});
 
@@ -1220,7 +1186,7 @@ test.describe('Localized object entries are saved correctly', () => {
 					.click();
 
 				await expect(fixedPhoneInput).toHaveValue(ptLocalNumber);
-				await expect(userPrefixCombobox).toHaveText(ptUserPrefix);
+				await expect(userPrefixDropdown).toHaveText(ptUserPrefix);
 				await expect(userPhoneInput).toHaveValue(ptLocalNumber);
 			});
 		}

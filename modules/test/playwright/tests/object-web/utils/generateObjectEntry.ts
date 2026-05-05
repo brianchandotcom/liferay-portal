@@ -86,6 +86,8 @@ function generateObjectEntryValue({
 			return {
 				key: listTypeEntriesName[listTypeEntriesRandomLength1],
 			};
+		case 'PhoneNumber':
+			return String(Math.floor(1000000000 + Math.random() * 9000000000));
 		case 'PrecisionDecimal':
 			return parseFloat(Math.random().toFixed(15)).toString();
 		case 'RichText':

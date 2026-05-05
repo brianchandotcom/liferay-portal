@@ -2,7 +2,7 @@ import getCN from 'classnames';
 import React from 'react';
 import WorkspaceListItem from './ListItem';
 import {DataSourceStates} from 'shared/util/constants';
-import {getPlanLabel} from 'shared/util/subscriptions';
+import {getPlanLabel, SubscriptionNames} from 'shared/util/subscriptions';
 import {noop} from 'lodash';
 import {Project} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
@@ -85,7 +85,7 @@ export default class WorkspaceList extends React.Component {
 
 						const hasLimitReached =
 							faroSubscription?.get('name') ===
-								'Liferay Data Platform' &&
+								SubscriptionNames.LiferayDataPlatform &&
 							isSubscriptionLimitReached(faroSubscription);
 
 						return (

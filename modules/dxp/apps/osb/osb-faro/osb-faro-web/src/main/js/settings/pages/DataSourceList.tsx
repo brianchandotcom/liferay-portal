@@ -33,6 +33,7 @@ import {getDataSourceDisplayObject} from 'shared/util/data-sources';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
@@ -42,9 +43,15 @@ import {useTimeZone} from 'shared/hooks/useTimeZone';
 const DATA_SOURCE_SUBSCRIPTION_RULES: {
 	[type: string]: {excluded?: string[]; included?: string[]};
 } = {
-	[DataSourceTypes.Demandbase]: {included: ['Liferay Data Platform']},
-	[DataSourceTypes.Hubspot]: {included: ['Liferay Data Platform']},
-	[DataSourceTypes.Salesforce]: {included: ['Liferay Data Platform']}
+	[DataSourceTypes.Demandbase]: {
+		included: [SubscriptionNames.LiferayDataPlatform]
+	},
+	[DataSourceTypes.Hubspot]: {
+		included: [SubscriptionNames.LiferayDataPlatform]
+	},
+	[DataSourceTypes.Salesforce]: {
+		included: [SubscriptionNames.LiferayDataPlatform]
+	}
 };
 
 export const isDataSourceVisible = (

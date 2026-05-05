@@ -9,13 +9,14 @@ import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {Routes, setUriQueryValue, toRoute} from 'shared/util/router';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {useFetchProjects} from 'shared/hooks/useProjects';
 
 const mockBusinessProject = new Project(
 	data.mockProject(123, {
 		faroSubscription: fromJS(
 			data.mockSubscription({
-				name: 'Liferay Analytics Cloud Business'
+				name: SubscriptionNames.LiferayAnalyticsCloudBusiness
 			})
 		),
 		name: 'Project A'
@@ -23,7 +24,7 @@ const mockBusinessProject = new Project(
 );
 
 const mockBasicSubscription = data.mockSubscription({
-	name: 'Liferay Analytics Cloud Basic'
+	name: SubscriptionNames.LiferayAnalyticsCloudBasic
 });
 
 jest.mock('shared/hooks/useCurrentUser', () => ({

@@ -1,7 +1,7 @@
 import * as data from 'test/data';
 import {fromJS} from 'immutable';
 import {getBasicProjects, getSingleProjectRoute} from '../projects';
-import {PLANS} from 'shared/util/subscriptions';
+import {PLANS, SubscriptionNames} from 'shared/util/subscriptions';
 import {Project} from 'shared/util/records';
 import {Routes, toRoute} from 'shared/util/router';
 
@@ -13,7 +13,7 @@ const mockProjects = [
 			data.mockProject(0, {
 				corpProjectUuid,
 				faroSubscription: data.mockSubscription({
-					name: 'Liferay Analytics Cloud Basic'
+					name: SubscriptionNames.LiferayAnalyticsCloudBasic
 				}),
 				name: ''
 			})
@@ -23,7 +23,7 @@ const mockProjects = [
 		fromJS(
 			data.mockProject(124, {
 				faroSubscription: data.mockSubscription({
-					name: 'Liferay Analytics Cloud Business'
+					name: SubscriptionNames.LiferayAnalyticsCloudBusiness
 				}),
 				name: 'Project B'
 			})
@@ -33,7 +33,7 @@ const mockProjects = [
 		fromJS(
 			data.mockProject(125, {
 				faroSubscription: data.mockSubscription({
-					name: 'Liferay Analytics Cloud Basic'
+					name: SubscriptionNames.LiferayAnalyticsCloudBasic
 				}),
 				name: 'Project C'
 			})

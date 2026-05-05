@@ -7,6 +7,7 @@ import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 
 jest.unmock('react-dom');
@@ -32,7 +33,7 @@ const defaultProps = {
 		data.mockProject(23, {
 			faroSubscription: fromJS(
 				data.mockSubscription({
-					name: 'Liferay SaaS - Enterprise Plan'
+					name: SubscriptionNames.LiferaySaasEnterprisePlan
 				})
 			)
 		})

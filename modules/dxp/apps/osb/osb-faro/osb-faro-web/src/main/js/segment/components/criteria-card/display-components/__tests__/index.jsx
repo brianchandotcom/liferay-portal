@@ -5,6 +5,7 @@ import {List, Map} from 'immutable';
 import {Property} from 'shared/util/records';
 import {RelationalOperators} from 'segment/segment-editor/dynamic/utils/constants';
 import {render} from '@testing-library/react';
+import {SegmentTypes} from 'shared/util/constants';
 
 jest.unmock('react-dom');
 
@@ -57,6 +58,7 @@ describe('DisplayComponent', () => {
 			<DisplayComponent
 				criterion={mockCriterion}
 				property={mockProperty}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 

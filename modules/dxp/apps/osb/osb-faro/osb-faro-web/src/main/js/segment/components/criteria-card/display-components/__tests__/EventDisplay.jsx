@@ -12,6 +12,7 @@ import {DataTypes, EventTypes} from 'event-analysis/utils/types';
 import {List, Map} from 'immutable';
 import {render} from '@testing-library/react';
 import {Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 import {withReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 
 jest.unmock('react-dom');
@@ -107,6 +108,7 @@ describe('EventDisplay', () => {
 					type: PropertyTypes.Event
 				}}
 				segment={mockSegment}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 

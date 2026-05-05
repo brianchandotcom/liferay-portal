@@ -1,0 +1,3 @@
+export const TESTRAY_CLIENT_ID = process.env.TESTRAY_CLIENT_ID
+export const TESTRAY_CLIENT_SECRET = process.env.TESTRAY_CLIENT_SECRET
+export const LIFERAY_PORTAL_PATH = process.env.LIFERAY_PORTAL_PATH

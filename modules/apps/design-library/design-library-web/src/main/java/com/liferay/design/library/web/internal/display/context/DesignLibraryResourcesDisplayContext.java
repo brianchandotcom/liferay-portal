@@ -5,16 +5,10 @@
 
 package com.liferay.design.library.web.internal.display.context;
 
-import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.ThemeCSSCET;
-import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.design.library.web.internal.constants.DesignLibraryConstants;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.token.definition.FrontendTokenDefinition;
-import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
-import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -39,10 +33,8 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Gabriel Prates
@@ -50,13 +42,9 @@ import java.util.Objects;
 public class DesignLibraryResourcesDisplayContext {
 
 	public DesignLibraryResourcesDisplayContext(
-		CETManager cetManager,
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_cetManager = cetManager;
-		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
 		_httpServletRequest = httpServletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -113,11 +101,10 @@ public class DesignLibraryResourcesDisplayContext {
 	public Map<String, Object> getFDSAdditionalProps(long designLibraryEntryId)
 		throws PortalException {
 
-		Group group = DepotEntryLocalServiceUtil.fetchDepotEntry(
-			designLibraryEntryId
-		).getGroup();
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
+			designLibraryEntryId);
 
-		long depotGroupId = group.getGroupId();
+		long depotGroupId = depotEntry.getGroupId();
 
 		if (!_hasManageStyleBookEntriesPermission(depotGroupId)) {
 			return HashMapBuilder.<String, Object>put(
@@ -132,7 +119,8 @@ public class DesignLibraryResourcesDisplayContext {
 			"canAddStyleBook", true
 		).put(
 			"frontendTokenDefinitionProviders",
-			_getFrontendTokenDefinitionProviders()
+			StyleBookUtil.getFrontendTokenDefinitionProviders(
+				_themeDisplay.getCompanyId(), _themeDisplay.getLocale())
 		).put(
 			"styleBookNamespace",
 			PortalUtil.getPortletNamespace(StyleBookPortletKeys.STYLE_BOOK)
@@ -257,46 +245,6 @@ public class DesignLibraryResourcesDisplayContext {
 			));
 	}
 
-	private List<Map<String, Object>> _getFrontendTokenDefinitionProviders() {
-		List<Map<String, Object>> frontendTokenDefinitionProviders =
-			new ArrayList<>();
-
-		for (FrontendTokenDefinition frontendTokenDefinition :
-				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
-					_themeDisplay.getCompanyId())) {
-
-			if (Objects.equals(
-					frontendTokenDefinition.getThemeType(),
-					FrontendTokenDefinitionConstants.
-						THEME_TYPE_THEME_CSS_CET)) {
-
-				CET cet = _cetManager.getCET(
-					_themeDisplay.getCompanyId(),
-					frontendTokenDefinition.getThemeId());
-
-				ThemeCSSCET themeCSSCET = (ThemeCSSCET)cet;
-
-				if (StringUtil.equalsIgnoreCase(
-						themeCSSCET.getScope(), "controlPanel")) {
-
-					continue;
-				}
-			}
-
-			frontendTokenDefinitionProviders.add(
-				HashMapBuilder.<String, Object>put(
-					"name",
-					StyleBookUtil.getThemeName(
-						_themeDisplay.getCompanyId(), _themeDisplay.getLocale(),
-						frontendTokenDefinition.getThemeId())
-				).put(
-					"themeId", frontendTokenDefinition.getThemeId()
-				).build());
-		}
-
-		return frontendTokenDefinitionProviders;
-	}
-
 	private boolean _hasManageStyleBookEntriesPermission(long groupId) {
 		PortletResourcePermission portletResourcePermission =
 			_portletResourcePermissionSnapshot.get();
@@ -316,9 +264,6 @@ public class DesignLibraryResourcesDisplayContext {
 			PortletResourcePermission.class,
 			"(resource.name=" + StyleBookConstants.RESOURCE_NAME + ")");
 
-	private final CETManager _cetManager;
-	private final FrontendTokenDefinitionRegistry
-		_frontendTokenDefinitionRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

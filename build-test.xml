@@ -16793,7 +16793,7 @@ if (ppstate.equals("normal")) {
 		<poshi-execute failonerror="true" task="validatePoshi" />
 	</target>
 
-	<target depends="prepare-selenium" name="run-selenium-test">
+	<target depends="prepare-selenium,force-feature-flag-LPD-11235" name="run-selenium-test">
 		<if>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
@@ -17701,8 +17701,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				</echo>
 			</then>
 		</if>
-
-		<antcall target="force-feature-flag-LPD-11235" />
 
 		<get-testcase-property property.name="skip.run.selenium.test" />
 

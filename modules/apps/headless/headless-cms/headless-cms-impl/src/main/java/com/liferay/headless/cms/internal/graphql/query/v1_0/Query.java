@@ -5,7 +5,9 @@
 
 package com.liferay.headless.cms.internal.graphql.query.v1_0;
 
+import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
 import com.liferay.headless.cms.dto.v1_0.AssetUsage;
+import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.headless.cms.resource.v1_0.AssetUsageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -38,12 +40,34 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
+	public static void setAssetStatisticsResourceComponentServiceObjects(
+		ComponentServiceObjects<AssetStatisticsResource>
+			assetStatisticsResourceComponentServiceObjects) {
+
+		_assetStatisticsResourceComponentServiceObjects =
+			assetStatisticsResourceComponentServiceObjects;
+	}
+
 	public static void setAssetUsageResourceComponentServiceObjects(
 		ComponentServiceObjects<AssetUsageResource>
 			assetUsageResourceComponentServiceObjects) {
 
 		_assetUsageResourceComponentServiceObjects =
 			assetUsageResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetStatistics{expiredCount, expiringSoonCount, inDraftCount, reviewDateOverdueCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public AssetStatistics assetStatistics() throws Exception {
+		return _applyComponentServiceObjects(
+			_assetStatisticsResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			assetStatisticsResource ->
+				assetStatisticsResource.getAssetStatistics());
 	}
 
 	/**
@@ -67,6 +91,39 @@ public class Query {
 				assetUsageResource.getAssetUsagesAssetPage(
 					assetId, search, Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(assetUsageResource, sortsString))));
+	}
+
+	@GraphQLName("AssetStatisticsPage")
+	public class AssetStatisticsPage {
+
+		public AssetStatisticsPage(Page assetStatisticsPage) {
+			actions = assetStatisticsPage.getActions();
+
+			items = assetStatisticsPage.getItems();
+			lastPage = assetStatisticsPage.getLastPage();
+			page = assetStatisticsPage.getPage();
+			pageSize = assetStatisticsPage.getPageSize();
+			totalCount = assetStatisticsPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<AssetStatistics> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
 	}
 
 	@GraphQLName("AssetUsagePage")
@@ -121,6 +178,26 @@ public class Query {
 		}
 	}
 
+	private void _populateResourceContext(
+			AssetStatisticsResource assetStatisticsResource)
+		throws Exception {
+
+		assetStatisticsResource.setContextAcceptLanguage(_acceptLanguage);
+		assetStatisticsResource.setContextCompany(_company);
+		assetStatisticsResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		assetStatisticsResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		assetStatisticsResource.setContextUriInfo(_uriInfo);
+		assetStatisticsResource.setContextUser(_user);
+		assetStatisticsResource.setGroupLocalService(_groupLocalService);
+		assetStatisticsResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		assetStatisticsResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		assetStatisticsResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(AssetUsageResource assetUsageResource)
 		throws Exception {
 
@@ -138,6 +215,8 @@ public class Query {
 		assetUsageResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private static ComponentServiceObjects<AssetStatisticsResource>
+		_assetStatisticsResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetUsageResource>
 		_assetUsageResourceComponentServiceObjects;
 
@@ -158,4 +237,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1230211951
+// LIFERAY-REST-BUILDER-HASH:-652470107

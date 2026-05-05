@@ -87,6 +87,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(AssetPermissionActionResourceImpl.class);
 
+			add(AssetStatisticsResourceImpl.class);
+
 			add(AssetUsageResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
@@ -94,4 +96,4 @@ public class OpenAPIResourceImpl {
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:1840671133
+// LIFERAY-REST-BUILDER-HASH:-1867425424

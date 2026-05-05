@@ -11,6 +11,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -62,8 +63,11 @@ public class ObjectUserNotificationsHandlerTest {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{\"appendBackURL\": true, \"notificationLink\": " +
-				"\"/web/cms/view-asset?objectEntryId=123\"}"
+			JSONUtil.put(
+				"appendBackURL", true
+			).put(
+				"notificationLink", "/web/cms/view-asset?objectEntryId=123"
+			).toString()
 		);
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
@@ -131,7 +135,9 @@ public class ObjectUserNotificationsHandlerTest {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{\"notificationLink\": \"/web/cms/view-asset?objectEntryId=123\"}"
+			JSONUtil.put(
+				"notificationLink", "/web/cms/view-asset?objectEntryId=123"
+			).toString()
 		);
 
 		Assert.assertEquals(
@@ -147,8 +153,11 @@ public class ObjectUserNotificationsHandlerTest {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{\"appendBackURL\": true, \"notificationLink\": " +
-				"\"/web/cms/view-asset?objectEntryId=123\"}"
+			JSONUtil.put(
+				"appendBackURL", true
+			).put(
+				"notificationLink", "/web/cms/view-asset?objectEntryId=123"
+			).toString()
 		);
 
 		Assert.assertEquals(
@@ -190,7 +199,9 @@ public class ObjectUserNotificationsHandlerTest {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{\"externalReferenceCode\": \"externalReferenceCode\"}"
+			JSONUtil.put(
+				"externalReferenceCode", "externalReferenceCode"
+			).toString()
 		);
 
 		try (MockedStatic<PortalUtil> portalUtilMockedStatic =
@@ -235,7 +246,9 @@ public class ObjectUserNotificationsHandlerTest {
 		Mockito.when(
 			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"{\"exceedsObjectEntryLimit\": true}"
+			JSONUtil.put(
+				"exceedsObjectEntryLimit", true
+			).toString()
 		);
 
 		try (MockedStatic<PortletURLBuilder> portletURLBuilderMockedStatic =

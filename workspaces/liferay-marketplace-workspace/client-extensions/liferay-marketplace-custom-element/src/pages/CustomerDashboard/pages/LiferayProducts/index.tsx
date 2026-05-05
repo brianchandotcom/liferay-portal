@@ -26,6 +26,7 @@ const searchParams = new URLSearchParams({
 		OrderTypes.ADDONS,
 		OrderTypes.AI_HUB,
 		OrderTypes.CMP,
+		OrderTypes.DSR,
 		OrderTypes.DXP,
 	]),
 	nestedFields: 'placedOrderItems',
@@ -94,6 +95,7 @@ const LiferayProductsListView = () => {
 									![
 										OrderTypes.AI_HUB,
 										OrderTypes.CMP,
+										OrderTypes.DSR,
 									].includes(
 										row.orderTypeExternalReferenceCode as OrderTypes
 									),

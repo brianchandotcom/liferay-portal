@@ -178,7 +178,7 @@ spec:
         storageClass: {{ $backup.storageClass | quote }}
         uniformBucketLevelAccess: true
     managementPolicies: {{ $managementPolicies }}
-{{- range $dataPlane := list "blue" "green" }}
+{{- range $dataPlane := $dataPlanes }}
 ---
 apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: BucketIAMMember

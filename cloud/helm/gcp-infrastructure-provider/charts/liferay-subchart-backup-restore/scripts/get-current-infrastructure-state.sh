@@ -102,20 +102,6 @@ function main {
 			--selector "component=liferay")
 
 	echo "${liferay_workload_name}" > /tmp/liferay-workload-name.txt
-
-	kubectl \
-		get \
-		buckets.storage.gcp.m.upbound.io \
-		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_plane_active}" \
-		> /tmp/dl-bucket-active.txt
-
-	kubectl \
-		get \
-		buckets.storage.gcp.m.upbound.io \
-		--output jsonpath="{.items[0].metadata.name}" \
-		--selector "dataPlane=${data_plane_inactive}" \
-		> /tmp/dl-bucket-inactive.txt
 }
 
 main

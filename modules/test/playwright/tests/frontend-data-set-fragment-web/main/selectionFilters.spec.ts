@@ -127,14 +127,14 @@ test.beforeEach(
 			integerPicklistERC = integerPicklist.externalReferenceCode;
 
 			picklistIntegerOptionInactive = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: integerPicklistERC,
 				key: picklistIntegerOptionKeyInactive,
-				name: integerPicklistName,
 				value: picklistIntegerOptionLabelInactive,
 			});
 
 			picklistIntegerOptionActive = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: integerPicklistERC,
 				key: picklistIntegerOptionKeyActive,
-				name: integerPicklistName,
 				value: picklistIntegerOptionLabelActive,
 			});
 
@@ -148,14 +148,14 @@ test.beforeEach(
 			booleanPicklistERC = booleanPicklist.externalReferenceCode;
 
 			picklistBooleanOptionTrue = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: booleanPicklistERC,
 				key: picklistBooleanOptionKeyTrue,
-				name: booleanPicklistName,
 				value: picklistBooleanOptionLabelTrue,
 			});
 
 			picklistBooleanOptionFalse = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: booleanPicklistERC,
 				key: picklistBooleanOptionKeyFalse,
-				name: booleanPicklistName,
 				value: picklistBooleanOptionLabelFalse,
 			});
 
@@ -169,14 +169,14 @@ test.beforeEach(
 			collectionPicklistERC = collectionPicklist.externalReferenceCode;
 
 			picklistCollectionOptionAnyKey = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: collectionPicklistERC,
 				key: picklistCollectionOptionKeyAnyKey,
-				name: collectionPicklistName,
 				value: picklistCollectionOptionLabelAnyKey,
 			});
 
 			picklistCollectionOptionEggs = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: collectionPicklistERC,
 				key: picklistCollectionOptioKeyEggs,
-				name: collectionPicklistName,
 				value: picklistCollectionOptionLabelEggs,
 			});
 
@@ -1024,7 +1024,7 @@ test('x-filterable: Selection filter of type "Object Picklist" can filter intege
 	});
 
 	await test.step('Create a new selection filter with preselected values and include mode', async () => {
-		const picklist = await picklistApiHelpers.getPicklist(integerPicklistName);
+		const picklist = await picklistApiHelpers.getPicklist(integerPicklistERC);
 
 		selectionFilter =
 			await dataSetManagerApiHelpers.createDataSetSelectionFilter({
@@ -1134,7 +1134,7 @@ test('x-filterable: Selection filter of type "Object Picklist" can filter boolea
 	});
 
 	await test.step('Create a new selection filter with preselected values and include mode', async () => {
-		const picklist = await picklistApiHelpers.getPicklist(booleanPicklistName);
+		const picklist = await picklistApiHelpers.getPicklist(booleanPicklistERC);
 
 		selectionFilter =
 			await dataSetManagerApiHelpers.createDataSetSelectionFilter({
@@ -1253,7 +1253,7 @@ test('x-filterable: Selection filter of type "Object Picklist" can filter a coll
 	});
 
 	await test.step('Create a new selection filter with preselected values and include mode', async () => {
-		const picklist = await picklistApiHelpers.getPicklist(collectionPicklistName);
+		const picklist = await picklistApiHelpers.getPicklist(collectionPicklistERC);
 
 		selectionFilter =
 			await dataSetManagerApiHelpers.createDataSetSelectionFilter({

@@ -15,6 +15,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectAssetVersionBulkSelecti
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DueDateObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DuplicateObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectTagsBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
@@ -109,6 +110,11 @@ public class BulkActionSerDes {
 			if (typeString.equals("DueDateObjectBulkSelectionAction")) {
 				return DueDateObjectBulkSelectionActionSerDes.toJSON(
 					(DueDateObjectBulkSelectionAction)bulkAction);
+			}
+
+			if (typeString.equals("DuplicateObjectBulkSelectionAction")) {
+				return DuplicateObjectBulkSelectionActionSerDes.toJSON(
+					(DuplicateObjectBulkSelectionAction)bulkAction);
 			}
 
 			if (typeString.equals("EditObjectCategoriesBulkSelectionAction")) {
@@ -282,6 +288,10 @@ public class BulkActionSerDes {
 					return DueDateObjectBulkSelectionAction.toDTO(json);
 				}
 
+				if (typeString.equals("DuplicateObjectBulkSelectionAction")) {
+					return DuplicateObjectBulkSelectionAction.toDTO(json);
+				}
+
 				if (typeString.equals(
 						"EditObjectCategoriesBulkSelectionAction")) {
 
@@ -447,4 +457,4 @@ public class BulkActionSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1351964235
+// LIFERAY-REST-BUILDER-HASH:1739271268

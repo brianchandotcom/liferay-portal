@@ -2000,11 +2000,11 @@ public class DataFactory {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			LayoutModel layoutModel = newLayoutModel(
-				groupId, jsonObject.getString("layoutTemplateId"),
+				groupId, jsonObject.getBoolean("privateLayout"),
 				StringUtil.replace(
 					StringUtil.toLowerCase(jsonObject.getString("name")),
 					CharPool.SPACE, CharPool.DASH),
-				jsonObject.getBoolean("privateLayout"),
+				jsonObject.getString("layoutTemplateId"),
 				getPortletNames(jsonObject.getJSONArray("portlets")));
 
 			layoutModels.add(layoutModel);
@@ -4990,7 +4990,7 @@ public class DataFactory {
 		long groupId, String name, String column1, String column2) {
 
 		return newLayoutModel(
-			groupId, "2_columns_ii", name, false, column1, column2);
+			groupId, false, name, "2_columns_ii", column1, column2);
 	}
 
 	public List<LayoutModel> newLayoutModels(
@@ -4998,9 +4998,9 @@ public class DataFactory {
 
 		return ListUtil.fromArray(
 			newLayoutModel(
-				groupId, "2_columns_ii", name, false, column1, column2),
+				groupId, false, name, "2_columns_ii", column1, column2),
 			newLayoutModel(
-				groupId, "2_columns_ii", name, true, column1, column2));
+				groupId, true, name, "2_columns_ii", column1, column2));
 	}
 
 	public LayoutPageTemplateStructureModel newLayoutPageTemplateStructureModel(
@@ -8064,8 +8064,8 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, String layoutTemplateId, String name,
-		boolean privateLayout, String... columns) {
+		long groupId, boolean privateLayout, String name,
+		String layoutTemplateId, String... columns) {
 
 		return newLayoutModel(
 			groupId, privateLayout, 0, name, layoutTemplateId, false, columns);

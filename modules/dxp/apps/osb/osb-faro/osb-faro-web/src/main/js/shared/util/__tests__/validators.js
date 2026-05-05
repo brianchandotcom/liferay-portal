@@ -1,5 +1,7 @@
 import {
+	composeValidators,
 	toPromise,
+	validateExternalReferenceCode,
 	validateGreaterThanZero,
 	validateInputMessage,
 	validateIsInteger,
@@ -239,5 +241,64 @@ describe('validateRequired', () => {
 		const response = validateRequired('   ');
 
 		return expect(response).resolves.toEqual('Required');
+	});
+});
+
+describe('composeValidators', () => {
+	it('returns the first error when multiple validators fail', async () => {
+		const validator = composeValidators(
+			() => 'first',
+			() => 'second'
+		);
+
+		await expect(validator('value')).resolves.toBe('first');
+	});
+
+	it('returns empty string when all validators pass', async () => {
+		const validator = composeValidators(
+			() => '',
+			() => Promise.resolve('')
+		);
+
+		await expect(validator('value')).resolves.toBe('');
+	});
+
+	it('short-circuits and skips later validators after a failure', async () => {
+		const second = jest.fn(() => 'never');
+
+		const validator = composeValidators(() => 'stop', second);
+
+		await validator('value');
+
+		expect(second).not.toHaveBeenCalled();
+	});
+});
+
+describe('validateExternalReferenceCode', () => {
+	it.each(['', '   '])(
+		'returns required error for empty value %p',
+		async value => {
+			await expect(validateExternalReferenceCode(value)).resolves.toBe(
+				'Required'
+			);
+		}
+	);
+
+	it.each(['Invalid Code', 'has spaces', 'UPPER', 'with@symbol', 'a/b'])(
+		'returns slug error for invalid value %p',
+		async value => {
+			await expect(validateExternalReferenceCode(value)).resolves.toBe(
+				'ERC must contain only lowercase letters, numbers, hyphens, and underscores.'
+			);
+		}
+	);
+
+	it.each([
+		'vip-users',
+		'vip_users_2026',
+		'abc123',
+		'3010f20f-98bd-4910-2a30-97716addddb5'
+	])('accepts valid slug %p', async value => {
+		await expect(validateExternalReferenceCode(value)).resolves.toBe('');
 	});
 });

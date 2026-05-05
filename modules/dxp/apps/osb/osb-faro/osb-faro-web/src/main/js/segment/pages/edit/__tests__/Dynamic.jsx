@@ -17,6 +17,9 @@ jest.mock(
 	'segment/segment-editor/dynamic/hoc/WithPropertyGroups',
 	() => Component => Component
 );
+jest.mock('uuid', () => ({
+	v4: () => '00000000-0000-0000-0000-000000000000'
+}));
 
 describe('DynamicSegmentEdit', () => {
 	afterEach(cleanup);

@@ -165,7 +165,6 @@ exports[`SegmentEditor should render 1`] = `
                 >
                   <button
                     class="button-root btn btn-sm btn-primary"
-                    disabled=""
                     type="submit"
                   >
                     Save Segment
@@ -204,6 +203,55 @@ exports[`SegmentEditor should render 1`] = `
               <div
                 class="content-wrapper"
               >
+                <div
+                  class="segment-erc"
+                >
+                  <div
+                    class="form-group form-group-autofit"
+                  >
+                    <div
+                      class="form-group-item form-group-item-label form-group-item-shrink"
+                    >
+                      <label
+                        class="form-control-label label-root required"
+                        for="externalReferenceCode"
+                      >
+                        <span
+                          class="content-container"
+                        >
+                          Segment ERC
+                        </span>
+                        <span
+                          class="info-popover-root"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-question-circle-full icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#question-circle-full"
+                            />
+                          </svg>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="form-group-item"
+                    >
+                      <div
+                        class=""
+                      >
+                        <input
+                          class="input-root form-control"
+                          id="externalReferenceCode"
+                          name="externalReferenceCode"
+                          type="text"
+                          value="00000000-0000-0000-0000-000000000000"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="criteria-builder-root"
                 >

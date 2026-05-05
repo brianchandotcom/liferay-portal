@@ -8,8 +8,8 @@ export type RequestResult<T> =
 	| {data: T; error: null; status?: string | null};
 
 interface ApiErrorResponse {
-	error?: string;
 	message?: string;
+	title?: string;
 }
 
 const UNEXPECTED_ERROR_MESSAGE = Liferay.Language.get(
@@ -74,8 +74,8 @@ async function postFormDataWithProgress<T>(
 				const errorResponse = responseData as ApiErrorResponse;
 
 				const errorMessage =
+					errorResponse?.title ||
 					errorResponse?.message ||
-					errorResponse?.error ||
 					UNEXPECTED_ERROR_MESSAGE;
 
 				resolve({

@@ -17,7 +17,7 @@ public class ExportImportPreviewDisplayContext {
 		_group = group;
 	}
 
-	public String getImportPreviewURL() {
+	public String getImportPreviewAPIURL() {
 		if (_group.isDepot()) {
 			return StringBundler.concat(
 				"/o/export-import/v1.0/asset-libraries/",

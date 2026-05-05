@@ -9,7 +9,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
-import {getValidateLarFile} from '../../../utils/getValidateLarFile';
+import {postImportPreview} from '../../../utils/postImportPreview';
 import {useWizard} from '../NewImport';
 
 interface FileSelectionValues {
@@ -19,7 +19,7 @@ interface FileSelectionValues {
 
 export default function FileSelectionStep() {
 	const [progress, setProgress] = useState<number>();
-	const {groupId} = useWizard();
+	const {importPreviewAPIURL} = useWizard();
 
 	const {setFieldValue, values} = useFormikContext<FileSelectionValues>();
 	const autoFilledFileRef = useRef<File | undefined>(undefined);
@@ -39,11 +39,11 @@ export default function FileSelectionStep() {
 	}, [values.fileSelector, values.name, setFieldValue]);
 
 	const handleUpload = (file: File, signal?: AbortSignal) =>
-		getValidateLarFile({
+		postImportPreview({
 			file,
-			groupId,
 			onProgress: setProgress,
 			signal,
+			url: importPreviewAPIURL,
 		});
 
 	return (

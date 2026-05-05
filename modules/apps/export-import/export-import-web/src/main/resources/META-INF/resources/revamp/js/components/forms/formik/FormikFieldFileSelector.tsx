@@ -8,9 +8,9 @@ import React from 'react';
 import {RequestResult} from '../../../services/ApiHelper';
 import FileSelector from '../../FileSelector';
 import {FormikWrapper} from './FormikWrapper';
-import {ValidationResponse, useFileSelector} from './hooks/useFileSelector';
+import {useFileSelector} from './hooks/useFileSelector';
 
-export function FormikFieldFileSelector({
+export function FormikFieldFileSelector<T>({
 	'aria-describedby': ariaDescribedby,
 	'aria-labelledby': ariaLabelledby,
 	name,
@@ -26,7 +26,7 @@ export function FormikFieldFileSelector({
 	'uploadRequest': (
 		file: File,
 		signal?: AbortSignal
-	) => Promise<RequestResult<ValidationResponse>>;
+	) => Promise<RequestResult<T>>;
 	'validExtensions'?: string;
 }) {
 	const {

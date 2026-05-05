@@ -5,29 +5,30 @@
 
 import ApiHelper, {RequestResult} from '../services/ApiHelper';
 
-export async function getValidateLarFile({
+export interface ImportPreview {
+	additionCount: number;
+	author: string;
+	deletionCount: number;
+	exportDate: string;
+	fileEntryId: number;
+	fileName: string;
+	fileSize: number;
+	portletDataHandlerSections: unknown[];
+}
+
+export async function postImportPreview({
 	file,
-	groupId,
 	onProgress,
 	signal,
+	url,
 }: {
 	file: File;
-	groupId: number;
 	onProgress: (progressEvent: number) => void;
 	signal?: AbortSignal;
-}): Promise<
-	RequestResult<{
-		errorMessages: string[];
-		success: boolean;
-		tempFilePath: string;
-	}>
-> {
-	return await ApiHelper.postFormDataWithProgress<{
-		errorMessages: string[];
-		success: boolean;
-		tempFilePath: string;
-	}>(
-		`/o/export-import/v1.0/scopes/${groupId}/validate`,
+	url: string;
+}): Promise<RequestResult<ImportPreview>> {
+	return await ApiHelper.postFormDataWithProgress<ImportPreview>(
+		url,
 		Liferay.Util.objectToFormData({file}),
 		(progressEvent) => {
 			onProgress(progressEvent);

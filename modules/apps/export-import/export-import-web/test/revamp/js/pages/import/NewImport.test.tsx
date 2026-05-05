@@ -12,14 +12,19 @@ import React from 'react';
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/revamp/js/utils/getValidateLarFile',
+	'../../../../../src/main/resources/META-INF/resources/revamp/js/utils/postImportPreview',
 	() => ({
-		getValidateLarFile: jest.fn(() =>
+		postImportPreview: jest.fn(() =>
 			Promise.resolve({
 				data: {
-					errorMessages: [],
-					success: true,
-					tempFilePath: '/tmp/site.lar',
+					additionCount: 0,
+					author: 'Test User',
+					deletionCount: 0,
+					exportDate: '2000-07-27T00:00:00Z',
+					fileEntryId: 1,
+					fileName: 'site.lar',
+					fileSize: 4,
+					portletDataHandlerSections: [],
 				},
 				error: null,
 			})
@@ -28,7 +33,12 @@ jest.mock(
 );
 
 const renderComponent = () =>
-	render(<NewImport backURL="/some/back/url" groupId={0} />);
+	render(
+		<NewImport
+			backURL="/some/back/url"
+			importPreviewAPIURL="/o/export-import/v1.0/import-preview"
+		/>
+	);
 
 let user: ReturnType<typeof userEvent.setup>;
 

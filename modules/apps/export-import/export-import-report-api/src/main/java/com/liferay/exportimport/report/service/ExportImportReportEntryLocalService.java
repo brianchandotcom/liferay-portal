@@ -239,6 +239,10 @@ public interface ExportImportReportEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getExportImportReportEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getExportImportReportEntriesCount(
+		long companyId, long exportImportConfigurationId);
+
 	/**
 	 * Returns the export import report entry with the primary key.
 	 *
@@ -302,4 +306,4 @@ public interface ExportImportReportEntryLocalService
 		ExportImportReportEntry exportImportReportEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1609212277
+// LIFERAY-SERVICE-BUILDER-HASH:-1818811699

@@ -42,7 +42,10 @@ public class OpenAPIResourceTest {
 
 		String path = _getPath(inputStream, "/servers/0/url");
 
-		Assert.assertTrue(path.startsWith("http://localhost:8080/"));
+		Assert.assertTrue(
+			path.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/"));
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
@@ -54,7 +57,10 @@ public class OpenAPIResourceTest {
 
 			path = _getPath(inputStream, "/servers/0/url");
 
-			Assert.assertTrue(path.startsWith("https://localhost:8080/"));
+			Assert.assertTrue(
+				path.startsWith(
+					"https://localhost:" +
+						PortalUtil.getPortalServerPort(false) + "/"));
 		}
 	}
 

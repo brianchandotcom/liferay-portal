@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.rest.client.dto.v1_0.Suggestion;
 import com.liferay.portal.search.rest.client.dto.v1_0.SuggestionsContributorConfiguration;
@@ -149,8 +150,9 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 		throws Exception {
 
 		return _postSuggestionsPage(
-			"http://localhost:8080/web/guest/home", "/search", null, "q",
-			_layout.getPlid(), scope, search,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/home",
+			"/search", null, "q", _layout.getPlid(), scope, search,
 			new SuggestionsContributorConfiguration[] {
 				new SuggestionsContributorConfiguration() {
 					{
@@ -245,8 +247,10 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			StringUtil.randomString());
 
 		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
-			"http://localhost:8080/web/guest/home", "/search",
-			testGroup.getGroupId(), "q", _layout.getPlid(), "this-site",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/home",
+			"/search", testGroup.getGroupId(), "q", _layout.getPlid(),
+			"this-site",
 			StringBundler.concat(
 				_journalArticle.getTitle(_locale), StringPool.SPACE,
 				journalArticle.getTitle(_locale)),
@@ -278,8 +282,9 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 			_serviceContext);
 
 		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
-			"http://localhost:8080/web/guest/home", "/search",
-			testGroup.getGroupId(), "q", _layout.getPlid(), null,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/home",
+			"/search", testGroup.getGroupId(), "q", _layout.getPlid(), null,
 			_journalArticle.getArticleId(),
 			new SuggestionsContributorConfiguration[] {
 				new SuggestionsContributorConfiguration() {
@@ -311,8 +316,10 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 		String suggestionsDisplayGroupGroupName = "Suggestions";
 
 		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
-			"http://localhost:8080/web/guest/home", "/search", null, "q",
-			_layout.getPlid(), testGroup.getExternalReferenceCode(),
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/home",
+			"/search", null, "q", _layout.getPlid(),
+			testGroup.getExternalReferenceCode(),
 			_journalArticle.getArticleId(),
 			new SuggestionsContributorConfiguration[] {
 				new SuggestionsContributorConfiguration() {
@@ -353,8 +360,9 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 		String suggestionsDisplayGroupGroupName = "Suggestions";
 
 		Page<SuggestionsContributorResults> page = _postSuggestionsPage(
-			"http://localhost:8080/web/guest/home", "/search",
-			testGroup.getGroupId(), "q", _layout.getPlid(), null,
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/home",
+			"/search", testGroup.getGroupId(), "q", _layout.getPlid(), null,
 			_journalArticle.getArticleId(),
 			new SuggestionsContributorConfiguration[] {
 				new SuggestionsContributorConfiguration() {

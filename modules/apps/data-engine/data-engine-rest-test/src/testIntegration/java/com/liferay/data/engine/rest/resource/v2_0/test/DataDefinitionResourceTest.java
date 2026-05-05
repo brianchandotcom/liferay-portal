@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.test.rule.SearchTestRule;
@@ -837,7 +838,7 @@ public class DataDefinitionResourceTest
 						CompanyLocalServiceUtil.getCompany(
 							companyId
 						).getVirtualHostname(),
-						8080, "http"
+						PortalUtil.getPortalServerPort(false), "http"
 					).locale(
 						LocaleUtil.getDefault()
 					).build();

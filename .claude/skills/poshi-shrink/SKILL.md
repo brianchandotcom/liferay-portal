@@ -1,9 +1,12 @@
 ---
-name: poshi-consolidate
-description: Triage and consolidate Poshi .testcase files for a given Liferay @component-name before migrating to Playwright, Java integration, or unit tests. Enumerates tests by component, groups by testray.main.component.name, identifies overlapping tests within a file, and drives the consolidation via reviewable per-merge commits. Use when the user asks to migrate, consolidate, merge, triage, or reduce Poshi tests for their team's component.
+
+argument-hint: "<component-name>"
+description: Shrink a Liferay component's Poshi test suite by merging overlapping tests. Use when the user asks to reduce, merge, or clean up Poshi tests for a @component-name.
+name: poshi-shrink
+
 ---
 
-# Poshi Test Consolidation
+# Shrink Poshi Tests
 
 A playbook for shrinking a Liferay component's Poshi test suite before migrating tests to Playwright, Java integration, or unit layer. Typical outcome: a file with ~27 tests ends up with ~8, in ~24 small reviewable commits.
 
@@ -11,7 +14,7 @@ A playbook for shrinking a Liferay component's Poshi test suite before migrating
 
 Before doing anything, confirm:
 
-- **`@component-name`**: the annotation at the top of `.testcase` files (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Check the first line of any `.testcase` file if unsure.
+- **`@component-name`**: passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Check the first line of any `.testcase` file if unsure.
 - **LPD ticket prefix**: for commit messages (e.g., `LPD-87004`). Use `LPD-X` if none yet.
 
 If either is not in the skill args, ask. Do not guess.
@@ -113,7 +116,7 @@ For each test, look up its LPS/LPD ticket from `@description` in `git log` and s
 | `inconclusive` | Ticket not in the repo's git log |
 | `no-ticket` | No LPS/LPD reference in the description |
 
-This step is useful but not required for the consolidation itself.
+This step is useful but not required for the shrink itself.
 
 ### Step 3 — Pick a file and find merge groups
 
@@ -140,7 +143,7 @@ Avoid files with 40+ tests on the first pass — practice on smaller ones first.
 
 ### Step 4 — Plan and get approval
 
-Never start editing before the user has seen and approved the consolidation plan. Present it clearly:
+Never start editing before the user has seen and approved the shrink plan. Present it clearly:
 
 > **Group A — <Context name>** (N → 1):
 > - Rename `<Keeper>` → `<FinalName>` (commit 1)
@@ -157,7 +160,7 @@ For each group, make one commit per source test. Message conventions:
 - `<TICKET> Rename test <Keeper> to <FinalName>` — pure rename; first commit of the group; no logic change.
 - `<TICKET> Merge test <Source> into <FinalName>` — delete the source test block; add its unique assertions as new `task` blocks in the target.
 
-If a source's assertions are already fully covered by the target, still make the "Merge" commit (it simply deletes the source — documents the consolidation).
+If a source's assertions are already fully covered by the target, still make the "Merge" commit (it simply deletes the source — documents the shrink).
 
 Do **not** squash, bundle, or batch these commits. The per-merge granularity is exactly what makes the diff reviewable.
 

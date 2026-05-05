@@ -33,6 +33,10 @@
 						"readOnly": true,
 						"type": "string"
 					},
+					"extension": {
+						"readOnly": true,
+						"type": "string"
+					},
 					"externalReferenceCode": {
 						"type": "string"
 					},
@@ -77,6 +81,10 @@
 					},
 					"scope": {
 						"$ref": "#/components/schemas/Scope"
+					},
+					"size": {
+						"readOnly": true,
+						"type": "string"
 					},
 					"thumbnailURL": {
 						"description": "optional field that specifies the thumbnail of the file to be used, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.thumbnailURL`)",

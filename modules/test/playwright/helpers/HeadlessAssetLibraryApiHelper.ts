@@ -61,6 +61,32 @@ export class HeadlessAssetLibraryApiHelper {
 		);
 	}
 
+	async getAssetLibrary(externalReferenceCode: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`
+		);
+	}
+
+	async patchAssetLibrary(
+		externalReferenceCode: string,
+		body: Record<string, any>
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`,
+			body
+		);
+	}
+
+	async patchAssetLibraryWithProblem(
+		externalReferenceCode: string,
+		body: Record<string, any>
+	) {
+		return this.apiHelpers.patchRequestOptions(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`,
+			{data: body, failOnStatusCode: false}
+		);
+	}
+
 	async putAssetLibraryUserAccount(
 		assetLibraryExternalReferenceCode: string,
 		userAccountExternalReferenceCode: string

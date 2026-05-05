@@ -21,6 +21,7 @@ const SPACES: Space[] = [
 		creatorUserId: '234',
 		description: '',
 		externalReferenceCode: 'space-1-erc',
+		friendlyURL: '/asset-library-123',
 		id: 123,
 		name: 'Space 1',
 		settings: {
@@ -33,6 +34,7 @@ const SPACES: Space[] = [
 		creatorUserId: '234',
 		description: '',
 		externalReferenceCode: 'space-2-erc',
+		friendlyURL: '/asset-library-456',
 		id: 456,
 		name: 'Space 2',
 		settings: {

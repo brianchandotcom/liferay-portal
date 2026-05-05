@@ -86,7 +86,7 @@ describe('SegmentEditor', () => {
 		expect(screen.getByTestId('toggle-switch-input')).toBeInTheDocument();
 		expect(
 			screen.getByText(
-				'When this is enabled, event 2 must occur after event 1, with any number of events in between. When this is disabled, events can be completed in any order.'
+				'When sequential mode is enabled, event 1 must be completed before event 2, although other events may occur in between. When disabled, events can be completed in any order.'
 			)
 		).toBeInTheDocument();
 
@@ -122,7 +122,7 @@ describe('SegmentEditor', () => {
 
 		expect(
 			screen.getByText(
-				'When this is enabled, event 2 must occur after event 1, with any number of events in between. When this is disabled, events can be completed in any order.'
+				'When sequential mode is enabled, event 1 must be completed before event 2, although other events may occur in between. When disabled, events can be completed in any order.'
 			)
 		).toBeInTheDocument();
 

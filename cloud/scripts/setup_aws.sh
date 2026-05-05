@@ -458,15 +458,14 @@ function _terraform_init_and_apply {
 		-backend-config="encrypt=true" \
 		-backend-config="key=${deployment_name}/${region}/${folder_separator}/terraform.tfstate" \
 		-backend-config="region=${region}" \
-		-backend-config="use_lockfile=true" \
-		-upgrade
+		-backend-config="use_lockfile=true"
 	else
 			cat > backend_override.tf <<EOF
 terraform {
 	backend "local" {}
 }
 EOF
-			terraform init -upgrade
+			terraform init
 	fi
 
 	terraform apply ${terraform_args} "${@:7}"

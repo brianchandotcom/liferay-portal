@@ -421,9 +421,8 @@ public interface PatcherBuildLocalService
 
 	public PatcherBuild preparePatcherBuild(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String accountEntryCode,
-			String patcherBuildName, int type, boolean useExistingHotfix,
-			Locale locale)
+			long patcherProjectVersionId, String accountEntryCode, int type,
+			Locale locale, String patcherBuildName, boolean useExistingHotfix)
 		throws Exception;
 
 	public void setPatcherAccountPatcherBuilds(
@@ -496,4 +495,4 @@ public interface PatcherBuildLocalService
 		throws Exception;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2110396172
+// LIFERAY-SERVICE-BUILDER-HASH:-906455652

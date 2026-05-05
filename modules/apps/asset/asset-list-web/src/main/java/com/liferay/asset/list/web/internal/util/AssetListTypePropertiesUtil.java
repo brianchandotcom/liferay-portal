@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,6 +31,10 @@ public class AssetListTypePropertiesUtil {
 		Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-74731")) {
+			return jsonArray;
+		}
 
 		for (int i = 0; i < classNameIds.length; i++) {
 			long classTypeId = 0;

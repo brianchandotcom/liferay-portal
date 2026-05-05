@@ -67,15 +67,21 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		sb.append(sqlWhere);
 
 		for (int i = 0; i < finderColumns.length; i++) {
-			sb.append(finderColumns[i].getSqlFragment(values[i]));
+			String fragment = finderColumns[i].getSqlFragment(values[i]);
+
+			if (fragment.isEmpty()) {
+				continue;
+			}
+
+			sb.append(fragment);
 			sb.append(" AND ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
 		if ((where != null) && !where.isEmpty()) {
-			sb.append(" AND ");
 			sb.append(where);
+		}
+		else if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

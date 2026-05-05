@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,6 +40,21 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		_sqlCountWhere = sqlCountWhere;
 		_defaultOrderByJpql = defaultOrderByJpql;
 		_orderByEntityAlias = orderByEntityAlias;
+
+		List<Integer> arrayableIndexes = new ArrayList<>();
+
+		for (int i = 0; i < finderColumns.length; i++) {
+			if (finderColumns[i] instanceof ArrayableFinderColumn) {
+				arrayableIndexes.add(i);
+			}
+		}
+
+		if (arrayableIndexes.isEmpty()) {
+			_arrayableIndexes = null;
+		}
+		else {
+			_arrayableIndexes = arrayableIndexes.toArray(new Integer[0]);
+		}
 	}
 
 	public int count(FinderCache finderCache, Object[] values) {
@@ -101,19 +117,13 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		if (_unpaginatedFindPath != null) {
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+		if ((_unpaginatedFindPath != null) && (start == QueryUtil.ALL_POS) &&
+			(end == QueryUtil.ALL_POS) && (orderByComparator == null) &&
+			!_isMultiElementArrayable(values)) {
 
-				if (useFinderCache) {
-					finderPath = _unpaginatedFindPath;
-					finderArgs = buildFinderArgs(values);
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _paginatedFindPath;
-				finderArgs = _buildPaginatedFinderArgs(
-					values, start, end, orderByComparator);
+			if (useFinderCache) {
+				finderPath = _unpaginatedFindPath;
+				finderArgs = buildFinderArgs(values);
 			}
 		}
 		else if (useFinderCache) {
@@ -200,15 +210,21 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		sb.append(sqlSelectWhere);
 
 		for (int i = 0; i < finderColumns.length; i++) {
-			sb.append(finderColumns[i].getSqlFragment(values[i]));
+			String fragment = finderColumns[i].getSqlFragment(values[i]);
+
+			if (fragment.isEmpty()) {
+				continue;
+			}
+
+			sb.append(fragment);
 			sb.append(" AND ");
 		}
 
-		sb.setIndex(sb.index() - 1);
-
 		if ((where != null) && !where.isEmpty()) {
-			sb.append(" AND ");
 			sb.append(where);
+		}
+		else if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
 		}
 
 		if (orderByComparator == null) {
@@ -239,6 +255,23 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		return finderArgs;
 	}
 
+	private boolean _isMultiElementArrayable(Object[] values) {
+		if (_arrayableIndexes == null) {
+			return false;
+		}
+
+		for (int index : _arrayableIndexes) {
+			Object[] array = (Object[])values[index];
+
+			if (array.length > 1) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private final Integer[] _arrayableIndexes;
 	private final FinderPath _countFinderPath;
 	private final String _defaultOrderByJpql;
 	private final String _orderByEntityAlias;

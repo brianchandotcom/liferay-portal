@@ -178,7 +178,7 @@
 		<delete dir="${project.dir}/tmp/license-reports" quiet="true" />
 
 		<gradle-execute dir="${project.dir}/modules" task="generateLicenseReport">
-			<arg value="-Dbuild.profile=dxp" />
+			<arg value="-Dbuild.profile=portal" />
 			<arg value="-Dlicense.report.enabled=true" />
 			<arg value="-Dlicense.report.output.dir=${project.dir}/tmp/license-reports" />
 			<arg value="-Dlicense.report.override.properties.file=${project.dir}/lib/license-override.properties" />

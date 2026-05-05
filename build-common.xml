@@ -138,7 +138,7 @@
 		name="xmltask"
 	/>
 
-	<condition property="build.profile" value="dxp">
+	<condition property="build.profile" value="portal">
 		<not>
 			<isset property="build.profile" />
 		</not>

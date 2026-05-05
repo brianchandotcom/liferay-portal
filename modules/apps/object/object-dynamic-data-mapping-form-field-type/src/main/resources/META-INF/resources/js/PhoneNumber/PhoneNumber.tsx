@@ -79,33 +79,29 @@ const LocalizablePhoneNumber = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div aria-label={label} role="group">
-				<ClayInput.Group>
-					<PhoneNumberInput
-						countries={countries}
-						disabled={disabled}
-						id={otherProps.id as string}
-						key={editingLanguageId}
-						name={name}
-						onBlur={onBlur}
-						onChange={handleLocalChange}
-						onFocus={onFocus}
-						prefix={prefix}
-						prefixType={prefixType}
-						value={
-							value[editingLanguageId] ?? predefinedValue ?? ''
-						}
-					/>
+			<ClayInput.Group aria-label={label} role="group">
+				<PhoneNumberInput
+					countries={countries}
+					disabled={disabled}
+					id={otherProps.id as string}
+					key={editingLanguageId}
+					name={name}
+					onBlur={onBlur}
+					onChange={handleLocalChange}
+					onFocus={onFocus}
+					prefix={prefix}
+					prefixType={prefixType}
+					value={value[editingLanguageId] ?? predefinedValue ?? ''}
+				/>
 
-					<ClayInput.GroupItem shrink>
-						<LocalesDropdown
-							availableLocales={availableLocales}
-							fieldName={fieldName}
-							value={value}
-						/>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-			</div>
+				<ClayInput.GroupItem shrink>
+					<LocalesDropdown
+						availableLocales={availableLocales}
+						fieldName={fieldName}
+						value={value}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
 		</FieldBase>
 	);
 };
@@ -132,25 +128,23 @@ const NonLocalizablePhoneNumber = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div aria-label={label} role="group">
-				<ClayInput.Group>
-					<PhoneNumberInput
-						countries={countries}
-						disabled={disabled}
-						id={otherProps.id as string}
-						name={name}
-						onBlur={onBlur}
-						onChange={(event) => {
-							setCombinedValue(event.target.value);
-							onChange?.(event);
-						}}
-						onFocus={onFocus}
-						prefix={prefix}
-						prefixType={prefixType}
-						value={initialValue || predefinedValue}
-					/>
-				</ClayInput.Group>
-			</div>
+			<ClayInput.Group aria-label={label} role="group">
+				<PhoneNumberInput
+					countries={countries}
+					disabled={disabled}
+					id={otherProps.id as string}
+					name={name}
+					onBlur={onBlur}
+					onChange={(event) => {
+						setCombinedValue(event.target.value);
+						onChange?.(event);
+					}}
+					onFocus={onFocus}
+					prefix={prefix}
+					prefixType={prefixType}
+					value={initialValue || predefinedValue}
+				/>
+			</ClayInput.Group>
 
 			<input name={name} type="hidden" value={combinedValue} />
 		</FieldBase>

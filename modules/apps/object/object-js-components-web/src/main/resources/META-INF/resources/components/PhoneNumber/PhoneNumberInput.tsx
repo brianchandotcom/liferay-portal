@@ -132,6 +132,7 @@ export function PhoneNumberInput({
 
 			<ClayInput.GroupItem prepend={prefixType === PREFIX_TYPE.FIXED}>
 				<ClayInput
+					aria-label={Liferay.Language.get('phone-number')}
 					className="ddm-field-text form-control"
 					disabled={disabled}
 					id={id ?? name}

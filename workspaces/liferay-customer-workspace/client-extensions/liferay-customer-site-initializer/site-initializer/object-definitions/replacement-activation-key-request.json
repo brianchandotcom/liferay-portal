@@ -37,7 +37,7 @@
 			"label": {
 				"en_US": "Clustered?"
 			},
-			"listTypeDefinitionExternalReferenceCode": "CLUSTERED",
+			"listTypeDefinitionExternalReferenceCode": "LT_CLUSTERED",
 			"name": "clustered",
 			"required": true,
 			"type": "String"
@@ -95,7 +95,7 @@
 			"label": {
 				"en_US": "Support Region"
 			},
-			"listTypeDefinitionExternalReferenceCode": "SUPPORT_REGION",
+			"listTypeDefinitionExternalReferenceCode": "LT_SUPPORT_REGION",
 			"name": "supportRegion",
 			"required": true,
 			"type": "String"
@@ -109,7 +109,7 @@
 			"label": {
 				"en_US": "Type of Server"
 			},
-			"listTypeDefinitionExternalReferenceCode": "TYPE_OF_SERVER",
+			"listTypeDefinitionExternalReferenceCode": "LT_TYPE_OF_SERVER",
 			"name": "typeOfServer",
 			"required": true,
 			"type": "String"
@@ -123,7 +123,7 @@
 			"label": {
 				"en_US": "Version of Liferay Software"
 			},
-			"listTypeDefinitionExternalReferenceCode": "VERSION_OF_LIFERAY_SOFTWARE",
+			"listTypeDefinitionExternalReferenceCode": "LT_VERSION_OF_LIFERAY_SOFTWARE",
 			"name": "versionOfLiferaySoftware",
 			"required": false,
 			"type": "String"

@@ -30,7 +30,7 @@ export default function useGetUTCTimeZonesList(): {
 				);
 			}
 			catch (error) {
-				console.error('Error fetching UTC time zones:', error);
+				console.error('Unable to fetch UTC time zones:', error);
 
 				setError(true);
 			}

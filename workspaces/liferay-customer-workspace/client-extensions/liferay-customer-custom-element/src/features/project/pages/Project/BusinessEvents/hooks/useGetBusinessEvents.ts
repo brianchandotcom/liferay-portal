@@ -33,7 +33,7 @@ export default function useGetBusinessEvents(): {
 			setBusinessEvents(items);
 		}
 		catch (error) {
-			console.error('Error fetching business events:', error);
+			console.error('Unable to fetch business events:', error);
 		}
 		finally {
 			setLoading(false);

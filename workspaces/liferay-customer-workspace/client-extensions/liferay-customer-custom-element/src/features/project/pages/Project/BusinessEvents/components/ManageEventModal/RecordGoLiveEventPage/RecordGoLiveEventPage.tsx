@@ -155,7 +155,7 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
-			console.error('Error recording go-live', error);
+			console.error('Unable to record event date', error);
 		}
 	};
 

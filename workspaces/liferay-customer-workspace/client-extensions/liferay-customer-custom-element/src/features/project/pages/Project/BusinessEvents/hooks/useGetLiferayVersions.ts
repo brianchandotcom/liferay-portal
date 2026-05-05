@@ -32,7 +32,7 @@ export default function useGetLiferayVersions(): {
 				);
 			}
 			catch (error) {
-				console.error('Error fetching Liferay versions:', error);
+				console.error('Unable to fetch Liferay versions:', error);
 
 				setError(true);
 			}

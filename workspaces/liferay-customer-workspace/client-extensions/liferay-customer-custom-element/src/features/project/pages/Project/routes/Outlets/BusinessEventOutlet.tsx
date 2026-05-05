@@ -40,7 +40,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
 				setIsValidBusinessEvent(true);
 			}
 			catch (error) {
-				console.error('Error fetching business event:', error);
+				console.error('Unable to fetch business event:', error);
 
 				Liferay.Util.openToast({
 					message: i18n.translate('an-unexpected-error-occurred'),

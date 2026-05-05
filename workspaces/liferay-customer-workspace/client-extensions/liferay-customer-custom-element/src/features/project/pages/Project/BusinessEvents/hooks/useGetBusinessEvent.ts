@@ -36,7 +36,7 @@ export default function useGetBusinessEvent(id: string): {
 			setBusinessEvent(businessEventResponse as IBusinessEvent);
 		}
 		catch (error) {
-			console.error('Error fetching business event:', error);
+			console.error('Unable to fetch business event:', error);
 		}
 		finally {
 			setLoading(false);

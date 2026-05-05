@@ -36,7 +36,7 @@ export default function useGetBusinessEventTypesList(): {
 				);
 			}
 			catch (error) {
-				console.error('Error fetching business event types:', error);
+				console.error('Unable to fetch business event types:', error);
 
 				setError(true);
 			}

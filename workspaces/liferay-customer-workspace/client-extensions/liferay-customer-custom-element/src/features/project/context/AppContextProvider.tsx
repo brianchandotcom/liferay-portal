@@ -93,7 +93,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 				});
 			}
 			catch (error) {
-				console.error('Error fetching business events', error);
+				console.error('Unable to fetch business events', error);
 			}
 		};
 

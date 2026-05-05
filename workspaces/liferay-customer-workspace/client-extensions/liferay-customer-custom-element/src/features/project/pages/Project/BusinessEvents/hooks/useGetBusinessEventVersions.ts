@@ -35,7 +35,7 @@ export default function useGetBusinessEventVersions(id: string): {
 			);
 		}
 		catch (error) {
-			console.error('Error fetching business event versions:', error);
+			console.error('Unable to fetch business event versions:', error);
 		}
 		finally {
 			setLoading(false);

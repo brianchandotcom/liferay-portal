@@ -9,7 +9,7 @@ import React from 'react';
 
 import {IInlineNotificationComponent} from '../inline_notification/InlineNotification';
 import {EEntityFieldType} from '../management_bar/controls/filters/utils/types';
-import {ISnapshotGroup} from '../views/ViewsContext';
+import {ISnapshots} from '../views/ViewsContext';
 
 export declare function FrontendDataSet({
 	actionParameterName,
@@ -390,7 +390,7 @@ export interface IFrontendDataSetProps {
 	showSearch?: boolean;
 	showSelectAll?: boolean;
 	sidePanelId?: string;
-	snapshots?: Array<ISnapshotGroup>;
+	snapshots?: Array<ISnapshots>;
 	snapshotsEnabled?: boolean;
 	sorts?: TSort[];
 	style?: 'default' | 'fluid' | 'stacked';

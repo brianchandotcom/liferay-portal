@@ -12,8 +12,8 @@ export interface IViewsContext {
 	groupedFilters: Array<any>;
 	modifiedFields: any;
 	paginationDelta: any;
-	snapshotGroups: Array<ISnapshotGroup>;
 	snapshotUpdated: boolean;
+	snapshots: Array<ISnapshots>;
 	snapshotsEnabled: boolean;
 	sorts: Array<any>;
 	views: Array<any>;
@@ -26,9 +26,10 @@ export interface ISnapshot {
 	label: string;
 }
 
-export interface ISnapshotGroup {
+export interface ISnapshots {
+	headerVisible: boolean;
 	items: Array<ISnapshot>;
-	key: string;
+	label?: string;
 }
 
 export type TViewsContextDispatch = ({
@@ -46,8 +47,8 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 		groupedFilters: [],
 		modifiedFields: {},
 		paginationDelta: null,
-		snapshotGroups: [],
 		snapshotUpdated: false,
+		snapshots: [],
 		snapshotsEnabled: false,
 		sorts: [],
 		views: [],

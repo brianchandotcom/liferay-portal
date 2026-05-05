@@ -23,6 +23,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectAssetVersionBulkSelecti
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectEntryBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DueDateObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DuplicateObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectTagsBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
@@ -1904,6 +1905,16 @@ public abstract class BaseBulkActionResourceTestCase {
 				return bulkAction;
 			},
 			() -> {
+				DuplicateObjectBulkSelectionAction bulkAction =
+					new DuplicateObjectBulkSelectionAction();
+
+				bulkAction.setType(
+					BulkAction.Type.create(
+						"DuplicateObjectBulkSelectionAction"));
+
+				return bulkAction;
+			},
+			() -> {
 				EditObjectCategoriesBulkSelectionAction bulkAction =
 					new EditObjectCategoriesBulkSelectionAction();
 
@@ -2246,4 +2257,4 @@ public abstract class BaseBulkActionResourceTestCase {
 		_bulkActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1463695251
+// LIFERAY-REST-BUILDER-HASH:-1351577210

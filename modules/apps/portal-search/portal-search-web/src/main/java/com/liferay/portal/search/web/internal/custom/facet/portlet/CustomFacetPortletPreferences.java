@@ -6,11 +6,12 @@
 package com.liferay.portal.search.web.internal.custom.facet.portlet;
 
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 /**
  * @author Wade Cao
  */
-public interface CustomFacetPortletPreferences {
+public interface CustomFacetPortletPreferences extends SEOPortletPreferences {
 
 	public static final String PREFERENCE_KEY_AGGREGATION_FIELD =
 		"aggregationField";

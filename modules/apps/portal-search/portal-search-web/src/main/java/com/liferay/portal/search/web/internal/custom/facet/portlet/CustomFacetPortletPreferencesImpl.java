@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -113,6 +114,17 @@ public class CustomFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getSEOParameterName() {
+		String parameterName = getParameterName();
+
+		if (Validator.isNull(parameterName)) {
+			return getAggregationField();
+		}
+
+		return parameterName;
+	}
+
+	@Override
 	public boolean isFrequenciesVisible() {
 		return getBoolean(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,
@@ -123,6 +135,13 @@ public class CustomFacetPortletPreferencesImpl
 	public boolean isShowInputRange() {
 		return getBoolean(
 			CustomFacetPortletPreferences.PREFERENCE_KEY_SHOW_INPUT_RANGE,
+			true);
+	}
+
+	@Override
+	public boolean isWebCrawlerIndexingEnabled() {
+		return getBoolean(
+			SEOPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED,
 			true);
 	}
 

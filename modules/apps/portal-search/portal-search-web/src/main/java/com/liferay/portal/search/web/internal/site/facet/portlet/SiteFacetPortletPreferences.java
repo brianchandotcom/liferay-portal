@@ -5,10 +5,12 @@
 
 package com.liferay.portal.search.web.internal.site.facet.portlet;
 
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
+
 /**
  * @author André de Oliveira
  */
-public interface SiteFacetPortletPreferences {
+public interface SiteFacetPortletPreferences extends SEOPortletPreferences {
 
 	public static final String PREFERENCE_KEY_FREQUENCIES_VISIBLE =
 		"frequenciesVisible";

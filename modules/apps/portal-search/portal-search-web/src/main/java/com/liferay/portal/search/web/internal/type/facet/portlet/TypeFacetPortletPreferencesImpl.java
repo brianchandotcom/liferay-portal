@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -103,9 +104,21 @@ public class TypeFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getSEOParameterName() {
+		return getParameterName();
+	}
+
+	@Override
 	public boolean isFrequenciesVisible() {
 		return getBoolean(
 			TypeFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,
+			true);
+	}
+
+	@Override
+	public boolean isWebCrawlerIndexingEnabled() {
+		return getBoolean(
+			SEOPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED,
 			true);
 	}
 

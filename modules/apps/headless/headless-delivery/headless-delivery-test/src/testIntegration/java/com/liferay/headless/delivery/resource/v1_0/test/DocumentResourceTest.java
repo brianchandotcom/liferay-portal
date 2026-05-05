@@ -325,7 +325,9 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
-			_read("http://localhost:8080" + document.getContentUrl()));
+			_read(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					document.getContentUrl()));
 	}
 
 	@Override

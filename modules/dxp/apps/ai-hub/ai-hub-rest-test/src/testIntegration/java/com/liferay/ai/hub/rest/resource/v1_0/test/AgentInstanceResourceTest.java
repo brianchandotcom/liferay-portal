@@ -112,6 +112,8 @@ public class AgentInstanceResourceTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		BaseAgentInstanceResourceTestCase.setUpClass();
+
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
@@ -142,7 +144,8 @@ public class AgentInstanceResourceTest
 			).put(
 				"clientSecret", RandomTestUtil.randomString()
 			).put(
-				"serviceURL", "http://localhost:8080"
+				"serviceURL",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)
 			).build());
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());

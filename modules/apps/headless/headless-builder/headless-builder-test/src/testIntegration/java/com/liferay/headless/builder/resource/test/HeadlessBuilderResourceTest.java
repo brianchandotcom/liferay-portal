@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -262,7 +263,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		HTTPTestUtil.customize(
 		).withBaseURL(
-			"http://www.able.com:8080"
+			"http://www.able.com:" + PortalUtil.getPortalServerPort(false)
 		).withCredentials(
 			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).apply(

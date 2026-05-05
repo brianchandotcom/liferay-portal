@@ -328,10 +328,10 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		document.addKeyword(
-			"objectDefinitionId", objectEntry.getObjectDefinitionId());
-		document.addKeyword(
 			"objectDefinitionExternalReferenceCode",
 			objectDefinition.getExternalReferenceCode());
+		document.addKeyword(
+			"objectDefinitionId", objectEntry.getObjectDefinitionId());
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 

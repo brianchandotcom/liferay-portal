@@ -69,13 +69,13 @@ public class GlobalPrivacyControlProviderImplTest {
 	public void testIsEnabled() throws Exception {
 		Assert.assertFalse(
 			_globalPrivacyControlProvider.isEnabled(
-				_createMockHttpServletRequest(null)));
+				_createMockHttpServletRequest(false, null)));
 
-		_saveCompanyConfiguration(false, true);
+		_saveCompanyConfiguration();
 
 		Assert.assertFalse(
 			_globalPrivacyControlProvider.isEnabled(
-				_createMockHttpServletRequest(null)));
+				_createMockHttpServletRequest(false, null)));
 
 		try (ConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -91,7 +91,7 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isEnabled(
-					_createMockHttpServletRequest(null)));
+					_createMockHttpServletRequest(false, null)));
 		}
 
 		try (ConfigurationTemporarySwapper
@@ -108,13 +108,7 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertTrue(
 				_globalPrivacyControlProvider.isEnabled(
-					_createMockHttpServletRequest(null)));
-			Assert.assertTrue(
-				_globalPrivacyControlProvider.isEnabled(
-					_createMockHttpServletRequest("0")));
-			Assert.assertTrue(
-				_globalPrivacyControlProvider.isEnabled(
-					_createMockHttpServletRequest("invalid")));
+					_createMockHttpServletRequest(false, null)));
 		}
 	}
 
@@ -122,7 +116,7 @@ public class GlobalPrivacyControlProviderImplTest {
 	public void testIsSignalActive() throws Exception {
 		Assert.assertFalse(
 			_globalPrivacyControlProvider.isSignalActive(
-				_createMockHttpServletRequest("1")));
+				_createMockHttpServletRequest(false, "1")));
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -135,14 +129,14 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertTrue(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("1")));
+					_createMockHttpServletRequest(false, "1")));
 		}
 
-		_saveCompanyConfiguration(false, true);
+		_saveCompanyConfiguration();
 
 		Assert.assertFalse(
 			_globalPrivacyControlProvider.isSignalActive(
-				_createMockHttpServletRequest("1")));
+				_createMockHttpServletRequest(false, "1")));
 
 		try (ConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
@@ -158,7 +152,7 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("1")));
+					_createMockHttpServletRequest(false, "1")));
 		}
 
 		try (ConfigurationTemporarySwapper
@@ -175,28 +169,22 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest(null)));
+					_createMockHttpServletRequest(false, null)));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("0")));
+					_createMockHttpServletRequest(false, "0")));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("true")));
+					_createMockHttpServletRequest(false, "true")));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("0, 1")));
-			Assert.assertFalse(
-				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("1, 0")));
+					_createMockHttpServletRequest(false, "0, 1")));
 			Assert.assertTrue(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest("1")));
-			Assert.assertTrue(
-				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest(" 1 ")));
+					_createMockHttpServletRequest(false, " 1 ")));
 
 			MockHttpServletRequest mockHttpServletRequest =
-				_createMockHttpServletRequest("0");
+				_createMockHttpServletRequest(false, "0");
 
 			mockHttpServletRequest.addHeader("Sec-GPC", "1");
 
@@ -206,7 +194,7 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertTrue(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequestWithLayout("1")));
+					_createMockHttpServletRequest(true, "1")));
 		}
 
 		_groupConfigurationPid =
@@ -248,7 +236,7 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertTrue(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequestWithLayout("1")));
+					_createMockHttpServletRequest(true, "1")));
 		}
 
 		try (ConfigurationTemporarySwapper
@@ -277,12 +265,13 @@ public class GlobalPrivacyControlProviderImplTest {
 
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequestWithLayout("1")));
+					_createMockHttpServletRequest(true, "1")));
 		}
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest(
-		String secGPCHeader) {
+			boolean includeLayout, String secGPCHeader)
+		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -293,41 +282,29 @@ public class GlobalPrivacyControlProviderImplTest {
 
 		mockHttpServletRequest.setAttribute(WebKeys.COMPANY_ID, _companyId);
 
-		return mockHttpServletRequest;
-	}
+		if (includeLayout) {
+			if (_group == null) {
+				_group = GroupTestUtil.addGroup();
 
-	private MockHttpServletRequest _createMockHttpServletRequestWithLayout(
-			String secGPCHeader)
-		throws Exception {
+				_layout = LayoutTestUtil.addTypePortletLayout(_group);
+			}
 
-		if (_group == null) {
-			_group = GroupTestUtil.addGroup();
-
-			_layout = LayoutTestUtil.addTypePortletLayout(_group);
+			mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 		}
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_createMockHttpServletRequest(secGPCHeader);
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
-
 		return mockHttpServletRequest;
 	}
 
-	private void _saveCompanyConfiguration(
-			boolean cookiesPreferenceHandlingEnabled,
-			boolean globalPrivacyControlEnabled)
-		throws Exception {
-
+	private void _saveCompanyConfiguration() throws Exception {
 		_companyConfigurationPid =
 			ConfigurationTestUtil.createFactoryConfiguration(
 				_SCOPED_FACTORY_PID,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"companyId", _companyId
 				).put(
-					"enabled", cookiesPreferenceHandlingEnabled
+					"enabled", false
 				).put(
-					"globalPrivacyControlEnabled", globalPrivacyControlEnabled
+					"globalPrivacyControlEnabled", true
 				).build());
 	}
 

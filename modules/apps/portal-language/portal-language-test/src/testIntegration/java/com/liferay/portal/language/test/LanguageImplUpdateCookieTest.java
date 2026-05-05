@@ -94,6 +94,6 @@ public class LanguageImplUpdateCookieTest {
 	}
 
 	@Inject
-	private static Language _language;
+	private Language _language;
 
 }

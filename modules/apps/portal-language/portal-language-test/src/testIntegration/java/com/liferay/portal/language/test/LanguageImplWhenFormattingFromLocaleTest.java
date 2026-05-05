@@ -123,6 +123,6 @@ public class LanguageImplWhenFormattingFromLocaleTest {
 	}
 
 	@Inject
-	private static Language _language;
+	private Language _language;
 
 }

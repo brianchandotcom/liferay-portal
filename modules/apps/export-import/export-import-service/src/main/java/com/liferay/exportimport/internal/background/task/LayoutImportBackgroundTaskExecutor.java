@@ -111,8 +111,7 @@ public class LayoutImportBackgroundTaskExecutor
 			_exportImportReportEntryLocalService.
 				getExportImportReportEntriesCount(
 					exportImportConfiguration.getCompanyId(),
-					exportImportConfiguration.
-						getExportImportConfigurationId());
+					exportImportConfiguration.getExportImportConfigurationId());
 
 		if (count > 0) {
 			return BackgroundTaskResult.COMPLETED_WITH_ERRORS;

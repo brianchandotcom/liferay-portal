@@ -206,6 +206,7 @@ public class ExportImportReportEntryLocalServiceTest {
 			RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			exportImportConfigurationId, RandomTestUtil.randomString());
+
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
@@ -217,6 +218,7 @@ public class ExportImportReportEntryLocalServiceTest {
 			RandomTestUtil.randomLong(), company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			exportImportConfigurationId, RandomTestUtil.randomString());
+
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
 			RandomTestUtil.randomLong(), company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),

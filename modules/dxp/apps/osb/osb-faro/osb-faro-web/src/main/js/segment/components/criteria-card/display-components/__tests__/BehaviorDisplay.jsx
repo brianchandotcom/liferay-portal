@@ -10,6 +10,7 @@ import {
 } from 'segment/segment-editor/dynamic/utils/constants';
 import {List, Map} from 'immutable';
 import {Property, Segment} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 import {withReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 
 jest.unmock('react-dom');
@@ -71,6 +72,7 @@ describe('BehaviorDisplay', () => {
 				criterion={mockCriterion}
 				property={mockProperty}
 				segment={mockSegment}
+				segmentType={SegmentTypes.Batch}
 			/>
 		);
 

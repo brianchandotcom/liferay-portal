@@ -5,29 +5,41 @@
 
 import React, {useMemo} from 'react';
 
-const DATE_OPTIONS: Intl.DateTimeFormatOptions = {
-	day: 'numeric',
-	month: 'short',
-	timeZone: Liferay.ThemeDisplay.getTimeZone(),
-	year: 'numeric',
-};
+function getDateOptions(): Intl.DateTimeFormatOptions {
+	return {
+		day: 'numeric',
+		month: 'short',
+		timeZone: Liferay.ThemeDisplay.getTimeZone(),
+		year: 'numeric',
+	};
+}
 
-const CALENDAR_DAY_OPTIONS: Intl.DateTimeFormatOptions = {
-	day: '2-digit',
-	month: '2-digit',
-	timeZone: Liferay.ThemeDisplay.getTimeZone(),
-	year: 'numeric',
-};
+function getCalendarDayOptions(): Intl.DateTimeFormatOptions {
+	return {
+		day: '2-digit',
+		month: '2-digit',
+		timeZone: Liferay.ThemeDisplay.getTimeZone(),
+		year: 'numeric',
+	};
+}
 
-const CALENDAR_DAY_FORMATTER = new Intl.DateTimeFormat(
-	'en-US',
-	CALENDAR_DAY_OPTIONS
-);
+let _calendarDayFormatter: Intl.DateTimeFormat | null = null;
+
+function getCalendarDayFormatter(): Intl.DateTimeFormat {
+	if (!_calendarDayFormatter) {
+		_calendarDayFormatter = new Intl.DateTimeFormat(
+			'en-US',
+			getCalendarDayOptions()
+		);
+	}
+
+	return _calendarDayFormatter;
+}
 
 function getCalendarDayKey(date: Date): number {
 	const parts: Record<string, string> = {};
 
-	for (const part of CALENDAR_DAY_FORMATTER.formatToParts(date)) {
+	for (const part of getCalendarDayFormatter().formatToParts(date)) {
 		parts[part.type] = part.value;
 	}
 
@@ -50,7 +62,7 @@ const ReviewDateRenderer = ({
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 	const formatter = useMemo(
-		() => new Intl.DateTimeFormat(locale, DATE_OPTIONS),
+		() => new Intl.DateTimeFormat(locale, getDateOptions()),
 		[locale]
 	);
 

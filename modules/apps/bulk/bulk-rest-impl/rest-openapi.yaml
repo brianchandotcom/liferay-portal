@@ -35,6 +35,7 @@ components:
                     DeleteObjectBulkSelectionAction: "#/components/schemas/DeleteObjectBulkSelectionAction"
                     DeleteObjectEntryBulkSelectionAction: "#/components/schemas/DeleteObjectEntryBulkSelectionAction"
                     DueDateObjectBulkSelectionAction: "#/components/schemas/DueDateObjectBulkSelectionAction"
+                    DuplicateObjectBulkSelectionAction: "#/components/schemas/DuplicateObjectBulkSelectionAction"
                     EditObjectCategoriesBulkSelectionAction: "#/components/schemas/EditObjectCategoriesBulkSelectionAction"
                     EditObjectTagsBulkSelectionAction: "#/components/schemas/EditObjectTagsBulkSelectionAction"
                     ExpireObjectBulkSelectionAction: "#/components/schemas/ExpireObjectBulkSelectionAction"
@@ -62,6 +63,7 @@ components:
                         -   DeleteObjectBulkSelectionAction
                         -   DeleteObjectEntryBulkSelectionAction
                         -   DueDateObjectBulkSelectionAction
+                        -   DuplicateObjectBulkSelectionAction
                         -   ExpireObjectBulkSelectionAction
                         -   EditObjectTagsBulkSelectionAction
                         -   MoveObjectBulkSelectionAction
@@ -169,6 +171,9 @@ components:
                         dueDate:
                             format: date-time
                             type: string
+        DuplicateObjectBulkSelectionAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
         EditObjectCategoriesBulkSelectionAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"

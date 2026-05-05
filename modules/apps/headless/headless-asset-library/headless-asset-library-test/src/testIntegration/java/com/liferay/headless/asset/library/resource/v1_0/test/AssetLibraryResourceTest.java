@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -250,6 +251,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
 			defaultLanguageId, logoColor, new MimeTypeLimit[0], sharingEnabled,
 			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
+
+		_testPatchAssetLibraryFriendlyURL();
+		_testPatchAssetLibraryFriendlyURLValidation();
 	}
 
 	@Override
@@ -353,6 +357,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		throws Exception {
 
 		AssetLibrary assetLibrary = super.randomAssetLibrary();
+
+		assetLibrary.setFriendlyURL((String)null);
 
 		assetLibrary.setSettings(
 			new Settings() {
@@ -501,6 +507,28 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return assetLibraryResource.postAssetLibrary(randomAssetLibrary());
 	}
 
+	private void _assertFriendlyURLValidationFailure(
+			String friendlyURL, String expectedType)
+		throws Exception {
+
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		assetLibrary.setFriendlyURL(friendlyURL);
+
+		try {
+			assetLibraryResource.patchAssetLibrary(
+				assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(expectedType, problem.getType());
+		}
+	}
+
 	private void _assertGroupDepotEntryType(AssetLibrary assetLibrary)
 		throws Exception {
 
@@ -604,6 +632,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		AssetLibrary assetLibrary = super.randomAssetLibrary();
 
+		assetLibrary.setFriendlyURL((String)null);
+
 		if (provideSettings) {
 			assetLibrary.setSettings(
 				new Settings() {
@@ -620,6 +650,50 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			RandomTestUtil.randomEnum(AssetLibrary.Type.class));
 
 		return assetLibrary;
+	}
+
+	private void _testPatchAssetLibraryFriendlyURL() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		Assert.assertEquals(
+			"/asset-library-" + assetLibrary.getId(),
+			assetLibrary.getFriendlyURL());
+
+		String customFriendlyURL = StringUtil.toLowerCase(
+			"/cms-friendly-url-" + RandomTestUtil.randomString());
+
+		assetLibrary.setFriendlyURL(customFriendlyURL);
+
+		assetLibrary = assetLibraryResource.patchAssetLibrary(
+			assetLibrary.getExternalReferenceCode(), assetLibrary);
+
+		Assert.assertEquals(customFriendlyURL, assetLibrary.getFriendlyURL());
+	}
+
+	private void _testPatchAssetLibraryFriendlyURLValidation()
+		throws Exception {
+
+		_assertFriendlyURLValidationFailure(
+			"/api", "FRIENDLY_URL_KEYWORD_CONFLICT");
+
+		_assertFriendlyURLValidationFailure(
+			"/.", "FRIENDLY_URL_INVALID_CHARACTERS");
+
+		_assertFriendlyURLValidationFailure(
+			"/" + "a".repeat(256), "FRIENDLY_URL_TOO_LONG");
+
+		AssetLibrary firstAssetLibrary = _addAssetLibrary();
+
+		String existingFriendlyURL =
+			"/cms-dup-" + RandomTestUtil.randomString();
+
+		firstAssetLibrary.setFriendlyURL(existingFriendlyURL);
+
+		assetLibraryResource.patchAssetLibrary(
+			firstAssetLibrary.getExternalReferenceCode(), firstAssetLibrary);
+
+		_assertFriendlyURLValidationFailure(
+			existingFriendlyURL, "FRIENDLY_URL_DUPLICATE");
 	}
 
 	private void _testPostAssetLibrary(MimeTypeLimit[] mimeTypeLimits)

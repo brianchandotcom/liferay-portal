@@ -18,6 +18,7 @@
 		"dynamic-data-mapping-form-field-type": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
+		"libphonenumber-js": "1.12.42",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"uuid": "9.0.0"

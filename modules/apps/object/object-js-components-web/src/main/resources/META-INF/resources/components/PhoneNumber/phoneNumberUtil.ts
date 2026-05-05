@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {parsePhoneNumberFromString} from 'libphonenumber-js/min';
+
 export interface CountryInfo {
 	a2: string;
 	idd: string;
@@ -150,6 +152,19 @@ export function getFlagSymbol(a2: string): string {
 	return FLAG_ICON_MAP[a2.toUpperCase()] || '';
 }
 
+/**
+ * Splits an E.164 phone number (e.g. "+18775433729") into its country and
+ * local-number parts (e.g. {countryA2: "US", localNumber: "8775433729"}).
+ *
+ * Many countries share the same calling code, so the National Destination
+ * Code is used to pick the right one — "+1877…" resolves to US while "+1416…"
+ * resolves to CA. The detected country is only returned when it appears in
+ * `countries`; otherwise the function falls back to matching the longest IDD
+ * prefix from `countries`.
+ *
+ * Values that don't start with "+" are returned as-is in `localNumber` with an
+ * empty `countryA2`.
+ */
 export function parsePhoneValue(
 	value: string,
 	countries: CountryInfo[] = DEFAULT_COUNTRIES
@@ -157,17 +172,32 @@ export function parsePhoneValue(
 	countryA2: string;
 	localNumber: string;
 } {
-	const digits = value.slice(1);
-
 	if (!value || !value.startsWith('+')) {
-		return {countryA2: '', localNumber: digits || ''};
+		return {countryA2: '', localNumber: value || ''};
 	}
 
-	// Including DEFAULT_COUNTRIES to match the more common countries first.
-	// This will be re-adjusted once we can identify the country using the NDC.
-	// See LPD-85417.
+	const parsed = parsePhoneNumberFromString(value);
 
-	const countriesByIddLength = [...DEFAULT_COUNTRIES, ...countries].sort(
+	if (parsed?.country) {
+		const isSupportedCountry = countries.some(
+			(country) => country.a2 === parsed.country
+		);
+
+		if (isSupportedCountry) {
+			return {
+				countryA2: parsed.country,
+				localNumber: parsed.nationalNumber,
+			};
+		}
+	}
+
+	// Fallback: the parsed country is not in the backend-provided list (or the
+	// number could not be parsed). Match by calling code against the allowed
+	// countries, preferring the longest IDD prefix.
+
+	const digits = value.slice(1); // Removes the "+" in the value.
+
+	const countriesByIddLength = [...countries].sort(
 		(a, b) => b.idd.length - a.idd.length
 	);
 
@@ -175,7 +205,8 @@ export function parsePhoneValue(
 		if (digits.startsWith(country.idd)) {
 			return {
 				countryA2: country.a2,
-				localNumber: digits.slice(country.idd.length),
+				localNumber:
+					parsed?.nationalNumber ?? digits.slice(country.idd.length),
 			};
 		}
 	}

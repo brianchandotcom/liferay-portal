@@ -11,9 +11,8 @@ module "envoy_proxy_role" {
 		}
 	}
 	policy_name="${var.deployment_name}-AWS-Gateway-Controller"
-	source="terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
+	source="git::https://github.com/terraform-aws-modules/terraform-aws-iam.git//modules/iam-role-for-service-accounts?ref=277e8947b1267290988e47882d8dc116850929be"
 	use_name_prefix=false
-	version="6.4.0"
 }
 resource "helm_release" "envoy_gateway" {
 	chart="gateway-helm"

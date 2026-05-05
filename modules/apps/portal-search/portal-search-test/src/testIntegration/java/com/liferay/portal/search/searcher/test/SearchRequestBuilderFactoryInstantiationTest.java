@@ -42,6 +42,6 @@ public class SearchRequestBuilderFactoryInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

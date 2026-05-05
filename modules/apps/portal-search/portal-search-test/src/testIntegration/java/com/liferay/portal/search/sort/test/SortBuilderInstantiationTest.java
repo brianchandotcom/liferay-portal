@@ -45,6 +45,6 @@ public class SortBuilderInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static SortBuilderFactory _sortBuilderFactory;
+	private SortBuilderFactory _sortBuilderFactory;
 
 }

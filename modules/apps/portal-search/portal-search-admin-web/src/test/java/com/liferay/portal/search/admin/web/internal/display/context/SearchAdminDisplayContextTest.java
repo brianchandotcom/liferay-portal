@@ -254,9 +254,8 @@ public class SearchAdminDisplayContextTest {
 		_mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 	}
 
-	private static MockRenderRequest _mockRenderRequest;
-
 	private Language _language;
+	private MockRenderRequest _mockRenderRequest;
 	private final PermissionChecker _permissionChecker = Mockito.mock(
 		PermissionChecker.class);
 	private final Portal _portal = Mockito.mock(Portal.class);

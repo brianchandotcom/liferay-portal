@@ -180,7 +180,8 @@ public class TypeFacetPortletSharedSearchContributorTest {
 	private static final PortletSharedSearchSettings
 		_portletSharedSearchSettings = Mockito.mock(
 			PortletSharedSearchSettings.class);
-	private static TypeFacetPortletSharedSearchContributor
+
+	private TypeFacetPortletSharedSearchContributor
 		_typeFacetPortletSharedSearchContributor;
 
 }

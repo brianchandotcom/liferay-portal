@@ -285,11 +285,6 @@ public class UpgradePortletPreferencesTest {
 		UserFacetPortletKeys.USER_FACET + "_INSTANCE_%"
 	};
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.search.web.internal.upgrade.registry.SearchWebUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private EntityCache _entityCache;
 
@@ -305,5 +300,10 @@ public class UpgradePortletPreferencesTest {
 	private MultiVMPool _multiVMPool;
 
 	private String[] _portletIds;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.search.web.internal.upgrade.registry.SearchWebUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

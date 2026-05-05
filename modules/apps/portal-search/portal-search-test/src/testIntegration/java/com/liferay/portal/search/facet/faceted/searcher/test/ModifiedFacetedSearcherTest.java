@@ -119,6 +119,6 @@ public class ModifiedFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	}
 
 	@Inject
-	private static ModifiedFacetFactory _modifiedFacetFactory;
+	private ModifiedFacetFactory _modifiedFacetFactory;
 
 }

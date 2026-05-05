@@ -456,6 +456,6 @@ public class AggregationsInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static Aggregations _aggregations;
+	private Aggregations _aggregations;
 
 }

@@ -47,6 +47,6 @@ public class SignificanceHeuristicsInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static SignificanceHeuristics _significanceHeuristics;
+	private SignificanceHeuristics _significanceHeuristics;
 
 }

@@ -1194,11 +1194,12 @@ public class CPDefinitionLocalServiceImpl
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								StringBundler.concat(
-									"Unable to find option value with ID ",
-									newCPDefinitionOptionRelId,
-									" and key ",
-									sourceCPDefinitionOptionValueRel.getKey()
-									));
+									"Unable to find commerce product ",
+									"definition option value relationship ",
+									"with commerce product definition option ",
+									"relationship ID ",
+									newCPDefinitionOptionRelId, " and key ",
+									sourceCPDefinitionOptionValueRel.getKey()));
 						}
 
 						break;

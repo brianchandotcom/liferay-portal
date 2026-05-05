@@ -102,6 +102,38 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 	</#list>
 
 	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		<#list entity.uniqueEntityFinders as entityFinder>
+			<#assign entityColumns = entityFinder.entityColumns />
+
+			/**
+			 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found. Uses the finder cache.
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+			 */
+			public default ${entity.name} fetchBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.type} ${entityColumn.name}
+
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
+
+			) {
+				return fetchBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
+
+				true);
+			}
+		</#list>
+
 		<#list entity.collectionEntityFinders as entityFinder>
 			<#assign entityColumns = entityFinder.entityColumns />
 

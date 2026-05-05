@@ -13,13 +13,14 @@ import {
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import {isValidPhoneNumber} from 'libphonenumber-js/min';
 import React, {useState} from 'react';
 
 import type {
 	FieldChangeEventHandler,
 	LocalizedValue,
 } from 'dynamic-data-mapping-form-field-type';
+
+const PHONE_NUMBER_PATTERN = /^\+[0-9]{7,15}$/;
 
 interface BasePhoneNumberProps {
 	countries?: CountryInfo[];
@@ -69,7 +70,7 @@ const LocalizablePhoneNumber = ({
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || (otherProps.disabled as boolean);
 	const label = otherProps.label as string;
-	const hasError = !!currentValue && !isValidPhoneNumber(currentValue);
+	const hasError = !!currentValue && !PHONE_NUMBER_PATTERN.test(currentValue);
 
 	const handleLocalChange = (event: {target: {value: string}}) => {
 		const nextValue = {
@@ -139,7 +140,8 @@ const NonLocalizablePhoneNumber = ({
 
 	const disabled = readOnly || (otherProps.disabled as boolean);
 	const label = otherProps.label as string;
-	const hasError = !!combinedValue && !isValidPhoneNumber(combinedValue);
+	const hasError =
+		!!combinedValue && !PHONE_NUMBER_PATTERN.test(combinedValue);
 
 	return (
 		<FieldBase

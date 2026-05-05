@@ -9,7 +9,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import i18n from '~/utils/I18n';
 import {useAppContext} from '~/features/project/context';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import useUserAccountsByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
@@ -18,6 +17,8 @@ import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	getContactRoleByFilter,
 } from '~/features/project/utils/getHighPriorityContacts';
+import i18n from '~/utils/I18n';
+
 import IncidentContactEditForm from './components/IncidentContactEditModal';
 import IncidentContactsButton from './components/IncidentContactsButton';
 
@@ -31,31 +32,28 @@ const IncidentContactCard = ({
 	const [{project}] = useAppContext();
 	const incidentContactStandard = 2;
 
-	const {
-		data: myUserAccountData,
-		loading: myUserAccountLoading
-	} = useMyUserAccountByAccountExternalReferenceCode(
-		project?.accountKey,
-		!project?.accountKey
-	);
-	const [
-		,
-		{data: userAccountsData, loading: userAccountsLoading, refetch},
-	] = useUserAccountsByAccountExternalReferenceCode(project?.accountKey, !project?.accountKey);
+	const {data: myUserAccountData, loading: myUserAccountLoading} =
+		useMyUserAccountByAccountExternalReferenceCode(
+			project?.accountKey,
+			!project?.accountKey
+		);
+	const [, {data: userAccountsData, loading: userAccountsLoading, refetch}] =
+		useUserAccountsByAccountExternalReferenceCode(
+			project?.accountKey,
+			!project?.accountKey
+		);
 
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 	const hasAdministratorRole =
 		loggedUserAccount?.selectedAccountSummary.hasAdministratorRole;
 
-	const [
-		currentHighPriorityContacts,
-		setCurrentHighPriorityContacts,
-	] = useState({
-		cloudNative: [],
-		criticalIncident: [],
-		privacyBreach: [],
-		securityBreach: [],
-	});
+	const [currentHighPriorityContacts, setCurrentHighPriorityContacts] =
+		useState({
+			cloudNative: [],
+			criticalIncident: [],
+			privacyBreach: [],
+			securityBreach: [],
+		});
 
 	const [modalFilter, setModalFilter] = useState();
 	const [modalMonitoring, setModalMonitoring] = useState();
@@ -71,10 +69,17 @@ const IncidentContactCard = ({
 		setModalMonitoring(false);
 	};
 
-	const lxcProductNames = [PRODUCT_TYPES.liferayCloud, PRODUCT_TYPES.liferayExperienceCloud];
+	const lxcProductNames = [
+		PRODUCT_TYPES.liferayCloud,
+		PRODUCT_TYPES.liferayExperienceCloud,
+	];
 
-	const isLXCEnvironment = accountSubscriptionGroupsNames?.some(name =>
+	const isLXCEnvironment = accountSubscriptionGroupsNames?.some((name) =>
 		lxcProductNames.includes(name)
+	);
+
+	const isNative = accountSubscriptionGroupsNames?.some(
+		(name) => name === PRODUCT_TYPES.cloudNative
 	);
 
 	const getHighPriorityContactsByFilterRAYSOURCE = async (filter) => {
@@ -92,9 +97,10 @@ const IncidentContactCard = ({
 					selectedAccountSummary,
 					userAccountContactInformation,
 				} = account;
-				const primaryPhoneNumber = userAccountContactInformation?.telephones.map(
-					(phone) => (phone.primary ? phone.phoneNumber : [])
-				);
+				const primaryPhoneNumber =
+					userAccountContactInformation?.telephones.map((phone) =>
+						phone.primary ? phone.phoneNumber : []
+					);
 
 				return {
 					contact: primaryPhoneNumber ?? [],
@@ -117,13 +123,15 @@ const IncidentContactCard = ({
 				for (const filter of Object.keys(
 					HIGH_PRIORITY_CONTACT_CATEGORIES
 				)) {
-					const contacts = await getHighPriorityContactsByFilterRAYSOURCE(
-						getContactRoleByFilter(filter)
-					);
+					const contacts =
+						await getHighPriorityContactsByFilterRAYSOURCE(
+							getContactRoleByFilter(filter)
+						);
 					updatedFilteredContacts[filter] = contacts;
 				}
 				setCurrentHighPriorityContacts(updatedFilteredContacts);
-			} catch (error) {
+			}
+			catch (error) {
 				console.error(
 					i18n.translate('error-fetching-high-priority-contacts'),
 					error
@@ -134,7 +142,7 @@ const IncidentContactCard = ({
 		fetchHighPriorityContacts();
 	}, [modalMonitoring, !project?.accountKey, userAccountsData]);
 
-	const generateContactBody = ({contact, email, name, id}) => (
+	const generateContactBody = ({contact, email, id, name}) => (
 		<div className="customer-portal-cards" key={id}>
 			<h4>{email}</h4>
 
@@ -152,33 +160,29 @@ const IncidentContactCard = ({
 		</div>
 	);
 
-	const cloudNativeContacts = currentHighPriorityContacts.cloudNative?.map(
-		generateContactBody
-	);
+	const cloudNativeContacts =
+		currentHighPriorityContacts.cloudNative?.map(generateContactBody);
 
-	const criticalIncidentContacts = currentHighPriorityContacts.criticalIncident?.map(
-		generateContactBody
-	);
+	const criticalIncidentContacts =
+		currentHighPriorityContacts.criticalIncident?.map(generateContactBody);
 
-	const privacyBreachContacts = currentHighPriorityContacts.privacyBreach?.map(
-		generateContactBody
-	);
+	const privacyBreachContacts =
+		currentHighPriorityContacts.privacyBreach?.map(generateContactBody);
 
-	const securityBreachContacts = currentHighPriorityContacts.securityBreach?.map(
-		generateContactBody
-	);
+	const securityBreachContacts =
+		currentHighPriorityContacts.securityBreach?.map(generateContactBody);
 
-	const hasCloudNativeContact = !!currentHighPriorityContacts.cloudNative
-		?.length;
+	const hasCloudNativeContact =
+		!!currentHighPriorityContacts.cloudNative?.length;
 
-	const hasCriticalIncidentContact = !!currentHighPriorityContacts
-		.criticalIncident?.length;
+	const hasCriticalIncidentContact =
+		!!currentHighPriorityContacts.criticalIncident?.length;
 
-	const hasPrivacyBreachContact = !!currentHighPriorityContacts.privacyBreach
-		?.length;
+	const hasPrivacyBreachContact =
+		!!currentHighPriorityContacts.privacyBreach?.length;
 
-	const hasSecurityBreachContact = !!currentHighPriorityContacts
-		.securityBreach?.length;
+	const hasSecurityBreachContact =
+		!!currentHighPriorityContacts.securityBreach?.length;
 
 	const handleOnClick = (highPriorityContactCategory) => {
 		setModalFilter(highPriorityContactCategory);
@@ -191,182 +195,199 @@ const IncidentContactCard = ({
 				<ClayLoadingIndicator />
 			) : (
 				hasActiveProduct &&
-				userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
-					.length > 0 && (
+				userAccountsData?.accountUserAccountsByExternalReferenceCode
+					?.items.length > 0 && (
 					<>
-						<div
-							className={classNames('customer-portal-card-footer', {
-								'customer-portal-card-footer-style-ac': !isLXCEnvironment,
-								'customer-portal-card-footer-style-lxc': isLXCEnvironment,
-							})}
-						>
-							<div className="customer-portal-card-footer-title">
-								<h1>{i18n.translate('incident-contacts')}</h1>
-							</div>
-
-							<>
-								<div className="customer-portal-card-footer-description">
-									<p>
-										{i18n.translate(
-											'team-members-who-can-be-contacted-with-high-priority-messages'
-										)}
-									</p>
+						{!isNative && (
+							<div
+								className={classNames(
+									'customer-portal-card-footer',
+									{
+										'customer-portal-card-footer-style-ac':
+											!isLXCEnvironment,
+										'customer-portal-card-footer-style-lxc':
+											isLXCEnvironment,
+									}
+								)}
+							>
+								<div className="customer-portal-card-footer-title">
+									<h1>
+										{i18n.translate('incident-contacts')}
+									</h1>
 								</div>
 
-								<div className="w-100">
-									<div className="customer-portal-card-title row">
-										<div
-											className={classNames(
-												'customer-portal-card-description',
-												{
-													'col': !isLXCEnvironment,
-													'col-4': isLXCEnvironment,
-												}
+								<>
+									<div className="customer-portal-card-footer-description">
+										<p>
+											{i18n.translate(
+												'team-members-who-can-be-contacted-with-high-priority-messages'
 											)}
-										>
-											<h3 className="pb-1">
-												{i18n.translate(
-													'critical-incident-contacts'
-												)}
+										</p>
+									</div>
 
-												{hasCriticalIncidentContact &&
-													hasAdministratorRole && (
-														<ClayIcon
-															onClick={() =>
-																handleOnClick(
-																	HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
-																)
-															}
-															symbol="pencil"
-														/>
-													)}
-											</h3>
-
+									<div className="w-100">
+										<div className="customer-portal-card-title row">
 											<div
-												className={classNames('pr-1', {
-													'customer-portal-card-description-scroll scroller':
-														currentHighPriorityContacts
-															.criticalIncident
-															?.length >
-														incidentContactStandard,
-												})}
+												className={classNames(
+													'customer-portal-card-description',
+													{
+														'col': !isLXCEnvironment,
+														'col-4':
+															isLXCEnvironment,
+													}
+												)}
 											>
-												{hasCriticalIncidentContact
-													? criticalIncidentContacts
-													: hasAdministratorRole && (
-															<IncidentContactsButton
+												<h3 className="pb-1">
+													{i18n.translate(
+														'critical-incident-contacts'
+													)}
+
+													{hasCriticalIncidentContact &&
+														hasAdministratorRole && (
+															<ClayIcon
 																onClick={() =>
 																	handleOnClick(
 																		HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 																	)
 																}
+																symbol="pencil"
 															/>
-													)}
-											</div>
-										</div>
-
-										{isLXCEnvironment && (
-											<>
-												<div className="col customer-portal-card-description pl-4">
-													<h3 className="pb-1">
-														{i18n.translate(
-															'security-breach-contact'
 														)}
+												</h3>
 
-														{hasSecurityBreachContact &&
-															hasAdministratorRole && (
-																<ClayIcon
+												<div
+													className={classNames(
+														'pr-1',
+														{
+															'customer-portal-card-description-scroll scroller':
+																currentHighPriorityContacts
+																	.criticalIncident
+																	?.length >
+																incidentContactStandard,
+														}
+													)}
+												>
+													{hasCriticalIncidentContact
+														? criticalIncidentContacts
+														: hasAdministratorRole && (
+																<IncidentContactsButton
 																	onClick={() =>
 																		handleOnClick(
-																			HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach
+																			HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 																		)
 																	}
-																	symbol="pencil"
 																/>
 															)}
-													</h3>
+												</div>
+											</div>
 
-													<div
-														className={classNames(
-															'pr-1',
-															{
-																'customer-portal-card-description-scroll scroller':
-																	currentHighPriorityContacts
-																		.securityBreach
-																		?.length >
-																	incidentContactStandard,
-															}
-														)}
-													>
-														{hasSecurityBreachContact
-															? securityBreachContacts
-															: hasAdministratorRole && (
-																	<IncidentContactsButton
+											{isLXCEnvironment && (
+												<>
+													<div className="col customer-portal-card-description pl-4">
+														<h3 className="pb-1">
+															{i18n.translate(
+																'security-breach-contact'
+															)}
+
+															{hasSecurityBreachContact &&
+																hasAdministratorRole && (
+																	<ClayIcon
 																		onClick={() =>
 																			handleOnClick(
 																				HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach
 																			)
 																		}
+																		symbol="pencil"
 																	/>
+																)}
+														</h3>
+
+														<div
+															className={classNames(
+																'pr-1',
+																{
+																	'customer-portal-card-description-scroll scroller':
+																		currentHighPriorityContacts
+																			.securityBreach
+																			?.length >
+																		incidentContactStandard,
+																}
 															)}
+														>
+															{hasSecurityBreachContact
+																? securityBreachContacts
+																: hasAdministratorRole && (
+																		<IncidentContactsButton
+																			onClick={() =>
+																				handleOnClick(
+																					HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach
+																				)
+																			}
+																		/>
+																	)}
+														</div>
 													</div>
-												</div>
 
-												<div className="col customer-portal-card-description pl-4">
-													<h3 className="pb-1">
-														{i18n.translate(
-															'privacy-breach-contact'
-														)}
-
-														{hasPrivacyBreachContact &&
-															hasAdministratorRole && (
-																<ClayIcon
-																	onClick={() =>
-																		handleOnClick(
-																			HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach
-																		)
-																	}
-																	symbol="pencil"
-																/>
+													<div className="col customer-portal-card-description pl-4">
+														<h3 className="pb-1">
+															{i18n.translate(
+																'privacy-breach-contact'
 															)}
-													</h3>
 
-													<div
-														className={classNames(
-															'pr-1',
-															{
-																'customer-portal-card-description-scroll scroller':
-																	currentHighPriorityContacts
-																		.privacyBreach
-																		?.length >
-																	incidentContactStandard,
-															}
-														)}
-													>
-														{hasPrivacyBreachContact
-															? privacyBreachContacts
-															: hasAdministratorRole && (
-																	<IncidentContactsButton
+															{hasPrivacyBreachContact &&
+																hasAdministratorRole && (
+																	<ClayIcon
 																		onClick={() =>
 																			handleOnClick(
 																				HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach
 																			)
 																		}
+																		symbol="pencil"
 																	/>
-															)}
-													</div>
-												</div>
-											</>
-										)}
-									</div>
-								</div>
-							</>
-						</div>
+																)}
+														</h3>
 
-						{hasDXPCloudSubscription && (
+														<div
+															className={classNames(
+																'pr-1',
+																{
+																	'customer-portal-card-description-scroll scroller':
+																		currentHighPriorityContacts
+																			.privacyBreach
+																			?.length >
+																		incidentContactStandard,
+																}
+															)}
+														>
+															{hasPrivacyBreachContact
+																? privacyBreachContacts
+																: hasAdministratorRole && (
+																		<IncidentContactsButton
+																			onClick={() =>
+																				handleOnClick(
+																					HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach
+																				)
+																			}
+																		/>
+																	)}
+														</div>
+													</div>
+												</>
+											)}
+										</div>
+									</div>
+								</>
+							</div>
+						)}
+
+						{!hasDXPCloudSubscription && isNative && (
 							<div className="customer-portal-card-footer customer-portal-card-footer-style-ac">
 								<div className="customer-portal-card-footer-title">
-									<h1>{i18n.translate('cloud-native-contacts')}</h1>
+									<h1>
+										{i18n.translate(
+											'cloud-native-contacts'
+										)}
+									</h1>
 								</div>
 
 								<div className="customer-portal-card-footer-description">
@@ -417,7 +438,7 @@ const IncidentContactCard = ({
 																	)
 																}
 															/>
-													)}
+														)}
 											</div>
 										</div>
 									</div>
@@ -446,9 +467,7 @@ const IncidentContactCard = ({
 									hasSecurityBreachContact={
 										hasSecurityBreachContact
 									}
-									leftButton={i18n.translate(
-										'cancel'
-									)}
+									leftButton={i18n.translate('cancel')}
 									modalFilter={modalFilter}
 								/>
 							</ClayModal>

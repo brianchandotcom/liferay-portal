@@ -7,31 +7,39 @@ package com.liferay.layout.seo.internal.canonical.url;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
+import com.liferay.layout.seo.contributor.LayoutSEOCanonicalURLContributor;
 import com.liferay.layout.seo.internal.configuration.LayoutSEOCompanyConfiguration;
 import com.liferay.layout.seo.internal.util.AlternateURLMapperProvider;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -52,12 +60,15 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 		String layoutCanonicalURL = _getLayoutCanonicalURL(locale, layout);
 
-		if (Validator.isNotNull(layoutCanonicalURL)) {
-			return layoutCanonicalURL;
+		if (Validator.isNull(layoutCanonicalURL)) {
+			layoutCanonicalURL = _getDefaultCanonicalURL(
+				layout, locale, canonicalURL, themeDisplay);
 		}
 
-		return _getDefaultCanonicalURL(
-			layout, locale, canonicalURL, themeDisplay);
+		layoutCanonicalURL = _appendContributedParameters(
+			layoutCanonicalURL, layout);
+
+		return HttpComponentsUtil.sortParameters(layoutCanonicalURL);
 	}
 
 	@Override
@@ -108,15 +119,63 @@ public class LayoutSEOCanonicalURLProviderImpl
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(BundleContext bundleContext) {
 		_alternateURLMapperProvider = new AlternateURLMapperProvider(
 			_assetDisplayPageFriendlyURLProvider, _classNameLocalService,
 			_portal);
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, LayoutSEOCanonicalURLContributor.class,
+			"jakarta.portlet.name");
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_alternateURLMapperProvider = null;
+
+		_serviceTrackerMap.close();
+	}
+
+	private String _appendContributedParameters(
+		String canonicalURL, Layout layout) {
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		if (httpServletRequest == null) {
+			return canonicalURL;
+		}
+
+		Map<String, String[]> parameters = new HashMap<>();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
+			LayoutSEOCanonicalURLContributor layoutCanonicalURLContributor =
+				_serviceTrackerMap.getService(portlet.getRootPortletId());
+
+			if (layoutCanonicalURLContributor == null) {
+				continue;
+			}
+
+			parameters.putAll(
+				layoutCanonicalURLContributor.contributeURLParameters(
+					httpServletRequest, layout.getPlid(),
+					portlet.getPortletId()));
+		}
+
+		if (parameters.isEmpty()) {
+			return canonicalURL;
+		}
+
+		String queryString = HttpComponentsUtil.parameterMapToString(
+			parameters, false);
+
+		if (canonicalURL.contains(StringPool.QUESTION)) {
+			return canonicalURL + StringPool.AMPERSAND + queryString;
+		}
+
+		return canonicalURL + StringPool.QUESTION + queryString;
 	}
 
 	private String _getDefaultCanonicalURL(
@@ -198,5 +257,8 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 	@Reference
 	private Portal _portal;
+
+	private ServiceTrackerMap<String, LayoutSEOCanonicalURLContributor>
+		_serviceTrackerMap;
 
 }

@@ -10,6 +10,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
+import com.liferay.layout.seo.provider.LayoutSetSEORobotsProvider;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.util.template.LayoutConverterRegistry;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -57,7 +58,7 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
 				_itemSelector, layoutActionsHelper, _layoutService,
-				_layoutSetPrototypeHelper,
+				_layoutSetPrototypeHelper, _layoutSetRobotsProvider,
 				_portal.getLiferayPortletRequest(actionRequest),
 				_portal.getLiferayPortletResponse(actionResponse));
 
@@ -97,6 +98,9 @@ public class GetLayoutChildrenMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+
+	@Reference
+	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
 
 	@Reference
 	private Portal _portal;

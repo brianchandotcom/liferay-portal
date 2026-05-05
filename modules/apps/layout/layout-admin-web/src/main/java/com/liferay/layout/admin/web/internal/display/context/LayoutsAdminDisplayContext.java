@@ -41,6 +41,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.seo.provider.LayoutSetSEORobotsProvider;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.theme.item.selector.LayoutThemeItemSelectorCriterion;
 import com.liferay.layout.util.comparator.LayoutCreateDateComparator;
@@ -98,6 +99,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -108,7 +110,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.RobotsUtil;
 import com.liferay.site.display.context.GroupDisplayContextHelper;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
@@ -142,6 +143,7 @@ public class LayoutsAdminDisplayContext {
 		ItemSelector itemSelector, LayoutActionsHelper layoutActionsHelper,
 		LayoutService layoutService,
 		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
+		LayoutSetSEORobotsProvider layoutSetRobotsProvider,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -149,6 +151,7 @@ public class LayoutsAdminDisplayContext {
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutService = layoutService;
 		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
+		_layoutSetRobotsProvider = layoutSetRobotsProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -1201,6 +1204,16 @@ public class LayoutsAdminDisplayContext {
 	public String getRobots() {
 		return ParamUtil.getString(
 			httpServletRequest, "robots", _getStrictRobots());
+	}
+
+	public String getRobotsContributions() {
+		LayoutSet selLayoutSet = getSelLayoutSet();
+
+		if (selLayoutSet == null) {
+			return StringPool.BLANK;
+		}
+
+		return _layoutSetRobotsProvider.getRobotsContributions(selLayoutSet);
 	}
 
 	public String getSelectFaviconEventName() {
@@ -2437,7 +2450,7 @@ public class LayoutsAdminDisplayContext {
 					layoutSet.getSettingsProperty(
 						layoutSet.isPrivateLayout() + "-robots.txt"),
 					StringUtil.read(
-						RobotsUtil.class.getClassLoader(),
+						PortalClassLoaderUtil.getClassLoader(),
 						PropsValues.ROBOTS_TXT_WITH_SITEMAP));
 			}
 			catch (IOException ioException) {
@@ -2450,7 +2463,7 @@ public class LayoutsAdminDisplayContext {
 
 		try {
 			return StringUtil.read(
-				RobotsUtil.class.getClassLoader(),
+				PortalClassLoaderUtil.getClassLoader(),
 				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 		catch (IOException ioException) {
@@ -2568,6 +2581,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutService _layoutService;
 	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
+	private final LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

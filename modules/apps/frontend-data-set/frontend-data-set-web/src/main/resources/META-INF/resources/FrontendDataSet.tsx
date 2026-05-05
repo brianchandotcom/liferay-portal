@@ -92,7 +92,7 @@ import {
 	VisibleFieldNames,
 } from './utils/types';
 import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
-import ViewsContext, {ISnapshot, ISnapshotGroup} from './views/ViewsContext';
+import ViewsContext, {ISnapshot, ISnapshots} from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
 import viewsReducer, {EViewsActionTypes} from './views/viewsReducer';
 
@@ -604,15 +604,13 @@ const FrontendDataSetContent = ({
 			oldSorts: sortsProp,
 		});
 
-		const parsedSnapshotGroups = snapshots?.map(
-			(group: ISnapshotGroup) => ({
-				...group,
-				items: group.items.map((snapshot: ISnapshot) => ({
-					...snapshot,
-					configuration: JSON.parse(snapshot.configuration),
-				})),
-			})
-		);
+		const parsedSnapshots = snapshots?.map((group: ISnapshots) => ({
+			...group,
+			items: group.items.map((snapshot: ISnapshot) => ({
+				...snapshot,
+				configuration: JSON.parse(snapshot.configuration),
+			})),
+		}));
 
 		return {
 			activeView,
@@ -621,7 +619,7 @@ const FrontendDataSetContent = ({
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,
-			snapshotGroups: parsedSnapshotGroups,
+			snapshots: parsedSnapshots,
 			snapshotsEnabled,
 			sorts,
 			views,
@@ -1823,7 +1821,9 @@ const FrontendDataSetContent = ({
 		}
 		else {
 			const snapshot = deepClone(
-				snapshots.find((view: ISnapshot) => view.erc === value)
+				snapshots
+					.flatMap((group: ISnapshots) => group.items)
+					.find((snapshot: ISnapshot) => snapshot.erc === value)
 			);
 
 			updateConfigInURL({

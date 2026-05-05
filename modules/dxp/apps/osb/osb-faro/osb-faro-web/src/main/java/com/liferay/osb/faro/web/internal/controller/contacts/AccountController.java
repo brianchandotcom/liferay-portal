@@ -50,8 +50,7 @@ public class AccountController extends BaseFaroController {
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public FaroFDSResultsDisplay getAccountDetailsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("page") int page,
-			@QueryParam("pageSize") int pageSize)
+			@QueryParam("page") int page, @QueryParam("pageSize") int pageSize)
 		throws Exception {
 
 		AccountDetails accountDetails = contactsEngineClient.getAccountDetails(

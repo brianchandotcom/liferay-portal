@@ -8,7 +8,7 @@ name: start-work
 
 # Start Work on a Jira Ticket
 
-Prepare a Liferay ticket for development. Drive every Jira interaction through the Jira Cloud REST API at `liferay.atlassian.net`, authenticated with `${JIRA_API_USER}` / `${JIRA_API_TOKEN}`.
+Prepare a Liferay ticket for development.
 
 ## 1. Resolve the Ticket
 

@@ -9,7 +9,7 @@ name: jira-bug
 
 # Create a Jira Bug in LPD
 
-Create a bug ticket in the LPD Jira project through the REST API, authenticating with credentials from the `${JIRA_API_USER}` and `${JIRA_API_TOKEN}` environment variables.
+Create a bug ticket in the LPD Jira project through the REST API.
 
 ## Input
 
@@ -35,31 +35,11 @@ The LPD project requires the following fields. Apply these defaults unless the u
 	- `Headless Batch Engine API` (ID: `16022`)
 - **Cross Cutting Properties** (`customfield_10979`): `None` (ID: `14468`).
 
-When no listed component matches, search by keyword:
-
-```bash
-curl \
-	--silent \
-	--url "https://liferay.atlassian.net/rest/api/3/project/LPD/components" \
-	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}" \
-	| python3 -c "import json, sys; [print(f'{c[\"id\"]:>6} {c[\"name\"]}') for c in json.load(sys.stdin) if 'SEARCH_TERM' in c['name'].lower()]"
-```
+When no listed component matches, fetch the LPD project components and pick the one whose name matches the keyword.
 
 ## Create the Ticket
 
-Submit the issue through Jira REST API v3:
-
-```bash
-curl \
-	--data '<JSON payload>' \
-	--header "Content-Type: application/json" \
-	--request POST \
-	--silent \
-	--url "https://liferay.atlassian.net/rest/api/3/issue" \
-	--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
-```
-
-Author the description in Atlassian Document Format (ADF) with the following sections, in order: Description, Steps to Reproduce, Expected Behavior, Actual Behavior. Append a Fix section when a commit is referenced.
+Create the issue in the LPD project with the gathered summary, description, and required fields. Author the description in Atlassian Document Format (ADF) with the following sections, in order: Description, Steps to Reproduce, Expected Behavior, Actual Behavior. Append a Fix section when a commit is referenced.
 
 ## Output
 

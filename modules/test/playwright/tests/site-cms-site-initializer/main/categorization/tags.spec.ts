@@ -5,16 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import getRandomString from '../../../../utils/getRandomString';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
 	cmsPagesTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
 	}),
@@ -428,6 +431,61 @@ test(
 		});
 
 		await expect(tagsPage.getItem('<Tag>')).not.toBeVisible();
+	}
+);
+
+test(
+	"View a Tag's usages",
+	{tag: '@LPD-89713'},
+	async ({apiHelpers, dataSetPage, page, tagsPage}) => {
+		const {id: siteId} =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('cms');
+
+		const tagName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postSiteKeyword({
+			name: tagName,
+			siteId,
+		});
+
+		await tagsPage.goto();
+
+		await tagsPage.execItemAction({
+			action: 'View Usages',
+			filter: tagName,
+		});
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
+
+		const basicWebContentTitle = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				keywords: [tagName],
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: basicWebContentTitle,
+			},
+			'cms/basic-web-contents/scopes/Default'
+		);
+
+		await tagsPage.goto();
+
+		await tagsPage.execItemAction({
+			action: 'View Usages',
+			filter: tagName,
+		});
+
+		await checkAccessibility({
+			page,
+			selectors: ['.content'],
+			selectorsToExclude: [
+				'.control-menu-container',
+				'.sidebar-container',
+				'.top-bar',
+			],
+		});
+
+		await expect(dataSetPage.getRow(basicWebContentTitle)).toBeVisible();
 	}
 );
 

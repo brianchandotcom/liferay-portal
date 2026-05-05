@@ -1,46 +1,8 @@
-task buildChatbotWidget(type: Exec)
-task installChatbotWidget(type: Exec)
-
-def chatbotWidgetProjectDir = new File(rootDir, "../workspaces/liferay-aihub-workspace/client-extensions/liferay-aihub-custom-element")
-
-buildChatbotWidget {
-	dependsOn installChatbotWidget
-
-	commandLine "yarn", "build"
-
-	inputs.dir new File(chatbotWidgetProjectDir, "src")
-	inputs.file new File(chatbotWidgetProjectDir, "index.html")
-	inputs.file new File(chatbotWidgetProjectDir, "package.json")
-	inputs.file new File(chatbotWidgetProjectDir, "tsconfig.json")
-	inputs.file new File(chatbotWidgetProjectDir, "vite.config.ts")
-	outputs.dir new File(chatbotWidgetProjectDir, "build/vite")
-	workingDir chatbotWidgetProjectDir
-}
-
-installChatbotWidget {
-	commandLine "yarn", "install"
-
-	inputs.file new File(chatbotWidgetProjectDir, "package.json")
-	outputs.dir new File(chatbotWidgetProjectDir, "node_modules")
-	workingDir chatbotWidgetProjectDir
-}
-
 processResources {
-	dependsOn buildChatbotWidget
-
 	doLast {
 		copy {
 			from new File(projectDir, "src/main/resources/site-initializer/thumbnail.png")
 			into new File(sourceSets.main.output.resourcesDir, "META-INF/resources")
-		}
-
-		copy {
-			from(new File(chatbotWidgetProjectDir, "build/vite")) {
-				include "index.css"
-				include "index.js"
-			}
-
-			into new File(sourceSets.main.output.resourcesDir, "site-initializer/documents/company/chatbot")
 		}
 	}
 }

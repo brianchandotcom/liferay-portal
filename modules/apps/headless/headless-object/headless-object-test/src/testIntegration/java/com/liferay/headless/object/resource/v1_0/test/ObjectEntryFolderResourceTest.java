@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -739,7 +740,8 @@ public class ObjectEntryFolderResourceTest
 	}
 
 	private Map<String, Map<String, String>> _getExpectedActions(
-		long objectEntryFolderId, boolean sharingEnabled) {
+		long objectEntryFolderId, long parentObjectEntryFolderId,
+		boolean sharingEnabled) {
 
 		String href1 =
 			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
@@ -757,6 +759,13 @@ public class ObjectEntryFolderResourceTest
 			"copy-replace", _getActionValue(href3 + "/copy-replace", "POST")
 		).put(
 			"delete", _getActionValue(href2, "DELETE")
+		).put(
+			"duplicate",
+			_getActionValue(
+				StringBundler.concat(
+					href2, "/by-parent-object-entry-folder-id/",
+					parentObjectEntryFolderId, "/copy"),
+				"POST")
 		).put(
 			"get", _getActionValue(href2, "GET")
 		).put(
@@ -848,7 +857,11 @@ public class ObjectEntryFolderResourceTest
 				postObjectEntryFolder.getId());
 
 		Assert.assertEquals(
-			_getExpectedActions(getObjectEntryFolder.getId(), sharingEnabled),
+			_getExpectedActions(
+				getObjectEntryFolder.getId(),
+				GetterUtil.getLong(
+					getObjectEntryFolder.getParentObjectEntryFolderId()),
+				sharingEnabled),
 			getObjectEntryFolder.getActions());
 	}
 

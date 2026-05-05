@@ -116,7 +116,9 @@ class HeadlessItemSelector extends Plugin {
 					groupId: getGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {
-						const videoURL = items[0]?.embedded?.videoURL;
+						const videoURL =
+							items[0]?.embedded?.videoURL ??
+							items[0]?.embedded?.file?.link?.href;
 
 						if (!videoURL) {
 							return;

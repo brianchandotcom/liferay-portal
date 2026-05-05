@@ -5,6 +5,13 @@ liferay-default:
         instrumentation.opentelemetry.io/inject-nodejs: "false"
         instrumentation.opentelemetry.io/inject-python: "false"
         sidecar.opentelemetry.io/inject: "false"
+    autoscaling:
+        keda:
+            triggerAuthentication:
+                spec:
+                    podIdentity:
+                        provider: aws
+        type: keda
     configmap:
         data:
             com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |

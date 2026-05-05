@@ -101,6 +101,14 @@ variable "infrastructure_provider_helm_chart_config" {
 variable "infrastructure_provider_helm_chart_version" {
 	type=string
 }
+variable "keda_enabled" {
+	default=false
+	type=bool
+}
+variable "keda_namespace" {
+	default="keda-system"
+	type=string
+}
 variable "liferay_git_repo_config" {
 	default={
 		auth={}

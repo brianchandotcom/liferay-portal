@@ -29,6 +29,17 @@ variable "external_secrets_namespace" {
 	default="external-secrets-system"
 	type=string
 }
+variable "keda_enabled" {
+	default=false
+	type=bool
+}
+variable "keda_helm_chart_version" {
+	type=string
+}
+variable "keda_namespace" {
+	default="keda-system"
+	type=string
+}
 variable "project_id" {
 	type=string
 }

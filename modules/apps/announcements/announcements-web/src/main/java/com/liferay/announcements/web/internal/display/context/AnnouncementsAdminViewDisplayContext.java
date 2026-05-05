@@ -190,11 +190,13 @@ public class AnnouncementsAdminViewDisplayContext {
 		String orderByCol = ParamUtil.getString(
 			_httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
 			"modified-date");
+
+		announcementsEntriesSearchContainer.setOrderByCol(orderByCol);
+
 		String orderByType = ParamUtil.getString(
 			_httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
 			"desc");
 
-		announcementsEntriesSearchContainer.setOrderByCol(orderByCol);
 		announcementsEntriesSearchContainer.setOrderByType(orderByType);
 
 		long classNameId = 0;

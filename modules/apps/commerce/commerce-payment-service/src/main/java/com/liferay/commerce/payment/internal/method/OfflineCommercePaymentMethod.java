@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.commerce.payment.internal.configuration.OfflineCommercePaymentMethodConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = CommercePaymentMethod.class
 )
 public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
@@ -136,32 +138,10 @@ public class OfflineCommercePaymentMethod implements CommercePaymentMethod {
 	}
 
 	@Modified
-	protected void modified(Map<String, Object> properties)
-		throws PortalException {
-
+	protected void modified(Map<String, Object> properties) {
 		_offlineCommercePaymentMethodConfiguration =
 			ConfigurableUtil.createConfigurable(
 				OfflineCommercePaymentMethodConfiguration.class, properties);
-
-		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels =
-			_commercePaymentMethodGroupRelLocalService.
-				getCommercePaymentMethodGroupRels(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
-				commercePaymentMethodGroupRels) {
-
-			String key = (String)properties.get("key");
-
-			if (key.equals(
-					commercePaymentMethodGroupRel.getPaymentIntegrationKey())) {
-
-				_commercePaymentMethodGroupRelLocalService.
-					deleteCommercePaymentMethodGroupRel(
-						commercePaymentMethodGroupRel.
-							getCommercePaymentMethodGroupRelId());
-			}
-		}
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

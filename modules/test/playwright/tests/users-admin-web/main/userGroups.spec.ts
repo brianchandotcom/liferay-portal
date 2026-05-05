@@ -47,6 +47,14 @@ test(
 			userGroupsPage.userGroupsTableCell(userGroupName)
 		).toBeVisible();
 
+		const userGroupRow = await userGroupsPage.userGroupsTableRow(
+			1,
+			userGroupName,
+			true
+		);
+
+		await expect(userGroupRow.row.getByText('Approved')).toBeVisible();
+
 		const newUserGroupName = getRandomString();
 
 		await (

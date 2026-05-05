@@ -945,6 +945,20 @@ public class DataFactory {
 		return sequence;
 	}
 
+	public String getTemplateFileName(List<LayoutModel> layoutModels) {
+		String externalReferenceCode = StringPool.BLANK;
+
+		for (LayoutModel layoutModel : layoutModels) {
+			externalReferenceCode = layoutModel.getExternalReferenceCode();
+
+			if (!externalReferenceCode.endsWith("-draft")) {
+				break;
+			}
+		}
+
+		return "utility_page_" + externalReferenceCode + "_definition.json";
+	}
+
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
 	}

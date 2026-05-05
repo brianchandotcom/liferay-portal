@@ -5,8 +5,8 @@
 
 let _signalActive = null;
 
-export function initGlobalPrivacyControl(serverSignalActive) {
-	_signalActive = Boolean(serverSignalActive);
+export function initGlobalPrivacyControl(signalActive) {
+	_signalActive = Boolean(signalActive);
 }
 
 export function isGlobalPrivacyControlSignalActive() {

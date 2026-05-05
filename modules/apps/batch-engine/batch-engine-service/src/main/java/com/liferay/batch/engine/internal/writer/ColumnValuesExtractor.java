@@ -5,8 +5,6 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-
 import com.liferay.batch.engine.csv.ColumnDescriptor;
 import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
 import com.liferay.petra.function.UnsafeFunction;
@@ -25,6 +23,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * @author Shuyang Zhou
@@ -228,7 +228,10 @@ public class ColumnValuesExtractor {
 
 		if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
 			if (ItemClassIndexUtil.isDate(fieldClass)) {
-				DateFormat dateFormat = new ISO8601DateFormat();
+				DateFormat dateFormat = new SimpleDateFormat(
+					"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 				return new UnsafeFunction
 					<Object, Object, ReflectiveOperationException>() {

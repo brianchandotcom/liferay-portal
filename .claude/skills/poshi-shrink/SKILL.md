@@ -20,97 +20,24 @@ A playbook for shrinking a Liferay component's Poshi test suite before migrating
 
 The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Ask if missing; do not guess.
 
-Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, every `.testcase` whose `@component-name` matches; abort when none does. The same enumeration feeds the **Triage Report**: per file, capture the path, the `testray.main.component.name` value, and the test-block count, sorted by component then by ascending test count.
+Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, every `.testcase` whose `@component-name` matches; abort when none does. The same enumeration feeds the **Shrink Plan**: per file, capture the path, the `testray.main.component.name` value, and the test-block count.
 
 ## Expected Output
 
-### Triage Report
+### Shrink Plan
 
-A `<component>-test-triage.md` saved at repo root. Lists every `.testcase` tagged with the component, grouped by `testray.main.component.name`, with optional bucket classification per test.
+Build the plan via plan mode (`EnterPlanMode`) using this format:
 
-The bucket signals the most likely target layer for a future migration:
+```markdown
+## Inventory
 
-| Bucket | Signal |
-| --- | --- |
-| `integration-java` | Ticket changed Java in service/validator/permission layer |
-| `rest-integration` | Ticket changed Java in `*-rest-impl` |
-| `playwright` | Ticket changed only JSP/JS/CSS/fragment files |
-| `needs-review` | Ticket only added the Poshi test, or only language keys |
-| `inconclusive` | Ticket not in the repo's git log |
-| `no-ticket` | No LPS/LPD reference in the description |
-
-To classify a test, look up its LPS/LPD ticket from `@description` in `git log` and inspect which files that ticket actually changed. Classification is optional; when skipped, leave the **Bucket** column blank in the **Test Details** table and the **By Bucket** counts at zero.
-
-The report follows this template:
-
-````markdown
-# <Component Title> Test Triage Report
-
-**Scope:** All Poshi tests tagged `@component-name = "<component>"`
-**Date:** YYYY-MM-DD
-**Method:** Enumerated <N> `.testcase` files, parsed <N> test blocks for priority and ticket references, looked up ticket commits in git log, classified buckets by changed file paths.
-
-## Summary
-
-- **Total test blocks:** <N>
-- **Unique tickets referenced:** <N>
-
-### By Bucket
-
-| Bucket | Count | Meaning |
+| File | Test Count | testray.main.component.name |
 | --- | --- | --- |
-| integration-java | <N> | Rewrite as Java integration test against service/validator/permission layer |
-| rest-integration | <N> | Rewrite as REST-layer integration test in `*-rest-test` |
-| playwright | <N> | Keep as functional; migrate to Playwright (not Java-replaceable) |
-| needs-review | <N> | Git log alone not conclusive; must read the test body |
-| inconclusive | <N> | Ticket not in this repo's git history (often LPD-internal) |
-| no-ticket | <N> | Test description has no LPS/LPD reference; must read the test body |
+| <path> | <N> | <component> |
 
-### By Priority
+## Files to Attack
 
-| Priority | Count |
-| --- | --- |
-| 5 | <N> |
-| 4 | <N> |
-| 3 | <N> |
-| 2 | <N> |
-| 1 | <N> |
-
-## Test Details
-
-| File | Test | Priority | Ticket | Bucket | Notes |
-| --- | --- | --- | --- | --- | --- |
-| <file> | <test> | <priority> | <ticket> | <bucket> | <notes> |
-
-## Files by Component & Test Count
-
-Classification based on `property testray.main.component.name` in each `.testcase`. Sorted ascending by test count within each component so small files (easy migration wins) appear first.
-
-### Totals by Component
-
-| Component | Files | Tests |
-| --- | --- | --- |
-| <component> | <N> | <N> |
-| **Total** | **<N>** | **<N>** |
-
-### Quick-win candidates (1–2 tests, <N> files)
-
-| Component | File | Tests |
-| --- | --- | --- |
-| <component> | <file> | <N> |
-
-### <Component Name> (<N> files, <N> tests)
-
-| File | Tests |
-| --- | --- |
-| <file> | <N> |
-````
-
-Sort the **Test Details** rows by bucket order (`integration-java`, `rest-integration`, `playwright`, `needs-review`, `inconclusive`, `no-ticket`), then priority descending, then file path and test name. Leave the **Ticket** cell blank when there is none. **Notes** is a short reason taken from the bucket lookup, for example "service/validator/permission impl" or "UI/JSP/frontend fix".
-
-### Merge Plan
-
-For the file the user picks to attack, present the grouping clearly and **wait for explicit approval before any edit**:
+### <file path> (N → M)
 
 > **Group A — <Context name>** (N → 1):
 >
@@ -119,16 +46,21 @@ For the file the user picks to attack, present the grouping clearly and **wait f
 > - Merge `<Source3>` → adds `<assertion>` (commit 3)
 > - … etc
 
-Pick the **keeper**: the test with the most comprehensive assertions, or the clearest name. The **final name** is usually descriptive of the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`), typically different from the keeper's original name.
+### <next file path> (N → M)
 
-Start with files showing visually obvious overlap — classic signals from Liferay test names:
+…
+```
+
+Sort the inventory ascending by test count so small files (easy wins) surface first. Avoid files with 40+ tests on the first pass.
+
+Pick the **keeper** for each group: the test with the most comprehensive assertions, or the clearest name. The **final name** is usually descriptive of the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`), typically different from the keeper's original name.
+
+Common merge-worthy signals — classic patterns from Liferay test names:
 
 - Multiple `AuthorNotShowIn<Context>` tests — usually one per panel-context is enough.
 - Multiple `MetricsIconVisibleIn<Context>` + `PanelInformationIn<Context>` — the first checks title+traffic, the second title+URL+language; huge overlap.
 - `CheckAllInfo*` or similar catch-all tests that duplicate specific-field tests.
 - Tests that share the full `setUp` + first N tasks (navigate, create blog, open panel) and differ only in the final assertion.
-
-Avoid files with 40+ tests on the first pass — practice on smaller ones first.
 
 #### Merge Signals — DO
 
@@ -144,7 +76,7 @@ Avoid files with 40+ tests on the first pass — practice on smaller ones first.
 
 ### Edited Test Files
 
-After approval, apply each operation in the order it appears in the plan:
+After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan:
 
 - **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits.
 - **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source.

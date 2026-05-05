@@ -143,6 +143,8 @@ public abstract class BulkAction implements Cloneable, Serializable {
 			"DeleteObjectEntryBulkSelectionAction"),
 		DUE_DATE_OBJECT_BULK_SELECTION_ACTION(
 			"DueDateObjectBulkSelectionAction"),
+		DUPLICATE_OBJECT_BULK_SELECTION_ACTION(
+			"DuplicateObjectBulkSelectionAction"),
 		EXPIRE_OBJECT_BULK_SELECTION_ACTION("ExpireObjectBulkSelectionAction"),
 		EDIT_OBJECT_TAGS_BULK_SELECTION_ACTION(
 			"EditObjectTagsBulkSelectionAction"),
@@ -189,4 +191,4 @@ public abstract class BulkAction implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-867626296
+// LIFERAY-REST-BUILDER-HASH:-336127652

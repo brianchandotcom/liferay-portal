@@ -39,7 +39,7 @@ public class IndexUtil {
 		JSONObject mappingsJSONObject) {
 
 		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
-			"dynamic_templates");
+			_DYNAMIC_TEMPLATES);
 
 		if (dynamicTemplatesJSONArray == null) {
 			return null;
@@ -90,7 +90,7 @@ public class IndexUtil {
 		JSONObject mappingsJSONObject) {
 
 		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
-			"dynamic_templates");
+			_DYNAMIC_TEMPLATES);
 
 		if (dynamicTemplatesJSONArray == null) {
 			return null;
@@ -224,7 +224,8 @@ public class IndexUtil {
 
 				mergeToJsonObject((JSONObject)object1, (JSONObject)object2);
 			}
-			else if ((object1 instanceof JSONArray) &&
+			else if (key.equals(_DYNAMIC_TEMPLATES) &&
+					 (object1 instanceof JSONArray) &&
 					 (object2 instanceof JSONArray)) {
 
 				jsonObject.put(
@@ -289,5 +290,7 @@ public class IndexUtil {
 			map.put((String)namesJSONArray.get(0), jsonObject);
 		}
 	}
+
+	private static final String _DYNAMIC_TEMPLATES = "dynamic_templates";
 
 }

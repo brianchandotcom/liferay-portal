@@ -6,6 +6,7 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.petra.string.StringBundler;
 
 import java.util.Base64;
 
@@ -21,6 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Caleb Hall
@@ -35,6 +38,30 @@ public class AnalyticsService extends BaseService {
 			_analyticsAuthEmailAddress + ":" + _analyticsAuthPassword;
 
 		return "Basic " + encoder.encodeToString(authorization.getBytes());
+	}
+
+	public String getCorpProjectUuid(String corpProjectUuid) {
+		try {
+			return get(
+				getAuthorization(),
+				UriComponentsBuilder.fromUriString(
+					_analyticsAuthUrl
+				).path(
+					"/o/faro/main/project/corpProjectUuid/" + corpProjectUuid
+				).build(
+				).toUri());
+		}
+		catch (WebClientResponseException webClientResponseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to find corpProjectUuid: ", corpProjectUuid,
+						" \n",
+						webClientResponseException.getResponseBodyAsString()));
+			}
+
+			return null;
+		}
 	}
 
 	public String provision(JSONObject jsonObject) throws Exception {

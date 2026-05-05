@@ -36,7 +36,37 @@ import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
+import {useSubscriptionName} from 'shared/hooks/useSubscriptionName';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
+
+const DATA_SOURCE_SUBSCRIPTION_RULES: {
+	[type: string]: {excluded?: string[]; included?: string[]};
+} = {
+	[DataSourceTypes.Demandbase]: {included: ['Liferay Data Platform']},
+	[DataSourceTypes.Hubspot]: {included: ['Liferay Data Platform']},
+	[DataSourceTypes.Salesforce]: {included: ['Liferay Data Platform']}
+};
+
+export const isDataSourceVisible = (
+	type: string,
+	subscriptionName: string | null
+): boolean => {
+	const rule = DATA_SOURCE_SUBSCRIPTION_RULES[type];
+
+	if (!rule || !subscriptionName) {
+		return true;
+	}
+
+	if (rule.excluded?.includes(subscriptionName)) {
+		return false;
+	}
+
+	if (rule.included && !rule.included.includes(subscriptionName)) {
+		return false;
+	}
+
+	return true;
+};
 
 interface ICellProps {
 	data: {[key: string]: any};
@@ -163,6 +193,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 			type: AlertTypes;
 		}[]
 	>([]);
+	const subscriptionName = useSubscriptionName({groupId});
 	const {timeZoneId} = useTimeZone();
 
 	const {delta, orderIOMap, page, query} = useQueryPagination({
@@ -222,8 +253,9 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 		)
 	);
 
-	const connectorItems = listAvailableConnectors(existingConnectorTypes).map(
-		config => ({
+	const connectorItems = listAvailableConnectors(existingConnectorTypes)
+		.filter(config => isDataSourceVisible(config.type, subscriptionName))
+		.map(config => ({
 			label: config.displayName,
 			onClick: () => {
 				history.push(
@@ -233,36 +265,40 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 					})
 				);
 			}
-		})
-	);
+		}));
+
+	const dataSourceItems = [
+		{
+			label: Liferay.Language.get('liferay-dxp'),
+			onClick: () => {
+				history.push(
+					toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+						groupId,
+						id: DataSourceTypes.Liferay
+					})
+				);
+			},
+			type: DataSourceTypes.Liferay
+		},
+		{
+			label: Liferay.Language.get('salesforce'),
+			onClick: () => {
+				history.push(
+					toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+						groupId,
+						id: DataSourceTypes.Salesforce
+					})
+				);
+			},
+			type: DataSourceTypes.Salesforce
+		}
+	]
+		.filter(({type}) => isDataSourceVisible(type, subscriptionName))
+		.map(({type, ...item}) => item);
 
 	const renderDataSourcesDropdown = () => (
 		<ClayDropDownWithItems
-			items={[
-				{
-					label: Liferay.Language.get('liferay-dxp'),
-					onClick: () => {
-						history.push(
-							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
-								groupId,
-								id: DataSourceTypes.Liferay
-							})
-						);
-					}
-				},
-				{
-					label: Liferay.Language.get('salesforce'),
-					onClick: () => {
-						history.push(
-							toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
-								groupId,
-								id: DataSourceTypes.Salesforce
-							})
-						);
-					}
-				},
-				...connectorItems
-			]}
+			items={[...dataSourceItems, ...connectorItems]}
 			trigger={
 				<ClayButton displayType='primary' size='sm'>
 					{Liferay.Language.get('add-data-source')}

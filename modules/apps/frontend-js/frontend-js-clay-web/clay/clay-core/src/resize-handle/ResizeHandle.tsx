@@ -35,7 +35,10 @@ type Props = {
 	 * Property to set the current width (controlled).
 	 */
 	width?: number;
-};
+} & Omit<
+	React.HTMLAttributes<HTMLDivElement>,
+	'onKeyDown' | 'onKeyUp' | 'onPointerDown'
+>;
 
 const MAIN_MOUSE_BUTTON = 0;
 

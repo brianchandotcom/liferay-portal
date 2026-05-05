@@ -5423,8 +5423,13 @@ test.describe('Manage object entries through View Object Entries', () => {
 		{tag: ['@LPD-83570']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const localNumber = '1231231234';
-			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
 			const prefix = '+1';
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['PhoneNumber'],
+			});
+
+			const objectFieldLabel = objectFields[0].label!['en_US'];
 
 			const fieldContainer = page.getByRole('group', {
 				name: objectFieldLabel,
@@ -5433,53 +5438,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			let objectDefinition: ObjectDefinition;
 
 			await test.step('Create an object definition', async () => {
-				const objectDefinitionAPIClient =
-					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-				const response =
-					await objectDefinitionAPIClient.postObjectDefinition({
-						active: true,
-						externalReferenceCode: getRandomString(),
-						label: {
-							en_US: getRandomString(),
-						},
-						name: 'ObjectDefinitionName' + getRandomInt(),
-						objectFields: [
-							{
-								DBType: 'String' as const,
-								businessType: 'PhoneNumber' as const,
-								indexedAsKeyword: false,
-								indexedLanguageId: '',
-								label: {en_US: objectFieldLabel},
-								localized: false,
-								name: objectFieldLabel,
-								objectFieldSettings: [
-									{
-										name: 'prefixType',
-										value: 'definedByUser',
-									},
-								] as any,
-								readOnly: 'false',
-								readOnlyConditionExpression: '',
-								required: false,
-								state: false,
-								system: false,
-								type: 'String' as const,
-								unique: false,
-							},
-						],
-						panelCategoryKey: 'control_panel.object',
-						pluralLabel: {
-							en_US: 'NewObject',
-						},
-						portlet: true,
-						scope: 'company',
-						status: {
-							code: 0,
-						},
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
 					});
-
-				objectDefinition = response.body;
 
 				apiHelpers.data.push({
 					id: objectDefinition.id,
@@ -5536,8 +5499,27 @@ test.describe('Manage object entries through View Object Entries', () => {
 		{tag: ['@LPD-83570']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
 			const localNumber = '11987654321';
-			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
 			const prefix = '+1';
+
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'PhoneNumber',
+						objectFieldSettings: [
+							{
+								name: 'prefixType',
+								value: 'fixed',
+							},
+							{
+								name: 'prefix',
+								value: prefix,
+							},
+						],
+					},
+				],
+			});
+
+			const objectFieldLabel = objectFields[0].label!['en_US'];
 
 			const fieldContainer = page.getByRole('group', {
 				name: objectFieldLabel,
@@ -5546,57 +5528,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			let objectDefinition: ObjectDefinition;
 
 			await test.step('Create an object definition', async () => {
-				const objectDefinitionAPIClient =
-					await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-				const response =
-					await objectDefinitionAPIClient.postObjectDefinition({
-						active: true,
-						externalReferenceCode: getRandomString(),
-						label: {
-							en_US: getRandomString(),
-						},
-						name: 'ObjectDefinitionName' + getRandomInt(),
-						objectFields: [
-							{
-								DBType: 'String' as const,
-								businessType: 'PhoneNumber' as const,
-								indexedAsKeyword: false,
-								indexedLanguageId: '',
-								label: {en_US: objectFieldLabel},
-								localized: false,
-								name: objectFieldLabel,
-								objectFieldSettings: [
-									{
-										name: 'prefixType',
-										value: 'fixed',
-									},
-									{
-										name: 'prefix',
-										value: prefix,
-									},
-								] as any,
-								readOnly: 'false',
-								readOnlyConditionExpression: '',
-								required: false,
-								state: false,
-								system: false,
-								type: 'String' as const,
-								unique: false,
-							},
-						],
-						panelCategoryKey: 'control_panel.object',
-						pluralLabel: {
-							en_US: 'NewObject',
-						},
-						portlet: true,
-						scope: 'company',
-						status: {
-							code: 0,
-						},
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
 					});
-
-				objectDefinition = response.body;
 
 				apiHelpers.data.push({
 					id: objectDefinition.id,

@@ -101,7 +101,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			themeDisplay.setSiteGroupId(layout.getGroupId());
 		}
 
-		if (!_hasPreviewPermission(layout, themeDisplay.getRealUser())) {
+		if (!_containsLayoutPreviewDraftPermission(layout, themeDisplay.getRealUser())) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return null;
@@ -274,7 +274,8 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			layout.isPrivateLayout());
 	}
 
-	private boolean _hasPreviewPermission(Layout layout, User user)
+	private boolean _containsLayoutPreviewDraftPermission(
+			Layout layout, User user)
 		throws Exception {
 
 		Group group = layout.getGroup();

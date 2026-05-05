@@ -4,17 +4,19 @@ import * as NotificationAlertList from 'shared/components/NotificationAlertList'
 import DataSourceList, {
 	DataSourceName,
 	disableRow,
+	isDataSourceVisible,
 	StatusRenderer
 } from '../DataSourceList';
 import mockStore, {mockStoreData} from 'test/mock-store';
 import React from 'react';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
-import {DataSourceStates} from 'shared/util/constants';
+import {DataSourceStates, DataSourceTypes} from 'shared/util/constants';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/client/testing';
 import {Provider} from 'react-redux';
 import {RemoteData} from 'shared/util/records';
 import {Routes} from 'shared/util/router';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
@@ -330,5 +332,64 @@ describe('disableRow', () => {
 
 	it('should return false if datasource state is NOT inProgressDeleting', () => {
 		expect(disableRow({state: DataSourceStates.Ready})).toBe(false);
+	});
+});
+
+describe('isDataSourceVisible', () => {
+	it('should always show data source types with no rule, regardless of subscription', () => {
+		expect(
+			isDataSourceVisible(
+				DataSourceTypes.Liferay,
+				SubscriptionNames.LiferayDataPlatform
+			)
+		).toBe(true);
+
+		expect(
+			isDataSourceVisible(
+				DataSourceTypes.Csv,
+				SubscriptionNames.LiferayAnalyticsCloudEnterprise
+			)
+		).toBe(true);
+	});
+
+	it('should return true when the subscription name is null', () => {
+		expect(isDataSourceVisible(DataSourceTypes.Demandbase, null)).toBe(
+			true
+		);
+	});
+
+	it('should show Demandbase, Hubspot and Salesforce only when the subscription is Liferay Data Platform', () => {
+		[
+			DataSourceTypes.Demandbase,
+			DataSourceTypes.Hubspot,
+			DataSourceTypes.Salesforce
+		].forEach(type => {
+			expect(
+				isDataSourceVisible(
+					type,
+					SubscriptionNames.LiferayDataPlatform
+				)
+			).toBe(true);
+		});
+	});
+
+	it('should hide Demandbase, Hubspot and Salesforce for any subscription other than Liferay Data Platform', () => {
+		const nonLDPSubscriptions = [
+			SubscriptionNames.LiferayAnalyticsCloudBasic,
+			SubscriptionNames.LiferayAnalyticsCloudBusiness,
+			SubscriptionNames.LiferayAnalyticsCloudEnterprise,
+			SubscriptionNames.LiferaySaasEnterprisePlan,
+			SubscriptionNames.LxcBusinessPlan
+		];
+
+		[
+			DataSourceTypes.Demandbase,
+			DataSourceTypes.Hubspot,
+			DataSourceTypes.Salesforce
+		].forEach(type => {
+			nonLDPSubscriptions.forEach(subscription => {
+				expect(isDataSourceVisible(type, subscription)).toBe(false);
+			});
+		});
 	});
 });

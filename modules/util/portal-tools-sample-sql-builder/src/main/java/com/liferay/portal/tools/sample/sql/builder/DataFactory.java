@@ -8042,6 +8042,18 @@ public class DataFactory {
 
 	protected LayoutModel newLayoutModel(
 		long groupId, boolean privateLayout, long parentLayoutId, String name,
+		String typeSettings, boolean hidden, String friendlyURL) {
+
+		String uuid = SequentialUUID.generate();
+
+		return newLayoutModel(
+			groupId, privateLayout, parentLayoutId, 0, 0, name,
+			LayoutConstants.TYPE_PORTLET, typeSettings, hidden, false,
+			friendlyURL, null, uuid, uuid);
+	}
+
+	protected LayoutModel newLayoutModel(
+		long groupId, boolean privateLayout, long parentLayoutId, String name,
 		String layoutTemplateId, boolean hidden, String... columns) {
 
 		return newLayoutModel(
@@ -8057,18 +8069,6 @@ public class DataFactory {
 
 		return newLayoutModel(
 			groupId, privateLayout, 0, name, layoutTemplateId, false, columns);
-	}
-
-	protected LayoutModel newLayoutModel(
-		long groupId, boolean privateLayout, long parentLayoutId, String name,
-		String typeSettings, boolean hidden, String friendlyURL) {
-
-		String uuid = SequentialUUID.generate();
-
-		return newLayoutModel(
-			groupId, privateLayout, parentLayoutId, 0, 0, name,
-			LayoutConstants.TYPE_PORTLET, typeSettings, hidden, false,
-			friendlyURL, null, uuid, uuid);
 	}
 
 	protected LayoutSetModel newLayoutSetModel(

@@ -14,9 +14,13 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.nimbusds.common.contenttype.ContentType;
 import com.nimbusds.oauth2.sdk.http.HTTPRequest;
 import com.nimbusds.oauth2.sdk.http.HTTPResponse;
+import com.nimbusds.oauth2.sdk.util.JSONObjectUtils;
+import com.nimbusds.oauth2.sdk.util.URLUtils;
 
 import java.net.URL;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -42,7 +46,11 @@ public class OpenIdConnectHttpUtilTest {
 		HTTPResponse httpResponse = _send(
 			"application/json", 200, "{\"sub\":\"subject\"}");
 
-		Assert.assertEquals("{\"sub\":\"subject\"}", httpResponse.getBody());
+		Map<String, Object> bodyMap = JSONObjectUtils.parse(
+			httpResponse.getBody());
+
+		Assert.assertEquals("subject", bodyMap.get("sub"));
+
 		Assert.assertEquals(
 			"application/json",
 			String.valueOf(httpResponse.getEntityContentType()));
@@ -85,10 +93,17 @@ public class OpenIdConnectHttpUtilTest {
 
 		Http.Body body = httpOptions.getBody();
 
-		Assert.assertNotNull(body);
 		Assert.assertEquals(StringPool.UTF8, body.getCharset());
+
+		Map<String, List<String>> bodyParameters = URLUtils.parseParameters(
+			body.getContent());
+
 		Assert.assertEquals(
-			"grant_type=authorization_code&code=xyz", body.getContent());
+			Collections.singletonList("xyz"), bodyParameters.get("code"));
+		Assert.assertEquals(
+			Collections.singletonList("authorization_code"),
+			bodyParameters.get("grant_type"));
+
 		Assert.assertEquals(
 			ContentType.APPLICATION_URLENCODED.toString(),
 			body.getContentType());
@@ -106,7 +121,6 @@ public class OpenIdConnectHttpUtilTest {
 
 		body = httpOptions.getBody();
 
-		Assert.assertNotNull(body);
 		Assert.assertEquals(
 			"application/x-www-form-urlencoded", body.getContentType());
 

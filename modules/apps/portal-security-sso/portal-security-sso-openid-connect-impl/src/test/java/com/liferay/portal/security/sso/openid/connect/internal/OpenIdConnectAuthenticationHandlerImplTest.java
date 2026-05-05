@@ -93,11 +93,11 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 			String userInfoJSON = _requestUserInfoJSON();
 
 			Assert.assertNotNull(userInfoJSON);
-			Assert.assertTrue(
-				userInfoJSON,
-				userInfoJSON.contains("\"email\":\"test@example.com\""));
-			Assert.assertTrue(
-				userInfoJSON, userInfoJSON.contains("\"sub\":\"subject\""));
+
+			Map<String, Object> userInfo = JSONObjectUtils.parse(userInfoJSON);
+
+			Assert.assertEquals("test@example.com", userInfo.get("email"));
+			Assert.assertEquals("subject", userInfo.get("sub"));
 		}
 
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(

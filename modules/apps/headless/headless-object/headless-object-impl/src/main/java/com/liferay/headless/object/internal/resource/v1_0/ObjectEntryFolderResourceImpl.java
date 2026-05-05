@@ -871,6 +871,31 @@ public class ObjectEntryFolderResourceImpl
 						ActionKeys.DELETE, serviceBuilderObjectEntryFolder,
 						"deleteObjectEntryFolder")
 				).put(
+					"duplicate",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return ActionUtil.addAction(
+							ActionKeys.UPDATE,
+							ObjectEntryFolderResourceImpl.class,
+							serviceBuilderObjectEntryFolder.
+								getObjectEntryFolderId(),
+							"postObjectEntryFolderByParentObjectEntryFolder" +
+								"Copy",
+							null, _objectEntryFolderModelResourcePermission,
+							HashMapBuilder.put(
+								"parentObjectEntryFolderId",
+								String.valueOf(
+									serviceBuilderObjectEntryFolder.
+										getParentObjectEntryFolderId())
+							).build(),
+							contextUriInfo);
+					}
+				).put(
 					"get",
 					addAction(
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,

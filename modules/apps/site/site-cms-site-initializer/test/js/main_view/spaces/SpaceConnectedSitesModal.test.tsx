@@ -13,12 +13,17 @@ import {openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import ConnectedSiteService from '../../../../src/main/resources/META-INF/resources/js/common/services/ConnectedSiteService';
+import SiteTemplateService from '../../../../src/main/resources/META-INF/resources/js/common/services/SiteTemplateService';
 import {Site} from '../../../../src/main/resources/META-INF/resources/js/common/types/Site';
+import {SiteTemplate} from '../../../../src/main/resources/META-INF/resources/js/common/types/SiteTemplate';
 import SpaceConnectedSitesModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceConnectedSitesModal';
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/services/ConnectedSiteService'
+);
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/common/services/SiteTemplateService'
 );
 
 jest.mock('frontend-js-components-web', () => ({
@@ -38,6 +43,21 @@ const mockConnectSiteToSpace =
 const mockDisconnectSiteFromSpace =
 	ConnectedSiteService.disconnectSiteFromSpace as jest.MockedFunction<
 		typeof ConnectedSiteService.disconnectSiteFromSpace
+	>;
+
+const mockGetConnectedSiteTemplates =
+	SiteTemplateService.getConnectedSiteTemplates as jest.MockedFunction<
+		typeof SiteTemplateService.getConnectedSiteTemplates
+	>;
+
+const mockConnectSiteTemplateToSpace =
+	SiteTemplateService.connectSiteTemplateToSpace as jest.MockedFunction<
+		typeof SiteTemplateService.connectSiteTemplateToSpace
+	>;
+
+const mockDisconnectSiteTemplateFromSpace =
+	SiteTemplateService.disconnectSiteTemplateFromSpace as jest.MockedFunction<
+		typeof SiteTemplateService.disconnectSiteTemplateFromSpace
 	>;
 
 const mockedOpenToast = openToast as jest.Mock;
@@ -70,6 +90,17 @@ const mockUnconnectedSite: Site = {
 	searchable: true,
 };
 
+const mockConnectedSiteTemplate: SiteTemplate = {
+	id: '101',
+	name: 'Connected Template',
+	siteExternalReferenceCode: 'ERC',
+};
+
+const mockUnconnectedSiteTemplate: SiteTemplate = {
+	id: '102',
+	name: 'Unconnected Template',
+};
+
 const DEFAULT_PROPS = {
 	externalReferenceCode: 'ERC',
 	hasConnectSitesPermission: true,
@@ -81,12 +112,12 @@ const renderComponent = (props = DEFAULT_PROPS) => {
 	return render(<SpaceConnectedSitesModal {...props} />);
 };
 
-const assertErrorToast = async () => {
+const assertErrorToast = async (message = errorMessage) => {
 	await waitFor(() => {
 		expect(mockedOpenToast).toHaveBeenCalledTimes(1);
 
 		expect(mockedOpenToast).toHaveBeenCalledWith({
-			message: errorMessage,
+			message,
 			type: 'danger',
 		});
 	});
@@ -146,6 +177,22 @@ describe('SpaceConnectedSitesModal', () => {
 			data: null,
 			error: null,
 		});
+
+		mockGetConnectedSiteTemplates.mockResolvedValue({
+			data: {items: []},
+			error: null,
+		});
+		mockConnectSiteTemplateToSpace.mockResolvedValue({
+			data: {
+				...mockUnconnectedSiteTemplate,
+				siteExternalReferenceCode: DEFAULT_PROPS.externalReferenceCode,
+			},
+			error: null,
+		});
+		mockDisconnectSiteTemplateFromSpace.mockResolvedValue({
+			data: null,
+			error: null,
+		});
 	});
 
 	afterAll(() => {
@@ -166,10 +213,13 @@ describe('SpaceConnectedSitesModal', () => {
 		});
 	});
 
-	it('renders the modal header', async () => {
+	it('renders the modal header and the description', async () => {
 		renderComponent();
 
 		expect(screen.getByText('all-sites')).toBeInTheDocument();
+		expect(
+			screen.getByText('connect-sites-and-site-templates-to-this-space')
+		).toBeInTheDocument();
 
 		await waitFor(() => {
 			expect(mockGetConnectedSitesFromSpace).toHaveBeenCalledWith(
@@ -181,7 +231,7 @@ describe('SpaceConnectedSitesModal', () => {
 		expect(await screen.findByText('Connected Site 2')).toBeInTheDocument();
 	});
 
-	it('displays an empty state message when no sites are connected', async () => {
+	it('displays an empty state message when no sites or templates are connected', async () => {
 		mockGetConnectedSitesFromSpace.mockResolvedValue({
 			data: {items: []},
 			error: null,
@@ -192,6 +242,33 @@ describe('SpaceConnectedSitesModal', () => {
 		expect(
 			await screen.findByText('no-sites-are-connected-yet')
 		).toBeInTheDocument();
+	});
+
+	it('renders connected site templates with a "Site Template" suffix', async () => {
+		mockGetConnectedSitesFromSpace.mockResolvedValue({
+			data: {items: []},
+			error: null,
+		});
+		mockGetConnectedSiteTemplates.mockResolvedValue({
+			data: {items: [mockConnectedSiteTemplate]},
+			error: null,
+		});
+
+		renderComponent();
+
+		expect(
+			await screen.findByText(
+				`${mockConnectedSiteTemplate.name} (site-template)`
+			)
+		).toBeInTheDocument();
+
+		const templateRow = screen
+			.getByText(`${mockConnectedSiteTemplate.name} (site-template)`)
+			.closest('li')!;
+
+		expect(
+			within(templateRow).queryByText(/searchable-content/)
+		).not.toBeInTheDocument();
 	});
 
 	describe('when hasConnectSitesPermission is true', () => {
@@ -233,7 +310,7 @@ describe('SpaceConnectedSitesModal', () => {
 			await waitFor(() => {
 				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
 					DEFAULT_PROPS.externalReferenceCode,
-					mockUnconnectedSite.id
+					mockUnconnectedSite.externalReferenceCode
 				);
 			});
 
@@ -443,6 +520,143 @@ describe('SpaceConnectedSitesModal', () => {
 				screen.getByRole('button', {name: 'connect'})
 			).toBeDisabled();
 		});
+
+		it('switches the autocomplete placeholder when toggled to site templates', async () => {
+			renderComponent();
+			await waitForComponentRendering();
+
+			expect(
+				screen.getByPlaceholderText('select-a-site')
+			).toBeInTheDocument();
+
+			await userEvent.selectOptions(
+				screen.getByLabelText('sites'),
+				'site-templates'
+			);
+
+			expect(
+				screen.getByPlaceholderText('select-a-site-template')
+			).toBeInTheDocument();
+			expect(
+				screen.queryByPlaceholderText('select-a-site')
+			).not.toBeInTheDocument();
+		});
+
+		it('allows connecting a new site template', async () => {
+			mockFetch.mockImplementation(async () => {
+				return {
+					headers: new Headers([
+						['Content-Type', 'application/json'],
+					]),
+					json: async () => ({
+						items: [mockUnconnectedSiteTemplate],
+					}),
+				} as Response;
+			});
+
+			mockConnectSiteTemplateToSpace.mockResolvedValue({
+				data: {
+					...mockUnconnectedSiteTemplate,
+					siteExternalReferenceCode:
+						DEFAULT_PROPS.externalReferenceCode,
+				},
+				error: null,
+			});
+
+			renderComponent();
+			await waitForComponentRendering();
+
+			await userEvent.selectOptions(
+				screen.getByLabelText('sites'),
+				'site-templates'
+			);
+
+			await userEvent.click(
+				screen.getByPlaceholderText('select-a-site-template')
+			);
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('option', {
+						name: mockUnconnectedSiteTemplate.name,
+					})
+				).toBeInTheDocument();
+			});
+
+			await userEvent.click(
+				screen.getByRole('option', {
+					name: mockUnconnectedSiteTemplate.name,
+				})
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {name: 'connect'})
+			);
+
+			await waitFor(() => {
+				expect(mockConnectSiteTemplateToSpace).toHaveBeenCalledWith(
+					mockUnconnectedSiteTemplate.id,
+					DEFAULT_PROPS.externalReferenceCode
+				);
+			});
+
+			await assertSuccessToast(
+				'site-template-x-was-successfully-connected-to-the-space'
+			);
+
+			expect(
+				screen.getByText(
+					`${mockUnconnectedSiteTemplate.name} (site-template)`
+				)
+			).toBeInTheDocument();
+		});
+
+		it('allows disconnecting a site template', async () => {
+			mockGetConnectedSiteTemplates.mockResolvedValue({
+				data: {items: [mockConnectedSiteTemplate]},
+				error: null,
+			});
+
+			renderComponent();
+
+			const templateRow = (
+				await screen.findByText(
+					`${mockConnectedSiteTemplate.name} (site-template)`
+				)
+			).closest('li')!;
+			const actionsButton = within(templateRow).getByRole('button', {
+				name: 'site-actions',
+			});
+
+			await userEvent.click(actionsButton);
+
+			expect(
+				screen.queryByRole('menuitem', {name: 'make-unsearchable'})
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('menuitem', {name: 'make-searchable'})
+			).not.toBeInTheDocument();
+
+			await userEvent.click(
+				await screen.findByRole('menuitem', {name: 'disconnect'})
+			);
+
+			await waitFor(() => {
+				expect(
+					mockDisconnectSiteTemplateFromSpace
+				).toHaveBeenCalledWith(mockConnectedSiteTemplate.id);
+			});
+
+			await assertSuccessToast(
+				'site-template-x-was-successfully-disconnected-from-the-space'
+			);
+
+			expect(
+				screen.queryByText(
+					`${mockConnectedSiteTemplate.name} (site-template)`
+				)
+			).not.toBeInTheDocument();
+		});
 	});
 
 	describe('without connect permissions', () => {
@@ -456,7 +670,7 @@ describe('SpaceConnectedSitesModal', () => {
 			await waitForComponentRendering();
 
 			expect(
-				screen.queryByRole('combobox', {name: 'site'})
+				screen.queryByPlaceholderText('select-a-site')
 			).not.toBeInTheDocument();
 			expect(
 				screen.queryByRole('button', {name: 'connect'})

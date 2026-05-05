@@ -5,6 +5,7 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
@@ -12,8 +13,20 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
+import {InputGroupWithSelect} from '../../common/components/InputGroupWithSelect';
 import ConnectedSiteService from '../../common/services/ConnectedSiteService';
+import SiteTemplateService from '../../common/services/SiteTemplateService';
 import {Site} from '../../common/types/Site';
+import {SiteTemplate} from '../../common/types/SiteTemplate';
+
+enum ConnectableKind {
+	SITES = 'sites',
+	SITE_TEMPLATES = 'site-templates',
+}
+
+type Connection =
+	| {kind: 'site'; site: Site}
+	| {kind: 'site-template'; siteTemplate: SiteTemplate};
 
 const showErrorMessage = (message: string) => {
 	openToast({
@@ -29,24 +42,67 @@ const showSuccessMessage = (message: string) => {
 	});
 };
 
-const ConnectedSiteActions = ({
-	externalReferenceCode,
-	onSiteChange,
-	onSiteDisconnected,
-	site,
-}: {
-	externalReferenceCode: string;
-	onSiteChange: (site: Site) => void;
-	onSiteDisconnected: (site: Site) => void;
-	site: Site;
-}) => {
-	const {searchable} = site;
+const getConnectionId = (connection: Connection) =>
+	connection.kind === 'site'
+		? connection.site.id
+		: connection.siteTemplate.id;
 
-	const disconnectSite = async () => {
-		const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
-			externalReferenceCode,
-			site.externalReferenceCode
-		);
+const getConnectionKey = (connection: Connection) =>
+	`${connection.kind}:${getConnectionId(connection)}`;
+
+const getConnectionName = (connection: Connection) =>
+	connection.kind === 'site'
+		? connection.site.descriptiveName
+		: connection.siteTemplate.name;
+
+const getConnectionLabel = (connection: Connection) =>
+	connection.kind === 'site'
+		? connection.site.descriptiveName
+		: `${connection.siteTemplate.name} (${Liferay.Language.get('site-template')})`;
+
+const ConnectableActions = ({
+	connection,
+	externalReferenceCode,
+	onConnectionChange,
+	onConnectionDisconnected,
+}: {
+	connection: Connection;
+	externalReferenceCode: string;
+	onConnectionChange: (connection: Connection) => void;
+	onConnectionDisconnected: (connection: Connection) => void;
+}) => {
+	const disconnect = async () => {
+		const name = getConnectionName(connection);
+
+		if (connection.kind === 'site') {
+			const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
+				externalReferenceCode,
+				connection.site.externalReferenceCode
+			);
+
+			if (error) {
+				showErrorMessage(error);
+
+				return;
+			}
+
+			onConnectionDisconnected(connection);
+			showSuccessMessage(
+				sub(
+					Liferay.Language.get(
+						'site-x-was-successfully-disconnected-from-the-space'
+					),
+					`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
+				)
+			);
+
+			return;
+		}
+
+		const {error} =
+			await SiteTemplateService.disconnectSiteTemplateFromSpace(
+				connection.siteTemplate.id
+			);
 
 		if (error) {
 			showErrorMessage(error);
@@ -54,55 +110,67 @@ const ConnectedSiteActions = ({
 			return;
 		}
 
-		onSiteDisconnected?.(site);
+		onConnectionDisconnected(connection);
 		showSuccessMessage(
 			sub(
 				Liferay.Language.get(
-					'site-x-was-successfully-disconnected-from-the-space'
+					'site-template-x-was-successfully-disconnected-from-the-space'
 				),
-				`<strong>${Liferay.Util.escapeHTML(site.descriptiveName)}</strong>`
+				`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
 			)
 		);
 	};
 
 	const changeSearchable = async () => {
+		if (connection.kind !== 'site') {
+			return;
+		}
+
 		const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 			externalReferenceCode,
-			site.externalReferenceCode,
-			String(!searchable)
+			connection.site.externalReferenceCode,
+			String(!connection.site.searchable)
 		);
 
 		if (data) {
-			onSiteChange(data);
+			onConnectionChange({kind: 'site', site: data});
 		}
 		else if (error) {
 			showErrorMessage(error);
 		}
 	};
 
-	const isSearchableLabel = searchable
-		? Liferay.Language.get('yes')
-		: Liferay.Language.get('no');
+	const items = [];
+
+	if (connection.kind === 'site') {
+		items.push({
+			label: connection.site.searchable
+				? Liferay.Language.get('make-unsearchable')
+				: Liferay.Language.get('make-searchable'),
+			onClick: changeSearchable,
+		});
+	}
+
+	items.push({
+		label: Liferay.Language.get('disconnect'),
+		onClick: disconnect,
+	});
+
+	const isSearchableLabel =
+		connection.kind === 'site' && connection.site.searchable
+			? Liferay.Language.get('yes')
+			: Liferay.Language.get('no');
 
 	return (
 		<div className="align-items-center d-flex">
-			<span className="c-mr-3 text-2 text-secondary">
-				{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
-			</span>
+			{connection.kind === 'site' && (
+				<span className="c-mr-3 text-2 text-secondary">
+					{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
+				</span>
+			)}
 
 			<ClayDropDownWithItems
-				items={[
-					{
-						label: searchable
-							? Liferay.Language.get('make-unsearchable')
-							: Liferay.Language.get('make-searchable'),
-						onClick: changeSearchable,
-					},
-					{
-						label: Liferay.Language.get('disconnect'),
-						onClick: disconnectSite,
-					},
-				]}
+				items={items}
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('site-actions')}
@@ -118,28 +186,51 @@ const ConnectedSiteActions = ({
 	);
 };
 
-const SitesSelector = ({
-	connectedSites,
+const ConnectableSelector = ({
+	connections,
 	externalReferenceCode,
-	onSiteConnected,
+	onConnectionAdded,
 }: {
-	connectedSites: Site[];
+	connections: Connection[];
 	externalReferenceCode: string;
-	onSiteConnected: (site: Site) => void;
+	onConnectionAdded: (connection: Connection) => void;
 }) => {
+	const [kind, setKind] = useState<ConnectableKind>(ConnectableKind.SITES);
 	const [site, setSite] = useState<Site>();
+	const [siteTemplate, setSiteTemplate] = useState<SiteTemplate>();
 	const [disableConnectButton, setDisableConnectButton] =
 		useState<boolean>(true);
 
-	const connectSiteToSpace = async () => {
-		if (site) {
+	const isAlreadyConnected = (id: string) =>
+		connections.some((connection) => {
+			if (kind === ConnectableKind.SITES) {
+				return (
+					connection.kind === 'site' &&
+					connection.site.externalReferenceCode === id
+				);
+			}
+
+			return (
+				connection.kind === 'site-template' &&
+				connection.siteTemplate.id === id
+			);
+		});
+
+	const resetSelection = () => {
+		setSite(undefined);
+		setSiteTemplate(undefined);
+		setDisableConnectButton(true);
+	};
+
+	const connect = async () => {
+		if (kind === ConnectableKind.SITES && site) {
 			const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 				externalReferenceCode,
 				site.externalReferenceCode
 			);
 
 			if (data) {
-				onSiteConnected(data);
+				onConnectionAdded({kind: 'site', site: data});
 				showSuccessMessage(
 					sub(
 						Liferay.Language.get(
@@ -155,64 +246,143 @@ const SitesSelector = ({
 						Liferay.Language.get('unable-to-connect-site-to-space')
 				);
 			}
-			setDisableConnectButton(true);
-			setSite(undefined);
-		}
-	};
 
-	const controlConnectSiteButton = (
-		selectedSite: Site,
-		connectedSites: Site[]
-	) => {
-		const alreadyConnected = connectedSites.some(
-			(connectedSite) =>
-				connectedSite.externalReferenceCode ===
-				selectedSite.externalReferenceCode
-		);
-		setDisableConnectButton(alreadyConnected);
+			resetSelection();
+
+			return;
+		}
+
+		if (kind === ConnectableKind.SITE_TEMPLATES && siteTemplate) {
+			const {data, error} =
+				await SiteTemplateService.connectSiteTemplateToSpace(
+					siteTemplate.id,
+					externalReferenceCode
+				);
+
+			if (data) {
+				onConnectionAdded({kind: 'site-template', siteTemplate: data});
+				showSuccessMessage(
+					sub(
+						Liferay.Language.get(
+							'site-template-x-was-successfully-connected-to-the-space'
+						),
+						`<strong>${Liferay.Util.escapeHTML(siteTemplate.name)}</strong>`
+					)
+				);
+			}
+			else if (error) {
+				showErrorMessage(
+					error ||
+						Liferay.Language.get(
+							'unable-to-connect-site-template-to-space'
+						)
+				);
+			}
+
+			resetSelection();
+		}
 	};
 
 	return (
 		<div className="p-4">
 			<div className="align-items-end autofit-row c-gap-3">
 				<div className="autofit-col autofit-col-expand">
-					<label htmlFor="siteSelector">
-						{Liferay.Language.get('site')}
-					</label>
-
-					<ItemSelector
-						apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
-						id="siteSelector"
-						items={site ? [site] : []}
-						onItemsChange={(items: Site[]) => {
-							if (items.length) {
-								const item = items[0];
-								controlConnectSiteButton(item, connectedSites);
-								setSite(item);
-							}
-							else {
-								setSite(undefined);
-							}
+					<InputGroupWithSelect
+						label={Liferay.Language.get('sites')}
+						onSelectChange={(value) => {
+							setKind(value as ConnectableKind);
+							resetSelection();
 						}}
-						placeholder={Liferay.Language.get('select-a-site')}
+						options={[
+							{
+								label: Liferay.Language.get('sites'),
+								value: ConnectableKind.SITES,
+							},
+							{
+								label: Liferay.Language.get('site-templates'),
+								value: ConnectableKind.SITE_TEMPLATES,
+							},
+						]}
+						selectValue={kind}
 					>
-						{(item: Site) => (
-							<ItemSelector.Item
-								key={item.id}
-								textValue={Liferay.Util.escapeHTML(
-									item.descriptiveName
+						{kind === ConnectableKind.SITES ? (
+							<ItemSelector
+								apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
+								id="connectableSelector"
+								items={site ? [site] : []}
+								onItemsChange={(items: Site[]) => {
+									if (items.length) {
+										const item = items[0];
+										setSite(item);
+										setDisableConnectButton(
+											isAlreadyConnected(
+												item.externalReferenceCode
+											)
+										);
+									}
+									else {
+										setSite(undefined);
+										setDisableConnectButton(true);
+									}
+								}}
+								placeholder={Liferay.Language.get(
+									'select-a-site'
 								)}
 							>
-								{Liferay.Util.escapeHTML(item.descriptiveName)}
-							</ItemSelector.Item>
+								{(item: Site) => (
+									<ItemSelector.Item
+										key={item.id}
+										textValue={Liferay.Util.escapeHTML(
+											item.descriptiveName
+										)}
+									>
+										{Liferay.Util.escapeHTML(
+											item.descriptiveName
+										)}
+									</ItemSelector.Item>
+								)}
+							</ItemSelector>
+						) : (
+							<ItemSelector
+								apiURL={`${location.origin}/o/headless-admin-site/v1.0/site-templates?active=true`}
+								id="connectableSelector"
+								items={siteTemplate ? [siteTemplate] : []}
+								onItemsChange={(items: SiteTemplate[]) => {
+									if (items.length) {
+										const item = items[0];
+										setSiteTemplate(item);
+										setDisableConnectButton(
+											isAlreadyConnected(item.id)
+										);
+									}
+									else {
+										setSiteTemplate(undefined);
+										setDisableConnectButton(true);
+									}
+								}}
+								placeholder={Liferay.Language.get(
+									'select-a-site-template'
+								)}
+							>
+								{(item: SiteTemplate) => (
+									<ItemSelector.Item
+										key={item.id}
+										textValue={Liferay.Util.escapeHTML(
+											item.name
+										)}
+									>
+										{Liferay.Util.escapeHTML(item.name)}
+									</ItemSelector.Item>
+								)}
+							</ItemSelector>
 						)}
-					</ItemSelector>
+					</InputGroupWithSelect>
 				</div>
 
 				<div className="autofit-col">
 					<ClayButton
 						disabled={disableConnectButton}
-						onClick={connectSiteToSpace}
+						onClick={connect}
 					>
 						{Liferay.Language.get('connect')}
 					</ClayButton>
@@ -229,50 +399,81 @@ export default function SpaceConnectedSitesModal({
 	externalReferenceCode: string;
 	hasConnectSitesPermission?: boolean;
 }) {
-	const [connectedSites, setConnectedSites] = useState<Site[]>([]);
+	const [connections, setConnections] = useState<Connection[]>([]);
 	const listLabelId = useId();
 
 	useEffect(() => {
-		const fetchConnectedSitesToSpace = async () => {
-			const {data} =
-				await ConnectedSiteService.getConnectedSitesFromSpace(
+		const fetchConnections = async () => {
+			const [sitesResult, templatesResult] = await Promise.all([
+				ConnectedSiteService.getConnectedSitesFromSpace(
 					externalReferenceCode
-				);
+				),
+				SiteTemplateService.getConnectedSiteTemplates(
+					externalReferenceCode
+				),
+			]);
 
-			if (data) {
-				setConnectedSites(data.items);
+			const next: Connection[] = [];
+
+			if (sitesResult.data) {
+				for (const site of sitesResult.data.items) {
+					next.push({kind: 'site', site});
+				}
 			}
+
+			if (templatesResult.data) {
+				for (const siteTemplate of templatesResult.data.items) {
+					next.push({kind: 'site-template', siteTemplate});
+				}
+			}
+
+			next.sort((a, b) =>
+				getConnectionName(a).localeCompare(getConnectionName(b))
+			);
+
+			setConnections(next);
 		};
 
-		fetchConnectedSitesToSpace();
+		fetchConnections();
 	}, [externalReferenceCode]);
 
-	const onSiteConnected = (site: Site) => {
-		setConnectedSites((currentConnectedSites) => {
+	const onConnectionAdded = (connection: Connection) => {
+		setConnections((current) => {
 			if (
-				currentConnectedSites.some(
-					(prevSite) => prevSite.id === site.id
+				current.some(
+					(existing) =>
+						getConnectionKey(existing) ===
+						getConnectionKey(connection)
 				)
 			) {
-				return currentConnectedSites;
+				return current;
 			}
 
-			return [...currentConnectedSites, site];
+			const next = [...current, connection];
+
+			next.sort((a, b) =>
+				getConnectionName(a).localeCompare(getConnectionName(b))
+			);
+
+			return next;
 		});
 	};
 
-	const onSiteDisconnected = (site: Site) => {
-		setConnectedSites((currentConnectedSites) =>
-			currentConnectedSites.filter(
-				(currentSite) => currentSite.id !== site.id
+	const onConnectionDisconnected = (connection: Connection) => {
+		setConnections((current) =>
+			current.filter(
+				(existing) =>
+					getConnectionKey(existing) !== getConnectionKey(connection)
 			)
 		);
 	};
 
-	const onSiteChange = (site: Site) => {
-		setConnectedSites((currentConnectedSites) =>
-			currentConnectedSites.map((currentSite) =>
-				currentSite.id === site.id ? site : currentSite
+	const onConnectionChange = (connection: Connection) => {
+		setConnections((current) =>
+			current.map((existing) =>
+				getConnectionKey(existing) === getConnectionKey(connection)
+					? connection
+					: existing
 			)
 		);
 	};
@@ -285,30 +486,26 @@ export default function SpaceConnectedSitesModal({
 				{Liferay.Language.get('all-sites')}
 			</ClayModal.Header>
 
-			{hasConnectSitesPermission && (
-				<ClayModal.Item>
-					<SitesSelector
-						connectedSites={connectedSites}
-						externalReferenceCode={externalReferenceCode}
-						onSiteConnected={onSiteConnected}
-					/>
-				</ClayModal.Item>
-			)}
-
 			<ClayModal.Body>
-				{!connectedSites.length ? (
+				<p className="c-mb-4 text-secondary">
+					{Liferay.Language.get(
+						'connect-sites-and-site-templates-to-this-space'
+					)}
+				</p>
+
+				{hasConnectSitesPermission && (
+					<ConnectableSelector
+						connections={connections}
+						externalReferenceCode={externalReferenceCode}
+						onConnectionAdded={onConnectionAdded}
+					/>
+				)}
+
+				{!connections.length ? (
 					<div className="text-center">
 						<h2 className="font-weight-semi-bold text-4">
 							{Liferay.Language.get('no-sites-are-connected-yet')}
 						</h2>
-
-						{hasConnectSitesPermission && (
-							<p className="text-3">
-								{Liferay.Language.get(
-									'connect-sites-to-this-space'
-								)}
-							</p>
-						)}
 					</div>
 				) : (
 					<>
@@ -325,43 +522,47 @@ export default function SpaceConnectedSitesModal({
 							aria-labelledby={listLabelId}
 							className="list-unstyled mb-0"
 						>
-							{connectedSites.map((site) => {
-								return (
-									<li
-										className="align-items-center c-py-2 d-flex font-weight-semi-bold justify-content-between text-3"
-										key={site.id}
-									>
-										<div className="align-items-center d-flex">
-											<ClaySticker
-												className="c-mr-2"
-												displayType="secondary"
-												shape="circle"
-												size="sm"
-											>
+							{connections.map((connection) => (
+								<li
+									className="align-items-center c-py-2 d-flex font-weight-semi-bold justify-content-between text-3"
+									key={getConnectionKey(connection)}
+								>
+									<div className="align-items-center d-flex">
+										<ClaySticker
+											className="c-mr-2"
+											displayType="secondary"
+											shape="circle"
+											size="sm"
+										>
+											{connection.kind === 'site' ? (
 												<ClaySticker.Image
 													alt=""
-													src={site.logo}
+													src={connection.site.logo}
 												/>
-											</ClaySticker>
+											) : (
+												<ClayIcon symbol="cloud" />
+											)}
+										</ClaySticker>
 
-											{site.descriptiveName}
-										</div>
+										{getConnectionLabel(connection)}
+									</div>
 
-										{hasConnectSitesPermission && (
-											<ConnectedSiteActions
-												externalReferenceCode={
-													externalReferenceCode
-												}
-												onSiteChange={onSiteChange}
-												onSiteDisconnected={
-													onSiteDisconnected
-												}
-												site={site}
-											/>
-										)}
-									</li>
-								);
-							})}
+									{hasConnectSitesPermission && (
+										<ConnectableActions
+											connection={connection}
+											externalReferenceCode={
+												externalReferenceCode
+											}
+											onConnectionChange={
+												onConnectionChange
+											}
+											onConnectionDisconnected={
+												onConnectionDisconnected
+											}
+										/>
+									)}
+								</li>
+							))}
 						</ul>
 					</>
 				)}

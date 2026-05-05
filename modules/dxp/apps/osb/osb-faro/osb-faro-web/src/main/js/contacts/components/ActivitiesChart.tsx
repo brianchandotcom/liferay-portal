@@ -155,18 +155,15 @@ const ActivitiesChart: React.FC<
 				data={history}
 				onClick={pointData => {
 					if (alwaysShowSelectedTooltip && pointData) {
-						if (_tooltipRef) {
-							const {
-								getTranslate,
-								props: {viewBox},
-								state: {boxWidth}
-							} = _tooltipRef.current;
+						const tooltip = _tooltipRef.current;
 
+						if (tooltip?.state?.boxWidth && tooltip.getTranslate) {
 							setSelectedTooltipX(
-								getTranslate({
+								tooltip.getTranslate({
 									key: 'x',
-									tooltipDimension: boxWidth,
-									viewBoxDimension: viewBox.width
+									tooltipDimension: tooltip.state.boxWidth,
+									viewBoxDimension:
+										tooltip.props.viewBox.width
 								})
 							);
 						}
@@ -273,7 +270,7 @@ const ActivitiesChart: React.FC<
 				<ReferenceLine
 					strokeWidth={1}
 					x={
-						showFixedTooltip && selectedPoint !== undefined
+						selectedPoint !== undefined
 							? history[selectedPoint].intervalInitDate
 							: undefined
 					}

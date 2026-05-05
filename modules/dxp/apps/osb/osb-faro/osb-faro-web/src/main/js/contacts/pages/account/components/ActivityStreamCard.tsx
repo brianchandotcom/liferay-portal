@@ -13,28 +13,44 @@ import AccountUserSessionQuery, {
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import ActivityStreamTimeline from './ActivityStreamTimeline';
 import Card from 'shared/components/Card';
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import moment from 'moment';
 import React, {useEffect, useState} from 'react';
 import SearchInput from 'shared/components/SearchInput';
 import URLConstants from 'shared/util/url-constants';
+import {
+	DEFAULT_DATE_FORMAT,
+	formatUTCDate,
+	getDateRangeLabel,
+	getDateRangeLabelFromDate,
+	getEndDate
+} from 'shared/util/date';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
-import {getDateRangeLabel} from 'shared/util/date';
 import {getIcon, getStatsColor} from 'shared/util/metrics';
 import {getSafeRangeSelectors} from 'shared/util/util';
-import {Interval, RangeSelectors} from 'shared/types';
+import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
 import {isNil} from 'lodash';
 import {mapListResultsToProps} from 'shared/util/mappers';
-import {SessionEntityTypes} from 'shared/util/constants';
+import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {Text} from '@clayui/core';
-import {toRounded, toThousands} from 'shared/util/numbers';
+import {toRounded} from 'shared/util/numbers';
 import {TrendClassification} from 'segment/types';
 import {useQuery} from '@apollo/client';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 import {WrapSafeResults} from 'shared/hoc/util';
+
+const formatTimestamp = (timestamp: number): string => {
+	const date = new Date(timestamp);
+	const hours = date.getUTCHours().toString().padStart(2, '0');
+	const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+	const seconds = date.getUTCSeconds().toString().padStart(2, '0');
+
+	return `${hours}:${minutes}:${seconds}`;
+};
 
 interface IActivityStreamCardProps {
 	accountId: string;
@@ -83,8 +99,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		error,
 		items: activityHistory,
 		loading,
-		refetch,
-		total: activityTotal
+		refetch
 	} = mapListResultsToProps(metricResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -114,6 +129,43 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		}
 	});
 
+	const getDateRange = (): SafeRangeSelectors => {
+		const {intervalInitDate} =
+			(selectedPoint !== undefined && activityHistory[selectedPoint]) ||
+			{};
+
+		const endDate = getEndDate(intervalInitDate, interval);
+		const hasSelectedDate = !isNil(endDate) && !isNil(intervalInitDate);
+
+		if (!hasSelectedDate) {
+			return safeRangeSelectors;
+		}
+
+		const formattedRangeEnd = formatUTCDate(endDate, DEFAULT_DATE_FORMAT);
+		const formattedRangeStart = formatUTCDate(
+			intervalInitDate,
+			DEFAULT_DATE_FORMAT
+		);
+
+		if (rangeSelectors.rangeKey === RangeKeyTimeRanges.Last24Hours) {
+			return getSafeRangeSelectors({
+				rangeEnd: `${formattedRangeEnd}T${formatTimestamp(
+					intervalInitDate + 59 * 60000
+				)}`,
+				rangeKey: rangeSelectors.rangeKey,
+				rangeStart: `${formattedRangeStart}T${formatTimestamp(
+					intervalInitDate
+				)}`
+			});
+		}
+
+		return getSafeRangeSelectors({
+			rangeEnd: formattedRangeEnd,
+			rangeKey: rangeSelectors.rangeKey,
+			rangeStart: formattedRangeStart
+		});
+	};
+
 	const sessionsResponse = useQuery<
 		AccountUserSessionData,
 		AccountUserSessionVariables
@@ -127,7 +179,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			keywords,
 			page: page - 1,
 			size: delta,
-			...safeRangeSelectors
+			...getDateRange()
 		}
 	});
 
@@ -136,6 +188,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 	const totalSessionEvents = sessionsData?.totalEventsMetric?.value ?? 0;
 
 	const handleChangeSelection = (index: number | null) => {
+		resetPage();
 		onPointSelect(index ?? undefined);
 	};
 
@@ -162,11 +215,14 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		!activityHistory.length ||
 		activityHistory.every(({totalEvents}) => !totalEvents);
 
-	const dateRangeLabel = getDateRangeLabel(
-		activityHistory,
-		interval,
-		'intervalInitDate'
-	);
+	const selected = hasSelectedPoint || selectedPoint !== undefined;
+
+	const {intervalInitDate: selectedIntervalInitDate} =
+		(selectedPoint !== undefined && activityHistory[selectedPoint]) || {};
+
+	const dateRangeLabel = selected
+		? getDateRangeLabelFromDate(selectedIntervalInitDate, interval)
+		: getDateRangeLabel(activityHistory, interval, 'intervalInitDate');
 
 	return (
 		<WrapSafeResults
@@ -232,7 +288,6 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 					<div className='position-relative'>
 						<ActivitiesChart
 							alwaysShowSelectedTooltip
-							hasSelectedPoint={hasSelectedPoint}
 							hideGrid={isChartEmpty}
 							history={activityHistory}
 							interval={interval}
@@ -297,24 +352,26 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 					</div>
 
 					<div className='chart-footer mt-3'>
-						<Text color='secondary' size={3} weight='semi-bold'>
-							{sub(Liferay.Language.get('account-s-events-x'), [
-								dateRangeLabel
-							])}
-						</Text>
-
-						<div className='mt-1'>
-							<Text size={3}>
+						<div className='d-flex align-items-baseline'>
+							<Text color='secondary' size={3} weight='semi-bold'>
 								{sub(
-									Liferay.Language.get('x-events'),
-									[
-										<b key='count'>
-											{toThousands(activityTotal ?? 0)}
-										</b>
-									],
-									false
+									Liferay.Language.get('account-s-events-x'),
+									[dateRangeLabel]
 								)}
 							</Text>
+
+							{selected && (
+								<ClayButton
+									className='ml-2 p-0'
+									displayType='link'
+									onClick={() => handleChangeSelection(null)}
+									size='sm'
+								>
+									{Liferay.Language.get(
+										'clear-date-selection'
+									)}
+								</ClayButton>
+							)}
 						</div>
 					</div>
 				</div>

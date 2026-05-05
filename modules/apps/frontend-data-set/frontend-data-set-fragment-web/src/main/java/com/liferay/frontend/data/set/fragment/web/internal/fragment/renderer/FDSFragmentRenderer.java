@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -297,7 +298,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 					}
 
 					String tokenMarkup =
-						"<span><strong>" + tokenValue + "</strong></span>";
+						"<span><strong>" + HtmlUtil.escape(tokenValue) +
+							"</strong></span>";
 
 					return Matcher.quoteReplacement(tokenMarkup);
 				}));
@@ -356,7 +358,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenName);
 
 			if (Validator.isNotNull(tokenValue)) {
-				tokenResolutionsJSONObject.put(tokenName, tokenValue);
+				tokenResolutionsJSONObject.put(
+					tokenName, HtmlUtil.escape(tokenValue));
 			}
 		}
 

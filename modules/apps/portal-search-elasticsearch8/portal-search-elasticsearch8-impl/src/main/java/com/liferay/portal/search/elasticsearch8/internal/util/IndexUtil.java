@@ -224,7 +224,8 @@ public class IndexUtil {
 
 				mergeToJsonObject((JSONObject)object1, (JSONObject)object2);
 			}
-			else if ((object1 instanceof JSONArray) &&
+			else if (key.equals("dynamic_templates") &&
+					 (object1 instanceof JSONArray) &&
 					 (object2 instanceof JSONArray)) {
 
 				jsonObject.put(

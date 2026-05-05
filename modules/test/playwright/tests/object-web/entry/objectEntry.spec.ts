@@ -5496,14 +5496,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 			});
 
 			await test.step('Select the "United States" prefix, fill the phone number field, and save the entry', async () => {
-				await fieldContainer.getByRole('combobox').click();
+				await fieldContainer.getByLabel('Country Code').click();
 
 				await page.getByRole('option', {name: /United States/}).click();
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
 				await fieldContainer
-					.locator('input[type="tel"]')
+					.getByLabel('Phone Number')
 					.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
@@ -5520,12 +5520,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 					.first()
 					.click();
 
-				await expect(fieldContainer.getByRole('combobox')).toHaveText(
-					prefix
-				);
+				await expect(
+					fieldContainer.getByLabel('Country Code')
+				).toHaveText(prefix);
 
 				await expect(
-					fieldContainer.locator('input[type="tel"]')
+					fieldContainer.getByLabel('Phone Number')
 				).toHaveValue(localNumber);
 			});
 		}
@@ -5616,7 +5616,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
 				await fieldContainer
-					.locator('input[type="tel"]')
+					.getByLabel('Phone Number')
 					.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
@@ -5636,7 +5636,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
 				await expect(
-					fieldContainer.locator('input[type="tel"]')
+					fieldContainer.getByLabel('Phone Number')
 				).toHaveValue(localNumber);
 			});
 		}
@@ -5661,14 +5661,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 			);
 
 			const fixedPhoneInput =
-				fixedFieldContainer.locator('input[type="tel"]');
+				fixedFieldContainer.getByLabel('Phone Number');
 
 			const userFieldContainer = page.locator(
 				`[data-field-name="${userFieldLabel}"]`
 			);
 
 			const userPhoneInput =
-				userFieldContainer.locator('input[type="tel"]');
+				userFieldContainer.getByLabel('Phone Number');
 			const userPrefixCombobox =
 				userFieldContainer.getByLabel('Country Code');
 

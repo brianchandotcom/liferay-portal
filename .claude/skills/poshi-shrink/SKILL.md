@@ -74,21 +74,12 @@ Common merge-worthy signals — classic patterns from Liferay test names:
 - Tests with special setup (localized URLs, fragment translations, system settings changes, extra page creation).
 - Tests with `@ignore` / `@skip` annotations.
 
-### Edited Test Files
+### Shrunk Test Files
 
-After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan:
+After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan and commit after each one with the `/commit` skill — one commit per operation, never squashed. The per-merge granularity is exactly what makes the diff reviewable.
 
-- **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits.
-- **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source.
-
-### Per-Merge Commits
-
-One commit per operation — never squash. Use the `/commit` skill. Message templates:
-
-- `<TICKET> Rename test <Keeper> to <FinalName>` — pure rename; first commit of the group; no logic change.
-- `<TICKET> Merge test <Source> into <FinalName>` — delete the source test block; add its unique assertions as new `task` blocks in the target.
-
-The per-merge granularity is exactly what makes the diff reviewable. Do **not** bundle multiple merges into one commit.
+- **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits. Commit message: `<TICKET> Rename test <Keeper> to <FinalName>`.
+- **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source. Commit message: `<TICKET> Merge test <Source> into <FinalName>`.
 
 When the file convention keeps tests alphabetical, add a final `<TICKET> Alphabetic order` commit after all merges.
 

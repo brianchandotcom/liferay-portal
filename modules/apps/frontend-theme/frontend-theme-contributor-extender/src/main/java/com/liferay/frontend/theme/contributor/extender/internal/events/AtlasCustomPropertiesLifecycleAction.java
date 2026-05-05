@@ -40,62 +40,59 @@ public class AtlasCustomPropertiesLifecycleAction implements LifecycleAction {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay == null) || (themeDisplay.getTheme() == null)) {
+		if ((themeDisplay == null) || (themeDisplay.getTheme() == null) ||
+			!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-84497")) {
+
 			return;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-84497")) {
+		Theme theme = themeDisplay.getTheme();
 
-			Theme theme = themeDisplay.getTheme();
+		String prefix = PortalUtil.getPathModule();
+		String proxyPath = PortalUtil.getPathProxy();
 
-			String prefix = PortalUtil.getPathModule();
-			String proxyPath = PortalUtil.getPathProxy();
+		if (prefix.startsWith(proxyPath)) {
+			prefix = prefix.substring(proxyPath.length());
+		}
 
-			if (prefix.startsWith(proxyPath)) {
-				prefix = prefix.substring(proxyPath.length());
+		String basePath = StringBundler.concat(
+			prefix, StringPool.SLASH, theme.getServletContextName(),
+			theme.getCssPath());
+
+		String mainAtlasName = PortalUtil.isRightToLeft(httpServletRequest) ?
+			"/main-atlas-custom-properties_rtl.css" :
+				"/main-atlas-custom-properties.css";
+
+		String mainHashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
+			basePath + mainAtlasName);
+
+		if (Validator.isNotNull(mainHashedFileURI)) {
+			try {
+				themeDisplay.setMainCSSURL(
+					PortalUtil.getCDNHost(httpServletRequest) + proxyPath +
+						mainHashedFileURI);
 			}
-
-			String basePath = StringBundler.concat(
-				prefix, StringPool.SLASH, theme.getServletContextName(),
-				theme.getCssPath());
-
-			String mainAtlasName =
-				PortalUtil.isRightToLeft(httpServletRequest) ?
-					"/main-atlas-custom-properties_rtl.css" :
-						"/main-atlas-custom-properties.css";
-
-			String mainHashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
-				basePath + mainAtlasName);
-
-			if (Validator.isNotNull(mainHashedFileURI)) {
-				try {
-					themeDisplay.setMainCSSURL(
-						PortalUtil.getCDNHost(httpServletRequest) + proxyPath +
-							mainHashedFileURI);
-				}
-				catch (PortalException portalException) {
-					_log.error("Unable to set main CSS URL", portalException);
-				}
+			catch (PortalException portalException) {
+				_log.error("Unable to set main CSS URL", portalException);
 			}
+		}
 
-			String clayAtlasName =
-				PortalUtil.isRightToLeft(httpServletRequest) ?
-					"/clay-atlas-custom-properties_rtl.css" :
-						"/clay-atlas-custom-properties.css";
+		String clayAtlasName = PortalUtil.isRightToLeft(httpServletRequest) ?
+			"/clay-atlas-custom-properties_rtl.css" :
+				"/clay-atlas-custom-properties.css";
 
-			String clayHashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
-				basePath + clayAtlasName);
+		String clayHashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
+			basePath + clayAtlasName);
 
-			if (Validator.isNotNull(clayHashedFileURI)) {
-				try {
-					themeDisplay.setClayCSSURL(
-						PortalUtil.getCDNHost(httpServletRequest) + proxyPath +
-							clayHashedFileURI);
-				}
-				catch (PortalException portalException) {
-					_log.error("Unable to set Clay CSS URL", portalException);
-				}
+		if (Validator.isNotNull(clayHashedFileURI)) {
+			try {
+				themeDisplay.setClayCSSURL(
+					PortalUtil.getCDNHost(httpServletRequest) + proxyPath +
+						clayHashedFileURI);
+			}
+			catch (PortalException portalException) {
+				_log.error("Unable to set Clay CSS URL", portalException);
 			}
 		}
 	}

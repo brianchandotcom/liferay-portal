@@ -18,7 +18,10 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -33,25 +36,7 @@ public class QuotaUtil {
 	public static void checkUsage(long companyId, String text, long userId)
 		throws PortalException {
 
-		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
-			userId);
-
-		if (accountEntry == null) {
-			return;
-		}
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionLocalServiceUtil.
-				fetchObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_QUOTA", companyId);
-
-		if (objectDefinition == null) {
-			return;
-		}
-
-		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.fetchObjectEntry(
-			"quota-" + accountEntry.getAccountEntryId(), 0,
-			objectDefinition.getObjectDefinitionId());
+		ObjectEntry objectEntry = _fetchQuotaObjectEntry(companyId, userId);
 
 		if (objectEntry == null) {
 			return;
@@ -87,6 +72,62 @@ public class QuotaUtil {
 			throw new UnsupportedOperationException(
 				"You have exceeded your token quota");
 		}
+
+		updateUsage(companyId, tokensCount, userId);
+	}
+
+	public static void updateUsage(
+			long companyId, long tokensCount, long userId)
+		throws PortalException {
+
+		ObjectEntry objectEntry = _fetchQuotaObjectEntry(companyId, userId);
+
+		if (objectEntry == null) {
+			return;
+		}
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		ObjectEntryLocalServiceUtil.partialUpdateObjectEntry(
+			userId, objectEntry.getObjectEntryId(), 0,
+			HashMapBuilder.<String, Serializable>put(
+				"usage",
+				() -> {
+					long usage = MapUtil.getLong(
+						objectEntry.getValues(), "usage");
+
+					return usage + tokensCount;
+				}
+			).build(),
+			serviceContext);
+	}
+
+	private static ObjectEntry _fetchQuotaObjectEntry(
+			long companyId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = AccountEntryUtil.getUserAccountEntry(
+			userId);
+
+		if (accountEntry == null) {
+			return null;
+		}
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionLocalServiceUtil.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", companyId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return ObjectEntryLocalServiceUtil.fetchObjectEntry(
+			"quota-" + accountEntry.getAccountEntryId(), 0,
+			objectDefinition.getObjectDefinitionId());
 	}
 
 }

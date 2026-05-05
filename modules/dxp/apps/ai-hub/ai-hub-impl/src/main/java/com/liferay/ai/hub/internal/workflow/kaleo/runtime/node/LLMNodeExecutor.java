@@ -254,6 +254,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			chatResponse, kaleoInstanceToken, aiMessage.text(), prompt,
 			executionContext.getServiceContext(), userMessage);
 
+		QuotaUtil.updateUsage(
+			chatResponse, executionContext.getServiceContext());
+
 		List<KaleoTransition> kaleoTransitions =
 			kaleoNode.getKaleoTransitions();
 

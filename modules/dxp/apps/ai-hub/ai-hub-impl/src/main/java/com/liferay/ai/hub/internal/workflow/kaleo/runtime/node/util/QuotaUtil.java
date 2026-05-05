@@ -9,8 +9,12 @@ import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.workflow.kaleo.runtime.constants.WorkflowInstanceDestinationNames;
+
+import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.output.TokenUsage;
 
 import java.io.Serializable;
 
@@ -45,6 +49,21 @@ public class QuotaUtil {
 				GetterUtil.getString(workflowContext.get("outBoundEventName")),
 				nodeName,
 				GetterUtil.getString(workflowContext.get("sseEventSinkKey")));
+		}
+	}
+
+	public static void updateUsage(
+		ChatResponse chatResponse, ServiceContext serviceContext) {
+
+		try {
+			TokenUsage tokenUsage = chatResponse.tokenUsage();
+
+			com.liferay.ai.hub.internal.quota.QuotaUtil.updateUsage(
+				serviceContext.getCompanyId(), tokenUsage.outputTokenCount(),
+				serviceContext.getUserId());
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
 		}
 	}
 

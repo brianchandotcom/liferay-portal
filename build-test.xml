@@ -11326,6 +11326,18 @@ org.apache.catalina.ha.session.level=INFO]]>
 		</if>
 
 		<if>
+			<matches pattern="https?://" string="${test.build.dsr.license.url}" />
+			<then>
+				<mkdir dir="${liferay.home}/deploy" />
+
+				<mirrors-get
+					dest="${liferay.home}/deploy/license-dsr.xml"
+					src="${test.build.dsr.license.url}"
+				/>
+			</then>
+		</if>
+
+		<if>
 			<matches pattern="https?://" string="${test.build.license.xml.zip.url}" />
 			<then>
 				<mkdir dir="${liferay.home}/deploy" />
@@ -14555,6 +14567,7 @@ analytics.cloud.domain.allowed=*</echo>
 
 		<antcall target="deploy-license-xml">
 			<param name="test.build.cmp.license.url" value="${test.cmp.license.url}" />
+			<param name="test.build.dsr.license.url" value="${test.dsr.license.url}" />
 			<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
 		</antcall>
 	</target>
@@ -15483,6 +15496,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall target="deploy-license-xml">
 			<param name="test.build.cmp.license.url" value="${test.cmp.license.url}" />
+			<param name="test.build.dsr.license.url" value="${test.dsr.license.url}" />
 			<param name="test.build.license.xml.zip.url" value="${test.license.xml.url}" />
 		</antcall>
 

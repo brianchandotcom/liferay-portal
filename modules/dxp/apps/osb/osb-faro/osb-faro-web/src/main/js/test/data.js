@@ -31,6 +31,7 @@ import {
 	NotificationSubtypes,
 	NotificationTypes
 } from 'shared/util/records/Notification';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 
 const BASE_TIMESTAMP = 1531263666366;
 
@@ -713,11 +714,11 @@ export function mockSubscription(data = {}) {
 	return {
 		addOns: new List([
 			new Map({
-				name: 'Liferay Analytics Cloud Enterprise Contacts',
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts,
 				quantity: 2
 			}),
 			new Map({
-				name: 'Liferay Analytics Cloud Enterprise Tracked Pages',
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages,
 				quantity: 1
 			})
 		]),
@@ -726,7 +727,7 @@ export function mockSubscription(data = {}) {
 		individualsLimit: 105000,
 		individualsStatus: SubscriptionStatuses.Ok,
 		lastAnniversaryDate: getTimestamp(-2),
-		name: 'Liferay Analytics Cloud Enterprise',
+		name: SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 		pageViewsCountSinceLastAnniversary: 100023,
 		pageViewsLimit: 7000000,
 		pageViewsStatus: SubscriptionStatuses.Ok,
@@ -863,11 +864,11 @@ export function mockPlan({data = {}, individuals = {}, pageViews = {}} = {}) {
 	return {
 		addOns: {
 			individuals: {
-				name: 'Liferay Analytics Cloud Enterprise Contacts',
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts,
 				quantity: 2
 			},
 			pageViews: {
-				name: 'Liferay Analytics Cloud Enterprise Tracked Pages',
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages,
 				quantity: 1
 			}
 		},
@@ -887,7 +888,7 @@ export function mockPlan({data = {}, individuals = {}, pageViews = {}} = {}) {
 				...pageViews
 			})
 		},
-		name: 'Liferay Analytics Cloud Enterprise',
+		name: SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 		startDate: getTimestamp(-2),
 		...data
 	};
@@ -899,20 +900,22 @@ export function mockProject(seed = 1, data = {}) {
 		accountName: `accountName${seed}`,
 		addOnsIList: new Map([
 			{
-				baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
+				baseSubscriptionPlan:
+					SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 				limits: {
 					individuals: 5000,
 					pageViews: 0
 				},
-				name: 'Liferay Analytics Cloud Enterprise Contacts'
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts
 			},
 			{
-				baseSubscriptionPlan: 'Liferay Analytics Cloud Enterprise',
+				baseSubscriptionPlan:
+					SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 				limits: {
 					individuals: 0,
 					pageViews: 5000000
 				},
-				name: 'Liferay Analytics Cloud Enterprise Tracked Pages'
+				name: SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages
 			}
 		]),
 		corpProjectName: `corpProjectName${seed}`,

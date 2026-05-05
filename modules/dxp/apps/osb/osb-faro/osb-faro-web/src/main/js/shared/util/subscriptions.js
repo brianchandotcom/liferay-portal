@@ -7,64 +7,139 @@ export const INDIVIDUALS = 'individuals';
 
 export const PAGEVIEWS = 'pageViews';
 
+export const SubscriptionNames = {
+	LiferayAnalyticsCloudBasic: 'Liferay Analytics Cloud Basic',
+	LiferayAnalyticsCloudBusiness: 'Liferay Analytics Cloud Business',
+	LiferayAnalyticsCloudBusinessContacts:
+		'Liferay Analytics Cloud Business Contacts',
+	LiferayAnalyticsCloudBusinessTrackedPages:
+		'Liferay Analytics Cloud Business Tracked Pages',
+	LiferayAnalyticsCloudEnterprise: 'Liferay Analytics Cloud Enterprise',
+	LiferayAnalyticsCloudEnterpriseContacts:
+		'Liferay Analytics Cloud Enterprise Contacts',
+	LiferayAnalyticsCloudEnterpriseTrackedPages:
+		'Liferay Analytics Cloud Enterprise Tracked Pages',
+	LiferayDataPlatform: 'Liferay Data Platform',
+	LiferaySaasBusinessPlan: 'Liferay SaaS - Business Plan',
+	LiferaySaasCspCustomUserTier: 'Liferay SaaS - CSP - Custom User Tier',
+	LiferaySaasCspCustomUserTierExtraUser:
+		'Liferay SaaS - CSP - Custom User Tier - Extra User',
+	LiferaySaasCspUpTo100Users: 'Liferay SaaS - CSP - Up to 100 Users',
+	LiferaySaasCspUpTo100UsersExtraUser:
+		'Liferay SaaS - CSP - Up to 100 Users - Extra User',
+	LiferaySaasCspUpTo10kUsers: 'Liferay SaaS - CSP - Up to 10K Users',
+	LiferaySaasCspUpTo10kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 10K Users - Extra User',
+	LiferaySaasCspUpTo1kUsers: 'Liferay SaaS - CSP - Up to 1K Users',
+	LiferaySaasCspUpTo1kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 1K Users - Extra User',
+	LiferaySaasCspUpTo20kUsers: 'Liferay SaaS - CSP - Up to 20K Users',
+	LiferaySaasCspUpTo20kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 20K Users - Extra User',
+	LiferaySaasCspUpTo500Users: 'Liferay SaaS - CSP - Up to 500 Users',
+	LiferaySaasCspUpTo500UsersExtraUser:
+		'Liferay SaaS - CSP - Up to 500 Users - Extra User',
+	LiferaySaasCspUpTo5kUsers: 'Liferay SaaS - CSP - Up to 5K Users',
+	LiferaySaasCspUpTo5kUsersExtraUser:
+		'Liferay SaaS - CSP - Up to 5K Users - Extra User',
+	LiferaySaasEnterprisePlan: 'Liferay SaaS - Enterprise Plan',
+	LiferaySaasProPlan: 'Liferay SaaS - Pro Plan',
+	LiferaySaasSubscriptionEngageSite:
+		'Liferay SaaS Subscription - Engage Site',
+	LiferaySaasSubscriptionSupportSite:
+		'Liferay SaaS Subscription - Support Site',
+	LiferaySaasSubscriptionTransactSite:
+		'Liferay SaaS Subscription - Transact Site',
+	LxcBusinessPlan: 'LXC - Business Plan',
+	LxcCspCustomUserTier: 'LXC - CSP - Custom User Tier',
+	LxcCspCustomUserTierExtraUser: 'LXC - CSP - Custom User Tier - Extra User',
+	LxcCspUpTo100Users: 'LXC - CSP - Up to 100 Users',
+	LxcCspUpTo100UsersExtraUser: 'LXC - CSP - Up to 100 Users - Extra User',
+	LxcCspUpTo10kUsers: 'LXC - CSP - Up to 10K Users',
+	LxcCspUpTo10kUsersExtraUser: 'LXC - CSP - Up to 10K Users - Extra User',
+	LxcCspUpTo1kUsers: 'LXC - CSP - Up to 1K Users',
+	LxcCspUpTo1kUsersExtraUser: 'LXC - CSP - Up to 1K Users - Extra User',
+	LxcCspUpTo20kUsers: 'LXC - CSP - Up to 20K Users',
+	LxcCspUpTo20kUsersExtraUser: 'LXC - CSP - Up to 20K Users - Extra User',
+	LxcCspUpTo500Users: 'LXC - CSP - Up to 500 Users',
+	LxcCspUpTo500UsersExtraUser: 'LXC - CSP - Up to 500 Users - Extra User',
+	LxcCspUpTo5kUsers: 'LXC - CSP - Up to 5K Users',
+	LxcCspUpTo5kUsersExtraUser: 'LXC - CSP - Up to 5K Users - Extra User',
+	LxcEnterprisePlan: 'LXC - Enterprise Plan',
+	LxcProPlan: 'LXC - Pro Plan',
+	LxcSubscriptionEngageSite: 'LXC Subscription - Engage Site',
+	LxcSubscriptionSupportSite: 'LXC Subscription - Support Site',
+	LxcSubscriptionTransactSite: 'LXC Subscription - Transact Site'
+};
+
 export const PLAN_TYPES = {
-	['Liferay Analytics Cloud Basic']: 'basic',
-	['Liferay Analytics Cloud Business']: 'business',
-	['Liferay Analytics Cloud Business Contacts']: INDIVIDUALS,
-	['Liferay Analytics Cloud Business Tracked Pages']: PAGEVIEWS,
-	['Liferay Analytics Cloud Enterprise']: 'enterprise',
-	['Liferay Analytics Cloud Enterprise Contacts']: INDIVIDUALS,
-	['Liferay Analytics Cloud Enterprise Tracked Pages']: PAGEVIEWS,
-	['Liferay Data Platform']: 'dataPlatform',
-	['Liferay SaaS - Business Plan']: 'lxcBusiness',
-	['Liferay SaaS - CSP - Custom User Tier']: 'lxcCspCustomUserTier',
-	['Liferay SaaS - CSP - Custom User Tier - Extra User']:
+	[SubscriptionNames.LiferayAnalyticsCloudBasic]: 'basic',
+	[SubscriptionNames.LiferayAnalyticsCloudBusiness]: 'business',
+	[SubscriptionNames.LiferayAnalyticsCloudBusinessContacts]: INDIVIDUALS,
+	[SubscriptionNames.LiferayAnalyticsCloudBusinessTrackedPages]: PAGEVIEWS,
+	[SubscriptionNames.LiferayAnalyticsCloudEnterprise]: 'enterprise',
+	[SubscriptionNames.LiferayAnalyticsCloudEnterpriseContacts]: INDIVIDUALS,
+	[SubscriptionNames.LiferayAnalyticsCloudEnterpriseTrackedPages]: PAGEVIEWS,
+	[SubscriptionNames.LiferayDataPlatform]: 'dataPlatform',
+	[SubscriptionNames.LiferaySaasBusinessPlan]: 'lxcBusiness',
+	[SubscriptionNames.LiferaySaasCspCustomUserTier]: 'lxcCspCustomUserTier',
+	[SubscriptionNames.LiferaySaasCspCustomUserTierExtraUser]:
 		'lxcCspCustomUserTierExtraUser',
-	['Liferay SaaS - CSP - Up to 100 Users']: 'lxcCspUpTo100Users',
-	['Liferay SaaS - CSP - Up to 100 Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo100Users]: 'lxcCspUpTo100Users',
+	[SubscriptionNames.LiferaySaasCspUpTo100UsersExtraUser]:
 		'lxcCspUpTo100UsersExtraUser',
-	['Liferay SaaS - CSP - Up to 10K Users']: 'lxcCspUpTo10kUsers',
-	['Liferay SaaS - CSP - Up to 10K Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo10kUsers]: 'lxcCspUpTo10kUsers',
+	[SubscriptionNames.LiferaySaasCspUpTo10kUsersExtraUser]:
 		'lxcCspUpTo10kUsersExtraUser',
-	['Liferay SaaS - CSP - Up to 1K Users']: 'lxcCspUpTo1kUsers',
-	['Liferay SaaS - CSP - Up to 1K Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo1kUsers]: 'lxcCspUpTo1kUsers',
+	[SubscriptionNames.LiferaySaasCspUpTo1kUsersExtraUser]:
 		'lxcCspUpTo1kUsersExtraUser',
-	['Liferay SaaS - CSP - Up to 20K Users']: 'lxcCspUpTo20kUsers',
-	['Liferay SaaS - CSP - Up to 20K Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo20kUsers]: 'lxcCspUpTo20kUsers',
+	[SubscriptionNames.LiferaySaasCspUpTo20kUsersExtraUser]:
 		'lxcCspUpTo20kUsersExtraUser',
-	['Liferay SaaS - CSP - Up to 500 Users']: 'lxcCspUpTo500Users',
-	['Liferay SaaS - CSP - Up to 500 Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo500Users]: 'lxcCspUpTo500Users',
+	[SubscriptionNames.LiferaySaasCspUpTo500UsersExtraUser]:
 		'lxcCspUpTo500UsersExtraUser',
-	['Liferay SaaS - CSP - Up to 5K Users']: 'lxcCspUpTo5kUsers',
-	['Liferay SaaS - CSP - Up to 5K Users - Extra User']:
+	[SubscriptionNames.LiferaySaasCspUpTo5kUsers]: 'lxcCspUpTo5kUsers',
+	[SubscriptionNames.LiferaySaasCspUpTo5kUsersExtraUser]:
 		'lxcCspUpTo5kUsersExtraUser',
-	['Liferay SaaS - Enterprise Plan']: 'lxcEnterprise',
-	['Liferay SaaS - Pro Plan']: 'lxcPro',
-	['Liferay SaaS Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
-	['Liferay SaaS Subscription - Support Site']: 'lxcSubscriptionSupportSite',
-	['Liferay SaaS Subscription - Transact Site']:
+	[SubscriptionNames.LiferaySaasEnterprisePlan]: 'lxcEnterprise',
+	[SubscriptionNames.LiferaySaasProPlan]: 'lxcPro',
+	[SubscriptionNames.LiferaySaasSubscriptionEngageSite]:
+		'lxcSubscriptionEngageSite',
+	[SubscriptionNames.LiferaySaasSubscriptionSupportSite]:
+		'lxcSubscriptionSupportSite',
+	[SubscriptionNames.LiferaySaasSubscriptionTransactSite]:
 		'lxcSubscriptionTransactSite',
-	['LXC - Business Plan']: 'lxcBusiness',
-	['LXC - CSP - Custom User Tier']: 'lxcCspCustomUserTier',
-	['LXC - CSP - Custom User Tier - Extra User']:
+	[SubscriptionNames.LxcBusinessPlan]: 'lxcBusiness',
+	[SubscriptionNames.LxcCspCustomUserTier]: 'lxcCspCustomUserTier',
+	[SubscriptionNames.LxcCspCustomUserTierExtraUser]:
 		'lxcCspCustomUserTierExtraUser',
-	['LXC - CSP - Up to 100 Users']: 'lxcCspUpTo100Users',
-	['LXC - CSP - Up to 100 Users - Extra User']: 'lxcCspUpTo100UsersExtraUser',
-	['LXC - CSP - Up to 10K Users']: 'lxcCspUpTo10kUsers',
-	['LXC - CSP - Up to 10K Users - Extra User']: 'lxcCspUpTo10kUsersExtraUser',
-	['LXC - CSP - Up to 1K Users']: 'lxcCspUpTo1kUsers',
-	['LXC - CSP - Up to 1K Users - Extra User']: 'lxcCspUpTo1kUsersExtraUser',
-	['LXC - CSP - Up to 20K Users']: 'lxcCspUpTo20kUsers',
-	['LXC - CSP - Up to 20K Users - Extra User']: 'lxcCspUpTo20kUsersExtraUser',
-	['LXC - CSP - Up to 500 Users']: 'lxcCspUpTo500Users',
-	['LXC - CSP - Up to 500 Users - Extra User']: 'lxcCspUpTo500UsersExtraUser',
-	['LXC - CSP - Up to 5K Users']: 'lxcCspUpTo5kUsers',
-	['LXC - CSP - Up to 5K Users - Extra User']: 'lxcCspUpTo5kUsersExtraUser',
-	['LXC - Enterprise Plan']: 'lxcEnterprise',
-	['LXC - Pro Plan']: 'lxcPro',
-	['LXC Subscription - Engage Site']: 'lxcSubscriptionEngageSite',
-	['LXC Subscription - Support Site']: 'lxcSubscriptionSupportSite',
-	['LXC Subscription - Transact Site']: 'lxcSubscriptionTransactSite'
+	[SubscriptionNames.LxcCspUpTo100Users]: 'lxcCspUpTo100Users',
+	[SubscriptionNames.LxcCspUpTo100UsersExtraUser]:
+		'lxcCspUpTo100UsersExtraUser',
+	[SubscriptionNames.LxcCspUpTo10kUsers]: 'lxcCspUpTo10kUsers',
+	[SubscriptionNames.LxcCspUpTo10kUsersExtraUser]:
+		'lxcCspUpTo10kUsersExtraUser',
+	[SubscriptionNames.LxcCspUpTo1kUsers]: 'lxcCspUpTo1kUsers',
+	[SubscriptionNames.LxcCspUpTo1kUsersExtraUser]:
+		'lxcCspUpTo1kUsersExtraUser',
+	[SubscriptionNames.LxcCspUpTo20kUsers]: 'lxcCspUpTo20kUsers',
+	[SubscriptionNames.LxcCspUpTo20kUsersExtraUser]:
+		'lxcCspUpTo20kUsersExtraUser',
+	[SubscriptionNames.LxcCspUpTo500Users]: 'lxcCspUpTo500Users',
+	[SubscriptionNames.LxcCspUpTo500UsersExtraUser]:
+		'lxcCspUpTo500UsersExtraUser',
+	[SubscriptionNames.LxcCspUpTo5kUsers]: 'lxcCspUpTo5kUsers',
+	[SubscriptionNames.LxcCspUpTo5kUsersExtraUser]:
+		'lxcCspUpTo5kUsersExtraUser',
+	[SubscriptionNames.LxcEnterprisePlan]: 'lxcEnterprise',
+	[SubscriptionNames.LxcProPlan]: 'lxcPro',
+	[SubscriptionNames.LxcSubscriptionEngageSite]: 'lxcSubscriptionEngageSite',
+	[SubscriptionNames.LxcSubscriptionSupportSite]:
+		'lxcSubscriptionSupportSite',
+	[SubscriptionNames.LxcSubscriptionTransactSite]:
+		'lxcSubscriptionTransactSite'
 };
 
 function formatSubscriptions(allPlans) {

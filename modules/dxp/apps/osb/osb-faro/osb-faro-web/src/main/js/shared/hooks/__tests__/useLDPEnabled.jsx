@@ -3,6 +3,7 @@ import React from 'react';
 import {fromJS} from 'immutable';
 import {Provider} from 'react-redux';
 import {renderHook} from '@testing-library/react';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {useLDPEnabled} from 'shared/hooks/useLDPEnabled';
 
 jest.unmock('react-dom');
@@ -16,7 +17,7 @@ describe('useLDPEnabled', () => {
 				[groupId]: {
 					data: {
 						faroSubscription: {
-							name: 'Liferay Data Platform'
+							name: SubscriptionNames.LiferayDataPlatform
 						}
 					}
 				}
@@ -40,7 +41,7 @@ describe('useLDPEnabled', () => {
 				[groupId]: {
 					data: {
 						faroSubscription: {
-							name: 'Liferay Analytics Cloud Enterprise'
+							name: SubscriptionNames.LiferayAnalyticsCloudEnterprise
 						}
 					}
 				}

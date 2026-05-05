@@ -4,7 +4,8 @@ import {
 	getPropIcon,
 	getPropLabel,
 	INDIVIDUALS,
-	PAGEVIEWS
+	PAGEVIEWS,
+	SubscriptionNames
 } from '../subscriptions';
 import {fromJS} from 'immutable';
 import {mockSubscription} from 'test/data';
@@ -24,7 +25,7 @@ describe('subscriptions', () => {
 					fromJS(
 						mockSubscription({
 							individualsCount: 5000,
-							name: 'Liferay Analytics Cloud Enterprise',
+							name: SubscriptionNames.LiferayAnalyticsCloudEnterprise,
 							pageViewsCount: 5000000
 						})
 					)
@@ -43,7 +44,7 @@ describe('subscriptions', () => {
 					fromJS(
 						mockSubscription({
 							individualsCount: 5000,
-							name: 'LXC Subscription - Engage Site',
+							name: SubscriptionNames.LxcSubscriptionEngageSite,
 							pageViewsCount: 5000000
 						})
 					)
@@ -75,7 +76,7 @@ describe('subscriptions', () => {
 			const plan = formatPlanData(
 				fromJS(
 					mockSubscription({
-						name: 'Liferay Analytics Cloud Basic'
+						name: SubscriptionNames.LiferayAnalyticsCloudBasic
 					})
 				)
 			);

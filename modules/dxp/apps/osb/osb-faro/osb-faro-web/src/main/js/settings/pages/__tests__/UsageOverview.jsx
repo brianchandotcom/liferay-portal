@@ -6,6 +6,7 @@ import {fromJS} from 'immutable';
 import {Project} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {SubscriptionNames} from 'shared/util/subscriptions';
 import {SubscriptionStatuses, UserRoleNames} from 'shared/util/constants';
 import {UsageOverview} from '../UsageOverview';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
@@ -285,7 +286,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Basic'
+						name: SubscriptionNames.LiferayAnalyticsCloudBasic
 					})
 				)
 			})
@@ -305,7 +306,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Enterprise'
+						name: SubscriptionNames.LiferayAnalyticsCloudEnterprise
 					})
 				)
 			})
@@ -327,7 +328,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Business'
+						name: SubscriptionNames.LiferayAnalyticsCloudBusiness
 					})
 				)
 			})
@@ -381,7 +382,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Basic'
+						name: SubscriptionNames.LiferayAnalyticsCloudBasic
 					})
 				)
 			})
@@ -409,7 +410,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Business'
+						name: SubscriptionNames.LiferayAnalyticsCloudBusiness
 					})
 				)
 			})
@@ -437,7 +438,7 @@ describe('UsageOverview', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Enterprise'
+						name: SubscriptionNames.LiferayAnalyticsCloudEnterprise
 					})
 				)
 			})
@@ -471,7 +472,7 @@ describe('Subscription Details', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Basic'
+						name: SubscriptionNames.LiferayAnalyticsCloudBasic
 					})
 				)
 			})
@@ -495,7 +496,7 @@ describe('Subscription Details', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Business'
+						name: SubscriptionNames.LiferayAnalyticsCloudBusiness
 					})
 				)
 			})
@@ -519,7 +520,7 @@ describe('Subscription Details', () => {
 			data.mockProject(23, {
 				faroSubscription: fromJS(
 					data.mockSubscription({
-						name: 'Liferay Analytics Cloud Enterprise'
+						name: SubscriptionNames.LiferayAnalyticsCloudEnterprise
 					})
 				)
 			})

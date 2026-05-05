@@ -43,13 +43,9 @@ const HighPriorityContactsInput = ({
 	}, [currentHighPriorityContacts]);
 
 	useEffect(() => {
-		setCriticalIncidentContactList(items);
+		setContactList(items);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [items, sourceItems]);
-
-	const setCriticalIncidentContactList = (contactList) => {
-		return setContactList(contactList);
-	};
 
 	useEffect(() => {
 		const teamMembers = userAccountsData?.accountUserAccountsByExternalReferenceCode?.items.map(

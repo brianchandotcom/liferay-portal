@@ -27,7 +27,6 @@ import {
 
 const IncidentContactEditModal = ({
 	close,
-	hasCloudNativeContact,
 	hasCriticalIncidentContact,
 	hasPrivacyBreachContact,
 	hasSecurityBreachContact,
@@ -139,7 +138,6 @@ const IncidentContactEditModal = ({
 	).find((category) => category === modalFilter);
 
 	const hasHighPriorityContactByCategory = {
-		[HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative]: hasCloudNativeContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident]: hasCriticalIncidentContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach]: hasPrivacyBreachContact,
 		[HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach]: hasSecurityBreachContact,
@@ -209,7 +207,6 @@ const IncidentContactEditModal = ({
 
 const IncidentContactEditForm = ({
 	close,
-	hasCloudNativeContact,
 	hasCriticalIncidentContact,
 	hasPrivacyBreachContact,
 	hasSecurityBreachContact,
@@ -222,7 +219,6 @@ const IncidentContactEditForm = ({
 			{(formikProps) => (
 				<IncidentContactEditModal
 					close={close}
-					hasCloudNativeContact={hasCloudNativeContact}
 					hasCriticalIncidentContact={hasCriticalIncidentContact}
 					hasPrivacyBreachContact={hasPrivacyBreachContact}
 					hasSecurityBreachContact={hasSecurityBreachContact}

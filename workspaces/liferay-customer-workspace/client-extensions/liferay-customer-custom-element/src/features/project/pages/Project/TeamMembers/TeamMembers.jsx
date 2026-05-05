@@ -53,14 +53,6 @@ const TeamMembers = () => {
 			item?.activationStatus === 'Active'
 	);
 
-	const hasDXPCloudSubscription = accountSubscriptionGroups?.some(
-		(item) =>
-			item.name === PRODUCT_TYPES.liferayCloud &&
-			item.activationProductName
-				?.split(',')
-				.includes(PRODUCT_TYPES.dxpCloud)
-	);
-
 	const loading = loadingCurrentKoroneikiAccount || loadingSubscriptionGroups;
 
 	useEffect(() => {
@@ -94,9 +86,6 @@ const TeamMembers = () => {
 							accountSubscriptionGroupsNames
 						}
 						hasActiveProduct={hasActiveProduct}
-						hasDXPCloudSubscription={hasDXPCloudSubscription}
-						koroneikiAccount={koroneikiAccount}
-						loading={loading}
 					/>
 				)}
 			</div>

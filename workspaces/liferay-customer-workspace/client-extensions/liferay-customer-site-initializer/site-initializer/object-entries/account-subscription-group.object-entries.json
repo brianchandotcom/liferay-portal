@@ -2,6 +2,7 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_analytics-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -11,6 +12,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_commerce",
 			"hasActivation": true,
 			"menuOrder": 2,
@@ -20,6 +22,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_enterprise-search",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -30,6 +33,7 @@
 		{
 			"accountKey": "ERC-001",
 			"activationProductName": "Cloud Native, Liferay PaaS, Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -39,6 +43,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_other",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -48,6 +53,7 @@
 		},
 		{
 			"accountKey": "ERC-001",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_portal",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -58,6 +64,7 @@
 		{
 			"accountKey": "ERC-001",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-001_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -68,6 +75,7 @@
 		{
 			"accountKey": "ERC-002",
 			"activationProductName": "Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-002_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -78,6 +86,7 @@
 		{
 			"accountKey": "ERC-003",
 			"activationProductName": "Liferay PaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-003_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -88,6 +97,7 @@
 		{
 			"accountKey": "ERC-004",
 			"activationProductName": "Cloud Native",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-004_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -98,6 +108,7 @@
 		{
 			"accountKey": "ERC-005",
 			"activationProductName": "Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-005_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -108,6 +119,7 @@
 		{
 			"accountKey": "ERC-006",
 			"activationProductName": "Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-006_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -118,6 +130,7 @@
 		{
 			"accountKey": "ERC-007",
 			"activationProductName": "Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-007_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -128,6 +141,7 @@
 		{
 			"accountKey": "ERC-008",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-008_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -137,6 +151,7 @@
 		},
 		{
 			"accountKey": "ERC-009",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-009_commerce",
 			"hasActivation": true,
 			"menuOrder": 2,
@@ -146,6 +161,7 @@
 		},
 		{
 			"accountKey": "ERC-010",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-010_analytics-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -155,6 +171,7 @@
 		},
 		{
 			"accountKey": "ERC-011",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-011_enterprise-search",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -164,6 +181,7 @@
 		},
 		{
 			"accountKey": "ERC-012",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-012_portal",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -173,6 +191,7 @@
 		},
 		{
 			"accountKey": "ERC-013",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-013_other",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -182,6 +201,7 @@
 		},
 		{
 			"accountKey": "ERC-014",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-014_partnership",
 			"hasActivation": true,
 			"menuOrder": 7,
@@ -192,6 +212,7 @@
 		{
 			"accountKey": "ERC-015",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-015_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -202,6 +223,7 @@
 		{
 			"accountKey": "ERC-016",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-016_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -212,6 +234,7 @@
 		{
 			"accountKey": "ERC-017",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-017_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
@@ -222,6 +245,7 @@
 		{
 			"accountKey": "ERC-018",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-018_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -232,6 +256,7 @@
 		{
 			"accountKey": "ERC-019",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-019_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -242,6 +267,7 @@
 		{
 			"accountKey": "ERC-020",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-020_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -252,6 +278,7 @@
 		{
 			"accountKey": "ERC-021",
 			"activationProductName": "DXP",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-021_self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
@@ -262,6 +289,7 @@
 		{
 			"accountKey": "ERC-022",
 			"activationProductName": "Liferay SaaS",
+			"activationStatus": "Active",
 			"externalReferenceCode": "ERC-022_liferay-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,

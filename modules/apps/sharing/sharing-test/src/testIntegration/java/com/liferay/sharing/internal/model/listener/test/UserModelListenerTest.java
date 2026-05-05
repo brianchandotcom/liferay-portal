@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -201,6 +202,48 @@ public class UserModelListenerTest {
 		Assert.assertEquals(
 			toTicketSharingEntries.toString(), 0,
 			toTicketSharingEntries.size());
+
+		emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
+
+		ticket1 = _addInviteCollaboratorTicketWithExtraInfo(null);
+		ticket2 = _addInviteCollaboratorTicketWithExtraInfo("not-json");
+		ticket3 = _addInviteCollaboratorTicket(emailAddress1);
+
+		sharingEntry1 = _addToTicketIdSharingEntry(
+			_group1.getGroupId(), ticket1.getTicketId());
+		sharingEntry2 = _addToTicketIdSharingEntry(
+			_group1.getGroupId(), ticket2.getTicketId());
+		sharingEntry3 = _addToTicketIdSharingEntry(
+			_group1.getGroupId(), ticket3.getTicketId());
+
+		User user4 = _addUser(emailAddress1);
+
+		Assert.assertNotNull(
+			_ticketLocalService.fetchTicket(ticket1.getTicketId()));
+		Assert.assertNotNull(
+			_ticketLocalService.fetchTicket(ticket2.getTicketId()));
+		Assert.assertNull(
+			_ticketLocalService.fetchTicket(ticket3.getTicketId()));
+
+		sharingEntry1 = _sharingEntryLocalService.getSharingEntry(
+			sharingEntry1.getSharingEntryId());
+
+		Assert.assertEquals(
+			ticket1.getTicketId(), sharingEntry1.getToTicketId());
+		Assert.assertEquals(0, sharingEntry1.getToUserId());
+
+		sharingEntry2 = _sharingEntryLocalService.getSharingEntry(
+			sharingEntry2.getSharingEntryId());
+
+		Assert.assertEquals(
+			ticket2.getTicketId(), sharingEntry2.getToTicketId());
+		Assert.assertEquals(0, sharingEntry2.getToUserId());
+
+		sharingEntry3 = _sharingEntryLocalService.getSharingEntry(
+			sharingEntry3.getSharingEntryId());
+
+		Assert.assertEquals(0, sharingEntry3.getToTicketId());
+		Assert.assertEquals(user4.getUserId(), sharingEntry3.getToUserId());
 	}
 
 	@Test
@@ -314,12 +357,19 @@ public class UserModelListenerTest {
 	private Ticket _addInviteCollaboratorTicket(String emailAddress)
 		throws Exception {
 
+		return _addInviteCollaboratorTicketWithExtraInfo(
+			JSONUtil.put(
+				"emailAddress", emailAddress
+			).toString());
+	}
+
+	private Ticket _addInviteCollaboratorTicketWithExtraInfo(String extraInfo)
+		throws Exception {
+
 		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
 			_group1.getGroupId(), TicketConstants.TYPE_INVITE_COLLABORATOR,
-			JSONUtil.put(
-				"emailAddress", emailAddress
-			).toString(),
+			extraInfo,
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
 	}

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -53,8 +55,25 @@ public class UserModelListener extends BaseModelListener<User> {
 
 				actionableDynamicQuery.setPerformActionMethod(
 					(Ticket ticket) -> {
-						JSONObject jsonObject = _jsonFactory.createJSONObject(
-							ticket.getExtraInfo());
+						String extraInfo = ticket.getExtraInfo();
+
+						if (Validator.isNull(extraInfo)) {
+							return;
+						}
+
+						JSONObject jsonObject;
+
+						try {
+							jsonObject = _jsonFactory.createJSONObject(
+								extraInfo);
+						}
+						catch (JSONException jsonException) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(jsonException);
+							}
+
+							return;
+						}
 
 						if (!StringUtil.equalsIgnoreCase(
 								jsonObject.getString("emailAddress"),

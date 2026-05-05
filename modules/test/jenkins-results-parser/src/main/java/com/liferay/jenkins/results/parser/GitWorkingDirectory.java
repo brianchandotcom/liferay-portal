@@ -19,6 +19,7 @@ import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -696,6 +697,13 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitRef remoteGitRef, int retries) {
 
+		return fetch(localGitBranch, noTags, remoteGitRef, retries, null);
+	}
+
+	public LocalGitBranch fetch(
+		LocalGitBranch localGitBranch, boolean noTags,
+		RemoteGitRef remoteGitRef, int retries, Date shallowSinceDate) {
+
 		if (remoteGitRef == null) {
 			throw new GitWorkingDirectoryIllegalArgumentException(
 				this, "Remote Git reference is null");
@@ -769,6 +777,16 @@ public class GitWorkingDirectory {
 		}
 		else {
 			sb.append("--tags ");
+		}
+
+		if (shallowSinceDate != null) {
+			String shallowSinceDateString =
+				JenkinsResultsParserUtil.toDateString(
+					shallowSinceDate, "yyyy-MM-dd'T'HH:mm:ss'Z'", "UTC");
+
+			sb.append("--shallow-since=\"");
+			sb.append(shallowSinceDateString);
+			sb.append("\" ");
 		}
 
 		sb.append(remoteURL);
@@ -889,6 +907,12 @@ public class GitWorkingDirectory {
 
 	public LocalGitBranch fetch(RemoteGitRef remoteGitRef) {
 		return fetch(null, true, remoteGitRef);
+	}
+
+	public LocalGitBranch fetch(
+		RemoteGitRef remoteGitRef, Date shallowSinceDate) {
+
+		return fetch(null, true, remoteGitRef, 3, shallowSinceDate);
 	}
 
 	public LocalGitBranch fetch(RemoteGitRef remoteGitRef, int retries) {

@@ -25,10 +25,9 @@ export class AssetPublisherWidgetPage {
 		this.configurationIframe = this.page.frameLocator(
 			'iframe[title*="Configuration"]'
 		);
-		this.collectionInput = this.configurationIframe.getByLabel(
-			'Collection',
-			{exact: true}
-		);
+		this.collectionInput = this.configurationIframe.getByRole('textbox', {
+			name: 'Collection',
+		});
 		this.collectionSelectorIframe = this.configurationIframe.frameLocator(
 			'iframe[title="Select Collection"]'
 		);

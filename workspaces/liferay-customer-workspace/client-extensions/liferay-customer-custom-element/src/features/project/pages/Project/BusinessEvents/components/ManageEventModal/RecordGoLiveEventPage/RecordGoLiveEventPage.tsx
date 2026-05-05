@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApolloClient} from '@apollo/client/core/ApolloClient';
 import {ClayInput} from '@clayui/form';
 import {useEffect, useMemo, useState} from 'react';
 import {Badge, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
 import {Liferay} from '~/services/liferay';
-import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
+import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent, IOption} from '~/utils/types';
 
@@ -20,15 +19,13 @@ import {Observer} from '@clayui/modal/lib/types';
 import classNames from 'classnames';
 import {isValidDate} from '~/utils/validations.form';
 
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useGetUTCTimeZonesList from '../../../hooks/useGetUTCTimeZonesList';
-import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
 	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
-	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
 	errors?: Record<string, any>;
 	modalType: string;
@@ -46,7 +43,6 @@ interface IProps {
 const RecordGoLiveEventPage: React.FC<IProps> = ({
 	accountExternalReferenceCode,
 	businessEvent,
-	client,
 	closeFunction = () => {},
 	errors,
 	modalType,
@@ -70,13 +66,6 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		accountExternalReferenceCode,
-		businessEvent,
-		false,
-		true
-	);
-
 	const {utcTimeZonesList} = useGetUTCTimeZonesList();
 	const [utcTimeZonesOptions, setUTCTimeZonesOptions] = useState<IOption[]>(
 		[]
@@ -97,68 +86,63 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 
 	useEffect(() => {
 		const hasError = errors && Object.keys(errors).length;
-		const hasActualGoLiveDate = values.businessEvent?.actualGoLiveDate;
-		const hasActualGoLiveTime = values.businessEvent?.actualGoLiveTime;
+		const hasActualEventDate = values.businessEvent?.actualEventDate;
+		const hasActualEventTime = values.businessEvent?.actualEventTime;
 		const hasTimeZone = values.businessEvent?.timeZone?.key;
 
 		const isValidDate = (date: string) => new Date(date) <= new Date();
-		const isActualGoLiveDateValid = isValidDate(hasActualGoLiveDate);
+		const isActualEventDateValid = isValidDate(hasActualEventDate);
 
-		setIsValidRecordDate(isActualGoLiveDateValid);
+		setIsValidRecordDate(isActualEventDateValid);
 
 		const hasAllRequiredFieldsFilled =
-			Boolean(hasActualGoLiveDate) &&
-			Boolean(hasActualGoLiveTime) &&
+			Boolean(hasActualEventDate) &&
+			Boolean(hasActualEventTime) &&
 			Boolean(hasTimeZone);
 
 		setBaseButtonDisabled(
 			!hasAllRequiredFieldsFilled ||
 				Boolean(hasError) ||
-				!isActualGoLiveDateValid
+				!isActualEventDateValid
 		);
 	}, [
 		errors,
 		touched,
-		values.businessEvent?.actualGoLiveDate,
-		values.businessEvent?.actualGoLiveTime,
+		values.businessEvent?.actualEventDate,
+		values.businessEvent?.actualEventTime,
 		values.businessEvent?.timeZone?.key,
 	]);
 
 	const handleSubmit = async () => {
 		const businessEventId = businessEvent.id;
 
+		if (!businessEventId) {
+			return;
+		}
+
 		const updatedBusinessEvent = {...values?.businessEvent};
 		const formattedBusinessEvent = {
-			actualGoLiveDateTime: getFormattedGoLiveDateTime(
-				updatedBusinessEvent.actualGoLiveDate,
-				updatedBusinessEvent.actualGoLiveTime
+			...businessEvent,
+			actualEventDate: getFormattedEventDateTime(
+				updatedBusinessEvent.actualEventDate,
+				updatedBusinessEvent.actualEventTime
 			),
-			eventStatus: 'completed',
+			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			eventStatus: 'Completed',
+			eventType: businessEvent.eventType?.key,
 			lastComment: updatedBusinessEvent?.lastComment,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
+			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
-
-			await client.mutate<{
-				patchBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: patchBusinessEvent,
-				variables: {
-					businessEvent: formattedBusinessEvent,
-					businessEventId,
-				},
-			});
+			await updateBusinessEvent(
+				accountExternalReferenceCode,
+				businessEventId,
+				formattedBusinessEvent
+			);
 
 			closeFunction(false);
 
@@ -171,11 +155,11 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 				message: i18n.translate('an-unexpected-error-occurred'),
 				type: 'danger',
 			});
-			console.error('Error canceling business event', error);
+			console.error('Unable to record event date', error);
 		}
 	};
 
-	const isEditable = ['open', 'overdue'].includes(
+	const isEditable = ['Open', 'Overdue'].includes(
 		businessEvent.eventStatus?.key!
 	);
 
@@ -188,8 +172,8 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			modalType={modalType}
 			observer={observer}
 			onClose={() => closeFunction(false)}
-			submitButton={i18n.translate('record-actual-go-live')}
-			title={i18n.translate('record-actual-go-live')}
+			submitButton={i18n.translate('record-actual-event-date')}
+			title={i18n.translate('record-actual-event-date')}
 		>
 			{isEditable ? (
 				<div>
@@ -203,11 +187,11 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 								badgeClassName="mr-4"
 								dateFormat="MM-dd-yyyy"
 								groupStyle="pb-1"
-								label={i18n.translate('actual-go-live-date')}
-								name="businessEvent.actualGoLiveDate"
+								label={i18n.translate('actual-event-date')}
+								name="businessEvent.actualEventDate"
 								onChange={(value) =>
 									setFieldValue(
-										'businessEvent.actualGoLiveDate',
+										'businessEvent.actualEventDate',
 										value
 									)
 								}
@@ -232,10 +216,10 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 							<TimePicker
 								groupStyle="pb-1"
 								label={i18n.translate('time')}
-								name="businessEvent.actualGoLiveTime"
+								name="businessEvent.actualEventTime"
 								onChange={(value) =>
 									setFieldValue(
-										'businessEvent.actualGoLiveTime',
+										'businessEvent.actualEventTime',
 										value
 									)
 								}
@@ -255,23 +239,23 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 						onChange={handleInputChange}
 						required
 						type="text"
-						value={values?.lastComment}
+						value={values.businessEvent?.lastComment}
 					/>
 
 					<Badge alertType="info" badgeClassName="mt-3">
 						<span className="pl-1 text-paragraph">
 							{i18n.translate(
-								'entering-an-actual-go-live-date-will-close-this-business-event-no-further-edits-will-be-possible'
+								'entering-an-actual-event-date-will-close-this-business-event-no-further-edits-will-be-possible'
 							)}
 						</span>
 					</Badge>
 
-					{values.businessEvent?.actualGoLiveDate! &&
+					{values.businessEvent?.actualEventDate! &&
 						!isValidRecordDate && (
 							<Badge>
 								<span className="pl-1">
 									{i18n.translate(
-										'please-select-an-actual-go-live-date-that-has-already-occurred-or-is-today'
+										'please-select-an-actual-event-date-that-has-already-occurred-or-is-today'
 									)}
 								</span>
 							</Badge>

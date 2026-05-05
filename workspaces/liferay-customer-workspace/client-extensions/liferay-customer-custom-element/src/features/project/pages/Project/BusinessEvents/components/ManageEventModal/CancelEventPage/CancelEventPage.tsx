@@ -3,23 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApolloClient} from '@apollo/client/core/ApolloClient';
 import {ClayInput} from '@clayui/form';
 import {Observer} from '@clayui/modal/lib/types';
 import {useState} from 'react';
 import {Badge} from '~/components';
 import {Liferay} from '~/services/liferay';
-import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
+import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import {IBusinessEvent} from '~/utils/types';
 
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import BusinessEventsModal from '../../BusinessEventsModal/BusinessEventsModal';
 
 interface IProps {
 	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
-	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
 	modalType: string;
 	observer: Observer;
@@ -29,7 +26,6 @@ interface IProps {
 const CancelEventPage: React.FC<IProps> = ({
 	accountExternalReferenceCode,
 	businessEvent,
-	client,
 	closeFunction = () => {},
 	modalType,
 	observer,
@@ -39,44 +35,34 @@ const CancelEventPage: React.FC<IProps> = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] =
 		useState<boolean>(false);
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		accountExternalReferenceCode,
-		businessEvent,
-		false,
-		true
-	);
-
 	const handleSubmit = async () => {
 		const updatedBusinessEvent = {...businessEvent};
 
 		const businessEventId = updatedBusinessEvent.id;
 
+		if (!businessEventId) {
+			return;
+		}
+
 		const formattedBusinessEvent = {
-			eventStatus: 'canceled',
+			...updatedBusinessEvent,
+			currentLiferayVersion:
+				updatedBusinessEvent.currentLiferayVersion?.key,
+			eventStatus: 'Canceled',
+			eventType: updatedBusinessEvent.eventType?.key,
 			lastComment: reason,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				updatedBusinessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: updatedBusinessEvent.targetGoLiveDateTime,
+			newLiferayVersion: updatedBusinessEvent.newLiferayVersion?.key,
+			timeZone: updatedBusinessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
-
-			await client.mutate<{
-				patchBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: patchBusinessEvent,
-				variables: {
-					businessEvent: formattedBusinessEvent,
-					businessEventId,
-				},
-			});
+			await updateBusinessEvent(
+				accountExternalReferenceCode,
+				businessEventId,
+				formattedBusinessEvent
+			);
 
 			closeFunction(false);
 			onCancel();

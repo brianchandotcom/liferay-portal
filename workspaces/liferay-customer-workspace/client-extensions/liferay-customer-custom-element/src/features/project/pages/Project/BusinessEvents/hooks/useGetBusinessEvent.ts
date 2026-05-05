@@ -4,7 +4,8 @@
  */
 
 import {useCallback, useEffect, useState} from 'react';
-import {getBusinessEventById} from '~/services/liferay/api';
+import useAccountKey from '~/hooks/useAccountKey';
+import {getBusinessEventById} from '~/services/liferay/rest/jira/Jira';
 import {IBusinessEvent} from '~/utils/types';
 
 export default function useGetBusinessEvent(id: string): {
@@ -18,21 +19,29 @@ export default function useGetBusinessEvent(id: string): {
 
 	const [loading, setLoading] = useState(true);
 
+	const accountKey = useAccountKey();
 	const fetchBusinessEvent = useCallback(async () => {
+		if (!accountKey) {
+			return;
+		}
+
 		setLoading(true);
 
 		try {
-			const data = await getBusinessEventById(id);
+			const businessEventResponse = await getBusinessEventById(
+				accountKey,
+				id
+			);
 
-			setBusinessEvent(data as unknown as IBusinessEvent);
+			setBusinessEvent(businessEventResponse as IBusinessEvent);
 		}
 		catch (error) {
-			console.error('Error fetching business event:', error);
+			console.error('Unable to fetch business event:', error);
 		}
 		finally {
 			setLoading(false);
 		}
-	}, [id]);
+	}, [accountKey, id]);
 
 	useEffect(() => {
 		if (!id) {

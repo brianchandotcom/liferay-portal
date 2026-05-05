@@ -6,7 +6,6 @@
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
-import {fetcher} from '~/services/liferay/fetcher';
 import {
 	getAccountByExternalReferenceCode,
 	getAccountSubscriptionGroups,
@@ -15,6 +14,7 @@ import {
 	getStructuredContentFolders,
 	getUserAccount,
 } from '~/services/liferay/graphql/queries';
+import {getBusinessEvents} from '~/services/liferay/rest/jira/Jira';
 import {
 	EXPERIENCE_SUBSCRIPTIONS,
 	LEGACY_SUBSCRIPTIONS,
@@ -79,24 +79,13 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 	const pageRoutes = useMemo(() => routerPath(), []);
 
 	useEffect(() => {
-		const getBusinessEvents = async (filterQuery: string) => {
-			const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
-
+		const fetchBusinessEvents = async (accountKey: string) => {
 			try {
-				const businessEventsResponse = await fetcher(
-					`${HEADLESS_BASE_URL}c/businessevents?${filterQuery}`,
-					{
-						headers: {
-							'Accept-Language':
-								Liferay.ThemeDisplay.getBCP47LanguageId(),
-							'Content-Type': 'application/json',
-							'x-csrf-token': Liferay.authToken,
-						},
-						method: 'GET',
-					}
-				);
+				const businessEventsResponse =
+					await getBusinessEvents(accountKey);
 
-				const items = businessEventsResponse.items as IBusinessEvent[];
+				const items = (businessEventsResponse.items ||
+					[]) as IBusinessEvent[];
 
 				dispatch({
 					payload: items,
@@ -104,7 +93,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 				});
 			}
 			catch (error) {
-				console.error('Error', error);
+				console.error('Unable to fetch business events', error);
 			}
 		};
 
@@ -401,10 +390,9 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 
 						getStructuredContents();
 
-						const businessEventsFilterQuery = accountBrief?.id
-							? `filter=r_accountEntryToBusinessEvents_accountEntryId eq '${accountBrief.id}'`
-							: '';
-						getBusinessEvents(businessEventsFilterQuery);
+						fetchBusinessEvents(
+							projectExternalReferenceCode as string
+						);
 					}
 				}
 			}

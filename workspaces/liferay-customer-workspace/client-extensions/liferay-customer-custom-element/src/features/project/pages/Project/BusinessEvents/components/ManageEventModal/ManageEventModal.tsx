@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApolloClient} from '@apollo/client/core/ApolloClient';
 import {Observer} from '@clayui/modal/lib/types';
 import {Formik} from 'formik';
 import {IBusinessEvent} from '~/utils/types';
@@ -14,7 +13,6 @@ import RecordGoLiveEventPage from './RecordGoLiveEventPage';
 interface IProps {
 	accountExternalReferenceCode: string;
 	businessEvent: IBusinessEvent;
-	client: ApolloClient<any>;
 	closeFunction?: (value: boolean) => void;
 	modalType: string;
 	observer: Observer;
@@ -25,7 +23,6 @@ interface IProps {
 const ManageEventModal: React.FC<IProps> = ({
 	accountExternalReferenceCode,
 	businessEvent,
-	client,
 	closeFunction,
 	modalType,
 	observer,
@@ -38,7 +35,6 @@ const ManageEventModal: React.FC<IProps> = ({
 				<CancelEventPage
 					accountExternalReferenceCode={accountExternalReferenceCode}
 					businessEvent={businessEvent}
-					client={client}
 					closeFunction={closeFunction}
 					modalType={modalType}
 					observer={observer}
@@ -48,7 +44,15 @@ const ManageEventModal: React.FC<IProps> = ({
 				<Formik
 					initialValues={{
 						businessEvent: {
+							actualEventDate: '',
+							actualEventTime: {
+								hours: '--',
+								minutes: '--',
+							},
 							lastComment: '',
+							timeZone: businessEvent.timeZone || {
+								key: '',
+							},
 						},
 					}}
 					onSubmit={() => {}}
@@ -60,7 +64,6 @@ const ManageEventModal: React.FC<IProps> = ({
 								accountExternalReferenceCode
 							}
 							businessEvent={businessEvent}
-							client={client}
 							closeFunction={closeFunction}
 							errors={formikProps.errors}
 							modalType={modalType}

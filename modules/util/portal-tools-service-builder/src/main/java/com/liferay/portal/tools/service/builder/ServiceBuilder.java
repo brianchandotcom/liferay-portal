@@ -1787,17 +1787,17 @@ public class ServiceBuilder {
 	public boolean isBasePersistenceMethod(JavaMethod method) {
 		String methodName = method.getName();
 
-		if (methodName.equals("clearCache") ||
-			methodName.equals("fetchByPrimaryKeys") ||
-			methodName.equals("findWithDynamicQuery") ||
-			methodName.equals("setConfiguration") ||
-			methodName.equals("setDataSource") ||
-			methodName.equals("setSessionFactory")) {
+		if (methodName.equals("cacheResult")) {
+			return isVersionGTE_7_4_0();
+		}
+		else if (methodName.equals("clearCache") ||
+				 methodName.equals("fetchByPrimaryKeys") ||
+				 methodName.equals("findWithDynamicQuery") ||
+				 methodName.equals("setConfiguration") ||
+				 methodName.equals("setDataSource") ||
+				 methodName.equals("setSessionFactory")) {
 
 			return true;
-		}
-		else if (methodName.equals("cacheResult")) {
-			return isVersionGTE_7_4_0();
 		}
 		else if (methodName.equals("getBadColumnNames")) {
 			return !isVersionLTE_7_1_0();

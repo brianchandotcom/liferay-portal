@@ -1,0 +1,16 @@
+{
+	"name": "liferay-test-fixer",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"collect-failure-data": "tsx --env-file=.env.local src/failure-data.ts",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@trivago/prettier-plugin-sort-imports": "^6.0.2",
+		"@types/node": "^20",
+		"prettier": "^3.6.2",
+		"tsx": "^4.21.0",
+		"typescript": "^5"
+	}
+}

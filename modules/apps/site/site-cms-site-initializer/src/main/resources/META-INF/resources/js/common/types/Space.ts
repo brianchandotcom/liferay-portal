@@ -20,6 +20,7 @@ export type Space = {
 	creatorUserId: string;
 	description: string;
 	externalReferenceCode: string;
+	friendlyURL: string;
 	id: number;
 	name: string;
 	settings?: SpaceSettings;

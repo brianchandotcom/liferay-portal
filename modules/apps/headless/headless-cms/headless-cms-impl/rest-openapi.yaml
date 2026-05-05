@@ -15,6 +15,24 @@ components:
                     enum:
                         -   ResetAssetPermissionAction
                     type: string
+        AssetStatistics:
+            properties:
+                expiredCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                expiringSoonCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                inDraftCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                reviewDateOverdueCount:
+                    format: int64
+                    readOnly: true
+                    type: integer
         AssetUsage:
             properties:
                 name:
@@ -57,6 +75,19 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/AssetPermissionAction"
             tags: ["AssetPermissionAction"]
+    "/asset-statistics":
+        get:
+            operationId: getAssetStatistics
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetStatistics"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetStatistics"
+            tags: ["AssetStatistics"]
     "/asset-usages/{assetId}":
         get:
             operationId: getAssetUsagesAssetPage

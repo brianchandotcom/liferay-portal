@@ -101,7 +101,9 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			themeDisplay.setSiteGroupId(layout.getGroupId());
 		}
 
-		if (!_containsLayoutPreviewDraftPermission(layout, themeDisplay.getRealUser())) {
+		if (!_containsLayoutPreviewDraftPermission(
+				layout, themeDisplay.getRealUser())) {
+
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return null;
@@ -248,6 +250,25 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		}
 	}
 
+	private boolean _containsLayoutPreviewDraftPermission(
+			Layout layout, User user)
+		throws Exception {
+
+		Group group = layout.getGroup();
+
+		if (group.hasStagingGroup()) {
+			Layout stagingLayout = _fetchStagingLayout(
+				layout, group.getStagingGroup());
+
+			if (stagingLayout != null) {
+				layout = stagingLayout;
+			}
+		}
+
+		return LayoutPermissionUtil.containsLayoutPreviewDraftPermission(
+			PermissionCheckerFactoryUtil.create(user), layout);
+	}
+
 	private Layout _fetchStagingLayout(Layout layout, Group stagingGroup) {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
@@ -272,25 +293,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layout.getUuid(), stagingGroup.getGroupId(),
 			layout.isPrivateLayout());
-	}
-
-	private boolean _containsLayoutPreviewDraftPermission(
-			Layout layout, User user)
-		throws Exception {
-
-		Group group = layout.getGroup();
-
-		if (group.hasStagingGroup()) {
-			Layout stagingLayout = _fetchStagingLayout(
-				layout, group.getStagingGroup());
-
-			if (stagingLayout != null) {
-				layout = stagingLayout;
-			}
-		}
-
-		return LayoutPermissionUtil.containsLayoutPreviewDraftPermission(
-			PermissionCheckerFactoryUtil.create(user), layout);
 	}
 
 	private void _includeInfoItemObjects(

@@ -21,113 +21,248 @@ definition {
 		}
 	}
 
-	@description = "LPS-135390 - Verify it is possible to view and access the Object Admin portlet with the Access in Control Panel permission"
-	@priority = 4
-	test CanAccessObjectAdminWithAccessPermission {
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
+	@description = "LPS-135397 - Verify if it's possible to add a Block"
+	@priority = 5
+	test CanAddBlock {
+		property portal.acceptance = "true";
 
-		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceAction},
-				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-				roleTitle = "Regular Role");
-		}
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 1",
+			objectName = "CustomObject1",
+			pluralLabelName = "Custom Objects 1");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = 90,
-			roleTitle = "Regular Role");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Objects");
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject1");
 
 		ObjectAdmin.openObjectAdmin();
 
-		AssertElementPresent(
-			key_labelName = "User",
-			locator1 = "CreateObject#OBJECT_NAME");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 1");
 
-		AssertElementPresent(
-			key_labelName = "Commerce Order",
-			locator1 = "CreateObject#OBJECT_NAME");
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+		ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
+
+		ObjectAdmin.assertBlockIsPresent(fieldBlockName = "Block Name");
 	}
 
-	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
+	@description = "LPS-135397 - Verify if it's possible to add Entries with Custom Layout Created"
 	@priority = 4
-	test CanAddObjectWithAddPermission {
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
+	test CanAddEntriesWithCustomLayout {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 2",
+			objectName = "CustomObject2",
+			pluralLabelName = "Custom Objects 2");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-			roleTitle = "Regular Role",
-			roleType = "regular");
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject2");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_OBJECT_DEFINITION",
-			resourceName = "com.liferay.object",
-			roleTitle = "Regular Role",
-			roleType = "regular");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject2");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 9",
-			pluralLabelName = "Custom Objects 9");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 2");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
 
 		CreateObject.saveObject();
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject2");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject2");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry 1");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject2");
+
+		ObjectPortlet.viewEntry(entry = "Entry 1");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with one column"
+	@priority = 4
+	test CanAddFieldForBlockOneColumn {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 4",
+			objectName = "CustomObject4",
+			pluralLabelName = "Custom Objects 4");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject4");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject4");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 4");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block Name",
+			columnsNumber = 1,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
 		AssertElementPresent(
-			key_labelName = "Custom Object 9",
-			locator1 = "CreateObject#OBJECT_NAME");
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with three columns"
+	@priority = 4
+	test CanAddFieldForBlockThreeColumns {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 5",
+			objectName = "CustomObject5",
+			pluralLabelName = "Custom Objects 5");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject5");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject5");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 5");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block Name",
+			columnsNumber = 3,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		AssertElementPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Field for the Block with two columns"
+	@priority = 4
+	test CanAddFieldForBlockTwoColumns {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 6",
+			objectName = "CustomObject6",
+			pluralLabelName = "Custom Objects 6");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject6");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject6");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 6");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block Name",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		AssertElementPresent(
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to add a Tab with Fields Type"
+	@priority = 5
+	test CanAddFieldTab {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 7",
+			objectName = "CustomObject7",
+			pluralLabelName = "Custom Objects 7");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject7");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 7");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+		AssertElementPresent(
+			key_fieldTabName = "Field Tab",
+			locator1 = "ObjectAdmin#FIELD_TAB_NAME");
 	}
 
 	@description = "LPS-135400 - Verify it is possible to add a relation with an entry through the Relationship field"
@@ -334,23 +469,6 @@ definition {
 		ObjectDefinitionAPI.deleteRelationship(objectDefinitionId = ${objectDefinitionId});
 	}
 
-	@description = "LPS-135549 - Verify it is possible to cancel the creation of a Custom Object"
-	@priority = 4
-	test CanCancelCreationCustomObject {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 11",
-			pluralLabelName = "Custom Objects11");
-
-		Button.clickCancel();
-
-		AssertElementNotPresent(
-			key_name = "CustomObject11",
-			key_system = "No",
-			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
 	@description = "LPS-135400 - Verify it is possible to cancel the creation of a Relationship"
 	@priority = 4
 	test CanCancelRelationshipCreation {
@@ -386,104 +504,205 @@ definition {
 			value1 = "No Results Found");
 	}
 
-	@description = "LPS-184370 - Verify the user can delete an inactive custom object"
-	@priority = 3
-	test CanDeleteInactiveCustomObject {
-		task ("Given a custom object with a text field and an object entry") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object 184370",
-				objectName = "CustomObject184370",
-				pluralLabelName = "Custom Objects 184370");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Text",
-				fieldLabelName = "Text Field",
-				fieldName = "customObjectField",
-				fieldType = "String",
-				isRequired = "false",
-				objectName = "CustomObject184370");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject184370");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "customObjectField",
-				objectName = "CustomObject184370",
-				value = "Entry Test");
-		}
-
-		task ("When the custom object is deactivated") {
-			ObjectAdmin.openObjectAdmin();
-
-			CreateObject.inactiveCustomObject(objectLabel = "Custom Object 184370");
-		}
-
-		task ("Then the inactive object can be deleted") {
-			Navigator.gotoBack();
-
-			ObjectAdmin.deleteCustomObjectViaUI(
-				labelName = "Custom Object 184370",
-				objectName = "CustomObject184370");
-
-			AssertElementNotPresent(
-				key_labelName = "Custom Object 184370",
-				locator1 = "CreateObject#OBJECT_NAME");
-		}
-	}
-
-	@description = "LPS-135390 - Verify it is possible to delete an Object with the Delete permission"
+	@description = "LPS-135397 - Verify it is possible to Cancel the update of a Layout"
 	@priority = 4
-	test CanDeleteObjectWithDeletePermission {
+	test CanCancelUpdateLayout {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 35",
-			objectName = "CustomObject35",
-			pluralLabelName = "Custom Objects 35");
+			labelName = "Custom Object 14",
+			objectName = "CustomObject14",
+			pluralLabelName = "Custom Objects 14");
 
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject14");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-			roleTitle = "Regular Role",
-			roleType = "regular");
-
-		for (var resourceActionIndex : list "DELETE,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceActionIndex},
-				resourceName = "com.liferay.object.model.ObjectDefinition",
-				roleTitle = "Regular Role",
-				roleType = "regular");
-		}
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject14");
 
 		ObjectAdmin.openObjectAdmin();
 
-		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 35");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 14");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Type(
+			locator1 = "ObjectAdmin#LAYOUT_BASIC_INFO_NAME_FIELD",
+			value1 = "Layout Updated");
+
+		Button.clickCancel();
+
+		Refresh();
+
+		AssertTextNotEquals(
+			key_name = "Layout",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE",
+			value1 = "Layout Updated");
+	}
+
+	@description = "LPS-135397 - Verify it is possible to collapse and expand a block of fields"
+	@priority = 4
+	test CanCollapseAndExpandBlock {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 16",
+			objectName = "CustomObject16",
+			pluralLabelName = "Custom Objects 16");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject16");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject16");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 16");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.markLayoutAsDefault();
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field",
+			isCollapsible = "Yes",
+			tabName = "Field Tab");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject16");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject16");
+
+		LexiconEntry.gotoAdd();
+
+		AssertVisible(
+			key_entryLabel = "Custom Field",
+			locator1 = "ObjectPortlet#VIEW_ENTRY_DETAILS_LABEL");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to create a Layout for an Object"
+	@priority = 5
+	test CanCreateLayout {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 23",
+			objectName = "CustomObject23",
+			pluralLabelName = "Custom Objects 23");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 23");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.addObjectLayoutViaUI(layoutName = "Layout Name");
+
+		ObjectAdmin.assertObjectLayout(layoutLabel = "Layout Name");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to delete a Field"
+	@priority = 5
+	test CanDeleteFieldOnLayout {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 33",
+			objectName = "CustomObject33",
+			pluralLabelName = "Custom Objects 33");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject33");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject33");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 33");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block Name",
+			columnsNumber = 1,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		CreateObject.deleteFieldOnBlock();
 
 		AssertElementNotPresent(
-			key_tabName = "Custom Object 35",
-			locator1 = "ObjectAdmin#ANY_TAB_ON_ENTRY");
+			key_fieldLabelName = "Custom Field",
+			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
+	}
+
+	@description = "LPS-135397 - Verify if it's possible to delete a Layout for an Object"
+	@priority = 5
+	test CanDeleteLayout {
+		property portal.acceptance = "true";
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 34",
+			objectName = "CustomObject34",
+			pluralLabelName = "Custom Objects 34");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject34");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 34");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+
+		ObjectAdmin.assertObjectLayoutNotPresent(layoutLabel = "Layout Name");
 	}
 
 	@description = "LPS-151877 - Verify that when the admin user deletes the relationship between Account and the Object, the Account Restriction is disabled and the admin user can edit the Object"
@@ -542,260 +761,125 @@ definition {
 		}
 	}
 
-	@description = "LPS-135390 - Verify it is not possible to add an Object without the Add Object Definition permission"
-	@priority = 5
-	test CannotAddObjectWithoutAddPermission {
-		property portal.acceptance = "true";
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-			roleTitle = "Regular Role",
-			roleType = "regular");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertElementNotPresent(locator1 = "Button#PLUS");
-	}
-
-	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"
+	@description = "LPS-135397 - Verify if it's not possible to add a Tab with Relationship Type in an Object without Relashionsip"
 	@priority = 4
-	test CannotCreateDuplicatedObjectName {
+	test CannotAddRelationshibTabWithoutRelationship {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 40",
-			objectName = "CustomObject40",
-			pluralLabelName = "Custom Objects 40");
+			labelName = "Custom Object 37",
+			objectName = "CustomObject37",
+			pluralLabelName = "Custom Objects 37");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject37");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 40",
-			fieldName = "CustomObject40",
-			pluralLabelName = "Custom Objects 40");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 37");
 
-		CreateObject.saveObject();
+		ObjectAdmin.goToLayoutsTab();
 
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "This name is already in use. Try another one.");
-	}
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
-	@description = "LPS-135390 - Verify it is not possible to delete an Object without the Delete permission"
-	@priority = 4
-	test CannotDeleteObjectWithoutDeletePermission {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 42",
-			objectName = "CustomObject42",
-			pluralLabelName = "Custom Objects 42");
+		ObjectAdmin.goToLayoutTabOnLayouts();
 
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
 
-		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceAction},
-				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-				roleTitle = "Regular Role");
-		}
+		ObjectAdmin.addTabRelationshipsOnLayout(tabName = "Relationship Tab");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.assertDeleteEntryButtonNotPresent(entry = "Custom Object 42");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to leave the Object Label field blank"
-	@priority = 4
-	test CannotLeaveObjectLabelFieldBlank {
-		ObjectAdmin.openObjectAdmin();
-
-		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
-
-		Type(
-			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
-			value1 = "Custom Objects 47");
-
-		Type(
-			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
-			value1 = "CustomObject47");
-
-		CreateObject.saveObject();
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
 
 		AssertElementPresent(
-			key_fieldLabel = "Label",
+			key_fieldLabel = "Relationship",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
-	@description = "LPS-135549 - Verify it is not possible to leave the Object Name field blank"
+	@description = "LPS-135397 - Verify that the Relationship tab cannot be added first"
 	@priority = 4
-	test CannotLeaveObjectNameFieldBlank {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object",
-			fieldName = "",
-			pluralLabelName = "Custom Objects");
-
-		CreateObject.saveObject();
-
-		AssertElementPresent(
-			key_fieldLabel = "Object Name",
-			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Object Name in lower case"
-	@priority = 4
-	test CannotSaveLowerCaseObjectName {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 54",
-			fieldName = "customObject54",
-			pluralLabelName = "Custom Objects 54");
-
-		CreateObject.saveObject();
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR",
-			value1 = "The first character of a name must be an uppercase letter.");
-	}
-
-	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"
-	@priority = 4
-	test CannotSaveWithSpecialCharacterForObjectName {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 57",
-			pluralLabelName = "Custom Objects 57");
-
-		Type(
-			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
-			value1 = "ObjectTest@");
-
-		CreateObject.saveObject();
-
-		Alert.viewErrorMessage(errorMessage = "Name must only contain letters and digits");
-	}
-
-	@description = "LPS-139005 - Verify that is not possible to submit entries in a form with an Object that was inactivated"
-	@priority = 4
-	test CannotSubmitEntriesInFormAfterObjectInactivated {
+	test CannotAddRelationshipTabFirst {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 59",
-			objectName = "CustomObject59",
-			pluralLabelName = "Custom Objects 59");
+			labelName = "Custom Object 38",
+			objectName = "CustomObject38",
+			pluralLabelName = "Custom Objects 38");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject38");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 38");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		LexiconEntry.gotoAddNoSelectFrame();
+
+		AssertElementPresent(locator1 = "CreateObject#DISABLED_TAB_TYPE_RELATIONSHIPS");
+	}
+
+	@description = "LPS-135397 - Verify it is not possible to set a layout as default without all the required fields on the first tab"
+	@priority = 4
+	test CannotSetLayoutDefaultWithoutAllRequiredFieldsOnFirstTab {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 58",
+			objectName = "CustomObject58",
+			pluralLabelName = "Custom Objects 58");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
+			fieldLabelName = "Custom Field Required",
+			fieldName = "customObjectFieldRequired",
+			fieldType = "String",
+			isRequired = "true",
+			objectName = "CustomObject58");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field Not Required",
+			fieldName = "customObjectFieldNotRequired",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject59");
+			objectName = "CustomObject58");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject59");
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		PopulateObjectFormsConfiguration.openFormSettings();
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Select a Storage Type",
-			optionName = "Object");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Select Object",
-			optionName = "Custom Object 59");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
-
-		Form.gotoAddField(fieldType = "Text");
-
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
-
-		Form.save();
-
-		Form.publishForm();
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject58");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 59");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 58");
 
-		CreateObject.checkToggleInactive();
+		ObjectAdmin.goToLayoutsTab();
 
-		CreateObject.saveObject();
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
 
-		PopulateObjectFormsConfiguration.openForm();
+		SelectFrame(locator1 = "IFrame#IFRAME");
 
-		AssertElementPresent(
-			key_text = "exclamation-full",
-			locator1 = "Icon#ANY");
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
 
-		MouseOver(
-			key_text = "exclamation-full",
-			locator1 = "Icon#ANY");
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field Not Required",
+			tabName = "Field Tab");
 
-		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#ALERT_ICON_MESSAGE");
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
 
-		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
+		Click.clickAtNotVisible(locator1 = "ObjectAdmin#ENTRY_BOOLEAN_CHECKBOX");
 
-		FormsAdminNavigator.openPublishURL();
+		Button.clickSave();
 
-		FormFields.editText(
-			fieldLabel = "Text",
-			fieldName = "Text",
-			fieldValue = "Entry 1");
+		SelectFrame(locator1 = "Message#ERROR");
 
-		PortletEntry.save();
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#ERROR",
+			value1 = "All required object fields must be associated to the first tab of a default object layout");
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to submit an entry with a invalid value on the Relationship field"
@@ -1140,57 +1224,48 @@ definition {
 		}
 	}
 
-	@description = "LPS-135547 - Verify it is possible to search for a Custom Object"
+	@description = "LPS-135397 - Verify if it's possible to set the block as Collapsible"
 	@priority = 4
-	test CanSearchForCustomObject {
-		for (var letter : list "A,B") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Custom Object ${letter} 76",
-				objectName = "CustomObject${letter}76",
-				pluralLabelName = "Custom Objects ${letter} 76");
-		}
+	test CanSetBlockCollapsible {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 80",
+			objectName = "CustomObject80",
+			pluralLabelName = "Custom Objects 80");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject80");
 
 		ObjectAdmin.openObjectAdmin();
 
-		Search.searchCP(searchTerm = "CustomObjectA76");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 80");
 
-		AssertElementPresent(
-			key_labelName = "Custom Object A 76",
-			locator1 = "CreateObject#OBJECT_NAME");
+		ObjectAdmin.goToLayoutsTab();
 
-		AssertElementNotPresent(
-			key_labelName = "Custom Object B 76",
-			locator1 = "CreateObject#OBJECT_NAME");
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+		ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
+
+		Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 	}
 
-	@description = "LPS-135547 - Verify it is possible to search for a System Object"
+	@description = "LPS-135397 - Verify if it's possible to update a Custom Layout Created"
 	@priority = 4
-	test CanSearchForSystemObject {
+	test CanUpdateCustomLayout {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object A 78",
-			objectName = "CustomObjectA78",
-			pluralLabelName = "Custom Objects A 78");
+			labelName = "Custom Object 86",
+			objectName = "CustomObject86",
+			pluralLabelName = "Custom Objects 86");
 
-		ObjectAdmin.openObjectAdmin();
-
-		Search.searchCP(searchTerm = "User");
-
-		AssertElementPresent(
-			key_labelName = "User",
-			locator1 = "CreateObject#OBJECT_NAME");
-
-		AssertElementNotPresent(
-			key_labelName = "Custom Object A 78",
-			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
-	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
-	@priority = 4
-	test CanSubmitEntriesOnFormWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 85",
-			objectName = "CustomObject85",
-			pluralLabelName = "Custom Objects 85");
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout",
+			objectName = "CustomObject86");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -1198,74 +1273,40 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject85");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject85");
-
-		FormsAdmin.addForm();
-
-		Form.editName(formName = "Form 1");
-
-		PopulateObjectFormsConfiguration.openFormSettings();
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Select a Storage Type",
-			optionName = "Object");
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Select Object",
-			optionName = "Custom Object 85");
-
-		Click(locator1 = "PopulateObjectFormsConfiguration#BUTTON_SETTINGS_FORM");
-
-		Form.gotoAddField(fieldType = "Text");
-
-		PopulateObjectFormsConfiguration.mapFormField(fieldLabelName = "Custom Field");
-
-		Form.save();
-
-		Form.publishForm();
+			objectName = "CustomObject86");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 85");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 86");
 
-		CreateObject.checkToggleInactive();
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		SelectFrame(locator1 = "IFrame#IFRAME");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_LAYOUT_TAB");
+
+		ObjectAdmin.addTabFieldsOnLayout(
+			blockName = "Block 1",
+			columnsNumber = 2,
+			fieldLabelName = "Custom Field",
+			tabName = "Field Tab");
+
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Type(
+			locator1 = "ObjectAdmin#LAYOUT_BASIC_INFO_NAME_FIELD",
+			value1 = "Layout Updated");
 
 		CreateObject.saveObject();
 
-		ObjectAdmin.openObjectAdmin();
+		Refresh();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object 85");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		PopulateObjectFormsConfiguration.openForm();
-
-		AssertElementNotPresent(
-			key_text = "exclamation-full",
-			locator1 = "Icon#ANY");
-
-		FormsAdminNavigator.gotoEditFormByName(formName = "Form 1");
-
-		FormsAdminNavigator.openPublishURL();
-
-		FormFields.editText(
-			fieldLabel = "Text",
-			fieldName = "Text",
-			fieldValue = "Entry 1");
-
-		PortletEntry.save();
-
-		Navigator.openURL();
-
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject85");
-
-		ObjectPortlet.viewEntry(entry = "Entry 1");
+		AssertTextEquals(
+			key_name = "Layout Updated",
+			locator1 = "ObjectAdmin#TABLE_LIST_TITLE",
+			value1 = "Layout Updated");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update an Object with the Update permission"
@@ -1818,97 +1859,6 @@ definition {
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "Entry 1");
 	}
 
-	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on the eye icon"
-	@priority = 4
-	test CanViewObjectsDetailsByClickingEyeIcon {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 118",
-			objectName = "CustomObject118",
-			pluralLabelName = "Custom Objects 118");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 118");
-
-		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
-	}
-
-	@description = "LPS-135549 - Verify it is possible to view the Details of an Object by clicking on its name"
-	@priority = 4
-	test CanViewObjectsDetailsByClickingName {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 118",
-			objectName = "CustomObject118",
-			pluralLabelName = "Custom Objects 118");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 118");
-
-		Click(locator1 = "ObjectAdmin#OBJECT_DETAILS_TAB");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#DETAILS_PAGE_TITLE");
-	}
-
-	@description = "LPS-135390 - Verify it is possible to view an Object with the View permission"
-	@priority = 4
-	test CanViewObjectWithViewPermission {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 119",
-			objectName = "CustomObject119",
-			pluralLabelName = "Custom Objects 119");
-
-		JSONRole.addRegularRole(
-			roleKey = "Regular Role",
-			roleTitle = "Regular Role");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_CONTROL_PANEL",
-			resourceName = 90,
-			roleTitle = "Regular Role");
-
-		for (var resourceAction : list "ACCESS_IN_CONTROL_PANEL,VIEW") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = ${resourceAction},
-				resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
-				roleTitle = "Regular Role");
-		}
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.object.model.ObjectDefinition",
-			roleTitle = "Regular Role");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regular Role",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openURL();
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertElementPresent(
-			key_labelName = "Custom Object 119",
-			locator1 = "CreateObject#OBJECT_NAME");
-	}
-
 	@description = "LPS-135401 - Verify if Cascade deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted but not its relation"
 	@priority = 4
 	test CascadeDeletionOneToManyWillAllowDeleteChild {
@@ -2197,14 +2147,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry C");
 	}
 
-	@description = "LPS-135549 - Verify that the columns Name, System and Status are displayed for the Objects table"
-	@priority = 4
-	test ColumnsAreDisplayedObjectsTable {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.assertObjectColumnsAreDisplayed();
-	}
-
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the child Object) to be deleted and its relation to be disassociated"
 	@priority = 4
 	test DisassociateDeletionOneToManyWillAllowDeleteChild {
@@ -2389,16 +2331,41 @@ definition {
 			value1 = "Entry A");
 	}
 
-	@description = "LPS-135547 - Verify the empty state when searching for an Object returns nothing"
-	@priority = 3
-	test EmptyStateNoResultObject {
+	@description = "LPS-135397 - Verify if it's not possible to add a Field without Choose an Option Field"
+	@priority = 4
+	test FieldOptionRequired {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 133",
+			objectName = "CustomObject133",
+			pluralLabelName = "Custom Objects 133");
+
+		ObjectAdmin.addObjectLayoutViaAPI(
+			layoutName = "Layout Name",
+			objectName = "CustomObject133");
+
 		ObjectAdmin.openObjectAdmin();
 
-		Search.searchCP(searchTerm = "Object X 130");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 133");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Objects Created Yet");
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.selectKebabMenuOption(kebabOption = "Edit");
+
+		ObjectAdmin.goToLayoutTabOnLayouts();
+
+		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");
+
+		ObjectAdmin.addLayoutBlockViaUI(blockName = "Block Name");
+
+		Click(locator1 = "ObjectAdmin#ADD_FIELD_ON_BLOCK");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		AssertElementPresent(
+			key_fieldLabel = "Field",
+			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
 	@description = "LPS-137874 - Verify that Objects created on a Virtual Instance are not displayed on the Forms Settings, Collection Providers and Display Page Template of the Main Instance and vice versa"
@@ -2417,487 +2384,6 @@ definition {
 
 		// TODO LPS-141682 ObjectAdminDisplaysOnlyItsInstanceObjects pending implementation
 
-	}
-
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Collection Providers when inactivated"
-	@priority = 4
-	test ObjectDisappearsCollectionProvidersWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 139",
-			objectName = "CustomObject139",
-			pluralLabelName = "Custom Objects 139");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject139");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 139");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
-
-		AssertElementNotPresent(
-			key_labelName = "Custom Objects 139",
-			locator1 = "VisualizeObjectCollectionDisplay#VIEW_OBJECT_COLLECTION_DISPLAY");
-	}
-
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Form's storage type when inactivated"
-	@priority = 4
-	test ObjectDisappearsFormStorageSettingsWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 140",
-			objectName = "CustomObject140",
-			pluralLabelName = "Custom Objects 140");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 140");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		FormsAdmin.addForm();
-
-		PopulateObjectFormsConfiguration.openFormSettings();
-
-		ObjectAdmin.selectDropdownItem(
-			labelName = "Select a Storage Type",
-			optionName = "Object");
-
-		AssertElementNotPresent(
-			key_optionName = "Custom Object 140",
-			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
-	}
-
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Item Selector when inactivated"
-	@priority = 4
-	test ObjectDisappearsPageItemSelectWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 141",
-			objectName = "CustomObject141",
-			pluralLabelName = "Custom Objects 141");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject141");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 141");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		Click.javaScriptClick(locator1 = "VisualizeObjectDisplayPage#SELECT_ITEM");
-
-		SelectFrame(
-			key_title = "Select",
-			locator1 = "IFrame#MODAL_ANY");
-
-		AssertElementNotPresent(
-			key_pluralLabelName = "Custom Objects 141",
-			locator1 = "VisualizeObjectDisplayPage#SELECT_OBJECT");
-	}
-
-	@description = "LPS-139005 - Verify that the Object is no longer displayed on the Page Template (subtype) when inactivated"
-	@priority = 4
-	test ObjectDisappearsPageTemplateWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 142",
-			objectName = "CustomObject142",
-			pluralLabelName = "Custom Objects 142");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject142");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 142");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		VisualizeObjectDisplayPage.openPageTemplate();
-
-		VisualizeObjectDisplayPage.selectBlankPageTemplate();
-
-		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
-
-		AssertElementNotPresent(
-			key_type = "Custom Object 142",
-			locator1 = "VisualizeObjectDisplayPage#CONTENT_TYPE_OPTION",
-			value1 = "Custom Object 142");
-	}
-
-	@description = "LPS-139005 - Verify that the Object entries are not displayed on Page fragments from an Object that was inactivated"
-	@priority = 4
-	test ObjectEntriesDisappearsPageFragmentsWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 145",
-			objectName = "CustomObject145",
-			pluralLabelName = "Custom Objects 145");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject145");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 145");
-
-		CreateObject.selectTitleField(fieldLabel = "Custom Field");
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject145");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject145",
-			value = "Entry Test");
-
-		Navigator.openURL();
-
-		ContentPages.addPage(pageName = "Blank Display Page");
-
-		PageEditor.addFragment(
-			collectionName = "Content Display",
-			fragmentName = "Collection Display");
-
-		PageEditor.editCollectionDisplay(
-			fragmentName = "Collection Display",
-			infoListProviderName = "Custom Objects 145");
-
-		PageEditor.editCollectionDisplay(
-			fragmentName = "Collection Display",
-			selectedName = "Custom Objects 145",
-			styleDisplay = "Table");
-
-		PageEditor.publish();
-
-		ObjectAdmin.openObjectAdmin();
-
-		CreateObject.inactiveCustomObject(objectLabel = "Custom Object 145");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "guest");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Blank Display Page");
-
-		AssertElementNotPresent(
-			key_entryName = "Entry Test",
-			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
-	}
-
-	@description = "LPS-139005 - Verify that the Object entries are displayed again on Page fragments from an Object that was reactivated"
-	@priority = 4
-	test ObjectEntriesReappearsPageFragmentsWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 142598",
-			objectName = "CustomObject142598",
-			pluralLabelName = "Custom Objects 142598");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Custom Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject142598");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject142598");
-
-		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-			fieldName = "customObjectField",
-			objectName = "CustomObject142598",
-			value = "Test 1");
-
-		Navigator.openURL();
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		VisualizeObjectCollectionDisplay.openHeading();
-
-		VisualizeObjectDisplayPage.addItem(
-			frameTitle = "Select",
-			pluralLabelName = "Custom Objects 142598");
-
-		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Custom Field");
-
-		PageEditor.publish();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 142598");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 142598");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Test Content Page Name");
-
-		AssertElementPresent(
-			key_entry = "Test 1",
-			locator1 = "VisualizeObjectDisplayPage#DISPLAY_ENTRY");
-	}
-
-	@description = "LPS-135549 - Verify that the Object Name is autofilled when Label is filled"
-	@priority = 4
-	test ObjectNameIsAutofilled {
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 150",
-			pluralLabelName = "");
-
-		AssertTextEquals(
-			locator1 = "CreateObject#OBJECT_DEFINITION_NAME",
-			value1 = "CustomObject150");
-	}
-
-	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Open Menu when inactivated"
-	@priority = 5
-	test ObjectPorletDisappearsOpenMenuWhenInactivated {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 140856",
-			objectName = "CustomObject140856",
-			pluralLabelName = "Custom Objects 140856");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject140856");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject140856");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 140856");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ApplicationsMenu.openApplicationsMenu();
-
-		ApplicationsMenu.gotoPanel(panel = "Control Panel");
-
-		AssertElementNotPresent(
-			key_category = "Object",
-			key_portlet = "Custom Objects 140856",
-			locator1 = "ApplicationsMenu#PORTLET");
-	}
-
-	@description = "LPS-139005 - Verify that the Object portlet is no longer displayed on the Site Menu when inactivated"
-	@priority = 4
-	test ObjectPorletDisappearsSiteMenuWhenInactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 152",
-			objectName = "CustomObject152",
-			panelCategoryKey = "site_administration.content",
-			pluralLabelName = "Custom Objects 152",
-			scope = "site");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject152");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 152");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ProductMenuHelper.openProductMenu();
-
-		ProductMenuHelper.expandCategory(category = "Content & Data");
-
-		AssertElementNotPresent(
-			key_portlet = "Custom Object 152",
-			locator1 = "ProductMenu#PORTLET",
-			value1 = "Custom Object 152");
-	}
-
-	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Open Menu when reactivated"
-	@priority = 4
-	test ObjectPortletReappearsOpenMenuWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 153",
-			objectName = "CustomObject153",
-			pluralLabelName = "Custom Objects 153");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject153");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ApplicationsMenu.openApplicationsMenu();
-
-		ApplicationsMenu.gotoPanel(panel = "Control Panel");
-
-		AssertElementPresent(
-			key_category = "Object",
-			key_portlet = "Custom Objects 153",
-			locator1 = "ApplicationsMenu#PORTLET");
-	}
-
-	@description = "LPS-139005 - Verify that the Object portlet is displayed again on the Site Menu when reactivated"
-	@priority = 4
-	test ObjectPortletReappearsSiteMenuWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 154",
-			objectName = "CustomObject154",
-			panelCategoryKey = "site_administration.content",
-			pluralLabelName = "Custom Objects 154",
-			scope = "site");
-
-		ObjectAdmin.addObjectFieldViaAPI(
-			fieldBusinessType = "Text",
-			fieldLabelName = "Field",
-			fieldName = "customObjectField",
-			fieldType = "String",
-			isRequired = "false",
-			objectName = "CustomObject154");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject154");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 154");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 154");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
-		ProductMenuHelper.openProductMenu();
-
-		ProductMenuHelper.expandCategory(category = "Content & Data");
-
-		AssertElementPresent(
-			key_portlet = "Custom Objects 154",
-			locator1 = "ProductMenu#PORTLET",
-			value1 = "Custom Objects 154");
-	}
-
-	@description = "LPS-139005 - Verify that the Object is displayed again on the Page Template (subtype) when reactivated"
-	@priority = 4
-	test ObjectReappearsPageTemplateWhenReactivated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 158",
-			objectName = "CustomObject158",
-			pluralLabelName = "Custom Objects 158");
-
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject158");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 158");
-
-		CreateObject.checkToggleInactive();
-
-		CreateObject.saveObject();
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 158");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.saveObject();
-
-		VisualizeObjectDisplayPage.openPageTemplate();
-
-		VisualizeObjectDisplayPage.selectBlankPageTemplate();
-
-		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
-
-		AssertElementPresent(
-			locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE",
-			value1 = "Custom Object 158");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Panel of the Main Instance and vice versa"
@@ -3085,34 +2571,6 @@ definition {
 		Button.click(button = "Close");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
-	}
-
-	@description = "LPS-139418 - Verify that previous filled data is not kept when cancelling the creation of an Object"
-	@priority = 4
-	test PreviousFilledDataIsNotKeptAfterCancel {
-		ObjectAdmin.openObjectAdmin();
-
-		LexiconEntry.gotoAdd();
-
-		ObjectAdmin.addNewObject(
-			fieldLabelName = "Custom Object 166",
-			pluralLabelName = "Custom Objects 166");
-
-		Button.clickCancel();
-
-		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
-
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#PLURAL_LABEL_CUSTOM_OBJECT",
-			value1 = "");
-
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#LABEL_CUSTOM_OBJECT",
-			value1 = "");
-
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#NAME_CUSTOM_OBJECT",
-			value1 = "");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
@@ -3807,54 +3265,6 @@ definition {
 		AssertElementPresent(
 			key_tabName = "Relationship Tab",
 			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
-	}
-
-	@description = "LPS-135549 - Verify that the columns Name, System and Status displays the correct value on the Objects table when a Custom Object is created"
-	@priority = 4
-	test TableDisplayCorrectValueWhenObjectCreated {
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 175",
-			objectName = "CustomObject175",
-			pluralLabelName = "Custom Objects 175");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectAdmin.assertObjectColumnValue(
-			label = "Custom Object 175",
-			scope = "company",
-			status = "Draft",
-			system = "No");
-	}
-
-	@description = "LPS-135548 - Verify that user can view custom objects"
-	@priority = 5
-	test ViewCustomObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object 176",
-			objectName = "CustomObject176",
-			pluralLabelName = "Custom Objects 176");
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertElementPresent(
-			key_name = "Custom Object 176",
-			key_system = "No",
-			locator1 = "ObjectAdmin#VIEW_OBJECT");
-	}
-
-	@description = "LPS-135548 - Verify that user can view system objects"
-	@priority = 5
-	test ViewSystemObjects {
-		property portal.acceptance = "true";
-
-		ObjectAdmin.openObjectAdmin();
-
-		AssertElementPresent(
-			key_name = "User",
-			key_system = "Yes",
-			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
 }

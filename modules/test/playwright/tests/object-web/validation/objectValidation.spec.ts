@@ -1055,7 +1055,7 @@ test.describe('Object Expression Builder Validation', () => {
 	test(
 		'Can create validation using oldValue function with Picklist field',
 		{tag: '@LPD-78504'},
-		async ({apiHelpers, page: _page, site: _site}) => {
+		async ({apiHelpers}) => {
 			const suffix = getRandomString().substring(0, 8);
 
 			const listTypeDefinition =
@@ -1141,6 +1141,9 @@ test.describe('Object Expression Builder Validation', () => {
 				}
 			);
 
+			// First patch (open -> inprogress): oldValue is 'open', so the rule
+			// passes and the entry updates successfully.
+
 			const updatedEntry = await apiHelpers.objectEntry.patchObjectEntry(
 				{customPicklistField: {key: 'inprogress', name: 'In Progress'}},
 				applicationName,
@@ -1148,6 +1151,18 @@ test.describe('Object Expression Builder Validation', () => {
 			);
 
 			expect(updatedEntry.customPicklistField.key).toBe('inprogress');
+
+			// Second patch (inprogress -> open): oldValue is now 'inprogress',
+			// so the rule fails and the API responds with a validation error.
+
+			const failedResponse =
+				(await apiHelpers.objectEntry.patchObjectEntry(
+					{customPicklistField: {key: 'open', name: 'Open'}},
+					applicationName,
+					entry.id
+				)) as unknown as {detail: string};
+
+			expect(failedResponse.detail).toContain('Validation error');
 		}
 	);
 });

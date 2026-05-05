@@ -4,7 +4,6 @@
  */
 
 import {
-	ObjectActionAPI,
 	ObjectDefinition,
 	ObjectDefinitionAPI,
 } from '@liferay/object-admin-rest-client-js';
@@ -348,22 +347,15 @@ test(
 	'Can trigger action with unmodifiable system object definition using client extension',
 	{tag: '@LPD-78504'},
 	async ({apiHelpers}) => {
-		const objectActionAPIClient =
-			await apiHelpers.buildRestClient(ObjectActionAPI);
-
-		const {body: objectAction} =
-			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-				'L_USER',
-				{
-					active: true,
-					label: {en_US: `Custom Action ${getRandomInt()}`},
-					name: `customAction${getRandomInt()}`,
-					objectActionExecutorKey:
-						'function#liferay-sample-etc-spring-boot-object-action-2',
-					objectActionTriggerKey: 'onAfterAdd',
-					parameters: {},
-				}
-			);
+		const objectAction = await apiHelpers.objectAction.postRandomAction(
+			'L_USER',
+			{
+				objectActionExecutorKey:
+					'function#liferay-sample-etc-spring-boot-object-action-2',
+				objectActionTriggerKey: 'onAfterAdd',
+				parameters: {},
+			}
+		);
 
 		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
 
@@ -375,6 +367,8 @@ test(
 			familyName: 'userln',
 			givenName,
 		});
+
+		apiHelpers.data.push({id: user.id, type: 'userAccount'});
 
 		// The client-extension action runs asynchronously after the user is
 		// created, so poll until the action's effect (alternateName patched

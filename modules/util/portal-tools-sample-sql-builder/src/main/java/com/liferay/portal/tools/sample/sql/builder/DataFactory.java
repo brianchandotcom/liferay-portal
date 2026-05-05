@@ -7028,6 +7028,61 @@ public class DataFactory {
 			_counter.get(), GroupConstants.USER_PERSONAL_SITE, false);
 	}
 
+	public List<LayoutModel> newUtilityPageLayoutModels(
+		long groupId, String name) {
+
+		List<LayoutModel> layoutModels = new ArrayList<>();
+
+		String externalReferenceCodeSuffix = StringUtil.replace(
+			StringUtil.toUpperCase(name.trim()), CharPool.SPACE, CharPool.DASH);
+
+		String friendlyURL = StringUtil.toLowerCase(
+			externalReferenceCodeSuffix);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).build();
+
+		if (Validator.isNumber(name)) {
+			externalReferenceCodeSuffix = name + "-ERROR";
+
+			friendlyURL = name + "-1";
+
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:show-footer", "false");
+			typeSettingsUnicodeProperties.setProperty(
+				"lfr-theme:regular:show-header", "false");
+		}
+		else if (name.equals("Sign In")) {
+			externalReferenceCodeSuffix = "LOGIN";
+		}
+
+		String externalReferenceCode =
+			"LFR-" + externalReferenceCodeSuffix + "-layout";
+
+		LayoutModel publicLayoutModel = newUtilityPageLayoutModel(
+			groupId, 0, 0, name, typeSettingsUnicodeProperties.toString(),
+			friendlyURL, externalReferenceCode);
+
+		layoutModels.add(publicLayoutModel);
+
+		typeSettingsUnicodeProperties.setProperty("published", "true");
+
+		layoutModels.add(
+			newUtilityPageLayoutModel(
+				publicLayoutModel.getGroupId(), getClassNameId(Layout.class),
+				publicLayoutModel.getPlid(), publicLayoutModel.getName(),
+				typeSettingsUnicodeProperties.toString(),
+				String.valueOf(
+					new UUID(
+						SecureRandomUtil.nextLong(),
+						SecureRandomUtil.nextLong())),
+				externalReferenceCode + "-draft"));
+
+		return layoutModels;
+	}
+
 	public VirtualHostModel newVirtualHostModel() {
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
@@ -8841,6 +8896,17 @@ public class DataFactory {
 		userModel.setExternalReferenceCode(uuid);
 
 		return userModel;
+	}
+
+	protected LayoutModel newUtilityPageLayoutModel(
+		long groupId, long classNameId, long classPK, String name,
+		String typeSettings, String friendlyURL, String externalReferenceCode) {
+
+		return newLayoutModel(
+			groupId, false, 0, classNameId, classPK, name,
+			LayoutConstants.TYPE_UTILITY, typeSettings, true, true, friendlyURL,
+			"classic_WAR_classictheme", SequentialUUID.generate(),
+			externalReferenceCode);
 	}
 
 	protected String nextDDLCustomFieldName(

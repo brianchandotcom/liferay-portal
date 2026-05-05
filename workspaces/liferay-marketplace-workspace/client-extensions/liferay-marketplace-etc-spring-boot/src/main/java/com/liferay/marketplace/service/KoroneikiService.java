@@ -231,14 +231,15 @@ public class KoroneikiService {
 			com.liferay.headless.admin.user.client.dto.v1_0.Account account =
 				accountResource.getAccount(order.getAccountId());
 
+			Account koroneikiAccount = postKoroneikiAccount(account, jwt);
+
+			order.setAccountExternalReferenceCode(koroneikiAccount::getKey);
+
 			accountResource.patchAccount(
 				account.getId(),
 				new com.liferay.headless.admin.user.client.dto.v1_0.Account() {
 					{
-						setExternalReferenceCode(
-							() -> postKoroneikiAccount(
-								account, jwt
-							).getKey());
+						setExternalReferenceCode(koroneikiAccount::getKey);
 					}
 				});
 		}
@@ -249,7 +250,8 @@ public class KoroneikiService {
 			for (OrderItem orderItem : order.getOrderItems()) {
 				ProductPurchase productPurchase =
 					postAccountAccountKeyProductPurchase(
-						accountExternalReferenceCode, jwt, licenseType,
+						order.getAccountExternalReferenceCode(), jwt,
+						licenseType,
 						MarketplaceUtil.getSkuOptionValue(
 							"license-usage-type", orderItem.getOptions()),
 						orderItem);

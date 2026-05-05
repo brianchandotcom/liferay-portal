@@ -11,7 +11,6 @@ import NavigationBar from '@clayui/navigation-bar';
 import {useCallback, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -28,6 +27,7 @@ import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import usecanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 
 const BusinessEventsItemDetails = () => {
 	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
@@ -38,17 +38,13 @@ const BusinessEventsItemDetails = () => {
 		loading: loadingBusinessEvents,
 	} = useGetBusinessEvent(id || '');
 
-	const {client} = useAppPropertiesContext();
-
 	const [modalType, setModalType] = useState('');
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const {loading: loadingTickets, tickets} = useAccountsTickets(
 		businessEvent,
 		accountKey,
-		loadingBusinessEvents ||
-			!businessEvent?.associatedTickets ||
-			businessEvent?.associatedTickets === '[]'
+		loadingBusinessEvents || !businessEvent?.associatedTickets
 	);
 
 	const {
@@ -75,7 +71,7 @@ const BusinessEventsItemDetails = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="check-circle" />,
-			label: i18n.translate('record-actual-go-live'),
+			label: i18n.translate('record-actual-event-date'),
 			onClick: () => {
 				setModalType('goLiveEvent');
 				onOpenChange(true);
@@ -108,7 +104,7 @@ const BusinessEventsItemDetails = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
@@ -124,13 +120,13 @@ const BusinessEventsItemDetails = () => {
 
 	useEffect(() => {
 		if (businessEvent && tickets) {
-			const associatedTickets = JSON.parse(
-				businessEvent.associatedTickets!
+			const associatedTickets = parseAssociatedTickets(
+				businessEvent.associatedTickets
 			);
 
 			setTicketOptions([
 				...(tickets?.filter((ticket) =>
-					associatedTickets.includes(ticket.ticketId)
+					associatedTickets.includes(String(ticket.ticketId))
 				) || []),
 			]);
 		}
@@ -171,7 +167,7 @@ const BusinessEventsItemDetails = () => {
 
 			<div>
 				<div
-					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} mb-1 d-inline px-2 py-1`}
 				>
 					{i18n.translate(
 						getKebabCase(
@@ -186,7 +182,7 @@ const BusinessEventsItemDetails = () => {
 					</div>
 
 					{hasAllEventsPermissions &&
-						!['canceled', 'completed'].includes(
+						!['Canceled', 'Completed'].includes(
 							businessEvent.eventStatus?.key!
 						) && (
 							<div className="be-actions">
@@ -288,16 +284,16 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.targetGoLiveDateTime && (
+					{businessEvent?.plannedEventDate && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-								{i18n.translate('target-go-live-date')}
+								{i18n.translate('planned-event-date')}
 							</div>
 
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.targetGoLiveDateTime,
+										businessEvent?.plannedEventDate,
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -305,7 +301,7 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.targetGoLiveDateTime,
+										businessEvent?.plannedEventDate,
 										'UTC'
 									)}
 								</div>
@@ -313,16 +309,16 @@ const BusinessEventsItemDetails = () => {
 						</div>
 					)}
 
-					{businessEvent?.actualGoLiveDateTime && (
+					{businessEvent?.actualEventDate && (
 						<div className="event-detail-item mb-4">
 							<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-								{i18n.translate('actual-go-live-date')}
+								{i18n.translate('actual-event-date')}
 							</div>
 
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.actualGoLiveDateTime,
+										businessEvent?.actualEventDate,
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -330,7 +326,7 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.actualGoLiveDateTime,
+										businessEvent?.actualEventDate,
 										'UTC'
 									)}
 								</div>
@@ -378,7 +374,6 @@ const BusinessEventsItemDetails = () => {
 				<ManageEventModal
 					accountExternalReferenceCode={accountKey || ''}
 					businessEvent={businessEvent}
-					client={client}
 					closeFunction={handleCloseModal}
 					modalType={modalType}
 					observer={observer}

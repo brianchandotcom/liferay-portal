@@ -11,10 +11,9 @@ import {useNavigate} from 'react-router-dom';
 import {Button, Input, Select} from '~/components';
 import DatePicker from '~/components/DatePicker/DatePicker';
 import TimePicker from '~/components/TimePicker/TimePicker';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
 import {Liferay} from '~/services/liferay';
-import {addBusinessEvent} from '~/services/liferay/graphql/queries';
+import {createBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
@@ -22,7 +21,6 @@ import {isValidDate} from '~/utils/validations.form';
 
 import Layout from '../../../../../../../components/FormLayout';
 import AssociatedTicketsContainer from '../../components/AssociatedTicketsContainer';
-import useAccountsSyncBusinessEvents from '../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../hooks/useAccountsTickets';
 import useCanViewTickets from '../../hooks/useCanViewTickets';
 import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
@@ -30,7 +28,7 @@ import useGetLiferayVersions from '../../hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '../../hooks/useGetUTCTimeZonesList';
 import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../utils/containsOption';
-import {getFormattedGoLiveDateTime} from '../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../utils/getFormattedEventDate';
 import useIsSaasOnly from '../../utils/useIsSaasOnly';
 
 interface IProps {
@@ -54,8 +52,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	touched,
 	values,
 }) => {
-	const {client} = useAppPropertiesContext();
-
 	const [{project, subscriptionGroups}] = useAppContext();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
@@ -77,7 +73,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 	const [hasImpactingEvents, setHasImpactingEvents] = useState<string>('no');
 
 	const isDescriptionRequired = useMemo(
-		() => businessEvent.eventType?.key === 'otherEvent',
+		() => businessEvent.eventType?.key === 'Other Event',
 		[businessEvent.eventType]
 	);
 
@@ -85,7 +81,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		useState<boolean>(false);
 
 	const isNewLiferayVersionRequired = useMemo(
-		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		() => ['Migration', 'Upgrade'].includes(businessEvent.eventType?.key!),
 		[businessEvent.eventType]
 	);
 
@@ -114,17 +110,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		start: now.getFullYear(),
 	};
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		false,
-		false
-	);
-
-	const {
-		dxpMinorVersionsAndPortalMajorVersions,
-		loading: loadingLiferayVersions,
-	} = useGetLiferayVersions();
+	const {loading: loadingLiferayVersions, productVersions} =
+		useGetLiferayVersions();
 
 	const [newLiferayVersionOptions, setNewLiferayVersionOptions] = useState<
 		IOption[]
@@ -185,27 +172,23 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		const updatedBusinessEvent = {
 			...businessEvent,
 			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
+			eventStatus: businessEvent.eventStatus?.key,
+			eventType: businessEvent.eventType?.name,
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
+			plannedEventDate: getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
+			),
 			timeZone: businessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
-
-			await client.mutate<{
-				addBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: addBusinessEvent,
-				variables: {
-					businessEvent: updatedBusinessEvent,
-				},
-			});
+			await createBusinessEvent(
+				project?.accountKey || '',
+				updatedBusinessEvent
+			);
 
 			navigate(`/${project?.accountKey}/business-events`);
 
@@ -232,34 +215,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		loadingUTCTimeZonesList;
 
 	useEffect(() => {
-		if (hasImpactingEvents === 'yes') {
-			const selectedTicketsMap = selectedTickets.map(
-				(ticket) => `"${ticket.ticketId}"`
-			);
-
-			setFieldValue(
-				'businessEvent.associatedTickets',
-				`[${selectedTicketsMap.length ? selectedTicketsMap.join(', ') : ''}]`
-			);
-		}
-		else {
-			setFieldValue('businessEvent.associatedTickets', '[]');
-		}
-	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
-
-	useEffect(() => {
 		setFieldValue(
-			'businessEvent.targetGoLiveDateTime',
-			getFormattedGoLiveDateTime(
-				businessEvent.targetGoLiveDate,
-				businessEvent.targetGoLiveTime
-			)
+			'businessEvent.associatedTickets',
+			hasImpactingEvents === 'yes'
+				? selectedTickets.map((ticket) => ticket.ticketId).join(',')
+				: ''
 		);
-	}, [
-		businessEvent.targetGoLiveDate,
-		businessEvent.targetGoLiveTime,
-		setFieldValue,
-	]);
+	}, [hasImpactingEvents, selectedTickets, setFieldValue]);
 
 	useEffect(() => {
 		const hasCurrentLiferayVersion =
@@ -270,13 +232,13 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		const hasEventName = values.businessEvent.name;
 		const hasEventType = values.businessEvent.eventType.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
-		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasPlannedEventDate = values.businessEvent.plannedEventDate;
 		const hasTouched = Boolean(Object.keys(touched).length);
 
 		let hasAllRequiredFieldsFilled =
 			Boolean(hasEventName) &&
 			Boolean(hasEventType) &&
-			Boolean(hasTargetGoLiveDate);
+			Boolean(hasPlannedEventDate);
 
 		if (isDescriptionRequired) {
 			hasAllRequiredFieldsFilled =
@@ -307,34 +269,32 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		values.businessEvent.eventType,
 		values.businessEvent.name,
 		values.businessEvent.newLiferayVersion,
-		values.businessEvent.targetGoLiveDate,
+		values.businessEvent.plannedEventDate,
 	]);
 
 	useEffect(() => {
-		if (dxpMinorVersionsAndPortalMajorVersions?.length) {
+		if (productVersions?.length) {
 			setNewLiferayVersionOptions([
-				...dxpMinorVersionsAndPortalMajorVersions.filter(
-					(version, index, versions) => {
-						if (businessEvent.currentLiferayVersion?.key) {
-							return (
-								index <
-								versions.findIndex((version) => {
-									return (
-										version.value ===
-										businessEvent.currentLiferayVersion?.key
-									);
-								})
-							);
-						}
-
-						return true;
+				...productVersions.filter((version, index, versions) => {
+					if (businessEvent.currentLiferayVersion?.key) {
+						return (
+							index <
+							versions.findIndex((version) => {
+								return (
+									version.value ===
+									businessEvent.currentLiferayVersion?.key
+								);
+							})
+						);
 					}
-				),
+
+					return true;
+				}),
 			]);
 		}
 	}, [
 		businessEvent.currentLiferayVersion?.key,
-		dxpMinorVersionsAndPortalMajorVersions,
+		productVersions,
 		emptyOption,
 	]);
 
@@ -360,13 +320,6 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		newLiferayVersionOptions,
 		setFieldValue,
 	]);
-
-	useEffect(() => {
-		setFieldValue(
-			'businessEvent.r_accountEntryToBusinessEvents_accountEntryId',
-			project?.id
-		);
-	}, [project?.id, setFieldValue]);
 
 	useEffect(() => {
 		setTicketOptions([
@@ -457,12 +410,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											handleOptionChange(
 												'businessEvent.currentLiferayVersion.name',
 												value,
-												dxpMinorVersionsAndPortalMajorVersions
+												productVersions
 											)
 										}
 										options={[
 											emptyOption,
-											...dxpMinorVersionsAndPortalMajorVersions,
+											...productVersions,
 										]}
 										required
 									/>
@@ -510,12 +463,12 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 											badgeClassName="mt-1 mx-3"
 											dateFormat="MM-dd-yyyy"
 											label={i18n.translate(
-												'target-go-live-date'
+												'planned-event-date'
 											)}
-											name="businessEvent.targetGoLiveDate"
+											name="businessEvent.plannedEventDate"
 											onChange={(value) =>
 												setFieldValue(
-													'businessEvent.targetGoLiveDate',
+													'businessEvent.plannedEventDate',
 													value
 												)
 											}
@@ -558,10 +511,10 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 									<ClayInput.GroupItem className="m-0">
 										<TimePicker
 											label={i18n.translate('time')}
-											name="businessEvent.targetGoLiveTime"
+											name="businessEvent.plannedEventTime"
 											onChange={(value) =>
 												setFieldValue(
-													'businessEvent.targetGoLiveTime',
+													'businessEvent.plannedEventTime',
 													value
 												)
 											}

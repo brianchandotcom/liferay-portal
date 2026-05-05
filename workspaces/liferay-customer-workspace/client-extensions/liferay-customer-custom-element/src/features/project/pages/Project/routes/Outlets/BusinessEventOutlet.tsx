@@ -3,25 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useApolloClient} from '@apollo/client';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useState} from 'react';
 import {Navigate, Outlet, useParams} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
-import {getBusinessEvent} from '~/services/liferay/graphql/queries';
+import {getBusinessEventById} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
-import {IBusinessEvent, IProject} from '~/utils/types';
 
 interface BusinessEventOutletProps {
-	project: IProject | null;
 	skip: boolean;
 }
 
-const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
-	project,
-	skip,
-}) => {
-	const client = useApolloClient();
+const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({skip}) => {
 	const {accountKey, id} = useParams();
 	const [isValidBusinessEvent, setIsValidBusinessEvent] = useState<
 		boolean | null
@@ -34,7 +27,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 				return;
 			}
 
-			if (!id || !project || !project.id) {
+			if (!id || !accountKey) {
 				setIsValidBusinessEvent(false);
 				setIsLoading(false);
 
@@ -42,31 +35,12 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 			}
 
 			try {
-				const {data} = await client.query<{
-					businessEvent: IBusinessEvent;
-				}>({
-					context: {
-						type: 'liferay-rest',
-					},
-					query: getBusinessEvent,
-					variables: {
-						businessEventId: id,
-					},
-				});
+				await getBusinessEventById(accountKey, id);
 
-				if (
-					data?.businessEvent
-						?.r_accountEntryToBusinessEvents_accountEntryId ===
-					project.id
-				) {
-					setIsValidBusinessEvent(true);
-				}
-				else {
-					setIsValidBusinessEvent(false);
-				}
+				setIsValidBusinessEvent(true);
 			}
 			catch (error) {
-				console.error('Error fetching business event:', error);
+				console.error('Unable to fetch business event:', error);
 
 				Liferay.Util.openToast({
 					message: i18n.translate('an-unexpected-error-occurred'),
@@ -81,7 +55,7 @@ const BusinessEventOutlet: React.FC<BusinessEventOutletProps> = ({
 		};
 
 		validateBusinessEvent();
-	}, [client, id, project, skip]);
+	}, [id, accountKey, skip]);
 
 	if (isLoading || skip) {
 		return (

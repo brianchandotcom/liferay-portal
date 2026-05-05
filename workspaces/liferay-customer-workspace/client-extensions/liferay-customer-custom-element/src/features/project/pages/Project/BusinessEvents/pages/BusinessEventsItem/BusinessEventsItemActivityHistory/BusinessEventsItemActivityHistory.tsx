@@ -12,7 +12,6 @@ import {useCallback, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
@@ -32,36 +31,11 @@ const BusinessEventsItemActivityHistory = () => {
 		id || ''
 	);
 
-	const {client} = useAppPropertiesContext();
-
-	const generateFilterQuery = useCallback(() => {
-		const queryParams: string[] = [];
-
-		if (id) {
-			queryParams.push(
-				`r_businessEventToBusinessEventVersions_c_businessEventId eq '${id}'`
-			);
-		}
-
-		const filterQuery = queryParams.length
-			? `filter=${queryParams.join(' and ')}`
-			: '';
-		const sortQuery = 'sort=dateModified:desc';
-
-		if (filterQuery) {
-			return `${filterQuery}&${sortQuery}`;
-		}
-
-		return sortQuery;
-	}, [id]);
-
-	const filterQuery = generateFilterQuery();
-
 	const {
 		businessEventVersions,
 		fetchBusinessEventVersions,
 		loading: loadingVersions,
-	} = useGetBusinessEventVersions(filterQuery);
+	} = useGetBusinessEventVersions(id || '');
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
@@ -90,7 +64,7 @@ const BusinessEventsItemActivityHistory = () => {
 						<div>
 							<div className="text-neutral-10">
 								{getFormattedDate(
-									businessEventVersion?.dateModified,
+									businessEventVersion?.createdDate,
 									'day2DMonthSYearN',
 									'UTC'
 								)}
@@ -98,7 +72,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
-									businessEventVersion?.dateModified,
+									businessEventVersion?.createdDate,
 									'UTC'
 								)}
 							</div>
@@ -106,12 +80,10 @@ const BusinessEventsItemActivityHistory = () => {
 					),
 					user: (
 						<div className="align-items-center d-flex">
-							<Avatar
-								userName={businessEventVersion?.creator?.name}
-							/>
+							<Avatar userName={businessEventVersion?.author} />
 
 							<div className="font-weight-semi-bold m-0 ml-2 mr-1 text-neutral-10 text-truncate">
-								{businessEventVersion?.creator?.name}
+								{businessEventVersion?.author}
 							</div>
 						</div>
 					),
@@ -140,7 +112,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
@@ -189,7 +161,7 @@ const BusinessEventsItemActivityHistory = () => {
 		{
 			customOptionStyle: 'pr-5',
 			icon: <ClayIcon symbol="check-circle" />,
-			label: i18n.translate('record-actual-go-live'),
+			label: i18n.translate('record-actual-event-date'),
 			onClick: () => {
 				setModalType('goLiveEvent');
 				onOpenChange(true);
@@ -220,7 +192,7 @@ const BusinessEventsItemActivityHistory = () => {
 
 			<div>
 				<div
-					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} mb-1 d-inline px-2 py-1`}
 				>
 					{businessEvent?.eventStatus?.name}
 				</div>
@@ -231,7 +203,7 @@ const BusinessEventsItemActivityHistory = () => {
 					</div>
 
 					{hasAllEventsPermissions &&
-						!['canceled', 'completed'].includes(
+						!['Canceled', 'Completed'].includes(
 							businessEvent.eventStatus?.key!
 						) && (
 							<div>
@@ -283,7 +255,6 @@ const BusinessEventsItemActivityHistory = () => {
 				<ManageEventModal
 					accountExternalReferenceCode={accountKey || ''}
 					businessEvent={businessEvent}
-					client={client}
 					closeFunction={onOpenChange}
 					modalType={modalType}
 					observer={observer}

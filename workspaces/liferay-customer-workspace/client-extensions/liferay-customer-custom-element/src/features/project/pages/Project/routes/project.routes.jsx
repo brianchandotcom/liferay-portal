@@ -324,7 +324,7 @@ const ProjectRoutes = () => {
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />
 							<Route element={<BusinessEventAdd />} path="new"/>
-							<Route path=":id" element={<BusinessEventOutlet project={project} skip={!project} />}>
+							<Route path=":id" element={<BusinessEventOutlet skip={!project} />}>
 								<Route element={<BusinessEventsItemDetails />} index />
 								<Route element={<BusinessEventsItemEdit />} path="edit"/>
 								<Route element={<BusinessEventsItemActivityHistory />} path="activity-history"/>

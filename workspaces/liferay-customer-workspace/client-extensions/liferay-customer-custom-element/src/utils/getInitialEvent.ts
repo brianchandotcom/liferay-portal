@@ -5,24 +5,24 @@
 
 export default function getInitialEvent() {
 	return {
-		associatedTickets: '[]',
+		associatedTickets: '',
 		currentLiferayVersion: {
 			key: '',
 		},
 		description: '',
 		eventStatus: {
-			key: 'open',
+			key: 'Open',
 		},
 		eventType: {
 			key: '',
 		},
+		lastComment: 'New business event has been created.',
 		name: '',
 		newLiferayVersion: {
 			key: '',
 		},
-		r_accountEntryToBusinessEvents_accountEntryId: '',
-		targetGoLiveDate: '',
-		targetGoLiveTime: {
+		plannedEventDate: '',
+		plannedEventTime: {
 			hours: '--',
 			minutes: '--',
 		},

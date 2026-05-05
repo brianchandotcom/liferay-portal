@@ -15,26 +15,25 @@ import {FieldArray, Formik} from 'formik';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {Button, DatePicker, Input, Select, TimePicker} from '~/components';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
 import useGetBusinessEventTypesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetBusinessEventTypesList';
 import useGetLiferayVersions from '~/features/project/pages/Project/BusinessEvents/hooks/useGetLiferayVersions';
 import useGetUTCTimeZonesList from '~/features/project/pages/Project/BusinessEvents/hooks/useGetUTCTimeZonesList';
 import {Liferay} from '~/services/liferay';
-import {patchBusinessEvent} from '~/services/liferay/graphql/queries';
+import {updateBusinessEvent} from '~/services/liferay/rest/jira/Jira';
 import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import {IBusinessEvent, IOption, ITicket} from '~/utils/types';
 import {isValidDate} from '~/utils/validations.form';
 
 import AssociatedTicketsContainer from '../../../components/AssociatedTicketsContainer';
-import useAccountsSyncBusinessEvents from '../../../hooks/useAccountsSyncBusinessEvents';
 import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import useCanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../../utils/containsOption';
-import {getFormattedGoLiveDateTime} from '../../../utils/getFormattedGoLiveDate';
+import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
+import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
 
@@ -59,11 +58,10 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	setFieldValue,
 	values,
 }) => {
-	const {client} = useAppPropertiesContext();
-
 	const [{project, subscriptionGroups}] = useAppContext();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState<boolean>(true);
+
 	const [reason, setReason] = useState('');
 
 	const {businessEventTypesList, loading: loadingBusinessEventTypesList} =
@@ -81,14 +79,11 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const [hasImpactingEvents, setHasImpactingEvents] = useState(() => {
-		return originalBusinessEvent.associatedTickets &&
-			originalBusinessEvent.associatedTickets !== '[]'
-			? 'yes'
-			: 'no';
+		return originalBusinessEvent.associatedTickets ? 'yes' : 'no';
 	});
 
 	const isDescriptionRequired = useMemo(
-		() => businessEvent.eventType?.key === 'otherEvent',
+		() => businessEvent.eventType?.key === 'Other Event',
 		[businessEvent.eventType]
 	);
 
@@ -98,7 +93,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const isNewLiferayVersionRequired = useMemo(
-		() => ['migration', 'upgrade'].includes(businessEvent.eventType?.key!),
+		() => ['Migration', 'Upgrade'].includes(businessEvent.eventType?.key!),
 		[businessEvent.eventType]
 	);
 
@@ -126,22 +121,13 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		onClose: () => setIsModalOpen(false),
 	});
 
-	const {updateAccountBusinessEvents} = useAccountsSyncBusinessEvents(
-		project?.accountKey || '',
-		businessEvent,
-		true,
-		false
-	);
-
 	const {
 		canViewTickets: canViewTickets,
 		loading: loadingJiraAccountChecking,
 	} = useCanViewTickets(project?.accountKey || '');
 
-	const {
-		dxpMinorVersionsAndPortalMajorVersions,
-		loading: loadingLiferayVersions,
-	} = useGetLiferayVersions();
+	const {loading: loadingLiferayVersions, productVersions} =
+		useGetLiferayVersions();
 
 	const [newLiferayVersionOptions, setNewLiferayVersionOptions] = useState<
 		IOption[]
@@ -205,38 +191,30 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			associatedTickets: businessEvent.associatedTickets,
 			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
 			description: businessEvent.description,
-			eventStatus:
-				new Date(businessEvent.targetGoLiveDateTime!) >= now
-					? 'open'
-					: originalBusinessEvent.eventStatus?.key,
+			eventStatus: originalBusinessEvent.eventStatus?.key,
 			eventType: businessEvent.eventType?.key,
 			lastComment: reason,
 			name: businessEvent?.name,
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
-			r_accountEntryToBusinessEvents_accountEntryId:
-				businessEvent.r_accountEntryToBusinessEvents_accountEntryId,
-			targetGoLiveDateTime: businessEvent.targetGoLiveDateTime,
+			plannedEventDate: getFormattedEventDateTime(
+				businessEvent.plannedEventDate,
+				businessEvent.plannedEventTime
+			),
 			timeZone: businessEvent.timeZone?.key,
 		};
 
 		try {
 			setIsLoadingSubmitButton(true);
 
-			await updateAccountBusinessEvents();
+			if (!businessEvent.id) {
+				throw new Error('Business event ID is missing');
+			}
 
-			await client.mutate<{
-				patchBusinessEvent: IBusinessEvent;
-			}>({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: patchBusinessEvent,
-				variables: {
-					businessEvent: formattedBusinessEvent,
-					businessEventId: businessEvent.id,
-				},
-			});
+			await updateBusinessEvent(
+				project?.accountKey || '',
+				businessEvent.id,
+				formattedBusinessEvent
+			);
 
 			navigate(
 				`/${project?.accountKey}/business-events/${businessEvent.id}`
@@ -265,34 +243,15 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		loadingUTCTimeZonesList;
 
 	useEffect(() => {
-		if (hasImpactingEvents === 'yes') {
-			const selectedTickets = selectedTicketOptions.map(
-				(ticket) => `"${ticket.ticketId}"`
-			);
-
-			setFieldValue(
-				'businessEvent.associatedTickets',
-				`[${selectedTickets.length ? selectedTickets.join(', ') : ''}]`
-			);
-		}
-		else {
-			setFieldValue('businessEvent.associatedTickets', '[]');
-		}
-	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
-
-	useEffect(() => {
 		setFieldValue(
-			'businessEvent.targetGoLiveDateTime',
-			getFormattedGoLiveDateTime(
-				businessEvent.targetGoLiveDate,
-				businessEvent.targetGoLiveTime
-			)
+			'businessEvent.associatedTickets',
+			hasImpactingEvents === 'yes'
+				? selectedTicketOptions
+						.map((ticket) => ticket.ticketId)
+						.join(',')
+				: ''
 		);
-	}, [
-		businessEvent.targetGoLiveDate,
-		businessEvent.targetGoLiveTime,
-		setFieldValue,
-	]);
+	}, [hasImpactingEvents, selectedTicketOptions, setFieldValue]);
 
 	useEffect(() => {
 		if (!isDescriptionRequired) {
@@ -359,42 +318,40 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 	]);
 
 	useEffect(() => {
-		if (dxpMinorVersionsAndPortalMajorVersions?.length) {
+		if (productVersions?.length) {
 			setNewLiferayVersionOptions([
-				...dxpMinorVersionsAndPortalMajorVersions.filter(
-					(version, index, versions) => {
-						if (businessEvent.currentLiferayVersion?.key) {
-							return (
-								index <
-								versions.findIndex((version) => {
-									return (
-										version.value ===
-										businessEvent.currentLiferayVersion?.key
-									);
-								})
-							);
-						}
-
-						return true;
+				...productVersions.filter((version, index, versions) => {
+					if (businessEvent.currentLiferayVersion?.key) {
+						return (
+							index <
+							versions.findIndex((version) => {
+								return (
+									version.value ===
+									businessEvent.currentLiferayVersion?.key
+								);
+							})
+						);
 					}
-				),
+
+					return true;
+				}),
 			]);
 		}
 	}, [
 		businessEvent.currentLiferayVersion?.key,
-		dxpMinorVersionsAndPortalMajorVersions,
+		productVersions,
 		emptyOption,
 	]);
 
 	useEffect(() => {
 		if (originalBusinessEvent && tickets) {
-			const associatedTickets = JSON.parse(
-				originalBusinessEvent.associatedTickets!
+			const associatedTickets = parseAssociatedTickets(
+				originalBusinessEvent.associatedTickets
 			);
 
 			setTicketOptions([
 				...tickets?.map((ticket) =>
-					associatedTickets.includes(ticket.ticketId)
+					associatedTickets.includes(String(ticket.ticketId))
 						? {...ticket, selected: true}
 						: {...ticket, selected: false}
 				),
@@ -402,7 +359,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 			setSelectedTicketOptions([
 				...tickets.filter((ticket) => {
-					return associatedTickets.includes(ticket.ticketId);
+					return associatedTickets.includes(String(ticket.ticketId));
 				}),
 			]);
 
@@ -421,12 +378,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		const hasEventName = values.businessEvent.name;
 		const hasEventType = values.businessEvent.eventType.key;
 		const hasNewLiferayVersion = values.businessEvent.newLiferayVersion.key;
-		const hasTargetGoLiveDate = values.businessEvent.targetGoLiveDate;
+		const hasPlannedEventDate = values.businessEvent.plannedEventDate;
 
 		let hasAllRequiredFieldsFilled =
 			Boolean(hasEventName) &&
 			Boolean(hasEventType) &&
-			Boolean(hasTargetGoLiveDate);
+			Boolean(hasPlannedEventDate);
 
 		if (isDescriptionRequired) {
 			hasAllRequiredFieldsFilled =
@@ -454,7 +411,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 		values.businessEvent.eventType,
 		values.businessEvent.name,
 		values.businessEvent.newLiferayVersion,
-		values.businessEvent.targetGoLiveDate,
+		values.businessEvent.plannedEventDate,
 	]);
 
 	return !loading ? (
@@ -478,7 +435,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 
 					<div>
 						<div
-							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} mb-1 d-inline px-2 py-1`}
+							className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} mb-1 d-inline px-2 py-1`}
 						>
 							{i18n.translate(
 								getKebabCase(
@@ -516,16 +473,16 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									isLoading={isLoadingSubmitButton}
 									onClick={() => {
 										const newTargetGoLiveDateTime =
-											getFormattedGoLiveDateTime(
-												businessEvent.targetGoLiveDate,
-												businessEvent.targetGoLiveTime
+											getFormattedEventDateTime(
+												businessEvent.plannedEventDate,
+												businessEvent.plannedEventTime
 											);
 										if (
 											businessEvent.timeZone?.key !==
 												originalBusinessEvent.timeZone
 													?.key ||
 											newTargetGoLiveDateTime !==
-												originalBusinessEvent.targetGoLiveDateTime
+												originalBusinessEvent.plannedEventDate
 										) {
 											setIsModalOpen(true);
 										}
@@ -546,7 +503,7 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 							headerTitle={businessEvent.name!}
 							isLoadingSubmitButton={isLoadingSubmitButton}
 							message={i18n.translate(
-								'we-understand-that-plans-change-please-let-us-know-why-the-target-go-live-date-for-this-event-is-being-updated'
+								'we-understand-that-plans-change-please-let-us-know-why-the-planned-event-date-for-this-event-is-being-updated'
 							)}
 							observer={observer}
 							onClose={onClose}
@@ -622,12 +579,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													handleOptionChange(
 														'businessEvent.currentLiferayVersion.name',
 														value,
-														dxpMinorVersionsAndPortalMajorVersions
+														productVersions
 													)
 												}
 												options={[
 													emptyOption,
-													...dxpMinorVersionsAndPortalMajorVersions,
+													...productVersions,
 												]}
 												required
 											/>
@@ -688,14 +645,14 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													dateFormat="MM-dd-yyyy"
 													groupStyle="pb-1"
 													label={i18n.translate(
-														'target-go-live-date'
+														'planned-event-date'
 													)}
-													name="businessEvent.targetGoLiveDate"
+													name="businessEvent.plannedEventDate"
 													onChange={(
 														value: string
 													) => {
 														setFieldValue(
-															'businessEvent.targetGoLiveDate',
+															'businessEvent.plannedEventDate',
 															value
 														);
 													}}
@@ -747,10 +704,10 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 													label={i18n.translate(
 														'time'
 													)}
-													name="businessEvent.targetGoLiveTime"
+													name="businessEvent.plannedEventTime"
 													onChange={(value) =>
 														setFieldValue(
-															'businessEvent.targetGoLiveTime',
+															'businessEvent.plannedEventTime',
 															value
 														)
 													}
@@ -880,7 +837,7 @@ const BusinessEventsItemEdit: React.FC = () => {
 	}
 
 	if (
-		['canceled', 'completed'].includes(
+		['Canceled', 'Completed'].includes(
 			businessEvent?.eventStatus?.key || ''
 		)
 	) {
@@ -895,13 +852,11 @@ const BusinessEventsItemEdit: React.FC = () => {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
 
-	const targetGoLiveTime = businessEvent.targetGoLiveDateTime
-		?.split('T')[1]
-		.substring(0, 5);
+	const plannedEventDate = businessEvent.plannedEventDate || '';
+	const [datePart = '', timePart = ''] = plannedEventDate.split('T');
+	const plannedEventTime = timePart ? timePart.substring(0, 5) : '';
 
-	const [year, month, day] = businessEvent
-		.targetGoLiveDateTime!.split('T')[0]
-		.split('-');
+	const [year = '', month = '', day = ''] = datePart.split('-');
 
 	return (
 		<Formik
@@ -913,10 +868,10 @@ const BusinessEventsItemEdit: React.FC = () => {
 					newLiferayVersion: businessEvent.newLiferayVersion || {
 						key: '',
 					},
-					targetGoLiveDate: `${month}-${day}-${year}`,
-					targetGoLiveTime: {
-						hours: targetGoLiveTime?.split(':')[0],
-						minutes: targetGoLiveTime?.split(':')[1],
+					plannedEventDate: datePart ? `${month}-${day}-${year}` : '',
+					plannedEventTime: {
+						hours: plannedEventTime?.split(':')[0] || '--',
+						minutes: plannedEventTime?.split(':')[1] || '--',
 					},
 					timeZone: businessEvent.timeZone || {key: ''},
 				},

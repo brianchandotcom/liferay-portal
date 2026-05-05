@@ -12,12 +12,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import {useCallback, useMemo, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
-import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useAppContext} from '~/features/project/context';
+import useAccountKey from '~/hooks/useAccountKey';
 import {Liferay} from '~/services/liferay';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
@@ -28,6 +28,7 @@ import ManageEventModal from './components/ManageEventModal';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
+import parseAssociatedTickets from './utils/parseAssociatedTickets';
 import useIsSaasOnly from './utils/useIsSaasOnly';
 
 const columns = [
@@ -49,8 +50,8 @@ const columns = [
 		label: i18n.translate('associated-tickets'),
 	},
 	{
-		columnKey: 'targetGoLiveDate',
-		label: i18n.translate('target-go-live-date'),
+		columnKey: 'plannedEventDate',
+		label: i18n.translate('planned-event-date'),
 	},
 	{
 		columnKey: 'actions',
@@ -59,16 +60,15 @@ const columns = [
 ];
 
 const BusinessEvents = () => {
-	const [{project, subscriptionGroups}] = useAppContext();
+	const [{subscriptionGroups}] = useAppContext();
 
-	const {filterQuery, filters, handleFilterChange, handleSearchChange} =
-		useFilters(project);
+	const accountKey = useAccountKey();
+
+	const {filters, handleFilterChange, handleSearchChange} = useFilters();
 
 	const {businessEvents, fetchBusinessEvents, loading} =
-		useGetBusinessEvents(filterQuery);
+		useGetBusinessEvents();
 	const [modalType, setModalType] = useState('');
-
-	const {client} = useAppPropertiesContext();
 
 	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
@@ -100,17 +100,99 @@ const BusinessEvents = () => {
 
 		Liferay.Util.openToast({
 			message: i18n.translate(
-				'business-event-actual-go-live-date-recorded-successfully'
+				'business-event-actual-event-date-recorded-successfully'
 			),
 			type: 'success',
 		});
 	}, [fetchBusinessEvents]);
 
+	const filteredBusinessEvents = useMemo(() => {
+		const normalize = (value?: string) =>
+			(value || '').toLowerCase().replace(/[\s_-]/g, '');
+
+		const oneYearAgo = new Date();
+
+		oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+		return businessEvents.filter((event) => {
+			const statusKey = event.eventStatus?.key;
+			const normalizedStatus = normalize(statusKey);
+
+			if (normalizedStatus === 'canceled') {
+				const modified = event.plannedEventDate
+					? new Date(event.plannedEventDate)
+					: null;
+
+				if (modified && modified < oneYearAgo) {
+					return false;
+				}
+			}
+
+			if (normalizedStatus === 'completed') {
+				const goLive = event.actualEventDate
+					? new Date(event.actualEventDate)
+					: null;
+
+				if (goLive && goLive < oneYearAgo) {
+					return false;
+				}
+			}
+
+			if (filters.selectedFilters?.length) {
+				const statusFilter = filters.selectedFilters.find(
+					(f) => f.key === 'eventStatus'
+				);
+
+				if (statusFilter?.values?.length) {
+					const selectedKeys = statusFilter.values.map(
+						(v: {key: string}) => normalize(v.key)
+					);
+
+					if (
+						normalizedStatus &&
+						!selectedKeys.includes(normalizedStatus)
+					) {
+						return false;
+					}
+				}
+
+				const typeFilter = filters.selectedFilters.find(
+					(f) => f.key === 'eventType'
+				);
+
+				if (typeFilter?.values?.length) {
+					const selectedKeys = typeFilter.values.map(
+						(v: {key: string}) => normalize(v.key)
+					);
+
+					const normalizedType = normalize(event.eventType?.key);
+
+					if (
+						normalizedType &&
+						!selectedKeys.includes(normalizedType)
+					) {
+						return false;
+					}
+				}
+			}
+
+			if (filters.searchTerm?.trim()) {
+				const search = filters.searchTerm.toLowerCase();
+
+				if (!event.name?.toLowerCase().includes(search)) {
+					return false;
+				}
+			}
+
+			return true;
+		});
+	}, [businessEvents, filters]);
+
 	const rows = useMemo(() => {
-		if (businessEvents?.length > 0) {
-			return businessEvents.map((businessEvent) => {
-				const associatedTicketsCount = JSON.parse(
-					businessEvent.associatedTickets!
+		if (filteredBusinessEvents?.length > 0) {
+			return filteredBusinessEvents.map((businessEvent) => {
+				const associatedTicketsCount = parseAssociatedTickets(
+					businessEvent.associatedTickets
 				).length;
 
 				const associatedTicketsString =
@@ -173,7 +255,7 @@ const BusinessEvents = () => {
 						label: i18n.translate('view-details'),
 						onClick: () => {
 							navigate(
-								`/${project?.accountKey}/business-events/${businessEvent.id}`
+								`/${accountKey}/business-events/${businessEvent.id}`
 							);
 						},
 					},
@@ -181,7 +263,7 @@ const BusinessEvents = () => {
 
 				if (
 					hasAllEventsPermissions &&
-					!['canceled', 'completed'].includes(
+					!['Canceled', 'Completed'].includes(
 						businessEvent.eventStatus?.key!
 					)
 				) {
@@ -191,13 +273,13 @@ const BusinessEvents = () => {
 							label: i18n.translate('edit-event'),
 							onClick: () => {
 								navigate(
-									`/${project?.accountKey}/business-events/${businessEvent.id}/edit`
+									`/${accountKey}/business-events/${businessEvent.id}/edit`
 								);
 							},
 						},
 						{
 							customOptionStyle: 'pr-5',
-							label: i18n.translate('record-actual-go-live'),
+							label: i18n.translate('record-actual-event-date'),
 							onClick: () => {
 								setModalType('goLiveEvent');
 								onOpenChange(true);
@@ -250,7 +332,11 @@ const BusinessEvents = () => {
 					eventName: (
 						<div>
 							<div className="be-event-name font-weight-semi-bold text-neutral-10">
-								{businessEvent?.name}
+								<Link
+									to={`/${accountKey}/business-events/${businessEvent.id}`}
+								>
+									{businessEvent?.name}
+								</Link>
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
@@ -262,10 +348,28 @@ const BusinessEvents = () => {
 							</div>
 						</div>
 					),
+					plannedEventDate: (
+						<div>
+							<div className="text-neutral-10">
+								{getFormattedDate(
+									businessEvent?.plannedEventDate,
+									'day2DMonthSYearN',
+									'UTC'
+								)}
+							</div>
+
+							<div className="be-subtitle text-neutral-7">
+								{getFormattedTime(
+									businessEvent?.plannedEventDate,
+									'UTC'
+								)}
+							</div>
+						</div>
+					),
 					status: (
 						<div className="align-items-center d-flex">
 							<div
-								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} px-2 py-1`}
+								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key.toLowerCase()} px-2 py-1`}
 							>
 								{i18n.translate(
 									getKebabCase(
@@ -276,36 +380,18 @@ const BusinessEvents = () => {
 							</div>
 						</div>
 					),
-					targetGoLiveDate: (
-						<div>
-							<div className="text-neutral-10">
-								{getFormattedDate(
-									businessEvent?.targetGoLiveDateTime,
-									'day2DMonthSYearN',
-									'UTC'
-								)}
-							</div>
-
-							<div className="be-subtitle text-neutral-7">
-								{getFormattedTime(
-									businessEvent?.targetGoLiveDateTime,
-									'UTC'
-								)}
-							</div>
-						</div>
-					),
 				};
 			});
 		}
 
 		return [];
 	}, [
-		businessEvents,
+		accountKey,
+		filteredBusinessEvents,
 		hasAllEventsPermissions,
 		isSaasOnly,
 		navigate,
 		onOpenChange,
-		project?.accountKey,
 	]);
 
 	return loading ? (
@@ -332,14 +418,14 @@ const BusinessEvents = () => {
 					hasCreatePermissions={hasAllEventsPermissions}
 					onFilterChange={handleFilterChange}
 					onSearchChange={handleSearchChange}
-					searchResultsCount={businessEvents.length}
+					searchResultsCount={filteredBusinessEvents.length}
 					searchTerm={filters.searchTerm || ''}
 					selectedFilters={filters.selectedFilters || []}
 				/>
 			</div>
 
 			<div>
-				{businessEvents.length ? (
+				{filteredBusinessEvents.length ? (
 					<>
 						<Table
 							columns={columns}
@@ -348,11 +434,8 @@ const BusinessEvents = () => {
 
 						{selectedBusinessEvent && open && (
 							<ManageEventModal
-								accountExternalReferenceCode={
-									project?.accountKey || ''
-								}
+								accountExternalReferenceCode={accountKey || ''}
 								businessEvent={selectedBusinessEvent}
-								client={client}
 								closeFunction={onOpenChange}
 								modalType={modalType}
 								observer={observer}

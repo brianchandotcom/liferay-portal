@@ -6,10 +6,10 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import {memo, useEffect, useState} from 'react';
+import {memo, useState} from 'react';
 import i18n from '~/utils/I18n';
 
-const SearchBar = ({clearSearchTerm, isBusinessEvent, onSearchSubmit}) => {
+const SearchBar = ({isBusinessEvent, onSearchSubmit}) => {
 	const [term, setTerm] = useState('');
 	const [searching, setSearching] = useState(true);
 

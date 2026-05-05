@@ -17,9 +17,17 @@ export interface PortletDataHandlerChoice {
 	type: 'Choice';
 }
 
+export interface PortletDataHandlerSetting {
+	label: string;
+	name: string;
+	portletDataHandlerControls?: PortletDataHandlerControl[];
+	type: 'Setting';
+}
+
 export type PortletDataHandlerControl =
 	| PortletDataHandlerBoolean
-	| PortletDataHandlerChoice;
+	| PortletDataHandlerChoice
+	| PortletDataHandlerSetting;
 
 export type PortletDataHandler = Omit<PortletDataHandlerBoolean, 'type'>;
 

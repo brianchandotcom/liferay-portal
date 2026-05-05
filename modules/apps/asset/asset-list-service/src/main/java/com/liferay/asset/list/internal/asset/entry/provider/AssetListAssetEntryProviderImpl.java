@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.internal.configuration.AssetListConfiguration;
+import com.liferay.asset.list.internal.util.AssetListFiltersUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRelModel;
@@ -44,6 +45,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -234,6 +238,27 @@ public class AssetListAssetEntryProviderImpl
 
 			assetEntryQuery.setAttribute(
 				"ddmStructureFieldValue", ddmStructureFieldValue);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				assetListEntry.getCompanyId(), "LPD-74731")) {
+
+			String filters = unicodeProperties.getProperty("filters");
+
+			if (Validator.isNotNull(filters)) {
+				try {
+					assetEntryQuery.setAttribute(
+						"filters",
+						JSONFactoryUtil.createJSONArray(filters));
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to parse filters JSON: " + filters,
+							exception);
+					}
+				}
+			}
 		}
 
 		String orderByColumn1 = GetterUtil.getString(
@@ -676,7 +701,8 @@ public class AssetListAssetEntryProviderImpl
 				_getAssetCategoryIdsBooleanClauses(assetCategoryIds),
 				_getAssetTagNamesBooleanClauses(assetTagNames),
 				_getClassTypeIdsBooleanClauses(
-					assetEntryQuery.getClassTypeIds())));
+					assetEntryQuery.getClassTypeIds()),
+				_getFiltersBooleanClauses(assetEntryQuery, companyId)));
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(assetEntryQuery.getEnd());
 		searchContext.setKeywords(keywords);
@@ -714,6 +740,16 @@ public class AssetListAssetEntryProviderImpl
 
 			return fieldName;
 		}
+	}
+
+	private BooleanClause[] _getFiltersBooleanClauses(
+		AssetEntryQuery assetEntryQuery, long companyId) {
+
+		JSONArray filtersJSONArray =
+			(JSONArray)assetEntryQuery.getAttribute("filters");
+
+		return AssetListFiltersUtil.getFiltersBooleanClauses(
+			filtersJSONArray, companyId, LocaleUtil.getMostRelevantLocale());
 	}
 
 	private long _getFirstSegmentsEntryId(

@@ -179,3 +179,27 @@ export const validateSalesforceDomain = validatePattern(
 	/^https:\/\/.*$/,
 	Liferay.Language.get('please-enter-a-valid-salesforce-url')
 );
+
+export const composeValidators =
+	(...validators: Array<(value: any) => Promise<string> | string>) =>
+	async (value: any) => {
+		for (const validator of validators) {
+			const error = await validator(value);
+
+			if (error) {
+				return error;
+			}
+		}
+
+		return '';
+	};
+
+export const validateExternalReferenceCode = composeValidators(
+	validateRequired,
+	validatePattern(
+		/^[a-z0-9_-]+$/,
+		Liferay.Language.get(
+			'erc-must-contain-only-lowercase-letters-numbers-hyphens-and-underscores'
+		)
+	)
+);

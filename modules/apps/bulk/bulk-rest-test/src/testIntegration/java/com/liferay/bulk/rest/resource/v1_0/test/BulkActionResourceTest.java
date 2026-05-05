@@ -19,6 +19,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.CopyObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteObjectBulkSelectionAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DuplicateObjectBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectCategoriesBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.EditObjectTagsBulkSelectionAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireObjectBulkSelectionAction;
@@ -181,6 +182,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
 		_testPostBulkActionWithTypeDelete();
 		_testPostBulkActionWithTypeDeleteObjectEntry();
+		_testPostBulkActionWithTypeDuplicate();
 		_testPostBulkActionWithTypeExpire();
 		_testPostBulkActionWithTypeKeyword();
 		_testPostBulkActionWithTypePermission();
@@ -1267,6 +1269,75 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertNotNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntries[1].getObjectEntryId()));
+	}
+
+	private void _testPostBulkActionWithTypeDuplicate() throws Exception {
+		DuplicateObjectBulkSelectionAction duplicateBulkAction =
+			new DuplicateObjectBulkSelectionAction();
+
+		duplicateBulkAction.setType(
+			BulkAction.Type.DUPLICATE_OBJECT_BULK_SELECTION_ACTION);
+
+		ObjectEntryFolder sourceObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry1.getGroupId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry1.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			sourceObjectEntryFolder.getObjectEntryFolderId(),
+			_getObjectEntryValues());
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry1.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId());
+
+		duplicateBulkAction.setBulkActionItems(
+			_toBulkActionItems(
+				_cmsBasicWebContentObjectDefinition, objectEntry,
+				objectEntryFolder));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getCompanyId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
+			null, null, null, null, null, null, null, null,
+			duplicateBulkAction);
+
+		Assert.assertNotNull(bulkActionTask.getId());
+
+		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
+
+		ObjectEntry duplicateBulkActionObjectEntry =
+			_objectEntryLocalService.getObjectEntry(bulkActionTask.getId());
+
+		Map<String, Serializable> values =
+			duplicateBulkActionObjectEntry.getValues();
+
+		Assert.assertEquals(0, values.get("numberOfFailedItems"));
+
+		Assert.assertEquals(
+			2,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getCompanyId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			2,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
 	}
 
 	private void _testPostBulkActionWithTypeExpire() throws Exception {

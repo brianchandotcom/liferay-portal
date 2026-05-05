@@ -33,7 +33,7 @@ public class PatcherFixServiceImpl extends PatcherFixServiceBaseImpl {
 
 	@Override
 	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
-			String patcherProjectVersionName, String ticketList)
+			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -49,7 +49,7 @@ public class PatcherFixServiceImpl extends PatcherFixServiceBaseImpl {
 
 		return patcherFixLocalService.
 			checkPatcherFixesByPatcherProjectVersionName(
-				patcherProjectVersionName, ticketList);
+				patcherFixNames, patcherProjectVersionName);
 	}
 
 	@Reference

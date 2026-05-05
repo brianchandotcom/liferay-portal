@@ -1247,7 +1247,8 @@ public class PortalImpl implements Portal {
 						i18nPath.concat(_PUBLIC_GROUP_SERVLET_MAPPING)));
 			}
 
-			return alternateURLs;
+			return _getAlternateURLsMap(
+				alternateURLs, portalDomain, virtualHostnames);
 		}
 
 		// www.liferay.com:8080/ctx/page to www.liferay.com:8080/ctx/es/page
@@ -1293,7 +1294,8 @@ public class PortalImpl implements Portal {
 				}
 			}
 
-			return alternateURLs;
+			return _getAlternateURLsMap(
+				alternateURLs, virtualHostname, virtualHostnames);
 		}
 
 		boolean replaceFriendlyURL = true;
@@ -1462,7 +1464,8 @@ public class PortalImpl implements Portal {
 			alternateURLs.put(locale, alternateURL);
 		}
 
-		return alternateURLs;
+		return _getAlternateURLsMap(
+			alternateURLs, virtualHostname, virtualHostnames);
 	}
 
 	@Override
@@ -7468,6 +7471,52 @@ public class PortalImpl implements Portal {
 		}
 
 		return i18nErrorPath.concat(redirect);
+	}
+
+	private Map<Locale, String> _getAlternateURLsMap(
+		Map<Locale, String> alternateURLsMap, String currentVirtualHostname,
+		NavigableMap<String, String> virtualHostnames) {
+
+		if (Validator.isNull(currentVirtualHostname) ||
+			virtualHostnames.isEmpty()) {
+
+			return alternateURLsMap;
+		}
+
+		Map<String, String> localizedVirtualHostnames = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : virtualHostnames.entrySet()) {
+			String languageId = entry.getValue();
+
+			if (Validator.isNotNull(languageId)) {
+				localizedVirtualHostnames.put(languageId, entry.getKey());
+			}
+		}
+
+		if (localizedVirtualHostnames.isEmpty()) {
+			return alternateURLsMap;
+		}
+
+		Map<Locale, String> localizedAlternateURLsMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : alternateURLsMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String alternateURL = entry.getValue();
+
+			String virtualHostname = localizedVirtualHostnames.get(
+				LocaleUtil.toLanguageId(locale));
+
+			if ((virtualHostname != null) &&
+				!virtualHostname.equals(currentVirtualHostname)) {
+
+				alternateURL = StringUtil.replaceFirst(
+					alternateURL, currentVirtualHostname, virtualHostname);
+			}
+
+			localizedAlternateURLsMap.put(locale, alternateURL);
+		}
+
+		return localizedAlternateURLsMap;
 	}
 
 	private String _getDefaultVirtualHostname(Company company) {

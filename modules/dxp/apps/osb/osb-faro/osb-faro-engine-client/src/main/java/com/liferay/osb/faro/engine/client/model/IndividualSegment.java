@@ -57,6 +57,10 @@ public class IndividualSegment {
 		return _embeddedResources;
 	}
 
+	public String getExternalReferenceCode() {
+		return _externalReferenceCode;
+	}
+
 	public String getFilterMetadata() {
 		return _filterMetadata;
 	}
@@ -162,6 +166,10 @@ public class IndividualSegment {
 		_embeddedResources = embeddedResources;
 	}
 
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_externalReferenceCode = externalReferenceCode;
+	}
+
 	public void setFilterMetadata(String filterMetadata) {
 		_filterMetadata = filterMetadata;
 	}
@@ -259,6 +267,7 @@ public class IndividualSegment {
 	private Date _dateCreated;
 	private Date _dateModified;
 	private Map<String, Object> _embeddedResources = new HashMap<>();
+	private String _externalReferenceCode;
 	private String _filterMetadata;
 	private String _filterString;
 	private String _id;

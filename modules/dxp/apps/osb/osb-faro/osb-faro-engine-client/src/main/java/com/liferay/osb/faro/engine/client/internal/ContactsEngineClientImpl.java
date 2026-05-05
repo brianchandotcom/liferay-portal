@@ -304,14 +304,16 @@ public class ContactsEngineClientImpl
 	@Override
 	public IndividualSegment addIndividualSegment(
 		FaroProject faroProject, long userId, String channelId,
-		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType, boolean sequential, String status) {
+		String externalReferenceCode, String filterString,
+		boolean includeAnonymousUsers, String name, String segmentType,
+		boolean sequential, String status) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
 
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
 		individualSegment.setDateModified(new Date());
+		individualSegment.setExternalReferenceCode(externalReferenceCode);
 		individualSegment.setFilterString(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);
@@ -3195,14 +3197,16 @@ public class ContactsEngineClientImpl
 	@Override
 	public IndividualSegment updateIndividualSegment(
 		FaroProject faroProject, String id, long userId, String channelId,
-		String filterString, boolean includeAnonymousUsers, String name,
-		String segmentType, boolean sequential) {
+		String externalReferenceCode, String filterString,
+		boolean includeAnonymousUsers, String name, String segmentType,
+		boolean sequential) {
 
 		IndividualSegment individualSegment = new IndividualSegment();
 
 		individualSegment.setId(id);
 		individualSegment.setAuthor(getAuthor(userId));
 		individualSegment.setChannelId(channelId);
+		individualSegment.setExternalReferenceCode(externalReferenceCode);
 		individualSegment.setFilterString(filterString);
 		individualSegment.setIncludeAnonymousUsers(includeAnonymousUsers);
 		individualSegment.setName(name);

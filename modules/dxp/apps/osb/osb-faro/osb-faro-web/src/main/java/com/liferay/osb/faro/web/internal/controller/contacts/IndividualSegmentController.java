@@ -92,6 +92,7 @@ public class IndividualSegmentController extends BaseFaroController {
 	public IndividualSegmentDisplay createIndividualSegmentDisplay(
 			@PathParam("groupId") long groupId,
 			@FormParam("channelId") String channelId,
+			@FormParam("externalReferenceCode") String externalReferenceCode,
 			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)
 			@FormParam("individualIds")
 			FaroParam
@@ -106,8 +107,8 @@ public class IndividualSegmentController extends BaseFaroController {
 		validateCreate(channelId, segmentType);
 
 		return createIndividualSegment(
-			channelId, groupId, filterString, includeAnonymousUsers, name,
-			segmentType, sequential);
+			channelId, groupId, externalReferenceCode, filterString,
+			includeAnonymousUsers, name, segmentType, sequential);
 	}
 
 	@DELETE
@@ -364,7 +365,9 @@ public class IndividualSegmentController extends BaseFaroController {
 	@PUT
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	public IndividualSegmentDisplay updateIndividualSegmentDisplay(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@PathParam("groupId") long groupId,
+			@FormParam("externalReferenceCode") String externalReferenceCode,
+			@PathParam("id") String id,
 			@FormParam("filter") String filterString,
 			@FormParam("includeAnonymousUsers") boolean includeAnonymousUsers,
 			@DefaultValue(StringPool.BLANK) @FormParam("individualIds")
@@ -382,14 +385,14 @@ public class IndividualSegmentController extends BaseFaroController {
 		validateUpdate(individualSegment);
 
 		return updateIndividualSegment(
-			groupId, individualSegment, filterString, includeAnonymousUsers,
-			name, sequential);
+			groupId, individualSegment, externalReferenceCode, filterString,
+			includeAnonymousUsers, name, sequential);
 	}
 
 	protected IndividualSegmentDisplay createIndividualSegment(
-			String channelId, long groupId, String filterString,
-			boolean includeAnonymousUsers, String name, String segmentType,
-			boolean sequential)
+			String channelId, long groupId, String externalReferenceCode,
+			String filterString, boolean includeAnonymousUsers, String name,
+			String segmentType, boolean sequential)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -397,9 +400,9 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		return new IndividualSegmentDisplay(
 			contactsEngineClient.addIndividualSegment(
-				faroProject, getUserId(), channelId, filterString,
-				includeAnonymousUsers, name, segmentType, sequential,
-				IndividualSegment.Status.ACTIVE.name()));
+				faroProject, getUserId(), channelId, externalReferenceCode,
+				filterString, includeAnonymousUsers, name, segmentType,
+				sequential, IndividualSegment.Status.ACTIVE.name()));
 	}
 
 	protected FaroResultsDisplay<IndividualSegment> search(
@@ -444,8 +447,8 @@ public class IndividualSegmentController extends BaseFaroController {
 
 	protected IndividualSegmentDisplay updateIndividualSegment(
 			long groupId, IndividualSegment individualSegment,
-			String filterString, boolean includeAnonymousUsers, String name,
-			boolean sequential)
+			String externalReferenceCode, String filterString,
+			boolean includeAnonymousUsers, String name, boolean sequential)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -454,9 +457,9 @@ public class IndividualSegmentController extends BaseFaroController {
 		return new IndividualSegmentDisplay(
 			contactsEngineClient.updateIndividualSegment(
 				faroProject, individualSegment.getId(), getUserId(),
-				individualSegment.getChannelId(), filterString,
-				includeAnonymousUsers, name, individualSegment.getSegmentType(),
-				sequential));
+				individualSegment.getChannelId(), externalReferenceCode,
+				filterString, includeAnonymousUsers, name,
+				individualSegment.getSegmentType(), sequential));
 	}
 
 	protected void updateMembership(
@@ -509,7 +512,8 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		individualSegment = contactsEngineClient.updateIndividualSegment(
 			faroProject, individualSegment.getId(), getUserId(),
-			individualSegment.getChannelId(), null, false, name,
+			individualSegment.getChannelId(),
+			individualSegment.getExternalReferenceCode(), null, false, name,
 			individualSegment.getSegmentType(), false);
 
 		updateMembership(faroProject, individualSegment.getId(), individualIds);

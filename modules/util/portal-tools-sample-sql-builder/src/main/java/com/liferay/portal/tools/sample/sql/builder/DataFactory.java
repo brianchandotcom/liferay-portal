@@ -9370,6 +9370,22 @@ public class DataFactory {
 			String templateFileName)
 		throws Exception {
 
+		if (templateFileName.startsWith("utility_page")) {
+			String data = _readFile(
+				"utility_page_templates/" + templateFileName);
+
+			for (FragmentEntryLinkModel fragmentEntryLinkModel :
+					fragmentEntryLinkModels) {
+
+				data = StringUtil.replaceFirst(
+					data, "${fragmentEntryLinkId}",
+					String.valueOf(
+						fragmentEntryLinkModel.getFragmentEntryLinkId()));
+			}
+
+			return data;
+		}
+
 		String data = _readFile("home_page_template/" + templateFileName);
 
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :

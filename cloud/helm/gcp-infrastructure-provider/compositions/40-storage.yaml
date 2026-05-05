@@ -1,4 +1,4 @@
-{{- range $i, $dataPlane := list "blue" "green" }}
+{{- range $i, $dataPlane := $dataPlanes }}
 {{- if $i }}
 ---
 {{- end }}
@@ -17,7 +17,7 @@ spec:
         encryption:
             defaultKmsKeyName: {{ $cmkKeyName }}
         {{- end }}
-        forceDestroy: {{ $forceDestroy }}
+        forceDestroy: {{ or $forceDestroy (ne $dataPlane $activeDataPlane) }}
         labels:
             {{- $backupTargetLabels | toYaml | nindent 12 }}
             active: {{ printf "%t" (eq $dataPlane $activeDataPlane) | quote }}

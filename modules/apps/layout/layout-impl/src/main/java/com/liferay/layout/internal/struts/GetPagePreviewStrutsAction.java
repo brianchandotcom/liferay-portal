@@ -19,10 +19,13 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -78,10 +81,12 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)currentThemeDisplay.clone();
 
+		Layout layout = themeDisplay.getLayout();
+
 		long selPlid = ParamUtil.getLong(httpServletRequest, "selPlid");
 
 		if (selPlid > 0) {
-			Layout layout = _layoutLocalService.fetchLayout(selPlid);
+			layout = _layoutLocalService.fetchLayout(selPlid);
 
 			themeDisplay.setLayout(layout);
 
@@ -96,10 +101,7 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 			themeDisplay.setSiteGroupId(layout.getGroupId());
 		}
 
-		if (!LayoutPermissionUtil.containsLayoutUpdatePermission(
-				PermissionCheckerFactoryUtil.create(themeDisplay.getRealUser()),
-				themeDisplay.getLayout())) {
-
+		if (!_hasPreviewPermission(layout, themeDisplay.getRealUser())) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 			return null;
@@ -131,8 +133,6 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 				LocaleUtil.toLanguageId(themeDisplay.getLocale()));
 
 			themeDisplay.setLocale(LocaleUtil.fromLanguageId(languageId));
-
-			Layout layout = themeDisplay.getLayout();
 
 			Theme theme = layout.getTheme();
 
@@ -248,6 +248,50 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 		}
 	}
 
+	private Layout _fetchStagingLayout(Layout layout, Group stagingGroup) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry != null) {
+			LayoutPageTemplateEntry stagingLayoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntry(
+						stagingGroup.getGroupId(),
+						layoutPageTemplateEntry.
+							getLayoutPageTemplateEntryKey());
+
+			if (stagingLayoutPageTemplateEntry != null) {
+				return _layoutLocalService.fetchLayout(
+					stagingLayoutPageTemplateEntry.getPlid());
+			}
+
+			return null;
+		}
+
+		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), stagingGroup.getGroupId(),
+			layout.isPrivateLayout());
+	}
+
+	private boolean _hasPreviewPermission(Layout layout, User user)
+		throws Exception {
+
+		Group group = layout.getGroup();
+
+		if (group.hasStagingGroup()) {
+			Layout stagingLayout = _fetchStagingLayout(
+				layout, group.getStagingGroup());
+
+			if (stagingLayout != null) {
+				layout = stagingLayout;
+			}
+		}
+
+		return LayoutPermissionUtil.containsLayoutPreviewDraftPermission(
+			PermissionCheckerFactoryUtil.create(user), layout);
+	}
+
 	private void _includeInfoItemObjects(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
@@ -314,6 +358,10 @@ public class GetPagePreviewStrutsAction implements StrutsAction {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private Portal _portal;

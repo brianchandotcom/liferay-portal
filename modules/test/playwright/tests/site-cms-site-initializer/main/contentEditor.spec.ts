@@ -1922,6 +1922,38 @@ test(
 );
 
 test(
+	'Image selector lets the user open the multiple file uploader from the Upload Files button',
+	{tag: '@LPD-88407'},
+	async ({contentsPage, page}) => {
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		await waitForEditor({page});
+
+		await page.getByRole('button', {name: 'Image'}).click();
+
+		await expect(page.getByText('Select Image')).toBeVisible();
+
+		const uploadFilesButton = page.getByRole('button', {
+			name: 'Upload Files',
+		});
+
+		await expect(uploadFilesButton).toBeVisible();
+
+		await uploadFilesButton.click();
+
+		await expect(
+			page.getByText('Drag and Drop your files or')
+		).toBeVisible();
+
+		await expect(
+			page.getByRole('button', {name: 'Select Files'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Tags are not cleared after saving content when the categories panel is never opened',
 	{tag: '@LPD-79085'},
 	async ({contentsPage, page}) => {

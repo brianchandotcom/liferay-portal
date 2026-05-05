@@ -265,7 +265,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		StringBundler sb = new StringBundler(10);
 
 		sb.append("<div class=\"p-2\"><span class=\"workflow-status\">");
-		sb.append("<strong class=\"label ");
+		sb.append("<strong class=\"label ml-2 text-uppercase ");
 
 		if (_isResolved(
 				apiURLTokenValuesJSONObject, externalReferenceCode,

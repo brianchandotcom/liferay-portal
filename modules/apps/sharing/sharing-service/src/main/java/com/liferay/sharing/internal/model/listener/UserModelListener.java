@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
@@ -37,6 +38,65 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onAfterCreate(User user) throws ModelListenerException {
+		if (user.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			return;
+		}
+
+		_updateSharingEntries(user);
+	}
+
+	@Override
+	public void onAfterUpdate(User originalUser, User user)
+		throws ModelListenerException {
+
+		if ((originalUser.getStatus() == user.getStatus()) ||
+			(originalUser.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
+			(user.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+			return;
+		}
+
+		_updateSharingEntries(user);
+	}
+
+	@Override
+	public void onBeforeRemove(User user) {
+		_sharingEntryLocalService.deleteToUserSharingEntries(user.getUserId());
+	}
+
+	private void _updateSharingEntries(Ticket ticket, User user) {
+		for (SharingEntry sharingEntry :
+				_sharingEntryLocalService.getToTicketSharingEntries(
+					ticket.getTicketId())) {
+
+			SharingEntry existingSharingEntry =
+				_sharingEntryLocalService.fetchSharingEntry(
+					0, sharingEntry.getToUserGroupId(), user.getUserId(),
+					sharingEntry.getClassNameId(), sharingEntry.getClassPK());
+
+			if (existingSharingEntry != null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"A sharing entry already exists for user ",
+							user.getUserId(), " with classNameId ",
+							sharingEntry.getClassNameId(), " and classPK ",
+							sharingEntry.getClassPK()));
+				}
+
+				_sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+
+				continue;
+			}
+
+			sharingEntry.setToTicketId(0);
+			sharingEntry.setToUserId(user.getUserId());
+
+			_sharingEntryLocalService.updateSharingEntry(sharingEntry);
+		}
+	}
+
+	private void _updateSharingEntries(User user) {
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				ActionableDynamicQuery actionableDynamicQuery =
@@ -91,43 +151,6 @@ public class UserModelListener extends BaseModelListener<User> {
 
 				return null;
 			});
-	}
-
-	@Override
-	public void onBeforeRemove(User user) {
-		_sharingEntryLocalService.deleteToUserSharingEntries(user.getUserId());
-	}
-
-	private void _updateSharingEntries(Ticket ticket, User user) {
-		for (SharingEntry sharingEntry :
-				_sharingEntryLocalService.getToTicketSharingEntries(
-					ticket.getTicketId())) {
-
-			SharingEntry existingSharingEntry =
-				_sharingEntryLocalService.fetchSharingEntry(
-					0, sharingEntry.getToUserGroupId(), user.getUserId(),
-					sharingEntry.getClassNameId(), sharingEntry.getClassPK());
-
-			if (existingSharingEntry != null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"A sharing entry already exists for user ",
-							user.getUserId(), " with classNameId ",
-							sharingEntry.getClassNameId(), " and classPK ",
-							sharingEntry.getClassPK()));
-				}
-
-				_sharingEntryLocalService.deleteSharingEntry(sharingEntry);
-
-				continue;
-			}
-
-			sharingEntry.setToTicketId(0);
-			sharingEntry.setToUserId(user.getUserId());
-
-			_sharingEntryLocalService.updateSharingEntry(sharingEntry);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

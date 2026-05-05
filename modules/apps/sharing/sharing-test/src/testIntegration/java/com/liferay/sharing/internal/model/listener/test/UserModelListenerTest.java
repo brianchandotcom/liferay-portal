@@ -13,11 +13,13 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -354,6 +356,60 @@ public class UserModelListenerTest {
 			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
 	}
 
+	@Test
+	@TestInfo("LPD-48130")
+	public void testUpdateUserStatus() throws Exception {
+		WorkflowDefinitionLink workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
+				null, TestPropsValues.getUserId(),
+				TestPropsValues.getCompanyId(),
+				WorkflowConstants.DEFAULT_GROUP_ID, User.class.getName(), 0, 0,
+				"Single Approver", 1);
+
+		try {
+			String emailAddress =
+				RandomTestUtil.randomString() + "@liferay.com";
+
+			Ticket ticket = _addInviteCollaboratorTicket(emailAddress);
+
+			SharingEntry sharingEntry = _addToTicketIdSharingEntry(
+				_group1.getGroupId(), ticket.getTicketId());
+
+			User user = _addUserWithWorkflow(emailAddress);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_PENDING, user.getStatus());
+
+			Assert.assertNotNull(
+				_ticketLocalService.fetchTicket(ticket.getTicketId()));
+
+			sharingEntry = _sharingEntryLocalService.getSharingEntry(
+				sharingEntry.getSharingEntryId());
+
+			Assert.assertEquals(
+				ticket.getTicketId(), sharingEntry.getToTicketId());
+			Assert.assertEquals(0, sharingEntry.getToUserId());
+
+			_userLocalService.updateStatus(
+				user.getUserId(), WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					_group1.getGroupId(), TestPropsValues.getUserId()));
+
+			Assert.assertNull(
+				_ticketLocalService.fetchTicket(ticket.getTicketId()));
+
+			sharingEntry = _sharingEntryLocalService.getSharingEntry(
+				sharingEntry.getSharingEntryId());
+
+			Assert.assertEquals(0, sharingEntry.getToTicketId());
+			Assert.assertEquals(user.getUserId(), sharingEntry.getToUserId());
+		}
+		finally {
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+				workflowDefinitionLink);
+		}
+	}
+
 	private Ticket _addInviteCollaboratorTicket(String emailAddress)
 		throws Exception {
 
@@ -438,5 +494,9 @@ public class UserModelListenerTest {
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

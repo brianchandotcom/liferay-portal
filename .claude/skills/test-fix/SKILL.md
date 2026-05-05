@@ -145,18 +145,10 @@ When that does not point to a single commit, rank candidates: files in the test'
 
 Work on `master` with uncommitted changes — the branch is created later. For each suspect in ranked order:
 
-1. Read its documented intent — commit message, linked `LPD-XXXXX` ticket when the subject carries one, and the merged PR body:
+1. Read its documented intent — the commit message and diff, the linked `LPD-XXXXX` ticket (summary, issue type, description) when the subject carries one, and the body of the merged pull request that introduced the commit:
 
 	```bash
-	git show <sha>
-
-	curl \
-		--header "Content-Type: application/json" \
-		--silent \
-		--url "https://liferay.atlassian.net/rest/api/3/issue/LPD-XXXXX?fields=summary,issuetype,description" \
-		--user "${JIRA_API_USER}:${JIRA_API_TOKEN}"
-
-	gh pr list --search "<sha>" --repo brianchandotcom/liferay-portal --state merged --json number,title,body
+	gh pr list --json number,title,body --repo brianchandotcom/liferay-portal --search "<sha>" --state merged
 	```
 
 	Look for explicit references to the failing test or asserted behaviour, and for any sign that the change deliberately drops the contract the assertion was checking.

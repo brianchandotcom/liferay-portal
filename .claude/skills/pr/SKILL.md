@@ -9,7 +9,7 @@ name: pr
 
 # Create a Pull Request
 
-Create a GitHub pull request for the current branch, transition the linked Jira ticket to review, and record the pull request URL on that ticket. Drive every Jira interaction through the Jira Cloud REST API at `liferay.atlassian.net`, authenticated with `${JIRA_API_USER}` and `${JIRA_API_TOKEN}`.
+Create a GitHub pull request for the current branch, transition the linked Jira ticket to review, and record the pull request URL on that ticket.
 
 ## Preconditions
 

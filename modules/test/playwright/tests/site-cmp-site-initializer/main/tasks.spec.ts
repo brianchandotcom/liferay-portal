@@ -18,31 +18,24 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-17564': {enabled: true},
+		'LPD-58677': {enabled: true},
 	}),
 	loginTest()
 );
 
 const cmpProject = 'cmp/projects';
 const cmpTask = 'cmp/tasks';
-let assetLibrary;
 let project;
 const tasks = [];
 let taskNames = [];
 
 test.beforeEach(async ({apiHelpers}) => {
 	taskNames = [getRandomString(), getRandomString(), getRandomString()];
-	assetLibrary = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-		name: getRandomString(),
-		settings: {},
-		type: 'Project',
-	});
 	project = await apiHelpers.objectEntry.postObjectEntry(
 		{
 			title: getRandomString(),
 		},
-		cmpProject,
-		assetLibrary.name
+		cmpProject
 	);
 
 	for (const taskName of taskNames) {
@@ -59,12 +52,6 @@ test.beforeEach(async ({apiHelpers}) => {
 });
 
 test.afterEach(async ({apiHelpers}) => {
-	if (assetLibrary) {
-		await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
-			assetLibrary.externalReferenceCode
-		);
-	}
-
 	if (project) {
 		await apiHelpers.objectEntry.deleteObjectEntry(
 			cmpProject,
@@ -263,19 +250,11 @@ test(
 		const cmpProjectApplicationName = 'cmp/projects';
 		const cmpTaskApplicationName = 'cmp/tasks';
 
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: getRandomString(),
-				settings: {},
-				type: 'Project',
-			});
-
 		const project = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				title: getRandomString(),
 			},
-			cmpProjectApplicationName,
-			assetLibrary.name
+			cmpProjectApplicationName
 		);
 
 		await apiHelpers.objectEntry.postObjectEntry(

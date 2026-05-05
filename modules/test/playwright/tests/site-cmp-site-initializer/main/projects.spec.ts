@@ -17,7 +17,7 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-17564': {enabled: true},
+		'LPD-58677': {enabled: true},
 	}),
 	loginTest()
 );
@@ -25,29 +25,24 @@ const test = mergeTests(
 test(
 	'Project view tab navigation',
 	{tag: ['@LPD-77908']},
-	async ({apiHelpers, editTaskPage, page, projectPage, projectsPage}) => {
-		const cmpProjectApplicationName = 'cmp/projects';
-
-		const assetLibrary =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
-				name: getRandomString(),
-				settings: {},
-				type: 'Project',
-			});
-
-		const project = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				title: getRandomString(),
-			},
-			cmpProjectApplicationName,
-			assetLibrary.name
-		);
+	async ({
+		editProjectPage,
+		editTaskPage,
+		page,
+		projectPage,
+		projectsPage,
+	}) => {
+		const projectTitle = getRandomString();
 
 		try {
 			await test.step('Access details tab and create a task using the "new task" button', async () => {
 				await projectsPage.goto();
 
-				await projectsPage.getProject(project.title).click();
+				await projectsPage.newProjectButton.click();
+
+				await editProjectPage.titleInput.fill(projectTitle);
+
+				await editProjectPage.saveButton.click();
 
 				await projectPage.newTaskButton.click();
 
@@ -79,7 +74,7 @@ test(
 			await test.step('Navigate to projects page using sidebar button', async () => {
 				await page.getByRole('menuitem', {name: 'Projects'}).click();
 
-				await projectsPage.getProject(project.title).click();
+				await projectsPage.getProject(projectTitle).click();
 
 				await expect(projectPage.detailsTab).toHaveAttribute(
 					'aria-selected',
@@ -88,12 +83,14 @@ test(
 			});
 		}
 		finally {
-			if (project) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					cmpProjectApplicationName,
-					String(project.id)
-				);
-			}
+			await projectsPage.goto();
+
+			await projectsPage.dataSetFragmentPage.execItemAction({
+				action: 'Delete',
+				filter: projectTitle,
+			});
+
+			await projectPage.deleteButton.click();
 		}
 	}
 );

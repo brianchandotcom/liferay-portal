@@ -46,6 +46,7 @@ import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -542,6 +543,46 @@ public abstract class BaseDB implements DB {
 		return databaseMetaData.getIndexInfo(
 			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
 			onlyUnique, false);
+	}
+
+	@Override
+	public List<QueryInfo> getLockedQueryInfos(Connection connection)
+		throws SQLException {
+
+		String sql = getLockedQueryInfosSQL();
+
+		if (sql == null) {
+			return Collections.emptyList();
+		}
+
+		List<QueryInfo> lockedQueryInfos = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
+
+			preparedStatement.setLong(
+				1, PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String query = resultSet.getString("query");
+
+					if (query == null) {
+						continue;
+					}
+
+					long duration = resultSet.getLong("duration");
+					String id = resultSet.getString("id");
+					String schema = resultSet.getString("schema_");
+					String state = resultSet.getString("state");
+
+					lockedQueryInfos.add(
+						new QueryInfo(duration, id, query, schema, state));
+				}
+			}
+		}
+
+		return lockedQueryInfos;
 	}
 
 	@Override
@@ -1505,6 +1546,10 @@ public abstract class BaseDB implements DB {
 
 	protected String getIndexColumnName(String indexColumnName) {
 		return indexColumnName;
+	}
+
+	protected String getLockedQueryInfosSQL() {
+		return null;
 	}
 
 	protected String getRenameTableSQL(

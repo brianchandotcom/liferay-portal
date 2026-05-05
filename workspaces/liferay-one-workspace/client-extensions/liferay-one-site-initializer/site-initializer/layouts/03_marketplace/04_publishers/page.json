@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/marketplace/publishers",
+	"hidden": false,
+	"name": "Publishers",
+	"name_i18n": {
+		"en_US": "Publishers"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

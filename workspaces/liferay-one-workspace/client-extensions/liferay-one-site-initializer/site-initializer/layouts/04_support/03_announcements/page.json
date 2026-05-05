@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/support/announcements",
+	"hidden": false,
+	"name": "Announcements",
+	"name_i18n": {
+		"en_US": "Announcements"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

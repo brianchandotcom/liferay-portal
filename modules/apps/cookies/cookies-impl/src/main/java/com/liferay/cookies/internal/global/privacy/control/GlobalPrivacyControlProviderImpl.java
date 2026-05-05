@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -77,10 +78,8 @@ public class GlobalPrivacyControlProviderImpl
 			"Sec-GPC");
 
 		while (headersEnumeration.hasMoreElements()) {
-			String headerValue = headersEnumeration.nextElement();
-
-			if ((headerValue != null) &&
-				Objects.equals(headerValue.trim(), "1")) {
+			if (Objects.equals(
+					StringUtil.trim(headersEnumeration.nextElement()), "1")) {
 
 				return true;
 			}

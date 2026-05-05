@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -57,7 +56,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		StyleBookManagementToolbarDisplayContext
 			styleBookManagementToolbarDisplayContext =
 				new StyleBookManagementToolbarDisplayContext(
-					_cetManager, _frontendTokenDefinitionRegistry,
 					httpServletRequest, liferayPortletRequest,
 					liferayPortletResponse,
 					styleBookDisplayContext.
@@ -69,9 +67,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view.jsp";
 	}
-
-	@Reference
-	private CETManager _cetManager;
 
 	@Reference
 	private FrontendTokenDefinitionRegistry _frontendTokenDefinitionRegistry;

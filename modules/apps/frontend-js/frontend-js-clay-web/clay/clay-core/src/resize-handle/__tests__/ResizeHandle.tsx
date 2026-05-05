@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PanelResizer, Position} from '..';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+
+import {Position, ResizeHandle} from '../ResizeHandle';
 
 import '@testing-library/jest-dom';
 
@@ -18,7 +19,7 @@ function renderComponent({
 	position?: Position;
 }) {
 	return render(
-		<PanelResizer
+		<ResizeHandle
 			data-testid="resizer"
 			onPanelWidthChange={onChange}
 			panelWidth={500}
@@ -29,7 +30,7 @@ function renderComponent({
 	);
 }
 
-describe('PanelResizer', () => {
+describe('ResizeHandle', () => {
 	test('uses the arrow keys, respecting left position', () => {
 		const onChange = jest.fn();
 

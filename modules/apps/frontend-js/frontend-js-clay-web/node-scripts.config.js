@@ -80,6 +80,7 @@ module.exports = {
 			'OverlayMask',
 			'Picker',
 			'Provider',
+			'ResizeHandle',
 			'Row',
 			'SidePanel',
 			'SidePanelWithDrilldown',

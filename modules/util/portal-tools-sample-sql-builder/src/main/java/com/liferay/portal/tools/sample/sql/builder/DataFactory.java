@@ -8043,31 +8043,11 @@ public class DataFactory {
 		long groupId, boolean hidden, String layoutTemplateId, String name,
 		boolean privateLayout, long parentLayoutId, String... columns) {
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.create(
-				true
-			).put(
-				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
-			).build();
-
-		for (int i = 0; i < columns.length; i++) {
-			if (!columns[i].equals("")) {
-				typeSettingsUnicodeProperties.setProperty(
-					"column-" + (i + 1), columns[i]);
-			}
-		}
-
-		if (name.equals("search")) {
-			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
-		}
-		else {
-			typeSettingsUnicodeProperties.setProperty(
-				"privateLayout", String.valueOf(privateLayout));
-		}
-
 		return newLayoutModel(
 			groupId, privateLayout, parentLayoutId, name,
-			typeSettingsUnicodeProperties.toString(), hidden, name);
+			_generateTypeSettings(
+				layoutTemplateId, name, privateLayout, columns),
+			hidden, name);
 	}
 
 	protected LayoutModel newLayoutModel(
@@ -9196,6 +9176,35 @@ public class DataFactory {
 		}
 
 		return data;
+	}
+
+	private String _generateTypeSettings(
+		String layoutTemplateId, String name, boolean privateLayout,
+		String... columns) {
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, layoutTemplateId
+			).build();
+
+		for (int i = 0; i < columns.length; i++) {
+			if (!columns[i].equals("")) {
+				typeSettingsUnicodeProperties.setProperty(
+					"column-" + (i + 1), columns[i]);
+			}
+		}
+
+		if (name.equals("search")) {
+			typeSettingsUnicodeProperties.setProperty("privateLayout", "true");
+		}
+		else {
+			typeSettingsUnicodeProperties.setProperty(
+				"privateLayout", String.valueOf(privateLayout));
+		}
+
+		return typeSettingsUnicodeProperties.toString();
 	}
 
 	private String _getFragmentComponentConfiguration(String renderKey)

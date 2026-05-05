@@ -28,17 +28,17 @@ Parse `${ARGUMENTS}` and conversation context:
 
 | Service | Default | Config Location |
 |---|---|---|
-| Tomcat HTTP | 8080 | `tomcat-*/conf/server.xml` |
-| Tomcat Shutdown | 8005 | `tomcat-*/conf/server.xml` |
-| Tomcat AJP | 8009 | `tomcat-*/conf/server.xml` |
-| HTTPS Redirect | 8443 | `tomcat-*/conf/server.xml` |
-| JPDA Debug | 8000 | `tomcat-*/bin/setenv.sh` |
-| OSGi Console | 11311 | `tomcat-*/webapps/ROOT/WEB-INF/classes/portal-developer.properties` |
-| ES Sidecar HTTP | 9201 | `osgi/configs/...ElasticsearchConfiguration.config` |
-| ES Transport | 9301 | `osgi/configs/...ElasticsearchConfiguration.config` |
-| Glowroot | 4000 | `glowroot/admin.json` |
-| Arquillian | 32763 | `osgi/configs/...ArquillianConnector.config` |
-| DataGuard | 42763 | `osgi/configs/...DataGuardConnector.config` |
+| Tomcat HTTP | 8080 | `<tomcat>/conf/server.xml` |
+| Tomcat Shutdown | 8005 | `<tomcat>/conf/server.xml` |
+| Tomcat AJP | 8009 | `<tomcat>/conf/server.xml` |
+| HTTPS Redirect | 8443 | `<tomcat>/conf/server.xml` |
+| JPDA Debug | 8000 | `<tomcat>/bin/setenv.sh` |
+| OSGi Console | 11311 | `<tomcat>/webapps/ROOT/WEB-INF/classes/portal-developer.properties` |
+| ES Sidecar HTTP | 9201 | `<bundles>/osgi/configs/...ElasticsearchConfiguration.config` |
+| ES Transport | 9301 | `<bundles>/osgi/configs/...ElasticsearchConfiguration.config` |
+| Glowroot | 4000 | `<bundles>/glowroot/admin.json` |
+| Arquillian | 32763 | `<bundles>/osgi/configs/...ArquillianConnector.config` |
+| DataGuard | 42763 | `<bundles>/osgi/configs/...DataGuardConnector.config` |
 
 All ports shift by the same offset N: `port = default + N`.
 
@@ -80,10 +80,10 @@ app.server.parent.dir=${project.dir}/bundle
 
 ### 3. Build
 
-Check whether a bundle already exists by looking for a `tomcat-*` directory inside the resolved bundle parent directory (see step 4a).
+Check whether a bundle already exists by looking for `<tomcat>` inside `<bundles>`.
 
 - **Bundle exists:** Skip `ant all`. Inform the user the existing bundle will be reused. If the user explicitly requests a rebuild, run `ant all`.
-- **No bundle:** Before running `ant all`, try to reuse the main worktree's bundle. Locate the `liferay-portal` worktree (no suffix) via `git worktree list --porcelain`, resolve its bundle directory using the same logic as step 4a, and read `.githash` from it. When that hash equals `git rev-parse HEAD` in the current worktree, or when the user explicitly asks to copy or reuse the main bundle, reuse it into `<WORKTREE_DIR>/bundle` and skip `ant all`. Always reuse by making a full copy — never by symlinking or sharing the folder. Otherwise, run it:
+- **No bundle:** Before running `ant all`, try to reuse the main worktree's bundle. Locate the `liferay-portal` worktree (no suffix) via `git worktree list --porcelain`, resolve its `<bundles>`, and read `.githash` from it. When that hash equals `git rev-parse HEAD` in the current worktree, or when the user explicitly asks to copy or reuse the main bundle, reuse it into `<WORKTREE_DIR>/bundle` and skip `ant all`. Always reuse by making a full copy — never by symlinking or sharing the folder. Otherwise, run it:
 
 ```bash
 cd <WORKTREE_DIR> && ant setup-profile-dxp && ant all
@@ -93,17 +93,7 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 
 ### 4. Configure Ports
 
-#### 4a. Resolve the Bundle Directory
-
-1. Read `app.server.<username>.properties` in the worktree root
-
-1. Parse `app.server.parent.dir`, replacing `${project.dir}` with the repo root
-
-1. Fallback: `<REPO_ROOT>/bundle`
-
-1. Find the `tomcat-*` directory inside it
-
-#### 4b. Determine the Offset
+#### 4a. Determine the Offset
 
 1. If user specified an offset, use it (reject 0)
 
@@ -111,11 +101,11 @@ If `ant all` fails, stop and surface the full error to the user — do not conti
 
 1. Otherwise, scan ports starting from offset=1: for each candidate offset, check if ports `8080+N`, `8005+N`, `8000+N`, `11311+N`, `9201+N`, `9301+N`, `4000+N` are all free using `nc -z localhost <port>`. First offset where ALL are free wins.
 
-1. Save the chosen offset to `<BUNDLE_DIR>/.worktree-port-offset`
+1. Save the chosen offset to `<bundles>/.worktree-port-offset`
 
-#### 4c. Patch server.xml
+#### 4b. Patch server.xml
 
-File: `<TOMCAT>/conf/server.xml`
+File: `<tomcat>/conf/server.xml`
 
 Read the current HTTP port from the `protocol="HTTP/1.1"` Connector to determine the current offset. Then replace all port attributes.
 
@@ -139,26 +129,26 @@ Use `"${SED_INPLACE[@]}"` in place of `sed -i` for all subsequent calls:
 	-e 's/port="<CURRENT_AJP>"/port="<TARGET_AJP>"/g' \
 	-e 's/port="<CURRENT_HTTPS>"/port="<TARGET_HTTPS>"/g' \
 	-e 's/redirectPort="<CURRENT_HTTPS>"/redirectPort="<TARGET_HTTPS>"/g' \
-	<TOMCAT>/conf/server.xml
+	<tomcat>/conf/server.xml
 ```
 
 Skip if target HTTP port is already present (idempotent).
 
-#### 4d. Patch setenv.sh
+#### 4c. Patch setenv.sh
 
-File: `<TOMCAT>/bin/setenv.sh`
+File: `<tomcat>/bin/setenv.sh`
 
 Replace the JPDA debug port (this file gets **wiped on rebuild**):
 
 ```bash
-"${SED_INPLACE[@]}" 's/^JPDA_ADDRESS="[0-9]*"/JPDA_ADDRESS="<8000+N>"/' <TOMCAT>/bin/setenv.sh
+"${SED_INPLACE[@]}" 's/^JPDA_ADDRESS="[0-9]*"/JPDA_ADDRESS="<8000+N>"/' <tomcat>/bin/setenv.sh
 ```
 
 Skip if the target value is already present.
 
-#### 4e. Patch portal-developer.properties
+#### 4d. Patch portal-developer.properties
 
-File: `<TOMCAT>/webapps/ROOT/WEB-INF/classes/portal-developer.properties`
+File: `<tomcat>/webapps/ROOT/WEB-INF/classes/portal-developer.properties`
 
 Replace the OSGi console port (this file gets **wiped on rebuild**):
 
@@ -168,7 +158,7 @@ module.framework.properties.osgi.console=<11311+N>
 
 Use `"${SED_INPLACE[@]}" 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to handle any current value.
 
-#### 4f. Create OSGi Config Files
+#### 4e. Create OSGi Config Files
 
 These get **wiped on rebuild** — always overwrite.
 
@@ -198,7 +188,7 @@ port="<32763+N>"
 port="<42763+N>"
 ```
 
-#### 4g. Patch glowroot/admin.json
+#### 4f. Patch glowroot/admin.json
 
 File: `<BUNDLE>/glowroot/admin.json`
 
@@ -208,7 +198,7 @@ Use `jq` to set `.web.port` to `4000+N`. Skip if already correct (survives rebui
 jq '.web.port = <TARGET>' admin.json > admin.json.tmp && mv admin.json.tmp admin.json
 ```
 
-#### 4h. Patch portal-ext.properties
+#### 4g. Patch portal-ext.properties
 
 File: `<BUNDLE>/portal-ext.properties`
 
@@ -226,7 +216,7 @@ users.reminder.queries.enabled=false
 
 **Important:** The property is `portal.instance.inet.socket.address` (with `inet`), NOT `portal.instance.http.socket.address`. Also remove any old `portal.instance.http.socket.address` lines.
 
-#### 4i. Configure MySQL Database
+#### 4h. Configure MySQL Database
 
 Derive the DB name from the worktree directory (see Database Naming above).
 
@@ -249,7 +239,7 @@ mysql --execute 'CREATE DATABASE IF NOT EXISTS <DB_NAME> CHARACTER SET utf8mb4 C
 
 If `mysql` CLI is unavailable or fails, print the command for the user to run manually. Show errors — never swallow them with `2>/dev/null`.
 
-#### 4j. Print Summary
+#### 4i. Print Summary
 
 Print a table of all assigned ports, the DB name, the Liferay URL, and the Glowroot URL.
 
@@ -258,13 +248,13 @@ Print a table of all assigned ports, the DB name, the Liferay URL, and the Glowr
 Start Tomcat with the JPDA debugger attached. `jpda run` is a foreground command, so run it in the background so that the call does not block:
 
 ```bash
-<BUNDLE>/tomcat-*/bin/catalina.sh jpda run
+<tomcat>/bin/catalina.sh jpda run
 ```
 
 Tell the user how to follow the log:
 
 ```bash
-tail -f <BUNDLE>/tomcat-*/logs/catalina.out
+tail -f <tomcat>/logs/catalina.out
 ```
 
 ## Rerunnability
@@ -296,7 +286,7 @@ Show a summary table of all Git worktrees with their port, running status, offse
 
 1. Run `git worktree list --porcelain` to enumerate all worktrees
 
-1. For each, resolve the bundle directory (same logic as step 4a)
+1. For each, resolve `<bundles>`
 
 1. Read `.worktree-port-offset` to get the offset and derive the HTTP port and DB name
 
@@ -330,7 +320,7 @@ Resolve the worktree's absolute path from `git worktree list --porcelain` output
 
 ```bash
 # 1. Stop Tomcat
-<BUNDLE>/tomcat-*/bin/catalina.sh stop
+<tomcat>/bin/catalina.sh stop
 
 # 2. Drop the database
 mysql --execute 'DROP DATABASE IF EXISTS <DB_NAME>;' --user root

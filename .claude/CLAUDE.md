@@ -71,6 +71,8 @@ Logs are available at `<bundles>/logs/liferay.<yyyy-MM-dd>.log`. Check them when
 
 Liferay DXP is heavily tested. Every change must include test coverage.
 
+Tests that exercise the runtime (Integration, Playwright, Poshi) run against the bundle, not the source — deploy any modules under test first, or the rerun executes the previous bundle.
+
 #### Unit Tests
 
 Unit tests are preferred for pure logic.
@@ -85,7 +87,8 @@ ant test-unit -Dtest.class=SomeTest
 ant test-package -Dtest.package=com.liferay.portal.kernel.util
 
 # Frontend
-cd <module-root> && npm test
+cd <module-root> && yarn test
+cd <module-root> && yarn test <test-file-path>
 ```
 
 #### Integration Tests

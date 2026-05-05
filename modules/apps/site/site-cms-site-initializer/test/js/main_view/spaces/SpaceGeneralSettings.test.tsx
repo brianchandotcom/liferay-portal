@@ -30,6 +30,7 @@ jest.mock(
 const SPACE: Partial<Space> = {
 	description: 'This is the description for Cool Space',
 	externalReferenceCode: 'space-external-reference-code',
+	friendlyURL: '/cool-space',
 	name: 'Cool Space',
 	settings: {
 		logoColor: 'outline-2',

@@ -10,33 +10,38 @@ name: poshi-shrink
 
 A playbook for shrinking a Liferay component's Poshi test suite before migrating tests to Playwright, Java integration, or unit layer. Typical outcome: a file with ~27 tests ends up with ~8, in ~24 small reviewable commits.
 
-## Inputs required from the user
+## Preconditions
 
-Before doing anything, confirm:
+- The working tree is clean. Abort and ask the user to commit or stash first when dirty.
 
-- **`@component-name`**: passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Check the first line of any `.testcase` file if unsure.
-- **LPD ticket prefix**: for commit messages (e.g., `LPD-87004`). Use `LPD-X` if none yet.
+## Input
 
-If either is not in the skill args, ask. Do not guess.
+### Component Name
 
-## Workflow
+The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Ask if missing; do not guess.
 
-### Step 1 — Triage all tests for the component
+Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, every `.testcase` whose `@component-name` matches; abort when none does. The same enumeration feeds the **Triage Report**: per file, capture the path, the `testray.main.component.name` value, and the test-block count, sorted by component then by ascending test count.
 
-From `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, list every `.testcase` file tagged with the component, its `testray.main.component.name`, and its test count. Sort ascending by component, then by test count, so small files (easy migration wins) surface first.
+## Expected Output
 
-```bash
-cd portal-web/test/functional/com/liferay/portalweb/tests/enduser
-find . -name "*.testcase" | while read f; do
-  if grep -q '@component-name = "<COMPONENT>"' "$f"; then
-    component=$(grep -oE 'testray\.main\.component\.name = "[^"]*"' "$f" | head -1 | sed -E 's/.*= "([^"]*)"/\1/')
-    count=$(grep -cE '^[[:space:]]*test [A-Za-z0-9_]+ \{' "$f")
-    printf "%s\t%s\t%d\n" "${f#./}" "${component:-(none)}" "$count"
-  fi
-done | sort -t$'\t' -k2,2 -k3,3n
-```
+### Triage Report
 
-Save a triage doc at repo root (`<component>-test-triage.md`) following this template:
+A `<component>-test-triage.md` saved at repo root. Lists every `.testcase` tagged with the component, grouped by `testray.main.component.name`, with optional bucket classification per test.
+
+The bucket signals the most likely target layer for a future migration:
+
+| Bucket | Signal |
+| --- | --- |
+| `integration-java` | Ticket changed Java in service/validator/permission layer |
+| `rest-integration` | Ticket changed Java in `*-rest-impl` |
+| `playwright` | Ticket changed only JSP/JS/CSS/fragment files |
+| `needs-review` | Ticket only added the Poshi test, or only language keys |
+| `inconclusive` | Ticket not in the repo's git log |
+| `no-ticket` | No LPS/LPD reference in the description |
+
+To classify a test, look up its LPS/LPD ticket from `@description` in `git log` and inspect which files that ticket actually changed. Classification is optional; when skipped, leave the **Bucket** column blank in the **Test Details** table and the **By Bucket** counts at zero.
+
+The report follows this template:
 
 ````markdown
 # <Component Title> Test Triage Report
@@ -101,24 +106,20 @@ Classification based on `property testray.main.component.name` in each `.testcas
 | <file> | <N> |
 ````
 
-Sort the **Test Details** rows by bucket order (`integration-java`, `rest-integration`, `playwright`, `needs-review`, `inconclusive`, `no-ticket`), then priority descending, then file path and test name. Leave the **Ticket** cell blank when there is none. **Notes** is a short reason taken from the bucket lookup, for example "service/validator/permission impl" or "UI/JSP/frontend fix". The bucket and **Test Details** content is filled in after Step 2; Step 1 alone produces the **Files by Component & Test Count** section and the test enumeration.
+Sort the **Test Details** rows by bucket order (`integration-java`, `rest-integration`, `playwright`, `needs-review`, `inconclusive`, `no-ticket`), then priority descending, then file path and test name. Leave the **Ticket** cell blank when there is none. **Notes** is a short reason taken from the bucket lookup, for example "service/validator/permission impl" or "UI/JSP/frontend fix".
 
-### Step 2 — Optional bucket-classification per test
+### Merge Plan
 
-For each test, look up its LPS/LPD ticket from `@description` in `git log` and see what files the ticket actually changed. Helps decide the target layer later.
+For the file the user picks to attack, present the grouping clearly and **wait for explicit approval before any edit**:
 
-| Bucket | Signal |
-|--------|--------|
-| `integration-java` | Ticket changed Java in service/validator/permission layer |
-| `rest-integration` | Ticket changed Java in `*-rest-impl` |
-| `playwright` | Ticket changed only JSP/JS/CSS/fragment files |
-| `needs-review` | Ticket only added the Poshi test, or only language keys |
-| `inconclusive` | Ticket not in the repo's git log |
-| `no-ticket` | No LPS/LPD reference in the description |
+> **Group A — <Context name>** (N → 1):
+>
+> - Rename `<Keeper>` → `<FinalName>` (commit 1)
+> - Merge `<Source2>` → adds `<assertion>` (commit 2)
+> - Merge `<Source3>` → adds `<assertion>` (commit 3)
+> - … etc
 
-This step is useful but not required for the shrink itself.
-
-### Step 3 — Pick a file and find merge groups
+Pick the **keeper**: the test with the most comprehensive assertions, or the clearest name. The **final name** is usually descriptive of the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`), typically different from the keeper's original name.
 
 Start with files showing visually obvious overlap — classic signals from Liferay test names:
 
@@ -129,62 +130,53 @@ Start with files showing visually obvious overlap — classic signals from Lifer
 
 Avoid files with 40+ tests on the first pass — practice on smaller ones first.
 
-#### Merge signals — DO
+#### Merge Signals — DO
 
 - Same setup + same UI surface + different assertion → one test with N assertion tasks.
 - Tests differing only in asset type (blog vs document vs web content) when the panel behaviour being asserted is identical — often fully redundant; propose deletion rather than merge.
 - Tests where the source's assertion is already fully covered in the target — commit still happens, it just deletes the source.
 
-#### Merge signals — DON'T
+#### Merge Signals — DON'T
 
 - Tests with test-level property overrides that differ: `property portal.upstream = "quarantine"`, `property test.liferay.virtual.instance = "false"`, `property test.run.type = "single"` (when not inherited).
 - Tests with special setup (localized URLs, fragment translations, system settings changes, extra page creation).
 - Tests with `@ignore` / `@skip` annotations.
 
-### Step 4 — Plan and get approval
+### Edited Test Files
 
-Never start editing before the user has seen and approved the shrink plan. Present it clearly:
+After approval, apply each operation in the order it appears in the plan:
 
-> **Group A — <Context name>** (N → 1):
-> - Rename `<Keeper>` → `<FinalName>` (commit 1)
-> - Merge `<Source2>` → adds `<assertion>` (commit 2)
-> - Merge `<Source3>` → adds `<assertion>` (commit 3)
-> - ... etc
+- **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits.
+- **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source.
 
-Pick the **keeper**: the test with the most comprehensive assertions, or the clearest name. The **final name** is usually descriptive of the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`), typically different from the keeper's original name.
+### Per-Merge Commits
 
-### Step 5 — Execute with one commit per operation
-
-For each group, make one commit per source test. Message conventions:
+One commit per operation — never squash. Use the `/commit` skill. Message templates:
 
 - `<TICKET> Rename test <Keeper> to <FinalName>` — pure rename; first commit of the group; no logic change.
 - `<TICKET> Merge test <Source> into <FinalName>` — delete the source test block; add its unique assertions as new `task` blocks in the target.
 
-If a source's assertions are already fully covered by the target, still make the "Merge" commit (it simply deletes the source — documents the shrink).
+The per-merge granularity is exactly what makes the diff reviewable. Do **not** bundle multiple merges into one commit.
 
-Do **not** squash, bundle, or batch these commits. The per-merge granularity is exactly what makes the diff reviewable.
+When the file convention keeps tests alphabetical, add a final `<TICKET> Alphabetic order` commit after all merges.
 
-After each commit:
-```bash
-git add <path>
-git commit -m "<TICKET> Merge test <Source> into <FinalName>"
-```
+### Summary
 
-### Step 6 — Optional cleanup
+After the file is shrunk, report:
 
-- If the file convention keeps tests alphabetical, add a final `<TICKET> Alphabetic order` commit after all merges.
-- If commits come out unsigned despite `commit.gpgsign=true`, the user's SSH signer (1Password, etc.) may have been locked. Re-sign with `git rebase --exec 'git commit --amend --no-edit -S' <base>` — user must approve in their signer.
+- The file shrunk and its `testray.main.component.name`.
+- Before/after test counts.
+- Total commits made (renames + merges + optional cleanups).
+- Tests kept intact and the reason (special setup, differing properties, `@ignore`).
 
-## Anti-patterns to avoid
+## Anti-Patterns
 
-- **Never start editing without an approved plan.** Always present the grouping first.
 - **Never rewrite history on pushed/shared branches** unless the user explicitly asks.
 - **Don't trust the LPS ticket to identify the fix location blindly** — sometimes the ticket only added the Poshi test and the real fix is elsewhere.
 - **Don't drop strong assertions when merging.** When one test uses `AssertTextEquals.assertPartialText("web/<site-path>")` and another uses a weak `AssertVisible value1="http://"`, keep the strong one.
 - **Don't merge tests across different property/setup profiles.** Those properties exist for a reason (flaky environment, quarantined, virtual-instance-specific).
-- **Don't guess the ticket prefix.** Ask if not provided.
 
-## Heuristics learned from prior runs
+## Heuristics
 
 - Identical panel assertions across four asset-type variants (blog / document / widget / content page) are usually overengineered — **one representative often suffices**; propose deletion for the rest instead of merging four tests into four tests.
 - The *keeper* does not have to keep its name. Pick the most comprehensive test as the starting point, then rename it.

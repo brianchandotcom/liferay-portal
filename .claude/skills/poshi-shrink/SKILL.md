@@ -18,7 +18,7 @@ A playbook for shrinking a Liferay component's Poshi test suite before migrating
 
 ### Component Name
 
-The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-knowledge-base`, `portal-commerce`). Ask if missing; do not guess.
+The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-commerce`, `portal-content-management`). Ask if missing; do not guess.
 
 Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, every `.testcase` whose `@component-name` matches; abort when none does. The same enumeration feeds the **Shrink Plan**: per file, capture the path, the `testray.main.component.name` value, and the test-block count.
 

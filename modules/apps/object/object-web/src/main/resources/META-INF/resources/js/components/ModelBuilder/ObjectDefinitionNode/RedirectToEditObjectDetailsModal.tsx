@@ -4,7 +4,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React from 'react';
 
@@ -36,13 +35,11 @@ export function RedirectToEditObjectDetailsModal({
 					</ClayModal.Header>
 
 					<ClayModal.Body>
-						<ClayForm>
-							<p>
-								{Liferay.Language.get(
-									'you-are-leaving-object-model-builder-and-opening-the-object-admin-page-view-in-a-new-tab'
-								)}
-							</p>
-						</ClayForm>
+						<p>
+							{Liferay.Language.get(
+								'you-are-leaving-object-model-builder-and-opening-the-object-admin-page-view-in-a-new-tab'
+							)}
+						</p>
 					</ClayModal.Body>
 
 					<ClayModal.Footer

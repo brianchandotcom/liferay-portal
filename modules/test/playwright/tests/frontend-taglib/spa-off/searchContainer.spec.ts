@@ -88,6 +88,10 @@ test(
 
 		await test.step('Clear the filters', async () => {
 			await journalPage.clearFilters();
+
+			await expect(
+				page.getByText('Results Found With Filters')
+			).toBeHidden();
 		});
 
 		await test.step('Check that selections are kept', async () => {
@@ -210,11 +214,19 @@ test(
 		});
 
 		await journalPage.selectPage(0);
+
+		await expect(
+			page.getByText('Showing 1 to 4 of 6 entries.')
+		).toBeVisible();
 		await expect(
 			page.getByText('2 of 6 Items Selected', {exact: true})
 		).toBeVisible();
 
 		await journalPage.selectPage(1);
+
+		await expect(
+			page.getByText('Showing 5 to 6 of 6 entries.')
+		).toBeVisible();
 		await expect(
 			page.getByText('2 of 6 Items Selected', {exact: true})
 		).toBeVisible();

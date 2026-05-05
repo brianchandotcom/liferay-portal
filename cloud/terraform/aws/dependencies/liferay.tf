@@ -65,8 +65,7 @@ module "s3_bucket_liferay_overlay" {
 			bucket_key_enabled=true
 		}
 	}
-	source="terraform-aws-modules/s3-bucket/aws"
-	version="~> 4.1.1"
+	source="git::https://github.com/terraform-aws-modules/terraform-aws-s3-bucket.git?ref=cd61253a03de4f99c77a8e45146bd65a55ab103e"
 	versioning={
 		enabled=true
 	}

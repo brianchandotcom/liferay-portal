@@ -62,7 +62,7 @@ public class RelatedObjectEntryResourceImplTest {
 		Object result = ReflectionTestUtil.invoke(
 			_relatedObjectEntryResourceImpl,
 			"_getSystemObjectDefinitionManager",
-			new Class<?>[] {long.class, String.class}, _companyId,
+			new Class<?>[] {long.class, String.class}, _COMPANY_ID,
 			"user-accounts");
 
 		Assert.assertSame(systemObjectDefinitionManager, result);
@@ -78,7 +78,7 @@ public class RelatedObjectEntryResourceImplTest {
 		Object result = ReflectionTestUtil.invoke(
 			_relatedObjectEntryResourceImpl,
 			"_getSystemObjectDefinitionManager",
-			new Class<?>[] {long.class, String.class}, _companyId,
+			new Class<?>[] {long.class, String.class}, _COMPANY_ID,
 			"user-accounts");
 
 		Assert.assertSame(systemObjectDefinitionManager, result);
@@ -90,9 +90,10 @@ public class RelatedObjectEntryResourceImplTest {
 
 		JaxRsApplicationDescriptor jaxRsApplicationDescriptor = Mockito.mock(
 			JaxRsApplicationDescriptor.class);
-		ObjectDefinition objectDefinition = Mockito.mock(ObjectDefinition.class);
-		SystemObjectDefinitionManager systemObjectDefinitionManager = Mockito.mock(
-			SystemObjectDefinitionManager.class);
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			Mockito.mock(SystemObjectDefinitionManager.class);
 
 		Mockito.when(
 			_uriInfo.getBaseUri()
@@ -102,7 +103,7 @@ public class RelatedObjectEntryResourceImplTest {
 
 		Mockito.when(
 			_objectDefinitionLocalService.
-				getUnmodifiableSystemObjectDefinitions(_companyId)
+				getUnmodifiableSystemObjectDefinitions(_COMPANY_ID)
 		).thenReturn(
 			Collections.singletonList(objectDefinition)
 		);
@@ -135,7 +136,7 @@ public class RelatedObjectEntryResourceImplTest {
 		return systemObjectDefinitionManager;
 	}
 
-	private static final long _companyId = RandomTestUtil.randomLong();
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
 		Mockito.mock(ObjectDefinitionLocalService.class);

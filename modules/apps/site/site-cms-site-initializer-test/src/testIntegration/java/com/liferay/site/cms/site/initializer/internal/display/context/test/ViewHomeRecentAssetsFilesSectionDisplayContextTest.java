@@ -42,7 +42,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 @FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
-public class ViewHomeRecentAssetsSectionDisplayContextTest
+public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 	extends BaseFilesSectionDisplayContextTestCase {
 
 	@ClassRule

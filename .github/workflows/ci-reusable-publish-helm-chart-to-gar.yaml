@@ -88,9 +88,9 @@ jobs:
             -   id: auth
                 if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Authenticate to Google Cloud
-                uses: google-github-actions/auth@v2
+                uses: google-github-actions/auth@v3
                 with:
-                    service_account: ${{secrets.GCP_SA}}
+                    project_id: ${{secrets.GCP_PROJECT_ID}}
                     token_format: access_token
                     workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
             -   if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}

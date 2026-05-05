@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -55,11 +56,12 @@ public class PhoneNumberDDMFormFieldTemplateContextContributor
 					(LocalizedValue)ddmFormField.getProperty("predefinedValue");
 
 				if (predefinedValue == null) {
-					return null;
+					return StringPool.BLANK;
 				}
 
-				return predefinedValue.getString(
-					ddmFormFieldRenderingContext.getLocale());
+				return GetterUtil.getString(
+					predefinedValue.getString(
+						ddmFormFieldRenderingContext.getLocale()));
 			}
 		).put(
 			"prefix", GetterUtil.getString(ddmFormField.getProperty("prefix"))

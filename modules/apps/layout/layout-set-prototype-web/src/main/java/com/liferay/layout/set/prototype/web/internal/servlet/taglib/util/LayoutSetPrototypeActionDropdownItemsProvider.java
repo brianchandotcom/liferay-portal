@@ -78,8 +78,12 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 							});
 					}
 
-					if (_layoutSetPrototype.isActive() && !group.isGuest()) {
-						add(_getDeactivateActionUnsafeConsumer());
+					if (_layoutSetPrototype.isActive()) {
+						if (!group.isGuest()) {
+							add(_getDeactivateActionUnsafeConsumer());
+						}
+
+						add(_getExecuteLayoutSetPrototypeSyncUnsafeConsumer());
 					}
 					else if (!_layoutSetPrototype.isActive()) {
 						add(_getActivateActionUnsafeConsumer());
@@ -175,6 +179,30 @@ public class LayoutSetPrototypeActionDropdownItemsProvider {
 			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getExecuteLayoutSetPrototypeSyncUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "executeLayoutSetPrototypeSync");
+			dropdownItem.putData(
+				"executeLayoutSetPrototypeSyncURL",
+				PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"executeLayoutSetPrototypeSync"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"layoutSetPrototypeId",
+					_layoutSetPrototype.getLayoutSetPrototypeId()
+				).buildString());
+			dropdownItem.setIcon("reload");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "execute-site-template-sync"));
 		};
 	}
 

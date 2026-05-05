@@ -12,11 +12,14 @@ import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.exception.RequiredLayoutSetPrototypeException;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -25,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
@@ -105,6 +109,32 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		for (long curLayoutSetPrototypeId : layoutSetPrototypeIds) {
 			layoutSetPrototypeService.deleteLayoutSetPrototype(
 				curLayoutSetPrototypeId);
+		}
+	}
+
+	public void executeLayoutSetPrototypeSync(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long layoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "layoutSetPrototypeId");
+
+		LayoutSetPrototype layoutSetPrototype =
+			layoutSetPrototypeService.fetchLayoutSetPrototype(
+				layoutSetPrototypeId);
+
+		if (layoutSetPrototype == null) {
+			return;
+		}
+
+		Sites sites = _sitesSnapshot.get();
+
+		for (LayoutSet layoutSet :
+				layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
+					layoutSetPrototype.getUuid())) {
+
+			sites.mergeLayoutSetPrototypeLayouts(
+				layoutSet.getGroup(), layoutSet);
 		}
 	}
 
@@ -243,6 +273,9 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 	}
 
 	@Reference
+	protected LayoutSetLocalService layoutSetLocalService;
+
+	@Reference
 	protected LayoutSetPrototypeHelper layoutSetPrototypeHelper;
 
 	@Reference
@@ -253,5 +286,8 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference
 	protected PanelAppRegistry panelAppRegistry;
+
+	private static final Snapshot<Sites> _sitesSnapshot = new Snapshot<>(
+		LayoutSetPrototypePortlet.class, Sites.class);
 
 }

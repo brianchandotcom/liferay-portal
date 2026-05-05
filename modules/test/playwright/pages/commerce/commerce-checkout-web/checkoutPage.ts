@@ -50,6 +50,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly multishippingTableLocator: Locator;
 	readonly nameInput: Locator;
 	readonly optionsButton: Locator;
+	readonly orderConfirmationContainer: Locator;
 	readonly orderItemsTabLink: Locator;
 	readonly orderItemsTableLocator: Locator;
 	readonly orderSuccessMessage: Locator;
@@ -156,6 +157,9 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		});
 		this.orderItemsTableLocator = page.locator(
 			'#_com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet_commerceOrderItems table'
+		);
+		this.orderConfirmationContainer = page.locator(
+			'.commerce-checkout-confirmation'
 		);
 		this.orderSuccessMessage = page.getByText(
 			'Success! Your order has been processed.'
@@ -278,6 +282,8 @@ export class CheckoutPage extends CommerceDNDTablePage {
 			await callback(currentStep);
 
 			await this.continueButton.click();
+
+			await expect(this.orderConfirmationContainer).toBeVisible();
 		}
 
 		currentStep = await this.activeCheckoutStep.textContent();

@@ -10,6 +10,10 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.rest.client.dto.v1_0.ProvisioningRequest;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -20,10 +24,15 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerRegistry;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -93,6 +102,17 @@ public class ProvisioningRequestResourceTest
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				accountEntry.getAccountEntryId(), user.getUserId()));
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_AI_HUB_QUOTA", TestPropsValues.getCompanyId());
+
+		long accountEntryId = accountEntry.getAccountEntryId();
+
+		_assertQuotaObjectEntry(
+			objectDefinition, "guest-quota-" + accountEntryId);
+		_assertQuotaObjectEntry(objectDefinition, "quota-" + accountEntryId);
+
 		accountEntry =
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
 				"L_AI_HUB", TestPropsValues.getCompanyId());
@@ -100,6 +120,21 @@ public class ProvisioningRequestResourceTest
 		Assert.assertNotNull(
 			_accountEntryUserRelLocalService.fetchAccountEntryUserRel(
 				accountEntry.getAccountEntryId(), user.getUserId()));
+	}
+
+	private void _assertQuotaObjectEntry(
+		ObjectDefinition objectDefinition, String externalReferenceCode) {
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
+
+		Assert.assertNotNull(externalReferenceCode, objectEntry);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		Assert.assertEquals(
+			33333333, GetterUtil.getInteger(values.get("limit")));
+		Assert.assertEquals(0, GetterUtil.getInteger(values.get("usage")));
 	}
 
 	private static String _originalName;
@@ -113,6 +148,12 @@ public class ProvisioningRequestResourceTest
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

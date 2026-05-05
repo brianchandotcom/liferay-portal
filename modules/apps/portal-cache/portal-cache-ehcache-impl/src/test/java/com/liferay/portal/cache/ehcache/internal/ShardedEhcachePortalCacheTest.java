@@ -790,10 +790,9 @@ public class ShardedEhcachePortalCacheTest {
 
 	private static final String _TEST_VALUE_SYSTEM = "TEST_VALUE_SYSTEM";
 
-	private static BaseEhcachePortalCacheManager _baseEhcachePortalCacheManager;
-	private static CacheManager _cacheManager;
-	private static ThreadLocal<Long> _companyIdThreadLocal;
-
+	private BaseEhcachePortalCacheManager _baseEhcachePortalCacheManager;
+	private CacheManager _cacheManager;
+	private ThreadLocal<Long> _companyIdThreadLocal;
 	private final MockedStatic<CompanyThreadLocal>
 		_companyThreadLocalMockedStatic = Mockito.mockStatic(
 			CompanyThreadLocal.class);

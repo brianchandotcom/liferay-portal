@@ -489,9 +489,7 @@ public class PortalCacheExtenderTest {
 
 	private static final String _CACHE_NAME_SINGLE = "test.cache.single";
 
-	private static Bundle _bundle;
-	private static String _multiVmXML;
-	private static String _singleVmXML;
+	private Bundle _bundle;
 
 	@Inject
 	private com.liferay.portal.kernel.util.File _file;
@@ -501,5 +499,8 @@ public class PortalCacheExtenderTest {
 	)
 	private PortalCacheManager<? extends Serializable, ? extends Serializable>
 		_multiVMPortalCacheManager;
+
+	private String _multiVmXML;
+	private String _singleVmXML;
 
 }

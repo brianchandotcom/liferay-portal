@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -170,6 +171,15 @@ JSONArray rangesJSONArray = customFacetPortletPreferences.getRangesJSONArray();
 		>
 			<aui:input helpMessage="enter-the-key-of-an-alternate-search-this-widget-is-participating-on-if-not-set-widget-participates-on-default-search" label="federated-search-key" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_FEDERATED_SEARCH_KEY) %>" type="text" value="<%= customFacetPortletPreferences.getFederatedSearchKey() %>" />
 		</liferay-frontend:fieldset>
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-71164") %>'>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="seo-configuration"
+			>
+				<aui:input helpMessage="enable-web-crawler-indexing-help" label="enable-web-crawler-indexing" name="<%= PortletPreferencesJspUtil.getInputName(CustomFacetPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED) %>" type="checkbox" value="<%= customFacetPortletPreferences.isWebCrawlerIndexingEnabled() %>" />
+			</liferay-frontend:fieldset>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

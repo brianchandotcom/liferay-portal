@@ -5,10 +5,12 @@
 
 package com.liferay.portal.search.web.internal.tag.facet.portlet;
 
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
+
 /**
  * @author Lino Alves
  */
-public interface TagFacetPortletPreferences {
+public interface TagFacetPortletPreferences extends SEOPortletPreferences {
 
 	public static final String PREFERENCE_KEY_DISPLAY_STYLE =
 		"tagFacetDisplayStyle";

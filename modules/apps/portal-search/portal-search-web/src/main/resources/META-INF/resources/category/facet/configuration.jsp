@@ -5,6 +5,8 @@
  */
 --%>
 
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
@@ -15,6 +17,7 @@ taglib uri="http://liferay.com/tld/template" prefix="liferay-template" %>
 
 <%@ page import="com.liferay.asset.kernel.service.AssetVocabularyLocalService" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalService" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -103,6 +106,15 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 				/>
 			</div>
 		</liferay-frontend:fieldset>
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-71164") %>'>
+			<liferay-frontend:fieldset
+				collapsible="<%= true %>"
+				label="seo-configuration"
+			>
+				<aui:input helpMessage="enable-web-crawler-indexing-help" label="enable-web-crawler-indexing" name="<%= PortletPreferencesJspUtil.getInputName(CategoryFacetPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED) %>" type="checkbox" value="<%= categoryFacetPortletPreferences.isWebCrawlerIndexingEnabled() %>" />
+			</liferay-frontend:fieldset>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

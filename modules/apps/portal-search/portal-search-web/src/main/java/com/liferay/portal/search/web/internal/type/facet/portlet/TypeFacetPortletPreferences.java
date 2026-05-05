@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.type.facet.portlet;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 import java.util.List;
 import java.util.Locale;
@@ -13,7 +14,7 @@ import java.util.Locale;
 /**
  * @author Lino Alves
  */
-public interface TypeFacetPortletPreferences {
+public interface TypeFacetPortletPreferences extends SEOPortletPreferences {
 
 	public static final String PREFERENCE_KEY_ASSET_TYPES = "assetTypes";
 

@@ -23,6 +23,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-api")
+	compileOnly project(":apps:layout:layout-seo-api")
 	compileOnly project(":apps:learn:learn-api")
 	compileOnly project(":apps:learn:learn-taglib")
 	compileOnly project(":apps:object:object-api")

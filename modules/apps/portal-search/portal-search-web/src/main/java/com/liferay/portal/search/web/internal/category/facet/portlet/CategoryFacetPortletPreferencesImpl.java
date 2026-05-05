@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.web.internal.portlet.preferences.BasePortletPreferences;
+import com.liferay.portal.search.web.internal.seo.SEOPortletPreferences;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -83,6 +84,11 @@ public class CategoryFacetPortletPreferencesImpl
 	}
 
 	@Override
+	public String getSEOParameterName() {
+		return getParameterName();
+	}
+
+	@Override
 	public String[] getVocabularyIds() {
 		List<String> vocabularyIds = new LinkedList<>();
 
@@ -120,6 +126,13 @@ public class CategoryFacetPortletPreferencesImpl
 	public boolean isFrequenciesVisible() {
 		return getBoolean(
 			CategoryFacetPortletPreferences.PREFERENCE_KEY_FREQUENCIES_VISIBLE,
+			true);
+	}
+
+	@Override
+	public boolean isWebCrawlerIndexingEnabled() {
+		return getBoolean(
+			SEOPortletPreferences.PREFERENCE_KEY_WEB_CRAWLER_INDEXING_ENABLED,
 			true);
 	}
 

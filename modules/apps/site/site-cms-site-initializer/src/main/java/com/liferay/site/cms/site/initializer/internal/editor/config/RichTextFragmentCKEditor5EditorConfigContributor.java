@@ -5,13 +5,17 @@
 
 package com.liferay.site.cms.site.initializer.internal.editor.config;
 
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
@@ -37,6 +41,19 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 
 		if (!scopeGroup.isCMS()) {
 			return;
+		}
+
+		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
+
+		if (httpServletRequest != null) {
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+
+			if (infoItem instanceof GroupedModel) {
+				GroupedModel groupedModel = (GroupedModel)infoItem;
+
+				jsonObject.put("groupId", groupedModel.getGroupId());
+			}
 		}
 
 		jsonObject.put(

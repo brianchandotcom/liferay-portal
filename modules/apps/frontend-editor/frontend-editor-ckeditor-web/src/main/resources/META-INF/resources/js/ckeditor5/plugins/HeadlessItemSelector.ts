@@ -55,12 +55,16 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 
 			buttonView.on('execute', () => {
+				const groupId =
+					Number(editor.config.get('groupId')) ||
+					Liferay.ThemeDisplay.getScopeGroupId();
+
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
 					allowedExtensions: ALLOWED_IMAGE_FILE_EXTENSIONS.map(
 						(extension) => `.${extension}`
 					).join(','),
-					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
+					groupId,
 					itemTypeLabel: Liferay.Language.get('image'),
 					onSelect: (items) => {
 						const href = items[0]?.embedded?.file?.link?.href;
@@ -95,12 +99,16 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.bind('isEnabled').to(command, 'isEnabled');
 
 			buttonView.on('execute', () => {
+				const groupId =
+					Number(editor.config.get('groupId')) ||
+					Liferay.ThemeDisplay.getScopeGroupId();
+
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
 					filters: [
 						`((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL_VIDEO') or (extension in ('${ALLOWED_VIDEO_FILE_EXTENSIONS.join("','")}')))`,
 					],
-					groupId: Liferay.ThemeDisplay.getSiteGroupId(),
+					groupId,
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {
 						const videoURL = items[0]?.embedded?.videoURL;

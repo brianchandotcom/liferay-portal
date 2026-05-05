@@ -82,97 +82,99 @@ that may or may not be enforced with a unique index at the database level. Case
 <#-- Case 3: entityFinder.isCollection() && !entityFinder.isUnique() -->
 
 <#if entityFinder.isCollection() && !entityFinder.isUnique()>
-	/**
-	 * Returns all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @return the matching ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
-
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name}
-
-		<#if entityColumn_has_next>
-			,
-		</#if>
-	</#list>
-
-	) {
-		return findBy${entityFinder.name}(
+	<#if !serviceBuilder.isVersionGTE_7_4_0() || entityFinder.hasArrayableOperator() || entityFinder.isUnique() || entityFinder.hasCustomComparator()>
+		/**
+		 * Returns all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @return the matching ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findBy${entityFinder.name}(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.type} ${entityColumn.name}
+
+			<#if entityColumn_has_next>
+				,
+			</#if>
 		</#list>
 
-		QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
+		) {
+			return findBy${entityFinder.name}(
 
-	/**
-	 * Returns a range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param start the lower bound of the range of ${entity.pluralHumanName}
-	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-	 * @return the range of matching ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
 
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name},
-	</#list>
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		}
 
-	int start, int end) {
-		return findBy${entityFinder.name}(
+		/**
+		 * Returns a range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+		 *
+		 * <p>
+		 * <#include "range_comment.ftl">
+		 * </p>
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @param start the lower bound of the range of ${entity.pluralHumanName}
+		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+		 * @return the range of matching ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findBy${entityFinder.name}(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.type} ${entityColumn.name},
 		</#list>
 
-		start, end, null);
-	}
+		int start, int end) {
+			return findBy${entityFinder.name}(
 
-	/**
-	 * Returns an ordered range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
-	 *
-	 * <p>
-	 * <#include "range_comment.ftl">
-	 * </p>
-	 *
-	<#list entityColumns as entityColumn>
-	 * @param ${entityColumn.name} the ${entityColumn.humanName}
-	</#list>
-	 * @param start the lower bound of the range of ${entity.pluralHumanName}
-	 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ${entity.pluralHumanName}
-	 */
-	@Override
-	public List<${entity.name}> findBy${entityFinder.name}(
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
 
-	<#list entityColumns as entityColumn>
-		${entityColumn.type} ${entityColumn.name},
-	</#list>
+			start, end, null);
+		}
 
-	int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-		return findBy${entityFinder.name}(
+		/**
+		 * Returns an ordered range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+		 *
+		 * <p>
+		 * <#include "range_comment.ftl">
+		 * </p>
+		 *
+		<#list entityColumns as entityColumn>
+		 * @param ${entityColumn.name} the ${entityColumn.humanName}
+		</#list>
+		 * @param start the lower bound of the range of ${entity.pluralHumanName}
+		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+		 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+		 * @return the ordered range of matching ${entity.pluralHumanName}
+		 */
+		@Override
+		public List<${entity.name}> findBy${entityFinder.name}(
 
 		<#list entityColumns as entityColumn>
-			${entityColumn.name},
+			${entityColumn.type} ${entityColumn.name},
 		</#list>
 
-		start, end, orderByComparator, true);
-	}
+		int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
+			return findBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.name},
+			</#list>
+
+			start, end, orderByComparator, true);
+		}
+	</#if>
 
 	/**
 	 * Returns an ordered range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.

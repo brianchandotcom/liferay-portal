@@ -4,7 +4,7 @@ import React from 'react';
 import {ACTIVITY_KEY, RelationalOperators} from '../../utils/constants';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {createCustomValueMap} from '../../utils/custom-inputs';
-import {Map} from 'immutable';
+import {Map, OrderedMap} from 'immutable';
 import {Property, Segment} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {ReferencedObjectsProvider} from '../../context/referencedObjects';
@@ -117,6 +117,60 @@ describe('BehaviorInput', () => {
 		expect(
 			container.querySelector('.form-group-item-shrink.has-error')
 		).toBeTruthy();
+	});
+
+	describe('handleAssetSelect', () => {
+		it('should call onChange with a plain object when a single asset is selected', () => {
+			const onChange = jest.fn();
+			const ref = React.createRef();
+
+			render(
+				<Provider store={mockStore()}>
+					<ReferencedObjectsProvider segment={new Segment({})}>
+						<BehaviorInput
+							{...defaultProps}
+							onChange={onChange}
+							ref={ref}
+						/>
+					</ReferencedObjectsProvider>
+				</Provider>
+			);
+
+			const asset = {id: 'asset-1', name: 'Test Asset'};
+
+			ref.current.handleAssetSelect(OrderedMap([[asset.id, asset]]));
+
+			expect(onChange).toHaveBeenCalledTimes(1);
+			expect(Array.isArray(onChange.mock.calls[0][0])).toBe(false);
+		});
+
+		it('should call onChange with an array when multiple assets are selected', () => {
+			const onChange = jest.fn();
+			const ref = React.createRef();
+
+			render(
+				<Provider store={mockStore()}>
+					<ReferencedObjectsProvider segment={new Segment({})}>
+						<BehaviorInput
+							{...defaultProps}
+							onChange={onChange}
+							ref={ref}
+						/>
+					</ReferencedObjectsProvider>
+				</Provider>
+			);
+
+			const items = OrderedMap([
+				['asset-1', {id: 'asset-1', name: 'Asset 1'}],
+				['asset-2', {id: 'asset-2', name: 'Asset 2'}]
+			]);
+
+			ref.current.handleAssetSelect(items);
+
+			expect(onChange).toHaveBeenCalledTimes(1);
+			expect(Array.isArray(onChange.mock.calls[0][0])).toBe(true);
+			expect(onChange.mock.calls[0][0]).toHaveLength(2);
+		});
 	});
 
 	describe('AssetItem', () => {

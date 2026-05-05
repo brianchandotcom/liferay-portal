@@ -1585,13 +1585,13 @@ public class ProjectController extends BaseFaroController {
 
 		if (StringUtil.equals(
 				faroSubscriptionDisplay.getName(),
-				ProductConstants.BASIC_PRODUCT_NAME) ||
+				ProductConstants.BASIC_PRODUCT_ENTRY_NAME) ||
 			StringUtil.equals(
 				faroSubscriptionDisplay.getName(),
-				ProductConstants.BUSINESS_PRODUCT_NAME) ||
+				ProductConstants.BUSINESS_PRODUCT_ENTRY_NAME) ||
 			StringUtil.equals(
 				faroSubscriptionDisplay.getName(),
-				ProductConstants.ENTERPRISE_PRODUCT_NAME)) {
+				ProductConstants.ENTERPRISE_PRODUCT_ENTRY_NAME)) {
 
 			return true;
 		}

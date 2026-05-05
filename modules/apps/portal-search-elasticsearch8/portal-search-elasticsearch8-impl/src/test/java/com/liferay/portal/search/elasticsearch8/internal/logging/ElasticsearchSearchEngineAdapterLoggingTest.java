@@ -97,20 +97,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 					}
 				});
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
-
-			_assertLogEntry(
-				logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
-				LoggerTestUtil.INFO);
-			_assertLogEntry(
-				logEntries.get(1),
-				"Search request string for [" + _INDEX_NAME + "]:",
-				LoggerTestUtil.DEBUG);
-			_assertLogEntry(
-				logEntries.get(2), "The search engine processed the request in",
-				LoggerTestUtil.DEBUG);
+			_assertSearchRequestExecutorLogEntries(logCapture.getLogEntries());
 		}
 	}
 
@@ -157,20 +144,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 					}
 				});
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
-
-			_assertLogEntry(
-				logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
-				LoggerTestUtil.INFO);
-			_assertLogEntry(
-				logEntries.get(1),
-				"Search request string for [" + _INDEX_NAME + "]:",
-				LoggerTestUtil.DEBUG);
-			_assertLogEntry(
-				logEntries.get(2), "The search engine processed the request in",
-				LoggerTestUtil.DEBUG);
+			_assertSearchRequestExecutorLogEntries(logCapture.getLogEntries());
 		}
 	}
 
@@ -183,6 +157,23 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 		Assert.assertTrue(
 			message + " does not start with " + expectedMessage,
 			message.startsWith(expectedMessage));
+	}
+
+	private void _assertSearchRequestExecutorLogEntries(
+		List<LogEntry> logEntries) {
+
+		Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
+
+		_assertLogEntry(
+			logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
+			LoggerTestUtil.INFO);
+		_assertLogEntry(
+			logEntries.get(1),
+			"Search request string for [" + _INDEX_NAME + "]:",
+			LoggerTestUtil.DEBUG);
+		_assertLogEntry(
+			logEntries.get(2), "The search engine processed the request in",
+			LoggerTestUtil.DEBUG);
 	}
 
 	private void _waitForElasticsearchToStart(

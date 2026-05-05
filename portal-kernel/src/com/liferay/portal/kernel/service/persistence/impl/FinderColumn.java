@@ -24,11 +24,11 @@ public class FinderColumn<T extends BaseModel<T>> {
 		boolean caseSensitive, boolean convertNull,
 		Function<T, Object> valueExtractor) {
 
-		_type = type;
+		this.type = type;
 		_comparator = comparator;
-		_caseSensitive = caseSensitive;
-		_convertNull = convertNull;
-		_valueExtractor = valueExtractor;
+		this.caseSensitive = caseSensitive;
+		this.convertNull = convertNull;
+		this.valueExtractor = valueExtractor;
 
 		int dotIndex = columnName.indexOf('.');
 
@@ -40,46 +40,46 @@ public class FinderColumn<T extends BaseModel<T>> {
 		}
 
 		if ((type == Type.STRING) && !caseSensitive) {
-			_sqlBind = StringBundler.concat(
+			sqlBind = StringBundler.concat(
 				"lower(", entityAlias, columnName, ") ", comparator, " ?");
 		}
 		else {
-			_sqlBind = StringBundler.concat(
+			sqlBind = StringBundler.concat(
 				entityAlias, columnName, " ", comparator, " ?");
 		}
 
 		if (type == Type.STRING) {
-			_sqlNull = StringBundler.concat(
+			sqlNull = StringBundler.concat(
 				"(", entityAlias, columnName, " IS NULL OR ", entityAlias,
 				columnName, " ", comparator, " '')");
 		}
 		else {
-			_sqlNull = null;
+			sqlNull = null;
 		}
 
 		if (comparator.equals("<>") || comparator.equals("!=")) {
-			_sqlIsNull = entityAlias + columnName + " IS NOT NULL";
+			sqlIsNull = entityAlias + columnName + " IS NOT NULL";
 		}
 		else {
-			_sqlIsNull = entityAlias + columnName + " IS NULL";
+			sqlIsNull = entityAlias + columnName + " IS NULL";
 		}
 	}
 
 	public void bindValue(QueryPos queryPos, Object normalizedValue) {
-		if (_type.isPrimitive()) {
+		if (type.isPrimitive()) {
 			queryPos.add(normalizedValue);
 
 			return;
 		}
 
-		if ((_type == Type.STRING) && _convertNull) {
+		if ((type == Type.STRING) && convertNull) {
 			String stringValue = (String)normalizedValue;
 
 			if (stringValue.isEmpty()) {
 				return;
 			}
 
-			if (!_caseSensitive) {
+			if (!caseSensitive) {
 				stringValue = StringUtil.toLowerCase(stringValue);
 			}
 
@@ -92,7 +92,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 			return;
 		}
 
-		if ((_type == Type.STRING) && !_caseSensitive) {
+		if ((type == Type.STRING) && !caseSensitive) {
 			normalizedValue = StringUtil.toLowerCase((String)normalizedValue);
 		}
 
@@ -100,7 +100,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public Object extractValue(T entity) {
-		return _valueExtractor.apply(entity);
+		return valueExtractor.apply(entity);
 	}
 
 	public String getKeyFragment() {
@@ -108,31 +108,31 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public String getSqlFragment(Object normalizedValue) {
-		if (_type.isPrimitive()) {
-			return _sqlBind;
+		if (type.isPrimitive()) {
+			return sqlBind;
 		}
 
-		if ((_type == Type.STRING) && _convertNull) {
+		if ((type == Type.STRING) && convertNull) {
 			String stringValue = (String)normalizedValue;
 
 			if (stringValue.isEmpty()) {
-				return _sqlNull;
+				return sqlNull;
 			}
 
-			return _sqlBind;
+			return sqlBind;
 		}
 
 		if (normalizedValue == null) {
-			return _sqlIsNull;
+			return sqlIsNull;
 		}
 
-		return _sqlBind;
+		return sqlBind;
 	}
 
 	public boolean matches(T entity, Object normalizedValue) {
-		Object entityValue = _valueExtractor.apply(entity);
+		Object entityValue = valueExtractor.apply(entity);
 
-		if ((_type == Type.STRING) && !_caseSensitive) {
+		if ((type == Type.STRING) && !caseSensitive) {
 			entityValue = StringUtil.toLowerCase((String)entityValue);
 		}
 
@@ -151,7 +151,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 		if (_comparator.equals("LIKE")) {
 			return StringUtil.wildcardMatches(
 				(String)entityValue, (String)normalizedValue, '_', '%', '\\',
-				_caseSensitive);
+				caseSensitive);
 		}
 
 		@SuppressWarnings("rawtypes")
@@ -196,12 +196,12 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public Object normalizeValue(Object value) {
-		if (_type == Type.STRING) {
-			if (!_caseSensitive) {
+		if (type == Type.STRING) {
+			if (!caseSensitive) {
 				value = StringUtil.toLowerCase((String)value);
 			}
 
-			if (_convertNull) {
+			if (convertNull) {
 				value = Objects.toString(value, "");
 			}
 		}
@@ -210,9 +210,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public Object toFinderArg(Object normalizedValue) {
-		if (normalizedValue instanceof Date) {
-			Date date = (Date)normalizedValue;
-
+		if (normalizedValue instanceof Date date) {
 			return date.getTime();
 		}
 
@@ -236,14 +234,15 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	}
 
-	private final boolean _caseSensitive;
+	protected final boolean caseSensitive;
+	protected final boolean convertNull;
+	protected final String sqlBind;
+	protected final String sqlIsNull;
+	protected final String sqlNull;
+	protected final Type type;
+	protected final Function<T, Object> valueExtractor;
+
 	private final String _comparator;
-	private final boolean _convertNull;
 	private final String _keyFragment;
-	private final String _sqlBind;
-	private final String _sqlIsNull;
-	private final String _sqlNull;
-	private final Type _type;
-	private final Function<T, Object> _valueExtractor;
 
 }

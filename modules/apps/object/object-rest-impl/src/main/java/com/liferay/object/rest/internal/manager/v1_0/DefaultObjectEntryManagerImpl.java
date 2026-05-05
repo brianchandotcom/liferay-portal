@@ -2587,11 +2587,11 @@ public class DefaultObjectEntryManagerImpl
 							dtoConverterContext.getUriInfo());
 					}
 
-					ObjectScopeProvider copyObjectScopeProvider =
+					ObjectScopeProvider objectScopeProvider =
 						_objectScopeProviderRegistry.getObjectScopeProvider(
 							objectDefinition.getScope());
 
-					if (!copyObjectScopeProvider.isGroupAware()) {
+					if (!objectScopeProvider.isGroupAware()) {
 						return _addAction(
 							ObjectActionKeys.ADD_OBJECT_ENTRY,
 							"postByExternalReferenceCodeByVersionCopy",

@@ -83,6 +83,12 @@ public class CIForwardProcessor {
 				return;
 			}
 
+			if (_hasMergeConflict()) {
+				_pullRequest.addComment(_getMergeConflictCommentBody());
+
+				return;
+			}
+
 			_pullRequest.addComment(_getPassedCommentBody());
 
 			final String senderUsername;
@@ -541,6 +547,19 @@ public class CIForwardProcessor {
 		return incompleteRequiredCompletedTestSuiteNames;
 	}
 
+	private String _getMergeConflictCommentBody() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Unable to forward to ");
+		sb.append(_recipientUsername);
+		sb.append(":");
+		sb.append(_pullRequest.getUpstreamRemoteGitBranchName());
+		sb.append(" because the new pull request would contain a merge ");
+		sb.append("conflict.");
+
+		return sb.toString();
+	}
+
 	private List<String> _getOpenForwardedPullRequestUrls() throws IOException {
 		List<String> openForwardedPullRequestUrls = new ArrayList<>();
 
@@ -728,6 +747,75 @@ public class CIForwardProcessor {
 		}
 
 		return sb.toString();
+	}
+
+	private boolean _hasMergeConflict() {
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				_pullRequest.getUpstreamRemoteGitBranchName(),
+				_gitRepositoryDir.getAbsolutePath(),
+				_pullRequest.getGitRepositoryName());
+
+		String upstreamBranchName =
+			_pullRequest.getUpstreamRemoteGitBranchName();
+
+		String receiverRemoteURL = GitUtil.getUserRemoteURL(
+			_pullRequest.getGitRepositoryName(), _recipientUsername);
+
+		RemoteGitBranch senderRemoteGitBranch =
+			_pullRequest.getSenderRemoteGitBranch();
+
+		RemoteGitBranch receiverRemoteGitBranch =
+			gitWorkingDirectory.getRemoteGitBranch(
+				upstreamBranchName, receiverRemoteURL, true);
+
+		GitCommit mergeBaseCommit = receiverRemoteGitBranch.getMergeBaseCommit(
+			senderRemoteGitBranch);
+
+		if (mergeBaseCommit == null) {
+			return false;
+		}
+
+		String senderSHA = _pullRequest.getSenderSHA();
+
+		if (!gitWorkingDirectory.localSHAExists(senderSHA)) {
+			gitWorkingDirectory.fetch(senderRemoteGitBranch);
+		}
+
+		if (!gitWorkingDirectory.localSHAExists(
+				receiverRemoteGitBranch.getSHA())) {
+
+			gitWorkingDirectory.fetch(
+				receiverRemoteGitBranch, mergeBaseCommit.getCommitDate());
+		}
+
+		LocalGitBranch receiverLocalGitBranch =
+			gitWorkingDirectory.createLocalGitBranch(
+				_recipientUsername + "-" + upstreamBranchName + "-precheck",
+				true, receiverRemoteGitBranch.getSHA());
+
+		LocalGitBranch senderLocalGitBranch =
+			gitWorkingDirectory.createLocalGitBranch(
+				_pullRequest.getLocalSenderBranchName() + "-precheck", true,
+				senderSHA);
+
+		try {
+			gitWorkingDirectory.rebase(
+				true, receiverLocalGitBranch, senderLocalGitBranch);
+
+			return false;
+		}
+		catch (GitWorkingDirectory.GitWorkingDirectoryRuntimeException
+					gitWorkingDirectoryRuntimeException) {
+
+			String message = gitWorkingDirectoryRuntimeException.getMessage();
+
+			if ((message != null) && message.contains("Unable to rebase ")) {
+				return true;
+			}
+
+			throw gitWorkingDirectoryRuntimeException;
+		}
 	}
 
 	private boolean _isForwardEligible() throws IOException {

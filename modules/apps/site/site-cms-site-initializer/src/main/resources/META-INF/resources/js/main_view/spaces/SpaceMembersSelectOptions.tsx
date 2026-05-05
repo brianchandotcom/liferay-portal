@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import classNames from 'classnames';
-import React, {useId} from 'react';
+import React from 'react';
+
+import {InputGroupWithSelect} from '../../common/components/InputGroupWithSelect';
 
 export enum SelectOptions {
 	USERS = 'users',
@@ -20,48 +21,31 @@ export interface SpaceMembersSelectOptionsProps {
 	selectValue: SelectOptions;
 }
 
-export function SpaceMembersSelectOptions(
-	props: SpaceMembersSelectOptionsProps
-) {
-	const {children, className, label, onSelectChange, selectValue} = props;
-	const selectId = useId();
-
+export function SpaceMembersSelectOptions({
+	children,
+	className,
+	label,
+	onSelectChange,
+	selectValue,
+}: SpaceMembersSelectOptionsProps) {
 	return (
-		<ClayForm.Group
+		<InputGroupWithSelect
 			className={classNames('space-members-input-with-select', className)}
+			label={label}
+			onSelectChange={(value) => onSelectChange?.(value as SelectOptions)}
+			options={[
+				{
+					label: Liferay.Language.get('users'),
+					value: SelectOptions.USERS,
+				},
+				{
+					label: Liferay.Language.get('groups'),
+					value: SelectOptions.GROUPS,
+				},
+			]}
+			selectValue={selectValue}
 		>
-			{label && (
-				<label className="d-block" htmlFor={selectId}>
-					{label}
-				</label>
-			)}
-
-			<ClayInput.Group>
-				<ClayInput.GroupItem prepend shrink>
-					<ClaySelectWithOption
-						className="font-weight-semi-bold form-control form-control-select-secondary rounded-left"
-						id={selectId}
-						onChange={(event) => {
-							onSelectChange?.(
-								event.target.value as SelectOptions
-							);
-						}}
-						options={[
-							{
-								label: Liferay.Language.get('users'),
-								value: 'users',
-							},
-							{
-								label: Liferay.Language.get('groups'),
-								value: 'groups',
-							},
-						]}
-						value={selectValue}
-					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem append>{children}</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
+			{children}
+		</InputGroupWithSelect>
 	);
 }

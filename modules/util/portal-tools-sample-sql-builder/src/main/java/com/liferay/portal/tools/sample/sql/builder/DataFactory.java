@@ -784,6 +784,12 @@ public class DataFactory {
 		return sb.toString();
 	}
 
+	public List<String> getLayoutNames() {
+		return Arrays.asList(
+			"404", "500", "Cookie Policy", "Create Account", "Forgot Password",
+			"Sign In");
+	}
+
 	public int getMaxAccountEntryCommerceOrderCount() {
 		return BenchmarksPropsValues.MAX_ACCOUNT_ENTRY_COMMERCE_ORDER_COUNT;
 	}

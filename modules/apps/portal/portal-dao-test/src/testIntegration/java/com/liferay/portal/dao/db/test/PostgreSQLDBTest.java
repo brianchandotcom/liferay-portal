@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,11 @@ public class PostgreSQLDBTest extends DBTest {
 
 		_assertIndexMetadatas(
 			db.getIndexMetadatas(connection, TABLE_NAME_1, null, false));
+	}
+
+	@Override
+	protected void assertLockedQueryState(String state) {
+		Assert.assertTrue(StringUtil.equalsIgnoreCase(state, "Lock"));
 	}
 
 	private void _assertIndexMetadatas(List<IndexMetadata> indexMetadatas)

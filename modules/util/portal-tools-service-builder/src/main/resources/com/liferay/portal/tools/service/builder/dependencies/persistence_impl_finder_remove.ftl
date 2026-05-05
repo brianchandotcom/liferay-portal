@@ -23,7 +23,11 @@
 				${finderCacheInstance},
 				new Object[] {
 					<#list entityColumns as entityColumn>
-						${entityColumn.name}
+						<#if entityColumn.hasArrayableOperator()>
+							new ${entityColumn.type}[] {${entityColumn.name}}
+						<#else>
+							${entityColumn.name}
+						</#if>
 
 						<#if entityColumn_has_next>
 							,

@@ -32,7 +32,11 @@ public int countBy${entityFinder.name}(
 			${finderCacheInstance},
 			new Object[] {
 				<#list entityColumns as entityColumn>
-					${entityColumn.name}
+					<#if entityColumn.hasArrayableOperator()>
+						new ${entityColumn.type}[] {${entityColumn.name}}
+					<#else>
+						${entityColumn.name}
+					</#if>
 
 					<#if entityColumn_has_next>
 						,
@@ -180,101 +184,129 @@ public int countBy${entityFinder.name}(
 	</#list>
 
 	) {
-		<#list entityColumns as entityColumn>
-			<#if entityColumn.hasArrayableOperator()>
-				if (${entityColumn.pluralName} == null) {
-					${entityColumn.pluralName} = new ${entityColumn.type}[0];
-				}
-				else if (${entityColumn.pluralName}.length > 1) {
-					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-						for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
-							${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
-						}
-					</#if>
-
-					<#if serviceBuilder.isVersionGTE_7_2_0()>
-						${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
-					<#else>
-						${entityColumn.pluralName} =
-							<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-								ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
-							<#else>
-								ArrayUtil.unique(${entityColumn.pluralName});
-							</#if>
-
-						<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-							Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
-						<#else>
-							Arrays.sort(${entityColumn.pluralName});
-						</#if>
-					</#if>
-				}
-			<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
-			</#if>
-		</#list>
-
-		<#if entity.isChangeTrackingEnabled()>
-			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-		</#if>
-
-		Object[] finderArgs = new Object[] {
+		<#if !entityFinder.collectionPersistenceFinderEnabled>
 			<#list entityColumns as entityColumn>
 				<#if entityColumn.hasArrayableOperator()>
-						StringUtil.merge(${entityColumn.pluralName})
-				<#elseif stringUtil.equals(entityColumn.type, "Date")>
-						_getTime(${entityColumn.name})
-				<#else>
-					${entityColumn.name}
-				</#if>
+					if (${entityColumn.pluralName} == null) {
+						${entityColumn.pluralName} = new ${entityColumn.type}[0];
+					}
+					else if (${entityColumn.pluralName}.length > 1) {
+						<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+							for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
+								${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
+							}
+						</#if>
 
-				<#if entityColumn_has_next>
-						,
+						<#if serviceBuilder.isVersionGTE_7_2_0()>
+							${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
+						<#else>
+							${entityColumn.pluralName} =
+								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+									ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+								<#else>
+									ArrayUtil.unique(${entityColumn.pluralName});
+								</#if>
+
+							<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+								Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+							<#else>
+								Arrays.sort(${entityColumn.pluralName});
+							</#if>
+						</#if>
+					}
+				<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 				</#if>
 			</#list>
-		};
+		</#if>
 
-		Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
+		<#if entityFinder.collectionPersistenceFinderEnabled>
+			<#if entity.isChangeTrackingEnabled()>
+				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+			</#if>
 
-		if (count == null) {
-			<#include "persistence_impl_count_by_arrayable_query.ftl">
+			return _collectionPersistenceFinderBy${entityFinder.name}.count(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							ArrayUtil.sortedUnique(${entityColumn.pluralName})
+						<#else>
+							${entityColumn.name}
+						</#if>
 
-			String sql = sb.toString();
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				});
 
-			Session session = null;
+			<#if entity.isChangeTrackingEnabled()>
+				}
+			</#if>
+		<#else>
+			<#if entity.isChangeTrackingEnabled()>
+				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
+			</#if>
 
-			try {
-				session = openSession();
+			Object[] finderArgs = new Object[] {
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+							StringUtil.merge(${entityColumn.pluralName})
+					<#elseif stringUtil.equals(entityColumn.type, "Date")>
+							_getTime(${entityColumn.name})
+					<#else>
+						${entityColumn.name}
+					</#if>
 
-				Query query = session.createQuery(sql);
+					<#if entityColumn_has_next>
+							,
+					</#if>
+				</#list>
+			};
 
-				<#if bindParameter(entityColumns)>
-					QueryPos queryPos = QueryPos.getInstance(query);
-				</#if>
+			Long count = (Long)${finderCache}.getResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, this);
 
-				<@finderQPos _arrayable = true />
+			if (count == null) {
+				<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-				count = (Long)query.uniqueResult();
+				String sql = sb.toString();
 
-				${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
+				Session session = null;
 
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					<#if bindParameter(entityColumns)>
+						QueryPos queryPos = QueryPos.getInstance(query);
+					</#if>
+
+					<@finderQPos _arrayable = true />
+
+					count = (Long)query.uniqueResult();
+
+					${finderCache}.putResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs, count);
+
+				}
+				catch (Exception exception) {
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
+					</#if>
+
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-				</#if>
 
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
+			return count.intValue();
 
-		return count.intValue();
-
-		<#if entity.isChangeTrackingEnabled()>
-			}
+			<#if entity.isChangeTrackingEnabled()>
+				}
+			</#if>
 		</#if>
 	}
 </#if>

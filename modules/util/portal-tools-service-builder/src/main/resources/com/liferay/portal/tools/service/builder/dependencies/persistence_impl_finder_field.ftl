@@ -56,6 +56,6 @@ private static final String _FINDER_COLUMN_${entityFinder.name?upper_case}_${ent
 	private static final String _FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_6${finderFieldSuffix} = "(" + removeConjunction(_FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_3) + ")";
 </#if>
 
-<#if entityColumn.hasArrayableOperator() && !stringUtil.equals(entityColumn.type, "String")>
+<#if entityColumn.hasArrayableOperator() && !stringUtil.equals(entityColumn.type, "String") && (validator.isNotNull(finderFieldSuffix) || !entityFinder.collectionPersistenceFinderEnabled || entity.isPermissionCheckEnabled(entityFinder))>
 	private static final String _FINDER_COLUMN_${entityFinder.name?upper_case}_${entityColumn.name?upper_case}_7${finderFieldSuffix} = "${finderFieldName}<#if entityColumn.isArrayableAndOperator()> NOT IN (<#else> IN (</#if>";
 </#if>

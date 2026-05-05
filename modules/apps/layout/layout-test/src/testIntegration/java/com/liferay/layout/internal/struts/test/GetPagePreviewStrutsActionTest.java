@@ -10,6 +10,7 @@ import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntry;
 import com.liferay.client.extension.service.ClientExtensionEntryLocalService;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -159,6 +160,47 @@ public class GetPagePreviewStrutsActionTest {
 			"classic_WAR_classictheme", "01", null);
 
 		_assertContainsContent("classic_WAR_classictheme");
+	}
+
+	@Test
+	public void testGetPagePreviewLayoutInLiveGroupWithStaging()
+		throws Exception {
+
+		Layout layout = _addLayout(_group, false, LayoutConstants.TYPE_CONTENT);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				ServletContextPool.get(StringPool.BLANK));
+
+		mockHttpServletRequest.addParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		mockHttpServletRequest.setAttribute(
+			WebKeys.CURRENT_URL, RandomTestUtil.randomString());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		_themeDisplay.setRequest(mockHttpServletRequest);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_getPagePreviewStrutsAction.execute(
+			mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
 	}
 
 	@Test
@@ -450,6 +492,10 @@ public class GetPagePreviewStrutsActionTest {
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private StagingLocalService _stagingLocalService;
+
 	private ThemeDisplay _themeDisplay;
 
 	@Inject

@@ -18,6 +18,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -117,23 +118,30 @@ public abstract class BaseFDSSerializer {
 				}
 			}
 
-			JSONArray groupsJSONArray = JSONUtil.putAll(
+			JSONArray jsonArray = JSONUtil.putAll(
 				JSONUtil.put(
-					"items", _toItemsJSONArray(ownedEntries)
+					"headerVisible", false
 				).put(
-					"key", "owned"
+					"items", _toJSONArray(ownedEntries)
+				).put(
+					"label",
+					language.get(httpServletRequest.getLocale(), "owned")
 				));
 
 			if (!sharedEntries.isEmpty()) {
-				groupsJSONArray.put(
+				jsonArray.put(
 					JSONUtil.put(
-						"items", _toItemsJSONArray(sharedEntries)
+						"headerVisible", true
 					).put(
-						"key", "shared-with-me"
+						"items", _toJSONArray(sharedEntries)
+					).put(
+						"label",
+						language.get(
+							httpServletRequest.getLocale(), "shared-with-me")
 					));
 			}
 
-			return groupsJSONArray;
+			return jsonArray;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -154,9 +162,12 @@ public abstract class BaseFDSSerializer {
 	protected FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry;
 
 	@Reference
+	protected Language language;
+
+	@Reference
 	protected SharingEntryLocalService sharingEntryLocalService;
 
-	private JSONArray _toItemsJSONArray(List<ObjectEntry> objectEntries)
+	private JSONArray _toJSONArray(List<ObjectEntry> objectEntries)
 		throws Exception {
 
 		return JSONUtil.toJSONArray(

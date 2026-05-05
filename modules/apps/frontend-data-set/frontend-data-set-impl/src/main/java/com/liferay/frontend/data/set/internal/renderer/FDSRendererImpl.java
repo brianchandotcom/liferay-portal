@@ -267,15 +267,15 @@ public class FDSRendererImpl implements FDSRenderer {
 							return null;
 						}
 
-						JSONArray snapshotGroupsJSONArray =
+						JSONArray snapshotsJSONArray =
 							fdsSerializer.serializeSnapshots(
 								fdsName, httpServletRequest);
 
-						if (JSONUtil.isEmpty(snapshotGroupsJSONArray)) {
+						if (JSONUtil.isEmpty(snapshotsJSONArray)) {
 							return null;
 						}
 
-						return snapshotGroupsJSONArray;
+						return snapshotsJSONArray;
 					}
 				).put(
 					"snapshotsEnabled", snapshotsEnabled

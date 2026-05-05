@@ -129,6 +129,15 @@ public class UserGroupServiceWrapper
 			gtUserGroupId, companyId, parentUserGroupId, size);
 	}
 
+	@Override
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupService.getOrAddEmptyUserGroup(
+			externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -403,4 +412,4 @@ public class UserGroupServiceWrapper
 	private UserGroupService _userGroupService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2088304552
+// LIFERAY-SERVICE-BUILDER-HASH:1466976816

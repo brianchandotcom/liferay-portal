@@ -49,6 +49,7 @@ public class UserGroupWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", isAddedByLDAPImport());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -139,6 +140,12 @@ public class UserGroupWrapper
 
 		if (addedByLDAPImport != null) {
 			setAddedByLDAPImport(addedByLDAPImport);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -283,6 +290,16 @@ public class UserGroupWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return model.getPublicLayoutsPageCount();
+	}
+
+	/**
+	 * Returns the status of this user group.
+	 *
+	 * @return the status of this user group
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -475,6 +492,16 @@ public class UserGroupWrapper
 	}
 
 	/**
+	 * Sets the status of this user group.
+	 *
+	 * @param status the status of this user group
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
+	/**
 	 * Sets the user group ID of this user group.
 	 *
 	 * @param userGroupId the user group ID of this user group
@@ -554,4 +581,4 @@ public class UserGroupWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-182913800
+// LIFERAY-SERVICE-BUILDER-HASH:-1867940504

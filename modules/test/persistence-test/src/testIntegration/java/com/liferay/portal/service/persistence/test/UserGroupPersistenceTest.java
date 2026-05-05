@@ -141,6 +141,8 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setAddedByLDAPImport(RandomTestUtil.randomBoolean());
 
+		newUserGroup.setStatus(RandomTestUtil.nextInt());
+
 		_userGroups.add(_persistence.update(newUserGroup));
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(
@@ -180,6 +182,8 @@ public class UserGroupPersistenceTest {
 		Assert.assertEquals(
 			existingUserGroup.isAddedByLDAPImport(),
 			newUserGroup.isAddedByLDAPImport());
+		Assert.assertEquals(
+			existingUserGroup.getStatus(), newUserGroup.getStatus());
 	}
 
 	@Test(expected = DuplicateUserGroupExternalReferenceCodeException.class)
@@ -300,7 +304,7 @@ public class UserGroupPersistenceTest {
 			true, "externalReferenceCode", true, "userGroupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "parentUserGroupId", true, "name", true,
-			"description", true, "addedByLDAPImport", true);
+			"description", true, "addedByLDAPImport", true, "status", true);
 	}
 
 	@Test
@@ -617,6 +621,8 @@ public class UserGroupPersistenceTest {
 
 		userGroup.setAddedByLDAPImport(RandomTestUtil.randomBoolean());
 
+		userGroup.setStatus(RandomTestUtil.nextInt());
+
 		_userGroups.add(_persistence.update(userGroup));
 
 		return userGroup;
@@ -627,4 +633,4 @@ public class UserGroupPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1377195954
+// LIFERAY-SERVICE-BUILDER-HASH:2100466545

@@ -366,6 +366,12 @@ public interface UserGroupLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -801,4 +807,4 @@ public interface UserGroupLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369973637
+// LIFERAY-SERVICE-BUILDER-HASH:1727923866

@@ -4237,6 +4237,7 @@ public class UserGroupPersistenceImpl
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("addedByLDAPImport");
+		ctMergeColumnNames.add("status");
 		ctMergeColumnNames.add("groups_");
 		ctMergeColumnNames.add("teams");
 		ctMergeColumnNames.add("users");
@@ -4547,4 +4548,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1073510775
+// LIFERAY-SERVICE-BUILDER-HASH:-1859228986

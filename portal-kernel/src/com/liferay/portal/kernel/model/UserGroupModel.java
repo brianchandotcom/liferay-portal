@@ -293,6 +293,20 @@ public interface UserGroupModel
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
 
+	/**
+	 * Returns the status of this user group.
+	 *
+	 * @return the status of this user group
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this user group.
+	 *
+	 * @param status the status of this user group
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public UserGroup cloneWithOriginalValues();
 
@@ -301,4 +315,4 @@ public interface UserGroupModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1957282042
+// LIFERAY-SERVICE-BUILDER-HASH:-1380723629

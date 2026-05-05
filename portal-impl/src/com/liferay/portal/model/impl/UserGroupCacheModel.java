@@ -67,7 +67,7 @@ public class UserGroupCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,8 @@ public class UserGroupCacheModel
 		sb.append(description);
 		sb.append(", addedByLDAPImport=");
 		sb.append(addedByLDAPImport);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -165,6 +167,7 @@ public class UserGroupCacheModel
 		}
 
 		userGroupImpl.setAddedByLDAPImport(addedByLDAPImport);
+		userGroupImpl.setStatus(status);
 
 		userGroupImpl.resetOriginalValues();
 
@@ -193,6 +196,8 @@ public class UserGroupCacheModel
 		description = objectInput.readUTF();
 
 		addedByLDAPImport = objectInput.readBoolean();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -248,6 +253,8 @@ public class UserGroupCacheModel
 		}
 
 		objectOutput.writeBoolean(addedByLDAPImport);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -264,6 +271,7 @@ public class UserGroupCacheModel
 	public String name;
 	public String description;
 	public boolean addedByLDAPImport;
+	public int status;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1569303194
+// LIFERAY-SERVICE-BUILDER-HASH:335713954

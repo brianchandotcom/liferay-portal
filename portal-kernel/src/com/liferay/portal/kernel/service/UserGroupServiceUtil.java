@@ -127,6 +127,13 @@ public class UserGroupServiceUtil {
 			gtUserGroupId, companyId, parentUserGroupId, size);
 	}
 
+	public static UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, String name)
+		throws PortalException {
+
+		return getService().getOrAddEmptyUserGroup(externalReferenceCode, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -378,4 +385,4 @@ public class UserGroupServiceUtil {
 	private static volatile UserGroupService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1209312754
+// LIFERAY-SERVICE-BUILDER-HASH:-923350783

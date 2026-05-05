@@ -1548,6 +1548,7 @@ create table UserGroup (
 	name VARCHAR(255) null,
 	description STRING null,
 	addedByLDAPImport BOOLEAN,
+	status INTEGER,
 	primary key (userGroupId, ctCollectionId)
 );
 

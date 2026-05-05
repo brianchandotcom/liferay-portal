@@ -211,6 +211,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_format = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
 	}
 
 	@Before
@@ -259,7 +261,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(), PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -269,7 +271,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			).authentication(
 				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(), PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -280,7 +282,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			).authentication(
 				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(), PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).parameter(
@@ -780,7 +782,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						Map createBatchAction = new HashMap<>();
 						createBatchAction.put("method", "POST");
-						createBatchAction.put("href", ("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}/batch").replace("{${firstPathJavaMethodParameter.parameterName}}", String.valueOf(${firstPathJavaMethodParameter.parameterName})));
+						createBatchAction.put("href", ("http://localhost:" + _portalServerPort + "/o${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}/batch").replace("{${firstPathJavaMethodParameter.parameterName}}", String.valueOf(${firstPathJavaMethodParameter.parameterName})));
 
 						expectedActions.put("createBatch", createBatchAction);
 					</#if>
@@ -1376,7 +1378,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					return new MockHttpServletRequest() {
 						@Override
 						public StringBuffer getRequestURL() {
-							return new StringBuffer(StringBundler.concat("http://localhost:", String.valueOf(PortalUtil.getPortalServerPort(false)), "/o/v1.0/", RandomTestUtil.randomString(), "/", RandomTestUtil.randomString()));
+							return new StringBuffer(StringBundler.concat("http://localhost:", String.valueOf(_portalServerPort), "/o/v1.0/", RandomTestUtil.randomString(), "/", RandomTestUtil.randomString()));
 						}
 					};
 				}
@@ -1409,7 +1411,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getRequestUri() {
-							return URI.create(StringBundler.concat("http://localhost:", PortalUtil.getPortalServerPort(false), "/o/", applicationPath, resourcePath));
+							return URI.create(StringBundler.concat("http://localhost:", _portalServerPort, "/o/", applicationPath, resourcePath));
 						}
 
 						@Override
@@ -1429,7 +1431,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getBaseUri() {
-							return URI.create(StringBundler.concat("http://localhost:", PortalUtil.getPortalServerPort(false), "/o/", applicationPath));
+							return URI.create(StringBundler.concat("http://localhost:", _portalServerPort, "/o/", applicationPath));
 						}
 
 						@Override
@@ -2949,7 +2951,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						).authentication(
 							_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 						).endpoint(
-							testCompany.getVirtualHostname(), PortalUtil.getPortalServerPort(false), "http"
+							testCompany.getVirtualHostname(), _portalServerPort, "http"
 						).parameters(
 							parameters
 						).build();
@@ -3891,7 +3893,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			).toString(),
 			"application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path("http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/graphql");
+		httpInvoker.path("http://localhost:" + _portalServerPort + "/o/graphql");
 		httpInvoker.userNameAndPassword("test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
 		HttpInvoker.HttpResponse httpResponse = httpInvoker.invoke();
@@ -4280,6 +4282,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceTestCase.class);
 
 	private static Format _format;
+
+	private static int _portalServerPort;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 

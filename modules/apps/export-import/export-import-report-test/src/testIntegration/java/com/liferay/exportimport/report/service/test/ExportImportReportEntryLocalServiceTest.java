@@ -192,6 +192,47 @@ public class ExportImportReportEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetExportImportReportEntriesCount() throws Exception {
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			0,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount(
+					TestPropsValues.getCompanyId(),
+					exportImportConfigurationId));
+
+		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
+			RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			exportImportConfigurationId, RandomTestUtil.randomString());
+		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
+			RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
+			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			exportImportConfigurationId, RandomTestUtil.randomString());
+		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
+			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
+
+		Assert.assertEquals(
+			1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount(
+					TestPropsValues.getCompanyId(),
+					exportImportConfigurationId));
+
+		_companyLocalService.deleteCompany(company);
+	}
+
+	@Test
 	public void testGetOrAddEmptyExportImportReportEntry() throws Exception {
 		int count =
 			_exportImportReportEntryLocalService.

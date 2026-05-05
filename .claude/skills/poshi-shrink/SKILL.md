@@ -53,7 +53,7 @@ Build the plan via plan mode (`EnterPlanMode`) using this format:
 
 Sort the inventory ascending by test count so small files (easy wins) surface first. Avoid files with 40+ tests on the first pass.
 
-Pick the **keeper** for each group: the test with the most comprehensive assertions, or the clearest name. The **final name** is usually descriptive of the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`), typically different from the keeper's original name.
+Pick the **keeper** for each group: the test with the most comprehensive assertions, even when its name is awkward — the keeper does not have to keep its name. The **final name** describes the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`) and is typically different from the keeper's original name.
 
 Common merge-worthy signals — classic patterns from Liferay test names:
 
@@ -65,7 +65,7 @@ Common merge-worthy signals — classic patterns from Liferay test names:
 #### Merge Signals — DO
 
 - Same setup + same UI surface + different assertion → one test with N assertion tasks.
-- Tests differing only in asset type (blog vs document vs web content) when the panel behaviour being asserted is identical — often fully redundant; propose deletion rather than merge.
+- Tests differing only in asset type (blog vs document vs widget vs content page) when the panel behaviour being asserted is identical — one representative usually suffices; propose deletion for the rest rather than merging four tests into four.
 - Tests where the source's assertion is already fully covered in the target — commit still happens, it just deletes the source.
 
 #### Merge Signals — DON'T
@@ -79,7 +79,7 @@ Common merge-worthy signals — classic patterns from Liferay test names:
 After `ExitPlanMode` returns the user's approval, apply each operation in the order it appears in the plan and commit after each one with the `/commit` skill — one commit per operation, never squashed. The per-merge granularity is exactly what makes the diff reviewable.
 
 - **Rename** — change the keeper's `test <OldName>` to `test <FinalName>` with no other edits. Commit message: `<TICKET> Rename test <Keeper> to <FinalName>`.
-- **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source. Commit message: `<TICKET> Merge test <Source> into <FinalName>`.
+- **Merge** — delete the source's `test <Source> { ... }` block and fold its **unique** assertions into the target as new `task` blocks. When the source's assertions are already fully covered by the target, simply delete the source. When the same condition is asserted at different strengths (e.g., `AssertTextEquals.assertPartialText("web/<site-path>")` vs the weaker `AssertVisible value1="http://"`), keep the stronger one. Commit message: `<TICKET> Merge test <Source> into <FinalName>`.
 
 When the file convention keeps tests alphabetical, add a final `<TICKET> Alphabetic order` commit after all merges.
 
@@ -91,16 +91,3 @@ After the file is shrunk, report:
 - Before/after test counts.
 - Total commits made (renames + merges + optional cleanups).
 - Tests kept intact and the reason (special setup, differing properties, `@ignore`).
-
-## Anti-Patterns
-
-- **Never rewrite history on pushed/shared branches** unless the user explicitly asks.
-- **Don't trust the LPS ticket to identify the fix location blindly** — sometimes the ticket only added the Poshi test and the real fix is elsewhere.
-- **Don't drop strong assertions when merging.** When one test uses `AssertTextEquals.assertPartialText("web/<site-path>")` and another uses a weak `AssertVisible value1="http://"`, keep the strong one.
-- **Don't merge tests across different property/setup profiles.** Those properties exist for a reason (flaky environment, quarantined, virtual-instance-specific).
-
-## Heuristics
-
-- Identical panel assertions across four asset-type variants (blog / document / widget / content page) are usually overengineered — **one representative often suffices**; propose deletion for the rest instead of merging four tests into four tests.
-- The *keeper* does not have to keep its name. Pick the most comprehensive test as the starting point, then rename it.
-- When a merge target already has an assertion the source also has, the merge commit is still a valid "documents-that-this-was-redundant" commit.

@@ -196,5 +196,40 @@
 				</table>
 			</div>
 		</main>
+		<template id="row-resolved">
+			<tr>
+				<td><span class="test-name">{{name}}</span></td>
+				<td class="col-type">{{type}}</td>
+				<td>
+					<span class="verdict {{verdictClass}}">{{verdict}}</span>
+				</td>
+				<td>{{conclusion}}</td>
+				<td class="nowrap muted">{{resolutionTime}}</td>
+				<td><a href="{{ticketUrl}}">{{ticketKey}}</a></td>
+				<td><a href="{{prUrl}}">#{{prNumber}}</a></td>
+			</tr>
+		</template>
+		<template id="row-no-fix-needed">
+			<tr>
+				<td><span class="test-name">{{name}}</span></td>
+				<td class="col-type">{{type}}</td>
+				<td><span class="verdict no-fix-needed">No fix needed</span></td>
+				<td class="muted">Test passes locally.</td>
+				<td class="nowrap muted">{{resolutionTime}}</td>
+				<td>—</td>
+				<td>—</td>
+			</tr>
+		</template>
+		<template id="row-unresolved">
+			<tr>
+				<td><span class="test-name">{{name}}</span></td>
+				<td class="col-type">{{type}}</td>
+				<td><span class="verdict unresolved">Unresolved</span></td>
+				<td class="muted">{{conclusion}}</td>
+				<td class="nowrap muted">{{resolutionTime}}</td>
+				<td>—</td>
+				<td>—</td>
+			</tr>
+		</template>
 	</body>
 </html>

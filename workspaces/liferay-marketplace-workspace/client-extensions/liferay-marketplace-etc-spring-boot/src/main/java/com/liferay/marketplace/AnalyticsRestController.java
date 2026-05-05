@@ -7,6 +7,7 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.permission.AccountMemberPermission;
 import com.liferay.marketplace.service.AnalyticsService;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
@@ -34,6 +35,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,6 +54,32 @@ import reactor.util.retry.Retry;
 @RequestMapping("/analytics")
 @RestController
 public class AnalyticsRestController extends BaseRestController {
+
+	@GetMapping("project/corpProjectUuid/{corpProjectUuid}")
+	public ResponseEntity<?> getCorpProjectUuid(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable String corpProjectUuid)
+		throws Exception {
+
+		_accountMemberPermission.check(corpProjectUuid, jwt);
+
+		String analyticsProject = _analyticsService.getCorpProjectUuid(
+			corpProjectUuid);
+
+		if (analyticsProject == null) {
+			return ResponseEntity.status(
+				HttpStatus.NOT_FOUND
+			).body(
+				null
+			);
+		}
+
+		return ResponseEntity.status(
+			HttpStatus.OK
+		).body(
+			_analyticsService.getCorpProjectUuid(corpProjectUuid)
+		);
+	}
 
 	@GetMapping("plan/{accountKey}")
 	public ResponseEntity<?> getPlan(@PathVariable String accountKey)
@@ -219,6 +248,9 @@ public class AnalyticsRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		AnalyticsRestController.class);
+
+	@Autowired
+	private AccountMemberPermission _accountMemberPermission;
 
 	@Value("${liferay.marketplace.analytics.auth.url}")
 	private String _analyticsAuthUrl;

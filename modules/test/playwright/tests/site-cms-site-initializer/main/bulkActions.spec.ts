@@ -2797,3 +2797,149 @@ test(
 		});
 	}
 );
+
+test(
+	'Bulk Duplicate creates draft copies in the same Space',
+	{tag: '@LPD-88656'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentTitles = [
+			`Content ${getRandomString()}`,
+			`Content ${getRandomString()}`,
+		];
+		const spaceName = `Space ${getRandomString()}`;
+
+		await test.step('Create a Space with two contents', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			for (const title of contentTitles) {
+				await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title,
+					},
+					applicationName,
+					spaceName
+				);
+			}
+		});
+
+		await test.step('Bulk duplicate both contents', async () => {
+			await assetsPage.gotoSpaceContents(spaceName);
+
+			await assetsPage.selectItems(contentTitles);
+
+			await assetsPage.execBulkItemAction('Duplicate');
+		});
+
+		await test.step('Info alert for the bulk duplicate is displayed', async () => {
+			await waitForAlert(
+				page,
+				'Info:Duplicate action started for 2 assets.',
+				{type: 'info'}
+			);
+		});
+
+		await test.step('Success alert for the bulk duplicate is displayed', async () => {
+			await waitForAlert(
+				page,
+				'Success:2 assets were successfully duplicated.',
+				{first: true}
+			);
+		});
+
+		await test.step('Both copies appear with (Copy) suffix in Draft state', async () => {
+			for (const originalTitle of contentTitles) {
+				await expect(
+					page.getByRole('link', {
+						exact: true,
+						name: `${originalTitle} (Copy)`,
+					})
+				).toBeVisible();
+			}
+
+			await expect(
+				assetsPage.table.bodyRows
+					.filter({
+						has: page.getByRole('link', {
+							exact: true,
+							name: `${contentTitles[0]} (Copy)`,
+						}),
+					})
+					.getByText('Draft')
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Bulk Duplicate handles a mixed entry and folder selection in the same Space',
+	{tag: '@LPD-88656'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const contentTitle = `Content ${getRandomString()}`;
+		const folderTitle = `Folder ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await test.step('Create a Space with one content and one folder', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: spaceName,
+				title: folderTitle,
+			});
+		});
+
+		await test.step('Bulk duplicate the content and folder', async () => {
+			await assetsPage.gotoSpaceContents(spaceName);
+
+			await assetsPage.selectItems([contentTitle, folderTitle]);
+
+			await assetsPage.execBulkItemAction('Duplicate');
+		});
+
+		await test.step('Info alert for the bulk duplicate is displayed', async () => {
+			await waitForAlert(
+				page,
+				'Info:Duplicate action started for 2 assets.',
+				{type: 'info'}
+			);
+		});
+
+		await test.step('Success alert for the bulk duplicate is displayed', async () => {
+			await waitForAlert(
+				page,
+				'Success:2 assets were successfully duplicated.',
+				{first: true}
+			);
+		});
+
+		await test.step('Both copies appear with (Copy) suffix', async () => {
+			for (const title of [contentTitle, folderTitle]) {
+				await expect(
+					page.getByRole('link', {
+						exact: true,
+						name: `${title} (Copy)`,
+					})
+				).toBeVisible();
+			}
+		});
+	}
+);

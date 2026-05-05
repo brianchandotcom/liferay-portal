@@ -82,6 +82,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 			creatorUserId: '20103',
 			description: 'This is a test space',
 			externalReferenceCode: 'ERC2',
+			friendlyURL: '/asset-library-1',
 			id: 1,
 			name: 'Test Space',
 			settings: {logoColor: 'outline-0'},

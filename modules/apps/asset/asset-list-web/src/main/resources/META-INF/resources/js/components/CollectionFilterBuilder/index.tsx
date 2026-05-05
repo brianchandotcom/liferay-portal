@@ -11,7 +11,10 @@ import {
 	ConditionBuilder,
 	getRandomID,
 } from './condition_builder/ConditionBuilder';
-import {getCollectionOperators} from './operators';
+import {
+	getCollectionOperators,
+	getCollectionQuantifierOptions,
+} from './operators';
 
 import type {
 	ConditionType,
@@ -220,6 +223,7 @@ export default function CollectionFilterBuilder({
 				conditionType={conditionType}
 				conditions={conditions}
 				getOperators={getCollectionOperators}
+				getQuantifierOptions={getCollectionQuantifierOptions}
 				onChange={handleChange}
 				properties={propertiesWithAssetFields}
 				renderValueInput={renderCustomValueInput}

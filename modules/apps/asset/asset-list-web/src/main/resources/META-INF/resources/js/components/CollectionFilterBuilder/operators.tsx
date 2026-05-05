@@ -42,3 +42,21 @@ export function getCollectionOperators(
 			return DEFAULT_OPERATORS;
 	}
 }
+
+const QUANTIFIER_OPTIONS: GenericOperator[] = [
+	{label: Liferay.Language.get('any-of-the-following'), value: 'any'},
+	{label: Liferay.Language.get('all-of-the-following'), value: 'all'},
+];
+
+export function getCollectionQuantifierOptions(
+	property: GenericProperty
+): GenericOperator[] | null {
+	switch (property.type) {
+		case 'asset-categories':
+		case 'asset-tags':
+		case 'string':
+			return QUANTIFIER_OPTIONS;
+		default:
+			return null;
+	}
+}

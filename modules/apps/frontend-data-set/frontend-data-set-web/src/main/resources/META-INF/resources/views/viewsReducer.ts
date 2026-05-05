@@ -6,17 +6,15 @@
 import {deepClone} from 'frontend-js-web';
 
 import {IView} from '../utils/types';
-import {ISnapshot, ISnapshotGroup} from './ViewsContext';
+import {ISnapshot, ISnapshots} from './ViewsContext';
 import getViewComponent from './getViewComponent';
 
-const OWNED_GROUP_KEY = 'owned';
-
-const mapSnapshotInGroups = (
-	snapshotGroups: Array<ISnapshotGroup>,
+const mapSnapshots = (
+	snapshots: Array<ISnapshots>,
 	erc: string,
 	updater: (snapshot: ISnapshot) => ISnapshot
 ) =>
-	snapshotGroups.map((group) => ({
+	snapshots.map((group) => ({
 		...group,
 		items: group.items.map((snapshot) =>
 			snapshot.erc === erc ? updater(snapshot) : snapshot
@@ -48,39 +46,38 @@ type TViewsActions = {
 
 const viewsActions: TViewsActions = {
 	[EViewsActionTypes.ADD_OR_UPDATE_SNAPSHOT]: (state, value) => {
-		const {snapshotGroups}: {snapshotGroups: Array<ISnapshotGroup>} = state;
+		const {snapshots}: {snapshots: Array<ISnapshots>} = state;
 
 		const {configuration, erc} = value;
 
-		const existsInGroups = snapshotGroups.some((group) =>
+		const existsInSnapshots = snapshots.some((group) =>
 			group.items.some((snapshot) => snapshot.erc === erc)
 		);
 
-		let updatedGroups: Array<ISnapshotGroup>;
+		let updatedSnapshots: Array<ISnapshots>;
 
-		if (existsInGroups) {
-			updatedGroups = mapSnapshotInGroups(
-				snapshotGroups,
-				erc,
-				(snapshot) => ({...snapshot, configuration})
-			);
+		if (existsInSnapshots) {
+			updatedSnapshots = mapSnapshots(snapshots, erc, (snapshot) => ({
+				...snapshot,
+				configuration,
+			}));
 		}
 		else {
-			const ownedGroupIndex = snapshotGroups.findIndex(
-				(group) => group.key === OWNED_GROUP_KEY
+			const hiddenHeaderSnapshotsIndex = snapshots.findIndex(
+				(group) => !group.headerVisible
 			);
 
-			if (ownedGroupIndex >= 0) {
-				updatedGroups = snapshotGroups.map((group, index) =>
-					index === ownedGroupIndex
+			if (hiddenHeaderSnapshotsIndex >= 0) {
+				updatedSnapshots = snapshots.map((group, index) =>
+					index === hiddenHeaderSnapshotsIndex
 						? {...group, items: [...group.items, value]}
 						: group
 				);
 			}
 			else {
-				updatedGroups = [
-					{items: [value], key: OWNED_GROUP_KEY},
-					...snapshotGroups,
+				updatedSnapshots = [
+					{headerVisible: false, items: [value]},
+					...snapshots,
 				];
 			}
 		}
@@ -88,8 +85,8 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			activeSnapshotERC: erc,
-			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
+			snapshots: updatedSnapshots,
 		};
 	},
 	[EViewsActionTypes.BATCH_UPDATE]: (state, stateUpdates) => {
@@ -110,13 +107,13 @@ const viewsActions: TViewsActions = {
 	[EViewsActionTypes.DELETE_SNAPSHOT]: (state, value) => {
 		const {
 			defaultSnapshot,
-			snapshotGroups,
+			snapshots,
 		}: {
 			defaultSnapshot: any;
-			snapshotGroups: Array<ISnapshotGroup>;
+			snapshots: Array<ISnapshots>;
 		} = state;
 
-		const updatedGroups = snapshotGroups.map((group) => ({
+		const updatedSnapshots = snapshots.map((group) => ({
 			...group,
 			items: group.items.filter(
 				(snapshot) => snapshot.erc !== value.snapshotERC
@@ -127,30 +124,30 @@ const viewsActions: TViewsActions = {
 			...state,
 			...defaultSnapshot,
 			activeSnapshotERC: null,
-			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
+			snapshots: updatedSnapshots,
 		};
 	},
 	[EViewsActionTypes.NOOP]: (state) => state,
 	[EViewsActionTypes.RENAME_ACTIVE_SNAPSHOT]: (state, value) => {
 		const {
 			activeSnapshotERC,
-			snapshotGroups,
+			snapshots,
 		}: {
 			activeSnapshotERC: string;
-			snapshotGroups: Array<ISnapshotGroup>;
+			snapshots: Array<ISnapshots>;
 		} = state;
 
-		const updatedGroups = mapSnapshotInGroups(
-			snapshotGroups,
+		const updatedSnapshots = mapSnapshots(
+			snapshots,
 			activeSnapshotERC,
 			(snapshot) => ({...snapshot, label: value.label})
 		);
 
 		return {
 			...state,
-			snapshotGroups: updatedGroups,
 			snapshotUpdated: false,
+			snapshots: updatedSnapshots,
 		};
 	},
 	[EViewsActionTypes.RESET_TO_DEFAULT_SNAPSHOT]: (state) => {

@@ -53,6 +53,8 @@ public class JaxRsComponentRegistrationTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			JaxRsComponentRegistrationTest.class);
 
@@ -106,25 +108,25 @@ public class JaxRsComponentRegistrationTest {
 	@Test
 	public void testIsRegistered() throws Exception {
 		URL url = new URL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"http://localhost:" + _portalServerPort +
 				"/o/rest-test/greeter1/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"http://localhost:" + _portalServerPort +
 				"/o/rest-test/greeter2/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"http://localhost:" + _portalServerPort +
 				"/o/rest-test/greeter3/sayHello");
 
 		Assert.assertEquals("Hello.", URLUtil.toString(url));
 
 		url = new URL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"http://localhost:" + _portalServerPort +
 				"/o/rest-test/greeter3/addon");
 
 		Assert.assertEquals("addon", URLUtil.toString(url));
@@ -133,8 +135,7 @@ public class JaxRsComponentRegistrationTest {
 	@Test(expected = Exception.class)
 	public void testServiceListIsUnavailable() throws Exception {
 		URL url = new URL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/o/soap-test/services");
+			"http://localhost:" + _portalServerPort + "/o/soap-test/services");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"portal_web.docroot.errors.code_jsp", LoggerTestUtil.OFF)) {
@@ -169,6 +170,7 @@ public class JaxRsComponentRegistrationTest {
 
 	}
 
+	private static int _portalServerPort;
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 

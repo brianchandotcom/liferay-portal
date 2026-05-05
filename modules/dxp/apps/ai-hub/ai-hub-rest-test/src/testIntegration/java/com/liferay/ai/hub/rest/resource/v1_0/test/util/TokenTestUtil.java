@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.List;
 public class TokenTestUtil {
 
 	public static JSONObject postToken() throws Exception {
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		User user = TestPropsValues.getUser();
 
 		OAuth2Application oAuth2Application =
@@ -39,9 +42,9 @@ public class TokenTestUtil {
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.WEB_APPLICATION.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), "",
-				List.of(), "http://localhost:8080", 0, null, "AI Hub", "",
-				List.of("http://localhost:8080"), false,
-				Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
+				List.of(), "http://localhost:" + portalServerPort, 0, null,
+				"AI Hub", "", List.of("http://localhost:" + portalServerPort),
+				false, Arrays.asList("Liferay.AI.Hub.REST.everything"), false,
 				new ServiceContext());
 
 		ConfigurationTestUtil.saveConfiguration(
@@ -51,7 +54,7 @@ public class TokenTestUtil {
 			).put(
 				"clientSecret", oAuth2Application.getClientSecret()
 			).put(
-				"serviceURL", "http://localhost:8080"
+				"serviceURL", "http://localhost:" + portalServerPort
 			).build());
 
 		return HTTPTestUtil.invokeToJSONObject(

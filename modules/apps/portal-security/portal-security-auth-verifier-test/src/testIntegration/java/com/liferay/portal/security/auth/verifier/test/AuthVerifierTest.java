@@ -76,6 +76,8 @@ public class AuthVerifierTest {
 
 		_bundleContext = bundle.getBundleContext();
 
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		_registerServletContextHelper(
 			HashMapDictionaryBuilder.<String, Object>put(
 				JaxrsWhiteboardConstants.JAX_RS_NAME, "guest-no-allowed"
@@ -253,21 +255,21 @@ public class AuthVerifierTest {
 	public void testAllowGuest() throws Exception {
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-guest-allowed-false-test/guestAllowed"));
 
 		_assertHttpResponseStatusCode(403, url.openConnection());
 
 		url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-guest-allowed-true-test/guestAllowed"));
 
 		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
 
 		url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-guest-allowed-default-test/guestAllowed"));
 
 		Assert.assertEquals("guest-allowed", URLUtil.toString(url));
@@ -277,7 +279,7 @@ public class AuthVerifierTest {
 	public void testAllowGuestFailsForInvalidCredentials() throws Exception {
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-guest-allowed-true-test/guestAllowed"));
 
 		String credentials = DatatypeConverter.printBase64Binary(
@@ -297,7 +299,7 @@ public class AuthVerifierTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-override-missing-test",
 				"/attemptMatchRelativeToContextPath"));
 
@@ -310,7 +312,7 @@ public class AuthVerifierTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-override-not-matched-test",
 				"/authVerifierMatched"));
 
@@ -318,7 +320,7 @@ public class AuthVerifierTest {
 
 		url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-override-matched-test",
 				"/authVerifierNotMatched"));
 
@@ -329,7 +331,7 @@ public class AuthVerifierTest {
 	public void testAuthVerifierNotMatched() throws Exception {
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-override-missing-test",
 				"/authVerifierNotMatched"));
 
@@ -340,7 +342,7 @@ public class AuthVerifierTest {
 	public void testRemoteAccess() throws Exception {
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-tracker-remote-access-test",
 				"/remoteAccess"));
 
@@ -351,21 +353,21 @@ public class AuthVerifierTest {
 	public void testRemoteUser() throws Exception {
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-tracker-enabled-test/remoteUser"));
 
 		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
 
 		url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-tracker-disabled-test/remoteUser"));
 
 		Assert.assertEquals("no-remote-user", URLUtil.toString(url));
 
 		url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-tracker-default-test/remoteUser"));
 
 		Assert.assertEquals("remote-user-set", URLUtil.toString(url));
@@ -377,7 +379,7 @@ public class AuthVerifierTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/auth-verifier-filter-override-matched-test"));
 
 		Assert.assertEquals("matched", URLUtil.toString(url));
@@ -561,6 +563,7 @@ public class AuthVerifierTest {
 	}
 
 	private static BundleContext _bundleContext;
+	private static int _portalServerPort;
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 

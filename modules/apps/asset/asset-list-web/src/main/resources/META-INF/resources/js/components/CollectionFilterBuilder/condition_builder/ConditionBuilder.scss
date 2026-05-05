@@ -5,11 +5,11 @@
 	}
 
 	&__select {
-		max-width: 180px;
+		min-width: 160px;
 	}
 
 	&__value-input .form-control-sm {
-		max-width: 180px;
+		min-width: 160px;
 	}
 
 	&__asset-selector {
@@ -20,6 +20,7 @@
 			height: auto;
 			line-height: 1.5;
 			min-height: 2rem;
+			min-width: 160px;
 			padding: 0 0.25rem;
 		}
 

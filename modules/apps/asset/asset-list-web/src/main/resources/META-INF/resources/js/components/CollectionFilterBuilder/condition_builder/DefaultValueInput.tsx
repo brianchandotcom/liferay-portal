@@ -19,8 +19,9 @@ import type {GenericProperty} from './types';
  * entries) should provide their own renderValueInput instead.
  */
 export function DefaultValueInput(
+	index: number,
 	property: GenericProperty,
-	_operator: string,
+	operator: string,
 	value: string | Array<string | object> | undefined,
 	onChange: (value: string | Array<string | object>) => void
 ): React.ReactNode {
@@ -61,13 +62,49 @@ export function DefaultValueInput(
 		);
 	}
 
-	if (type === 'integer' || type === 'double') {
+	if (type === 'integer' || type === 'numeric' || type === 'decimal') {
+		if (operator === 'between') {
+			const [from, to] = (value as string[]) || [];
+
+			return (
+				<div className="c-gap-2 d-flex flex-grow-1">
+					<ClayInput
+						aria-label={Liferay.Language.get('from')}
+						className="form-control-sm"
+						id={`${property.name}-from-${index}`}
+						onChange={(event) =>
+							onChange([event.target.value, to] as string[])
+						}
+						placeholder={Liferay.Language.get('from')}
+						step={type === 'decimal' ? '0.001' : '1'}
+						type="number"
+						value={from}
+					/>
+
+					<ClayInput
+						aria-label={Liferay.Language.get('to')}
+						className="form-control-sm"
+						id={`${property.name}-to-${index}`}
+						onChange={(event) =>
+							onChange([from, event.target.value] as string[])
+						}
+						placeholder={Liferay.Language.get('to')}
+						step={type === 'decimal' ? '0.001' : '1'}
+						type="number"
+						value={to}
+					/>
+				</div>
+			);
+		}
+
 		return (
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
 				className="form-control-sm"
+				id={`${property.name}-${index}`}
 				onChange={(event) => onChange(event.target.value)}
 				placeholder={Liferay.Language.get('enter-value')}
+				step={type === 'decimal' ? '0.001' : '1'}
 				type="number"
 				value={(value as string) ?? ''}
 			/>
@@ -79,6 +116,7 @@ export function DefaultValueInput(
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
 				className="form-control-sm"
+				id={`${property.name}-${index}`}
 				onChange={(event) => onChange(event.target.value)}
 				type={type === 'date-time' ? 'datetime-local' : 'date'}
 				value={(value as string) ?? ''}
@@ -90,6 +128,7 @@ export function DefaultValueInput(
 		<ClayInput
 			aria-label={Liferay.Language.get('value')}
 			className="form-control-sm"
+			id={`${property.name}-${index}`}
 			onChange={(event) => onChange(event.target.value)}
 			placeholder={Liferay.Language.get('enter-value')}
 			type="text"

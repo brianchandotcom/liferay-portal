@@ -38,7 +38,7 @@ export default function createValueInput({
 	tagSelectorURL?: string;
 	vocabularyIds?: string[];
 }): ValueInputRenderer {
-	return (property, operator, value, onChange) => {
+	return (index, property, operator, value, onChange) => {
 		if (property.type === 'asset-tags') {
 			return (
 				<AssetTagsSelector
@@ -87,6 +87,6 @@ export default function createValueInput({
 			);
 		}
 
-		return DefaultValueInput(property, operator, value, onChange);
+		return DefaultValueInput(index, property, operator, value, onChange);
 	};
 }

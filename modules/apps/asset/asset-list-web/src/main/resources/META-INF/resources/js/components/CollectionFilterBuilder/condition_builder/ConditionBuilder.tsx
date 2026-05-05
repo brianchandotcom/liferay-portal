@@ -45,6 +45,7 @@ type ConditionRowProps = {
 	getQuantifierOptions?: (
 		property: GenericProperty
 	) => GenericOperator[] | null;
+	index: number;
 	onChange: (condition: FilterCondition) => void;
 	onDelete: () => void;
 	properties: Array<GenericProperty | PropertyGroup>;
@@ -62,6 +63,7 @@ function ConditionRow({
 	condition,
 	getOperators,
 	getQuantifierOptions,
+	index,
 	onChange,
 	onDelete,
 	properties,
@@ -106,8 +108,8 @@ function ConditionRow({
 			className="align-items-center condition-builder__row d-flex justify-content-between mb-3 p-2 rounded"
 			role="menuitem"
 		>
-			<div className="c-gap-2 d-flex flex-grow-1 flex-wrap">
-				<div className="condition-builder__select form-group mb-0 w-100">
+			<div className="c-gap-2 d-flex flex-wrap">
+				<div className="condition-builder__select form-group mb-0">
 					<Picker
 						aria-label={Liferay.Language.get('field')}
 						as={TriggerLabel}
@@ -161,7 +163,7 @@ function ConditionRow({
 				</div>
 
 				{!!operators.length && (
-					<div className="condition-builder__select form-group mb-0 w-100">
+					<div className="condition-builder__select form-group mb-0">
 						<Picker
 							aria-label={Liferay.Language.get('operator')}
 							as={TriggerLabel}
@@ -188,7 +190,7 @@ function ConditionRow({
 				)}
 
 				{!!quantifierOptions?.length && (
-					<div className="condition-builder__select form-group mb-0 w-100">
+					<div className="condition-builder__select form-group mb-0">
 						<Picker
 							aria-label={Liferay.Language.get('quantifier')}
 							as={TriggerLabel}
@@ -216,6 +218,7 @@ function ConditionRow({
 				<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
 					{selectedProperty && condition.operatorName
 						? renderValueInput(
+								index,
 								selectedProperty,
 								condition.operatorName,
 								condition.value,
@@ -322,6 +325,7 @@ export function ConditionBuilder({
 						condition={condition}
 						getOperators={getOperators}
 						getQuantifierOptions={getQuantifierOptions}
+						index={index}
 						key={condition.id}
 						onChange={(updated) =>
 							handleUpdateCondition(index, updated)

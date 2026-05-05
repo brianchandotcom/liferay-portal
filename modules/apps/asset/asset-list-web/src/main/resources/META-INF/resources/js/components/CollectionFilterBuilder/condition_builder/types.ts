@@ -11,8 +11,9 @@ export type PropertyType =
 	| 'boolean'
 	| 'date'
 	| 'date-time'
-	| 'double'
+	| 'decimal'
 	| 'integer'
+	| 'numeric'
 	| 'picklist'
 	| 'string';
 
@@ -67,11 +68,11 @@ export type ConditionType = 'all' | 'any';
 
 /**
  * Render prop for the value input cell of a condition row.
- * Consumers provide this to handle domain-specific value inputs
- * (e.g. async picklist fetch for Objects, boolean toggle for Page Editor).
+ * Consumers provide this to handle domain-specific value inputs.
  * Use DefaultValueInput for standard type-based inputs.
  */
 export type ValueInputRenderer = (
+	index: number,
 	property: GenericProperty,
 	operator: string,
 	value: string | Array<string | object> | undefined,

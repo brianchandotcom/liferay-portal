@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.NotificationUtil;
@@ -685,8 +686,18 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 					portalGitWorkingDirectory.getWorkingDirectory(),
 					"build.xml", "setup-yarn");
 			}
-			catch (Exception exception) {
-				exception.printStackTrace();
+			catch (AntException antException) {
+				System.out.println(
+					"Skipping Playwright class-group enumeration because " +
+						"setup-yarn failed");
+
+				antException.printStackTrace();
+
+				_playwrightJSONObject = new JSONObject();
+
+				_playwrightJSONObjectsLoaded.set(true);
+
+				return;
 			}
 
 			try {
@@ -716,6 +727,8 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 				_sendNotification("Unable to parse Playwright JSON object");
 
 				exception.printStackTrace();
+
+				_playwrightJSONObject = new JSONObject();
 			}
 
 			JSONArray errorsJSONArray = _playwrightJSONObject.optJSONArray(

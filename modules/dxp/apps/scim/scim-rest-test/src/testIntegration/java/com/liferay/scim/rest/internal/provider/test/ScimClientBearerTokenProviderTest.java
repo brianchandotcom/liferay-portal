@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.scim.rest.util.ScimClientUtil;
@@ -113,8 +114,8 @@ public class ScimClientBearerTokenProviderTest {
 
 		options.setLocation(
 			StringBundler.concat(
-				"http://", company.getVirtualHostname(),
-				":8080/o/oauth2/token"));
+				"http://", company.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false), "/o/oauth2/token"));
 
 		options.setMethod(Http.Method.POST);
 

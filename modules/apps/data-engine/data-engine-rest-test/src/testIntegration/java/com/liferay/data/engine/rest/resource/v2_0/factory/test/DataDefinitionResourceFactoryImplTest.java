@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,7 +64,9 @@ public class DataDefinitionResourceFactoryImplTest {
 					@Override
 					public Object getAttribute(String name) {
 						if (StringUtil.equals(name, WebKeys.CURRENT_URL)) {
-							return "http://localhost:8080/currentURL";
+							return "http://localhost:" +
+								PortalUtil.getPortalServerPort(false) +
+									"/currentURL";
 						}
 						else if (StringUtil.equals(name, WebKeys.LOCALE)) {
 							return LocaleUtil.BRAZIL;

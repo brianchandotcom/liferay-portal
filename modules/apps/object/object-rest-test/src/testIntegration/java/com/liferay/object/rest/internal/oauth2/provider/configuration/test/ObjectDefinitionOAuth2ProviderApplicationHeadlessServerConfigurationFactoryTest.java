@@ -19,6 +19,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
@@ -117,7 +118,8 @@ public class
 			).put(
 				"description", RandomTestUtil.randomString()
 			).put(
-				"homePageURL", "http://localhost:8080"
+				"homePageURL",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)
 			).put(
 				"name", objectDefinition.getName()
 			).put(

@@ -492,8 +492,8 @@ test(
 		const picklistEntryKey = '0';
 
 		await picklistApiHelpers.editPicklist({
+			externalReferenceCode: picklistERC,
 			key: picklistEntryKey,
-			name: picklistName,
 			value: fieldName,
 		});
 

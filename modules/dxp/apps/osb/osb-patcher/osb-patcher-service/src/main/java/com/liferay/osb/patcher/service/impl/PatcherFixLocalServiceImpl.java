@@ -127,11 +127,11 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 	@Override
 	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
-			String patcherProjectVersionName, String ticketList)
+			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException {
 
 		_validateCheckPatcherFixesByPatcherProjectVersionName(
-			patcherProjectVersionName, ticketList);
+			patcherFixNames, patcherProjectVersionName);
 
 		PatcherProjectVersion patcherProjectVersion =
 			PatcherProjectVersionLocalServiceUtil.
@@ -142,19 +142,20 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			PatcherFixConstants.TYPE_ANY,
 			WorkflowConstants.STATUS_FIX_COMPLETE);
 
-		Set<String> patcherFixNames = new HashSet<>();
+		Set<String> completedPatcherFixNames = new HashSet<>();
 
 		for (PatcherFix patcherFix : patcherFixes) {
-			patcherFixNames.add(patcherFix.getName());
+			completedPatcherFixNames.add(patcherFix.getName());
 		}
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		for (String ticket : ticketList.split(",")) {
-			String preparedTicket = PatcherUtil.preparePatcherName(ticket);
+		for (String patcherFixName : patcherFixNames.split(",")) {
+			patcherFixName = PatcherUtil.preparePatcherName(patcherFixName);
 
 			jsonObject.put(
-				preparedTicket, patcherFixNames.contains(preparedTicket));
+				patcherFixName,
+				completedPatcherFixNames.contains(patcherFixName));
 		}
 
 		return jsonObject;
@@ -547,11 +548,11 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 	}
 
 	private void _validateCheckPatcherFixesByPatcherProjectVersionName(
-			String patcherProjectVersionName, String ticketList)
+			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException {
 
 		if (Validator.isNull(patcherProjectVersionName)) {
-			throw new PortalException("The project version name is invalid");
+			throw new PortalException("Patcher project version name is null");
 		}
 
 		PatcherProjectVersion patcherProjectVersion =
@@ -559,34 +560,35 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 				fetchPatcherProjectVersionByName(patcherProjectVersionName);
 
 		if (patcherProjectVersion == null) {
-			throw new PortalException("The project version is invalid");
+			throw new PortalException("Patcher project version does not exist");
 		}
 
-		if (Validator.isNull(ticketList)) {
-			throw new PortalException("The ticket list is invalid");
+		if (Validator.isNull(patcherFixNames)) {
+			throw new PortalException("Patcher fix names is null");
 		}
 
-		List<String> invalidTickets = new ArrayList<>();
+		List<String> invalidPatcherFixNames = new ArrayList<>();
 		Pattern pattern = Pattern.compile(
 			PatcherConstants.TICKET_NAME_LPD_LPE_LPS_REGEX);
 
-		for (String ticket : ticketList.split(",")) {
-			String preparedTicket = PatcherUtil.preparePatcherName(ticket);
+		for (String patcherFixName : patcherFixNames.split(",")) {
+			patcherFixName = PatcherUtil.preparePatcherName(patcherFixName);
 
 			if (!pattern.matcher(
-					preparedTicket
+					patcherFixName
 				).matches()) {
 
-				invalidTickets.add(ticket);
+				invalidPatcherFixNames.add(patcherFixName);
 			}
 		}
 
-		if (!invalidTickets.isEmpty()) {
-			String invalidTicketList = StringUtil.merge(
-				invalidTickets, StringPool.COMMA_AND_SPACE);
+		if (!invalidPatcherFixNames.isEmpty()) {
+			String invalidPatcherFixNamesString = StringUtil.merge(
+				invalidPatcherFixNames, StringPool.COMMA_AND_SPACE);
 
 			throw new PortalException(
-				"The following tickets are invalid: " + invalidTicketList);
+				"Patcher fix names are invalid: " +
+					invalidPatcherFixNamesString);
 		}
 	}
 

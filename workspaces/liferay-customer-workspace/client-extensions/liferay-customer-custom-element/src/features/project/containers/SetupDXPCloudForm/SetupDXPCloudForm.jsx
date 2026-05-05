@@ -76,11 +76,9 @@ const SetupDXPCloudPage = ({
 	const {provisioningServerAPI} = useAppPropertiesContext();
 
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState({
-		cloudNative: [],
 		criticalIncident: [],
 	});
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState({
-		cloudNative: [],
 		criticalIncident: [],
 	});
 	const [isCriticalIncidentEmpty, setIsCriticalIncidentEmpty] = useState(false);
@@ -584,26 +582,6 @@ const SetupDXPCloudPage = ({
 						}
 					/>
 
-					<SetupHighPriorityContactForm
-						addContactList={(contactList) =>
-							handleHighPriorityContacts(
-								contactList,
-								'cloudNative',
-								setAddHighPriorityContact
-							)
-						}
-						disableSubmit={() => {}}
-						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
-						}
-						removedContactList={(contactList) =>
-							handleHighPriorityContacts(
-								contactList,
-								'cloudNative',
-								setRemoveHighPriorityContact
-							)
-						}
-					/>
 				</div>
 			)}
 		</Layout>

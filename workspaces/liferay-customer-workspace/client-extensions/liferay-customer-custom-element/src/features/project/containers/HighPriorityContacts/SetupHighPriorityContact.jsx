@@ -48,23 +48,25 @@ const getHighPriorityContactsByFilterRaysource = (
 				name,
 				selectedAccountSummary,
 				userAccountContactInformation,
-			}) => ({
-				contact:
-					userAccountContactInformation?.telephones.map((phone) =>
-						phone.primary ? phone.phoneNumber : []
-					) ?? [],
-				email,
-				id,
-				labelRole: highPriorityContactCategory?.contactCategory.name,
-				name,
-				role: selectedAccountSummary?.roleBriefs.filter(
-					({name}) => name === filter
-				)[0]?.name,
-				roleId: selectedAccountSummary?.roleBriefs.filter(
-					({name}) => name === filter
-				)[0]?.id,
-				value: id,
-			})
+			}) => {
+				const matchingRole = selectedAccountSummary?.roleBriefs.find(
+					(brief) => brief.name === filter
+				);
+
+				return {
+					contact:
+						userAccountContactInformation?.telephones.map((phone) =>
+							phone.primary ? phone.phoneNumber : []
+						) ?? [],
+					email,
+					id,
+					labelRole: highPriorityContactCategory?.contactCategory.name,
+					name,
+					role: matchingRole?.name,
+					roleId: matchingRole?.id,
+					value: id,
+				};
+			}
 		);
 
 const SetupHighPriorityContact = ({
@@ -75,14 +77,15 @@ const SetupHighPriorityContact = ({
 	removedContactList,
 	setCurrentContact,
 }) => {
-	const [
-		currentHighPriorityContacts,
-		setCurrentHighPriorityContacts,
-	] = useState([]);
+	const [currentHighPriorityContacts, setCurrentHighPriorityContacts] =
+		useState([]);
 
 	const [rolesId, setRolesId] = useState();
 	const {client} = useAppPropertiesContext();
-	const {data: currentKoroneikiAccountData, loading: loadingCurrentKoroneikiAccount } = useCurrentKoroneikiAccount();
+	const {
+		data: currentKoroneikiAccountData,
+		loading: loadingCurrentKoroneikiAccount,
+	} = useCurrentKoroneikiAccount();
 	const projectOnboarding = useOnboarding();
 	const projectPortal = useAppContext();
 
@@ -193,7 +196,7 @@ const SetupHighPriorityContactForm = ({
 	<Formik
 		initialValues={{
 			activations: {
-				criticalIncedentContact: [],
+				criticalIncidentContact: [],
 			},
 		}}
 	>

@@ -341,7 +341,7 @@ function _set_up_gcp_gitops {
 
 	_terraform_init_and_apply "./platform" "gitops/platform" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
 
-	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}" "${_GITOPS_RESOURCE_TF_VARS[@]}"
+	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
 
 	echo "Google GCP GitOps infrastructure setup complete."
 

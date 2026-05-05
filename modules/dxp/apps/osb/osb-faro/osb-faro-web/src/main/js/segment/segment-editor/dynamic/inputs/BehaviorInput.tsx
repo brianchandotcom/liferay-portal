@@ -363,7 +363,7 @@ export class BehaviorInput extends React.Component<IBehaviorInputProps> {
 								[key: string]: any;
 							}) => Promise<any>
 						}
-						entity={this.getAssetFromContext() ?? {}}
+						entity={this.getAssetFromContext()}
 						error={touched.asset && !valid.asset}
 						groupId={groupId}
 						initialOrderIOMap={createOrderIOMap(COUNT)}

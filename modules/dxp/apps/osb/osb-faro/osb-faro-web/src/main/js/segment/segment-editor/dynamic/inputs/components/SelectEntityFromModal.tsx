@@ -17,7 +17,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 interface ISelectEntityFromModalProps extends PropsFromRedux {
 	columns: Columns;
 	dataSourceFn?: (params: {[key: string]: any}) => Promise<any>;
-	entity: {dataSourceName?: string; [key: string]: any};
+	entity?: {dataSourceName?: string; [key: string]: any};
 	error: boolean;
 	graphqlProps?: {[key: string]: any};
 	groupId?: string;
@@ -68,7 +68,7 @@ const SelectEntityFromModal: React.FC<ISelectEntityFromModalProps> = ({
 			dataSourceParams: {groupId},
 			initialDelta,
 			initialOrderIOMap,
-			initialSelectedItems: entity ? [entity] : undefined,
+			initialSelectedItems: entity?.id ? [entity] : undefined,
 			onClose: close,
 			onSubmit: (items: OrderedMap<string, object>) => {
 				onSubmit(items);

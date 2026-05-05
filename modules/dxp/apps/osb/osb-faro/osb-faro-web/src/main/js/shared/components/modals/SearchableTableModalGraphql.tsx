@@ -77,6 +77,7 @@ const SearchableTableModalGraphql: React.FC<
 
 	useEffect(() => {
 		if (selectedItems.length) {
+			selectionDispatch?.({type: ACTION_TYPES.clearAll});
 			selectionDispatch?.({
 				payload: {items: selectedItems},
 				type: ACTION_TYPES.add

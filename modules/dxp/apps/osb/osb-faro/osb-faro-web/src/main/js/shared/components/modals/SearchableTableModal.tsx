@@ -84,7 +84,8 @@ const SearchableTableModal: React.FC<ISearchableTableModalProps> = ({
 	});
 
 	useEffect(() => {
-		if (initialSelectedItems) {
+		if (initialSelectedItems?.length) {
+			selectionDispatch?.({type: ActionTypes.ClearAll});
 			selectionDispatch?.({
 				payload: {items: initialSelectedItems},
 				type: ActionTypes.Add

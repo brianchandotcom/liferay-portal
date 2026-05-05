@@ -6,17 +6,254 @@
 package com.liferay.headless.cms.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.headless.cms.client.dto.v1_0.AssetStatistics;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
 
-import org.junit.Ignore;
+import java.io.Serializable;
+
+import java.util.Collections;
+import java.util.Date;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Crescenzo Rega
  */
-@Ignore
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class AssetStatisticsResourceTest
 	extends BaseAssetStatisticsResourceTestCase {
-}
 
-// LIFERAY-REST-BUILDER-HASH:1424625049
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	@Test
+	public void testGetAssetStatistics() throws Exception {
+
+		// Add object entry on irrelevant group and irrelevant object definition
+
+		ObjectDefinition irrelevantObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "name")),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		ObjectEntry irrelevantObjectEntry =
+			_objectEntryLocalService.addObjectEntry(
+				irrelevantGroup.getGroupId(), TestPropsValues.getUserId(),
+				irrelevantObjectDefinition.getObjectDefinitionId(), 0, "en_US",
+				HashMapBuilder.<String, Serializable>put(
+					"name", RandomTestUtil.randomString()
+				).build(),
+				serviceContext);
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(),
+			irrelevantObjectEntry.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertAssetStatistics(0, 0, 0, 0);
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_SPACE, serviceContext);
+
+		Group cmsGroup = CMSTestUtil.getOrAddGroup(
+			AssetStatisticsResourceTest.class);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_WEB_CONTENT", cmsGroup.getCompanyId());
+
+		Date now = new Date();
+
+		// Add object entry with imminent expiration date
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry1.setExpirationDate(
+			new Date(now.getTime() + (3 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry1);
+
+		_assertAssetStatistics(0, 1, 0, 0);
+
+		// Add object entry with distant expiration date
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry2.setExpirationDate(
+			new Date(now.getTime() + (10 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry2);
+
+		_assertAssetStatistics(0, 1, 0, 0);
+
+		// Add object entry with future review date
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry3.setReviewDate(new Date(now.getTime() + (5 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry3);
+
+		_assertAssetStatistics(0, 1, 0, 0);
+
+		// Add object entry with overdue review date
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		objectEntry4.setReviewDate(new Date(now.getTime() - (2 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry4);
+
+		_assertAssetStatistics(0, 1, 0, 1);
+
+		// Add object entry with status draft
+
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_assertAssetStatistics(0, 1, 1, 1);
+
+		// Add object entry with status expired
+
+		ObjectEntry objectEntry6 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+
+		_assertAssetStatistics(1, 1, 1, 1);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			irrelevantObjectDefinition);
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry.getDepotEntryId());
+	}
+
+	@Override
+	@Test
+	public void testGraphQLGetAssetStatistics() throws Exception {
+	}
+
+	private ObjectEntry _addObjectEntry(
+			DepotEntry depotEntry, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		return _objectEntryLocalService.addObjectEntry(
+			depotEntry.getGroupId(), depotEntry.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					"L_CONTENTS", depotEntry.getGroupId(),
+					depotEntry.getCompanyId()
+				).getObjectEntryFolderId(),
+			"en_US",
+			HashMapBuilder.<String, Serializable>put(
+				"content_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertAssetStatistics(
+			long expectedExpiredCount, long expectedExpiringSoonCount,
+			long expectedInDraftCount, long expectedReviewDateOverdueCount)
+		throws Exception {
+
+		AssetStatistics assetStatistics =
+			assetStatisticsResource.getAssetStatistics();
+
+		Assert.assertEquals(
+			expectedExpiredCount,
+			GetterUtil.getLong(assetStatistics.getExpiredCount()));
+		Assert.assertEquals(
+			expectedExpiringSoonCount,
+			GetterUtil.getLong(assetStatistics.getExpiringSoonCount()));
+		Assert.assertEquals(
+			expectedInDraftCount,
+			GetterUtil.getLong(assetStatistics.getInDraftCount()));
+		Assert.assertEquals(
+			expectedReviewDateOverdueCount,
+			GetterUtil.getLong(assetStatistics.getReviewDateOverdueCount()));
+	}
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+}

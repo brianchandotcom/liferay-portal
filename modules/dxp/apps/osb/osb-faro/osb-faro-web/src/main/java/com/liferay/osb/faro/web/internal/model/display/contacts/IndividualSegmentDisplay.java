@@ -52,6 +52,7 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 		_channelId = individualSegment.getChannelId();
 		_dateCreated = individualSegment.getDateCreated();
 		_dateModified = individualSegment.getDateModified();
+		_externalReferenceCode = individualSegment.getExternalReferenceCode();
 		_filterString = individualSegment.getFilterString();
 		_id = individualSegment.getId();
 		_includeAnonymousUsers = individualSegment.isIncludeAnonymousUsers();
@@ -227,6 +228,7 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 	private String _channelId;
 	private Date _dateCreated;
 	private Date _dateModified;
+	private String _externalReferenceCode;
 
 	@JsonProperty("filter")
 	private String _filterString;

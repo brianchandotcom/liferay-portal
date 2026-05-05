@@ -74,6 +74,26 @@ public class AttachmentBase64SerDes {
 			sb.append("\"");
 		}
 
+		if (attachmentBase64.getPriority() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"priority\": ");
+
+			sb.append(attachmentBase64.getPriority());
+		}
+
+		if (attachmentBase64.getRestricted() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"restricted\": ");
+
+			sb.append(attachmentBase64.getRestricted());
+		}
+
 		if (attachmentBase64.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -84,6 +104,20 @@ public class AttachmentBase64SerDes {
 			sb.append("\"");
 
 			sb.append(_escape(attachmentBase64.getTitle()));
+
+			sb.append("\"");
+		}
+
+		if (attachmentBase64.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(attachmentBase64.getType()));
 
 			sb.append("\"");
 		}
@@ -124,11 +158,33 @@ public class AttachmentBase64SerDes {
 				String.valueOf(attachmentBase64.getExternalReferenceCode()));
 		}
 
+		if (attachmentBase64.getPriority() == null) {
+			map.put("priority", null);
+		}
+		else {
+			map.put("priority", String.valueOf(attachmentBase64.getPriority()));
+		}
+
+		if (attachmentBase64.getRestricted() == null) {
+			map.put("restricted", null);
+		}
+		else {
+			map.put(
+				"restricted", String.valueOf(attachmentBase64.getRestricted()));
+		}
+
 		if (attachmentBase64.getTitle() == null) {
 			map.put("title", null);
 		}
 		else {
 			map.put("title", String.valueOf(attachmentBase64.getTitle()));
+		}
+
+		if (attachmentBase64.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(attachmentBase64.getType()));
 		}
 
 		return map;
@@ -157,7 +213,16 @@ public class AttachmentBase64SerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -183,9 +248,26 @@ public class AttachmentBase64SerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "priority")) {
+				if (jsonParserFieldValue != null) {
+					attachmentBase64.setPriority(
+						Double.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "restricted")) {
+				if (jsonParserFieldValue != null) {
+					attachmentBase64.setRestricted(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
 				if (jsonParserFieldValue != null) {
 					attachmentBase64.setTitle((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					attachmentBase64.setType((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -269,4 +351,4 @@ public class AttachmentBase64SerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1889501493
+// LIFERAY-REST-BUILDER-HASH:1322312648

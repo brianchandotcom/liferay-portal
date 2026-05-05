@@ -1572,10 +1572,9 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, String> _addAction(
-			String actionName, String methodName,
-			ObjectDefinition objectDefinition,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			Map<String, String> templateParameterMap, UriInfo uriInfo) {
+		String actionName, String methodName, ObjectDefinition objectDefinition,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+		Map<String, String> templateParameterMap, UriInfo uriInfo) {
 
 		if (serviceBuilderObjectEntry.isRootDescendantNode()) {
 			return null;

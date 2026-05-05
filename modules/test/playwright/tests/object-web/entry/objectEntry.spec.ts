@@ -5426,9 +5426,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
 			const prefix = '+1';
 
-			const fieldContainer = page.locator(
-				`[data-field-name="${objectFieldLabel}"]`
-			);
+			const fieldContainer = page.getByRole('group', {
+				name: objectFieldLabel,
+			});
 
 			let objectDefinition: ObjectDefinition;
 
@@ -5539,9 +5539,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const objectFieldLabel = `phoneNumber${getRandomInt()}`;
 			const prefix = '+1';
 
-			const fieldContainer = page.locator(
-				`[data-field-name="${objectFieldLabel}"]`
-			);
+			const fieldContainer = page.getByRole('group', {
+				name: objectFieldLabel,
+			});
 
 			let objectDefinition: ObjectDefinition;
 
@@ -5656,16 +5656,16 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const ptUserPrefix = '+55';
 			const userFieldLabel = `phoneNumberUser${getRandomInt()}`;
 
-			const fixedFieldContainer = page.locator(
-				`[data-field-name="${fixedFieldLabel}"]`
-			);
+			const fixedFieldContainer = page.getByRole('group', {
+				name: fixedFieldLabel,
+			});
 
 			const fixedPhoneInput =
 				fixedFieldContainer.getByLabel('Phone Number');
 
-			const userFieldContainer = page.locator(
-				`[data-field-name="${userFieldLabel}"]`
-			);
+			const userFieldContainer = page.getByRole('group', {
+				name: userFieldLabel,
+			});
 
 			const userPhoneInput =
 				userFieldContainer.getByLabel('Phone Number');

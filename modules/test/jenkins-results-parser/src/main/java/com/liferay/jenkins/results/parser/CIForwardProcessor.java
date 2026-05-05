@@ -750,14 +750,13 @@ public class CIForwardProcessor {
 	}
 
 	private boolean _hasMergeConflict() {
-		GitWorkingDirectory gitWorkingDirectory =
-			GitWorkingDirectoryFactory.newGitWorkingDirectory(
-				_pullRequest.getUpstreamRemoteGitBranchName(),
-				_gitRepositoryDir.getAbsolutePath(),
-				_pullRequest.getGitRepositoryName());
-
 		String upstreamBranchName =
 			_pullRequest.getUpstreamRemoteGitBranchName();
+
+		GitWorkingDirectory gitWorkingDirectory =
+			GitWorkingDirectoryFactory.newGitWorkingDirectory(
+				upstreamBranchName, _gitRepositoryDir.getAbsolutePath(),
+				_pullRequest.getGitRepositoryName());
 
 		String receiverRemoteURL = GitUtil.getUserRemoteURL(
 			_pullRequest.getGitRepositoryName(), _recipientUsername);
@@ -791,7 +790,8 @@ public class CIForwardProcessor {
 
 		LocalGitBranch receiverLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
-				_recipientUsername + "-" + upstreamBranchName + "-precheck",
+				JenkinsResultsParserUtil.combine(
+					_recipientUsername, "-", upstreamBranchName, "-precheck"),
 				true, receiverRemoteGitBranch.getSHA());
 
 		LocalGitBranch senderLocalGitBranch =
@@ -811,6 +811,13 @@ public class CIForwardProcessor {
 			String message = gitWorkingDirectoryRuntimeException.getMessage();
 
 			if ((message != null) && message.contains("Unable to rebase ")) {
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Detected merge conflict between ",
+						senderRemoteGitBranch.getUsername(), ":",
+						senderRemoteGitBranch.getName(), " and ",
+						_recipientUsername, ":", upstreamBranchName));
+
 				return true;
 			}
 

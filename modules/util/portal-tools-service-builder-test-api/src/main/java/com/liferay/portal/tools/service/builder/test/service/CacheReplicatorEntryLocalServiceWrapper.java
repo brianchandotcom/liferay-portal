@@ -50,6 +50,15 @@ public class CacheReplicatorEntryLocalServiceWrapper
 			cacheReplicatorEntry);
 	}
 
+	@Override
+	public
+		com.liferay.portal.tools.service.builder.test.model.CacheReplicatorEntry
+			addCacheReplicatorEntry(long companyId, String name) {
+
+		return _cacheReplicatorEntryLocalService.addCacheReplicatorEntry(
+			companyId, name);
+	}
+
 	/**
 	 * Creates a new cache replicator entry with the primary key. Does not add the cache replicator entry to the database.
 	 *
@@ -245,6 +254,15 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	}
 
 	@Override
+	public
+		com.liferay.portal.tools.service.builder.test.model.CacheReplicatorEntry
+			fetchCacheReplicatorEntryByName(String name) {
+
+		return _cacheReplicatorEntryLocalService.
+			fetchCacheReplicatorEntryByName(name);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -272,6 +290,26 @@ public class CacheReplicatorEntryLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.
+			CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+				long companyId) {
+
+		return _cacheReplicatorEntryLocalService.
+			getCacheReplicatorEntriesByCompanyId(companyId);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.portal.tools.service.builder.test.model.
+			CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+				long companyId, int start, int end) {
+
+		return _cacheReplicatorEntryLocalService.
+			getCacheReplicatorEntriesByCompanyId(companyId, start, end);
+	}
+
 	/**
 	 * Returns the number of cache replicator entries.
 	 *
@@ -281,6 +319,12 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	public int getCacheReplicatorEntriesCount() {
 		return _cacheReplicatorEntryLocalService.
 			getCacheReplicatorEntriesCount();
+	}
+
+	@Override
+	public int getCacheReplicatorEntriesCountByCompanyId(long companyId) {
+		return _cacheReplicatorEntryLocalService.
+			getCacheReplicatorEntriesCountByCompanyId(companyId);
 	}
 
 	/**
@@ -371,4 +415,4 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	private CacheReplicatorEntryLocalService _cacheReplicatorEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1583117237
+// LIFERAY-SERVICE-BUILDER-HASH:1582792236

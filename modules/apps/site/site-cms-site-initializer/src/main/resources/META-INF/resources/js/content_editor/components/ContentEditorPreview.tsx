@@ -102,7 +102,7 @@ export default function ContentEditorPreview({
 	return (
 		<div
 			aria-labelledby={titleId}
-			className={classNames('content-editor__preview c-slideout-end', {
+			className={classNames('content-editor__preview', {
 				resizing,
 				visible: isVisible,
 			})}

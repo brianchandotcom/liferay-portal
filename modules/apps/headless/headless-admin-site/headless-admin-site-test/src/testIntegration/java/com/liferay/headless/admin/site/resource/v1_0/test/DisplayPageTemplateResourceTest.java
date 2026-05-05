@@ -62,6 +62,7 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -117,6 +118,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -138,6 +140,13 @@ public class DisplayPageTemplateResourceTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseDisplayPageTemplateResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Ignore
 	@Override
@@ -825,8 +834,7 @@ public class DisplayPageTemplateResourceTest
 		).authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
@@ -1488,9 +1496,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -1841,9 +1849,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -2300,9 +2308,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -2327,6 +2335,8 @@ public class DisplayPageTemplateResourceTest
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DisplayPageTemplateResourceTest.class);
+
+	private static int _portalServerPort;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

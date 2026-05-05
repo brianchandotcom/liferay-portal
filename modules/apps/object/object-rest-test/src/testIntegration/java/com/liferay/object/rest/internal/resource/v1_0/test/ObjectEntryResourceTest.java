@@ -307,6 +307,8 @@ public class ObjectEntryResourceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		_testGroupId = TestPropsValues.getGroupId();
 
 		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
@@ -8299,8 +8301,8 @@ public class ObjectEntryResourceTest {
 			_addObjectAction(_objectDefinition1), _objectDefinition1,
 			(actionJSONObject, jsonObject, objectAction) -> Assert.assertEquals(
 				StringBundler.concat(
-					"http://localhost:", PortalUtil.getPortalServerPort(false),
-					"/o", _objectDefinition1.getRESTContextPath(),
+					"http://localhost:", _portalServerPort, "/o",
+					_objectDefinition1.getRESTContextPath(),
 					"/by-external-reference-code/",
 					jsonObject.getString("externalReferenceCode"),
 					"/object-actions/", objectAction.getName()),
@@ -8311,8 +8313,8 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1,
 			(actionJSONObject, jsonObject, objectAction) -> Assert.assertEquals(
 				StringBundler.concat(
-					"http://localhost:", PortalUtil.getPortalServerPort(false),
-					"/o", _siteScopedObjectDefinition1.getRESTContextPath(),
+					"http://localhost:", _portalServerPort, "/o",
+					_siteScopedObjectDefinition1.getRESTContextPath(),
 					"/scopes/", _testGroupId, "/by-external-reference-code/",
 					jsonObject.getString("externalReferenceCode"),
 					"/object-actions/", objectAction.getName()),
@@ -9822,7 +9824,7 @@ public class ObjectEntryResourceTest {
 		try {
 			HTTPTestUtil.customize(
 			).withBaseURL(
-				"http://www.able.com:8080"
+				"http://www.able.com:" + _portalServerPort
 			).withCredentials(
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
@@ -9843,7 +9845,7 @@ public class ObjectEntryResourceTest {
 
 			HTTPTestUtil.customize(
 			).withBaseURL(
-				"http://www.able.com:8080"
+				"http://www.able.com:" + _portalServerPort
 			).withCredentials(
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
@@ -9863,7 +9865,7 @@ public class ObjectEntryResourceTest {
 
 			HTTPTestUtil.customize(
 			).withBaseURL(
-				"http://www.able.com:8080"
+				"http://www.able.com:" + _portalServerPort
 			).withCredentials(
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
@@ -11303,7 +11305,7 @@ public class ObjectEntryResourceTest {
 
 		HTTPTestUtil.customize(
 		).withBaseURL(
-			"http://www.able.com:8080"
+			"http://www.able.com:" + _portalServerPort
 		).withCredentials(
 			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).apply(
@@ -16319,11 +16321,11 @@ public class ObjectEntryResourceTest {
 		String objectEntryId, boolean sharingEnabled) {
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			"http://localhost:", _portalServerPort, "/o",
 			objectDefinition.getRESTContextPath(), StringPool.SLASH,
 			objectEntryId);
 		String scopedEndpoint = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
+			"http://localhost:", _portalServerPort, "/o",
 			objectDefinition.getRESTContextPath(), "/scopes/",
 			_group.getGroupId());
 
@@ -16611,7 +16613,7 @@ public class ObjectEntryResourceTest {
 					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 					objectField))) {
 
-			jsonObject.put("fileURL", "http://localhost:8080");
+			jsonObject.put("fileURL", "http://localhost:" + _portalServerPort);
 		}
 
 		return jsonObject;
@@ -18617,7 +18619,8 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				RandomTestUtil.randomString() + ".txt",
 				StringBundler.concat(
-					"http://", company.getVirtualHostname(), ":8080",
+					"http://", company.getVirtualHostname(), ":",
+					_portalServerPort,
 					_dlURLHelper.getPreviewURL(
 						customFileEntry1, customFileEntry1.getFileVersion(),
 						null, "", false, true)),
@@ -18634,7 +18637,8 @@ public class ObjectEntryResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			String url = StringBundler.concat(
-				"http://", company.getVirtualHostname(), ":8081");
+				"http://", company.getVirtualHostname(), ":",
+				_portalServerPort + 1);
 
 			_testPatchPutCustomObjectEntryWithAttachmentField(
 				fileEntry -> JSONUtil.put(
@@ -18658,8 +18662,8 @@ public class ObjectEntryResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			String url = StringBundler.concat(
-				"http//", company.getVirtualHostname(), ":8080/",
-				RandomTestUtil.randomString());
+				"http//", company.getVirtualHostname(), ":", _portalServerPort,
+				"/", RandomTestUtil.randomString());
 
 			_testPatchPutCustomObjectEntryWithAttachmentField(
 				fileEntry -> JSONUtil.put(
@@ -18678,8 +18682,8 @@ public class ObjectEntryResourceTest {
 		// Documents and media source, file from URL not found
 
 		String httpCode404URL = StringBundler.concat(
-			"http://", company.getVirtualHostname(), ":8080/",
-			RandomTestUtil.randomString());
+			"http://", company.getVirtualHostname(), ":", _portalServerPort,
+			"/", RandomTestUtil.randomString());
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -18699,7 +18703,7 @@ public class ObjectEntryResourceTest {
 		// Documents and media source, file from URL with unsupported protocol
 
 		String unsupportedProtocolFileURL = StringBundler.concat(
-			"file://", company.getVirtualHostname(), ":8080");
+			"file://", company.getVirtualHostname(), ":", _portalServerPort);
 
 		_testPatchPutCustomObjectEntryWithAttachmentField(
 			fileEntry -> JSONUtil.put(
@@ -19592,7 +19596,8 @@ public class ObjectEntryResourceTest {
 			_toFileEntry(
 				customFileEntry1.getTitle(),
 				StringBundler.concat(
-					"http://", company.getVirtualHostname(), ":8080",
+					"http://", company.getVirtualHostname(), ":",
+					_portalServerPort,
 					_dlURLHelper.getPreviewURL(
 						customFileEntry1, customFileEntry1.getFileVersion(),
 						null, "", false, true)),
@@ -19608,7 +19613,8 @@ public class ObjectEntryResourceTest {
 				LoggerTestUtil.ERROR)) {
 
 			String hostDownFileURL = StringBundler.concat(
-				"http://", company.getVirtualHostname(), ":8081");
+				"http://", company.getVirtualHostname(), ":",
+				_portalServerPort + 1);
 
 			_testPostCustomObjectEntryWithAttachmentObjectField(
 				fileEntry -> JSONUtil.put(
@@ -19626,7 +19632,7 @@ public class ObjectEntryResourceTest {
 		// Documents and media source, file from URL malformed
 
 		String malformedFileURL = StringBundler.concat(
-			"http//", company.getVirtualHostname(), ":8080/",
+			"http//", company.getVirtualHostname(), ":", _portalServerPort, "/",
 			RandomTestUtil.randomString());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -19650,8 +19656,8 @@ public class ObjectEntryResourceTest {
 		// Documents and media source, file from URL not found
 
 		String resourceNotFoundFileURL = StringBundler.concat(
-			"http://", company.getVirtualHostname(), ":8080/",
-			RandomTestUtil.randomString());
+			"http://", company.getVirtualHostname(), ":", _portalServerPort,
+			"/", RandomTestUtil.randomString());
 
 		_testPostCustomObjectEntryWithAttachmentObjectField(
 			fileEntry -> JSONUtil.put(
@@ -19670,7 +19676,7 @@ public class ObjectEntryResourceTest {
 		// Documents and media source, file from URL with unsupported protocol
 
 		String unsupportedProtocolURL = StringBundler.concat(
-			"file://", company.getVirtualHostname(), ":8080");
+			"file://", company.getVirtualHostname(), ":", _portalServerPort);
 
 		_testPostCustomObjectEntryWithAttachmentObjectField(
 			fileEntry -> JSONUtil.put(
@@ -21321,8 +21327,7 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						taxonomyCategory.getId(), "/taxonomy-categories")
 				).put(
@@ -21333,8 +21338,7 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						taxonomyCategory.getId())
 				).put(
@@ -21345,8 +21349,7 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						taxonomyCategory.getId())
 				).put(
@@ -21357,8 +21360,7 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						taxonomyCategory.getId())
 				).put(
@@ -21369,8 +21371,7 @@ public class ObjectEntryResourceTest {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						taxonomyCategory.getId())
 				).put(
@@ -21692,6 +21693,7 @@ public class ObjectEntryResourceTest {
 	private static final DateFormat _dateTimeDateFormat =
 		DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+	private static int _portalServerPort;
 	private static List<ServiceRegistration<?>> _serviceRegistrations;
 	private static TaxonomyCategoryResource _taxonomyCategoryResource;
 	private static final TestDLFileEntryModelListener

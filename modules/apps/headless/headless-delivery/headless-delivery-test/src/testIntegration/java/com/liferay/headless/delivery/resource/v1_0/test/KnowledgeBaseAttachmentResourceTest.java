@@ -163,7 +163,7 @@ public class KnowledgeBaseAttachmentResourceTest
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
 			_read(
-				"http://localhost:8080" +
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
 					knowledgeBaseAttachment.getContentUrl()));
 	}
 

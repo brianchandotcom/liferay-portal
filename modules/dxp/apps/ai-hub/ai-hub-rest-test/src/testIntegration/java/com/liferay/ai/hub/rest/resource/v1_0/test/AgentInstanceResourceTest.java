@@ -112,6 +112,8 @@ public class AgentInstanceResourceTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		BaseAgentInstanceResourceTestCase.setUpClass();
+
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
@@ -135,6 +137,8 @@ public class AgentInstanceResourceTest
 
 		_originalName = PrincipalThreadLocal.getName();
 
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		ConfigurationTestUtil.saveConfiguration(
 			AIHubCellConfiguration.class.getName(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -142,7 +146,7 @@ public class AgentInstanceResourceTest
 			).put(
 				"clientSecret", RandomTestUtil.randomString()
 			).put(
-				"serviceURL", "http://localhost:8080"
+				"serviceURL", "http://localhost:" + _portalServerPort
 			).build());
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
@@ -221,9 +225,7 @@ public class AgentInstanceResourceTest
 				"r_accountToAIHubMCPServers_accountEntryId",
 				aiHubAccountEntry.getAccountEntryId()
 			).put(
-				"url",
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"/o/mcp"
+				"url", "http://localhost:" + _portalServerPort + "/o/mcp"
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				GroupTestUtil.addGroup(), TestPropsValues.getUserId()));
@@ -1026,6 +1028,7 @@ public class AgentInstanceResourceTest
 
 	private static String _originalName;
 	private static PermissionChecker _originalPermissionChecker;
+	private static int _portalServerPort;
 
 	@Inject
 	private static SiteInitializerRegistry _siteInitializerRegistry;

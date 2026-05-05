@@ -33,6 +33,7 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -78,6 +79,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -97,6 +99,13 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseMasterPageResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Ignore
 	@Override
@@ -736,8 +745,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
@@ -1064,9 +1072,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -1261,9 +1269,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -1508,9 +1516,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -1546,6 +1554,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 			WorkflowConstants.STATUS_APPROVED);
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;

@@ -348,7 +348,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		themeDisplay.setPortalURL(
 			testCompany.getPortalURL(testGroup.getGroupId()));
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(testGroup.getGroupId());
 		themeDisplay.setUser(testCompany.getGuestUser());
 

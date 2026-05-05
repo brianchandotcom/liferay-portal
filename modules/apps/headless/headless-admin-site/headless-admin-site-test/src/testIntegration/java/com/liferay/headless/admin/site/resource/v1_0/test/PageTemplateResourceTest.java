@@ -45,6 +45,7 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -88,6 +89,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -107,6 +109,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BasePageTemplateResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Ignore
 	@Override
@@ -831,8 +840,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
@@ -1496,9 +1504,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -1731,9 +1739,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -2002,9 +2010,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() ->
-							"http://localhost:8080/" +
-								RandomTestUtil.randomString());
+						() -> StringBundler.concat(
+							"http://localhost:", _portalServerPort, "/",
+							RandomTestUtil.randomString()));
 				}
 			};
 
@@ -2076,6 +2084,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PageTemplateResourceTest.class);
+
+	private static int _portalServerPort;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

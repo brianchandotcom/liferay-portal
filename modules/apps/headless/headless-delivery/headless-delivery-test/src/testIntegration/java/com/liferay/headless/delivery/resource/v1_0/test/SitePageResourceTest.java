@@ -165,6 +165,7 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -192,6 +193,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseSitePageResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -566,8 +574,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.SPAIN
 		).build();
@@ -705,8 +712,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				public StringBuffer getRequestURL() {
 					return new StringBuffer(
 						StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/o/v1.0/",
+							"http://localhost:", _portalServerPort, "/o/v1.0/",
 							RandomTestUtil.randomString(), "/",
 							RandomTestUtil.randomString()));
 				}
@@ -739,8 +745,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				public URI getBaseUri() {
 					return URI.create(
 						StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/o/",
+							"http://localhost:", _portalServerPort, "/o/",
 							_applicationPath));
 				}
 
@@ -812,8 +817,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				public URI getRequestUri() {
 					return URI.create(
 						StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/o/",
+							"http://localhost:", _portalServerPort, "/o/",
 							_applicationPath, _resourcePath));
 				}
 
@@ -2412,6 +2416,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				roleKey = RoleConstants.OWNER;
 			}
 		};
+
+	private static int _portalServerPort;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

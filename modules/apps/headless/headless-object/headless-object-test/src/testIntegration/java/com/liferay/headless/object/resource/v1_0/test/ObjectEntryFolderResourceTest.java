@@ -86,6 +86,8 @@ public class ObjectEntryFolderResourceTest
 	public static void setUpClass() throws Exception {
 		BaseObjectEntryFolderResourceTestCase.setUpClass();
 
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-17564");
 	}
@@ -742,8 +744,7 @@ public class ObjectEntryFolderResourceTest
 		long objectEntryFolderId, boolean sharingEnabled) {
 
 		String href1 =
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/o/headless-object/v1.0";
+			"http://localhost:" + _portalServerPort + "/o/headless-object/v1.0";
 
 		String href2 = href1 + "/object-entry-folders/" + objectEntryFolderId;
 
@@ -795,8 +796,7 @@ public class ObjectEntryFolderResourceTest
 		).authentication(
 			login, password
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -912,8 +912,7 @@ public class ObjectEntryFolderResourceTest
 			).authentication(
 				user.getEmailAddress(), "test"
 			).endpoint(
-				testCompany.getVirtualHostname(),
-				PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -1473,6 +1472,8 @@ public class ObjectEntryFolderResourceTest
 		_testDepotEntryGroup = _groupLocalService.updateGroup(
 			_testDepotEntryGroup.getGroupId(), unicodeProperties.toString());
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

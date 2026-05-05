@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.Inject;
 
@@ -85,7 +86,7 @@ public class ProductVirtualSettingsFileEntryResourceTest
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
 			_read(
-				"http://localhost:8080" +
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
 					productVirtualSettingsFileEntry.getSrc()));
 	}
 

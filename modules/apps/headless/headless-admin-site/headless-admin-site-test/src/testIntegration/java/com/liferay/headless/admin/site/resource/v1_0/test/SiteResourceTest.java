@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -68,6 +69,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -93,6 +95,13 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	@Rule
 	public static final LazyReferencingTestRule lazyReferencingTestRule =
 		LazyReferencingTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseSiteResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -545,7 +554,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -602,7 +611,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -1571,7 +1580,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -1621,6 +1630,8 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
 		"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 			"ExceptionMapper";
+
+	private static int _portalServerPort;
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;

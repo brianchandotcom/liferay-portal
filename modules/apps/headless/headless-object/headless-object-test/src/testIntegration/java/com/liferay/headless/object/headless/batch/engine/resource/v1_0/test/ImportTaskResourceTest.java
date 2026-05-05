@@ -34,6 +34,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,6 +57,11 @@ public class ImportTaskResourceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_testGroup = GroupTestUtil.addGroup();
@@ -71,8 +77,7 @@ public class ImportTaskResourceTest {
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			_testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			_testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -203,8 +208,7 @@ public class ImportTaskResourceTest {
 		).authentication(
 			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
-			_testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			_testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameter(
@@ -243,6 +247,8 @@ public class ImportTaskResourceTest {
 			}
 		}
 	}
+
+	private static int _portalServerPort;
 
 	private ObjectEntryFolderResource _objectEntryFolderResource;
 	private Company _testCompany;

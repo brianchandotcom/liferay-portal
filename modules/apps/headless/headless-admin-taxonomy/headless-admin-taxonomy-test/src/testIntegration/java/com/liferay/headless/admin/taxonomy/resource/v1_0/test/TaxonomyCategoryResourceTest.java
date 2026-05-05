@@ -82,6 +82,7 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -101,6 +102,13 @@ public class TaxonomyCategoryResourceTest
 		new AggregateTestRule(
 			LazyReferencingTestRule.INSTANCE, new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseTaxonomyCategoryResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -1090,8 +1098,7 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						getTaxonomyCategory.getId(), "/taxonomy-categories")
 				).put(
@@ -1102,8 +1109,7 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						getTaxonomyCategory.getId())
 				).put(
@@ -1114,8 +1120,7 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						getTaxonomyCategory.getId())
 				).put(
@@ -1126,8 +1131,7 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						getTaxonomyCategory.getId())
 				).put(
@@ -1138,8 +1142,7 @@ public class TaxonomyCategoryResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/",
 						getTaxonomyCategory.getId())
 				).put(
@@ -1977,6 +1980,8 @@ public class TaxonomyCategoryResourceTest
 			}
 		}
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

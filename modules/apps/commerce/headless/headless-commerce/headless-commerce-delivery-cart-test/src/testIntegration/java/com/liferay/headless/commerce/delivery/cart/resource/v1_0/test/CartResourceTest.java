@@ -64,6 +64,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -82,6 +83,13 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseCartResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -162,7 +170,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/commerce-payment?groupId=", _commerceChannel.getGroupId(),
 				"&nextStep=", callbackURL, "&uuid=", cart.getOrderUUID()),
 			cartResource.getCartByExternalReferenceCodePaymentUrl(
@@ -178,7 +186,7 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/commerce-payment?groupId=", _commerceChannel.getGroupId(),
 				"&nextStep=", callbackURL, "&uuid=", cart.getOrderUUID()),
 			cartResource.getCartPaymentURL(cart.getId(), callbackURL));
@@ -1001,6 +1009,8 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR_OF_DAY),
 			calendar.get(Calendar.MINUTE), true, _serviceContext);
 	}
+
+	private static int _portalServerPort;
 
 	private AccountEntry _accountEntry;
 

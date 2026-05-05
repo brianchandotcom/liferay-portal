@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -75,6 +76,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class TaxonomyVocabularyResourceTest
 	extends BaseTaxonomyVocabularyResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseTaxonomyVocabularyResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Override
 	@Test
@@ -129,7 +137,7 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"http://localhost:", _portalServerPort,
 			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch");
 
 		assertValid(
@@ -139,8 +147,7 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/",
 						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 						"/taxonomy-vocabularies")
@@ -152,8 +159,7 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/asset-libraries/",
 						testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 						"/taxonomy-vocabularies/batch")
@@ -416,7 +422,7 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"http://localhost:", _portalServerPort,
 			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/batch");
 
 		assertValid(
@@ -426,8 +432,7 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/sites/",
 						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
 						"/taxonomy-vocabularies")
@@ -439,8 +444,7 @@ public class TaxonomyVocabularyResourceTest
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/sites/",
 						testGetSiteTaxonomyVocabulariesPage_getSiteId(),
 						"/taxonomy-vocabularies/batch")
@@ -473,7 +477,7 @@ public class TaxonomyVocabularyResourceTest
 				postTaxonomyVocabulary.getId());
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"http://localhost:", _portalServerPort,
 			"/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/",
 			getTaxonomyVocabulary.getId());
 
@@ -587,8 +591,7 @@ public class TaxonomyVocabularyResourceTest
 			).authentication(
 				siteMemberUser.getEmailAddress(), password
 			).endpoint(
-				testCompany.getVirtualHostname(),
-				PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -842,6 +845,8 @@ public class TaxonomyVocabularyResourceTest
 	private static final String _LOG_NAME =
 		"com.liferay.headless.admin.taxonomy.internal.resource.v1_0." +
 			"TaxonomyVocabularyResourceImpl";
+
+	private static int _portalServerPort;
 
 	@Inject
 	private AssetVocabularyGroupRelLocalService

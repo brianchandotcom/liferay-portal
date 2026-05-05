@@ -45,6 +45,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -64,6 +65,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseUserAccountResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -235,8 +243,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), password
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).parameter(
@@ -265,8 +272,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), password
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -343,6 +349,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			(entityField, userAccount1, userAccount2) -> {
 			});
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

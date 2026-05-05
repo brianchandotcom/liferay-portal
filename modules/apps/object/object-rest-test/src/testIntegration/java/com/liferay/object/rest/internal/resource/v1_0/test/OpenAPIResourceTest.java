@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -59,6 +60,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -77,6 +79,11 @@ public class OpenAPIResourceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -334,7 +341,7 @@ public class OpenAPIResourceTest {
 		try {
 			HTTPTestUtil.customize(
 			).withBaseURL(
-				"http://www.able.com:8080"
+				"http://www.able.com:" + _portalServerPort
 			).withCredentials(
 				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
 			).apply(
@@ -368,9 +375,10 @@ public class OpenAPIResourceTest {
 
 					Assert.assertEquals(1, jsonArray.length());
 					Assert.assertEquals(
-						"http://www.able.com:8080/o" +
-							companyObjectDefinition.getRESTContextPath() +
-								"/openapi.yaml",
+						StringBundler.concat(
+							"http://www.able.com:", _portalServerPort, "/o",
+							companyObjectDefinition.getRESTContextPath(),
+							"/openapi.yaml"),
 						jsonArray.get(0));
 				}
 			);
@@ -476,6 +484,8 @@ public class OpenAPIResourceTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

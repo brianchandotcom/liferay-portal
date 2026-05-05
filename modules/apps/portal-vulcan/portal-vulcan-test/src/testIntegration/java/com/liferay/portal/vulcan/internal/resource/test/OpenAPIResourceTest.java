@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.internal.test.util.URLConnectionUtil;
 import java.io.InputStream;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,27 +35,35 @@ public class OpenAPIResourceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
+
 	@Test
 	public void testGetOpenAPIServerURL() throws Exception {
 		InputStream inputStream = URLConnectionUtil.getInputStream(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"http://localhost:" + _portalServerPort +
 				"/o/headless-delivery/v1.0/openapi.json");
 
 		String path = _getPath(inputStream, "/servers/0/url");
 
-		Assert.assertTrue(path.startsWith("http://localhost:8080/"));
+		Assert.assertTrue(
+			path.startsWith("http://localhost:" + _portalServerPort + "/"));
 
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"WEB_SERVER_PROTOCOL", "https")) {
 
 			inputStream = URLConnectionUtil.getInputStream(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"http://localhost:" + _portalServerPort +
 					"/o/headless-delivery/v1.0/openapi.json");
 
 			path = _getPath(inputStream, "/servers/0/url");
 
-			Assert.assertTrue(path.startsWith("https://localhost:8080/"));
+			Assert.assertTrue(
+				path.startsWith(
+					"https://localhost:" + _portalServerPort + "/"));
 		}
 	}
 
@@ -67,6 +76,8 @@ public class OpenAPIResourceTest {
 
 		return jsonNode.asText();
 	}
+
+	private static int _portalServerPort;
 
 	private final ObjectMapper _objectMapper = new ObjectMapper();
 

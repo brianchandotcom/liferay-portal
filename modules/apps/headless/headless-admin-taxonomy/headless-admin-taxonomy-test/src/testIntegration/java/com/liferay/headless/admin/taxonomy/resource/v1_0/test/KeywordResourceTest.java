@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,6 +64,13 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class KeywordResourceTest extends BaseKeywordResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseKeywordResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Override
 	@Test
@@ -222,8 +230,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/keywords/",
 						getKeyword.getId())
 				).put(
@@ -234,8 +241,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/keywords/",
 						getKeyword.getId())
 				).put(
@@ -246,8 +252,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/keywords/",
 						getKeyword.getId())
 				).put(
@@ -258,8 +263,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/keywords/",
 						getKeyword.getId(), "/subscribe")
 				).put(
@@ -270,8 +274,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 				HashMapBuilder.put(
 					"href",
 					StringBundler.concat(
-						"http://localhost:",
-						PortalUtil.getPortalServerPort(false),
+						"http://localhost:", _portalServerPort,
 						"/o/headless-admin-taxonomy/v1.0/keywords/",
 						getKeyword.getId(), "/unsubscribe")
 				).put(
@@ -481,8 +484,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		).authentication(
 			_cmsAdministratorUser.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -531,8 +533,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 			).authentication(
 				_spaceContentReviewerUser.getEmailAddress(), "test"
 			).endpoint(
-				testCompany.getVirtualHostname(),
-				PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -635,7 +636,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 		httpInvoker.path(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"http://localhost:", _portalServerPort,
 				"/o/headless-admin-taxonomy/v1.0/keywords/", keyword1.getId(),
 				"/merge?fromKeywordIds=", keyword4.getId(), "&fromKeywordIds=",
 				keyword5.getId()));
@@ -801,8 +802,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), "test"
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -822,6 +822,8 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		Assert.assertEquals(originalTotalCount + 1, page.getTotalCount());
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;

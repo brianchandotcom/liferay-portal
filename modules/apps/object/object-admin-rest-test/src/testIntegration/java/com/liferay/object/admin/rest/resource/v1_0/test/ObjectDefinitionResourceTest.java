@@ -119,6 +119,7 @@ import java.util.function.Function;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -140,6 +141,13 @@ public class ObjectDefinitionResourceTest
 	@Rule
 	public static final LazyReferencingTestRule lazyReferencingTestRule =
 		LazyReferencingTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseObjectDefinitionResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	@Override
@@ -2836,8 +2844,7 @@ public class ObjectDefinitionResourceTest
 			).authentication(
 				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(),
-				PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).locale(
 				locale
 			).build();
@@ -3045,8 +3052,7 @@ public class ObjectDefinitionResourceTest
 			).authentication(
 				user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
-				testCompany.getVirtualHostname(),
-				PortalUtil.getPortalServerPort(false), "http"
+				testCompany.getVirtualHostname(), _portalServerPort, "http"
 			).parameter(
 				"createStrategy", "UPSERT"
 			).locale(
@@ -3308,6 +3314,8 @@ public class ObjectDefinitionResourceTest
 			}
 		}
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

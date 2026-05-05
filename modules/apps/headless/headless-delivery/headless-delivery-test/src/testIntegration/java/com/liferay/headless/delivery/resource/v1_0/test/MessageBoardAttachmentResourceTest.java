@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.io.File;
@@ -135,7 +136,7 @@ public class MessageBoardAttachmentResourceTest
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
 			_read(
-				"http://localhost:8080" +
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
 					messageBoardAttachment.getContentUrl()));
 	}
 

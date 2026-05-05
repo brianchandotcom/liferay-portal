@@ -77,6 +77,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -95,6 +96,13 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		BaseDocumentResourceTestCase.setUpClass();
+
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Override
 	@Test
@@ -325,7 +333,9 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
-			_read("http://localhost:8080" + document.getContentUrl()));
+			_read(
+				"http://localhost:" + _portalServerPort +
+					document.getContentUrl()));
 	}
 
 	@Override
@@ -604,8 +614,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		).authentication(
 			user.getEmailAddress(), password
 		).endpoint(
-			testCompany.getVirtualHostname(),
-			PortalUtil.getPortalServerPort(false), "http"
+			testCompany.getVirtualHostname(), _portalServerPort, "http"
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
@@ -914,6 +923,8 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		Assert.assertEquals(
 			postDocument.getSizeInBytes(), putDocument.getSizeInBytes());
 	}
+
+	private static int _portalServerPort;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

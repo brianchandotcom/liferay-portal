@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -165,7 +166,8 @@ public class WikiPageAttachmentResourceTest
 		Assert.assertEquals(
 			new String(FileUtil.getBytes(multipartFiles.get("file"))),
 			_read(
-				"http://localhost:8080" + wikiPageAttachment.getContentUrl()));
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					wikiPageAttachment.getContentUrl()));
 	}
 
 	@Override

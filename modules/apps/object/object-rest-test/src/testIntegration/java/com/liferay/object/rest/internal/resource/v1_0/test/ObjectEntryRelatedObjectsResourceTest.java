@@ -68,6 +68,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -89,6 +90,11 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		_portalServerPort = PortalUtil.getPortalServerPort(false);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -687,8 +693,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.POST);
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
-			endpoint, "/", jsonObject.get("externalReferenceCode"));
+			"http://localhost:", _portalServerPort, "/o", endpoint, "/",
+			jsonObject.get("externalReferenceCode"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
@@ -754,8 +760,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			Http.Method.POST);
 
 		href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
-			endpoint, "/", jsonObject.get("externalReferenceCode"));
+			"http://localhost:", _portalServerPort, "/o", endpoint, "/",
+			jsonObject.get("externalReferenceCode"));
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, endpoint, Http.Method.GET);
@@ -832,8 +838,7 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
 
 		String href = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
-			endpoint);
+			"http://localhost:", _portalServerPort, "/o", endpoint);
 
 		JSONAssert.assertEquals(
 			JSONFactoryUtil.createJSONObject(
@@ -2297,6 +2302,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 
 	private static final String _SYSTEM_OBJECT_FIELD_VALUE =
 		RandomTestUtil.randomString();
+
+	private static int _portalServerPort;
 
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;

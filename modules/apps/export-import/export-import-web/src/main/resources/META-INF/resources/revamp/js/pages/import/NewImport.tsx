@@ -12,8 +12,12 @@ import DataSelectionStep from './steps/DataSelectionStep';
 import FileSelectionStep from './steps/FileSelectionStep';
 import SettingsStep, {SETTINGS_STEP_INITIAL_VALUES} from './steps/SettingsStep';
 
-export const WizardContext = createContext({
-	groupId: 0,
+interface WizardContextValue {
+	importPreviewAPIURL: string;
+}
+
+export const WizardContext = createContext<WizardContextValue>({
+	importPreviewAPIURL: '',
 });
 
 export function useWizard() {
@@ -22,13 +26,13 @@ export function useWizard() {
 
 export function NewImport({
 	backURL,
-	groupId,
+	importPreviewAPIURL,
 }: {
 	backURL: string;
-	groupId: number;
+	importPreviewAPIURL: string;
 }) {
 	return (
-		<WizardContext.Provider value={{groupId}}>
+		<WizardContext.Provider value={{importPreviewAPIURL}}>
 			<Wizard backURL={backURL}>
 				<WizardStep
 					description={Liferay.Language.get(

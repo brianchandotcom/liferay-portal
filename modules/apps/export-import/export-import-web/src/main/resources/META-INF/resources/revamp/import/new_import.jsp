@@ -17,6 +17,8 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
+ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new ExportImportPreviewDisplayContext(liveGroup);
+
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
@@ -52,7 +54,7 @@ portletDisplay.setURLBack(backURL);
 		module="{NewImport} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"groupId", liveGroupId
+				"importPreviewAPIURL", exportImportPreviewDisplayContext.getImportPreviewAPIURL()
 			).build()
 		%>'
 	/>

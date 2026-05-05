@@ -9,12 +9,6 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import {RequestResult} from '../../../../services/ApiHelper';
 import {FileSelectorStatus} from '../../../FileSelector';
 
-export interface ValidationResponse {
-	errorMessages: string[];
-	success: boolean;
-	tempFilePath: string;
-}
-
 const STATUS_CHANGE_DELAY = 1000;
 
 const TRANSIENT_STATUSES: FileSelectorStatus[] = [
@@ -23,12 +17,12 @@ const TRANSIENT_STATUSES: FileSelectorStatus[] = [
 	'VALIDATING',
 ];
 
-export function useFileSelector(
+export function useFileSelector<T>(
 	name: string,
 	uploadRequest: (
 		file: File,
 		signal?: AbortSignal
-	) => Promise<RequestResult<ValidationResponse>>
+	) => Promise<RequestResult<T>>
 ) {
 	const [field, meta, helpers] = useField(name);
 
@@ -100,13 +94,11 @@ export function useFileSelector(
 				return;
 			}
 
-			if (result.error || !result.data || result.data.success === false) {
-				const errorMsg =
-					result.data?.errorMessages?.[0] ||
+			if (result.error || !result.data) {
+				handleRejection(
 					result.error ||
-					Liferay.Language.get('an-unexpected-error-occurred');
-
-				handleRejection(errorMsg);
+						Liferay.Language.get('an-unexpected-error-occurred')
+				);
 
 				return;
 			}

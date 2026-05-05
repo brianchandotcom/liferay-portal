@@ -45,7 +45,12 @@ export default function DataSelection({
 				/>
 			</ClayLayout.Sheet>
 
-			<div data-testid="data-selection-section">
+			<div
+				aria-busy={loading}
+				aria-live="polite"
+				data-testid="data-selection-section"
+				role="status"
+			>
 				{loading ? (
 					<ClayLoadingIndicator className="mb-9 mt-8" />
 				) : (

@@ -46,18 +46,18 @@ public class FinderPath {
 
 		this(
 			cacheName, methodName, params, columnNames, baseModelResult,
-			_EMPTY_ARGS_EXTRACTOR);
+			_EMPTY_ARGS_EXTRACTOR_FUNCTION);
 	}
 
 	public FinderPath(
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult,
-		Function<Object, Object[]> argsExtractor) {
+		Function<Object, Object[]> argsExtractorFunction) {
 
 		_cacheName = cacheName;
 		_columnNames = columnNames;
 		_baseModelResult = baseModelResult;
-		_argsExtractor = argsExtractor;
+		_argsExtractorFunction = argsExtractorFunction;
 
 		_initCacheKeyPrefix(methodName, params);
 
@@ -70,7 +70,7 @@ public class FinderPath {
 	}
 
 	public Object[] extractArgs(BaseModel<?> baseModel) {
-		return _argsExtractor.apply(baseModel);
+		return _argsExtractorFunction.apply(baseModel);
 	}
 
 	public String getCacheKeyPrefix() {
@@ -150,8 +150,8 @@ public class FinderPath {
 			"value.object.finder.cache.single.result.cool.down.period"),
 		600_000_000_000L);
 
-	private static final Function<Object, Object[]> _EMPTY_ARGS_EXTRACTOR =
-		baseModel -> new Object[0];
+	private static final Function<Object, Object[]>
+		_EMPTY_ARGS_EXTRACTOR_FUNCTION = baseModel -> new Object[0];
 
 	private static final String _PARAMS_SEPARATOR = "_P_";
 
@@ -159,7 +159,7 @@ public class FinderPath {
 
 	private static final Map<String, String> _encodedTypes = _getEncodedTypes();
 
-	private final Function<Object, Object[]> _argsExtractor;
+	private final Function<Object, Object[]> _argsExtractorFunction;
 	private final boolean _baseModelResult;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;

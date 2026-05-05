@@ -833,6 +833,17 @@ public class SectionDisplayContextHelper {
 			).setHref(
 				"#"
 			).setIcon(
+				"copy"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "duplicate")
+			).build(
+				"duplicate"
+			),
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
 				"time"
 			).setLabel(
 				LanguageUtil.get(httpServletRequest, "expire")

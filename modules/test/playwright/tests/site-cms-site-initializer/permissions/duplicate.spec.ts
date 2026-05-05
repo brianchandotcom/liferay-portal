@@ -166,3 +166,72 @@ test(
 		});
 	}
 );
+
+test(
+	'Folder Duplicate visibility depends on user role',
+	{tag: '@LPD-88657'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderName = `Folder ${getRandomString()}`;
+
+		await test.step('Create a folder for the Space', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: spaceName,
+				title: folderName,
+			});
+		});
+
+		const duplicateAndVerify = async (expectedSuffixedTitle: string) => {
+			await assetsPage.gotoSpaceContents(spaceName);
+
+			await assetsPage.execItemAction({
+				action: 'Duplicate',
+				filter: folderName,
+				parentAction: 'Copy',
+			});
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: expectedSuffixedTitle,
+				})
+			).toBeVisible();
+		};
+
+		await test.step('CMS Administrator can duplicate the folder', async () => {
+			await performUserSwitch(page, cmsAdminUser.alternateName);
+
+			await duplicateAndVerify(`${folderName} (Copy)`);
+		});
+
+		await test.step('Space Administrator can duplicate the folder', async () => {
+			await performUserSwitch(page, spaceAdminUser.alternateName);
+
+			await duplicateAndVerify(`${folderName} (Copy 1)`);
+		});
+
+		await test.step('Space Content Reviewer can duplicate the folder', async () => {
+			await performUserSwitch(
+				page,
+				spaceContentReviewerUser.alternateName
+			);
+
+			await duplicateAndVerify(`${folderName} (Copy 2)`);
+		});
+
+		await test.step('Space Member does not see Duplicate', async () => {
+			await performUserSwitch(page, spaceMemberUser.alternateName);
+
+			await assetsPage.gotoSpaceContents(spaceName);
+
+			await assetsPage.table.bodyRows
+				.filter({hasText: folderName})
+				.getByRole('button', {name: `${folderName} Actions`})
+				.click();
+
+			await expect(
+				page.getByRole('menuitem', {exact: true, name: 'Duplicate'})
+			).toBeHidden();
+		});
+	}
+);

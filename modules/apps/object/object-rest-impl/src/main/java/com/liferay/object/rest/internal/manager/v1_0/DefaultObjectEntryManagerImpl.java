@@ -1572,8 +1572,7 @@ public class DefaultObjectEntryManagerImpl
 			String actionName, String methodName,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			Map<String, String> templateParameterMap, UriInfo uriInfo)
-		throws Exception {
+			Map<String, String> templateParameterMap, UriInfo uriInfo) {
 
 		if (serviceBuilderObjectEntry.isRootDescendantNode()) {
 			return null;

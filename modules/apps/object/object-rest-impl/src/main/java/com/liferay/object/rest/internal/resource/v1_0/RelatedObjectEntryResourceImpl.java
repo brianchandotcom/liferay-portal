@@ -284,12 +284,12 @@ public class RelatedObjectEntryResourceImpl
 
 		String path = uri.getPath();
 
-		String oPath = Portal.PATH_MODULE + "/";
+		String modulePath = Portal.PATH_MODULE + "/";
 
-		int beginIndex = path.indexOf(oPath) + oPath.length();
+		int index = path.indexOf(modulePath) + modulePath.length();
 
 		String applicationPath = path.substring(
-			beginIndex, path.indexOf("/", beginIndex));
+			index, path.indexOf("/", index));
 
 		String restContextPath = applicationPath + "/v1.0/" + previousPath;
 

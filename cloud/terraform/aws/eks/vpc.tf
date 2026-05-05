@@ -13,10 +13,9 @@ module "vpc" {
 	}
 	public_subnets=coalesce(var.public_subnets, local.default_public_subnets)
 	single_nat_gateway=true
-	source="terraform-aws-modules/vpc/aws"
+	source="git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=25322b6b6be69db6cca7f167d7b0e5327156a595"
 	tags={
 		DeploymentName=var.deployment_name
 		Name="${var.deployment_name}-vpc"
 	}
-	version="5.8.1"
 }

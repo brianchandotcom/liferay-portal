@@ -1,9 +1,7 @@
 assemble:
-    -   from: build/vite
+    -   from: build/static
         into: static
 liferay-one-custom-element:
-    cssURLs:
-        -   "**/index*.css"
     friendlyURLMapping: liferay-one-custom-element
     htmlElementName: liferay-one-custom-element
     instanceable: true
@@ -11,5 +9,5 @@ liferay-one-custom-element:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        -   main.js
+        -   "*.js"
     useESM: true

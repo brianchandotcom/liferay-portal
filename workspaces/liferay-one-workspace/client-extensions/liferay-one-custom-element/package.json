@@ -1,0 +1,29 @@
+{
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-router-dom": "6.8.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.6",
+		"@types/react-dom": "^18.0.9",
+		"@vitejs/plugin-react": "^3.0.0",
+		"typescript": "5.7.2",
+		"vite": "4.0.0"
+	},
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
+	"license": "LGPL",
+	"name": "@liferay/liferay-one-custom-element",
+	"private": true,
+	"scripts": {
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"type": "module",
+	"version": "0.0.0"
+}

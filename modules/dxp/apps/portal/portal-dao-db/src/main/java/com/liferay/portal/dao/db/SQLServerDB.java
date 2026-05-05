@@ -446,6 +446,23 @@ public class SQLServerDB extends BaseDB {
 	}
 
 	@Override
+	protected String getLockedQueryInfosSQL() {
+		return StringBundler.concat(
+			"select sys.dm_exec_requests.total_elapsed_time as duration, ",
+			"sys.dm_exec_requests.session_id as id, substring(",
+			"input_buffer.event_info, 1, 4000) as query, db_name(",
+			"sys.dm_exec_requests.database_id) as schema_, ",
+			"sys.dm_exec_requests.wait_type as state from ",
+			"sys.dm_exec_requests cross apply sys.dm_exec_input_buffer(",
+			"sys.dm_exec_requests.session_id, ",
+			"sys.dm_exec_requests.request_id) as input_buffer where ",
+			"sys.dm_exec_requests.session_id != @@spid and ",
+			"sys.dm_exec_requests.session_id >= 50 and ",
+			"sys.dm_exec_requests.total_elapsed_time >= ? and ",
+			"sys.dm_exec_requests.wait_type like 'LCK\\_%' escape '\\'");
+	}
+
+	@Override
 	protected String getRenameTableSQL(
 		String oldTableName, String newTableName) {
 

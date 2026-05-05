@@ -140,8 +140,9 @@ public class CollaboratorUtil {
 
 				if (existingUser == null) {
 					Ticket ticket = _addOrUpdateTicket(
-						className, classPK, collaborator, collaborator.getId(),
-						companyId, ticketLocalService, collaborator.getType());
+						className, classPK, collaborator,
+						GetterUtil.getLong(collaborator.getId()), companyId,
+						ticketLocalService, collaborator.getType());
 
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,

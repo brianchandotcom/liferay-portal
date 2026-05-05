@@ -98,6 +98,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFolder;
@@ -5575,6 +5576,237 @@ public class ObjectEntryLocalServiceTest {
 			24, values2, valuesList.get(1), selectedObjectFieldNames);
 		_assertObjectEntryValues(
 			24, values3, valuesList.get(2), selectedObjectFieldNames);
+	}
+
+	@Test
+	public void testGetValuesListCountByObjectDefinitionIds() throws Exception {
+
+		// Add object entry on irrelevant group
+
+		Group irrelevantGroup = GroupTestUtil.addGroup();
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "name")),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			irrelevantGroup.getGroupId(),
+			objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry1.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		// Add object entry on irrelevant object definition
+
+		ObjectDefinition irrelevantObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "name")),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			irrelevantObjectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry2.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		// Add object entry with distant expiration date
+
+		ObjectEntry objectEntry3 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		Date now = new Date();
+
+		objectEntry3.setExpirationDate(
+			new Date(now.getTime() + (10 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry3);
+
+		// Add object entry with future review date
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "name")),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		ObjectEntry objectEntry4 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		objectEntry4.setReviewDate(new Date(now.getTime() + (5 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry4);
+
+		// Add object entry with imminent expiration date
+
+		ObjectEntry objectEntry5 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		objectEntry5.setExpirationDate(
+			new Date(now.getTime() + (3 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry5);
+
+		// Add object entry with overdue expiration date
+
+		ObjectEntry objectEntry6 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition1.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		objectEntry6.setExpirationDate(new Date(now.getTime() - Time.DAY));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry6);
+
+		// Add object entry with overdue review date
+
+		ObjectEntry objectEntry7 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		objectEntry7.setReviewDate(new Date(now.getTime() - (2 * Time.DAY)));
+
+		_objectEntryLocalService.updateObjectEntry(objectEntry7);
+
+		// Add object entry with status draft
+
+		ObjectEntry objectEntry8 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry8.getObjectEntryId(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		// Add object entry with status expired
+
+		ObjectEntry objectEntry9 = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition2.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"name", RandomTestUtil.randomString()
+			).build());
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry9.getObjectEntryId(),
+			WorkflowConstants.STATUS_EXPIRED, serviceContext);
+
+		Long[] groupIds = {TestPropsValues.getGroupId()};
+		Long[] objectDefinitionIds = {
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId()
+		};
+
+		// Predicate with imminent expiration date
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(), groupIds, objectDefinitionIds,
+				ObjectEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_APPROVED
+				).and(
+					ObjectEntryTable.INSTANCE.expirationDate.gt(now)
+				).and(
+					ObjectEntryTable.INSTANCE.expirationDate.lte(
+						new Date(now.getTime() + (7 * Time.DAY)))
+				)));
+
+		// Predicate with irrelevant group
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(),
+				new Long[] {irrelevantGroup.getGroupId()}, objectDefinitionIds,
+				ObjectEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_DRAFT)));
+
+		// Predicate with irrelevant object definition
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(), groupIds,
+				new Long[] {irrelevantObjectDefinition.getObjectDefinitionId()},
+				ObjectEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_DRAFT)));
+
+		// Predicate with overdue review date
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(), groupIds, objectDefinitionIds,
+				ObjectEntryTable.INSTANCE.reviewDate.lt(now)));
+
+		// Predicate with status draft
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(), groupIds, objectDefinitionIds,
+				ObjectEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_DRAFT)));
+
+		// Predicate with status expired
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getValuesListCount(
+				TestPropsValues.getCompanyId(), groupIds, objectDefinitionIds,
+				ObjectEntryTable.INSTANCE.status.eq(
+					WorkflowConstants.STATUS_EXPIRED)));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			irrelevantObjectDefinition);
+
+		GroupTestUtil.deleteGroup(irrelevantGroup);
 	}
 
 	@FeatureFlag("LPD-17564")

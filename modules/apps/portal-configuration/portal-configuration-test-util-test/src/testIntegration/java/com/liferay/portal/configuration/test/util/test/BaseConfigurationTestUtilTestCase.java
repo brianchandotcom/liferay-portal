@@ -63,6 +63,6 @@ public abstract class BaseConfigurationTestUtilTestCase {
 	protected String configurationPid;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 }

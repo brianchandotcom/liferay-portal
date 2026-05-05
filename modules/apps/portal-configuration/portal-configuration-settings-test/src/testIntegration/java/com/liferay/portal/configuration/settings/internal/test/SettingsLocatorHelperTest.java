@@ -345,6 +345,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 	}
 
 	@Inject
-	private static SettingsLocatorHelper _settingsLocatorHelper;
+	private SettingsLocatorHelper _settingsLocatorHelper;
 
 }

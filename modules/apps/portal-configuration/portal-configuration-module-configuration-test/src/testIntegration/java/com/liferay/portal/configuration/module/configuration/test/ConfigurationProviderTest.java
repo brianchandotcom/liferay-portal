@@ -429,10 +429,10 @@ public class ConfigurationProviderTest {
 	private static final String _PID = "test.pid";
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
-	private static ConfigurationProvider _configurationProvider;
+	private ConfigurationProvider _configurationProvider;
 
 	private final Map<String, Configuration> _configurations = new HashMap<>();
 	private Dictionary<String, Object> _properties;

@@ -90,7 +90,7 @@ public class ConfigurationOverrideInstanceTest {
 	}
 
 	@Inject
-	private static ConfigurationProvider _configurationProvider;
+	private ConfigurationProvider _configurationProvider;
 
 	private Group _group;
 

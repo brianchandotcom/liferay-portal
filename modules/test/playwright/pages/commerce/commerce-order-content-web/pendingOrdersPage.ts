@@ -16,6 +16,7 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 	readonly approveButton: Locator;
 	readonly checkoutButton: Locator;
 	readonly createDateSortButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly doneButton: Locator;
 	readonly editMenuItem: Locator;
 	readonly errorMessageCloseButton: Locator;
@@ -62,6 +63,10 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 		this.doneButton = page.getByRole('button', {
 			exact: true,
 			name: 'Done',
+		});
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
 		});
 		this.editMenuItem = page.getByRole('menuitem', {
 			exact: true,

@@ -39,6 +39,8 @@ export class CommerceMiniCartPage {
 	) => Promise<string[]>;
 	readonly showOptionsButton: Locator;
 	readonly signInToCheckoutButton: Locator;
+	readonly removeAllItemsButton: Locator;
+	readonly removeAllItemsConfirmButton: Locator;
 	readonly submitButton: Locator;
 	readonly unitOfMeasureTableLabel: Locator;
 	readonly viewDetailsButton: Locator;
@@ -109,6 +111,14 @@ export class CommerceMiniCartPage {
 		});
 		this.signInToCheckoutButton = page.getByRole('button', {
 			name: 'Sign In to Checkout',
+		});
+		this.removeAllItemsButton = page.getByRole('button', {
+			exact: true,
+			name: 'Remove All Items',
+		});
+		this.removeAllItemsConfirmButton = page.getByRole('button', {
+			exact: true,
+			name: 'Yes',
 		});
 		this.submitButton = page.getByRole('button', {name: 'Submit'});
 		this.unitOfMeasureTableLabel = page.getByText('Unit of Measure Table', {

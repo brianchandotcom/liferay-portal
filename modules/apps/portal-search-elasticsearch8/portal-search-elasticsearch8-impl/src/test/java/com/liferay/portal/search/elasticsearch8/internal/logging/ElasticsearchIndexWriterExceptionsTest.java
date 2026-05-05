@@ -35,6 +35,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.function.ThrowingRunnable;
 
 /**
  * @author Bryan Engler
@@ -49,20 +50,11 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testAddDocument() {
-		String expectedMessage =
-			"failed to parse field [expirationDate] of type [date]";
-
-		ElasticsearchException elasticsearchException = Assert.assertThrows(
-			ElasticsearchException.class,
+		_assertElasticsearchException(
+			"failed to parse field [expirationDate] of type [date]",
 			() -> addDocument(
 				DocumentCreationHelpers.singleKeyword(
 					Field.EXPIRATION_DATE, "text")));
-
-		String message = elasticsearchException.getMessage();
-
-		Assert.assertTrue(
-			message + " does not contain " + expectedMessage,
-			message.contains(expectedMessage));
 	}
 
 	@Test
@@ -85,13 +77,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			RuntimeException runtimeException = Assert.assertThrows(
-				RuntimeException.class,
+			_assertRuntimeException(
+				"Bulk add failed",
 				() -> indexWriter.addDocuments(
 					createSearchContext(), documents));
-
-			Assert.assertEquals(
-				"Bulk add failed", runtimeException.getMessage());
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -103,23 +92,15 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testCommit() {
-		String expectedMessage = "[index_not_found_exception] no such index";
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(1);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		ElasticsearchException elasticsearchException = Assert.assertThrows(
-			ElasticsearchException.class,
+		_assertElasticsearchException(
+			"[index_not_found_exception] no such index",
 			() -> indexWriter.commit(searchContext));
-
-		String message = elasticsearchException.getMessage();
-
-		Assert.assertTrue(
-			message + " does not contain " + expectedMessage,
-			message.contains(expectedMessage));
 	}
 
 	@Test
@@ -173,12 +154,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			RuntimeException runtimeException = Assert.assertThrows(
-				RuntimeException.class,
+			_assertRuntimeException(
+				"Bulk delete failed",
 				() -> indexWriter.deleteDocuments(searchContext, uids));
-
-			Assert.assertEquals(
-				"Bulk delete failed", runtimeException.getMessage());
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -190,23 +168,15 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testDeleteEntityDocuments() {
-		String expectedMessage = "[index_not_found_exception] no such index";
-
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(1);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		ElasticsearchException elasticsearchException = Assert.assertThrows(
-			ElasticsearchException.class,
+		_assertElasticsearchException(
+			"[index_not_found_exception] no such index",
 			() -> indexWriter.deleteEntityDocuments(searchContext, "test"));
-
-		String message = elasticsearchException.getMessage();
-
-		Assert.assertTrue(
-			message + " does not contain " + expectedMessage,
-			message.contains(expectedMessage));
 	}
 
 	@Test
@@ -252,12 +222,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			RuntimeException runtimeException = Assert.assertThrows(
-				RuntimeException.class,
+			_assertRuntimeException(
+				"Update failed",
 				() -> indexWriter.updateDocument(
 					createSearchContext(), document));
-
-			Assert.assertEquals("Update failed", runtimeException.getMessage());
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -288,13 +256,10 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 			IndexWriter indexWriter = getIndexWriter();
 
-			RuntimeException runtimeException = Assert.assertThrows(
-				RuntimeException.class,
+			_assertRuntimeException(
+				"Bulk update failed",
 				() -> indexWriter.updateDocuments(
 					createSearchContext(), documents));
-
-			Assert.assertEquals(
-				"Bulk update failed", runtimeException.getMessage());
 
 			_assertLogCapture(
 				message -> Assert.assertTrue(
@@ -309,6 +274,19 @@ public class ElasticsearchIndexWriterExceptionsTest
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
+	private void _assertElasticsearchException(
+		String expectedMessage, ThrowingRunnable runnable) {
+
+		ElasticsearchException elasticsearchException = Assert.assertThrows(
+			ElasticsearchException.class, runnable);
+
+		String message = elasticsearchException.getMessage();
+
+		Assert.assertTrue(
+			message + " does not contain " + expectedMessage,
+			message.contains(expectedMessage));
+	}
+
 	private void _assertLogCapture(
 		Consumer<String> consumer, LogCapture logCapture, String logLevel) {
 
@@ -320,6 +298,15 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 		Assert.assertEquals(logLevel, logEntry.getPriority());
 		consumer.accept(logEntry.getMessage());
+	}
+
+	private void _assertRuntimeException(
+		String expectedMessage, ThrowingRunnable runnable) {
+
+		RuntimeException runtimeException = Assert.assertThrows(
+			RuntimeException.class, runnable);
+
+		Assert.assertEquals(expectedMessage, runtimeException.getMessage());
 	}
 
 	private static final String _UID = "1";

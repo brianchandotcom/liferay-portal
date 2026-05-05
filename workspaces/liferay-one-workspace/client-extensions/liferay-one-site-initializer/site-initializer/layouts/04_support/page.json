@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/support",
+	"hidden": false,
+	"name": "Support",
+	"name_i18n": {
+		"en_US": "Support"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

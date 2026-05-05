@@ -1,0 +1,72 @@
+[
+	{
+		"externalReferenceCode": "LO_MARKETPLACE_NAV",
+		"menuItems": [
+			{
+				"friendlyURL": "/marketplace/applications",
+				"name": "Applications",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/marketplace/products",
+				"name": "Products",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/marketplace/publishers",
+				"name": "Publishers",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/marketplace/solutions",
+				"name": "Solutions",
+				"type": "layout"
+			}
+		],
+		"name": "Marketplace Navigation",
+		"name_i18n": {
+			"en_US": "Marketplace Navigation"
+		},
+		"title": "Marketplace Navigation"
+	},
+	{
+		"externalReferenceCode": "LO_ADMIN_NAV",
+		"menuItems": [
+			{
+				"friendlyURL": "/admin",
+				"name": "Admin",
+				"type": "layout"
+			}
+		],
+		"name": "Admin Navigation",
+		"name_i18n": {
+			"en_US": "Admin Navigation"
+		},
+		"title": "Admin Navigation"
+	},
+	{
+		"externalReferenceCode": "LO_SUPPORT_NAV",
+		"menuItems": [
+			{
+				"friendlyURL": "/support/getting-started",
+				"name": "Getting Started",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/support/customer-portal-help",
+				"name": "Customer Portal Help",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/support/announcements",
+				"name": "Announcements",
+				"type": "layout"
+			}
+		],
+		"name": "Support Navigation",
+		"name_i18n": {
+			"en_US": "Support Navigation"
+		},
+		"title": "Support Navigation"
+	}
+]

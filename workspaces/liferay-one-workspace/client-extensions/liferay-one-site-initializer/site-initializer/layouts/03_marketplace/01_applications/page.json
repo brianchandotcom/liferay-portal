@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/marketplace/applications",
+	"hidden": false,
+	"name": "Applications",
+	"name_i18n": {
+		"en_US": "Applications"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

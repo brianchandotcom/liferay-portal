@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/admin",
+	"hidden": true,
+	"name": "Admin",
+	"name_i18n": {
+		"en_US": "Admin"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/support/getting-started",
+	"hidden": false,
+	"name": "Getting Started",
+	"name_i18n": {
+		"en_US": "Getting Started"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

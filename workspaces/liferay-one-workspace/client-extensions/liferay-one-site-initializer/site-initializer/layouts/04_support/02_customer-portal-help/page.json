@@ -1,0 +1,11 @@
+{
+	"friendlyURL": "/support/customer-portal-help",
+	"hidden": false,
+	"name": "Customer Portal Help",
+	"name_i18n": {
+		"en_US": "Customer Portal Help"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content"
+}

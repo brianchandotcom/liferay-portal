@@ -197,9 +197,9 @@ jobs:
 
                             echo "should_publish=true" >> ${GITHUB_OUTPUT}
                         else
-                            echo "::warning::Chart liferay-aws-marketplace@${CHART_VERSION} already exists."
+                            echo "Chart liferay-aws-marketplace@${CHART_VERSION} already exists."
 
-                            echo "- **liferay-aws-marketplace**: \`${CHART_VERSION}\` already published." >> ${GITHUB_STEP_SUMMARY}
+                            echo "liferay-aws-marketplace: \`${CHART_VERSION}\` already published." >> ${GITHUB_STEP_SUMMARY}
                         fi
                     }
 

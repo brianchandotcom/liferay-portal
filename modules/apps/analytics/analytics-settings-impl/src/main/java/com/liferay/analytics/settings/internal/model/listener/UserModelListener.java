@@ -30,6 +30,10 @@ public class UserModelListener
 
 	@Override
 	public void onAfterRemove(User user) throws ModelListenerException {
+		if (!isTracked(user)) {
+			return;
+		}
+
 		_usersDataControlTasks.addEmailAddress(
 			user.getCompanyId(), user.getEmailAddress());
 	}

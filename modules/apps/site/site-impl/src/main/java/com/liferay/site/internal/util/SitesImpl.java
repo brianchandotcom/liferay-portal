@@ -426,66 +426,9 @@ public class SitesImpl implements Sites {
 	 *         the layout set; <code>false</code> otherwise
 	 */
 	@Override
-	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet)
-		throws PortalException {
-
+	public boolean isLayoutSetMergeable(Group group, LayoutSet layoutSet) {
 		if (!layoutSet.isLayoutSetPrototypeLinkActive() ||
 			group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
-
-			return false;
-		}
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		long lastMergeTime = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_MERGE_TIME));
-		long lastMergeVersion = GetterUtil.getLong(
-			settingsUnicodeProperties.getProperty(LAST_MERGE_VERSION));
-
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		Date modifiedDate = layoutSetPrototype.getModifiedDate();
-
-		if ((lastMergeTime >= modifiedDate.getTime()) &&
-			((lastMergeVersion == 0) ||
-			 (lastMergeVersion == layoutSetPrototype.getMvccVersion())) &&
-			!isAnyFailedLayoutModifiedSinceLastMerge(layoutSet)) {
-
-			return false;
-		}
-
-		if (lastMergeTime != 0) {
-			return false;
-		}
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeLayoutSetSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeLayoutSetSettingsUnicodeProperties.getProperty(
-				MERGE_FAIL_COUNT));
-
-		if (mergeFailCount >
-				PropsValues.LAYOUT_SET_PROTOTYPE_MERGE_FAIL_THRESHOLD) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Merge not performed because the fail threshold was ",
-						"reached for layoutSetPrototypeId ",
-						layoutSetPrototype.getLayoutSetPrototypeId(),
-						" and layoutId ",
-						layoutSetPrototypeLayoutSet.getLayoutSetId(),
-						". Update the count in the database to try again."));
-			}
 
 			return false;
 		}

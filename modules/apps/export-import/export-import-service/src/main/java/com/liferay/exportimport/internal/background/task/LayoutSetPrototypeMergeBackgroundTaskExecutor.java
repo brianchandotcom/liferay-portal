@@ -40,7 +40,6 @@ import com.liferay.sites.kernel.util.Sites;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
@@ -76,8 +75,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
 
-		boolean anyFailedLayoutModifiedSinceLastMerge = MapUtil.getBoolean(
-			parameterMap, "anyFailedLayoutModifiedSinceLastMerge");
 		long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
 		long layoutSetPrototypeId = MapUtil.getLong(
 			parameterMap, "layoutSetPrototypeId");
@@ -89,38 +86,6 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 			LayoutSetPrototype layoutSetPrototype =
 				_layoutSetPrototypeLocalService.getLayoutSetPrototype(
 					layoutSetPrototypeId);
-
-			UnicodeProperties settingsUnicodeProperties =
-				layoutSet.getSettingsProperties();
-
-			long lastMergeTime = GetterUtil.getLong(
-				settingsUnicodeProperties.getProperty(Sites.LAST_MERGE_TIME));
-			long lastMergeVersion = GetterUtil.getLong(
-				settingsUnicodeProperties.getProperty(
-					Sites.LAST_MERGE_VERSION));
-
-			Date layoutSetPrototypeModifiedDate =
-				layoutSetPrototype.getModifiedDate();
-
-			if ((lastMergeVersion == layoutSetPrototype.getMvccVersion()) &&
-				(lastMergeTime >= layoutSetPrototypeModifiedDate.getTime()) &&
-				!anyFailedLayoutModifiedSinceLastMerge) {
-
-				if (_log.isDebugEnabled()) {
-					StringBundler sb = new StringBundler(5);
-
-					sb.append("Skipping background task ");
-					sb.append(backgroundTask.getBackgroundTaskId());
-					sb.append(", layoutSet ");
-					sb.append(layoutSetId);
-					sb.append(" is already up to date");
-
-					_log.debug(sb.toString());
-				}
-
-				return new BackgroundTaskResult(
-					BackgroundTaskConstants.STATUS_SUCCESSFUL);
-			}
 
 			boolean importData = MapUtil.getBoolean(parameterMap, "importData");
 

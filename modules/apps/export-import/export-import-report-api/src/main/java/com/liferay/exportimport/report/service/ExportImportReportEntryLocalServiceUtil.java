@@ -274,6 +274,13 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().getExportImportReportEntriesCount();
 	}
 
+	public static int getExportImportReportEntriesCount(
+		long companyId, long exportImportConfigurationId) {
+
+		return getService().getExportImportReportEntriesCount(
+			companyId, exportImportConfigurationId);
+	}
+
 	/**
 	 * Returns the export import report entry with the primary key.
 	 *
@@ -372,4 +379,4 @@ public class ExportImportReportEntryLocalServiceUtil {
 			ExportImportReportEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1145355427
+// LIFERAY-SERVICE-BUILDER-HASH:-1063489840

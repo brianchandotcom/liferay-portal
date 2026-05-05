@@ -99,7 +99,8 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		error,
 		items: activityHistory,
 		loading,
-		refetch
+		refetch,
+		total: totalSessions
 	} = mapListResultsToProps(metricResponse, ({eventMetric}) => ({
 		items: eventMetric.totalEventsMetric.histogram.metrics?.map(
 			({key, value}, index: number) => ({
@@ -111,7 +112,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 					].value
 			})
 		),
-		total: eventMetric.totalEventsMetric?.value
+		total: eventMetric.totalSessionsMetric?.value
 	}));
 
 	const trendResponse = useQuery<
@@ -185,7 +186,6 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 
 	const sessionsData = sessionsResponse.data?.eventsByUserSessions;
 	const userSessions = sessionsData?.userSessions ?? [];
-	const totalSessionEvents = sessionsData?.totalEventsMetric?.value ?? 0;
 
 	const handleChangeSelection = (index: number | null) => {
 		resetPage();
@@ -224,6 +224,11 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 		? getDateRangeLabelFromDate(selectedIntervalInitDate, interval)
 		: getDateRangeLabel(activityHistory, interval, 'intervalInitDate');
 
+	const totalItems =
+		selectedPoint !== undefined
+			? activityHistory[selectedPoint]?.totalSessions ?? 0
+			: totalSessions ?? 0;
+
 	return (
 		<WrapSafeResults
 			className='flex-grow-1 loading-root'
@@ -239,7 +244,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 			<Card.Body>
 				<div className='account-activity-stream'>
 					<div className='trend-summary mb-4'>
-						<div className='text-weight-semi-bold'>
+						<div className='font-weight-semi-bold'>
 							<Text size={7}>
 								{sub(Liferay.Language.get('x-activities'), [
 									trendValue
@@ -268,10 +273,9 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 										className='mr-1'
 										key='percentage'
 										style={{
-											color:
-												getStatsColor(
-													trendClassification || ''
-												) || TrendClassification.Neutral
+											color: getStatsColor(
+												trendClassification || ''
+											)
 										}}
 									>
 										{`${toRounded(
@@ -394,7 +398,7 @@ const ActivityStreamCard: React.FC<IActivityStreamCardProps> = ({
 					onPageChange={onPageChange}
 					page={page}
 					sessions={userSessions}
-					totalEvents={totalSessionEvents}
+					totalItems={totalItems}
 				/>
 			</Card.Body>
 		</WrapSafeResults>

@@ -193,7 +193,7 @@ describe('ActivityStreamTimeline rendering', () => {
 		page: 1,
 		sessions: [] as AccountUserSession[],
 		timeZoneId: 'UTC',
-		totalEvents: 0
+		totalItems: 0
 	};
 
 	it('renders the loading state', () => {
@@ -248,7 +248,7 @@ describe('ActivityStreamTimeline rendering', () => {
 						userName: 'Jane Doe'
 					}
 				]}
-				totalEvents={1}
+				totalItems={1}
 			/>
 		);
 
@@ -278,7 +278,7 @@ describe('ActivityStreamTimeline rendering', () => {
 						userName: null
 					}
 				]}
-				totalEvents={1}
+				totalItems={1}
 			/>
 		);
 

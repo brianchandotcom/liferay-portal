@@ -23,7 +23,7 @@ interface IActivityStreamTimelineProps {
 	page: number;
 	sessions: AccountUserSession[];
 	timeZoneId?: string;
-	totalEvents: number;
+	totalItems: number;
 }
 
 interface UserGroup {
@@ -118,7 +118,7 @@ export const groupByDate = (
 	});
 
 	return Array.from(byDate.entries())
-		.sort(([a], [b]) => (a < b ? 1 : a > b ? -1 : 0))
+		.sort(([a], [b]) => b.localeCompare(a))
 		.map(([dateKey, daySessions]) => {
 			const byUser = new Map<string, AccountUserSession[]>();
 
@@ -167,14 +167,14 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 	page,
 	sessions,
 	timeZoneId,
-	totalEvents
+	totalItems
 }) => {
 	const dateGroups = useMemo(
 		() => groupByDate(sessions, timeZoneId),
 		[sessions, timeZoneId]
 	);
 
-	const isLastPage = page * delta >= totalEvents;
+	const isLastPage = page * delta >= totalItems;
 
 	if (loading) {
 		return <Loading />;
@@ -287,7 +287,7 @@ const ActivityStreamTimeline: React.FC<IActivityStreamTimelineProps> = ({
 				onPageChange={onPageChange}
 				page={page}
 				selectedDelta={delta}
-				totalItems={totalEvents}
+				totalItems={totalItems}
 			/>
 		</div>
 	);

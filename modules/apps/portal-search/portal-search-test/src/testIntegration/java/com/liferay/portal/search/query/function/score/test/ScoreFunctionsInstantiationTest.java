@@ -96,6 +96,6 @@ public class ScoreFunctionsInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static ScoreFunctions _scoreFunctions;
+	private ScoreFunctions _scoreFunctions;
 
 }

@@ -474,16 +474,13 @@ public class SearchRequestBuilderTest {
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static Portal _portal;
-
-	@Inject
 	private CollapseBuilderFactory _collapseBuilderFactory;
 
 	@Inject
 	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	private Group _group;
 
@@ -500,6 +497,9 @@ public class SearchRequestBuilderTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RescoreBuilderFactory _rescoreBuilderFactory;

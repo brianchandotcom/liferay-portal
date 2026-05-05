@@ -151,6 +151,6 @@ public class ScopeFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 	}
 
 	@Inject
-	private static SiteFacetFactory _siteFacetFactory;
+	private SiteFacetFactory _siteFacetFactory;
 
 }

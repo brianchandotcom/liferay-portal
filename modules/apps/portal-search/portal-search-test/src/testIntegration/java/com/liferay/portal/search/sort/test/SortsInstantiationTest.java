@@ -87,6 +87,6 @@ public class SortsInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static Sorts _sorts;
+	private Sorts _sorts;
 
 }

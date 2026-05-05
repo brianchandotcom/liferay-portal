@@ -195,6 +195,6 @@ public class AssetTagNamesFacetedSearcherTest
 	}
 
 	@Inject
-	private static AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
+	private AssetTagNamesFacetFactory _assetTagNamesFacetFactory;
 
 }

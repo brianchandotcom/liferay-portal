@@ -334,12 +334,12 @@ public class SearchEngineAdapterTest {
 	}
 
 	@Inject
-	private static SearchEngineAdapter _searchEngineAdapter;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Inject
-	private static SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 
 	@Inject
-	private static SearchEngineInformation _searchEngineInformation;
+	private SearchEngineInformation _searchEngineInformation;
 
 }

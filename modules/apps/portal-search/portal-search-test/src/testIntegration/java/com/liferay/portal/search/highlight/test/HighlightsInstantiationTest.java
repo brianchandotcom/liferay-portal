@@ -61,12 +61,12 @@ public class HighlightsInstantiationTest {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject
-	private static FieldConfigBuilderFactory _fieldConfigBuilderFactory;
+	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;
 
 	@Inject
-	private static HighlightBuilderFactory _highlightBuilderFactory;
+	private HighlightBuilderFactory _highlightBuilderFactory;
 
 	@Inject
-	private static Highlights _highlights;
+	private Highlights _highlights;
 
 }

@@ -445,9 +445,8 @@ public class DB2DB extends BaseDB {
 			"sysibmadm.applications.agent_id = activity.application_handle ",
 			"where timestampdiff(2, char(current timestamp - ",
 			"activity.local_start_time)) * 1000 >= ? and ",
-			"sysibmadm.applications.agent_id != ",
-			"mon_get_application_handle() and ",
-			"sysibmadm.applications.appl_status = 'LOCKWAIT'");
+			"sysibmadm.applications.agent_id != mon_get_application_handle() ",
+			"and sysibmadm.applications.appl_status = 'LOCKWAIT'");
 	}
 
 	@Override

@@ -226,6 +226,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 
 		_jobExecutorUnsafeRunnable.run();
 
+		JSONObject payloadJSONObject = null;
 		List<UserNotificationEvent> testUserNotificationEvents =
 			new ArrayList<>();
 
@@ -241,6 +242,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			if ((classPK == objectEntry1.getObjectEntryId()) ||
 				(classPK == objectEntry2.getObjectEntryId())) {
 
+				payloadJSONObject = jsonObject;
 				testUserNotificationEvents.add(userNotificationEvent);
 			}
 		}
@@ -249,19 +251,15 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			testUserNotificationEvents.toString(), 1,
 			testUserNotificationEvents.size());
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			testUserNotificationEvents.get(
-				0
-			).getPayload());
-
 		Assert.assertEquals(
-			objectEntry1.getObjectEntryId(), jsonObject.getLong("classPK"));
+			objectEntry1.getObjectEntryId(),
+			payloadJSONObject.getLong("classPK"));
 		Assert.assertEquals(
 			"x-has-reached-its-review-date",
-			jsonObject.getString("notificationMessageKey"));
+			payloadJSONObject.getString("notificationMessageKey"));
 		Assert.assertEquals(
 			objectEntry1.getTitleValue(),
-			jsonObject.getString("notificationMessageArg"));
+			payloadJSONObject.getString("notificationMessageArg"));
 	}
 
 	@Test

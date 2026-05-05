@@ -45,148 +45,170 @@ public class FaroSubscriptionConstants {
 	private static final Map<String, FaroSubscriptionPlan>
 		_faroSubscriptionPlans =
 			HashMapBuilder.<String, FaroSubscriptionPlan>put(
-				ProductConstants.BASIC_PRODUCT_NAME,
+				ProductConstants.BASIC_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.BASIC_PRODUCT_NAME, 1000, 300000)
+					null, ProductConstants.BASIC_PRODUCT_ENTRY_NAME, 1000,
+					300000)
 			).put(
-				ProductConstants.BUSINESS_CONTACTS_PRODUCT_NAME,
+				ProductConstants.BUSINESS_CONTACTS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.BUSINESS_PRODUCT_NAME,
-					ProductConstants.BUSINESS_CONTACTS_PRODUCT_NAME, 5000, 0)
+					ProductConstants.BUSINESS_PRODUCT_ENTRY_NAME,
+					ProductConstants.BUSINESS_CONTACTS_PRODUCT_ENTRY_NAME, 5000,
+					0)
 			).put(
-				ProductConstants.BUSINESS_PRODUCT_NAME,
+				ProductConstants.BUSINESS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.BUSINESS_PRODUCT_NAME, 10000,
+					null, ProductConstants.BUSINESS_PRODUCT_ENTRY_NAME, 10000,
 					5000000)
 			).put(
-				ProductConstants.BUSINESS_TRACKED_PAGES_PRODUCT_NAME,
+				ProductConstants.BUSINESS_TRACKED_PAGES_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.BUSINESS_PRODUCT_NAME,
-					ProductConstants.BUSINESS_TRACKED_PAGES_PRODUCT_NAME, 0,
-					5000000)
+					ProductConstants.BUSINESS_PRODUCT_ENTRY_NAME,
+					ProductConstants.BUSINESS_TRACKED_PAGES_PRODUCT_ENTRY_NAME,
+					0, 5000000)
 			).put(
-				ProductConstants.DATA_PLATFORM_PRODUCT_NAME,
+				ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
 					20, 300, null, 5, 3, 1000,
-					ProductConstants.DATA_PLATFORM_PRODUCT_NAME, 300000, 3)
+					ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME, 300000,
+					3)
 			).put(
-				ProductConstants.ENTERPRISE_CONTACTS_PRODUCT_NAME,
+				ProductConstants.ENTERPRISE_CONTACTS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.ENTERPRISE_PRODUCT_NAME,
-					ProductConstants.ENTERPRISE_CONTACTS_PRODUCT_NAME, 5000, 0)
-			).put(
-				ProductConstants.ENTERPRISE_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null, ProductConstants.ENTERPRISE_PRODUCT_NAME, 100000,
-					60000000)
-			).put(
-				ProductConstants.ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					ProductConstants.ENTERPRISE_PRODUCT_NAME,
-					ProductConstants.ENTERPRISE_TRACKED_PAGES_PRODUCT_NAME, 0,
-					5000000)
-			).put(
-				ProductConstants.LXC_BUSINESS_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_BUSINESS_PRODUCT_NAME, 10000,
-					5000000)
-			).put(
-				ProductConstants.LXC_CSP_1K_USERS_EXTRA_USER_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_1K_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_1K_USERS_EXTRA_USER_PRODUCT_NAME,
-					1000, 0)
-			).put(
-				ProductConstants.LXC_CSP_1K_USERS_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_1K_USERS_PRODUCT_NAME, 1000,
-					-1)
-			).put(
-				ProductConstants.LXC_CSP_5K_USERS_EXTRA_USER_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_5K_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_5K_USERS_EXTRA_USER_PRODUCT_NAME,
+					ProductConstants.ENTERPRISE_PRODUCT_ENTRY_NAME,
+					ProductConstants.ENTERPRISE_CONTACTS_PRODUCT_ENTRY_NAME,
 					5000, 0)
 			).put(
-				ProductConstants.LXC_CSP_5K_USERS_PRODUCT_NAME,
+				ProductConstants.ENTERPRISE_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_5K_USERS_PRODUCT_NAME, 5000,
-					-1)
+					null, ProductConstants.ENTERPRISE_PRODUCT_ENTRY_NAME,
+					100000, 60000000)
 			).put(
-				ProductConstants.LXC_CSP_10K_USERS_EXTRA_USER_PRODUCT_NAME,
+				ProductConstants.ENTERPRISE_TRACKED_PAGES_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_10K_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_10K_USERS_EXTRA_USER_PRODUCT_NAME,
+					ProductConstants.ENTERPRISE_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						ENTERPRISE_TRACKED_PAGES_PRODUCT_ENTRY_NAME,
+					0, 5000000)
+			).put(
+				ProductConstants.LXC_BUSINESS_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_BUSINESS_PRODUCT_ENTRY_NAME,
+					10000, 5000000)
+			).put(
+				ProductConstants.LXC_CSP_1K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					ProductConstants.LXC_CSP_1K_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_1K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
+					1000, 0)
+			).put(
+				ProductConstants.LXC_CSP_1K_USERS_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_CSP_1K_USERS_PRODUCT_ENTRY_NAME,
+					1000, -1)
+			).put(
+				ProductConstants.LXC_CSP_5K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					ProductConstants.LXC_CSP_5K_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_5K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
+					5000, 0)
+			).put(
+				ProductConstants.LXC_CSP_5K_USERS_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_CSP_5K_USERS_PRODUCT_ENTRY_NAME,
+					5000, -1)
+			).put(
+				ProductConstants.
+					LXC_CSP_10K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					ProductConstants.LXC_CSP_10K_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_10K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 					10000, 0)
 			).put(
-				ProductConstants.LXC_CSP_10K_USERS_PRODUCT_NAME,
+				ProductConstants.LXC_CSP_10K_USERS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_10K_USERS_PRODUCT_NAME,
+					null, ProductConstants.LXC_CSP_10K_USERS_PRODUCT_ENTRY_NAME,
 					10000, -1)
 			).put(
-				ProductConstants.LXC_CSP_20K_USERS_EXTRA_USER_PRODUCT_NAME,
+				ProductConstants.
+					LXC_CSP_20K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_20K_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_20K_USERS_EXTRA_USER_PRODUCT_NAME,
+					ProductConstants.LXC_CSP_20K_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_20K_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 					20000, 0)
 			).put(
-				ProductConstants.LXC_CSP_20K_USERS_PRODUCT_NAME,
+				ProductConstants.LXC_CSP_20K_USERS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_20K_USERS_PRODUCT_NAME,
+					null, ProductConstants.LXC_CSP_20K_USERS_PRODUCT_ENTRY_NAME,
 					20000, -1)
 			).put(
-				ProductConstants.LXC_CSP_100_USERS_EXTRA_USER_PRODUCT_NAME,
+				ProductConstants.
+					LXC_CSP_100_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_100_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_100_USERS_EXTRA_USER_PRODUCT_NAME,
+					ProductConstants.LXC_CSP_100_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_100_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 					100, 0)
 			).put(
-				ProductConstants.LXC_CSP_100_USERS_PRODUCT_NAME,
+				ProductConstants.LXC_CSP_100_USERS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_100_USERS_PRODUCT_NAME, 100,
-					-1)
+					null, ProductConstants.LXC_CSP_100_USERS_PRODUCT_ENTRY_NAME,
+					100, -1)
 			).put(
-				ProductConstants.LXC_CSP_500_USERS_EXTRA_USER_PRODUCT_NAME,
+				ProductConstants.
+					LXC_CSP_500_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					ProductConstants.LXC_CSP_500_USERS_PRODUCT_NAME,
-					ProductConstants.LXC_CSP_500_USERS_EXTRA_USER_PRODUCT_NAME,
+					ProductConstants.LXC_CSP_500_USERS_PRODUCT_ENTRY_NAME,
+					ProductConstants.
+						LXC_CSP_500_USERS_EXTRA_USER_PRODUCT_ENTRY_NAME,
 					500, 0)
 			).put(
-				ProductConstants.LXC_CSP_500_USERS_PRODUCT_NAME,
+				ProductConstants.LXC_CSP_500_USERS_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_500_USERS_PRODUCT_NAME, 500,
-					-1)
+					null, ProductConstants.LXC_CSP_500_USERS_PRODUCT_ENTRY_NAME,
+					500, -1)
 			).put(
-				ProductConstants.LXC_CSP_CUSTOM_PRODUCT_NAME,
+				ProductConstants.LXC_CSP_CUSTOM_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_CSP_CUSTOM_PRODUCT_NAME, -1, -1)
-			).put(
-				ProductConstants.LXC_ENTERPRISE_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_ENTERPRISE_PRODUCT_NAME, 100000,
-					60000000)
-			).put(
-				ProductConstants.LXC_PRO_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null, ProductConstants.LXC_PRO_PRODUCT_NAME, 1000, 300000)
-			).put(
-				ProductConstants.LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_NAME,
-				new FaroSubscriptionPlan(
-					null,
-					ProductConstants.LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_NAME,
+					null, ProductConstants.LXC_CSP_CUSTOM_PRODUCT_ENTRY_NAME,
 					-1, -1)
 			).put(
-				ProductConstants.LXC_SUBSCRIPTION_SUPPORT_SITE_PRODUCT_NAME,
+				ProductConstants.LXC_ENTERPRISE_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
-					null,
-					ProductConstants.LXC_SUBSCRIPTION_SUPPORT_SITE_PRODUCT_NAME,
-					-1, -1)
+					null, ProductConstants.LXC_ENTERPRISE_PRODUCT_ENTRY_NAME,
+					100000, 60000000)
 			).put(
-				ProductConstants.LXC_SUBSCRIPTION_TRANSACT_SITE_PRODUCT_NAME,
+				ProductConstants.LXC_PRO_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null, ProductConstants.LXC_PRO_PRODUCT_ENTRY_NAME, 1000,
+					300000)
+			).put(
+				ProductConstants.
+					LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
 					null,
 					ProductConstants.
-						LXC_SUBSCRIPTION_TRANSACT_SITE_PRODUCT_NAME,
+						LXC_SUBSCRIPTION_ENGAGE_SITE_PRODUCT_ENTRY_NAME,
+					-1, -1)
+			).put(
+				ProductConstants.
+					LXC_SUBSCRIPTION_SUPPORT_SITE_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null,
+					ProductConstants.
+						LXC_SUBSCRIPTION_SUPPORT_SITE_PRODUCT_ENTRY_NAME,
+					-1, -1)
+			).put(
+				ProductConstants.
+					LXC_SUBSCRIPTION_TRANSACT_SITE_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null,
+					ProductConstants.
+						LXC_SUBSCRIPTION_TRANSACT_SITE_PRODUCT_ENTRY_NAME,
 					-1, -1)
 			).build();
 	private static final Map<String, Integer> _statuses = HashMapBuilder.put(

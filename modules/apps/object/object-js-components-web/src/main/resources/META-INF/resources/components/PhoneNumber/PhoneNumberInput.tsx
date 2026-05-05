@@ -12,6 +12,7 @@ import {
 	CountryInfo,
 	PREFIX_TYPE,
 	PrefixType,
+	getDefaultCountry,
 	getFlagSymbol,
 	parsePhoneValue,
 } from './phoneNumberUtil';
@@ -43,7 +44,7 @@ export function PhoneNumberInput({
 }: PhoneNumberInputProps) {
 	const [localNumber, setLocalNumber] = useState('');
 	const [selectedCountry, setSelectedCountry] = useState<CountryInfo>(
-		countries[0]
+		getDefaultCountry(countries)
 	);
 
 	const fixedCountry =
@@ -93,7 +94,7 @@ export function PhoneNumberInput({
 				(country) => country.a2 === countryA2
 			);
 
-			setSelectedCountry(country || countries[0]);
+			setSelectedCountry(country || getDefaultCountry(countries));
 			setLocalNumber(parsedLocalNumber);
 		}
 

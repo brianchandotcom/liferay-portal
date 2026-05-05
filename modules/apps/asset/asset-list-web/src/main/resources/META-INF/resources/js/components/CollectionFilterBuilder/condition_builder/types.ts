@@ -59,6 +59,7 @@ export interface FilterCondition {
 	id: string;
 	operatorName?: string;
 	propertyName?: string;
+	quantifier?: string;
 	value?: string | Array<string | object>;
 }
 
@@ -87,6 +88,15 @@ export interface ConditionBuilderProps {
 	 * per field type.
 	 */
 	getOperators: (property: GenericProperty) => GenericOperator[];
+
+	/**
+	 * Returns the quantifier options (e.g. any/all) for a given property,
+	 * or `null` to skip the quantifier cell. Renders between the operator
+	 * and value cells, mirroring the operator slot.
+	 */
+	getQuantifierOptions?: (
+		property: GenericProperty
+	) => GenericOperator[] | null;
 
 	onChange: (
 		conditions: FilterCondition[],

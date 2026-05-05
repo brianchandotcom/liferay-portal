@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.Before;
 
@@ -283,10 +284,15 @@ public abstract class BaseBatchEngineExportTaskItemWriterImplTestCase {
 
 	protected static final List<String> columnFieldNames = Arrays.asList(
 		"createDate", "description", "id", "map", "name_en", "name_hr");
-	protected static final DateFormat dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ssX");
+	protected static final DateFormat dateFormat;
 	protected static final List<String> jsonFieldNames = Arrays.asList(
 		"childItem", "createDate", "description", "id", "map", "name");
+
+	static {
+		dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+	}
 
 	protected Map<String, ObjectValuePair<Field, Method>>
 		fieldNameObjectValuePairs = ItemClassIndexUtil.index(Item.class);

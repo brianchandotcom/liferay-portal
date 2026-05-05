@@ -38,5 +38,6 @@ export interface PortletDataHandlerSection {
 }
 
 export interface ExportPreview {
+	additionCount: number;
 	portletDataHandlerSections: PortletDataHandlerSection[];
 }

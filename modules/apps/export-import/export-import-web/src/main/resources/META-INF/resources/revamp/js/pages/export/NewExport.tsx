@@ -160,6 +160,7 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
+						itemsCount={data?.additionCount}
 						loading={loading}
 						onApplyFilter={handleApplyFilter}
 						sections={sections}

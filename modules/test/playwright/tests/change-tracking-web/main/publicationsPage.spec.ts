@@ -920,8 +920,12 @@ test(
 
 		const view = page.frameLocator('iframe');
 
-		await expect(view.nth(0).getByText('Heading Example')).toBeVisible({timeout: 30000});
-		await expect(view.nth(1).getByText('Edited Text')).toBeVisible({timeout: 30000});
+		await expect(view.nth(0).getByText('Heading Example')).toBeVisible({
+			timeout: 30000,
+		});
+		await expect(view.nth(1).getByText('Edited Text')).toBeVisible({
+			timeout: 30000,
+		});
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.plid);
 	}

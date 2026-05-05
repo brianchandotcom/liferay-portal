@@ -5,6 +5,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -22,6 +26,26 @@ public class RemoteGitRef
 		return JenkinsResultsParserUtil.combine(
 			"https://github.com/", getUsername(), "/", getRepositoryName(),
 			"/tree/", getName());
+	}
+
+	public GitCommit getMergeBaseCommit(RemoteGitRef otherRemoteGitRef) {
+		JSONObject compareJSONObject = getCompareJSONObject(otherRemoteGitRef);
+
+		JSONObject mergeBaseCommitJSONObject = compareJSONObject.optJSONObject(
+			"merge_base_commit");
+
+		if (mergeBaseCommitJSONObject == null) {
+			return null;
+		}
+
+		String sha = mergeBaseCommitJSONObject.optString("sha", null);
+
+		if (sha == null) {
+			return null;
+		}
+
+		return GitCommitFactory.newGitHubRemoteGitCommit(
+			getUsername(), getRepositoryName(), sha, mergeBaseCommitJSONObject);
 	}
 
 	public RemoteGitRepository getRemoteGitRepository() {
@@ -68,6 +92,26 @@ public class RemoteGitRef
 		}
 
 		_remoteGitRepository = remoteGitRepository;
+	}
+
+	protected JSONObject getCompareJSONObject(RemoteGitRef otherRemoteGitRef) {
+		if (otherRemoteGitRef == null) {
+			throw new IllegalArgumentException("Other remote Git ref is null");
+		}
+
+		String compareSpec = JenkinsResultsParserUtil.combine(
+			getName(), "...", otherRemoteGitRef.getUsername(), ":",
+			otherRemoteGitRef.getName());
+
+		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+			getRepositoryName(), getUsername(), "compare/" + compareSpec);
+
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(url);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private final RemoteGitRepository _remoteGitRepository;

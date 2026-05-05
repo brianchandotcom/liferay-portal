@@ -40,7 +40,7 @@ const FieldDatePicker = (props: FieldDatePickerProps) => {
 		onBlur,
 		onChange,
 		required,
-		timezone = Liferay.ThemeDisplay.getTimeZone(),
+		timezone = '',
 		value = '',
 		weekdaysShort = dateUtils.getWeekdaysShort(locale),
 		...restProps

@@ -37,6 +37,21 @@ const ACTIONS = {
 		});
 	},
 
+	executeLayoutSetPrototypeSync(itemData) {
+		openConfirmModal({
+			message: Liferay.Language.get('site-template-sync-help'),
+			onConfirm: (isConfirmed) => {
+				if (isConfirmed) {
+					submitForm(
+						document.hrefFm,
+						itemData.executeLayoutSetPrototypeSyncURL
+					);
+				}
+			},
+			title: Liferay.Language.get('site-template-sync'),
+		});
+	},
+
 	permissions(itemData) {
 		openWindow({
 			dialog: {

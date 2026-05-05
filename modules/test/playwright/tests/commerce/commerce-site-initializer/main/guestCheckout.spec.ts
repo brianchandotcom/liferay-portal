@@ -105,79 +105,95 @@ test(
 	}) => {
 		test.setTimeout(90000);
 
-		const {channel, site} = await classicCommerceSetUp(
-			apiHelpers,
-			`B2B_${getRandomString()}`
-		);
+		let account;
 
-		const account = await apiHelpers.headlessAdminUser.postAccount({
-			name: getRandomString(),
-			type: 'business',
-		});
+		const {channel, site} =
+			await test.step('Set up classic commerce B2B site, create an account', async () => {
+				const setUp = await classicCommerceSetUp(
+					apiHelpers,
+					`B2B_${getRandomString()}`
+				);
 
-		await guestCheckoutSetUp(
-			channel,
-			commerceAdminChannelDetailsPage,
-			commerceAdminChannelsPage,
-			page,
-			site
-		);
+				account = await apiHelpers.headlessAdminUser.postAccount({
+					name: getRandomString(),
+					type: 'business',
+				});
 
-		try {
-			await commerceThemeClassicCatalogPage
-				.productCardAddToCartButton('Wear Sensors')
-				.click();
-
-			await page.waitForLoadState('networkidle');
-
-			await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
-				'has-badge mini-cart-opener'
-			);
-
-			await commerceMiniCartPage.miniCartButton.click();
-
-			await commerceMiniCartPage.signInToCheckoutButton.click();
-
-			const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
-
-			await expect(signInToCheckoutModal).toBeVisible();
-
-			const emailAddressInput = signInToCheckoutModal.locator(
-				'input[id*="LoginPortlet_login"]'
-			);
-			const passInput = signInToCheckoutModal.locator(
-				'input[id*="LoginPortlet_pass"]'
-			);
-			const signInButton = signInToCheckoutModal.getByRole('button', {
-				name: 'Sign In',
+				return setUp;
 			});
 
-			await emailAddressInput.fill('test@liferay.com');
-			await passInput.fill('test');
+		await test.step('Enable guest checkout on the channel', async () => {
+			await guestCheckoutSetUp(
+				channel,
+				commerceAdminChannelDetailsPage,
+				commerceAdminChannelsPage,
+				page,
+				site
+			);
+		});
 
-			await signInButton.click();
+		try {
+			await test.step('Add a product to the cart as guest', async () => {
+				await commerceThemeClassicCatalogPage
+					.productCardAddToCartButton('Wear Sensors')
+					.click();
 
-			await expect(
-				page.locator('.btn-account-selector', {hasText: account.name})
-			).toBeVisible();
+				await page.waitForLoadState('networkidle');
 
-			await commerceMiniCartPage.miniCartButton.click();
+				await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+					'has-badge mini-cart-opener'
+				);
+			});
 
-			await expect(
-				commerceMiniCartPage.miniCartItem('Wear Sensors')
-			).toBeVisible();
+			await test.step('Sign in to checkout from the mini cart', async () => {
+				await commerceMiniCartPage.miniCartButton.click();
 
-			await commerceMiniCartPage.miniCartButtonClose.click();
+				await commerceMiniCartPage.signInToCheckoutButton.click();
 
-			await checkoutPage.performCheckout({
-				shippingAddress: {
-					city: 'testCity',
-					countryLabel: 'United States',
-					name: `Guest to ${account.name}`,
-					regionLabel: 'Florida',
-					street: 'testStreet',
-					zip: '12345',
-				},
+				const signInToCheckoutModal = page.locator(
+					'#guest-sign-in-modal'
+				);
+
+				await expect(signInToCheckoutModal).toBeVisible();
+
+				await signInToCheckoutModal
+					.locator('input[id*="LoginPortlet_login"]')
+					.fill('test@liferay.com');
+				await signInToCheckoutModal
+					.locator('input[id*="LoginPortlet_pass"]')
+					.fill('test');
+				await signInToCheckoutModal
+					.getByRole('button', {name: 'Sign In'})
+					.click();
+			});
+
+			await test.step('Verify the account is selected and the cart still has the product', async () => {
+				await expect(
+					page.locator('.btn-account-selector', {
+						hasText: account.name,
+					})
+				).toBeVisible();
+
+				await commerceMiniCartPage.miniCartButton.click();
+
+				await expect(
+					commerceMiniCartPage.miniCartItem('Wear Sensors')
+				).toBeVisible();
+
+				await commerceMiniCartPage.miniCartButtonClose.click();
+			});
+
+			await test.step('Complete the checkout flow', async () => {
+				await checkoutPage.performCheckout({
+					shippingAddress: {
+						city: 'testCity',
+						countryLabel: 'United States',
+						name: `Guest to ${account.name}`,
+						regionLabel: 'Florida',
+						street: 'testStreet',
+						zip: '12345',
+					},
+				});
 			});
 		}
 		finally {
@@ -187,8 +203,10 @@ test(
 			const orders =
 				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
 
-			if (orders.items[0]) {
-				apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+			for (const order of orders.items) {
+				await apiHelpers.headlessCommerceAdminOrder.deleteOrder(
+					order.id
+				);
 			}
 		}
 	}

@@ -30,8 +30,9 @@ public class BaseRestController
 			throw new JiraOrganizationNotFoundException();
 		}
 
-		JSONObject assetObjectJSONObject = _jiraService.getAssetObject(
-			jiraWorkspaceId, jiraOrganizationId);
+		JSONObject assetObjectJSONObject =
+			_jiraService.getAssetObjectJSONObject(
+				jiraWorkspaceId, jiraOrganizationId);
 
 		JSONArray jsonArray = assetObjectJSONObject.getJSONArray("attributes");
 

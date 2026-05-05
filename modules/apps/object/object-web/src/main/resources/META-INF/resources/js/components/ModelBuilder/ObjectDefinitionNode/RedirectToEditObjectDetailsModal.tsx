@@ -46,9 +46,6 @@ export function RedirectToEditObjectDetailsModal({
 						last={
 							<ClayButton.Group key={1} spaced>
 								<ClayButton
-									aria-labelledby={Liferay.Language.get(
-										'cancel'
-									)}
 									displayType="secondary"
 									onClick={onClose}
 								>
@@ -56,9 +53,6 @@ export function RedirectToEditObjectDetailsModal({
 								</ClayButton>
 
 								<ClayButton
-									aria-labelledby={Liferay.Language.get(
-										'open-page-view'
-									)}
 									displayType="info"
 									onClick={handleSubmit}
 								>

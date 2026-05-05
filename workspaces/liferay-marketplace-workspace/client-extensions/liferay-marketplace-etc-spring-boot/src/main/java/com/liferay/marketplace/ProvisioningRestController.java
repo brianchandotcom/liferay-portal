@@ -7,15 +7,12 @@ package com.liferay.marketplace;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
-import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.AnalyticsService;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningService;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
-import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
 import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
@@ -28,8 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.math.BigDecimal;
 
 import java.time.Instant;
 
@@ -213,7 +208,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_postAppLicenseKey(appLicenseKey, jwt, order);
 
-		_provisionAnalyticsWorkspace(new JSONObject(json), jwt, order);
+		_provisionAnalyticsWorkspace(new JSONObject(json), order);
 	}
 
 	@PostMapping("license-key-type-free")
@@ -365,34 +360,20 @@ public class ProvisioningRestController extends BaseRestController {
 	}
 
 	private void _provisionAnalyticsWorkspace(
-			JSONObject jsonObject, Jwt jwt, Order order)
+			JSONObject jsonObject, Order order)
 		throws Exception {
 
-		if (!jsonObject.has("analyticsForm")) {
-			return;
+		String analyticsProject = _analyticsService.getCorpProjectUuid(
+			order.getAccountExternalReferenceCode());
+
+		if (analyticsProject == null) {
+			analyticsProject = _analyticsService.provision(
+				jsonObject.getJSONObject(
+					"analyticsForm"
+				).put(
+					"corpProjectUuid", order.getAccountExternalReferenceCode()
+				));
 		}
-
-		if (!jsonObject.has("productPurchaseKey")) {
-			ProductResource productResource =
-				_koroneikiService.getProductResource();
-
-			Product product = productResource.getProductByNameProductName(
-				"Analytics%20Cloud%20Basic");
-
-			_koroneikiService.postAccountAccountKeyProductPurchase(
-				order.getAccountExternalReferenceCode(), jwt, "Subscription",
-				null,
-				new OrderItem() {
-					{
-						setOrderId(order::getId);
-						setQuantity(() -> new BigDecimal(1));
-						setSkuExternalReferenceCode(product::getKey);
-					}
-				});
-		}
-
-		String analyticsProject = _analyticsService.provision(
-			jsonObject.getJSONObject("analyticsForm"));
 
 		_marketplaceService.updateOrder(
 			HashMapBuilder.put(

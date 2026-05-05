@@ -113,6 +113,32 @@ describe('NewExport', () => {
 		expect(dataSelectionGroup).not.toHaveAttribute('aria-invalid');
 	});
 
+	it('keeps form values after applying a filter', async () => {
+		renderComponent();
+
+		const fileNameInput = await screen.findByRole('textbox', {
+			name: /file-name/,
+		});
+		await userEvent.type(fileNameInput, 'test-file');
+
+		const filterSelect = screen.getByRole('combobox', {
+			name: 'filter-content-by',
+		});
+		await userEvent.selectOptions(filterSelect, 'last');
+
+		await userEvent.click(
+			screen.getByRole('button', {name: /show-results/i})
+		);
+
+		await waitFor(() => {
+			expect(fetch).toHaveBeenCalledTimes(2);
+		});
+
+		expect(screen.getByRole('textbox', {name: /file-name/})).toHaveValue(
+			'test-file'
+		);
+	});
+
 	it('enables the export button once filename and contentSelection are set', async () => {
 		renderComponent();
 

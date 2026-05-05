@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
 import DateFilter, {DateFilterValues} from '../../../components/date_filter';
@@ -14,10 +15,12 @@ const LABEL_ID = 'dataSelection-label';
 
 export default function DataSelection({
 	itemsCount,
+	loading = false,
 	onApplyFilter,
 	sections,
 }: {
 	itemsCount?: number;
+	loading?: boolean;
 	onApplyFilter?: (filterValues: DateFilterValues) => void;
 	sections: PortletDataHandlerSection[];
 }) {
@@ -43,11 +46,15 @@ export default function DataSelection({
 			</ClayLayout.Sheet>
 
 			<div data-testid="data-selection-section">
-				<FormikFieldContentSelector
-					aria-labelledby={LABEL_ID}
-					name="contentSelection"
-					sections={sections}
-				/>
+				{loading ? (
+					<ClayLoadingIndicator className="mb-9 mt-8" />
+				) : (
+					<FormikFieldContentSelector
+						aria-labelledby={LABEL_ID}
+						name="contentSelection"
+						sections={sections}
+					/>
+				)}
 			</div>
 		</>
 	);

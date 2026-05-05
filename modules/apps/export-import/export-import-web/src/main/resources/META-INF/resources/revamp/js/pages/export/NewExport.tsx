@@ -6,18 +6,50 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Form, Formik, FormikValues} from 'formik';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import Footer from '../../components/Footer';
-import {DateFilterValues} from '../../components/date_filter';
+import {
+	DateFilterValues,
+	FilterType,
+	ModifiedLastType,
+} from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
-import {fetchExportPreview} from '../../services/exportPreviewService';
+import {
+	ExportPreviewParams,
+	fetchExportPreview,
+} from '../../services/exportPreviewService';
 import {ExportPreview} from '../../types/portletDataHandlerSection';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
+
+const HOURS_BY_MODIFIED_LAST: Record<ModifiedLastType, number> = {
+	[ModifiedLastType.H12]: 12,
+	[ModifiedLastType.H24]: 24,
+	[ModifiedLastType.H48]: 48,
+	[ModifiedLastType.D7]: 24 * 7,
+};
+
+function dateFilterToParams(values: DateFilterValues): ExportPreviewParams {
+	if (values.filterType === FilterType.Last) {
+		return {
+			last: HOURS_BY_MODIFIED_LAST[values.modifiedLast],
+			range: 'last',
+		};
+	}
+
+	if (values.filterType === FilterType.Range) {
+		return {
+			endDate: new Date(values.toDate).toISOString(),
+			range: 'dateRange',
+			startDate: new Date(values.fromDate).toISOString(),
+		};
+	}
+
+	return {range: 'all'};
+}
 
 interface NewExportProps {
 	backURL: string;
@@ -35,52 +67,54 @@ export function NewExport({
 	const [loading, setLoading] = useState(!exportPreview);
 	const initialPreviewRef = useRef<ExportPreview | undefined>(exportPreview);
 
+	const fetchPreview = useCallback(
+		(params?: ExportPreviewParams) => {
+			setLoading(true);
+			setError(null);
+
+			fetchExportPreview(exportPreviewAPIURL, params).then((result) => {
+				if (result.error !== null) {
+					setError(result.error);
+				}
+				else {
+					setData(result.data);
+
+					if (!initialPreviewRef.current) {
+						initialPreviewRef.current = result.data;
+					}
+				}
+
+				setLoading(false);
+			});
+		},
+		[exportPreviewAPIURL]
+	);
+
 	useEffect(() => {
 		if (exportPreview) {
 			return;
 		}
 
-		setLoading(true);
-		setError(null);
-
-		fetchExportPreview(exportPreviewAPIURL).then((result) => {
-			if (result.error !== null) {
-				setError(result.error);
-			}
-			else {
-				setData(result.data);
-
-				if (!initialPreviewRef.current) {
-					initialPreviewRef.current = result.data;
-				}
-			}
-
-			setLoading(false);
-		});
-	}, [exportPreview, exportPreviewAPIURL]);
-
-	if (loading) {
-		return (
-			<div className="sheet">
-				<ClayLoadingIndicator className="mb-9 mt-8" />
-			</div>
-		);
-	}
+		fetchPreview();
+	}, [exportPreview, fetchPreview]);
 
 	if (error) {
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
 	}
 
-	if (!data) {
-		return null;
-	}
-
-	const sections = data.portletDataHandlerSections;
+	const sections = data?.portletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
+		if (
+			filterValues.filterType === FilterType.All &&
+			initialPreviewRef.current
+		) {
+			setData(initialPreviewRef.current);
 
-		// eslint-disable-next-line no-console
-		console.log('Filtering by:', filterValues);
+			return;
+		}
+
+		fetchPreview(dateFilterToParams(filterValues));
 	};
 
 	return (
@@ -126,6 +160,7 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
+						loading={loading}
 						onApplyFilter={handleApplyFilter}
 						sections={sections}
 					/>

@@ -11,8 +11,6 @@ liferay-customer-etc-spring-boot-oahs:
         -   Liferay.Headless.Delivery.everything
         -   Liferay.Notification.REST.everything
         -   c_accountsubscription.everything.read
-        -   c_businessevent.everything
-        -   c_businesseventversion.everything
         -   c_koroneikiaccount.everything.read
         -   c_notificationsubscription.everything
         -   c_notificationtarget.everything
@@ -24,11 +22,5 @@ liferay-customer-etc-spring-boot-oaua:
     name: Liferay Customer Etc Spring Boot OAuth Application User Agent
     scopes:
         -   Liferay.Headless.Admin.User.everything.read
-        -   c_businesseventversion.everything
         -   c_ticketattachment.everything
     type: oAuthApplicationUserAgent
-liferay-customer-etc-spring-boot-object-action-business-event:
-    name: Liferay Customer Etc Spring Boot Object Action Business Event
-    oAuth2ApplicationExternalReferenceCode: liferay-customer-etc-spring-boot-oaua
-    resourcePath: /object/action/business/event
-    type: objectAction

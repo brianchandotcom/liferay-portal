@@ -10,13 +10,7 @@ package com.liferay.customer.constants;
  */
 public class NotificationSubscriptionConstants {
 
-	public static final String FIELD_ACCOUNT_ENTRY_TO_BUSINESS_EVENT =
-		"r_accountEntryToBusinessEvents_accountEntryERC";
-
 	public static final String FIELD_ACTIVE = "active";
-
-	public static final String FIELD_BUSINESS_EVENT_TO_BUSINESS_EVENT_VERSION =
-		"r_businessEventToBusinessEventVersions_c_businessEventId";
 
 	public static final String FIELD_FILTER = "filter";
 

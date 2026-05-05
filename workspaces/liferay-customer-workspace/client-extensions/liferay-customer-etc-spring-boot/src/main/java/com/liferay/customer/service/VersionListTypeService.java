@@ -8,14 +8,12 @@ package com.liferay.customer.service;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,47 +47,9 @@ public class VersionListTypeService extends BaseService {
 				).build(
 				).toUri()));
 
-		Map<String, List<String>> versionsMap = _getVersionsMap(
-			releasesJSONArray);
-
-		List<String> dxpMajorVersionsMap = versionsMap.get("dxpMajor");
-
 		_updateListTypeDefinition(
 			_liferayCustomerVersionListTypeDXPMajorERC, "DXP Major Version",
-			dxpMajorVersionsMap);
-
-		List<String> dxpMinorVersionsMap = versionsMap.get("dxpMinor");
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypeDXPMinorERC, "DXP Minor Version",
-			dxpMinorVersionsMap);
-
-		List<String> dxpMinorVersionsAndPortalMajorVersionsMap =
-			new ArrayList<>();
-
-		dxpMinorVersionsAndPortalMajorVersionsMap.addAll(dxpMinorVersionsMap);
-
-		Collections.addAll(
-			dxpMinorVersionsAndPortalMajorVersionsMap,
-			_liferayCustomerVersionListTypePortalMajorVersions.split(
-				StringPool.COMMA));
-
-		_updateListTypeDefinition(
-			_liferayCustomerVersionListTypeDXPMinorPortalMajorERC,
-			"DXP Minor Version and Portal Major Version",
-			dxpMinorVersionsAndPortalMajorVersionsMap);
-	}
-
-	private void _addVersion(
-		String key, String version, Map<String, List<String>> versionsMap) {
-
-		List<String> versions = versionsMap.get(key);
-
-		if ((versions != null) && !versions.contains(version)) {
-			versions.add(version);
-
-			Collections.sort(versions);
-		}
+			_getDXPMajorVersions(releasesJSONArray));
 	}
 
 	private String _getAuthorization() {
@@ -97,32 +57,26 @@ public class VersionListTypeService extends BaseService {
 			"liferay-customer-etc-spring-boot-oahs");
 	}
 
-	private Map<String, List<String>> _getVersionsMap(
-		JSONArray releasesJSONArray) {
-
-		Map<String, List<String>> versionsMap =
-			HashMapBuilder.<String, List<String>>put(
-				"dxpMajor", new ArrayList<>()
-			).put(
-				"dxpMinor", new ArrayList<>()
-			).build();
+	private List<String> _getDXPMajorVersions(JSONArray releasesJSONArray) {
+		TreeSet<String> versions = new TreeSet<>();
 
 		for (int i = 0; i < releasesJSONArray.length(); i++) {
 			JSONObject releaseJSONObject = releasesJSONArray.getJSONObject(i);
 
-			String product = releaseJSONObject.getString("product");
-			String productGroupVersion = releaseJSONObject.getString(
+			String product = releaseJSONObject.optString("product");
+			String productGroupVersion = releaseJSONObject.optString(
 				"productGroupVersion");
 
 			if (Validator.isNull(product) ||
 				Validator.isNull(productGroupVersion) ||
-				!product.equals("dxp")) {
+				!product.equals("dxp") ||
+				!_isSupported(releaseJSONObject.optJSONArray("tags"))) {
 
 				continue;
 			}
 
 			String productMajorVersion = releaseJSONObject.optString(
-				"productMajorVersion", null);
+				"productMajorVersion");
 
 			if (Validator.isNull(productMajorVersion)) {
 				productMajorVersion =
@@ -130,18 +84,10 @@ public class VersionListTypeService extends BaseService {
 						StringUtil.toUpperCase(productGroupVersion);
 			}
 
-			if (_isSupported(releaseJSONObject.optJSONArray("tags"))) {
-				_addVersion(
-					product + "Major", productMajorVersion, versionsMap);
-			}
-
-			String productVersion = releaseJSONObject.getString(
-				"productVersion");
-
-			_addVersion(product + "Minor", productVersion, versionsMap);
+			versions.add(productMajorVersion);
 		}
 
-		return versionsMap;
+		return new ArrayList<>(versions);
 	}
 
 	private boolean _isSupported(JSONArray tagsJSONArray) {
@@ -150,7 +96,7 @@ public class VersionListTypeService extends BaseService {
 		}
 
 		for (int i = 0; i < tagsJSONArray.length(); i++) {
-			if (StringUtil.equals(tagsJSONArray.getString(i), "supported")) {
+			if (StringUtil.equals(tagsJSONArray.optString(i), "supported")) {
 				return true;
 			}
 		}
@@ -235,15 +181,6 @@ public class VersionListTypeService extends BaseService {
 
 	@Value("${liferay.customer.version.list.type.dxp.major.erc}")
 	private String _liferayCustomerVersionListTypeDXPMajorERC;
-
-	@Value("${liferay.customer.version.list.type.dxp.minor.erc}")
-	private String _liferayCustomerVersionListTypeDXPMinorERC;
-
-	@Value("${liferay.customer.version.list.type.dxp.minor.portal.major.erc}")
-	private String _liferayCustomerVersionListTypeDXPMinorPortalMajorERC;
-
-	@Value("${liferay.customer.version.list.type.portal.major.versions}")
-	private String _liferayCustomerVersionListTypePortalMajorVersions;
 
 	@Value("${liferay.customer.version.list.type.releases.url}")
 	private String _liferayCustomerVersionListTypeReleasesURL;

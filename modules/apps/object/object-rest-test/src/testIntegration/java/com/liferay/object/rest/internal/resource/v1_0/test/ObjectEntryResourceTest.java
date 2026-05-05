@@ -16316,7 +16316,8 @@ public class ObjectEntryResourceTest {
 
 	private Map<String, Map<String, String>> _getExpectedActions(
 		String externalReferenceCode, ObjectDefinition objectDefinition,
-		String objectEntryId, boolean sharingEnabled) {
+		String objectEntryFolderId, String objectEntryId,
+		boolean sharingEnabled) {
 
 		String href = StringBundler.concat(
 			"http://localhost:", PortalUtil.getPortalServerPort(false), "/o",
@@ -16361,6 +16362,21 @@ public class ObjectEntryResourceTest {
 			}
 		).put(
 			"delete", _getActionValue(href, "DELETE")
+		).put(
+			"duplicate",
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						_group.getCompanyId(), "LPD-17564")) {
+
+					return _getActionValue(
+						StringBundler.concat(
+							href, "/by-object-entry-folder-id/",
+							objectEntryFolderId, "/copy"),
+						"POST");
+				}
+
+				return null;
+			}
 		).put(
 			"expire",
 			() -> {
@@ -17466,8 +17482,9 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(
 			_getExpectedActions(
 				jsonObject.getString("externalReferenceCode"),
-				_siteScopedObjectDefinition1, jsonObject.getString("id"),
-				sharingEnabled),
+				_siteScopedObjectDefinition1,
+				jsonObject.getString("objectEntryFolderId"),
+				jsonObject.getString("id"), sharingEnabled),
 			actionsJSONObject.toMap());
 	}
 

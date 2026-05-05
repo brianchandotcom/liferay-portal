@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -74,13 +73,6 @@ public class OracleDBTest extends DBTest {
 						"')"));
 			}
 		}
-	}
-
-	@Override
-	protected void assertLockedQueryState(String state) {
-		Assert.assertTrue(
-			StringUtil.startsWith(state, "enq:") ||
-			StringUtil.containsIgnoreCase(state, "library cache"));
 	}
 
 }

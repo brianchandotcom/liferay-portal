@@ -649,9 +649,7 @@ public class DBTest {
 
 	@Test
 	public void testGetLockedQueryInfos() throws Exception {
-		DBType dbType = db.getDBType();
-
-		Assume.assumeTrue(dbType != DBType.HYPERSONIC);
+		Assume.assumeTrue(db.getDBType() != DBType.HYPERSONIC);
 
 		db.runSQL(
 			"insert into " + TABLE_NAME_1 +
@@ -1021,6 +1019,14 @@ public class DBTest {
 		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 			Assert.assertTrue(
 				StringUtil.containsIgnoreCase(state, "LOCK WAIT"));
+		}
+		else if (dbType == DBType.ORACLE) {
+			Assert.assertTrue(
+				StringUtil.startsWith(state, "enq:") ||
+				StringUtil.containsIgnoreCase(state, "library cache"));
+		}
+		else if (dbType == DBType.POSTGRESQL) {
+			Assert.assertTrue(StringUtil.equalsIgnoreCase(state, "Lock"));
 		}
 		else if (dbType == DBType.SQLSERVER) {
 			Assert.assertTrue(StringUtil.startsWith(state, "LCK_"));

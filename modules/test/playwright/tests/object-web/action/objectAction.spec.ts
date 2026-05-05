@@ -1023,272 +1023,6 @@ test.describe('Object Action CRUD', () => {
 	);
 });
 
-test.describe('Object Action Required Field Validation', () => {
-	test(
-		'Cannot leave action name blank',
-		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			editObjectActionPage,
-			page,
-			viewObjectActionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe
-				.getByPlaceholder('Text to translate')
-				.fill('Action Label');
-
-			await editObjectActionPage.openActionBuilderTab();
-
-			await editObjectActionPage.inputWhenCombo.click();
-			await iframe.getByRole('option', {name: 'On After Add'}).click();
-
-			await editObjectActionPage.inputThenCombo.click();
-			await iframe.getByRole('option', {name: 'Webhook'}).click();
-
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
-
-			await iframe.getByRole('tab', {name: 'Basic Info'}).click();
-
-			await iframe.getByPlaceholder('Text to translate').clear();
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				iframe.locator('#actionNameInputfieldFeedback')
-			).toContainText('Required');
-		}
-	);
-
-	test(
-		'Cannot leave action then field blank',
-		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			editObjectActionPage,
-			page,
-			viewObjectActionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe
-				.getByPlaceholder('Text to translate')
-				.fill('Action Label');
-
-			await editObjectActionPage.openActionBuilderTab();
-
-			await editObjectActionPage.inputWhenCombo.click();
-			await iframe.getByRole('option', {name: 'On After Add'}).click();
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(iframe.getByText('Required')).toBeVisible();
-		}
-	);
-
-	test(
-		'Cannot leave action when field blank',
-		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			editObjectActionPage,
-			page,
-			viewObjectActionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe
-				.getByPlaceholder('Text to translate')
-				.fill('Action Label');
-
-			await editObjectActionPage.openActionBuilderTab();
-
-			await editObjectActionPage.inputThenCombo.click();
-			await iframe.getByRole('option', {name: 'Webhook'}).click();
-
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(iframe.getByText('Required')).toBeVisible();
-		}
-	);
-
-	test(
-		'Cannot leave URL blank when webhook is selected',
-		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			editObjectActionPage,
-			page,
-			viewObjectActionsPage,
-		}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe
-				.getByPlaceholder('Text to translate')
-				.fill('Action Label');
-
-			await editObjectActionPage.openActionBuilderTab();
-
-			await editObjectActionPage.inputWhenCombo.click();
-			await iframe.getByRole('option', {name: 'On After Add'}).click();
-
-			await editObjectActionPage.inputThenCombo.click();
-			await iframe.getByRole('option', {name: 'Webhook'}).click();
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				iframe.locator('#urlInputfieldFeedback')
-			).toContainText('Required');
-		}
-	);
-
-	test(
-		'Cannot save action without expression builder value',
-		{tag: '@LPD-78504'},
-		async ({
-			apiHelpers,
-			editObjectActionPage,
-			page,
-			viewObjectActionsPage,
-		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe
-				.getByPlaceholder('Text to translate')
-				.fill('Custom Action');
-
-			await editObjectActionPage.openActionBuilderTab();
-
-			await editObjectActionPage.inputWhenCombo.click();
-			await iframe.getByRole('option', {name: 'On After Add'}).click();
-
-			await iframe.getByLabel('Enable Condition').check();
-
-			await editObjectActionPage.inputThenCombo.click();
-			await iframe.getByRole('option', {name: 'Webhook'}).click();
-
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(iframe.getByText('Required')).toBeVisible();
-
-			await page.reload();
-
-			await viewObjectActionsPage.actionsTabItem.click();
-
-			await expect(page.getByText('No Results Found')).toBeVisible();
-		}
-	);
-
-	test(
-		'Can verify action name is required',
-		{tag: '@LPD-78504'},
-		async ({apiHelpers, page, viewObjectActionsPage}) => {
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
-
-			await viewObjectActionsPage.openObjectActionSidePanel();
-
-			const iframe = page.frameLocator('iframe');
-
-			await iframe.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				iframe.locator('#actionNameInputfieldFeedback')
-			).toContainText('Required');
-		}
-	);
-});
-
 test.describe('Object Action Conditions and Triggers', () => {
 	test(
 		'Can create an action with expression builder condition',
@@ -2252,48 +1986,13 @@ test.describe('Object Action Cross-Object Behavior', () => {
 	);
 });
 
-test.describe('Object Action with Groovy Script', () => {
+test.describe('Object Action Required Field Validation', () => {
 	test(
-		'Can create an action with Groovy Script',
-		{tag: ['@LPD-78504', '@LPS-156569']},
-		async ({apiHelpers, scriptManagementPage, site: _site}) => {
-			await scriptManagementPage.enableScriptManagementConfiguration();
-
+		'Can verify action name is required',
+		{tag: '@LPD-78504'},
+		async ({apiHelpers, page, viewObjectActionsPage}) => {
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields: [
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode: 'customObjectField',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {en_US: 'Custom Field'},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: 'customObjectField',
-							required: true,
-							system: false,
-							type: 'String',
-						},
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode:
-								'customObjectFieldActionTest',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {en_US: 'Custom Field Action Test'},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: 'customObjectFieldActionTest',
-							required: false,
-							system: false,
-							type: 'String',
-						},
-					],
 					status: {code: 0},
 				});
 
@@ -2302,223 +2001,31 @@ test.describe('Object Action with Groovy Script', () => {
 				type: 'objectDefinition',
 			});
 
-			const groovyScript = `
-	import com.liferay.object.model.ObjectEntry;
-	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-	import com.liferay.portal.kernel.service.ServiceContext;
-	
-	import java.io.Serializable;
-	import java.util.Map;
-	
-	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
-	Map<String, Serializable> values = objectEntry.getValues();
-	values.put("customObjectFieldActionTest", "Action Test Works")
-	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
-	`;
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-			const objectActionAPIClient =
-				await apiHelpers.buildRestClient(ObjectActionAPI);
+			await viewObjectActionsPage.openObjectActionSidePanel();
 
-			const {body: objectAction} =
-				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-					objectDefinition.externalReferenceCode!,
-					{
-						active: true,
-						errorMessage: {en_US: ''},
-						label: {en_US: 'Custom Action'},
-						name: `customAction${getRandomInt()}`,
-						objectActionExecutorKey: 'groovy',
-						objectActionTriggerKey: 'onAfterAdd',
-						parameters: {
-							lineCount: groovyScript.split('\n').length,
-							script: groovyScript,
-						},
-					}
-				);
+			const iframe = page.frameLocator('iframe');
 
-			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+			await iframe.getByRole('button', {name: 'Save'}).click();
 
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-			const entry = await apiHelpers.objectEntry.postObjectEntry(
-				{customObjectField: 'Entry Test'},
-				applicationName
-			);
-
-			// The Groovy executor runs asynchronously after the entry is
-			// committed, so poll until the action's effect (updated
-			// customObjectFieldActionTest) is visible.
-
-			await expect(async () => {
-				const updatedEntry =
-					await apiHelpers.objectEntry.getObjectEntryById(
-						applicationName,
-						String(entry.id)
-					);
-
-				expect(updatedEntry.customObjectFieldActionTest).toBe(
-					'Action Test Works'
-				);
-			}).toPass();
+			await expect(
+				iframe.locator('#actionNameInputfieldFeedback')
+			).toContainText('Required');
 		}
 	);
 
 	test(
-		'Can edit an action with Groovy Script',
-		{tag: ['@LPD-78504', '@LPS-156560']},
-		async ({apiHelpers, scriptManagementPage, site: _site}) => {
-			await scriptManagementPage.enableScriptManagementConfiguration();
-
-			await scriptManagementPage.page.waitForTimeout(2000);
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields: [
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode: 'customObjectField',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {en_US: 'Custom Field'},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: 'customObjectField',
-							required: true,
-							system: false,
-							type: 'String',
-						},
-						{
-							DBType: 'String',
-							businessType: 'Text',
-							externalReferenceCode:
-								'customObjectFieldActionTest',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {en_US: 'Custom Field Action Test'},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: 'customObjectFieldActionTest',
-							required: false,
-							system: false,
-							type: 'String',
-						},
-					],
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const groovyScript = `
-	import com.liferay.object.model.ObjectEntry;
-	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-	import com.liferay.portal.kernel.service.ServiceContext;
-	
-	import java.io.Serializable;
-	import java.util.Map;
-	
-	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
-	Map<String, Serializable> values = objectEntry.getValues();
-	values.put("customObjectFieldActionTest", "Action Test Works")
-	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
-	`;
-
-			const objectActionAPIClient =
-				await apiHelpers.buildRestClient(ObjectActionAPI);
-
-			const {body: objectAction} =
-				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-					objectDefinition.externalReferenceCode!,
-					{
-						active: true,
-						errorMessage: {en_US: ''},
-						label: {en_US: 'Custom Action'},
-						name: `customAction${getRandomInt()}`,
-						objectActionExecutorKey: 'groovy',
-						objectActionTriggerKey: 'onAfterUpdate',
-						parameters: {
-							lineCount: groovyScript.split('\n').length,
-							script: groovyScript,
-						},
-					}
-				);
-
-			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
-
-			await objectActionAPIClient.patchObjectAction(objectAction.id!, {
-				conditionExpression: "customObjectField == 'Entry Update'",
-			});
-
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-			const entry = await apiHelpers.objectEntry.postObjectEntry(
-				{customObjectField: 'Entry Test'},
-				applicationName
-			);
-
-			await apiHelpers.objectEntry.patchObjectEntry(
-				{customObjectField: 'Entry Update'},
-				applicationName,
-				Number(entry.id)
-			);
-
-			// The Groovy executor runs asynchronously after the entry is committed,
-			// so poll until the action's effect (updated customObjectFieldActionTest)
-			// is visible.
-
-			await expect(async () => {
-				const updatedEntry =
-					await apiHelpers.objectEntry.getObjectEntryById(
-						applicationName,
-						String(entry.id)
-					);
-
-				expect(updatedEntry.customObjectFieldActionTest).toBe(
-					'Action Test Works'
-				);
-			}).toPass();
-		}
-	);
-
-	test(
-		'Can use expression with Groovy Script action',
-		{tag: ['@LPD-78504', '@LPS-156346']},
+		'Cannot leave action name blank',
+		{tag: '@LPD-78504'},
 		async ({
 			apiHelpers,
-			scriptManagementPage,
-			site: _site,
+			editObjectActionPage,
+			page,
 			viewObjectActionsPage,
 		}) => {
-			await scriptManagementPage.enableScriptManagementConfiguration();
-
-			await scriptManagementPage.page.waitForTimeout(2000);
-
 			const objectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields: [
-						{
-							DBType: 'Integer',
-							businessType: 'Integer',
-							externalReferenceCode: 'customInteger',
-							indexed: true,
-							indexedAsKeyword: false,
-							indexedLanguageId: '',
-							label: {en_US: 'Custom Integer'},
-							listTypeDefinitionId: 0,
-							localized: false,
-							name: 'customInteger',
-							required: false,
-							system: false,
-							type: 'Integer',
-						},
-					],
 					status: {code: 0},
 				});
 
@@ -2527,50 +2034,220 @@ test.describe('Object Action with Groovy Script', () => {
 				type: 'objectDefinition',
 			});
 
-			const objectActionAPIClient =
-				await apiHelpers.buildRestClient(ObjectActionAPI);
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
 
-			const {body: objectAction} =
-				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-					objectDefinition.externalReferenceCode!,
-					{
-						active: true,
-						conditionExpression: 'customInteger == 5',
-						errorMessage: {en_US: ''},
-						label: {en_US: 'Action Label'},
-						name: `customAction${getRandomInt()}`,
-						objectActionExecutorKey: 'groovy',
-						objectActionTriggerKey: 'onAfterAdd',
-						parameters: {
-							lineCount: 1,
-							script: "println 'Success'",
-						},
-					}
-				);
+			await viewObjectActionsPage.openObjectActionSidePanel();
 
-			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+			const iframe = page.frameLocator('iframe');
 
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
 
-			await apiHelpers.objectEntry.postObjectEntry(
-				{customInteger: 5},
-				applicationName
-			);
+			await editObjectActionPage.openActionBuilderTab();
 
-			// The Groovy executor runs asynchronously after the entry is
-			// committed, so poll the actions page until the action's last
-			// execution status reflects 'Success'.
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
 
-			await expect(async () => {
-				await viewObjectActionsPage.goto(
-					objectDefinition.label!['en_US']
-				);
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-				await expect(
-					viewObjectActionsPage.lastExecutionCell.nth(1)
-				).toContainText('Success');
-			}).toPass();
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('tab', {name: 'Basic Info'}).click();
+
+			await iframe.getByPlaceholder('Text to translate').clear();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.locator('#actionNameInputfieldFeedback')
+			).toContainText('Required');
+		}
+	);
+
+	test(
+		'Cannot leave action then field blank',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'Cannot leave action when field blank',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+		}
+	);
+
+	test(
+		'Cannot leave URL blank when webhook is selected',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Action Label');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				iframe.locator('#urlInputfieldFeedback')
+			).toContainText('Required');
+		}
+	);
+
+	test(
+		'Cannot save action without expression builder value',
+		{tag: '@LPD-78504'},
+		async ({
+			apiHelpers,
+			editObjectActionPage,
+			page,
+			viewObjectActionsPage,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectActionsPage.goto(objectDefinition.label['en_US']);
+
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			const iframe = page.frameLocator('iframe');
+
+			await iframe
+				.getByPlaceholder('Text to translate')
+				.fill('Custom Action');
+
+			await editObjectActionPage.openActionBuilderTab();
+
+			await editObjectActionPage.inputWhenCombo.click();
+			await iframe.getByRole('option', {name: 'On After Add'}).click();
+
+			await iframe.getByLabel('Enable Condition').check();
+
+			await editObjectActionPage.inputThenCombo.click();
+			await iframe.getByRole('option', {name: 'Webhook'}).click();
+
+			await iframe.getByLabel('URL').fill('http://localhost:8080');
+
+			await iframe.getByRole('button', {name: 'Save'}).click();
+
+			await expect(iframe.getByText('Required')).toBeVisible();
+
+			await page.reload();
+
+			await viewObjectActionsPage.actionsTabItem.click();
+
+			await expect(page.getByText('No Results Found')).toBeVisible();
 		}
 	);
 });
@@ -2670,78 +2347,6 @@ test.describe('Object Action Standalone Permissions', () => {
 
 			await expect(
 				roleDefinePermissionsPage.page.getByText(actionPermissionName)
-			).toBeHidden();
-		}
-	);
-
-	test(
-		'Cannot see deactivated standalone action in dropdown menu',
-		{tag: ['@LPD-78504', '@LPS-173773']},
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const fieldName = objectFields[0].name!;
-			const fieldLabel = objectFields[0].label!;
-			const actionLabel = `Action Label ${getRandomInt()}`;
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const objectActionAPIClient =
-				await apiHelpers.buildRestClient(ObjectActionAPI);
-
-			const {body: objectAction} =
-				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
-					objectDefinition.externalReferenceCode!,
-					{
-						active: false,
-						errorMessage: {en_US: 'Error message'},
-						label: {en_US: actionLabel},
-						name: `ActionName${getRandomInt()}`,
-						objectActionExecutorKey: 'add-object-entry',
-						objectActionTriggerKey: 'standalone',
-						parameters: {
-							objectDefinitionExternalReferenceCode:
-								objectDefinition.externalReferenceCode,
-							predefinedValues: [
-								{
-									businessType: 'Text',
-									inputAsValue: true,
-									label: fieldLabel,
-									name: fieldName,
-									value: 'New Entry Test',
-								},
-							],
-						},
-					}
-				);
-
-			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
-
-			const applicationName =
-				'c/' + objectDefinition.name!.toLowerCase() + 's';
-
-			await apiHelpers.objectEntry.postObjectEntry(
-				{[fieldName]: 'Entry Test'},
-				applicationName
-			);
-
-			await viewObjectEntriesPage.goto(objectDefinition.className!);
-
-			await viewObjectEntriesPage.frontendDatasetActions.click();
-
-			await expect(
-				page.getByRole('menuitem', {name: actionLabel})
 			).toBeHidden();
 		}
 	);
@@ -3100,6 +2705,78 @@ test.describe('Object Action Standalone Permissions', () => {
 			).not.toBeVisible();
 		}
 	);
+
+	test(
+		'Cannot see deactivated standalone action in dropdown menu',
+		{tag: ['@LPD-78504', '@LPS-173773']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const fieldName = objectFields[0].name!;
+			const fieldLabel = objectFields[0].label!;
+			const actionLabel = `Action Label ${getRandomInt()}`;
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: false,
+						errorMessage: {en_US: 'Error message'},
+						label: {en_US: actionLabel},
+						name: `ActionName${getRandomInt()}`,
+						objectActionExecutorKey: 'add-object-entry',
+						objectActionTriggerKey: 'standalone',
+						parameters: {
+							objectDefinitionExternalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							predefinedValues: [
+								{
+									businessType: 'Text',
+									inputAsValue: true,
+									label: fieldLabel,
+									name: fieldName,
+									value: 'New Entry Test',
+								},
+							],
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry Test'},
+				applicationName
+			);
+
+			await viewObjectEntriesPage.goto(objectDefinition.className!);
+
+			await viewObjectEntriesPage.frontendDatasetActions.click();
+
+			await expect(
+				page.getByRole('menuitem', {name: actionLabel})
+			).toBeHidden();
+		}
+	);
 });
 
 test.describe('Object Action with Formula Field', () => {
@@ -3224,6 +2901,329 @@ test.describe('Object Action with Formula Field', () => {
 					type: 'notificationQueueEntry',
 				});
 			}
+		}
+	);
+});
+
+test.describe('Object Action with Groovy Script', () => {
+	test(
+		'Can create an action with Groovy Script',
+		{tag: ['@LPD-78504', '@LPS-156569']},
+		async ({apiHelpers, scriptManagementPage, site: _site}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode:
+								'customObjectFieldActionTest',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field Action Test'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectFieldActionTest',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const groovyScript = `
+	import com.liferay.object.model.ObjectEntry;
+	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+	import com.liferay.portal.kernel.service.ServiceContext;
+	
+	import java.io.Serializable;
+	import java.util.Map;
+	
+	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
+	Map<String, Serializable> values = objectEntry.getValues();
+	values.put("customObjectFieldActionTest", "Action Test Works")
+	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
+	`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							lineCount: groovyScript.split('\n').length,
+							script: groovyScript,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customObjectField: 'Entry Test'},
+				applicationName
+			);
+
+			// The Groovy executor runs asynchronously after the entry is
+			// committed, so poll until the action's effect (updated
+			// customObjectFieldActionTest) is visible.
+
+			await expect(async () => {
+				const updatedEntry =
+					await apiHelpers.objectEntry.getObjectEntryById(
+						applicationName,
+						String(entry.id)
+					);
+
+				expect(updatedEntry.customObjectFieldActionTest).toBe(
+					'Action Test Works'
+				);
+			}).toPass();
+		}
+	);
+
+	test(
+		'Can edit an action with Groovy Script',
+		{tag: ['@LPD-78504', '@LPS-156560']},
+		async ({apiHelpers, scriptManagementPage, site: _site}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			await scriptManagementPage.page.waitForTimeout(2000);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode: 'customObjectField',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectField',
+							required: true,
+							system: false,
+							type: 'String',
+						},
+						{
+							DBType: 'String',
+							businessType: 'Text',
+							externalReferenceCode:
+								'customObjectFieldActionTest',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Field Action Test'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customObjectFieldActionTest',
+							required: false,
+							system: false,
+							type: 'String',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const groovyScript = `
+	import com.liferay.object.model.ObjectEntry;
+	import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+	import com.liferay.portal.kernel.service.ServiceContext;
+	
+	import java.io.Serializable;
+	import java.util.Map;
+	
+	ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(id);
+	Map<String, Serializable> values = objectEntry.getValues();
+	values.put("customObjectFieldActionTest", "Action Test Works")
+	ObjectEntryLocalServiceUtil.updateObjectEntry(objectEntry.getUserId(), id, 0L, values, new ServiceContext());
+	`;
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Custom Action'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterUpdate',
+						parameters: {
+							lineCount: groovyScript.split('\n').length,
+							script: groovyScript,
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			await objectActionAPIClient.patchObjectAction(objectAction.id!, {
+				conditionExpression: "customObjectField == 'Entry Update'",
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			const entry = await apiHelpers.objectEntry.postObjectEntry(
+				{customObjectField: 'Entry Test'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.patchObjectEntry(
+				{customObjectField: 'Entry Update'},
+				applicationName,
+				Number(entry.id)
+			);
+
+			// The Groovy executor runs asynchronously after the entry is committed,
+			// so poll until the action's effect (updated customObjectFieldActionTest)
+			// is visible.
+
+			await expect(async () => {
+				const updatedEntry =
+					await apiHelpers.objectEntry.getObjectEntryById(
+						applicationName,
+						String(entry.id)
+					);
+
+				expect(updatedEntry.customObjectFieldActionTest).toBe(
+					'Action Test Works'
+				);
+			}).toPass();
+		}
+	);
+
+	test(
+		'Can use expression with Groovy Script action',
+		{tag: ['@LPD-78504', '@LPS-156346']},
+		async ({
+			apiHelpers,
+			scriptManagementPage,
+			site: _site,
+			viewObjectActionsPage,
+		}) => {
+			await scriptManagementPage.enableScriptManagementConfiguration();
+
+			await scriptManagementPage.page.waitForTimeout(2000);
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: [
+						{
+							DBType: 'Integer',
+							businessType: 'Integer',
+							externalReferenceCode: 'customInteger',
+							indexed: true,
+							indexedAsKeyword: false,
+							indexedLanguageId: '',
+							label: {en_US: 'Custom Integer'},
+							listTypeDefinitionId: 0,
+							localized: false,
+							name: 'customInteger',
+							required: false,
+							system: false,
+							type: 'Integer',
+						},
+					],
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					objectDefinition.externalReferenceCode!,
+					{
+						active: true,
+						conditionExpression: 'customInteger == 5',
+						errorMessage: {en_US: ''},
+						label: {en_US: 'Action Label'},
+						name: `customAction${getRandomInt()}`,
+						objectActionExecutorKey: 'groovy',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							lineCount: 1,
+							script: "println 'Success'",
+						},
+					}
+				);
+
+			apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{customInteger: 5},
+				applicationName
+			);
+
+			// The Groovy executor runs asynchronously after the entry is
+			// committed, so poll the actions page until the action's last
+			// execution status reflects 'Success'.
+
+			await expect(async () => {
+				await viewObjectActionsPage.goto(
+					objectDefinition.label!['en_US']
+				);
+
+				await expect(
+					viewObjectActionsPage.lastExecutionCell.nth(1)
+				).toContainText('Success');
+			}).toPass();
 		}
 	);
 });

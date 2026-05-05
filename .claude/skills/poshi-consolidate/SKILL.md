@@ -33,10 +33,72 @@ find . -name "*.testcase" | while read f; do
 done | sort -t$'\t' -k2,2 -k3,3n
 ```
 
-Save a triage doc at repo root (`<component>-test-triage.md`) with:
-- Totals by `testray.main.component.name` (files + tests).
-- Full table of files, component, test count.
-- "Quick-win candidates" section: files with 1–2 tests.
+Save a triage doc at repo root (`<component>-test-triage.md`) following this template:
+
+````markdown
+# <Component Title> Test Triage Report
+
+**Scope:** All Poshi tests tagged `@component-name = "<component>"`
+**Date:** YYYY-MM-DD
+**Method:** Enumerated <N> `.testcase` files, parsed <N> test blocks for priority and ticket references, looked up ticket commits in git log, classified buckets by changed file paths.
+
+## Summary
+
+- **Total test blocks:** <N>
+- **Unique tickets referenced:** <N>
+
+### By Bucket
+
+| Bucket | Count | Meaning |
+| --- | --- | --- |
+| integration-java | <N> | Rewrite as Java integration test against service/validator/permission layer |
+| rest-integration | <N> | Rewrite as REST-layer integration test in `*-rest-test` |
+| playwright | <N> | Keep as functional; migrate to Playwright (not Java-replaceable) |
+| needs-review | <N> | Git log alone not conclusive; must read the test body |
+| inconclusive | <N> | Ticket not in this repo's git history (often LPD-internal) |
+| no-ticket | <N> | Test description has no LPS/LPD reference; must read the test body |
+
+### By Priority
+
+| Priority | Count |
+| --- | --- |
+| 5 | <N> |
+| 4 | <N> |
+| 3 | <N> |
+| 2 | <N> |
+| 1 | <N> |
+
+## Test Details
+
+| File | Test | Priority | Ticket | Bucket | Notes |
+| --- | --- | --- | --- | --- | --- |
+| <file> | <test> | <priority> | <ticket> | <bucket> | <notes> |
+
+## Files by Component & Test Count
+
+Classification based on `property testray.main.component.name` in each `.testcase`. Sorted ascending by test count within each component so small files (easy migration wins) appear first.
+
+### Totals by Component
+
+| Component | Files | Tests |
+| --- | --- | --- |
+| <component> | <N> | <N> |
+| **Total** | **<N>** | **<N>** |
+
+### Quick-win candidates (1–2 tests, <N> files)
+
+| Component | File | Tests |
+| --- | --- | --- |
+| <component> | <file> | <N> |
+
+### <Component Name> (<N> files, <N> tests)
+
+| File | Tests |
+| --- | --- |
+| <file> | <N> |
+````
+
+Sort the **Test Details** rows by bucket order (`integration-java`, `rest-integration`, `playwright`, `needs-review`, `inconclusive`, `no-ticket`), then priority descending, then file path and test name. Leave the **Ticket** cell blank when there is none. **Notes** is a short reason taken from the bucket lookup, for example "service/validator/permission impl" or "UI/JSP/frontend fix". The bucket and **Test Details** content is filled in after Step 2; Step 1 alone produces the **Files by Component & Test Count** section and the test enumeration.
 
 ### Step 2 — Optional bucket-classification per test
 
@@ -124,20 +186,3 @@ git commit -m "<TICKET> Merge test <Source> into <FinalName>"
 - Identical panel assertions across four asset-type variants (blog / document / widget / content page) are usually overengineered — **one representative often suffices**; propose deletion for the rest instead of merging four tests into four tests.
 - The *keeper* does not have to keep its name. Pick the most comprehensive test as the starting point, then rename it.
 - When a merge target already has an assertion the source also has, the merge commit is still a valid "documents-that-this-was-redundant" commit.
-
-## Reference example
-
-Completed run: `portal-analytics-cloud` / `Content Performance` / `ContentPerformance.testcase`.
-
-- Before: 27 tests.
-- After: 8 tests (70% reduction).
-- Commits: 24 (~5 renames + ~18 merges + 1 deletion-of-redundant + 1 alphabetic cleanup).
-- Groups consolidated:
-  - Blog Display Page panel: 5 → 1
-  - Content Page panel: 8 → 1
-  - Document Display Page panel: 4 → 0 (subsumed by Blog Display Page panel — identical assertions, only asset type differed)
-  - Widget Page panel: 3 → 1
-  - Language Dropdown: 3 → 1
-- Kept intact: 4 tests with unique setup (localized URL config, fragment translations, extra page creation).
-
-The triage doc from that run (`analytics-cloud-test-triage.md` at repo root) is a good template for structure.

@@ -9228,7 +9228,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://localhost:8080/o/c/object2s/"
+			"url": "http://localhost:<serverPort>/o/c/object2s/"
 		}
 	]
 }

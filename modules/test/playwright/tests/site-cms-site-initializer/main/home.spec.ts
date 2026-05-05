@@ -591,15 +591,11 @@ test(
 				await homePage.goto();
 
 				await expect(
-					dataSetFragmentPage.table.bodyRows
-						.getByLabel(visibleTitle)
-						.getByText(visibleTitle)
+					dataSetFragmentPage.getRow(visibleTitle)
 				).toBeVisible();
 
 				await expect(
-					dataSetFragmentPage.table.bodyRows
-						.getByLabel(restrictedTitle)
-						.getByText(restrictedTitle)
+					dataSetFragmentPage.getRow(restrictedTitle)
 				).toBeVisible();
 			});
 
@@ -609,15 +605,11 @@ test(
 				await homePage.goto();
 
 				await expect(
-					dataSetFragmentPage.table.bodyRows
-						.getByLabel(visibleTitle)
-						.getByText(visibleTitle)
+					dataSetFragmentPage.getRow(visibleTitle)
 				).toBeVisible();
 
 				await expect(
-					dataSetFragmentPage.table.bodyRows.getByLabel(
-						restrictedTitle
-					)
+					dataSetFragmentPage.getRow(restrictedTitle)
 				).toBeHidden();
 			});
 		}
@@ -688,15 +680,11 @@ test(
 
 			await test.step('Recent Assets shows the content and file rows', async () => {
 				await expect(
-					dataSetFragmentPage.table.bodyRows
-						.getByLabel(contentTitle)
-						.getByText(contentTitle)
+					dataSetFragmentPage.getRow(contentTitle)
 				).toBeVisible();
 
 				await expect(
-					dataSetFragmentPage.table.bodyRows
-						.getByLabel(fileTitle)
-						.getByText(fileTitle)
+					dataSetFragmentPage.getRow(fileTitle)
 				).toBeVisible();
 			});
 
@@ -749,7 +737,7 @@ test(
 				}
 
 				await expect(
-					page.getByRole('menuitem', {
+					page.getByRole('menu').getByRole('menuitem', {
 						exact: true,
 						name: 'Download',
 					})

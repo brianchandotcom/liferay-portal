@@ -1078,6 +1078,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 		<attribute default="true" name="setup.testable.tomcat" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.cmp.license.url" />
+		<attribute default="" name="test.dsr.license.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.plugins.war.zip.url" />
@@ -1114,6 +1115,17 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<property name="test.build.cmp.license.url" value="@{test.cmp.license.url}" />
 
 					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.cmp.license.url=@{test.cmp.license.url}]]></echo>
+				</then>
+			</if>
+
+			<if>
+				<matches pattern="https?://" string="@{test.dsr.license.url}" />
+				<then>
+					<var name="test.build.dsr.license.url" unset="true" />
+
+					<property name="test.build.dsr.license.url" value="@{test.dsr.license.url}" />
+
+					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.dsr.license.url=@{test.dsr.license.url}]]></echo>
 				</then>
 			</if>
 
@@ -2104,6 +2116,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -2153,6 +2166,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="false" name="startup.testing.warm" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.cmp.license.url" />
+		<attribute default="" name="test.dsr.license.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.legacy.database.dump" />
 		<attribute default="" name="test.license.xml.url" />
@@ -2295,6 +2309,7 @@ app.server.type=@{app.server.type}]]></echo>
 									setup.testable.tomcat="@{setup.testable.tomcat}"
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.plugins.war.zip.url="${test.plugins.war.zip.url}"
@@ -2481,6 +2496,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 				setup.testable.jboss="false"
 				test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 				test.cmp.license.url="${test.cmp.license.url}"
+				test.dsr.license.url="${test.dsr.license.url}"
 				test.fix.pack.base.url="${test.fix.pack.base.url}"
 				test.legacy.database.dump="true"
 				test.license.xml.url="${test.license.xml.url}"
@@ -2941,6 +2957,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute default="" name="subrepository.name" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.cmp.license.url" />
+		<attribute default="" name="test.dsr.license.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
@@ -3082,6 +3099,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								setup.testable.tomcat="@{setup.testable.tomcat}"
 								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 								test.cmp.license.url="${test.cmp.license.url}"
+								test.dsr.license.url="${test.dsr.license.url}"
 								test.fix.pack.base.url="${test.fix.pack.base.url}"
 								test.license.xml.url="${test.license.xml.url}"
 								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -3512,6 +3530,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -3552,6 +3571,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute name="database.type" />
 		<attribute default="" name="test.build.fix.pack.zip.url" />
 		<attribute default="" name="test.cmp.license.url" />
+		<attribute default="" name="test.dsr.license.url" />
 		<attribute default="" name="test.fix.pack.base.url" />
 		<attribute default="" name="test.license.xml.url" />
 		<attribute default="" name="test.portal.bundle.dependencies.zip.url" />
@@ -3719,6 +3739,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								app.server.type="@{app.server.type}"
 								test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 								test.cmp.license.url="${test.cmp.license.url}"
+								test.dsr.license.url="${test.dsr.license.url}"
 								test.fix.pack.base.url="${test.fix.pack.base.url}"
 								test.license.xml.url="${test.license.xml.url}"
 								test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -3877,6 +3898,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -4046,6 +4068,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -4192,6 +4215,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -4328,6 +4352,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -4442,6 +4467,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -4536,6 +4562,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<prepare-release-test-environment
 									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 									test.cmp.license.url="${test.cmp.license.url}"
+									test.dsr.license.url="${test.dsr.license.url}"
 									test.fix.pack.base.url="${test.fix.pack.base.url}"
 									test.license.xml.url="${test.license.xml.url}"
 									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -5015,6 +5042,16 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 				</if>
 
 				<if>
+					<matches pattern="https?://" string="${test.dsr.license.url}" />
+					<then>
+						<mirrors-get
+							dest="${blade.samples.dir}/liferay-workspace/configs/common/deploy/license-dsr.xml"
+							src="${test.dsr.license.url}"
+						/>
+					</then>
+				</if>
+
+				<if>
 					<matches pattern="https?://" string="${test.license.xml.url}" />
 					<then>
 						<mirrors-get
@@ -5374,6 +5411,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5396,6 +5434,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5417,6 +5456,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5439,6 +5479,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5460,6 +5501,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5482,6 +5524,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5503,6 +5546,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5525,6 +5569,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5659,6 +5704,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="db2"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5677,6 +5723,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="11.1.3"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5695,6 +5742,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="11.5.7"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5712,6 +5760,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5734,6 +5783,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5756,6 +5806,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5777,6 +5828,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5799,6 +5851,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5821,6 +5874,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5858,6 +5912,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -5895,6 +5950,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6096,6 +6152,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6118,6 +6175,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6141,6 +6199,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6164,6 +6223,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6186,6 +6246,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6208,6 +6269,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6231,6 +6293,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6254,6 +6317,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6452,6 +6516,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -6478,6 +6543,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -6500,6 +6566,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -6570,6 +6637,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -6592,6 +6660,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -6829,6 +6898,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6851,6 +6921,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6874,6 +6945,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6897,6 +6969,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6919,6 +6992,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6941,6 +7015,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6964,6 +7039,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -6987,6 +7063,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7287,6 +7364,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7308,6 +7386,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7329,6 +7408,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7856,6 +7936,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mariadb"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7877,6 +7958,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="10.2"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7898,6 +7980,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="10.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7919,6 +8002,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="10.6"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7939,6 +8023,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7959,6 +8044,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="mysql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -7980,6 +8066,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8001,6 +8088,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8021,6 +8109,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8041,6 +8130,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.type="postgresql"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8062,6 +8152,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8083,6 +8174,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8190,6 +8282,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8211,6 +8304,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8231,6 +8325,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8252,6 +8347,7 @@ information. Make sure to commit in all format-javadoc results.
 			setup.proxy="false"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.plugin.zip.url="${test.plugin.zip.url}"
@@ -8975,6 +9071,7 @@ information. Make sure to commit in all format-javadoc results.
 			database.version="11.1.3"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
@@ -9762,6 +9859,7 @@ ${output.content}</echo>
 			database.version="8.4"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
@@ -9779,6 +9877,7 @@ ${output.content}</echo>
 			database.version="15.5"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.cmp.license.url="${test.cmp.license.url}"
+			test.dsr.license.url="${test.dsr.license.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"

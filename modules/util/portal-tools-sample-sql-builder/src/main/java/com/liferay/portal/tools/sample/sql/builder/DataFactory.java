@@ -6796,9 +6796,9 @@ public class DataFactory {
 		long groupId, LayoutModel layoutModel) {
 
 		return newLayoutModel(
-			"layout", groupId, false, layoutModel.getName(),
-			layoutModel.isPrivateLayout(), layoutModel.getParentLayoutId(),
-			layoutModel.getTypeSettings());
+			groupId, layoutModel.isPrivateLayout(),
+			layoutModel.getParentLayoutId(), layoutModel.getName(),
+			layoutModel.getTypeSettings(), false, "layout");
 	}
 
 	public LayoutModel newSearchLayoutModel(long groupId, boolean hidden) {
@@ -8066,8 +8066,8 @@ public class DataFactory {
 		}
 
 		return newLayoutModel(
-			name, groupId, hidden, name, privateLayout, parentLayoutId,
-			typeSettingsUnicodeProperties.toString());
+			groupId, privateLayout, parentLayoutId, name,
+			typeSettingsUnicodeProperties.toString(), hidden, name);
 	}
 
 	protected LayoutModel newLayoutModel(
@@ -8079,8 +8079,8 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		String friendlyURL, long groupId, boolean hidden, String name,
-		boolean privateLayout, long parentLayoutId, String typeSettings) {
+		long groupId, boolean privateLayout, long parentLayoutId, String name,
+		String typeSettings, boolean hidden, String friendlyURL) {
 
 		String uuid = SequentialUUID.generate();
 

@@ -308,7 +308,6 @@ const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 				<div className='individuals-activities-chart'>
 					<ActivitiesChart
 						alwaysShowSelectedTooltip
-						hasSelectedPoint={hasSelectedPoint}
 						history={activityHistory}
 						interval={interval}
 						onPointSelect={handleChangeSelection}

@@ -342,7 +342,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				<div className='individuals-activities-chart'>
 					<ActivitiesChart
 						alwaysShowSelectedTooltip
-						hasSelectedPoint={hasSelectedPoint}
 						history={activityHistory}
 						interval={interval}
 						LDPEnabled={LDPEnabled}

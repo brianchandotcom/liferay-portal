@@ -92,7 +92,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			_searchEngineAdapter.execute(
 				new CountSearchRequest() {
 					{
-						setIndexNames("_all");
+						setIndexNames(_INDEX_NAME);
 						setQuery(new MatchAllQuery());
 					}
 				});
@@ -102,9 +102,11 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
 			_assertLogEntry(
-				logEntries.get(0), "Stack trace for [_all]:", LoggerTestUtil.INFO);
+				logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
+				LoggerTestUtil.INFO);
 			_assertLogEntry(
-				logEntries.get(1), "Search request string for [_all]:",
+				logEntries.get(1),
+				"Search request string for [" + _INDEX_NAME + "]:",
 				LoggerTestUtil.DEBUG);
 			_assertLogEntry(
 				logEntries.get(2), "The search engine processed the request in",
@@ -124,7 +126,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 						addSearchSearchRequest(
 							new SearchSearchRequest() {
 								{
-									setIndexNames("_all");
+									setIndexNames(_INDEX_NAME);
 									setQuery(new MatchAllQuery());
 								}
 							});
@@ -150,7 +152,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			_searchEngineAdapter.execute(
 				new SearchSearchRequest() {
 					{
-						setIndexNames("_all");
+						setIndexNames(_INDEX_NAME);
 						setQuery(new MatchAllQuery());
 					}
 				});
@@ -160,9 +162,11 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
 
 			_assertLogEntry(
-				logEntries.get(0), "Stack trace for [_all]:", LoggerTestUtil.INFO);
+				logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
+				LoggerTestUtil.INFO);
 			_assertLogEntry(
-				logEntries.get(1), "Search request string for [_all]:",
+				logEntries.get(1),
+				"Search request string for [" + _INDEX_NAME + "]:",
 				LoggerTestUtil.DEBUG);
 			_assertLogEntry(
 				logEntries.get(2), "The search engine processed the request in",
@@ -197,6 +201,8 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 				}
 			});
 	}
+
+	private static final String _INDEX_NAME = "_all";
 
 	private static ElasticsearchConnectionFixture
 		_elasticsearchConnectionFixture;

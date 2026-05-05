@@ -4,6 +4,7 @@
  */
 
 import {Keys} from '@clayui/shared';
+import classnames from 'classnames';
 import React from 'react';
 
 export type Position = 'left' | 'right';
@@ -78,7 +79,9 @@ export function ResizeHandle({
 			aria-valuemax={maxWidth}
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
-			className="c-horizontal-resizer"
+			className={classnames('c-horizontal-resizer', {
+				'c-horizontal-resizer-end': position === 'right',
+			})}
 			{...otherProps}
 			onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
 				const delta = keyDownCounter > 7 ? 10 : 1;

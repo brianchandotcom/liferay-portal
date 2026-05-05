@@ -373,6 +373,8 @@ When the value is reused for a second lookup in the same scope, reassign `index`
 +foo.setGamma(gamma);
 ```
 
+**Exception:** When the receiver is a Service Builder entity (anything backed by a `*ModelImpl` — `FragmentEntryVersion`, `User`, `Group`, etc.), the auto-formatter's `JavaServiceObjectCheck` rewrites the setter block into model-field declaration order, not alphabetical. Leave entity setter blocks as the formatter produces them; alphabetizing by hand will be reverted on the next `formatSource` run.
+
 ### Rule 18: Use Complete Sentences in User-Facing Messages
 
 **Why:** Status, error, and notification strings that omit the linking verb read as fragments and translate poorly; restoring the auxiliary (`is`, `are`, `was`, `were`) turns the message into a complete sentence and matches the dominant phrasing already used across language files, log statements, and shell echoes.

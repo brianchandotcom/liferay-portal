@@ -144,5 +144,6 @@ const sections: PortletDataHandlerSection[] = [
 ];
 
 export const mockExportPreview: ExportPreview = {
+	additionCount: 42,
 	portletDataHandlerSections: sections,
 };

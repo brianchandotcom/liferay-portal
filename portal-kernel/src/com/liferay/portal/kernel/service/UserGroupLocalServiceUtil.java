@@ -472,6 +472,15 @@ public class UserGroupLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws PortalException {
+
+		return getService().getOrAddEmptyUserGroup(
+			externalReferenceCode, companyId, userId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1003,4 +1012,4 @@ public class UserGroupLocalServiceUtil {
 	private static volatile UserGroupLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:340560588
+// LIFERAY-SERVICE-BUILDER-HASH:67191497

@@ -115,6 +115,11 @@ public interface UserGroupService extends BaseService {
 	public List<UserGroup> getGtUserGroups(
 		long gtUserGroupId, long companyId, long parentUserGroupId, int size);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, String name)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -310,4 +315,4 @@ public interface UserGroupService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:285403524
+// LIFERAY-SERVICE-BUILDER-HASH:878462301

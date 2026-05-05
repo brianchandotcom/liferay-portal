@@ -533,6 +533,16 @@ public class UserGroupLocalServiceWrapper
 		return _userGroupLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public UserGroup getOrAddEmptyUserGroup(
+			String externalReferenceCode, long companyId, long userId,
+			String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userGroupLocalService.getOrAddEmptyUserGroup(
+			externalReferenceCode, companyId, userId, name);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -1143,4 +1153,4 @@ public class UserGroupLocalServiceWrapper
 	private UserGroupLocalService _userGroupLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1430494914
+// LIFERAY-SERVICE-BUILDER-HASH:536731783

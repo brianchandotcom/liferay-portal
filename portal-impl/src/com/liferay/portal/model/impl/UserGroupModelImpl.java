@@ -70,7 +70,8 @@ public class UserGroupModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentUserGroupId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"addedByLDAPImport", Types.BOOLEAN}
+		{"description", Types.VARCHAR}, {"addedByLDAPImport", Types.BOOLEAN},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -91,10 +92,11 @@ public class UserGroupModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("addedByLDAPImport", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table UserGroup (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(255) null,description STRING null,addedByLDAPImport BOOLEAN,primary key (userGroupId, ctCollectionId))";
+		"create table UserGroup (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,userGroupId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(255) null,description STRING null,addedByLDAPImport BOOLEAN,status INTEGER,primary key (userGroupId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 
@@ -338,6 +340,7 @@ public class UserGroupModelImpl
 				"description", UserGroup::getDescription);
 			attributeGetterFunctions.put(
 				"addedByLDAPImport", UserGroup::getAddedByLDAPImport);
+			attributeGetterFunctions.put("status", UserGroup::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -395,6 +398,8 @@ public class UserGroupModelImpl
 				"addedByLDAPImport",
 				(BiConsumer<UserGroup, Boolean>)
 					UserGroup::setAddedByLDAPImport);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<UserGroup, Integer>)UserGroup::setStatus);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -722,6 +727,21 @@ public class UserGroupModelImpl
 		_addedByLDAPImport = addedByLDAPImport;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
@@ -798,6 +818,7 @@ public class UserGroupModelImpl
 		userGroupImpl.setName(getName());
 		userGroupImpl.setDescription(getDescription());
 		userGroupImpl.setAddedByLDAPImport(isAddedByLDAPImport());
+		userGroupImpl.setStatus(getStatus());
 
 		userGroupImpl.resetOriginalValues();
 
@@ -833,6 +854,7 @@ public class UserGroupModelImpl
 			this.<String>getColumnOriginalValue("description"));
 		userGroupImpl.setAddedByLDAPImport(
 			this.<Boolean>getColumnOriginalValue("addedByLDAPImport"));
+		userGroupImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
 
 		return userGroupImpl;
 	}
@@ -983,6 +1005,8 @@ public class UserGroupModelImpl
 
 		userGroupCacheModel.addedByLDAPImport = isAddedByLDAPImport();
 
+		userGroupCacheModel.status = getStatus();
+
 		return userGroupCacheModel;
 	}
 
@@ -1059,6 +1083,7 @@ public class UserGroupModelImpl
 	private String _name;
 	private String _description;
 	private boolean _addedByLDAPImport;
+	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1105,6 +1130,7 @@ public class UserGroupModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("addedByLDAPImport", _addedByLDAPImport);
+		_columnOriginalValues.put("status", _status);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1157,6 +1183,8 @@ public class UserGroupModelImpl
 
 		columnBitmasks.put("addedByLDAPImport", 8192L);
 
+		columnBitmasks.put("status", 16384L);
+
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
 
@@ -1164,4 +1192,4 @@ public class UserGroupModelImpl
 	private UserGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-305291597
+// LIFERAY-SERVICE-BUILDER-HASH:-288707411

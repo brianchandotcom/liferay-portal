@@ -55,10 +55,12 @@ public class UserGroupTable extends BaseTable<UserGroupTable> {
 		createColumn(
 			"addedByLDAPImport", Boolean.class, Types.BOOLEAN,
 			Column.FLAG_DEFAULT);
+	public final Column<UserGroupTable, Integer> status = createColumn(
+		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 
 	private UserGroupTable() {
 		super("UserGroup", UserGroupTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1961244830
+// LIFERAY-SERVICE-BUILDER-HASH:2036872267

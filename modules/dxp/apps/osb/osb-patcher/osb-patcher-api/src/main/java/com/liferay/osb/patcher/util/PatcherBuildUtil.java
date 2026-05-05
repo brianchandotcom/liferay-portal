@@ -2170,8 +2170,7 @@ public class PatcherBuildUtil {
 		}
 
 		JenkinsUtil.validateJenkinsRequestKey(
-			patcherBuild, jenkinsStatusJSON,
-			patcherBuild.getRequestKey());
+			patcherBuild, jenkinsStatusJSON, patcherBuild.getRequestKey());
 	}
 
 	protected static void validateOSBPatcherBuildMergeJenkinsStatus(
@@ -2198,8 +2197,7 @@ public class PatcherBuildUtil {
 		}
 
 		JenkinsUtil.validateJenkinsRequestKey(
-			patcherBuild, jenkinsStatusJSON,
-			patcherBuild.getRequestKey());
+			patcherBuild, jenkinsStatusJSON, patcherBuild.getRequestKey());
 
 		JSONObject jenkinsStatusJSONObject = JSONFactoryUtil.createJSONObject(
 			jenkinsStatusJSON);

@@ -21,8 +21,8 @@ jobs:
                     project_id: ${{secrets.GCP_PROJECT_ID}}
             -   env:
                     BUCKET: liferay-cloud-native-bootstrap-nonprd
-                    PR_NUMBER: ${{github.event.pull_request.number}}
                     PROVIDER: ${{matrix.provider}}
+                    PR_NUMBER: ${{github.event.pull_request.number}}
                 name: Delete preview bootstrap scripts for closed PR
                 run: |
                     set -o errexit

@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Keys} from '@clayui/shared';
 import React from 'react';
-
-import {Keys} from './Keys';
 
 export type Position = 'left' | 'right';
 
@@ -42,7 +41,7 @@ const MAIN_MOUSE_BUTTON = 0;
 
 let keyDownCounter = 0;
 
-export function PanelResizer({
+export function ResizeHandle({
 	onPanelWidthChange,
 	panelWidth = 320,
 	panelWidthMax,

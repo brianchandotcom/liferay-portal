@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'd5da8f6073678c7e8e9fc96e9dccf6bc438c1fbfebc6bf2a3691fc8c0fbe4f22',
+	hash: 'e414c4a251fb9e33ae1ab13e8c035cb66439e46534621516d72ef3e3abed46a6',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -528,6 +528,7 @@ module.exports = {
 			'OverlayMask',
 			'Picker',
 			'Provider',
+			'ResizeHandle',
 			'Row',
 			'SidePanel',
 			'SidePanelWithDrilldown',

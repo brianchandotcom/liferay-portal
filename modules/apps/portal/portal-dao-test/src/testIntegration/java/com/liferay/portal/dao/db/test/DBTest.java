@@ -649,7 +649,7 @@ public class DBTest {
 
 	@Test
 	public void testGetLockedQueryInfos() throws Exception {
-		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
+		Assume.assumeTrue(db.getDBType() != DBType.HYPERSONIC);
 
 		db.runSQL(
 			"insert into " + TABLE_NAME_1 +
@@ -693,12 +693,11 @@ public class DBTest {
 
 					String query = lockedQueryInfo.getQuery();
 
-					if ((query != null) && query.contains("waiting")) {
+					if (query.contains("waiting")) {
 						Assert.assertNotNull(lockedQueryInfo.getId());
 						Assert.assertNotNull(lockedQueryInfo.getSchema());
-						Assert.assertTrue(
-							StringUtil.containsIgnoreCase(
-								lockedQueryInfo.getState(), "LOCK WAIT"));
+
+						assertLockedQueryState(lockedQueryInfo.getState());
 
 						return;
 					}
@@ -1009,6 +1008,29 @@ public class DBTest {
 
 	protected void addIndex(String[] columnNames) {
 		addIndex(TABLE_NAME_1, columnNames, false);
+	}
+
+	protected void assertLockedQueryState(String state) {
+		DBType dbType = db.getDBType();
+
+		if (dbType == DBType.DB2) {
+			Assert.assertTrue(StringUtil.equalsIgnoreCase(state, "LOCKWAIT"));
+		}
+		else if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			Assert.assertTrue(
+				StringUtil.containsIgnoreCase(state, "LOCK WAIT"));
+		}
+		else if (dbType == DBType.ORACLE) {
+			Assert.assertTrue(
+				StringUtil.startsWith(state, "enq:") ||
+				StringUtil.containsIgnoreCase(state, "library cache"));
+		}
+		else if (dbType == DBType.POSTGRESQL) {
+			Assert.assertTrue(StringUtil.equalsIgnoreCase(state, "Lock"));
+		}
+		else if (dbType == DBType.SQLSERVER) {
+			Assert.assertTrue(StringUtil.startsWith(state, "LCK_"));
+		}
 	}
 
 	protected static final String INDEX_NAME = "IX_TEMP";

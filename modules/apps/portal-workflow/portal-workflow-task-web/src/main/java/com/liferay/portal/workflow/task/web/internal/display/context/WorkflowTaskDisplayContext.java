@@ -527,7 +527,8 @@ public class WorkflowTaskDisplayContext {
 
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("javascript:Liferay.Util.openModal({iframeBodyCssClass: '', id: '");
+		sb.append(
+			"javascript:Liferay.Util.openModal({iframeBodyCssClass: '', id: '");
 		sb.append(_liferayPortletResponse.getNamespace());
 		sb.append("viewDiffs', title: '");
 		sb.append(

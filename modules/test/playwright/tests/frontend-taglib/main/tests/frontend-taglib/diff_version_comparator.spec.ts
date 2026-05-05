@@ -157,10 +157,13 @@ test(
 			await page.getByRole('menuitem', {name: 'Edit'}).click();
 
 			await page
-				.getByRole('group', { name: 'Fields' }).getByLabel('Rich Text Editor. Editing')
+				.getByRole('group', {name: 'Fields'})
+				.getByLabel('Rich Text Editor. Editing')
 				.fill('test');
 
-			await page.getByRole('button', {name: 'Submit for Workflow'}).click();
+			await page
+				.getByRole('button', {name: 'Submit for Workflow'})
+				.click();
 
 			await waitForAlert(page, 'Success:');
 

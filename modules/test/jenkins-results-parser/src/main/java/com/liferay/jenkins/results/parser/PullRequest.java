@@ -644,8 +644,12 @@ public class PullRequest {
 
 	public RemoteGitBranch getSenderRemoteGitBranch() {
 		if (_senderRemoteGitBranch == null) {
-			_senderRemoteGitBranch = GitUtil.getRemoteGitBranch(
-				getSenderBranchName(), new File(""), getSenderRemoteURL());
+			_senderRemoteGitBranch =
+				(RemoteGitBranch)GitBranchFactory.newRemoteGitRef(
+					GitRepositoryFactory.getRemoteGitRepository(
+						"github.com", getGitHubRemoteGitRepositoryName(),
+						getSenderUsername()),
+					getSenderBranchName(), getSenderSHA(), "heads");
 		}
 
 		return _senderRemoteGitBranch;

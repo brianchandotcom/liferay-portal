@@ -2021,14 +2021,15 @@ public class DataFactory {
 
 					layoutModels.add(
 						newLayoutModel(
-							groupId, sublayoutJSONObject.getBoolean("hidden"),
-							sublayoutJSONObject.getString("layoutTemplateId"),
+							groupId,
+							sublayoutJSONObject.getBoolean("privateLayout"),
+							layoutModel.getLayoutId(),
 							StringUtil.replace(
 								StringUtil.toLowerCase(
 									sublayoutJSONObject.getString("name")),
 								CharPool.SPACE, CharPool.DASH),
-							sublayoutJSONObject.getBoolean("privateLayout"),
-							layoutModel.getLayoutId(),
+							sublayoutJSONObject.getString("layoutTemplateId"),
+							sublayoutJSONObject.getBoolean("hidden"),
 							getPortletNames(
 								sublayoutJSONObject.getJSONArray("portlets"))));
 				}
@@ -6803,7 +6804,7 @@ public class DataFactory {
 
 	public LayoutModel newSearchLayoutModel(long groupId, boolean hidden) {
 		return newLayoutModel(
-			groupId, hidden, "1_2_columns_i", "search", false, 0,
+			groupId, false, 0, "search", "1_2_columns_i", hidden,
 			new String[] {
 				StringBundler.concat(
 					SearchBarPortletKeys.SEARCH_BAR, StringPool.COMMA,
@@ -8040,8 +8041,8 @@ public class DataFactory {
 	}
 
 	protected LayoutModel newLayoutModel(
-		long groupId, boolean hidden, String layoutTemplateId, String name,
-		boolean privateLayout, long parentLayoutId, String... columns) {
+		long groupId, boolean privateLayout, long parentLayoutId, String name,
+		String layoutTemplateId, boolean hidden, String... columns) {
 
 		return newLayoutModel(
 			groupId, privateLayout, parentLayoutId, name,
@@ -8055,7 +8056,7 @@ public class DataFactory {
 		boolean privateLayout, String... columns) {
 
 		return newLayoutModel(
-			groupId, false, layoutTemplateId, name, privateLayout, 0, columns);
+			groupId, privateLayout, 0, name, layoutTemplateId, false, columns);
 	}
 
 	protected LayoutModel newLayoutModel(

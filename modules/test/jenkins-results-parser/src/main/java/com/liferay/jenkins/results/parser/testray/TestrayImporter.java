@@ -1192,7 +1192,10 @@ public class TestrayImporter {
 			return JobPropertyFactory.newJobProperty(basePropertyName, job);
 		}
 
-		return null;
+		throw new RuntimeException(
+			JenkinsResultsParserUtil.combine(
+				"Unable to resolve '", basePropertyName,
+				"' Build database has no jobs"));
 	}
 
 	private String _getMajorPortalVersion() {

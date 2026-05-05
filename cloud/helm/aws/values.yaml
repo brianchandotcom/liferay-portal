@@ -147,6 +147,10 @@ liferay-default:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+    dependencies:
+        opensearch2:
+            portalProperties: |
+                configuration.override.com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration_remoteClusterConnectionId="REMOTE"
     network:
         enabled: true
         timeouts:
@@ -178,8 +182,6 @@ liferay-default:
         -   com.liferay.portal.search.elasticsearch7.impl
         -   com.liferay.portal.search.learning.to.rank.api
         -   com.liferay.portal.search.learning.to.rank.impl
-    portalProperties: |
-        configuration.override.com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration_remoteClusterConnectionId="REMOTE"
     resources:
         limits:
             cpu: 4000m

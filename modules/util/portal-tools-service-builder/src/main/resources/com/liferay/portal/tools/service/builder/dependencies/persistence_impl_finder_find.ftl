@@ -659,65 +659,67 @@ that may or may not be enforced with a unique index at the database level. Case
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled(entityFinder)>
-		/**
-		 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
-		 *
-		<#list entityColumns as entityColumn>
-		 * @param ${entityColumn.name} the ${entityColumn.humanName}
-		</#list>
-		 * @return the matching ${entity.pluralHumanName} that the user has permission to view
-		 */
-		@Override
-		public List<${entity.name}> filterFindBy${entityFinder.name}(
-
-		<#list entityColumns as entityColumn>
-			${entityColumn.type} ${entityColumn.name}
-
-			<#if entityColumn_has_next>
-				,
-			</#if>
-		</#list>
-
-		) {
-			return filterFindBy${entityFinder.name}(
+		<#if !serviceBuilder.isVersionGTE_7_4_0() || entityFinder.hasCustomComparator() || entityFinder.isUnique()>
+			/**
+			 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @return the matching ${entity.pluralHumanName} that the user has permission to view
+			 */
+			@Override
+			public List<${entity.name}> filterFindBy${entityFinder.name}(
 
 			<#list entityColumns as entityColumn>
-				${entityColumn.name},
+				${entityColumn.type} ${entityColumn.name}
+
+				<#if entityColumn_has_next>
+					,
+				</#if>
 			</#list>
 
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-		}
+			) {
+				return filterFindBy${entityFinder.name}(
 
-		/**
-		 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
-		 *
-		 * <p>
-		 * <#include "range_comment.ftl">
-		 * </p>
-		 *
-		<#list entityColumns as entityColumn>
-		 * @param ${entityColumn.name} the ${entityColumn.humanName}
-		</#list>
-		 * @param start the lower bound of the range of ${entity.pluralHumanName}
-		 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-		 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
-		 */
-		@Override
-		public List<${entity.name}> filterFindBy${entityFinder.name}(
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
 
-		<#list entityColumns as entityColumn>
-			${entityColumn.type} ${entityColumn.name},
-		</#list>
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			}
 
-		int start, int end) {
-			return filterFindBy${entityFinder.name}(
+			/**
+			 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
+			 *
+			 * <p>
+			 * <#include "range_comment.ftl">
+			 * </p>
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @param start the lower bound of the range of ${entity.pluralHumanName}
+			 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+			 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
+			 */
+			@Override
+			public List<${entity.name}> filterFindBy${entityFinder.name}(
 
 			<#list entityColumns as entityColumn>
-				${entityColumn.name},
+				${entityColumn.type} ${entityColumn.name},
 			</#list>
 
-			start, end, null);
-		}
+			int start, int end) {
+				return filterFindBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
+
+				start, end, null);
+			}
+		</#if>
 
 		/**
 		 * Returns an ordered range of all the ${entity.pluralHumanName} that the user has permissions to view where ${entityFinder.getHumanConditions(false)}.
@@ -1173,89 +1175,91 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#if>
 
 		<#if entityFinder.hasArrayableOperator()>
-			/**
-			 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
-			 *
-			<#list entityColumns as entityColumn>
-				<#if entityColumn.hasArrayableOperator()>
-			 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
-				<#else>
-			 * @param ${entityColumn.name} the ${entityColumn.humanName}
-				</#if>
-			</#list>
-			 * @return the matching ${entity.pluralHumanName} that the user has permission to view
-			 */
-			@Override
-			public List<${entity.name}> filterFindBy${entityFinder.name}(
-
-			<#list entityColumns as entityColumn>
-				<#if entityColumn.hasArrayableOperator()>
-					${entityColumn.type}[] ${entityColumn.pluralName}
-				<#else>
-					${entityColumn.type} ${entityColumn.name}
-				</#if>
-
-				<#if entityColumn_has_next>
-					,
-				</#if>
-			</#list>
-
-			) {
-				return filterFindBy${entityFinder.name}(
+			<#if !serviceBuilder.isVersionGTE_7_4_0() || entityFinder.hasCustomComparator() || entityFinder.hasArrayablePagination()>
+				/**
+				 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @return the matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				@Override
+				public List<${entity.name}> filterFindBy${entityFinder.name}(
 
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
-						${entityColumn.pluralName},
+						${entityColumn.type}[] ${entityColumn.pluralName}
 					<#else>
-						${entityColumn.name},
+						${entityColumn.type} ${entityColumn.name}
+					</#if>
+
+					<#if entityColumn_has_next>
+						,
 					</#if>
 				</#list>
 
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-			}
+				) {
+					return filterFindBy${entityFinder.name}(
 
-			/**
-			 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
-			 *
-			 * <p>
-			 * <#include "range_comment.ftl">
-			 * </p>
-			 *
-			<#list entityColumns as entityColumn>
-				<#if entityColumn.hasArrayableOperator()>
-			 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
-				<#else>
-			 * @param ${entityColumn.name} the ${entityColumn.humanName}
-				</#if>
-			</#list>
-			 * @param start the lower bound of the range of ${entity.pluralHumanName}
-			 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
-			 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
-			 */
-			@Override
-			public List<${entity.name}> filterFindBy${entityFinder.name}(
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
 
-			<#list entityColumns as entityColumn>
-				<#if entityColumn.hasArrayableOperator()>
-					${entityColumn.type}[] ${entityColumn.pluralName},
-				<#else>
-					${entityColumn.type} ${entityColumn.name},
-				</#if>
-			</#list>
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				}
 
-			int start, int end) {
-				return filterFindBy${entityFinder.name}(
+				/**
+				 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
+				 *
+				 * <p>
+				 * <#include "range_comment.ftl">
+				 * </p>
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @param start the lower bound of the range of ${entity.pluralHumanName}
+				 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+				 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				@Override
+				public List<${entity.name}> filterFindBy${entityFinder.name}(
 
 				<#list entityColumns as entityColumn>
 					<#if entityColumn.hasArrayableOperator()>
-						${entityColumn.pluralName},
+						${entityColumn.type}[] ${entityColumn.pluralName},
 					<#else>
-						${entityColumn.name},
+						${entityColumn.type} ${entityColumn.name},
 					</#if>
 				</#list>
 
-				start, end, null);
-			}
+				int start, int end) {
+					return filterFindBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					start, end, null);
+				}
+			</#if>
 
 			/**
 			 * Returns an ordered range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.

@@ -19,6 +19,7 @@ import com.liferay.headless.commerce.delivery.order.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.order.client.pagination.Pagination;
 import com.liferay.headless.commerce.delivery.order.client.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.order.client.serdes.v1_0.AttachmentSerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -36,8 +37,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -167,8 +170,11 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Attachment attachment = randomAttachment();
 
+		attachment.setExtension(regex);
 		attachment.setExternalReferenceCode(regex);
 		attachment.setTitle(regex);
+		attachment.setType(regex);
+		attachment.setTypeLabel(regex);
 		attachment.setUrl(regex);
 
 		String json = AttachmentSerDes.toJSON(attachment);
@@ -177,8 +183,11 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		attachment = AttachmentSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, attachment.getExtension());
 		Assert.assertEquals(regex, attachment.getExternalReferenceCode());
 		Assert.assertEquals(regex, attachment.getTitle());
+		Assert.assertEquals(regex, attachment.getType());
+		Assert.assertEquals(regex, attachment.getTypeLabel());
 		Assert.assertEquals(regex, attachment.getUrl());
 	}
 
@@ -395,7 +404,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Page<Attachment> page =
 			attachmentResource.getPlacedOrderAttachmentsPage(
-				placedOrderId, Pagination.of(1, 10));
+				placedOrderId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -405,7 +414,8 @@ public abstract class BaseAttachmentResourceTestCase {
 					irrelevantPlacedOrderId, randomIrrelevantAttachment());
 
 			page = attachmentResource.getPlacedOrderAttachmentsPage(
-				irrelevantPlacedOrderId, Pagination.of(1, (int)totalCount + 1));
+				irrelevantPlacedOrderId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -426,7 +436,7 @@ public abstract class BaseAttachmentResourceTestCase {
 				placedOrderId, randomAttachment());
 
 		page = attachmentResource.getPlacedOrderAttachmentsPage(
-			placedOrderId, Pagination.of(1, 10));
+			placedOrderId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -449,6 +459,105 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlacedOrderAttachmentsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long placedOrderId =
+			testGetPlacedOrderAttachmentsPage_getPlacedOrderId();
+
+		Attachment attachment1 = randomAttachment();
+
+		attachment1 = testGetPlacedOrderAttachmentsPage_addAttachment(
+			placedOrderId, attachment1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> page =
+				attachmentResource.getPlacedOrderAttachmentsPage(
+					placedOrderId, null,
+					getFilterString(entityField, "between", attachment1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(attachment1),
+				(List<Attachment>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetPlacedOrderAttachmentsPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long placedOrderId =
+			testGetPlacedOrderAttachmentsPage_getPlacedOrderId();
+
+		Attachment attachment1 =
+			testGetPlacedOrderAttachmentsPage_addAttachment(
+				placedOrderId, randomAttachment());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment2 =
+			testGetPlacedOrderAttachmentsPage_addAttachment(
+				placedOrderId, randomAttachment());
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> page =
+				attachmentResource.getPlacedOrderAttachmentsPage(
+					placedOrderId, null,
+					getFilterString(entityField, operator, attachment1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(attachment1),
+				(List<Attachment>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPlacedOrderAttachmentsPageWithPagination()
 		throws Exception {
 
@@ -457,7 +566,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		Page<Attachment> attachmentsPage =
 			attachmentResource.getPlacedOrderAttachmentsPage(
-				placedOrderId, null);
+				placedOrderId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
@@ -480,10 +589,11 @@ public abstract class BaseAttachmentResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Attachment> page1 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -491,26 +601,29 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			Page<Attachment> page2 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
 			Page<Attachment> page3 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId,
+					placedOrderId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-						pageSizeLimit));
+						pageSizeLimit),
+					null);
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}
 		else {
 			Page<Attachment> page1 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId, Pagination.of(1, totalCount + 2));
+					placedOrderId, null, null, Pagination.of(1, totalCount + 2),
+					null);
 
 			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
 
@@ -519,7 +632,8 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			Page<Attachment> page2 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId, Pagination.of(2, totalCount + 2));
+					placedOrderId, null, null, Pagination.of(2, totalCount + 2),
+					null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -530,11 +644,157 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			Page<Attachment> page3 =
 				attachmentResource.getPlacedOrderAttachmentsPage(
-					placedOrderId, Pagination.of(1, (int)totalCount + 3));
+					placedOrderId, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(attachment1, (List<Attachment>)page3.getItems());
 			assertContains(attachment2, (List<Attachment>)page3.getItems());
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithSortDateTime()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(
+					attachment1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithSortDouble()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(
+					attachment1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					attachment2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithSortInteger()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(attachment1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(attachment2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderAttachmentsPageWithSortString()
+		throws Exception {
+
+		testGetPlacedOrderAttachmentsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, attachment1, attachment2) -> {
+				Class<?> clazz = attachment1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetPlacedOrderAttachmentsPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, Attachment, Attachment, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long placedOrderId =
+			testGetPlacedOrderAttachmentsPage_getPlacedOrderId();
+
+		Attachment attachment1 = randomAttachment();
+		Attachment attachment2 = randomAttachment();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, attachment1, attachment2);
+		}
+
+		attachment1 = testGetPlacedOrderAttachmentsPage_addAttachment(
+			placedOrderId, attachment1);
+
+		attachment2 = testGetPlacedOrderAttachmentsPage_addAttachment(
+			placedOrderId, attachment2);
+
+		Page<Attachment> page =
+			attachmentResource.getPlacedOrderAttachmentsPage(
+				placedOrderId, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> ascPage =
+				attachmentResource.getPlacedOrderAttachmentsPage(
+					placedOrderId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(attachment1, (List<Attachment>)ascPage.getItems());
+			assertContains(attachment2, (List<Attachment>)ascPage.getItems());
+
+			Page<Attachment> descPage =
+				attachmentResource.getPlacedOrderAttachmentsPage(
+					placedOrderId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(attachment2, (List<Attachment>)descPage.getItems());
+			assertContains(attachment1, (List<Attachment>)descPage.getItems());
 		}
 	}
 
@@ -572,7 +832,8 @@ public abstract class BaseAttachmentResourceTestCase {
 		Page<Attachment> page =
 			attachmentResource.
 				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+					externalReferenceCode, null, null, Pagination.of(1, 10),
+					null);
 
 		long totalCount = page.getTotalCount();
 
@@ -585,8 +846,8 @@ public abstract class BaseAttachmentResourceTestCase {
 			page =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						irrelevantExternalReferenceCode,
-						Pagination.of(1, (int)totalCount + 1));
+						irrelevantExternalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -609,7 +870,8 @@ public abstract class BaseAttachmentResourceTestCase {
 		page =
 			attachmentResource.
 				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, Pagination.of(1, 10));
+					externalReferenceCode, null, null, Pagination.of(1, 10),
+					null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -632,6 +894,109 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+
+		Attachment attachment1 = randomAttachment();
+
+		attachment1 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, attachment1);
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> page =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, null,
+						getFilterString(entityField, "between", attachment1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(attachment1),
+				(List<Attachment>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilterStringContains()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithFilter(
+				String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+
+		Attachment attachment1 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment2 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, randomAttachment());
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> page =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, null,
+						getFilterString(entityField, operator, attachment1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(attachment1),
+				(List<Attachment>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithPagination()
 		throws Exception {
 
@@ -641,7 +1006,7 @@ public abstract class BaseAttachmentResourceTestCase {
 		Page<Attachment> attachmentsPage =
 			attachmentResource.
 				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-					externalReferenceCode, null);
+					externalReferenceCode, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(attachmentsPage.getTotalCount());
 
@@ -665,10 +1030,11 @@ public abstract class BaseAttachmentResourceTestCase {
 			Page<Attachment> page1 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
+						externalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
@@ -677,20 +1043,22 @@ public abstract class BaseAttachmentResourceTestCase {
 			Page<Attachment> page2 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
+						externalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			assertContains(attachment2, (List<Attachment>)page2.getItems());
 
 			Page<Attachment> page3 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
+						externalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
-							pageSizeLimit));
+							pageSizeLimit),
+						null);
 
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
 		}
@@ -698,8 +1066,8 @@ public abstract class BaseAttachmentResourceTestCase {
 			Page<Attachment> page1 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, totalCount + 2));
+						externalReferenceCode, null, null,
+						Pagination.of(1, totalCount + 2), null);
 
 			List<Attachment> attachments1 = (List<Attachment>)page1.getItems();
 
@@ -709,8 +1077,8 @@ public abstract class BaseAttachmentResourceTestCase {
 			Page<Attachment> page2 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(2, totalCount + 2));
+						externalReferenceCode, null, null,
+						Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -722,12 +1090,164 @@ public abstract class BaseAttachmentResourceTestCase {
 			Page<Attachment> page3 =
 				attachmentResource.
 					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
-						externalReferenceCode,
-						Pagination.of(1, (int)totalCount + 3));
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(attachment1, (List<Attachment>)page3.getItems());
 			assertContains(attachment2, (List<Attachment>)page3.getItems());
 			assertContains(attachment3, (List<Attachment>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSortDateTime()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(
+					attachment1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSortDouble()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(
+					attachment1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					attachment2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSortInteger()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, attachment1, attachment2) -> {
+				BeanTestUtil.setProperty(attachment1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(attachment2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSortString()
+		throws Exception {
+
+		testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, attachment1, attachment2) -> {
+				Class<?> clazz = attachment1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						attachment1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						attachment2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, Attachment, Attachment, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_getExternalReferenceCode();
+
+		Attachment attachment1 = randomAttachment();
+		Attachment attachment2 = randomAttachment();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, attachment1, attachment2);
+		}
+
+		attachment1 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, attachment1);
+
+		attachment2 =
+			testGetPlacedOrderByExternalReferenceCodeAttachmentsPage_addAttachment(
+				externalReferenceCode, attachment2);
+
+		Page<Attachment> page =
+			attachmentResource.
+				getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+					externalReferenceCode, null, null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<Attachment> ascPage =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
+
+			assertContains(attachment1, (List<Attachment>)ascPage.getItems());
+			assertContains(attachment2, (List<Attachment>)ascPage.getItems());
+
+			Page<Attachment> descPage =
+				attachmentResource.
+					getPlacedOrderByExternalReferenceCodeAttachmentsPage(
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
+
+			assertContains(attachment2, (List<Attachment>)descPage.getItems());
+			assertContains(attachment1, (List<Attachment>)descPage.getItems());
 		}
 	}
 
@@ -802,6 +1322,9 @@ public abstract class BaseAttachmentResourceTestCase {
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Attachment testGraphQLAttachment_addAttachment()
 		throws Exception {
@@ -880,6 +1403,10 @@ public abstract class BaseAttachmentResourceTestCase {
 	protected void assertValid(Attachment attachment) throws Exception {
 		boolean valid = true;
 
+		if (attachment.getDateModified() == null) {
+			valid = false;
+		}
+
 		if (attachment.getId() == null) {
 			valid = false;
 		}
@@ -887,10 +1414,42 @@ public abstract class BaseAttachmentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (attachment.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("extension", additionalAssertFieldName)) {
+				if (attachment.getExtension() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (attachment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priority", additionalAssertFieldName)) {
+				if (attachment.getPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("restricted", additionalAssertFieldName)) {
+				if (attachment.getRestricted() == null) {
 					valid = false;
 				}
 
@@ -907,6 +1466,14 @@ public abstract class BaseAttachmentResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (attachment.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (attachment.getTypeLabel() == null) {
 					valid = false;
 				}
 
@@ -1042,6 +1609,39 @@ public abstract class BaseAttachmentResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("actions", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)attachment1.getActions(),
+						(Map)attachment2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dateModified", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getDateModified(),
+						attachment2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("extension", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getExtension(),
+						attachment2.getExtension())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1065,6 +1665,27 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("priority", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getPriority(), attachment2.getPriority())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("restricted", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getRestricted(),
+						attachment2.getRestricted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						attachment1.getTitle(), attachment2.getTitle())) {
@@ -1078,6 +1699,17 @@ public abstract class BaseAttachmentResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						attachment1.getType(), attachment2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeLabel", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getTypeLabel(),
+						attachment2.getTypeLabel())) {
 
 					return false;
 				}
@@ -1202,6 +1834,86 @@ public abstract class BaseAttachmentResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("dateModified")) {
+			if (operator.equals("between")) {
+				Date date = attachment.getDateModified();
+
+				sb = new StringBundler();
+
+				sb.append("(");
+				sb.append(entityFieldName);
+				sb.append(" gt ");
+				sb.append(_format.format(date.getTime() - (2 * Time.SECOND)));
+				sb.append(" and ");
+				sb.append(entityFieldName);
+				sb.append(" lt ");
+				sb.append(_format.format(date.getTime() + (2 * Time.SECOND)));
+				sb.append(")");
+			}
+			else {
+				sb.append(entityFieldName);
+
+				sb.append(" ");
+				sb.append(operator);
+				sb.append(" ");
+
+				sb.append(_format.format(attachment.getDateModified()));
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("extension")) {
+			Object object = attachment.getExtension();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = attachment.getExternalReferenceCode();
 
@@ -1253,6 +1965,17 @@ public abstract class BaseAttachmentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("priority")) {
+			sb.append(String.valueOf(attachment.getPriority()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("restricted")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("title")) {
 			Object object = attachment.getTitle();
 
@@ -1300,7 +2023,93 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			sb.append(String.valueOf(attachment.getType()));
+			Object object = attachment.getType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("typeLabel")) {
+			Object object = attachment.getTypeLabel();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1396,11 +2205,18 @@ public abstract class BaseAttachmentResourceTestCase {
 	protected Attachment randomAttachment() throws Exception {
 		return new Attachment() {
 			{
+				dateModified = RandomTestUtil.nextDate();
+				extension = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				priority = RandomTestUtil.randomDouble();
+				restricted = RandomTestUtil.randomBoolean();
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				type = RandomTestUtil.randomInt();
+				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				typeLabel = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				url = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -1626,4 +2442,4 @@ public abstract class BaseAttachmentResourceTestCase {
 		AttachmentResource _attachmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-691787216
+// LIFERAY-REST-BUILDER-HASH:182620795

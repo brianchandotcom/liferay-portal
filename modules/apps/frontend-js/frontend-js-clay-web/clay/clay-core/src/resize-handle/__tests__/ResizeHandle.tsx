@@ -21,11 +21,11 @@ function renderComponent({
 	return render(
 		<ResizeHandle
 			data-testid="resizer"
-			onPanelWidthChange={onChange}
-			panelWidth={500}
-			panelWidthMax={600}
-			panelWidthMin={200}
+			maxWidth={600}
+			minWidth={200}
+			onWidthChange={onChange}
 			position={position}
+			width={500}
 		/>
 	);
 }

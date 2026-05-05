@@ -349,11 +349,11 @@ export function SidePanel({
 
 						{isResizable && (
 							<ResizeHandle
-								onPanelWidthChange={setResizeWidth}
-								panelWidth={panelWidth}
-								panelWidthMax={sidePanelObservedMaxWidth}
-								panelWidthMin={PANEL_WIDTH_MIN}
+								maxWidth={sidePanelObservedMaxWidth}
+								minWidth={PANEL_WIDTH_MIN}
+								onWidthChange={setResizeWidth}
 								position={direction}
+								width={panelWidth}
 							/>
 						)}
 					</SidePanelContext.Provider>

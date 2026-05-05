@@ -1194,11 +1194,11 @@ public class CPDefinitionLocalServiceImpl
 						if (_log.isWarnEnabled()) {
 							_log.warn(
 								StringBundler.concat(
-									"Unable to find new ",
-									"CPDefinitionOptionValueRel for key ",
-									sourceCPDefinitionOptionValueRel.getKey(),
-									" under CPDefinitionOptionRel ",
-									newCPDefinitionOptionRelId));
+									"Unable to find option value with ID ",
+									newCPDefinitionOptionRelId,
+									" and key ",
+									sourceCPDefinitionOptionValueRel.getKey()
+									));
 						}
 
 						break;

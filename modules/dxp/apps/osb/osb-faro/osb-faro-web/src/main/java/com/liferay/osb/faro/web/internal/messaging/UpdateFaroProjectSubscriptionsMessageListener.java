@@ -23,6 +23,8 @@ import com.liferay.osb.faro.web.internal.constants.FaroMessageDestinationNames;
 import com.liferay.osb.faro.web.internal.messaging.destination.creator.DestinationCreator;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -141,6 +143,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 			if (Validator.isNull(faroProject.getCorpProjectUuid())) {
 				Date createDate = new Date(faroProject.getCreateTime());
+				String subscription = faroProject.getSubscription();
 
 				osbAccountEntry = new OSBAccountEntry() {
 					{
@@ -148,7 +151,7 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 							new OSBOfferingEntry();
 
 						osbOfferingEntry.setProductEntryId(
-							ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_ID);
+							_getProductEntryId(subscription));
 						osbOfferingEntry.setQuantity(1);
 						osbOfferingEntry.setStartDate(createDate);
 
@@ -260,6 +263,24 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 		return DateUtil.formatDate(calendar.getTime(), DateUtil.PATTERN_DATE);
 	}
 
+	private String _getProductEntryId(String subscription) throws Exception {
+		JSONObject subscriptionJSONObject = _jsonFactory.createJSONObject(
+			subscription);
+
+		String subscriptionName = subscriptionJSONObject.getString("name");
+
+		if (subscriptionName != null) {
+			String productEntryId = ProductConstants.getProductEntryId(
+				subscriptionName);
+
+			if (productEntryId != null) {
+				return productEntryId;
+			}
+		}
+
+		return ProductConstants.BASIC_PRODUCT_ENTRY_ID;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateFaroProjectSubscriptionsMessageListener.class);
 
@@ -276,6 +297,9 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 	@Reference
 	private FaroProjectUsageLocalService _faroProjectUsageLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

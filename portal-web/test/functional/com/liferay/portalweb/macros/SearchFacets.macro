@@ -217,6 +217,8 @@ definition {
 			var searchURL = "${searchURL}&${facetURLName}=${termURLValue}";
 		}
 
+		var searchURL = SearchFacets.sortQueryParameters(searchURL = ${searchURL});
+
 		return ${searchURL};
 	}
 
@@ -230,6 +232,8 @@ definition {
 		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
 
 		var searchURL = "${beforeFacetGroup}${afterFacetGroup}";
+
+		var searchURL = SearchFacets.sortQueryParameters(searchURL = ${searchURL});
 
 		return ${searchURL};
 	}
@@ -269,6 +273,8 @@ definition {
 		}
 
 		var searchURL = "${beforeFacetGroup}${afterFacetGroup}${facetGroup}";
+
+		var searchURL = SearchFacets.sortQueryParameters(searchURL = ${searchURL});
 
 		return ${searchURL};
 	}
@@ -353,6 +359,21 @@ definition {
 		PortletEntry.save();
 
 		IFrame.closeFrame();
+	}
+
+	@summary = "Default summary"
+	macro sortQueryParameters(searchURL = null) {
+		var baseURL = StringUtil.extractFirst(${searchURL}, "?");
+		var queryString = StringUtil.extractLast(${searchURL}, "?");
+
+		var queryParamList = StringUtil.replace(${queryString}, "&", ",");
+		var queryParamList = ListUtil.sort(${queryParamList});
+
+		var queryString = StringUtil.replace(${queryParamList}, ",", "&");
+
+		var searchURL = "${baseURL}?${queryString}";
+
+		return ${searchURL};
 	}
 
 	@summary = "Default summary"

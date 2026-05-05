@@ -13,6 +13,7 @@ import {
 import {useFormState} from 'data-engine-js-components-web';
 import {LocalesDropdown} from 'dynamic-data-mapping-form-field-type';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
+import {isValidPhoneNumber} from 'libphonenumber-js/min';
 import React, {useState} from 'react';
 
 import type {
@@ -65,8 +66,10 @@ const LocalizablePhoneNumber = ({
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
+	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || (otherProps.disabled as boolean);
 	const label = otherProps.label as string;
+	const hasError = !!currentValue && !isValidPhoneNumber(currentValue);
 
 	const handleLocalChange = (event: {target: {value: string}}) => {
 		const nextValue = {
@@ -78,7 +81,18 @@ const LocalizablePhoneNumber = ({
 	};
 
 	return (
-		<FieldBase {...otherProps} name={name} readOnly={disabled}>
+		<FieldBase
+			{...otherProps}
+			{...(hasError && {
+				displayErrors: true,
+				errorMessage: Liferay.Language.get(
+					'please-enter-a-valid-phone-number'
+				),
+				valid: false,
+			})}
+			name={name}
+			readOnly={disabled}
+		>
 			<ClayInput.Group aria-label={label} role="group">
 				<PhoneNumberInput
 					countries={countries}
@@ -91,7 +105,7 @@ const LocalizablePhoneNumber = ({
 					onFocus={onFocus}
 					prefix={prefix}
 					prefixType={prefixType}
-					value={value[editingLanguageId] ?? predefinedValue ?? ''}
+					value={currentValue}
 				/>
 
 				<ClayInput.GroupItem shrink>
@@ -119,15 +133,27 @@ const NonLocalizablePhoneNumber = ({
 	value: initialValue,
 	...otherProps
 }: NonLocalizablePhoneNumberProps) => {
-	const disabled = readOnly || (otherProps.disabled as boolean);
-	const label = otherProps.label as string;
-
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
 
+	const disabled = readOnly || (otherProps.disabled as boolean);
+	const label = otherProps.label as string;
+	const hasError = !!combinedValue && !isValidPhoneNumber(combinedValue);
+
 	return (
-		<FieldBase {...otherProps} name={name} readOnly={disabled}>
+		<FieldBase
+			{...otherProps}
+			{...(hasError && {
+				displayErrors: true,
+				errorMessage: Liferay.Language.get(
+					'please-enter-a-valid-phone-number'
+				),
+				valid: false,
+			})}
+			name={name}
+			readOnly={disabled}
+		>
 			<ClayInput.Group aria-label={label} role="group">
 				<PhoneNumberInput
 					countries={countries}

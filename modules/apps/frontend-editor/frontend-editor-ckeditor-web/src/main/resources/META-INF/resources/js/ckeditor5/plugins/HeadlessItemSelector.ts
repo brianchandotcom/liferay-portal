@@ -37,6 +37,10 @@ const ALLOWED_IMAGE_EXTENSIONS_CSV = ALLOWED_IMAGE_FILE_EXTENSIONS.map(
 	(extension) => `.${extension}`
 ).join(',');
 
+const ALLOWED_VIDEO_EXTENSIONS_CSV = ALLOWED_VIDEO_FILE_EXTENSIONS.map(
+	(extension) => `.${extension}`
+).join(',');
+
 const VIDEO_FILTER = `((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL_VIDEO') or (extension in ('${ALLOWED_VIDEO_FILE_EXTENSIONS.join(
 	"','"
 )}')))`;
@@ -107,6 +111,7 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.on('execute', () => {
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
+					allowedExtensions: ALLOWED_VIDEO_EXTENSIONS_CSV,
 					filters: [VIDEO_FILTER],
 					groupId: getGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),

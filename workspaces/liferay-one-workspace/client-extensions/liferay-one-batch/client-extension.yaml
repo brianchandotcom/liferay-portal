@@ -1,0 +1,16 @@
+assemble:
+    -   from: batch
+        into: batch
+liferay-one-batch:
+    name: Liferay One Batch
+    oAuthApplicationHeadlessServer: liferay-one-batch-oahs
+    type: batch
+liferay-one-batch-oahs:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay One Batch OAuth Application Headless Server
+    scopes:
+        -   Liferay.Headless.Admin.List.Type.everything
+        -   Liferay.Headless.Batch.Engine.everything
+        -   Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

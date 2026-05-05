@@ -1,0 +1,268 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"externalReferenceCode": "C_ACCOUNT_REGION",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ACCOUNT_REGION_AMERICAS",
+					"key": "americas",
+					"name": "Americas"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_REGION_EMEA",
+					"key": "eMEA",
+					"name": "EMEA"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_REGION_APAC",
+					"key": "aPAC",
+					"name": "APAC"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_REGION_LATAM",
+					"key": "lATAM",
+					"name": "LATAM"
+				}
+			],
+			"name": "One Account Region"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_TIER",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_PLATINUM",
+					"key": "platinum",
+					"name": "Platinum"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_GOLD",
+					"key": "gold",
+					"name": "Gold"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_SILVER",
+					"key": "silver",
+					"name": "Silver"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_BRONZE",
+					"key": "bronze",
+					"name": "Bronze"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_TRIAL",
+					"key": "trial",
+					"name": "Trial"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_TIER_COMMUNITY",
+					"key": "community",
+					"name": "Community"
+				}
+			],
+			"name": "One Account Tier"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ACCOUNT_STATUS_ACTIVE",
+					"key": "active",
+					"name": "Active"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_STATUS_SUSPENDED",
+					"key": "suspended",
+					"name": "Suspended"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_STATUS_CANCELLED",
+					"key": "cancelled",
+					"name": "Cancelled"
+				},
+				{
+					"externalReferenceCode": "C_ACCOUNT_STATUS_EXPIRED",
+					"key": "expired",
+					"name": "Expired"
+				}
+			],
+			"name": "One Account Status"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_NOTE_FORMAT",
+			"listTypeEntries": [
+			],
+			"name": "One Account Note Format"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_NOTE_TYPE",
+			"listTypeEntries": [
+			],
+			"name": "One Account Note Type"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_NOTE_PRIORITY",
+			"listTypeEntries": [
+			],
+			"name": "One Account Note Priority"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_NOTE_STATUS",
+			"listTypeEntries": [
+			],
+			"name": "One Account Note Status"
+		},
+		{
+			"externalReferenceCode": "C_PUBLISHER_APPROVAL_STATUS",
+			"listTypeEntries": [
+			],
+			"name": "One Publisher Approval Status"
+		},
+		{
+			"externalReferenceCode": "C_ENVIRONMENT_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_TYPE_CLOUD_NATIVE",
+					"key": "cloudNative",
+					"name": "Cloud Native"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_TYPE_ON_PREM",
+					"key": "onPrem",
+					"name": "On-Prem"
+				}
+			],
+			"name": "One Environment Type"
+		},
+		{
+			"externalReferenceCode": "C_ENVIRONMENT_NAME",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_NAME_PRODUCTION",
+					"key": "production",
+					"name": "Production"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_NAME_NON_PRODUCTION",
+					"key": "nonProduction",
+					"name": "Non-Production"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_NAME_DEVELOPMENT",
+					"key": "development",
+					"name": "Development"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_NAME_BACKUP",
+					"key": "backup",
+					"name": "Backup"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_NAME_HA_PRODUCTION",
+					"key": "hAProduction",
+					"name": "HA Production"
+				}
+			],
+			"name": "One Environment Name"
+		},
+		{
+			"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XS",
+					"key": "xS",
+					"name": "XS"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_S",
+					"key": "s",
+					"name": "S"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_M",
+					"key": "m",
+					"name": "M"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_L",
+					"key": "l",
+					"name": "L"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XL",
+					"key": "xL",
+					"name": "XL"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XXL",
+					"key": "xXL",
+					"name": "XXL"
+				}
+			],
+			"name": "One Environment Instance Size"
+		},
+		{
+			"externalReferenceCode": "C_ENVIRONMENT_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_STATUS_ACTIVE",
+					"key": "active",
+					"name": "Active"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_STATUS_DECOMMISSIONED",
+					"key": "decommissioned",
+					"name": "Decommissioned"
+				},
+				{
+					"externalReferenceCode": "C_ENVIRONMENT_STATUS_SUSPENDED",
+					"key": "suspended",
+					"name": "Suspended"
+				}
+			],
+			"name": "One Environment Status"
+		},
+		{
+			"externalReferenceCode": "C_ENTITLEMENT_RULE_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_RULE_TYPE_FILTER",
+					"key": "filter",
+					"name": "Filter"
+				},
+				{
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_RULE_TYPE_SCRIPTED",
+					"key": "scripted",
+					"name": "Scripted"
+				}
+			],
+			"name": "One Entitlement Rule Type"
+		},
+		{
+			"externalReferenceCode": "C_ENTITLEMENT_STATUS",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_STATUS_ACTIVE",
+					"key": "active",
+					"name": "Active"
+				},
+				{
+					"externalReferenceCode": "C_ENTITLEMENT_DEFINITION_STATUS_INACTIVE",
+					"key": "inactive",
+					"name": "Inactive"
+				}
+			],
+			"name": "One Entitlement Status"
+		}
+	]
+}

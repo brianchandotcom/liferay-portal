@@ -7,6 +7,13 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {getTempDir} from '../../../../utils/temp';
 
+type taskStatus = 'completedWithErrors' | 'success';
+
+const taskStatusTexts: Record<taskStatus, string> = {
+	completedWithErrors: 'Completed with errors',
+	success: 'Successful',
+};
+
 export class PortletExportImportPage {
 	readonly frame: FrameLocator;
 	readonly page: Page;
@@ -14,6 +21,8 @@ export class PortletExportImportPage {
 	readonly exportButton: Locator;
 	readonly exportDeletionsButton: Locator;
 	readonly importDeletionsButton: Locator;
+	readonly taskActionsMenu: Locator;
+	readonly viewReportEntriesMenuItem: Locator;
 
 	constructor(page: Page) {
 		this.frame = page.frameLocator('iframe[title="Export \\/ Import"]');
@@ -26,6 +35,13 @@ export class PortletExportImportPage {
 		this.importDeletionsButton = this.frame.getByLabel(
 			'Replicate Individual Deletions'
 		);
+		this.taskActionsMenu = this.frame
+			.locator('[data-qa-id="row"]')
+			.first()
+			.getByRole('button');
+		this.viewReportEntriesMenuItem = this.frame.getByRole('menuitem', {
+			name: 'View Report Entries',
+		});
 	}
 
 	async exportLARFile({
@@ -62,9 +78,11 @@ export class PortletExportImportPage {
 	async importLARFile({
 		filePath,
 		includeDeletions = false,
+		taskStatus = 'success',
 	}: {
 		filePath: string;
 		includeDeletions?: boolean;
+		taskStatus?: taskStatus;
 	}): Promise<void> {
 		await this.frame.getByRole('link', {name: 'Import'}).click();
 
@@ -78,7 +96,9 @@ export class PortletExportImportPage {
 		await this.frame.getByRole('button', {name: 'Import'}).click();
 
 		await expect(
-			this.frame.getByRole('cell', {name: 'Successful'}).first()
+			this.frame
+				.getByRole('cell', {name: taskStatusTexts[taskStatus]})
+				.first()
 		).toBeVisible();
 	}
 }

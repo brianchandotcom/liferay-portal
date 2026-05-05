@@ -170,3 +170,52 @@ test(
 		}
 	}
 );
+
+test(
+	'Duplicating a folder creates a copy in the same parent',
+	{tag: '@LPD-88657'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const folderName = `Folder ${getRandomString()}`;
+		const spaceName = 'Default';
+
+		await test.step('Create a folder in the Space', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				scopeKey: spaceName,
+				title: folderName,
+			});
+		});
+
+		await test.step('Duplicate the folder', async () => {
+			await assetsPage.gotoSpaceContents(spaceName);
+
+			await assetsPage.execItemAction({
+				action: 'Duplicate',
+				filter: folderName,
+				parentAction: 'Copy',
+			});
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: `${folderName} (Copy)`,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Duplicate the original again and check the suffix increments', async () => {
+			await assetsPage.execItemAction({
+				action: 'Duplicate',
+				filter: folderName,
+				parentAction: 'Copy',
+			});
+
+			await expect(
+				page.getByRole('link', {
+					exact: true,
+					name: `${folderName} (Copy 1)`,
+				})
+			).toBeVisible();
+		});
+	}
+);

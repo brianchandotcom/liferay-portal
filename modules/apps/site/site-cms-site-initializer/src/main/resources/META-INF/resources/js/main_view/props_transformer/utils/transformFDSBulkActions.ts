@@ -11,6 +11,7 @@ const BULK_ACTION_PERMISSION_KEYS: Record<string, string> = {
 	'default-permissions': 'permissions',
 	'delete': 'delete',
 	'download': 'get',
+	'duplicate': 'duplicate',
 	'edit-categories': 'edit-categories',
 	'edit-default-permissions-by-role': 'permissions',
 	'edit-permissions-by-role': 'permissions',

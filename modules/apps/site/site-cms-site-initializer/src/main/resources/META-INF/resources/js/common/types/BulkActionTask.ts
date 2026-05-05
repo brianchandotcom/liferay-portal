@@ -123,6 +123,7 @@ export interface IBulkActionType {
 	DueDateObjectBulkSelectionAction: {
 		dueDate?: string;
 	};
+	DuplicateObjectBulkSelectionAction: {};
 	EditObjectCategoriesBulkSelectionAction: {
 		append?: boolean;
 		taxonomyCategoryIdsToAdd?: number[];
@@ -166,6 +167,7 @@ export interface IBulkActionTaskType {
 	DeleteTaskBulkAction: string;
 	DownloadBulkAction: string;
 	DueDateObjectBulkSelectionAction: string;
+	DuplicateObjectBulkSelectionAction: string;
 	EditObjectCategoriesBulkSelectionAction: string;
 	EditObjectTagsBulkSelectionAction: string;
 	ExpireObjectBulkSelectionAction: string;

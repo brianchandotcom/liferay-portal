@@ -7087,6 +7087,73 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public List<FragmentEntryLinkModel>
+			newUtilityPageLayoutsFragmentEntryLinkModels(
+				List<LayoutModel> layoutModels,
+				List<SegmentsExperienceModel> segmentsExperienceModels)
+		throws Exception {
+
+		LayoutModel nondraftLayoutModel = null;
+
+		List<FragmentEntryLinkModel> originalFragmentEntryLinkModels =
+			new ArrayList<>();
+
+		for (LayoutModel layoutModel : layoutModels) {
+			String externalReferenceCode =
+				layoutModel.getExternalReferenceCode();
+
+			if (!externalReferenceCode.endsWith("-draft")) {
+				nondraftLayoutModel = layoutModel;
+
+				continue;
+			}
+
+			String renderNamespace = StringUtil.randomId();
+
+			long segmentsExperienceId = _getSegmentsExperienceId(
+				layoutModel, segmentsExperienceModels);
+
+			List<String> rendererKeyAndPositionList =
+				_utilityPageFragmentEntryLinkRendererKeyAndPositionMap.get(
+					externalReferenceCode);
+
+			for (String rendererKeyAndPosition : rendererKeyAndPositionList) {
+				originalFragmentEntryLinkModels.add(
+					newUtilityPageFragmentEntryLinkModel(
+						layoutModel, segmentsExperienceId,
+						rendererKeyAndPosition, externalReferenceCode,
+						renderNamespace));
+			}
+		}
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
+			originalFragmentEntryLinkModels);
+
+		long segmentsExperienceId = _getSegmentsExperienceId(
+			nondraftLayoutModel, segmentsExperienceModels);
+
+		for (FragmentEntryLinkModel originalFragmentEntryLinkModel :
+				originalFragmentEntryLinkModels) {
+
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					nondraftLayoutModel,
+					originalFragmentEntryLinkModel.getExternalReferenceCode(),
+					segmentsExperienceId,
+					originalFragmentEntryLinkModel.getCss(),
+					originalFragmentEntryLinkModel.getHtml(),
+					originalFragmentEntryLinkModel.getJs(),
+					originalFragmentEntryLinkModel.getConfiguration(),
+					originalFragmentEntryLinkModel.getEditableValues(),
+					originalFragmentEntryLinkModel.getNamespace(),
+					originalFragmentEntryLinkModel.getPosition(),
+					originalFragmentEntryLinkModel.getRendererKey(),
+					originalFragmentEntryLinkModel.getType()));
+		}
+
+		return fragmentEntryLinkModels;
+	}
+
 	public VirtualHostModel newVirtualHostModel() {
 		VirtualHostModel virtualHostModel = new VirtualHostModelImpl();
 
@@ -8901,6 +8968,96 @@ public class DataFactory {
 		return userModel;
 	}
 
+	protected FragmentEntryLinkModel newUtilityPageFragmentEntryLinkModel(
+			LayoutModel layoutModel, long segmentsExperienceId,
+			String rendererKeyAndPosition, String externalReferenceCode,
+			String renderNamespace)
+		throws Exception {
+
+		String configuration = StringPool.BLANK;
+		String css = StringPool.BLANK;
+		String editValue = StringPool.BLANK;
+		String html = StringPool.BLANK;
+		int type = FragmentConstants.TYPE_COMPONENT;
+		String rendererKey = StringPool.BLANK;
+		int position = 0;
+
+		if (rendererKeyAndPosition.equals(StringPool.BLANK)) {
+			type = FragmentConstants.TYPE_PORTLET;
+
+			editValue = StringUtil.replace(
+				_readFile(
+					"fragment_component/fragment_" +
+						"component_portlet_editValue_utility_page.json"),
+				"${portletId}",
+				_utilityPagePortletIdMap.get(externalReferenceCode));
+		}
+		else {
+			String[] rendererKeyAndPositionArray = rendererKeyAndPosition.split(
+				"#");
+
+			rendererKey = rendererKeyAndPositionArray[0];
+
+			position = GetterUtil.getInteger(rendererKeyAndPositionArray[1]);
+
+			String fragmentName = StringUtil.toLowerCase(
+				StringUtil.split(rendererKey, CharPool.DASH)[1]);
+
+			css = _readFile(
+				_getFragmentComponentInputStream(
+					"basic/component", fragmentName, "css"));
+			html = _readFile(
+				_getFragmentComponentInputStream(
+					"basic/component", fragmentName, "html"));
+
+			if (rendererKey.contains("heading")) {
+				editValue = StringUtil.replace(
+					_readFile(
+						"fragment_component/fragment_" +
+							"component_heading_editValue_utility_page.json"),
+					"${heading}", rendererKeyAndPositionArray[2]);
+
+				configuration = _readFile(
+					"fragment_component" +
+						"/fragment_component_heading_configuration.json");
+			}
+			else if (rendererKey.contains("paragraph")) {
+				String paragraphContent = rendererKeyAndPositionArray[2];
+
+				if (paragraphContent.endsWith(".txt")) {
+					String fileName = StringUtil.replace(
+						paragraphContent, CharPool.SPACE, CharPool.UNDERLINE);
+
+					paragraphContent = _readFile(
+						"fragment_component/" + fileName);
+				}
+
+				editValue = StringUtil.replace(
+					_readFile(
+						"fragment_component/fragment_" +
+							"component_paragraph_editValue_utility_page.json"),
+					"${paragraph}", paragraphContent);
+			}
+			else if (rendererKey.contains("button")) {
+				String suffix = "404";
+
+				if (externalReferenceCode.contains("COOKIE")) {
+					suffix = "cookie";
+				}
+
+				editValue = _readFile(
+					StringBundler.concat(
+						"fragment_component/fragment_component_", suffix,
+						"_button_editValue_utility_page.json"));
+			}
+		}
+
+		return newFragmentEntryLinkModel(
+			layoutModel, null, segmentsExperienceId, css, html,
+			StringPool.BLANK, configuration, editValue, renderNamespace,
+			position, rendererKey, type);
+	}
+
 	protected LayoutModel newUtilityPageLayoutModel(
 		long groupId, long classNameId, long classPK, String name,
 		String typeSettings, String friendlyURL, String externalReferenceCode) {
@@ -9571,6 +9728,61 @@ public class DataFactory {
 			).build();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
+	private static final Map<String, List<String>>
+		_utilityPageFragmentEntryLinkRendererKeyAndPositionMap =
+			HashMapBuilder.<String, List<String>>put(
+				"LFR-404-ERROR-layout-draft",
+				Arrays.asList(
+					"BASIC_COMPONENT-heading#0#404",
+					"BASIC_COMPONENT-paragraph#1#Page Not Found",
+					"BASIC_COMPONENT-button#2#")
+			).put(
+				"LFR-500-ERROR-layout-draft",
+				Arrays.asList(
+					"BASIC_COMPONENT-heading#0#500",
+					"BASIC_COMPONENT-paragraph#1#Internal Server Error")
+			).put(
+				"LFR-COOKIE-POLICY-layout-draft",
+				Arrays.asList(
+					StringPool.BLANK,
+					"BASIC_COMPONENT-heading#0#Strictly Necessary Cookies",
+					StringPool.BLANK,
+					"BASIC_COMPONENT-paragraph#1#Strictly_Necessary_Cookies." +
+						"txt",
+					"BASIC_COMPONENT-heading#0#Personalization Cookies",
+					"BASIC_COMPONENT-paragraph#1#Personalization_Cookies.txt",
+					"BASIC_COMPONENT-paragraph#0#Cookies_List.txt",
+					StringPool.BLANK,
+					"BASIC_COMPONENT-heading#0#Performance Cookies",
+					"BASIC_COMPONENT-button#1#",
+					"BASIC_COMPONENT-heading#0#Functional Cookies",
+					"BASIC_COMPONENT-paragraph#1#Functional_Cookies.txt",
+					"BASIC_COMPONENT-paragraph#1#Performance_Cookies.txt",
+					"BASIC_COMPONENT-heading#0#Cookies List", StringPool.BLANK)
+			).put(
+				"LFR-CREATE-ACCOUNT-layout-draft",
+				Arrays.asList(StringPool.BLANK)
+			).put(
+				"LFR-FORGOT-PASSWORD-layout-draft",
+				Arrays.asList(StringPool.BLANK)
+			).put(
+				"LFR-LOGIN-layout-draft", Arrays.asList(StringPool.BLANK)
+			).build();
+	private static final Map<String, String> _utilityPagePortletIdMap =
+		HashMapBuilder.put(
+			"LFR-COOKIE-POLICY-layout-draft",
+			"com_liferay_object_web_internal_object_definitions_portlet_" +
+				"ObjectDefinitionsPortlet"
+		).put(
+			"LFR-CREATE-ACCOUNT-layout-draft",
+			"com_liferay_login_web_portlet_CreateAccountPortlet"
+		).put(
+			"LFR-FORGOT-PASSWORD-layout-draft",
+			"com_liferay_login_web_portlet_ForgotPasswordPortlet"
+		).put(
+			"LFR-LOGIN-layout-draft",
+			"com_liferay_login_web_portlet_LoginPortlet"
+		).build();
 
 	private RoleModel _administratorRoleModel;
 	private Map<Long, SimpleCounter>[] _assetCategoryCounters;

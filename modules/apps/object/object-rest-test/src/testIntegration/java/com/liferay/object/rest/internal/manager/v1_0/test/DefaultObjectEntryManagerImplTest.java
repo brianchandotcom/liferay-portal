@@ -7356,8 +7356,8 @@ public class DefaultObjectEntryManagerImplTest
 			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
 			_objectDefinition1, _user);
 
-		DTOConverterContext dtoConverterContext =
-			_createCopyActionDTOConverterContext(_user);
+		DTOConverterContext dtoConverterContext = _createDTOConverterContext(
+			_getUriInfo(), _user);
 
 		_assertVersionedObjectEntriesCopyAction(
 			dtoConverterContext, _objectDefinition1, objectEntry, null, true);
@@ -7407,8 +7407,6 @@ public class DefaultObjectEntryManagerImplTest
 			role.getRoleId(),
 			new String[] {ActionKeys.ADD_ENTRY, ActionKeys.VIEW});
 
-		dtoConverterContext = _createCopyActionDTOConverterContext(_user);
-
 		_assertVersionedObjectEntriesCopyAction(
 			dtoConverterContext, _objectDefinition6, objectEntry,
 			String.valueOf(_depotEntry.getGroupId()), true);
@@ -7446,8 +7444,6 @@ public class DefaultObjectEntryManagerImplTest
 		role = _addRoleUser(
 			new String[] {ObjectActionKeys.ADD_OBJECT_ENTRY},
 			_objectDefinition6, _user);
-
-		dtoConverterContext = _createCopyActionDTOConverterContext(_user);
 
 		_assertVersionedObjectEntriesCopyAction(
 			dtoConverterContext, _objectDefinition6, objectEntry,
@@ -10809,125 +10805,20 @@ public class DefaultObjectEntryManagerImplTest
 			"startswith( ", fieldName, ",'", value, "')");
 	}
 
-	private DTOConverterContext _createCopyActionDTOConverterContext(
-		User user) {
-
-		return new DefaultDTOConverterContext(
-			false, Collections.emptyMap(), dtoConverterRegistry, null,
-			LocaleUtil.getDefault(),
-			new UriInfo() {
-
-				@Override
-				public URI getAbsolutePath() {
-					return null;
-				}
-
-				@Override
-				public UriBuilder getAbsolutePathBuilder() {
-					return null;
-				}
-
-				@Override
-				public URI getBaseUri() {
-					return URI.create("http://localhost:8080/o/c/");
-				}
-
-				@Override
-				public UriBuilder getBaseUriBuilder() {
-					return UriBuilder.fromUri("http://localhost:8080/o/c/");
-				}
-
-				@Override
-				public List<Object> getMatchedResources() {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public List<String> getMatchedURIs() {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public List<String> getMatchedURIs(boolean decode) {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public String getPath() {
-					return null;
-				}
-
-				@Override
-				public String getPath(boolean decode) {
-					return null;
-				}
-
-				@Override
-				public MultivaluedMap<String, String> getPathParameters() {
-					return new MultivaluedHashMap<>();
-				}
-
-				@Override
-				public MultivaluedMap<String, String> getPathParameters(
-					boolean decode) {
-
-					return new MultivaluedHashMap<>();
-				}
-
-				@Override
-				public List<PathSegment> getPathSegments() {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public List<PathSegment> getPathSegments(boolean decode) {
-					return Collections.emptyList();
-				}
-
-				@Override
-				public MultivaluedMap<String, String> getQueryParameters() {
-					return new MultivaluedHashMap<>();
-				}
-
-				@Override
-				public MultivaluedMap<String, String> getQueryParameters(
-					boolean decode) {
-
-					return new MultivaluedHashMap<>();
-				}
-
-				@Override
-				public URI getRequestUri() {
-					return null;
-				}
-
-				@Override
-				public UriBuilder getRequestUriBuilder() {
-					return null;
-				}
-
-				@Override
-				public URI relativize(URI uri) {
-					return null;
-				}
-
-				@Override
-				public URI resolve(URI uri) {
-					return null;
-				}
-
-			},
-			user);
-	}
-
 	private DTOConverterContext _createDTOConverterContext() {
 		return _createDTOConverterContext(_user);
 	}
 
-	private DTOConverterContext _createDTOConverterContext(User user) {
+	private DTOConverterContext _createDTOConverterContext(
+		UriInfo uriInfo, User user) {
+
 		return new DefaultDTOConverterContext(
 			false, Collections.emptyMap(), dtoConverterRegistry, null,
-			LocaleUtil.getDefault(), null, user);
+			LocaleUtil.getDefault(), uriInfo, user);
+	}
+
+	private DTOConverterContext _createDTOConverterContext(User user) {
+		return _createDTOConverterContext(null, user);
 	}
 
 	private Tree _createObjectEntryTree(
@@ -11146,6 +11037,111 @@ public class DefaultObjectEntryManagerImplTest
 			"yyyy-MM-dd", dateString, LocaleUtil.getSiteDefault());
 
 		return new Timestamp(date.getTime());
+	}
+
+	private UriInfo _getUriInfo() {
+		return new UriInfo() {
+
+			@Override
+			public URI getAbsolutePath() {
+				return null;
+			}
+
+			@Override
+			public UriBuilder getAbsolutePathBuilder() {
+				return null;
+			}
+
+			@Override
+			public URI getBaseUri() {
+				return URI.create("http://localhost:8080/o/c/");
+			}
+
+			@Override
+			public UriBuilder getBaseUriBuilder() {
+				return UriBuilder.fromUri("http://localhost:8080/o/c/");
+			}
+
+			@Override
+			public List<Object> getMatchedResources() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<String> getMatchedURIs(boolean decode) {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public String getPath() {
+				return null;
+			}
+
+			@Override
+			public String getPath(boolean decode) {
+				return null;
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getPathParameters(
+				boolean decode) {
+
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments() {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public List<PathSegment> getPathSegments(boolean decode) {
+				return Collections.emptyList();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters() {
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public MultivaluedMap<String, String> getQueryParameters(
+				boolean decode) {
+
+				return new MultivaluedHashMap<>();
+			}
+
+			@Override
+			public URI getRequestUri() {
+				return null;
+			}
+
+			@Override
+			public UriBuilder getRequestUriBuilder() {
+				return null;
+			}
+
+			@Override
+			public URI relativize(URI uri) {
+				return null;
+			}
+
+			@Override
+			public URI resolve(URI uri) {
+				return null;
+			}
+
+		};
 	}
 
 	private void _removeResourcePermission(

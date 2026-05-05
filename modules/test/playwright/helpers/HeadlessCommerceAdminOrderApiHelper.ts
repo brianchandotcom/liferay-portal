@@ -140,6 +140,12 @@ export class HeadlessCommerceAdminOrderApiHelper {
 		);
 	}
 
+	async getOrderTypesPage() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/order-types`
+		);
+	}
+
 	async patchOrder(id: number, order: TOrder) {
 		await this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}orders/${id}?nestedFields=orderItems`,

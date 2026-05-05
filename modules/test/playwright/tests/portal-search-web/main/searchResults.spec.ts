@@ -367,7 +367,7 @@ test.describe('Search Paginator', () => {
 			const basicWebContentStructureId =
 				await getBasicWebContentStructureId(apiHelpers);
 
-			for (let count = 0; count < 9; count++) {
+			for (let count = 0; count < 21; count++) {
 				await apiHelpers.jsonWebServicesJournal.addWebContent({
 					ddmStructureId: basicWebContentStructureId,
 					groupId: site.id,
@@ -516,6 +516,8 @@ test.describe('URL Parameters Are Sorted', () => {
 			);
 
 			expect(deltaKeys).toEqual([...deltaKeys].sort());
+
+			await searchPage.selectPaginationItemsPerPage(20);
 		});
 
 		await test.step('Verify URL parameters are sorted after clicking pagination page number', async () => {

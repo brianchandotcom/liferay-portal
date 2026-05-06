@@ -3269,10 +3269,6 @@ public class ObjectEntryLocalServiceImpl
 			));
 
 		for (ObjectEntry objectEntry : objectEntries) {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionPersistence.fetchByPrimaryKey(
-					objectEntry.getObjectDefinitionId());
-
 			JSONObject payloadJSONObject = JSONUtil.put(
 				"classPK", objectEntry.getObjectEntryId()
 			).put(
@@ -3288,6 +3284,10 @@ public class ObjectEntryLocalServiceImpl
 					contributor.contribute(objectEntry, payloadJSONObject);
 				}
 			}
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectEntry.getObjectDefinitionId());
 
 			_userNotificationEventLocalService.sendUserNotificationEvents(
 				objectEntry.getUserId(), objectDefinition.getPortletId(),

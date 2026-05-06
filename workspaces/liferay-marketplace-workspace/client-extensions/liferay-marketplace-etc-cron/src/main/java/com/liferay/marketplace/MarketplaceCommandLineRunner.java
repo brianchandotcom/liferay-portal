@@ -1030,7 +1030,7 @@ public class MarketplaceCommandLineRunner
 		put(
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				_liferayOAuthApplicationExternalReferenceCodes),
-			data,
+			body,
 			UriComponentsBuilder.fromPath(
 				"/o/c/reports/by-external-reference-code/" +
 					externalReferenceCode

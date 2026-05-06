@@ -1887,13 +1887,13 @@
 				},
 				"propagateChanges": {
 					"default": false,
-					"description": "When enabled, changes will be propagated immediately after publishing a fragment entry. If staging is enabled, this setting does not affect live sites.",
+					"description": "When enabled, changes are propagated immediately after publishing a fragment entry. If staging is enabled, this setting does not affect live sites.",
 					"title": "Propagate Fragment Changes Automatically",
 					"type": "boolean"
 				},
 				"propagateContributedFragmentChanges": {
 					"default": true,
-					"description": "When enabled, changes will be propagated immediately during the deploy process. When disabled, changes can be propagated manually after deploy process.",
+					"description": "When enabled, changes are propagated immediately during the deploy process. When disabled, changes can be propagated manually after deploy process.",
 					"title": "Propagate Default Fragments Changes During Deploy Process Automatically",
 					"type": "boolean"
 				}

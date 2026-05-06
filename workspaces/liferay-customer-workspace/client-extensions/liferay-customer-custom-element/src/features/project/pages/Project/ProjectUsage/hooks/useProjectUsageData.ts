@@ -181,7 +181,7 @@ const useProjectUsageData = (
 								.DOCUMENT_LIBRARY_AND_BACKUP_STORAGE
 						],
 						infoText: i18n.translate(
-							'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
+							'the-amount-of-data-in-gbs-stored-in-the-backup-service-document-library-service-provided-through-liferay-cloud-infrastructure-and-the-customization-artifacts-built-from-the-customers-git-repository-client-extensions-and-osgi-modules'
 						),
 						maxCountText: i18n.translate('total-storage'),
 						title: i18n.translate('storage'),
@@ -189,7 +189,7 @@ const useProjectUsageData = (
 					{
 						...response?.[ResourceUsageDataEnum.DATABASE_STORAGE],
 						infoText: i18n.translate(
-							'the-amount-of-data-in-gibs-used-by-the-sql-database-instance-provisioned-as-part-of-liferay-cloud-infrastructure-including-the-database-data-itself-and-any-other-storage-needed-in-an-high-availability-scenario'
+							'the-amount-of-data-in-gibs-used-by-the-sql-database-instance-provisioned-as-part-of-liferay-cloud-infrastructure-including-the-database-data-itself-and-any-other-database-storage-needed-in-a-high-availability-scenario'
 						),
 						maxCountText: i18n.translate('total-storage'),
 						title: i18n.translate('database'),
@@ -240,7 +240,7 @@ const useProjectUsageData = (
 								.STORAGE_CAPACITY_DOCUMENT_LIBRARY
 						],
 						infoText: i18n.translate(
-							'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
+							'the-amount-of-data-in-gbs-stored-in-the-backup-service-document-library-service-provided-through-liferay-cloud-infrastructure-and-the-customization-artifacts-built-from-the-customers-git-repository-client-extensions-and-osgi-modules'
 						),
 						maxCountText: i18n.translate('total-storage'),
 						title: i18n.translate('storage'),

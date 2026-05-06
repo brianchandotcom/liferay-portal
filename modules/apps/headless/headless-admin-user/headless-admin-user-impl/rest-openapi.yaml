@@ -790,6 +790,10 @@ components:
                     description:
                         The address's country (e.g., USA).
                     type: string
+                addressCountryExternalReferenceCode:
+                    description:
+                        The external reference code of the address's country.
+                    type: string
                 addressCountry_i18n:
                     additionalProperties:
                         type: string
@@ -801,6 +805,10 @@ components:
                 addressRegion:
                     description:
                         The address's region (e.g., state).
+                    type: string
+                addressRegionExternalReferenceCode:
+                    description:
+                        The external reference code of the address's region.
                     type: string
                 addressSubtype:
                     description:

@@ -17,6 +17,7 @@ export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 	readonly addDiscountModalSubmitButton: Locator;
 	readonly addDiscountModalTypeSelect: Locator;
 	readonly discountLink: (name: string) => Locator;
+	readonly discountsHeading: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly tableRowAt: (rowIndex: number) => Locator;
@@ -53,6 +54,10 @@ export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 		);
 		this.discountLink = (name: string) =>
 			page.getByRole('link', {name}).first();
+		this.discountsHeading = page.getByRole('heading', {
+			exact: true,
+			name: 'Discounts',
+		});
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 		this.tableRowAt = (rowIndex: number) =>

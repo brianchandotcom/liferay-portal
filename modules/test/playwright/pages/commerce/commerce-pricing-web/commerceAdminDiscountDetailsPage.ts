@@ -17,6 +17,7 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 	readonly amountFieldReuiredErrorMessage: Locator;
 	readonly amountInput: Locator;
 	readonly cartTotalMiniumAmountInput: Locator;
+	readonly draftStatus: Locator;
 	readonly editDiscountRuleFrame: FrameLocator;
 	readonly eligibilityEntryCell: (name: string) => Locator;
 	readonly eligibilityTab: Locator;
@@ -26,8 +27,10 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 	readonly mustBeValidNumberErrorMessage: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
+	readonly pendingStatus: Locator;
 	readonly publishButton: Locator;
 	readonly saveAsDraftButton: Locator;
+	readonly submitForWorkflowButton: Locator;
 	readonly relationFindInput: (placeholder: string) => Locator;
 	readonly relationResultCell: (entryName: string) => Locator;
 	readonly relationRowSelectButton: (entryName: string) => Locator;
@@ -73,13 +76,23 @@ export class CommerceAdminDiscountDetailsPage extends CommerceDNDTablePage {
 		this.maximumDiscountAmountInput = page.getByLabel(
 			'Maximum Discount Amount'
 		);
+		this.draftStatus = page.getByText('Draft', {exact: true});
 		this.nameInput = page.getByLabel('Name', {exact: true});
+		this.pendingStatus = page.getByText('Pending', {exact: true});
 		this.publishButton = page
 			.getByRole('button', {exact: true, name: 'Publish'})
 			.or(page.getByRole('link', {exact: true, name: 'Publish'}));
 		this.saveAsDraftButton = page
 			.getByRole('button', {exact: true, name: 'Save as Draft'})
 			.or(page.getByRole('link', {exact: true, name: 'Save as Draft'}));
+		this.submitForWorkflowButton = page
+			.getByRole('button', {exact: true, name: 'Submit for Workflow'})
+			.or(
+				page.getByRole('link', {
+					exact: true,
+					name: 'Submit for Workflow',
+				})
+			);
 		this.relationFindInput = (placeholder: string) =>
 			page.getByPlaceholder(placeholder);
 		this.relationResultCell = (entryName: string) =>

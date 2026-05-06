@@ -51,14 +51,14 @@ const DSRLicenseKeyForm = () => {
 	} = useSWR(
 		accountKey ? `/ac-plan/${accountKey}` : null,
 		async () => {
-			return analyticsOAuth2.getPlan(accountKey);
+			return analyticsOAuth2.getProjectCorpProjectUuid(accountKey);
 		},
 		{
 			shouldRetryOnError: false,
 		}
 	);
 
-	const hasAnalyticsCloud = !!analyticsPlan?.productPurchaseKey && !error;
+	const hasAnalyticsCloud = !!analyticsPlan && !error;
 
 	const {
 		control,
@@ -92,11 +92,7 @@ const DSRLicenseKeyForm = () => {
 			product
 		);
 
-		productPurchase.setForm({
-			...data,
-			productKey: analyticsPlan?.productKey,
-			productPurchaseKey: analyticsPlan?.productPurchaseKey,
-		});
+		productPurchase.setForm(data);
 
 		productPurchase.setHasAnalyticsCloud(hasAnalyticsCloud);
 

@@ -17,6 +17,21 @@ import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.lifecycle.constants.ExportImportLifecycleConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.petra.string.CharPool;
@@ -42,6 +57,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log4j.Log4JUtil;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -53,13 +70,19 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.TomcatClusterTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -533,6 +556,105 @@ public class ClusterGeneralTest implements Serializable {
 			_tomcatNode1);
 	}
 
+	@Test
+	public void testValidatePublishOnTwoNodes() throws Exception {
+		long userId = TestPropsValues.getUserId();
+
+		TomcatNode masterTomcatNode;
+		TomcatNode slaveTomcatNode;
+
+		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
+			masterTomcatNode = _tomcatNode1;
+			slaveTomcatNode = _tomcatNode2;
+		}
+		else {
+			masterTomcatNode = _tomcatNode2;
+			slaveTomcatNode = _tomcatNode1;
+		}
+
+		Object[] values = masterTomcatNode.syncExecute(
+			() -> {
+				try {
+					PermissionThreadLocal.setPermissionChecker(
+						PermissionCheckerFactoryUtil.create(
+							TestPropsValues.getUser()));
+
+					Group liveGroup = GroupTestUtil.addGroup();
+
+					long liveGroupId = liveGroup.getGroupId();
+
+					StagingLocalServiceUtil.enableLocalStaging(
+						userId, liveGroup, false, false, new ServiceContext());
+
+					liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+					Group stagingGroup = liveGroup.getStagingGroup();
+
+					long stagingGroupId = stagingGroup.getGroupId();
+
+					return new Object[] {
+						liveGroupId, stagingGroupId,
+						LayoutTestUtil.addTypePortletLayout(
+							stagingGroupId, "Staging Test Page", false),
+						BlogsEntryLocalServiceUtil.addEntry(
+							userId, "Blogs Entry Title", "Blogs Entry Content",
+							ServiceContextTestUtil.getServiceContext(
+								stagingGroupId, userId))
+					};
+				}
+				finally {
+					PermissionThreadLocal.setPermissionChecker(null);
+				}
+			});
+
+		long liveGroupId = (Long)values[0];
+		long stagingGroupId = (Long)values[1];
+		Layout stagingLayout = (Layout)values[2];
+		BlogsEntry stagingBlogsEntry = (BlogsEntry)values[3];
+
+		_publishLayouts(
+			masterTomcatNode, masterTomcatNode, userId, stagingGroupId,
+			liveGroupId, stagingLayout.getLayoutId());
+
+		_assertEqualOnBothNodes(
+			masterTomcatNode, slaveTomcatNode,
+			() -> LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				stagingLayout.getUuid(), liveGroupId, false));
+
+		_assertEqualOnBothNodes(
+			masterTomcatNode, slaveTomcatNode,
+			() -> BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+				stagingBlogsEntry.getUuid(), liveGroupId));
+
+		BlogsEntry liveBlogsEntryFromMaster = masterTomcatNode.syncExecute(
+			() -> BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+				stagingBlogsEntry.getUuid(), liveGroupId));
+
+		JournalArticle stagingArticleFromSlave = slaveTomcatNode.syncExecute(
+			() -> JournalTestUtil.addArticle(
+				stagingGroupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"WebContent Title", "WebContent Content",
+				LocaleUtil.getSiteDefault(), false, true));
+
+		_publishLayouts(
+			slaveTomcatNode, masterTomcatNode, userId, stagingGroupId,
+			liveGroupId, stagingLayout.getLayoutId());
+
+		Assert.assertEquals(
+			liveBlogsEntryFromMaster,
+			masterTomcatNode.syncExecute(
+				() ->
+					BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(
+						stagingBlogsEntry.getUuid(), liveGroupId)));
+
+		_assertEqualOnBothNodes(
+			masterTomcatNode, slaveTomcatNode,
+			() ->
+				JournalArticleLocalServiceUtil.
+					fetchJournalArticleByUuidAndGroupId(
+						stagingArticleFromSlave.getUuid(), liveGroupId));
+	}
+
 	private static String _getLocalClusterNodeId() {
 		ClusterNode localClusterNode =
 			ClusterExecutorUtil.getLocalClusterNode();
@@ -573,6 +695,20 @@ public class ClusterGeneralTest implements Serializable {
 				throw new IOException(exception);
 			}
 		};
+	}
+
+	private <T extends Serializable> void _assertEqualOnBothNodes(
+			TomcatNode masterTomcatNode, TomcatNode slaveTomcatNode,
+			TomcatNode.ClusterExecutable<T> clusterExecutable)
+		throws Exception {
+
+		T masterValue = masterTomcatNode.syncExecute(clusterExecutable);
+		T slaveValue = slaveTomcatNode.syncExecute(clusterExecutable);
+
+		Assert.assertNotNull(masterValue);
+		Assert.assertNotNull(slaveValue);
+
+		Assert.assertEquals(masterValue, slaveValue);
 	}
 
 	private void _assertNodesVisibleToEachOther(
@@ -684,6 +820,68 @@ public class ClusterGeneralTest implements Serializable {
 					PermissionThreadLocal.setPermissionChecker(null);
 				}
 			});
+	}
+
+	private void _publishLayouts(
+			TomcatNode invokerTomcatNode, TomcatNode masterTomcatNode,
+			long userId, long stagingGroupId, long liveGroupId, long layoutId)
+		throws Exception {
+
+		long exportImportConfigurationId = invokerTomcatNode.syncExecute(
+			() -> {
+				ExportImportConfiguration exportImportConfiguration =
+					ExportImportConfigurationLocalServiceUtil.
+						addDraftExportImportConfiguration(
+							userId,
+							ExportImportConfigurationConstants.
+								TYPE_PUBLISH_LAYOUT_LOCAL,
+							ExportImportConfigurationSettingsMapFactoryUtil.
+								buildPublishLayoutLocalSettingsMap(
+									UserLocalServiceUtil.getUser(userId),
+									stagingGroupId, liveGroupId, false,
+									new long[] {layoutId},
+									ExportImportConfigurationParameterMapFactoryUtil.
+										buildParameterMap()));
+
+				return exportImportConfiguration.
+					getExportImportConfigurationId();
+			});
+
+		Future<?> future = masterTomcatNode.execute(
+			() -> {
+				TestExportImportLifecycleListener
+					testExportImportLifecycleListener =
+						TestExportImportLifecycleListener.register(
+							String.valueOf(exportImportConfigurationId));
+
+				testExportImportLifecycleListener.await();
+
+				return null;
+			});
+
+		invokerTomcatNode.syncExecute(
+			() -> {
+				String originalName = PrincipalThreadLocal.getName();
+
+				try {
+					PrincipalThreadLocal.setName(userId);
+
+					PermissionThreadLocal.setPermissionChecker(
+						PermissionCheckerFactoryUtil.create(
+							TestPropsValues.getUser()));
+
+					StagingUtil.publishLayouts(
+						userId, exportImportConfigurationId);
+
+					return null;
+				}
+				finally {
+					PermissionThreadLocal.setPermissionChecker(null);
+					PrincipalThreadLocal.setName(originalName);
+				}
+			});
+
+		future.get();
 	}
 
 	private void _restartAndVerifyNode(
@@ -1176,6 +1374,86 @@ public class ClusterGeneralTest implements Serializable {
 
 		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
 		private ServiceRegistration<?> _serviceRegistration;
+
+	}
+
+	private static class TestExportImportLifecycleListener
+		implements ExportImportLifecycleListener {
+
+		public static TestExportImportLifecycleListener register(
+			String processId) {
+
+			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			TestExportImportLifecycleListener
+				testExportImportLifecycleListener =
+					new TestExportImportLifecycleListener(processId);
+
+			testExportImportLifecycleListener._serviceRegistration =
+				bundleContext.registerService(
+					ExportImportLifecycleListener.class,
+					testExportImportLifecycleListener, null);
+
+			return testExportImportLifecycleListener;
+		}
+
+		public void await() throws Exception {
+			_countDownLatch.await();
+
+			_serviceRegistration.unregister();
+
+			if (_throwable != null) {
+				throw new AssertionError(_throwable);
+			}
+		}
+
+		@Override
+		public boolean isParallel() {
+			return false;
+		}
+
+		@Override
+		public void onExportImportLifecycleEvent(
+			ExportImportLifecycleEvent exportImportLifecycleEvent) {
+
+			if (!_processId.equals(exportImportLifecycleEvent.getProcessId())) {
+				return;
+			}
+
+			int code = exportImportLifecycleEvent.getCode();
+
+			if (code ==
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED) {
+
+				_countDownLatch.countDown();
+			}
+			else if (code ==
+						ExportImportLifecycleConstants.
+							EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED) {
+
+				for (Serializable attribute :
+						exportImportLifecycleEvent.getAttributes()) {
+
+					if (attribute instanceof Throwable) {
+						_throwable = (Throwable)attribute;
+
+						break;
+					}
+				}
+
+				_countDownLatch.countDown();
+			}
+		}
+
+		private TestExportImportLifecycleListener(String processId) {
+			_processId = processId;
+		}
+
+		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+		private final String _processId;
+		private ServiceRegistration<?> _serviceRegistration;
+		private volatile Throwable _throwable;
 
 	}
 

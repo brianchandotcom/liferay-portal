@@ -1,8 +1,8 @@
 ---
 
 allowed-tools: [Bash, Edit, Glob, Grep, Read, Skill, Write]
-argument-hint: '<caseResultId>'
-description: Resolve a single Liferay test failure end-to-end. Use when the user invokes `/test-fix` with a single Testray case result ID.
+argument-hint: '<caseResultId | testName>'
+description: Resolve a single Liferay test failure end-to-end. Use when the user invokes `/test-fix` with a Testray case result ID or a test name.
 name: test-fix
 
 ---
@@ -22,13 +22,13 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 
 ## Input
 
-### Case Result ID
+### Case Result ID / Test Name
 
-`${ARGUMENTS}` is a single positive integer Testray case result ID. Abort immediately when the argument is missing or not a positive integer.
+`${ARGUMENTS}` is either a positive integer Testray case result ID or a test name. Abort immediately when `${ARGUMENTS}` is empty.
 
 ### Failure Data
 
-Fetched at the start of the run by invoking the `test-fix-testray-data` skill. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the skill returns these fields:
+Fetched at the start of the run by invoking the `test-fix-testray-data` skill, which accepts both formats and resolves a test name to a case result ID. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the skill returns these fields:
 
 - **errorTrace** — error trace produced by the test framework.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).

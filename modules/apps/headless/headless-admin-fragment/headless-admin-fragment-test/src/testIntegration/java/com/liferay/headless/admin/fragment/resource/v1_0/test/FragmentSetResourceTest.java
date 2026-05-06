@@ -272,17 +272,6 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			fragmentSet.getDescription(), fragmentCollection.getDescription());
 	}
 
-	private void _assertFragmentCollectionNull(
-		FragmentSet fragmentSet, Group group) {
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.
-				fetchFragmentCollectionByExternalReferenceCode(
-					fragmentSet.getExternalReferenceCode(), group.getGroupId());
-
-		Assert.assertNull(fragmentCollection);
-	}
-
 	private void _assertGetSiteFragmentSetsPageWithFilter(
 			FragmentSet expectedFragmentSet, String filterString,
 			FragmentSet notExpectedFragmentSet)
@@ -376,7 +365,12 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			irrelevantGroup.getExternalReferenceCode());
 
 		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
-		_assertFragmentCollectionNull(fragmentSet2, irrelevantGroup);
+
+		Assert.assertNull(
+			_fragmentCollectionLocalService.
+				fetchFragmentCollectionByExternalReferenceCode(
+					fragmentSet2.getExternalReferenceCode(),
+					irrelevantGroup.getGroupId()));
 	}
 
 	private void _testPostSiteFragmentSetBatch() throws Exception {

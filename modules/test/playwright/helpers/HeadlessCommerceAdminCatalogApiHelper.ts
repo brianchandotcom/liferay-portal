@@ -156,8 +156,9 @@ type TProductSpecifications = {
 };
 
 export type TProductTaxConfiguration = {
-	id: number;
-	taxable: boolean;
+	id?: number;
+	taxCategory?: string;
+	taxable?: boolean;
 };
 
 type TProductVirtualSettings = {

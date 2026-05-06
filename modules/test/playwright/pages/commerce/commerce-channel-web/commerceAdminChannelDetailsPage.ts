@@ -666,7 +666,7 @@ export class CommerceAdminChannelDetailsPage {
 		).click();
 	}
 
-	async addFixedTaxRate(amount: string, name: string) {
+	async addFixedTaxRate(amount: string, name: string, percentage = false) {
 		const tableName = 'Tax Calculations';
 
 		await (
@@ -676,6 +676,13 @@ export class CommerceAdminChannelDetailsPage {
 		await expect(await this.activeToggle(tableName)).toBeVisible();
 
 		await (await this.activeToggle(tableName)).check();
+
+		if (percentage) {
+			await (await this.sidePanelFrame(tableName))
+				.getByLabel('Percentage')
+				.check();
+		}
+
 		await (await this.frameSaveButton(false, tableName)).click();
 
 		await (await this.taxRatesTab(tableName)).click();
@@ -684,7 +691,9 @@ export class CommerceAdminChannelDetailsPage {
 		await expect(this.taxCategoryChoiceBox).toBeVisible();
 
 		await this.taxCategoryChoiceBox.selectOption(name);
-		await this.addTaxRateFrame.getByLabel('Amount').fill(amount);
+		await this.addTaxRateFrame
+			.getByLabel(percentage ? 'Rate' : 'Amount')
+			.fill(amount);
 		await this.taxRateFrameSubmitButton.click();
 
 		await this.page.reload();

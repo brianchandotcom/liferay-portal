@@ -9,12 +9,14 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
+import {workflowPagesTest} from '../../../../fixtures/workflowPagesTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import {WidgetPagePage} from '../../../../pages/layout-admin-web/WidgetPagePage';
 import getRandomString from '../../../../utils/getRandomString';
 import {
 	performLoginViaApi,
 	performUserSwitch,
+	userData,
 } from '../../../../utils/performLogin';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {createAccountWithBuyerUser, miniumSetUp} from '../../utils/commerce';
@@ -23,7 +25,8 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	loginTest(),
-	pageViewModePagesTest
+	pageViewModePagesTest,
+	workflowPagesTest
 );
 
 let catalog: {id: number};
@@ -32,6 +35,7 @@ let setupData: Array<{id: number | string; type: string}>;
 let site: Site;
 let sku1: number;
 let sku2: number;
+let uJointProductId: number;
 
 test.beforeAll(async ({browser}) => {
 	const page = await browser.newPage();
@@ -63,6 +67,8 @@ test.beforeAll(async ({browser}) => {
 	product = products.items.find(
 		(item: {name: {en_US: string}}) => item.name.en_US === 'U-Joint'
 	);
+
+	uJointProductId = product.productId;
 
 	sku2 = (
 		await apiHelpers.headlessCommerceAdminCatalog.getProduct(
@@ -127,7 +133,7 @@ test.afterEach(async ({browser}) => {
 	);
 
 	const discountsPage = await apiHelpers.get(
-		`${apiHelpers.baseUrl}headless-commerce-admin-pricing/v2.0/discounts`
+		`${apiHelpers.baseUrl}headless-commerce-admin-pricing/v2.0/discounts?pageSize=200`
 	);
 
 	await Promise.all(
@@ -1150,7 +1156,7 @@ test(
 
 			await checkoutPage.continueButton.click();
 
-			await page.getByRole('radio', {name: 'Standard'}).check();
+			await checkoutPage.shippingMethodRadio('Standard').check();
 
 			await checkoutPage.continueButton.click();
 			await checkoutPage.continueButton.click();
@@ -1167,5 +1173,216 @@ test(
 		await orderDetailsPage.applyCouponCode(couponCode);
 
 		await expect(orderDetailsPage.couponCodeUsageLimitError).toBeVisible();
+	}
+);
+
+test(
+	'Discount and tax category are applied correctly during checkout',
+	{tag: ['@COMMERCE-11821', '@LPD-85008']},
+	async ({
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		orderDetailsPage,
+		page,
+		pendingOrdersPage,
+	}) => {
+		const taxCategory = (
+			await apiHelpers.headlessCommerceAdminChannel.getTaxCategories()
+		).items[0];
+
+		const discount =
+			await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+				active: true,
+				level: 'L1',
+				percentageLevel1: 15,
+				target: 'shipping',
+				title: `Discount 1 ${getRandomString()}`,
+				usePercentage: false,
+			});
+
+		await apiHelpers.headlessCommerceAdminPricing.postDiscountRule(
+			discount.id,
+			{
+				name: 'FREESHIPPING',
+				type: 'cart-total',
+				typeSettings: '200',
+			}
+		);
+
+		await test.step('Configure a 10% fixed tax rate on the channel', async () => {
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await commerceAdminChannelDetailsPage.addFixedTaxRate(
+				'10',
+				taxCategory.name.en_US,
+				true
+			);
+		});
+
+		await apiHelpers.headlessCommerceAdminCatalog.patchProductTaxConfiguration(
+			uJointProductId,
+			{taxCategory: taxCategory.name.en_US}
+		);
+
+		const {account, buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		await apiHelpers.headlessCommerceDeliveryCart.postCart(
+			{
+				accountId: account.id,
+				cartItems: [{options: '[]', quantity: 10, skuId: sku2}],
+			},
+			channel.id
+		);
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(`/web${site.friendlyUrlPath}/pending-orders`);
+
+		await pendingOrdersPage.viewButton.click();
+
+		await orderDetailsPage.checkoutButton.click();
+
+		await checkoutPage.addAddress({
+			city: 'Test City',
+			countryLabel: 'United States',
+			name: buyerUser.alternateName,
+			regionLabel: 'Florida',
+			street: 'Test Address',
+			zip: '12345',
+		});
+
+		await checkoutPage.continueButton.click();
+
+		await checkoutPage.shippingMethodRadio('Standard').check();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.summaryAmount('$ 240.00')).toBeVisible();
+		await expect(checkoutPage.summaryAmount('$ 24.00')).toBeVisible();
+		await expect(checkoutPage.summaryAmount('$ 264.00')).toBeVisible();
+
+		await checkoutPage.continueButton.click();
+
+		await expect(checkoutPage.orderSuccessMessage).toBeVisible();
+	}
+);
+
+test(
+	'Single Approver workflow moves a draft discount to Pending on submit',
+	{tag: ['@COMMERCE-10663', '@LPD-85008']},
+	async ({
+		commerceAdminDiscountDetailsPage,
+		commerceAdminDiscountsPage,
+		configurationTabPage,
+		page,
+	}) => {
+		const discountName = `Test Discount ${getRandomString()}`;
+
+		await test.step('Assign Single Approver workflow to Discount', async () => {
+			await configurationTabPage.goTo();
+
+			await configurationTabPage.assignWorkflowToAssetType(
+				'Single Approver',
+				'Discount'
+			);
+		});
+
+		await test.step('Create a discount and save it as draft', async () => {
+			await commerceAdminDiscountsPage.goto();
+
+			await commerceAdminDiscountsPage.addDiscountButton.click();
+
+			await expect(async () => {
+				await commerceAdminDiscountsPage.addDiscountModalNameInput.fill(
+					discountName
+				);
+
+				await expect(
+					commerceAdminDiscountsPage.addDiscountModalNameInput
+				).toHaveValue(discountName, {timeout: 1000});
+			}).toPass({timeout: 10000});
+
+			await commerceAdminDiscountsPage.addDiscountModalTypeSelect.selectOption(
+				{label: 'Percentage'}
+			);
+			await commerceAdminDiscountsPage.addDiscountModalApplyToSelect.selectOption(
+				{label: 'Products'}
+			);
+			await commerceAdminDiscountsPage.addDiscountModalSubmitButton.click();
+
+			await commerceAdminDiscountDetailsPage.amountInput.fill('10');
+			await commerceAdminDiscountDetailsPage.saveAsDraftButton.click();
+
+			await waitForAlert(page);
+		});
+
+		await test.step('Discount status is Draft and Submit for Workflow is available', async () => {
+			await expect(
+				commerceAdminDiscountDetailsPage.draftStatus
+			).toBeVisible();
+		});
+
+		await test.step('Submit for Workflow moves the discount to Pending', async () => {
+			await commerceAdminDiscountDetailsPage.submitForWorkflowButton.click();
+
+			await waitForAlert(page);
+
+			await expect(
+				commerceAdminDiscountDetailsPage.pendingStatus
+			).toBeVisible();
+		});
+
+		await configurationTabPage.goTo();
+
+		await configurationTabPage.unassignWorkflowFromAssetType('Discount');
+	}
+);
+
+test(
+	'A user with the Discount Manager role can access the Discounts panel',
+	{tag: ['@COMMERCE-10819', '@LPD-85008']},
+	async ({apiHelpers, commerceAdminDiscountsPage, page}) => {
+		const screenName = `discount-manager-${getRandomString().slice(0, 8)}`;
+
+		const discountManagerUser =
+			await apiHelpers.headlessAdminUser.postUserAccount({
+				alternateName: screenName,
+				emailAddress: `${screenName}@liferay.com`,
+				familyName: 'Manager',
+				givenName: 'Discount',
+			});
+
+		const discountManagerRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Discount Manager'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			discountManagerRole.externalReferenceCode,
+			discountManagerUser.id
+		);
+
+		userData[screenName] = {
+			name: 'Discount',
+			password: 'test',
+			surname: 'Manager',
+		};
+
+		await performUserSwitch(page, screenName);
+
+		await commerceAdminDiscountsPage.goto();
+
+		await expect(commerceAdminDiscountsPage.discountsHeading).toBeVisible();
 	}
 );

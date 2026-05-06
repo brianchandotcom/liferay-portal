@@ -24,4 +24,6 @@ public class ExportImportReportEntryConstants {
 
 	public static final int TYPE_ERROR = 1;
 
+	public static final int TYPE_MISSING_REFERENCE = 3;
+
 }

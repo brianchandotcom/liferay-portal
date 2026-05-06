@@ -87,7 +87,7 @@ describe('addRepeatableGroup', () => {
 		getDefaultLanguageIdSpy.mockReturnValue('en_US');
 		getLanguageIdSpy.mockReturnValue('es_ES');
 
-		const languageGetSpy = jest
+		const getLanguageSpy = jest
 			.spyOn(Liferay.Language, 'get')
 			.mockImplementation((key: string) =>
 				key === 'repeatable-group' ? 'Grupo repetible' : key
@@ -116,7 +116,7 @@ describe('addRepeatableGroup', () => {
 			});
 		}
 		finally {
-			languageGetSpy.mockRestore();
+			getLanguageSpy.mockRestore();
 		}
 	});
 });

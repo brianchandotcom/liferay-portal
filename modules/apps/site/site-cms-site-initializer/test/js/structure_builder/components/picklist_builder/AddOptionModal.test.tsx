@@ -66,7 +66,7 @@ describe('AddOptionModal', () => {
 			locale: 'en_US',
 		});
 
-		const languageGetSpy = jest
+		const getLanguageSpy = jest
 			.spyOn(Liferay.Language, 'get')
 			.mockImplementation((key: string) =>
 				key === 'option' ? 'Opción' : key
@@ -98,12 +98,12 @@ describe('AddOptionModal', () => {
 			});
 		}
 		finally {
-			languageGetSpy.mockRestore();
+			getLanguageSpy.mockRestore();
 		}
 	});
 
 	it('generates an ASCII-only key when the current locale localizes "option" with non-ASCII characters', async () => {
-		const languageGetSpy = jest
+		const getLanguageSpy = jest
 			.spyOn(Liferay.Language, 'get')
 			.mockImplementation((key: string) =>
 				key === 'option' ? 'Opción' : key
@@ -122,7 +122,7 @@ describe('AddOptionModal', () => {
 			});
 		}
 		finally {
-			languageGetSpy.mockRestore();
+			getLanguageSpy.mockRestore();
 		}
 	});
 

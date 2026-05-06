@@ -20,6 +20,11 @@ export const useFDSState = (fdsId: string): IFDSState => {
 		const State = (window as any).Liferay?.State;
 
 		if (!State) {
+			// eslint-disable-next-line no-console
+			console.error(
+				'useFDSState: Liferay.State is unavailable; FDS search/filter state will be empty.'
+			);
+
 			return;
 		}
 

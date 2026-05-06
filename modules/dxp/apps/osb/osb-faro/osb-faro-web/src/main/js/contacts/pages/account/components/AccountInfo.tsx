@@ -7,40 +7,25 @@ import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 
-interface LifecycleStatusProps {
-	className?: string;
-}
-
-const AccountInfoData: {
+export interface IAccount {
 	accountName?: string;
 	accountType?: string;
 	annualRevenue?: number;
-	numberOfEmployees?: number;
-	id: string;
+	fields?: Array<{
+		dataSourceId?: string;
+		dataSourceName?: string;
+		name: string;
+		value?: string;
+	}>;
+	id?: string;
 	industry?: string;
-	fields: [
-		{
-			name: string;
-			dataSourceId?: string;
-			dataSourceName?: string;
-			value?: string;
-		}
-	];
-} = {
-	accountName: 'Acme Corp',
-	accountType: 'Customer',
-	annualRevenue: 5000000,
-	fields: [
-		{
-			dataSourceName: 'Salesforce Production',
-			name: 'website',
-			value: 'https://acme.com'
-		}
-	],
-	id: 'acc-123',
-	industry: 'Technology',
-	numberOfEmployees: 250
-};
+	numberOfEmployees?: number;
+}
+
+interface IAccountInfoProps {
+	account?: IAccount;
+	className?: string;
+}
 
 const infoDataLabels = {
 	accountName: Liferay.Language.get('account-name'),
@@ -68,26 +53,28 @@ const infoItem = (label: string, value?: string, link?: boolean) => (
 	</div>
 );
 
-const AccountInfo: React.FC<LifecycleStatusProps> = ({className}) => {
+const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
+		if (!account) {
+			return undefined;
+		}
 		if (key === 'annualRevenue') {
-			return AccountInfoData.annualRevenue !== undefined
-				? toThousands(AccountInfoData.annualRevenue)
+			return account.annualRevenue !== undefined
+				? toThousands(account.annualRevenue)
 				: undefined;
 		}
 		if (key === 'numberOfEmployees') {
-			return AccountInfoData.numberOfEmployees !== undefined
-				? toThousands(AccountInfoData.numberOfEmployees)
+			return account.numberOfEmployees !== undefined
+				? toThousands(account.numberOfEmployees)
 				: undefined;
 		}
 		if (key === 'website') {
-			return AccountInfoData.fields.find(
-				field => field.name === 'website'
-			)?.value;
+			return account.fields?.find(field => field.name === 'website')
+				?.value;
 		}
-		return AccountInfoData[key];
+		return account[key];
 	};
 
 	return (
@@ -131,10 +118,10 @@ const AccountInfo: React.FC<LifecycleStatusProps> = ({className}) => {
 				</Card.Body>
 			</Card>
 
-			{isDetailsModalOpen && (
+			{isDetailsModalOpen && account?.id && (
 				<AccountDetailsModal
-					accountId={AccountInfoData.id}
-					accountName={AccountInfoData.accountName}
+					accountId={account.id}
+					accountName={account.accountName}
 					onClose={() => setIsDetailsModalOpen(false)}
 				/>
 			)}

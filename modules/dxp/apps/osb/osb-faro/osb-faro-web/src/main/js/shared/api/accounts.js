@@ -66,7 +66,15 @@ const MOCK_ACCOUNT_DETAILS = {
 
 export function fetch({accountId, channelId, groupId}) {
 	if (USE_MOCK_ACCOUNT_FETCH) {
-		return Promise.resolve({accountName: 'Dickenson plc'});
+		return Promise.resolve({
+			accountName: 'Dickenson plc',
+			accountType: 'Customer',
+			annualRevenue: 5000000,
+			fields: [{name: 'website', value: 'https://dickenson.com'}],
+			id: accountId,
+			industry: 'Technology',
+			numberOfEmployees: 250
+		});
 	}
 
 	return sendRequest({

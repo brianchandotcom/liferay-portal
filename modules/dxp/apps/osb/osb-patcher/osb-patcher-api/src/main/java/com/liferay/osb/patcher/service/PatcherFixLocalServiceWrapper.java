@@ -140,12 +140,12 @@ public class PatcherFixLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.json.JSONObject
 			checkPatcherFixesByPatcherProjectVersionName(
-				String patcherProjectVersionName, String ticketList)
+				String patcherFixNames, String patcherProjectVersionName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _patcherFixLocalService.
 			checkPatcherFixesByPatcherProjectVersionName(
-				patcherProjectVersionName, ticketList);
+				patcherFixNames, patcherProjectVersionName);
 	}
 
 	@Override
@@ -826,4 +826,4 @@ public class PatcherFixLocalServiceWrapper
 	private PatcherFixLocalService _patcherFixLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:769446415
+// LIFERAY-SERVICE-BUILDER-HASH:35594231

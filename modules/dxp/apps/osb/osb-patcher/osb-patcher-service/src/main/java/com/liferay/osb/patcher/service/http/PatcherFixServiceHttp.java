@@ -43,8 +43,8 @@ public class PatcherFixServiceHttp {
 
 	public static com.liferay.portal.kernel.json.JSONObject
 			checkPatcherFixesByPatcherProjectVersionName(
-				HttpPrincipal httpPrincipal, String patcherProjectVersionName,
-				String ticketList)
+				HttpPrincipal httpPrincipal, String patcherFixNames,
+				String patcherProjectVersionName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -54,7 +54,7 @@ public class PatcherFixServiceHttp {
 				_checkPatcherFixesByPatcherProjectVersionNameParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, patcherProjectVersionName, ticketList);
+				methodKey, patcherFixNames, patcherProjectVersionName);
 
 			Object returnObj = null;
 
@@ -92,4 +92,4 @@ public class PatcherFixServiceHttp {
 			new Class[] {String.class, String.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1885695527
+// LIFERAY-SERVICE-BUILDER-HASH:-960927535

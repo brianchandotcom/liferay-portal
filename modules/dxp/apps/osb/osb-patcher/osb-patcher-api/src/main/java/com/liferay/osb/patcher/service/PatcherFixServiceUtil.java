@@ -29,11 +29,11 @@ public class PatcherFixServiceUtil {
 	 */
 	public static com.liferay.portal.kernel.json.JSONObject
 			checkPatcherFixesByPatcherProjectVersionName(
-				String patcherProjectVersionName, String ticketList)
+				String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException {
 
 		return getService().checkPatcherFixesByPatcherProjectVersionName(
-			patcherProjectVersionName, ticketList);
+			patcherFixNames, patcherProjectVersionName);
 	}
 
 	/**
@@ -53,4 +53,4 @@ public class PatcherFixServiceUtil {
 		new Snapshot<>(PatcherFixServiceUtil.class, PatcherFixService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2009148765
+// LIFERAY-SERVICE-BUILDER-HASH:830935617

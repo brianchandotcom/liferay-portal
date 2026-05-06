@@ -105,7 +105,7 @@ public interface PatcherFixLocalService
 		long patcherFixPackId, long[] patcherFixIds);
 
 	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
-			String patcherProjectVersionName, String ticketList)
+			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException;
 
 	public void clearPatcherBuildPatcherFixes(long patcherBuildId);
@@ -481,4 +481,4 @@ public interface PatcherFixLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-214394448
+// LIFERAY-SERVICE-BUILDER-HASH:1193074550

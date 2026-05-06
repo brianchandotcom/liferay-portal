@@ -71,6 +71,7 @@ const Licenses = ({actions, readOnly = false}: LicensesProps) => {
 		OrderTypes.CLIENT_EXTENSION,
 		OrderTypes.CMP,
 		OrderTypes.COMPOSITE_APP,
+		OrderTypes.DSR,
 		OrderTypes.DXP_APP,
 	].includes(placedOrder?.orderTypeExternalReferenceCode as OrderTypes)
 		? 'On-Premise'

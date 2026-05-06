@@ -20,7 +20,7 @@ const SegmentEnabledSequentialCard = () => (
 
 			<Text color='secondary' size={3}>
 				{Liferay.Language.get(
-					'when-this-is-enabled,-event-2-must-occur-after-event-1,-with-any-number-of-events-in-between'
+					'when-this-is-enabled,the-second-event-must-come-after-the-first-event,-with-any-number-of-events-in-between'
 				)}
 			</Text>
 		</Card.Body>

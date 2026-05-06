@@ -357,7 +357,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 			forcedReconsentButton.addEventListener('click', function (event) {
 				Liferay.Util.openConfirmModal({
 					message:
-						'<liferay-ui:message key="you-are-about-to-force-reconsent" />',
+						'<liferay-ui:message key='<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingActive() ? "you-are-about-to-force-reconsent" : "you-are-about-to-change-the-consent-renewal-period-when-active" %>' />',
 					onConfirm: function (isConfirmed) {
 						if (isConfirmed) {
 							Liferay.Util.fetch('<%= forceReconsentURL %>', {
@@ -376,13 +376,32 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 		if (activeInput && toggleActiveButton) {
 			toggleActiveButton.addEventListener('click', function (event) {
-				form.reset();
+				var isCurrentlyActive = activeInput.value === 'true';
 
-				activeInput.value = activeInput.value === 'true' ? 'false' : 'true';
+				var performToggle = function () {
+					form.reset();
 
-				form.dataset.skipActiveWarning = 'true';
+					activeInput.value = isCurrentlyActive ? 'false' : 'true';
 
-				form.requestSubmit();
+					form.dataset.skipActiveWarning = 'true';
+
+					form.requestSubmit();
+				};
+
+				if (isCurrentlyActive) {
+					Liferay.Util.openConfirmModal({
+						message:
+							'<liferay-ui:message key="you-are-about-to-deactivate-the-consent-manager" />',
+						onConfirm: function (isConfirmed) {
+							if (isConfirmed) {
+								performToggle();
+							}
+						},
+					});
+				}
+				else {
+					performToggle();
+				}
 			});
 		}
 
@@ -413,7 +432,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 
 			var enabled = document.getElementById('<portlet:namespace />enabled');
 
-			if (
+			var renewalPeriodChanged =
 				(consentRenewalPeriod.value !==
 					'<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>' ||
 					consentRenewalPeriodTimeUnit.value !==
@@ -423,26 +442,13 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 					dissentRenewalPeriodTimeUnit.value !==
 						'<%= dissentRenewalPeriodTimeUnit %>') &&
 				enabled.checked &&
-				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>
-			) {
-				event.preventDefault();
-				event.stopImmediatePropagation();
+				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>;
 
-				Liferay.Util.openConfirmModal({
-					message:
-						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
-					onConfirm: (isConfirmed) => {
-						if (isConfirmed) {
-							form.dataset.skipActiveWarning = 'true';
-
-							Liferay.Util.fetch('<%= forceReconsentURL %>', {
-								method: 'POST',
-							}).finally(() => form.requestSubmit());
-						}
-					},
-				});
-
-				return;
+			if (renewalPeriodChanged) {
+				form.dataset.renewalPeriodChanged = 'true';
+			}
+			else {
+				delete form.dataset.renewalPeriodChanged;
 			}
 		});
 	}

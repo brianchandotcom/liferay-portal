@@ -30,6 +30,20 @@ public class ObjectEntryGroupIdException extends PortalException {
 
 	}
 
+	public static class InvalidGroupIdForAssetCategory
+		extends ObjectEntryGroupIdException {
+
+		public InvalidGroupIdForAssetCategory(long assetCategoryId) {
+			super(
+				String.format(
+					"Asset category %d does not belong to the object entry's " +
+						"scope",
+					assetCategoryId),
+				"asset-category-x-does-not-belong-to-the-object-entrys-scope");
+		}
+
+	}
+
 	public static class InvalidGroupIdForScope
 		extends ObjectEntryGroupIdException {
 

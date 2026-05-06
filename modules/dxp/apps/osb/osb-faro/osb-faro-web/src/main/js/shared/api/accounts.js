@@ -8,11 +8,18 @@ const {
 	pagination: {cur: DEFAULT_PAGE, delta: DEFAULT_DELTA}
 } = FaroConstants;
 
-// TODO: replace the mock with the once
-// contacts/{groupId}/account/{accountId} is ready
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function fetch({accountId, groupId}) {
-	return Promise.resolve({accountName: 'Dickenson plc'});
+const USE_MOCK_ACCOUNT_FETCH = true;
+
+export function fetch({accountId, channelId, groupId}) {
+	if (USE_MOCK_ACCOUNT_FETCH) {
+		return Promise.resolve({accountName: 'Dickenson plc'});
+	}
+
+	return sendRequest({
+		data: {channelId},
+		method: 'GET',
+		path: `contacts/${groupId}/account/${accountId}`
+	});
 }
 
 export function fetchDetails({accountId, groupId}) {

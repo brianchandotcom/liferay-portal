@@ -39,7 +39,7 @@ const AccountProfileRoutes = () => {
 		dataSourceFn: API.accounts.fetch as (params: {
 			[key: string]: any;
 		}) => Promise<any>,
-		variables: {accountId: id!, groupId: groupId!}
+		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
 	});
 
 	const accountName: string =

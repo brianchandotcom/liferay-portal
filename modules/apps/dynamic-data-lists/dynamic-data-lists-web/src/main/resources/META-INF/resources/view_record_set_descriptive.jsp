@@ -23,12 +23,12 @@ dateSearchEntry.setDate(ddlRecordSet.getModifiedDate());
 	</aui:a>
 </h2>
 
-<span class="text-default">
+<span class="font-weight-normal">
 	<div class="record-set-description">
 		<%= HtmlUtil.escape(ddlRecordSet.getDescription(locale)) %>
 	</div>
 </span>
-<span class="text-default">
+<span class="font-weight-normal">
 	<span class="record-set-id">
 		<liferay-ui:message key="id" />: <%= ddlRecordSet.getRecordSetId() %>
 	</span>

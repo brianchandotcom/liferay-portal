@@ -20,13 +20,13 @@ DDMDataProviderInstance ddmDataProviderInstance = (DDMDataProviderInstance)row.g
 		</aui:a>
 	</div>
 
-	<div class="h5 text-default">
+	<div class="font-weight-normal h5">
 		<div class="text-truncate">
 			<%= HtmlUtil.escape(ddmDataProviderInstance.getDescription(locale)) %>
 		</div>
 	</div>
 
-	<div class="h5 text-default">
+	<div class="font-weight-normal h5">
 		<span class="data-provider-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmDataProviderInstance.getDataProviderInstanceId() %>
 		</span>

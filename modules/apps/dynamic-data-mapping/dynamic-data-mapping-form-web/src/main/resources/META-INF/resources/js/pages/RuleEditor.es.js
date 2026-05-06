@@ -28,9 +28,11 @@ export function RuleEditor({onCancel, onSave, rule, ...otherProps}) {
 			onSubmit={(event) => event.preventDefault()}
 		>
 			<div className="form-rule-builder-header">
-				<h2 className="text-default">{Liferay.Language.get('rule')}</h2>
+				<h2 className="font-weight-normal">
+					{Liferay.Language.get('rule')}
+				</h2>
 
-				<div className="h4 text-default">
+				<div className="font-weight-normal h4">
 					{Liferay.Language.get(
 						'define-condition-and-action-to-change-fields-and-elements-on-the-form'
 					)}

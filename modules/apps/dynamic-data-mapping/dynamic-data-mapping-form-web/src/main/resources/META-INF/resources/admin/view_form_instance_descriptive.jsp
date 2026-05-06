@@ -59,12 +59,12 @@ dateSearchEntry.setDate(ddmFormInstance.getModifiedDate());
 		</c:choose>
 	</h2>
 
-	<span class="text-default">
+	<span class="font-weight-normal">
 		<div class="form-instance-description text-truncate">
 			<%= HtmlUtil.replaceNewLine(HtmlUtil.escape(ddmFormInstance.getDescription(locale))) %>
 		</div>
 	</span>
-	<span class="text-default">
+	<span class="font-weight-normal">
 		<span class="form-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmFormInstance.getFormInstanceId() %>
 		</span>

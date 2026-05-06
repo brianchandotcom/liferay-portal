@@ -24,13 +24,13 @@ dateSearchEntry.setDate(ddmStructure.getModifiedDate());
 		</aui:a>
 	</div>
 
-	<div class="h5 text-default">
+	<div class="font-weight-normal h5">
 		<div class="form-instance-description text-truncate">
 			<%= HtmlUtil.escape(ddmStructure.getDescription(locale)) %>
 		</div>
 	</div>
 
-	<div class="h5 text-default">
+	<div class="font-weight-normal h5">
 		<span class="form-instance-id">
 			<liferay-ui:message key="id" />: <%= ddmStructure.getStructureId() %>
 		</span>

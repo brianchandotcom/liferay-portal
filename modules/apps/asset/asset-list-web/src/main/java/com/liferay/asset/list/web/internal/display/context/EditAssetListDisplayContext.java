@@ -665,44 +665,6 @@ public class EditAssetListDisplayContext {
 			unicodeProperties, className, availableClassTypeIds);
 	}
 
-	public List<Map<String, Object>> getConditions() {
-		String conditions = _unicodeProperties.getProperty("conditions");
-
-		if (Validator.isNull(conditions)) {
-			return Collections.emptyList();
-		}
-
-		try {
-			JSONArray conditionsJSONArray = JSONFactoryUtil.createJSONArray(
-				conditions);
-
-			List<Map<String, Object>> conditionsList = new ArrayList<>(
-				conditionsJSONArray.length());
-
-			for (int i = 0; i < conditionsJSONArray.length(); i++) {
-				JSONObject conditionJSONObject =
-					conditionsJSONArray.getJSONObject(i);
-
-				Map<String, Object> conditionMap = new HashMap<>();
-
-				for (String key : conditionJSONObject.keySet()) {
-					conditionMap.put(key, conditionJSONObject.get(key));
-				}
-
-				conditionsList.add(conditionMap);
-			}
-
-			return conditionsList;
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return Collections.emptyList();
-		}
-	}
-
 	public Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
 			"assetListEntrySegmentsEntryRels",
@@ -790,6 +752,43 @@ public class EditAssetListDisplayContext {
 		_setDDMStructure();
 
 		return _ddmStructureFieldValue;
+	}
+
+	public List<Map<String, Object>> getFilters() {
+		String filters = _unicodeProperties.getProperty("filters");
+
+		if (Validator.isNull(filters)) {
+			return Collections.emptyList();
+		}
+
+		try {
+			JSONArray filtersJSONArray = JSONFactoryUtil.createJSONArray(
+				filters);
+
+			List<Map<String, Object>> filtersList = new ArrayList<>(
+				filtersJSONArray.length());
+
+			for (int i = 0; i < filtersJSONArray.length(); i++) {
+				JSONObject filterJSONObject = filtersJSONArray.getJSONObject(i);
+
+				Map<String, Object> filterMap = new HashMap<>();
+
+				for (String key : filterJSONObject.keySet()) {
+					filterMap.put(key, filterJSONObject.get(key));
+				}
+
+				filtersList.add(filterMap);
+			}
+
+			return filtersList;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return Collections.emptyList();
+		}
 	}
 
 	public String getGroupItemSelectorURL() {

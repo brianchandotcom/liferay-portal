@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
+import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
@@ -21,15 +22,21 @@ import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../../utils/performLogin';
 import {getTempDir} from '../../../../utils/temp';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
-import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
+import {
+	configureBuyerUserForSite,
+	createChannelAccountManagerUser,
+	miniumSetUp,
+} from '../../utils/commerce';
 
 export const test = mergeTests(
+	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
@@ -1483,5 +1490,124 @@ test(
 			'Choose an Option',
 			'White',
 		]);
+	}
+);
+
+test(
+	'Sales Agent can view product details when the selected account belongs to an authorized account group',
+	{tag: ['@COMMERCE-12657', '@LPD-87650']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceThemeMiniumCatalogPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+		productDetailsPage,
+	}) => {
+		const {channel, site} = await miniumSetUp(apiHelpers);
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const uJoint = (
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({filter: `name eq 'U-Joint'`})
+			)
+		).items[0];
+		const uJointName = uJoint.name['en_US'];
+
+		let account1;
+		let account2;
+		let accountGroup;
+		let salesAgent;
+
+		await test.step('Create accounts, sales agent and account group', async () => {
+			let camResult;
+
+			[account1, account2, camResult, accountGroup] = await Promise.all([
+				apiHelpers.headlessAdminUser.postAccount({
+					name: `Account ${getRandomString()}`,
+					type: 'business',
+				}),
+				apiHelpers.headlessAdminUser.postAccount({
+					name: `Account ${getRandomString()}`,
+					type: 'business',
+				}),
+				createChannelAccountManagerUser(apiHelpers, {
+					accountEntryActionIds: [
+						'MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL',
+					],
+					companyId,
+					siteId: site.id,
+				}),
+				apiHelpers.headlessAdminUser.postAccountGroup({
+					name: `Account Group ${getRandomString()}`,
+				}),
+			]);
+
+			salesAgent = camResult.user;
+
+			apiHelpers.data.push({
+				id: accountGroup.id,
+				type: 'accountGroup',
+			});
+		});
+
+		await test.step('Restrict U-Joint to the account group', async () => {
+			await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+				account2.externalReferenceCode,
+				accountGroup.externalReferenceCode
+			);
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				uJoint.productId,
+				{
+					name: uJoint.name,
+					productAccountGroupFilter: true,
+					productAccountGroups: [
+						{accountGroupId: accountGroup.id, id: 0},
+					],
+				}
+			);
+		});
+
+		await test.step('Assign the sales agent as Channel Account Manager for both accounts', async () => {
+			for (const account of [account1, account2]) {
+				await accountsPage.goto();
+				await accountsPage.accountNameLink(account.name).click();
+				await editAccountPage.channelDefaultsLink.click();
+				await editAccountChannelDefaultsPage.addChannelAccountManager({
+					channelName: channel.name,
+					userScreenName: salesAgent.alternateName,
+				});
+			}
+		});
+
+		await test.step('Switch user, select account2, and verify product details', async () => {
+			await performUserSwitch(page, salesAgent.alternateName);
+
+			await page.goto(`/web/${site.name}`);
+
+			await commerceThemeMiniumCatalogPage.selectAccount(account2.name);
+
+			const productLink =
+				commerceThemeMiniumCatalogPage.productLink(uJointName);
+
+			await expect(productLink).toBeVisible();
+
+			await productLink.click();
+
+			await expect(
+				await productDetailsPage.nameField(uJointName)
+			).toBeVisible();
+			await expect(
+				await productDetailsPage.skuField('MIN55861')
+			).toBeVisible();
+			await expect(
+				await productDetailsPage.priceField('$ 24.00')
+			).toBeVisible();
+		});
 	}
 );

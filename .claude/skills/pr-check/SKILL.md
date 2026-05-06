@@ -64,7 +64,7 @@ Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-For each validation, read only its `## Trigger` and `## Time Estimate` sections — do not load `## Command` or `## Auto-Commit` in this pass. Evaluate the trigger against the diff; when it matches, add the time estimate to the running total. The output of this pass is the matched-validation list and the cumulative estimate.
+Read every validation file under `.claude/skills/pr-check/validations/` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. Then in your next turn, evaluate each validation's `## Trigger` against the diff and emit the matched-validation list and cumulative time estimate (summed from each matched file's `## Time Estimate`).
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 

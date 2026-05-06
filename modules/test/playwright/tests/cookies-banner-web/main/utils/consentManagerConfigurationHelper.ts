@@ -93,13 +93,7 @@ export async function resetConsentManagerConfiguration(systemSettingsPage) {
 	await resetConfiguration(true, systemSettingsPage);
 }
 
-export async function saveOrUpdateConfiguration(dialog: boolean, page) {
-	if (dialog) {
-		page.once('dialog', async (dialogWindow) => {
-			await dialogWindow.accept();
-		});
-	}
-
+export async function saveOrUpdateConfiguration(_dialog: boolean, page) {
 	const saveButton = page.getByRole('button', {
 		name: 'Save',
 	});
@@ -113,6 +107,22 @@ export async function saveOrUpdateConfiguration(dialog: boolean, page) {
 	}
 	else if (await updateButton.isVisible()) {
 		await updateButton.dispatchEvent('click');
+	}
+
+	const modal = page.getByRole('alertdialog');
+
+	try {
+		await modal.waitFor({state: 'visible', timeout: 2000});
+
+		await modal.getByRole('button', {name: 'OK'}).click();
+
+		await modal.waitFor({state: 'hidden'});
+	}
+	catch {
+
+		// No confirmation modal: either nothing changed or the configuration
+		// is not active.
+
 	}
 
 	try {
@@ -221,7 +231,14 @@ export async function updateConsentManagerConfiguration(
 
 	await saveOrUpdateConfiguration(dialog, page);
 
-	const desiredActive = active === undefined ? enabled === true : active;
+	let desiredActive;
+
+	if (active !== undefined) {
+		desiredActive = active;
+	}
+	else if (enabled === true) {
+		desiredActive = true;
+	}
 
 	if (desiredActive !== undefined && enabled !== false) {
 		const {toggleActivateButton, toggleDeactivateButton} =
@@ -233,6 +250,12 @@ export async function updateConsentManagerConfiguration(
 			const toggleButton = isCurrentlyActive
 				? toggleDeactivateButton
 				: toggleActivateButton;
+
+			if (isCurrentlyActive) {
+				page.once('dialog', async (dialogWindow) => {
+					await dialogWindow.accept();
+				});
+			}
 
 			await toggleButton.click();
 

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useOutletContext} from 'react-router-dom';
@@ -11,10 +12,10 @@ import useSWR from 'swr';
 import {OrderCustomFields} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
+import {Liferay} from '../../../../../liferay/liferay';
 import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../../utils/browser';
 import {safeJSONParse} from '../../../../../utils/util';
-import {Liferay} from '../../../../../liferay/liferay';
 
 import './DSRTokens.scss';
 
@@ -34,12 +35,10 @@ const DSRTokens = () => {
 		? String(orderMetadata.analyticsProject.groupId)
 		: '';
 
-	const {data: fetchedToken, isLoading} = useSWR(
+	const {data: token = '', isLoading} = useSWR(
 		groupId ? `/analytics/project/${groupId}/data-source/token` : null,
 		() => analyticsOAuth2.getProjectDataSourceToken(groupId)
 	);
-
-	const token = fetchedToken || i18n.translate('token-unavailable');
 
 	return (
 		<div className="dsr-tokens mt-5">
@@ -65,8 +64,12 @@ const DSRTokens = () => {
 				{isLoading ? (
 					<ClayLoadingIndicator />
 				) : (
-					<div className="dsr-token-field">
-						<span className="dsr-token-input">{token}</span>
+					<div className="d-flex">
+						<ClayInput
+							className="dsr-token-input"
+							readOnly
+							value={token}
+						/>
 
 						<button
 							aria-label={i18n.translate('copy')}

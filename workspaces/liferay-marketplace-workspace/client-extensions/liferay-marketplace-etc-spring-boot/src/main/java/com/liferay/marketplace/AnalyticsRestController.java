@@ -55,32 +55,6 @@ import reactor.util.retry.Retry;
 @RestController
 public class AnalyticsRestController extends BaseRestController {
 
-	@GetMapping("project/corpProjectUuid/{corpProjectUuid}")
-	public ResponseEntity<?> getCorpProjectUuid(
-			@AuthenticationPrincipal Jwt jwt,
-			@PathVariable String corpProjectUuid)
-		throws Exception {
-
-		_accountMemberPermission.check(corpProjectUuid, jwt);
-
-		String analyticsProject = _analyticsService.getCorpProjectUuid(
-			corpProjectUuid);
-
-		if (analyticsProject == null) {
-			return ResponseEntity.status(
-				HttpStatus.NOT_FOUND
-			).body(
-				null
-			);
-		}
-
-		return ResponseEntity.status(
-			HttpStatus.OK
-		).body(
-			_analyticsService.getCorpProjectUuid(corpProjectUuid)
-		);
-	}
-
 	@GetMapping("plan/{accountKey}")
 	public ResponseEntity<?> getPlan(@PathVariable String accountKey)
 		throws Exception {
@@ -205,6 +179,32 @@ public class AnalyticsRestController extends BaseRestController {
 				"/o/faro/main/project/" + projectId
 			).build(
 			).toUri());
+	}
+
+	@GetMapping("project/corpProjectUuid/{corpProjectUuid}")
+	public ResponseEntity<?> getProjectCorpProjectUuid(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable String corpProjectUuid)
+		throws Exception {
+
+		_accountMemberPermission.check(corpProjectUuid, jwt);
+
+		String analyticsProject = _analyticsService.getCorpProjectUuid(
+			corpProjectUuid);
+
+		if (analyticsProject == null) {
+			return ResponseEntity.status(
+				HttpStatus.NOT_FOUND
+			).body(
+				null
+			);
+		}
+
+		return ResponseEntity.status(
+			HttpStatus.OK
+		).body(
+			analyticsProject
+		);
 	}
 
 	@GetMapping("project/{projectId}/data-source/token")

@@ -6,8 +6,11 @@
 package com.liferay.object.rest.internal.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.object.comment.ObjectEntryComment;
+import com.liferay.object.exception.ObjectEntryGroupIdException;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyCategory;
 import com.liferay.object.rest.dto.v1_0.ParentTaxonomyVocabulary;
@@ -18,7 +21,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
@@ -63,9 +68,10 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		long companyId, long groupId, Locale locale,
-		ModelPermissions modelPermissions, ObjectEntry objectEntry,
-		List<ObjectEntryComment> objectEntryComments, long userId) {
+			long companyId, long groupId, Locale locale,
+			ModelPermissions modelPermissions, ObjectEntry objectEntry,
+			List<ObjectEntryComment> objectEntryComments, long userId)
+		throws PortalException {
 
 		ServiceContext serviceContext = createServiceContext(
 			companyId, groupId, objectEntry, userId);
@@ -86,7 +92,8 @@ public class ServiceContextUtil {
 	}
 
 	public static ServiceContext createServiceContext(
-		long companyId, long groupId, ObjectEntry objectEntry, long userId) {
+			long companyId, long groupId, ObjectEntry objectEntry, long userId)
+		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -98,8 +105,13 @@ public class ServiceContextUtil {
 		}
 
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(objectEntry.getTaxonomyCategoryIds()));
+			long[] assetCategoryIds = ArrayUtil.toArray(
+				objectEntry.getTaxonomyCategoryIds());
+
+			_validateAssetCategoryGroupIds(
+				assetCategoryIds, companyId, groupId);
+
+			serviceContext.setAssetCategoryIds(assetCategoryIds);
 		}
 
 		if (Validator.isNotNull(objectEntry.getKeywords())) {
@@ -238,6 +250,40 @@ public class ServiceContextUtil {
 		if (SetUtil.isNotEmpty(assetCategoryIds)) {
 			objectEntry.setTaxonomyCategoryIds(
 				() -> assetCategoryIds.toArray(new Long[0]));
+		}
+	}
+
+	private static void _validateAssetCategoryGroupIds(
+			long[] assetCategoryIds, long companyId, long groupId)
+		throws PortalException {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return;
+		}
+
+		long resolvedGroupId = groupId;
+
+		if (resolvedGroupId <= 0) {
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			resolvedGroupId = company.getGroupId();
+		}
+
+		long[] groupIds =
+			SiteConnectedGroupGroupProviderUtil.
+				getCurrentAndAncestorSiteAndDepotGroupIds(resolvedGroupId);
+
+		for (long assetCategoryId : assetCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if ((assetCategory == null) ||
+				!ArrayUtil.contains(groupIds, assetCategory.getGroupId())) {
+
+				throw new ObjectEntryGroupIdException.
+					InvalidGroupIdForAssetCategory(assetCategoryId);
+			}
 		}
 	}
 

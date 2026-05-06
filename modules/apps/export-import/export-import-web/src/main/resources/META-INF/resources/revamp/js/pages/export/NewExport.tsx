@@ -18,7 +18,8 @@ import {
 import {FormikDebug} from '../../components/forms/formik';
 import {
 	ExportPreviewParams,
-	fetchExportPreview,
+	ExportPreviewQuery,
+	getExportPreview,
 } from '../../services/exportPreviewService';
 import {ExportPreview} from '../../types/portletDataHandlerSection';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
@@ -32,7 +33,7 @@ const HOURS_BY_MODIFIED_LAST: Record<ModifiedLastType, number> = {
 	[ModifiedLastType.D7]: 24 * 7,
 };
 
-function dateFilterToParams(values: DateFilterValues): ExportPreviewParams {
+function dateFilterToQuery(values: DateFilterValues): ExportPreviewQuery {
 	if (values.filterType === FilterType.Last) {
 		return {
 			last: HOURS_BY_MODIFIED_LAST[values.modifiedLast],
@@ -51,33 +52,33 @@ function dateFilterToParams(values: DateFilterValues): ExportPreviewParams {
 	return {range: 'all'};
 }
 
-interface NewExportProps {
-	backURL: string;
-	exportPreview?: ExportPreview;
-	exportPreviewAPIURL: string;
-}
-
 export function NewExport({
 	backURL,
 	exportPreview,
 	exportPreviewAPIURL,
-}: NewExportProps) {
-	const [data, setData] = useState<ExportPreview | undefined>(exportPreview);
+}: {
+	backURL: string;
+	exportPreview?: ExportPreview;
+	exportPreviewAPIURL: string;
+}) {
+	const [preview, setPreview] = useState<ExportPreview | undefined>(
+		exportPreview
+	);
 	const [error, setError] = useState<string | null>(null);
 	const [loading, setLoading] = useState(!exportPreview);
 	const initialPreviewRef = useRef<ExportPreview | undefined>(exportPreview);
 
-	const fetchPreview = useCallback(
-		(params?: ExportPreviewParams) => {
+	const getPreview = useCallback(
+		(exportPreviewParams: ExportPreviewParams) => {
 			setLoading(true);
 			setError(null);
 
-			fetchExportPreview(exportPreviewAPIURL, params).then((result) => {
+			getExportPreview(exportPreviewParams).then((result) => {
 				if (result.error !== null) {
 					setError(result.error);
 				}
 				else {
-					setData(result.data);
+					setPreview(result.data);
 
 					if (!initialPreviewRef.current) {
 						initialPreviewRef.current = result.data;
@@ -87,7 +88,7 @@ export function NewExport({
 				setLoading(false);
 			});
 		},
-		[exportPreviewAPIURL]
+		[]
 	);
 
 	useEffect(() => {
@@ -95,26 +96,29 @@ export function NewExport({
 			return;
 		}
 
-		fetchPreview();
-	}, [exportPreview, fetchPreview]);
+		getPreview({url: exportPreviewAPIURL});
+	}, [exportPreview, exportPreviewAPIURL, getPreview]);
 
 	if (error) {
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
 	}
 
-	const sections = data?.portletDataHandlerSections ?? [];
+	const sections = preview?.portletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
 		if (
 			filterValues.filterType === FilterType.All &&
 			initialPreviewRef.current
 		) {
-			setData(initialPreviewRef.current);
+			setPreview(initialPreviewRef.current);
 
 			return;
 		}
 
-		fetchPreview(dateFilterToParams(filterValues));
+		getPreview({
+			query: dateFilterToQuery(filterValues),
+			url: exportPreviewAPIURL,
+		});
 	};
 
 	return (
@@ -160,7 +164,7 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
-						itemsCount={data?.additionCount}
+						itemsCount={preview?.additionCount}
 						loading={loading}
 						onApplyFilter={handleApplyFilter}
 						sections={sections}

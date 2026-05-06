@@ -12,10 +12,10 @@ import {Position, ResizeHandle} from '../ResizeHandle';
 import '@testing-library/jest-dom';
 
 function renderComponent({
-	onChange,
+	onChange = jest.fn(),
 	position = 'left',
 }: {
-	onChange: () => void;
+	onChange?: () => void;
 	position?: Position;
 }) {
 	return render(
@@ -123,6 +123,52 @@ describe('ResizeHandle', () => {
 		simulateMouseEvent(document, 'pointermove', 650);
 
 		expect(onChange).toHaveBeenLastCalledWith(600);
+	});
+
+	describe('c-horizontal-resizer-end modifier', () => {
+		afterEach(() => {
+			document.dir = '';
+		});
+
+		test('LTR: applied only when position="right"', () => {
+			document.dir = 'ltr';
+
+			const {unmount} = renderComponent({
+				position: 'left',
+			});
+
+			expect(screen.getByTestId('resizer')).not.toHaveClass(
+				'c-horizontal-resizer-end'
+			);
+
+			unmount();
+
+			renderComponent({position: 'right'});
+
+			expect(screen.getByTestId('resizer')).toHaveClass(
+				'c-horizontal-resizer-end'
+			);
+		});
+
+		test('RTL: inverted to compensate the converter flip (applied only when position="left")', () => {
+			document.dir = 'rtl';
+
+			const {unmount} = renderComponent({
+				position: 'left',
+			});
+
+			expect(screen.getByTestId('resizer')).toHaveClass(
+				'c-horizontal-resizer-end'
+			);
+
+			unmount();
+
+			renderComponent({position: 'right'});
+
+			expect(screen.getByTestId('resizer')).not.toHaveClass(
+				'c-horizontal-resizer-end'
+			);
+		});
 	});
 });
 

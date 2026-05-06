@@ -221,9 +221,11 @@ export class PagesAdminPage {
 			'#selectThemeSpritemapCET_iframe_'
 		);
 
-		const clientExtensionItem = iframe.getByText(clientExtensionName);
+		const clientExtensionItem = iframe.getByText(clientExtensionName, {
+			exact: true,
+		});
 
-		await expect(clientExtensionItem).toBeVisible();
+		await clientExtensionItem.click({trial: true});
 
 		await clientExtensionItem.click();
 

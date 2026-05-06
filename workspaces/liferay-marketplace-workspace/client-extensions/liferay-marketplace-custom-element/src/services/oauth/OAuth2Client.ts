@@ -34,8 +34,10 @@ class OAuth2Client {
 			const error = new FetcherError(
 				'An error occurred while fetching the data.'
 			);
+			if (response.headers.get('Content-Length') !== '0') {
+				error.info = await response.json();
+			}
 
-			error.info = await response.json();
 			error.status = response.status;
 
 			throw error;

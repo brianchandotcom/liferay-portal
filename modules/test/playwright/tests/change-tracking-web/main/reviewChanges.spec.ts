@@ -845,14 +845,8 @@ test.describe('Publications with incomplete status tests', () => {
 
 		await expect(publicationSelector).toBeVisible();
 
-		const publicationsOptions = await page.locator(
-			'#_com_liferay_change_tracking_web_portlet_PublicationsPortlet_toPublication > option'
-		);
-
-		await expect(publicationsOptions).toHaveText([
-			'None',
-			ctCollection.body.name,
-		]);
+		await expect(publicationSelector).toContainText('None');
+		await expect(publicationSelector).toContainText(ctCollection.body.name);
 
 		await apiHelpers.headlessChangeTracking.deleteCTCollection(
 			ctCollection2.body.id

@@ -2381,6 +2381,10 @@ public abstract class BaseTopLevelBuild
 				"jenkins.remote.url[test-1-0]");
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(masterHostname)) {
+				if (!masterHostname.endsWith("/")) {
+					masterHostname += "/";
+				}
+
 				return JenkinsResultsParserUtil.combine(
 					masterHostname,
 					"userContent/reports/ci-system-status/index.html");

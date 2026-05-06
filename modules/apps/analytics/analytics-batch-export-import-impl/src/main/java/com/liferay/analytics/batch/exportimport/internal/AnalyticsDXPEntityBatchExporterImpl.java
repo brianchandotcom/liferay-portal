@@ -17,7 +17,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -153,18 +161,39 @@ public class AnalyticsDXPEntityBatchExporterImpl
 		}
 	}
 
+	private User _addAnalyticsAdmin(long companyId) throws Exception {
+		Company company = _companyLocalService.getCompany(companyId);
+
+		Role role = _roleLocalService.getRole(
+			companyId, "Analytics Administrator");
+
+		User user = _userLocalService.addUser(
+			0, companyId, true, null, null, false,
+			AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN,
+			"analytics.administrator@" + company.getMx(),
+			LocaleUtil.getDefault(), "Analytics", "", "Administrator", 0, 0,
+			true, 0, 1, 1970, "", UserConstants.TYPE_REGULAR, null, null,
+			new long[] {role.getRoleId()}, null, false, new ServiceContext());
+
+		return _userLocalService.updateUser(user);
+	}
+
 	private DispatchTrigger _addDispatchTrigger(
 			long companyId, String dispatchTriggerName,
 			LocalDateTime localDateTime)
 		throws Exception {
 
+		User user = _userLocalService.fetchUserByScreenName(
+			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+		if (user == null) {
+			user = _addAnalyticsAdmin(companyId);
+		}
+
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				null,
-				_userLocalService.getUserIdByScreenName(
-					companyId,
-					AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN),
-				dispatchTriggerName, null, dispatchTriggerName, false);
+				null, user.getUserId(), dispatchTriggerName, null,
+				dispatchTriggerName, false);
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), true, _CRON_EXPRESSION,
@@ -180,6 +209,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 		AnalyticsDXPEntityBatchExporterImpl.class);
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
 
 	@Reference
@@ -187,6 +219,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 	@Reference
 	private MessageBus _messageBus;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

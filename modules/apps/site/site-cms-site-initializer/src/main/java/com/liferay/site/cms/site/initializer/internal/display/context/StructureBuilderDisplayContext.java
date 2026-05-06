@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -58,12 +57,10 @@ public class StructureBuilderDisplayContext {
 
 	public StructureBuilderDisplayContext(
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
-		Language language,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
-		_language = language;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -182,7 +179,7 @@ public class StructureBuilderDisplayContext {
 		).put(
 			"defaultLanguageLabels",
 			DefaultLanguageLabelsUtil.getDefaultLanguageLabelsJSONObject(
-				_language, _themeDisplay)
+				_themeDisplay)
 		).put(
 			"state",
 			JSONUtil.put(
@@ -363,7 +360,6 @@ public class StructureBuilderDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
-	private final Language _language;
 	private ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

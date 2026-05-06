@@ -8,9 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -22,19 +21,18 @@ import java.util.Locale;
 public class DefaultLanguageLabelsUtil {
 
 	public static JSONObject getDefaultLanguageLabelsJSONObject(
-			Language language, ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			themeDisplay.getCompanyId());
+		Company company = themeDisplay.getCompany();
 
-		Locale defaultLocale = company.getLocale();
+		Locale locale = company.getLocale();
 
 		JSONObject jsonObject = JSONUtil.put(
-			"locale", LocaleUtil.toLanguageId(defaultLocale));
+			"locale", LocaleUtil.toLanguageId(locale));
 
 		for (String key : _SEED_LANGUAGE_KEYS) {
-			jsonObject.put(key, language.get(defaultLocale, key));
+			jsonObject.put(key, LanguageUtil.get(locale, key));
 		}
 
 		return jsonObject;

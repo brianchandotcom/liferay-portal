@@ -7,7 +7,9 @@ set -o pipefail
 function get_gradle_property {
 	local key=${1}
 
-	local value=$(_read_property ${key} ../gradle-local.properties)
+	local value
+
+	value=$(_read_property ${key} ../gradle-local.properties)
 
 	if [ -z ${value} ]
 	then

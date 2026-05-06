@@ -93,6 +93,19 @@ public class JiraSupportIssue {
 		return ArrayUtil.contains(JiraIssueConstants.STATUSES_CLOSED, _status);
 	}
 
+	public JSONObject toJSONObject() {
+		return new JSONObject(
+		).put(
+			"link", getTicketURL()
+		).put(
+			"status", getStatus()
+		).put(
+			"subject", getSummary()
+		).put(
+			"ticketId", getKey()
+		);
+	}
+
 	private final String _key;
 	private final String[] _labels;
 	private String _organizationId;

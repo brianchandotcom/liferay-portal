@@ -395,9 +395,7 @@ describe('Field DocumentLibrary', () => {
 
 		const triggerBeforeUnload = () => {
 			act(() => {
-				if (window.onbeforeunload) {
-					window.onbeforeunload();
-				}
+				window.dispatchEvent(new Event('beforeunload'));
 			});
 		};
 
@@ -538,7 +536,23 @@ describe('Field DocumentLibrary', () => {
 
 		afterEach(() => {
 			global.XMLHttpRequest = originalXMLHttpRequest;
-			window.onbeforeunload = null;
+		});
+
+		it('cleans up intermediate replacements on unload after multiple replaces in edit mode', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({
+				allowGuestUsers: true,
+				value: valueWithFileEntry(42),
+			});
+
+			triggerGuestUpload();
+			completeUpload(88);
+			triggerGuestUpload();
+			completeUpload(99);
+			triggerBeforeUnload();
+
+			expectDeleted(88, 99);
 		});
 
 		it('deletes both the previous and current upload on new-entry abandon after replace', () => {
@@ -626,7 +640,6 @@ describe('Field DocumentLibrary', () => {
 			renderField({value: valueWithFileEntry(42)});
 
 			clickClear();
-			fireGlobal('paginationControlsCancelButtonClicked');
 			triggerBeforeUnload();
 
 			expectNoDeletes();
@@ -642,7 +655,6 @@ describe('Field DocumentLibrary', () => {
 
 			triggerGuestUpload();
 			completeUpload(99);
-			fireGlobal('paginationControlsCancelButtonClicked');
 			triggerBeforeUnload();
 
 			expectDeleted(99);

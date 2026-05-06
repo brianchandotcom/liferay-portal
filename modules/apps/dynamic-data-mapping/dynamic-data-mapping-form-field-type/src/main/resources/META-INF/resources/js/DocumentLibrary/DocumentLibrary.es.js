@@ -647,7 +647,7 @@ const Main = ({
 	}, []);
 
 	useEffect(() => {
-		window.onbeforeunload = function () {
+		const handleBeforeUnload = () => {
 			if (readOnly || submitButtonClicked) {
 				return;
 			}
@@ -662,15 +662,17 @@ const Main = ({
 				deleteFileEntry(currentFileEntryId);
 			}
 
-			if (!originalFileEntryId) {
-				pendingDeletionsRef.current.forEach((fileEntryId) =>
-					deleteFileEntry(fileEntryId)
-				);
-			}
+			pendingDeletionsRef.current.forEach((fileEntryId) => {
+				if (fileEntryId !== originalFileEntryId) {
+					deleteFileEntry(fileEntryId);
+				}
+			});
 		};
 
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
 		return () => {
-			window.onbeforeunload = null;
+			window.removeEventListener('beforeunload', handleBeforeUnload);
 		};
 	}, [currentValue, deleteFileEntry, readOnly, submitButtonClicked]);
 
@@ -688,21 +690,9 @@ const Main = ({
 		Liferay.on('paginationControlsSubmitButtonClicked', onSubmit);
 
 		return () => {
-			Liferay.detach('paginationControlsSubmitButtonClicked');
+			Liferay.detach('paginationControlsSubmitButtonClicked', onSubmit);
 		};
 	}, [deleteFileEntry]);
-
-	useEffect(() => {
-		const onCancel = () => {
-			pendingDeletionsRef.current = [];
-		};
-
-		Liferay.on('paginationControlsCancelButtonClicked', onCancel);
-
-		return () => {
-			Liferay.detach('paginationControlsCancelButtonClicked');
-		};
-	}, []);
 
 	return (
 		<FieldBase

@@ -1,4 +1,11 @@
-@use "sass:math";
+@use 'sass:math';
+
+.modal-body {
+	.data-set-content-wrapper {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+}
 
 .card-root {
 	.data-set-wrapper {

@@ -1,8 +1,8 @@
-/* eslint-disable arrow-body-style */
-/* eslint-disable sort-keys */
+import AccountDetailsModal from './AccountDetailsModal';
+import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
@@ -27,27 +27,78 @@ const AccountInfoData: {
 		}
 	];
 } = {
-	id: 'acc-123',
 	accountName: 'Acme Corp',
 	accountType: 'Customer',
 	annualRevenue: 5000000,
-	numberOfEmployees: 250,
-	industry: 'Technology',
 	fields: [
 		{
-			name: 'website',
 			dataSourceName: 'Salesforce Production',
+			name: 'website',
 			value: 'https://acme.com'
 		}
-	]
+	],
+	id: 'acc-123',
+	industry: 'Technology',
+	numberOfEmployees: 250
 };
+
+const mockAccountDetailsItems = [
+	{
+		dataSourceId: 'ds-1',
+		dataSourceName: 'Salesforce Production',
+		lastModified: '2024-11-20T08:30:00.000Z',
+		name: 'website',
+		sourceName: 'Web',
+		value: 'https://acme.com'
+	},
+	{
+		dataSourceId: 'ds-1',
+		dataSourceName: 'Salesforce Production',
+		lastModified: '2024-10-15T10:00:00.000Z',
+		name: 'industry',
+		sourceName: 'CRM',
+		value: 'Technology'
+	},
+	{
+		dataSourceId: 'ds-2',
+		dataSourceName: 'HubSpot',
+		lastModified: '2024-09-10T14:00:00.000Z',
+		name: 'annualRevenue',
+		sourceName: 'Financial',
+		value: '5000000'
+	},
+	{
+		dataSourceId: 'ds-3',
+		dataSourceName: 'Workday',
+		lastModified: '2024-08-05T09:00:00.000Z',
+		name: 'numberOfEmployees',
+		sourceName: 'HR',
+		value: '250'
+	},
+	{
+		dataSourceId: 'ds-1',
+		dataSourceName: 'Salesforce Production',
+		lastModified: '2024-07-22T11:00:00.000Z',
+		name: 'country',
+		sourceName: 'Geo',
+		value: 'United States'
+	},
+	{
+		dataSourceId: 'ds-2',
+		dataSourceName: 'HubSpot',
+		lastModified: '2024-06-30T16:45:00.000Z',
+		name: 'accountType',
+		sourceName: 'CRM',
+		value: 'Customer'
+	}
+];
 
 const infoDataLabels = {
 	accountName: Liferay.Language.get('account-name'),
 	accountType: Liferay.Language.get('account-type'),
+	annualRevenue: Liferay.Language.get('annual-revenue'),
 	industry: Liferay.Language.get('industry'),
 	numberOfEmployees: Liferay.Language.get('company-size'),
-	annualRevenue: Liferay.Language.get('annual-revenue'),
 	website: Liferay.Language.get('website')
 };
 
@@ -69,6 +120,8 @@ const infoItem = (label: string, value?: string, link?: boolean) => (
 );
 
 const AccountInfo: React.FC<LifecycleStatusProps> = ({className}) => {
+	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
 		if (key === 'annualRevenue') {
 			return AccountInfoData.annualRevenue !== undefined
@@ -118,8 +171,25 @@ const AccountInfo: React.FC<LifecycleStatusProps> = ({className}) => {
 							)}
 						</React.Fragment>
 					))}
+					<Button
+						borderless
+						className='ml-auto rounded-lg'
+						onClick={() => setIsDetailsModalOpen(true)}
+						size='sm'
+					>
+						{Liferay.Language.get('view-all')}
+					</Button>
 				</Card.Body>
 			</Card>
+
+			{isDetailsModalOpen && (
+				<AccountDetailsModal
+					accountId={AccountInfoData.id}
+					accountName={AccountInfoData.accountName}
+					items={mockAccountDetailsItems}
+					onClose={() => setIsDetailsModalOpen(false)}
+				/>
+			)}
 		</>
 	);
 };

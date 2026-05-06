@@ -14,6 +14,16 @@ components:
                 billingAllowed:
                     default: true
                     type: boolean
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created the country.
+                    readOnly: true
+                externalReferenceCode:
+                    description:
+                        The country's external reference code.
+                    example: AB-34098-789-N
+                    type: string
                 groupFilterEnabled:
                     default: false
                     type: boolean
@@ -34,7 +44,6 @@ components:
                 regions:
                     items:
                         $ref: "#/components/schemas/Region"
-                    readOnly: true
                     type: array
                 shippingAllowed:
                     default: true
@@ -55,6 +64,61 @@ components:
                 -   name
                 -   number
             type: object
+        Creator:
+            description:
+                Represents the user who created/authored the content. Properties follow the
+                [creator](https://schema.org/creator) specification.
+            properties:
+                additionalName:
+                    description:
+                        The user's additional name, which can be used as a middle name.
+                    readOnly: true
+                    type: string
+                contentType:
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    description:
+                        The user's external reference code.
+                    example: AB-34098-789-N
+                    readOnly: true
+                    type: string
+                familyName:
+                    description:
+                        The user's surname (last name).
+                    readOnly: true
+                    type: string
+                givenName:
+                    description:
+                        The user's first name.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The user's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                image:
+                    description:
+                        A relative URL to the user's profile image.
+                    format: uri
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The user's full name.
+                    readOnly: true
+                    type: string
+                profileURL:
+                    description:
+                        A relative URL to the user's profile.
+                    format: uri
+                    readOnly: true
+                    type: string
+            type: object
         Region:
             properties:
                 active:
@@ -62,8 +126,17 @@ components:
                     type: boolean
                 countryId:
                     format: int64
-                    readOnly: true
                     type: integer
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created the region.
+                    readOnly: true
+                externalReferenceCode:
+                    description:
+                        The region's external reference code.
+                    example: AB-34098-789-N
+                    type: string
                 id:
                     format: int64
                     readOnly: true
@@ -182,6 +255,98 @@ paths:
                     schema:
                         pattern: "[A-Z]{3}"
                         type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+    "/countries/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Deletes a country.
+            operationId: deleteCountryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Country"]
+        get:
+            operationId: getCountryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+        patch:
+            description:
+                Updates the country with information sent in the request body. Only the provided fields are updated.
+            operationId: patchCountryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Country"
+            tags: ["Country"]
+        put:
+            description:
+                Replaces the country with information sent in the request body. Any missing fields are deleted unless
+                they are required.
+            operationId: putCountryByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Country"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Country"
             responses:
                 200:
                     content:
@@ -452,6 +617,98 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/Region"
                                 type: array
+            tags: ["Region"]
+    "/regions/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            description:
+                Deletes a region.
+            operationId: deleteRegionByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Region"]
+        get:
+            operationId: getRegionByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]
+        patch:
+            description:
+                Updates the region with information sent in the request body. Only the provided fields are updated.
+            operationId: patchRegionByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+            tags: ["Region"]
+        put:
+            description:
+                Replaces the region with information sent in the request body. Any missing fields are deleted unless
+                they are required.
+            operationId: putRegionByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Region"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Region"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Region"
             tags: ["Region"]
     "/regions/{regionId}":
         delete:

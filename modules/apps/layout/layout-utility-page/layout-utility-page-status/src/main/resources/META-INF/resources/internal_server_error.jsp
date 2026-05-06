@@ -22,7 +22,7 @@
 	<code class="lfr-url-error"><%= statusDisplayContext.getEscapedURL(themeDisplay) %></code>
 
 	<%
-	statusDisplayContext.logSessionErrors();
+	statusDisplayContext.logException();
 	%>
 
 </liferay-layout:render-layout-utility-page-entry>

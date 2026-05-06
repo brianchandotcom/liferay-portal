@@ -8,8 +8,6 @@ package com.liferay.headless.object.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.object.dto.v1_0.Collaborator;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -159,15 +157,12 @@ public class CollaboratorDTOConverter
 		};
 	}
 
-	private String _fetchEmailAddress(Ticket ticket) throws Exception {
+	private String _fetchEmailAddress(Ticket ticket) {
 		if (ticket == null) {
 			return null;
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			ticket.getExtraInfo());
-
-		return jsonObject.getString("emailAddress");
+		return ticket.getExtraInfo();
 	}
 
 	private Ticket _fetchTicket(SharingEntry sharingEntry) {
@@ -205,9 +200,6 @@ public class CollaboratorDTOConverter
 			GuestOrUserUtil.getPermissionChecker(), user.getUserId(),
 			ActionKeys.VIEW);
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Portal _portal;

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
@@ -72,7 +71,9 @@ public class CollaboratorUtil {
 			_validateEmailAddress(collaborator.getEmailAddress());
 
 			User existingUser = userLocalService.fetchUserByEmailAddress(
-				companyId, collaborator.getEmailAddress());
+				companyId,
+				StringUtil.toLowerCase(
+					StringUtil.trim(collaborator.getEmailAddress())));
 
 			if (existingUser != null) {
 				return toCollaborator(
@@ -87,7 +88,7 @@ public class CollaboratorUtil {
 
 			Ticket ticket = _addOrUpdateTicket(
 				className, classPK, collaborator, collaboratorId, companyId,
-				ticketLocalService, type);
+				ticketLocalService);
 
 			return toCollaborator(
 				acceptLanguage, dtoConverter, dtoConverterRegistry,
@@ -136,12 +137,14 @@ public class CollaboratorUtil {
 				_validateEmailAddress(collaborator.getEmailAddress());
 
 				User existingUser = userLocalService.fetchUserByEmailAddress(
-					companyId, collaborator.getEmailAddress());
+					companyId,
+					StringUtil.toLowerCase(
+						StringUtil.trim(collaborator.getEmailAddress())));
 
 				if (existingUser == null) {
 					Ticket ticket = _addOrUpdateTicket(
 						className, classPK, collaborator, collaborator.getId(),
-						companyId, ticketLocalService, collaborator.getType());
+						companyId, ticketLocalService);
 
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
@@ -378,7 +381,7 @@ public class CollaboratorUtil {
 	private static Ticket _addOrUpdateTicket(
 			String className, long classPK, Collaborator collaborator,
 			long collaboratorId, long companyId,
-			TicketLocalService ticketLocalService, String type)
+			TicketLocalService ticketLocalService)
 		throws Exception {
 
 		Ticket ticket = ticketLocalService.fetchTicket(collaboratorId);
@@ -391,15 +394,8 @@ public class CollaboratorUtil {
 			throw new NoSuchModelException();
 		}
 
-		String extraInfo = JSONUtil.put(
-			"actionIds", collaborator.getActionIds()
-		).put(
-			"emailAddress", collaborator.getEmailAddress()
-		).put(
-			"share", collaborator.getShare()
-		).put(
-			"type", type
-		).toString();
+		String extraInfo = StringUtil.toLowerCase(
+			StringUtil.trim(collaborator.getEmailAddress()));
 
 		if (ticket == null) {
 			return ticketLocalService.addTicket(

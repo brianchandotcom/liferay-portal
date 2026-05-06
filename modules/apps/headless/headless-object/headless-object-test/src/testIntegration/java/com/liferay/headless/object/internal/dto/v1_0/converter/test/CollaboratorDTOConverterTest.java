@@ -13,7 +13,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Ticket;
@@ -102,16 +101,7 @@ public class CollaboratorDTOConverterTest {
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), _objectEntry.getModelClassName(),
 			_objectEntry.getObjectEntryId(),
-			TicketConstants.TYPE_INVITE_COLLABORATOR,
-			JSONUtil.put(
-				"actionIds", JSONUtil.put(SharingEntryAction.VIEW.getActionId())
-			).put(
-				"emailAddress", emailAddress
-			).put(
-				"share", true
-			).put(
-				"type", "Email"
-			).toString(),
+			TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress,
 			expirationDate, null);
 
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(

@@ -39,7 +39,6 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 
 		Company company1 = CompanyTestUtil.addCompanyWithWebId(
 			true, generateVirtualHostName());
-
 		Company company2 = CompanyTestUtil.addCompanyWithWebId(
 			true, generateVirtualHostName());
 
@@ -48,8 +47,8 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 
 		assertURLtoString(
-			(code, body) -> {
-				Assert.assertEquals(200, (long)code);
+			(body, responseCode) -> {
+				Assert.assertEquals(200, (long)responseCode);
 				Assert.assertTrue(body.contains(group.getGroupKey()));
 				Assert.assertTrue(
 					body.contains(layout.getName(LocaleUtil.getDefault())));
@@ -59,8 +58,8 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 				group.getFriendlyURL()));
 
 		assertURLtoString(
-			(code, body) -> {
-				Assert.assertEquals(404, (long)code);
+			(body, responseCode) -> {
+				Assert.assertEquals(404, (long)responseCode);
 				Assert.assertTrue(body.contains(company2.getVirtualHostname()));
 			},
 			StringBundler.concat(

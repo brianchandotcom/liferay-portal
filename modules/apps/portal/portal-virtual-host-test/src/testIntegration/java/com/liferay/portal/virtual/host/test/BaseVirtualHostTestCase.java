@@ -16,7 +16,7 @@ import com.liferay.portal.test.rule.Inject;
 public abstract class BaseVirtualHostTestCase {
 
 	protected void assertURLtoString(
-			UnsafeBiConsumer<Integer, String, Exception> unsafeBiConsumer,
+			UnsafeBiConsumer<String, Integer, Exception> unsafeBiConsumer,
 			String url)
 		throws Exception {
 
@@ -28,7 +28,7 @@ public abstract class BaseVirtualHostTestCase {
 
 		Http.Response response = options.getResponse();
 
-		unsafeBiConsumer.accept(response.getResponseCode(), body);
+		unsafeBiConsumer.accept(body, response.getResponseCode());
 	}
 
 	protected String generateVirtualHostName() {

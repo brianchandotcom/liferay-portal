@@ -139,18 +139,13 @@ const DataSet = ({
 							return;
 						}
 
-						const {restSchema, schemas} = oApiData;
+						setFieldTreeItems(getFields(oApiData));
 
-						getFields({restSchema, schemas}).then((fields) => {
-							setFieldTreeItems(fields);
-							setLoading(false);
-						});
-
-						getFilterableFields({restSchema, schemas}).then(
-							(filterableFields) => {
-								setFilterableFieldTreeItems(filterableFields);
-							}
+						setFilterableFieldTreeItems(
+							getFilterableFields(oApiData)
 						);
+
+						setLoading(false);
 					}
 				);
 			}

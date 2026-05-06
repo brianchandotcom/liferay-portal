@@ -6,7 +6,6 @@
 package com.liferay.client.extension.upgrade.v3_5_2.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -56,7 +55,7 @@ public class CETConfigurationUpgradeProcessTest {
 
 		db.runSQL(
 			"delete from Configuration_ where configurationId in ('" +
-				StringUtil.merge(_pids, StringPool.COMMA_AND_SPACE) + "')");
+				StringUtil.merge(_pids, "','") + "')");
 	}
 
 	@Test

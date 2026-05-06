@@ -68,7 +68,7 @@ export const testFlagsEnabled = mergeTests(
 
 test(
 	'Verify there is advanced staging configuration checkbox with description in Instance Setting,the configuration checkbox can be enabled',
-	{tag: ['@LPS-189238']},
+	{tag: ['@LPS-189238', '@LPD-88913']},
 	async ({
 		apiHelpers,
 		exportImportStagingInstanceSettingsPage,
@@ -109,6 +109,14 @@ test(
 				page,
 			});
 			await portletPublishToLivePage.publishToLiveButton.click();
+
+			await test.step('LPD-88913 - Publish to Live modal must keep the cadmin wrapper', async () => {
+				await expect(
+					page.locator(
+						'div.cadmin > [id$="publishLatestChangesDialog"]'
+					)
+				).toBeVisible();
+			});
 
 			await expect(
 				portletPublishToLivePage.publishToLiveIframe.getByRole('link', {

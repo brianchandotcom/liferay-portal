@@ -7,32 +7,125 @@ package com.liferay.exportimport.web.internal.display.context;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.staging.StagingGroupHelper;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Daniel Raposo
+ * @author Jorge González
  */
 public class ExportImportPreviewDisplayContext {
 
-	public ExportImportPreviewDisplayContext(Group group) {
+	public ExportImportPreviewDisplayContext(
+		String backMVCRenderCommandName, HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse, Group group,
+		long groupId, long liveGroupId, boolean privateLayout,
+		StagingGroupHelper stagingGroupHelper) {
+
+		_backMVCRenderCommandName = backMVCRenderCommandName;
+		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 		_group = group;
+		_groupId = groupId;
+		_liveGroupId = liveGroupId;
+		_privateLayout = privateLayout;
+		_stagingGroupHelper = stagingGroupHelper;
+	}
+
+	public String getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
+		}
+
+		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
+
+		if (Validator.isBlank(backURL)) {
+			backURL = PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				_backMVCRenderCommandName
+			).setParameter(
+				"displayStyle",
+				() -> ParamUtil.getString(_httpServletRequest, "displayStyle")
+			).setParameter(
+				"groupId", _groupId
+			).setParameter(
+				"liveGroupId", _liveGroupId
+			).setParameter(
+				"privateLayout", _privateLayout
+			).buildString();
+		}
+
+		_backURL = backURL;
+
+		return _backURL;
+	}
+
+	public String getExportPreviewAPIURL() {
+		if (_exportPreviewAPIURL != null) {
+			return _exportPreviewAPIURL;
+		}
+
+		_exportPreviewAPIURL = _getPreviewAPIURL("/export-preview");
+
+		return _exportPreviewAPIURL;
 	}
 
 	public String getImportPreviewAPIURL() {
-		if (_group.isDepot()) {
-			return StringBundler.concat(
-				"/o/export-import/v1.0/asset-libraries/",
-				_group.getExternalReferenceCode(), "/import-preview");
+		if (_importPreviewAPIURL != null) {
+			return _importPreviewAPIURL;
 		}
 
-		if (_group.isSite()) {
-			return StringBundler.concat(
-				"/o/export-import/v1.0/sites/",
-				_group.getExternalReferenceCode(), "/import-preview");
-		}
+		_importPreviewAPIURL = _getPreviewAPIURL("/import-preview");
 
-		return "/o/export-import/v1.0/import-preview";
+		return _importPreviewAPIURL;
 	}
 
+	private String _encode(String value) {
+		if (Validator.isBlank(value)) {
+			return "";
+		}
+
+		return URLEncoder.encode(value, StandardCharsets.UTF_8);
+	}
+
+	private String _getPreviewAPIURL(String endpoint) {
+		if (_stagingGroupHelper.isCompanyGroup(_group)) {
+			return _BASE_PATH + endpoint;
+		}
+
+		if (_group.isDepot()) {
+			return StringBundler.concat(
+				_BASE_PATH, "/asset-libraries/",
+				_encode(_group.getExternalReferenceCode()), endpoint);
+		}
+
+		return StringBundler.concat(
+			_BASE_PATH, "/sites/", _encode(_group.getExternalReferenceCode()),
+			endpoint);
+	}
+
+	private static final String _BASE_PATH = "/o/export-import/v1.0";
+
+	private final String _backMVCRenderCommandName;
+	private String _backURL;
+	private String _exportPreviewAPIURL;
 	private final Group _group;
+	private final long _groupId;
+	private final HttpServletRequest _httpServletRequest;
+	private String _importPreviewAPIURL;
+	private final LiferayPortletResponse _liferayPortletResponse;
+	private final long _liveGroupId;
+	private final boolean _privateLayout;
+	private final StagingGroupHelper _stagingGroupHelper;
 
 }

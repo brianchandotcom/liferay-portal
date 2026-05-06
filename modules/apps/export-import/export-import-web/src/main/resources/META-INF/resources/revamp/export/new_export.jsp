@@ -15,10 +15,10 @@ if (liveGroup == null) {
 	liveGroupId = groupId;
 }
 
-NewExportDisplayContext newExportDisplayContext = new NewExportDisplayContext(request, liferayPortletResponse, group, groupId, liveGroupId, privateLayout, stagingGroupHelper);
+ExportImportPreviewDisplayContext exportImportPreviewDisplayContext = new ExportImportPreviewDisplayContext("/export_import/view_export_layouts", request, liferayPortletResponse, group, groupId, liveGroupId, privateLayout, stagingGroupHelper);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(newExportDisplayContext.getBackURL());
+portletDisplay.setURLBack(exportImportPreviewDisplayContext.getBackURL());
 %>
 
 <clay:container-fluid
@@ -30,6 +30,12 @@ portletDisplay.setURLBack(newExportDisplayContext.getBackURL());
 
 	<react:component
 		module="{NewExport} from exportimport-web"
-		props="<%= newExportDisplayContext.getReactProps() %>"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"backURL", exportImportPreviewDisplayContext.getBackURL()
+			).put(
+				"exportPreviewAPIURL", exportImportPreviewDisplayContext.getExportPreviewAPIURL()
+			).build()
+		%>'
 	/>
 </clay:container-fluid>

@@ -104,8 +104,6 @@ public class DesignLibraryResourcesDisplayContext {
 		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
 			designLibraryEntryId);
 
-		Group group = depotEntry.getGroup();
-
 		long depotGroupId = depotEntry.getGroupId();
 
 		if (!_hasManageStyleBookEntriesPermission(depotGroupId)) {
@@ -118,7 +116,10 @@ public class DesignLibraryResourcesDisplayContext {
 			"addStyleBookEntryURL",
 			_getAddStyleBookEntryURL(
 				depotGroupId, designLibraryEntryId,
-				group.getName(_themeDisplay.getLocale()))
+				depotEntry.getGroup(
+				).getName(
+					_themeDisplay.getLocale()
+				))
 		).put(
 			"canAddStyleBook", true
 		).put(

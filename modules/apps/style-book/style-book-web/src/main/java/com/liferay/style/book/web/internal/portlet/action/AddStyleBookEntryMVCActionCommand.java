@@ -49,12 +49,15 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			StyleBookEntry styleBookEntry = _addStyleBookEntry(actionRequest);
 
+			String backURLTitle = ParamUtil.getString(
+				actionRequest, "backURLTitle");
 			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",
-				_getRedirectURL(actionResponse, redirect, styleBookEntry));
+				_getRedirectURL(
+					actionResponse, backURLTitle, redirect, styleBookEntry));
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {
@@ -92,7 +95,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getRedirectURL(
-		ActionResponse actionResponse, String redirect,
+		ActionResponse actionResponse, String backURLTitle, String redirect,
 		StyleBookEntry styleBookEntry) {
 
 		return PortletURLBuilder.createRenderURL(
@@ -101,6 +104,8 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			"/style_book/edit_style_book_entry"
 		).setRedirect(
 			redirect
+		).setParameter(
+			"backURLTitle", backURLTitle
 		).setParameter(
 			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
 		).buildString();

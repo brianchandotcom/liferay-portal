@@ -7,9 +7,12 @@ package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.address.client.dto.v1_0.Country;
+import com.liferay.headless.admin.address.client.dto.v1_0.Creator;
+import com.liferay.headless.admin.address.client.dto.v1_0.Region;
 import com.liferay.headless.admin.address.client.http.HttpInvoker;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
+import com.liferay.headless.admin.address.client.resource.v1_0.CountryResource;
 import com.liferay.headless.admin.address.client.serdes.v1_0.CountrySerDes;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.exception.CountryA2Exception;
@@ -18,9 +21,16 @@ import com.liferay.portal.kernel.exception.DuplicateCountryException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.randomizerbumpers.RandomizerBumper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
@@ -30,6 +40,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,6 +85,14 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		assertContains(country1, (List<Country>)page.getItems());
 		assertContains(country2, (List<Country>)page.getItems());
 		assertValid(page);
+	}
+
+	@Override
+	@Test
+	public void testGetCountry() throws Exception {
+		super.testGetCountry();
+
+		_testGetCountryWithNestedFields();
 	}
 
 	@Override
@@ -282,6 +301,13 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected Country testDeleteCountryByExternalReferenceCode_addCountry()
+		throws Exception {
+
+		return _addCountry(randomCountry());
+	}
+
+	@Override
 	protected Country testGetCountriesPage_addCountry(Country country)
 		throws Exception {
 
@@ -353,6 +379,13 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected Country testGetCountryByExternalReferenceCode_addCountry()
+		throws Exception {
+
+		return _addCountry(randomCountry());
+	}
+
+	@Override
 	protected Country testGetCountryByName_addCountry() throws Exception {
 		return _addCountry(randomCountry());
 	}
@@ -402,6 +435,13 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 	}
 
 	@Override
+	protected Country testPatchCountryByExternalReferenceCode_addCountry()
+		throws Exception {
+
+		return _addCountry(randomCountry());
+	}
+
+	@Override
 	protected Country testPostCountry_addCountry(Country country)
 		throws Exception {
 
@@ -410,6 +450,13 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 
 	@Override
 	protected Country testPutCountry_addCountry() throws Exception {
+		return _addCountry(randomCountry());
+	}
+
+	@Override
+	protected Country testPutCountryByExternalReferenceCode_addCountry()
+		throws Exception {
+
 		return _addCountry(randomCountry());
 	}
 
@@ -436,6 +483,43 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 		return randomValue ->
 			StringUtil.isLowerCase(randomValue) &&
 			!existingValues.contains(randomValue);
+	}
+
+	private void _testGetCountryWithNestedFields() throws Exception {
+		Country postCountry = _addCountry(randomCountry());
+
+		com.liferay.portal.kernel.model.Region serviceBuilderRegion =
+			_regionLocalService.addRegion(
+				null, postCountry.getId(), true, RandomTestUtil.randomString(),
+				0D, RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		CountryResource countryResource = CountryResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator,regions"
+		).build();
+
+		Country getCountry = countryResource.getCountry(postCountry.getId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getCountry.getRegions(),
+				region ->
+					region.getId() == serviceBuilderRegion.getRegionId()));
+
+		Creator creator = getCountry.getCreator();
+
+		User user = TestPropsValues.getUser();
+
+		Assert.assertEquals(creator.getId(), Long.valueOf(user.getUserId()));
+		Assert.assertTrue(
+			Objects.equals(
+				creator.getExternalReferenceCode(),
+				user.getExternalReferenceCode()));
 	}
 
 	private <T extends Exception> void _testPostCountryProblem(
@@ -483,5 +567,8 @@ public class CountryResourceTest extends BaseCountryResourceTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private RegionLocalService _regionLocalService;
 
 }

@@ -257,15 +257,14 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 			testGroup.getExternalReferenceCode(), fragmentSet);
 	}
 
-	private void _assertFragmentCollection(
-		FragmentSet fragmentSet, Group group) {
+	private void _assertFragmentCollection(FragmentSet fragmentSet, Group group)
+		throws Exception {
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.
-				fetchFragmentCollectionByExternalReferenceCode(
+				getFragmentCollectionByExternalReferenceCode(
 					fragmentSet.getExternalReferenceCode(), group.getGroupId());
 
-		Assert.assertNotNull(fragmentCollection);
 		Assert.assertEquals(
 			fragmentSet.getName(), fragmentCollection.getName());
 		Assert.assertEquals(

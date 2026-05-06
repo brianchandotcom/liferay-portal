@@ -40,7 +40,7 @@ public interface PatcherFixService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.osb.patcher.service.impl.PatcherFixServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the patcher fix remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link PatcherFixServiceUtil} if injection and service tracking are not available.
 	 */
 	public JSONObject checkPatcherFixesByPatcherProjectVersionName(
-			String patcherProjectVersionName, String ticketList)
+			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException;
 
 	/**
@@ -51,4 +51,4 @@ public interface PatcherFixService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-724553067
+// LIFERAY-SERVICE-BUILDER-HASH:-1615907961

@@ -137,6 +137,10 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			PatcherProjectVersionLocalServiceUtil.
 				fetchPatcherProjectVersionByName(patcherProjectVersionName);
 
+		if (patcherProjectVersion == null) {
+			throw new PortalException("Patcher project version does not exist");
+		}
+
 		List<PatcherFix> patcherFixes = getPatcherFixes(
 			patcherProjectVersion.getPatcherProjectVersionId(), true,
 			PatcherFixConstants.TYPE_ANY,
@@ -582,14 +586,6 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 
 		if (Validator.isNull(patcherProjectVersionName)) {
 			throw new PortalException("Patcher project version name is null");
-		}
-
-		PatcherProjectVersion patcherProjectVersion =
-			PatcherProjectVersionLocalServiceUtil.
-				fetchPatcherProjectVersionByName(patcherProjectVersionName);
-
-		if (patcherProjectVersion == null) {
-			throw new PortalException("Patcher project version does not exist");
 		}
 	}
 

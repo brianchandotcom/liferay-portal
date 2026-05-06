@@ -1175,6 +1175,9 @@ test.describe('Localized object entries are saved correctly', () => {
 			await test.step('Verify the en_US values persist after save', async () => {
 				await expect(fixedPhoneInput).toHaveValue(enLocalNumber);
 				await expect(userPrefixDropdown).toHaveText(enUserPrefix);
+				await expect(
+					userPrefixDropdown.locator('.lexicon-icon-en-us')
+				).toBeVisible();
 				await expect(userPhoneInput).toHaveValue(enLocalNumber);
 			});
 
@@ -1187,6 +1190,9 @@ test.describe('Localized object entries are saved correctly', () => {
 
 				await expect(fixedPhoneInput).toHaveValue(ptLocalNumber);
 				await expect(userPrefixDropdown).toHaveText(ptUserPrefix);
+				await expect(
+					userPrefixDropdown.locator('.lexicon-icon-pt-br')
+				).toBeVisible();
 				await expect(userPhoneInput).toHaveValue(ptLocalNumber);
 			});
 		}

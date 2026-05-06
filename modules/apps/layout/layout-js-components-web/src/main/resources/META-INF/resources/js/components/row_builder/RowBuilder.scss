@@ -1,0 +1,47 @@
+@import 'atlas-variables';
+@import 'cadmin-variables';
+
+@mixin row-builder-item(
+	$backgroundColor,
+	$borderColor,
+	$focusRingColor,
+	$leftBorderColor
+) {
+	border: 1px solid $borderColor;
+	border-left: 4px solid $leftBorderColor;
+	border-radius: 0.25rem;
+	min-height: 50px;
+
+	&:focus-visible {
+		box-shadow:
+			0 0 0 2px $backgroundColor,
+			0 0 0 4px $focusRingColor;
+		outline: 0;
+	}
+
+	.layout__row-builder-delete-button {
+		opacity: 0;
+	}
+
+	&:hover .layout__row-builder-delete-button,
+	&:focus-within:not(:focus) .layout__row-builder-delete-button,
+	&:focus-visible .layout__row-builder-delete-button,
+	.layout__row-builder-delete-button:focus-visible {
+		opacity: 1;
+	}
+}
+
+.layout__row-builder-item {
+	@include row-builder-item($white, $gray-300, $primary-l0, $warning-l1);
+}
+
+html#{$cadmin-selector} .cadmin {
+	.layout__row-builder-item {
+		@include row-builder-item(
+			$cadmin-white,
+			$cadmin-gray-300,
+			$cadmin-primary-l0,
+			$cadmin-warning-l1
+		);
+	}
+}

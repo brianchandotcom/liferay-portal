@@ -7,7 +7,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {PortletDataHandlerControl} from '../../../types/portletDataHandlerSection';
+import {PortletDataHandlerControl} from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
 	getInitialSelection,

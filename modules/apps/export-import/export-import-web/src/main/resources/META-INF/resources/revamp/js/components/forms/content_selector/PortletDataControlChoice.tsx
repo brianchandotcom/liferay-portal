@@ -6,7 +6,7 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {PortletDataHandlerChoice} from '../../../types/portletDataHandlerSection';
+import {PortletDataHandlerChoice} from '../../../types/portletDataHandler';
 import FieldSelectWithOption from '../FieldSelectWithOption';
 
 interface PortletDataControlChoiceProps {

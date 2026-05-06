@@ -6,7 +6,7 @@
 import {useField, useFormikContext} from 'formik';
 import React from 'react';
 
-import {PortletDataHandlerSection} from '../../../types/portletDataHandlerSection';
+import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
 import ContentSelector, {
 	ContentSelection,
 } from '../content_selector/ContentSelector';

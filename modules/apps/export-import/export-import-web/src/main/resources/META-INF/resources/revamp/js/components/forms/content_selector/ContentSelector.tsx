@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import React from 'react';
 
-import {PortletDataHandlerSection} from '../../../types/portletDataHandlerSection';
+import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
 import {updateSelection} from '../../../utils/contentSelection';
 import ContentSection, {SectionSelection} from './ContentSection';
 

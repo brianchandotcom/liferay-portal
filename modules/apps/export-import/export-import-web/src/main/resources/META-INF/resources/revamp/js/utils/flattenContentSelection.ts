@@ -7,7 +7,7 @@ import {ContentSelection} from '../components/forms/content_selector/ContentSele
 import {
 	PortletDataHandlerControl,
 	PortletDataHandlerSection,
-} from '../types/portletDataHandlerSection';
+} from '../types/portletDataHandler';
 import {HandlerSelection} from './contentSelection';
 
 interface FlattenContentSelectionInput {

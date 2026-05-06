@@ -67,15 +67,13 @@ test(
 		await test.step('Make edit to web content and approve workflow', async () => {
 			await journalPage.goto();
 
-			await page.getByLabel(`Actions for ${title}`).click();
+			await journalEditArticlePage.editArticle(title);
 
-			await page.getByRole('menuitem', {name: 'Edit'}).click();
+			const editor = page.getByLabel('Rich Text Editor. Editing').first();
 
-			await page
-				.getByRole('application', {name: 'Content,'})
-				.frameLocator('iframe[title="editor"]')
-				.getByRole('textbox')
-				.fill('test');
+			await editor.isVisible();
+
+			await editor.fill('test');
 
 			await page
 				.getByRole('button', {name: 'Submit for Workflow'})

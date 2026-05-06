@@ -13,7 +13,7 @@ import Footer from '../../components/Footer';
 import {
 	DateFilterValues,
 	FilterType,
-	ModifiedLastType,
+	HOURS_BY_MODIFIED_LAST,
 } from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
 import {
@@ -25,13 +25,6 @@ import {ExportPreview} from '../../types/exportImportPreview';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';
-
-const HOURS_BY_MODIFIED_LAST: Record<ModifiedLastType, number> = {
-	[ModifiedLastType.H12]: 12,
-	[ModifiedLastType.H24]: 24,
-	[ModifiedLastType.H48]: 48,
-	[ModifiedLastType.D7]: 24 * 7,
-};
 
 function dateFilterToQuery(values: DateFilterValues): ExportPreviewQuery {
 	if (values.filterType === FilterType.Last) {

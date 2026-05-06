@@ -27,6 +27,13 @@ export const FILTER_OPTIONS = [
 	},
 ];
 
+export const HOURS_BY_MODIFIED_LAST: Record<ModifiedLastType, number> = {
+	[ModifiedLastType.H12]: 12,
+	[ModifiedLastType.H24]: 24,
+	[ModifiedLastType.H48]: 48,
+	[ModifiedLastType.D7]: 24 * 7,
+};
+
 export const MODIFIED_LAST_OPTIONS = [
 	{
 		label: sub(Liferay.Language.get('x-hours'), '12'),

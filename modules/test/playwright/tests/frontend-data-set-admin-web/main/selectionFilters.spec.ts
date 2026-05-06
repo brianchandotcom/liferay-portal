@@ -487,7 +487,7 @@ test(
 test(
 	'Can create a filter for a boolean field',
 	{tag: '@LPD-56706'},
-	async ({ filtersPage, page, picklistApiHelpers }) => {
+	async ({filtersPage, page, picklistApiHelpers}) => {
 		const fieldName = 'active';
 		const picklistEntryKey = '0';
 
@@ -497,9 +497,7 @@ test(
 			value: fieldName,
 		});
 
-
 		await test.step('Create a selection filter from API Headless source', async () => {
-
 			await filtersPage.createSelectionFilterPicklist({
 				filterBy: 'externalReferenceCode',
 				filterMode: 'Include',
@@ -508,8 +506,7 @@ test(
 				selectionType: 'Single',
 				source: picklistName,
 				sourceType: 'Object Picklist',
-
-			})
+			});
 
 			await filtersPage.newSelectionFilterForm.filterBySelectButton.click();
 			await filtersPage.fieldSelectModalPage.searchAndSelectField(
@@ -530,14 +527,14 @@ test(
 
 		await test.step('Open the edit filter form', async () => {
 			const filterActionsButton = page
-				.getByRole('cell', { name: 'Actions' })
+				.getByRole('cell', {name: 'Actions'})
 				.getByRole('button');
 
 			await expect(filterActionsButton).toBeVisible();
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('menuitem', { name: 'Edit' }),
+				target: page.getByRole('menuitem', {name: 'Edit'}),
 				trigger: filterActionsButton,
 			});
 

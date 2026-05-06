@@ -10,11 +10,67 @@
 <%@ include file="/force_reconsent_url.jspf" %>
 
 <aui:script>
-	var form = document.<portlet:namespace />fm;
+	var form =
+		document.<portlet:namespace />fm ||
+		document.forms['<portlet:namespace />fm'];
 
 	if (form) {
+		var isPreferenceHandlingPage = !!document.getElementById(
+			'<portlet:namespace />consentRenewalPeriod'
+		);
+
+		var formIsDirty = false;
+
+		var markDirty = function () {
+			formIsDirty = true;
+		};
+
+		form.addEventListener('input', markDirty);
+		form.addEventListener('change', markDirty);
+
+		var hasFieldDifferences = function () {
+			var fields = form.querySelectorAll('input, select, textarea');
+
+			for (var i = 0; i < fields.length; i++) {
+				var field = fields[i];
+
+				if (field.type === 'checkbox' || field.type === 'radio') {
+					if (field.checked !== field.defaultChecked) {
+						return true;
+					}
+				}
+				else if (field.tagName === 'SELECT') {
+					var options = Array.from(field.options);
+					var defaultOption =
+						options.find((option) => option.defaultSelected) ||
+						options[0];
+
+					if (defaultOption && field.value !== defaultOption.value) {
+						return true;
+					}
+				}
+				else if (field.value !== field.defaultValue) {
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		var formHasChanges = function () {
+			if (isPreferenceHandlingPage) {
+				return hasFieldDifferences();
+			}
+
+			return formIsDirty;
+		};
+
 		form.addEventListener('submit', (event) => {
 			if (form.dataset.skipActiveWarning === 'true') {
+				return;
+			}
+
+			if (!formHasChanges()) {
 				return;
 			}
 
@@ -22,6 +78,8 @@
 			event.stopImmediatePropagation();
 
 			var checkboxId = '<portlet:namespace />forceReconsentCheckbox';
+			var renewalPeriodChanged = form.dataset.renewalPeriodChanged === 'true';
+			var checkboxAttributes = renewalPeriodChanged ? 'checked disabled' : '';
 
 			Liferay.Util.openModal({
 				bodyHTML:
@@ -29,7 +87,9 @@
 					'<div class="custom-control custom-checkbox">' +
 					'<input class="custom-control-input" id="' +
 					checkboxId +
-					'" type="checkbox" />' +
+					'" type="checkbox" ' +
+					checkboxAttributes +
+					' />' +
 					'<label class="custom-control-label" for="' +
 					checkboxId +
 					'"><liferay-ui:message key="check-if-you-want-to-force-re-consent-to-the-users" /></label>' +
@@ -46,6 +106,7 @@
 						label: Liferay.Language.get('ok'),
 						onClick: ({processClose}) => {
 							var forceReconsent =
+								renewalPeriodChanged ||
 								document.getElementById(checkboxId)?.checked;
 
 							processClose();

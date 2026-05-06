@@ -170,7 +170,7 @@ export default function CollectionFilterBuilder({
 			/>
 
 			<input
-				name={`${namespace}TypeSettingsProperties--conditions--`}
+				name={`${namespace}TypeSettingsProperties--filters--`}
 				type="hidden"
 				value={JSON.stringify(filterValuesAndOmitID(conditions))}
 			/>
@@ -178,7 +178,7 @@ export default function CollectionFilterBuilder({
 			{/* Use for Developer Viewing. TO-DO: Remove */}
 			<div className="mt-4">
 				<div className="text-secondary">
-					<code>{namespace}TypeSettingsProperties--conditions</code>
+					<code>{namespace}TypeSettingsProperties--filters</code>
 				</div>
 
 				<pre

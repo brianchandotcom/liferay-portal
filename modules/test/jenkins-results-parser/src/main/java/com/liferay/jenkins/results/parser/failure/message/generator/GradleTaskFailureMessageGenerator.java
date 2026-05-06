@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Dom4JUtil;
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.IOException;
 
@@ -38,32 +39,57 @@ public class GradleTaskFailureMessageGenerator
 
 	@Override
 	public Element getMessageElement(String consoleText) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+			return null;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
-		Matcher matcher = _pattern.matcher(consoleText);
+		int start = consoleText.length();
 
-		if (matcher.find()) {
-			String snippet = matcher.group(1);
+		Matcher javaErrorMatcher = _javaErrorPattern.matcher(consoleText);
 
-			int start = consoleText.lastIndexOf(snippet);
+		if (javaErrorMatcher.find()) {
+			String snippet = javaErrorMatcher.group();
 
+			int snippetStart = consoleText.lastIndexOf(snippet);
+
+			if (snippetStart < start) {
+				start = snippetStart;
+			}
+		}
+
+		Matcher taskFailedMatcher = _taskFailedPattern.matcher(consoleText);
+
+		if (taskFailedMatcher.find()) {
+			String snippet = taskFailedMatcher.group(1);
+
+			int snippetStart = consoleText.lastIndexOf(snippet);
+
+			if (snippetStart < start) {
+				start = snippetStart;
+			}
+		}
+
+		if (start != consoleText.length()) {
 			sb.append(getConsoleTextSnippetByStart(consoleText, start));
 
 			sb.append("\n\n");
 		}
 
 		if (consoleText.contains(_TOKEN_WHAT_WENT_WRONG)) {
-			int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG);
+			int snippetStart = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG);
 
-			int whereIndex = consoleText.lastIndexOf(_TOKEN_WHERE, start);
+			int whereIndex = consoleText.lastIndexOf(
+				_TOKEN_WHERE, snippetStart);
 
 			if (whereIndex != -1) {
-				start = whereIndex;
+				snippetStart = whereIndex;
 			}
 
-			start = consoleText.lastIndexOf("\n", start);
+			snippetStart = consoleText.lastIndexOf("\n", snippetStart);
 
-			sb.append(getConsoleTextSnippetByStart(consoleText, start));
+			sb.append(getConsoleTextSnippetByStart(consoleText, snippetStart));
 		}
 
 		if (sb.length() == 0) {
@@ -77,7 +103,9 @@ public class GradleTaskFailureMessageGenerator
 
 	private static final String _TOKEN_WHERE = "* Where:";
 
-	private static final Pattern _pattern = Pattern.compile(
+	private static final Pattern _javaErrorPattern = Pattern.compile(
+		"[^\\n]+.java:\\d+: error:[^\\n]+");
+	private static final Pattern _taskFailedPattern = Pattern.compile(
 		"\\n(\\s+\\[exec\\] > Task :[^ ]+ FAILED)");
 
 }

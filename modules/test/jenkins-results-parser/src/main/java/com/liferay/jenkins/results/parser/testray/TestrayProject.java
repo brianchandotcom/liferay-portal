@@ -178,7 +178,7 @@ public class TestrayProject {
 		return null;
 	}
 
-	public List<TestrayComponent> getTestrayComponents() {
+	public synchronized List<TestrayComponent> getTestrayComponents() {
 		if (_testrayComponents != null) {
 			return _testrayComponents;
 		}
@@ -334,7 +334,7 @@ public class TestrayProject {
 		return null;
 	}
 
-	public List<TestrayTeam> getTestrayTeams() {
+	public synchronized List<TestrayTeam> getTestrayTeams() {
 		if (_testrayTeams != null) {
 			return _testrayTeams;
 		}

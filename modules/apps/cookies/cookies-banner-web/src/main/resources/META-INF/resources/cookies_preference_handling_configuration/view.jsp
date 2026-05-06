@@ -362,7 +362,19 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 						if (isConfirmed) {
 							Liferay.Util.fetch('<%= forceReconsentURL %>', {
 								method: 'POST',
-							}).finally(() => location.reload());
+							}).then((response) => {
+								if (response.ok) {
+									location.reload();
+								}
+								else {
+									Liferay.Util.openToast({
+										message: Liferay.Language.get(
+											'your-request-failed-to-complete'
+										),
+										type: 'danger',
+									});
+								}
+							});
 						}
 					},
 				});

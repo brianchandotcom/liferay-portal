@@ -37,20 +37,21 @@ export function TranslationOptionsContainer({
 	values,
 }: TranslationOptionsContainerProps) {
 	const translatableField =
-		(values.businessType === 'LongText' ||
-			values.businessType === 'PhoneNumber' ||
-			values.businessType === 'RichText' ||
-			values.businessType === 'Text' ||
-			values.businessType === 'Attachment' ||
+		(values.businessType === 'Attachment' ||
 			values.businessType === 'Boolean' ||
 			values.businessType === 'Date' ||
 			values.businessType === 'DateTime' ||
 			values.businessType === 'Decimal' ||
+			values.businessType === 'EmailAddress' ||
 			values.businessType === 'Integer' ||
 			values.businessType === 'LongInteger' ||
+			values.businessType === 'LongText' ||
 			values.businessType === 'MultiselectPicklist' ||
+			values.businessType === 'PhoneNumber' ||
 			values.businessType === 'Picklist' ||
-			values.businessType === 'PrecisionDecimal') &&
+			values.businessType === 'PrecisionDecimal' ||
+			values.businessType === 'RichText' ||
+			values.businessType === 'Text') &&
 		!values.system;
 
 	return (

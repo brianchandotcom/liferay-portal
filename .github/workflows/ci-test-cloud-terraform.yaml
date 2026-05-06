@@ -22,11 +22,13 @@ jobs:
                 working-directory: ./cloud/terraform/${{matrix.stack}}
             -   name: Run TFLint
                 run: |
-                    stack=${{matrix.stack}}
-                    cloud=${stack%%/*}
-                    config=$GITHUB_WORKSPACE/cloud/terraform/$cloud/.tflint.hcl
-                    tflint --init --config=$config
-                    tflint --config=$config
+                    STACK="${{matrix.stack}}"
+                    CLOUD="${STACK%%/*}"
+                    CONFIG="${GITHUB_WORKSPACE}/cloud/terraform/${CLOUD}/.tflint.hcl"
+
+                    tflint --init --config="${CONFIG}"
+
+                    tflint --config="${CONFIG}"
                 working-directory: ./cloud/terraform/${{matrix.stack}}
             -   name: Run Checkov
                 uses: bridgecrewio/checkov-action@v12

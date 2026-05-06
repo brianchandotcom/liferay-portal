@@ -6,22 +6,28 @@
 package com.liferay.headless.admin.address.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.admin.address.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.address.client.dto.v1_0.Region;
 import com.liferay.headless.admin.address.client.http.HttpInvoker;
 import com.liferay.headless.admin.address.client.pagination.Page;
 import com.liferay.headless.admin.address.client.pagination.Pagination;
+import com.liferay.headless.admin.address.client.resource.v1_0.RegionResource;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.exception.DuplicateRegionException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -34,6 +40,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,6 +65,14 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Override
+	@Test
+	public void testGetRegion() throws Exception {
+		super.testGetRegion();
+
+		_testGetRegionWithNestedFields();
 	}
 
 	@Override
@@ -190,6 +205,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Region testDeleteRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		return _addRegion(randomRegion());
+	}
+
+	@Override
 	protected Region testGetCountryRegionByRegionCode_addRegion()
 		throws Exception {
 
@@ -233,6 +255,13 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 
 	@Override
 	protected Region testGetRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
+	}
+
+	@Override
+	protected Region testGetRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
 		return _addRegion(randomRegion());
 	}
 
@@ -322,7 +351,21 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 	}
 
 	@Override
+	protected Region testPatchRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
+		return _addRegion(randomRegion());
+	}
+
+	@Override
 	protected Region testPutRegion_addRegion() throws Exception {
+		return _addRegion(randomRegion());
+	}
+
+	@Override
+	protected Region testPutRegionByExternalReferenceCode_addRegion()
+		throws Exception {
+
 		return _addRegion(randomRegion());
 	}
 
@@ -363,6 +406,31 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 					exceptionClass.getSimpleName(), jsonObject.get("type"));
 			}
 		}
+	}
+
+	private void _testGetRegionWithNestedFields() throws Exception {
+		Region postRegion = _addRegion(randomRegion());
+
+		RegionResource regionResource = RegionResource.builder(
+		).authentication(
+			"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "creator"
+		).build();
+
+		Region getRegion = regionResource.getRegion(postRegion.getId());
+
+		Creator creator = getRegion.getCreator();
+
+		User user = TestPropsValues.getUser();
+
+		Assert.assertEquals(creator.getId(), Long.valueOf(user.getUserId()));
+		Assert.assertTrue(
+			Objects.equals(
+				creator.getExternalReferenceCode(),
+				user.getExternalReferenceCode()));
 	}
 
 	private <T extends Exception> void _testPostCountryRegionProblem(

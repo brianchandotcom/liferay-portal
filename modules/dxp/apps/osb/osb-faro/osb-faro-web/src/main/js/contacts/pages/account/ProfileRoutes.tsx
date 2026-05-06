@@ -80,6 +80,7 @@ const AccountProfileRoutes = () => {
 				<Suspense fallback={<Loading />}>
 					<Switch>
 						<BundleRouter
+							componentProps={{account: data}}
 							data={Profile}
 							exact
 							path={Routes.CONTACTS_ACCOUNT_PROFILE}

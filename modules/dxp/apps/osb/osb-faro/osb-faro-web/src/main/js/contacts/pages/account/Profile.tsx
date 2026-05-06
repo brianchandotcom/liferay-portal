@@ -1,9 +1,13 @@
-import AccountInfo from './components/AccountInfo';
+import AccountInfo, {IAccount} from './components/AccountInfo';
 import React from 'react';
 
-const Profile = () => (
+interface IProfileProps {
+	account?: IAccount;
+}
+
+const Profile: React.FC<IProfileProps> = ({account}) => (
 	<>
-		<AccountInfo />
+		<AccountInfo account={account} />
 	</>
 );
 

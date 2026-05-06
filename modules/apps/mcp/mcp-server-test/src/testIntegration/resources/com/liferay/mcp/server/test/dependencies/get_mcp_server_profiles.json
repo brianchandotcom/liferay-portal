@@ -1,0 +1,19 @@
+{
+	"properties": {
+		"filter": {
+			"type": "string"
+		},
+		"page": {
+			"type": "string"
+		},
+		"pageSize": {
+			"type": "string"
+		},
+		"search": {
+			"type": "string"
+		}
+	},
+	"required": [
+	],
+	"type": "object"
+}

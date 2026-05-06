@@ -14,7 +14,7 @@ All language keys live in the global file at `modules/apps/portal-language/porta
 
 ## Writing Values That Begin with "When Enabled,"
 
-This applies to any value that begins with "When enabled,", regardless of how the key is named — `*-help`, `*-description`, or keys like `when-enabled-a-character-counter-will-be-shown-to-the-user` whose name encodes the full sentence. Follow "When enabled," with an explicit noun-phrase subject and a verb that agrees with that subject. Use the present tense ("a search bar is displayed") rather than the future tense ("a search bar will be displayed"). Do not drop the subject and start with a bare verb ("displays a search bar").
+This applies to any value that begins with "When enabled,", regardless of how the key is named — `*-help`, `*-description`, or keys like `when-enabled-a-character-counter-is-shown-to-the-user` whose name encodes the full sentence. Follow "When enabled," with an explicit noun-phrase subject and a verb that agrees with that subject. Use the present tense ("a search bar is displayed") rather than the future tense ("a search bar will be displayed"). Do not drop the subject and start with a bare verb ("displays a search bar").
 
 Good:
 

@@ -1891,52 +1891,58 @@ test(
 	{tag: ['@LPD-85551', '@LPD-87955']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
-		const file1Title = `Content ${getRandomString()}`;
+		const fileTitle = `Content ${getRandomString()}`;
 		let objectEntry;
 
 		try {
-			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: file1Title,
-				},
-				applicationName,
-				'Default'
-			);
+			await test.step('Create a content', async () => {
+				objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title: fileTitle,
+					},
+					applicationName,
+					'Default'
+				);
 
-			await assetsPage.gotoAll();
+				await assetsPage.gotoAll();
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: file1Title})
-			).toBeVisible();
+				await expect(
+					page.getByRole('cell', {exact: true, name: fileTitle})
+				).toBeVisible();
+			});
 
-			await page.getByRole('button', {name: 'Filter'}).click();
+			await test.step('Apply Create Date filter', async () => {
+				await page.getByRole('button', {name: 'Filter'}).click();
 
-			await page.getByRole('menuitem', {name: 'Create Date'}).click();
+				await page.getByRole('menuitem', {name: 'Create Date'}).click();
 
-			const fromDate = new Date();
-			const toDate = new Date();
+				const fromDate = new Date();
+				const toDate = new Date();
 
-			fromDate.setDate(fromDate.getDate() - 1);
+				fromDate.setDate(fromDate.getDate() - 1);
 
-			await page
-				.getByLabel('From')
-				.fill(fromDate.toISOString().split('T')[0]);
-			await page
-				.getByLabel('To', {exact: true})
-				.fill(toDate.toISOString().split('T')[0]);
+				await page
+					.getByLabel('From')
+					.fill(fromDate.toISOString().split('T')[0]);
+				await page
+					.getByLabel('To', {exact: true})
+					.fill(toDate.toISOString().split('T')[0]);
 
-			await page.getByRole('button', {name: 'Add Filter'}).click();
+				await page.getByRole('button', {name: 'Add Filter'}).click();
+			});
 
-			await expect(
-				page
-					.getByRole('button', {name: /Create Date:/})
-					.locator('.label-section')
-			).toBeVisible();
+			await test.step('Check filter chip and entry are visible', async () => {
+				await expect(
+					page
+						.getByRole('button', {name: /Create Date:/})
+						.locator('.label-section')
+				).toBeVisible();
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: file1Title})
-			).toBeVisible();
+				await expect(
+					page.getByRole('cell', {exact: true, name: fileTitle})
+				).toBeVisible();
+			});
 		}
 		finally {
 			if (objectEntry) {
@@ -1959,70 +1965,90 @@ test(
 		let matchingEntry;
 		let otherEntry;
 
-		const matchingDisplayDate = new Date();
-
-		matchingDisplayDate.setDate(matchingDisplayDate.getDate() + 5);
-
 		try {
-			matchingEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					displayDate: matchingDisplayDate.toISOString(),
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: matchingTitle,
-				},
-				applicationName,
-				'Default'
-			);
+			await test.step('Create matching and non-matching contents', async () => {
+				const matchingDisplayDate = new Date();
 
-			otherEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: otherTitle,
-				},
-				applicationName,
-				'Default'
-			);
+				matchingDisplayDate.setDate(matchingDisplayDate.getDate() + 5);
 
-			await assetsPage.gotoAll();
+				matchingEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						displayDate: matchingDisplayDate.toISOString(),
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title: matchingTitle,
+					},
+					applicationName,
+					'Default'
+				);
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: matchingTitle})
-			).toBeVisible();
-			await expect(
-				page.getByRole('cell', {exact: true, name: otherTitle})
-			).toBeVisible();
+				otherEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title: otherTitle,
+					},
+					applicationName,
+					'Default'
+				);
 
-			await page.getByRole('button', {name: 'Filter'}).click();
+				await assetsPage.gotoAll();
 
-			await page.getByRole('menuitem', {name: 'Display Date'}).click();
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: matchingTitle,
+					})
+				).toBeVisible();
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: otherTitle,
+					})
+				).toBeVisible();
+			});
 
-			const fromDate = new Date();
-			const toDate = new Date();
+			await test.step('Apply Display Date filter', async () => {
+				await page.getByRole('button', {name: 'Filter'}).click();
 
-			fromDate.setDate(fromDate.getDate() + 4);
-			toDate.setDate(toDate.getDate() + 6);
+				await page
+					.getByRole('menuitem', {name: 'Display Date'})
+					.click();
 
-			await page
-				.getByLabel('From')
-				.fill(fromDate.toISOString().split('T')[0]);
-			await page
-				.getByLabel('To', {exact: true})
-				.fill(toDate.toISOString().split('T')[0]);
+				const fromDate = new Date();
+				const toDate = new Date();
 
-			await page.getByRole('button', {name: 'Add Filter'}).click();
+				fromDate.setDate(fromDate.getDate() + 4);
+				toDate.setDate(toDate.getDate() + 6);
 
-			await expect(
-				page
-					.getByRole('button', {name: /Display Date:/})
-					.locator('.label-section')
-			).toBeVisible();
+				await page
+					.getByLabel('From')
+					.fill(fromDate.toISOString().split('T')[0]);
+				await page
+					.getByLabel('To', {exact: true})
+					.fill(toDate.toISOString().split('T')[0]);
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: matchingTitle})
-			).toBeVisible();
-			await expect(
-				page.getByRole('cell', {exact: true, name: otherTitle})
-			).not.toBeVisible();
+				await page.getByRole('button', {name: 'Add Filter'}).click();
+			});
+
+			await test.step('Check only the matching content remains visible', async () => {
+				await expect(
+					page
+						.getByRole('button', {name: /Display Date:/})
+						.locator('.label-section')
+				).toBeVisible();
+
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: matchingTitle,
+					})
+				).toBeVisible();
+				await expect(
+					page.getByRole('cell', {
+						exact: true,
+						name: otherTitle,
+					})
+				).not.toBeVisible();
+			});
 		}
 		finally {
 			if (matchingEntry) {
@@ -2046,52 +2072,60 @@ test(
 	{tag: ['@LPD-85551', '@LPD-87955']},
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-web-contents';
-		const file1Title = `Content ${getRandomString()}`;
+		const fileTitle = `Content ${getRandomString()}`;
 		let objectEntry;
 
 		try {
-			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-					title: file1Title,
-				},
-				applicationName,
-				'Default'
-			);
+			await test.step('Create a content', async () => {
+				objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title: fileTitle,
+					},
+					applicationName,
+					'Default'
+				);
 
-			await assetsPage.gotoAll();
+				await assetsPage.gotoAll();
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: file1Title})
-			).toBeVisible();
+				await expect(
+					page.getByRole('cell', {exact: true, name: fileTitle})
+				).toBeVisible();
+			});
 
-			await page.getByRole('button', {name: 'Filter'}).click();
+			await test.step('Apply Modified Date filter', async () => {
+				await page.getByRole('button', {name: 'Filter'}).click();
 
-			await page.getByRole('menuitem', {name: 'Modified Date'}).click();
+				await page
+					.getByRole('menuitem', {name: 'Modified Date'})
+					.click();
 
-			const fromDate = new Date();
-			const toDate = new Date();
+				const fromDate = new Date();
+				const toDate = new Date();
 
-			fromDate.setDate(fromDate.getDate() - 1);
+				fromDate.setDate(fromDate.getDate() - 1);
 
-			await page
-				.getByLabel('From')
-				.fill(fromDate.toISOString().split('T')[0]);
-			await page
-				.getByLabel('To', {exact: true})
-				.fill(toDate.toISOString().split('T')[0]);
+				await page
+					.getByLabel('From')
+					.fill(fromDate.toISOString().split('T')[0]);
+				await page
+					.getByLabel('To', {exact: true})
+					.fill(toDate.toISOString().split('T')[0]);
 
-			await page.getByRole('button', {name: 'Add Filter'}).click();
+				await page.getByRole('button', {name: 'Add Filter'}).click();
+			});
 
-			await expect(
-				page
-					.getByRole('button', {name: /Modified Date:/})
-					.locator('.label-section')
-			).toBeVisible();
+			await test.step('Check filter chip and entry are visible', async () => {
+				await expect(
+					page
+						.getByRole('button', {name: /Modified Date:/})
+						.locator('.label-section')
+				).toBeVisible();
 
-			await expect(
-				page.getByRole('cell', {exact: true, name: file1Title})
-			).toBeVisible();
+				await expect(
+					page.getByRole('cell', {exact: true, name: fileTitle})
+				).toBeVisible();
+			});
 		}
 		finally {
 			if (objectEntry) {

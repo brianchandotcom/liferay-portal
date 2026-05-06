@@ -74,15 +74,4 @@ spec:
                             requests:
                                 storage: {{ $search.volumeSize }}
     version: {{ $search.version }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-    name: elasticsearch-connection-details
-    namespace: {{ .Release.Namespace }}
-stringData:
-    ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ include "elasticsearch.name" . }}-es-elastic-user"
-    ELASTICSEARCH_DEFAULT_USERNAME: elastic
-    ELASTICSEARCH_URL: http://{{ include "elasticsearch.name" . }}-es-http.{{ .Release.Namespace }}.svc:9200
-type: Opaque
 {{- end -}}

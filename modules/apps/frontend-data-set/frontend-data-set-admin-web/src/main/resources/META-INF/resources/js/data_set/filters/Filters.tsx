@@ -331,11 +331,8 @@ function Filters({
 			JSON.stringify(filterableFields)
 		);
 
-		const availableFilterTypeFields = filterableFieldsCopy.filter(
-			(field) =>
-				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
-					field
-				)
+		const availableFilterTypeFields = filterableFieldsCopy.filter((field) =>
+			FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(field)
 		);
 
 		setAvailableFields(availableFilterTypeFields);

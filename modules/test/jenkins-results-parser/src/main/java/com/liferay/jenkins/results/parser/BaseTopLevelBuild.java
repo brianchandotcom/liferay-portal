@@ -1482,7 +1482,7 @@ public abstract class BaseTopLevelBuild
 			Dom4JUtil.getNewElement(
 				"p", null,
 				Dom4JUtil.getNewAnchorElement(
-					_URL_CI_SYSTEM_STATUS, "CI System Status")),
+					_getCISystemStatusURL(), "CI System Status")),
 			Dom4JUtil.getNewElement(
 				"p", null, "Start Time: ",
 				toJenkinsReportDateString(
@@ -2375,6 +2375,24 @@ public abstract class BaseTopLevelBuild
 		return cachedDownstreamBuilds;
 	}
 
+	private String _getCISystemStatusURL() {
+		try {
+			String masterHostname = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.remote.url[test-1-0]");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(masterHostname)) {
+				return JenkinsResultsParserUtil.combine(
+					masterHostname,
+					"userContent/reports/ci-system-status/index.html");
+			}
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
+		return _URL_CI_SYSTEM_STATUS;
+	}
+
 	private Map<Map<String, String>, Integer> _getSlaveUsageByLabels() {
 		Map<Map<String, String>, Integer> slaveUsages = new HashMap<>();
 
@@ -2474,7 +2492,7 @@ public abstract class BaseTopLevelBuild
 		"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js";
 
 	private static final String _URL_CI_SYSTEM_STATUS =
-		"http://test-1-0.liferay.com/userContent/reports/ci-system-status" +
+		"https://test-1-0.liferay.com/userContent/reports/ci-system-status" +
 			"/index.html";
 
 	private static final Pattern _downstreamBuildURLPattern = Pattern.compile(

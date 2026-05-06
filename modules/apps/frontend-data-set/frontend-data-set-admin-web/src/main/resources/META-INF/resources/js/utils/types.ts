@@ -38,7 +38,7 @@ export enum ESelectionFilterSourceType {
 export interface IProperty {
 	$ref?: string;
 	format?: EFieldFormat;
-	items?: any;
+	items?: IProperty;
 	type?: EFieldType;
 	['x-parent-map']?: string;
 }

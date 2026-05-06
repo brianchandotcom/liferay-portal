@@ -159,7 +159,9 @@ function getFilterableFields({
 	filterableItemList.forEach((item) => {
 		const type = filterablePaths[item].type;
 		const entityFieldType =
-			type === EFieldType.ARRAY ? filterablePaths[item].items : type;
+			type === EFieldType.ARRAY
+				? filterablePaths[item].items?.type
+				: type;
 
 		const field: IField = {
 			entityFieldType,

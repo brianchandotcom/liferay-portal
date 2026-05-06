@@ -28,10 +28,10 @@ export class PicklistApiHelpers extends ApiHelpers {
 
 	async deleteBatchPicklist(names: Array<string>, picklistItems: Array<any>) {
 		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/batch`;
-		
+
 		const items = picklistItems
-		.filter(item => names.includes(item.name))
-		.map(item => ({ id: item.id }));
+			.filter((item) => names.includes(item.name))
+			.map((item) => ({id: item.id}));
 
 		return this.delete(url, {data: items});
 	}
@@ -71,6 +71,5 @@ export class PicklistApiHelpers extends ApiHelpers {
 		const picklists = await this.get(url);
 
 		return picklists.items;
-	}	
-
+	}
 }

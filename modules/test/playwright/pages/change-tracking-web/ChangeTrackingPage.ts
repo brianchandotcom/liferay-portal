@@ -227,7 +227,7 @@ export class ChangeTrackingPage {
 			await checkBox.setChecked(true);
 
 			await expect(
-				this.page.getByText('Allow Unapproved Changes')
+				this.page.getByText('Allow Publishing Unapproved Changes')
 			).toBeVisible();
 
 			await this.goto();
@@ -236,7 +236,7 @@ export class ChangeTrackingPage {
 			await checkBox.setChecked(false);
 
 			await expect(
-				this.page.getByText('Allow Unapproved Changes')
+				this.page.getByText('Allow Publishing Unapproved Changes')
 			).not.toBeVisible();
 		}
 	}

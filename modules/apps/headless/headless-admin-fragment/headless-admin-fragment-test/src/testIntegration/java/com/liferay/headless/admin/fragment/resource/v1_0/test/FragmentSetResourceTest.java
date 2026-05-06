@@ -438,7 +438,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		fragmentSet2.setDescription(RandomTestUtil.randomString());
 		fragmentSet2.setName(RandomTestUtil.randomString());
 
-		FragmentSet putFragmentSet2 = fragmentSetResource.putSiteFragmentSet(
+		FragmentSet putFragmentSet = fragmentSetResource.putSiteFragmentSet(
 			testGroup.getExternalReferenceCode(),
 			fragmentSet2.getExternalReferenceCode(), fragmentSet2);
 
@@ -452,7 +452,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				Http.Method.POST));
 
 		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
-		_assertFragmentCollection(putFragmentSet2, irrelevantGroup);
+		_assertFragmentCollection(putFragmentSet, irrelevantGroup);
 	}
 
 	private JSONObject _waitForExportFinish(

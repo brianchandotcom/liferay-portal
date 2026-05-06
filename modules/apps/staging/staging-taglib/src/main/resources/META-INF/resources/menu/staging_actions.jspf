@@ -239,7 +239,6 @@
 						event.preventDefault();
 
 						Liferay.Util.openModal({
-							containerProps: {},
 							id: '<portlet:namespace />publishLatestChangesDialog',
 							iframeBodyCssClass: 'dialog-with-footer',
 							onClose: () => {

@@ -116,7 +116,19 @@
 							if (forceReconsent) {
 								Liferay.Util.fetch('<%= forceReconsentURL %>', {
 									method: 'POST',
-								}).finally(() => form.requestSubmit());
+								}).then((response) => {
+									if (response.ok) {
+										form.requestSubmit();
+									}
+									else {
+										Liferay.Util.openToast({
+											message: Liferay.Language.get(
+												'your-request-failed-to-complete'
+											),
+											type: 'danger',
+										});
+									}
+								});
 							}
 							else {
 								form.requestSubmit();

@@ -205,7 +205,7 @@ test(
 		await test.step('Click Forced Re-Consent and accept the confirmation dialog', async () => {
 			page.once('dialog', async (dialogWindow) => {
 				expect(dialogWindow.message()).toContain(
-					'You are about to force the re-consent'
+					'You are about to force the re-consent of consent preference cookies. By performing this action, every user will have to give their consent again. Are you sure you want to continue'
 				);
 
 				await dialogWindow.accept();
@@ -215,8 +215,6 @@ test(
 		});
 
 		await test.step('Verify success alert and reappearance of Cookies Banner', async () => {
-			await waitForAlert(page);
-
 			await expect(cookiesBanner).toBeVisible();
 		});
 

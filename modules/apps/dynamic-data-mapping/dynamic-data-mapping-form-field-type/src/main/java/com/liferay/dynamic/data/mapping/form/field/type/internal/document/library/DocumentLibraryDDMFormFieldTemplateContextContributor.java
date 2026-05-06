@@ -109,6 +109,10 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		).put(
 			"fileEntryDeleteURL",
 			() -> {
+				if (ddmFormFieldRenderingContext.isReadOnly()) {
+					return null;
+				}
+
 				HttpServletRequest httpServletRequest =
 					ddmFormFieldRenderingContext.getHttpServletRequest();
 

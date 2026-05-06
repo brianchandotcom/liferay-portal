@@ -37,6 +37,7 @@ export class CommerceAdminProductDetailsPage {
 	readonly productConfigurationLink: Locator;
 	readonly productDetailsInput: (inputName: string) => Promise<Locator>;
 	readonly productDiagramLink: Locator;
+	readonly productGroupsLink: Locator;
 	readonly productId: Locator;
 	readonly productMediaLink: Locator;
 	readonly productOptionsLink: Locator;
@@ -129,6 +130,10 @@ export class CommerceAdminProductDetailsPage {
 			page.getByLabel(inputName);
 		this.productDiagramLink = page.getByRole('link', {
 			name: 'Diagram',
+		});
+		this.productGroupsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Product Groups',
 		});
 		this.productId = page.locator('span:has-text("ID")+strong');
 		this.productMediaLink = page.getByRole('link', {
@@ -229,6 +234,10 @@ export class CommerceAdminProductDetailsPage {
 
 	async goToProductDiagram() {
 		await this.productDiagramLink.click();
+	}
+
+	async goToProductGroups() {
+		await this.productGroupsLink.click();
 	}
 
 	async goToProductOptions() {

@@ -59,7 +59,10 @@ function ConditionRow({
 	showDeleteButton,
 }: ConditionRowProps) {
 	const selectedProperty = properties.find(
-		(p) => p.name === condition.propertyName
+		(p) =>
+			p.name === condition.propertyName &&
+			p.classNameId === condition.classNameId &&
+			p.classTypeId === condition.classTypeId
 	);
 
 	const operators = selectedProperty ? getOperators(selectedProperty) : [];
@@ -70,6 +73,11 @@ function ConditionRow({
 		},
 		[condition, onChange]
 	);
+
+	const propertyKey = (p: Pick<
+		GenericProperty,
+		'classNameId' | 'classTypeId' | 'name'
+	>) => `${p.classNameId ?? ''}|${p.classTypeId ?? ''}|${p.name}`;
 
 	return (
 		<div
@@ -83,27 +91,33 @@ function ConditionRow({
 						as={TriggerLabel}
 						items={properties.map((p) => ({
 							label: p.label,
-							value: p.name,
+							value: propertyKey(p),
 						}))}
 						onSelectionChange={(key) => {
 							const newProperty = properties.find(
-								(p) => p.name === key
+								(p) => propertyKey(p) === key
 							);
 
-							const operators = key
-								? getOperators(newProperty as GenericProperty)
+							const operators = newProperty
+								? getOperators(newProperty)
 								: null;
 
 							onChange({
+								classNameId: newProperty?.classNameId,
+								classTypeId: newProperty?.classTypeId,
 								id: condition.id,
 								operatorName:
 									operators?.length === 0 ? 'eq' : undefined,
-								propertyName: (key as string) || undefined,
+								propertyName: newProperty?.name,
 								value: undefined,
 							});
 						}}
 						placeholder={Liferay.Language.get('select')}
-						selectedKey={condition.propertyName ?? ''}
+						selectedKey={
+							selectedProperty
+								? propertyKey(selectedProperty)
+								: ''
+						}
 					>
 						{(item) => (
 							<Option key={item.value}>{item.label}</Option>

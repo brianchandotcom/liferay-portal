@@ -24,8 +24,14 @@ export interface PropertyOption {
  * A field or attribute that can be used in a condition row.
  * Consumers normalize their domain types (ObjectField, ClassTypeField,
  * fragment input, etc.) to this shape via an adapter.
+ *
+ * `classNameId` / `classTypeId` are populated for properties that originate
+ * from a typed source (e.g. an Object definition), so the row stays
+ * self-describing when the same field name appears on multiple types.
  */
 export interface GenericProperty {
+	classNameId?: number;
+	classTypeId?: number;
 	label: string;
 	name: string;
 	options?: PropertyOption[];
@@ -38,6 +44,8 @@ export interface GenericOperator {
 }
 
 export interface FilterCondition {
+	classNameId?: number;
+	classTypeId?: number;
 	id: string;
 	operatorName?: string;
 	propertyName?: string;

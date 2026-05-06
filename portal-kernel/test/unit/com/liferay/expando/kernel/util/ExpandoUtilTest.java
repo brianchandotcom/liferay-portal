@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.Serializable;
 
@@ -22,19 +21,12 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Petteri Karttunen
  */
 public class ExpandoUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {
@@ -49,6 +41,18 @@ public class ExpandoUtilTest {
 	}
 
 	@Test
+	public void testFillMissingDefaultLocaleValues() {
+		Map<Locale, String> localizedMap = HashMapBuilder.put(
+			LocaleUtil.GERMANY, "Hallo"
+		).build();
+
+		ExpandoUtil.fillMissingDefaultLocaleValues(
+			_attributesOf("greeting", (Serializable)localizedMap));
+
+		Assert.assertEquals("Hallo", localizedMap.get(LocaleUtil.US));
+	}
+
+	@Test
 	public void testFillMissingDefaultLocaleValuesWithDefaultPresent() {
 		Map<Locale, String> localizedMap = HashMapBuilder.put(
 			LocaleUtil.GERMANY, "Hallo"
@@ -56,11 +60,15 @@ public class ExpandoUtilTest {
 			LocaleUtil.US, "Hello"
 		).build();
 
-		ExpandoUtil.fillMissingDefaultLocaleValues(
-			_attributesOf("greeting", (Serializable)localizedMap));
+		List<String> warningMessages =
+			ExpandoUtil.fillMissingDefaultLocaleValues(
+				_attributesOf("greeting", (Serializable)localizedMap));
 
 		Assert.assertEquals("Hello", localizedMap.get(LocaleUtil.US));
 		Assert.assertEquals("Hallo", localizedMap.get(LocaleUtil.GERMANY));
+
+		Assert.assertTrue(
+			warningMessages.toString(), warningMessages.isEmpty());
 	}
 
 	@Test
@@ -72,14 +80,17 @@ public class ExpandoUtilTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ExpandoUtil.class.getName(), LoggerTestUtil.WARN)) {
 
-			ExpandoUtil.fillMissingDefaultLocaleValues(
-				_attributesOf("greeting", (Serializable)localizedMap));
+			List<String> warningMessages =
+				ExpandoUtil.fillMissingDefaultLocaleValues(
+					_attributesOf("greeting", (Serializable)localizedMap));
 
 			Assert.assertArrayEquals(
 				new String[] {"Hallo", "Welt"},
 				localizedMap.get(LocaleUtil.US));
 
 			_assertLog(logCapture, "greeting", LocaleUtil.GERMANY);
+			_assertWarningMessages(
+				warningMessages, "greeting", LocaleUtil.GERMANY);
 		}
 	}
 
@@ -92,12 +103,15 @@ public class ExpandoUtilTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				ExpandoUtil.class.getName(), LoggerTestUtil.WARN)) {
 
-			ExpandoUtil.fillMissingDefaultLocaleValues(
-				_attributesOf("greeting", (Serializable)localizedMap));
+			List<String> warningMessages =
+				ExpandoUtil.fillMissingDefaultLocaleValues(
+					_attributesOf("greeting", (Serializable)localizedMap));
 
 			Assert.assertEquals("Hallo", localizedMap.get(LocaleUtil.US));
 
 			_assertLog(logCapture, "greeting", LocaleUtil.GERMANY);
+			_assertWarningMessages(
+				warningMessages, "greeting", LocaleUtil.GERMANY);
 		}
 	}
 
@@ -115,6 +129,20 @@ public class ExpandoUtilTest {
 		Assert.assertTrue(message, message.contains(name));
 		Assert.assertTrue(
 			message, message.contains(LocaleUtil.toLanguageId(locale)));
+	}
+
+	private void _assertWarningMessages(
+		List<String> warningMessages, String name, Locale locale) {
+
+		Assert.assertEquals(
+			warningMessages.toString(), 1, warningMessages.size());
+
+		String warningMessage = warningMessages.get(0);
+
+		Assert.assertTrue(warningMessage, warningMessage.contains(name));
+		Assert.assertTrue(
+			warningMessage,
+			warningMessage.contains(LocaleUtil.toLanguageId(locale)));
 	}
 
 	private Map<String, Serializable> _attributesOf(

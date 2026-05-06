@@ -2,6 +2,7 @@ import AccountDetailsModal from './AccountDetailsModal';
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
+import ClayLink from '@clayui/link';
 import React, {useState} from 'react';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
@@ -36,15 +37,18 @@ const infoDataLabels = {
 	website: Liferay.Language.get('website')
 };
 
+const normalizeHref = (value: string) =>
+	/^https?:\/\//i.test(value) ? value : `https://${value}`;
+
 const infoItem = (label: string, value?: string, link?: boolean) => (
 	<div className='d-flex justify-content-between mb-2'>
 		<Text color='secondary' size={3}>
 			{label}
 		</Text>
-		{link ? (
-			<a href={value} rel='noopener noreferrer' target='_blank'>
+		{link && value ? (
+			<ClayLink href={normalizeHref(value)} target='_blank'>
 				<Text size={3}>{value}</Text>
-			</a>
+			</ClayLink>
 		) : (
 			<Text color='secondary' size={3}>
 				{value}

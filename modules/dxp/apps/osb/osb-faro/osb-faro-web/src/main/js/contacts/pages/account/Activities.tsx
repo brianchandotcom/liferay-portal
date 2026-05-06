@@ -1,27 +1,26 @@
 import ActivityStreamCard from './components/ActivityStreamCard';
 import ActivityStreamCardHeader from './components/ActivityStreamCardHeader';
 import BaseCard from 'shared/components/base-card';
+import Loading from 'shared/components/Loading';
 import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {Interval, RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
 
-// TODO: temporary hard-coded id for end-to-end testing — revert to `id` from
-// `useParams()` once the page is wired in production.
-const TEST_ACCOUNT_ID =
-	'1e74cbd38ebda5b7ba279c8e13443b67cf976dd444fc98c0e42b673ed7c5e43a';
-
 const Activities = () => {
 	const {selectedChannel} = useContext(ChannelContext);
 
-	const {channelId: routeChannelId} = useParams<{
+	const {channelId: routeChannelId, id} = useParams<{
 		channelId: string;
 		groupId: string;
 		id: string;
 	}>();
 
-	const channelId = routeChannelId ?? selectedChannel?.id ?? '';
-	const id = TEST_ACCOUNT_ID;
+	const channelId = routeChannelId ?? selectedChannel?.id;
+
+	if (!channelId) {
+		return <Loading />;
+	}
 
 	return (
 		<>

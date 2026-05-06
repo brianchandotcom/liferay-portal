@@ -167,8 +167,9 @@ public class CustomFDSSerializer
 			tokenResolutionsJSONObject
 		);
 
-		List<ObjectEntry> objectEntries = getSortedRelatedObjectEntries(
-			fdsName, httpServletRequest, (Predicate)null, "tableSectionsOrder",
+		List<ObjectEntry> objectEntries = getRelatedObjectEntries(
+			fdsName, httpServletRequest, (Predicate)null,
+			"dataSetToDataSetCardsSections", "dataSetToDataSetListSections",
 			"dataSetToDataSetTableSections");
 
 		if (objectEntries == null) {

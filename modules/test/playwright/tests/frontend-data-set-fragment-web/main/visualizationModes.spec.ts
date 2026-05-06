@@ -264,3 +264,88 @@ test('Show mapped scalar array field in the fragment @LPD-11769', async ({
 		).toEqual(['one, two, three', '']);
 	});
 });
+
+test('Request URL includes nestedFields when a card-only binding is nested @LPD-85420', async ({
+	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
+	layout,
+	page,
+}) => {
+	const NESTED_OBJECT_FIELD = 'dataSetToDataSetTableSections';
+	const NESTED_CHILD_FIELD = 'label';
+
+	await test.step('Create cards section field with nested binding', async () => {
+		await dataSetManagerApiHelpers.createDataSetCardsSection({
+			dataSetERC,
+			fieldName: `${NESTED_OBJECT_FIELD}.${NESTED_CHILD_FIELD}`,
+			name: 'title',
+		});
+	});
+
+	const datasetRequestPromise = page.waitForRequest((request) =>
+		request.url().includes(`nestedFields=${NESTED_OBJECT_FIELD}`)
+	);
+
+	await test.step('Configure Data Set in the page', async () => {
+		await dataSetFragmentPage.configureDataSetFragment({
+			dataSetLabel,
+			layout,
+		});
+	});
+
+	await test.step('Data Set request URL contains nestedFields for cards binding', async () => {
+		const datasetRequest = await datasetRequestPromise;
+
+		const datasetRequestUrl = decodeURIComponent(datasetRequest.url());
+
+		expect(datasetRequestUrl).toContain(
+			`nestedFields=${NESTED_OBJECT_FIELD}`
+		);
+	});
+});
+
+test('Request URL includes nestedFields when a list-only binding is nested @LPD-85420', async ({
+	dataSetFragmentPage,
+	dataSetManagerApiHelpers,
+	layout,
+	page,
+}) => {
+	const NESTED_OBJECT_FIELD = 'dataSetToDataSetTableSections';
+	const NESTED_CHILD_FIELD = 'label';
+
+	await test.step('Update Data Set defaultVisualizationMode to list', async () => {
+		await dataSetManagerApiHelpers.updateDataSet({
+			defaultVisualizationMode: 'list',
+			erc: dataSetERC,
+		});
+	});
+
+	await test.step('Create list section field with nested binding', async () => {
+		await dataSetManagerApiHelpers.createDataSetListSection({
+			dataSetERC,
+			fieldName: `${NESTED_OBJECT_FIELD}.${NESTED_CHILD_FIELD}`,
+			name: 'title',
+		});
+	});
+
+	const datasetRequestPromise = page.waitForRequest((request) =>
+		request.url().includes(`nestedFields=${NESTED_OBJECT_FIELD}`)
+	);
+
+	await test.step('Configure Data Set in the page', async () => {
+		await dataSetFragmentPage.configureDataSetFragment({
+			dataSetLabel,
+			layout,
+		});
+	});
+
+	await test.step('Data Set request URL contains nestedFields for list binding', async () => {
+		const datasetRequest = await datasetRequestPromise;
+
+		const datasetRequestUrl = decodeURIComponent(datasetRequest.url());
+
+		expect(datasetRequestUrl).toContain(
+			`nestedFields=${NESTED_OBJECT_FIELD}`
+		);
+	});
+});

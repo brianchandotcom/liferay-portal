@@ -1369,8 +1369,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			});
 
 		Mockito.when(
-			_customFDSSerializer.getSortedRelatedObjectEntries(
-				fdsName, httpServletRequest, null, "tableSectionsOrder",
+			_customFDSSerializer.getRelatedObjectEntries(
+				fdsName, httpServletRequest, null,
+				"dataSetToDataSetCardsSections", "dataSetToDataSetListSections",
 				"dataSetToDataSetTableSections")
 		).thenReturn(
 			objectEntries

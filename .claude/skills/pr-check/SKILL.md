@@ -72,4 +72,12 @@ When the total exceeds 20 minutes, surface the breakdown and ask the developer w
 
 For each matched validation from pass 1, run the **Command** and apply **Auto-Commit** when present. Record PASS or FAIL. Do not halt on FAIL — continue so the developer sees the full picture.
 
+When the validation's **Command** is a build (gradle, ant, npm, jest), bound the output:
+
+```bash
+<command> 2>&1 | tail -n 100
+```
+
+Decide PASS/FAIL from the build tool's success markers in the captured output (`BUILD SUCCESSFUL` / `BUILD FAILED`, `Tests: N passed, M failed`, etc.). Apply only to build commands. Leave inert commands like `git status --porcelain` and `git diff --quiet` untouched.
+
 If all validations pass, report `PASS`. When any fail, report `FAIL` and surface the failed validations.

@@ -146,6 +146,34 @@ describe('SegmentEditor', () => {
 			).not.toBeInTheDocument();
 		});
 	});
+
+	it('shows the Segment ERC popover with the description and the slug rule', () => {
+		render(
+			<Provider store={mockStore()}>
+				<BrowserRouter>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='BATCH'
+						/>
+					</DndProvider>
+				</BrowserRouter>
+			</Provider>
+		);
+
+		expect(
+			screen.getByText(
+				'Unique key for referencing the segment definition.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'ERC must contain only lowercase letters, numbers, hyphens, and underscores.'
+			)
+		).toBeInTheDocument();
+	});
 });
 
 describe('validateSegmentEditor', () => {

@@ -36,7 +36,7 @@ test('LPD-42406 Info alert shows up when response for expired publications is no
 		page.getByText('There is one or more out of date publications.')
 	).toBeVisible();
 
-	await page.getByLabel('Close').click();
+	await alert.getByLabel('Close').click();
 
 	await expect(alert).toBeHidden();
 

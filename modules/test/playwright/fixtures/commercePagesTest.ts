@@ -22,6 +22,7 @@ import {CommerceAdminCurrencyDetailsPage} from '../pages/commerce/commerce-curre
 import {CommerceAdminHealthCheckPage} from '../pages/commerce/commerce-health-status-web/commerceAdminHealthCheckPage';
 import {CommerceAdminInventoryPage} from '../pages/commerce/commerce-inventory-web/commerceAdminInventoryPage';
 import {CommerceLayoutsPage} from '../pages/commerce/commerce-order-content-web/commerceLayoutsPage';
+import {OrderDetailsPage} from '../pages/commerce/commerce-order-content-web/orderDetailsPage';
 import {PendingOrdersPage} from '../pages/commerce/commerce-order-content-web/pendingOrdersPage';
 import {PlacedOrderPage} from '../pages/commerce/commerce-order-content-web/placedOrderPage';
 import {PlacedOrdersPage} from '../pages/commerce/commerce-order-content-web/placedOrdersPage';
@@ -136,6 +137,7 @@ const commercePagesTest = test.extend<{
 	commerceThemeMiniumPage: CommerceThemeMiniumPage;
 	commerceWishListPage: CommerceWishListPage;
 	offlinePaymentMethodsSystemSettingPage: OfflinePaymentMethodsSystemSettingPage;
+	orderDetailsPage: OrderDetailsPage;
 	organizationManagementPage: OrganizationManagementPage;
 	pendingOrdersPage: PendingOrdersPage;
 	placedOrderPage: PlacedOrderPage;
@@ -328,6 +330,9 @@ const commercePagesTest = test.extend<{
 	},
 	offlinePaymentMethodsSystemSettingPage: async ({page}, use) => {
 		await use(new OfflinePaymentMethodsSystemSettingPage(page));
+	},
+	orderDetailsPage: async ({page}, use) => {
+		await use(new OrderDetailsPage(page));
 	},
 	organizationManagementPage: async ({page}, use) => {
 		await use(new OrganizationManagementPage(page));

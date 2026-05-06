@@ -18,6 +18,7 @@ type TDiscount = {
 	];
 	id?: number;
 	level?: string;
+	limitationTimes?: number;
 	limitationType?: string;
 	maximumDiscountAmount?: number;
 	neverExpire?: boolean;

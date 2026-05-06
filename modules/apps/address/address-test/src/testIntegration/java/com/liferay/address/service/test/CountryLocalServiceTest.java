@@ -6,8 +6,11 @@
 package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.CountryTitleException;
+import com.liferay.portal.kernel.exception.NoSuchCountryException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryLocalization;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -149,6 +153,48 @@ public class CountryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyCountry() throws Exception {
+
+		// Lazy referencing disabled
+
+		try {
+			_countryLocalService.getOrAddEmptyCountry(
+				RandomTestUtil.randomString(), "aa", "aaa",
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
+
+			Assert.fail();
+		}
+		catch (NoSuchCountryException noSuchCountryException) {
+			Assert.assertNotNull(noSuchCountryException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			Country country = _countryLocalService.getOrAddEmptyCountry(
+				externalReferenceCode, "aa", "aaa",
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
+
+			Assert.assertEquals(
+				externalReferenceCode, country.getExternalReferenceCode());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, country.getStatus());
+			Assert.assertEquals(
+				country,
+				_countryLocalService.fetchCountryByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId()));
+
+			_countryLocalService.deleteCountry(country);
+		}
+	}
+
+	@Test
 	public void testSearchCountries() throws Exception {
 		Country country1 = _addCountry(
 			"a1", "a11", true, RandomTestUtil.randomString() + "_a11");
@@ -232,10 +278,10 @@ public class CountryLocalServiceTest {
 		int position = RandomTestUtil.randomInt();
 
 		Country updatedCountry = _countryLocalService.updateCountry(
-			country.getCountryId(), country.getA2(), country.getA3(),
-			country.isActive(), !billingAllowed, country.getIdd(),
-			country.getName(), number, position, !shippingAllowed,
-			!subjectToVAT);
+			country.getExternalReferenceCode(), country.getCountryId(),
+			country.getA2(), country.getA3(), country.isActive(),
+			!billingAllowed, country.getIdd(), country.getName(), number,
+			position, !shippingAllowed, !subjectToVAT);
 
 		Assert.assertEquals(!billingAllowed, updatedCountry.isBillingAllowed());
 		Assert.assertEquals(number, updatedCountry.getNumber());
@@ -256,15 +302,42 @@ public class CountryLocalServiceTest {
 				"de_DE", RandomTestUtil.randomString(maxTitleLength + 1)));
 	}
 
+	@Test
+	public void testUpdateCountryWithLazyReferencingEnabled() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Country country = _countryLocalService.getOrAddEmptyCountry(
+				RandomTestUtil.randomString(), "aa", "aaa",
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				TestPropsValues.getUserId());
+
+			String name = RandomTestUtil.randomString();
+			String number = String.valueOf(RandomTestUtil.nextInt());
+
+			country = _countryLocalService.updateCountry(
+				country.getExternalReferenceCode(), country.getCountryId(),
+				country.getA2(), country.getA3(), true, false, null, name,
+				number, 0D, false, false);
+
+			Assert.assertEquals(name, country.getName());
+			Assert.assertEquals(number, country.getNumber());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, country.getStatus());
+
+			_countryLocalService.deleteCountry(country);
+		}
+	}
+
 	private Country _addCountry(
 			boolean billingAllowed, String number, double position,
 			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired)
 		throws Exception {
 
 		return _countryLocalService.addCountry(
-			"aa", "aaa", true, billingAllowed, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), number, position, shippingAllowed,
-			subjectToVAT, zipRequired,
+			null, "aa", "aaa", true, billingAllowed,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			number, position, shippingAllowed, subjectToVAT, zipRequired,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -280,7 +353,7 @@ public class CountryLocalServiceTest {
 		throws Exception {
 
 		return _countryLocalService.addCountry(
-			a2, a3, active, RandomTestUtil.randomBoolean(),
+			null, a2, a3, active, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), name, number,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -289,7 +362,7 @@ public class CountryLocalServiceTest {
 
 	private Region _addRegion(long countryId) throws Exception {
 		return _regionLocalService.addRegion(
-			countryId, RandomTestUtil.randomBoolean(),
+			null, countryId, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());

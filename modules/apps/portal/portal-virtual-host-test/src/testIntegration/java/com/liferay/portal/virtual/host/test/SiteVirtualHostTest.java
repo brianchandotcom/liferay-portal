@@ -190,15 +190,16 @@ public class SiteVirtualHostTest extends BaseVirtualHostTestCase {
 		throws Exception {
 
 		assertURLtoString(
-			(code, body) -> {
+			(body, responseCode) -> {
 				if (!accessible) {
 					Assert.assertEquals(
-						HttpServletResponse.SC_NOT_FOUND, (long)code);
+						HttpServletResponse.SC_NOT_FOUND, (long)responseCode);
 
 					return;
 				}
 
-				Assert.assertEquals(HttpServletResponse.SC_OK, (long)code);
+				Assert.assertEquals(
+					HttpServletResponse.SC_OK, (long)responseCode);
 				Assert.assertTrue(body.contains(group.getDescriptiveName()));
 
 				Layout layout = _layoutLocalService.fetchDefaultLayout(

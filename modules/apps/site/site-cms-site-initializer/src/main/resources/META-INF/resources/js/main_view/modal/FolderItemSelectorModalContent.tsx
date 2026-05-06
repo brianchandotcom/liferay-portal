@@ -899,10 +899,7 @@ function FolderItemSelectorModalContent({
 								ITEM_SELECTOR_ITEM_TYPE.FOLDER &&
 							rootFolder
 						) {
-							handleOnItemsChange(
-								rootFolder,
-								rootFolder.title
-							);
+							handleOnItemsChange(rootFolder, rootFolder.title);
 						}
 					}}
 					onOpenChange={onOpenChange}

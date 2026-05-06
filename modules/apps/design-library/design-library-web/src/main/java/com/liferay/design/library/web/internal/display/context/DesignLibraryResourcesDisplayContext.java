@@ -126,7 +126,8 @@ public class DesignLibraryResourcesDisplayContext {
 		}
 
 		return HashMapBuilder.<String, Object>put(
-			"addStyleBookEntryURL", _getAddStyleBookEntryURL(depotGroupId)
+			"addStyleBookEntryURL",
+			_getAddStyleBookEntryURL(depotGroupId, designLibraryEntryId)
 		).put(
 			"canAddStyleBook", true
 		).put(
@@ -211,13 +212,24 @@ public class DesignLibraryResourcesDisplayContext {
 			));
 	}
 
-	private String _getAddStyleBookEntryURL(long depotGroupId) {
+	private String _getAddStyleBookEntryURL(
+		long depotGroupId, long designLibraryEntryId) {
+
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
 				_httpServletRequest, StyleBookPortletKeys.STYLE_BOOK,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/style_book/add_style_book_entry"
+		).setRedirect(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setMVCRenderCommandName(
+				"/design_library/design_library_resources"
+			).setParameter(
+				DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
+				designLibraryEntryId
+			).buildString()
 		).setParameter(
 			"groupId", depotGroupId
 		).buildString();

@@ -501,6 +501,108 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countByUserId(long userId);
 
 	/**
+	 * Returns all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @return the matching sharing entries
+	 */
+	public java.util.List<SharingEntry> findByToUserGroupId(long toUserGroupId);
+
+	/**
+	 * Returns a range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharing.model.impl.SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @return the range of matching sharing entries
+	 */
+	public java.util.List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharing.model.impl.SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sharing entries
+	 */
+	public java.util.List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharing.model.impl.SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sharing entries
+	 */
+	public java.util.List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first sharing entry in the ordered set where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	public SharingEntry findByToUserGroupId_First(
+			long toUserGroupId,
+			com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
+				orderByComparator)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the first sharing entry in the ordered set where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	public SharingEntry fetchByToUserGroupId_First(
+		long toUserGroupId,
+		com.liferay.portal.kernel.util.OrderByComparator<SharingEntry>
+			orderByComparator);
+
+	/**
+	 * Removes all the sharing entries where toUserGroupId = &#63; from the database.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 */
+	public void removeByToUserGroupId(long toUserGroupId);
+
+	/**
+	 * Returns the number of sharing entries where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @return the number of matching sharing entries
+	 */
+	public int countByToUserGroupId(long toUserGroupId);
+
+	/**
 	 * Returns all the sharing entries where toUserId = &#63;.
 	 *
 	 * @param toUserId the to user ID
@@ -1313,4 +1415,4 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public SharingEntry fetchByPrimaryKey(long sharingEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1036639967
+// LIFERAY-SERVICE-BUILDER-HASH:1032846420

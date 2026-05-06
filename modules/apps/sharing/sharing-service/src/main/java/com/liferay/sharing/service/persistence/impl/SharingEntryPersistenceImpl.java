@@ -766,6 +766,154 @@ public class SharingEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByToUserGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByToUserGroupId;
+	private FinderPath _finderPathCountByToUserGroupId;
+	private CollectionPersistenceFinder<SharingEntry>
+		_collectionPersistenceFinderByToUserGroupId;
+
+	/**
+	 * Returns all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @return the matching sharing entries
+	 */
+	@Override
+	public List<SharingEntry> findByToUserGroupId(long toUserGroupId) {
+		return findByToUserGroupId(
+			toUserGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @return the range of matching sharing entries
+	 */
+	@Override
+	public List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end) {
+
+		return findByToUserGroupId(toUserGroupId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sharing entries
+	 */
+	@Override
+	public List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator) {
+
+		return findByToUserGroupId(
+			toUserGroupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharing entries where toUserGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharingEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param start the lower bound of the range of sharing entries
+	 * @param end the upper bound of the range of sharing entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching sharing entries
+	 */
+	@Override
+	public List<SharingEntry> findByToUserGroupId(
+		long toUserGroupId, int start, int end,
+		OrderByComparator<SharingEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByToUserGroupId.find(
+			finderCache, new Object[] {toUserGroupId}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first sharing entry in the ordered set where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	@Override
+	public SharingEntry findByToUserGroupId_First(
+			long toUserGroupId,
+			OrderByComparator<SharingEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		SharingEntry sharingEntry = fetchByToUserGroupId_First(
+			toUserGroupId, orderByComparator);
+
+		if (sharingEntry != null) {
+			return sharingEntry;
+		}
+
+		throw new NoSuchEntryException(
+			_collectionPersistenceFinderByToUserGroupId.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toUserGroupId}));
+	}
+
+	/**
+	 * Returns the first sharing entry in the ordered set where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	@Override
+	public SharingEntry fetchByToUserGroupId_First(
+		long toUserGroupId, OrderByComparator<SharingEntry> orderByComparator) {
+
+		return _collectionPersistenceFinderByToUserGroupId.fetchFirst(
+			finderCache, new Object[] {toUserGroupId}, orderByComparator);
+	}
+
+	/**
+	 * Removes all the sharing entries where toUserGroupId = &#63; from the database.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 */
+	@Override
+	public void removeByToUserGroupId(long toUserGroupId) {
+		_collectionPersistenceFinderByToUserGroupId.remove(
+			finderCache, new Object[] {toUserGroupId});
+	}
+
+	/**
+	 * Returns the number of sharing entries where toUserGroupId = &#63;.
+	 *
+	 * @param toUserGroupId the to user group ID
+	 * @return the number of matching sharing entries
+	 */
+	@Override
+	public int countByToUserGroupId(long toUserGroupId) {
+		return _collectionPersistenceFinderByToUserGroupId.count(
+			finderCache, new Object[] {toUserGroupId});
+	}
+
 	private FinderPath _finderPathWithPaginationFindByToUserId;
 	private FinderPath _finderPathWithoutPaginationFindByToUserId;
 	private FinderPath _finderPathCountByToUserId;
@@ -2335,6 +2483,35 @@ public class SharingEntryPersistenceImpl
 					"sharingEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getUserId));
 
+		_finderPathWithPaginationFindByToUserGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToUserGroupId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"toUserGroupId"}, true);
+
+		_finderPathWithoutPaginationFindByToUserGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToUserGroupId",
+			new String[] {Long.class.getName()}, new String[] {"toUserGroupId"},
+			true);
+
+		_finderPathCountByToUserGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToUserGroupId",
+			new String[] {Long.class.getName()}, new String[] {"toUserGroupId"},
+			false);
+
+		_collectionPersistenceFinderByToUserGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByToUserGroupId,
+				_finderPathWithoutPaginationFindByToUserGroupId,
+				_finderPathCountByToUserGroupId, _SQL_SELECT_SHARINGENTRY_WHERE,
+				_SQL_COUNT_SHARINGENTRY_WHERE,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"sharingEntry.", "toUserGroupId", FinderColumn.Type.LONG,
+					"=", true, true, SharingEntry::getToUserGroupId));
+
 		_finderPathWithPaginationFindByToUserId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToUserId",
 			new String[] {
@@ -2630,4 +2807,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1482380816
+// LIFERAY-SERVICE-BUILDER-HASH:-1240255259

@@ -179,7 +179,9 @@ public class StructureBuilderDisplayContext {
 		).put(
 			"defaultLanguageLabels",
 			DefaultLanguageLabelsUtil.getDefaultLanguageLabelsJSONObject(
-				_themeDisplay)
+				_themeDisplay, "boolean", "date", "date-and-time", "decimal",
+				"long-text", "numeric", "repeatable-group", "rich-text",
+				"select-from-list", "select-related-content", "text", "upload")
 		).put(
 			"state",
 			JSONUtil.put(

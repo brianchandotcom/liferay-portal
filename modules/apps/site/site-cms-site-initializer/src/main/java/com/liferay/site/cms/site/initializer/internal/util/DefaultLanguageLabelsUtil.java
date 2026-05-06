@@ -21,7 +21,7 @@ import java.util.Locale;
 public class DefaultLanguageLabelsUtil {
 
 	public static JSONObject getDefaultLanguageLabelsJSONObject(
-			ThemeDisplay themeDisplay)
+			ThemeDisplay themeDisplay, String... keys)
 		throws PortalException {
 
 		Company company = themeDisplay.getCompany();
@@ -31,17 +31,11 @@ public class DefaultLanguageLabelsUtil {
 		JSONObject jsonObject = JSONUtil.put(
 			"locale", LocaleUtil.toLanguageId(locale));
 
-		for (String key : _SEED_LANGUAGE_KEYS) {
+		for (String key : keys) {
 			jsonObject.put(key, LanguageUtil.get(locale, key));
 		}
 
 		return jsonObject;
 	}
-
-	private static final String[] _SEED_LANGUAGE_KEYS = {
-		"boolean", "date", "date-and-time", "decimal", "long-text", "numeric",
-		"option", "repeatable-group", "rich-text", "select-from-list",
-		"select-related-content", "text", "untitled-picklist", "upload"
-	};
 
 }

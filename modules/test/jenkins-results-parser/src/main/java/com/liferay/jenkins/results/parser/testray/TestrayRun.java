@@ -29,20 +29,36 @@ import org.json.JSONObject;
  */
 public class TestrayRun {
 
+	public static final String[] FIELD_NAMES = {
+		"dateCreated", "dateModified", "id", "name"
+	};
+
 	public static String getDefaultRunIDString() {
 		return _properties.getProperty("testray.environment.default[master]");
 	}
 
 	public List<Factor> getFactors() {
-		return factors;
+		return _factors;
 	}
 
 	public long getID() {
+		if (_id != null) {
+			return _id;
+		}
+
 		if (_jsonObject == null) {
+			_id = _testrayBuild.getTestrayRunID(this);
+
+			if (_id != null) {
+				return _id;
+			}
+
 			return 0;
 		}
 
-		return _jsonObject.getLong("id");
+		_id = _jsonObject.optLong("id");
+
+		return _id;
 	}
 
 	public String getRunIDString() {
@@ -61,6 +77,10 @@ public class TestrayRun {
 
 	public TestrayBuild getTestrayBuild() {
 		return _testrayBuild;
+	}
+
+	public void setID(long id) {
+		_id = id;
 	}
 
 	public static class Factor {
@@ -193,7 +213,7 @@ public class TestrayRun {
 	protected void initializeFactorsByAxisTestClassGroup(
 		AxisTestClassGroup axisTestClassGroup) {
 
-		factors = new ArrayList<>();
+		_factors = new ArrayList<>();
 
 		if (axisTestClassGroup == null) {
 			return;
@@ -232,7 +252,7 @@ public class TestrayRun {
 				continue;
 			}
 
-			factors.add(new Factor(factoryName, factoryValue));
+			_factors.add(new Factor(factoryName, factoryValue));
 		}
 
 		BatchTestClassGroup batchTestClassGroup =
@@ -245,7 +265,7 @@ public class TestrayRun {
 	protected void initializeFactorsByBatchName(
 		String batchName, String testSuiteName) {
 
-		factors = new ArrayList<>();
+		_factors = new ArrayList<>();
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
 			return;
@@ -265,14 +285,14 @@ public class TestrayRun {
 				continue;
 			}
 
-			factors.add(new Factor(factoryName, factoryValue));
+			_factors.add(new Factor(factoryName, factoryValue));
 		}
 
 		_addSearchEngineFactor(batchName, testSuiteName);
 	}
 
 	protected void initializeFactorsByJSONObject(JSONObject jsonObject) {
-		factors = new ArrayList<>();
+		_factors = new ArrayList<>();
 
 		if (jsonObject == null) {
 			return;
@@ -297,15 +317,13 @@ public class TestrayRun {
 					String factorName = _getFactorName(
 						factorValueMatcher.group("nameKey"));
 
-					factors.add(new Factor(factorName, factorValue));
+					_factors.add(new Factor(factorName, factorValue));
 
 					break;
 				}
 			}
 		}
 	}
-
-	protected List<Factor> factors;
 
 	private void _addSearchEngineFactor(
 		String batchName, String testSuiteName) {
@@ -323,7 +341,7 @@ public class TestrayRun {
 			return;
 		}
 
-		factors.add(
+		_factors.add(
 			new Factor(searchEngineFactorName, searchEngineFactorValue));
 	}
 
@@ -496,6 +514,8 @@ public class TestrayRun {
 			"\\[(?<nameKey>[^\\]]+)\\](\\[(?<valueKey>[^\\]]+)\\])?");
 	private static final Properties _properties = new Properties();
 
+	private List<Factor> _factors;
+	private Long _id;
 	private final JSONObject _jsonObject;
 	private final TestrayBuild _testrayBuild;
 

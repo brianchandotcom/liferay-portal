@@ -54,6 +54,8 @@ portletDisplay.setURLBack(backURL);
 		module="{NewImport} from exportimport-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"backURL", backURL
+			).put(
 				"importPreviewAPIURL", exportImportPreviewDisplayContext.getImportPreviewAPIURL()
 			).build()
 		%>'

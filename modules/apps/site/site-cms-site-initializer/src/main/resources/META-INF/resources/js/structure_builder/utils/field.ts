@@ -4,7 +4,7 @@
  */
 
 import {ObjectField} from '../../common/types/ObjectDefinition';
-import {getDefaultLanguageLabel} from '../../common/utils/getDefaultLanguageLabel';
+import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
 import getUuid from './getUuid';

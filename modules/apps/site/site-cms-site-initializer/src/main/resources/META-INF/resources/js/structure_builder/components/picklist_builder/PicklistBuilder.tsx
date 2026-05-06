@@ -13,7 +13,7 @@ import {Picklist} from '../../../common/types/Picklist';
 import {
 	DefaultLanguageLabels,
 	setDefaultLanguageLabels,
-} from '../../../common/utils/getDefaultLanguageLabel';
+} from '../../../common/utils/defaultLanguageLabels';
 import PicklistBuilderContextProvider, {
 	buildState,
 	useId,

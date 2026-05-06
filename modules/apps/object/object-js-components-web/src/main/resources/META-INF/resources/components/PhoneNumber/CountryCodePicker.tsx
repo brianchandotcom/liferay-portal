@@ -25,7 +25,7 @@ const PickerTrigger = React.forwardRef<
 	const flagSymbol = getFlagSymbol(selectedCountry.a2);
 
 	return (
-		<div {...(otherProps as any)} ref={ref}>
+		<button {...(otherProps as any)} ref={ref}>
 			{flagSymbol && (
 				<span className="inline-item inline-item-before">
 					<ClayIcon symbol={flagSymbol} />
@@ -33,7 +33,7 @@ const PickerTrigger = React.forwardRef<
 			)}
 
 			<span>+{selectedCountry.idd}</span>
-		</div>
+		</button>
 	);
 });
 

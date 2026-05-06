@@ -26,6 +26,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
@@ -741,6 +742,56 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteCPDefinitionRemovesIncomingDefinitionLinks()
+		throws Exception {
+
+		frutillaRule.scenario(
+			"Delete product definition with incoming definition links"
+		).given(
+			"A product definition with a definition link to another product " +
+				"definition"
+		).when(
+			"the linked product definition is deleted"
+		).then(
+			"the definition link should be removed from the source product " +
+				"definition"
+		);
+
+		CPDefinition cpDefinition1 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+		CPDefinition cpDefinition2 = CPTestUtil.addCPDefinitionFromCatalog(
+			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
+			false);
+
+		Calendar displayCalendar = CalendarFactoryUtil.getCalendar();
+
+		displayCalendar.setTime(cpDefinition1.getDisplayDate());
+
+		_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(
+			cpDefinition1.getCPDefinitionId(), cpDefinition2.getCProductId(),
+			displayCalendar.get(Calendar.MONTH),
+			displayCalendar.get(Calendar.DAY_OF_MONTH),
+			displayCalendar.get(Calendar.YEAR),
+			displayCalendar.get(Calendar.HOUR_OF_DAY),
+			displayCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0D,
+			"related", _serviceContext);
+
+		Assert.assertEquals(
+			1,
+			_cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+				cpDefinition1.getCPDefinitionId()));
+
+		_cpDefinitionLocalService.deleteCPDefinition(
+			cpDefinition2.getCPDefinitionId());
+
+		Assert.assertEquals(
+			0,
+			_cpDefinitionLinkLocalService.getCPDefinitionLinksCount(
+				cpDefinition1.getCPDefinitionId()));
+	}
+
+	@Test
 	public void testDeleteCPDefinitionWithIgnoreSKUCombinationsAndDefaultInstance()
 		throws Exception {
 
@@ -1380,6 +1431,9 @@ public class CPDefinitionLocalServiceTest {
 	@Inject
 	private CPDefinitionInventoryLocalService
 		_cpDefinitionInventoryLocalService;
+
+	@Inject
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;

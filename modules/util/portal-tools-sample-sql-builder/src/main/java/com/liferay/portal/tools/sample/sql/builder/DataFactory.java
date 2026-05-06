@@ -320,6 +320,7 @@ import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -7133,16 +7134,19 @@ public class DataFactory {
 			long segmentsExperienceId = _getSegmentsExperienceId(
 				layoutModel, segmentsExperienceModels);
 
-			List<String> rendererKeyAndPositionList =
-				_utilityPageFragmentEntryLinkRendererKeyAndPositionMap.get(
-					externalReferenceCode);
+			List<Tuple>
+				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples =
+					_utilityPageFragmentEntryLinkRendererKeyAndPositionTuplesMap.
+						get(externalReferenceCode);
 
-			for (String rendererKeyAndPosition : rendererKeyAndPositionList) {
+			for (Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple :
+					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples) {
+
 				originalFragmentEntryLinkModels.add(
 					newUtilityPageFragmentEntryLinkModel(
 						layoutModel, segmentsExperienceId,
-						rendererKeyAndPosition, externalReferenceCode,
-						renderNamespace));
+						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple,
+						externalReferenceCode, renderNamespace));
 			}
 		}
 
@@ -8990,8 +8994,8 @@ public class DataFactory {
 
 	protected FragmentEntryLinkModel newUtilityPageFragmentEntryLinkModel(
 			LayoutModel layoutModel, long segmentsExperienceId,
-			String rendererKeyAndPosition, String externalReferenceCode,
-			String renderNamespace)
+			Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple,
+			String externalReferenceCode, String renderNamespace)
 		throws Exception {
 
 		String configuration = StringPool.BLANK;
@@ -9002,7 +9006,9 @@ public class DataFactory {
 		String rendererKey = StringPool.BLANK;
 		int position = 0;
 
-		if (rendererKeyAndPosition.equals(StringPool.BLANK)) {
+		if (utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.getSize() ==
+				1) {
+
 			type = FragmentConstants.TYPE_PORTLET;
 
 			editValue = StringUtil.replace(
@@ -9013,12 +9019,14 @@ public class DataFactory {
 				_utilityPagePortletIdMap.get(externalReferenceCode));
 		}
 		else {
-			String[] rendererKeyAndPositionArray = rendererKeyAndPosition.split(
-				"#");
-
-			rendererKey = rendererKeyAndPositionArray[0];
-
-			position = GetterUtil.getInteger(rendererKeyAndPositionArray[1]);
+			rendererKey =
+				(String)
+					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+						getObject(0);
+			position =
+				(Integer)
+					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+						getObject(1);
 
 			String fragmentName = StringUtil.toLowerCase(
 				StringUtil.split(rendererKey, CharPool.DASH)[1]);
@@ -9035,14 +9043,20 @@ public class DataFactory {
 					_readFile(
 						"fragment_component/fragment_" +
 							"component_heading_editValue_utility_page.json"),
-					"${heading}", rendererKeyAndPositionArray[2]);
+					"${heading}",
+					(String)
+						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+							getObject(2));
 
 				configuration = _readFile(
 					"fragment_component" +
 						"/fragment_component_heading_configuration.json");
 			}
 			else if (rendererKey.contains("paragraph")) {
-				String paragraphContent = rendererKeyAndPositionArray[2];
+				String paragraphContent =
+					(String)
+						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+							getObject(2);
 
 				if (paragraphContent.endsWith(".txt")) {
 					String fileName = StringUtil.replace(
@@ -9764,45 +9778,63 @@ public class DataFactory {
 			).build();
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
-	private static final Map<String, List<String>>
-		_utilityPageFragmentEntryLinkRendererKeyAndPositionMap =
-			HashMapBuilder.<String, List<String>>put(
+	private static final Map<String, List<Tuple>>
+		_utilityPageFragmentEntryLinkRendererKeyAndPositionTuplesMap =
+			HashMapBuilder.<String, List<Tuple>>put(
 				"LFR-404-ERROR-layout-draft",
 				Arrays.asList(
-					"BASIC_COMPONENT-heading#0#404",
-					"BASIC_COMPONENT-paragraph#1#Page Not Found",
-					"BASIC_COMPONENT-button#2#")
+					new Tuple("BASIC_COMPONENT-heading", 0, "404"),
+					new Tuple("BASIC_COMPONENT-paragraph", 1, "Page Not Found"),
+					new Tuple("BASIC_COMPONENT-button", 2, StringPool.BLANK))
 			).put(
 				"LFR-500-ERROR-layout-draft",
 				Arrays.asList(
-					"BASIC_COMPONENT-heading#0#500",
-					"BASIC_COMPONENT-paragraph#1#Internal Server Error")
+					new Tuple("BASIC_COMPONENT-heading", 0, "500"),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 1,
+						"Internal Server Error"))
 			).put(
 				"LFR-COOKIE-POLICY-layout-draft",
 				Arrays.asList(
-					StringPool.BLANK,
-					"BASIC_COMPONENT-heading#0#Strictly Necessary Cookies",
-					StringPool.BLANK,
-					"BASIC_COMPONENT-paragraph#1#Strictly_Necessary_Cookies." +
-						"txt",
-					"BASIC_COMPONENT-heading#0#Personalization Cookies",
-					"BASIC_COMPONENT-paragraph#1#Personalization_Cookies.txt",
-					"BASIC_COMPONENT-paragraph#0#Cookies_List.txt",
-					StringPool.BLANK,
-					"BASIC_COMPONENT-heading#0#Performance Cookies",
-					"BASIC_COMPONENT-button#1#",
-					"BASIC_COMPONENT-heading#0#Functional Cookies",
-					"BASIC_COMPONENT-paragraph#1#Functional_Cookies.txt",
-					"BASIC_COMPONENT-paragraph#1#Performance_Cookies.txt",
-					"BASIC_COMPONENT-heading#0#Cookies List", StringPool.BLANK)
+					new Tuple(StringPool.BLANK),
+					new Tuple(
+						"BASIC_COMPONENT-heading", 0,
+						"Strictly Necessary Cookies"),
+					new Tuple(StringPool.BLANK),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 1,
+						"Strictly_Necessary_Cookies.txt"),
+					new Tuple(
+						"BASIC_COMPONENT-heading", 0,
+						"Personalization Cookies"),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 1,
+						"Personalization_Cookies.txt"),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 0, "Cookies_List.txt"),
+					new Tuple(StringPool.BLANK),
+					new Tuple(
+						"BASIC_COMPONENT-heading", 0, "Performance Cookies"),
+					new Tuple("BASIC_COMPONENT-button", 1, StringPool.BLANK),
+					new Tuple(
+						"BASIC_COMPONENT-heading", 0, "Functional Cookies"),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 1,
+						"Functional_Cookies.txt"),
+					new Tuple(
+						"BASIC_COMPONENT-paragraph", 1,
+						"Performance_Cookies.txt"),
+					new Tuple("BASIC_COMPONENT-heading", 0, "Cookies List"),
+					new Tuple(StringPool.BLANK))
 			).put(
 				"LFR-CREATE-ACCOUNT-layout-draft",
-				Arrays.asList(StringPool.BLANK)
+				Arrays.asList(new Tuple(StringPool.BLANK))
 			).put(
 				"LFR-FORGOT-PASSWORD-layout-draft",
-				Arrays.asList(StringPool.BLANK)
+				Arrays.asList(new Tuple(StringPool.BLANK))
 			).put(
-				"LFR-LOGIN-layout-draft", Arrays.asList(StringPool.BLANK)
+				"LFR-LOGIN-layout-draft",
+				Arrays.asList(new Tuple(StringPool.BLANK))
 			).build();
 	private static final Map<String, String> _utilityPagePortletIdMap =
 		HashMapBuilder.put(

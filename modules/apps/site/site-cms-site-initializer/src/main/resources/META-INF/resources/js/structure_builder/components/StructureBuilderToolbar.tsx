@@ -61,6 +61,7 @@ export default function StructureBuilderToolbar() {
 			<Toolbar.Item className="d-none d-sm-flex">
 				<ClayLink
 					className="btn btn-outline-borderless btn-outline-secondary btn-sm"
+					data-canonical-name={Liferay.Language.get('cancel')}
 					href="structures"
 				>
 					{Liferay.Language.get('cancel')}

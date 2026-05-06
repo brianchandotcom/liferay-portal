@@ -1833,6 +1833,61 @@ test(
 );
 
 test(
+	'Bulk Expire over a Select All expanded selection forwards the section filter',
+	{tag: '@LPD-88977'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const fileCount = 21;
+		const titlePrefix = `BulkSelectAll ${getRandomString()}`;
+
+		await test.step(`Create ${fileCount} files in the Default space`, async () => {
+			for (let i = 0; i < fileCount; i++) {
+				const entry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						file: {
+							fileBase64: 'R0lGODlhAQABAAAAACw=',
+							name: `${titlePrefix}_${i}.gif`,
+						},
+						objectEntryFolderExternalReferenceCode: 'L_FILES',
+						title: `${titlePrefix}_${i}`,
+					},
+					'cms/basic-documents',
+					'Default'
+				);
+
+				apiHelpers.data.push({
+					id: entry.file.id,
+					type: 'document',
+				});
+			}
+		});
+
+		await assetsPage.gotoFiles();
+		await assetsPage.changeVisualizationMode('Table');
+
+		await page.getByTitle('Select Items').click();
+
+		const selectAllLink = page.getByRole('button', {
+			exact: true,
+			name: 'Select All',
+		});
+
+		await expect(selectAllLink).toBeVisible();
+
+		await selectAllLink.click();
+
+		await expect(page.getByText('All Selected')).toBeVisible();
+
+		await assetsPage.execBulkItemAction('Expire');
+
+		await waitForAlert(page, 'Info:Expire action started', {
+			type: 'info',
+		});
+
+		await expect(page.getByText('Filter is null')).toHaveCount(0);
+	}
+);
+
+test(
 	'Export for Translation CMS assets in bulk',
 	{tag: '@LPD-85361'},
 	async ({apiHelpers, assetsPage, page}) => {

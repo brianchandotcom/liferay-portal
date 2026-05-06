@@ -327,11 +327,11 @@ function Filters({
 	};
 
 	const onCreationButtonClick = (filterType: EFilterType) => {
-		const currentFilterTypeFields: IFieldTreeItem[] = JSON.parse(
+		const filterableFieldsCopy: IFieldTreeItem[] = JSON.parse(
 			JSON.stringify(filterableFields)
 		);
 
-		const availableFilterTypeFields = currentFilterTypeFields.filter(
+		const availableFilterTypeFields = filterableFieldsCopy.filter(
 			(field) =>
 				FILTER_TYPES[filterType as EFilterType].availableFieldsFilter(
 					field

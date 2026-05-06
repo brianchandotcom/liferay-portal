@@ -28,11 +28,15 @@ const XHR_HEADERS = {
 	'X-CSRF-Token': Liferay.authToken,
 };
 
+function getErrorMessage(errorResponse: ApiErrorResponse): string {
+	return (
+		errorResponse.title || errorResponse.message || UNEXPECTED_ERROR_MESSAGE
+	);
+}
+
 async function get<T>(url: string): Promise<RequestResult<T>> {
 	try {
-		const response = await fetch(url, {
-			headers: HEADERS,
-		});
+		const response = await fetch(url, {headers: HEADERS});
 
 		if (response.status === 401) {
 			window.location.reload();
@@ -55,15 +59,9 @@ async function get<T>(url: string): Promise<RequestResult<T>> {
 			return {data: responseData as T, error: null};
 		}
 
-		const errorResponse = responseData as ApiErrorResponse;
-
 		return {
 			data: null,
-			error:
-				errorResponse?.title ||
-				errorResponse?.message ||
-				errorResponse?.error ||
-				UNEXPECTED_ERROR_MESSAGE,
+			error: getErrorMessage(responseData as ApiErrorResponse),
 			status: response.status.toString(),
 		};
 	}
@@ -111,36 +109,25 @@ async function postFormDataWithProgress<T>(
 				responseData = JSON.parse(xhr.responseText);
 			}
 			catch (error) {
-				return resolve({
-					data: null,
-					error: UNEXPECTED_ERROR_MESSAGE,
-				});
+				resolve({data: null, error: UNEXPECTED_ERROR_MESSAGE});
+
+				return;
 			}
 
 			if (xhr.status >= 200 && xhr.status < 300) {
 				resolve({data: responseData as T, error: null});
 			}
 			else {
-				const errorResponse = responseData as ApiErrorResponse;
-
-				const errorMessage =
-					errorResponse?.title ||
-					errorResponse?.message ||
-					UNEXPECTED_ERROR_MESSAGE;
-
 				resolve({
 					data: null,
-					error: errorMessage,
+					error: getErrorMessage(responseData as ApiErrorResponse),
 					status: xhr.status.toString(),
 				});
 			}
 		};
 
 		xhr.onerror = () =>
-			resolve({
-				data: null,
-				error: UNEXPECTED_ERROR_MESSAGE,
-			});
+			resolve({data: null, error: UNEXPECTED_ERROR_MESSAGE});
 
 		xhr.onloadend = () => {
 			if (signal) {

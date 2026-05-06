@@ -89,7 +89,6 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDescription(description);
 		accountGroup.setName(name);
 		accountGroup.setType(AccountConstants.ACCOUNT_GROUP_TYPE_STATIC);
-		accountGroup.setExpandoBridgeAttributes(serviceContext);
 
 		if (_emptyModelManager.isEmptyModel()) {
 			accountGroup.setStatus(WorkflowConstants.STATUS_EMPTY);
@@ -97,6 +96,8 @@ public class AccountGroupLocalServiceImpl
 		else {
 			accountGroup.setStatus(WorkflowConstants.STATUS_APPROVED);
 		}
+
+		accountGroup.setExpandoBridgeAttributes(serviceContext);
 
 		accountGroup = accountGroupPersistence.update(accountGroup);
 

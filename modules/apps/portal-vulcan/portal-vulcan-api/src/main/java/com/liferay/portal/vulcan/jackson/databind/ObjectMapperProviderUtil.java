@@ -25,6 +25,7 @@ import com.liferay.portal.vulcan.jaxrs.serializer.JSONArrayStdSerializer;
 import com.liferay.portal.vulcan.jaxrs.serializer.JSONObjectStdSerializer;
 import com.liferay.portal.vulcan.jaxrs.serializer.UnsafeSupplierJsonSerializer;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.TimeZone;
@@ -60,12 +61,13 @@ public class ObjectMapperProviderUtil {
 						}
 					});
 
-				SimpleDateFormat dateFormat = new SimpleDateFormat(
+				DateFormat dateFormat = new SimpleDateFormat(
 					"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 				dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 				setDateFormat(dateFormat);
+
 				setSerializationInclusion(JsonInclude.Include.NON_NULL);
 			}
 		};

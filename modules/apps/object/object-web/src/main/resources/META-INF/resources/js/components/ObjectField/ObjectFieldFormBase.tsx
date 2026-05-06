@@ -813,9 +813,10 @@ export default function ObjectFieldFormBase({
 					</ClayForm.Group>
 				)}
 
-			{(values.businessType === 'PhoneNumber' ||
-				values.businessType === 'Text' ||
-				values.businessType === 'Integer') && (
+			{(values.businessType === 'EmailAddress' ||
+				values.businessType === 'Integer' ||
+				values.businessType === 'PhoneNumber' ||
+				values.businessType === 'Text') && (
 				<UniqueValues
 					disabled={disabled}
 					objectField={values}

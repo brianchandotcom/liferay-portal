@@ -318,6 +318,7 @@ type ObjectFieldBusinessTypeName =
 	| 'Date'
 	| 'DateTime'
 	| 'Decimal'
+	| 'EmailAddress'
 	| 'Encrypted'
 	| 'Formula'
 	| 'Integer'
@@ -370,6 +371,10 @@ interface ObjectFieldSetting {
 
 type ObjectFieldSettingName =
 	| 'acceptedFileExtensions'
+	| 'autocomplete'
+	| 'autocompleteDomains'
+	| 'autocompleteEnabled'
+	| 'blockedDomains'
 	| 'defaultValue'
 	| 'defaultValueType'
 	| 'fileSource'

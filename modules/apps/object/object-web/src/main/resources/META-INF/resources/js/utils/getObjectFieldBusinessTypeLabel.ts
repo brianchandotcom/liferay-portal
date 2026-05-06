@@ -12,6 +12,7 @@ const objectFieldBusinessTypeLabels = {
 	Date: Liferay.Language.get('date'),
 	DateTime: Liferay.Language.get('date-time'),
 	Decimal: Liferay.Language.get('decimal'),
+	EmailAddress: Liferay.Language.get('email-address'),
 	Encrypted: Liferay.Language.get('encrypted'),
 	Formula: Liferay.Language.get('formula'),
 	Integer: Liferay.Language.get('integer'),

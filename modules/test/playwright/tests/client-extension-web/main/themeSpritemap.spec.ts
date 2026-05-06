@@ -10,7 +10,6 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../../utils/getRandomString';
-import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
@@ -73,12 +72,7 @@ testSample.describe('Samples', () => {
 test(
 	'Client extension is applied',
 	{tag: ['@LPS-166479', '@LPD-75288']},
-	async ({
-		apiHelpers,
-		page,
-		pagesAdminPage,
-		site,
-	}) => {
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
 		const sample = {
 			erc: 'LXC:liferay-sample-theme-spritemap-1',
 			name: 'Liferay Sample Theme Spritemap 1',
@@ -107,25 +101,20 @@ test(
 		});
 
 		await test.step('Create an empty page and go to it', async () => {
-			const layout = await apiHelpers.headlessDelivery.createSitePage({
-				pageDefinition: getPageDefinition([]),
-				siteId: site.id,
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
 				title: getRandomString(),
 			});
 
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath || layout.friendlyURL}`
-			);
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 		});
 
 		await test.step('Assert new spritemap is used', async () => {
-			const sampleSpritemapUse = page
-				.getByTestId('applicationsMenu')
-				.locator('svg use');
+			const spritemap = await page.evaluate(
+				() => Liferay.Icons.spritemap
+			);
 
-			const spritemapHref = await sampleSpritemapUse.getAttribute('href');
-
-			expect(spritemapHref).toContain(sample.url);
+			expect(spritemap).toContain(sample.url);
 		});
 	}
 );

@@ -30,6 +30,9 @@ function Toolbar({backURL, children, className, title}: Props) {
 						<ClayToolbar.Item>
 							<ClayToolbar.Action
 								aria-label={Liferay.Language.get('back')}
+								data-canonical-name={Liferay.Language.get(
+									'back'
+								)}
 								href={backURL}
 								symbol="angle-left"
 								title={Liferay.Language.get('back')}

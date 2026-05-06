@@ -311,10 +311,24 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 																	<Form.Label
 																		htmlFor='externalReferenceCode'
 																		popover={{
-																			content:
-																				Liferay.Language.get(
-																					'unique-key-for-referencing-the-segment-definition'
-																				),
+																			content: (
+																				<>
+																					<span>
+																						{Liferay.Language.get(
+																							'unique-key-for-referencing-the-segment-definition'
+																						)}
+																					</span>
+
+																					<br />
+																					<br />
+
+																					<span>
+																						{Liferay.Language.get(
+																							'erc-must-contain-only-lowercase-letters-numbers-hyphens-and-underscores'
+																						)}
+																					</span>
+																				</>
+																			),
 																			title: Liferay.Language.get(
 																				'segment-erc'
 																			)

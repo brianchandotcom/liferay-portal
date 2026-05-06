@@ -71,12 +71,17 @@ test('Resize columns', {tag: '@LPD-54497'}, async ({fdsSamplePage, page}) => {
 test(
 	'Hide column and assert correct visibility of columns',
 	{tag: '@LPD-45051'},
-	async ({page}) => {
+	async ({fdsSamplePage, page}) => {
+		const firstRowItemActionButton =
+			fdsSamplePage.table.itemActionButtons.first();
+
 		const initialBodyCellText = await page.locator('td').nth(1).innerText();
 
 		const rowAction = page.locator('td .component-action').first();
 
 		await test.step('Check that row actions are present', async () => {
+			await firstRowItemActionButton.hover();
+
 			await expect(rowAction).toBeAttached();
 		});
 
@@ -127,7 +132,7 @@ test(
 
 			await expect(advancedSampleListItem).toBeVisible();
 
-			await advancedSampleListItem.click();
+			await advancedSampleListItem.getByRole('radio').click();
 
 			await expect(advancedSampleListItem).toHaveClass(/selected/);
 

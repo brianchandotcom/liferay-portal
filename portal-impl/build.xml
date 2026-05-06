@@ -728,12 +728,9 @@
 						</if>
 
 						<if>
-							<or>
-								<matches pattern="modules/test/poshi" string="${baseline.current.branch.file.names}" />
-								<not>
-									<matches pattern="\.(js|json|jsp|jspf|scss|ts|tsx)(${line.separator}|$)" string="${baseline.current.branch.file.names}" />
-								</not>
-							</or>
+							<not>
+								<matches pattern="${source.formatter.frontend.file.regex}" string="${baseline.current.branch.file.names}" />
+							</not>
 							<then>
 								<property name="skip.node.task" value="true" />
 							</then>

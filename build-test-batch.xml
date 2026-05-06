@@ -10513,9 +10513,22 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 						<echo>Running com.liferay.source.formatter.jar from HEAD.</echo>
 					</then>
 					<else>
-						<antcall target="setup-sdk" />
+						<lstopwatch action="start" name="setup.source.format" />
 
-						<antcall target="setup-yarn" />
+						<antcall inheritAll="false" target="update-gradle-properties" />
+
+						<gradle-execute setupbinariescache="true" task="setUpComLiferaySourceFormatter">
+							<arg value="--build-file=${project.dir}/modules/util.gradle" />
+						</gradle-execute>
+
+						<lstopwatch action="total" name="setup.source.format" />
+
+						<if>
+							<matches pattern="${source.formatter.frontend.file.regex}" string="${git.diff}" />
+							<then>
+								<antcall target="setup-yarn" />
+							</then>
+						</if>
 
 						<loadproperties>
 							<zipentry name="META-INF/MANIFEST.MF" zipfile="tools/sdk/dependencies/com.liferay.source.formatter/lib/com.liferay.source.formatter.jar" />

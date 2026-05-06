@@ -70,7 +70,7 @@ When the total exceeds 20 minutes, surface the breakdown and ask the developer w
 
 ### Pass 2: Execute
 
-For each matched validation from pass 1, run the **Command** and apply **Auto-Commit** when present. Record PASS or FAIL. Do not halt on FAIL — continue so the developer sees the full picture.
+For each matched validation, spawn one subagent. **Pass it only the **Command** and **Auto-Commit** sections of the validation file, not the full file.** Record PASS or FAIL. Do not halt on FAIL — continue so the developer sees the full picture.
 
 When the validation's **Command** is a build (gradle, ant, npm, jest), bound the output:
 

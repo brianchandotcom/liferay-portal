@@ -9016,7 +9016,7 @@ public class DataFactory {
 					"fragment_component/fragment_" +
 						"component_portlet_editValue_utility_page.json"),
 				"${portletId}",
-				_utilityPagePortletIdMap.get(externalReferenceCode));
+				_utilityPagePortletIds.get(externalReferenceCode));
 		}
 		else {
 			rendererKey =
@@ -9836,7 +9836,7 @@ public class DataFactory {
 				"LFR-LOGIN-layout-draft",
 				Arrays.asList(new Tuple(StringPool.BLANK))
 			).build();
-	private static final Map<String, String> _utilityPagePortletIdMap =
+	private static final Map<String, String> _utilityPagePortletIds =
 		HashMapBuilder.put(
 			"LFR-COOKIE-POLICY-layout-draft",
 			"com_liferay_object_web_internal_object_definitions_portlet_" +

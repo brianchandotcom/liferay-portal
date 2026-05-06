@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {analyticsCloudConnectedTest} from '../../../fixtures/analyticsCloudConnectedTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -17,17 +17,56 @@ import getPageDefinition from '../../layout-content-page-editor-web/main/utils/g
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {templatesPageTest} from '../../template-web/main/fixtures/templatesPageTest';
 
+const ANALYTICS_CONFIGURATION_PID =
+	'com.liferay.analytics.settings.configuration.AnalyticsConfiguration';
+
+const ANALYTICS_CONFIGURATION_URL = `/o/headless-admin-configuration/v1.0/instance-configurations/${ANALYTICS_CONFIGURATION_PID}`;
+
 const test = mergeTests(
-	analyticsCloudConnectedTest({
-		'LPD-81914': {enabled: true},
-	}),
 	apiHelpersTest,
 	assetPublisherPagesTest,
+	featureFlagsTest({
+		'LPD-65399': {enabled: true},
+		'LPD-81914': {enabled: true},
+		'LPS-155284': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
 	templatesPageTest
 );
+
+let originalAnalyticsProperties: Record<string, unknown> = {};
+
+test.beforeEach(async ({apiHelpers}) => {
+	const configuration = await apiHelpers.get(ANALYTICS_CONFIGURATION_URL);
+
+	originalAnalyticsProperties = configuration?.properties ?? {};
+
+	await apiHelpers.put(ANALYTICS_CONFIGURATION_URL, {
+		data: {
+			externalReferenceCode: ANALYTICS_CONFIGURATION_PID,
+			properties: {
+				liferayAnalyticsDataSourceId: 'playwright-stub-data-source',
+				liferayAnalyticsFaroBackendSecuritySignature:
+					'playwright-stub-signature',
+				liferayAnalyticsFaroBackendURL:
+					'http://playwright-stub.invalid',
+			},
+		},
+		failOnStatusCode: true,
+	});
+});
+
+test.afterEach(async ({apiHelpers}) => {
+	await apiHelpers.put(ANALYTICS_CONFIGURATION_URL, {
+		data: {
+			externalReferenceCode: ANALYTICS_CONFIGURATION_PID,
+			properties: originalAnalyticsProperties,
+		},
+		failOnStatusCode: true,
+	});
+});
 
 test(
 	'Emits data-analytics-asset-* attributes for Asset Publisher display templates',

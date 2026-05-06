@@ -261,6 +261,7 @@ export function getDefaultField({
 	type: FieldType;
 }): Field {
 	const resolvedLanguageKey = languageKey ?? FIELD_TYPE_LANGUAGE_KEY[type];
+	const defaultLocaleLabel = getDefaultLanguageLabel(resolvedLanguageKey);
 
 	const base = {
 		erc: getRandomId(),
@@ -270,14 +271,13 @@ export function getDefaultField({
 			indexedLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
 		},
 		label: {
-			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-				getDefaultLanguageLabel(resolvedLanguageKey),
+			[Liferay.ThemeDisplay.getDefaultLanguageId()]: defaultLocaleLabel,
 			[Liferay.ThemeDisplay.getLanguageId()]:
 				Liferay.Language.get(resolvedLanguageKey),
 		},
 		localized: true,
 		locked,
-		name: name ?? normalizeString(FIELD_TYPE_LABEL[type], {style: 'camel'}),
+		name: name ?? normalizeString(defaultLocaleLabel, {style: 'camel'}),
 		parent,
 		required,
 		settings: {},

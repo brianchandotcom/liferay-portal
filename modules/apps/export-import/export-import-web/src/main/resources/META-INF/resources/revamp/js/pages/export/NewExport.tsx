@@ -21,7 +21,7 @@ import {
 	ExportPreviewQuery,
 	getExportPreview,
 } from '../../services/exportPreviewService';
-import {ExportPreview} from '../../types/portletDataHandlerSection';
+import {ExportPreview} from '../../types/exportImportPreview';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import DataSelection from './components/DataSelection';
 import Setup from './components/Setup';

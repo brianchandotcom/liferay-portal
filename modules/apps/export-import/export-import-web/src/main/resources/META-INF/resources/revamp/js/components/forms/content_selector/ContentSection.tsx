@@ -10,7 +10,7 @@ import React from 'react';
 import {
 	PortletDataHandlerBoolean,
 	PortletDataHandlerSection as PortletDataHandlerSectionType,
-} from '../../../types/portletDataHandlerSection';
+} from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
 	getInitialSelection,

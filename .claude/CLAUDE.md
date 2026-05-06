@@ -83,7 +83,7 @@ cd <module-root> && <gradlew> test --tests <TestClassName>
 
 # Portal core
 ant test-unit
-ant test-unit -Dtest.class=SomeTest
+ant test-class -Dtest.class=SomeTest
 ant test-package -Dtest.package=com.liferay.portal.kernel.util
 
 # Frontend

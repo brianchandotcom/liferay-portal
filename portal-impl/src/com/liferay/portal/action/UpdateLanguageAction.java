@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,19 +74,28 @@ public class UpdateLanguageAction implements Action {
 					themeDisplay.getUserId(), languageId);
 			}
 
-			HttpSession httpSession = httpServletRequest.getSession();
+			if (Validator.isNull(themeDisplay.getDoAsUserId())) {
+				HttpSession httpSession = httpServletRequest.getSession();
 
-			httpSession.setAttribute(WebKeys.LOCALE, locale);
+				httpSession.setAttribute(WebKeys.LOCALE, locale);
 
-			LanguageUtil.updateCookie(
-				httpServletRequest, httpServletResponse, locale);
+				LanguageUtil.updateCookie(
+					httpServletRequest, httpServletResponse, locale);
+			}
 		}
 
 		// Send redirect
 
 		try {
-			httpServletResponse.sendRedirect(
-				getRedirect(httpServletRequest, themeDisplay, locale));
+			String redirect = getRedirect(
+				httpServletRequest, themeDisplay, locale);
+
+			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+				redirect = HttpComponentsUtil.setParameter(
+					redirect, "doAsUserLanguageId", languageId);
+			}
+
+			httpServletResponse.sendRedirect(redirect);
 		}
 		catch (IllegalArgumentException | NoSuchLayoutException exception) {
 			if (_log.isDebugEnabled()) {

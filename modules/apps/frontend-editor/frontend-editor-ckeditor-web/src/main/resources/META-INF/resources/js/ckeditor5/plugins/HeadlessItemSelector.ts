@@ -33,13 +33,16 @@ const ALLOWED_VIDEO_FILE_EXTENSIONS = [
 	'wmv',
 ];
 
-const ALLOWED_IMAGE_EXTENSIONS_CSV = ALLOWED_IMAGE_FILE_EXTENSIONS.map(
-	(extension) => `.${extension}`
-).join(',');
+const toAllowedExtensionsCSV = (extensions: string[]) =>
+	extensions.map((extension) => `.${extension}`).join(',');
 
-const ALLOWED_VIDEO_EXTENSIONS_CSV = ALLOWED_VIDEO_FILE_EXTENSIONS.map(
-	(extension) => `.${extension}`
-).join(',');
+const ALLOWED_IMAGE_EXTENSIONS_CSV = toAllowedExtensionsCSV(
+	ALLOWED_IMAGE_FILE_EXTENSIONS
+);
+
+const ALLOWED_VIDEO_EXTENSIONS_CSV = toAllowedExtensionsCSV(
+	ALLOWED_VIDEO_FILE_EXTENSIONS
+);
 
 const VIDEO_FILTER = `((objectDefinitionExternalReferenceCode eq 'L_CMS_EXTERNAL_VIDEO') or (extension in ('${ALLOWED_VIDEO_FILE_EXTENSIONS.join(
 	"','"

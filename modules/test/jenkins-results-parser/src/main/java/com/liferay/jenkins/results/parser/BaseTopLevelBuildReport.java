@@ -409,6 +409,10 @@ public abstract class BaseTopLevelBuildReport
 				masterHostname = "https://test-1-0.liferay.com/";
 			}
 
+			if (!masterHostname.endsWith("/")) {
+				masterHostname += "/";
+			}
+
 			return new URL(
 				JenkinsResultsParserUtil.combine(
 					masterHostname, "userContent/testResults/", getJobName(),

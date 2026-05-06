@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
@@ -50,12 +51,19 @@ public class QuotaUtil {
 
 		long tokensCount = 0L;
 
+		String location = vertexAIConfiguration.location();
+		String modelName = vertexAIConfiguration.modelName();
+
+		if (Objects.equals(location, "global")) {
+			location = "europe-central2";
+			modelName = "gemini-2.5-flash";
+		}
+
 		try (VertexAI vertexAI = new VertexAI(
-				vertexAIConfiguration.projectId(),
-				vertexAIConfiguration.location())) {
+				vertexAIConfiguration.projectId(), location)) {
 
 			GenerativeModel generativeModel = new GenerativeModel(
-				vertexAIConfiguration.modelName(), vertexAI);
+				modelName, vertexAI);
 
 			CountTokensResponse countTokensResponse =
 				generativeModel.countTokens(text);

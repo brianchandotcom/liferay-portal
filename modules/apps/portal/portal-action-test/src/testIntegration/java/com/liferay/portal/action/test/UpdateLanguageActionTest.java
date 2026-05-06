@@ -62,6 +62,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Ricardo Couso
@@ -118,6 +119,12 @@ public class UpdateLanguageActionTest {
 			_layout.getUuid(), LocaleUtil.getSiteDefault(), null, false, true,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	@Test
+	@TestInfo("LPD-88958")
+	public void testExecute() throws Exception {
+		_testExecuteWithImpersonationPreservesSessionLocale();
 	}
 
 	@Test
@@ -264,6 +271,55 @@ public class UpdateLanguageActionTest {
 			_journalArticle.getFriendlyURLMap();
 
 		return separator + friendlyURLMap.get(locale);
+	}
+
+	private void _testExecuteWithImpersonationPreservesSessionLocale()
+		throws Exception {
+
+		UpdateLanguageAction updateLanguageAction = new UpdateLanguageAction();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		String languageId = LocaleUtil.toLanguageId(_targetLocale);
+
+		mockHttpServletRequest.setParameter("languageId", languageId);
+
+		mockHttpServletRequest.setParameter("persistState", "false");
+		mockHttpServletRequest.setParameter(
+			"redirect",
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+				_group.getFriendlyURL() + StringPool.SLASH);
+
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		httpSession.setAttribute(WebKeys.LOCALE, _sourceLocale);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setDoAsUserId(RandomTestUtil.randomString());
+		themeDisplay.setLayout(_layout);
+		themeDisplay.setLayoutSet(_group.getPublicLayoutSet());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		updateLanguageAction.execute(
+			null, mockHttpServletRequest, mockHttpServletResponse);
+
+		String redirectedUrl = mockHttpServletResponse.getRedirectedUrl();
+
+		Assert.assertNotNull(redirectedUrl);
+		Assert.assertTrue(
+			redirectedUrl.contains("doAsUserLanguageId=" + languageId));
+
+		Assert.assertEquals(
+			_sourceLocale, httpSession.getAttribute(WebKeys.LOCALE));
 	}
 
 	private void _testGetRedirect(

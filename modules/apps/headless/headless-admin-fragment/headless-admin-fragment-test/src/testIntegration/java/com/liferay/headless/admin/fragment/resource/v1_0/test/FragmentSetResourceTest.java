@@ -64,6 +64,14 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 	@Override
 	@Test
+	public void testBatchEngineDeleteImportTask() throws Exception {
+		super.testBatchEngineDeleteImportTask();
+
+		_testBatchEngineDeleteImportTask();
+	}
+
+	@Override
+	@Test
 	public void testDeleteSiteFragmentSet() throws Exception {
 		super.testDeleteSiteFragmentSet();
 
@@ -79,8 +87,6 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				fetchFragmentCollectionByExternalReferenceCode(
 					fragmentSet.getExternalReferenceCode(),
 					testGroup.getGroupId()));
-
-		_testDeleteSiteFragmentSetBatch();
 	}
 
 	@Override
@@ -349,7 +355,7 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		}
 	}
 
-	private void _testDeleteSiteFragmentSetBatch() throws Exception {
+	private void _testBatchEngineDeleteImportTask() throws Exception {
 		FragmentSet fragmentSet1 = testPostSiteFragmentSet_addFragmentSet(
 			randomFragmentSet());
 		FragmentSet fragmentSet2 = testPostSiteFragmentSet_addFragmentSet(

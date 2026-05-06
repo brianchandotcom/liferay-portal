@@ -26,6 +26,7 @@ export {default as openOptionsModal} from './components/modals/openOptionsModal'
 export {default as PageTemplateModal} from './components/page_template_modal/PageTemplateModal';
 export {default as PopoverTooltip} from './components/popover_tooltip/PopoverTooltip';
 export {default as Resizer} from './components/resizer/Resizer';
+export {RowBuilder} from './components/row_builder/RowBuilder';
 export {default as ScreenReaderAnnouncer} from './components/screen_reader_announcer/ScreenReaderAnnouncer';
 export {default as SearchForm} from './components/search_form/SearchForm';
 export {default as SearchResultsMessage} from './components/search_results_message/SearchResultsMessage';

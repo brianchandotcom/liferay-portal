@@ -6,7 +6,7 @@
 import {ClayInput} from '@clayui/form';
 import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {ComponentProps, FC, useContext, useMemo, useRef} from 'react';
+import React, {FC, useContext, useMemo} from 'react';
 
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
@@ -18,18 +18,13 @@ import InfoItemService from '../../../app/services/InfoItemService';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
-import useConditionValues from '../../../app/utils/useConditionValues';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
-import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
 interface ConditionProps {
 	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
 	onConditionChange: (condition: ConditionType) => void;
-	onDeleteCondition: () => void;
-	showDeleteButton: boolean;
-	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 
 export const TYPE_VALUES = {
@@ -112,20 +107,8 @@ export default function Condition({
 	condition,
 	inputFragmentItems,
 	onConditionChange,
-	onDeleteCondition,
-	showDeleteButton,
-	wrapperRef,
 }: ConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
-
-	const [{description}] = useConditionValues({
-		conditions: [condition],
-		items: inputFragmentItems,
-	});
-
-	const selectRef = useRef<HTMLButtonElement | undefined>();
-
-	const completeCondition = !!condition.options?.value;
 
 	const onErrorChange = (error: RuleError | null) => {
 		if (condition.error?.element.id !== error?.element.id) {
@@ -148,21 +131,7 @@ export default function Condition({
 			: CONDITION_TYPE_ITEMS;
 
 	return (
-		<RuleBuilderItem
-			aria-label={
-				completeCondition
-					? description
-					: Liferay.Language.get('incomplete-condition')
-			}
-			description={description}
-			onDeleteButtonClick={onDeleteCondition}
-			onItemSelected={() => {
-				selectRef.current?.focus();
-			}}
-			showDeleteButton={showDeleteButton}
-			type="condition"
-			wrapperRef={wrapperRef}
-		>
+		<>
 			<RuleSelect
 				aria-label={Liferay.Language.get(
 					'select-item-for-the-condition'
@@ -173,7 +142,6 @@ export default function Condition({
 					onConditionChange({...condition, type})
 				}
 				selectedKey={condition.type}
-				triggerRef={selectRef}
 			/>
 
 			{condition.type === TYPE_VALUES.field ? (
@@ -203,7 +171,7 @@ export default function Condition({
 					sendMessage={sendMessage}
 				/>
 			) : null}
-		</RuleBuilderItem>
+		</>
 	);
 }
 

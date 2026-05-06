@@ -5424,7 +5424,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		'can add an entry with phone number object field where prefix type is defined by user',
 		{tag: ['@LPD-83570']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const localNumber = '1231231234';
+			const localNumber = '8775433729';
 			const prefix = '+1';
 
 			const objectFields = generateObjectFields({
@@ -5492,6 +5492,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 				await expect(
 					fieldContainer.getByLabel('Phone Number')
 				).toHaveValue(localNumber);
+			});
+
+			await test.step('Verify that the country code icon is correct for the local number entered', async () => {
+				await expect(
+					fieldContainer
+						.getByLabel('Country Code')
+						.locator('.lexicon-icon-en-us')
+				).toBeVisible();
 			});
 		}
 	);

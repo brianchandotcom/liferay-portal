@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.site.cms.site.initializer.internal.util.DefaultLanguageLabelsUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,10 +58,12 @@ public class StructureBuilderDisplayContext {
 
 	public StructureBuilderDisplayContext(
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Language language,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
+		_language = language;
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
@@ -175,6 +179,10 @@ public class StructureBuilderDisplayContext {
 						"/structure-builder"),
 					_themeDisplay)
 			)
+		).put(
+			"defaultLanguageLabels",
+			DefaultLanguageLabelsUtil.getDefaultLanguageLabelsJSONObject(
+				_language, _themeDisplay)
 		).put(
 			"state",
 			JSONUtil.put(
@@ -355,6 +363,7 @@ public class StructureBuilderDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
+	private final Language _language;
 	private ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;

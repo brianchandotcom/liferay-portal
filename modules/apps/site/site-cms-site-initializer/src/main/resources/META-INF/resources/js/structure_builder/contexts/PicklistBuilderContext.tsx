@@ -13,21 +13,17 @@ import React, {
 } from 'react';
 
 import {Option, Options, Picklist} from '../../common/types/Picklist';
+import {getDefaultLanguageLabel} from '../../common/utils/getDefaultLanguageLabel';
 import getRandomId from '../utils/getRandomId';
 import normalizeI18nValue from '../utils/normalizeI18nValue';
 
 const noop = () => null;
 
-const DEFAULT_PICKLIST_NAME = Liferay.Language.get('untitled-picklist');
-
-const INITIAL_STATE = {
+const INITIAL_STATE: State = {
 	deletedOptions: false,
-	erc: getRandomId(),
+	erc: '',
 	id: null,
-	name: {
-		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_PICKLIST_NAME,
-		[Liferay.ThemeDisplay.getLanguageId()]: DEFAULT_PICKLIST_NAME,
-	},
+	name: {},
 	options: new Map(),
 	setDeletedOptions: noop,
 	setErc: noop,
@@ -35,6 +31,19 @@ const INITIAL_STATE = {
 	setName: noop,
 	setOptions: noop,
 };
+
+function getInitialState(): State {
+	return {
+		...INITIAL_STATE,
+		erc: getRandomId(),
+		name: {
+			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
+				getDefaultLanguageLabel('untitled-picklist'),
+			[Liferay.ThemeDisplay.getLanguageId()]:
+				Liferay.Language.get('untitled-picklist'),
+		},
+	};
+}
 
 export type State = {
 	deletedOptions: boolean;
@@ -88,11 +97,11 @@ export default function PicklistBuilderContextProvider({
 
 const buildState = (picklist: Picklist): State => {
 	if (!picklist) {
-		return INITIAL_STATE;
+		return getInitialState();
 	}
 
 	return {
-		...INITIAL_STATE,
+		...getInitialState(),
 		erc: picklist.externalReferenceCode,
 		id: picklist.id,
 		name: normalizeI18nValue(picklist.name_i18n),

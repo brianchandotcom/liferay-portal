@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getDefaultLanguageLabel} from '../../../common/utils/getDefaultLanguageLabel';
 import {
 	RepeatableGroup,
 	Structure,
@@ -12,8 +13,6 @@ import {Uuid} from '../../types/Uuid';
 import getRandomId from '../getRandomId';
 import getRandomName from '../getRandomName';
 import sortChildren from './sortChildren';
-
-const DEFAULT_GROUP_LABEL = Liferay.Language.get('repeatable-group');
 
 export default function addRepeatableGroup({
 	groupChildren,
@@ -71,8 +70,9 @@ export default function addRepeatableGroup({
 			erc: getRandomId(),
 			label: {
 				[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-					DEFAULT_GROUP_LABEL,
-				[Liferay.ThemeDisplay.getLanguageId()]: DEFAULT_GROUP_LABEL,
+					getDefaultLanguageLabel('repeatable-group'),
+				[Liferay.ThemeDisplay.getLanguageId()]:
+					Liferay.Language.get('repeatable-group'),
 			},
 			name: getRandomName({capitalize: true}),
 			parent: groupParent,

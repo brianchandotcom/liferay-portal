@@ -83,7 +83,8 @@ export function ResizeHandle({
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
 			className={classnames('c-horizontal-resizer', {
-				'c-horizontal-resizer-end': position === 'right',
+				'c-horizontal-resizer-end':
+					document.dir === 'rtl' ? positionLeft : !positionLeft,
 			})}
 			{...otherProps}
 			onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {

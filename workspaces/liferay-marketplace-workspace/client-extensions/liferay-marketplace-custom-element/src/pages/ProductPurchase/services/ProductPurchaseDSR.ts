@@ -71,7 +71,7 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 			digitalSalesRoomERC
 		).catch(console.error);
 
-		await provisioningOAuth2.provisionDSR({
+		await provisioningOAuth2.provisionDSRBeta({
 			analyticsForm,
 			licenseEntry: {
 				description: 'Beta Access DSR',

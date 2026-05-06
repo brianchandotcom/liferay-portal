@@ -243,6 +243,23 @@ export default function StructureTree({search}: {search: string}) {
 		window
 	);
 
+	useEventListener(
+		'keydown',
+		(event) => {
+			if ((event as KeyboardEvent).key === 'Escape') {
+				dispatch({
+					selection: [],
+					type: 'set-selection',
+				});
+			}
+		},
+		false,
+
+		// @ts-ignore
+
+		window
+	);
+
 	useEffect(() => {
 		for (const uuid of selection) {
 			if (!selectedKeys.has(uuid)) {

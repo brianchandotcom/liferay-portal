@@ -3160,8 +3160,28 @@ server.detector.server.id=wildfly</echo>
 
 			<property name="database.url.upgrade" value="${database.url}" />
 
+			<get-testcase-property property.name="portal.version" />
+
+			<local name="database.url.parameters" />
+
+			<if>
+				<and>
+					<equals arg1="${portal.version}" arg2="6.1.30" />
+					<equals arg1="${database.type}" arg2="postgresql" />
+					<not>
+						<contains string="${database.url.upgrade}" substring="?" />
+					</not>
+				</and>
+				<then>
+					<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
+				</then>
+				<else>
+					<property name="database.url.parameters" value="" />
+				</else>
+			</if>
+
 			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url.upgrade}
+jdbc.default.url=${database.url.upgrade}${database.url.parameters}
 jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}</echo>
 

@@ -462,6 +462,8 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
 
+		long time = System.currentTimeMillis() + _EXPORT_TIMEOUT;
+
 		while (true) {
 			jsonObject = HTTPTestUtil.invokeToJSONObject(
 				null,
@@ -478,8 +480,21 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 
 				return jsonObject;
 			}
+
+			if (System.currentTimeMillis() > time) {
+				throw new AssertionError(
+					StringBundler.concat(
+						"Export task ", externalReferenceCode,
+						" did not finish within ", _EXPORT_TIMEOUT, " ms"));
+			}
+
+			Thread.sleep(_EXPORT_POLL_INTERVAL);
 		}
 	}
+
+	private static final long _EXPORT_POLL_INTERVAL = 500;
+
+	private static final long _EXPORT_TIMEOUT = 60000;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

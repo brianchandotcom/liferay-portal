@@ -461,7 +461,7 @@ export function RuleList({
 }) {
 	return (
 		<div className="form-rule-list">
-			<h1 className="text-default">
+			<h1 className="font-weight-normal">
 				{Liferay.Language.get('rule-builder')}
 			</h1>
 

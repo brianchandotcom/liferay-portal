@@ -104,7 +104,7 @@ public class GradleTaskFailureMessageGenerator
 	private static final String _TOKEN_WHERE = "* Where:";
 
 	private static final Pattern _javaErrorPattern = Pattern.compile(
-		"[^\\n]+.java:\\d+: error:[^\\n]+");
+		"[^\\n]+\\.java:\\d+: error:[^\\n]+");
 	private static final Pattern _taskFailedPattern = Pattern.compile(
 		"\\n(\\s+\\[exec\\] > Task :[^ ]+ FAILED)");
 

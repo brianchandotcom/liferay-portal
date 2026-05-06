@@ -626,6 +626,8 @@ public interface WebKeys {
 
 	public static final String STARTUP_FINISHED = "STARTUP_FINISHED";
 
+	public static final String STATUS_EXCEPTION = "STATUS_EXCEPTION";
+
 	public static final String SUBJECT = "SUBJECT";
 
 	public static final String TAB_INDEX = "TAB_INDEX";

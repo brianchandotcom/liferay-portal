@@ -6075,7 +6075,12 @@ public class PortalImpl implements Portal {
 
 			httpServletResponse.setStatus(status);
 
-			SessionErrors.add(httpSession, exception.getClass(), exception);
+			if (exception != null) {
+				httpServletRequest.setAttribute(
+					WebKeys.STATUS_EXCEPTION, exception);
+
+				SessionErrors.add(httpSession, exception.getClass(), exception);
+			}
 
 			ServletContext servletContext = httpSession.getServletContext();
 

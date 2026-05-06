@@ -30,5 +30,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class ContentSiteGeneratorWebPortlet extends MVCPortlet {
+public class ContentSiteGeneratorPortlet extends MVCPortlet {
 }

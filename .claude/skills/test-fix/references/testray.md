@@ -1,0 +1,169 @@
+# Fetch Failure Data From Testray
+
+Pull a single Testray case result through the REST API at `https://testray.liferay.com`. Caller supplies either a positive integer case result ID or a test name as `${ARGUMENTS}`.
+
+## Preconditions
+
+`${TESTRAY_CLIENT_ID}` and `${TESTRAY_CLIENT_SECRET}` must be set in the environment. Without them, abort and surface the reason.
+
+## Authentication
+
+Fetch a bearer token once per run via the OAuth2 client credentials grant and reuse it for every call:
+
+```bash
+export ACCESS_TOKEN=$(curl \
+	--data "grant_type=client_credentials" \
+	--header "Authorization: Basic $(printf '%s:%s' "${TESTRAY_CLIENT_ID}" "${TESTRAY_CLIENT_SECRET}" | base64 --wrap 0)" \
+	--header "Content-Type: application/x-www-form-urlencoded" \
+	--request POST \
+	--silent \
+	--url "https://testray.liferay.com/o/oauth2/token" \
+	| jq --raw-output '.access_token')
+```
+
+## Resolve a Test Name to a Case Result ID
+
+Skip when the input is already a positive integer. Otherwise resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
+
+1. Resolve the master project ID from the most recent `[master]` build:
+
+	```bash
+	curl \
+		--data-urlencode "filter=startswith(name, '[master]')" \
+		--data-urlencode "pageSize=1" \
+		--data-urlencode "sort=dateCreated:desc" \
+		--get \
+		--header "Accept: application/json" \
+		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+		--silent \
+		--url "https://testray.liferay.com/o/c/builds"
+	```
+
+	Read `r_projectToBuilds_c_projectId` from the first item as `<masterProjectId>` and reuse it below.
+
+1. Fetch every Case with that exact name and keep the single one whose `r_projectToCases_c_projectId` equals `<masterProjectId>`. When zero or more than one match, abort.
+
+	```bash
+	curl \
+		--data-urlencode "filter=name eq '<name>'" \
+		--data-urlencode "pageSize=20" \
+		--get \
+		--header "Accept: application/json" \
+		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+		--silent \
+		--url "https://testray.liferay.com/o/c/cases"
+	```
+
+1. Derive the team routine from `.github/CODEOWNERS`. Each Liferay team owns a routine on the master project named **`[master] ci:test:<team>`**, where `<team>` is the suffix of the GitHub team handle (`@liferay-page-management` maps to `page-management`). Other routines (`ci:test:relevant`, `EE Development Acceptance`, …) are not team routines and must not substitute. Resolve its ID:
+
+	```bash
+	curl \
+		--data-urlencode "filter=name eq '[master] ci:test:<team>' and r_routineToProjects_c_projectId eq '<masterProjectId>'" \
+		--data-urlencode "pageSize=1" \
+		--get \
+		--header "Accept: application/json" \
+		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+		--silent \
+		--url "https://testray.liferay.com/o/c/routines"
+	```
+
+	When CODEOWNERS does not point to a single team, or the routine does not exist, abort.
+
+1. List the most recent case results for the case:
+
+	```bash
+	curl \
+		--data-urlencode "filter=r_caseToCaseResult_c_caseId eq '<caseId>'" \
+		--data-urlencode "pageSize=50" \
+		--data-urlencode "sort=dateCreated:desc" \
+		--get \
+		--header "Accept: application/json" \
+		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+		--silent \
+		--url "https://testray.liferay.com/o/c/caseresults"
+	```
+
+	For each item in order, fetch its build (`/o/c/builds/<buildId>`) and read `r_routineToBuilds_c_routineId`. Return the `id` of the first case result whose build routine matches the team routine ID and whose `dueStatus.key` is not `UNTESTED`. The result may be `PASSED` — that is correct when the test currently passes on the team routine. When the loop ends without a match, abort.
+
+## Derive the Failure Data
+
+The case result drives every other lookup:
+
+```bash
+curl \
+	--header "Accept: application/json" \
+	--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+	--silent \
+	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
+```
+
+When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise return all four fields.
+
+### Name
+
+Fetch the case using `r_caseToCaseResult_c_caseId` from the case result and read `name` from the first item:
+
+```bash
+curl \
+	--data-urlencode "filter=id eq '<caseId>'" \
+	--data-urlencode "pageSize=1" \
+	--get \
+	--header "Accept: application/json" \
+	--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+	--silent \
+	--url "https://testray.liferay.com/o/c/cases"
+```
+
+### Type
+
+When `<name>` contains `PortalLogAssertor`, the type is `Java Log Assertor` and **no history is fetched**.
+
+Otherwise fetch the case type via `r_caseTypeToCases_c_caseTypeId` and map the matching item's `name`. Names not in the table pass through unchanged.
+
+```bash
+curl \
+	--data-urlencode "filter=id eq '<caseTypeId>'" \
+	--get \
+	--header "Accept: application/json" \
+	--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+	--silent \
+	--url "https://testray.liferay.com/o/c/casetypes"
+```
+
+| Case Type Name | Label |
+| --- | --- |
+| Automated Functional Test | Poshi |
+| JS Unit Test | JavaScript |
+| Modules Integration Test | Java Integration |
+| Modules Semantic Versioning Test | Java Semantic Versioning |
+| Modules Unit Test | Java Unit |
+| Playwright Test | Playwright |
+
+### Error Trace
+
+The `errors` field of the case result.
+
+### Last Pass SHA and First Fail SHA
+
+Both are `null` when the case name is `Top Level Build` or contains `PortalLogAssertor`. Skipped entirely for `Java Log Assertor`. Otherwise compute them from the case history filtered to the supplied case result's routine.
+
+Resolve the routine ID by fetching the build at `/o/c/builds/<buildId>` (where `<buildId>` is `r_buildToCaseResult_c_buildId` from the case result) and reading `r_routineToBuilds_c_routineId` as `<routineId>`.
+
+Fetch the case history:
+
+```bash
+curl \
+	--data-urlencode "pageSize=300" \
+	--data-urlencode "sort=executionDate:desc" \
+	--get \
+	--header "Accept: application/json" \
+	--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+	--silent \
+	--url "https://testray.liferay.com/o/testray-rest/v1.0/testray-case-result-history/<caseId>"
+```
+
+Filter to entries where `testrayRoutineId` equals `<routineId>` and walk newest-first. History entries expose the outcome on the top-level `status` field (not `dueStatus`, which only exists on case results):
+
+- `lastPassSha` is the `gitHash` of the first entry whose `status` is `PASSED`, or `null` if none.
+
+- `firstFailSha` is the `gitHash` of the oldest entry whose `status` is `FAILED` before that `PASSED`, or `null` if none.

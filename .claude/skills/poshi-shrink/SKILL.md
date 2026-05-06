@@ -8,7 +8,7 @@ name: poshi-shrink
 
 # Shrink Poshi Tests
 
-A playbook for shrinking a Liferay component's Poshi test suite before migrating tests to Playwright, Java integration, or unit layer. Typical outcome: a file with ~27 tests ends up with ~8, in ~24 small reviewable commits.
+A playbook for shrinking a Liferay component's Poshi test suite before migrating tests to Playwright, Java integration, or the unit layer. Typical outcome: a file with ~27 tests ends up with ~8, in ~24 small reviewable commits.
 
 ## Preconditions
 
@@ -18,9 +18,9 @@ A playbook for shrinking a Liferay component's Poshi test suite before migrating
 
 ### Component Name
 
-The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-commerce`, `portal-content-management`). When `${ARGUMENTS}` is empty, scan `.testcase` files under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, list the distinct `@component-name` values found, and ask the user to pick one. Do not guess.
+The `@component-name` annotation, passed as `${ARGUMENTS}` (e.g., `portal-analytics-cloud`, `portal-commerce`, `portal-content-management`). When `${ARGUMENTS}` is empty, scan `.testcase` files under `portal-web/test/functional/com/liferay/portalweb/tests/enduser`, list the distinct `@component-name` values found, and ask the user to pick one. Do not guess.
 
-Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser/`, every `.testcase` whose `@component-name` matches; abort when none does. The same enumeration feeds the **Shrink Plan**: per file, capture the path, the `testray.main.component.name` value, and the test-block count.
+Verify the component by enumerating, under `portal-web/test/functional/com/liferay/portalweb/tests/enduser`, every `.testcase` whose `@component-name` matches; abort when no file matches. The same enumeration feeds the **Shrink Plan**: per file, capture the path, the `testray.main.component.name` value, and the test-block count.
 
 ## Expected Output
 
@@ -53,22 +53,22 @@ Build the plan via plan mode (`EnterPlanMode`) using this format:
 
 Sort the inventory ascending by test count so small files (easy wins) surface first. Avoid files with 40+ tests on the first pass.
 
-Pick the **keeper** for each group: the test with the most comprehensive assertions, even when its name is awkward — the keeper does not have to keep its name. The **final name** describes the combined behaviour (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`) and is typically different from the keeper's original name.
+Pick the **keeper** for each group: the test with the most comprehensive assertions, even when its name is awkward — the keeper does not have to keep its name. The **final name** describes the combined behavior (e.g., `ContentPerformancePanelInBlogDisplayPage`, `LanguageDropdownInContentPage`) and is typically different from the keeper's original name.
 
 Common merge-worthy signals — classic patterns from Liferay test names:
 
-- Multiple `AuthorNotShowIn<Context>` tests — usually one per panel-context is enough.
-- Multiple `MetricsIconVisibleIn<Context>` + `PanelInformationIn<Context>` — the first checks title+traffic, the second title+URL+language; huge overlap.
+- Multiple `AuthorNotShowIn<Context>` tests — usually one per panel context is enough.
+- Multiple `MetricsIconVisibleIn<Context>` + `PanelInformationIn<Context>` — the first checks title+traffic, the second title+URL+language — huge overlap between the two.
 - `CheckAllInfo*` or similar catch-all tests that duplicate specific-field tests.
 - Tests that share the full `setUp` + first N tasks (navigate, create blog, open panel) and differ only in the final assertion.
 
 #### Merge Signals — DO
 
 - Same setup + same UI surface + different assertion → one test with N assertion tasks.
-- Tests differing only in asset type (blog vs document vs widget vs content page) when the panel behaviour being asserted is identical — one representative usually suffices; propose deletion for the rest rather than merging four tests into four.
-- Tests where the source's assertion is already fully covered in the target — commit still happens, it just deletes the source.
+- Tests differing only in asset type (blog vs document vs widget vs content page) when the panel behavior being asserted is identical — one representative usually suffices; propose deletion for the rest rather than merging four tests into four.
+- Tests where the source's assertion is already fully covered in the target — the commit still happens — it just deletes the source.
 
-#### Merge Signals — DON'T
+#### Merge Signals — DO NOT
 
 - Tests with test-level property overrides that differ: `property portal.upstream = "quarantine"`, `property test.liferay.virtual.instance = "false"`, `property test.run.type = "single"` (when not inherited).
 - Tests with special setup (localized URLs, fragment translations, system settings changes, extra page creation).

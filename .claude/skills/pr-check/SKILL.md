@@ -64,7 +64,7 @@ Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-For each validation, read its file, evaluate the **Trigger** against the diff, and when it matches, add its **Time Estimate** to the running total. The output of this pass is the matched-validation list and the cumulative estimate.
+For each validation, read only its `## Trigger` and `## Time Estimate` sections — do not load `## Command` or `## Auto-Commit` in this pass. Evaluate the trigger against the diff; when it matches, add the time estimate to the running total. The output of this pass is the matched-validation list and the cumulative estimate.
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 

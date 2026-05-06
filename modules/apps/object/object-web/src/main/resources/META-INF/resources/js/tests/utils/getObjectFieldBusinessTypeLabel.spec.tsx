@@ -54,6 +54,10 @@ describe('Check the return for all object field business types)', () => {
 		);
 	});
 
+	it('returns email language key', () => {
+		expect(getObjectFieldBusinessTypeLabel('Email')).toStrictEqual('email');
+	});
+
 	it('returns encrypted language key', () => {
 		expect(getObjectFieldBusinessTypeLabel('Encrypted')).toStrictEqual(
 			'encrypted'
@@ -84,7 +88,13 @@ describe('Check the return for all object field business types)', () => {
 		).toStrictEqual('multiselect-picklist');
 	});
 
-	it('returns Picklist language key', () => {
+	it('returns phone number language key', () => {
+		expect(getObjectFieldBusinessTypeLabel('PhoneNumber')).toStrictEqual(
+			'phone-number'
+		);
+	});
+
+	it('returns picklist language key', () => {
 		expect(getObjectFieldBusinessTypeLabel('Picklist')).toStrictEqual(
 			'picklist'
 		);

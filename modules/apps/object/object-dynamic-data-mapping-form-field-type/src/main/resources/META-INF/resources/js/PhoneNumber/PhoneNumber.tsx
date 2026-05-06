@@ -20,6 +20,8 @@ import type {
 	LocalizedValue,
 } from 'dynamic-data-mapping-form-field-type';
 
+// E.164 format: a leading "+" followed by 7 to 15 digits.
+
 const PHONE_NUMBER_PATTERN = /^\+[0-9]{7,15}$/;
 
 interface BasePhoneNumberProps {

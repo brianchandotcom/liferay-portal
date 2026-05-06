@@ -61,9 +61,13 @@ export function PhoneNumberInput({
 					? prefix || ''
 					: `+${country.idd}`;
 
+			const sanitizedNumber = number.replace(/\D/g, '');
+
 			onChange({
 				target: {
-					value: `${resolvedPrefix}${number.replace(/\D/g, '')}`,
+					value: sanitizedNumber
+						? `${resolvedPrefix}${sanitizedNumber}`
+						: '',
 				},
 			});
 		}

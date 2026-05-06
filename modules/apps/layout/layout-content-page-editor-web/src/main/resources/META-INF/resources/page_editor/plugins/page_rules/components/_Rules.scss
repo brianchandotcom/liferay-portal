@@ -25,36 +25,8 @@ html#{$cadmin-selector} .cadmin {
 		}
 	}
 
-	.page-editor__rule-builder-item {
-		border: 1px solid $cadmin-gray-300;
-		border-radius: 0.25rem;
-		min-height: 50px;
-
-		&:focus-visible {
-			box-shadow:
-				0 0 0 2px $cadmin-white,
-				0 0 0 4px $cadmin-primary-l0;
-			outline: 0;
-		}
-
-		.page-editor__rule-builder-delete-button {
-			opacity: 0;
-		}
-
-		&:hover .page-editor__rule-builder-delete-button,
-		&:focus-within:not(:focus) .page-editor__rule-builder-delete-button,
-		&:focus-visible .page-editor__rule-builder-delete-button,
-		.page-editor__rule-builder-delete-button:focus-visible {
-			opacity: 1;
-		}
-
-		&.page-editor__rule-builder-item--action {
-			border-left: 4px solid $purple;
-		}
-
-		&.page-editor__rule-builder-item--condition {
-			border-left: 4px solid $cadmin-warning-l1;
-		}
+	.layout__row-builder-item.page-editor__rule-builder-item--action {
+		border-left: 4px solid $purple;
 	}
 
 	.page-editor__rule-builder-select {

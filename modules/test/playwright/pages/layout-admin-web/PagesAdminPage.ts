@@ -10,6 +10,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {waitForAllPortletsReady} from '../../utils/waitForAllPortletsReady';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
 export class PagesAdminPage {
@@ -214,6 +215,8 @@ export class PagesAdminPage {
 		const panel = this.page.locator(
 			'[id$="theme-spritemap-client-extension"]'
 		);
+
+		await waitForAllPortletsReady(this.page);
 
 		await panel.getByRole('button', {name: 'Select'}).click();
 

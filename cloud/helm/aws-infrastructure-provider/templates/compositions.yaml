@@ -1535,13 +1535,7 @@ spec:
                         metadata:
                             annotations:
                                 gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-observer
-                            labels:
-                                app: liferay
-                                component: elasticsearch-observer
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
                             name: {{ $elasticsearchName }}-observer
-                            namespace: {{ $namespace }}
                         spec:
                             forProvider:
                                 manifest:
@@ -1557,13 +1551,7 @@ spec:
                         metadata:
                             annotations:
                                 gotemplating.fn.crossplane.io/composition-resource-name: elasticsearch-secret-observer
-                            labels:
-                                app: liferay
-                                component: elasticsearch-secret-observer
-                                environmentId: {{ $environmentId }}
-                                projectId: {{ $projectId }}
                             name: {{ $elasticsearchSecretName }}-observer
-                            namespace: {{ $namespace }}
                         spec:
                             forProvider:
                                 manifest:

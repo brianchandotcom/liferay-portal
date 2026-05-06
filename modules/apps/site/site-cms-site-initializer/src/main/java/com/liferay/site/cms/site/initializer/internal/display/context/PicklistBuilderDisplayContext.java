@@ -45,7 +45,7 @@ public class PicklistBuilderDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"defaultLanguageLabels",
 			DefaultLanguageLabelsUtil.getDefaultLanguageLabelsJSONObject(
-				_themeDisplay)
+				_themeDisplay, "option", "untitled-picklist")
 		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")

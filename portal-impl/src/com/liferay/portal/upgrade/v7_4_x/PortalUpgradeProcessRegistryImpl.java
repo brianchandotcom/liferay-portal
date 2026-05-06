@@ -758,6 +758,14 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(38, 3, 1), new UpgradeAssetEntryPublishDate());
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 4, 0),
+			new CountryExternalReferenceCodeUpgradeProcess());
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 4, 1),
+			new RegionExternalReferenceCodeUpgradeProcess());
 	}
 
 }

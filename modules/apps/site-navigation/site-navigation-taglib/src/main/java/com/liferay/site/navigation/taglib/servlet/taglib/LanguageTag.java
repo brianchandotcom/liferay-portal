@@ -236,8 +236,17 @@ public class LanguageTag extends IncludeTag {
 		formAction = HttpComponentsUtil.setParameter(
 			formAction, "privateLayout", layout.isPrivateLayout());
 
-		return HttpComponentsUtil.setParameter(
+		formAction = HttpComponentsUtil.setParameter(
 			formAction, "layoutId", layout.getLayoutId());
+
+		String doAsUserId = themeDisplay.getDoAsUserId();
+
+		if (Validator.isNotNull(doAsUserId)) {
+			formAction = HttpComponentsUtil.setParameter(
+				formAction, "doAsUserId", doAsUserId);
+		}
+
+		return formAction;
 	}
 
 	private List<LanguageEntry> _getLanguageEntries(

@@ -88,6 +88,16 @@ public class PostalAddressDTOConverter
 								address.getCompanyId()),
 							country.getLanguageIdToTitleMap());
 					});
+				setAddressCountryExternalReferenceCode(
+					() -> {
+						if (address.getCountryId() <= 0) {
+							return null;
+						}
+
+						Country country = address.getCountry();
+
+						return country.getExternalReferenceCode();
+					});
 				setAddressLocality(address::getCity);
 				setAddressRegion(
 					() -> {
@@ -98,6 +108,16 @@ public class PostalAddressDTOConverter
 						Region region = address.getRegion();
 
 						return region.getName();
+					});
+				setAddressRegionExternalReferenceCode(
+					() -> {
+						if (address.getRegionId() <= 0) {
+							return null;
+						}
+
+						Region region = address.getRegion();
+
+						return region.getExternalReferenceCode();
 					});
 				setAddressSubtype(address::getSubtype);
 				setAddressType(

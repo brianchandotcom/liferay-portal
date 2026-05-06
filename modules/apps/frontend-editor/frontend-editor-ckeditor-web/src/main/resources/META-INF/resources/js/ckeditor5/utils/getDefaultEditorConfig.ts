@@ -51,6 +51,7 @@ import {sub} from 'frontend-js-web';
 import AICreator from '../plugins/AICreator';
 import HeadlessItemSelector from '../plugins/HeadlessItemSelector';
 import ItemSelector from '../plugins/ItemSelector';
+import VideoEmbed from '../plugins/VideoEmbed';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
 const getDefaultEditorConfig = ({
@@ -149,6 +150,7 @@ const getDefaultEditorConfig = ({
 		TableCaption,
 		TableProperties,
 		TableToolbar,
+		VideoEmbed,
 	];
 
 	if (editorVariant === EEditorVariant.CLASSIC) {

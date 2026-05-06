@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,12 +61,9 @@ public class CTReviewChangesServlet extends HttpServlet {
 		Ticket ticket = _getTicket(httpServletRequest);
 
 		if (ticket == null) {
-			SessionErrors.add(httpServletRequest, NoSuchTicketException.class);
-
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			httpServletResponse.sendRedirect(
-				Portal.PATH_MAIN + "/portal/status");
+			_portal.sendError(
+				new NoSuchTicketException(), httpServletRequest,
+				httpServletResponse);
 
 			return;
 		}

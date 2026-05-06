@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 
 import {Option, Options, Picklist} from '../../common/types/Picklist';
-import {getDefaultLanguageLabel} from '../../common/utils/getDefaultLanguageLabel';
+import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
 import getRandomId from '../utils/getRandomId';
 import normalizeI18nValue from '../utils/normalizeI18nValue';
 

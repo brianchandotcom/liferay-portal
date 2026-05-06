@@ -6,18 +6,20 @@
 import {
 	getDefaultLanguageLabel,
 	setDefaultLanguageLabels,
-} from '../../../../src/main/resources/META-INF/resources/js/common/utils/getDefaultLanguageLabel';
+} from '../../../../src/main/resources/META-INF/resources/js/common/utils/defaultLanguageLabels';
 
 describe('getDefaultLanguageLabel', () => {
 	afterEach(() => {
-		setDefaultLanguageLabels({locale: 'en_US'});
+		setDefaultLanguageLabels({labels: {}, locale: 'en_US'});
 	});
 
 	it('returns the default-language label when the singleton was initialized with the key', () => {
 		setDefaultLanguageLabels({
-			'locale': 'en_US',
-			'option': 'Option',
-			'select-related-content': 'Select related content',
+			labels: {
+				'option': 'Option',
+				'select-related-content': 'Select related content',
+			},
+			locale: 'en_US',
 		});
 
 		expect(getDefaultLanguageLabel('option')).toBe('Option');
@@ -27,7 +29,7 @@ describe('getDefaultLanguageLabel', () => {
 	});
 
 	it('falls back to Liferay.Language.get when the key is missing in the singleton', () => {
-		setDefaultLanguageLabels({locale: 'en_US'});
+		setDefaultLanguageLabels({labels: {}, locale: 'en_US'});
 
 		expect(getDefaultLanguageLabel('untracked-key')).toBe('untracked-key');
 	});
@@ -36,7 +38,7 @@ describe('getDefaultLanguageLabel', () => {
 		jest.isolateModules(() => {
 			const {
 				getDefaultLanguageLabel: freshGet,
-			} = require('../../../../src/main/resources/META-INF/resources/js/common/utils/getDefaultLanguageLabel');
+			} = require('../../../../src/main/resources/META-INF/resources/js/common/utils/defaultLanguageLabels');
 
 			expect(freshGet('option')).toBe('option');
 		});

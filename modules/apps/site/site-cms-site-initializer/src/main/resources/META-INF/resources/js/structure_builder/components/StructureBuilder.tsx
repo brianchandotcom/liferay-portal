@@ -15,7 +15,7 @@ import {
 import {
 	DefaultLanguageLabels,
 	setDefaultLanguageLabels,
-} from '../../common/utils/getDefaultLanguageLabel';
+} from '../../common/utils/defaultLanguageLabels';
 import {Config, initializeConfig} from '../config';
 import CacheContextProvider from '../contexts/CacheContext';
 import StateContextProvider, {useSelector} from '../contexts/StateContext';

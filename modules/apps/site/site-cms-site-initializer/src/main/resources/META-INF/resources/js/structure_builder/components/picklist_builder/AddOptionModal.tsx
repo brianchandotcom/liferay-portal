@@ -12,7 +12,7 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {Option} from '../../../common/types/Picklist';
-import {getDefaultLanguageLabel} from '../../../common/utils/getDefaultLanguageLabel';
+import {getDefaultLanguageLabel} from '../../../common/utils/defaultLanguageLabels';
 import getLocalizedValue from '../../../common/utils/getLocalizedValue';
 import {useAddOption} from '../../contexts/PicklistBuilderContext';
 import getRandomId from '../../utils/getRandomId';

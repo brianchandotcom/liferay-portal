@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -28,14 +29,17 @@ public class DefaultLanguageLabelsUtil {
 
 		Locale locale = company.getLocale();
 
-		JSONObject jsonObject = JSONUtil.put(
-			"locale", LocaleUtil.toLanguageId(locale));
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (String key : keys) {
 			jsonObject.put(key, LanguageUtil.get(locale, key));
 		}
 
-		return jsonObject;
+		return JSONUtil.put(
+			"labels", jsonObject
+		).put(
+			"locale", LocaleUtil.toLanguageId(locale)
+		);
 	}
 
 }

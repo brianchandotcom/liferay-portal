@@ -208,6 +208,41 @@ export default function StructureTree({search}: {search: string}) {
 		objectDefinitionsStatus,
 	]);
 
+	useEventListener(
+		'keydown',
+		(event) => {
+			const {key, shiftKey, target} = event as KeyboardEvent;
+
+			if (!shiftKey || (key !== 'ArrowDown' && key !== 'ArrowUp')) {
+				return;
+			}
+
+			const fromId = (target as HTMLElement | null)
+				?.getAttribute('data-id')
+				?.split(',')[1] as Uuid | undefined;
+
+			const toId = (document.activeElement as HTMLElement | null)
+				?.getAttribute('data-id')
+				?.split(',')[1] as Uuid | undefined;
+
+			if (!toId || toId === structureUuid || toId === fromId) {
+				return;
+			}
+
+			dispatch({
+				selection: selection.includes(toId)
+					? selection.filter((uuid) => uuid !== fromId)
+					: [...selection, toId],
+				type: 'set-selection',
+			});
+		},
+		false,
+
+		// @ts-ignore
+
+		window
+	);
+
 	useEffect(() => {
 		for (const uuid of selection) {
 			if (!selectedKeys.has(uuid)) {

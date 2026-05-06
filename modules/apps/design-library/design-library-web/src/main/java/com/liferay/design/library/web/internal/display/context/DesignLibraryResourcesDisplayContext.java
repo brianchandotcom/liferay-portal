@@ -114,7 +114,12 @@ public class DesignLibraryResourcesDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"addStyleBookEntryURL",
-			_getAddStyleBookEntryURL(depotGroupId, designLibraryEntryId)
+			_getAddStyleBookEntryURL(
+				depotGroupId, designLibraryEntryId,
+				depotEntry.getGroup(
+				).getName(
+					_themeDisplay.getLocale()
+				))
 		).put(
 			"canAddStyleBook", true
 		).put(
@@ -201,7 +206,7 @@ public class DesignLibraryResourcesDisplayContext {
 	}
 
 	private String _getAddStyleBookEntryURL(
-		long depotGroupId, long designLibraryEntryId) {
+		long depotGroupId, long designLibraryEntryId, String backURLTitle) {
 
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(
@@ -218,6 +223,8 @@ public class DesignLibraryResourcesDisplayContext {
 				DesignLibraryConstants.DESIGN_LIBRARY_ENTRY_ID_KEY,
 				designLibraryEntryId
 			).buildString()
+		).setParameter(
+			"backURLTitle", backURLTitle
 		).setParameter(
 			"groupId", depotGroupId
 		).buildString();

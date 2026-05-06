@@ -14,6 +14,7 @@ import i18n from '../../../../../i18n';
 import analyticsOAuth2 from '../../../../../services/oauth/Analytics';
 import {copyToClipboard} from '../../../../../utils/browser';
 import {safeJSONParse} from '../../../../../utils/util';
+import {Liferay} from '../../../../../liferay/liferay';
 
 import './DSRTokens.scss';
 
@@ -70,7 +71,16 @@ const DSRTokens = () => {
 						<button
 							aria-label={i18n.translate('copy')}
 							className="dsr-token-copy"
-							onClick={() => copyToClipboard(token)}
+							onClick={() => {
+								copyToClipboard(token);
+
+								Liferay.Util.openToast({
+									message: i18n.sub(
+										'copied-x-to-the-clipboard',
+										'token'
+									),
+								});
+							}}
 							type="button"
 						>
 							<ClayIcon symbol="copy" />

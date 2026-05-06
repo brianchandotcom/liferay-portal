@@ -7,6 +7,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<react:component
-	module="{ContentSiteGenerator} from content-site-generator-web"
+<%
+ViewContentSitesDisplayContext viewContentSitesDisplayContext = (ViewContentSitesDisplayContext)request.getAttribute(ViewContentSitesDisplayContext.class.getName());
+%>
+
+<frontend-data-set:headless-display
+	apiURL="<%= viewContentSitesDisplayContext.getAPIURL() %>"
+	bulkActionDropdownItems="<%= viewContentSitesDisplayContext.getBulkActionDropdownItems() %>"
+	creationMenu="<%= viewContentSitesDisplayContext.getCreationMenu() %>"
+	emptyState="<%= viewContentSitesDisplayContext.getEmptyState() %>"
+	fdsActionDropdownItems="<%= viewContentSitesDisplayContext.getFDSActionDropdownItems() %>"
+	id="<%= ContentSiteGeneratorFDSNames.CONTENT_SITE_GENERATOR %>"
+	itemsPerPage="<%= 20 %>"
+	selectedItemsKey="id"
+	selectionType="multiple"
+	style="fluid"
 />

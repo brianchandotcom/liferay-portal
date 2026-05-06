@@ -826,7 +826,7 @@ export default {
 		'To generate your unique activation key file, please provide the technical specifications required below. These details are used exclusively to configure the software for your environment and ensure hardware compatibility.',
 	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
 		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
-	'token-unavailable': 'Token unavailable',
+	'token-unavailable': 'Token Unavailable',
 	'tokens': 'Tokens',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
@@ -947,7 +947,7 @@ export default {
 	'you-will-receive-an-invoice-via-email-with-all-the-details-needed-to-complete-your-payment-after-you-complete-the-payment-you-can-activate-your-license-from-the-customer-dashboard':
 		'You will receive an invoice via email with all the details needed to complete your payment. After you complete the payment, you can activate your license from the customer dashboard.',
 	'your-free-activation-key-has-been-generated':
-		'Your Free Activation Key Has Been Generated!',
+		'Your free activation key has been generated!',
 	'your-request-completed-successfully':
 		'Your request completed successfully',
 	'zip-files-must-be-in-universal-file-format-archive-luffa-the-specially-structured-zip-encoded-archive-used-to-package-client-extension-project-outputs-this-format-must-support-the-following-use-cases-deliver-batch-engine-data-files-compatible-with-all-deployment-targets-deliver-dxp-configuration-resource-compatible-with-all-deployment-targets-deliver-static-resources-compatible-with-all-deployment-targets-deliver-the-infrastructure-metadata-necessary-to-deploy-to-lxc-sm-for-more-information-see':

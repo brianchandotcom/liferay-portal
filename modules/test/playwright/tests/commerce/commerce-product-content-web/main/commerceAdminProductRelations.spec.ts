@@ -91,39 +91,87 @@ test('LPD-13559 Bulk actions for product relations', async ({
 	).toBeVisible();
 });
 
-test('CanDeleteProductWithRelations', async ({
-	apiHelpers,
-	commerceAdminProductDetailsProductRelationsPage,
-	commerceAdminProductPage,
-}) => {
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+test(
+	'Add edit and remove product relations of all types',
+	{tag: ['@LPD-55274', '@LPD-87061']},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsProductRelationsPage,
+		commerceAdminProductPage,
+	}) => {
+		const relationTypes = [
+			'Up-Sell',
+			'Cross-Sell',
+			'Related',
+			'Accessories',
+			'Spare',
+		];
 
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
-	const product2 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-	});
+		let catalog;
+		let sourceProduct;
+		let relatedProduct;
 
-	await commerceAdminProductPage.gotoProduct(product1.name.en_US);
+		await test.step('Create a catalog and products via API', async () => {
+			catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
 
-	await commerceAdminProductDetailsProductRelationsPage.addSpareProductRelation();
+			sourceProduct =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: 'Simple T-Shirt'},
+				});
+			relatedProduct =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+					name: {en_US: 'Shoes'},
+				});
+		});
 
-	await expect(
-		await commerceAdminProductDetailsProductRelationsPage.addProductRelationHeading(
-			product1.name.en_US
-		)
-	).toBeVisible();
+		await commerceAdminProductPage.gotoProduct(sourceProduct.name.en_US);
 
-	await apiHelpers.headlessCommerceAdminCatalog.deleteProduct(
-		product2.productId
-	);
+		await commerceAdminProductDetailsPage.goToProductRelations();
 
-	await commerceAdminProductPage.gotoProduct(product1.name.en_US);
+		await test.step('Add a product relation', async () => {
+			for (const relationType of relationTypes) {
+				await commerceAdminProductDetailsProductRelationsPage.addProductRelation(
+					relationType,
+					relatedProduct.name.en_US
+				);
 
-	await expect(
-		await commerceAdminProductDetailsProductRelationsPage.addProductRelationHeading(
-			product2.name.en_US
-		)
-	).not.toBeVisible();
-});
+				await expect(
+					commerceAdminProductDetailsProductRelationsPage.productRelationRow(
+						relatedProduct.name.en_US,
+						relationType
+					)
+				).toBeVisible();
+			}
+		});
+
+		await test.step('Edit a product relation', async () => {
+			await commerceAdminProductDetailsProductRelationsPage.setProductRelationPriority(
+				relatedProduct.name.en_US,
+				'Up-Sell',
+				1
+			);
+
+			await expect(
+				commerceAdminProductDetailsProductRelationsPage.productRelationRow(
+					relatedProduct.name.en_US,
+					'Up-Sell'
+				)
+			).toContainText('1');
+		});
+
+		await test.step('Remove product relations, bulk delete all relations and assert the table is empty', async () => {
+			await commerceAdminProductDetailsProductRelationsPage.selectItemsInput.check();
+
+			await commerceAdminProductDetailsProductRelationsPage.bulkActionButton.click();
+			await commerceAdminProductDetailsProductRelationsPage.deleteBulkMenuItem.click();
+
+			await expect(
+				commerceAdminProductDetailsProductRelationsPage.emptyTableMessage
+			).toBeVisible();
+		});
+	}
+);

@@ -145,6 +145,20 @@ public class ObjectEntryKeywordQueryContributor
 			}
 		}
 		else {
+			for (ObjectField objectField : objectFields) {
+				if (!_isTextField(objectField)) {
+					continue;
+				}
+
+				try {
+					_contribute(
+						objectField, keywords, booleanQuery, searchContext);
+				}
+				catch (ParseException parseException) {
+					throw new SystemException(parseException);
+				}
+			}
+
 			for (String token : _tokenizeKeywords(keywords)) {
 				if (addObjectEntryTitle.get() && !Validator.isBlank(token)) {
 					booleanQuery.add(
@@ -157,6 +171,10 @@ public class ObjectEntryKeywordQueryContributor
 				}
 
 				for (ObjectField objectField : objectFields) {
+					if (_isTextField(objectField)) {
+						continue;
+					}
+
 					try {
 						_contribute(
 							objectField, token, booleanQuery, searchContext);
@@ -267,7 +285,8 @@ public class ObjectEntryKeywordQueryContributor
 
 				for (String localizedFieldName : localizedFieldNames) {
 					localizedNestedBooleanQuery.add(
-						new MatchQuery(localizedFieldName, token),
+						_createMatchQuery(
+							localizedFieldName, token, searchContext),
 						BooleanClauseOccur.SHOULD);
 
 					queryConfig.addHighlightFieldNames(localizedFieldName);
@@ -287,7 +306,8 @@ public class ObjectEntryKeywordQueryContributor
 
 			if (!objectField.isLocalized()) {
 				nestedBooleanQuery.add(
-					new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
+					_createMatchQuery(fieldName, token, searchContext),
+					BooleanClauseOccur.MUST);
 
 				queryConfig.addHighlightFieldNames(fieldName);
 			}
@@ -382,6 +402,18 @@ public class ObjectEntryKeywordQueryContributor
 		}
 	}
 
+	private MatchQuery _createMatchQuery(
+		String field, String value, SearchContext searchContext) {
+
+		MatchQuery matchQuery = new MatchQuery(field, value);
+
+		if (searchContext.isAndSearch()) {
+			matchQuery.setOperator(MatchQuery.Operator.AND);
+		}
+
+		return matchQuery;
+	}
+
 	private String _getToken(
 		String fieldName, SearchContext searchContext, String token) {
 
@@ -419,6 +451,27 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		return value;
+	}
+
+	private boolean _isTextField(ObjectField objectField) {
+		if ((objectField == null) || !objectField.isIndexed() ||
+			objectField.isIndexedAsKeyword()) {
+
+			return false;
+		}
+
+		if (Objects.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_CLOB) ||
+			Objects.equals(
+				objectField.getDBType(), ObjectFieldConstants.DB_TYPE_STRING)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isValidInput(String token, String type) {

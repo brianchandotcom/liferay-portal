@@ -67,7 +67,7 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 	@Test
 	public void testRequestUserInfoJSON() throws Exception {
-		String email = RandomTestUtil.randomString() + "@liferay.com";
+		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 		String subject = RandomTestUtil.randomString();
 
 		try (MockedStatic<HttpUtil> httpUtilMockedStatic = Mockito.mockStatic(
@@ -87,7 +87,7 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 					httpOptions.setResponse(httpResponse);
 
 					return JSONUtil.put(
-						"email", email
+						"email", emailAddress
 					).put(
 						"sub", subject
 					).toString();
@@ -100,7 +100,7 @@ public class OpenIdConnectAuthenticationHandlerImplTest {
 
 			Map<String, Object> userInfo = JSONObjectUtils.parse(userInfoJSON);
 
-			Assert.assertEquals(email, userInfo.get("email"));
+			Assert.assertEquals(emailAddress, userInfo.get("email"));
 			Assert.assertEquals(subject, userInfo.get("sub"));
 		}
 

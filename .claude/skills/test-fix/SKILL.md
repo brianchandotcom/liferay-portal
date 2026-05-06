@@ -1,8 +1,8 @@
 ---
 
 allowed-tools: [Bash, Edit, Glob, Grep, Read, Skill, Write]
-argument-hint: '<caseResultId | testName>'
-description: Resolve a single Liferay test failure end-to-end. Use when the user invokes `/test-fix` with a Testray case result ID or a test name.
+argument-hint: '<caseResultId | testName | testrayBuildUrl>'
+description: Resolve a single Liferay test failure end-to-end.
 name: test-fix
 
 ---
@@ -22,15 +22,24 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 
 ## Input
 
-### Case Result ID / Test Name
+### Case Result ID
 
-`${ARGUMENTS}` is either a positive integer Testray case result ID or a test name. Abort immediately when `${ARGUMENTS}` is empty.
+A positive integer. Used directly as the Testray case result ID. Get it from `${ARGUMENTS}` based on its type:
+
+#### Testray Build URL
+
+A URL of the form `https://testray.liferay.com/#/project/<projectId>/routines/<routineId>/build/<buildId>?filter=<urlencoded-json>`. Resolved to a case result ID by following [`references/testray.md`](references/testray.md). The procedure returns a case result ID that the rest of the workflow consumes identically to a user-supplied one.
+
+#### Test Name
+
+Anything else. Resolved to a case result ID by following [`references/testray.md`](references/testray.md). When the resolution aborts, surface the reason and ask the user to retry with the case result ID directly.
 
 ### Failure Data
 
 Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the procedure returns these fields:
 
 - **errorTrace** — error trace produced by the test framework.
+- **failureDate** — timestamp the case result was recorded, used to scope the duplicate-ticket check in **Claim the Failure**.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).
 - **lastPassSha** — commit where the test last passed (may be `null` when the case has no recent pass on record).
 - **name** — test name (class, spec, or method).
@@ -67,22 +76,23 @@ One sentence describing the outcome:
 
 The elapsed time of the run, formatted as `<minutes>m <seconds>s`.
 
-### Jira Ticket
+### Jira Tickets
 
-Only when the test was fixed (verdict `Bug in portal` or `Outdated test`): the URL of the Jira ticket filed for the fix.
+The Task created in **Claim the Failure** is the persistent ticket of record for every verdict. Update it at the end of the run based on the verdict:
 
-Decide the ticket type from the verdict:
+- **Bug in portal** — invoke the `jira-bug` skill to create a separate Bug describing the regression. Title summarises the regression, description carries the failing test name, the trace, and the reproduction steps derived from the test scenario. Link the Bug to `<TASK_KEY>` with the **Fix** issue link type so the Task surfaces it as **is fixed by**, and keep `<TASK_KEY>` as the commit key. Return the Bug URL alongside the Task URL.
 
-- **Bug** for `Bug in portal` — invoke the `jira-bug` skill. The title summarizes the regression. The description carries the failing test name, the trace, and reproduction steps derived from the test scenario. The Bug key is the **commit key**.
-- **Task** for `Outdated test` — invoke the `jira-task` skill with title `Fix <test name>`.
+- **Outdated test** — keep `<TASK_KEY>` as the commit key. Return the Task URL.
 
-Label the ticket with the `claude-test-fix` label so every ticket created by this skill stays searchable as a group.
+- **No fix needed** — close `<TASK_KEY>` as `Won't Do` with a comment containing the literal `Test passes locally`. No PR is opened.
+
+- **Unresolved** — leave `<TASK_KEY>` in **In Progress**, append the handover summary as a comment, and return its URL so the human picking it up has a single landing page.
 
 ### Pull Request
 
 Only when the test was fixed (verdict `Bug in portal` or `Outdated test`): the URL of the pull request opened for the fix.
 
-Use the logic in the `start-work` skill to create the branch from the ticket key, then invoke the `commit` skill. Find the owner of the changed files using `<repo-root>/.github/CODEOWNERS` and invoke the `pr` skill with it as the target repository. Override the user's title-only default and pass the body content explicitly so the pull request explains the regression.
+Invoke the `commit` skill, then find the owner of the changed files using `<repo-root>/.github/CODEOWNERS` and invoke the `pr` skill with it as the target repository. Override the user's title-only default and pass the body content explicitly so the pull request explains the regression.
 
 Use this template:
 
@@ -113,37 +123,45 @@ Commit `<short-sha>` ("<subject>") <one or two sentences>.
 
 ## Workflow
 
-When any step aborts (failure data fetch, test does not reproduce, iteration budget exhausted, test file cannot be located, …), run the portal cleanup in step 4 and exit.
+### 1. Claim the Failure
 
-### 1. Reproduce Locally
+1. Check Jira for an LPD ticket whose summary contains `<test-name>`, is labeled `claude-test-fix`, and was **created on or after `<failureDate>`**. A ticket matching those criteria already covers this failure (in progress when still open, already shipped when resolved), so skip it; if there are other candidates, retry with the next one.
+
+1. Invoke the `jira-task` skill with summary `<test-name>` and a description that names the case result ID, the source build, and the failure trace excerpt. Add the `claude-test-fix` label.
+
+1. Invoke the `start-work` skill on the new Task.
+
+1. Carry the Task key forward as `<TASK_KEY>` for the rest of the workflow.
+
+### 2. Reproduce Locally
 
 This step runs **before** any range or commit analysis. The test may already pass locally — when it does, the run ends here without any further investigation.
 
-#### 1.1. Set Feature Flags
+#### 2.1. Set Feature Flags
 
 Inspect the test source to discover which feature flags it depends on. Mirror the CI setup before reproducing. Otherwise, the test path differs.
 
-- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then, strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 4. Bounce Tomcat for the new flag values to take effect.
+- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then, strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 5. Bounce Tomcat for the new flag values to take effect.
 
 - **Playwright tests** declare flags through the `featureFlagsTest` fixture under `modules/test/playwright/fixtures`. The fixture toggles them per test — no portal change is needed.
 
-#### 1.2. Run the Test
+#### 2.2. Run the Test
 
 Run the test, deploying first when the type requires it. For `Java Semantic Versioning`, the "test" is `<gradlew> baseline` from the failing module — strictly an API contract check, not a behavioral test. Then compare the local outcome with **errorTrace**:
 
-- **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip step 2 (diagnosis) and step 3 (iteration). Run the cleanup in step 4 and exit.
-- **Same failure** → continue to step 2.
+- **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip step 3 (diagnosis) and step 4 (iteration). Run the cleanup in step 5 and exit.
+- **Same failure** → continue to step 3.
 - **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarizing both traces (the one returned by the Testray fetch and the one observed locally) and exit.
 
-### 2. Identify Suspect Commits
+### 3. Identify Suspect Commits
 
 The breaking change lies between `${LAST_PASS_SHA}` and `${FIRST_FAIL_SHA}`. List candidates from the diff between those two commits, then narrow by tracing the line history of the file owning the line nearest the failing assertion or the topmost frame in **errorTrace**.
 
 When that does not point to a single commit, rank candidates: files in the test's own module first, then modules whose packages the test imports, then `*-api` / `portal-kernel` / shared `frontend-js-*`, then `portal-impl` / `petra-*` / shared infrastructure.
 
-### 3. Iterate Through Suspects
+### 4. Iterate Through Suspects
 
-Work on `master` with uncommitted changes — the branch is created later. For each suspect in ranked order:
+Apply candidate fixes as uncommitted changes; the `commit` skill picks them up later in **Pull Request**. For each suspect in ranked order:
 
 1. Read its documented intent — the commit message and diff, the linked `LPD-XXXXX` ticket (summary, issue type, description) when the subject carries one, and the body of the merged pull request that introduced the commit:
 
@@ -159,14 +177,14 @@ Work on `master` with uncommitted changes — the branch is created later. For e
 
 When the test turns green, do **not** lock in the verdict immediately — keep reading the remaining suspects to confirm none of them is a stronger explanation. Settling on the first green fix is how a wrong fix gets shipped; only commit once no better candidate surfaces.
 
-When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analyzed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 4 and exit.
+When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analyzed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 5 and exit.
 
-Once the verdict is locked in (only ever after a green local run — never file a ticket or commit otherwise), record the offending commit (short SHA + subject) and one sentence explaining how it broke the test — reused in the PR body's Root Cause section (see **Pull Request**).
+Once the verdict is locked in (only ever after a green local run — never commit or open a PR otherwise), record the offending commit (short SHA + subject) and one sentence explaining how it broke the test — reused in the PR body's Root Cause section (see **Pull Request**).
 
-### 4. Restore the Portal
+### 5. Restore the Portal
 
 This step is idempotent: the portal must end the run in the same state it started — Tomcat running with the original `portal-ext.properties` loaded.
 
-When step 1.1 changed `<bundles>/portal-ext.properties`, restore the snapshot and bounce Tomcat to pick the original properties back up.
+When step 2.1 changed `<bundles>/portal-ext.properties`, restore the snapshot and bounce Tomcat to pick the original properties back up.
 
-When step 1.1 was skipped because the test does not need flag changes, Tomcat keeps running untouched and there is nothing to do.
+When step 2.1 was skipped because the test does not need flag changes, Tomcat keeps running untouched and there is nothing to do.

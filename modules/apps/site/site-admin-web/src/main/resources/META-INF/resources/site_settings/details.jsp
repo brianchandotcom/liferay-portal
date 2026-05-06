@@ -83,7 +83,7 @@ if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	<aui:input inlineLabel="right" labelCssClass="simple-toggle-switch" name="active" type="toggle-switch" value="<%= liveGroup.isActive() %>" />
 
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-82960") %>'>
-		<aui:input disabled="<%= liveGroup.isActive() %>" helpMessage='<%= liveGroup.isActive() ? LanguageUtil.get(request, "the-site-must-be-deactivated-before-enabling-maintenance-mode") : LanguageUtil.get(request, "when-enabled-nonadmin-users-will-see-a-maintenance-page-instead-of-the-site-content") %>' inlineLabel="right" label="maintenance-mode" labelCssClass="simple-toggle-switch" name="maintenanceMode" type="toggle-switch" value="<%= liveGroup.isMaintenanceMode() %>" />
+		<aui:input disabled="<%= liveGroup.isActive() %>" helpMessage='<%= liveGroup.isActive() ? LanguageUtil.get(request, "the-site-must-be-deactivated-before-enabling-maintenance-mode") : LanguageUtil.get(request, "when-enabled-nonadmin-users-see-a-maintenance-page-instead-of-the-site-content") %>' inlineLabel="right" label="maintenance-mode" labelCssClass="simple-toggle-switch" name="maintenanceMode" type="toggle-switch" value="<%= liveGroup.isMaintenanceMode() %>" />
 
 		<aui:script>
 			var activeCheckbox = document.getElementById('<portlet:namespace />active');

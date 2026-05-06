@@ -36,7 +36,7 @@ describe('getDefaultField', () => {
 			locale: 'en_US',
 		});
 
-		const languageGetSpy = jest
+		const getLanguageSpy = jest
 			.spyOn(Liferay.Language, 'get')
 			.mockImplementation((key: string) =>
 				key === 'title' ? 'Título' : key
@@ -55,7 +55,7 @@ describe('getDefaultField', () => {
 			});
 		}
 		finally {
-			languageGetSpy.mockRestore();
+			getLanguageSpy.mockRestore();
 		}
 	});
 

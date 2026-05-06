@@ -5,7 +5,7 @@ USER root
 ARG LABEL_BUILD_DATE
 ARG LABEL_VCS_REF
 
-ENV CATALINA_OPTS="-server -XX:NewSize=1024m -XX:MaxNewSize=1024m -Xms4096m -Xmx4096m -XX:SurvivorRatio=6 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -XX:+UseLargePages -XX:LargePageSizeInBytes=256m -XX:+UseParNewGC -XX:ParallelGCThreads=16 -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+CMSCompactWhenClearAllSoftRefs -XX:CMSInitiatingOccupancyFraction=85 -XX:+CMSScavengeBeforeRemark -XX:+UseLargePages -XX:LargePageSizeInBytes=256m -XX:+UseCompressedOops -XX:+DisableExplicitGC -XX:-UseBiasedLocking -XX:+BindGCTaskThreadsToCPUs -XX:+UseFastAccessorMethods -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true" \
+ENV CATALINA_OPTS="-server -XX:NewSize=1024m -XX:MaxNewSize=1024m -Xms4096m -Xmx4096m -XX:SurvivorRatio=6 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -XX:+UseLargePages -XX:LargePageSizeInBytes=256m -XX:+UseParNewGC -XX:ParallelGCThreads=16 -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+CMSCompactWhenClearAllSoftRefs -XX:CMSInitiatingOccupancyFraction=85 -XX:+CMSScavengeBeforeRemark -XX:+UseLargePages -XX:LargePageSizeInBytes=256m -XX:+UseCompressedOops -XX:+DisableExplicitGC -XX:-UseBiasedLocking -XX:+BindGCTaskThreadsToCPUs -XX:+UseFastAccessorMethods" \
 	FARO_DEFAULT_WE_DEPLOY_KEY=osbasah.lfr.cloud \
 	FARO_DEMO_CREATOR_METHOD=snapshot \
 	FARO_PROJECT_ID=FARO-DEV-liferay \

@@ -123,7 +123,7 @@ export interface IDateFilter extends IFilter {
 
 export interface IField {
 	children?: Array<IField>;
-	entityFieldType?: EFieldType | `collection-${string}`;
+	entityFieldType?: EFieldType;
 	format?: EFieldFormat | EFieldType;
 	id?: string;
 	label?: string;

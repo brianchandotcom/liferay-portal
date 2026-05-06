@@ -170,7 +170,9 @@ function getFilterableFields({
 		};
 
 		if (type === EFieldType.ARRAY) {
-			field.entityFieldType = `collection-${field.entityFieldType}`;
+			field.entityFieldType = `collection-${field.entityFieldType}` as
+				| EFieldType.COLLECTION_INTEGER
+				| EFieldType.COLLECTION_STRING;
 		}
 
 		if (field.type === EFieldFormat.F_DATE_TIME) {

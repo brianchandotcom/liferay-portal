@@ -54,8 +54,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL",
-				!redirect.isEmpty() ? redirect :
-					_getRedirectURL(actionResponse, styleBookEntry));
+				_getRedirectURL(actionResponse, redirect, styleBookEntry));
 
 			if (SessionErrors.contains(
 					actionRequest, "styleBookEntryNameInvalid")) {
@@ -93,12 +92,15 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private String _getRedirectURL(
-		ActionResponse actionResponse, StyleBookEntry styleBookEntry) {
+		ActionResponse actionResponse, String redirect,
+		StyleBookEntry styleBookEntry) {
 
 		return PortletURLBuilder.createRenderURL(
 			_portal.getLiferayPortletResponse(actionResponse)
 		).setMVCRenderCommandName(
 			"/style_book/edit_style_book_entry"
+		).setRedirect(
+			redirect
 		).setParameter(
 			"styleBookEntryId", styleBookEntry.getStyleBookEntryId()
 		).buildString();

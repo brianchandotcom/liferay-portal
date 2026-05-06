@@ -205,6 +205,13 @@ export default function AssetsFDSPropsTransformer({
 		...remainingAdditionalProps
 	} = additionalProps || {};
 
+	const bulkActionAPIURL =
+		additionalAPIURLParameters && otherProps.apiURL
+			? `${otherProps.apiURL}${
+					otherProps.apiURL.includes('?') ? '&' : '?'
+				}${additionalAPIURLParameters}`
+			: otherProps.apiURL;
+
 	return {
 		...otherProps,
 		additionalAPIURLParameters,
@@ -434,7 +441,7 @@ export default function AssetsFDSPropsTransformer({
 							allowPropagate:
 								action.data.id ===
 								'edit-and-propagate-default-permissions',
-							apiURL: otherProps.apiURL,
+							apiURL: bulkActionAPIURL,
 							classExternalReferenceCode:
 								itemData.embedded.externalReferenceCode,
 							className: itemData.entryClassName,
@@ -591,7 +598,7 @@ export default function AssetsFDSPropsTransformer({
 						closeModal: () => void;
 					}) =>
 						EditAssetCategoriesModalContent({
-							apiURL: otherProps.apiURL,
+							apiURL: bulkActionAPIURL,
 							assetLibraries:
 								additionalProps.candidateAssetLibraries,
 							closeModal,
@@ -613,7 +620,7 @@ export default function AssetsFDSPropsTransformer({
 						closeModal: () => void;
 					}) =>
 						EditAssetTagsModalContent({
-							apiURL: otherProps?.apiURL,
+							apiURL: bulkActionAPIURL,
 							assetLibraries:
 								additionalProps.candidateAssetLibraries,
 							closeModal,
@@ -625,7 +632,7 @@ export default function AssetsFDSPropsTransformer({
 			}
 			else if (action?.data?.id === 'default-permissions') {
 				defaultPermissionsBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
@@ -638,11 +645,11 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'delete') {
 				if (additionalProps.brokenLinksCheckerEnabled) {
 					openAssetUsageListModal({
-						apiURL: otherProps.apiURL,
+						apiURL: bulkActionAPIURL,
 						itemsData: selectedData.items,
 						onDelete: async () => {
 							executeBulkDeleteAction(
-								otherProps.apiURL as string,
+								bulkActionAPIURL as string,
 								otherProps.id || '',
 								selectedData
 							);
@@ -655,7 +662,7 @@ export default function AssetsFDSPropsTransformer({
 
 						onSkip: async () => {
 							deleteAssetEntriesBulkAction({
-								apiURL: otherProps.apiURL,
+								apiURL: bulkActionAPIURL,
 								dataSetId: otherProps.id,
 								selectedData,
 							});
@@ -665,14 +672,14 @@ export default function AssetsFDSPropsTransformer({
 				}
 				else {
 					deleteAssetEntriesBulkAction({
-						apiURL: otherProps.apiURL,
+						apiURL: bulkActionAPIURL,
 						selectedData,
 					});
 				}
 			}
 			else if (action?.data?.id === 'download') {
 				triggerAssetDownloadBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					selectedData,
 					type: 'DownloadBulkAction',
 				});
@@ -680,7 +687,7 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'export-for-translation') {
 				exportTranslationBulkAction({
 					additionalProps,
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					selectedData,
 				});
 			}
@@ -688,7 +695,7 @@ export default function AssetsFDSPropsTransformer({
 				action?.data?.id === 'edit-default-permissions-by-role'
 			) {
 				defaultPermissionsBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
@@ -701,7 +708,7 @@ export default function AssetsFDSPropsTransformer({
 			}
 			else if (action?.data?.id === 'edit-permissions-by-role') {
 				permissionsBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
@@ -714,7 +721,7 @@ export default function AssetsFDSPropsTransformer({
 			}
 			else if (action?.data.id === 'expire') {
 				expireEntriesBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					dataSetId: otherProps.id,
 					selectedData,
 				});
@@ -737,7 +744,7 @@ export default function AssetsFDSPropsTransformer({
 			}
 			else if (action?.data?.id === 'permissions') {
 				permissionsBulkAction({
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
@@ -751,7 +758,7 @@ export default function AssetsFDSPropsTransformer({
 				openResetAssetPermissionModal({
 					loadData: () => {
 						executeResetPermissionObjectBulkSelectionAction({
-							apiURL: otherProps.apiURL,
+							apiURL: bulkActionAPIURL,
 							selectedData,
 						});
 					},
@@ -764,7 +771,7 @@ export default function AssetsFDSPropsTransformer({
 				copyOrMoveBulkAction({
 					action: action.data.id === 'copy-to' ? 'copy' : 'move',
 					additionalProps,
-					apiURL: otherProps.apiURL,
+					apiURL: bulkActionAPIURL,
 					dataSetId: otherProps.id,
 					selectedData,
 				});

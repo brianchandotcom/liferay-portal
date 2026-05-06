@@ -27,6 +27,7 @@ interface BasePhoneNumberProps {
 	disabled?: boolean;
 	fieldName: string;
 	id?: string;
+	label?: string;
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
 	onFocus?: (event: React.FocusEvent) => void;
@@ -68,8 +69,7 @@ const LocalizablePhoneNumber = ({
 	const {availableLocales, editingLanguageId} = useFormState();
 
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
-	const disabled = readOnly || (otherProps.disabled as boolean);
-	const label = otherProps.label as string;
+	const disabled = readOnly || otherProps.disabled;
 	const hasError = !!currentValue && !PHONE_NUMBER_PATTERN.test(currentValue);
 
 	const handleLocalChange = (event: {target: {value: string}}) => {
@@ -94,7 +94,7 @@ const LocalizablePhoneNumber = ({
 			name={name}
 			readOnly={disabled}
 		>
-			<ClayInput.Group aria-label={label} role="group">
+			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
 					disabled={disabled}
@@ -138,8 +138,7 @@ const NonLocalizablePhoneNumber = ({
 		initialValue || predefinedValue || ''
 	);
 
-	const disabled = readOnly || (otherProps.disabled as boolean);
-	const label = otherProps.label as string;
+	const disabled = readOnly || otherProps.disabled;
 	const hasError =
 		!!combinedValue && !PHONE_NUMBER_PATTERN.test(combinedValue);
 
@@ -156,7 +155,7 @@ const NonLocalizablePhoneNumber = ({
 			name={name}
 			readOnly={disabled}
 		>
-			<ClayInput.Group aria-label={label} role="group">
+			<ClayInput.Group aria-label={otherProps.label} role="group">
 				<PhoneNumberInput
 					countries={countries}
 					disabled={disabled}

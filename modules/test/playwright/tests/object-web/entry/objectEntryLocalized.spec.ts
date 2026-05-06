@@ -1106,6 +1106,36 @@ test.describe('Localized object entries are saved correctly', () => {
 				);
 			});
 
+			await test.step('Verify the error message is displayed', async () => {
+				const fixedErrorMessage = page
+					.locator('.form-group', {has: fixedFieldContainer})
+					.getByText('Please enter a valid phone number.');
+
+				await fixedPhoneInput.fill('1');
+
+				await fixedPhoneInput.blur();
+
+				await expect(fixedErrorMessage).toBeVisible();
+
+				await fixedPhoneInput.clear();
+
+				await expect(fixedErrorMessage).not.toBeVisible();
+
+				const userErrorMessage = page
+					.locator('.form-group', {has: userFieldContainer})
+					.getByText('Please enter a valid phone number.');
+
+				await userPhoneInput.fill('1');
+
+				await userPhoneInput.blur();
+
+				await expect(userErrorMessage).toBeVisible();
+
+				await userPhoneInput.clear();
+
+				await expect(userErrorMessage).not.toBeVisible();
+			});
+
 			await test.step('Fill both phone number fields with the en_US values', async () => {
 				await expect(
 					fixedFieldContainer.getByText(fixedPrefix)

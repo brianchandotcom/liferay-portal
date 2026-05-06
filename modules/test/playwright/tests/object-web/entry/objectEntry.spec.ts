@@ -5558,6 +5558,22 @@ test.describe('Manage object entries through View Object Entries', () => {
 				);
 			});
 
+			await test.step('Verify the error message is displayed', async () => {
+				const errorMessage = page
+					.locator('.form-group', {has: fieldContainer})
+					.getByText('Please enter a valid phone number.');
+
+				await fieldContainer.getByLabel('Phone Number').fill('1');
+
+				await fieldContainer.getByLabel('Phone Number').blur();
+
+				await expect(errorMessage).toBeVisible();
+
+				await fieldContainer.getByLabel('Phone Number').clear();
+
+				await expect(errorMessage).not.toBeVisible();
+			});
+
 			await test.step('Fill the phone number field and save the entry', async () => {
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 

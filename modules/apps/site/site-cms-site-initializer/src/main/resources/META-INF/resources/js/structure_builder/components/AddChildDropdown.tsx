@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {useCache} from '../contexts/CacheContext';
@@ -117,6 +118,7 @@ export default function AddChildDropdown({
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('add-field')}
 						className={className}
+						data-canonical-name={Liferay.Language.get('add-field')}
 						displayType={displayType}
 						size="sm"
 						symbol="plus"

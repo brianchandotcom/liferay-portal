@@ -9,10 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import getRandomString from '../../../utils/getRandomString';
-import {
-	performLoginViaApi,
-	performLogout,
-} from '../../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 

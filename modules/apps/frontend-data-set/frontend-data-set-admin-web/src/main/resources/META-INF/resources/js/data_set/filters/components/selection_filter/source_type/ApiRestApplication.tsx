@@ -374,22 +374,17 @@ function ApiRestApplication({
 								return;
 							}
 
-							const {restSchema, schemas} = oApiData;
+							const fields: IField[] = getFields(oApiData);
 
-							getFields({
-								restSchema,
-								schemas,
-							}).then((fields: IField[]) => {
-								if (fields) {
-									setFields(
-										fields.filter(
-											(field) =>
-												field.type !== 'array' &&
-												field.type !== 'object'
-										)
-									);
-								}
-							});
+							if (fields) {
+								setFields(
+									fields.filter(
+										(field: IField) =>
+											field.type !== 'array' &&
+											field.type !== 'object'
+									)
+								);
+							}
 						});
 					}
 				}}

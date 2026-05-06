@@ -7,7 +7,10 @@ import {
 	BLACKLISTED_FIELDS,
 	getValidFields,
 } from '../../src/main/resources/META-INF/resources/js/utils/getFields';
-import {IField, ISchemas} from '../../src/main/resources/META-INF/resources/js/utils/types';
+import {
+	IField,
+	ISchemas,
+} from '../../src/main/resources/META-INF/resources/js/utils/types';
 
 /*
  * A points to B using scalar field via $ref

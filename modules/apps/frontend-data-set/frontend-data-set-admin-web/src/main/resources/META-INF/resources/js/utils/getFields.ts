@@ -114,7 +114,7 @@ function getValidFields({
 	return fields;
 }
 
-export default async function getFields({
+export default function getFields({
 	restSchema,
 	schemas,
 }: {
@@ -129,13 +129,13 @@ export default async function getFields({
 	});
 }
 
-async function getFilterableFields({
+function getFilterableFields({
 	restSchema,
 	schemas,
 }: {
 	restSchema: string;
 	schemas: ISchemas;
-}): Promise<IField[]> {
+}): IField[] {
 	if (!schemas[restSchema]['x-filterable']) {
 		openDefaultFailureToast();
 

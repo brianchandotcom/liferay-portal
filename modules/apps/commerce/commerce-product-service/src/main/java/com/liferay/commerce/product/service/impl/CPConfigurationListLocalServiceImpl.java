@@ -112,8 +112,6 @@ public class CPConfigurationListLocalServiceImpl
 			cpConfigurationListPersistence.create(
 				counterLocalService.increment());
 
-		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
-
 		cpConfigurationList.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationList.setGroupId(groupId);
 		cpConfigurationList.setCompanyId(user.getCompanyId());
@@ -126,6 +124,7 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setPriority(priority);
 		cpConfigurationList.setDisplayDate(displayDate);
 		cpConfigurationList.setExpirationDate(expirationDate);
+		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
 
 		cpConfigurationList = cpConfigurationListPersistence.update(
 			cpConfigurationList);
@@ -459,8 +458,6 @@ public class CPConfigurationListLocalServiceImpl
 			cpConfigurationListPersistence.findByPrimaryKey(
 				cpConfigurationListId);
 
-		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
-
 		cpConfigurationList.setExternalReferenceCode(externalReferenceCode);
 		cpConfigurationList.setGroupId(groupId);
 		cpConfigurationList.setParentCPConfigurationListId(
@@ -470,6 +467,7 @@ public class CPConfigurationListLocalServiceImpl
 		cpConfigurationList.setPriority(priority);
 		cpConfigurationList.setDisplayDate(displayDate);
 		cpConfigurationList.setExpirationDate(expirationDate);
+		cpConfigurationList.setExpandoBridgeAttributes(serviceContext);
 
 		return cpConfigurationListPersistence.update(cpConfigurationList);
 	}

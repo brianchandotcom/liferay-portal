@@ -1,3 +1,4 @@
+import * as API from 'shared/api';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useMemo} from 'react';
 import {columns} from 'shared/util/frontend-data-set';
@@ -6,6 +7,7 @@ import {sub} from 'shared/util/lang';
 import {useFDSState} from 'shared/hooks/useFDSState';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const FDS_ID = 'account-details-attributes-dataset';
 
@@ -21,19 +23,30 @@ interface IAccountDetailsField {
 interface IAccountDetailsModalProps {
 	accountId: string;
 	accountName?: string;
-	items?: IAccountDetailsField[];
 	onClose: () => void;
 }
 
 const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
+	accountId,
 	accountName,
-	items,
 	onClose
 }) => {
-	const {groupId} = useParams<{groupId: string}>();
+	const {channelId, groupId} = useParams<{
+		channelId: string;
+		groupId: string;
+	}>();
 	const {observer} = useModal({onClose});
 	const FrontendDataSet = useFrontendDataSet();
 	const {search} = useFDSState(FDS_ID);
+
+	const {data} = useRequest({
+		dataSourceFn: API.accounts.fetchDetails as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
+		variables: {accountId, channelId, groupId}
+	});
+
+	const items: IAccountDetailsField[] = data?.fields ?? [];
 
 	const filteredItems = useMemo(() => {
 		if (!search) {
@@ -42,9 +55,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 
 		const query = search.toLowerCase();
 
-		return (items ?? []).filter(item =>
-			item.name.toLowerCase().includes(query)
-		);
+		return items.filter(item => item.name.toLowerCase().includes(query));
 	}, [items, search]);
 
 	return (
@@ -58,7 +69,6 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 			<ClayModal.Body className='px-0'>
 				{FrontendDataSet && (
 					<FrontendDataSet
-						// apiURL={`/o/faro/contacts/${groupId}/account/${accountId}/fields`}
 						configInURLBehavior='off'
 						customDataRenderers={{
 							attributeNameAndValueRenderer: ({

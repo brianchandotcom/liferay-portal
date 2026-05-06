@@ -7,18 +7,20 @@ set -o pipefail
 function get_gradle_property {
 	local key=${1}
 
-	local value=$(_read_property ${key} ../gradle-local.properties)
+	local value
+
+	value=$(_read_property ${key} ${SCRIPT_DIR}/../gradle-local.properties)
 
 	if [ -z ${value} ]
 	then
-		value=$(_read_property ${key} ../gradle.properties)
+		value=$(_read_property ${key} ${SCRIPT_DIR}/../gradle.properties)
 	fi
 
 	if [ -z ${value} ]
 	then
 		echo "Property \"${key}\" was not found." >&2
 
-		exit 1
+		return 1
 	fi
 
 	echo ${value}

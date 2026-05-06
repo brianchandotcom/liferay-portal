@@ -1574,21 +1574,12 @@ spec:
                                         namespace: {{ $namespace }}
                             managementPolicies: ["Observe"]
                         {{- if .observed.resources }}
-                        {{- $elasticsearchObject := (index .observed.resources "elasticsearch-observer" | default dict).resource | default dict -}}
-                        {{- $elasticsearchObjectAtProvider := ($elasticsearchObject.status | default dict).atProvider | default dict -}}
-                        {{- $elasticsearchObjectAtProviderManifest := (index $elasticsearchObjectAtProvider "manifest" | default dict) -}}
-                        {{- $elasticsearchObjectAtProviderManifestStatus := (index $elasticsearchObjectAtProviderManifest "status" | default dict) -}}
-
-                        {{- $elasticsearchHealth := (index $elasticsearchObjectAtProviderManifestStatus "health" | default "") -}}
+                        {{- $elasticsearchHealth := dig "resource" "status" "atProvider" "manifest" "status" "health" "" (index .observed.resources "elasticsearch-observer") -}}
                         {{- $isElasticsearchReady := or (eq $elasticsearchHealth "green") (eq $elasticsearchHealth "yellow") -}}
 
-                        {{- $elasticsearchSecretObject := (index .observed.resources "elasticsearch-secret-observer" | default dict).resource | default dict -}}
-                        {{- $elasticsearchSecretObjectAtProvider := ($elasticsearchSecretObject.status | default dict).atProvider | default dict -}}
-                        {{- $elasticsearchSecretObjectAtProviderManifest := (index $elasticsearchSecretObjectAtProvider "manifest" | default dict) -}}
-                        {{- $elasticsearchSecretObjectAtProviderManifestData := (index $elasticsearchSecretObjectAtProviderManifest "data" | default dict) -}}
-                        {{- $elasticsearchSecretObjectAtProviderManifestDataPassword := (index $elasticsearchSecretObjectAtProviderManifestData "elastic" | default "") -}}
+                        {{- $elasticsearchPassword := dig "resource" "status" "atProvider" "manifest" "data" "elastic" "" (index .observed.resources "elasticsearch-secret-observer") -}}
 
-                        {{- if and $isElasticsearchReady $elasticsearchSecretObjectAtProviderManifestDataPassword }}
+                        {{- if and $isElasticsearchReady $elasticsearchPassword }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
                         kind: Object
@@ -1608,7 +1599,7 @@ spec:
                                 manifest:
                                     apiVersion: v1
                                     data:
-                                        ELASTICSEARCH_PASSWORD: {{ $elasticsearchSecretObjectAtProviderManifestDataPassword }}
+                                        ELASTICSEARCH_PASSWORD: {{ $elasticsearchPassword }}
                                     kind: Secret
                                     metadata:
                                         labels:

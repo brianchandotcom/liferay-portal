@@ -221,9 +221,7 @@ export class ChangeTrackingPage {
 			).toBeVisible();
 		}
 
-		const checkBox = this.page.getByRole('checkbox', {
-			name: 'Enable Publications',
-		});
+		const checkBox = this.page.getByTitle('Enable Publications');
 
 		if (check) {
 			await checkBox.setChecked(true);

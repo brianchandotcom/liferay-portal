@@ -191,11 +191,7 @@ test('Cannot Enable Publications When Staging Is Enabled', async ({
 
 	await changeTrackingPage.goToPublicationsViaApplicationMenu();
 
-	await page
-		.getByRole('checkbox', {
-			name: 'Enable Publications',
-		})
-		.check();
+	await page.getByTitle('Enable Publications').check();
 
 	await waitForAlert(page, 'Error:Your request failed to complete.', {
 		type: 'danger',

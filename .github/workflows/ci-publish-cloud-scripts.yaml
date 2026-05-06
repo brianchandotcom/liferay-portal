@@ -29,15 +29,15 @@ jobs:
                     set -o nounset
                     set -o pipefail
 
-                    PATTERN="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
+                    local url="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
 
-                    echo "Searching for ${PATTERN}."
+                    echo "Searching for ${url}."
 
-                    if gcloud storage ls "${PATTERN}" > /dev/null 2>&1
+                    if gcloud storage ls "${url}" > /dev/null 2>&1
                     then
                         echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
 
-                        gcloud storage rm "${PATTERN}"
+                        gcloud storage rm "${url}"
                     else
                         echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
                     fi

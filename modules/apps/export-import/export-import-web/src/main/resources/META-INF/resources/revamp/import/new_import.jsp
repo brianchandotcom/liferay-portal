@@ -24,7 +24,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCRenderCommandName(
-	"/export_import/view_export_layouts"
+	"/export_import/view_import_layouts"
 ).setParameter(
 	"displayStyle", displayStyle
 ).setParameter(

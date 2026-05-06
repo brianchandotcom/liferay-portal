@@ -290,6 +290,7 @@ export default function FieldBase({
 		type === 'image' ||
 		type === 'localizable_text' ||
 		type === 'numeric' ||
+		type === 'phone-number' ||
 		type === 'rich_text' ||
 		type === 'search_location' ||
 		type === 'text';

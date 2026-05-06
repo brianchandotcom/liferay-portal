@@ -130,8 +130,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			String patcherFixNames, String patcherProjectVersionName)
 		throws PortalException {
 
-		_validateCheckPatcherFixesByPatcherProjectVersionName(
-			patcherFixNames, patcherProjectVersionName);
+		_validatePatcherFixNames(patcherFixNames);
+		_validatePatcherProjectVersionName(patcherProjectVersionName);
 
 		PatcherProjectVersion patcherProjectVersion =
 			PatcherProjectVersionLocalServiceUtil.
@@ -547,21 +547,8 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			_userLocalService.getUser(userId));
 	}
 
-	private void _validateCheckPatcherFixesByPatcherProjectVersionName(
-			String patcherFixNames, String patcherProjectVersionName)
+	private void _validatePatcherFixNames(String patcherFixNames)
 		throws PortalException {
-
-		if (Validator.isNull(patcherProjectVersionName)) {
-			throw new PortalException("Patcher project version name is null");
-		}
-
-		PatcherProjectVersion patcherProjectVersion =
-			PatcherProjectVersionLocalServiceUtil.
-				fetchPatcherProjectVersionByName(patcherProjectVersionName);
-
-		if (patcherProjectVersion == null) {
-			throw new PortalException("Patcher project version does not exist");
-		}
 
 		if (Validator.isNull(patcherFixNames)) {
 			throw new PortalException("Patcher fix names is null");
@@ -586,6 +573,23 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 			throw new PortalException(
 				"Patcher fix names are invalid: " +
 					invalidPatcherFixNamesString);
+		}
+	}
+
+	private void _validatePatcherProjectVersionName(
+			String patcherProjectVersionName)
+		throws PortalException {
+
+		if (Validator.isNull(patcherProjectVersionName)) {
+			throw new PortalException("Patcher project version name is null");
+		}
+
+		PatcherProjectVersion patcherProjectVersion =
+			PatcherProjectVersionLocalServiceUtil.
+				fetchPatcherProjectVersionByName(patcherProjectVersionName);
+
+		if (patcherProjectVersion == null) {
+			throw new PortalException("Patcher project version does not exist");
 		}
 	}
 

@@ -3,21 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import getRandomString from '../../../../utils/getRandomString';
-import {
-	performUserSwitchViaApi,
-	userData,
-} from '../../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
-import {SpaceSummaryPage} from '../pages/SpaceSummaryPage';
+import {addRoleMemberAndSwitch} from './helpers/roleMembership';
 
 const test = mergeTests(
 	cmsPagesTest,
@@ -29,53 +25,12 @@ const test = mergeTests(
 	loginTest()
 );
 
-type SpaceRole = 'Space Administrator' | 'Space Content Reviewer' | null;
-
-async function addRoleMemberAndSwitch({
-	apiHelpers,
-	page,
-	role,
-	spaceName,
-	spaceSummaryPage,
-}: {
-	apiHelpers: DataApiHelpers;
-	page: Page;
-	role: SpaceRole;
-	spaceName: string;
-	spaceSummaryPage: SpaceSummaryPage;
-}) {
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
-	const userFullName = `${user.givenName} ${user.familyName}`;
-
-	registerUserCredentials(user);
-
-	await spaceSummaryPage.goto(spaceName);
-	await spaceSummaryPage.addUserOrUserGroup(userFullName, 'users');
-
-	if (role) {
-		await spaceSummaryPage.addRoleToSpaceMember(role, userFullName);
-	}
-
-	await performUserSwitchViaApi(page, user.alternateName);
-	await spaceSummaryPage.goto(spaceName);
-
-	return {user, userFullName};
-}
-
-function createSpace(apiHelpers, spaceName) {
+function createSpace(apiHelpers: DataApiHelpers, spaceName: string) {
 	return apiHelpers.headlessAssetLibrary.createAssetLibrary({
 		name: spaceName,
 		settings: {},
 		type: 'Space',
 	});
-}
-
-function registerUserCredentials(user) {
-	userData[user.alternateName] = {
-		name: user.givenName,
-		password: 'test',
-		surname: user.familyName,
-	};
 }
 
 test(

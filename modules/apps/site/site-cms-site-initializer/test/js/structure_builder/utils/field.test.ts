@@ -27,20 +27,36 @@ describe('getDefaultField', () => {
 		setDefaultLanguageLabels({labels: {}, locale: 'en_US'});
 	});
 
-	it('populates label under both default and current language IDs when they differ', () => {
+	it('uses languageKey to seed both locale slots correctly when they differ', () => {
 		getDefaultLanguageIdSpy.mockReturnValue('en_US');
 		getLanguageIdSpy.mockReturnValue('es_ES');
 
-		const field = getDefaultField({
-			label: 'My Label',
-			parent: getUuid(),
-			type: 'text',
+		setDefaultLanguageLabels({
+			labels: {title: 'Title'},
+			locale: 'en_US',
 		});
 
-		expect(field.label).toEqual({
-			en_US: 'My Label',
-			es_ES: 'My Label',
-		});
+		const languageGetSpy = jest
+			.spyOn(Liferay.Language, 'get')
+			.mockImplementation((key: string) =>
+				key === 'title' ? 'Título' : key
+			);
+
+		try {
+			const field = getDefaultField({
+				languageKey: 'title',
+				parent: getUuid(),
+				type: 'text',
+			});
+
+			expect(field.label).toEqual({
+				en_US: 'Title',
+				es_ES: 'Título',
+			});
+		}
+		finally {
+			languageGetSpy.mockRestore();
+		}
 	});
 
 	it('produces a single label key when current and default language match', () => {
@@ -48,13 +64,11 @@ describe('getDefaultField', () => {
 		getLanguageIdSpy.mockReturnValue('en_US');
 
 		const field = getDefaultField({
-			label: 'My Label',
 			parent: getUuid(),
 			type: 'text',
 		});
 
 		expect(Object.keys(field.label)).toEqual(['en_US']);
-		expect(field.label.en_US).toBe('My Label');
 	});
 
 	it('falls back to FIELD_TYPE_LABEL when no label is provided', () => {

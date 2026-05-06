@@ -246,20 +246,22 @@ export type FieldType = (typeof FIELD_TYPES)[number];
 // Functions
 
 export function getDefaultField({
-	label,
+	languageKey,
 	locked = false,
 	name,
 	parent,
 	required = false,
 	type,
 }: {
-	label?: string;
+	languageKey?: string;
 	locked?: boolean;
 	name?: string;
 	parent: Uuid;
 	required?: boolean;
 	type: FieldType;
 }): Field {
+	const resolvedLanguageKey = languageKey ?? FIELD_TYPE_LANGUAGE_KEY[type];
+
 	const base = {
 		erc: getRandomId(),
 		indexableConfig: {
@@ -269,9 +271,9 @@ export function getDefaultField({
 		},
 		label: {
 			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-				label ?? getDefaultLanguageLabel(FIELD_TYPE_LANGUAGE_KEY[type]),
+				getDefaultLanguageLabel(resolvedLanguageKey),
 			[Liferay.ThemeDisplay.getLanguageId()]:
-				label ?? FIELD_TYPE_LABEL[type],
+				Liferay.Language.get(resolvedLanguageKey),
 		},
 		localized: true,
 		locked,

@@ -111,8 +111,7 @@ public class MCPServerServletTest {
 		String name = RandomTestUtil.randomString();
 
 		ObjectEntry objectEntry = _addObjectEntry(
-			name, "GET /test/v1.0/test-entities",
-			"POST /test/v1.0/test-entities");
+			name, "GET /mcp/server-profiles", "POST /mcp/server-profiles");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
 
@@ -125,11 +124,11 @@ public class MCPServerServletTest {
 		Assert.assertEquals(tools.toString(), 2, tools.size());
 
 		_assertTool(
-			tools.get(0), "getTestEntitiesPage",
-			"get_test_v1.0_test_entities.json");
+			tools.get(0), "getMCPServerProfilesPage",
+			"get_mcp_server_profiles.json");
 		_assertTool(
-			tools.get(1), "postTestEntity",
-			"post_test_v1.0_test_entities.json");
+			tools.get(1), "postMCPServerProfile",
+			"post_mcp_server_profiles.json");
 
 		mcpSyncClient.closeGracefully();
 
@@ -139,7 +138,7 @@ public class MCPServerServletTest {
 			HashMapBuilder.<String, Serializable>put(
 				"description", RandomTestUtil.randomString()
 			).put(
-				"endpoints", "GET /test/v1.0/test-entities"
+				"endpoints", "GET /mcp/server-profiles"
 			).put(
 				"name", name
 			).build(),
@@ -156,8 +155,8 @@ public class MCPServerServletTest {
 		Assert.assertEquals(tools.toString(), 1, tools.size());
 
 		_assertTool(
-			tools.get(0), "getTestEntitiesPage",
-			"get_test_v1.0_test_entities.json");
+			tools.get(0), "getMCPServerProfilesPage",
+			"get_mcp_server_profiles.json");
 
 		mcpSyncClient.closeGracefully();
 	}
@@ -203,7 +202,8 @@ public class MCPServerServletTest {
 						JSONObject jsonObject =
 							JSONFactoryUtil.createJSONObject(content.text());
 
-						JSONArray jsonArray = jsonObject.getJSONArray("/test");
+						JSONArray jsonArray = jsonObject.getJSONArray(
+							"/object-admin");
 
 						return jsonArray.getString(0);
 					}
@@ -215,7 +215,7 @@ public class MCPServerServletTest {
 			0);
 
 		Assert.assertThat(
-			newContent.text(), CoreMatchers.containsString("/test"));
+			newContent.text(), CoreMatchers.containsString("/object-admin"));
 
 		callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
@@ -223,7 +223,7 @@ public class MCPServerServletTest {
 				HashMapBuilder.<String, Object>put(
 					"method", "GET"
 				).put(
-					"path", "/test/v1.0/test-entities"
+					"path", "/object-admin/v1.0/object-definitions"
 				).build()));
 
 		contents = callToolResult.content();
@@ -299,8 +299,7 @@ public class MCPServerServletTest {
 		String name = RandomTestUtil.randomString();
 
 		_addObjectEntry(
-			name, "GET /test/v1.0/test-entities",
-			"POST /test/v1.0/test-entities");
+			name, "GET /mcp/server-profiles", "POST /mcp/server-profiles");
 
 		McpSyncClient mcpSyncClient = _getMcpSyncClient(name);
 
@@ -313,21 +312,25 @@ public class MCPServerServletTest {
 		Assert.assertEquals(tools.toString(), 2, tools.size());
 
 		_assertTool(
-			tools.get(0), "getTestEntitiesPage",
-			"get_test_v1.0_test_entities.json");
+			tools.get(0), "getMCPServerProfilesPage",
+			"get_mcp_server_profiles.json");
 		_assertTool(
-			tools.get(1), "postTestEntity",
-			"post_test_v1.0_test_entities.json");
+			tools.get(1), "postMCPServerProfile",
+			"post_mcp_server_profiles.json");
+
+		String entryName = RandomTestUtil.randomString();
 
 		McpSchema.CallToolResult callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"postTestEntity",
+				"postMCPServerProfile",
 				HashMapBuilder.<String, Object>put(
 					"body",
 					HashMapBuilder.<String, Object>put(
-						"name", name
+						"description", RandomTestUtil.randomString()
 					).put(
-						"type", "ChildTestEntity1"
+						"endpoints", RandomTestUtil.randomString()
+					).put(
+						"name", entryName
 					).build()
 				).build()));
 
@@ -338,7 +341,7 @@ public class MCPServerServletTest {
 		Assert.assertFalse(content.text(), callToolResult.isError());
 
 		Assert.assertEquals(
-			name,
+			entryName,
 			JSONFactoryUtil.createJSONObject(
 				content.text()
 			).getString(
@@ -347,7 +350,7 @@ public class MCPServerServletTest {
 
 		callToolResult = mcpSyncClient.callTool(
 			new McpSchema.CallToolRequest(
-				"getTestEntitiesPage", Collections.emptyMap()));
+				"getMCPServerProfilesPage", Collections.emptyMap()));
 
 		contents = callToolResult.content();
 
@@ -364,7 +367,7 @@ public class MCPServerServletTest {
 				),
 				"name"
 			).contains(
-				name
+				entryName
 			));
 
 		mcpSyncClient.closeGracefully();

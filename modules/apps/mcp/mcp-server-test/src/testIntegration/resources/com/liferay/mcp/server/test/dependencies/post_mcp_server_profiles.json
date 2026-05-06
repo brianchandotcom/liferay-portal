@@ -2,22 +2,15 @@
 	"properties": {
 		"body": {
 			"properties": {
-				"documentId": {
+				"externalReferenceCode": {
+					"type": "string"
+				},
+				"id": {
 					"format": "int64",
 					"type": "integer"
 				},
 				"name": {
 					"type": "string"
-				},
-				"nestedTestEntity": {
-					"properties": {
-					},
-					"type": "object"
-				},
-				"stringTestEntities": {
-					"items": {
-					},
-					"type": "array"
 				}
 			},
 			"type": "object"

@@ -5,9 +5,11 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.layout.utility.page.kernel.StatusLayoutUtilityPageEntryRequestContributorRegistryUtil;
 import com.liferay.petra.io.BigEndianCodec;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -21,7 +23,10 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
@@ -56,8 +61,12 @@ import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletMode;
 import jakarta.portlet.WindowState;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -811,6 +820,75 @@ public class PortalImplUnitTest {
 
 			Assert.assertFalse(_portalImpl.isValidResourceId("%view.jsp"));
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-85590")
+	public void testSendErrorPassesExceptionViaRequestAttributeAndSessionErrors()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		HttpServletResponse mockHttpServletResponse = Mockito.mock(
+			HttpServletResponse.class);
+
+		Mockito.when(
+			mockHttpServletResponse.isCommitted()
+		).thenReturn(
+			false
+		);
+
+		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
+
+		ServletContext mockServletContext = Mockito.mock(ServletContext.class);
+
+		Mockito.when(
+			mockHttpSession.getServletContext()
+		).thenReturn(
+			mockServletContext
+		);
+
+		Mockito.when(
+			mockServletContext.getRequestDispatcher(Mockito.anyString())
+		).thenReturn(
+			Mockito.mock(RequestDispatcher.class)
+		);
+
+		mockHttpServletRequest.setSession(mockHttpSession);
+
+		NoSuchImageException noSuchImageException = new NoSuchImageException();
+
+		try (MockedStatic<PortalSessionThreadLocal>
+				portalSessionThreadLocalMockedStatic = Mockito.mockStatic(
+					PortalSessionThreadLocal.class);
+			MockedStatic<SessionErrors> sessionErrorsMockedStatic =
+				Mockito.mockStatic(SessionErrors.class);
+			MockedStatic
+				<StatusLayoutUtilityPageEntryRequestContributorRegistryUtil>
+					statusLayoutUtilityPageEntryRequestContributorRegistryUtilMockedStatic =
+						Mockito.mockStatic(
+							StatusLayoutUtilityPageEntryRequestContributorRegistryUtil.class)) {
+
+			portalSessionThreadLocalMockedStatic.when(
+				PortalSessionThreadLocal::getHttpSession
+			).thenReturn(
+				mockHttpSession
+			);
+
+			_portalImpl.sendError(
+				0, noSuchImageException, mockHttpServletRequest,
+				mockHttpServletResponse);
+
+			sessionErrorsMockedStatic.verify(
+				() -> SessionErrors.add(
+					mockHttpSession, NoSuchImageException.class,
+					noSuchImageException));
+		}
+
+		Assert.assertSame(
+			noSuchImageException,
+			mockHttpServletRequest.getAttribute(WebKeys.STATUS_EXCEPTION));
 	}
 
 	@Test

@@ -142,13 +142,27 @@ public class TestrayRoutine {
 	public TestrayBuild getTestrayBuildByName(
 		String buildName, String... names) {
 
-		String filter = JenkinsResultsParserUtil.combine(
-			"name eq '", buildName, "' and ",
-			"r_routineToBuilds_c_routineId eq '", String.valueOf(getID()), "'");
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("name eq '");
+		sb.append(buildName);
+		sb.append("'");
+
+		TestrayProject testrayProject = getTestrayProject();
+
+		if (testrayProject != null) {
+			sb.append(" and r_projectToBuilds_c_projectId eq '");
+			sb.append(testrayProject.getID());
+			sb.append("'");
+		}
+
+		sb.append(" and r_routineToBuilds_c_routineId eq '");
+		sb.append(getID());
+		sb.append("'");
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"builds", TestrayBuild.FIELD_NAMES, filter, null, 1, 1);
+				"builds", TestrayBuild.FIELD_NAMES, sb.toString(), null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
 				return null;

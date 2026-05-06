@@ -60,19 +60,10 @@ public class ObjectUserNotificationsHandlerTest {
 
 	@Test
 	public void testGetLinkAppendsBackURLToNotificationLink() throws Exception {
-		Mockito.when(
-			_userNotificationEvent.getPayload()
-		).thenReturn(
-			JSONUtil.put(
-				"appendBackURL", true
-			).put(
-				"notificationLink", "/web/cms/view-asset?objectEntryId=123"
-			).toString()
-		);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
 			themeDisplay.getRequest()
@@ -86,13 +77,14 @@ public class ObjectUserNotificationsHandlerTest {
 			themeDisplay
 		);
 
-		LiferayPortletURL liferayPortletURL = Mockito.mock(
-			LiferayPortletURL.class);
-
 		Mockito.when(
-			liferayPortletURL.toString()
+			_userNotificationEvent.getPayload()
 		).thenReturn(
-			"/web/notifications-panel"
+			JSONUtil.put(
+				"appendBackURL", true
+			).put(
+				"notificationLink", "/web/cms/view-asset?objectEntryId=123"
+			).toString()
 		);
 
 		try (MockedStatic<HttpComponentsUtil> httpComponentsUtilMockedStatic =
@@ -100,6 +92,15 @@ public class ObjectUserNotificationsHandlerTest {
 			MockedStatic<PortletURLFactoryUtil>
 				portletURLFactoryUtilMockedStatic = Mockito.mockStatic(
 					PortletURLFactoryUtil.class)) {
+
+			LiferayPortletURL liferayPortletURL = Mockito.mock(
+				LiferayPortletURL.class);
+
+			Mockito.when(
+				liferayPortletURL.toString()
+			).thenReturn(
+				"/web/notifications-panel"
+			);
 
 			portletURLFactoryUtilMockedStatic.when(
 				() -> PortletURLFactoryUtil.create(

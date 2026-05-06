@@ -96,12 +96,6 @@ public class RelatedObjectEntryResourceImplTest {
 			Mockito.mock(SystemObjectDefinitionManager.class);
 
 		Mockito.when(
-			_uriInfo.getBaseUri()
-		).thenReturn(
-			URI.create("http://localhost:8080" + basePath)
-		);
-
-		Mockito.when(
 			_objectDefinitionLocalService.
 				getUnmodifiableSystemObjectDefinitions(_COMPANY_ID)
 		).thenReturn(
@@ -131,6 +125,12 @@ public class RelatedObjectEntryResourceImplTest {
 			jaxRsApplicationDescriptor.getRESTContextPath()
 		).thenReturn(
 			"headless-admin-user/v1.0/user-accounts"
+		);
+
+		Mockito.when(
+			_uriInfo.getBaseUri()
+		).thenReturn(
+			URI.create("http://localhost:8080" + basePath)
 		);
 
 		return systemObjectDefinitionManager;

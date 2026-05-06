@@ -1,0 +1,414 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-85514",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#CSGA",
+			"externalReferenceCode": "L_CSG_ARTIFACT",
+			"label": {
+				"en_US": "Content Generator Artifact"
+			},
+			"modifiable": true,
+			"name": "ContentGeneratorArtifact",
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_ARTIFACT_FILE_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "File Name"
+					},
+					"name": "fileName",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_ARTIFACT_CLASS_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Class Name"
+					},
+					"name": "className",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_ARTIFACT_DELEGATE_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Delegate Name"
+					},
+					"name": "delegateName",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "L_CSG_ARTIFACT_JSON",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "JSON"
+					},
+					"name": "json",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "json"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputerToDocumentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": "20"
+						}
+					],
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "L_CSG_ARTIFACT_LOAD_ORDER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Load Order"
+					},
+					"name": "loadOrder",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "Integer",
+					"businessType": "Integer",
+					"externalReferenceCode": "L_CSG_ARTIFACT_ITEM_COUNT",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Item Count"
+					},
+					"name": "itemCount",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Integer"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_ARTIFACT_LANGUAGES",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Languages"
+					},
+					"localized": false,
+					"name": "languages",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "L_CSG_ARTIFACT_PREVIEW_ITEM",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Preview Item"
+					},
+					"localized": false,
+					"name": "previewItem",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Content Generator Artifacts"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "fileName"
+		},
+		{
+			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#CSGN",
+			"externalReferenceCode": "L_CSG_ATTACHMENT",
+			"label": {
+				"en_US": "Content Generator Attachment"
+			},
+			"modifiable": true,
+			"name": "ContentGeneratorAttachment",
+			"objectFields": [
+				{
+					"DBType": "Long",
+					"businessType": "Attachment",
+					"externalReferenceCode": "L_CSG_ATTACHMENT_FILE_ENTRY",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "File Entry"
+					},
+					"name": "fileEntry",
+					"objectFieldSettings": [
+						{
+							"name": "acceptedFileExtensions",
+							"value": "*"
+						},
+						{
+							"name": "fileSource",
+							"value": "userComputerToDocumentsAndMedia"
+						},
+						{
+							"name": "maximumFileSize",
+							"value": "100"
+						}
+					],
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Long"
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Content Generator Attachments"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true
+		},
+		{
+			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#CSGR",
+			"externalReferenceCode": "L_CSG_RUN",
+			"label": {
+				"en_US": "Content Generator Run"
+			},
+			"modifiable": true,
+			"name": "ContentGeneratorRun",
+			"objectActions": [
+				{
+					"active": true,
+					"errorMessage": {
+						"en_US": "Unable to commit run"
+					},
+					"externalReferenceCode": "L_CSG_RUN_COMMIT",
+					"label": {
+						"en_US": "Commit"
+					},
+					"name": "commit",
+					"objectActionExecutorKey": "commit-content-site-generator-run",
+					"objectActionTriggerKey": "standalone",
+					"parameters": {
+					},
+					"system": true
+				}
+			],
+			"objectFields": [
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_RUN_NAME",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Name"
+					},
+					"name": "name",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "L_CSG_RUN_PROMPT",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Prompt"
+					},
+					"name": "prompt",
+					"required": true,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "refining",
+					"externalReferenceCode": "L_CSG_RUN_STATUS_FIELD",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Run Status"
+					},
+					"listTypeDefinitionExternalReferenceCode": "L_CSG_RUN_STATUS",
+					"name": "runStatus",
+					"required": true,
+					"state": true,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_RUN_TARGET_LANGUAGES",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Target Languages"
+					},
+					"name": "targetLanguages",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "Date",
+					"businessType": "Date",
+					"externalReferenceCode": "L_CSG_RUN_COMMITTED_AT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Committed At"
+					},
+					"name": "committedAt",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Date"
+				},
+				{
+					"DBType": "Clob",
+					"businessType": "LongText",
+					"externalReferenceCode": "L_CSG_RUN_FAILURE_REASON",
+					"indexed": false,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Failure Reason"
+					},
+					"name": "failureReason",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "L_CSG_RUN_RESULTING_SITE_ERC",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Resulting Site ERC"
+					},
+					"name": "resultingSiteERC",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				}
+			],
+			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
+			"objectRelationships": [
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_CSG_RUN_TO_ARTIFACTS",
+					"label": {
+						"en_US": "Artifacts"
+					},
+					"name": "artifacts",
+					"objectDefinitionExternalReferenceCode1": "L_CSG_RUN",
+					"objectDefinitionExternalReferenceCode2": "L_CSG_ARTIFACT",
+					"objectDefinitionName2": "ContentGeneratorArtifact",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				},
+				{
+					"deletionType": "cascade",
+					"externalReferenceCode": "L_CSG_RUN_TO_ATTACHMENTS",
+					"label": {
+						"en_US": "Attachments"
+					},
+					"name": "attachments",
+					"objectDefinitionExternalReferenceCode1": "L_CSG_RUN",
+					"objectDefinitionExternalReferenceCode2": "L_CSG_ATTACHMENT",
+					"objectDefinitionName2": "ContentGeneratorAttachment",
+					"parameterObjectFieldId": 0,
+					"parameterObjectFieldName": "",
+					"reverse": false,
+					"system": true,
+					"type": "oneToMany"
+				}
+			],
+			"panelCategoryKey": "control_panel.object",
+			"pluralLabel": {
+				"en_US": "Content Generator Runs"
+			},
+			"scope": "company",
+			"status": {
+				"code": 0
+			},
+			"system": true,
+			"titleObjectFieldName": "name"
+		}
+	]
+}

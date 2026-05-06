@@ -21,7 +21,7 @@ export default function DataSelection({
 }: {
 	itemsCount?: number;
 	loading?: boolean;
-	onApplyFilter?: (filterValues: DateFilterValues) => void;
+	onApplyFilter: (filterValues: DateFilterValues) => void;
 	sections: PortletDataHandlerSection[];
 }) {
 	return (

@@ -71,8 +71,6 @@ test(
 
 			const editor = page.getByLabel('Rich Text Editor. Editing').first();
 
-			await editor.isVisible();
-
 			await editor.fill('test');
 
 			await page

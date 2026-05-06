@@ -4,26 +4,20 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
-import {createReadStream} from 'fs';
-import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
-import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
-import {editThemeSVGSpritemapPageTest} from './fixtures/editThemeSVGSpritemapPageTest';
-import {WaitAction} from './pages/EditClientExtensionsPage';
 import {ViewClientExtensionPage} from './pages/ViewClientExtensionPage';
 
 const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	clientExtensionsPageTest,
-	editThemeSVGSpritemapPageTest,
 	loginTest(),
 	pagesAdminPagesTest
 );
@@ -81,42 +75,32 @@ test(
 	{tag: ['@LPS-166479', '@LPD-75288']},
 	async ({
 		apiHelpers,
-		editThemeSVGSpritemapPage,
 		page,
 		pagesAdminPage,
 		site,
 	}) => {
-		const fileTitle = getRandomString();
+		const sample = {
+			erc: 'LXC:liferay-sample-theme-spritemap-1',
+			name: 'Liferay Sample Theme Spritemap 1',
+			url: '',
+		};
 
-		const fileURL = `${liferayConfig.environment.baseUrl}/documents/d${site.friendlyUrlPath}/${fileTitle}`;
-
-		await test.step('Upload the svg file to Documents And Media', async () => {
-			await apiHelpers.headlessDelivery.postDocument(
-				site.id,
-				createReadStream(
-					path.join(__dirname, '/dependencies/spritemap_example.svg')
-				),
-				{
-					title: fileTitle,
-				}
+		await test.step(`Get "Liferay Sample Theme Spritemap 1"'s URL`, async () => {
+			const viewClientExtensionPage = new ViewClientExtensionPage(
+				page,
+				sample.erc
 			);
-		});
 
-		const clientExtensionName = getRandomString();
+			await viewClientExtensionPage.goto();
 
-		await test.step('Create a new client extension', async () => {
-			await editThemeSVGSpritemapPage.goto();
-
-			await editThemeSVGSpritemapPage.nameInput.fill(clientExtensionName);
-
-			await editThemeSVGSpritemapPage.urlInput.fill(fileURL);
-
-			await editThemeSVGSpritemapPage.publish(WaitAction.SUCCESS);
+			sample.url = await viewClientExtensionPage
+				.getInputByLabel('URL')
+				.inputValue();
 		});
 
 		await test.step('Apply new client extension to site', async () => {
 			await pagesAdminPage.selectClientExtension({
-				clientExtensionName,
+				clientExtensionName: 'Liferay Sample Theme Spritemap 1',
 				siteUrl: site.friendlyUrlPath,
 				type: 'themeSpritemap',
 			});
@@ -141,7 +125,7 @@ test(
 
 			const spritemapHref = await sampleSpritemapUse.getAttribute('href');
 
-			expect(spritemapHref).toContain(fileURL);
+			expect(spritemapHref).toContain(sample.url);
 		});
 	}
 );

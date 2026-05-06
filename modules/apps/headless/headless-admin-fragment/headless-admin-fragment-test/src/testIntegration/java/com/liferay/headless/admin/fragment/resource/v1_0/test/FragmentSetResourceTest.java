@@ -418,6 +418,9 @@ public class FragmentSetResourceTest extends BaseFragmentSetResourceTestCase {
 				String.valueOf(throwable),
 				throwable instanceof DuplicateFragmentCollectionKeyException);
 		}
+
+		_assertFragmentCollection(fragmentSet1, irrelevantGroup);
+		_assertFragmentCollection(fragmentSet2, irrelevantGroup);
 	}
 
 	private void _testPutSiteFragmentSetBatch() throws Exception {

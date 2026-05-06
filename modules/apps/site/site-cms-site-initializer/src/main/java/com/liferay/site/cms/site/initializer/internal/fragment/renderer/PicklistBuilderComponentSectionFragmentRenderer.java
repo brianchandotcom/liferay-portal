@@ -42,12 +42,13 @@ public class PicklistBuilderComponentSectionFragmentRenderer
 
 	@Override
 	protected Map<String, Object> getProps(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
 		PicklistBuilderDisplayContext picklistBuilderDisplayContext =
 			new PicklistBuilderDisplayContext(
-				httpServletRequest, _jsonFactory,
+				httpServletRequest, _jsonFactory, language,
 				_listTypeDefinitionResourceFactory);
 
 		return picklistBuilderDisplayContext.getProps();

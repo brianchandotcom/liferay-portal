@@ -11,12 +11,14 @@ import com.liferay.learn.LearnMessageUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.DefaultLanguageLabelsUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,18 +31,24 @@ public class PicklistBuilderDisplayContext {
 
 	public PicklistBuilderDisplayContext(
 		HttpServletRequest httpServletRequest, JSONFactory jsonFactory,
+		Language language,
 		ListTypeDefinitionResource.Factory listTypeDefinitionResourceFactory) {
 
 		_httpServletRequest = httpServletRequest;
 		_jsonFactory = jsonFactory;
+		_language = language;
 		_listTypeDefinitionResourceFactory = listTypeDefinitionResourceFactory;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getProps() {
+	public Map<String, Object> getProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"defaultLanguageLabels",
+			DefaultLanguageLabelsUtil.getDefaultLanguageLabelsJSONObject(
+				_language, _themeDisplay)
+		).put(
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")
 		).put(
@@ -107,6 +115,7 @@ public class PicklistBuilderDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
+	private final Language _language;
 	private ListTypeDefinition _listTypeDefinition;
 	private final ListTypeDefinitionResource.Factory
 		_listTypeDefinitionResourceFactory;

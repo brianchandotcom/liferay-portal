@@ -74,7 +74,7 @@ public class StructureBuilderComponentSectionFragmentRenderer
 
 		StructureBuilderDisplayContext structureBuilderDisplayContext =
 			new StructureBuilderDisplayContext(
-				httpServletRequest, _jsonFactory,
+				httpServletRequest, _jsonFactory, language,
 				_objectDefinitionResourceFactory);
 
 		return structureBuilderDisplayContext.getProps();

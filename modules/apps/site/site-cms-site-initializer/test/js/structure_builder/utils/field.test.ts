@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {setDefaultLanguageLabels} from '../../../../src/main/resources/META-INF/resources/js/common/utils/getDefaultLanguageLabel';
 import {
 	FIELD_TYPE_LABEL,
 	getDefaultField,
@@ -23,6 +24,7 @@ describe('getDefaultField', () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		setDefaultLanguageLabels({locale: 'en_US'});
 	});
 
 	it('populates label under both default and current language IDs when they differ', () => {
@@ -68,5 +70,24 @@ describe('getDefaultField', () => {
 			en_US: FIELD_TYPE_LABEL.text,
 			es_ES: FIELD_TYPE_LABEL.text,
 		});
+	});
+
+	it('seeds the default-language label from the singleton when no label is provided', () => {
+		getDefaultLanguageIdSpy.mockReturnValue('en_US');
+		getLanguageIdSpy.mockReturnValue('es_ES');
+
+		setDefaultLanguageLabels({
+			'date-and-time': 'Date and time',
+			'locale': 'en_US',
+			'text': 'Text',
+		});
+
+		expect(
+			getDefaultField({parent: getUuid(), type: 'text'}).label.en_US
+		).toBe('Text');
+
+		expect(
+			getDefaultField({parent: getUuid(), type: 'datetime'}).label.en_US
+		).toBe('Date and time');
 	});
 });

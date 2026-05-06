@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {setDefaultLanguageLabels} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/getDefaultLanguageLabel';
 import {
 	RepeatableGroup,
 	Structure,
@@ -41,6 +42,7 @@ describe('addRepeatableGroup', () => {
 
 	afterEach(() => {
 		jest.restoreAllMocks();
+		setDefaultLanguageLabels({locale: 'en_US'});
 	});
 
 	it('populates the new group label under both default and current language IDs', () => {
@@ -79,5 +81,40 @@ describe('addRepeatableGroup', () => {
 
 		expect(Object.keys(group.label)).toEqual(['en_US']);
 		expect(group.label.en_US).toBe('repeatable-group');
+	});
+
+	it('seeds the default-language label from the singleton when current locale differs', () => {
+		getDefaultLanguageIdSpy.mockReturnValue('en_US');
+		getLanguageIdSpy.mockReturnValue('es_ES');
+
+		const languageGetSpy = jest
+			.spyOn(Liferay.Language, 'get')
+			.mockImplementation((key: string) =>
+				key === 'repeatable-group' ? 'Grupo repetible' : key
+			);
+
+		setDefaultLanguageLabels({
+			'locale': 'en_US',
+			'repeatable-group': 'Repeatable group',
+		});
+
+		try {
+			const children = addRepeatableGroup({
+				groupChildren: [],
+				groupParent: ROOT_UUID,
+				groupUuid: GROUP_UUID,
+				root: ROOT,
+			});
+
+			const group = children.get(GROUP_UUID) as RepeatableGroup;
+
+			expect(group.label).toEqual({
+				en_US: 'Repeatable group',
+				es_ES: 'Grupo repetible',
+			});
+		}
+		finally {
+			languageGetSpy.mockRestore();
+		}
 	});
 });

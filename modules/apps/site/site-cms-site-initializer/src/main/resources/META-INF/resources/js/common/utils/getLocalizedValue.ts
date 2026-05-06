@@ -8,9 +8,8 @@ export default function getLocalizedValue(
 	languageId = Liferay.ThemeDisplay.getLanguageId()
 ) {
 	return (
-		(value &&
-			(value[languageId] ||
-				value[Liferay.ThemeDisplay.getDefaultLanguageId()])) ||
+		value?.[languageId] ||
+		value?.[Liferay.ThemeDisplay.getDefaultLanguageId()] ||
 		''
 	);
 }

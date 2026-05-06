@@ -67,13 +67,7 @@ function Body({
 		filter?.label_i18n ?? {}
 	);
 	const [selectedField, setSelectedField] = useState<IField | undefined>(
-		filter
-			? {
-					entityFieldType: filter.entityFieldType,
-					label: filter.fieldName,
-					name: filter.fieldName,
-				}
-			: undefined
+		filter ? {label: filter.fieldName, name: filter.fieldName} : undefined
 	);
 	const filterClientExtensionFormElementId = `${namespace}clientExtensionEntryERC`;
 
@@ -135,10 +129,8 @@ function Body({
 			const formData = {
 				clientExtensionEntryERC:
 					selectedClientExtension?.externalReferenceCode,
-				entityFieldType: selectedField?.entityFieldType,
 				fieldName: selectedField?.name,
 				label_i18n: i18nFilterLabels,
-				type: selectedField?.type,
 			};
 
 			onSave(formData);

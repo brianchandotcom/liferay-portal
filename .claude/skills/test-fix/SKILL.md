@@ -28,7 +28,7 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 
 ### Failure Data
 
-Fetched at the start of the run by invoking the `test-fix-testray-data` skill, which accepts both formats and resolves a test name to a case result ID. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the skill returns these fields:
+Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise the procedure returns these fields:
 
 - **errorTrace** — error trace produced by the test framework.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).
@@ -40,11 +40,11 @@ Fetched at the start of the run by invoking the `test-fix-testray-data` skill, w
 
 ### Name
 
-The test name (class, spec, or method) returned by `test-fix-testray-data`. When the data fetch fails before a name is known, use `case-result <CASE_RESULT_ID>`.
+The test name (class, spec, or method) returned by the Testray fetch. When the fetch fails before a name is known, use `case-result <CASE_RESULT_ID>`.
 
 ### Type
 
-The test type returned by `test-fix-testray-data` (one of the values listed under **Input**). Use `Unknown` when the data fetch fails before a type is known.
+The test type returned by the Testray fetch (one of the values listed under **Input**). Use `Unknown` when the fetch fails before a type is known.
 
 ### Verdict
 
@@ -133,7 +133,7 @@ Run the test, deploying first when the type requires it. For `Java Semantic Vers
 
 - **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip step 2 (diagnosis) and step 3 (iteration). Run the cleanup in step 4 and exit.
 - **Same failure** → continue to step 2.
-- **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarising both traces (the one returned by `test-fix-testray-data` and the one observed locally) and exit.
+- **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarising both traces (the one returned by the Testray fetch and the one observed locally) and exit.
 
 ### 2. Identify Suspect Commits
 

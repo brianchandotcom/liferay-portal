@@ -1091,8 +1091,11 @@ public class CustomFDSSerializer
 		).put(
 			"entityFieldType",
 			() -> {
-				if (Validator.isNotNull(properties.get("entityFieldType"))) {
-					return String.valueOf(properties.get("entityFieldType"));
+				String entityFieldType = String.valueOf(
+					properties.get("entityFieldType"));
+
+				if (Validator.isNotNull(entityFieldType)) {
+					return entityFieldType;
 				}
 
 				return FDSEntityFieldTypes.STRING;
@@ -1191,26 +1194,15 @@ public class CustomFDSSerializer
 		).put(
 			"entityFieldType",
 			() -> {
-				boolean collection =
-					_isCollection(
-						String.valueOf(properties.get("fieldName")),
-						sourceType) ||
-					Objects.equals(
-						entityFieldType,
-						FDSEntityFieldTypes.COLLECTION_INTEGER) ||
-					Objects.equals(
-						entityFieldType, FDSEntityFieldTypes.COLLECTION_STRING);
-
-				if (collection) {
-					if (Validator.isNotNull(entityFieldType)) {
-						return entityFieldType;
-					}
-
-					return FDSEntityFieldTypes.COLLECTION;
-				}
-
 				if (Validator.isNotNull(entityFieldType)) {
 					return entityFieldType;
+				}
+
+				if (_isCollection(
+						String.valueOf(properties.get("fieldName")),
+						sourceType)) {
+
+					return FDSEntityFieldTypes.COLLECTION;
 				}
 
 				return FDSEntityFieldTypes.STRING;

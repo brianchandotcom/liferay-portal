@@ -9,7 +9,10 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import getRandomString from '../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../utils/performLogin';
+import {
+	performLoginViaApi,
+	performLogout,
+} from '../../../utils/performLogin';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
@@ -150,7 +153,7 @@ test('LPD-29282 Assert publications user can not see the hidden fields if show a
 
 	await performLogout(page);
 
-	await performLogin(page, user.alternateName);
+	await performLoginViaApi({page, screenName: user.alternateName});
 
 	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
 
@@ -168,7 +171,7 @@ test('LPD-29282 Assert publications user can not see the hidden fields if show a
 
 	await performLogout(page);
 
-	await performLogin(page, 'test');
+	await performLoginViaApi({page, screenName: 'test'});
 
 	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
 });

@@ -8158,12 +8158,10 @@ public class DataFactory {
 		layoutModel.setParentLayoutId(parentLayoutId);
 		layoutModel.setClassNameId(classNameId);
 		layoutModel.setClassPK(classPK);
-
 		layoutModel.setName(
 			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
 		layoutModel.setTitle(
 			"<?xml version=\"1.0\"?><root><name>" + name + "</name></root>");
-
 		layoutModel.setType(type);
 		layoutModel.setTypeSettings(
 			StringUtil.replace(typeSettings, '\n', "\\n"));

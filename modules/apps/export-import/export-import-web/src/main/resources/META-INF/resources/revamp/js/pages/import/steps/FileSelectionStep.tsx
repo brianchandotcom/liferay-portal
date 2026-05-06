@@ -9,19 +9,17 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
-import {postImportPreview} from '../../../utils/postImportPreview';
+import {postImportPreview} from '../../../services/importPreviewService';
 import {useWizard} from '../NewImport';
-
-interface FileSelectionValues {
-	fileSelector?: File;
-	name: string;
-}
 
 export default function FileSelectionStep() {
 	const [progress, setProgress] = useState<number>();
 	const {importPreviewAPIURL} = useWizard();
 
-	const {setFieldValue, values} = useFormikContext<FileSelectionValues>();
+	const {setFieldValue, values} = useFormikContext<{
+		fileSelector?: File;
+		name: string;
+	}>();
 	const autoFilledFileRef = useRef<File | undefined>(undefined);
 
 	useEffect(() => {
@@ -38,7 +36,7 @@ export default function FileSelectionStep() {
 		}
 	}, [values.fileSelector, values.name, setFieldValue]);
 
-	const handleUpload = (file: File, signal?: AbortSignal) =>
+	const postPreview = (file: File, signal?: AbortSignal) =>
 		postImportPreview({
 			file,
 			onProgress: setProgress,
@@ -95,7 +93,7 @@ export default function FileSelectionStep() {
 					aria-labelledby="fileSelector-label"
 					name="fileSelector"
 					progress={progress}
-					uploadRequest={handleUpload}
+					uploadRequest={postPreview}
 					validExtensions=".lar"
 				/>
 			</ClayLayout.Sheet>

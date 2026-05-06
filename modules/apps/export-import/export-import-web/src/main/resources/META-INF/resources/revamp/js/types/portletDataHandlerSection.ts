@@ -41,3 +41,14 @@ export interface ExportPreview {
 	additionCount: number;
 	portletDataHandlerSections: PortletDataHandlerSection[];
 }
+
+export interface ImportPreview {
+	additionCount: number;
+	author: string;
+	deletionCount: number;
+	exportDate: string;
+	fileEntryId: number;
+	fileName: string;
+	fileSize: number;
+	portletDataHandlerSections: PortletDataHandlerSection[];
+}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, cleanup, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -13,9 +13,34 @@ const globalLanguageDirection = Liferay.Language.direction;
 
 const spritemap = 'icons.svg';
 
+const fileEntryDeleteURL = 'http://test.local/delete-file-entry';
+const guestUploadURL = 'http://test.local/upload-file-entry';
+
 const defaultDocumentLibraryConfig = {
 	name: 'uploadField',
 	spritemap,
+};
+
+const valueWithFileEntry = (id) =>
+	JSON.stringify({
+		fileEntryId: id,
+		groupId: 1,
+		title: `file-${id}`,
+		uuid: `uuid-${id}`,
+	});
+
+const formDataValue = (formData, key) => {
+	if (!formData || typeof formData.entries !== 'function') {
+		return null;
+	}
+
+	for (const [entryKey, entryValue] of formData.entries()) {
+		if (entryKey === key || entryKey.endsWith(key)) {
+			return entryValue;
+		}
+	}
+
+	return null;
 };
 
 const DocumentLibraryWithProvider = (props) => (
@@ -347,5 +372,280 @@ describe('Field DocumentLibrary', () => {
 		);
 
 		expect(guestUploadFieldInput).not.toBe(null);
+	});
+
+	describe('file deletion lifecycle', () => {
+		const originalXMLHttpRequest = global.XMLHttpRequest;
+
+		let xhrInstances;
+		let eventBus;
+
+		const renderField = (props = {}) =>
+			render(
+				<DocumentLibraryWithProvider
+					{...defaultDocumentLibraryConfig}
+					fileEntryDeleteURL={fileEntryDeleteURL}
+					guestUploadURL={guestUploadURL}
+					onBlur={jest.fn()}
+					onChange={jest.fn()}
+					onFocus={jest.fn()}
+					{...props}
+				/>
+			);
+
+		const triggerBeforeUnload = () => {
+			act(() => {
+				if (window.onbeforeunload) {
+					window.onbeforeunload();
+				}
+			});
+		};
+
+		const fireGlobal = (name) => {
+			act(() => {
+				(eventBus.get(name) || [])
+					.slice()
+					.forEach((handler) => handler());
+			});
+		};
+
+		const completeUpload = (newFileEntryId) => {
+			const uploadXhr = xhrInstances.find(
+				(instance) => instance.url === guestUploadURL
+			);
+
+			expect(uploadXhr).toBeDefined();
+
+			uploadXhr.responseText = JSON.stringify({
+				file: valueParsed(newFileEntryId),
+				success: true,
+			});
+
+			uploadXhr.readyState = 4;
+
+			const readyStateChangeHandler =
+				uploadXhr.addEventListener.mock.calls.find(
+					([name]) => name === 'readystatechange'
+				)[1];
+
+			act(() => readyStateChangeHandler({}));
+		};
+
+		const valueParsed = (id) => JSON.parse(valueWithFileEntry(id));
+
+		const deleteCalls = () =>
+			xhrInstances
+				.filter((instance) => instance.url === fileEntryDeleteURL)
+				.map((instance) =>
+					Number(
+						formDataValue(
+							instance.send.mock.calls[0]?.[0],
+							'oldFileEntryId'
+						)
+					)
+				);
+
+		const expectDeleted = (...ids) =>
+			expect(deleteCalls().sort()).toEqual([...ids].sort());
+
+		const expectNoDeletes = () => expect(deleteCalls()).toEqual([]);
+
+		const clickClear = () => {
+			const clearButton = document.querySelector(
+				'[aria-label="unselect-file"]'
+			);
+
+			expect(clearButton).not.toBe(null);
+
+			act(() => {
+				fireEvent.click(clearButton);
+			});
+		};
+
+		const triggerGuestUpload = () => {
+			const fileInput = document.getElementById(
+				'uploadFieldinputFileGuestUpload'
+			);
+
+			expect(fileInput).not.toBe(null);
+
+			act(() => {
+				fireEvent.change(fileInput, {
+					target: {
+						files: [
+							new File(['hello'], 'hello.txt', {
+								type: 'text/plain',
+							}),
+						],
+					},
+				});
+			});
+		};
+
+		beforeEach(() => {
+			xhrInstances = [];
+
+			global.XMLHttpRequest = jest.fn(() => {
+				const instance = {
+					addEventListener: jest.fn(),
+					open: jest.fn(function (method, url) {
+						this.url = url;
+					}),
+					readyState: 0,
+					responseText: '',
+					send: jest.fn(),
+					upload: {addEventListener: jest.fn()},
+					url: '',
+				};
+
+				xhrInstances.push(instance);
+
+				return instance;
+			});
+
+			eventBus = new Map();
+
+			Liferay.on.mockImplementation((name, handler) => {
+				if (!eventBus.has(name)) {
+					eventBus.set(name, []);
+				}
+
+				eventBus.get(name).push(handler);
+			});
+
+			Liferay.detach.mockImplementation((name, handler) => {
+				if (handler) {
+					const handlers = eventBus.get(name) || [];
+					const index = handlers.indexOf(handler);
+
+					if (index >= 0) {
+						handlers.splice(index, 1);
+					}
+				}
+				else {
+					eventBus.delete(name);
+				}
+			});
+
+			Liferay.fire.mockImplementation((name) => {
+				(eventBus.get(name) || [])
+					.slice()
+					.forEach((handler) => handler());
+			});
+
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => true);
+		});
+
+		afterEach(() => {
+			global.XMLHttpRequest = originalXMLHttpRequest;
+			window.onbeforeunload = null;
+		});
+
+		it('deletes both the previous and current upload on new-entry abandon after replace', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({allowGuestUsers: true, value: '{}'});
+
+			triggerGuestUpload();
+			completeUpload(88);
+			triggerGuestUpload();
+			completeUpload(99);
+			triggerBeforeUnload();
+
+			expectDeleted(88, 99);
+		});
+
+		it('deletes only the replacement on unload when replacing in edit mode', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({
+				allowGuestUsers: true,
+				value: valueWithFileEntry(42),
+			});
+
+			triggerGuestUpload();
+			completeUpload(99);
+			triggerBeforeUnload();
+
+			expectDeleted(99);
+		});
+
+		it('deletes the new entry session upload on abandon', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({allowGuestUsers: true, value: '{}'});
+
+			triggerGuestUpload();
+			completeUpload(99);
+			triggerBeforeUnload();
+
+			expectDeleted(99);
+		});
+
+		it('deletes the original on Save after Clear', () => {
+			renderField({value: valueWithFileEntry(42)});
+
+			clickClear();
+			fireGlobal('paginationControlsSubmitButtonClicked');
+
+			expectDeleted(42);
+		});
+
+		it('deletes the previous on Save after Replace', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({
+				allowGuestUsers: true,
+				value: valueWithFileEntry(42),
+			});
+
+			triggerGuestUpload();
+			completeUpload(99);
+			fireGlobal('paginationControlsSubmitButtonClicked');
+
+			expectDeleted(42);
+		});
+
+		it('does not delete on unload when editing an existing entry without changes', () => {
+			renderField({value: valueWithFileEntry(42)});
+
+			triggerBeforeUnload();
+
+			expectNoDeletes();
+		});
+
+		it('does not delete on unload when read-only (LPP-63922)', () => {
+			renderField({readOnly: true, value: valueWithFileEntry(42)});
+
+			triggerBeforeUnload();
+
+			expectNoDeletes();
+		});
+
+		it('does not delete when Clear is followed by Cancel (LPP-63917)', () => {
+			renderField({value: valueWithFileEntry(42)});
+
+			clickClear();
+			fireGlobal('paginationControlsCancelButtonClicked');
+			triggerBeforeUnload();
+
+			expectNoDeletes();
+		});
+
+		it('preserves the original on Cancel after Replace and cleans the orphan on unload', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({
+				allowGuestUsers: true,
+				value: valueWithFileEntry(42),
+			});
+
+			triggerGuestUpload();
+			completeUpload(99);
+			fireGlobal('paginationControlsCancelButtonClicked');
+			triggerBeforeUnload();
+
+			expectDeleted(99);
+		});
 	});
 });

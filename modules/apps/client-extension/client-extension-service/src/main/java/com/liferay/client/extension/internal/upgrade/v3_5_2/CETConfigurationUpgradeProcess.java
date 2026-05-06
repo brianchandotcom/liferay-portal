@@ -21,7 +21,7 @@ public class CETConfigurationUpgradeProcess extends UpgradeProcess {
 
 		runSQL(
 			"delete from Configuration_ where configurationId like '" +
-				_CLASS_NAME_CET_CONFIGURATION + "%'");
+				_CLASS_NAME_CET_CONFIGURATION + "~%'");
 	}
 
 	private static final String _CLASS_NAME_CET_CONFIGURATION =

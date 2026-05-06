@@ -10662,34 +10662,11 @@ public class DefaultObjectEntryManagerImplTest
 			AccountEntry accountEntry, String externalReferenceCodeSuffix)
 		throws Exception {
 
-		Tree tree = TreeTestUtil.createObjectEntryTree(
-			externalReferenceCodeSuffix, objectDefinitionLocalService,
-			_objectEntryLocalService, objectFieldLocalService,
-			_objectRelationshipLocalService,
+		return TreeTestUtil.createObjectEntryTree(
+			accountEntry.getAccountEntryId(), externalReferenceCodeSuffix,
+			objectDefinitionLocalService, _objectEntryLocalService,
+			objectFieldLocalService, _objectRelationshipLocalService,
 			_rootObjectDefinition.getObjectDefinitionId());
-
-		Node node = tree.getRootNode();
-
-		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
-			_objectEntryLocalService.getObjectEntry(node.getPrimaryKey());
-
-		_objectEntryLocalService.updateObjectEntry(
-			adminUser.getUserId(), serviceBuilderObjectEntry.getPrimaryKey(),
-			serviceBuilderObjectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				() -> {
-					ObjectField objectField =
-						objectFieldLocalService.getObjectField(
-							_rootObjectDefinition.
-								getAccountEntryRestrictedObjectFieldId());
-
-					return objectField.getName();
-				},
-				accountEntry.getAccountEntryId()
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
-
-		return tree;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

@@ -72,6 +72,7 @@ const InputAsValueFieldComponents: Partial<InputAsValueFieldComponents> = {
 	Date: DateDefaultValueInput,
 	DateTime: DateDefaultValueInput,
 	Decimal: NumericDefaultValueInput,
+	Email: TextDefaultValueInput,
 	Integer: NumericDefaultValueInput,
 	LongInteger: NumericDefaultValueInput,
 	LongText: TextDefaultValueInput,

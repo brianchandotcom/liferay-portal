@@ -84,11 +84,8 @@ export function useObjectFieldForm({
 		};
 
 		const hasDefaultValue =
-			(field.businessType &&
-				DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(
-					field.businessType
-				)) ||
-			field.businessType === 'Picklist';
+			field.businessType &&
+			DEFAULT_VALUE_SUPPORTED_BUSINESS_TYPES.includes(field.businessType);
 
 		const errors: ObjectFieldErrors = {};
 

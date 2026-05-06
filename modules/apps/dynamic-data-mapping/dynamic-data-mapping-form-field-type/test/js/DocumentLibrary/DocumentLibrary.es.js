@@ -5,9 +5,15 @@
 
 import {act, cleanup, fireEvent, render} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import DocumentLibrary from '../../../src/main/resources/META-INF/resources/js/DocumentLibrary/DocumentLibrary.es';
+
+jest.mock('frontend-js-components-web', () => ({
+	...jest.requireActual('frontend-js-components-web'),
+	openSelectionModal: jest.fn(),
+}));
 
 const globalLanguageDirection = Liferay.Language.direction;
 
@@ -480,7 +486,25 @@ describe('Field DocumentLibrary', () => {
 			});
 		};
 
+		const selectViaModal = (newFileEntryId) => {
+			openSelectionModal.mockImplementation(({onSelect}) => {
+				act(() =>
+					onSelect({value: valueWithFileEntry(newFileEntryId)})
+				);
+			});
+
+			const selectButton = document.getElementById('uploadField');
+
+			expect(selectButton).not.toBe(null);
+
+			act(() => {
+				fireEvent.click(selectButton);
+			});
+		};
+
 		beforeEach(() => {
+			openSelectionModal.mockReset();
+
 			xhrInstances = [];
 
 			global.XMLHttpRequest = jest.fn(() => {
@@ -632,6 +656,15 @@ describe('Field DocumentLibrary', () => {
 			renderField({readOnly: true, value: valueWithFileEntry(42)});
 
 			triggerBeforeUnload();
+
+			expectNoDeletes();
+		});
+
+		it('does not delete the previous on Save when replaced via the document selector', () => {
+			renderField({value: valueWithFileEntry(42)});
+
+			selectViaModal(99);
+			fireGlobal('paginationControlsSubmitButtonClicked');
 
 			expectNoDeletes();
 		});

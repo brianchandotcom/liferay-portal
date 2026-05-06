@@ -402,10 +402,17 @@ public abstract class BaseTopLevelBuildReport
 	@Override
 	public URL getTestResultsJSONUserContentURL() {
 		try {
+			String masterHostname = JenkinsResultsParserUtil.getBuildProperty(
+				"jenkins.remote.url[test-1-0]");
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(masterHostname)) {
+				masterHostname = "https://test-1-0.liferay.com/";
+			}
+
 			return new URL(
 				JenkinsResultsParserUtil.combine(
-					"https://test-1-0.liferay.com/userContent/testResults/",
-					getJobName(), "/builds/", String.valueOf(getBuildNumber()),
+					masterHostname, "userContent/testResults/", getJobName(),
+					"/builds/", String.valueOf(getBuildNumber()),
 					"/test.results.json"));
 		}
 		catch (IOException ioException) {

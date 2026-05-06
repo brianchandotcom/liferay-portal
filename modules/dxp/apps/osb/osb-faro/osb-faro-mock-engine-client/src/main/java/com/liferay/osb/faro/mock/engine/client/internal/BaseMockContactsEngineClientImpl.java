@@ -461,12 +461,12 @@ public abstract class BaseMockContactsEngineClientImpl
 	@Override
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
 		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta) {
+		String rangeEnd, int rangeKey, String rangeStart, String sort,
+		String vocabularyId, int cur, int delta) {
 
 		return contactsEngineClient.getAssetSummaryCategories(
 			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
-			sort, cur, delta);
+			sort, vocabularyId, cur, delta);
 	}
 
 	@Override

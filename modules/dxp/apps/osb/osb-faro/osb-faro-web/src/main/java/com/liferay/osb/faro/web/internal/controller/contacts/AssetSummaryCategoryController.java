@@ -40,7 +40,9 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 			@QueryParam("rangeEnd") String rangeEnd,
 			@QueryParam("rangeKey") int rangeKey,
 			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("sort") String sort, @QueryParam("cur") int cur,
+			@QueryParam("sort") String sort,
+			@QueryParam("vocabularyId") String vocabularyId,
+			@QueryParam("cur") int cur,
 			@DefaultValue("20") @QueryParam("delta") int delta)
 		throws Exception {
 
@@ -50,7 +52,7 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 		Results<AssetSummaryCategory> results =
 			contactsEngineClient.getAssetSummaryCategories(
 				faroProject, channelId, keywords, rangeEnd, rangeKey,
-				rangeStart, sort, cur, delta);
+				rangeStart, sort, vocabularyId, cur, delta);
 
 		Function<AssetSummaryCategory, AssetSummaryCategoryDisplay> function =
 			AssetSummaryCategoryDisplay::new;

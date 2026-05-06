@@ -1063,8 +1063,8 @@ public class ContactsEngineClientImpl
 	@Override
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
 		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta) {
+		String rangeEnd, int rangeKey, String rangeStart, String sort,
+		String vocabularyId, int cur, int delta) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
@@ -1088,6 +1088,10 @@ public class ContactsEngineClientImpl
 				"sort",
 				Arrays.asList(
 					StringUtil.replace(sort, CharPool.COLON, CharPool.COMMA)));
+		}
+
+		if (Validator.isNotNull(vocabularyId)) {
+			uriVariables.put("vocabularyId", vocabularyId);
 		}
 
 		PagedModel<?, AssetSummaryCategory> pagedModel = get(

@@ -240,8 +240,8 @@ public interface ContactsEngineClient {
 
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
 		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta);
+		String rangeEnd, int rangeKey, String rangeStart, String sort,
+		String vocabularyId, int cur, int delta);
 
 	public Results<AssetSummaryMimeType> getAssetSummaryMimeTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,

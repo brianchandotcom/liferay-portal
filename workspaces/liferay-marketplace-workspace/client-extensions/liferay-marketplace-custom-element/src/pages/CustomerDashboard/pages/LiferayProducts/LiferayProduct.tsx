@@ -30,7 +30,7 @@ const LiferayProduct = () => {
 	}
 
 	if (
-		[OrderTypes.CMP, OrderTypes.DXP].includes(
+		[OrderTypes.CMP, OrderTypes.DSR, OrderTypes.DXP].includes(
 			orderTypeExternalReferenceCode
 		)
 	) {

@@ -40,7 +40,6 @@ describe('NewExport', () => {
 
 		await checkAccessibility({
 			context: {
-				exclude: ['[data-testid="data-selection-section"]'],
 				include: [container],
 			},
 		});

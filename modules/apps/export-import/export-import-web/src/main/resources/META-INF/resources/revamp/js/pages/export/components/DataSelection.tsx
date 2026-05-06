@@ -45,12 +45,13 @@ export default function DataSelection({
 				/>
 			</ClayLayout.Sheet>
 
-			<div
-				aria-busy={loading}
-				aria-live="polite"
-				data-testid="data-selection-section"
-				role="status"
-			>
+			<div className="sr-only" role="status">
+				{loading
+					? Liferay.Language.get('loading')
+					: Liferay.Language.get('loaded')}
+			</div>
+
+			<div aria-busy={loading} data-testid="data-selection-section">
 				{loading ? (
 					<ClayLoadingIndicator className="mb-9 mt-8" />
 				) : (

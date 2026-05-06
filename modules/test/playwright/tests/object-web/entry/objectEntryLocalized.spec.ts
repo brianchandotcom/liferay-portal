@@ -1022,8 +1022,8 @@ test.describe('Localized object entries are saved correctly', () => {
 		'Phone Number fields',
 		{tag: ['@LPD-70691']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const enLocalNumber = '11987654321';
-			const ptLocalNumber = '11912345678';
+			const enLocalNumber = '8775433729';
+			const ptLocalNumber = '8121216000';
 
 			const fixedPrefix = '+1';
 			const enUserPrefix = '+1';
@@ -1099,10 +1099,10 @@ test.describe('Localized object entries are saved correctly', () => {
 			});
 
 			await test.step('Navigate to the object definition and add an entry', async () => {
-				await viewObjectEntriesPage.goto(objectDefinition.className);
+				await viewObjectEntriesPage.goto(objectDefinition.className!);
 
 				await viewObjectEntriesPage.clickAddObjectEntry(
-					objectDefinition.label['en_US']
+					objectDefinition.label!['en_US']
 				);
 			});
 
@@ -1171,7 +1171,9 @@ test.describe('Localized object entries are saved correctly', () => {
 			});
 
 			await test.step('Switch back to en_US and verify the en_US values are preserved', async () => {
-				await page.getByRole('button', {name: 'pt-br'}).first().click();
+				await fixedFieldContainer
+					.getByRole('button', {name: 'pt-br'})
+					.click();
 
 				await page
 					.getByRole('menuitem', {name: 'English (United States)'})
@@ -1183,7 +1185,9 @@ test.describe('Localized object entries are saved correctly', () => {
 			});
 
 			await test.step('Switch to pt_BR and verify the pt_BR values are preserved', async () => {
-				await page.getByRole('button', {name: 'en-us'}).first().click();
+				await fixedFieldContainer
+					.getByRole('button', {name: 'en-us'})
+					.click();
 
 				await page
 					.getByRole('menuitem', {name: 'português (Brasil)'})
@@ -1212,7 +1216,9 @@ test.describe('Localized object entries are saved correctly', () => {
 			});
 
 			await test.step('Verify the pt_BR values persist after save', async () => {
-				await page.getByRole('button', {name: 'en-us'}).first().click();
+				await fixedFieldContainer
+					.getByRole('button', {name: 'en-us'})
+					.click();
 
 				await page
 					.getByRole('menuitem', {name: 'português (Brasil)'})

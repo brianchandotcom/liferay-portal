@@ -424,7 +424,7 @@ test(
 			.getByRole('link', {name: /^Title \d+ /})
 			.count();
 
-		expect(visibleCount).toBeLessThanOrEqual(8);
+		expect(visibleCount).toBe(8);
 
 		await spaceSummaryPage.viewAllContentLink.click();
 
@@ -586,7 +586,7 @@ test(
 			.getByRole('link', {name: /^File \d+ /})
 			.count();
 
-		expect(visibleCount).toBeLessThanOrEqual(8);
+		expect(visibleCount).toBe(8);
 
 		await spaceSummaryPage.viewAllFilesLink.click();
 
@@ -655,7 +655,7 @@ test(
 			.getByRole('link', {name: /^(Folder|Entry) \d+ /})
 			.count();
 
-		expect(visibleCount).toBeLessThanOrEqual(8);
+		expect(visibleCount).toBe(8);
 
 		await spaceSummaryPage.viewAllContentLink.click();
 

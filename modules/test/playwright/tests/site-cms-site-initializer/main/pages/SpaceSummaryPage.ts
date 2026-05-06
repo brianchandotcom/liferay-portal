@@ -121,7 +121,8 @@ export class SpaceSummaryPage {
 			this.page,
 			type.includes('group')
 				? `Success:Group ${name} successfully added to space.`
-				: `Success:User ${name} successfully added to space.`
+				: `Success:User ${name} successfully added to space.`,
+			{autoClose: false}
 		);
 
 		await this.closeButton.click();
@@ -147,7 +148,8 @@ export class SpaceSummaryPage {
 			this.page,
 			type.includes('group')
 				? `Success:Group ${name} successfully removed from space.`
-				: `Success:User ${name} successfully removed from space.`
+				: `Success:User ${name} successfully removed from space.`,
+			{autoClose: false}
 		);
 
 		await this.closeButton.click();

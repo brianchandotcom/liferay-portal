@@ -118,6 +118,12 @@ function getObjectFieldSpecificProperties(
 				businessType: 'Decimal',
 				type: 'Double',
 			};
+		case 'Email':
+			return {
+				DBType: 'String',
+				businessType: 'Email',
+				type: 'String',
+			};
 		case 'Encrypted':
 			return {
 				DBType: 'Clob',

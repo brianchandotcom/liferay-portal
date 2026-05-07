@@ -9759,58 +9759,41 @@ public class DataFactory {
 			HashMapBuilder.<String, List<Tuple>>put(
 				"LFR-404-ERROR-layout-draft",
 				Arrays.asList(
-					new Tuple("BASIC_COMPONENT-heading", 0, "404"),
-					new Tuple("BASIC_COMPONENT-paragraph", 1, "Page Not Found"),
-					new Tuple("BASIC_COMPONENT-button", 2, StringPool.BLANK))
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple("BASIC_COMPONENT-paragraph", 1),
+					new Tuple("BASIC_COMPONENT-button", 2))
 			).put(
 				"LFR-500-ERROR-layout-draft",
 				Arrays.asList(
-					new Tuple("BASIC_COMPONENT-heading", 0, "500"),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 1,
-						"Internal Server Error"))
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple("BASIC_COMPONENT-paragraph", 1))
 			).put(
 				"LFR-COOKIE-POLICY-layout-draft",
 				Arrays.asList(
-					new Tuple(StringPool.BLANK),
-					new Tuple(
-						"BASIC_COMPONENT-heading", 0,
-						"Strictly Necessary Cookies"),
-					new Tuple(StringPool.BLANK),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 1,
-						"Strictly_Necessary_Cookies.txt"),
-					new Tuple(
-						"BASIC_COMPONENT-heading", 0,
-						"Personalization Cookies"),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 1,
-						"Personalization_Cookies.txt"),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 0, "Cookies_List.txt"),
-					new Tuple(StringPool.BLANK),
-					new Tuple(
-						"BASIC_COMPONENT-heading", 0, "Performance Cookies"),
-					new Tuple("BASIC_COMPONENT-button", 1, StringPool.BLANK),
-					new Tuple(
-						"BASIC_COMPONENT-heading", 0, "Functional Cookies"),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 1,
-						"Functional_Cookies.txt"),
-					new Tuple(
-						"BASIC_COMPONENT-paragraph", 1,
-						"Performance_Cookies.txt"),
-					new Tuple("BASIC_COMPONENT-heading", 0, "Cookies List"),
-					new Tuple(StringPool.BLANK))
+					new Tuple(StringPool.BLANK, 0),
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple(StringPool.BLANK, 0),
+					new Tuple("BASIC_COMPONENT-paragraph", 1),
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple("BASIC_COMPONENT-paragraph", 1),
+					new Tuple("BASIC_COMPONENT-paragraph", 0),
+					new Tuple(StringPool.BLANK, 0),
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple("BASIC_COMPONENT-button", 1),
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple("BASIC_COMPONENT-paragraph", 1),
+					new Tuple("BASIC_COMPONENT-paragraph", 1),
+					new Tuple("BASIC_COMPONENT-heading", 0),
+					new Tuple(StringPool.BLANK, 0))
 			).put(
 				"LFR-CREATE-ACCOUNT-layout-draft",
-				Arrays.asList(new Tuple(StringPool.BLANK))
+				Arrays.asList(new Tuple(StringPool.BLANK, 0))
 			).put(
 				"LFR-FORGOT-PASSWORD-layout-draft",
-				Arrays.asList(new Tuple(StringPool.BLANK))
+				Arrays.asList(new Tuple(StringPool.BLANK, 0))
 			).put(
 				"LFR-LOGIN-layout-draft",
-				Arrays.asList(new Tuple(StringPool.BLANK))
+				Arrays.asList(new Tuple(StringPool.BLANK, 0))
 			).build();
 	private static final Map<String, String> _utilityPagePortletIds =
 		HashMapBuilder.put(

@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 		boolean convertNull, boolean last, Function<T, Object> valueExtractor) {
 
 		_type = type;
+		_comparator = comparator;
 		_convertNull = convertNull;
 		_valueExtractor = valueExtractor;
 
@@ -89,7 +91,65 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public boolean matches(T entity, Object normalizedValue) {
-		return Objects.equals(_valueExtractor.apply(entity), normalizedValue);
+		Object entityValue = _valueExtractor.apply(entity);
+
+		if (_comparator.equals("=")) {
+			return Objects.equals(entityValue, normalizedValue);
+		}
+
+		if (_comparator.equals("!=") || _comparator.equals("<>")) {
+			return !Objects.equals(entityValue, normalizedValue);
+		}
+
+		if ((entityValue == null) || (normalizedValue == null)) {
+			return false;
+		}
+
+		if (_comparator.equals("LIKE")) {
+			return StringUtil.wildcardMatches(
+				(String)entityValue, (String)normalizedValue, '_', '%', '\\',
+				true);
+		}
+
+		@SuppressWarnings("rawtypes")
+		Comparable comparable = (Comparable)entityValue;
+
+		@SuppressWarnings("unchecked")
+		int comparisonResult = comparable.compareTo(normalizedValue);
+
+		if (_comparator.equals(">")) {
+			if (comparisonResult > 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (_comparator.equals(">=")) {
+			if (comparisonResult >= 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (_comparator.equals("<")) {
+			if (comparisonResult < 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		if (_comparator.equals("<=")) {
+			if (comparisonResult <= 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
 	}
 
 	public Object normalizeValue(Object value) {
@@ -145,6 +205,7 @@ public class FinderColumn<T extends BaseModel<T>> {
 
 	}
 
+	private final String _comparator;
 	private final boolean _convertNull;
 	private final String _keyFragment;
 	private final String _sqlBind;

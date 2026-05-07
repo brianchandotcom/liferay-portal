@@ -77,9 +77,9 @@ public class UploadPortletRequestWhenCreatingFromMainConstructorTest {
 	private static final byte[] _BYTES =
 		"Enterprise. Open Source. For Life.".getBytes();
 
-	private static String _portletNamespace;
-
 	@Inject
 	private Portal _portal;
+
+	private String _portletNamespace;
 
 }

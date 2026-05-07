@@ -159,15 +159,14 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 			jxPortletPreferences.getValues("testName", null));
 	}
 
-	private static String[] _layoutStaticPortletsAll;
-	private static LayoutTypePortlet _layoutTypePortlet;
+	private String[] _layoutStaticPortletsAll;
+	private LayoutTypePortlet _layoutTypePortlet;
 
 	@Inject
-	private static PortletPreferencesLocalService
-		_portletPreferencesLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject
-	private static PortletPreferenceValueLocalService
+	private PortletPreferenceValueLocalService
 		_portletPreferenceValueLocalService;
 
 	private TestNonembeddedPortlet _testNonembeddedPortlet;

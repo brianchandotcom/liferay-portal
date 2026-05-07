@@ -243,11 +243,11 @@ public class EmbeddedPortletWhenEmbeddingPortletUsingRuntimeTagTest
 		}
 	}
 
-	private static String[] _layoutStaticPortletsAll;
-	private static LayoutTypePortlet _layoutTypePortlet;
-
 	@Inject
 	private Language _language;
+
+	private String[] _layoutStaticPortletsAll;
+	private LayoutTypePortlet _layoutTypePortlet;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

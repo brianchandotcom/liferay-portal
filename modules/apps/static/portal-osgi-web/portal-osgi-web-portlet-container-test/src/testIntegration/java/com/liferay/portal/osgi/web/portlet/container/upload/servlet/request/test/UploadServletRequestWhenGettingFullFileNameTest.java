@@ -116,6 +116,6 @@ public class UploadServletRequestWhenGettingFullFileNameTest {
 	private static final byte[] _BYTES =
 		"Enterprise. Open Source. For Life.".getBytes();
 
-	private static String _fileNameParameter;
+	private String _fileNameParameter;
 
 }

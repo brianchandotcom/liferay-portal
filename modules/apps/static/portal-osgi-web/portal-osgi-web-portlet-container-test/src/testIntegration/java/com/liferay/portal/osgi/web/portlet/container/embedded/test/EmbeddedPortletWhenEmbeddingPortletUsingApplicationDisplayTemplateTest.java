@@ -110,7 +110,7 @@ public class
 		Assert.assertTrue(testRuntimePortlet.isCalledRuntime());
 	}
 
-	private static String[] _layoutStaticPortletsAll;
-	private static LayoutTypePortlet _layoutTypePortlet;
+	private String[] _layoutStaticPortletsAll;
+	private LayoutTypePortlet _layoutTypePortlet;
 
 }

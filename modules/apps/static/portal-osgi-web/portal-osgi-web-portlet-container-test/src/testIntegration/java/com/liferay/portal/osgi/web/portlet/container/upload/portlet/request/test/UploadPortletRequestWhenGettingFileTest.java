@@ -128,6 +128,6 @@ public class UploadPortletRequestWhenGettingFileTest {
 	private static final byte[] _BYTES =
 		"Enterprise. Open Source. For Life.".getBytes();
 
-	private static String _portletNamespace;
+	private String _portletNamespace;
 
 }

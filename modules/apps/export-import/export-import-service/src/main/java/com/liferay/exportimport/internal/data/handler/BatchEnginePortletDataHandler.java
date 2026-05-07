@@ -258,7 +258,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String getSectionKey() {
-		Set<String> sections = SetUtil.fromList(
+		Set<String> sectionKeys = SetUtil.fromList(
 			TransformUtil.transform(
 				_registrations,
 				registration -> {
@@ -269,11 +269,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					return exportImportDescriptor.getSectionKey();
 				}));
 
-		if (sections.isEmpty()) {
+		if (sectionKeys.isEmpty()) {
 			return super.getSectionKey();
 		}
 
-		Iterator<String> iterator = sections.iterator();
+		Iterator<String> iterator = sectionKeys.iterator();
 
 		return iterator.next();
 	}

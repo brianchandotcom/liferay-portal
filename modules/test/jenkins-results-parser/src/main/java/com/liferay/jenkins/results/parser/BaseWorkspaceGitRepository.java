@@ -1348,16 +1348,6 @@ public abstract class BaseWorkspaceGitRepository
 		return "";
 	}
 
-	private String _getJobVariant() {
-		String jobVariant = System.getenv("JOB_VARIANT");
-
-		if (jobVariant != null) {
-			return jobVariant;
-		}
-
-		return "";
-	}
-
 	private String _getSenderBranchHeadName() {
 		return getSenderBranchName() + "__" + getSenderBranchSHAShort();
 	}
@@ -1419,58 +1409,20 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private boolean _isDotGitDirArchiveRequired() {
-		String directoryName = getDirectoryName();
+		if (!_snapshot) {
+			return true;
+		}
 
-		String jobVariant = _getJobVariant();
-
-		if (directoryName.contains("liferay-plugins")) {
-			if (!_snapshot || jobVariant.startsWith("plugins-compile")) {
-				return true;
-			}
-
+		try {
+			return Boolean.parseBoolean(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"git.archive.dot.git.dir.required", getDirectoryName(),
+					System.getenv("DIST_TYPE"), System.getenv("JOB_NAME"),
+					System.getenv("CI_TEST_SUITE")));
+		}
+		catch (IOException ioException) {
 			return false;
 		}
-
-		if (directoryName.contains("liferay-portal")) {
-			if (!_snapshot) {
-				return true;
-			}
-
-			String jobName = _getJobName();
-
-			if (JenkinsResultsParserUtil.isTopLevelJobName(jobName) ||
-				jobName.equals("app-server-bundle-builder") ||
-				jobName.equals("forward-pullrequest") ||
-				jobName.equals("publish-testray-report") ||
-				jobName.equals("test-portal-source-format") ||
-				jobName.contains("validation") ||
-				jobVariant.contains("modules-unit") ||
-				jobVariant.contains("plugins-compile") ||
-				jobVariant.contains("rest-builder") ||
-				jobVariant.contains("service-builder")) {
-
-				return true;
-			}
-		}
-
-		if (directoryName.equals("liferay-release-tool-ee")) {
-			if (!_snapshot ||
-				(!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-				 jobVariant.startsWith("portal-license"))) {
-
-				return true;
-			}
-
-			String distType = System.getenv("DIST_TYPE");
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(distType) &&
-				"release".equalsIgnoreCase(distType)) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private boolean _isFullDotGitDirArchiveRequired() {

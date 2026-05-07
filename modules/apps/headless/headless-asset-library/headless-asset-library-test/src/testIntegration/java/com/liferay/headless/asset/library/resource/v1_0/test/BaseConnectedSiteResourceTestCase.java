@@ -732,6 +732,14 @@ public abstract class BaseConnectedSiteResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (connectedSite.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -937,6 +945,16 @@ public abstract class BaseConnectedSiteResourceTestCase {
 				if (!Objects.deepEquals(
 						connectedSite1.getSearchable(),
 						connectedSite2.getSearchable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("type", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						connectedSite1.getType(), connectedSite2.getType())) {
 
 					return false;
 				}
@@ -1255,6 +1273,11 @@ public abstract class BaseConnectedSiteResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("type")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1562,4 +1585,4 @@ public abstract class BaseConnectedSiteResourceTestCase {
 			_connectedSiteResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1736997199
+// LIFERAY-REST-BUILDER-HASH:-1474763763

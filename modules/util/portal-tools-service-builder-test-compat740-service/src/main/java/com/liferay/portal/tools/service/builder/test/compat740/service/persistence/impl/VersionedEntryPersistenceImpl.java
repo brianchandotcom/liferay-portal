@@ -656,7 +656,7 @@ public class VersionedEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
 				_SQL_COUNT_VERSIONEDENTRY_WHERE,
-				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, VersionedEntry::getGroupId));
@@ -687,10 +687,10 @@ public class VersionedEntryPersistenceImpl
 				_finderPathCountByGroupId_Head,
 				_SQL_SELECT_VERSIONEDENTRY_WHERE,
 				_SQL_COUNT_VERSIONEDENTRY_WHERE,
-				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				VersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"versionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, VersionedEntry::getGroupId),
+					true, true, VersionedEntry::getGroupId),
 				new FinderColumn<>(
 					"versionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, VersionedEntry::isHead));
@@ -702,6 +702,7 @@ public class VersionedEntryPersistenceImpl
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"versionedEntry.", "headId", FinderColumn.Type.LONG, "=", true,
 				true, VersionedEntry::getHeadId));
@@ -772,4 +773,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:358767243
+// LIFERAY-SERVICE-BUILDER-HASH:476929244

@@ -585,7 +585,7 @@ public class CTEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTENTRY_WHERE,
 				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getCompanyId));
@@ -597,10 +597,10 @@ public class CTEntryPersistenceImpl
 			convertNullFunction(CTEntry::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_CTENTRY_WHERE,
+			this, _finderPathFetchByC_N, _SQL_SELECT_CTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTEntry::getCompanyId),
+				true, CTEntry::getCompanyId),
 			new FinderColumn<>(
 				"ctEntry.", "name", FinderColumn.Type.STRING, "=", true, true,
 				CTEntry::getName));
@@ -668,4 +668,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1131309008
+// LIFERAY-SERVICE-BUILDER-HASH:162711101

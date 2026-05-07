@@ -555,12 +555,13 @@ public class LikeFinderEntryPersistenceImpl
 
 		_uniquePersistenceFinderByO_O_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O_P, _SQL_SELECT_LIKEFINDERENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"likeFinderEntry.", "ownerId", FinderColumn.Type.LONG, "=",
-				true, false, LikeFinderEntry::getOwnerId),
+				true, true, LikeFinderEntry::getOwnerId),
 			new FinderColumn<>(
 				"likeFinderEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-				true, false, LikeFinderEntry::getOwnerType),
+				true, true, LikeFinderEntry::getOwnerType),
 			new FinderColumn<>(
 				"likeFinderEntry.", "portletId", FinderColumn.Type.STRING, "=",
 				true, true, LikeFinderEntry::getPortletId));
@@ -592,15 +593,16 @@ public class LikeFinderEntryPersistenceImpl
 				_SQL_SELECT_LIKEFINDERENTRY_WHERE,
 				_SQL_COUNT_LIKEFINDERENTRY_WHERE,
 				LikeFinderEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"likeFinderEntry.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, LikeFinderEntry::getCompanyId),
+					"=", true, true, LikeFinderEntry::getCompanyId),
 				new FinderColumn<>(
 					"likeFinderEntry.", "ownerId", FinderColumn.Type.LONG, "=",
-					true, false, LikeFinderEntry::getOwnerId),
+					true, true, LikeFinderEntry::getOwnerId),
 				new FinderColumn<>(
 					"likeFinderEntry.", "ownerType", FinderColumn.Type.INTEGER,
-					"=", true, false, LikeFinderEntry::getOwnerType),
+					"=", true, true, LikeFinderEntry::getOwnerType),
 				new FinderColumn<>(
 					"likeFinderEntry.", "portletId", FinderColumn.Type.STRING,
 					"LIKE", true, true, LikeFinderEntry::getPortletId));
@@ -671,4 +673,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1612910979
+// LIFERAY-SERVICE-BUILDER-HASH:947449606

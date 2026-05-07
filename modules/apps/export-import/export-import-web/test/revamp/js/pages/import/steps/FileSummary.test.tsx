@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {render, screen, within} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import React from 'react';
 
 import FileSummary from '../../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/steps/FileSummary';
@@ -33,9 +33,7 @@ const baseImportPreview: ImportPreview = {
 };
 
 const valueOf = (label: string) =>
-	within(screen.getByText(label).parentElement as HTMLElement).getByText(
-		(_, element) => element?.classList.contains('text-secondary') ?? false
-	);
+	screen.getByText(label).nextElementSibling as HTMLElement;
 
 describe('FileSummary', () => {
 	beforeAll(() => {

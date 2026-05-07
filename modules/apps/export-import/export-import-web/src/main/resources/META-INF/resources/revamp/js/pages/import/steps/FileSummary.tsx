@@ -25,11 +25,11 @@ function MetadataItem({
 				<ClayIcon symbol={icon} />
 			</span>
 
-			<div className="ml-3">
-				<div className="font-weight-semi-bold">{label}</div>
+			<dl className="mb-0 ml-3">
+				<dt className="font-weight-semi-bold">{label}</dt>
 
-				<div className="text-secondary">{value}</div>
-			</div>
+				<dd className="mb-0 text-secondary">{value}</dd>
+			</dl>
 		</div>
 	);
 }

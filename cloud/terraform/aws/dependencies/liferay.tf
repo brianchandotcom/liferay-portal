@@ -205,6 +205,7 @@ POLICY
 	}
 }
 resource "aws_security_group" "os" {
+	description="OpenSearch domain VPC access"
 	name="${var.deployment_name}-os-sg"
 	tags={
 		Name="${var.deployment_name}-os-sg"
@@ -212,6 +213,7 @@ resource "aws_security_group" "os" {
 	vpc_id=local.vpc_config.vpc_id
 }
 resource "aws_security_group" "rds" {
+	description="RDS instance VPC access"
 	name="${var.deployment_name}-rds-sg"
 	tags={
 		Name="${var.deployment_name}-rds-sg"
@@ -220,6 +222,7 @@ resource "aws_security_group" "rds" {
 }
 resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
 	cidr_ipv4=data.aws_vpc.current.cidr_block
+	description="Allow TCP 443 from VPC CIDR to OpenSearch"
 	from_port=443
 	ip_protocol="tcp"
 	security_group_id=aws_security_group.os.id
@@ -227,6 +230,7 @@ resource "aws_vpc_security_group_ingress_rule" "os_ingress" {
 }
 resource "aws_vpc_security_group_ingress_rule" "rds_ingress" {
 	cidr_ipv4=data.aws_vpc.current.cidr_block
+	description="Allow TCP 5432 from VPC CIDR to RDS"
 	from_port=5432
 	ip_protocol="tcp"
 	security_group_id=aws_security_group.rds.id

@@ -1,5 +1,6 @@
 resource "aws_vpc_security_group_ingress_rule" "envoy_ingress_managed" {
 	cidr_ipv4=var.vpc_cidr
+	description="Envoy gateway ingress on port ${each.value}"
 	for_each=toset(["10080", "10443"])
 	from_port=each.value
 	ip_protocol="tcp"

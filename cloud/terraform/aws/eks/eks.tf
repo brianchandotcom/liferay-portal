@@ -221,6 +221,7 @@ resource "aws_kms_alias" "eks_kms_alias" {
 resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
+	enable_key_rotation=true
 	policy=jsonencode(
 		{
 			Statement=[

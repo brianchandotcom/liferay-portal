@@ -1,0 +1,5 @@
+.lfr-tooltip-scope {
+	+ .table-root .fds-info-panel {
+		top: -$ai-hub-breadcrumb-min-height;
+	}
+}

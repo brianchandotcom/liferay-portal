@@ -82,6 +82,11 @@ export function ObjectDefinitionNode({
 		}
 	};
 
+	const allowStandaloneObjectEntry =
+		objectDefinitionSettings?.find(
+			(setting) => setting.name === 'allowStandaloneObjectEntry'
+		)?.value === 'true';
+
 	const rootObjectDefinitionExternalReferenceCodes =
 		objectDefinitionSettings?.find(
 			(setting) =>
@@ -131,6 +136,7 @@ export function ObjectDefinitionNode({
 				}}
 			>
 				<ObjectDefinitionNodeHeader
+					allowStandaloneObjectEntry={allowStandaloneObjectEntry}
 					dbTableName={dbTableName}
 					dropDownItems={getObjectDefinitionNodeActions({
 						baseResourceURL,

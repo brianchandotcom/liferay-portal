@@ -24,7 +24,7 @@ export default function getUndeletableChildren(
 	const items = uuids.map((uuid) => findChild({root: structure, uuid})!);
 
 	for (const item of items) {
-		if (isLocked(item)) {
+		if (isLocked({root: structure, uuid: item.uuid})) {
 			undeletables.set(item.uuid, 'is-locked');
 		}
 

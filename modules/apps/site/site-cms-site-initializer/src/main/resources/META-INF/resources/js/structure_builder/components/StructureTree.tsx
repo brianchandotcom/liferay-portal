@@ -835,7 +835,10 @@ function getItemActions({
 	publishedChildren: State['publishedChildren'];
 	structure: Structure;
 }) {
-	if (isLocked(item) || isReferenced({root: structure, uuid: item.uuid})) {
+	if (
+		isLocked({root: structure, uuid: item.uuid}) ||
+		isReferenced({root: structure, uuid: item.uuid})
+	) {
 		return [];
 	}
 

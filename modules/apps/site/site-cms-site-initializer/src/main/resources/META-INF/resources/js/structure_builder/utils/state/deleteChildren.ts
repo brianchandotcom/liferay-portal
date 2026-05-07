@@ -30,7 +30,7 @@ export default function deleteChildren({
 
 		// Delete child if it applies
 
-		if (uuids.includes(child.uuid) && !isLocked(child)) {
+		if (uuids.includes(child.uuid) && !isLocked({root, uuid: child.uuid})) {
 			children.delete(child.uuid);
 
 			getDeletedChildrenUuids({child}).forEach((uuid) => {

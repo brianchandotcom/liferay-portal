@@ -22,7 +22,7 @@ export default function isCopyable({
 		return false;
 	}
 
-	if (isLocked(item)) {
+	if (isLocked({root, uuid})) {
 		return false;
 	}
 

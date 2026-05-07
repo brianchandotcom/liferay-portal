@@ -38,9 +38,10 @@ public class AssetSummaryController extends BaseFaroController {
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("filter") String filterString,
-			@QueryParam("search") String search,
-			@QueryParam("rangeKey") int rangeKey, @QueryParam("page") int page,
+			@QueryParam("page") int page,
 			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
+			@QueryParam("rangeKey") int rangeKey,
+			@QueryParam("search") String search,
 			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 				sortString)
 		throws Exception {

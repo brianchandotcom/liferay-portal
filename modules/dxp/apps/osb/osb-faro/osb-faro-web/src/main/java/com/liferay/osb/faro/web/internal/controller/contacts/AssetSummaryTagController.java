@@ -11,6 +11,7 @@ import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryTagDisplay;
+import com.liferay.petra.string.StringPool;
 
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
@@ -37,11 +38,13 @@ public class AssetSummaryTagController extends BaseFaroController {
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
 			@QueryParam("keywords") String keywords,
+			@QueryParam("page") int page,
+			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
 			@QueryParam("rangeEnd") String rangeEnd,
 			@QueryParam("rangeKey") int rangeKey,
 			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("sort") String sort, @QueryParam("cur") int cur,
-			@DefaultValue("20") @QueryParam("delta") int delta)
+			@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
+				sortString)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -50,12 +53,12 @@ public class AssetSummaryTagController extends BaseFaroController {
 		Results<AssetSummaryTag> results =
 			contactsEngineClient.getAssetSummaryTags(
 				faroProject, channelId, keywords, rangeEnd, rangeKey,
-				rangeStart, sort, cur, delta);
+				rangeStart, sortString, page, pageSize);
 
 		Function<AssetSummaryTag, AssetSummaryTagDisplay> function =
 			AssetSummaryTagDisplay::new;
 
-		return new FaroFDSResultsDisplay(results, function, cur, delta);
+		return new FaroFDSResultsDisplay(results, function, page, pageSize);
 	}
 
 }

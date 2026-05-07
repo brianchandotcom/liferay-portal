@@ -9,10 +9,17 @@ export * from './item_selector/types';
 export {default as ItemSelectorModal} from './item_selector/ItemSelectorModal';
 export type {FilesUploaderComponent} from './item_selector/ItemSelectorModal';
 export type {IItemSelectorModalProps} from './item_selector/ItemSelectorModal';
+export {default as TreeItemSelectorModal} from './item_selector/TreeItemSelectorModal';
+export type {ITreeItemSelectorModalProps} from './item_selector/TreeItemSelectorModal';
 export {
 	getCMSItemSelectorFilters,
 	getCMSItemSelectorGroupedFilters,
 } from './item_selector/getCMSItemSelectorFilters';
 export {default as openCMSFileSelectorModal} from './item_selector/openCMSFileSelectorModal';
 export {default as openItemSelectorModal} from './item_selector/openItemSelectorModal';
+export {default as openTreeItemSelectorModal} from './item_selector/openTreeItemSelectorModal';
+export type {
+	ITaxonomyCategory,
+	ITaxonomyCategoryTreeNode,
+} from './item_selector/useTaxonomyCategoryTreeNodes';
 export {default as CMSFileUploaderComponent} from './item_selector_file_uploader/CMSFileUploaderComponent';

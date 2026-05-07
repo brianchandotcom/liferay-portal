@@ -6,16 +6,19 @@
 import {Site} from '../types/Site';
 import ApiHelper from './ApiHelper';
 
+// TODO LPD-82494: confirm the body shape (specifically the `type` field name
+// and value set) when Balázs lands the unified ConnectedSite schema. The
+// current call sites pass either {searchable} for sites or {type} for
+// templates.
+
 async function connectSiteToSpace(
 	externalReferenceCode: string,
 	siteExternalReferenceCode: string,
-	searchable?: string
+	body: Record<string, string> = {searchable: 'true'}
 ) {
 	return await ApiHelper.put<Site>(
 		`/o/headless-asset-library/v1.0/asset-libraries/${externalReferenceCode}/connected-sites/${siteExternalReferenceCode}`,
-		{
-			searchable: searchable ? searchable : 'true',
-		}
+		body
 	);
 }
 

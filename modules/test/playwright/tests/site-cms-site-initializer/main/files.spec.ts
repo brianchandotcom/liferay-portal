@@ -14,6 +14,7 @@ import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
 	performLogout,
+	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -757,6 +758,119 @@ test(
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
 				String(objectEntry.id)
+			);
+		}
+	}
+);
+
+test(
+	'Shared file shows a shared icon in the Files section only for the recipient',
+	{tag: '@LPD-66045'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-documents';
+		const fileTitle1 = `File ${getRandomString()}`;
+		const fileTitle2 = `File ${getRandomString()}`;
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: fileTitle1,
+			},
+			applicationName,
+			spaceName
+		);
+
+		const objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: fileTitle2,
+			},
+			applicationName,
+			spaceName
+		);
+
+		try {
+			const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
+
+			const cmsAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'CMS Administrator'
+				);
+
+			await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+				cmsAdminRole.id,
+				Number(user.id)
+			);
+
+			await apiHelpers.objectEntry.postObjectEntryCollaborators(
+				[
+					{
+						actionIds: ['VIEW'],
+						id: user.id,
+						share: true,
+						type: 'User',
+					},
+				],
+				applicationName,
+				objectEntry1.id
+			);
+
+			await performUserSwitch(page, user.alternateName);
+
+			await assetsPage.gotoFiles();
+
+			await assetsPage.changeVisualizationMode('Table');
+
+			const fileRow1 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: fileTitle1})});
+
+			await expect(fileRow1).toBeVisible();
+
+			await expect(
+				fileRow1.locator('.lexicon-icon-users').first()
+			).toBeVisible();
+
+			const fileRow2 = page
+				.getByRole('row')
+				.filter({has: page.getByRole('link', {name: fileTitle2})});
+
+			await expect(fileRow2).toBeVisible();
+
+			await expect(fileRow2.locator('.lexicon-icon-users')).toHaveCount(
+				0
+			);
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
 			);
 		}
 	}

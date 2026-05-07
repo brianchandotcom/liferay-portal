@@ -269,10 +269,9 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 					infoLocalizedValue.getDefaultLocale()
 				);
 
-			for (Map.Entry<Locale, Object> entry :
-					infoLocalizedValue.getValues(
-					).entrySet()) {
+			Map<Locale, Object> values = infoLocalizedValue.getValues();
 
+			for (Map.Entry<Locale, Object> entry : values.entrySet()) {
 				long tempFileEntryId = GetterUtil.getLong(entry.getValue());
 
 				if (!_isTempFileEntryId(tempFileEntryId)) {
@@ -369,15 +368,20 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 
 		Map
 			<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
-			 InfoFieldValue<Object>> relatedInfoFieldValues = new HashMap<>();
+			 InfoFieldValue<Object>> newRelatedInfoFieldValues =
+				new HashMap<>();
+
+		Map
+			<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
+			 ? extends InfoFieldValue<?>> relatedInfoFieldValues =
+				relatedInfoFieldValue.getRelatedInfoFieldValues();
 
 		for (Map.Entry
 				<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
 				 ? extends InfoFieldValue<?>> entry :
-					relatedInfoFieldValue.getRelatedInfoFieldValues(
-					).entrySet()) {
+					relatedInfoFieldValues.entrySet()) {
 
-			relatedInfoFieldValues.put(
+			newRelatedInfoFieldValues.put(
 				entry.getKey(),
 				_normalizeInfoFieldValue(
 					(InfoFieldValue<Object>)entry.getValue(),
@@ -386,7 +390,7 @@ public class ObjectEntryCMSInfoItemFieldValuesUtil {
 					serviceContext));
 		}
 
-		return new RelatedInfoFieldValue<>(relatedInfoFieldValues);
+		return new RelatedInfoFieldValue<>(newRelatedInfoFieldValues);
 	}
 
 	private static boolean _showFilesInLibrary(ObjectField objectField) {

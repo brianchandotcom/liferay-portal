@@ -87,6 +87,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -269,17 +270,19 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		_testObjectEntryInfoItemFieldValuesProvider(
 			fileEntry, localDateTime, objectAction, objectEntry,
 			parentTextObjectFieldNameValue, null);
+
+		TimeZone timeZone = TimeZoneUtil.getTimeZone("Asia/Kolkata");
+
 		_testObjectEntryInfoItemFieldValuesProvider(
 			fileEntry,
 			localDateTime.atZone(
 				ZoneOffset.UTC
 			).withZoneSameInstant(
-				TimeZoneUtil.getTimeZone(
-					"Asia/Kolkata"
-				).toZoneId()
+				timeZone.toZoneId()
 			).toLocalDateTime(),
 			objectAction, objectEntry, parentTextObjectFieldNameValue,
 			_getThemeDisplay(StringPool.BLANK, "Asia/Kolkata"));
+
 		_testObjectEntryInfoItemFieldValuesProvider(
 			fileEntry, localDateTime, objectAction, objectEntry,
 			parentTextObjectFieldNameValue,

@@ -18,6 +18,10 @@ public class InvitedAccountUserDisplayContext {
 		return _ticketKey;
 	}
 
+	public String getTitle() {
+		return _title;
+	}
+
 	public void setEmailAddress(String emailAddress) {
 		_emailAddress = emailAddress;
 	}
@@ -26,7 +30,12 @@ public class InvitedAccountUserDisplayContext {
 		_ticketKey = ticketKey;
 	}
 
+	public void setTitle(String title) {
+		_title = title;
+	}
+
 	private String _emailAddress;
 	private String _ticketKey;
+	private String _title;
 
 }

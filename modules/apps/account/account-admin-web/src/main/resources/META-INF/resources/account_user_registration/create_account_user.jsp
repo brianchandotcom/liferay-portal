@@ -48,7 +48,7 @@ portletDisplay.setURLBack(backURL);
 		<aui:input name="ticketKey" type="hidden" value="<%= invitedAccountUserDisplayContext.getTicketKey() %>" />
 
 		<h2 class="sheet-title">
-			<liferay-ui:message key="create-account" />
+			<liferay-ui:message key="<%= invitedAccountUserDisplayContext.getTitle() %>" />
 		</h2>
 
 		<clay:sheet-section>

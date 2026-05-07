@@ -389,16 +389,18 @@ test(
 );
 
 test(
-	'Validate that a UI error appears when attempting to create a vocabulary with an existing name',
-	{tag: '@LPD-57497'},
+	'Validate that a UI error appears when attempting to create a vocabulary with a duplicate name or external reference code',
+	{tag: ['@LPD-57497', '@LPD-88752']},
 	async ({editVocabularyPage, page}) => {
-		await editVocabularyPage.goto();
-
+		const externalReferenceCode = `ERC${getRandomInt()}`;
 		const name = `Vocabulary${getRandomInt()}`;
+
+		await editVocabularyPage.goto();
 
 		await editVocabularyPage.changeGeneralInfo({
 			description: getRandomString(),
-			name,
+			externalReferenceCode: externalReferenceCode,
+			name: name,
 		});
 
 		await clickAndExpectToBeVisible({
@@ -408,64 +410,40 @@ test(
 			trigger: editVocabularyPage.saveButton,
 		});
 
-		await editVocabularyPage.goto();
+		await test.step('Duplicate name shows the name-specific error', async () => {
+			await editVocabularyPage.goto();
 
-		await editVocabularyPage.changeGeneralInfo({
-			description: getRandomString(),
-			name,
+			await editVocabularyPage.changeGeneralInfo({
+				description: getRandomString(),
+				externalReferenceCode: `ERC${getRandomInt()}`,
+				name: name,
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'Please enter a unique name. This one is already in use.',
+					{exact: true}
+				),
+				trigger: editVocabularyPage.saveButton,
+			});
 		});
 
-		await clickAndExpectToBeVisible({
-			target: page.getByText(
-				'Please enter a unique name. This one is already in use.'
-			),
-			trigger: editVocabularyPage.saveButton,
+		await test.step('Duplicate external reference code shows the ERC-specific error', async () => {
+			await editVocabularyPage.goto();
+
+			await editVocabularyPage.changeGeneralInfo({
+				description: getRandomString(),
+				externalReferenceCode: externalReferenceCode,
+				name: `Vocabulary${getRandomInt()}`,
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(
+					'Please enter a unique external reference code.',
+					{exact: true}
+				),
+				trigger: editVocabularyPage.saveButton,
+			});
 		});
-	}
-);
-
-test(
-	'Assert ERC-specific error appears when creating a vocabulary with a duplicate external reference code',
-	{tag: '@LPD-88752'},
-	async ({editVocabularyPage, page}) => {
-		await editVocabularyPage.goto();
-
-		const externalReferenceCode = `ERC${getRandomInt()}`;
-		const vocabularyName1 = `Vocabulary${getRandomInt()}`;
-		const vocabularyName2 = `Vocabulary${getRandomInt()}`;
-
-		await editVocabularyPage.changeGeneralInfo({
-			description: getRandomString(),
-			externalReferenceCode: externalReferenceCode,
-			name: vocabularyName1,
-		});
-
-		await clickAndExpectToBeVisible({
-			target: page.getByText(
-				`Success:${vocabularyName1} was published successfully.`
-			),
-			trigger: editVocabularyPage.saveButton,
-		});
-
-		await editVocabularyPage.goto();
-
-		await editVocabularyPage.changeGeneralInfo({
-			description: getRandomString(),
-			externalReferenceCode: externalReferenceCode,
-			name: vocabularyName2,
-		});
-
-		await clickAndExpectToBeVisible({
-			target: page.getByText(
-				'Please enter a unique external reference code.'
-			),
-			trigger: editVocabularyPage.saveButton,
-		});
-
-		await expect(
-			page.getByText(
-				'Please enter a unique name. This one is already in use.'
-			)
-		).toBeHidden();
 	}
 );

@@ -211,6 +211,7 @@ import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -290,7 +291,11 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlag("LPS-164801")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPS-164801")
+	}
+)
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -5597,14 +5602,16 @@ public class ObjectEntryResourceTest {
 			new JSONArray[] {
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
+					_objectDefinition1, role1),
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition2, role2),
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
+					_objectDefinition1, role1),
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition2, role2)
 			},
 			Type.MANY_TO_MANY);
 
@@ -5689,10 +5696,11 @@ public class ObjectEntryResourceTest {
 			},
 			new JSONArray[] {
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition2, role2),
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1)
+					_objectDefinition1, role1)
 			},
 			Type.MANY_TO_ONE);
 
@@ -5760,14 +5768,16 @@ public class ObjectEntryResourceTest {
 			new JSONArray[] {
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
+					_objectDefinition1, role1),
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition2, role2),
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
+					_objectDefinition1, role1),
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2)
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition2, role2)
 			},
 			Type.ONE_TO_MANY);
 
@@ -6060,10 +6070,12 @@ public class ObjectEntryResourceTest {
 			},
 			new JSONArray[] {
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition3, role2),
 				(JSONArray)_userAccountJSONObject.get("permissions"),
 				_getPermissionsJSONArray(
-					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
+					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW},
+					_objectDefinition3, role2),
 				(JSONArray)_userAccountJSONObject.get("permissions")
 			},
 			Type.MANY_TO_MANY);
@@ -6091,7 +6103,7 @@ public class ObjectEntryResourceTest {
 			new JSONArray[] {
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-					role1),
+					_objectDefinition1, role1),
 				(JSONArray)_userAccountJSONObject.get("permissions")
 			},
 			Type.MANY_TO_MANY);
@@ -9201,22 +9213,22 @@ public class ObjectEntryResourceTest {
 			_postCustomObjectEntryWithPermissions(true, null);
 
 		_assertCustomObjectEntryWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject(_objectDefinition1)),
 			objectEntryJSONObject);
 		_assertCustomObjectEntryWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject(_objectDefinition1)),
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject, null));
 		_assertCustomObjectEntryWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject(_objectDefinition1)),
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true, objectEntryJSONObject, null));
 		_assertCustomObjectEntryWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject(_objectDefinition1)),
 			_patchPutCustomObjectEntryWithPermissions(
 				Http.Method.PATCH, true, objectEntryJSONObject, null));
 		_assertCustomObjectEntryWithPermissions(
-			JSONUtil.putAll(_getOwnerPermissionsJSONObject()),
+			JSONUtil.putAll(_getOwnerPermissionsJSONObject(_objectDefinition1)),
 			_patchPutCustomObjectEntryWithPermissions(
 				Http.Method.PUT, true, objectEntryJSONObject, null));
 
@@ -16572,7 +16584,9 @@ public class ObjectEntryResourceTest {
 						"&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",
-						objectEntry.getExternalReferenceCode()));
+						objectEntry.getExternalReferenceCode(),
+						"&objectFieldExternalReferenceCode=",
+						objectField.getExternalReferenceCode()));
 
 				link.setLabel(fileEntry.getName());
 
@@ -16773,18 +16787,31 @@ public class ObjectEntryResourceTest {
 		return objectRelationshipNames;
 	}
 
-	private JSONObject _getOwnerPermissionsJSONObject() {
-		return _getPermissionsJSONObject(
-			new String[] {
-				ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
-				ActionKeys.VIEW
-			},
-			RoleConstants.OWNER);
+	private JSONObject _getOwnerPermissionsJSONObject(
+		ObjectDefinition objectDefinition) {
+
+		String[] actionIds = {
+			ActionKeys.DELETE, ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+			ActionKeys.VIEW
+		};
+
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFieldsByBusinessType(
+					objectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			actionIds = ArrayUtil.append(
+				actionIds, objectField.getAttachmentDownloadActionKey());
+		}
+
+		return _getPermissionsJSONObject(actionIds, RoleConstants.OWNER);
 	}
 
-	private JSONArray _getPermissionsJSONArray(String[] actionIds, Role role) {
+	private JSONArray _getPermissionsJSONArray(
+		String[] actionIds, ObjectDefinition objectDefinition, Role role) {
+
 		return JSONUtil.putAll(
-			_getOwnerPermissionsJSONObject(),
+			_getOwnerPermissionsJSONObject(objectDefinition),
 			_getPermissionsJSONObject(actionIds, role.getName()));
 	}
 

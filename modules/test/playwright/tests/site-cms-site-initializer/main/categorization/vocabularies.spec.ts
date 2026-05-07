@@ -423,3 +423,49 @@ test(
 		});
 	}
 );
+
+test(
+	'Assert ERC-specific error appears when creating a vocabulary with a duplicate external reference code',
+	{tag: '@LPD-88752'},
+	async ({editVocabularyPage, page}) => {
+		await editVocabularyPage.goto();
+
+		const externalReferenceCode = `ERC${getRandomInt()}`;
+		const vocabularyName1 = `Vocabulary${getRandomInt()}`;
+		const vocabularyName2 = `Vocabulary${getRandomInt()}`;
+
+		await editVocabularyPage.changeGeneralInfo({
+			description: getRandomString(),
+			externalReferenceCode: externalReferenceCode,
+			name: vocabularyName1,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				`Success:${vocabularyName1} was published successfully.`
+			),
+			trigger: editVocabularyPage.saveButton,
+		});
+
+		await editVocabularyPage.goto();
+
+		await editVocabularyPage.changeGeneralInfo({
+			description: getRandomString(),
+			externalReferenceCode: externalReferenceCode,
+			name: vocabularyName2,
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Please enter a unique external reference code.'
+			),
+			trigger: editVocabularyPage.saveButton,
+		});
+
+		await expect(
+			page.getByText(
+				'Please enter a unique name. This one is already in use.'
+			)
+		).toBeHidden();
+	}
+);

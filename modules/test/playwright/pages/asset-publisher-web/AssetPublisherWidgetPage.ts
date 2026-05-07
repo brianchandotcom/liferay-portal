@@ -16,6 +16,7 @@ export class AssetPublisherWidgetPage {
 	readonly collectionInput: Locator;
 	readonly collectionSelectorIframe: FrameLocator;
 	readonly configurationIframe: FrameLocator;
+	readonly selectCollectionPanel: Locator;
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
@@ -24,6 +25,10 @@ export class AssetPublisherWidgetPage {
 
 		this.configurationIframe = this.page.frameLocator(
 			'iframe[title*="Configuration"]'
+		);
+		this.selectCollectionPanel = this.configurationIframe.getByRole(
+			'button',
+			{name: 'Select Collection'}
 		);
 		this.collectionInput = this.configurationIframe.getByRole('textbox', {
 			name: 'Collection',
@@ -49,6 +54,7 @@ export class AssetPublisherWidgetPage {
 	}
 
 	async selectCollection(assetListEntryName: string) {
+		await this.selectCollectionPanel.click();
 		await this.collectionInput.click();
 		await this.collectionSelectorIframe
 			.getByRole('button', {name: `${assetListEntryName}`})

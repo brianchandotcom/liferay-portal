@@ -7,23 +7,37 @@ import {Locator, Page} from '@playwright/test';
 
 export class CommerceAdminWarehouseEligibilityPage {
 	readonly addChannels: Locator;
+	readonly channelRow: (channelName: string) => Locator;
+	readonly channelRowSelectButton: (channelName: string) => Locator;
+	readonly channelsHeading: Locator;
 	readonly detailsActiveToggle: Locator;
 	readonly linkTab: Locator;
+	readonly noChannelRadio: Locator;
 	readonly page: Page;
-	readonly specificChannelRadio: Locator;
+	readonly specificChannelsRadio: Locator;
 	readonly selectButton: Locator;
 
 	constructor(page: Page) {
 		this.addChannels = page.getByPlaceholder('Find a Channel');
+		this.channelRow = (channelName: string) =>
+			page.getByRole('link', {exact: true, name: channelName});
+		this.channelRowSelectButton = (channelName: string) =>
+			page
+				.getByRole('row')
+				.filter({hasText: channelName})
+				.getByRole('button', {exact: true, name: 'Select'});
+		this.channelsHeading = page.getByRole('heading', {
+			exact: true,
+			name: 'Channels',
+		});
 		this.detailsActiveToggle = page.getByLabel('Active');
 		this.linkTab = page.getByRole('link', {
 			exact: true,
 			name: 'Eligibility',
 		});
+		this.noChannelRadio = page.getByLabel('No Channel');
 		this.page = page;
-		this.specificChannelRadio = page.locator(
-			'[id="_com_liferay_commerce_warehouse_web_internal_portlet_CommerceInventoryWarehousePortlet_channel_3"]'
-		);
+		this.specificChannelsRadio = page.getByLabel('Specific Channels');
 		this.selectButton = page.getByRole('button', {
 			exact: true,
 			name: 'Select',

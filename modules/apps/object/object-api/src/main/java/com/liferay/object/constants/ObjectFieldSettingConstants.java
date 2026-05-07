@@ -13,6 +13,14 @@ public class ObjectFieldSettingConstants {
 	public static final String NAME_ACCEPTED_FILE_EXTENSIONS =
 		"acceptedFileExtensions";
 
+	public static final String NAME_AUTOCOMPLETE_DOMAINS =
+		"autocompleteDomains";
+
+	public static final String NAME_AUTOCOMPLETE_ENABLED =
+		"autocompleteEnabled";
+
+	public static final String NAME_BLOCKED_DOMAINS = "blockedDomains";
+
 	public static final String NAME_COUNTRY = "country";
 
 	public static final String NAME_COUNTRY_SOURCE = "countrySource";

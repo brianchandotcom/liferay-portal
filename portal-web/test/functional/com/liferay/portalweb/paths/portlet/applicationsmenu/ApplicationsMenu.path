@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>VIEW_ALL_LINK</td>
-	<td>//ul[@role='menu' and contains(@class, 'sites-list')]//button[@role='menuitem' and contains(.,'View All')]</td>
+	<td>//ul[@role='menu' and contains(@class, 'sites-list')]//*[@role='menuitem' and contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>

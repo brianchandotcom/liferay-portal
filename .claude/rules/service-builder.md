@@ -8,6 +8,7 @@ paths:
   - "modules/**/*-api/src/main/resources/**/packageinfo"
   - "modules/**/*-service/service.xml"
   - "modules/**/*-service/src/main/java/**/service/impl/*Impl.java"
+  - "modules/**/*-test/src/testIntegration/java/**/service/persistence/test/*PersistenceTest.java"
 
 ---
 

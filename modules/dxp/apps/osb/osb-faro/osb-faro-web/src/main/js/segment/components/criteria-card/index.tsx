@@ -1,14 +1,53 @@
 import CriteriaView from './CriteriaView';
 import Label from 'shared/components/Label';
 import Panel from '@clayui/panel';
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useMemo} from 'react';
+import {createVocabularyProperty} from 'segment/segment-editor/dynamic/utils/utils';
+import {
+	CustomFunctionOperators,
+	NotOperators
+} from 'segment/segment-editor/dynamic/utils/constants';
+import {ReferencedObjectsContext} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
 import {useDownloadReportContext} from 'shared/components/download-report/DownloadReportContext';
 
+const VOCABULARY_OPERATORS = new Set([
+	CustomFunctionOperators.VocabulariesFilter,
+	NotOperators.NotVocabulariesFilter
+]);
+
+function extractVocabularies(
+	criteria: any
+): Array<{id: string; name: string}> {
+	if (!criteria) return [];
+
+	if (criteria.items) {
+		return criteria.items.flatMap(extractVocabularies);
+	}
+
+	if (
+		criteria.propertyName &&
+		VOCABULARY_OPERATORS.has(criteria.operatorName)
+	) {
+		const id = criteria.propertyName;
+		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
+		const nameItem = items?.find?.(
+			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
+		);
+		const name = (nameItem?.get?.('value') as string) ?? id;
+
+		return [{id, name}];
+	}
+
+	return [];
+}
+
 interface ICriteriaCardProps {
+	channelId?: string;
 	criteriaString: string;
+	groupId?: string;
 	includeAnonymousUsers: boolean;
 	segmentType: SegmentTypes;
 	sequential: boolean;
@@ -16,7 +55,9 @@ interface ICriteriaCardProps {
 }
 
 const CriteriaCard: React.FC<ICriteriaCardProps> = ({
+	channelId,
 	criteriaString,
+	groupId,
 	includeAnonymousUsers,
 	segmentType,
 	sequential,
@@ -27,11 +68,30 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 	const {clearReportContainers, setReportContainer} =
 		useDownloadReportContext();
 
+	const {addProperty} = useContext(ReferencedObjectsContext);
+
+	const criteria = useMemo(
+		() => translateQueryToCriteria(criteriaString),
+		[criteriaString]
+	);
+
 	useEffect(() => {
 		setReportContainer(ReportContainer.SegmentCriteriaCard);
 
 		return clearReportContainers;
 	}, []);
+
+	useEffect(() => {
+		if (!channelId || !groupId || !addProperty) return;
+
+		const vocabularies = extractVocabularies(criteria);
+
+		if (!vocabularies.length) return;
+
+		vocabularies.forEach(({id, name}) => {
+			addProperty(createVocabularyProperty({id, name}));
+		});
+	}, [channelId, groupId, criteria]);
 
 	return (
 		<Panel
@@ -59,7 +119,7 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 				)}
 
 				<CriteriaView
-					criteria={translateQueryToCriteria(criteriaString)}
+					criteria={criteria}
 					ref={_criteriaViewRef}
 					segmentType={segmentType}
 					sequential={sequential}

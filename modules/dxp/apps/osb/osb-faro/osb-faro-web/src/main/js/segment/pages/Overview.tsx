@@ -86,7 +86,9 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 			<div className='overview-column-side' ref={_sideColumnRef}>
 				<ReferencedObjectsProvider segment={segment}>
 					<CriteriaCard
+						channelId={channelId}
 						criteriaString={criteriaString ?? ''}
+						groupId={groupId}
 						includeAnonymousUsers={includeAnonymousUsers}
 						segmentType={SegmentTypes.Batch}
 						sequential={sequential}

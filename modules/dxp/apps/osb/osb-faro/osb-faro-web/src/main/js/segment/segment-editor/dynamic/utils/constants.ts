@@ -42,7 +42,8 @@ export enum CustomFunctionOperators {
 	EventsFilterByCount = 'events-filter-by-count',
 	InterestsFilter = 'interests-filter',
 	OrganizationsFilter = 'organizations-filter',
-	SessionsFilter = 'sessions-filter'
+	SessionsFilter = 'sessions-filter',
+	VocabulariesFilter = 'vocabularies-filter'
 }
 
 export enum DisplayOnlyOperators {
@@ -63,7 +64,8 @@ export enum NotOperators {
 	NotContains = 'not-contains',
 	NotEventsFilterByCount = 'not-events-filter-by-count',
 	NotOrganizationsFilter = 'not-organizations-filter',
-	NotSessionsFilter = 'not-sessions-filter'
+	NotSessionsFilter = 'not-sessions-filter',
+	NotVocabulariesFilter = 'not-vocabularies-filter'
 }
 
 export const GROUP = 'GROUP';
@@ -72,6 +74,7 @@ export enum RelationalOperators {
 	EQ = 'eq',
 	GE = 'ge',
 	GT = 'gt',
+	In = 'in',
 	LE = 'le',
 	LT = 'lt',
 	NE = 'ne'
@@ -104,7 +107,8 @@ export enum PropertyTypes {
 	SessionGeolocation = 'session-geolocation',
 	SessionNumber = 'session-number',
 	SessionText = 'session-text',
-	Text = 'text'
+	Text = 'text',
+	Vocabulary = 'vocabulary'
 }
 
 /**
@@ -120,7 +124,8 @@ export const CUSTOM_FUNCTION_OPERATOR_KEY_MAP = {
 	['events.filterByCount']: CustomFunctionOperators.EventsFilterByCount,
 	['interests.filter']: CustomFunctionOperators.InterestsFilter,
 	['organizations.filter']: CustomFunctionOperators.OrganizationsFilter,
-	['sessions.filter']: CustomFunctionOperators.SessionsFilter
+	['sessions.filter']: CustomFunctionOperators.SessionsFilter,
+	['vocabulary.filter']: CustomFunctionOperators.VocabulariesFilter
 };
 
 export const SUPPORTED_CONJUNCTION_OPTIONS = [
@@ -175,6 +180,18 @@ export const SUPPORTED_OPERATORS_MAP = {
 			key: RelationalOperators.EQ,
 			label: Liferay.Language.get('is-fragment'),
 			name: RelationalOperators.EQ
+		}
+	],
+	[PropertyTypes.Vocabulary]: [
+		{
+			key: CustomFunctionOperators.VocabulariesFilter,
+			label: Liferay.Language.get('has-fragment'),
+			name: CustomFunctionOperators.VocabulariesFilter
+		},
+		{
+			key: NotOperators.NotVocabulariesFilter,
+			label: Liferay.Language.get('has-not-fragment'),
+			name: NotOperators.NotVocabulariesFilter
 		}
 	],
 	[PropertyTypes.Date]: [
@@ -404,6 +421,10 @@ export const SUPPORTED_PROPERTY_TYPES_MAP = {
 		NotOperators.NotActivitiesFilterByCount
 	],
 	[PropertyTypes.Boolean]: [RelationalOperators.EQ],
+	[PropertyTypes.Vocabulary]: [
+		CustomFunctionOperators.VocabulariesFilter,
+		NotOperators.NotVocabulariesFilter
+	],
 	[PropertyTypes.Date]: [
 		RelationalOperators.EQ,
 		RelationalOperators.GE,
@@ -550,6 +571,69 @@ export const TIME_CONJUNCTION_OPTIONS = [
 
 export const ACTIVITY_KEY = 'activityKey';
 export const EVENT_KEY = 'eventId';
+
+export const ASSET_TYPE_APPLICATION_ID_MAP: Record<string, string> = {
+	'basic-document': 'Document',
+	'basic-web-content': 'WebContent',
+	blogs: 'Blog',
+	'documents-and-media': 'Document',
+	forms: 'Form',
+	'web-content': 'WebContent'
+};
+
+export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
+	comment: {
+		blogs: 'commentPosted'
+	},
+	download: {
+		'basic-document': 'documentDownloaded',
+		'documents-and-media': 'documentDownloaded'
+	},
+	impression: {
+		'basic-web-content': 'webContentImpressionMade',
+		'web-content': 'webContentImpressionMade'
+	},
+	submit: {
+		forms: 'formSubmitted'
+	},
+	view: {
+		'basic-document': 'documentPreviewed',
+		'basic-web-content': 'webContentViewed',
+		blogs: 'blogViewed',
+		'documents-and-media': 'documentPreviewed',
+		forms: 'formViewed',
+		'web-content': 'webContentViewed'
+	}
+};
+
+export const ASSET_TYPE_COMPATIBLE_EVENTS_MAP: Record<string, string[]> = {
+	any: ['all', 'view', 'download', 'impression', 'submit', 'comment'],
+	'basic-document': ['all', 'view', 'download'],
+	'basic-web-content': ['all', 'view', 'impression'],
+	blogs: ['all', 'view', 'comment'],
+	'documents-and-media': ['all', 'view', 'download'],
+	forms: ['all', 'view', 'submit'],
+	'knowledge-base': ['all'],
+	'web-content': ['all', 'view', 'impression']
+};
+
+export const APPLICATION_ID_ASSET_TYPE_MAP: Record<string, string> = {
+	Blog: 'blogs',
+	Document: 'documents-and-media',
+	Form: 'forms',
+	WebContent: 'web-content'
+};
+
+export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
+	blogViewed: 'view',
+	commentPosted: 'comment',
+	documentDownloaded: 'download',
+	documentPreviewed: 'view',
+	formSubmitted: 'submit',
+	formViewed: 'view',
+	webContentImpressionMade: 'impression',
+	webContentViewed: 'view'
+};
 
 export const TIME_WINDOW_OPTIONS = [
 	{

@@ -24,6 +24,7 @@ public class AssetSummaryVocabularyDisplay {
 	@JsonProperty("id")
 	private final String _id;
 
+	@JsonProperty("name")
 	private final String _name;
 
 }

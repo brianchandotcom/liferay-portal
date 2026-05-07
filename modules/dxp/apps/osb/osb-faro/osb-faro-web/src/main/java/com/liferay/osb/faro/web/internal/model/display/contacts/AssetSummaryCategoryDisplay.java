@@ -25,7 +25,10 @@ public class AssetSummaryCategoryDisplay {
 	@JsonProperty("id")
 	private final String _id;
 
+	@JsonProperty("name")
 	private final String _name;
+
+	@JsonProperty("vocabularyId")
 	private final String _vocabularyId;
 
 }

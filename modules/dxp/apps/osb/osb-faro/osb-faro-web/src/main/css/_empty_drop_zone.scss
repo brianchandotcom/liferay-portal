@@ -1,5 +1,4 @@
 .empty-drop-zone-target {
-	background-color: $secondaryHover;
 	border: 2px dashed $mainLighten52;
 	border-radius: 4px;
 	color: $secondary;
@@ -18,11 +17,12 @@
 	}
 
 	.empty-drop-zone-message {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
 		height: 136px;
 		justify-content: center;
+		padding-left: 45px;
 	}
 }

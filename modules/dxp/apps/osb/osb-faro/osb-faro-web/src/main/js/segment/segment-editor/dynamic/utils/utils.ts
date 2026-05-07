@@ -36,6 +36,21 @@ export const createInterestProperty = (name: string): Property =>
 		type: PropertyTypes.Interest
 	});
 
+export const createVocabularyProperty = ({
+	id,
+	name
+}: {
+	id: string;
+	name: string;
+}): Property =>
+	new Property({
+		entityName: Liferay.Language.get('vocabularies-and-categories'),
+		label: name,
+		name: id,
+		propertyKey: 'vocabulary',
+		type: PropertyTypes.Vocabulary
+	});
+
 /**
  * Creates a new group object with items.
  */
@@ -263,6 +278,23 @@ export const findPropertyByCriterion = (
 	) {
 		return SESSION_PROPERTIES.find(
 			(property: Property | undefined) => property?.name === propertyName
+		);
+	} else if (
+		[
+			CustomFunctionOperators.VocabulariesFilter,
+			NotOperators.NotVocabulariesFilter
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		)
+	) {
+		return (
+			(referencedPropertiesIMap.getIn(['vocabulary', propertyName]) as
+				| Property
+				| undefined) ??
+			createVocabularyProperty({
+				id: propertyName ?? '',
+				name: propertyName ?? ''
+			})
 		);
 	} else if (operatorName === CustomFunctionOperators.InterestsFilter) {
 		return createInterestProperty(propertyName ?? '');

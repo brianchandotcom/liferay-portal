@@ -159,50 +159,82 @@ public class TestrayProject {
 	}
 
 	public TestrayComponent getTestrayComponentByID(long componentID) {
-		for (TestrayComponent testrayComponent : getTestrayComponents()) {
-			if (Objects.equals(componentID, testrayComponent.getID())) {
+		synchronized (_testrayComponentsID) {
+			TestrayComponent testrayComponent = _testrayComponentsID.get(
+				componentID);
+
+			if (testrayComponent != null) {
 				return testrayComponent;
 			}
-		}
 
-		return null;
+			String filter = JenkinsResultsParserUtil.combine(
+				"id eq '", String.valueOf(componentID),
+				"' and r_projectToComponents_c_projectId eq '",
+				String.valueOf(getID()), "'");
+
+			try {
+				Set<JSONObject> entityJSONObjects =
+					_testrayServer.requestGraphQL(
+						"components", TestrayComponent.FIELD_NAMES, filter,
+						null, 1, 1);
+
+				for (JSONObject entityJSONObject : entityJSONObjects) {
+					testrayComponent = TestrayFactory.newTestrayComponent(
+						this, entityJSONObject);
+
+					_testrayComponentsID.put(
+						testrayComponent.getID(), testrayComponent);
+					_testrayComponentsName.put(
+						testrayComponent.getName(), testrayComponent);
+
+					return testrayComponent;
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			return null;
+		}
 	}
 
 	public TestrayComponent getTestrayComponentByName(String componentName) {
-		for (TestrayComponent testrayComponent : getTestrayComponents()) {
-			if (Objects.equals(componentName, testrayComponent.getName())) {
+		synchronized (_testrayComponentsID) {
+			TestrayComponent testrayComponent = _testrayComponentsName.get(
+				componentName);
+
+			if (testrayComponent != null) {
 				return testrayComponent;
 			}
-		}
 
-		return null;
-	}
+			String filter = JenkinsResultsParserUtil.combine(
+				"name eq '", componentName,
+				"' and r_projectToComponents_c_projectId eq '",
+				String.valueOf(getID()), "'");
 
-	public synchronized List<TestrayComponent> getTestrayComponents() {
-		if (_testrayComponents != null) {
-			return _testrayComponents;
-		}
+			try {
+				Set<JSONObject> entityJSONObjects =
+					_testrayServer.requestGraphQL(
+						"components", TestrayComponent.FIELD_NAMES, filter,
+						null, 1, 1);
 
-		_testrayComponents = new ArrayList<>();
+				for (JSONObject entityJSONObject : entityJSONObjects) {
+					testrayComponent = TestrayFactory.newTestrayComponent(
+						this, entityJSONObject);
 
-		String filter = JenkinsResultsParserUtil.combine(
-			"r_projectToComponents_c_projectId eq '", String.valueOf(getID()),
-			"'");
+					_testrayComponentsID.put(
+						testrayComponent.getID(), testrayComponent);
+					_testrayComponentsName.put(componentName, testrayComponent);
 
-		try {
-			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"components", TestrayComponent.FIELD_NAMES, filter, null);
-
-			for (JSONObject entityJSONObject : entityJSONObjects) {
-				_testrayComponents.add(
-					TestrayFactory.newTestrayComponent(this, entityJSONObject));
+					return testrayComponent;
+				}
 			}
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 
-		return _testrayComponents;
+			return null;
+		}
 	}
 
 	public TestrayProductVersion getTestrayProductVersionByID(
@@ -465,7 +497,10 @@ public class TestrayProject {
 	private final JSONObject _jsonObject;
 	private final Map<String, Long> _testrayCaseIDs = new HashMap<>();
 	private Map<String, TestrayCase> _testrayCases;
-	private List<TestrayComponent> _testrayComponents;
+	private final Map<Long, TestrayComponent> _testrayComponentsID =
+		new HashMap<>();
+	private final Map<String, TestrayComponent> _testrayComponentsName =
+		new HashMap<>();
 	private final TestrayServer _testrayServer;
 	private List<TestrayTeam> _testrayTeams;
 

@@ -5,11 +5,7 @@ import DataSourceQuery, {
 } from 'shared/queries/DataSourceQuery';
 import React, {useEffect, useState} from 'react';
 import {CREATE_DATE} from 'shared/util/pagination';
-import {
-	CredentialTypes,
-	DataSourceTypes,
-	OrderByDirections
-} from 'shared/util/constants';
+import {DataSourceTypes, OrderByDirections} from 'shared/util/constants';
 import {ReviewSyncedDataFragment} from '../ReviewSyncedDataFragment';
 import {updateSearchParams} from 'settings/components/base-page/utis';
 import {useHistory} from 'react-router-dom';
@@ -36,7 +32,6 @@ const ReviewSyncedDataStep = ({onNext, onPrev}: IReviewSyncedDataStepProps) => {
 		{
 			fetchPolicy: 'network-only',
 			variables: {
-				credentialsType: CredentialTypes.Token,
 				size: 1,
 				sort: {
 					column: CREATE_DATE,

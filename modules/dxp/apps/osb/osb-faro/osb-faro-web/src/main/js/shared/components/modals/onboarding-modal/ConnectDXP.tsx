@@ -22,11 +22,7 @@ import {ActionType, useChannelContext} from 'shared/context/channel';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {CREATE_DATE} from 'shared/util/pagination';
-import {
-	CredentialTypes,
-	DataSourceTypes,
-	OrderByDirections
-} from 'shared/util/constants';
+import {DataSourceTypes, OrderByDirections} from 'shared/util/constants';
 import {fetchDataSource} from 'shared/actions/data-sources';
 import {get, noop, upperFirst} from 'lodash';
 import {getDefaultChannel} from 'shared/components/channels-menu';
@@ -112,7 +108,6 @@ const ConnectDXP: React.FC<IConnectDXPWrapperProps & IConnectDXPProps> = ({
 				onDxpConnected(true);
 			},
 			variables: {
-				credentialsType: CredentialTypes.Token,
 				size: 1,
 				sort: {
 					column: CREATE_DATE,
@@ -286,7 +281,6 @@ const DxpSyncTable: FC<React.HTMLAttributes<HTMLElement>> = () => {
 		{
 			fetchPolicy: 'network-only',
 			variables: {
-				credentialsType: CredentialTypes.Token,
 				size: 1,
 				sort: {
 					column: CREATE_DATE,

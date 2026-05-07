@@ -10,14 +10,13 @@
  */
 
 module.exports = {
-	hash: 'e414c4a251fb9e33ae1ab13e8c035cb66439e46534621516d72ef3e3abed46a6',
+	hash: '9afbb0761949ff911a34e939b79dd3b16fb628acb945a33160a73e498e4a4b67',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
 		'@liferay/address-web': [],
 		'@liferay/ai-creator-openai-web': [],
 		'@liferay/ai-hub-cell-js-components-web': [],
-		'@liferay/ai-hub-cell-web': [],
 		'@liferay/ai-hub-web': [],
 		'@liferay/analytics-reports-js-components-web': [],
 		'@liferay/analytics-settings-web': [],
@@ -62,6 +61,7 @@ module.exports = {
 		'@liferay/configuration-admin-web': [],
 		'@liferay/content-dashboard-document-library-impl': [],
 		'@liferay/content-dashboard-web': [],
+		'@liferay/content-site-generator-web': [],
 		'@liferay/cookies-banner-web': [],
 		'@liferay/cookies-sample-web': [],
 		'@liferay/design-library-web': [],

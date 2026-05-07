@@ -14,18 +14,18 @@
 	"items": [
 		{
 			"active": true,
-			"className": "com.liferay.object.model.ObjectDefinition#CSGA",
-			"externalReferenceCode": "L_CSG_ARTIFACT",
+			"className": "com.liferay.object.model.ObjectDefinition#G3I1",
+			"externalReferenceCode": "L_AI_HUB_GENERATION_ITEM",
 			"label": {
-				"en_US": "Content Generator Artifact"
+				"en_US": "AI Hub Generation Item"
 			},
 			"modifiable": true,
-			"name": "ContentGeneratorArtifact",
+			"name": "AIHubGenerationItem",
 			"objectFields": [
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_ARTIFACT_FILE_NAME",
+					"externalReferenceCode": "FILE_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -39,47 +39,15 @@
 					"type": "String"
 				},
 				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_ARTIFACT_CLASS_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Class Name"
-					},
-					"name": "className",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_ARTIFACT_DELEGATE_NAME",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Delegate Name"
-					},
-					"name": "delegateName",
-					"required": true,
-					"state": false,
-					"system": true,
-					"type": "String"
-				},
-				{
 					"DBType": "Long",
 					"businessType": "Attachment",
-					"externalReferenceCode": "L_CSG_ARTIFACT_JSON",
+					"externalReferenceCode": "BATCH_FILE",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "JSON"
+						"en_US": "Batch File"
 					},
-					"name": "json",
+					"name": "batchFile",
 					"objectFieldSettings": [
 						{
 							"name": "acceptedFileExtensions",
@@ -102,7 +70,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "L_CSG_ARTIFACT_LOAD_ORDER",
+					"externalReferenceCode": "LOAD_ORDER",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
@@ -117,7 +85,7 @@
 				{
 					"DBType": "Integer",
 					"businessType": "Integer",
-					"externalReferenceCode": "L_CSG_ARTIFACT_ITEM_COUNT",
+					"externalReferenceCode": "ITEM_COUNT",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -132,7 +100,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_ARTIFACT_LANGUAGES",
+					"externalReferenceCode": "LANGUAGES",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -148,7 +116,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "L_CSG_ARTIFACT_PREVIEW_ITEM",
+					"externalReferenceCode": "PREVIEW_ITEM",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -162,90 +130,39 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
+			"objectFolderExternalReferenceCode": "L_AI_HUB_GENERATIONS_FOLDER",
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "Content Generator Artifacts"
+				"en_US": "AI Hub Generation Items"
 			},
 			"scope": "company",
 			"status": {
 				"code": 0
 			},
 			"system": true,
-			"titleObjectFieldName": "fileName"
+			"titleObjectFieldName": "externalReferenceCode"
 		},
 		{
 			"active": true,
-			"className": "com.liferay.object.model.ObjectDefinition#CSGN",
-			"externalReferenceCode": "L_CSG_ATTACHMENT",
+			"className": "com.liferay.object.model.ObjectDefinition#G3N1",
+			"externalReferenceCode": "L_AI_HUB_GENERATION",
 			"label": {
-				"en_US": "Content Generator Attachment"
+				"en_US": "AI Hub Generation"
 			},
 			"modifiable": true,
-			"name": "ContentGeneratorAttachment",
-			"objectFields": [
-				{
-					"DBType": "Long",
-					"businessType": "Attachment",
-					"externalReferenceCode": "L_CSG_ATTACHMENT_FILE_ENTRY",
-					"indexed": false,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "File Entry"
-					},
-					"name": "fileEntry",
-					"objectFieldSettings": [
-						{
-							"name": "acceptedFileExtensions",
-							"value": "*"
-						},
-						{
-							"name": "fileSource",
-							"value": "userComputerToDocumentsAndMedia"
-						},
-						{
-							"name": "maximumFileSize",
-							"value": "100"
-						}
-					],
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Long"
-				}
-			],
-			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
-			"panelCategoryKey": "control_panel.object",
-			"pluralLabel": {
-				"en_US": "Content Generator Attachments"
-			},
-			"scope": "company",
-			"status": {
-				"code": 0
-			},
-			"system": true
-		},
-		{
-			"active": true,
-			"className": "com.liferay.object.model.ObjectDefinition#CSGR",
-			"externalReferenceCode": "L_CSG_RUN",
-			"label": {
-				"en_US": "Content Generator Run"
-			},
-			"modifiable": true,
-			"name": "ContentGeneratorRun",
+			"name": "AIHubGeneration",
 			"objectActions": [
 				{
 					"active": true,
 					"errorMessage": {
-						"en_US": "Unable to commit run"
+						"en_US": "Unable to commit generation"
 					},
-					"externalReferenceCode": "L_CSG_RUN_COMMIT",
+					"externalReferenceCode": "COMMIT",
 					"label": {
 						"en_US": "Commit"
 					},
 					"name": "commit",
-					"objectActionExecutorKey": "commit-content-site-generator-run",
+					"objectActionExecutorKey": "commit-ai-hub-generation",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
 					},
@@ -256,14 +173,14 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_RUN_NAME",
+					"externalReferenceCode": "TITLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Name"
+						"en_US": "Title"
 					},
-					"name": "name",
+					"name": "title",
 					"required": true,
 					"state": false,
 					"system": true,
@@ -272,7 +189,7 @@
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "L_CSG_RUN_PROMPT",
+					"externalReferenceCode": "PROMPT",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -288,14 +205,14 @@
 					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "refining",
-					"externalReferenceCode": "L_CSG_RUN_STATUS_FIELD",
+					"externalReferenceCode": "GENERATION_STATUS",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Run Status"
+						"en_US": "Generation Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_CSG_RUN_STATUS",
-					"name": "runStatus",
+					"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GENERATION_STATUSES",
+					"name": "generationStatus",
 					"required": true,
 					"state": true,
 					"system": true,
@@ -304,7 +221,7 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_RUN_TARGET_LANGUAGES",
+					"externalReferenceCode": "TARGET_LANGUAGES",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
@@ -318,24 +235,30 @@
 					"type": "String"
 				},
 				{
-					"DBType": "Date",
-					"businessType": "Date",
-					"externalReferenceCode": "L_CSG_RUN_COMMITTED_AT",
+					"DBType": "DateTime",
+					"businessType": "DateTime",
+					"externalReferenceCode": "COMMIT_DATE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Committed At"
+						"en_US": "Commit Date"
 					},
-					"name": "committedAt",
+					"name": "commitDate",
+					"objectFieldSettings": [
+						{
+							"name": "timeStorage",
+							"value": "convertToUTC"
+						}
+					],
 					"required": false,
 					"state": false,
 					"system": true,
-					"type": "Date"
+					"type": "DateTime"
 				},
 				{
 					"DBType": "Clob",
 					"businessType": "LongText",
-					"externalReferenceCode": "L_CSG_RUN_FAILURE_REASON",
+					"externalReferenceCode": "FAILURE_REASON",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {
@@ -350,48 +273,32 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "L_CSG_RUN_RESULTING_SITE_ERC",
+					"externalReferenceCode": "GENERATED_SITE_ERC",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Resulting Site ERC"
+						"en_US": "Generated Site ERC"
 					},
-					"name": "resultingSiteERC",
+					"name": "generatedSiteERC",
 					"required": false,
 					"state": false,
 					"system": true,
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "L_CSG_FOLDER",
+			"objectFolderExternalReferenceCode": "L_AI_HUB_GENERATIONS_FOLDER",
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "L_CSG_RUN_TO_ARTIFACTS",
+					"externalReferenceCode": "L_AI_HUB_GENERATIONS_TO_L_AI_HUB_GENERATION_ITEMS",
 					"label": {
-						"en_US": "Artifacts"
+						"en_US": "Items"
 					},
-					"name": "artifacts",
-					"objectDefinitionExternalReferenceCode1": "L_CSG_RUN",
-					"objectDefinitionExternalReferenceCode2": "L_CSG_ARTIFACT",
-					"objectDefinitionName2": "ContentGeneratorArtifact",
-					"parameterObjectFieldId": 0,
-					"parameterObjectFieldName": "",
-					"reverse": false,
-					"system": true,
-					"type": "oneToMany"
-				},
-				{
-					"deletionType": "cascade",
-					"externalReferenceCode": "L_CSG_RUN_TO_ATTACHMENTS",
-					"label": {
-						"en_US": "Attachments"
-					},
-					"name": "attachments",
-					"objectDefinitionExternalReferenceCode1": "L_CSG_RUN",
-					"objectDefinitionExternalReferenceCode2": "L_CSG_ATTACHMENT",
-					"objectDefinitionName2": "ContentGeneratorAttachment",
+					"name": "items",
+					"objectDefinitionExternalReferenceCode1": "L_AI_HUB_GENERATION",
+					"objectDefinitionExternalReferenceCode2": "L_AI_HUB_GENERATION_ITEM",
+					"objectDefinitionName2": "AIHubGenerationItem",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
 					"reverse": false,
@@ -401,14 +308,14 @@
 			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "Content Generator Runs"
+				"en_US": "AI Hub Generations"
 			},
 			"scope": "company",
 			"status": {
 				"code": 0
 			},
 			"system": true,
-			"titleObjectFieldName": "name"
+			"titleObjectFieldName": "title"
 		}
 	]
 }

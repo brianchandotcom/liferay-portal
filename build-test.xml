@@ -13629,25 +13629,6 @@ analytics.cloud.domain.allowed=*</echo>
 		<apply-portal-ext-properties />
 	</target>
 
-	<target name="prepare-portal-properties">
-		<replace
-			file="portal-impl/src/portal.properties"
-		>
-			<replacefilter
-				token="#upgrade.processes="
-				value="upgrade.processes="
-			/>
-			<replacefilter
-				token="#com.liferay.portal.upgrade.UpgradeProcess_"
-				value="com.liferay.portal.upgrade.UpgradeProcess_"
-			/>
-			<replacefilter
-				token="verify.frequency=0"
-				value="verify.frequency=1"
-			/>
-		</replace>
-	</target>
-
 	<target name="prepare-portal-ssl">
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -15541,7 +15522,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		</antcall>
 
 		<antcall target="prepare-osgi-module-configurations" />
-		<antcall target="prepare-portal-properties" />
 		<antcall inheritAll="false" target="prepare-portal-ext-properties">
 			<param name="app.server.tomcat.version" value="${app.server.tomcat.version}" />
 		</antcall>
@@ -17090,8 +17070,6 @@ sendBlacklist=[]
 			</then>
 			<else>
 				<antcall target="prepare-osgi-module-configurations" />
-
-				<antcall target="prepare-portal-properties" />
 
 				<antcall target="prepare-portal-ext-properties">
 					<param name="functional.test.type" value="${functional.test.type}" />

@@ -11,10 +11,12 @@ import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -75,20 +77,26 @@ public class CreateAccountUserMVCActionCommand
 			return;
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			ticket.getExtraInfo());
+		User user = null;
 
-		JSONArray jsonArray = jsonObject.getJSONArray("accountRoleIds");
+		if (ticket.getType() == TicketConstants.TYPE_INVITE_COLLABORATOR) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					_portal.getCompanyId(actionRequest), "LPD-52006")) {
 
-		long[] accountRolesIds = new long[jsonArray.length()];
+				return;
+			}
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			accountRolesIds[i] = jsonArray.getLong(i);
+			_addUser(actionRequest, ticket.getExtraInfo());
 		}
+		else {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				ticket.getExtraInfo());
 
-		User user = _addUser(
-			actionRequest, ticket.getClassPK(), accountRolesIds,
-			jsonObject.getString("emailAddress"));
+			user = _addUser(
+				actionRequest, jsonObject.getString("emailAddress"));
+
+			_updateAccountRoles(jsonObject, ticket, user);
+		}
 
 		_ticketLocalService.deleteTicket(ticket);
 
@@ -106,9 +114,7 @@ public class CreateAccountUserMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	private User _addUser(
-			ActionRequest actionRequest, long accountEntryId,
-			long[] accountRoleIds, String emailAddress)
+	private User _addUser(ActionRequest actionRequest, String emailAddress)
 		throws Exception {
 
 		boolean autoPassword = true;
@@ -174,6 +180,23 @@ public class CreateAccountUserMVCActionCommand
 			_userService.updatePortrait(user.getUserId(), portraitBytes);
 		}
 
+		return user;
+	}
+
+	private void _updateAccountRoles(
+			JSONObject jsonObject, Ticket ticket, User user)
+		throws Exception {
+
+		JSONArray jsonArray = jsonObject.getJSONArray("accountRoleIds");
+
+		long[] accountRoleIds = new long[jsonArray.length()];
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			accountRoleIds[i] = jsonArray.getLong(i);
+		}
+
+		long accountEntryId = ticket.getClassPK();
+
 		_accountEntryUserRelLocalService.addAccountEntryUserRels(
 			accountEntryId, new long[] {user.getUserId()});
 
@@ -181,8 +204,6 @@ public class CreateAccountUserMVCActionCommand
 			_accountRoleLocalService.associateUser(
 				accountEntryId, accountRoleIds, user.getUserId());
 		}
-
-		return user;
 	}
 
 	@Reference

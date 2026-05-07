@@ -70,12 +70,12 @@ public class JWTTokenUtilTest {
 		}
 
 		_testGetUserId(
-			"Invalid JWT signature", _ISSUER,
-			token.substring(0, token.length() - 5) + "abcde");
-		_testGetUserId(
 			"Invalid JWT issuer", RandomTestUtil.randomString(),
 			JWTTokenUtil.generateToken(
 				TimeUnit.MINUTES.toMillis(1), _ISSUER, _USER_ID));
+		_testGetUserId(
+			"Invalid JWT signature", _ISSUER,
+			token.substring(0, token.length() - 5) + "abcde");
 		_testGetUserId(
 			"The JWT token is expired", _ISSUER,
 			JWTTokenUtil.generateToken(0, _ISSUER, _USER_ID));

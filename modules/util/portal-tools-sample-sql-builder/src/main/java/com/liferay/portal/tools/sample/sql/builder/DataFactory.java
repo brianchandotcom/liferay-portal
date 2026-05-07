@@ -1429,7 +1429,7 @@ public class DataFactory {
 					assetCategoryModelsMap.get(
 						getNextAssetClassNameId(groupId));
 
-				tuple = getAssetPublisherAssetCategoriesQueryValues(
+				tuple = getAssetPublisherAssetCategoriesTuple(
 					assetCategoryModels, startIndex);
 			}
 			else {
@@ -1439,7 +1439,7 @@ public class DataFactory {
 				List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 					getNextAssetClassNameId(groupId));
 
-				tuple = getAssetPublisherAssetTagsQueryValues(
+				tuple = getAssetPublisherAssetTagsTuple(
 					assetTagModels, startIndex);
 			}
 
@@ -6337,7 +6337,7 @@ public class DataFactory {
 				return newPortletPreferencesModel(plid, portletId);
 			}
 
-			tuple = getAssetPublisherAssetCategoriesQueryValues(
+			tuple = getAssetPublisherAssetCategoriesTuple(
 				assetCategoryModels, startIndex);
 		}
 		else {
@@ -6351,8 +6351,7 @@ public class DataFactory {
 				return newPortletPreferencesModel(plid, portletId);
 			}
 
-			tuple = getAssetPublisherAssetTagsQueryValues(
-				assetTagModels, startIndex);
+			tuple = getAssetPublisherAssetTagsTuple(assetTagModels, startIndex);
 		}
 
 		_assetPublisherQueryStartIndexes.put(
@@ -7264,7 +7263,7 @@ public class DataFactory {
 			leftPrimaryKey, ", ", rightPrimaryKey, ", 0, null);");
 	}
 
-	protected Tuple getAssetPublisherAssetCategoriesQueryValues(
+	protected Tuple getAssetPublisherAssetCategoriesTuple(
 		List<AssetCategoryModel> assetCategoryModels, int index) {
 
 		String[] categoryIds = new String[4];
@@ -7288,7 +7287,7 @@ public class DataFactory {
 				BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT);
 	}
 
-	protected Tuple getAssetPublisherAssetTagsQueryValues(
+	protected Tuple getAssetPublisherAssetTagsTuple(
 		List<AssetTagModel> assetTagModels, int index) {
 
 		String[] assetTagNames = new String[4];

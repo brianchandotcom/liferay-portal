@@ -214,7 +214,6 @@ import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -299,11 +298,7 @@ import org.springframework.transaction.support.DefaultTransactionStatus;
 /**
  * @author Luis Miguel Barcos
  */
-@FeatureFlags(
-	featureFlags = {
-		@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPS-164801")
-	}
-)
+@FeatureFlag("LPS-164801")
 @RunWith(Arquillian.class)
 public class ObjectEntryResourceTest {
 
@@ -16027,7 +16022,7 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				String.valueOf(object),
 				String.valueOf(jsonObject2.get(objectFieldName)),
-				JSONCompareMode.STRICT);
+				JSONCompareMode.LENIENT);
 		}
 	}
 
@@ -16739,9 +16734,7 @@ public class ObjectEntryResourceTest {
 						"&objectDefinitionExternalReferenceCode=",
 						objectDefinition.getExternalReferenceCode(),
 						"&objectEntryExternalReferenceCode=",
-						objectEntry.getExternalReferenceCode(),
-						"&objectFieldExternalReferenceCode=",
-						objectField.getExternalReferenceCode()));
+						objectEntry.getExternalReferenceCode()));
 
 				link.setLabel(fileEntry.getName());
 

@@ -91,6 +91,7 @@ export {default as manageMembersAction} from './main_view/props_transformer/acti
 export {triggerAssetBulkAction} from './main_view/props_transformer/actions/triggerAssetBulkAction';
 export {default as SimpleActionLinkRenderer} from './main_view/props_transformer/cell_renderers/SimpleActionLinkRenderer';
 export {default as addOnClickToCreationMenuItems} from './main_view/props_transformer/utils/addOnClickToCreationMenuItems';
+export {default as AllQuickFilters} from './main_view/quick_filters/AllQuickFilters';
 export {default as RecycleBinToolbar} from './main_view/recycle_bin/RecycleBinToolbar';
 export {default as AddSpaceMembers} from './main_view/spaces/AddSpaceMembers';
 export {default as NewSpace} from './main_view/spaces/NewSpace';

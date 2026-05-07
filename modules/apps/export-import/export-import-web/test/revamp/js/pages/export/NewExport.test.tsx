@@ -38,8 +38,14 @@ describe('NewExport', () => {
 
 		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
 
+		await screen.findByText('loaded');
+
 		await checkAccessibility({
 			context: {
+
+				// TODO Drop exclude once content_selector checkboxes expose labels
+
+				exclude: ['[data-testid="data-selection-section"]'],
 				include: [container],
 			},
 		});

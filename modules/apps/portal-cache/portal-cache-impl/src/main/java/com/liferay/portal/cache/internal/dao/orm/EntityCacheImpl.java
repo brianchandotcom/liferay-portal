@@ -360,13 +360,9 @@ public class EntityCacheImpl
 	private void _notify(
 		String className, BaseModel<?> baseModel, boolean updateByEntityCache) {
 
-		boolean enabled = SkipReplicationThreadLocal.isEnabled();
+		try (SafeCloseable safeCloseable =
+				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		if (!enabled) {
-			SkipReplicationThreadLocal.setEnabled(true);
-		}
-
-		try {
 			FinderCacheImpl finderCacheImpl = _getFinderCacheImpl();
 
 			if (finderCacheImpl == null) {
@@ -384,11 +380,6 @@ public class EntityCacheImpl
 			}
 			else {
 				finderCacheImpl.removeByEntityCache(className, baseModel);
-			}
-		}
-		finally {
-			if (!enabled) {
-				SkipReplicationThreadLocal.setEnabled(false);
 			}
 		}
 	}

@@ -212,7 +212,7 @@ test(
 
 		await contentsPage.editContent(blogTitle);
 
-		expect(page.getByPlaceholder('New Blog')).toHaveValue(blogTitle);
+		await expect(page.getByPlaceholder('New Blog')).toHaveValue(blogTitle);
 
 		// Delete content
 
@@ -1189,8 +1189,8 @@ test.describe('Schedule Publication', () => {
 
 			await contentsPage.viewShowDetails(title);
 
-			expect(page.getByText('Display Date')).toBeVisible();
-			expect(page.getByText(`10/31/${nextYear}`)).toBeVisible();
+			await expect(page.getByText('Display Date')).toBeVisible();
+			await expect(page.getByText(`10/31/${nextYear}`)).toBeVisible();
 
 			// Delete content
 

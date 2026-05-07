@@ -13,6 +13,7 @@ const createAccountProperty = ({
 }): Property =>
 	new Property({
 		entityName: Liferay.Language.get('account'),
+		id: name,
 		label,
 		name,
 		propertyKey: 'account',

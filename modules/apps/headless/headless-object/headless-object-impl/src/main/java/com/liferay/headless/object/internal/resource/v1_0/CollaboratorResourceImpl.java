@@ -216,8 +216,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
-			_sharingEntryService, _ticketLocalService, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -247,8 +248,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntryFolder.getGroupId(),
-			_sharingEntryService, _ticketLocalService, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -272,9 +274,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborator,
 			collaboratorId, contextCompany.getCompanyId(),
 			_collaboratorDTOConverter, _dtoConverterRegistry,
-			objectEntryFolder.getGroupId(), _sharingEntryService,
-			_ticketLocalService, type, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+			objectEntryFolder.getGroupId(), contextHttpServletRequest,
+			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
+			contextUser, _userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -304,9 +306,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntryFolder.getObjectEntryFolderId(), collaborator,
 			collaboratorId, contextCompany.getCompanyId(),
 			_collaboratorDTOConverter, _dtoConverterRegistry,
-			objectEntryFolder.getGroupId(), _sharingEntryService,
-			_ticketLocalService, type, contextUriInfo, contextUser,
-			_userGroupLocalService, _userLocalService);
+			objectEntryFolder.getGroupId(), contextHttpServletRequest,
+			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
+			contextUser, _userGroupLocalService, _userLocalService);
 	}
 
 	@Reference

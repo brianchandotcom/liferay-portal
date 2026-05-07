@@ -36,6 +36,8 @@ import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.ArrayList;
@@ -59,6 +61,7 @@ public class CollaboratorUtil {
 			long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, String type, UriInfo uriInfo,
 			User user, UserGroupLocalService userGroupLocalService,
@@ -80,8 +83,8 @@ public class CollaboratorUtil {
 					_addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
 						existingUser.getUserId(), companyId, groupId,
-						sharingEntryService, "User", userGroupLocalService,
-						userLocalService),
+						httpServletRequest, sharingEntryService, "User",
+						userGroupLocalService, userLocalService),
 					uriInfo, user);
 			}
 
@@ -93,8 +96,8 @@ public class CollaboratorUtil {
 				acceptLanguage, dtoConverter, dtoConverterRegistry,
 				_addOrUpdateSharingEntry(
 					classNameId, classPK, collaborator, ticket.getTicketId(),
-					companyId, groupId, sharingEntryService, type,
-					userGroupLocalService, userLocalService),
+					companyId, groupId, httpServletRequest, sharingEntryService,
+					type, userGroupLocalService, userLocalService),
 				uriInfo, user);
 		}
 
@@ -102,8 +105,8 @@ public class CollaboratorUtil {
 			acceptLanguage, dtoConverter, dtoConverterRegistry,
 			_addOrUpdateSharingEntry(
 				classNameId, classPK, collaborator, collaboratorId, companyId,
-				groupId, sharingEntryService, type, userGroupLocalService,
-				userLocalService),
+				groupId, httpServletRequest, sharingEntryService, type,
+				userGroupLocalService, userLocalService),
 			uriInfo, user);
 	}
 
@@ -112,6 +115,7 @@ public class CollaboratorUtil {
 			long classPK, Collaborator[] collaborators, long companyId,
 			DTOConverter<SharingEntry, Collaborator> dtoConverter,
 			DTOConverterRegistry dtoConverterRegistry, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService,
 			TicketLocalService ticketLocalService, UriInfo uriInfo, User user,
 			UserGroupLocalService userGroupLocalService,
@@ -148,8 +152,9 @@ public class CollaboratorUtil {
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
 						ticket.getTicketId(), companyId, groupId,
-						sharingEntryService, collaborator.getType(),
-						userGroupLocalService, userLocalService);
+						httpServletRequest, sharingEntryService,
+						collaborator.getType(), userGroupLocalService,
+						userLocalService);
 
 					ticketIds.add(ticket.getTicketId());
 				}
@@ -157,14 +162,14 @@ public class CollaboratorUtil {
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
 						existingUser.getUserId(), companyId, groupId,
-						sharingEntryService, "User", userGroupLocalService,
-						userLocalService);
+						httpServletRequest, sharingEntryService, "User",
+						userGroupLocalService, userLocalService);
 				}
 			}
 			else {
 				sharingEntry = _addOrUpdateSharingEntry(
 					classNameId, classPK, collaborator, collaborator.getId(),
-					companyId, groupId, sharingEntryService,
+					companyId, groupId, httpServletRequest, sharingEntryService,
 					collaborator.getType(), userGroupLocalService,
 					userLocalService);
 			}
@@ -336,6 +341,7 @@ public class CollaboratorUtil {
 	private static SharingEntry _addOrUpdateSharingEntry(
 			long classNameId, long classPK, Collaborator collaborator,
 			long collaboratorId, long companyId, long groupId,
+			HttpServletRequest httpServletRequest,
 			SharingEntryService sharingEntryService, String type,
 			UserGroupLocalService userGroupLocalService,
 			UserLocalService userLocalService)
@@ -368,13 +374,17 @@ public class CollaboratorUtil {
 			shareable = collaborator.getShare();
 		}
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setRequest(httpServletRequest);
+
 		return sharingEntryService.addOrUpdateSharingEntry(
 			null, toTicketId, toUserGroupId, toUserId, classNameId, classPK,
 			groupId, shareable,
 			TransformUtil.transformToList(
 				collaborator.getActionIds(),
 				SharingEntryAction::parseFromActionId),
-			collaborator.getDateExpired(), new ServiceContext());
+			collaborator.getDateExpired(), serviceContext);
 	}
 
 	private static Ticket _addOrUpdateTicket(

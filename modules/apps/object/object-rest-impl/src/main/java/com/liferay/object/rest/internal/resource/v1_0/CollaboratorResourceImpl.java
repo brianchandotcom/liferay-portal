@@ -10,12 +10,17 @@ import com.liferay.headless.object.util.v1_0.CollaboratorUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.events.ServicePreAction;
+import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -23,6 +28,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryService;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.ws.rs.core.Context;
 
@@ -226,6 +233,8 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
+		_initThemeDisplay(objectEntry);
+
 		return CollaboratorUtil.addOrUpdateCollaborators(
 			contextAcceptLanguage, objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
@@ -233,8 +242,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntry.getObjectEntryId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntry.getGroupId(),
-			_sharingEntryService, _ticketLocalService, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -256,6 +266,8 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 				contextCompany.getCompanyId(), _groupLocalService, scopeKey),
 			_objectDefinition.getObjectDefinitionId());
 
+		_initThemeDisplay(objectEntry);
+
 		return CollaboratorUtil.addOrUpdateCollaborators(
 			contextAcceptLanguage, objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
@@ -263,8 +275,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntry.getObjectEntryId(), collaborators,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntry.getGroupId(),
-			_sharingEntryService, _ticketLocalService, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -282,6 +295,8 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			objectEntryId);
 
+		_initThemeDisplay(objectEntry);
+
 		return CollaboratorUtil.addOrUpdateCollaborator(
 			contextAcceptLanguage, objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
@@ -289,8 +304,9 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntry.getObjectEntryId(), collaborator, collaboratorId,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntry.getGroupId(),
-			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, type, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	@Override
@@ -312,6 +328,8 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 				contextCompany.getCompanyId(), _groupLocalService, scopeKey),
 			_objectDefinition.getObjectDefinitionId());
 
+		_initThemeDisplay(objectEntry);
+
 		return CollaboratorUtil.addOrUpdateCollaborator(
 			contextAcceptLanguage, objectEntry.getModelClassName(),
 			_classNameLocalService.getClassNameId(
@@ -319,12 +337,44 @@ public class CollaboratorResourceImpl extends BaseCollaboratorResourceImpl {
 			objectEntry.getObjectEntryId(), collaborator, collaboratorId,
 			contextCompany.getCompanyId(), _collaboratorDTOConverter,
 			_dtoConverterRegistry, objectEntry.getGroupId(),
-			_sharingEntryService, _ticketLocalService, type, contextUriInfo,
-			contextUser, _userGroupLocalService, _userLocalService);
+			contextHttpServletRequest, _sharingEntryService,
+			_ticketLocalService, type, contextUriInfo, contextUser,
+			_userGroupLocalService, _userLocalService);
 	}
 
 	public void setObjectDefinition(ObjectDefinition objectDefinition) {
 		_objectDefinition = objectDefinition;
+	}
+
+	private void _initThemeDisplay(ObjectEntry objectEntry) throws Exception {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)contextHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			return;
+		}
+
+		ServicePreAction servicePreAction = new ServicePreAction();
+
+		HttpServletResponse httpServletResponse =
+			new DummyHttpServletResponse();
+
+		servicePreAction.servicePre(
+			contextHttpServletRequest, httpServletResponse, false);
+
+		ThemeServicePreAction themeServicePreAction =
+			new ThemeServicePreAction();
+
+		themeServicePreAction.run(
+			contextHttpServletRequest, httpServletResponse);
+
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setCompany(contextCompany);
+		themeDisplay.setScopeGroupId(objectEntry.getGroupId());
+		themeDisplay.setUser(contextUser);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

@@ -189,7 +189,7 @@ async function testCanViewVersion(
 	title: string,
 	view: 'Table' | 'Gallery'
 ) {
-	expect(page.getByRole('heading', {name: title})).toBeVisible();
+	await expect(page.getByRole('heading', {name: title})).toBeVisible();
 
 	if (view === 'Table') {
 		assetsPage.execItemAction({action: 'View History', filter: title});

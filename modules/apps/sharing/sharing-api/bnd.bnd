@@ -8,6 +8,7 @@ Export-Package:\
 	com.liferay.sharing.exception,\
 	com.liferay.sharing.filter,\
 	com.liferay.sharing.interpreter,\
+	com.liferay.sharing.mail,\
 	com.liferay.sharing.model,\
 	com.liferay.sharing.renderer,\
 	com.liferay.sharing.security.permission,\

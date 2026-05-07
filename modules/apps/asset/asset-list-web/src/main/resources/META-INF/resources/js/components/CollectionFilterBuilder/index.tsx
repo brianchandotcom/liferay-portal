@@ -6,49 +6,33 @@
 import {addParams, fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import renderValueInput from './ValueInput';
-import {
-	ConditionBuilder,
-	getRandomID,
-} from './condition_builder/ConditionBuilder';
-import {
-	getCollectionOperators,
-	getCollectionQuantifierOptions,
-} from './operators';
+import {ConditionBuilder, getRandomID} from './ConditionBuilder';
 
 import type {
-	ConditionType,
 	FilterCondition,
-	GenericProperty,
-	PropertyGroup,
-} from './condition_builder/types';
+	FilterProperty,
+	FilterPropertyGroup,
+} from './types';
 
 interface CollectionFilterBuilderProps {
 	categorySelectorURL?: string;
 	groupIds?: string[];
-	initialConditionType?: ConditionType;
 	initialConditions?: Array<Omit<FilterCondition, 'id'>>;
 	namespace: string;
-	onChange?: (state: {
-		conditionType: ConditionType;
-		conditions: FilterCondition[];
-	}) => void;
-	properties: GenericProperty[];
+	onChange?: (state: FilterCondition[]) => void;
+	properties: FilterProperty[];
 	propertiesURL?: string;
 	tagSelectorURL?: string;
 	vocabularyIds?: string[];
 }
 
 /**
- * Collections-specific wrapper around the generic ConditionBuilder.
- *
  * Serializes the current value into a hidden input so the typeSettings handler
  * picks it up on form submit.
  */
 export default function CollectionFilterBuilder({
 	categorySelectorURL,
 	groupIds,
-	initialConditionType = 'all',
 	initialConditions,
 	namespace,
 	onChange,
@@ -66,14 +50,11 @@ export default function CollectionFilterBuilder({
 			: [{id: getRandomID()}]
 	);
 
-	const [conditionType, setConditionType] =
-		useState<ConditionType>(initialConditionType);
-
-	const [properties, setProperties] = useState<GenericProperty[]>(
+	const [properties, setProperties] = useState<FilterProperty[]>(
 		initialProperties || []
 	);
 
-	const propertiesWithAssetFields = useMemo<PropertyGroup[]>(
+	const propertiesWithAssetFields = useMemo<FilterPropertyGroup[]>(
 		() => [
 			{
 				items: [
@@ -101,24 +82,6 @@ export default function CollectionFilterBuilder({
 			},
 		],
 		[properties]
-	);
-
-	const renderCustomValueInput = useMemo(
-		() =>
-			renderValueInput({
-				categorySelectorURL,
-				groupIds,
-				namespace,
-				tagSelectorURL,
-				vocabularyIds,
-			}),
-		[
-			categorySelectorURL,
-			groupIds,
-			namespace,
-			tagSelectorURL,
-			vocabularyIds,
-		]
 	);
 
 	const filterValuesAndOmitID = (conditions: FilterCondition[]) =>
@@ -207,27 +170,23 @@ export default function CollectionFilterBuilder({
 		};
 	}, [namespace, propertiesURL]);
 
-	const handleChange = (
-		newConditions: FilterCondition[],
-		newType: ConditionType
-	) => {
+	const handleChange = (newConditions: FilterCondition[]) => {
 		setConditions(newConditions);
-		setConditionType(newType);
 
-		onChange?.({conditionType: newType, conditions: newConditions});
+		onChange?.(newConditions);
 	};
 
 	return (
 		<>
 			<ConditionBuilder
-				conditionType={conditionType}
+				categorySelectorURL={categorySelectorURL}
 				conditions={conditions}
-				getOperators={getCollectionOperators}
-				getQuantifierOptions={getCollectionQuantifierOptions}
+				groupIds={groupIds}
+				namespace={namespace}
 				onChange={handleChange}
 				properties={propertiesWithAssetFields}
-				renderValueInput={renderCustomValueInput}
-				showConjunctionPicker={false}
+				tagSelectorURL={tagSelectorURL}
+				vocabularyIds={vocabularyIds}
 			/>
 
 			<input

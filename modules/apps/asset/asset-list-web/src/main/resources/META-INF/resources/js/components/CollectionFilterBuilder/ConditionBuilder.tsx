@@ -10,15 +10,16 @@ import {RowBuilder} from '@liferay/layout-js-components-web';
 import React, {useCallback, useMemo} from 'react';
 
 import './ConditionBuilder.scss';
+import ValueInput from './ValueInput';
+import {
+	getCollectionOperators,
+	getCollectionQuantifierOptions,
+} from './operators';
 
 import type {
-	ConditionBuilderProps,
-	ConditionType,
 	FilterCondition,
-	GenericOperator,
-	GenericProperty,
-	PropertyGroup,
-	ValueInputRenderer,
+	FilterProperty,
+	FilterPropertyGroup,
 } from './types';
 
 export function getRandomID() {
@@ -40,32 +41,42 @@ export const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	)
 );
 
-type ConditionRowProps = {
+interface ConditionBuilderProps {
+	categorySelectorURL?: string;
+	conditions: FilterCondition[];
+	groupIds?: string[];
+	namespace: string;
+	onChange: (conditions: FilterCondition[]) => void;
+	properties: Array<FilterProperty | FilterPropertyGroup>;
+	tagSelectorURL?: string;
+	vocabularyIds?: string[];
+}
+
+type ConditionRowProps = Omit<
+	ConditionBuilderProps,
+	'conditions' | 'onChange'
+> & {
 	condition: FilterCondition;
-	getOperators: (property: GenericProperty) => GenericOperator[];
-	getQuantifierOptions?: (
-		property: GenericProperty
-	) => GenericOperator[] | null;
 	index: number;
 	onChange: (condition: FilterCondition) => void;
-	properties: Array<GenericProperty | PropertyGroup>;
-	renderValueInput: ValueInputRenderer;
 };
 
 function isPropertyGroup(
-	input: GenericProperty | PropertyGroup
-): input is PropertyGroup {
+	input: FilterProperty | FilterPropertyGroup
+): input is FilterPropertyGroup {
 	return 'items' in input;
 }
 
 function ConditionRow({
+	categorySelectorURL,
 	condition,
-	getOperators,
-	getQuantifierOptions,
+	groupIds,
 	index,
+	namespace,
 	onChange,
 	properties,
-	renderValueInput,
+	tagSelectorURL,
+	vocabularyIds,
 }: ConditionRowProps) {
 	const flatProperties = useMemo(
 		() =>
@@ -82,12 +93,13 @@ function ConditionRow({
 			p.classTypeId === condition.classTypeId
 	);
 
-	const operators = selectedProperty ? getOperators(selectedProperty) : [];
+	const operators = selectedProperty
+		? getCollectionOperators(selectedProperty)
+		: [];
 
-	const quantifierOptions =
-		selectedProperty && getQuantifierOptions
-			? getQuantifierOptions(selectedProperty)
-			: null;
+	const quantifierOptions = selectedProperty
+		? getCollectionQuantifierOptions(selectedProperty)
+		: null;
 
 	const handleValueChange = useCallback(
 		(value: string | Array<string | object>) => {
@@ -97,7 +109,7 @@ function ConditionRow({
 	);
 
 	const propertyKey = (
-		p: Pick<GenericProperty, 'classNameId' | 'classTypeId' | 'name'>
+		p: Pick<FilterProperty, 'classNameId' | 'classTypeId' | 'name'>
 	) => `${p.classNameId ?? ''}|${p.classTypeId ?? ''}|${p.name}`;
 
 	return (
@@ -113,7 +125,7 @@ function ConditionRow({
 						);
 
 						const operators = newProperty
-							? getOperators(newProperty)
+							? getCollectionOperators(newProperty)
 							: null;
 
 						onChange({
@@ -207,73 +219,43 @@ function ConditionRow({
 			)}
 
 			<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
-				{selectedProperty && condition.operatorName
-					? renderValueInput(
-							index,
-							selectedProperty,
-							condition.operatorName,
-							condition.value,
-							handleValueChange
-						)
-					: null}
+				{selectedProperty && condition.operatorName ? (
+					<ValueInput
+						categorySelectorURL={categorySelectorURL}
+						groupIds={groupIds}
+						index={index}
+						namespace={namespace}
+						onChange={handleValueChange}
+						operator={condition.operatorName}
+						property={selectedProperty}
+						tagSelectorURL={tagSelectorURL}
+						value={condition.value}
+						vocabularyIds={vocabularyIds}
+					/>
+				) : null}
 			</div>
 		</>
 	);
 }
 
 export function ConditionBuilder({
-	conditionType,
+	categorySelectorURL,
 	conditions,
-	getOperators,
-	getQuantifierOptions,
+	groupIds,
+	namespace,
 	onChange,
 	properties,
-	renderValueInput,
-	showConjunctionPicker = true,
+	tagSelectorURL,
+	vocabularyIds,
 }: ConditionBuilderProps) {
 	return (
 		<div className="condition-builder">
-			{showConjunctionPicker && (
-				<div className="align-items-center c-gapx-2 c-mb-3 condition-builder__conjunction d-flex">
-					<span>{Liferay.Language.get('if')}</span>
-
-					<div className="condition-builder__select">
-						<Picker
-							aria-label={Liferay.Language.get('conjunction')}
-							as={TriggerLabel}
-							items={[
-								{
-									label: Liferay.Language.get('all'),
-									value: 'all',
-								},
-								{
-									label: Liferay.Language.get('any'),
-									value: 'any',
-								},
-							]}
-							onSelectionChange={(key) =>
-								onChange(conditions, key as ConditionType)
-							}
-							selectedKey={conditionType}
-						>
-							{(item) => (
-								<Option key={item.value}>{item.label}</Option>
-							)}
-						</Picker>
-					</div>
-
-					<span>
-						{Liferay.Language.get(
-							'of-the-following-conditions-are-met'
-						)}
-					</span>
-				</div>
-			)}
-
 			<RowBuilder<FilterCondition>
-				canDelete={(condition, _index, items) =>
-					items.length > 1 || !!condition.propertyName
-				}
+				canDelete={(
+					condition: FilterCondition,
+					_index: number,
+					items: FilterCondition[]
+				) => items.length > 1 || !!condition.propertyName}
 				createItem={() => ({id: getRandomID()})}
 				itemClassName="condition-builder__row"
 				items={conditions}
@@ -285,20 +267,28 @@ export function ConditionBuilder({
 						Liferay.Language.get('condition-deleted'),
 					list: Liferay.Language.get('conditions'),
 				}}
-				renderItem={({index, item, onChange: onItemChange}) => (
+				renderItem={({
+					index,
+					item,
+					onChange: onItemChange,
+				}: {
+					index: number;
+					item: FilterCondition;
+					onChange: (condition: FilterCondition) => void;
+				}) => (
 					<ConditionRow
+						categorySelectorURL={categorySelectorURL}
 						condition={item}
-						getOperators={getOperators}
-						getQuantifierOptions={getQuantifierOptions}
+						groupIds={groupIds}
 						index={index}
+						namespace={namespace}
 						onChange={onItemChange}
 						properties={properties}
-						renderValueInput={renderValueInput}
+						tagSelectorURL={tagSelectorURL}
+						vocabularyIds={vocabularyIds}
 					/>
 				)}
-				setItems={(nextConditions) =>
-					onChange(nextConditions, conditionType)
-				}
+				setItems={onChange}
 			/>
 		</div>
 	);

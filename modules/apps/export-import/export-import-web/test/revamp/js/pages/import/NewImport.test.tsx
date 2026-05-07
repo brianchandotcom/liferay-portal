@@ -12,7 +12,7 @@ import React from 'react';
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/revamp/js/services/importPreviewService',
+	'../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview',
 	() => ({
 		postImportPreview: jest.fn(() =>
 			Promise.resolve({

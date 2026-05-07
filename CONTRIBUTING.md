@@ -1,22 +1,23 @@
 # How to Contribute
 
-Liferay Portal is developed by its community consisting of users, enthusiasts,
-employees, customers, partners, and others. We strongly encourage you to
-contribute to Liferay's open source projects by implementing new features,
-enhancing existing features, and fixing bugs. We also welcome your participation
-in our forums, chat, writing documentation, and translating existing
-documentation.
+Liferay Portal is a leading open-source platform designed to help organizations
+build seamless digital experiences for their customers, partners, and employees.
+Our software is shaped by a global community of users, enthusiasts, customers,
+and partners working alongside Liferay engineers to solve complex challenges.
 
-Liferay Portal is known for its innovative top quality features. To maintain
-this reputation, all code changes are reviewed by a core set of project
-maintainers. We encourage you to join our
-[Slack Chat](https://communitychat.liferay.com/) and introduce yourself to the
-core maintainer(s) and engage them as you contribute to the areas they maintain.
+We invite you to help us innovate. Whether you are reporting a bug, identifying
+a security vulnerability, or proposing a bold new product idea, your feedback
+via our [Discussion Forums](https://discuss.liferay.com) is the engine of our
+growth.
 
-To get a deeper understanding of Liferay Portal in general, make sure to read
-[Liferay Portal's official documentation](https://portal.liferay.dev/docs). This
-documentation contains extensive explanations, examples, and reference material
-for you to consult time and time again.
+For those looking to contribute directly through code—whether by implementing
+new features or refining existing ones—we welcome your pull requests. To ensure
+Liferay remains a benchmark for quality and reliability, all contributions are
+reviewed by our core maintainers.
+
+To jumpstart your journey, please explore the [Liferay Official Documentation](https://learn.liferay.com).
+It offers the comprehensive guides and reference materials you need to build
+and contribute effectively.
 
 For more information, visit the links listed in the
 [Additional Resources](#additional-resources) section below.
@@ -27,11 +28,11 @@ The first step to contributing to Liferay Portal is to clone the `liferay-portal
 repo from Github and build the platform from source code.
 
 Please follow the instruction provided on
-[Building Liferay Portal from source code](https://portal.liferay.dev/participate/fix-a-bug/building-liferay-source)
-page!
+[Building Liferay Source](https://learn.liferay.com/w/reference/contributing-to-liferay-development/building-liferay-source)
+page.!
 
 To better understand the code structure please also read
-[How the source is organized](https://portal.liferay.dev/participate/fix-a-bug/how-the-source-is-organized)
+[Organizing the Source](https://learn.liferay.com/w/reference/contributing-to-liferay-development/organizing-the-source)
 page.
 
 ## Tooling
@@ -39,18 +40,14 @@ page.
 Creating customizations and debugging code can be made easier using tooling.
 Consider installing one or more of the following tools to aid in development:
 
-* [Blade CLI](https://portal.liferay.dev/docs/latest/reference/-/knowledge_base/r/installing-blade-cli)
-* [Liferay Dev Studio](https://portal.liferay.dev/docs/latest/reference/-/knowledge_base/r/installing-liferay-dev-studio)
-* [IntelliJ Plugin](https://portal.liferay.dev/docs/latest/reference/-/knowledge_base/r/installing-the-liferay-intellij-plugin)
-
-The [Configure an IDE for use with the Liferay Source](https://portal.liferay.dev/participate/fix-a-bug/ide-support)
-page, explains how to set up the project in your favorite IDE.
+* [Liferay Workspace](https://learn.liferay.com/w/dxp/development/tooling/liferay-workspace)
+* [Blade CLI](https://learn.liferay.com/w/dxp/development/tooling/blade-cli)
+* [IDEs and Plugins](https://learn.liferay.com/w/dxp/development/tooling#ides-and-plugins)
 
 ## Additional Resources
 
-* [Liferay Community Site](https://liferay.dev)
-* [Liferay Community Slack Chat](https://liferay-community.slack.com/)
-* [Liferay Community Slack Chat Self Invite](https://liferay.dev/chat)
+* [Liferay Community site](https://liferay.dev)
+* [Liferay discussion forums](https://discuss.liferay.com)
 * [Contributor License Agreement](https://www.liferay.com/legal/contributors-agreement)
 * [General GitHub documentation](http://help.github.com/)
 * [GitHub pull request documentation](http://help.github.com/send-pull-requests/)

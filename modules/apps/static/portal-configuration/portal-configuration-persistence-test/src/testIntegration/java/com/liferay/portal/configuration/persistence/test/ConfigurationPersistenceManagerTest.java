@@ -342,12 +342,12 @@ public class ConfigurationPersistenceManagerTest {
 	}
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
-	private static DataSource _dataSource;
+	private DataSource _dataSource;
 
 	@Inject
-	private static PersistenceManager _persistenceManager;
+	private PersistenceManager _persistenceManager;
 
 }

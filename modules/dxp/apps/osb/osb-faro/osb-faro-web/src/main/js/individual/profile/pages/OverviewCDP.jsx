@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {isNil} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useDataSource} from 'shared/hooks/useDataSource';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const OverviewCDPEmptyState = ({
@@ -19,6 +20,7 @@ const OverviewCDPEmptyState = ({
 	dataSourceData,
 	dataSourceLoading,
 	groupId,
+	hasConnectedDataSources,
 	pageDisplay = true
 }) => {
 	if (dataSourceLoading) {
@@ -71,7 +73,7 @@ const OverviewCDPEmptyState = ({
 						primary
 						title={Liferay.Language.get('no-site-data-synced')}
 					>
-						{authorized && (
+						{authorized && !hasConnectedDataSources && (
 							<ClayLink
 								button
 								className='button-root mt-1'
@@ -100,6 +102,8 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	const authorized = currentUser.isAdmin();
 
+	const dataSourceStates = useDataSource();
+
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
 		dataSourceFn: API.dataSource.search,
 		variables: {
@@ -125,6 +129,7 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 					dataSourceData={dataSourceData}
 					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
+					hasConnectedDataSources={!dataSourceStates.empty}
 					pageDisplay={false}
 				/>
 			</ContextualInformation>
@@ -142,6 +147,7 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 					dataSourceData={dataSourceData}
 					dataSourceLoading={dataSourceLoading}
 					groupId={groupId}
+					hasConnectedDataSources={!dataSourceStates.empty}
 				/>
 			</ProfileCardCDP>
 		</div>

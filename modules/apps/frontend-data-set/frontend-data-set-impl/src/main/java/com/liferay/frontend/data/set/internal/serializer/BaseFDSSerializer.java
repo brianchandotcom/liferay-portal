@@ -83,13 +83,20 @@ public abstract class BaseFDSSerializer {
 				TransformUtil.transform(
 					sharingEntries, SharingEntry::getClassPK));
 
-			String sharingEntriesClause = "";
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("(fdsName eq '");
+			sb.append(fdsName);
+			sb.append("' and (creatorId eq ");
+			sb.append(userId);
 
 			if (!sharingEntriesClassPKs.isEmpty()) {
-				sharingEntriesClause = StringBundler.concat(
-					" or id in ('",
-					StringUtil.merge(sharingEntriesClassPKs, "','"), "')");
+				sb.append(" or id in ('");
+				sb.append(StringUtil.merge(sharingEntriesClassPKs, "','"));
+				sb.append("')");
 			}
+
+			sb.append("))");
 
 			ObjectEntryManager objectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
@@ -102,10 +109,7 @@ public abstract class BaseFDSSerializer {
 				new DefaultDTOConverterContext(
 					false, null, null, null, null,
 					LocaleUtil.getMostRelevantLocale(), null, null),
-				StringBundler.concat(
-					"(fdsName eq '", fdsName, "' and (creatorId eq ", userId,
-					sharingEntriesClause, "))"),
-				null, null, null);
+				sb.toString(), null, null, null);
 
 			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
 			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();

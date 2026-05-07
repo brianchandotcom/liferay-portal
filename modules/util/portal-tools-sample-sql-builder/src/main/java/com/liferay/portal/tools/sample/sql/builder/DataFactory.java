@@ -9796,10 +9796,6 @@ public class DataFactory {
 			).build();
 	private static final Map<String, String> _utilityPagePortletIds =
 		HashMapBuilder.put(
-			"LFR-COOKIE-POLICY-layout-draft",
-			"com_liferay_object_web_internal_object_definitions_portlet_" +
-				"ObjectDefinitionsPortlet"
-		).put(
 			"LFR-CREATE-ACCOUNT-layout-draft",
 			"com_liferay_login_web_portlet_CreateAccountPortlet"
 		).put(

@@ -78,7 +78,7 @@ export function SelectCategory({
 		? [
 				{
 					items: filteredCategories.map((category) => ({
-						label: category.label,
+						title: category.label,
 						type: 'radio',
 						value: category.id,
 					})),

@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 /**
@@ -22,6 +23,18 @@ public class ThumbnailUtil {
 		thumbnailURLReference.setUrl(
 			() ->
 				"http://invalid.example.test/" + RandomTestUtil.randomString());
+
+		return thumbnailURLReference;
+	}
+
+	public static ThumbnailURLReference getThumbnailURLReference(
+		FileEntry fileEntry) {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		thumbnailURLReference.setExternalReferenceCode(
+			fileEntry::getExternalReferenceCode);
 
 		return thumbnailURLReference;
 	}

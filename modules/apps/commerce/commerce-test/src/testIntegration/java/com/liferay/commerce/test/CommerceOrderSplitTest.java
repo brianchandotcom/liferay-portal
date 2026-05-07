@@ -21,6 +21,8 @@ import com.liferay.commerce.discount.test.util.CommerceDiscountTestUtil;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.test.util.TestCommercePaymentMethod;
@@ -42,6 +44,9 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentLocalService;
+import com.liferay.commerce.shipment.test.util.CommerceShipmentTestUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
@@ -60,6 +65,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -83,6 +89,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -130,6 +137,8 @@ public class CommerceOrderSplitTest {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
+		_commerceChannels.add(_commerceChannel);
+
 		CommerceTestUtil.addWarehouseCommerceChannelRel(
 			_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			_commerceChannel.getCommerceChannelId());
@@ -169,24 +178,41 @@ public class CommerceOrderSplitTest {
 		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
 			_cpInstance2.getCPDefinition());
 
-		_objectAction = _addObjectAction(RandomTestUtil.randomString());
+		_objectAction = _addObjectAction(
+			"orderStatus = 10", RandomTestUtil.randomString());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		for (CommerceOrder commerceOrder : _getCommerceOrders()) {
-			_commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+		for (CommerceChannel commerceChannel : _commerceChannels) {
+			for (CommerceShipment commerceShipment :
+					_commerceShipmentLocalService.getCommerceShipments(
+						new long[] {commerceChannel.getGroupId()},
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+				_commerceShipmentLocalService.deleteCommerceShipment(
+					commerceShipment, false);
+			}
+
+			_commerceOrderLocalService.deleteCommerceOrders(
+				commerceChannel.getGroupId());
+		}
+
+		for (ObjectAction objectAction : _objectActions) {
+			_objectActionLocalService.deleteObjectAction(objectAction);
 		}
 	}
 
 	@Test
 	public void testCommerceOrderSplit1() throws Exception {
-		AccountEntry accountEntry = _addSupplierAccountEntry(_user);
+		AccountEntry accountEntry = _addAccountEntry(_user);
 
 		_createAndCheckoutCommerceOrder(
 			accountEntry, ListUtil.fromArray(_cpInstance1), _user);
 
-		List<CommerceOrder> commerceOrders = _getCommerceOrders();
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			commerceOrders.toString(), 2, commerceOrders.size());
@@ -199,53 +225,47 @@ public class CommerceOrderSplitTest {
 			CommerceDiscountConstants.LEVEL_L1,
 			CommerceDiscountConstants.TARGET_TOTAL, null);
 
-		CPDefinition bundleCPDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog2.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			false);
 
-		CPOption dynamicPriceTypeCPOption1 = CPTestUtil.addCPOption(
+		CPOption cpOption1 = CPTestUtil.addCPOption(
 			_commerceCatalog2.getGroupId(),
 			CPTestUtil.getDefaultCommerceOptionTypeKey(true), true);
 
 		CPTestUtil.addCPDefinitionOptionValueRelWithPrice(
-			_commerceCatalog1.getGroupId(),
-			bundleCPDefinition.getCPDefinitionId(),
-			_cpInstance1.getCPInstanceId(),
-			dynamicPriceTypeCPOption1.getCPOptionId(),
+			_commerceCatalog1.getGroupId(), cpDefinition.getCPDefinitionId(),
+			_cpInstance1.getCPInstanceId(), cpOption1.getCPOptionId(),
 			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC,
 			BigDecimal.valueOf(50), BigDecimal.ONE, true, true,
 			_serviceContext);
 
-		CPOption dynamicPriceTypeCPOption2 = CPTestUtil.addCPOption(
+		CPOption cpOption2 = CPTestUtil.addCPOption(
 			_commerceCatalog2.getGroupId(),
 			CPTestUtil.getDefaultCommerceOptionTypeKey(true), true);
 
 		CPTestUtil.addCPDefinitionOptionValueRelWithPrice(
-			_commerceCatalog2.getGroupId(),
-			bundleCPDefinition.getCPDefinitionId(),
-			_cpInstance2.getCPInstanceId(),
-			dynamicPriceTypeCPOption2.getCPOptionId(),
+			_commerceCatalog2.getGroupId(), cpDefinition.getCPDefinitionId(),
+			_cpInstance2.getCPInstanceId(), cpOption2.getCPOptionId(),
 			CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC,
 			BigDecimal.valueOf(100), BigDecimal.ONE, true, true,
 			_serviceContext);
 
 		_cpInstanceLocalService.buildCPInstances(
-			bundleCPDefinition.getCPDefinitionId(), _serviceContext);
+			cpDefinition.getCPDefinitionId(), _serviceContext);
 
-		List<CPInstance> bundleCPInstances =
-			bundleCPDefinition.getCPInstances();
+		List<CPInstance> cpInstances = cpDefinition.getCPInstances();
 
-		Assert.assertEquals(
-			bundleCPInstances.toString(), 1, bundleCPInstances.size());
+		Assert.assertEquals(cpInstances.toString(), 1, cpInstances.size());
 
-		CPInstance cpInstance3 = bundleCPInstances.get(0);
+		CPInstance cpInstance3 = cpInstances.get(0);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
 				cpInstance3.getGroupId());
 
 		CommercePriceEntryTestUtil.addCommercePriceEntry(
-			StringPool.BLANK, bundleCPDefinition.getCProductId(),
+			StringPool.BLANK, cpDefinition.getCProductId(),
 			cpInstance3.getCPInstanceUuid(),
 			commercePriceList.getCommercePriceListId(), BigDecimal.TEN);
 
@@ -256,18 +276,20 @@ public class CommerceOrderSplitTest {
 		_createAndCheckoutCommerceOrder(
 			_accountEntry, ListUtil.fromArray(cpInstance3), _user);
 
-		List<CommerceOrder> commerceOrders = _getCommerceOrders();
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			commerceOrders.toString(), 3, commerceOrders.size());
 
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(7.5), 1, _cpInstance1);
+			commerceOrders, 1, BigDecimal.valueOf(7.5), _cpInstance1);
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(3.5), 2, _cpInstance2,
+			commerceOrders, 2, BigDecimal.valueOf(3.5), _cpInstance2,
 			cpInstance3);
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(11), 3, _cpInstance1,
+			commerceOrders, 3, BigDecimal.valueOf(11), _cpInstance1,
 			_cpInstance2, cpInstance3);
 
 		CommerceOrderItem commerceOrderItem = _getCommerceOrderItem(
@@ -280,7 +302,9 @@ public class CommerceOrderSplitTest {
 			commerceOrderItem);
 
 		commerceOrderItem = _getCommerceOrderItem(
-			_getCommerceOrders(), _cpInstance1, 3);
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1, 3);
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
@@ -292,7 +316,8 @@ public class CommerceOrderSplitTest {
 
 	@Test
 	public void testCommerceOrderSplit3() throws Exception {
-		_objectAction = _addObjectAction(RandomTestUtil.randomString());
+		_objectAction = _addObjectAction(
+			"orderStatus = 10", RandomTestUtil.randomString());
 
 		CommerceDiscountTestUtil.addPercentageCommerceDiscount(
 			_group.getGroupId(), BigDecimal.valueOf(10),
@@ -304,30 +329,34 @@ public class CommerceOrderSplitTest {
 			_accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
 			_user);
 
-		List<CommerceOrder> commerceOrders = _getCommerceOrders();
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			commerceOrders.toString(), 3, commerceOrders.size());
 
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(2.5), BigDecimal.valueOf(22.5));
+			commerceOrders, BigDecimal.valueOf(22.5), BigDecimal.valueOf(2.5));
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(7.5), BigDecimal.valueOf(67.5));
+			commerceOrders, BigDecimal.valueOf(67.5), BigDecimal.valueOf(7.5));
 		_assertCommerceOrder(
-			commerceOrders, BigDecimal.valueOf(10), BigDecimal.valueOf(90));
+			commerceOrders, BigDecimal.valueOf(90), BigDecimal.valueOf(10));
 	}
 
 	@Test
 	public void testCommerceOrderSplit4() throws Exception {
 		User user = UserTestUtil.addUser();
 
-		AccountEntry accountEntry = _addSupplierAccountEntry(user);
+		AccountEntry accountEntry = _addAccountEntry(user);
 
 		_createAndCheckoutCommerceOrder(
 			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2), user);
 
 		CommerceOrderItem commerceOrderItem = _getCommerceOrderItem(
-			_getCommerceOrders(), _cpInstance1, 1);
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1, 1);
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user, PermissionCheckerFactoryUtil.create(user))) {
@@ -340,7 +369,9 @@ public class CommerceOrderSplitTest {
 		}
 
 		commerceOrderItem = _getCommerceOrderItem(
-			_getCommerceOrders(), _cpInstance1, 2);
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1, 2);
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
@@ -352,14 +383,442 @@ public class CommerceOrderSplitTest {
 			commerceOrderItem);
 
 		commerceOrderItem = _getCommerceOrderItem(
-			_getCommerceOrders(), _cpInstance1, 1);
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1, 1);
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
 				commerceOrderItem.getQuantity(), BigDecimal.valueOf(3)));
 	}
 
-	private ObjectAction _addObjectAction(String externalReferenceCode)
+	@Test
+	public void testCommerceOrderSplit5() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			Assert.assertEquals(
+				0L, commerceOrderItem.getCommerceInventoryBookedQuantityId());
+		}
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		commerceOrder = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			Assert.assertTrue(
+				commerceOrderItem.getCommerceInventoryBookedQuantityId() > 0);
+		}
+	}
+
+	@Test
+	public void testCommerceOrderSplit6() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		_completeCommerceOrder(
+			_getCommerceOrderByCPInstance(commerceOrders, _cpInstance1));
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		Assert.assertNotEquals(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+			commerceOrder.getOrderStatus());
+
+		_completeCommerceOrder(
+			_getCommerceOrderByCPInstance(commerceOrders, _cpInstance2));
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+			commerceOrder.getOrderStatus());
+	}
+
+	@Test
+	public void testCommerceOrderSplit7() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			commerceOrder.getOrderStatus());
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		commerceOrder = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		CommerceShipment commerceShipment =
+			CommerceShipmentTestUtil.createEmptyOrderShipment(
+				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			_commerceShipmentItemLocalService.addCommerceShipmentItem(
+				null, commerceShipment.getCommerceShipmentId(),
+				commerceOrderItem.getCommerceOrderItemId(), 0, BigDecimal.ZERO,
+				null, true,
+				ServiceContextTestUtil.getServiceContext(
+					commerceOrder.getGroupId()));
+		}
+
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
+
+		Assert.assertEquals(
+			CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			commerceOrder.getOrderStatus());
+	}
+
+	@Test
+	public void testCommerceOrderSplit8() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_ON_HOLD,
+			_user.getUserId(), true);
+
+		_commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+			_user.getUserId(), true);
+
+		commerceOrders = _commerceOrderLocalService.getCommerceOrders(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+	}
+
+	@Test
+	public void testCommerceOrderSplit9() throws Exception {
+		_addObjectAction("orderStatus = 1", RandomTestUtil.randomString());
+
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		_createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+	}
+
+	@Test
+	public void testCommerceOrderSplit10() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		CommerceOrderItem commerceOrderItem = _getCommerceOrderItem(
+			ListUtil.fromArray(commerceOrder), _cpInstance1, 2);
+
+		long commerceOrderItemId = commerceOrderItem.getCommerceOrderItemId();
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(commerceOrderItem.getQuantity(), BigDecimal.ONE));
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrderItem.getShippedQuantity(), BigDecimal.ZERO));
+
+		commerceOrder = _getCommerceOrderByCPInstance(
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		commerceOrderItem = commerceOrderItems.get(0);
+
+		commerceOrderItem.setQuantity(BigDecimal.valueOf(2));
+
+		commerceOrderItem =
+			_commerceOrderItemLocalService.updateCommerceOrderItem(
+				commerceOrderItem);
+
+		_addCommerceShipment(commerceOrder, commerceOrderItem, BigDecimal.ONE);
+
+		commerceOrderItem = _commerceOrderItemLocalService.getCommerceOrderItem(
+			commerceOrderItemId);
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrderItem.getQuantity(), BigDecimal.valueOf(2)));
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrderItem.getShippedQuantity(), BigDecimal.ONE));
+	}
+
+	@Test
+	public void testCommerceOrderSplit11() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_updateCommerceCatalog(accountEntry.getAccountEntryId());
+
+		CommerceChannel commerceChannel = _addCommerceChannel(
+			accountEntry.getAccountEntryId());
+
+		_createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		CommerceOrder commerceOrder = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		Assert.assertEquals(
+			commerceChannel.getGroupId(), commerceOrder.getGroupId());
+	}
+
+	@Test
+	public void testCommerceOrderSplit12() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_updateCommerceCatalog(accountEntry.getAccountEntryId());
+
+		CommerceOrder commerceOrder1 = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		CommerceOrder commerceOrder2 = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		Assert.assertEquals(
+			commerceOrder1.getGroupId(), commerceOrder2.getGroupId());
+	}
+
+	@Test
+	public void testCommerceOrderSplit13() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		_addCommerceChannel(accountEntry.getAccountEntryId());
+
+		CommerceOrder commerceOrder1 = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		CommerceOrder commerceOrder2 = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		Assert.assertEquals(
+			commerceOrder1.getGroupId(), commerceOrder2.getGroupId());
+	}
+
+	@Test
+	public void testCommerceOrderSplit14() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry();
+
+		CommerceOrder commerceOrder1 = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrders.toString(), 3, commerceOrders.size());
+
+		CommerceOrder commerceOrder2 = _getCommerceOrderByCPInstance(
+			commerceOrders, _cpInstance1);
+
+		Assert.assertEquals(
+			commerceOrder1.getGroupId(), commerceOrder2.getGroupId());
+	}
+
+	@Test
+	public void testCommerceOrderSplit15() throws Exception {
+		AccountEntry accountEntry = _addAccountEntry(_user);
+
+		CommerceOrder commerceOrder1 = _createAndCheckoutCommerceOrder(
+			accountEntry, ListUtil.fromArray(_cpInstance1, _cpInstance2),
+			_user);
+
+		CommerceOrder commerceOrder2 = _getCommerceOrderByCPInstance(
+			_commerceOrderLocalService.getCommerceOrders(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+			_cpInstance1);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder2.getCommerceOrderItems();
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		CommerceShipment commerceShipment = _addCommerceShipment(
+			commerceOrder2, commerceOrderItem, commerceOrderItem.getQuantity());
+
+		String trackingURL = RandomTestUtil.randomString();
+
+		commerceShipment = _commerceShipmentLocalService.updateCarrierDetails(
+			commerceShipment.getCommerceShipmentId(), 0, "Test Carrier", null,
+			trackingURL);
+
+		Assert.assertEquals(trackingURL, commerceShipment.getTrackingURL());
+
+		commerceOrderItem = _getCommerceOrderItem(
+			ListUtil.fromArray(commerceOrder1), _cpInstance1, 2);
+
+		commerceOrderItems =
+			_commerceOrderItemLocalService.getSupplierCommerceOrderItems(
+				commerceOrderItem.getCommerceOrderItemId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrderItems.toString(), 1, commerceOrderItems.size());
+
+		commerceOrderItem = commerceOrderItems.get(0);
+
+		List<CommerceShipmentItem> commerceShipmentItems =
+			_commerceShipmentItemLocalService.
+				getCommerceShipmentItemsByCommerceOrderItemId(
+					commerceOrderItem.getCommerceOrderItemId());
+
+		CommerceShipmentItem commerceShipmentItem = commerceShipmentItems.get(
+			0);
+
+		commerceShipment = _commerceShipmentLocalService.getCommerceShipment(
+			commerceShipmentItem.getCommerceShipmentId());
+
+		Assert.assertEquals(trackingURL, commerceShipment.getTrackingURL());
+	}
+
+	private AccountEntry _addAccountEntry() throws Exception {
+		return _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, _user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
+	private AccountEntry _addAccountEntry(User user) throws Exception {
+		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+			StringPool.BLANK, user.getUserId(), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			RandomTestUtil.randomString() + "@liferay.com", null,
+			RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		_updateCommerceCatalog(accountEntry.getAccountEntryId());
+
+		_commerceChannel.setAccountEntryId(accountEntry.getAccountEntryId());
+
+		_commerceChannel = _commerceChannelLocalService.updateCommerceChannel(
+			_commerceChannel);
+
+		return accountEntry;
+	}
+
+	private CommerceChannel _addCommerceChannel(long accountEntryId)
+		throws Exception {
+
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
+			_group.getGroupId(), _commerceCurrency.getCode());
+
+		commerceChannel.setAccountEntryId(accountEntryId);
+
+		commerceChannel = _commerceChannelLocalService.updateCommerceChannel(
+			commerceChannel);
+
+		_commerceChannels.add(commerceChannel);
+
+		return commerceChannel;
+	}
+
+	private CommerceShipment _addCommerceShipment(
+			CommerceOrder commerceOrder, CommerceOrderItem commerceOrderItem,
+			BigDecimal quantity)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			CommerceShipmentTestUtil.createEmptyOrderShipment(
+				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
+
+		_commerceShipmentItemLocalService.addCommerceShipmentItem(
+			null, commerceShipment.getCommerceShipmentId(),
+			commerceOrderItem.getCommerceOrderItemId(), 0, quantity, null,
+			false,
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId()));
+
+		return _commerceShipmentLocalService.getCommerceShipment(
+			commerceShipment.getCommerceShipmentId());
+	}
+
+	private ObjectAction _addObjectAction(
+			String conditionExpression, String externalReferenceCode)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -367,9 +826,9 @@ public class CommerceOrderSplitTest {
 				getObjectDefinitionByExternalReferenceCode(
 					"L_COMMERCE_ORDER", _user.getCompanyId());
 
-		return _objectActionLocalService.addObjectAction(
+		ObjectAction objectAction = _objectActionLocalService.addObjectAction(
 			null, _serviceContext.getUserId(),
-			objectDefinition.getObjectDefinitionId(), true, "orderStatus = 10",
+			objectDefinition.getObjectDefinitionId(), true, conditionExpression,
 			RandomTestUtil.randomString(), null,
 			HashMapBuilder.put(
 				_serviceContext.getLocale(), RandomTestUtil.randomString()
@@ -382,68 +841,46 @@ public class CommerceOrderSplitTest {
 				"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 			).build(),
 			false);
-	}
 
-	private AccountEntry _addSupplierAccountEntry(User user) throws Exception {
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
-			StringPool.BLANK, user.getUserId(), 0,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString() + "@liferay.com", null,
-			RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_SUPPLIER,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+		_objectActions.add(objectAction);
 
-		_commerceCatalog1.setAccountEntryId(accountEntry.getAccountEntryId());
-
-		_commerceCatalog1 = _commerceCatalogLocalService.updateCommerceCatalog(
-			_commerceCatalog1);
-
-		_commerceChannel.setAccountEntryId(accountEntry.getAccountEntryId());
-
-		_commerceChannel = _commerceChannelLocalService.updateCommerceChannel(
-			_commerceChannel);
-
-		return accountEntry;
+		return objectAction;
 	}
 
 	private void _assertCommerceOrder(
-		List<CommerceOrder> commerceOrders,
-		BigDecimal expectedTotalDiscountAmount, BigDecimal total) {
+		List<CommerceOrder> commerceOrders, BigDecimal total,
+		BigDecimal totalDiscountAmount) {
 
-		CommerceOrder commerceOrder = null;
+		commerceOrders = ListUtil.filter(
+			commerceOrders,
+			commerceOrder -> BigDecimalUtil.eq(
+				commerceOrder.getTotal(), total));
 
-		for (CommerceOrder curCommerceOrder : commerceOrders) {
-			if (BigDecimalUtil.eq(curCommerceOrder.getTotal(), total)) {
-				commerceOrder = curCommerceOrder;
-			}
-		}
+		CommerceOrder commerceOrder = commerceOrders.get(0);
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
-				commerceOrder.getTotalDiscountAmount(),
-				expectedTotalDiscountAmount));
+				commerceOrder.getTotalDiscountAmount(), totalDiscountAmount));
 	}
 
 	private void _assertCommerceOrder(
-		List<CommerceOrder> commerceOrders,
-		BigDecimal expectedTotalDiscountAmount, int size,
-		CPInstance... cpInstances) {
+		List<CommerceOrder> commerceOrders, int size,
+		BigDecimal totalDiscountAmount, CPInstance... cpInstances) {
 
-		CommerceOrder commerceOrder = null;
+		commerceOrders = ListUtil.filter(
+			commerceOrders,
+			commerceOrder -> {
+				List<CommerceOrderItem> commerceOrderItems =
+					commerceOrder.getCommerceOrderItems();
 
-		for (CommerceOrder curCommerceOrder : commerceOrders) {
-			List<CommerceOrderItem> commerceOrderItems =
-				curCommerceOrder.getCommerceOrderItems();
+				return commerceOrderItems.size() == size;
+			});
 
-			if (commerceOrderItems.size() == size) {
-				commerceOrder = curCommerceOrder;
-			}
-		}
+		CommerceOrder commerceOrder = commerceOrders.get(0);
 
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
-				commerceOrder.getTotalDiscountAmount(),
-				expectedTotalDiscountAmount));
+				commerceOrder.getTotalDiscountAmount(), totalDiscountAmount));
 
 		for (CPInstance cpInstance : cpInstances) {
 			List<CommerceOrderItem> commerceOrderItems = ListUtil.filter(
@@ -479,7 +916,27 @@ public class CommerceOrderSplitTest {
 		}
 	}
 
-	private void _createAndCheckoutCommerceOrder(
+	private void _completeCommerceOrder(CommerceOrder commerceOrder)
+		throws Exception {
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		_addCommerceShipment(
+			commerceOrder, commerceOrderItem, commerceOrderItem.getQuantity());
+
+		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_SHIPPED,
+			_user.getUserId(), true);
+
+		_commerceOrderEngine.transitionCommerceOrder(
+			commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+			_user.getUserId(), true);
+	}
+
+	private CommerceOrder _createAndCheckoutCommerceOrder(
 			AccountEntry accountEntry, List<CPInstance> cpInstances, User user)
 		throws Exception {
 
@@ -534,9 +991,7 @@ public class CommerceOrderSplitTest {
 
 			commerceOrder.setCommerceShippingMethodId(
 				_commerceShippingMethod.getCommerceShippingMethodId());
-
 			commerceOrder.setShippingAddressId(address.getAddressId());
-
 			commerceOrder.setCommercePaymentMethodKey(
 				TestCommercePaymentMethod.KEY);
 
@@ -547,7 +1002,7 @@ public class CommerceOrderSplitTest {
 				commerceOrder, user.getUserId());
 		}
 
-		_commerceOrderEngine.transitionCommerceOrder(
+		commerceOrder = _commerceOrderEngine.transitionCommerceOrder(
 			commerceOrder, CommerceOrderConstants.ORDER_STATUS_PROCESSING,
 			_user.getUserId(), true);
 
@@ -564,43 +1019,78 @@ public class CommerceOrderSplitTest {
 				Assert.assertEquals(
 					ObjectActionConstants.STATUS_SUCCESS, status);
 
-				return;
+				return commerceOrder;
 			}
 
 			Thread.sleep(500);
 		}
+
+		return commerceOrder;
+	}
+
+	private CommerceOrder _getCommerceOrderByCPInstance(
+		List<CommerceOrder> commerceOrders, CPInstance cpInstance) {
+
+		List<CommerceOrder> filteredCommerceOrders = ListUtil.filter(
+			commerceOrders,
+			commerceOrder -> {
+				List<CommerceOrderItem> commerceOrderItems =
+					commerceOrder.getCommerceOrderItems();
+
+				if (commerceOrderItems.size() != 1) {
+					return false;
+				}
+
+				CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+				return StringUtil.equals(
+					commerceOrderItem.getSku(), cpInstance.getSku());
+			});
+
+		Assert.assertFalse(
+			"No order found for SKU " + cpInstance.getSku(),
+			filteredCommerceOrders.isEmpty());
+
+		return filteredCommerceOrders.get(0);
 	}
 
 	private CommerceOrderItem _getCommerceOrderItem(
 		List<CommerceOrder> commerceOrders, CPInstance cpInstance, int size) {
 
+		List<CommerceOrder> filteredCommerceOrders = ListUtil.filter(
+			commerceOrders,
+			commerceOrder -> {
+				List<CommerceOrderItem> commerceOrderItems =
+					commerceOrder.getCommerceOrderItems();
+
+				return commerceOrderItems.size() == size;
+			});
+
 		CommerceOrderItem commerceOrderItem = null;
 
-		for (CommerceOrder commerceOrder : commerceOrders) {
-			List<CommerceOrderItem> commerceOrderItems =
-				commerceOrder.getCommerceOrderItems();
+		for (CommerceOrder commerceOrder : filteredCommerceOrders) {
+			List<CommerceOrderItem> commerceOrderItems = ListUtil.filter(
+				commerceOrder.getCommerceOrderItems(),
+				curCommerceOrderItem -> StringUtil.equals(
+					curCommerceOrderItem.getSku(), cpInstance.getSku()));
 
-			if (commerceOrderItems.size() != size) {
-				continue;
-			}
-
-			for (CommerceOrderItem curCommerceOrderItem : commerceOrderItems) {
-				if (StringUtil.equals(
-						curCommerceOrderItem.getSku(), cpInstance.getSku())) {
-
-					commerceOrderItem = curCommerceOrderItem;
-				}
+			if (!commerceOrderItems.isEmpty()) {
+				commerceOrderItem = commerceOrderItems.get(0);
 			}
 		}
 
-		Assert.assertNotNull(commerceOrderItem);
+		Assert.assertNotNull(
+			"No order item found for SKU " + cpInstance.getSku(),
+			commerceOrderItem);
 
 		return commerceOrderItem;
 	}
 
-	private List<CommerceOrder> _getCommerceOrders() {
-		return _commerceOrderLocalService.getCommerceOrders(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	private void _updateCommerceCatalog(long accountEntryId) {
+		_commerceCatalog1.setAccountEntryId(accountEntryId);
+
+		_commerceCatalog1 = _commerceCatalogLocalService.updateCommerceCatalog(
+			_commerceCatalog1);
 	}
 
 	private AccountEntry _accountEntry;
@@ -625,6 +1115,7 @@ public class CommerceOrderSplitTest {
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
+	private final List<CommerceChannel> _commerceChannels = new ArrayList<>();
 	private CommerceCurrency _commerceCurrency;
 	private CommerceInventoryWarehouse _commerceInventoryWarehouse;
 
@@ -643,6 +1134,12 @@ public class CommerceOrderSplitTest {
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
+	@Inject
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
+
+	@Inject
+	private CommerceShipmentLocalService _commerceShipmentLocalService;
+
 	private CommerceShippingMethod _commerceShippingMethod;
 	private CPInstance _cpInstance1;
 	private CPInstance _cpInstance2;
@@ -656,11 +1153,16 @@ public class CommerceOrderSplitTest {
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;
 
+	private final List<ObjectAction> _objectActions = new ArrayList<>();
+
 	@Inject
 	private ObjectActionTriggerRegistry _objectActionTriggerRegistry;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ResourceLocalService _resourceLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

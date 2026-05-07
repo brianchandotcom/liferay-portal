@@ -341,7 +341,7 @@ test(
 
 test(
 	'Validate vocabulary inputs',
-	{tag: ['@LPD-32750', '@LPD-69687']},
+	{tag: ['@LPD-32750', '@LPD-69687', '@LPD-88757']},
 	async ({editVocabularyPage, page}) => {
 		editVocabularyPage.goto();
 
@@ -385,6 +385,25 @@ test(
 		});
 
 		await expect(editVocabularyPage.saveButton).toBeDisabled();
+
+		// Check the external reference code input shows an error when longer
+		// than 75 characters
+
+		await page.getByRole('menuitem', {name: 'General'}).click();
+
+		await editVocabularyPage.changeGeneralInfo({
+			externalReferenceCode: 'x'.repeat(80),
+		});
+
+		await expect(
+			page.getByText(
+				'External reference code cannot exceed 75 characters.'
+			)
+		).toBeVisible();
+
+		await expect(page.getByLabel('External Reference Code')).toHaveValue(
+			'x'.repeat(80)
+		);
 	}
 );
 
@@ -399,8 +418,8 @@ test(
 
 		await editVocabularyPage.changeGeneralInfo({
 			description: getRandomString(),
-			externalReferenceCode: externalReferenceCode,
-			name: name,
+			externalReferenceCode,
+			name,
 		});
 
 		await clickAndExpectToBeVisible({
@@ -416,7 +435,7 @@ test(
 			await editVocabularyPage.changeGeneralInfo({
 				description: getRandomString(),
 				externalReferenceCode: `ERC${getRandomInt()}`,
-				name: name,
+				name,
 			});
 
 			await clickAndExpectToBeVisible({
@@ -433,7 +452,7 @@ test(
 
 			await editVocabularyPage.changeGeneralInfo({
 				description: getRandomString(),
-				externalReferenceCode: externalReferenceCode,
+				externalReferenceCode,
 				name: `Vocabulary${getRandomInt()}`,
 			});
 

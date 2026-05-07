@@ -697,8 +697,8 @@ public abstract class BaseWorkspaceGitRepository
 		try {
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
-					"git.archive.enabled", System.getenv("JOB_NAME"),
-					System.getenv("CI_TEST_SUITE")));
+					"git.archive.enabled", System.getenv("CI_TEST_SUITE"),
+					System.getenv("JOB_NAME")));
 		}
 		catch (IOException ioException) {
 			return true;
@@ -1417,8 +1417,8 @@ public abstract class BaseWorkspaceGitRepository
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
 					"git.archive.dot.git.dir.required", getDirectoryName(),
-					System.getenv("DIST_TYPE"), System.getenv("JOB_NAME"),
-					System.getenv("CI_TEST_SUITE")));
+					System.getenv("CI_TEST_SUITE"), System.getenv("DIST_TYPE"),
+					System.getenv("JOB_NAME")));
 		}
 		catch (IOException ioException) {
 			return false;

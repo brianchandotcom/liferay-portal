@@ -218,8 +218,8 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 		try {
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
-					"binaries.cache.enabled", System.getenv("JOB_NAME"),
-					System.getenv("CI_TEST_SUITE")));
+					"binaries.cache.enabled", System.getenv("CI_TEST_SUITE"),
+					System.getenv("JOB_NAME")));
 		}
 		catch (IOException ioException) {
 			return true;

@@ -107,6 +107,12 @@ const LocalizablePhoneNumber = ({
 		onBlur?.(event);
 	};
 
+	const handleLanguageClicked = (localeId: Liferay.Language.Locale) => {
+		if (validField.displayErrors) {
+			setValidField(validate(value[localeId] ?? predefinedValue ?? ''));
+		}
+	};
+
 	const handleChange = (event: {target: {value: string}}) => {
 		const newValue = {
 			...value,
@@ -150,6 +156,7 @@ const LocalizablePhoneNumber = ({
 					<LocalesDropdown
 						availableLocales={availableLocales}
 						fieldName={fieldName}
+						onLanguageClicked={handleLanguageClicked}
 						value={value}
 					/>
 				</ClayInput.GroupItem>

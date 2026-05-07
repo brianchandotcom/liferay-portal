@@ -116,13 +116,13 @@ public class FileInstallCfgTest {
 		FileInstallCfgTest.class.getName() + "Configuration";
 
 	private static BundleContext _bundleContext;
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	private static boolean _originalModuleFrameworkFileInstallCfgEnabled;
 
 	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
 	private Path _configurationPath;
 
 }

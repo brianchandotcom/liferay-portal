@@ -452,11 +452,12 @@ public class FileInstallConfigTest {
 	private static final String _CONFIGURATION_PID_PREFIX =
 		FileInstallConfigTest.class.getName() + "Configuration";
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	private BundleContext _bundleContext;
 	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
 	private Path _configurationPath;
 
 }

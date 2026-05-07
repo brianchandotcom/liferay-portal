@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import classNames from 'classnames';
 import React from 'react';
 
 import {InputGroupWithSelect} from '../../common/components/InputGroupWithSelect';
@@ -30,7 +29,7 @@ export function SpaceMembersSelectOptions({
 }: SpaceMembersSelectOptionsProps) {
 	return (
 		<InputGroupWithSelect
-			className={classNames('space-members-input-with-select', className)}
+			className={className}
 			label={label}
 			onSelectChange={(value) => onSelectChange?.(value as SelectOptions)}
 			options={[

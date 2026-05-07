@@ -7,6 +7,7 @@ import ClayModal from '@clayui/modal';
 import {
 	FileData,
 	MultipleFileUploader,
+	UploadBatchesCallback,
 	UploadMessages,
 	openToast,
 } from 'frontend-js-components-web';
@@ -16,6 +17,9 @@ import React from 'react';
 import ApiHelper from '../../common/services/ApiHelper';
 
 const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
+
+const sequentialUploadBatches: UploadBatchesCallback = (files) =>
+	files.map((file) => [file]);
 
 const IMPORT_MESSAGES: UploadMessages = {
 	anotherFileButton: Liferay.Language.get('import-another-file'),
@@ -143,6 +147,7 @@ export default function ImportTranslationModalContent({
 				messages={IMPORT_MESSAGES}
 				onModalClose={onModalClose}
 				onUploadComplete={onUploadComplete}
+				uploadBatches={sequentialUploadBatches}
 				uploadRequest={uploadRequest}
 				validExtensions={VALID_EXTENSIONS}
 			/>

@@ -37,6 +37,7 @@ export default function EditGeneralInfo({
 	assetLibraries,
 	defaultLanguageId,
 	externalReferenceCodeInputError,
+	externalReferenceCodeMaxLength,
 	isNew,
 	locales,
 	nameInputError,
@@ -54,6 +55,7 @@ export default function EditGeneralInfo({
 	assetLibraries: AssetLibraryType[];
 	defaultLanguageId: string;
 	externalReferenceCodeInputError: string;
+	externalReferenceCodeMaxLength: number;
 	isNew: boolean;
 	locales: any[];
 	nameInputError: string;
@@ -219,7 +221,22 @@ export default function EditGeneralInfo({
 								'external-reference-code'
 							)}
 							onChange={({target: {value}}) => {
-								if (externalReferenceCodeInputError) {
+								if (
+									value.length >
+									externalReferenceCodeMaxLength
+								) {
+									setExternalReferenceCodeInputError(
+										sub(
+											Liferay.Language.get(
+												'external-reference-code-cannot-exceed-x-characters'
+											),
+											String(
+												externalReferenceCodeMaxLength
+											)
+										)
+									);
+								}
+								else if (externalReferenceCodeInputError) {
 									setExternalReferenceCodeInputError('');
 								}
 

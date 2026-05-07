@@ -279,7 +279,9 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 		<div>
 			<ReferencedObjectsProvider segment={segment}>
 				<CriteriaCard
+					channelId={channelId}
 					criteriaString={criteriaString ?? ''}
+					groupId={groupId}
 					includeAnonymousUsers={includeAnonymousUsers}
 					segmentType={SegmentTypes.RealTime}
 					sequential={sequential}

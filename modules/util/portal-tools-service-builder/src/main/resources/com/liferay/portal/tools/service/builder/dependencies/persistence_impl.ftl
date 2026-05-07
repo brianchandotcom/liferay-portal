@@ -2927,7 +2927,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 							<#list entityColumns as entityColumn>
 								,
-								${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+								<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+									convertNullFunction(${entity.name}::get${entityColumn.methodName})
+								<#else>
+									${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+								</#if>
 							</#list>
 						<#else>
 							,

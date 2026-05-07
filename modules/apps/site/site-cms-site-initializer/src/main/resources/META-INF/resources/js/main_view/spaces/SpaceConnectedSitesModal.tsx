@@ -15,7 +15,6 @@ import React, {useEffect, useId, useState} from 'react';
 
 import {InputGroupWithSelect} from '../../common/components/InputGroupWithSelect';
 import ConnectedSiteService from '../../common/services/ConnectedSiteService';
-import SiteTemplateService from '../../common/services/SiteTemplateService';
 import {Site} from '../../common/types/Site';
 import {SiteTemplate} from '../../common/types/SiteTemplate';
 
@@ -24,9 +23,7 @@ enum ConnectableKind {
 	SITE_TEMPLATES = 'site-templates',
 }
 
-type Connection =
-	| {kind: 'site'; site: Site}
-	| {kind: 'site-template'; siteTemplate: SiteTemplate};
+const SITE_TEMPLATE_TYPE = 'site-template';
 
 const showErrorMessage = (message: string) => {
 	openToast({
@@ -42,67 +39,31 @@ const showSuccessMessage = (message: string) => {
 	});
 };
 
-const getConnectionId = (connection: Connection) =>
-	connection.kind === 'site'
-		? connection.site.id
-		: connection.siteTemplate.id;
+const isSiteTemplate = (site: Site) => site.type === SITE_TEMPLATE_TYPE;
 
-const getConnectionKey = (connection: Connection) =>
-	`${connection.kind}:${getConnectionId(connection)}`;
-
-const getConnectionName = (connection: Connection) =>
-	connection.kind === 'site'
-		? connection.site.descriptiveName
-		: connection.siteTemplate.name;
-
-const getConnectionLabel = (connection: Connection) =>
-	connection.kind === 'site'
-		? connection.site.descriptiveName
-		: `${connection.siteTemplate.name} (${Liferay.Language.get('site-template')})`;
+const getConnectionLabel = (site: Site) =>
+	isSiteTemplate(site)
+		? `${site.descriptiveName} (${Liferay.Language.get('site-template')})`
+		: site.descriptiveName;
 
 const ConnectableActions = ({
-	connection,
 	externalReferenceCode,
 	onConnectionChange,
 	onConnectionDisconnected,
+	site,
 }: {
-	connection: Connection;
 	externalReferenceCode: string;
-	onConnectionChange: (connection: Connection) => void;
-	onConnectionDisconnected: (connection: Connection) => void;
+	onConnectionChange: (site: Site) => void;
+	onConnectionDisconnected: (site: Site) => void;
+	site: Site;
 }) => {
+	const isTemplate = isSiteTemplate(site);
+
 	const disconnect = async () => {
-		const name = getConnectionName(connection);
-
-		if (connection.kind === 'site') {
-			const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
-				externalReferenceCode,
-				connection.site.externalReferenceCode
-			);
-
-			if (error) {
-				showErrorMessage(error);
-
-				return;
-			}
-
-			onConnectionDisconnected(connection);
-			showSuccessMessage(
-				sub(
-					Liferay.Language.get(
-						'site-x-was-successfully-disconnected-from-the-space'
-					),
-					`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
-				)
-			);
-
-			return;
-		}
-
-		const {error} =
-			await SiteTemplateService.disconnectSiteTemplateFromSpace(
-				connection.siteTemplate.id
-			);
+		const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
+			externalReferenceCode,
+			site.externalReferenceCode
+		);
 
 		if (error) {
 			showErrorMessage(error);
@@ -110,30 +71,28 @@ const ConnectableActions = ({
 			return;
 		}
 
-		onConnectionDisconnected(connection);
+		onConnectionDisconnected(site);
 		showSuccessMessage(
 			sub(
 				Liferay.Language.get(
-					'site-template-x-was-successfully-disconnected-from-the-space'
+					isTemplate
+						? 'site-template-x-was-successfully-disconnected-from-the-space'
+						: 'site-x-was-successfully-disconnected-from-the-space'
 				),
-				`<strong>${Liferay.Util.escapeHTML(name)}</strong>`
+				`<strong>${Liferay.Util.escapeHTML(site.descriptiveName)}</strong>`
 			)
 		);
 	};
 
 	const changeSearchable = async () => {
-		if (connection.kind !== 'site') {
-			return;
-		}
-
 		const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 			externalReferenceCode,
-			connection.site.externalReferenceCode,
-			String(!connection.site.searchable)
+			site.externalReferenceCode,
+			{searchable: String(!site.searchable)}
 		);
 
 		if (data) {
-			onConnectionChange({kind: 'site', site: data});
+			onConnectionChange(data);
 		}
 		else if (error) {
 			showErrorMessage(error);
@@ -142,9 +101,9 @@ const ConnectableActions = ({
 
 	const items = [];
 
-	if (connection.kind === 'site') {
+	if (!isTemplate) {
 		items.push({
-			label: connection.site.searchable
+			label: site.searchable
 				? Liferay.Language.get('make-unsearchable')
 				: Liferay.Language.get('make-searchable'),
 			onClick: changeSearchable,
@@ -156,14 +115,13 @@ const ConnectableActions = ({
 		onClick: disconnect,
 	});
 
-	const isSearchableLabel =
-		connection.kind === 'site' && connection.site.searchable
-			? Liferay.Language.get('yes')
-			: Liferay.Language.get('no');
+	const isSearchableLabel = site.searchable
+		? Liferay.Language.get('yes')
+		: Liferay.Language.get('no');
 
 	return (
 		<div className="align-items-center d-flex">
-			{connection.kind === 'site' && (
+			{!isTemplate && (
 				<span className="c-mr-3 text-2 text-secondary">
 					{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
 				</span>
@@ -191,9 +149,9 @@ const ConnectableSelector = ({
 	externalReferenceCode,
 	onConnectionAdded,
 }: {
-	connections: Connection[];
+	connections: Site[];
 	externalReferenceCode: string;
-	onConnectionAdded: (connection: Connection) => void;
+	onConnectionAdded: (site: Site) => void;
 }) => {
 	const [kind, setKind] = useState<ConnectableKind>(ConnectableKind.SITES);
 	const [site, setSite] = useState<Site>();
@@ -205,14 +163,14 @@ const ConnectableSelector = ({
 		connections.some((connection) => {
 			if (kind === ConnectableKind.SITES) {
 				return (
-					connection.kind === 'site' &&
-					connection.site.externalReferenceCode === id
+					!isSiteTemplate(connection) &&
+					connection.externalReferenceCode === id
 				);
 			}
 
 			return (
-				connection.kind === 'site-template' &&
-				connection.siteTemplate.id === id
+				isSiteTemplate(connection) &&
+				connection.externalReferenceCode === id
 			);
 		});
 
@@ -230,7 +188,7 @@ const ConnectableSelector = ({
 			);
 
 			if (data) {
-				onConnectionAdded({kind: 'site', site: data});
+				onConnectionAdded(data);
 				showSuccessMessage(
 					sub(
 						Liferay.Language.get(
@@ -253,14 +211,20 @@ const ConnectableSelector = ({
 		}
 
 		if (kind === ConnectableKind.SITE_TEMPLATES && siteTemplate) {
-			const {data, error} =
-				await SiteTemplateService.connectSiteTemplateToSpace(
-					siteTemplate.id,
-					externalReferenceCode
-				);
+
+			// TODO LPD-82494: confirm the URL parameter and request body
+			// shape when Balázs lands the unified endpoint. The current
+			// guess passes the template id as the path parameter and a
+			// `type` discriminator in the body.
+
+			const {data, error} = await ConnectedSiteService.connectSiteToSpace(
+				externalReferenceCode,
+				siteTemplate.id,
+				{type: SITE_TEMPLATE_TYPE}
+			);
 
 			if (data) {
-				onConnectionAdded({kind: 'site-template', siteTemplate: data});
+				onConnectionAdded(data);
 				showSuccessMessage(
 					sub(
 						Liferay.Language.get(
@@ -399,80 +363,70 @@ export default function SpaceConnectedSitesModal({
 	externalReferenceCode: string;
 	hasConnectSitesPermission?: boolean;
 }) {
-	const [connections, setConnections] = useState<Connection[]>([]);
+	const [connections, setConnections] = useState<Site[]>([]);
 	const listLabelId = useId();
 
 	useEffect(() => {
 		const fetchConnections = async () => {
-			const [sitesResult, templatesResult] = await Promise.all([
-				ConnectedSiteService.getConnectedSitesFromSpace(
+			const {data} =
+				await ConnectedSiteService.getConnectedSitesFromSpace(
 					externalReferenceCode
-				),
-				SiteTemplateService.getConnectedSiteTemplates(
-					externalReferenceCode
-				),
-			]);
+				);
 
-			const next: Connection[] = [];
+			if (data) {
+				const sorted = [...data.items].sort((a, b) =>
+					a.descriptiveName.localeCompare(b.descriptiveName)
+				);
 
-			if (sitesResult.data) {
-				for (const site of sitesResult.data.items) {
-					next.push({kind: 'site', site});
-				}
+				setConnections(sorted);
 			}
-
-			if (templatesResult.data) {
-				for (const siteTemplate of templatesResult.data.items) {
-					next.push({kind: 'site-template', siteTemplate});
-				}
-			}
-
-			next.sort((a, b) =>
-				getConnectionName(a).localeCompare(getConnectionName(b))
-			);
-
-			setConnections(next);
 		};
 
 		fetchConnections();
 	}, [externalReferenceCode]);
 
-	const onConnectionAdded = (connection: Connection) => {
+	const onConnectionAdded = (site: Site) => {
 		setConnections((current) => {
 			if (
 				current.some(
 					(existing) =>
-						getConnectionKey(existing) ===
-						getConnectionKey(connection)
+						existing.externalReferenceCode ===
+							site.externalReferenceCode &&
+						isSiteTemplate(existing) === isSiteTemplate(site)
 				)
 			) {
 				return current;
 			}
 
-			const next = [...current, connection];
+			const next = [...current, site];
 
 			next.sort((a, b) =>
-				getConnectionName(a).localeCompare(getConnectionName(b))
+				a.descriptiveName.localeCompare(b.descriptiveName)
 			);
 
 			return next;
 		});
 	};
 
-	const onConnectionDisconnected = (connection: Connection) => {
+	const onConnectionDisconnected = (site: Site) => {
 		setConnections((current) =>
 			current.filter(
 				(existing) =>
-					getConnectionKey(existing) !== getConnectionKey(connection)
+					!(
+						existing.externalReferenceCode ===
+							site.externalReferenceCode &&
+						isSiteTemplate(existing) === isSiteTemplate(site)
+					)
 			)
 		);
 	};
 
-	const onConnectionChange = (connection: Connection) => {
+	const onConnectionChange = (site: Site) => {
 		setConnections((current) =>
 			current.map((existing) =>
-				getConnectionKey(existing) === getConnectionKey(connection)
-					? connection
+				existing.externalReferenceCode === site.externalReferenceCode &&
+				isSiteTemplate(existing) === isSiteTemplate(site)
+					? site
 					: existing
 			)
 		);
@@ -525,7 +479,7 @@ export default function SpaceConnectedSitesModal({
 							{connections.map((connection) => (
 								<li
 									className="align-items-center c-py-2 d-flex font-weight-semi-bold justify-content-between text-3"
-									key={getConnectionKey(connection)}
+									key={`${isSiteTemplate(connection) ? 'st' : 's'}:${connection.externalReferenceCode}`}
 								>
 									<div className="align-items-center d-flex">
 										<ClaySticker
@@ -534,13 +488,13 @@ export default function SpaceConnectedSitesModal({
 											shape="circle"
 											size="sm"
 										>
-											{connection.kind === 'site' ? (
+											{isSiteTemplate(connection) ? (
+												<ClayIcon symbol="cloud" />
+											) : (
 												<ClaySticker.Image
 													alt=""
-													src={connection.site.logo}
+													src={connection.logo}
 												/>
-											) : (
-												<ClayIcon symbol="cloud" />
 											)}
 										</ClaySticker>
 
@@ -549,7 +503,6 @@ export default function SpaceConnectedSitesModal({
 
 									{hasConnectSitesPermission && (
 										<ConnectableActions
-											connection={connection}
 											externalReferenceCode={
 												externalReferenceCode
 											}
@@ -559,6 +512,7 @@ export default function SpaceConnectedSitesModal({
 											onConnectionDisconnected={
 												onConnectionDisconnected
 											}
+											site={connection}
 										/>
 									)}
 								</li>

@@ -19,9 +19,26 @@ type FakeFilter = {
 	};
 };
 
+type FakeCustomDataRenderers = {
+	accountNameRenderer: (props: {
+		itemData: {id: string | number};
+		value: string;
+	}) => React.ReactElement;
+};
+
+let lastCustomDataRenderers: FakeCustomDataRenderers | undefined;
 let lastFilters: FakeFilter[] | undefined;
 
-const FakeDataSet = ({filters, id}: {filters: FakeFilter[]; id: string}) => {
+const FakeDataSet = ({
+	customDataRenderers,
+	filters,
+	id
+}: {
+	customDataRenderers: FakeCustomDataRenderers;
+	filters: FakeFilter[];
+	id: string;
+}) => {
+	lastCustomDataRenderers = customDataRenderers;
 	lastFilters = filters;
 
 	return <div data-testid='fds-component' id={id} />;
@@ -30,6 +47,7 @@ const FakeDataSet = ({filters, id}: {filters: FakeFilter[]; id: string}) => {
 describe('AccountsDataSet', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+		lastCustomDataRenderers = undefined;
 		lastFilters = undefined;
 		useFrontendDataSetMock.mockReturnValue(FakeDataSet);
 	});
@@ -116,5 +134,21 @@ describe('AccountsDataSet', () => {
 			exclude: false,
 			selectedItems: [{label: 'At Risk', value: 'atRisk'}]
 		});
+	});
+
+	it('should render the account name link with channelId in the href', () => {
+		render(<AccountsDataSet channelId='123' groupId='23' />);
+
+		const {container} = render(
+			lastCustomDataRenderers!.accountNameRenderer({
+				itemData: {id: 'abc'},
+				value: 'Acme Corp'
+			})
+		);
+
+		expect(container.querySelector('a')).toHaveAttribute(
+			'href',
+			'/workspace/23/123/contacts/accounts/abc'
+		);
 	});
 });

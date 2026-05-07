@@ -35,6 +35,7 @@ export default function EditVocabulary({
 	backURL,
 	cmsGroupId,
 	defaultLanguageId,
+	externalReferenceCodeMaxLength,
 	locales,
 	spritemap,
 	vocabularyId,
@@ -44,6 +45,7 @@ export default function EditVocabulary({
 	backURL: string;
 	cmsGroupId: number;
 	defaultLanguageId: string;
+	externalReferenceCodeMaxLength: number;
 	locales: any[];
 	spritemap: string;
 	vocabularyId: number;
@@ -252,6 +254,7 @@ export default function EditVocabulary({
 
 	const shouldDisableSaveBtn =
 		!vocabulary.name.trim().length ||
+		!!externalReferenceCodeInputError ||
 		!!spaceInputError ||
 		!!assetTypeInputError;
 
@@ -343,6 +346,9 @@ export default function EditVocabulary({
 									defaultLanguageId={defaultLanguageId}
 									externalReferenceCodeInputError={
 										externalReferenceCodeInputError
+									}
+									externalReferenceCodeMaxLength={
+										externalReferenceCodeMaxLength
 									}
 									isNew={isNew}
 									locales={locales}

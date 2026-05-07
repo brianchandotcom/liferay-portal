@@ -5,12 +5,14 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -77,6 +79,10 @@ public class EditVocabularyDisplayContext {
 		).put(
 			"defaultLanguageId",
 			LocaleUtil.toLanguageId(_themeDisplay.getSiteDefaultLocale())
+		).put(
+			"externalReferenceCodeMaxLength",
+			ModelHintsUtil.getMaxLength(
+				AssetVocabulary.class.getName(), "externalReferenceCode")
 		).put(
 			"locales",
 			JSONUtil.toJSONArray(

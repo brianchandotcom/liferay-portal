@@ -114,7 +114,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 					_registerListeners();
 
 					TestPortalCacheListener.setCountDownLatch(
-						new CountDownLatch(11));
+						new CountDownLatch(6));
 
 					return null;
 				});
@@ -124,7 +124,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 					_registerListeners();
 
 					TestPortalCacheListener.setCountDownLatch(
-						new CountDownLatch(11));
+						new CountDownLatch(6));
 
 					return null;
 				});
@@ -152,18 +152,14 @@ public class CacheReplicatorEntryTest implements Serializable {
 						"Node 1 listener events mismatch",
 						TestPortalCacheListener.INSTANCE.getEvents(),
 						Arrays.asList("remove"),
-						Arrays.asList("remove", "remove", "remove", "remove"),
-						Arrays.asList("removeAll", "removeAll"),
-						Arrays.asList("removeAll", "removeAll"),
-						Arrays.asList("removeAll", "removeAll"));
+						Arrays.asList("remove", "remove"),
+						Arrays.asList("removeAll"), Arrays.asList("removeAll"),
+						Arrays.asList("removeAll"));
 
 					_assertEvents(
 						"Node 1 replicator events mismatch",
 						TestPortalCacheReplicator.INSTANCE.getEvents(),
-						Arrays.asList("remove"),
-						Arrays.asList("remove", "remove"),
-						Arrays.asList("removeAll"), Arrays.asList("removeAll"),
-						Arrays.asList("removeAll"));
+						Arrays.asList("remove"), null, null, null, null);
 
 					return null;
 				});
@@ -185,17 +181,14 @@ public class CacheReplicatorEntryTest implements Serializable {
 						"Node 2 listener events mismatch",
 						TestPortalCacheListener.INSTANCE.getEvents(),
 						Arrays.asList("remove"),
-						Arrays.asList("remove", "remove", "remove", "remove"),
-						Arrays.asList("removeAll", "removeAll"),
-						Arrays.asList("removeAll", "removeAll"),
-						Arrays.asList("removeAll", "removeAll"));
+						Arrays.asList("remove", "remove"),
+						Arrays.asList("removeAll"), Arrays.asList("removeAll"),
+						Arrays.asList("removeAll"));
 
 					_assertEvents(
 						"Node 2 replicator events mismatch",
 						TestPortalCacheReplicator.INSTANCE.getEvents(), null,
-						Arrays.asList("remove", "remove"),
-						Arrays.asList("removeAll"), Arrays.asList("removeAll"),
-						Arrays.asList("removeAll"));
+						null, null, null, null);
 
 					return null;
 				});

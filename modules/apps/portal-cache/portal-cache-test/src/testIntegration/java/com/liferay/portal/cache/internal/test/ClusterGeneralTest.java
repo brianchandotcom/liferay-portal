@@ -574,11 +574,11 @@ public class ClusterGeneralTest implements Serializable {
 
 		Object[] values = masterTomcatNode.syncExecute(
 			() -> {
-				try {
-					PermissionThreadLocal.setPermissionChecker(
-						PermissionCheckerFactoryUtil.create(
-							TestPropsValues.getUser()));
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(
+						TestPropsValues.getUser()));
 
+				try {
 					Group liveGroup = GroupTestUtil.addGroup();
 
 					long liveGroupId = liveGroup.getGroupId();
@@ -801,11 +801,11 @@ public class ClusterGeneralTest implements Serializable {
 
 		return tomcatNode.syncExecute(
 			() -> {
-				try {
-					PermissionThreadLocal.setPermissionChecker(
-						PermissionCheckerFactoryUtil.create(
-							TestPropsValues.getUser()));
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(
+						TestPropsValues.getUser()));
 
+				try {
 					Indexer<BlogsEntry> indexer =
 						IndexerRegistryUtil.getIndexer(BlogsEntry.class);
 
@@ -863,13 +863,13 @@ public class ClusterGeneralTest implements Serializable {
 			() -> {
 				String originalName = PrincipalThreadLocal.getName();
 
+				PrincipalThreadLocal.setName(userId);
+
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(
+						TestPropsValues.getUser()));
+
 				try {
-					PrincipalThreadLocal.setName(userId);
-
-					PermissionThreadLocal.setPermissionChecker(
-						PermissionCheckerFactoryUtil.create(
-							TestPropsValues.getUser()));
-
 					StagingUtil.publishLayouts(
 						userId, exportImportConfigurationId);
 

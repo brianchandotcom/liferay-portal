@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.cache;
 
+import com.liferay.petra.lang.SafeCloseable;
+
 import java.io.Serializable;
 
 /**
@@ -64,38 +66,20 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable, V> void putWithoutReplicator(
 		PortalCache<K, V> portalCache, K key, V value, int timeToLive) {
 
-		boolean enabled = SkipReplicationThreadLocal.isEnabled();
+		try (SafeCloseable safeCloseable =
+				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		if (!enabled) {
-			SkipReplicationThreadLocal.setEnabled(true);
-		}
-
-		try {
 			portalCache.put(key, value, timeToLive);
-		}
-		finally {
-			if (!enabled) {
-				SkipReplicationThreadLocal.setEnabled(false);
-			}
 		}
 	}
 
 	public static void removeAllWithoutReplicator(
 		PortalCache<?, ?> portalCache) {
 
-		boolean skip = SkipReplicationThreadLocal.isEnabled();
+		try (SafeCloseable safeCloseable =
+				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		if (!skip) {
-			SkipReplicationThreadLocal.setEnabled(true);
-		}
-
-		try {
 			portalCache.removeAll();
-		}
-		finally {
-			if (!skip) {
-				SkipReplicationThreadLocal.setEnabled(false);
-			}
 		}
 	}
 
@@ -122,19 +106,10 @@ public class PortalCacheHelperUtil {
 	public static <K extends Serializable> void removeWithoutReplicator(
 		PortalCache<K, ?> portalCache, K key) {
 
-		boolean skip = SkipReplicationThreadLocal.isEnabled();
+		try (SafeCloseable safeCloseable =
+				SkipReplicationThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		if (!skip) {
-			SkipReplicationThreadLocal.setEnabled(true);
-		}
-
-		try {
 			portalCache.remove(key);
-		}
-		finally {
-			if (!skip) {
-				SkipReplicationThreadLocal.setEnabled(false);
-			}
 		}
 	}
 

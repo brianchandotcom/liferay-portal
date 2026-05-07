@@ -587,9 +587,25 @@ public class PullRequest {
 	}
 
 	public String getMergeableState() {
-		_refreshJSONObject();
+		Retryable<String> retryable = new Retryable<String>(false, 5, 5, true) {
 
-		return _jsonObject.getString("mergeable_state");
+			@Override
+			public String execute() {
+				_refreshJSONObject();
+
+				String mergeableState = _jsonObject.getString(
+					"mergeable_state");
+
+				if (mergeableState.equals("unknown")) {
+					throw new RuntimeException("mergeable_state is unknown");
+				}
+
+				return mergeableState;
+			}
+
+		};
+
+		return retryable.executeWithRetries();
 	}
 
 	public String getNumber() {

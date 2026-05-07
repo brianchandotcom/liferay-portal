@@ -4,6 +4,10 @@
 
 A `workspaces/**` file changed.
 
+## Match
+
+`^workspaces/`
+
 ## Command
 
 Per affected workspace:

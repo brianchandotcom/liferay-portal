@@ -8,6 +8,10 @@
 
 Auto-generated REST DTOs, resources, and clients are **not** triggers on their own — drift is caught by `git diff --quiet`.
 
+## Match
+
+`/rest-config\.yaml$|/rest-openapi\.yaml$|/dto/v[0-9_]+/[^/]+\.java$|SerDes\.java$|OpenAPIResource[^/]*\.java$|Base[^/]*ResourceTestCase\.java$`
+
 ## Command
 
 ```bash

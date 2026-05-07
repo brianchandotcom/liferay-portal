@@ -12,6 +12,10 @@
 
 	N is the deploy set size as defined in [per-module-deploy.md](per-module-deploy.md). Show the cost math when picking this branch so the developer can override.
 
+## Match
+
+`^(portal-impl|portal-kernel|portal-test|portal-web|support-tomcat|util-bridges|util-java|util-slf4j|util-taglib)/`
+
 ## Command
 
 ```bash

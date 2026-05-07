@@ -4,6 +4,10 @@
 
 Always, except when the entire diff is documentation or language properties (`*.md`, `Language*.properties`) — the smoke baseline does not exercise documentation.
 
+## Match
+
+`!\.md$|/Language(_[a-zA-Z_]+)?\.properties$`
+
 ## Command
 
 A fixed five-class set: `ConfigurationEnvBuilderTest`, `LibraryReferenceTest`, `Log4jConfigUtilTest`, `ModulesStructureTest`, `SampleSQLBuilderTest`.

@@ -7,15 +7,19 @@ package com.liferay.asset.categories.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
+import com.liferay.asset.kernel.exception.VocabularyExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.VocabularyVisibilityTypeException;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -58,13 +62,29 @@ public class AssetVocabularyLocalServiceTest {
 	}
 
 	@Test
-	public void testAddVocabulary() {
+	@TestInfo("LPD-88752")
+	public void testAddVocabulary() throws Exception {
 		AssertUtils.assertFailure(
 			VocabularyVisibilityTypeException.class, null,
 			() -> _assetVocabularyLocalService.addVocabulary(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), null, new HashMap<>(), null,
 				null, 3, ServiceContextTestUtil.getServiceContext()));
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			AssetVocabulary.class.getName(), "externalReferenceCode");
+
+		AssertUtils.assertFailure(
+			VocabularyExternalReferenceCodeException.class,
+			StringBundler.concat(
+				"External reference code length cannot exceed ", maxLength,
+				" characters"),
+			() -> _assetVocabularyLocalService.addVocabulary(
+				StringUtil.randomString(maxLength + 1),
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), null, new HashMap<>(), null,
+				null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+				ServiceContextTestUtil.getServiceContext()));
 	}
 
 	@Test

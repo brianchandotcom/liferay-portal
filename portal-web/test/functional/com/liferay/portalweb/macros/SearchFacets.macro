@@ -363,10 +363,15 @@ definition {
 
 	@summary = "Default summary"
 	macro sortQueryParameters(searchURL = null) {
+		if (!(contains(${searchURL}, "?"))) {
+			return ${searchURL};
+		}
+
 		var baseURL = StringUtil.extractFirst(${searchURL}, "?");
 		var queryString = StringUtil.extractLast(${searchURL}, "?");
 
 		var queryParamList = StringUtil.replace(${queryString}, "&", ",");
+
 		var queryParamList = ListUtil.sort(${queryParamList});
 
 		var queryString = StringUtil.replace(${queryParamList}, ",", "&");

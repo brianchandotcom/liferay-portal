@@ -95,7 +95,7 @@ public class AssetStatisticsResourceTest
 			irrelevantObjectEntry.getObjectEntryId(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(0, 0, 0, 0);
+		_assertAssetStatistics(0, 0, 0, 0, 0);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
@@ -126,7 +126,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry1);
 
-		_assertAssetStatistics(0, 0, 0, 0);
+		_assertAssetStatistics(0, 0, 0, 0, 1);
 
 		// Add object entry with future review date
 
@@ -137,7 +137,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry2);
 
-		_assertAssetStatistics(0, 0, 0, 0);
+		_assertAssetStatistics(0, 0, 0, 0, 2);
 
 		// Add object entry with imminent expiration date
 
@@ -149,7 +149,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry3);
 
-		_assertAssetStatistics(0, 1, 0, 0);
+		_assertAssetStatistics(0, 1, 0, 0, 3);
 
 		// Add object entry with overdue review date
 
@@ -160,7 +160,7 @@ public class AssetStatisticsResourceTest
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry4);
 
-		_assertAssetStatistics(0, 1, 0, 1);
+		_assertAssetStatistics(0, 1, 0, 1, 4);
 
 		// Add object entry with status draft
 
@@ -171,7 +171,7 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), objectEntry5.getObjectEntryId(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertAssetStatistics(0, 1, 1, 1);
+		_assertAssetStatistics(0, 1, 1, 1, 5);
 
 		// Add object entry with status expired
 
@@ -182,7 +182,18 @@ public class AssetStatisticsResourceTest
 			TestPropsValues.getUserId(), objectEntry6.getObjectEntryId(),
 			WorkflowConstants.STATUS_EXPIRED, serviceContext);
 
-		_assertAssetStatistics(1, 1, 1, 1);
+		_assertAssetStatistics(1, 1, 1, 1, 6);
+
+		// Add object entry in a status that is not visible in the All view
+
+		ObjectEntry objectEntry7 = _addObjectEntry(
+			depotEntry, objectDefinition);
+
+		_objectEntryLocalService.updateStatus(
+			TestPropsValues.getUserId(), objectEntry7.getObjectEntryId(),
+			WorkflowConstants.STATUS_DENIED, serviceContext);
+
+		_assertAssetStatistics(1, 1, 1, 1, 6);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			irrelevantObjectDefinition);
@@ -224,7 +235,8 @@ public class AssetStatisticsResourceTest
 
 	private void _assertAssetStatistics(
 			long expectedExpiredCount, long expectedExpiringSoonCount,
-			long expectedInDraftCount, long expectedReviewDateOverdueCount)
+			long expectedInDraftCount, long expectedReviewDateOverdueCount,
+			long expectedTotalCount)
 		throws Exception {
 
 		AssetStatistics assetStatistics =
@@ -242,6 +254,9 @@ public class AssetStatisticsResourceTest
 		Assert.assertEquals(
 			expectedReviewDateOverdueCount,
 			GetterUtil.getLong(assetStatistics.getReviewDateOverdueCount()));
+		Assert.assertEquals(
+			expectedTotalCount,
+			GetterUtil.getLong(assetStatistics.getTotalCount()));
 	}
 
 	@Inject

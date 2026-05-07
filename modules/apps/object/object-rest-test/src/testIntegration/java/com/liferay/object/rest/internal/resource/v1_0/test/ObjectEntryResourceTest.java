@@ -123,6 +123,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
@@ -15883,7 +15884,7 @@ public class ObjectEntryResourceTest {
 			JSONAssert.assertEquals(
 				String.valueOf(object),
 				String.valueOf(jsonObject2.get(objectFieldName)),
-				JSONCompareMode.LENIENT);
+				JSONCompareMode.STRICT);
 		}
 	}
 
@@ -16480,6 +16481,8 @@ public class ObjectEntryResourceTest {
 		JSONObject jsonObject = JSONUtil.put(
 			"alternativeText", dlFileVersion.getDescription()
 		).put(
+			"extension", dlFileEntry::getExtension
+		).put(
 			"externalReferenceCode", dlFileEntry::getExternalReferenceCode
 		).put(
 			"id", _testDLFileEntryModelListener.getLastFileEntryId()
@@ -16602,6 +16605,9 @@ public class ObjectEntryResourceTest {
 
 				return JSONFactoryUtil.createJSONObject(scope.toString());
 			}
+		).put(
+			"size",
+			LanguageUtil.formatStorageSize(dlFileEntry.getSize(), LocaleUtil.US)
 		);
 
 		String fileSource = ObjectFieldSettingUtil.getValue(

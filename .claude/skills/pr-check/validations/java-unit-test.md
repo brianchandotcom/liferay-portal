@@ -23,10 +23,10 @@ For OSGi modules — run only the specific test class, batching counterparts wit
 ```bash
 "${REPO_ROOT}/gradlew" \
 	--continue \
-	-Dtest.ignore.failures=false \
 	--project-dir "${REPO_ROOT}/modules" \
 	--tests "<FQN1>" \
 	--tests "<FQN2>" \
+	-Dtest.ignore.failures=false \
 	:<path>:test
 ```
 

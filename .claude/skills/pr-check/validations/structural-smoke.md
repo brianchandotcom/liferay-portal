@@ -25,9 +25,9 @@ The five tests live in three places: two in `portal-impl/test/unit`, two in `por
 ```bash
 "${REPO_ROOT}/gradlew" \
 	--continue \
-	-Dtest.ignore.failures=false \
 	--project-dir "${REPO_ROOT}/modules" \
 	--tests "*.SampleSQLBuilderTest" \
+	-Dtest.ignore.failures=false \
 	:util:portal-tools-sample-sql-builder:test
 ```
 

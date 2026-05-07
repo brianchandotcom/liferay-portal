@@ -74,12 +74,12 @@ public class GlobalPrivacyControlProviderImpl
 			return false;
 		}
 
-		Enumeration<String> headersEnumeration = httpServletRequest.getHeaders(
+		Enumeration<String> enumeration = httpServletRequest.getHeaders(
 			"Sec-GPC");
 
-		while (headersEnumeration.hasMoreElements()) {
+		while (enumeration.hasMoreElements()) {
 			if (Objects.equals(
-					StringUtil.trim(headersEnumeration.nextElement()), "1")) {
+					StringUtil.trim(enumeration.nextElement()), "1")) {
 
 				return true;
 			}

@@ -532,4 +532,4 @@ public class FormContainerConfig implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-909634921
+// LIFERAY-REST-BUILDER-HASH:-364844649

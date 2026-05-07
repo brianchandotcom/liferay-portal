@@ -315,4 +315,4 @@ public class DateFragmentEditableElementValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:912573662
+// LIFERAY-REST-BUILDER-HASH:-2115724322

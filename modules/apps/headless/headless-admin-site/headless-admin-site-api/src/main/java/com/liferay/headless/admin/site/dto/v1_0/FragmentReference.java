@@ -316,4 +316,4 @@ public abstract class FragmentReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1015199358
+// LIFERAY-REST-BUILDER-HASH:477287042

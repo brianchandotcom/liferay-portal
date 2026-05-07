@@ -676,4 +676,4 @@ public class AccountCategoryForecast implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:902749393
+// LIFERAY-REST-BUILDER-HASH:-2075007535

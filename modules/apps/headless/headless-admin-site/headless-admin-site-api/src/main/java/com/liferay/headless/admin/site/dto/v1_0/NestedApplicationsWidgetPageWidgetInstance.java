@@ -414,4 +414,4 @@ public class NestedApplicationsWidgetPageWidgetInstance
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1942736791
+// LIFERAY-REST-BUILDER-HASH:-2089764503

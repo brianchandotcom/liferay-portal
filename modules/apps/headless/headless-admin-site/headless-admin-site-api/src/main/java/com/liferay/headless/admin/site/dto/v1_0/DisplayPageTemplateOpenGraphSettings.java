@@ -420,4 +420,4 @@ public class DisplayPageTemplateOpenGraphSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-499914418
+// LIFERAY-REST-BUILDER-HASH:163738190

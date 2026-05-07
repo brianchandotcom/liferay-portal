@@ -675,4 +675,4 @@ public class Diagram implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-574944074
+// LIFERAY-REST-BUILDER-HASH:1929094070

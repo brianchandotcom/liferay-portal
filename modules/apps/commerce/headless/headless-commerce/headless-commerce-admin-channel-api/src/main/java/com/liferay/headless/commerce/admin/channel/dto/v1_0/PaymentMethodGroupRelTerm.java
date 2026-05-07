@@ -518,4 +518,4 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1644541910
+// LIFERAY-REST-BUILDER-HASH:766263510

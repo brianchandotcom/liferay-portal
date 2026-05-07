@@ -367,4 +367,4 @@ public class CollectionItemExternalReference
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-844735351
+// LIFERAY-REST-BUILDER-HASH:-2047220343

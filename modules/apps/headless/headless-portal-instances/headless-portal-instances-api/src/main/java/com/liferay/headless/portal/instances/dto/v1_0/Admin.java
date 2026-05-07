@@ -351,4 +351,4 @@ public class Admin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:863631075
+// LIFERAY-REST-BUILDER-HASH:1710231011

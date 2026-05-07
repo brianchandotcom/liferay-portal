@@ -406,4 +406,4 @@ public class PageRuleCondition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-423880733
+// LIFERAY-REST-BUILDER-HASH:-798134557

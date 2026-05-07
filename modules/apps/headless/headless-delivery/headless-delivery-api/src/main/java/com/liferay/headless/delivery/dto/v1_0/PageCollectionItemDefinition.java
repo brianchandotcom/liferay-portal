@@ -252,4 +252,4 @@ public class PageCollectionItemDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-993773635
+// LIFERAY-REST-BUILDER-HASH:1598230205

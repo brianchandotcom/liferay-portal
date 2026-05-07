@@ -456,4 +456,4 @@ public class AggregateRating implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:262319719
+// LIFERAY-REST-BUILDER-HASH:1172063591

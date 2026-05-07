@@ -574,4 +574,4 @@ public class DiscountProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:65184628
+// LIFERAY-REST-BUILDER-HASH:-1818350476

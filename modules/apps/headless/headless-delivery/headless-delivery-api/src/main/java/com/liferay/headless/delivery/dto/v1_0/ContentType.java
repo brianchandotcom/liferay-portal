@@ -233,4 +233,4 @@ public class ContentType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1975216140
+// LIFERAY-REST-BUILDER-HASH:-1198543116

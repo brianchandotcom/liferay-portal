@@ -343,4 +343,4 @@ public class SystemProperties implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1565633521
+// LIFERAY-REST-BUILDER-HASH:464880369

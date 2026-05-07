@@ -294,4 +294,4 @@ public class TemplateReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:943721775
+// LIFERAY-REST-BUILDER-HASH:2048939567

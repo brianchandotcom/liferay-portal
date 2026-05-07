@@ -316,4 +316,4 @@ public abstract class CollectionReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-221357757
+// LIFERAY-REST-BUILDER-HASH:-1018322365

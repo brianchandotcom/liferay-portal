@@ -655,4 +655,4 @@ public class FormFragmentInstancePageElementDefinition
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:65516767
+// LIFERAY-REST-BUILDER-HASH:1225051103

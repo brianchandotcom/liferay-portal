@@ -291,4 +291,4 @@ public class ContentSubtype implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-697514104
+// LIFERAY-REST-BUILDER-HASH:-154840952

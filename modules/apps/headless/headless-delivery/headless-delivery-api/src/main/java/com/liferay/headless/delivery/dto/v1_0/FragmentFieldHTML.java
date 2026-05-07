@@ -246,4 +246,4 @@ public class FragmentFieldHTML implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-354032235
+// LIFERAY-REST-BUILDER-HASH:-1425445227

@@ -239,4 +239,4 @@ public class URLActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1913595527
+// LIFERAY-REST-BUILDER-HASH:-1713504889

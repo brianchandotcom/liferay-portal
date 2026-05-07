@@ -448,4 +448,4 @@ public class Hit implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-450720738
+// LIFERAY-REST-BUILDER-HASH:-667331298

@@ -952,4 +952,4 @@ public class Currency implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1777135056
+// LIFERAY-REST-BUILDER-HASH:24147664

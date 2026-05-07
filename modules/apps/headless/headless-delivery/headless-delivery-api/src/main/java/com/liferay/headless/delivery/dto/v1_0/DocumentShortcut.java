@@ -882,4 +882,4 @@ public class DocumentShortcut implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-398379363
+// LIFERAY-REST-BUILDER-HASH:-1787117667

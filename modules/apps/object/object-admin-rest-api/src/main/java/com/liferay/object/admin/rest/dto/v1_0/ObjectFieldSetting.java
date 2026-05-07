@@ -400,4 +400,4 @@ public class ObjectFieldSetting implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:899589450
+// LIFERAY-REST-BUILDER-HASH:-2142159798

@@ -789,4 +789,4 @@ public class AgentDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:921415686
+// LIFERAY-REST-BUILDER-HASH:-1692124922

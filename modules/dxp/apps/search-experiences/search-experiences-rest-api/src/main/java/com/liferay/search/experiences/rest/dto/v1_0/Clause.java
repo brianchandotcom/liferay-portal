@@ -794,4 +794,4 @@ public class Clause implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:234030055
+// LIFERAY-REST-BUILDER-HASH:149277927

@@ -292,4 +292,4 @@ public class SuccessNotificationMessage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1923996734
+// LIFERAY-REST-BUILDER-HASH:1279143106

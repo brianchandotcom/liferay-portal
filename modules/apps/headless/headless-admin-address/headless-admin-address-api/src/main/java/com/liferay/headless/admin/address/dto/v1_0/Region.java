@@ -559,4 +559,4 @@ public class Region implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2016816282
+// LIFERAY-REST-BUILDER-HASH:1679534694

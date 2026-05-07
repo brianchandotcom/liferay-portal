@@ -422,4 +422,4 @@ public class BaseScim implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-355815799
+// LIFERAY-REST-BUILDER-HASH:1111344521

@@ -233,4 +233,4 @@ public class GenericError implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:355964136
+// LIFERAY-REST-BUILDER-HASH:1289723368

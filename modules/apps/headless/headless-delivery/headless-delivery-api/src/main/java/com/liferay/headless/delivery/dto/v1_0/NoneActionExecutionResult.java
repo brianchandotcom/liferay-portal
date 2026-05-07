@@ -237,4 +237,4 @@ public class NoneActionExecutionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:634905022
+// LIFERAY-REST-BUILDER-HASH:49772734

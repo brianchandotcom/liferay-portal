@@ -669,4 +669,4 @@ public class TaxonomyCategoryBrief implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-640242876
+// LIFERAY-REST-BUILDER-HASH:-1058618812

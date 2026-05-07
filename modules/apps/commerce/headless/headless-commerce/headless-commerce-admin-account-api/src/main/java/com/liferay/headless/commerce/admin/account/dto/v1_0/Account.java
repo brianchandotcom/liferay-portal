@@ -1242,4 +1242,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-416352417
+// LIFERAY-REST-BUILDER-HASH:-1552839073

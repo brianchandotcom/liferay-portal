@@ -261,4 +261,4 @@ public class PageSetPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-861601075
+// LIFERAY-REST-BUILDER-HASH:560716237

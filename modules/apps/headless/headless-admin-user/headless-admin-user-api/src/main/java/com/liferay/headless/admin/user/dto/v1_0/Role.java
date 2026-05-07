@@ -1022,4 +1022,4 @@ public class Role implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-818631952
+// LIFERAY-REST-BUILDER-HASH:-2114817040

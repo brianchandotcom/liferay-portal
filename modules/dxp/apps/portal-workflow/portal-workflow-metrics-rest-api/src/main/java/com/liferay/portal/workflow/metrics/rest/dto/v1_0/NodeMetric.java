@@ -552,4 +552,4 @@ public class NodeMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1463840940
+// LIFERAY-REST-BUILDER-HASH:103201196

@@ -494,4 +494,4 @@ public class EmbeddingProviderConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1144413635
+// LIFERAY-REST-BUILDER-HASH:897853123

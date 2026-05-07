@@ -453,4 +453,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:362366001
+// LIFERAY-REST-BUILDER-HASH:1307171633

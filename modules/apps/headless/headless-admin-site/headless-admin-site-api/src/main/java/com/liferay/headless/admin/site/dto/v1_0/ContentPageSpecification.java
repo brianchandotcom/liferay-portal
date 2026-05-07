@@ -461,4 +461,4 @@ public class ContentPageSpecification
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-724315329
+// LIFERAY-REST-BUILDER-HASH:449227327

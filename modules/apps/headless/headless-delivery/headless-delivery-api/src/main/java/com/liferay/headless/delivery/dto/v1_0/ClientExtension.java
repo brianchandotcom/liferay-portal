@@ -353,4 +353,4 @@ public class ClientExtension implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2008504879
+// LIFERAY-REST-BUILDER-HASH:1215659217

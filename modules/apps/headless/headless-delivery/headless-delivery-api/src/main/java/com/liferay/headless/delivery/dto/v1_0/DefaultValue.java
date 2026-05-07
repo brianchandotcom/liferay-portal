@@ -291,4 +291,4 @@ public class DefaultValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:786120550
+// LIFERAY-REST-BUILDER-HASH:429119078

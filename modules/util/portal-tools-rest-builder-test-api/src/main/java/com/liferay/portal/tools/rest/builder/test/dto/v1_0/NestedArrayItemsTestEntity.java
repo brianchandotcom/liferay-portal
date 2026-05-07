@@ -302,4 +302,4 @@ public class NestedArrayItemsTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-18738108
+// LIFERAY-REST-BUILDER-HASH:-2098517180

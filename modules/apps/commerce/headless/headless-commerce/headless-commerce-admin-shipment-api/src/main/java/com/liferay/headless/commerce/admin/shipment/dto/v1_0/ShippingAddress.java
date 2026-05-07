@@ -967,4 +967,4 @@ public class ShippingAddress implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1845669318
+// LIFERAY-REST-BUILDER-HASH:-1508172998

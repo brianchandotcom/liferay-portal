@@ -549,4 +549,4 @@ public class VocabularyNavigationMenuItemSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-448960334
+// LIFERAY-REST-BUILDER-HASH:1766260658

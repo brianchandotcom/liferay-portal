@@ -339,4 +339,4 @@ public class InvitedMember implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-386030802
+// LIFERAY-REST-BUILDER-HASH:-936170450

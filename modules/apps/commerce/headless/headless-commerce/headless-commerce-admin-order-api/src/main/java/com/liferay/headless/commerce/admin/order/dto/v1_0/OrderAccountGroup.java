@@ -285,4 +285,4 @@ public class OrderAccountGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:575864962
+// LIFERAY-REST-BUILDER-HASH:-1085290110

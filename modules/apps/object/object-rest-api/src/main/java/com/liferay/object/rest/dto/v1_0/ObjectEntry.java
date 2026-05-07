@@ -1271,6 +1271,13 @@ public class ObjectEntry implements Serializable {
 		return Objects.equals(toString(), objectEntry.toString());
 	}
 
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
 	public Object getPropertyValue(String propertyName) {
 		if (Objects.equals(propertyName, "actions")) {
 			return getActions();
@@ -1488,13 +1495,6 @@ public class ObjectEntry implements Serializable {
 		private final UnsafeSupplier<T, E> _unsafeSupplier;
 		private T _value;
 
-	}
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
 	}
 
 	public String toString() {
@@ -2041,4 +2041,4 @@ public class ObjectEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1306455185
+// LIFERAY-REST-BUILDER-HASH:-1310536243

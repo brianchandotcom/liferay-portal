@@ -350,4 +350,4 @@ public class GridViewportDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-420208089
+// LIFERAY-REST-BUILDER-HASH:-1676773081

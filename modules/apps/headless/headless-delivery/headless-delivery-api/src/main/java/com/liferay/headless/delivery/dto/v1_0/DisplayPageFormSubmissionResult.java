@@ -416,4 +416,4 @@ public class DisplayPageFormSubmissionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1981750489
+// LIFERAY-REST-BUILDER-HASH:1329440217

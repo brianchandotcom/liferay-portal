@@ -641,4 +641,4 @@ public class Creator implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1177081218
+// LIFERAY-REST-BUILDER-HASH:1733247358

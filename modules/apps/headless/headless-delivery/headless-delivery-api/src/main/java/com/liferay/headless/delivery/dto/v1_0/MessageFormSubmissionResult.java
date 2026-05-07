@@ -470,4 +470,4 @@ public class MessageFormSubmissionResult implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1599433390
+// LIFERAY-REST-BUILDER-HASH:-784845906

@@ -346,4 +346,4 @@ public class LinkedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:531534466
+// LIFERAY-REST-BUILDER-HASH:-1929713278

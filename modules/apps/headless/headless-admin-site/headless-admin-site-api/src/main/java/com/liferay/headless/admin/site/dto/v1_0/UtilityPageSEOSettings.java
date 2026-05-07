@@ -299,4 +299,4 @@ public class UtilityPageSEOSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1387831608
+// LIFERAY-REST-BUILDER-HASH:390543416

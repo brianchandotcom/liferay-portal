@@ -308,6 +308,13 @@ public class JSONMapAttributeTestEntity implements Serializable {
 			toString(), jsonMapAttributeTestEntity.toString());
 	}
 
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
 	public Object getPropertyValue(String propertyName) {
 		if (Objects.equals(propertyName, "description")) {
 			return getDescription();
@@ -394,13 +401,6 @@ public class JSONMapAttributeTestEntity implements Serializable {
 		private final UnsafeSupplier<T, E> _unsafeSupplier;
 		private T _value;
 
-	}
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
 	}
 
 	public String toString() {
@@ -565,4 +565,4 @@ public class JSONMapAttributeTestEntity implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1388070878
+// LIFERAY-REST-BUILDER-HASH:8256460

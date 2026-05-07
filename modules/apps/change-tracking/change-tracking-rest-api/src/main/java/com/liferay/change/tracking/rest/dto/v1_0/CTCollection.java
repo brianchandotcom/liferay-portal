@@ -816,4 +816,4 @@ public class CTCollection implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1293571585
+// LIFERAY-REST-BUILDER-HASH:-179420929

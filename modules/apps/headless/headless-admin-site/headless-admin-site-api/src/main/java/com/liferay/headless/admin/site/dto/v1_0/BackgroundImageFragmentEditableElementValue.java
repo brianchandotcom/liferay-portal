@@ -266,4 +266,4 @@ public class BackgroundImageFragmentEditableElementValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2037242294
+// LIFERAY-REST-BUILDER-HASH:939614902

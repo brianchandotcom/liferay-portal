@@ -339,4 +339,4 @@ public class Status implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1343798479
+// LIFERAY-REST-BUILDER-HASH:-775988687

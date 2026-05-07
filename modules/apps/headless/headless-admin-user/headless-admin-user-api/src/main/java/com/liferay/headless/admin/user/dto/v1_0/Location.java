@@ -529,4 +529,4 @@ public class Location implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1423865953
+// LIFERAY-REST-BUILDER-HASH:1071816351

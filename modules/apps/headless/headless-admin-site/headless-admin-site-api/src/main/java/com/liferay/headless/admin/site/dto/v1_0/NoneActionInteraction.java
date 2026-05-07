@@ -251,4 +251,4 @@ public class NoneActionInteraction
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1286348484
+// LIFERAY-REST-BUILDER-HASH:666089532

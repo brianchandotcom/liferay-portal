@@ -577,4 +577,4 @@ public class WarehouseAccount implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-386394664
+// LIFERAY-REST-BUILDER-HASH:1313038040

@@ -309,4 +309,4 @@ public class Service implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1268860687
+// LIFERAY-REST-BUILDER-HASH:-1972187121

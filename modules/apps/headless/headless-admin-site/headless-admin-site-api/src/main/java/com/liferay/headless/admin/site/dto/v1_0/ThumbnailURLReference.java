@@ -291,4 +291,4 @@ public class ThumbnailURLReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:523528375
+// LIFERAY-REST-BUILDER-HASH:710996407

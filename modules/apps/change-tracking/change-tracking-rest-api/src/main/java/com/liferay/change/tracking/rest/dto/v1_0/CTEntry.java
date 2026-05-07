@@ -1348,4 +1348,4 @@ public class CTEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-590108986
+// LIFERAY-REST-BUILDER-HASH:-78450746

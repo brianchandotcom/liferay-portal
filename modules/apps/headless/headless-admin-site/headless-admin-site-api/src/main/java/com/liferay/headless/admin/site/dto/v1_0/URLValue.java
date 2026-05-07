@@ -299,4 +299,4 @@ public abstract class URLValue implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-348013219
+// LIFERAY-REST-BUILDER-HASH:1868354653

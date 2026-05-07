@@ -318,4 +318,4 @@ public class VideoFragmentConfigurationFieldValue
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1354486248
+// LIFERAY-REST-BUILDER-HASH:1480943848

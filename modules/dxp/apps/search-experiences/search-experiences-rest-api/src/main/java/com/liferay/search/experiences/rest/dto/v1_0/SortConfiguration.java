@@ -241,4 +241,4 @@ public class SortConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:988379543
+// LIFERAY-REST-BUILDER-HASH:-534589289

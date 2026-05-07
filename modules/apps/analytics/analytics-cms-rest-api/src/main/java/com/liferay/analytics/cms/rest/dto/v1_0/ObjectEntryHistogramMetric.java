@@ -244,4 +244,4 @@ public class ObjectEntryHistogramMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:791623539
+// LIFERAY-REST-BUILDER-HASH:-1283850125

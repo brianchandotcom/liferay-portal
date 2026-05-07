@@ -403,4 +403,4 @@ public class ObjectReviewed implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1635859275
+// LIFERAY-REST-BUILDER-HASH:-1168323147

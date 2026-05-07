@@ -412,4 +412,4 @@ public class SuggestionsContributorConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-428326665
+// LIFERAY-REST-BUILDER-HASH:1853151223

@@ -623,4 +623,4 @@ public class ListTypeDefinition implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1267708670
+// LIFERAY-REST-BUILDER-HASH:141363710

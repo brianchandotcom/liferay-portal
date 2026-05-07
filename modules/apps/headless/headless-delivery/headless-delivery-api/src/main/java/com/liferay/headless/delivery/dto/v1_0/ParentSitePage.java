@@ -236,4 +236,4 @@ public class ParentSitePage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:747512289
+// LIFERAY-REST-BUILDER-HASH:239200993

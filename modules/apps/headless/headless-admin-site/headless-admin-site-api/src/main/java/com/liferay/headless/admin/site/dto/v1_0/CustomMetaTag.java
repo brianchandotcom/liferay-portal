@@ -290,4 +290,4 @@ public class CustomMetaTag implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1703196896
+// LIFERAY-REST-BUILDER-HASH:-433156064

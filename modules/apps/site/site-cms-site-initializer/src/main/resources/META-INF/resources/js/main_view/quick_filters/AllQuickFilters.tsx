@@ -35,6 +35,7 @@ interface QuickFilterCounts {
 	expiringSoon: number;
 	inDraft: number;
 	reviewDateOverdue: number;
+	total: number;
 }
 
 function toDatePart(date: Date) {
@@ -110,6 +111,7 @@ export default function AllQuickFilters() {
 		expiringSoon: 0,
 		inDraft: 0,
 		reviewDateOverdue: 0,
+		total: 0,
 	});
 
 	const fetchCounts = useCallback(() => {
@@ -131,6 +133,7 @@ export default function AllQuickFilters() {
 					expiringSoon: data.expiringSoonCount ?? 0,
 					inDraft: data.inDraftCount ?? 0,
 					reviewDateOverdue: data.reviewDateOverdueCount ?? 0,
+					total: data.totalCount ?? 0,
 				});
 			})
 			.catch((error) => {
@@ -249,6 +252,10 @@ export default function AllQuickFilters() {
 
 		setActiveQuickFilter(null);
 	}, [allFDSState.filters]);
+
+	if (counts.total === 0) {
+		return null;
+	}
 
 	return (
 		<div className="all-quick-filters-container">

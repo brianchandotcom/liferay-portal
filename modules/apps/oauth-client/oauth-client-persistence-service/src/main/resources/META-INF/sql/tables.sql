@@ -8,7 +8,7 @@ create table OAuthClientASLocalMetadata (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	issuer VARCHAR(75) null,
+	issuer VARCHAR(256) null,
 	localWellKnownEnabled BOOLEAN,
 	localWellKnownURI VARCHAR(256) null,
 	metadataJSON TEXT null,

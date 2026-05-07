@@ -29,9 +29,9 @@
 <#assign
 	fieldNamespace = "_INSTANCE_" + fieldStructure.fieldNamespace
 
-	fieldName = fieldStructure.name
+	fieldName = htmlUtil.escapeAttribute(fieldStructure.name)
 
-	parentName = parentFieldStructure.name!""
+	parentName = htmlUtil.escapeAttribute(parentFieldStructure.name!"")
 	parentType = parentFieldStructure.type!""
 
 	isChildField = validator.isNotNull(parentName) && (stringUtil.equals(parentType, "radio") || stringUtil.equals(parentType, "select"))

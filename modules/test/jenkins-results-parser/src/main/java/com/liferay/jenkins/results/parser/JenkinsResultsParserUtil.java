@@ -1429,11 +1429,7 @@ public class JenkinsResultsParserUtil {
 		throws IOException {
 
 		if (_getCacheURL() == null) {
-			System.out.println(
-				combine(
-					"Build properties are not loaded. Set the environment ",
-					"variable \"CACHE_DIR\" to a directory containing a ",
-					JENKINS_REPOSITORY_NAME, " checkout."));
+			System.out.println("WARNING: Unable to get build properties");
 		}
 
 		Properties properties = new SecureProperties();

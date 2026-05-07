@@ -54,6 +54,28 @@ type PhoneNumberProps =
 	| (LocalizablePhoneNumberProps & {localizedObjectField: true})
 	| (NonLocalizablePhoneNumberProps & {localizedObjectField?: false});
 
+const validate = (value: string) => {
+	if (!value) {
+		return {displayErrors: false, errorMessage: undefined, valid: true};
+	}
+
+	const valid = PHONE_NUMBER_PATTERN.test(value);
+
+	return {
+		displayErrors: !valid,
+		errorMessage: valid
+			? undefined
+			: Liferay.Language.get('please-enter-a-valid-phone-number'),
+		valid,
+	};
+};
+
+const INITIAL_VALID_FIELD = {
+	displayErrors: false,
+	errorMessage: undefined as string | undefined,
+	valid: true,
+};
+
 const LocalizablePhoneNumber = ({
 	countries = [],
 	fieldName,
@@ -70,9 +92,10 @@ const LocalizablePhoneNumber = ({
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
+	const [validField, setValidField] = useState(INITIAL_VALID_FIELD);
+
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || otherProps.disabled;
-	const hasError = !!currentValue && !PHONE_NUMBER_PATTERN.test(currentValue);
 
 	const handleLocalChange = (event: {target: {value: string}}) => {
 		const nextValue = {
@@ -83,16 +106,16 @@ const LocalizablePhoneNumber = ({
 		onChange?.({target: {value: nextValue}});
 	};
 
+	const handleBlur = (event: React.FocusEvent) => {
+		setValidField(validate(currentValue));
+
+		onBlur?.(event);
+	};
+
 	return (
 		<FieldBase
 			{...otherProps}
-			{...(hasError && {
-				displayErrors: true,
-				errorMessage: Liferay.Language.get(
-					'please-enter-a-valid-phone-number'
-				),
-				valid: false,
-			})}
+			{...validField}
 			name={name}
 			readOnly={disabled}
 		>
@@ -103,7 +126,7 @@ const LocalizablePhoneNumber = ({
 					id={otherProps.id as string}
 					key={editingLanguageId}
 					name={name}
-					onBlur={onBlur}
+					onBlur={handleBlur}
 					onChange={handleLocalChange}
 					onFocus={onFocus}
 					prefix={prefix}
@@ -139,21 +162,20 @@ const NonLocalizablePhoneNumber = ({
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
+	const [validField, setValidField] = useState(INITIAL_VALID_FIELD);
 
 	const disabled = readOnly || otherProps.disabled;
-	const hasError =
-		!!combinedValue && !PHONE_NUMBER_PATTERN.test(combinedValue);
+
+	const handleBlur = (event: React.FocusEvent) => {
+		setValidField(validate(combinedValue));
+
+		onBlur?.(event);
+	};
 
 	return (
 		<FieldBase
 			{...otherProps}
-			{...(hasError && {
-				displayErrors: true,
-				errorMessage: Liferay.Language.get(
-					'please-enter-a-valid-phone-number'
-				),
-				valid: false,
-			})}
+			{...validField}
 			name={name}
 			readOnly={disabled}
 		>
@@ -163,7 +185,7 @@ const NonLocalizablePhoneNumber = ({
 					disabled={disabled}
 					id={otherProps.id as string}
 					name={name}
-					onBlur={onBlur}
+					onBlur={handleBlur}
 					onChange={(event) => {
 						setCombinedValue(event.target.value);
 						onChange?.(event);

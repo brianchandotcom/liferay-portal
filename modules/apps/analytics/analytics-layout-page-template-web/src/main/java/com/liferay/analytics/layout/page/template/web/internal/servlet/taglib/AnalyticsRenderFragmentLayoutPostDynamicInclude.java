@@ -5,7 +5,7 @@
 
 package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 
-import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util.AnalyticsRenderFragmentLayoutUtil;
+import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.constants.AnalyticsRenderFragmentLayoutConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
@@ -69,8 +69,8 @@ public class AnalyticsRenderFragmentLayoutPostDynamicInclude
 			return;
 		}
 
-		if (!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
-				layoutDisplayPageObjectProvider)) {
+		if (!AnalyticsRenderFragmentLayoutConstants.analyticsAssetTypes.
+				contains(layoutDisplayPageObjectProvider.getClassName())) {
 
 			try {
 				ScriptTag scriptTag = new ScriptTag();

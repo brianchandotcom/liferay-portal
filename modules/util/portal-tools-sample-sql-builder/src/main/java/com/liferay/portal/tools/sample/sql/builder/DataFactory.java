@@ -7136,15 +7136,11 @@ public class DataFactory {
 					_utilityPageFragmentEntryLinkRendererKeyAndPositionTuplesMap.
 						get(externalReferenceCode);
 
-			for (Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple :
-					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples) {
-
-				originalFragmentEntryLinkModels.add(
-					newUtilityPageFragmentEntryLinkModel(
-						layoutModel, segmentsExperienceId,
-						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple,
-						externalReferenceCode, renderNamespace));
-			}
+			originalFragmentEntryLinkModels.addAll(
+				newUtilityPageFragmentEntryLinkModel(
+					layoutModel, segmentsExperienceId,
+					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
+					externalReferenceCode, renderNamespace));
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
@@ -8985,9 +8981,10 @@ public class DataFactory {
 		return userModel;
 	}
 
-	protected FragmentEntryLinkModel newUtilityPageFragmentEntryLinkModel(
+	protected List<FragmentEntryLinkModel> newUtilityPageFragmentEntryLinkModel(
 			LayoutModel layoutModel, long segmentsExperienceId,
-			Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple,
+			List<Tuple>
+				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
 			String externalReferenceCode, String renderNamespace)
 		throws Exception {
 
@@ -8999,9 +8996,10 @@ public class DataFactory {
 		String rendererKey = StringPool.BLANK;
 		int position = 0;
 
-		if (utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.getSize() ==
-				1) {
+		int utilityPageFragmentEntryLinkItemCount =
+			utilityPageFragmentEntryLinkRendererKeyAndPositionTuples.size();
 
+		if (utilityPageFragmentEntryLinkItemCount == 1) {
 			type = FragmentConstants.TYPE_PORTLET;
 
 			editValue = StringUtil.replace(
@@ -9010,8 +9008,21 @@ public class DataFactory {
 						"component_portlet_editValue_utility_page.json"),
 				"${portletId}",
 				_utilityPagePortletIds.get(externalReferenceCode));
+
+			return Collections.singletonList(
+				newFragmentEntryLinkModel(
+					layoutModel, null, segmentsExperienceId, css, html,
+					StringPool.BLANK, configuration, editValue, renderNamespace,
+					position, rendererKey, type));
 		}
-		else {
+
+		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
+			new ArrayList<>();
+
+		for (int i = 0; i < utilityPageFragmentEntryLinkItemCount; i++) {
+			Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple =
+				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples.get(i);
+
 			rendererKey =
 				(String)
 					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
@@ -9021,68 +9032,40 @@ public class DataFactory {
 					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
 						getObject(1);
 
-			String fragmentName = StringUtil.toLowerCase(
-				StringUtil.split(rendererKey, CharPool.DASH)[1]);
+			String editValueFileName = StringPool.BLANK;
 
-			css = _readFile(
-				_getFragmentComponentInputStream(
-					"basic/component", fragmentName, "css"));
-			html = _readFile(
-				_getFragmentComponentInputStream(
-					"basic/component", fragmentName, "html"));
+			if (rendererKey != StringPool.BLANK) {
+				String fragmentName = StringUtil.toLowerCase(
+					StringUtil.split(rendererKey, CharPool.DASH)[1]);
 
-			if (rendererKey.contains("heading")) {
-				editValue = StringUtil.replace(
-					_readFile(
-						"fragment_component/fragment_" +
-							"component_heading_editValue_utility_page.json"),
-					"${heading}",
-					(String)
-						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
-							getObject(2));
+				css = _readFile(
+					_getFragmentComponentInputStream(
+						"basic/component", fragmentName, "css"));
+				html = _readFile(
+					_getFragmentComponentInputStream(
+						"basic/component", fragmentName, "html"));
 
-				configuration = _readFile(
-					"fragment_component" +
-						"/fragment_component_heading_configuration.json");
+				editValueFileName = StringBundler.concat(
+					externalReferenceCode, StringPool.UNDERLINE, rendererKey,
+					"_editValue_utility_page_", i, ".json");
 			}
-			else if (rendererKey.contains("paragraph")) {
-				String paragraphContent =
-					(String)
-						utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
-							getObject(2);
-
-				if (paragraphContent.endsWith(".txt")) {
-					String fileName = StringUtil.replace(
-						paragraphContent, CharPool.SPACE, CharPool.UNDERLINE);
-
-					paragraphContent = _readFile(
-						"fragment_component/" + fileName);
-				}
-
-				editValue = StringUtil.replace(
-					_readFile(
-						"fragment_component/fragment_" +
-							"component_paragraph_editValue_utility_page.json"),
-					"${paragraph}", paragraphContent);
+			else {
+				editValueFileName = StringBundler.concat(
+					externalReferenceCode, "_Portlet_editValue_utility_page_",
+					i, ".json");
 			}
-			else if (rendererKey.contains("button")) {
-				String suffix = "404";
 
-				if (externalReferenceCode.contains("COOKIE")) {
-					suffix = "cookie";
-				}
+			editValue = _readFile(
+				"fragment_component/utility_pages/" + editValueFileName);
 
-				editValue = _readFile(
-					StringBundler.concat(
-						"fragment_component/fragment_component_", suffix,
-						"_button_editValue_utility_page.json"));
-			}
+			fragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModel, null, segmentsExperienceId, css, html,
+					StringPool.BLANK, configuration, editValue, renderNamespace,
+					position, rendererKey, type));
 		}
 
-		return newFragmentEntryLinkModel(
-			layoutModel, null, segmentsExperienceId, css, html,
-			StringPool.BLANK, configuration, editValue, renderNamespace,
-			position, rendererKey, type);
+		return fragmentEntryLinkModels;
 	}
 
 	protected LayoutModel newUtilityPageLayoutModel(

@@ -65,18 +65,13 @@ public abstract class BaseFDSSerializer {
 
 		try {
 			long companyId = PortalUtil.getCompanyId(httpServletRequest);
-			long userId = PortalUtil.getUserId(httpServletRequest);
 
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
 						"L_DATA_SET_SNAPSHOT", companyId);
 
-			ObjectEntryManager objectEntryManager =
-				DefaultObjectEntryManagerProvider.provide(
-					objectEntryManagerRegistry.getObjectEntryManager(
-						objectDefinition.getCompanyId(),
-						objectDefinition.getStorageType()));
+			long userId = PortalUtil.getUserId(httpServletRequest);
 
 			List<SharingEntry> sharingEntries =
 				sharingEntryLocalService.getToUserSharingEntries(
@@ -96,6 +91,12 @@ public abstract class BaseFDSSerializer {
 					StringUtil.merge(sharingEntriesClassPKs, "','"), "')");
 			}
 
+			ObjectEntryManager objectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getStorageType()));
+
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 				companyId, objectDefinition, null, null,
 				new DefaultDTOConverterContext(
@@ -106,15 +107,15 @@ public abstract class BaseFDSSerializer {
 					sharingEntriesClause, "))"),
 				null, null, null);
 
-			List<ObjectEntry> ownedEntries = new ArrayList<>();
-			List<ObjectEntry> sharedEntries = new ArrayList<>();
+			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
+			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();
 
 			for (ObjectEntry objectEntry : page.getItems()) {
 				if (sharingEntriesClassPKs.contains(objectEntry.getId())) {
-					sharedEntries.add(objectEntry);
+					sharedObjectEntries.add(objectEntry);
 				}
 				else {
-					ownedEntries.add(objectEntry);
+					ownedObjectEntries.add(objectEntry);
 				}
 			}
 
@@ -122,18 +123,18 @@ public abstract class BaseFDSSerializer {
 				JSONUtil.put(
 					"headerVisible", false
 				).put(
-					"items", _toJSONArray(ownedEntries)
+					"items", _toJSONArray(ownedObjectEntries)
 				).put(
 					"label",
 					language.get(httpServletRequest.getLocale(), "owned")
 				));
 
-			if (!sharedEntries.isEmpty()) {
+			if (!sharedObjectEntries.isEmpty()) {
 				jsonArray.put(
 					JSONUtil.put(
 						"headerVisible", true
 					).put(
-						"items", _toJSONArray(sharedEntries)
+						"items", _toJSONArray(sharedObjectEntries)
 					).put(
 						"label",
 						language.get(

@@ -474,11 +474,13 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 					cmsBasicDocumentObjectDefinition.getObjectDefinitionId()));
 
 			if (Validator.isNotNull(storageDLFolderPath)) {
+				ObjectEntryFolder expectedObjectEntryFolder =
+					_getExpectedObjectEntryFolder(
+						objectEntry, storageDLFolderPath);
+
 				Assert.assertEquals(
 					expectedObjectEntryFolderId,
-					_getExpectedObjectEntryFolder(
-						objectEntry, storageDLFolderPath
-					).getObjectEntryFolderId());
+					expectedObjectEntryFolder.getObjectEntryFolderId());
 
 				if (StringUtil.equals(
 						storageDLFolderPath, StringPool.FORWARD_SLASH)) {

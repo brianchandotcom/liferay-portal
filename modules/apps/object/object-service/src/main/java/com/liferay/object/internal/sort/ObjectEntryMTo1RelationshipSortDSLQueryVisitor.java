@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collection;
 import java.util.Stack;
 
 /**
@@ -105,11 +106,11 @@ public class ObjectEntryMTo1RelationshipSortDSLQueryVisitor
 
 		Select select = (Select)selectAllBaseASTNodes.pop();
 
+		Collection<? extends Expression<?>> expressions =
+			select.getExpressions();
+
 		BaseASTNode baseASTNode = (BaseASTNode)groupByStep.groupBy(
-			select.getExpressions(
-			).toArray(
-				new Expression[0]
-			));
+			expressions.toArray(new Expression[0]));
 
 		return updateParents(baseASTNode, allBaseASTNodes);
 	}

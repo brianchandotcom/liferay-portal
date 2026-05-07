@@ -46,6 +46,10 @@ export default function PreviewSelectors({
 	sitesStatus,
 	vertical = false,
 }: Props) {
+	const labelClassName = classNames('font-weight-semi-bold text-3', {
+		'flex-shrink-0 mb-0': !vertical,
+	});
+
 	return (
 		<>
 			<div
@@ -54,11 +58,7 @@ export default function PreviewSelectors({
 					'mb-3': vertical,
 				})}
 			>
-				<span
-					className={classNames('font-weight-semi-bold text-3', {
-						'flex-shrink-0 mb-0': !vertical,
-					})}
-				>
+				<span className={labelClassName}>
 					{Liferay.Language.get('channel')}
 				</span>
 
@@ -108,14 +108,7 @@ export default function PreviewSelectors({
 					</ClayInput.Group>
 				) : displayPageTemplates?.length ? (
 					<>
-						<span
-							className={classNames(
-								'font-weight-semi-bold text-3',
-								{
-									'flex-shrink-0 mb-0': !vertical,
-								}
-							)}
-						>
+						<span className={labelClassName}>
 							{Liferay.Language.get('display-page')}
 						</span>
 

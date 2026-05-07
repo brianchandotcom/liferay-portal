@@ -132,7 +132,7 @@ async function handleBulkDeletion({
 		allEntriesHaveTrashEnabled,
 		someEntriesHaveTrashEnabled
 	);
-	if (showConfirmationModal) {
+	if (showConfirmationModal || selectedData.selectAll) {
 		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
 	}
 	else if (allEntriesHaveTrashEnabled) {

@@ -11,6 +11,8 @@ import com.liferay.cookies.global.privacy.control.GlobalPrivacyControlProvider;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -74,30 +76,39 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 		ScriptData scriptData = new ScriptData();
 
 		if (_globalPrivacyControlProvider.isSignalActive(httpServletRequest)) {
+			JSONObject argumentsJSONObject = JSONUtil.put(
+				"consentRenewalPeriod",
+				cookiesPreferenceHandlingConfiguration.consentRenewalPeriod()
+			).put(
+				"consentRenewalPeriodTimeUnit",
+				cookiesPreferenceHandlingConfiguration.
+					consentRenewalPeriodTimeUnit()
+			).put(
+				"dissentRenewalPeriod",
+				cookiesPreferenceHandlingConfiguration.dissentRenewalPeriod()
+			).put(
+				"dissentRenewalPeriodTimeUnit",
+				cookiesPreferenceHandlingConfiguration.
+					dissentRenewalPeriodTimeUnit()
+			).put(
+				"optionalConsentCookieTypeNames",
+				JSONUtil.putAll(
+					CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL,
+					CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
+					CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION)
+			).put(
+				"requiredConsentCookieTypeNames",
+				JSONUtil.putAll(CookiesConstants.NAME_CONSENT_TYPE_NECESSARY)
+			).put(
+				"storeConsent",
+				cookiesPreferenceHandlingConfiguration.storeConsent()
+			);
+
 			scriptData.append(
 				_portal.getPortletId(httpServletRequest),
 				new JSFragment(
 					StringBundler.concat(
-						"suppressThirdPartyCookies(",
-						cookiesPreferenceHandlingConfiguration.
-							consentRenewalPeriod(),
-						", \"",
-						cookiesPreferenceHandlingConfiguration.
-							consentRenewalPeriodTimeUnit(),
-						"\", ",
-						cookiesPreferenceHandlingConfiguration.
-							dissentRenewalPeriod(),
-						", \"",
-						cookiesPreferenceHandlingConfiguration.
-							dissentRenewalPeriodTimeUnit(),
-						"\", [\"",
-						CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL, "\", \"",
-						CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE,
-						"\", \"",
-						CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION,
-						"\"], [\"",
-						CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, "\"], ",
-						cookiesPreferenceHandlingConfiguration.storeConsent(),
+						"suppressThirdPartyCookies(", argumentsJSONObject,
 						");"),
 					Arrays.asList(
 						ESImportUtil.getESImport(

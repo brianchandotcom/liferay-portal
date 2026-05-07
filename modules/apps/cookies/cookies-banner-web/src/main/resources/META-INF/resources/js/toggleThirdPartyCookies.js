@@ -144,15 +144,15 @@ export default function toggleThirdPartyCookies() {
 	});
 }
 
-export function suppressThirdPartyCookies(
+export function suppressThirdPartyCookies({
 	consentRenewalPeriod,
 	consentRenewalPeriodTimeUnit,
 	dissentRenewalPeriod,
 	dissentRenewalPeriodTimeUnit,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
-	storeConsent
-) {
+	storeConsent,
+}) {
 	flipThirdPartyCookiesOff(document);
 
 	declineAllCookies(

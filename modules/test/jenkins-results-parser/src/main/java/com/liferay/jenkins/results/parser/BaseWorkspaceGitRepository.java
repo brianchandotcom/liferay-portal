@@ -1394,10 +1394,6 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private boolean _isDotGitDirArchiveRequired() {
-		if (!_snapshot) {
-			return true;
-		}
-
 		try {
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(

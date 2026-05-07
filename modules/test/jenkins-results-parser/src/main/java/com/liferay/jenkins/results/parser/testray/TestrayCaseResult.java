@@ -263,21 +263,35 @@ public class TestrayCaseResult {
 		return testrayCaseResults;
 	}
 
+	public URL getTestrayCaseResultURL() {
+		if (_testrayCaseResultURL != null) {
+			return _testrayCaseResultURL;
+		}
+
+		_testrayCaseResultURL = _getCachedTestrayCaseResultURL();
+
+		return _testrayCaseResultURL;
+	}
+
 	public TestrayComponent getTestrayComponent() {
 		if (_testrayComponent != null) {
 			return _testrayComponent;
 		}
 
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
 		JSONObject componentJSONObject = _jsonObject.optJSONObject(
 			"componentToCaseResult");
 
 		if (componentJSONObject != null) {
-			TestrayBuild testrayBuild = getTestrayBuild();
-
-			TestrayProject testrayProject = testrayBuild.getTestrayProject();
-
 			_testrayComponent = testrayProject.getTestrayComponentByID(
 				componentJSONObject.getLong("id"));
+		}
+		else {
+			_testrayComponent = testrayProject.getTestrayComponentByName(
+				getComponentName());
 		}
 
 		return _testrayComponent;
@@ -289,8 +303,36 @@ public class TestrayCaseResult {
 		return testrayBuild.getTestrayProject();
 	}
 
+	public TestrayRun getTestrayRun() {
+		return _testrayRun;
+	}
+
 	public TestrayServer getTestrayServer() {
 		return _testrayServer;
+	}
+
+	public TestrayTeam getTestrayTeam() {
+		if (_testrayTeam != null) {
+			return _testrayTeam;
+		}
+
+		String teamName = getTeamName();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(teamName)) {
+			return null;
+		}
+
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		if (testrayBuild == null) {
+			return null;
+		}
+
+		TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
+		_testrayTeam = testrayProject.getTestrayTeamByName(teamName);
+
+		return _testrayTeam;
 	}
 
 	public String getType() {
@@ -316,6 +358,10 @@ public class TestrayCaseResult {
 
 	public String[] getWarnings() {
 		return null;
+	}
+
+	public void setTestrayRun(TestrayRun testrayRun) {
+		_testrayRun = testrayRun;
 	}
 
 	public static enum ErrorType {
@@ -461,6 +507,76 @@ public class TestrayCaseResult {
 
 	protected Map<String, TestrayAttachment> testrayAttachments;
 
+	private URL _getCachedTestrayCaseResultURL() {
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		if (testrayBuild == null) {
+			return null;
+		}
+
+		TestrayCase testrayCase = getTestrayCase();
+
+		if (testrayCase == null) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("r_buildToCaseResult_c_buildId eq '");
+		sb.append(testrayBuild.getID());
+		sb.append("' and r_caseToCaseResult_c_caseId eq '");
+		sb.append(testrayCase.getID());
+		sb.append("'");
+
+		TestrayComponent testrayComponent = getTestrayComponent();
+
+		if (testrayComponent != null) {
+			sb.append(" and r_componentToCaseResult_c_componentId eq '");
+			sb.append(testrayComponent.getID());
+			sb.append("'");
+		}
+
+		TestrayRun testrayRun = getTestrayRun();
+
+		if (testrayRun != null) {
+			sb.append(" and r_runToCaseResult_c_runId eq '");
+			sb.append(testrayRun.getID());
+			sb.append("'");
+		}
+
+		TestrayTeam testrayTeam = getTestrayTeam();
+
+		if (testrayTeam != null) {
+			sb.append(" and r_teamToCaseResult_c_teamId eq '");
+			sb.append(testrayTeam.getID());
+			sb.append("'");
+		}
+
+		try {
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"caseResults", FIELD_NAMES, sb.toString(), null, 1, 1);
+
+			if (entityJSONObjects.isEmpty()) {
+				return null;
+			}
+
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				if (entityJSONObject == null) {
+					continue;
+				}
+
+				return new URL(
+					testrayBuild.getURL() + "/case-result/" +
+						entityJSONObject.getLong("id"));
+			}
+
+			return null;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
 	private boolean _isSimilarError(
 		TestrayCaseResult previousTestrayCaseResult) {
 
@@ -494,7 +610,10 @@ public class TestrayCaseResult {
 	private final JSONObject _jsonObject;
 	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
+	private URL _testrayCaseResultURL;
 	private TestrayComponent _testrayComponent;
+	private TestrayRun _testrayRun;
 	private final TestrayServer _testrayServer;
+	private TestrayTeam _testrayTeam;
 
 }

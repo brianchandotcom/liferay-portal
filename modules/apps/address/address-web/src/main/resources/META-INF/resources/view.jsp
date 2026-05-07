@@ -104,6 +104,16 @@ SearchContainer<Country> countrySearchContainer = CountrySearchContainerFactory.
 					property="position"
 				/>
 
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
+					name="status"
+				>
+					<clay:label
+						displayType="<%= WorkflowConstants.getStatusStyle(country.getStatus()) %>"
+						label="<%= WorkflowConstants.getStatusLabel(country.getStatus()) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
 				<liferay-ui:search-container-column-jsp
 					cssClass="table-column-text-end"
 					path="/country_action.jsp"

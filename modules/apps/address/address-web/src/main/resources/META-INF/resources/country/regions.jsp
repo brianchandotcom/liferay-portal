@@ -90,6 +90,16 @@ SearchContainer<Region> regionSearchContainer = RegionSearchContainerFactory.cre
 					property="position"
 				/>
 
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
+					name="status"
+				>
+					<clay:label
+						displayType="<%= WorkflowConstants.getStatusStyle(region.getStatus()) %>"
+						label="<%= WorkflowConstants.getStatusLabel(region.getStatus()) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+
 				<liferay-ui:search-container-column-jsp
 					cssClass="table-column-text-end"
 					path="/region_action.jsp"

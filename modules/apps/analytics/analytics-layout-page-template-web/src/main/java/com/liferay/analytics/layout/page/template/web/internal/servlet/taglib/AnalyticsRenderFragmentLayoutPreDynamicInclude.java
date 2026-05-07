@@ -5,15 +5,18 @@
 
 package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 
-import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.util.AnalyticsRenderFragmentLayoutUtil;
+import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.constants.AnalyticsRenderFragmentLayoutConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
@@ -24,6 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -63,8 +67,8 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if ((layoutDisplayPageObjectProvider == null) ||
-			!AnalyticsRenderFragmentLayoutUtil.isTrackeable(
-				layoutDisplayPageObjectProvider)) {
+			!AnalyticsRenderFragmentLayoutConstants.analyticsAssetTypes.
+				contains(layoutDisplayPageObjectProvider.getClassName())) {
 
 			return;
 		}
@@ -86,8 +90,8 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 	}
 
 	private <T> Map<String, Function<T, String>> _initAttributes(
-		AnalyticsRenderFragmentLayoutUtil.AnalyticsAssetType analyticsAssetType,
-		long classPK, String externalReferenceCode, String title) {
+		AnalyticsAssetType analyticsAssetType, long classPK,
+		String externalReferenceCode, String title) {
 
 		return TreeMapBuilder.<String, Function<T, String>>put(
 			"data-analytics-asset-id", displayObject -> String.valueOf(classPK)
@@ -109,10 +113,8 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 		String className, long classPK, T displayObject,
 		String externalReferenceCode, PrintWriter printWriter, String title) {
 
-		AnalyticsRenderFragmentLayoutUtil.AnalyticsAssetType
-			analyticsAssetType =
-				AnalyticsRenderFragmentLayoutUtil.getAnalyticsAssetType(
-					className);
+		AnalyticsAssetType analyticsAssetType = _analyticsAssetTypes.get(
+			className);
 
 		if (analyticsAssetType == null) {
 			return;
@@ -157,10 +159,60 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsRenderFragmentLayoutPreDynamicInclude.class);
 
+	private static final Map<String, AnalyticsAssetType> _analyticsAssetTypes =
+		HashMapBuilder.put(
+			"com.liferay.blogs.model.BlogsEntry", new AnalyticsAssetType("blog")
+		).put(
+			"com.liferay.journal.model.JournalArticle",
+			new AnalyticsAssetType(
+				HashMapBuilder.<String, Function<JournalArticle, String>>put(
+					"data-analytics-web-content-resource-pk",
+					journalArticle -> String.valueOf(
+						journalArticle.getResourcePrimKey())
+				).build(),
+				"web-content")
+		).put(
+			"com.liferay.portal.kernel.repository.model.FileEntry",
+			new AnalyticsAssetType(
+				HashMapBuilder.<String, Function<FileEntry, String>>put(
+					"data-analytics-asset-action", fileEntry -> "preview"
+				).put(
+					"data-analytics-asset-version",
+					fileEntry -> fileEntry.getVersion()
+				).build(),
+				"document")
+		).build();
+
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Portal _portal;
+
+	private static class AnalyticsAssetType<T> {
+
+		public AnalyticsAssetType(
+			Map<String, Function<T, String>> attributes, String type) {
+
+			_attributes = attributes;
+			_type = type;
+		}
+
+		public AnalyticsAssetType(String type) {
+			this(Collections.emptyMap(), type);
+		}
+
+		public Map<String, Function<T, String>> getAttributes() {
+			return _attributes;
+		}
+
+		public String getType() {
+			return _type;
+		}
+
+		private final Map<String, Function<T, String>> _attributes;
+		private final String _type;
+
+	}
 
 }

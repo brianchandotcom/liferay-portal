@@ -13,9 +13,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.ServletContext;
@@ -59,16 +61,35 @@ public class CookiesBannerBottomJSPDynamicInclude
 			return;
 		}
 
+		boolean previewMode = ParamUtil.getBoolean(
+			httpServletRequest, CookiesBannerWebKeys.COOKIES_PREVIEW);
+
+		if (previewMode) {
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (!permissionChecker.isOmniadmin() &&
+				!permissionChecker.isCompanyAdmin()) {
+
+				previewMode = false;
+			}
+		}
+
 		try {
 			CookiesPreferenceHandlingConfiguration
 				cookiesPreferenceHandlingConfiguration =
 					_cookiesConfigurationProvider.
 						getCookiesPreferenceHandlingConfiguration(themeDisplay);
 
-			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
+			if ((!cookiesPreferenceHandlingConfiguration.active() ||
+				 !cookiesPreferenceHandlingConfiguration.enabled()) &&
+				!previewMode) {
+
 				return;
 			}
 
+			httpServletRequest.setAttribute(
+				CookiesBannerWebKeys.COOKIES_PREVIEW, previewMode);
 			httpServletRequest.setAttribute(
 				CookiesBannerWebKeys.CUSTOM_FLOATING_ICON_IMAGE_ID,
 				cookiesPreferenceHandlingConfiguration.

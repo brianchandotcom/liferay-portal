@@ -3164,12 +3164,27 @@ server.detector.server.id=wildfly</echo>
 
 			<local name="database.url.parameters" />
 
+			<prepare-database-url-parameters url="${database.url.upgrade}" />
+
+			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url.upgrade}${database.url.parameters}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}</echo>
+
+			<prepare-upgrade-ext-properties />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="prepare-database-url-parameters">
+		<attribute name="url" />
+
+		<sequential>
 			<if>
 				<and>
 					<equals arg1="${portal.version}" arg2="6.1.30" />
 					<equals arg1="${database.type}" arg2="postgresql" />
 					<not>
-						<contains string="${database.url.upgrade}" substring="?" />
+						<contains string="@{url}" substring="?" />
 					</not>
 				</and>
 				<then>
@@ -3179,13 +3194,6 @@ server.detector.server.id=wildfly</echo>
 					<property name="database.url.parameters" value="" />
 				</else>
 			</if>
-
-			<echo file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url.upgrade}${database.url.parameters}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}</echo>
-
-			<prepare-upgrade-ext-properties />
 		</sequential>
 	</macrodef>
 
@@ -12989,21 +12997,7 @@ ${update.properties}</echo>
 		<get-database-property property.name="database.username" />
 		<get-database-property property.name="database.version" />
 
-		<if>
-			<and>
-				<equals arg1="${portal.version}" arg2="6.1.30" />
-				<equals arg1="${database.type}" arg2="postgresql" />
-				<not>
-					<contains string="${database.url}" substring="?" />
-				</not>
-			</and>
-			<then>
-				<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
-			</then>
-			<else>
-				<property name="database.url.parameters" value="" />
-			</else>
-		</if>
+		<prepare-database-url-parameters url="${database.url}" />
 
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 

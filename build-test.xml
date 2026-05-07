@@ -12969,19 +12969,6 @@ ${update.properties}</echo>
 
 		<if>
 			<and>
-				<equals arg1="${portal.version}" arg2="6.1.30" />
-				<equals arg1="${database.type}" arg2="postgresql" />
-			</and>
-			<then>
-				<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
-			</then>
-			<else>
-				<property name="database.url.parameters" value="" />
-			</else>
-		</if>
-
-		<if>
-			<and>
 				<isset property="portal.version" />
 				<or>
 					<equals arg1="database.partition.enabled" arg2="true" />
@@ -13001,6 +12988,22 @@ ${update.properties}</echo>
 		<get-database-property property.name="database.url" />
 		<get-database-property property.name="database.username" />
 		<get-database-property property.name="database.version" />
+
+		<if>
+			<and>
+				<equals arg1="${portal.version}" arg2="6.1.30" />
+				<equals arg1="${database.type}" arg2="postgresql" />
+				<not>
+					<contains string="${database.url}" substring="?" />
+				</not>
+			</and>
+			<then>
+				<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
+			</then>
+			<else>
+				<property name="database.url.parameters" value="" />
+			</else>
+		</if>
 
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 

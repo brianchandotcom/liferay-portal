@@ -8,6 +8,10 @@
 
 - OR (**Output-Only Catch-Up Regen**) the diff contains a class referenced by the XML and no XML change is present.
 
+## Match
+
+`instance_wrappers\.xml$`
+
 ## Command
 
 ```bash

@@ -4,6 +4,10 @@
 
 A Poshi DSL file changed: `*.{function,macro,path,testcase}`.
 
+## Match
+
+`\.(function|macro|path|testcase)$`
+
 ## Command
 
 ```bash

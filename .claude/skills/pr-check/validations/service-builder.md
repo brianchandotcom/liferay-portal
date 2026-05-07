@@ -18,6 +18,10 @@ OR (**Output-Only Catch-Up Regen**) the diff matches Service Builder output patt
 
 Auto-generated outputs are **not** triggers on their own — drift is caught by `git diff --quiet`. An auto-generated `*ModelImpl.java` hand-edited without a corresponding input change is an anti-pattern (the next regen will overwrite it); flag the change but do not fire this validation.
 
+## Match
+
+`(^|/)service\.xml$|(^|/)service\.properties$|/META-INF/module-hbm\.xml$|/META-INF/portlet-model-hints\.xml$|/META-INF/sql/[^/]+\.sql$|/model/impl/[^/]+Impl\.java$|/service/impl/[^/]+Impl\.java$|(BaseImpl|CacheModel|LocalService|LocalServiceUtil|LocalServiceWrapper|ModelArgumentsResolver|ModelImpl|Persistence|PersistenceConstants|PersistenceImpl|ServiceBaseImpl|ServiceHttp)\.java$|/model/[^/]+Wrapper\.java$|/service/[^/]+Service\.java$|/service/[^/]+ServiceUtil\.java$|/service/[^/]+ServiceWrapper\.java$|/service/persistence/[^/]+Util\.java$|^sql/indexes\.sql$`
+
 ## Command
 
 ```bash

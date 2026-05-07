@@ -4,6 +4,10 @@
 
 Always.
 
+## Match
+
+`.`
+
 ## Command
 
 Run the SDK setup, then invoke the `format-source` skill:

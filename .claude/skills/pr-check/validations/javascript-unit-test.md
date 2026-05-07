@@ -14,6 +14,10 @@ Fires when both conditions hold:
 
 1. The module's `package.json` declares a `"test"` script.
 
+## Match
+
+`^modules/.+\.(js|jsx|ts|tsx)$|^modules/.+/(package\.json|package-lock\.json|yarn\.lock)$`
+
 ## Selection
 
 Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `Foo.spec.tsx`, often under a `__tests__` directory or a sibling `tests` tree. The module's `package.json` `jest.testMatch` or `testRegex` declares the exact convention — read it to confirm the spec lookup pattern. Verify each counterpart file exists before scheduling it.

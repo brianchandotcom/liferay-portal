@@ -16,6 +16,10 @@ Expand by API consumers: for each `*-api/**/*.java` with added or removed `publi
 
 Both behavior-change and surface-only edits fire this validation — the build verifies compile and resource bundling regardless of intent.
 
+## Match
+
+`^modules/.+\.(java|js|jsx|ts|tsx|css|scss|sass|ftl|jsp|jspf|properties)$|^modules/.+/(bnd\.bnd|gradle\.properties|package-lock\.json|yarn\.lock|package\.json)$`
+
 ## Command
 
 Setup once, then deploy each module:

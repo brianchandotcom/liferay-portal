@@ -6,6 +6,10 @@ A Java source file changed with behavior intent — logic added, removed, or mod
 
 Test code (`**/src/test/**`) is in scope: when a test class itself changed, run it. Integration test sources (`**/src/testIntegration/**`) are not in scope here — IT execution is out of scope; signature breaks in IT are caught by **Integration Test Compile**.
 
+## Match
+
+`^modules/.+\.java$|^portal-(impl|kernel)/.+\.java$`
+
 ## Selection
 
 Locate the counterpart test by parallel name: `Foo.java` → `FooTest.java` in the same module's `src/test/java/**` (for OSGi modules) or `portal-impl/test/unit/**` / `portal-kernel/test/unit/**` (for portal-core).

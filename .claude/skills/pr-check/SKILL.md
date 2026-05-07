@@ -64,7 +64,15 @@ Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-Read every validation file under `.claude/skills/pr-check/validations/` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. Then in your next turn, evaluate each validation's `## Trigger` against the diff and emit the matched-validation list and cumulative time estimate (summed from each matched file's `## Time Estimate`).
+Read every validation file under `.claude/skills/pr-check/validations/` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
+
+In your next turn, compose a single bash script that:
+
+- computes the diff: `git diff --name-only "$(git merge-base HEAD master)...HEAD"`
+- for each validation, tests its regex against the diff and prints the validation name when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
+- runs as a single Bash tool invocation
+
+From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g. Service Builder output-only catch-up).
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 

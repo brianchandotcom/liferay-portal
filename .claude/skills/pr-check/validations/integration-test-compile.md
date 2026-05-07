@@ -6,6 +6,10 @@ A Java file changed in an OSGi module (excluding `modules/dxp/apps/saml/saml-adm
 
 Catches IT compile breaks without running ITs — IT execution is out of scope; use `test-plan` for that.
 
+## Match
+
+`^modules/.+\.java$`
+
 ## Command
 
 Per affected module:

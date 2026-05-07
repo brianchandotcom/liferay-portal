@@ -18,6 +18,7 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
@@ -332,15 +333,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		utilityPage = randomUtilityPage();
 
-		thumbnailURLReference = new ThumbnailURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setUrl(
-					() ->
-						"http://invalid.example.test/" +
-							RandomTestUtil.randomString());
-			}
-		};
+		thumbnailURLReference = ThumbnailUtil.randomThumbnailURLReference();
 
 		utilityPage.setThumbnailURLReference(thumbnailURLReference);
 
@@ -975,15 +968,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		UtilityPage utilityPage2 = randomUtilityPage();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		utilityPage2.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1261,15 +1246,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		utilityPage = randomUtilityPage();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		utilityPage.setThumbnailURLReference(thumbnailURLReference);
 

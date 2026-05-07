@@ -21,6 +21,7 @@ import React, {
 
 import {
 	EXPIRING_SOON_THRESHOLD_DAYS,
+	FDS_EVENT_DISPLAY_UPDATED,
 	FDS_FILTER_ID,
 	WORKFLOW_STATUS,
 } from '../../common/utils/constants';
@@ -113,7 +114,7 @@ export default function AllQuickFilters() {
 		reviewDateOverdue: 0,
 	});
 
-	useEffect(() => {
+	const fetchCounts = useCallback(() => {
 		fetch('/o/headless-cms/v1.0/asset-statistics', {
 			headers: {
 				Accept: 'application/json',
@@ -138,6 +139,16 @@ export default function AllQuickFilters() {
 				console.error('Failed to fetch asset statistics', error);
 			});
 	}, []);
+
+	useEffect(() => {
+		fetchCounts();
+
+		Liferay.on(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+
+		return () => {
+			Liferay.detach(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+		};
+	}, [fetchCounts]);
 
 	const applyQuickFilter = useCallback(
 		(

@@ -12,6 +12,8 @@ export const ENTERPRISE_URL = 'https://www.liferay.com/web/lr/cms-upgrade';
 
 export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
 
+export const FDS_EVENT_DISPLAY_UPDATED = 'fds-display-updated';
+
 export const FDS_EVENT_UPDATE_DISPLAY = 'fds-update-display';
 
 export const MS_PER_DAY = 24 * 60 * 60 * 1000;

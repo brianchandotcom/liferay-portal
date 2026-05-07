@@ -23,8 +23,7 @@ import ProductPurchaseDSR from '../../services/ProductPurchaseDSR';
 
 type DSRForm = z.infer<typeof zodSchema.dsrLicenseKey>;
 
-const EULA_URL =
-	'https://www.liferay.com/documents/d/guest/Liferay-EULA-2102002_GL';
+const EULA_URL = 'https://www.liferay.com/legal';
 
 const DSRLicenseKeyForm = () => {
 	const {
@@ -212,11 +211,11 @@ const DSRLicenseKeyForm = () => {
 			/>
 
 			<p className="activation-key-form-aggreements-text mt-4">
-				{i18n.translate('liferay-dxp-eula-disclaimer-prefix')}{' '}
+				{i18n.translate('liferay-dsr-eula-disclaimer-prefix')}{' '}
 				<a href={EULA_URL} rel="noreferrer" target="_blank">
-					{EULA_URL}
+					Legal | Liferay
 				</a>{' '}
-				{i18n.translate('liferay-dxp-eula-disclaimer-suffix')}
+				{i18n.translate('liferay-dsr-eula-disclaimer-suffix')}
 			</p>
 
 			<div className="align-items-center d-flex flex-row">

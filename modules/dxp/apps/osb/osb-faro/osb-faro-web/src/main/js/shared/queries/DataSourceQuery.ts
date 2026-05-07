@@ -19,18 +19,8 @@ export interface DataSourceSyncData {
 }
 
 export default gql`
-	query DataSource(
-		$credentialsType: String
-		$size: Int
-		$sort: Sort
-		$type: String
-	) {
-		dataSources(
-			credentialsType: $credentialsType
-			size: $size
-			sort: $sort
-			type: $type
-		) {
+	query DataSource($size: Int, $sort: Sort, $type: String) {
+		dataSources(size: $size, sort: $sort, type: $type) {
 			contactsSyncDetails {
 				selected
 			}

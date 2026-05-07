@@ -1,14 +1,8 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
-SCRIPT_DIR=${BASH_SOURCE[0]%/*}
-
-source "${SCRIPT_DIR}/_common.sh"
-
-PATCHING_DIR="${SCRIPT_DIR}/../build/docker/patching"
+source _common.sh
 
 function main {
 	local hotfix_url="${1:-}"
@@ -27,21 +21,22 @@ function main {
 
 	hotfix_file=$(basename "${hotfix_url%%\?*}")
 
-	local dest="${PATCHING_DIR}/${hotfix_file}"
+	mkdir --parents ../build/docker/patching
 
-	if [ -f "${dest}" ]
+	cd ../build/docker/patching
+
+	if [ -f "${hotfix_file}" ]
 	then
-		echo "Hotfix already present: ${dest}"
+		echo "Hotfix is already present at ${hotfix_file}."
+
 		exit 0
 	fi
 
-	mkdir --parents "${PATCHING_DIR}"
+	echo "Downloading ${hotfix_file}."
 
-	echo "Downloading ${hotfix_file} to ${dest}..."
+	curl --fail --location --output "${hotfix_file}" "${hotfix_url}"
 
-	curl --fail --location --output "${dest}" "${hotfix_url}"
-
-	echo "Hotfix ready at ${dest}"
+	echo "Downloaded ${hotfix_file}."
 }
 
 main "${@}"

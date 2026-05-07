@@ -5,30 +5,54 @@
 
 package com.liferay.sharing.notifications.internal.service;
 
+import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.kernel.template.MailTemplate;
+import com.liferay.mail.kernel.template.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
+import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.sharing.configuration.SharingEntryInvitationEmailConfiguration;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
@@ -37,7 +61,11 @@ import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcri
 import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
 
+import jakarta.mail.internet.InternetAddress;
+
+import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
+import jakarta.portlet.WindowState;
 
 import java.text.Format;
 
@@ -303,6 +331,15 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		ServiceContext serviceContext) {
 
 		try {
+			if (FeatureFlagManagerUtil.isEnabled(
+					sharingEntry.getCompanyId(), "LPD-52006") &&
+				(sharingEntry.getToTicketId() > 0)) {
+
+				_sendInvitationEmail(sharingEntry, serviceContext);
+
+				return;
+			}
+
 			if (sharingEntry.getToUserId() > 0) {
 				_sendNotificationEvent(
 					sharingEntry, notificationType, serviceContext,
@@ -380,11 +417,171 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		sharingNotificationSubcriptionSender.flushNotificationsAsync();
 	}
 
+	private String _getEmailAddress(Ticket ticket) throws PortalException {
+		String extraInfo = ticket.getExtraInfo();
+
+		if (Validator.isNull(extraInfo)) {
+			return null;
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(extraInfo);
+
+		return jsonObject.getString("emailAddress");
+	}
+
+	private void _sendInvitation(
+			SharingEntry sharingEntry, Ticket ticket, String emailAddress,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long companyId = sharingEntry.getCompanyId();
+
+		SharingEntryInvitationEmailConfiguration
+			sharingEntryInvitationEmailConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					SharingEntryInvitationEmailConfiguration.class, companyId);
+
+		User inviter = _userLocalService.getUser(sharingEntry.getUserId());
+
+		Group guestGroup = _groupLocalService.getGroup(
+			companyId, GroupConstants.GUEST);
+
+		String url = PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				serviceContext.getRequest(),
+				AccountPortletKeys.ACCOUNT_USERS_REGISTRATION,
+				_layoutLocalService.fetchDefaultLayout(
+					guestGroup.getGroupId(), false),
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/account_admin/create_account_user"
+		).setParameter(
+			"ticketKey", ticket.getKey()
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).buildString();
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put("[$ACCEPT_INVITATION_URL$]", url);
+
+		String invitationEmailSenderName =
+			sharingEntryInvitationEmailConfiguration.
+				invitationEmailSenderName();
+
+		if (Validator.isNull(invitationEmailSenderName)) {
+			invitationEmailSenderName = inviter.getFullName();
+		}
+
+		mailTemplateContextBuilder.put(
+			"[$INVITE_SENDER_NAME$]",
+			new EscapableObject<>(invitationEmailSenderName));
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		LocalizedValuesMap subjectLocalizedValuesMap =
+			sharingEntryInvitationEmailConfiguration.invitationEmailSubject();
+
+		MailTemplate subjectMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				subjectLocalizedValuesMap.get(inviter.getLocale()), false);
+
+		LocalizedValuesMap bodyLocalizedValuesMap =
+			sharingEntryInvitationEmailConfiguration.invitationEmailBody();
+
+		MailTemplate bodyMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				bodyLocalizedValuesMap.get(inviter.getLocale()), true);
+
+		String invitationEmailSenderEmailAddress =
+			sharingEntryInvitationEmailConfiguration.
+				invitationEmailSenderEmailAddress();
+
+		if (Validator.isNull(invitationEmailSenderEmailAddress)) {
+			invitationEmailSenderEmailAddress = inviter.getEmailAddress();
+		}
+
+		MailMessage mailMessage = new MailMessage(
+			new InternetAddress(
+				invitationEmailSenderEmailAddress, invitationEmailSenderName),
+			new InternetAddress(emailAddress),
+			subjectMailTemplate.renderAsString(
+				inviter.getLocale(), mailTemplateContext),
+			bodyMailTemplate.renderAsString(
+				inviter.getLocale(), mailTemplateContext),
+			true);
+
+		_mailService.sendEmail(mailMessage);
+	}
+
+	private void _sendInvitationEmail(
+			SharingEntry sharingEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		Ticket ticket = _ticketLocalService.fetchTicket(
+			sharingEntry.getToTicketId());
+
+		if ((ticket == null) ||
+			(ticket.getType() != TicketConstants.TYPE_INVITE_COLLABORATOR)) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping sharing invitation email; ticket " +
+						sharingEntry.getToTicketId() +
+							" is missing or has unexpected type");
+			}
+
+			return;
+		}
+
+		String emailAddress = _getEmailAddress(ticket);
+
+		if (Validator.isNull(emailAddress)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Skipping sharing invitation email; ticket " +
+						ticket.getTicketId() +
+							" has no emailAddress in extraInfo");
+			}
+
+			return;
+		}
+
+		try {
+			_sendInvitation(sharingEntry, ticket, emailAddress, serviceContext);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		NotificationsSharingEntryLocalServiceWrapper.class);
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private MailService _mailService;
+
+	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
+
+	@Reference
+	private TicketLocalService _ticketLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

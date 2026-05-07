@@ -7,10 +7,10 @@ package com.liferay.analytics.layout.page.template.web.internal.servlet.taglib;
 
 import com.liferay.analytics.layout.page.template.web.internal.servlet.taglib.constants.AnalyticsRenderFragmentLayoutConstants;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.TreeMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,10 +27,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,14 +69,25 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 			return;
 		}
 
-		_printAnalyticsCloudAssetTracker(
-			layoutDisplayPageObjectProvider.getClassName(),
-			layoutDisplayPageObjectProvider.getClassPK(),
-			layoutDisplayPageObjectProvider.getDisplayObject(),
-			layoutDisplayPageObjectProvider.getExternalReferenceCode(),
-			httpServletResponse.getWriter(),
-			layoutDisplayPageObjectProvider.getTitle(
-				_portal.getLocale(httpServletRequest)));
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		String data = HtmlUtil.buildData(
+			HashMapBuilder.<String, Object>put(
+				"analytics-asset-id",
+				layoutDisplayPageObjectProvider.getClassPK()
+			).put(
+				"analytics-asset-title",
+				layoutDisplayPageObjectProvider.getTitle(
+					_portal.getLocale(httpServletRequest))
+			).put(
+				"analytics-external-reference-code",
+				layoutDisplayPageObjectProvider.getExternalReferenceCode()
+			).putAll(
+				_getAnalyticsAssetTypeData(
+					layoutDisplayPageObjectProvider.getDisplayObject())
+			).build());
+
+		printWriter.print("<div " + data + ">");
 	}
 
 	@Override
@@ -89,130 +96,42 @@ public class AnalyticsRenderFragmentLayoutPreDynamicInclude
 			"com.liferay.layout,taglib#/render_fragment_layout/page.jsp#pre");
 	}
 
-	private <T> Map<String, Function<T, String>> _initAttributes(
-		AnalyticsAssetType analyticsAssetType, long classPK,
-		String externalReferenceCode, String title) {
+	private Map<String, Object> _getAnalyticsAssetTypeData(
+		Object displayObject) {
 
-		return TreeMapBuilder.<String, Function<T, String>>put(
-			"data-analytics-asset-id", displayObject -> String.valueOf(classPK)
-		).put(
-			"data-analytics-asset-title",
-			displayObject -> HtmlUtil.escapeAttribute(title)
-		).put(
-			"data-analytics-asset-type",
-			displayObject -> analyticsAssetType.getType()
-		).put(
-			"data-analytics-external-reference-code",
-			displayObject -> externalReferenceCode
-		).putAll(
-			analyticsAssetType.getAttributes()
-		).build();
-	}
-
-	private <T> void _printAnalyticsCloudAssetTracker(
-		String className, long classPK, T displayObject,
-		String externalReferenceCode, PrintWriter printWriter, String title) {
-
-		AnalyticsAssetType analyticsAssetType = _analyticsAssetTypes.get(
-			className);
-
-		if (analyticsAssetType == null) {
-			return;
+		if (displayObject instanceof BlogsEntry) {
+			return HashMapBuilder.<String, Object>put(
+				"analytics-asset-type", "blog"
+			).build();
+		}
+		else if (displayObject instanceof JournalArticle journalArticle) {
+			return HashMapBuilder.<String, Object>put(
+				"analytics-asset-type", "web-content"
+			).put(
+				"analytics-web-content-resource-pk",
+				journalArticle.getResourcePrimKey()
+			).build();
+		}
+		else if (displayObject instanceof FileEntry fileEntry) {
+			return HashMapBuilder.<String, Object>put(
+				"analytics-asset-action", "preview"
+			).put(
+				"analytics-asset-type", "document"
+			).put(
+				"analytics-asset-version", fileEntry.getVersion()
+			).build();
 		}
 
-		Map<String, Function<T, String>> attributes = _initAttributes(
-			analyticsAssetType, classPK, externalReferenceCode, title);
-
-		StringBundler sb = new StringBundler((attributes.size() * 5) + 2);
-
-		sb.append("<div ");
-
-		Set<Map.Entry<String, Function<T, String>>> entries =
-			attributes.entrySet();
-
-		Iterator<Map.Entry<String, Function<T, String>>> iterator =
-			entries.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, Function<T, String>> entry = iterator.next();
-
-			sb.append(entry.getKey());
-
-			sb.append("=\"");
-
-			Function<T, String> function = entry.getValue();
-
-			sb.append(function.apply(displayObject));
-
-			sb.append("\"");
-
-			if (iterator.hasNext()) {
-				sb.append(" ");
-			}
-		}
-
-		sb.append(">");
-
-		printWriter.print(sb);
+		return Collections.emptyMap();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsRenderFragmentLayoutPreDynamicInclude.class);
-
-	private static final Map<String, AnalyticsAssetType> _analyticsAssetTypes =
-		HashMapBuilder.put(
-			"com.liferay.blogs.model.BlogsEntry", new AnalyticsAssetType("blog")
-		).put(
-			"com.liferay.journal.model.JournalArticle",
-			new AnalyticsAssetType(
-				HashMapBuilder.<String, Function<JournalArticle, String>>put(
-					"data-analytics-web-content-resource-pk",
-					journalArticle -> String.valueOf(
-						journalArticle.getResourcePrimKey())
-				).build(),
-				"web-content")
-		).put(
-			"com.liferay.portal.kernel.repository.model.FileEntry",
-			new AnalyticsAssetType(
-				HashMapBuilder.<String, Function<FileEntry, String>>put(
-					"data-analytics-asset-action", fileEntry -> "preview"
-				).put(
-					"data-analytics-asset-version",
-					fileEntry -> fileEntry.getVersion()
-				).build(),
-				"document")
-		).build();
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private Portal _portal;
-
-	private static class AnalyticsAssetType<T> {
-
-		public AnalyticsAssetType(
-			Map<String, Function<T, String>> attributes, String type) {
-
-			_attributes = attributes;
-			_type = type;
-		}
-
-		public AnalyticsAssetType(String type) {
-			this(Collections.emptyMap(), type);
-		}
-
-		public Map<String, Function<T, String>> getAttributes() {
-			return _attributes;
-		}
-
-		public String getType() {
-			return _type;
-		}
-
-		private final Map<String, Function<T, String>> _attributes;
-		private final String _type;
-
-	}
 
 }

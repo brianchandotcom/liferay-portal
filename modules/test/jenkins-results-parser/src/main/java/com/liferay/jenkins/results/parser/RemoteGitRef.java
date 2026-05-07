@@ -103,7 +103,7 @@ public class RemoteGitRef
 			getName(), "...", otherRemoteGitRef.getUsername(), ":",
 			otherRemoteGitRef.getName());
 
-		String url = JenkinsResultsParserUtil.getGitHubApiUrl(
+		String url = JenkinsResultsParserUtil.getGitHubAPIURL(
 			getRepositoryName(), getUsername(), "compare/" + compareSpec);
 
 		try {

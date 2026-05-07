@@ -180,6 +180,16 @@ export class HeadlessCommerceAdminPricingApiHelper {
 		);
 	}
 
+	async patchPriceEntry(
+		priceEntryId: number,
+		priceEntry: Partial<TPriceEntry>
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/price-entries/${priceEntryId}`,
+			priceEntry
+		);
+	}
+
 	async postDiscount(discount?: TDiscount) {
 		discount = {
 			active: true,

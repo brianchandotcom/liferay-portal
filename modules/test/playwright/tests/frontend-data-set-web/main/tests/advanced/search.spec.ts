@@ -282,6 +282,7 @@ test('Search Bar is shown/hidden according to FDS configuration', async ({
 				restEndpoint: '/',
 				restSchema: 'FDSSample',
 				showSearch: false,
+				snapshotsEnabled: true,
 			});
 		}
 	});

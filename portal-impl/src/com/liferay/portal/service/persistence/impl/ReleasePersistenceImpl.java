@@ -5,14 +5,11 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchReleaseException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,9 +21,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.ReleasePersistence;
 import com.liferay.portal.kernel.service.persistence.ReleaseUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ReleaseImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
 
@@ -36,9 +34,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -70,6 +66,8 @@ public class ReleasePersistenceImpl
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
 	private FinderPath _finderPathFetchByServletContextName;
+	private UniquePersistenceFinder<Release>
+		_uniquePersistenceFinderByServletContextName;
 
 	/**
 	 * Returns the release where servletContextName = &#63; or throws a <code>NoSuchReleaseException</code> if it could not be found.
@@ -85,20 +83,17 @@ public class ReleasePersistenceImpl
 		Release release = fetchByServletContextName(servletContextName);
 
 		if (release == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("servletContextName=");
-			sb.append(servletContextName);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByServletContextName.
+					buildNoSuchKeyMessage(
+						_NO_SUCH_ENTITY_WITH_KEY,
+						new Object[] {servletContextName});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchReleaseException(sb.toString());
+			throw new NoSuchReleaseException(message);
 		}
 
 		return release;
@@ -126,95 +121,9 @@ public class ReleasePersistenceImpl
 	public Release fetchByServletContextName(
 		String servletContextName, boolean useFinderCache) {
 
-		servletContextName = Objects.toString(servletContextName, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {servletContextName};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByServletContextName, finderArgs, this);
-		}
-
-		if (result instanceof Release) {
-			Release release = (Release)result;
-
-			if (!Objects.equals(
-					servletContextName, release.getServletContextName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_RELEASE__WHERE);
-
-			boolean bindServletContextName = false;
-
-			if (servletContextName.isEmpty()) {
-				sb.append(
-					_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3);
-			}
-			else {
-				bindServletContextName = true;
-
-				sb.append(
-					_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindServletContextName) {
-					queryPos.add(StringUtil.toLowerCase(servletContextName));
-				}
-
-				List<Release> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByServletContextName, finderArgs,
-							list);
-					}
-				}
-				else {
-					Release release = list.get(0);
-
-					result = release;
-
-					cacheResult(release);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Release)result;
-		}
+		return _uniquePersistenceFinderByServletContextName.fetch(
+			FinderCacheUtil.getFinderCache(), new Object[] {servletContextName},
+			useFinderCache);
 	}
 
 	/**
@@ -240,22 +149,10 @@ public class ReleasePersistenceImpl
 	 */
 	@Override
 	public int countByServletContextName(String servletContextName) {
-		Release release = fetchByServletContextName(servletContextName);
-
-		if (release == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByServletContextName.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {servletContextName});
 	}
-
-	private static final String
-		_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_2 =
-			"lower(release_.servletContextName) = ?";
-
-	private static final String
-		_FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3 =
-			"(release_.servletContextName IS NULL OR release_.servletContextName = '')";
 
 	public ReleasePersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -463,7 +360,15 @@ public class ReleasePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
 			new String[] {String.class.getName()},
 			new String[] {"servletContextName"}, true,
-			Release::getServletContextName);
+			convertNullFunction(Release::getServletContextName));
+
+		_uniquePersistenceFinderByServletContextName =
+			new UniquePersistenceFinder<>(
+				this, _finderPathFetchByServletContextName,
+				_SQL_SELECT_RELEASE__WHERE, "",
+				new FinderColumn<>(
+					"release_.", "servletContextName", FinderColumn.Type.STRING,
+					"=", false, true, Release::getServletContextName));
 
 		ReleaseUtil.setPersistence(this);
 	}
@@ -498,4 +403,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-268010463
+// LIFERAY-SERVICE-BUILDER-HASH:-839833465

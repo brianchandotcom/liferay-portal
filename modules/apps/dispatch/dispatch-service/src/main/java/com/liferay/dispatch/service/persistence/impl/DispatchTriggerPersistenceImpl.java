@@ -3940,7 +3940,7 @@ public class DispatchTriggerPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DISPATCHTRIGGER_WHERE, _SQL_COUNT_DISPATCHTRIGGER_WHERE,
-			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DispatchTrigger::getUuid));
@@ -3971,9 +3971,10 @@ public class DispatchTriggerPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dispatchTrigger.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DispatchTrigger::getUuid),
+					true, true, DispatchTrigger::getUuid),
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
@@ -4003,6 +4004,7 @@ public class DispatchTriggerPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchTrigger::getCompanyId));
@@ -4032,6 +4034,7 @@ public class DispatchTriggerPersistenceImpl
 				_finderPathCountByActive, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dispatchTrigger.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, DispatchTrigger::isActive));
@@ -4059,10 +4062,10 @@ public class DispatchTriggerPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U,
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_DISPATCHTRIGGER_WHERE, _SQL_COUNT_DISPATCHTRIGGER_WHERE,
-			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dispatchTrigger.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, DispatchTrigger::getCompanyId),
+				true, true, DispatchTrigger::getCompanyId),
 			new FinderColumn<>(
 				"dispatchTrigger.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, DispatchTrigger::getUserId));
@@ -4093,9 +4096,10 @@ public class DispatchTriggerPersistenceImpl
 				_finderPathCountByC_DTET, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
 				_SQL_COUNT_DISPATCHTRIGGER_WHERE,
 				DispatchTriggerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dispatchTrigger.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, DispatchTrigger::getCompanyId),
+					"=", true, true, DispatchTrigger::getCompanyId),
 				new FinderColumn<>(
 					"dispatchTrigger.", "dispatchTaskExecutorType",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -4105,13 +4109,14 @@ public class DispatchTriggerPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false,
-			DispatchTrigger::getCompanyId, DispatchTrigger::getName);
+			DispatchTrigger::getCompanyId,
+			convertNullFunction(DispatchTrigger::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
+			this, _finderPathFetchByC_N, _SQL_SELECT_DISPATCHTRIGGER_WHERE, "",
 			new FinderColumn<>(
 				"dispatchTrigger.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, DispatchTrigger::getCompanyId),
+				true, true, DispatchTrigger::getCompanyId),
 			new FinderColumn<>(
 				"dispatchTrigger.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DispatchTrigger::getName));
@@ -4144,14 +4149,15 @@ public class DispatchTriggerPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			DispatchTrigger::getExternalReferenceCode,
+			convertNullFunction(DispatchTrigger::getExternalReferenceCode),
 			DispatchTrigger::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_DISPATCHTRIGGER_WHERE,
+			"",
 			new FinderColumn<>(
 				"dispatchTrigger.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DispatchTrigger::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dispatchTrigger.", "companyId", FinderColumn.Type.LONG, "=",
@@ -4249,4 +4255,4 @@ public class DispatchTriggerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:100124697
+// LIFERAY-SERVICE-BUILDER-HASH:187169728

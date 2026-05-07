@@ -1309,6 +1309,7 @@ public class DLFileEntryMetadataPersistenceImpl
 			_SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
 			_SQL_COUNT_DLFILEENTRYMETADATA_WHERE,
 			DLFileEntryMetadataModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"dlFileEntryMetadata.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, DLFileEntryMetadata::getUuid));
@@ -1339,10 +1340,10 @@ public class DLFileEntryMetadataPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
 				_SQL_COUNT_DLFILEENTRYMETADATA_WHERE,
 				DLFileEntryMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntryMetadata.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, DLFileEntryMetadata::getUuid),
+					"=", true, true, DLFileEntryMetadata::getUuid),
 				new FinderColumn<>(
 					"dlFileEntryMetadata.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntryMetadata::getCompanyId));
@@ -1373,7 +1374,7 @@ public class DLFileEntryMetadataPersistenceImpl
 				_SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
 				_SQL_COUNT_DLFILEENTRYMETADATA_WHERE,
 				DLFileEntryMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntryMetadata.", "fileEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1405,7 +1406,7 @@ public class DLFileEntryMetadataPersistenceImpl
 				_SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
 				_SQL_COUNT_DLFILEENTRYMETADATA_WHERE,
 				DLFileEntryMetadataModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntryMetadata.", "fileVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1420,9 +1421,10 @@ public class DLFileEntryMetadataPersistenceImpl
 
 		_uniquePersistenceFinderByD_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_F, _SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileEntryMetadata.", "DDMStructureId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DLFileEntryMetadata::getDDMStructureId),
 			new FinderColumn<>(
 				"dlFileEntryMetadata.", "fileVersionId", FinderColumn.Type.LONG,
@@ -1432,15 +1434,15 @@ public class DLFileEntryMetadataPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			DLFileEntryMetadata::getExternalReferenceCode,
+			convertNullFunction(DLFileEntryMetadata::getExternalReferenceCode),
 			DLFileEntryMetadata::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_DLFILEENTRYMETADATA_WHERE,
+			_SQL_SELECT_DLFILEENTRYMETADATA_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntryMetadata.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DLFileEntryMetadata::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dlFileEntryMetadata.", "companyId", FinderColumn.Type.LONG,
@@ -1482,4 +1484,4 @@ public class DLFileEntryMetadataPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2146534442
+// LIFERAY-SERVICE-BUILDER-HASH:189228294

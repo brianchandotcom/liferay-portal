@@ -1284,7 +1284,7 @@ public class RegionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
-			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"region.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Region::getUuid));
@@ -1314,10 +1314,10 @@ public class RegionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_REGION_WHERE,
 				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Region::getUuid),
+					true, Region::getUuid),
 				new FinderColumn<>(
 					"region.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCompanyId));
@@ -1346,7 +1346,7 @@ public class RegionPersistenceImpl
 				_finderPathWithoutPaginationFindByCountryId,
 				_finderPathCountByCountryId, _SQL_SELECT_REGION_WHERE,
 				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Region::getCountryId));
@@ -1375,7 +1375,7 @@ public class RegionPersistenceImpl
 				_finderPathWithoutPaginationFindByActive,
 				_finderPathCountByActive, _SQL_SELECT_REGION_WHERE,
 				_SQL_COUNT_REGION_WHERE, RegionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"region.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Region::isActive));
@@ -1403,10 +1403,10 @@ public class RegionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_A,
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_REGION_WHERE, _SQL_COUNT_REGION_WHERE,
-			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RegionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"region.", "countryId", FinderColumn.Type.LONG, "=", true,
-				false, Region::getCountryId),
+				"region.", "countryId", FinderColumn.Type.LONG, "=", true, true,
+				Region::getCountryId),
 			new FinderColumn<>(
 				"region.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Region::isActive));
@@ -1415,13 +1415,13 @@ public class RegionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "regionCode"}, false,
-			Region::getCountryId, Region::getRegionCode);
+			Region::getCountryId, convertNullFunction(Region::getRegionCode));
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R, _SQL_SELECT_REGION_WHERE,
+			this, _finderPathFetchByC_R, _SQL_SELECT_REGION_WHERE, "",
 			new FinderColumn<>(
-				"region.", "countryId", FinderColumn.Type.LONG, "=", true,
-				false, Region::getCountryId),
+				"region.", "countryId", FinderColumn.Type.LONG, "=", true, true,
+				Region::getCountryId),
 			new FinderColumn<>(
 				"region.", "regionCode", FinderColumn.Type.STRING, "=", true,
 				true, Region::getRegionCode));
@@ -1465,4 +1465,4 @@ public class RegionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:413702634
+// LIFERAY-SERVICE-BUILDER-HASH:985385260

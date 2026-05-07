@@ -497,10 +497,10 @@ public class CompanyPersistenceImpl
 		_finderPathFetchByWebId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
 			new String[] {String.class.getName()}, new String[] {"webId"},
-			false, Company::getWebId);
+			false, convertNullFunction(Company::getWebId));
 
 		_uniquePersistenceFinderByWebId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByWebId, _SQL_SELECT_COMPANY_WHERE,
+			this, _finderPathFetchByWebId, _SQL_SELECT_COMPANY_WHERE, "",
 			new FinderColumn<>(
 				"company.", "webId", FinderColumn.Type.STRING, "=", true, true,
 				Company::getWebId));
@@ -528,7 +528,7 @@ public class CompanyPersistenceImpl
 				_finderPathWithoutPaginationFindByLogoId,
 				_finderPathCountByLogoId, _SQL_SELECT_COMPANY_WHERE,
 				_SQL_COUNT_COMPANY_WHERE, CompanyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"company.", "logoId", FinderColumn.Type.LONG, "=", true,
 					true, Company::getLogoId));
@@ -569,4 +569,4 @@ public class CompanyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1540732871
+// LIFERAY-SERVICE-BUILDER-HASH:1046836121

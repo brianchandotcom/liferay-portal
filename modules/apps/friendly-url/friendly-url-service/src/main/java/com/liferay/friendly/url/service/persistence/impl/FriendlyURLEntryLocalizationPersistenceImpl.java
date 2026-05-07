@@ -1569,7 +1569,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "friendlyURLEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1582,15 +1582,16 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"friendlyURLEntryId", "languageId"}, false,
 				FriendlyURLEntryLocalization::getFriendlyURLEntryId,
-				FriendlyURLEntryLocalization::getLanguageId);
+				convertNullFunction(
+					FriendlyURLEntryLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByFriendlyURLEntryId_LanguageId,
-				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
+				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "friendlyURLEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getFriendlyURLEntryId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "languageId",
@@ -1628,14 +1629,14 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 			FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "groupId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				FriendlyURLEntryLocalization::getGroupId),
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				FriendlyURLEntryLocalization::getClassNameId),
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "urlTitle",
@@ -1685,18 +1686,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getCompanyId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getClassNameId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "urlTitle",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FriendlyURLEntryLocalization::getUrlTitle),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "ctCollectionId",
@@ -1740,18 +1741,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "groupId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getGroupId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getClassNameId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "classPK",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getClassPK),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "languageId",
@@ -1767,23 +1768,23 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
 			false, FriendlyURLEntryLocalization::getGroupId,
 			FriendlyURLEntryLocalization::getClassNameId,
-			FriendlyURLEntryLocalization::getLanguageId,
-			FriendlyURLEntryLocalization::getUrlTitle);
+			convertNullFunction(FriendlyURLEntryLocalization::getLanguageId),
+			convertNullFunction(FriendlyURLEntryLocalization::getUrlTitle));
 
 		_uniquePersistenceFinderByG_C_L_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_L_U,
-			_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
+			_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "groupId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				FriendlyURLEntryLocalization::getGroupId),
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				FriendlyURLEntryLocalization::getClassNameId),
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "languageId",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				FriendlyURLEntryLocalization::getLanguageId),
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "urlTitle",
@@ -1817,18 +1818,18 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "groupId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getGroupId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getClassNameId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "languageId",
-					FinderColumn.Type.STRING, "!=", true, false,
+					FinderColumn.Type.STRING, "!=", true, true,
 					FriendlyURLEntryLocalization::getLanguageId),
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "urlTitle",
@@ -1905,4 +1906,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-155609238
+// LIFERAY-SERVICE-BUILDER-HASH:-1478504752

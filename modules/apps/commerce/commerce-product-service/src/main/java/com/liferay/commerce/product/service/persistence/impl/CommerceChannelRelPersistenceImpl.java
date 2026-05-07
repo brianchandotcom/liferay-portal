@@ -836,6 +836,7 @@ public class CommerceChannelRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELREL_WHERE,
 				CommerceChannelRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceChannelRel.", "commerceChannelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -865,10 +866,10 @@ public class CommerceChannelRelPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_COMMERCECHANNELREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELREL_WHERE,
-			CommerceChannelRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceChannelRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannelRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceChannelRel::getClassNameId),
+				"=", true, true, CommerceChannelRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceChannelRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, CommerceChannelRel::getClassPK));
@@ -884,12 +885,13 @@ public class CommerceChannelRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C, _SQL_SELECT_COMMERCECHANNELREL_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceChannelRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceChannelRel::getClassNameId),
+				"=", true, true, CommerceChannelRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceChannelRel.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, CommerceChannelRel::getClassPK),
+				true, true, CommerceChannelRel::getClassPK),
 			new FinderColumn<>(
 				"commerceChannelRel.", "commerceChannelId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -964,4 +966,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:558092334
+// LIFERAY-SERVICE-BUILDER-HASH:1142563430

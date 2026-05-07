@@ -605,7 +605,7 @@ public class ContactsLayoutTemplatePersistenceImpl
 				_SQL_SELECT_CONTACTSLAYOUTTEMPLATE_WHERE,
 				_SQL_COUNT_CONTACTSLAYOUTTEMPLATE_WHERE,
 				ContactsLayoutTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"contactsLayoutTemplate.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -636,9 +636,10 @@ public class ContactsLayoutTemplatePersistenceImpl
 			_SQL_SELECT_CONTACTSLAYOUTTEMPLATE_WHERE,
 			_SQL_COUNT_CONTACTSLAYOUTTEMPLATE_WHERE,
 			ContactsLayoutTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"contactsLayoutTemplate.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, ContactsLayoutTemplate::getGroupId),
+				"=", true, true, ContactsLayoutTemplate::getGroupId),
 			new FinderColumn<>(
 				"contactsLayoutTemplate.", "type", FinderColumn.Type.INTEGER,
 				"=", true, true, ContactsLayoutTemplate::getType));
@@ -712,4 +713,4 @@ public class ContactsLayoutTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1911361789
+// LIFERAY-SERVICE-BUILDER-HASH:-481917666

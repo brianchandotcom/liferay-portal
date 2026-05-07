@@ -1298,7 +1298,7 @@ public class ChangesetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
-				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"changesetEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, ChangesetEntry::getGroupId));
@@ -1327,7 +1327,7 @@ public class ChangesetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
-				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"changesetEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ChangesetEntry::getCompanyId));
@@ -1360,7 +1360,7 @@ public class ChangesetEntryPersistenceImpl
 				_finderPathCountByChangesetCollectionId,
 				_SQL_SELECT_CHANGESETENTRY_WHERE,
 				_SQL_COUNT_CHANGESETENTRY_WHERE,
-				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"changesetEntry.", "changesetCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1389,10 +1389,10 @@ public class ChangesetEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_C,
 			_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
 			_SQL_SELECT_CHANGESETENTRY_WHERE, _SQL_COUNT_CHANGESETENTRY_WHERE,
-			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"changesetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, ChangesetEntry::getGroupId),
+				true, ChangesetEntry::getGroupId),
 			new FinderColumn<>(
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ChangesetEntry::getClassNameId));
@@ -1420,10 +1420,10 @@ public class ChangesetEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_CHANGESETENTRY_WHERE, _SQL_COUNT_CHANGESETENTRY_WHERE,
-			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ChangesetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"changesetEntry.", "changesetCollectionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ChangesetEntry::getChangesetCollectionId),
 			new FinderColumn<>(
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
@@ -1440,18 +1440,19 @@ public class ChangesetEntryPersistenceImpl
 				"classNameId"
 			},
 			false, ChangesetEntry::getChangesetCollectionId,
-			ChangesetEntry::getClassExternalReferenceCode,
+			convertNullFunction(ChangesetEntry::getClassExternalReferenceCode),
 			ChangesetEntry::getClassNameId);
 
 		_uniquePersistenceFinderByC_CERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_CERC_C, _SQL_SELECT_CHANGESETENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"changesetEntry.", "changesetCollectionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ChangesetEntry::getChangesetCollectionId),
 			new FinderColumn<>(
 				"changesetEntry.", "classExternalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ChangesetEntry::getClassExternalReferenceCode),
 			new FinderColumn<>(
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
@@ -1467,14 +1468,14 @@ public class ChangesetEntryPersistenceImpl
 			ChangesetEntry::getClassNameId, ChangesetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C, _SQL_SELECT_CHANGESETENTRY_WHERE,
+			this, _finderPathFetchByC_C_C, _SQL_SELECT_CHANGESETENTRY_WHERE, "",
 			new FinderColumn<>(
 				"changesetEntry.", "changesetCollectionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ChangesetEntry::getChangesetCollectionId),
 			new FinderColumn<>(
 				"changesetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, ChangesetEntry::getClassNameId),
+				true, true, ChangesetEntry::getClassNameId),
 			new FinderColumn<>(
 				"changesetEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ChangesetEntry::getClassPK));
@@ -1545,4 +1546,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2110398383
+// LIFERAY-SERVICE-BUILDER-HASH:1749707602

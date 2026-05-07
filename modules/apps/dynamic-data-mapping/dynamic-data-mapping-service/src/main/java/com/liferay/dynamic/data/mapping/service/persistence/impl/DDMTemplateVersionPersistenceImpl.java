@@ -811,6 +811,7 @@ public class DDMTemplateVersionPersistenceImpl
 				_SQL_SELECT_DDMTEMPLATEVERSION_WHERE,
 				_SQL_COUNT_DDMTEMPLATEVERSION_WHERE,
 				DDMTemplateVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddmTemplateVersion.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateVersion::getTemplateId));
@@ -819,13 +820,15 @@ public class DDMTemplateVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_V",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"templateId", "version"}, false,
-			DDMTemplateVersion::getTemplateId, DDMTemplateVersion::getVersion);
+			DDMTemplateVersion::getTemplateId,
+			convertNullFunction(DDMTemplateVersion::getVersion));
 
 		_uniquePersistenceFinderByT_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_V, _SQL_SELECT_DDMTEMPLATEVERSION_WHERE,
+			"",
 			new FinderColumn<>(
 				"ddmTemplateVersion.", "templateId", FinderColumn.Type.LONG,
-				"=", true, false, DDMTemplateVersion::getTemplateId),
+				"=", true, true, DDMTemplateVersion::getTemplateId),
 			new FinderColumn<>(
 				"ddmTemplateVersion.", "version", FinderColumn.Type.STRING, "=",
 				true, true, DDMTemplateVersion::getVersion));
@@ -854,10 +857,10 @@ public class DDMTemplateVersionPersistenceImpl
 			_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
 			_SQL_SELECT_DDMTEMPLATEVERSION_WHERE,
 			_SQL_COUNT_DDMTEMPLATEVERSION_WHERE,
-			DDMTemplateVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMTemplateVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmTemplateVersion.", "templateId", FinderColumn.Type.LONG,
-				"=", true, false, DDMTemplateVersion::getTemplateId),
+				"=", true, true, DDMTemplateVersion::getTemplateId),
 			new FinderColumn<>(
 				"ddmTemplateVersion.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, DDMTemplateVersion::getStatus));
@@ -931,4 +934,4 @@ public class DDMTemplateVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:44108246
+// LIFERAY-SERVICE-BUILDER-HASH:-582737269

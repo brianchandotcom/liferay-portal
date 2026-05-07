@@ -887,7 +887,7 @@ public class WikiPageResourcePersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 			_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
-			WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, WikiPageResource::getUuid));
@@ -895,14 +895,16 @@ public class WikiPageResourcePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, WikiPageResource::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(WikiPageResource::getUuid),
 			WikiPageResource::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
+			"",
 			new FinderColumn<>(
 				"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, WikiPageResource::getUuid),
+				true, true, WikiPageResource::getUuid),
 			new FinderColumn<>(
 				"wikiPageResource.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, WikiPageResource::getGroupId));
@@ -933,9 +935,10 @@ public class WikiPageResourcePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
 				_SQL_COUNT_WIKIPAGERESOURCE_WHERE,
 				WikiPageResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"wikiPageResource.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, WikiPageResource::getUuid),
+					true, true, WikiPageResource::getUuid),
 				new FinderColumn<>(
 					"wikiPageResource.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, WikiPageResource::getCompanyId));
@@ -944,13 +947,14 @@ public class WikiPageResourcePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"nodeId", "title"}, false,
-			WikiPageResource::getNodeId, WikiPageResource::getTitle);
+			WikiPageResource::getNodeId,
+			convertNullFunction(WikiPageResource::getTitle));
 
 		_uniquePersistenceFinderByN_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByN_T, _SQL_SELECT_WIKIPAGERESOURCE_WHERE,
+			this, _finderPathFetchByN_T, _SQL_SELECT_WIKIPAGERESOURCE_WHERE, "",
 			new FinderColumn<>(
 				"wikiPageResource.", "nodeId", FinderColumn.Type.LONG, "=",
-				true, false, WikiPageResource::getNodeId),
+				true, true, WikiPageResource::getNodeId),
 			new FinderColumn<>(
 				"wikiPageResource.", "title", FinderColumn.Type.STRING, "=",
 				true, true, WikiPageResource::getTitle));
@@ -1027,4 +1031,4 @@ public class WikiPageResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-871823646
+// LIFERAY-SERVICE-BUILDER-HASH:-898901749

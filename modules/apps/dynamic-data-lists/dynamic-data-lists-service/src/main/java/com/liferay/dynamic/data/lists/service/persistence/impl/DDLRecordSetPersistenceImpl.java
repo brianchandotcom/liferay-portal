@@ -2488,7 +2488,7 @@ public class DDLRecordSetPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DDLRECORDSET_WHERE, _SQL_COUNT_DDLRECORDSET_WHERE,
-			DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDLRecordSet::getUuid));
@@ -2496,14 +2496,15 @@ public class DDLRecordSetPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DDLRecordSet::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DDLRecordSet::getUuid),
 			DDLRecordSet::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORDSET_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORDSET_WHERE, "",
 			new FinderColumn<>(
 				"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DDLRecordSet::getUuid),
+				true, DDLRecordSet::getUuid),
 			new FinderColumn<>(
 				"ddlRecordSet.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecordSet::getGroupId));
@@ -2533,10 +2534,10 @@ public class DDLRecordSetPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DDLRECORDSET_WHERE,
 				_SQL_COUNT_DDLRECORDSET_WHERE,
-				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecordSet.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DDLRecordSet::getUuid),
+					true, true, DDLRecordSet::getUuid),
 				new FinderColumn<>(
 					"ddlRecordSet.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecordSet::getCompanyId));
@@ -2591,13 +2592,14 @@ public class DDLRecordSetPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_R",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "recordSetKey"}, false,
-			DDLRecordSet::getGroupId, DDLRecordSet::getRecordSetKey);
+			DDLRecordSet::getGroupId,
+			convertNullFunction(DDLRecordSet::getRecordSetKey));
 
 		_uniquePersistenceFinderByG_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_R, _SQL_SELECT_DDLRECORDSET_WHERE,
+			this, _finderPathFetchByG_R, _SQL_SELECT_DDLRECORDSET_WHERE, "",
 			new FinderColumn<>(
 				"ddlRecordSet.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DDLRecordSet::getGroupId),
+				true, DDLRecordSet::getGroupId),
 			new FinderColumn<>(
 				"ddlRecordSet.", "recordSetKey", FinderColumn.Type.STRING, "=",
 				true, true, DDLRecordSet::getRecordSetKey));
@@ -2697,4 +2699,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1853400773
+// LIFERAY-SERVICE-BUILDER-HASH:-1601954982

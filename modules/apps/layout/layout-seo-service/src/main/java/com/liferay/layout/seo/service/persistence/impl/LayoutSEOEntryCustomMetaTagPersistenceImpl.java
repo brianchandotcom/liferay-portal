@@ -543,10 +543,10 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 			_SQL_SELECT_LAYOUTSEOENTRYCUSTOMMETATAG_WHERE,
 			_SQL_COUNT_LAYOUTSEOENTRYCUSTOMMETATAG_WHERE,
 			LayoutSEOEntryCustomMetaTagModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSEOEntryCustomMetaTag.", "groupId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				LayoutSEOEntryCustomMetaTag::getGroupId),
 			new FinderColumn<>(
 				"layoutSEOEntryCustomMetaTag.", "layoutSEOEntryId",
@@ -623,4 +623,4 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1770316684
+// LIFERAY-SERVICE-BUILDER-HASH:1032489315

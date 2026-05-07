@@ -558,7 +558,7 @@ public class UserNotificationDeliveryPersistenceImpl
 				_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE,
 				UserNotificationDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userNotificationDelivery.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -576,28 +576,28 @@ public class UserNotificationDeliveryPersistenceImpl
 				"deliveryType"
 			},
 			false, UserNotificationDelivery::getUserId,
-			UserNotificationDelivery::getPortletId,
+			convertNullFunction(UserNotificationDelivery::getPortletId),
 			UserNotificationDelivery::getClassNameId,
 			UserNotificationDelivery::getNotificationType,
 			UserNotificationDelivery::getDeliveryType);
 
 		_uniquePersistenceFinderByU_P_C_N_D = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_P_C_N_D,
-			_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
+			_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE, "",
 			new FinderColumn<>(
 				"userNotificationDelivery.", "userId", FinderColumn.Type.LONG,
-				"=", true, false, UserNotificationDelivery::getUserId),
+				"=", true, true, UserNotificationDelivery::getUserId),
 			new FinderColumn<>(
 				"userNotificationDelivery.", "portletId",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				UserNotificationDelivery::getPortletId),
 			new FinderColumn<>(
 				"userNotificationDelivery.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				UserNotificationDelivery::getClassNameId),
 			new FinderColumn<>(
 				"userNotificationDelivery.", "notificationType",
-				FinderColumn.Type.INTEGER, "=", true, false,
+				FinderColumn.Type.INTEGER, "=", true, true,
 				UserNotificationDelivery::getNotificationType),
 			new FinderColumn<>(
 				"userNotificationDelivery.", "deliveryType",
@@ -638,4 +638,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952955584
+// LIFERAY-SERVICE-BUILDER-HASH:-1846825386

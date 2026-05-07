@@ -36864,7 +36864,7 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByResourcePrimKey,
 				_finderPathCountByResourcePrimKey, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey));
@@ -36891,7 +36891,7 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid));
@@ -36899,14 +36899,14 @@ public class KBArticlePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, KBArticle::getUuid,
-			KBArticle::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBARTICLE_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
-				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, KBArticle::getUuid),
+				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				KBArticle::getUuid),
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
@@ -36936,10 +36936,10 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, KBArticle::getUuid),
+					true, KBArticle::getUuid),
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId));
@@ -36967,10 +36967,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByR_G,
 			_finderPathWithoutPaginationFindByR_G, _finderPathCountByR_G,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
-				true, false, KBArticle::getResourcePrimKey),
+				true, true, KBArticle::getResourcePrimKey),
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
@@ -36982,10 +36982,10 @@ public class KBArticlePersistenceImpl
 			KBArticle::getResourcePrimKey, KBArticle::getVersion);
 
 		_uniquePersistenceFinderByR_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_V, _SQL_SELECT_KBARTICLE_WHERE,
+			this, _finderPathFetchByR_V, _SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
-				true, false, KBArticle::getResourcePrimKey),
+				true, true, KBArticle::getResourcePrimKey),
 			new FinderColumn<>(
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
@@ -37085,10 +37085,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_ERC,
 			_finderPathWithoutPaginationFindByG_ERC, _finderPathCountByG_ERC,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, KBArticle::getExternalReferenceCode));
@@ -37116,10 +37116,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_L,
 			_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
@@ -37147,10 +37147,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_M,
 			_finderPathWithoutPaginationFindByG_M, _finderPathCountByG_M,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
@@ -37178,10 +37178,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
@@ -37209,10 +37209,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_L,
 			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getCompanyId),
+				true, KBArticle::getCompanyId),
 			new FinderColumn<>(
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
@@ -37240,10 +37240,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_M,
 			_finderPathWithoutPaginationFindByC_M, _finderPathCountByC_M,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getCompanyId),
+				true, KBArticle::getCompanyId),
 			new FinderColumn<>(
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
@@ -37271,10 +37271,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getCompanyId),
+				true, KBArticle::getCompanyId),
 			new FinderColumn<>(
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
@@ -37369,10 +37369,10 @@ public class KBArticlePersistenceImpl
 			this, _finderPathWithPaginationFindByLtD_S, null,
 			_finderPathWithPaginationCountByLtD_S, _SQL_SELECT_KBARTICLE_WHERE,
 			_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "displayDate", FinderColumn.Type.DATE, "<", true,
-				false, KBArticle::getDisplayDate),
+				true, KBArticle::getDisplayDate),
 			new FinderColumn<>(
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
@@ -37388,13 +37388,13 @@ public class KBArticlePersistenceImpl
 			KBArticle::getVersion);
 
 		_uniquePersistenceFinderByR_G_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_G_V, _SQL_SELECT_KBARTICLE_WHERE,
+			this, _finderPathFetchByR_G_V, _SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
-				true, false, KBArticle::getResourcePrimKey),
+				true, true, KBArticle::getResourcePrimKey),
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
@@ -37520,13 +37520,13 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByR_G_NotS, null,
 				_finderPathWithPaginationCountByR_G_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
-					"=", true, false, KBArticle::getResourcePrimKey),
+					"=", true, true, KBArticle::getResourcePrimKey),
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -37572,17 +37572,18 @@ public class KBArticlePersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "externalReferenceCode", "version"}, false,
-			KBArticle::getGroupId, KBArticle::getExternalReferenceCode,
+			KBArticle::getGroupId,
+			convertNullFunction(KBArticle::getExternalReferenceCode),
 			KBArticle::getVersion);
 
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_KBARTICLE_WHERE,
+			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, KBArticle::getGroupId),
+				true, KBArticle::getGroupId),
 			new FinderColumn<>(
 				"kbArticle.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, KBArticle::getExternalReferenceCode),
+				"=", true, true, KBArticle::getExternalReferenceCode),
 			new FinderColumn<>(
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
@@ -37618,13 +37619,13 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_ERC_S,
 				_finderPathCountByG_ERC_S, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "externalReferenceCode",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KBArticle::getExternalReferenceCode),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
@@ -37760,13 +37761,13 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_UT,
 				_finderPathCountByG_KBFI_UT, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "kbFolderId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getKbFolderId),
+					true, true, KBArticle::getKbFolderId),
 				new FinderColumn<>(
 					"kbArticle.", "urlTitle", FinderColumn.Type.STRING, "=",
 					true, true, KBArticle::getUrlTitle));
@@ -37802,13 +37803,13 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_L,
 				_finderPathCountByG_KBFI_L, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "kbFolderId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getKbFolderId),
+					true, true, KBArticle::getKbFolderId),
 				new FinderColumn<>(
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
@@ -37844,13 +37845,13 @@ public class KBArticlePersistenceImpl
 				_finderPathWithoutPaginationFindByG_KBFI_S,
 				_finderPathCountByG_KBFI_S, _SQL_SELECT_KBARTICLE_WHERE,
 				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "kbFolderId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getKbFolderId),
+					true, true, KBArticle::getKbFolderId),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
@@ -37928,13 +37929,13 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_L_NotS, null,
 				_finderPathWithPaginationCountByG_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
-					true, false, KBArticle::isLatest),
+					true, true, KBArticle::isLatest),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -37961,13 +37962,13 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_M_NotS, null,
 				_finderPathWithPaginationCountByG_M_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
-					false, KBArticle::isMain),
+					true, KBArticle::isMain),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -37994,13 +37995,13 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByC_L_NotS, null,
 				_finderPathWithPaginationCountByC_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getCompanyId),
+					true, true, KBArticle::getCompanyId),
 				new FinderColumn<>(
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
-					true, false, KBArticle::isLatest),
+					true, true, KBArticle::isLatest),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -38027,13 +38028,13 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByC_M_NotS, null,
 				_finderPathWithPaginationCountByC_M_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getCompanyId),
+					true, true, KBArticle::getCompanyId),
 				new FinderColumn<>(
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
-					false, KBArticle::isMain),
+					true, KBArticle::isMain),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -38300,16 +38301,16 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_KBFI_UT_NotS, null,
 				_finderPathWithPaginationCountByG_KBFI_UT_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "kbFolderId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getKbFolderId),
+					true, true, KBArticle::getKbFolderId),
 				new FinderColumn<>(
 					"kbArticle.", "urlTitle", FinderColumn.Type.STRING, "=",
-					true, false, KBArticle::getUrlTitle),
+					true, true, KBArticle::getUrlTitle),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -38337,16 +38338,16 @@ public class KBArticlePersistenceImpl
 				this, _finderPathWithPaginationFindByG_KBFI_L_NotS, null,
 				_finderPathWithPaginationCountByG_KBFI_L_NotS,
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
-				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, KBArticle::getGroupId),
+					true, KBArticle::getGroupId),
 				new FinderColumn<>(
 					"kbArticle.", "kbFolderId", FinderColumn.Type.LONG, "=",
-					true, false, KBArticle::getKbFolderId),
+					true, true, KBArticle::getKbFolderId),
 				new FinderColumn<>(
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
-					true, false, KBArticle::isLatest),
+					true, true, KBArticle::isLatest),
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
@@ -38482,4 +38483,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-609606971
+// LIFERAY-SERVICE-BUILDER-HASH:-163663211

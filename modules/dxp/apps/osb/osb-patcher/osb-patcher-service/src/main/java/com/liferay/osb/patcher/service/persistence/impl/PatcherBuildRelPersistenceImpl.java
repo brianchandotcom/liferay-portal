@@ -583,6 +583,7 @@ public class PatcherBuildRelPersistenceImpl
 				_SQL_SELECT_PATCHERBUILDREL_WHERE,
 				_SQL_COUNT_PATCHERBUILDREL_WHERE,
 				PatcherBuildRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"patcherBuildRel.", "childPatcherBuildId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -615,6 +616,7 @@ public class PatcherBuildRelPersistenceImpl
 				_SQL_SELECT_PATCHERBUILDREL_WHERE,
 				_SQL_COUNT_PATCHERBUILDREL_WHERE,
 				PatcherBuildRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"patcherBuildRel.", "parentPatcherBuildId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -686,4 +688,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2060547841
+// LIFERAY-SERVICE-BUILDER-HASH:-2097766079

@@ -796,7 +796,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxFixedRateAddressRel.", "commerceTaxMethodId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -828,7 +828,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxFixedRateAddressRel.", "CPTaxCategoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -860,7 +860,7 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 				_SQL_SELECT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATEADDRESSREL_WHERE,
 				CommerceTaxFixedRateAddressRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxFixedRateAddressRel.", "countryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -938,4 +938,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:967763895
+// LIFERAY-SERVICE-BUILDER-HASH:1964724469

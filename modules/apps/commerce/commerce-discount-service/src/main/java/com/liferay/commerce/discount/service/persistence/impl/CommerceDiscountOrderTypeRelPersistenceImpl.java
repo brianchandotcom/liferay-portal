@@ -1066,7 +1066,7 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 			_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 			_SQL_COUNT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 			CommerceDiscountOrderTypeRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceDiscountOrderTypeRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1099,10 +1099,10 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				CommerceDiscountOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountOrderTypeRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceDiscountOrderTypeRel::getUuid),
 				new FinderColumn<>(
 					"commerceDiscountOrderTypeRel.", "companyId",
@@ -1135,7 +1135,7 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				CommerceDiscountOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountOrderTypeRel.", "commerceDiscountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1167,7 +1167,7 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
 				CommerceDiscountOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountOrderTypeRel.", "commerceOrderTypeId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1182,10 +1182,10 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 
 		_uniquePersistenceFinderByCDI_COTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_COTI,
-			_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE,
+			_SQL_SELECT_COMMERCEDISCOUNTORDERTYPEREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceDiscountOrderTypeRel.", "commerceDiscountId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceDiscountOrderTypeRel::getCommerceDiscountId),
 			new FinderColumn<>(
 				"commerceDiscountOrderTypeRel.", "commerceOrderTypeId",
@@ -1262,4 +1262,4 @@ public class CommerceDiscountOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:231382165
+// LIFERAY-SERVICE-BUILDER-HASH:1459320133

@@ -511,6 +511,7 @@ public class FaroPreferencesPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_FAROPREFERENCES_WHERE,
 				_SQL_COUNT_FAROPREFERENCES_WHERE,
 				FaroPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroPreferences::getGroupId));
@@ -522,10 +523,10 @@ public class FaroPreferencesPersistenceImpl
 			FaroPreferences::getGroupId, FaroPreferences::getOwnerId);
 
 		_uniquePersistenceFinderByG_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_O, _SQL_SELECT_FAROPREFERENCES_WHERE,
+			this, _finderPathFetchByG_O, _SQL_SELECT_FAROPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"faroPreferences.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, FaroPreferences::getGroupId),
+				true, true, FaroPreferences::getGroupId),
 			new FinderColumn<>(
 				"faroPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, true, FaroPreferences::getOwnerId));
@@ -596,4 +597,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-265195834
+// LIFERAY-SERVICE-BUILDER-HASH:1055938559

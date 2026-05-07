@@ -406,6 +406,7 @@ public class CacheFieldEntryPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_CACHEFIELDENTRY_WHERE,
 				_SQL_COUNT_CACHEFIELDENTRY_WHERE,
 				CacheFieldEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"cacheFieldEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CacheFieldEntry::getGroupId));
@@ -449,4 +450,4 @@ public class CacheFieldEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1943470650
+// LIFERAY-SERVICE-BUILDER-HASH:-538047236

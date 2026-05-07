@@ -5444,7 +5444,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, FragmentEntry::getUuid));
@@ -5474,10 +5474,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_Head,
 				_finderPathCountByUuid_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, FragmentEntry::getUuid),
+					true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -5507,10 +5507,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, FragmentEntry::getUuid),
+					true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getGroupId));
@@ -5522,18 +5522,18 @@ public class FragmentEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "head"}, false,
-			FragmentEntry::getUuid, FragmentEntry::getGroupId,
-			FragmentEntry::isHead);
+			convertNullFunction(FragmentEntry::getUuid),
+			FragmentEntry::getGroupId, FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
-			_SQL_SELECT_FRAGMENTENTRY_WHERE,
+			_SQL_SELECT_FRAGMENTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, FragmentEntry::getUuid),
+				true, FragmentEntry::getUuid),
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntry::getGroupId),
+				true, FragmentEntry::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, FragmentEntry::isHead));
@@ -5563,10 +5563,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, FragmentEntry::getUuid),
+					true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getCompanyId));
@@ -5602,13 +5602,13 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C_Head,
 				_finderPathCountByUuid_C_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, FragmentEntry::getUuid),
+					true, true, FragmentEntry::getUuid),
 				new FinderColumn<>(
 					"fragmentEntry.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getCompanyId),
+					true, true, FragmentEntry::getCompanyId),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -5637,7 +5637,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntry::getGroupId));
@@ -5667,10 +5667,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId_Head,
 				_finderPathCountByGroupId_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -5700,7 +5700,7 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFragmentCollectionId,
 				_finderPathCountByFragmentCollectionId,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -5736,10 +5736,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFragmentCollectionId_Head,
 				_finderPathCountByFragmentCollectionId_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
@@ -5767,7 +5767,7 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByType,
 			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, FragmentEntry::getType));
@@ -5797,10 +5797,10 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByType_Head,
 				_finderPathCountByType_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getType),
+					true, true, FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -5828,10 +5828,10 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_FCI,
 			_finderPathWithoutPaginationFindByG_FCI, _finderPathCountByG_FCI,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntry::getGroupId),
+				true, FragmentEntry::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntry.", "fragmentCollectionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -5868,13 +5868,13 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_Head,
 				_finderPathCountByG_FCI_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
@@ -5903,10 +5903,10 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_FEK,
 			_finderPathWithoutPaginationFindByG_FEK, _finderPathCountByG_FEK,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntry::getGroupId),
+				true, FragmentEntry::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntry.", "fragmentEntryKey", FinderColumn.Type.STRING,
 				"=", true, true, FragmentEntry::getFragmentEntryKey));
@@ -5918,17 +5918,19 @@ public class FragmentEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "fragmentEntryKey", "head"}, false,
-			FragmentEntry::getGroupId, FragmentEntry::getFragmentEntryKey,
+			FragmentEntry::getGroupId,
+			convertNullFunction(FragmentEntry::getFragmentEntryKey),
 			FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByG_FEK_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_FEK_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntry::getGroupId),
+				true, FragmentEntry::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntry.", "fragmentEntryKey", FinderColumn.Type.STRING,
-				"=", true, false, FragmentEntry::getFragmentEntryKey),
+				"=", true, true, FragmentEntry::getFragmentEntryKey),
 			new FinderColumn<>(
 				"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, FragmentEntry::isHead));
@@ -5955,13 +5957,13 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "name", FinderColumn.Type.STRING, "LIKE",
@@ -5992,17 +5994,17 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_Head, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "name", FinderColumn.Type.STRING, "LIKE",
-					true, false, FragmentEntry::getName),
+					true, true, FragmentEntry::getName),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -6038,13 +6040,13 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T,
 				_finderPathCountByG_FCI_T, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
@@ -6085,17 +6087,17 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_Head,
 				_finderPathCountByG_FCI_T_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getType),
+					true, true, FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -6131,13 +6133,13 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_S,
 				_finderPathCountByG_FCI_S, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
@@ -6178,17 +6180,17 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_S_Head,
 				_finderPathCountByG_FCI_S_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getStatus),
+					true, true, FragmentEntry::getStatus),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -6218,17 +6220,17 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_S, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_S,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "name", FinderColumn.Type.STRING, "LIKE",
-					true, false, FragmentEntry::getName),
+					true, true, FragmentEntry::getName),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, FragmentEntry::getStatus));
@@ -6263,20 +6265,20 @@ public class FragmentEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_FCI_LikeN_S_Head, null,
 				_finderPathWithPaginationCountByG_FCI_LikeN_S_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "name", FinderColumn.Type.STRING, "LIKE",
-					true, false, FragmentEntry::getName),
+					true, true, FragmentEntry::getName),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getStatus),
+					true, true, FragmentEntry::getStatus),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -6316,17 +6318,17 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_S,
 				_finderPathCountByG_FCI_T_S, _SQL_SELECT_FRAGMENTENTRY_WHERE,
 				_SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getType),
+					true, true, FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, FragmentEntry::getStatus));
@@ -6374,20 +6376,20 @@ public class FragmentEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_FCI_T_S_Head,
 				_finderPathCountByG_FCI_T_S_Head,
 				_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntry::getGroupId),
+					true, true, FragmentEntry::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntry.", "fragmentCollectionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntry::getFragmentCollectionId),
 				new FinderColumn<>(
 					"fragmentEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getType),
+					true, true, FragmentEntry::getType),
 				new FinderColumn<>(
 					"fragmentEntry.", "status", FinderColumn.Type.INTEGER, "=",
-					true, false, FragmentEntry::getStatus),
+					true, true, FragmentEntry::getStatus),
 				new FinderColumn<>(
 					"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, FragmentEntry::isHead));
@@ -6415,10 +6417,10 @@ public class FragmentEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByERC_G,
 			_finderPathWithoutPaginationFindByERC_G, _finderPathCountByERC_G,
 			_SQL_SELECT_FRAGMENTENTRY_WHERE, _SQL_COUNT_FRAGMENTENTRY_WHERE,
-			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				FragmentEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -6431,18 +6433,19 @@ public class FragmentEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"externalReferenceCode", "groupId", "head"}, false,
-			FragmentEntry::getExternalReferenceCode, FragmentEntry::getGroupId,
-			FragmentEntry::isHead);
+			convertNullFunction(FragmentEntry::getExternalReferenceCode),
+			FragmentEntry::getGroupId, FragmentEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_Head, _SQL_SELECT_FRAGMENTENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				FragmentEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"fragmentEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntry::getGroupId),
+				true, FragmentEntry::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, FragmentEntry::isHead));
@@ -6453,7 +6456,7 @@ public class FragmentEntryPersistenceImpl
 			FragmentEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHeadId, _SQL_SELECT_FRAGMENTENTRY_WHERE,
+			this, _finderPathFetchByHeadId, _SQL_SELECT_FRAGMENTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"fragmentEntry.", "headId", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntry::getHeadId));
@@ -6530,4 +6533,4 @@ public class FragmentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1294993658
+// LIFERAY-SERVICE-BUILDER-HASH:346670309

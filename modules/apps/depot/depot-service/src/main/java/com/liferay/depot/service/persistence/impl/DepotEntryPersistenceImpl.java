@@ -1069,7 +1069,7 @@ public class DepotEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
-			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DepotEntry::getUuid));
@@ -1077,14 +1077,14 @@ public class DepotEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DepotEntry::getUuid,
-			DepotEntry::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DepotEntry::getUuid), DepotEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEPOTENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEPOTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DepotEntry::getUuid),
+				true, DepotEntry::getUuid),
 			new FinderColumn<>(
 				"depotEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntry::getGroupId));
@@ -1114,10 +1114,10 @@ public class DepotEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DEPOTENTRY_WHERE,
 				_SQL_COUNT_DEPOTENTRY_WHERE, DepotEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"depotEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, DepotEntry::getUuid),
+					true, DepotEntry::getUuid),
 				new FinderColumn<>(
 					"depotEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DepotEntry::getCompanyId));
@@ -1128,7 +1128,7 @@ public class DepotEntryPersistenceImpl
 			false, DepotEntry::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByGroupId, _SQL_SELECT_DEPOTENTRY_WHERE,
+			this, _finderPathFetchByGroupId, _SQL_SELECT_DEPOTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"depotEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DepotEntry::getGroupId));
@@ -1156,10 +1156,10 @@ public class DepotEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_T,
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_DEPOTENTRY_WHERE, _SQL_COUNT_DEPOTENTRY_WHERE,
-			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DepotEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"depotEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DepotEntry::getCompanyId),
+				true, DepotEntry::getCompanyId),
 			new FinderColumn<>(
 				"depotEntry.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, DepotEntry::getType));
@@ -1236,4 +1236,4 @@ public class DepotEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-457011914
+// LIFERAY-SERVICE-BUILDER-HASH:500369731

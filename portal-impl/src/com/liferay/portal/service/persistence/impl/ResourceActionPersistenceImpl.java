@@ -492,7 +492,7 @@ public class ResourceActionPersistenceImpl
 			this, _finderPathWithPaginationFindByName,
 			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
 			_SQL_SELECT_RESOURCEACTION_WHERE, _SQL_COUNT_RESOURCEACTION_WHERE,
-			ResourceActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ResourceActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ResourceAction::getName));
@@ -500,14 +500,15 @@ public class ResourceActionPersistenceImpl
 		_finderPathFetchByN_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "actionId"}, false, ResourceAction::getName,
-			ResourceAction::getActionId);
+			new String[] {"name", "actionId"}, false,
+			convertNullFunction(ResourceAction::getName),
+			convertNullFunction(ResourceAction::getActionId));
 
 		_uniquePersistenceFinderByN_A = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByN_A, _SQL_SELECT_RESOURCEACTION_WHERE,
+			this, _finderPathFetchByN_A, _SQL_SELECT_RESOURCEACTION_WHERE, "",
 			new FinderColumn<>(
 				"resourceAction.", "name", FinderColumn.Type.STRING, "=", true,
-				false, ResourceAction::getName),
+				true, ResourceAction::getName),
 			new FinderColumn<>(
 				"resourceAction.", "actionId", FinderColumn.Type.STRING, "=",
 				true, true, ResourceAction::getActionId));
@@ -545,4 +546,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1152182733
+// LIFERAY-SERVICE-BUILDER-HASH:-1876869238

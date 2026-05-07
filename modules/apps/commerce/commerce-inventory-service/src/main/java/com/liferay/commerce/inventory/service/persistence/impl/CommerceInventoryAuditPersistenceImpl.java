@@ -646,7 +646,7 @@ public class CommerceInventoryAuditPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
 				CommerceInventoryAuditModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryAudit.", "createDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -683,12 +683,13 @@ public class CommerceInventoryAuditPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYAUDIT_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYAUDIT_WHERE,
 			CommerceInventoryAuditModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceInventoryAudit.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceInventoryAudit::getCompanyId),
+				"=", true, true, CommerceInventoryAudit::getCompanyId),
 			new FinderColumn<>(
 				"commerceInventoryAudit.", "sku", FinderColumn.Type.STRING, "=",
-				true, false, CommerceInventoryAudit::getSku),
+				true, true, CommerceInventoryAudit::getSku),
 			new FinderColumn<>(
 				"commerceInventoryAudit.", "unitOfMeasureKey",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -763,4 +764,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:549178250
+// LIFERAY-SERVICE-BUILDER-HASH:1642103448

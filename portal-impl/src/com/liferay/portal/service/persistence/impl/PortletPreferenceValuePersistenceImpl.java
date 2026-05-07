@@ -1201,7 +1201,7 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "portletPreferencesId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1232,9 +1232,10 @@ public class PortletPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 			PortletPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"portletPreferenceValue.", "portletPreferencesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PortletPreferenceValue::getPortletPreferencesId),
 			new FinderColumn<>(
 				"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
@@ -1273,14 +1274,14 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PortletPreferenceValue::getCompanyId),
 				new FinderColumn<>(
 					"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
-					"=", true, false, PortletPreferenceValue::getName),
+					"=", true, true, PortletPreferenceValue::getName),
 				new FinderColumn<>(
 					"portletPreferenceValue.", "smallValue",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1294,18 +1295,19 @@ public class PortletPreferenceValuePersistenceImpl
 			},
 			new String[] {"portletPreferencesId", "index_", "name"}, false,
 			PortletPreferenceValue::getPortletPreferencesId,
-			PortletPreferenceValue::getIndex, PortletPreferenceValue::getName);
+			PortletPreferenceValue::getIndex,
+			convertNullFunction(PortletPreferenceValue::getName));
 
 		_uniquePersistenceFinderByP_I_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByP_I_N,
-			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
+			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE, "",
 			new FinderColumn<>(
 				"portletPreferenceValue.", "portletPreferencesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PortletPreferenceValue::getPortletPreferencesId),
 			new FinderColumn<>(
 				"portletPreferenceValue.", "index", FinderColumn.Type.INTEGER,
-				"=", true, false, PortletPreferenceValue::getIndex),
+				"=", true, true, PortletPreferenceValue::getIndex),
 			new FinderColumn<>(
 				"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
 				"=", true, true, PortletPreferenceValue::getName));
@@ -1343,14 +1345,14 @@ public class PortletPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portletPreferenceValue.", "portletPreferencesId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PortletPreferenceValue::getPortletPreferencesId),
 				new FinderColumn<>(
 					"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
-					"=", true, false, PortletPreferenceValue::getName),
+					"=", true, true, PortletPreferenceValue::getName),
 				new FinderColumn<>(
 					"portletPreferenceValue.", "smallValue",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1392,4 +1394,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:169597840
+// LIFERAY-SERVICE-BUILDER-HASH:1358349961

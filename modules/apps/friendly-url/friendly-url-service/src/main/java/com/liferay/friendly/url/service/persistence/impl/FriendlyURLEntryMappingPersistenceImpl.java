@@ -443,10 +443,10 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
-			_SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE,
+			_SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"friendlyURLEntryMapping.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				FriendlyURLEntryMapping::getClassNameId),
 			new FinderColumn<>(
 				"friendlyURLEntryMapping.", "classPK", FinderColumn.Type.LONG,
@@ -518,4 +518,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:844636442
+// LIFERAY-SERVICE-BUILDER-HASH:2128012075

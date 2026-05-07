@@ -937,7 +937,7 @@ public class ObjectLayoutColumnPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTLAYOUTCOLUMN_WHERE,
 			_SQL_COUNT_OBJECTLAYOUTCOLUMN_WHERE,
-			ObjectLayoutColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectLayoutColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectLayoutColumn.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectLayoutColumn::getUuid));
@@ -968,9 +968,10 @@ public class ObjectLayoutColumnPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTLAYOUTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTLAYOUTCOLUMN_WHERE,
 				ObjectLayoutColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectLayoutColumn.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, ObjectLayoutColumn::getUuid),
+					"=", true, true, ObjectLayoutColumn::getUuid),
 				new FinderColumn<>(
 					"objectLayoutColumn.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectLayoutColumn::getCompanyId));
@@ -1001,6 +1002,7 @@ public class ObjectLayoutColumnPersistenceImpl
 				_SQL_SELECT_OBJECTLAYOUTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTLAYOUTCOLUMN_WHERE,
 				ObjectLayoutColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectLayoutColumn.", "objectFieldId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1032,6 +1034,7 @@ public class ObjectLayoutColumnPersistenceImpl
 				_SQL_SELECT_OBJECTLAYOUTCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTLAYOUTCOLUMN_WHERE,
 				ObjectLayoutColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectLayoutColumn.", "objectLayoutRowId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1106,4 +1109,4 @@ public class ObjectLayoutColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:545516471
+// LIFERAY-SERVICE-BUILDER-HASH:-1613222054

@@ -586,7 +586,7 @@ public class RedirectNotFoundEntryPersistenceImpl
 				_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE,
 				_SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE,
 				RedirectNotFoundEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RedirectNotFoundEntry::getGroupId));
@@ -595,14 +595,15 @@ public class RedirectNotFoundEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "url"}, false,
-			RedirectNotFoundEntry::getGroupId, RedirectNotFoundEntry::getUrl);
+			RedirectNotFoundEntry::getGroupId,
+			convertNullFunction(RedirectNotFoundEntry::getUrl));
 
 		_uniquePersistenceFinderByG_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U,
-			_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE,
+			_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, RedirectNotFoundEntry::getGroupId),
+				"=", true, true, RedirectNotFoundEntry::getGroupId),
 			new FinderColumn<>(
 				"redirectNotFoundEntry.", "url", FinderColumn.Type.STRING, "=",
 				true, true, RedirectNotFoundEntry::getUrl));
@@ -673,4 +674,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1963047840
+// LIFERAY-SERVICE-BUILDER-HASH:1253309086

@@ -555,7 +555,7 @@ public class SamlIdpSpConnectionPersistenceImpl
 				_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE,
 				_SQL_COUNT_SAMLIDPSPCONNECTION_WHERE,
 				SamlIdpSpConnectionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"samlIdpSpConnection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SamlIdpSpConnection::getCompanyId));
@@ -565,14 +565,14 @@ public class SamlIdpSpConnectionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "samlSpEntityId"}, false,
 			SamlIdpSpConnection::getCompanyId,
-			SamlIdpSpConnection::getSamlSpEntityId);
+			convertNullFunction(SamlIdpSpConnection::getSamlSpEntityId));
 
 		_uniquePersistenceFinderByC_SSEI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_SSEI,
-			_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE,
+			_SQL_SELECT_SAMLIDPSPCONNECTION_WHERE, "",
 			new FinderColumn<>(
 				"samlIdpSpConnection.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, SamlIdpSpConnection::getCompanyId),
+				"=", true, true, SamlIdpSpConnection::getCompanyId),
 			new FinderColumn<>(
 				"samlIdpSpConnection.", "samlSpEntityId",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -644,4 +644,4 @@ public class SamlIdpSpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-869450487
+// LIFERAY-SERVICE-BUILDER-HASH:52969447

@@ -3149,7 +3149,7 @@ public class AddressPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ADDRESS_WHERE, _SQL_COUNT_ADDRESS_WHERE,
-			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"address.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Address::getUuid));
@@ -3179,10 +3179,10 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Address::getUuid),
+					true, Address::getUuid),
 				new FinderColumn<>(
 					"address.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getCompanyId));
@@ -3211,7 +3211,7 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getCompanyId));
@@ -3239,7 +3239,7 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getUserId));
@@ -3268,7 +3268,7 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByCountryId,
 				_finderPathCountByCountryId, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "countryId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getCountryId));
@@ -3297,7 +3297,7 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByRegionId,
 				_finderPathCountByRegionId, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "regionId", FinderColumn.Type.LONG, "=", true,
 					true, Address::getRegionId));
@@ -3325,10 +3325,10 @@ public class AddressPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_ADDRESS_WHERE, _SQL_COUNT_ADDRESS_WHERE,
-			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"address.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Address::getCompanyId),
+				true, Address::getCompanyId),
 			new FinderColumn<>(
 				"address.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Address::getClassNameId));
@@ -3358,10 +3358,10 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByCN_CPK,
 				_finderPathCountByCN_CPK, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, Address::getClassNameId),
+					true, true, Address::getClassNameId),
 				new FinderColumn<>(
 					"address.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, Address::getClassPK));
@@ -3393,13 +3393,13 @@ public class AddressPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_ADDRESS_WHERE, _SQL_COUNT_ADDRESS_WHERE,
-			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"address.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Address::getCompanyId),
+				true, Address::getCompanyId),
 			new FinderColumn<>(
 				"address.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, Address::getClassNameId),
+				true, Address::getClassNameId),
 			new FinderColumn<>(
 				"address.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Address::getClassPK));
@@ -3477,16 +3477,16 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_C_M,
 				_finderPathCountByC_C_C_M, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, Address::getCompanyId),
+					true, Address::getCompanyId),
 				new FinderColumn<>(
 					"address.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, Address::getClassNameId),
+					true, true, Address::getClassNameId),
 				new FinderColumn<>(
 					"address.", "classPK", FinderColumn.Type.LONG, "=", true,
-					false, Address::getClassPK),
+					true, Address::getClassPK),
 				new FinderColumn<>(
 					"address.", "mailing", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Address::isMailing));
@@ -3526,16 +3526,16 @@ public class AddressPersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_C_P,
 				_finderPathCountByC_C_C_P, _SQL_SELECT_ADDRESS_WHERE,
 				_SQL_COUNT_ADDRESS_WHERE, AddressModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"address.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, Address::getCompanyId),
+					true, Address::getCompanyId),
 				new FinderColumn<>(
 					"address.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, Address::getClassNameId),
+					true, true, Address::getClassNameId),
 				new FinderColumn<>(
 					"address.", "classPK", FinderColumn.Type.LONG, "=", true,
-					false, Address::getClassPK),
+					true, Address::getClassPK),
 				new FinderColumn<>(
 					"address.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Address::isPrimary));
@@ -3544,13 +3544,14 @@ public class AddressPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			Address::getExternalReferenceCode, Address::getCompanyId);
+			convertNullFunction(Address::getExternalReferenceCode),
+			Address::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_ADDRESS_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_ADDRESS_WHERE, "",
 			new FinderColumn<>(
 				"address.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, Address::getExternalReferenceCode),
+				"=", true, true, Address::getExternalReferenceCode),
 			new FinderColumn<>(
 				"address.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Address::getCompanyId));
@@ -3591,4 +3592,4 @@ public class AddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-341126433
+// LIFERAY-SERVICE-BUILDER-HASH:-1718289716

@@ -647,10 +647,10 @@ public class JournalArticleLocalizationPersistenceImpl
 			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE,
 			_SQL_COUNT_JOURNALARTICLELOCALIZATION_WHERE,
 			JournalArticleLocalizationModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"journalArticleLocalization.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				JournalArticleLocalization::getCompanyId),
 			new FinderColumn<>(
 				"journalArticleLocalization.", "articlePK",
@@ -666,18 +666,18 @@ public class JournalArticleLocalizationPersistenceImpl
 			new String[] {"companyId", "articlePK", "languageId"}, false,
 			JournalArticleLocalization::getCompanyId,
 			JournalArticleLocalization::getArticlePK,
-			JournalArticleLocalization::getLanguageId);
+			convertNullFunction(JournalArticleLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByC_A_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A_L,
-			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE,
+			_SQL_SELECT_JOURNALARTICLELOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"journalArticleLocalization.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				JournalArticleLocalization::getCompanyId),
 			new FinderColumn<>(
 				"journalArticleLocalization.", "articlePK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				JournalArticleLocalization::getArticlePK),
 			new FinderColumn<>(
 				"journalArticleLocalization.", "languageId",
@@ -753,4 +753,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:87563988
+// LIFERAY-SERVICE-BUILDER-HASH:-1699739551

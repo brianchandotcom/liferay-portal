@@ -3959,7 +3959,7 @@ public class CommerceShipmentPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCESHIPMENT_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENT_WHERE,
-			CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceShipment.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceShipment::getUuid));
@@ -3967,14 +3967,16 @@ public class CommerceShipmentPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, CommerceShipment::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(CommerceShipment::getUuid),
 			CommerceShipment::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCESHIPMENT_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceShipment.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, CommerceShipment::getUuid),
+				true, true, CommerceShipment::getUuid),
 			new FinderColumn<>(
 				"commerceShipment.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceShipment::getGroupId));
@@ -4005,9 +4007,10 @@ public class CommerceShipmentPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCESHIPMENT_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENT_WHERE,
 				CommerceShipmentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceShipment.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CommerceShipment::getUuid),
+					true, true, CommerceShipment::getUuid),
 				new FinderColumn<>(
 					"commerceShipment.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceShipment::getCompanyId));
@@ -4087,14 +4090,15 @@ public class CommerceShipmentPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceShipment::getExternalReferenceCode,
+			convertNullFunction(CommerceShipment::getExternalReferenceCode),
 			CommerceShipment::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCESHIPMENT_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceShipment.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceShipment::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceShipment.", "companyId", FinderColumn.Type.LONG, "=",
@@ -4192,4 +4196,4 @@ public class CommerceShipmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1081003282
+// LIFERAY-SERVICE-BUILDER-HASH:-962149995

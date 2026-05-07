@@ -1252,10 +1252,10 @@ public class CTSContentPersistenceImpl
 			this, _finderPathWithPaginationFindByR_P,
 			_finderPathWithoutPaginationFindByR_P, _finderPathCountByR_P,
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
-			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-				true, false, CTSContent::getRepositoryId),
+				true, true, CTSContent::getRepositoryId),
 			new FinderColumn<>(
 				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getPath));
@@ -1289,13 +1289,13 @@ public class CTSContentPersistenceImpl
 			this, _finderPathWithPaginationFindByC_R_S,
 			_finderPathWithoutPaginationFindByC_R_S, _finderPathCountByC_R_S,
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
-			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctsContent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTSContent::getCompanyId),
+				true, CTSContent::getCompanyId),
 			new FinderColumn<>(
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-				true, false, CTSContent::getRepositoryId),
+				true, true, CTSContent::getRepositoryId),
 			new FinderColumn<>(
 				"ctsContent.", "storeType", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getStoreType));
@@ -1335,16 +1335,16 @@ public class CTSContentPersistenceImpl
 				_finderPathWithoutPaginationFindByC_R_P_S,
 				_finderPathCountByC_R_P_S, _SQL_SELECT_CTSCONTENT_WHERE,
 				_SQL_COUNT_CTSCONTENT_WHERE, CTSContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, CTSContent::getCompanyId),
+					true, true, CTSContent::getCompanyId),
 				new FinderColumn<>(
 					"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-					true, false, CTSContent::getRepositoryId),
+					true, true, CTSContent::getRepositoryId),
 				new FinderColumn<>(
 					"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
-					false, CTSContent::getPath),
+					true, CTSContent::getPath),
 				new FinderColumn<>(
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
@@ -1374,16 +1374,16 @@ public class CTSContentPersistenceImpl
 				this, _finderPathWithPaginationFindByC_R_LikeP_S, null,
 				_finderPathWithPaginationCountByC_R_LikeP_S,
 				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
-				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, CTSContent::getCompanyId),
+					true, true, CTSContent::getCompanyId),
 				new FinderColumn<>(
 					"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-					true, false, CTSContent::getRepositoryId),
+					true, true, CTSContent::getRepositoryId),
 				new FinderColumn<>(
 					"ctsContent.", "path", FinderColumn.Type.STRING, "LIKE",
-					true, false, CTSContent::getPath),
+					true, true, CTSContent::getPath),
 				new FinderColumn<>(
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
@@ -1399,23 +1399,24 @@ public class CTSContentPersistenceImpl
 				"companyId", "repositoryId", "path_", "version", "storeType"
 			},
 			false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
-			CTSContent::getPath, CTSContent::getVersion,
-			CTSContent::getStoreType);
+			convertNullFunction(CTSContent::getPath),
+			convertNullFunction(CTSContent::getVersion),
+			convertNullFunction(CTSContent::getStoreType));
 
 		_uniquePersistenceFinderByC_R_P_V_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R_P_V_S, _SQL_SELECT_CTSCONTENT_WHERE,
+			this, _finderPathFetchByC_R_P_V_S, _SQL_SELECT_CTSCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"ctsContent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTSContent::getCompanyId),
+				true, CTSContent::getCompanyId),
 			new FinderColumn<>(
 				"ctsContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-				true, false, CTSContent::getRepositoryId),
+				true, true, CTSContent::getRepositoryId),
 			new FinderColumn<>(
 				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
-				false, CTSContent::getPath),
+				true, CTSContent::getPath),
 			new FinderColumn<>(
 				"ctsContent.", "version", FinderColumn.Type.STRING, "=", true,
-				false, CTSContent::getVersion),
+				true, CTSContent::getVersion),
 			new FinderColumn<>(
 				"ctsContent.", "storeType", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getStoreType));
@@ -1492,4 +1493,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:366998225
+// LIFERAY-SERVICE-BUILDER-HASH:261988824

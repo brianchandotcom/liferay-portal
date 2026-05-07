@@ -502,7 +502,7 @@ public class DLSyncEventPersistenceImpl
 				this, _finderPathWithPaginationFindByGtModifiedTime, null,
 				_finderPathWithPaginationCountByGtModifiedTime,
 				_SQL_SELECT_DLSYNCEVENT_WHERE, _SQL_COUNT_DLSYNCEVENT_WHERE,
-				DLSyncEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLSyncEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlSyncEvent.", "modifiedTime", FinderColumn.Type.LONG, ">",
 					true, true, DLSyncEvent::getModifiedTime));
@@ -513,7 +513,7 @@ public class DLSyncEventPersistenceImpl
 			DLSyncEvent::getTypePK);
 
 		_uniquePersistenceFinderByTypePK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByTypePK, _SQL_SELECT_DLSYNCEVENT_WHERE,
+			this, _finderPathFetchByTypePK, _SQL_SELECT_DLSYNCEVENT_WHERE, "",
 			new FinderColumn<>(
 				"dlSyncEvent.", "typePK", FinderColumn.Type.LONG, "=", true,
 				true, DLSyncEvent::getTypePK));
@@ -587,4 +587,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1786047229
+// LIFERAY-SERVICE-BUILDER-HASH:532590920

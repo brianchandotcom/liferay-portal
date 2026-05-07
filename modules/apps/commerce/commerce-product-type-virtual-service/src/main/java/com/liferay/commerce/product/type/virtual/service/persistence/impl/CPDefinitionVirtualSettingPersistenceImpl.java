@@ -842,7 +842,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
 			_SQL_COUNT_CPDEFINITIONVIRTUALSETTING_WHERE,
 			CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDefinitionVirtualSetting::getUuid));
@@ -851,15 +851,15 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CPDefinitionVirtualSetting::getUuid,
+			convertNullFunction(CPDefinitionVirtualSetting::getUuid),
 			CPDefinitionVirtualSetting::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
+			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, CPDefinitionVirtualSetting::getUuid),
+				"=", true, true, CPDefinitionVirtualSetting::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "groupId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -892,10 +892,10 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
 				_SQL_COUNT_CPDEFINITIONVIRTUALSETTING_WHERE,
 				CPDefinitionVirtualSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionVirtualSetting.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CPDefinitionVirtualSetting::getUuid),
 				new FinderColumn<>(
 					"cpDefinitionVirtualSetting.", "companyId",
@@ -911,10 +911,10 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
-			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE,
+			_SQL_SELECT_CPDEFINITIONVIRTUALSETTING_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionVirtualSetting::getClassNameId),
 			new FinderColumn<>(
 				"cpDefinitionVirtualSetting.", "classPK",
@@ -990,4 +990,4 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1159534591
+// LIFERAY-SERVICE-BUILDER-HASH:-589592701

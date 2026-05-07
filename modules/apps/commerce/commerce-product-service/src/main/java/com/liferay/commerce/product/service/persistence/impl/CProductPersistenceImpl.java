@@ -1129,7 +1129,7 @@ public class CProductPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CPRODUCT_WHERE, _SQL_COUNT_CPRODUCT_WHERE,
-			CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CProductModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				CProduct::getUuid));
@@ -1137,13 +1137,13 @@ public class CProductPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, CProduct::getUuid,
-			CProduct::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(CProduct::getUuid), CProduct::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPRODUCT_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPRODUCT_WHERE, "",
 			new FinderColumn<>(
-				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				CProduct::getUuid),
 			new FinderColumn<>(
 				"cProduct.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -1174,10 +1174,10 @@ public class CProductPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CPRODUCT_WHERE,
 				_SQL_COUNT_CPRODUCT_WHERE, CProductModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cProduct.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, CProduct::getUuid),
+					true, CProduct::getUuid),
 				new FinderColumn<>(
 					"cProduct.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CProduct::getCompanyId));
@@ -1206,7 +1206,7 @@ public class CProductPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_CPRODUCT_WHERE,
 				_SQL_COUNT_CPRODUCT_WHERE, CProductModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cProduct.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CProduct::getGroupId));
@@ -1215,13 +1215,14 @@ public class CProductPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CProduct::getExternalReferenceCode, CProduct::getCompanyId);
+			convertNullFunction(CProduct::getExternalReferenceCode),
+			CProduct::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPRODUCT_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CPRODUCT_WHERE, "",
 			new FinderColumn<>(
 				"cProduct.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, CProduct::getExternalReferenceCode),
+				"=", true, true, CProduct::getExternalReferenceCode),
 			new FinderColumn<>(
 				"cProduct.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CProduct::getCompanyId));
@@ -1298,4 +1299,4 @@ public class CProductPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-114331934
+// LIFERAY-SERVICE-BUILDER-HASH:559374705

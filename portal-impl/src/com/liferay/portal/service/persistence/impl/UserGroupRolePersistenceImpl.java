@@ -1243,7 +1243,7 @@ public class UserGroupRolePersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_USERGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPROLE_WHERE,
-				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getUserId));
@@ -1272,7 +1272,7 @@ public class UserGroupRolePersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_USERGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPROLE_WHERE,
-				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getGroupId));
@@ -1300,7 +1300,7 @@ public class UserGroupRolePersistenceImpl
 				_finderPathWithoutPaginationFindByRoleId,
 				_finderPathCountByRoleId, _SQL_SELECT_USERGROUPROLE_WHERE,
 				_SQL_COUNT_USERGROUPROLE_WHERE,
-				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getRoleId));
@@ -1328,10 +1328,10 @@ public class UserGroupRolePersistenceImpl
 			this, _finderPathWithPaginationFindByU_G,
 			_finderPathWithoutPaginationFindByU_G, _finderPathCountByU_G,
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
-			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"userGroupRole.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, UserGroupRole::getUserId),
+				true, UserGroupRole::getUserId),
 			new FinderColumn<>(
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getGroupId));
@@ -1359,10 +1359,10 @@ public class UserGroupRolePersistenceImpl
 			this, _finderPathWithPaginationFindByG_R,
 			_finderPathWithoutPaginationFindByG_R, _finderPathCountByG_R,
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
-			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, UserGroupRole::getGroupId),
+				true, UserGroupRole::getGroupId),
 			new FinderColumn<>(
 				"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getRoleId));
@@ -1377,13 +1377,13 @@ public class UserGroupRolePersistenceImpl
 			UserGroupRole::getRoleId);
 
 		_uniquePersistenceFinderByU_G_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_G_R, _SQL_SELECT_USERGROUPROLE_WHERE,
+			this, _finderPathFetchByU_G_R, _SQL_SELECT_USERGROUPROLE_WHERE, "",
 			new FinderColumn<>(
 				"userGroupRole.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, UserGroupRole::getUserId),
+				true, UserGroupRole::getUserId),
 			new FinderColumn<>(
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, UserGroupRole::getGroupId),
+				true, UserGroupRole::getGroupId),
 			new FinderColumn<>(
 				"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getRoleId));
@@ -1421,4 +1421,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1447172440
+// LIFERAY-SERVICE-BUILDER-HASH:1829286875

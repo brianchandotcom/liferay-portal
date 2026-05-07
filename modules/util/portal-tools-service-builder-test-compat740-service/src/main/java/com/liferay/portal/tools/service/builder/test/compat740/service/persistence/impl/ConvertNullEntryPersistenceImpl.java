@@ -330,7 +330,7 @@ public class ConvertNullEntryPersistenceImpl
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			ConvertNullEntry::getName);
+			convertNullFunction(ConvertNullEntry::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName, _SQL_SELECT_CONVERTNULLENTRY_WHERE,
@@ -395,4 +395,4 @@ public class ConvertNullEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1946170537
+// LIFERAY-SERVICE-BUILDER-HASH:-813020471

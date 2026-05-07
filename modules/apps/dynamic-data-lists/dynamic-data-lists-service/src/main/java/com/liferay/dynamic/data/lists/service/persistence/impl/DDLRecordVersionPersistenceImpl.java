@@ -1171,6 +1171,7 @@ public class DDLRecordVersionPersistenceImpl
 				_finderPathCountByRecordId, _SQL_SELECT_DDLRECORDVERSION_WHERE,
 				_SQL_COUNT_DDLRECORDVERSION_WHERE,
 				DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddlRecordVersion.", "recordId", FinderColumn.Type.LONG,
 					"=", true, true, DDLRecordVersion::getRecordId));
@@ -1199,10 +1200,10 @@ public class DDLRecordVersionPersistenceImpl
 			_finderPathWithoutPaginationFindByR_R, _finderPathCountByR_R,
 			_SQL_SELECT_DDLRECORDVERSION_WHERE,
 			_SQL_COUNT_DDLRECORDVERSION_WHERE,
-			DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecordVersion.", "recordSetId", FinderColumn.Type.LONG, "=",
-				true, false, DDLRecordVersion::getRecordSetId),
+				true, true, DDLRecordVersion::getRecordSetId),
 			new FinderColumn<>(
 				"ddlRecordVersion.", "recordSetVersion",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1212,13 +1213,14 @@ public class DDLRecordVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"recordId", "version"}, false,
-			DDLRecordVersion::getRecordId, DDLRecordVersion::getVersion);
+			DDLRecordVersion::getRecordId,
+			convertNullFunction(DDLRecordVersion::getVersion));
 
 		_uniquePersistenceFinderByR_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_V, _SQL_SELECT_DDLRECORDVERSION_WHERE,
+			this, _finderPathFetchByR_V, _SQL_SELECT_DDLRECORDVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddlRecordVersion.", "recordId", FinderColumn.Type.LONG, "=",
-				true, false, DDLRecordVersion::getRecordId),
+				true, true, DDLRecordVersion::getRecordId),
 			new FinderColumn<>(
 				"ddlRecordVersion.", "version", FinderColumn.Type.STRING, "=",
 				true, true, DDLRecordVersion::getVersion));
@@ -1247,10 +1249,10 @@ public class DDLRecordVersionPersistenceImpl
 			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
 			_SQL_SELECT_DDLRECORDVERSION_WHERE,
 			_SQL_COUNT_DDLRECORDVERSION_WHERE,
-			DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecordVersion.", "recordId", FinderColumn.Type.LONG, "=",
-				true, false, DDLRecordVersion::getRecordId),
+				true, true, DDLRecordVersion::getRecordId),
 			new FinderColumn<>(
 				"ddlRecordVersion.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, DDLRecordVersion::getStatus));
@@ -1297,15 +1299,16 @@ public class DDLRecordVersionPersistenceImpl
 				_finderPathCountByU_R_R_S, _SQL_SELECT_DDLRECORDVERSION_WHERE,
 				_SQL_COUNT_DDLRECORDVERSION_WHERE,
 				DDLRecordVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddlRecordVersion.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, DDLRecordVersion::getUserId),
+					true, true, DDLRecordVersion::getUserId),
 				new FinderColumn<>(
 					"ddlRecordVersion.", "recordSetId", FinderColumn.Type.LONG,
-					"=", true, false, DDLRecordVersion::getRecordSetId),
+					"=", true, true, DDLRecordVersion::getRecordSetId),
 				new FinderColumn<>(
 					"ddlRecordVersion.", "recordSetVersion",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					DDLRecordVersion::getRecordSetVersion),
 				new FinderColumn<>(
 					"ddlRecordVersion.", "status", FinderColumn.Type.INTEGER,
@@ -1380,4 +1383,4 @@ public class DDLRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:147199127
+// LIFERAY-SERVICE-BUILDER-HASH:1400698118

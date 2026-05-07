@@ -913,7 +913,7 @@ public class NotificationRecipientSettingPersistenceImpl
 			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 			NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"notificationRecipientSetting.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -946,10 +946,10 @@ public class NotificationRecipientSettingPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationRecipientSetting.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					NotificationRecipientSetting::getUuid),
 				new FinderColumn<>(
 					"notificationRecipientSetting.", "companyId",
@@ -986,7 +986,7 @@ public class NotificationRecipientSettingPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENTSETTING_WHERE,
 				NotificationRecipientSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationRecipientSetting.", "notificationRecipientId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -997,14 +997,14 @@ public class NotificationRecipientSettingPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"notificationRecipientId", "name"}, false,
 			NotificationRecipientSetting::getNotificationRecipientId,
-			NotificationRecipientSetting::getName);
+			convertNullFunction(NotificationRecipientSetting::getName));
 
 		_uniquePersistenceFinderByNRI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByNRI_N,
-			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE,
+			_SQL_SELECT_NOTIFICATIONRECIPIENTSETTING_WHERE, "",
 			new FinderColumn<>(
 				"notificationRecipientSetting.", "notificationRecipientId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				NotificationRecipientSetting::getNotificationRecipientId),
 			new FinderColumn<>(
 				"notificationRecipientSetting.", "name",
@@ -1081,4 +1081,4 @@ public class NotificationRecipientSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1651544615
+// LIFERAY-SERVICE-BUILDER-HASH:2058122620

@@ -554,10 +554,10 @@ public class OpenIdConnectUserPersistenceImpl
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_OPENIDCONNECTUSER_WHERE,
 			_SQL_COUNT_OPENIDCONNECTUSER_WHERE,
-			OpenIdConnectUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			OpenIdConnectUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"openIdConnectUser.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OpenIdConnectUser::getCompanyId),
+				true, true, OpenIdConnectUser::getCompanyId),
 			new FinderColumn<>(
 				"openIdConnectUser.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, OpenIdConnectUser::getUserId));
@@ -569,17 +569,19 @@ public class OpenIdConnectUserPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "issuer", "subject"}, false,
-			OpenIdConnectUser::getCompanyId, OpenIdConnectUser::getIssuer,
-			OpenIdConnectUser::getSubject);
+			OpenIdConnectUser::getCompanyId,
+			convertNullFunction(OpenIdConnectUser::getIssuer),
+			convertNullFunction(OpenIdConnectUser::getSubject));
 
 		_uniquePersistenceFinderByC_I_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_I_S, _SQL_SELECT_OPENIDCONNECTUSER_WHERE,
+			"",
 			new FinderColumn<>(
 				"openIdConnectUser.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OpenIdConnectUser::getCompanyId),
+				true, true, OpenIdConnectUser::getCompanyId),
 			new FinderColumn<>(
 				"openIdConnectUser.", "issuer", FinderColumn.Type.STRING, "=",
-				true, false, OpenIdConnectUser::getIssuer),
+				true, true, OpenIdConnectUser::getIssuer),
 			new FinderColumn<>(
 				"openIdConnectUser.", "subject", FinderColumn.Type.STRING, "=",
 				true, true, OpenIdConnectUser::getSubject));
@@ -650,4 +652,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1878763162
+// LIFERAY-SERVICE-BUILDER-HASH:-1729294190

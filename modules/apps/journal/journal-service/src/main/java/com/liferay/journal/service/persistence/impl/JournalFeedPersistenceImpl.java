@@ -1280,7 +1280,7 @@ public class JournalFeedPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_JOURNALFEED_WHERE, _SQL_COUNT_JOURNALFEED_WHERE,
-			JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, JournalFeed::getUuid));
@@ -1288,14 +1288,14 @@ public class JournalFeedPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, JournalFeed::getUuid,
-			JournalFeed::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(JournalFeed::getUuid), JournalFeed::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALFEED_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_JOURNALFEED_WHERE, "",
 			new FinderColumn<>(
 				"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, JournalFeed::getUuid),
+				true, JournalFeed::getUuid),
 			new FinderColumn<>(
 				"journalFeed.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, JournalFeed::getGroupId));
@@ -1325,10 +1325,10 @@ public class JournalFeedPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_JOURNALFEED_WHERE,
 				_SQL_COUNT_JOURNALFEED_WHERE,
-				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalFeed.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, JournalFeed::getUuid),
+					true, JournalFeed::getUuid),
 				new FinderColumn<>(
 					"journalFeed.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getCompanyId));
@@ -1357,7 +1357,7 @@ public class JournalFeedPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_JOURNALFEED_WHERE,
 				_SQL_COUNT_JOURNALFEED_WHERE,
-				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				JournalFeedModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalFeed.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, JournalFeed::getGroupId));
@@ -1366,13 +1366,13 @@ public class JournalFeedPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "feedId"}, false, JournalFeed::getGroupId,
-			JournalFeed::getFeedId);
+			convertNullFunction(JournalFeed::getFeedId));
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F, _SQL_SELECT_JOURNALFEED_WHERE,
+			this, _finderPathFetchByG_F, _SQL_SELECT_JOURNALFEED_WHERE, "",
 			new FinderColumn<>(
 				"journalFeed.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, JournalFeed::getGroupId),
+				true, JournalFeed::getGroupId),
 			new FinderColumn<>(
 				"journalFeed.", "feedId", FinderColumn.Type.STRING, "=", true,
 				true, JournalFeed::getFeedId));
@@ -1472,4 +1472,4 @@ public class JournalFeedPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1437403712
+// LIFERAY-SERVICE-BUILDER-HASH:-1819922519

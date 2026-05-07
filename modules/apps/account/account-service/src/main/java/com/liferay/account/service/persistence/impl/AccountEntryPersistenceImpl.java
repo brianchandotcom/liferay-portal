@@ -2387,7 +2387,7 @@ public class AccountEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ACCOUNTENTRY_WHERE, _SQL_COUNT_ACCOUNTENTRY_WHERE,
-			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AccountEntry::getUuid));
@@ -2417,10 +2417,10 @@ public class AccountEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ACCOUNTENTRY_WHERE,
 				_SQL_COUNT_ACCOUNTENTRY_WHERE,
-				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, AccountEntry::getUuid),
+					true, true, AccountEntry::getUuid),
 				new FinderColumn<>(
 					"accountEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountEntry::getCompanyId));
@@ -2449,7 +2449,7 @@ public class AccountEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ACCOUNTENTRY_WHERE,
 				_SQL_COUNT_ACCOUNTENTRY_WHERE,
-				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountEntry::getCompanyId));
@@ -2477,10 +2477,10 @@ public class AccountEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_ACCOUNTENTRY_WHERE, _SQL_COUNT_ACCOUNTENTRY_WHERE,
-			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, AccountEntry::getCompanyId),
+				true, AccountEntry::getCompanyId),
 			new FinderColumn<>(
 				"accountEntry.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, AccountEntry::getStatus));
@@ -2508,10 +2508,10 @@ public class AccountEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByU_T,
 			_finderPathWithoutPaginationFindByU_T, _finderPathCountByU_T,
 			_SQL_SELECT_ACCOUNTENTRY_WHERE, _SQL_COUNT_ACCOUNTENTRY_WHERE,
-			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountEntry.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, AccountEntry::getUserId),
+				true, AccountEntry::getUserId),
 			new FinderColumn<>(
 				"accountEntry.", "type", FinderColumn.Type.STRING, "=", true,
 				true, AccountEntry::getType));
@@ -2520,13 +2520,14 @@ public class AccountEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			AccountEntry::getExternalReferenceCode, AccountEntry::getCompanyId);
+			convertNullFunction(AccountEntry::getExternalReferenceCode),
+			AccountEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTENTRY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"accountEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AccountEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"accountEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -2624,4 +2625,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:447995141
+// LIFERAY-SERVICE-BUILDER-HASH:786514648

@@ -7681,6 +7681,7 @@ public class MicroblogsEntryPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, MicroblogsEntry::getCompanyId));
@@ -7709,6 +7710,7 @@ public class MicroblogsEntryPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MicroblogsEntry::getUserId));
@@ -7736,10 +7738,10 @@ public class MicroblogsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByU_T,
 			_finderPathWithoutPaginationFindByU_T, _finderPathCountByU_T,
 			_SQL_SELECT_MICROBLOGSENTRY_WHERE, _SQL_COUNT_MICROBLOGSENTRY_WHERE,
-			MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, MicroblogsEntry::getUserId),
+				true, MicroblogsEntry::getUserId),
 			new FinderColumn<>(
 				"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, MicroblogsEntry::getType));
@@ -7794,9 +7796,10 @@ public class MicroblogsEntryPersistenceImpl
 				_finderPathCountByCCNI_T, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"microblogsEntry.", "creatorClassNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					MicroblogsEntry::getCreatorClassNameId),
 				new FinderColumn<>(
 					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
@@ -7825,10 +7828,10 @@ public class MicroblogsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByT_P,
 			_finderPathWithoutPaginationFindByT_P, _finderPathCountByT_P,
 			_SQL_SELECT_MICROBLOGSENTRY_WHERE, _SQL_COUNT_MICROBLOGSENTRY_WHERE,
-			MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-				true, false, MicroblogsEntry::getType),
+				true, true, MicroblogsEntry::getType),
 			new FinderColumn<>(
 				"microblogsEntry.", "parentMicroblogsEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -7900,12 +7903,13 @@ public class MicroblogsEntryPersistenceImpl
 				_finderPathCountByC_CCNI_T, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, MicroblogsEntry::getCompanyId),
+					"=", true, true, MicroblogsEntry::getCompanyId),
 				new FinderColumn<>(
 					"microblogsEntry.", "creatorClassNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					MicroblogsEntry::getCreatorClassNameId),
 				new FinderColumn<>(
 					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
@@ -8036,15 +8040,16 @@ public class MicroblogsEntryPersistenceImpl
 				_finderPathCountByU_C_T_S, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, MicroblogsEntry::getUserId),
+					true, true, MicroblogsEntry::getUserId),
 				new FinderColumn<>(
 					"microblogsEntry.", "createDate", FinderColumn.Type.DATE,
-					"=", true, false, MicroblogsEntry::getCreateDate),
+					"=", true, true, MicroblogsEntry::getCreateDate),
 				new FinderColumn<>(
 					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, MicroblogsEntry::getType),
+					true, true, MicroblogsEntry::getType),
 				new FinderColumn<>(
 					"microblogsEntry.", "socialRelationType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -8142,4 +8147,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-290522077
+// LIFERAY-SERVICE-BUILDER-HASH:1342770801

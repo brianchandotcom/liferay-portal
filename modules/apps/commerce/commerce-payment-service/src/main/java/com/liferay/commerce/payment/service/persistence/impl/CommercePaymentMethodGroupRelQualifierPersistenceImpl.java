@@ -839,7 +839,7 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE,
 				CommercePaymentMethodGroupRelQualifierModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePaymentMethodGroupRelQualifier.",
 					"commercePaymentMethodGroupRelId", FinderColumn.Type.LONG,
@@ -872,10 +872,10 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 			_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE,
 			_SQL_COUNT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE,
 			CommercePaymentMethodGroupRelQualifierModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePaymentMethodGroupRelQualifier::getClassNameId),
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.",
@@ -897,14 +897,14 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE,
+			_SQL_SELECT_COMMERCEPAYMENTMETHODGROUPRELQUALIFIER_WHERE, "",
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePaymentMethodGroupRelQualifier::getClassNameId),
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.", "classPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePaymentMethodGroupRelQualifier::getClassPK),
 			new FinderColumn<>(
 				"commercePaymentMethodGroupRelQualifier.",
@@ -989,4 +989,4 @@ public class CommercePaymentMethodGroupRelQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-658921693
+// LIFERAY-SERVICE-BUILDER-HASH:-926452895

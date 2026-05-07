@@ -538,7 +538,7 @@ public class CSDiagramPinPersistenceImpl
 				_finderPathWithoutPaginationFindByCPDefinitionId,
 				_finderPathCountByCPDefinitionId,
 				_SQL_SELECT_CSDIAGRAMPIN_WHERE, _SQL_COUNT_CSDIAGRAMPIN_WHERE,
-				CSDiagramPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CSDiagramPinModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"csDiagramPin.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramPin::getCPDefinitionId));
@@ -612,4 +612,4 @@ public class CSDiagramPinPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:186636274
+// LIFERAY-SERVICE-BUILDER-HASH:9490544

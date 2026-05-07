@@ -333,7 +333,7 @@ public class CTScorePersistenceImpl
 		_uniquePersistenceFinderByCtCollectionId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCtCollectionId,
-				_SQL_SELECT_CTSCORE_WHERE,
+				_SQL_SELECT_CTSCORE_WHERE, "",
 				new FinderColumn<>(
 					"ctScore.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTScore::getCtCollectionId));
@@ -401,4 +401,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-156742839
+// LIFERAY-SERVICE-BUILDER-HASH:-140384346

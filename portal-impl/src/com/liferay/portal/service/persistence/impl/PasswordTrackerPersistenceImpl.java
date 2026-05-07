@@ -439,6 +439,7 @@ public class PasswordTrackerPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_PASSWORDTRACKER_WHERE,
 				_SQL_COUNT_PASSWORDTRACKER_WHERE,
 				PasswordTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"passwordTracker.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, PasswordTracker::getUserId));
@@ -479,4 +480,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-230457953
+// LIFERAY-SERVICE-BUILDER-HASH:-447437343

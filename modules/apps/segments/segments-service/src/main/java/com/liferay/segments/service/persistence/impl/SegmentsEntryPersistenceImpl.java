@@ -6573,7 +6573,7 @@ public class SegmentsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
-			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SegmentsEntry::getUuid));
@@ -6581,14 +6581,15 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, SegmentsEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(SegmentsEntry::getUuid),
 			SegmentsEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SEGMENTSENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, SegmentsEntry::getUuid),
+				true, SegmentsEntry::getUuid),
 			new FinderColumn<>(
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SegmentsEntry::getGroupId));
@@ -6618,10 +6619,10 @@ public class SegmentsEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SEGMENTSENTRY_WHERE,
 				_SQL_COUNT_SEGMENTSENTRY_WHERE,
-				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, SegmentsEntry::getUuid),
+					true, true, SegmentsEntry::getUuid),
 				new FinderColumn<>(
 					"segmentsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntry::getCompanyId));
@@ -6696,7 +6697,7 @@ public class SegmentsEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByActive,
 				_finderPathCountByActive, _SQL_SELECT_SEGMENTSENTRY_WHERE,
 				_SQL_COUNT_SEGMENTSENTRY_WHERE,
-				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
 					true, true, SegmentsEntry::isActive));
@@ -6725,7 +6726,7 @@ public class SegmentsEntryPersistenceImpl
 				_finderPathWithoutPaginationFindBySource,
 				_finderPathCountBySource, _SQL_SELECT_SEGMENTSENTRY_WHERE,
 				_SQL_COUNT_SEGMENTSENTRY_WHERE,
-				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
 					true, true, SegmentsEntry::getSource));
@@ -6734,13 +6735,14 @@ public class SegmentsEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "segmentsEntryKey"}, false,
-			SegmentsEntry::getGroupId, SegmentsEntry::getSegmentsEntryKey);
+			SegmentsEntry::getGroupId,
+			convertNullFunction(SegmentsEntry::getSegmentsEntryKey));
 
 		_uniquePersistenceFinderByG_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_S, _SQL_SELECT_SEGMENTSENTRY_WHERE,
+			this, _finderPathFetchByG_S, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, SegmentsEntry::getGroupId),
+				true, SegmentsEntry::getGroupId),
 			new FinderColumn<>(
 				"segmentsEntry.", "segmentsEntryKey", FinderColumn.Type.STRING,
 				"=", true, true, SegmentsEntry::getSegmentsEntryKey));
@@ -6830,13 +6832,14 @@ public class SegmentsEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			SegmentsEntry::getExternalReferenceCode, SegmentsEntry::getGroupId);
+			convertNullFunction(SegmentsEntry::getExternalReferenceCode),
+			SegmentsEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_SEGMENTSENTRY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_SEGMENTSENTRY_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SegmentsEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -6937,4 +6940,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-672870404
+// LIFERAY-SERVICE-BUILDER-HASH:-1041744699

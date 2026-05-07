@@ -1203,7 +1203,7 @@ public class CommerceOrderNotePersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 			_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
-			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderNote.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceOrderNote::getUuid));
@@ -1212,13 +1212,15 @@ public class CommerceOrderNotePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CommerceOrderNote::getUuid, CommerceOrderNote::getGroupId);
+			convertNullFunction(CommerceOrderNote::getUuid),
+			CommerceOrderNote::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_COMMERCEORDERNOTE_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceOrderNote.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, CommerceOrderNote::getUuid),
+				true, true, CommerceOrderNote::getUuid),
 			new FinderColumn<>(
 				"commerceOrderNote.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceOrderNote::getGroupId));
@@ -1249,9 +1251,10 @@ public class CommerceOrderNotePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 				_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 				CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceOrderNote.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CommerceOrderNote::getUuid),
+					true, true, CommerceOrderNote::getUuid),
 				new FinderColumn<>(
 					"commerceOrderNote.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderNote::getCompanyId));
@@ -1282,6 +1285,7 @@ public class CommerceOrderNotePersistenceImpl
 				_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 				_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
 				CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceOrderNote.", "commerceOrderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1311,10 +1315,10 @@ public class CommerceOrderNotePersistenceImpl
 			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
 			_SQL_SELECT_COMMERCEORDERNOTE_WHERE,
 			_SQL_COUNT_COMMERCEORDERNOTE_WHERE,
-			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderNoteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderNote.", "commerceOrderId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceOrderNote::getCommerceOrderId),
+				"=", true, true, CommerceOrderNote::getCommerceOrderId),
 			new FinderColumn<>(
 				"commerceOrderNote.", "restricted", FinderColumn.Type.BOOLEAN,
 				"=", true, true, CommerceOrderNote::isRestricted));
@@ -1323,14 +1327,15 @@ public class CommerceOrderNotePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceOrderNote::getExternalReferenceCode,
+			convertNullFunction(CommerceOrderNote::getExternalReferenceCode),
 			CommerceOrderNote::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEORDERNOTE_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceOrderNote.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceOrderNote::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceOrderNote.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1405,4 +1410,4 @@ public class CommerceOrderNotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1650698557
+// LIFERAY-SERVICE-BUILDER-HASH:380899973

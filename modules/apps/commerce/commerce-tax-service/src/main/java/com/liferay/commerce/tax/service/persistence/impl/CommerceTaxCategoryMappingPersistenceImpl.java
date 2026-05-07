@@ -1176,7 +1176,7 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 			_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 			CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTaxCategoryMapping::getUuid));
@@ -1185,15 +1185,15 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CommerceTaxCategoryMapping::getUuid,
+			convertNullFunction(CommerceTaxCategoryMapping::getUuid),
 			CommerceTaxCategoryMapping::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
+			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, CommerceTaxCategoryMapping::getUuid),
+				"=", true, true, CommerceTaxCategoryMapping::getUuid),
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "groupId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1226,10 +1226,10 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxCategoryMapping.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceTaxCategoryMapping::getUuid),
 				new FinderColumn<>(
 					"commerceTaxCategoryMapping.", "companyId",
@@ -1262,7 +1262,7 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 				_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				_SQL_COUNT_COMMERCETAXCATEGORYMAPPING_WHERE,
 				CommerceTaxCategoryMappingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxCategoryMapping.", "commerceTaxMethodId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1277,10 +1277,10 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
-			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
+			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "commerceTaxMethodId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTaxCategoryMapping::getCommerceTaxMethodId),
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "CPTaxCategoryId",
@@ -1291,15 +1291,16 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceTaxCategoryMapping::getExternalReferenceCode,
+			convertNullFunction(
+				CommerceTaxCategoryMapping::getExternalReferenceCode),
 			CommerceTaxCategoryMapping::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE,
+			_SQL_SELECT_COMMERCETAXCATEGORYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceTaxCategoryMapping::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceTaxCategoryMapping.", "companyId",
@@ -1375,4 +1376,4 @@ public class CommerceTaxCategoryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1373971880
+// LIFERAY-SERVICE-BUILDER-HASH:-487183552

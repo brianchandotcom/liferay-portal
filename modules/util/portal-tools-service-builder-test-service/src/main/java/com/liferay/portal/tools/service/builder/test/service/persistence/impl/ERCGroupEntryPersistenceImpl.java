@@ -844,7 +844,7 @@ public class ERCGroupEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ERCGROUPENTRY_WHERE, _SQL_COUNT_ERCGROUPENTRY_WHERE,
-			ERCGroupEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ERCGroupEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ercGroupEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ERCGroupEntry::getUuid));
@@ -852,14 +852,15 @@ public class ERCGroupEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, ERCGroupEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(ERCGroupEntry::getUuid),
 			ERCGroupEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_ERCGROUPENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_ERCGROUPENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ercGroupEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, ERCGroupEntry::getUuid),
+				true, ERCGroupEntry::getUuid),
 			new FinderColumn<>(
 				"ercGroupEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, ERCGroupEntry::getGroupId));
@@ -889,10 +890,10 @@ public class ERCGroupEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ERCGROUPENTRY_WHERE,
 				_SQL_COUNT_ERCGROUPENTRY_WHERE,
-				ERCGroupEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ERCGroupEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ercGroupEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ERCGroupEntry::getUuid),
+					true, true, ERCGroupEntry::getUuid),
 				new FinderColumn<>(
 					"ercGroupEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ERCGroupEntry::getCompanyId));
@@ -901,13 +902,14 @@ public class ERCGroupEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			ERCGroupEntry::getExternalReferenceCode, ERCGroupEntry::getGroupId);
+			convertNullFunction(ERCGroupEntry::getExternalReferenceCode),
+			ERCGroupEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_ERCGROUPENTRY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_ERCGROUPENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ercGroupEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ERCGroupEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"ercGroupEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -955,4 +957,4 @@ public class ERCGroupEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-432918444
+// LIFERAY-SERVICE-BUILDER-HASH:-1356585085

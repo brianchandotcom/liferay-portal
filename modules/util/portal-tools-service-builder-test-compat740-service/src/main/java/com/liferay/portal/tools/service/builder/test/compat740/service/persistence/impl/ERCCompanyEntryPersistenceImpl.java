@@ -812,7 +812,7 @@ public class ERCCompanyEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			ERCCompanyEntry::getExternalReferenceCode,
+			convertNullFunction(ERCCompanyEntry::getExternalReferenceCode),
 			ERCCompanyEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
@@ -894,4 +894,4 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1476260340
+// LIFERAY-SERVICE-BUILDER-HASH:663183925

@@ -1033,7 +1033,7 @@ public class CommercePriceListAccountRelPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 			CommercePriceListAccountRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commercePriceListAccountRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1066,10 +1066,10 @@ public class CommercePriceListAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 				CommercePriceListAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListAccountRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommercePriceListAccountRel::getUuid),
 				new FinderColumn<>(
 					"commercePriceListAccountRel.", "companyId",
@@ -1102,7 +1102,7 @@ public class CommercePriceListAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTACCOUNTREL_WHERE,
 				CommercePriceListAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListAccountRel.", "commercePriceListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1117,10 +1117,10 @@ public class CommercePriceListAccountRelPersistenceImpl
 
 		_uniquePersistenceFinderByCAI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCAI_CPI,
-			_SQL_SELECT_COMMERCEPRICELISTACCOUNTREL_WHERE,
+			_SQL_SELECT_COMMERCEPRICELISTACCOUNTREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceListAccountRel.", "commerceAccountId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePriceListAccountRel::getCommerceAccountId),
 			new FinderColumn<>(
 				"commercePriceListAccountRel.", "commercePriceListId",
@@ -1200,4 +1200,4 @@ public class CommercePriceListAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-142789900
+// LIFERAY-SERVICE-BUILDER-HASH:509850048

@@ -1637,7 +1637,7 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DDLRecord::getUuid));
@@ -1645,14 +1645,14 @@ public class DDLRecordPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DDLRecord::getUuid,
-			DDLRecord::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DDLRecord::getUuid), DDLRecord::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORD_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDLRECORD_WHERE, "",
 			new FinderColumn<>(
-				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DDLRecord::getUuid),
+				"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+				DDLRecord::getUuid),
 			new FinderColumn<>(
 				"ddlRecord.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getGroupId));
@@ -1682,10 +1682,10 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, DDLRecord::getUuid),
+					true, DDLRecord::getUuid),
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
@@ -1714,7 +1714,7 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getCompanyId));
@@ -1743,7 +1743,7 @@ public class DDLRecordPersistenceImpl
 				_finderPathWithoutPaginationFindByRecordSetId,
 				_finderPathCountByRecordSetId, _SQL_SELECT_DDLRECORD_WHERE,
 				_SQL_COUNT_DDLRECORD_WHERE, DDLRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=",
 					true, true, DDLRecord::getRecordSetId));
@@ -1771,10 +1771,10 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByR_U,
 			_finderPathWithoutPaginationFindByR_U, _finderPathCountByR_U,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
-				false, DDLRecord::getRecordSetId),
+				true, DDLRecord::getRecordSetId),
 			new FinderColumn<>(
 				"ddlRecord.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				DDLRecord::getUserId));
@@ -1802,10 +1802,10 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByR_R,
 			_finderPathWithoutPaginationFindByR_R, _finderPathCountByR_R,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetId", FinderColumn.Type.LONG, "=", true,
-				false, DDLRecord::getRecordSetId),
+				true, DDLRecord::getRecordSetId),
 			new FinderColumn<>(
 				"ddlRecord.", "recordSetVersion", FinderColumn.Type.STRING, "=",
 				true, true, DDLRecord::getRecordSetVersion));
@@ -1833,10 +1833,10 @@ public class DDLRecordPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_DDLRECORD_WHERE, _SQL_COUNT_DDLRECORD_WHERE,
-			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDLRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddlRecord.", "className", FinderColumn.Type.STRING, "=", true,
-				false, DDLRecord::getClassName),
+				true, DDLRecord::getClassName),
 			new FinderColumn<>(
 				"ddlRecord.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, DDLRecord::getClassPK));
@@ -1913,4 +1913,4 @@ public class DDLRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-264426887
+// LIFERAY-SERVICE-BUILDER-HASH:-1650714599

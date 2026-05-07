@@ -829,7 +829,7 @@ public class CTSChildPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTSCHILD_WHERE,
 				_SQL_COUNT_CTSCHILD_WHERE, CTSChildModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsChild.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTSChild::getCompanyId));
@@ -857,10 +857,10 @@ public class CTSChildPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_CTSCHILD_WHERE, _SQL_COUNT_CTSCHILD_WHERE,
-			CTSChildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTSChildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctsChild.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTSChild::getCompanyId),
+				true, CTSChild::getCompanyId),
 			new FinderColumn<>(
 				"ctsChild.", "ctsGrandParentId", FinderColumn.Type.LONG, "=",
 				true, true, CTSChild::getCtsGrandParentId));
@@ -888,10 +888,10 @@ public class CTSChildPersistenceImpl
 			this, _finderPathWithPaginationFindByC_P,
 			_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
 			_SQL_SELECT_CTSCHILD_WHERE, _SQL_COUNT_CTSCHILD_WHERE,
-			CTSChildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTSChildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctsChild.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTSChild::getCompanyId),
+				true, CTSChild::getCompanyId),
 			new FinderColumn<>(
 				"ctsChild.", "parentCTSChildId", FinderColumn.Type.LONG, "=",
 				true, true, CTSChild::getParentCTSChildId));
@@ -965,4 +965,4 @@ public class CTSChildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1047923482
+// LIFERAY-SERVICE-BUILDER-HASH:2013250934

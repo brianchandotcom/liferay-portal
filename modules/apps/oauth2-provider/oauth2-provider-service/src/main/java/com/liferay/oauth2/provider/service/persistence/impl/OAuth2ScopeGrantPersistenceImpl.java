@@ -970,6 +970,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 				_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE,
 				_SQL_COUNT_OAUTH2SCOPEGRANT_WHERE,
 				OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuth2ScopeGrant.", "oAuth2ApplicationScopeAliasesId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -988,27 +989,27 @@ public class OAuth2ScopeGrantPersistenceImpl
 			},
 			false, OAuth2ScopeGrant::getCompanyId,
 			OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
-			OAuth2ScopeGrant::getApplicationName,
-			OAuth2ScopeGrant::getBundleSymbolicName,
-			OAuth2ScopeGrant::getScope);
+			convertNullFunction(OAuth2ScopeGrant::getApplicationName),
+			convertNullFunction(OAuth2ScopeGrant::getBundleSymbolicName),
+			convertNullFunction(OAuth2ScopeGrant::getScope));
 
 		_uniquePersistenceFinderByC_O_A_B_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_O_A_B_S,
-			_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE,
+			_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE, "",
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OAuth2ScopeGrant::getCompanyId),
+				true, true, OAuth2ScopeGrant::getCompanyId),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "oAuth2ApplicationScopeAliasesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "applicationName",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				OAuth2ScopeGrant::getApplicationName),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "bundleSymbolicName",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				OAuth2ScopeGrant::getBundleSymbolicName),
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "scope", FinderColumn.Type.STRING, "=",
@@ -1089,4 +1090,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:58363962
+// LIFERAY-SERVICE-BUILDER-HASH:-281598916

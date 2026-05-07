@@ -912,7 +912,7 @@ public class LayoutSEOSitePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LAYOUTSEOSITE_WHERE, _SQL_COUNT_LAYOUTSEOSITE_WHERE,
-			LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSEOSite::getUuid));
@@ -920,14 +920,15 @@ public class LayoutSEOSitePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, LayoutSEOSite::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(LayoutSEOSite::getUuid),
 			LayoutSEOSite::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTSEOSITE_WHERE, "",
 			new FinderColumn<>(
 				"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, LayoutSEOSite::getUuid),
+				true, LayoutSEOSite::getUuid),
 			new FinderColumn<>(
 				"layoutSEOSite.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, LayoutSEOSite::getGroupId));
@@ -957,10 +958,10 @@ public class LayoutSEOSitePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
 				_SQL_COUNT_LAYOUTSEOSITE_WHERE,
-				LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutSEOSiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutSEOSite.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LayoutSEOSite::getUuid),
+					true, true, LayoutSEOSite::getUuid),
 				new FinderColumn<>(
 					"layoutSEOSite.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSEOSite::getCompanyId));
@@ -972,6 +973,7 @@ public class LayoutSEOSitePersistenceImpl
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByGroupId, _SQL_SELECT_LAYOUTSEOSITE_WHERE,
+			"",
 			new FinderColumn<>(
 				"layoutSEOSite.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, LayoutSEOSite::getGroupId));
@@ -1048,4 +1050,4 @@ public class LayoutSEOSitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2085384229
+// LIFERAY-SERVICE-BUILDER-HASH:1144950485

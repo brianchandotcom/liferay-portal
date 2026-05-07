@@ -575,6 +575,7 @@ public class RememberMeTokenPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_REMEMBERMETOKEN_WHERE,
 				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
 				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"rememberMeToken.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, RememberMeToken::getUserId));
@@ -599,6 +600,7 @@ public class RememberMeTokenPersistenceImpl
 				_SQL_SELECT_REMEMBERMETOKEN_WHERE,
 				_SQL_COUNT_REMEMBERMETOKEN_WHERE,
 				RememberMeTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"rememberMeToken.", "expirationDate",
 					FinderColumn.Type.DATE, "<=", true, true,
@@ -637,4 +639,4 @@ public class RememberMeTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:991410150
+// LIFERAY-SERVICE-BUILDER-HASH:-1837254422

@@ -935,7 +935,7 @@ public class ReadingTimeEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_READINGTIMEENTRY_WHERE,
 			_SQL_COUNT_READINGTIMEENTRY_WHERE,
-			ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ReadingTimeEntry::getUuid));
@@ -943,14 +943,16 @@ public class ReadingTimeEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, ReadingTimeEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(ReadingTimeEntry::getUuid),
 			ReadingTimeEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_READINGTIMEENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, ReadingTimeEntry::getUuid),
+				true, true, ReadingTimeEntry::getUuid),
 			new FinderColumn<>(
 				"readingTimeEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ReadingTimeEntry::getGroupId));
@@ -981,9 +983,10 @@ public class ReadingTimeEntryPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_READINGTIMEENTRY_WHERE,
 				_SQL_COUNT_READINGTIMEENTRY_WHERE,
 				ReadingTimeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"readingTimeEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ReadingTimeEntry::getUuid),
+					true, true, ReadingTimeEntry::getUuid),
 				new FinderColumn<>(
 					"readingTimeEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ReadingTimeEntry::getCompanyId));
@@ -999,12 +1002,13 @@ public class ReadingTimeEntryPersistenceImpl
 
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C, _SQL_SELECT_READINGTIMEENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"readingTimeEntry.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, ReadingTimeEntry::getGroupId),
+				true, true, ReadingTimeEntry::getGroupId),
 			new FinderColumn<>(
 				"readingTimeEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, ReadingTimeEntry::getClassNameId),
+				true, true, ReadingTimeEntry::getClassNameId),
 			new FinderColumn<>(
 				"readingTimeEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, ReadingTimeEntry::getClassPK));
@@ -1081,4 +1085,4 @@ public class ReadingTimeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:291482745
+// LIFERAY-SERVICE-BUILDER-HASH:-1144328769

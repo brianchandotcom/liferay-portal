@@ -3230,7 +3230,7 @@ public class COREntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-			COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				COREntry::getUuid));
@@ -3260,10 +3260,10 @@ public class COREntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CORENTRY_WHERE,
 				_SQL_COUNT_CORENTRY_WHERE, COREntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"corEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, COREntry::getUuid),
+					true, COREntry::getUuid),
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, COREntry::getCompanyId));
@@ -3291,10 +3291,10 @@ public class COREntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_A,
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-			COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, COREntry::getCompanyId),
+				true, COREntry::getCompanyId),
 			new FinderColumn<>(
 				"corEntry.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 				true, COREntry::isActive));
@@ -3318,10 +3318,10 @@ public class COREntryPersistenceImpl
 				this, _finderPathWithPaginationFindByC_LikeType, null,
 				_finderPathWithPaginationCountByC_LikeType,
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, COREntry::getCompanyId),
+					true, COREntry::getCompanyId),
 				new FinderColumn<>(
 					"corEntry.", "type", FinderColumn.Type.STRING, "LIKE", true,
 					true, COREntry::getType));
@@ -3344,10 +3344,10 @@ public class COREntryPersistenceImpl
 			this, _finderPathWithPaginationFindByLtD_S, null,
 			_finderPathWithPaginationCountByLtD_S, _SQL_SELECT_CORENTRY_WHERE,
 			_SQL_COUNT_CORENTRY_WHERE, COREntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"corEntry.", "displayDate", FinderColumn.Type.DATE, "<", true,
-				false, COREntry::getDisplayDate),
+				true, COREntry::getDisplayDate),
 			new FinderColumn<>(
 				"corEntry.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, COREntry::getStatus));
@@ -3370,10 +3370,10 @@ public class COREntryPersistenceImpl
 			this, _finderPathWithPaginationFindByLtE_S, null,
 			_finderPathWithPaginationCountByLtE_S, _SQL_SELECT_CORENTRY_WHERE,
 			_SQL_COUNT_CORENTRY_WHERE, COREntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"corEntry.", "expirationDate", FinderColumn.Type.DATE, "<",
-				true, false, COREntry::getExpirationDate),
+				true, true, COREntry::getExpirationDate),
 			new FinderColumn<>(
 				"corEntry.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, COREntry::getStatus));
@@ -3400,13 +3400,13 @@ public class COREntryPersistenceImpl
 				this, _finderPathWithPaginationFindByC_A_LikeType, null,
 				_finderPathWithPaginationCountByC_A_LikeType,
 				_SQL_SELECT_CORENTRY_WHERE, _SQL_COUNT_CORENTRY_WHERE,
-				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				COREntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, COREntry::getCompanyId),
+					true, COREntry::getCompanyId),
 				new FinderColumn<>(
 					"corEntry.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					false, COREntry::isActive),
+					true, COREntry::isActive),
 				new FinderColumn<>(
 					"corEntry.", "type", FinderColumn.Type.STRING, "LIKE", true,
 					true, COREntry::getType));
@@ -3415,13 +3415,14 @@ public class COREntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			COREntry::getExternalReferenceCode, COREntry::getCompanyId);
+			convertNullFunction(COREntry::getExternalReferenceCode),
+			COREntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CORENTRY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CORENTRY_WHERE, "",
 			new FinderColumn<>(
 				"corEntry.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, COREntry::getExternalReferenceCode),
+				"=", true, true, COREntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"corEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, COREntry::getCompanyId));
@@ -3518,4 +3519,4 @@ public class COREntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:3762165
+// LIFERAY-SERVICE-BUILDER-HASH:376548798

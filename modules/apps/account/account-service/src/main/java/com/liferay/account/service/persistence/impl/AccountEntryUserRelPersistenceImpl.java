@@ -677,7 +677,7 @@ public class AccountEntryUserRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYUSERREL_WHERE,
 				AccountEntryUserRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountEntryUserRel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -709,7 +709,7 @@ public class AccountEntryUserRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYUSERREL_WHERE,
 				AccountEntryUserRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountEntryUserRel.", "accountUserId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -724,10 +724,10 @@ public class AccountEntryUserRelPersistenceImpl
 
 		_uniquePersistenceFinderByAEI_AUI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByAEI_AUI,
-			_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE,
+			_SQL_SELECT_ACCOUNTENTRYUSERREL_WHERE, "",
 			new FinderColumn<>(
 				"accountEntryUserRel.", "accountEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				AccountEntryUserRel::getAccountEntryId),
 			new FinderColumn<>(
 				"accountEntryUserRel.", "accountUserId", FinderColumn.Type.LONG,
@@ -799,4 +799,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:126813379
+// LIFERAY-SERVICE-BUILDER-HASH:663396780

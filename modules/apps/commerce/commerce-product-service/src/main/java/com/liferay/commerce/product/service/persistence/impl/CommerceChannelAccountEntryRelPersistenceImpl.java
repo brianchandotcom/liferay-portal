@@ -1805,7 +1805,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1837,7 +1837,7 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "commerceChannelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1868,10 +1868,10 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "accountEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getAccountEntryId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "type",
@@ -1903,10 +1903,10 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "classPK",
@@ -1938,10 +1938,10 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "commerceChannelId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "type",
@@ -1982,14 +1982,14 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 			CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "accountEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getAccountEntryId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "commerceChannelId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "type",
@@ -2039,18 +2039,18 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
 				CommerceChannelAccountEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceChannelAccountEntryRel::getClassNameId),
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "classPK",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceChannelAccountEntryRel::getClassPK),
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "commerceChannelId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceChannelAccountEntryRel::getCommerceChannelId),
 				new FinderColumn<>(
 					"commerceChannelAccountEntryRel.", "type",
@@ -2076,22 +2076,22 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 
 		_uniquePersistenceFinderByA_C_C_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C_C_C_T,
-			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE,
+			_SQL_SELECT_COMMERCECHANNELACCOUNTENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "accountEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getAccountEntryId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "classPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getClassPK),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "commerceChannelId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceChannelAccountEntryRel::getCommerceChannelId),
 			new FinderColumn<>(
 				"commerceChannelAccountEntryRel.", "type",
@@ -2173,4 +2173,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-292206592
+// LIFERAY-SERVICE-BUILDER-HASH:-1049184289

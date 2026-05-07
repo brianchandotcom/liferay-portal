@@ -713,6 +713,7 @@ public class CommerceTaxMethodPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 				_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
 				CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTaxMethod::getGroupId));
@@ -721,13 +722,15 @@ public class CommerceTaxMethodPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "engineKey"}, false,
-			CommerceTaxMethod::getGroupId, CommerceTaxMethod::getEngineKey);
+			CommerceTaxMethod::getGroupId,
+			convertNullFunction(CommerceTaxMethod::getEngineKey));
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_E, _SQL_SELECT_COMMERCETAXMETHOD_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, CommerceTaxMethod::getGroupId),
+				true, true, CommerceTaxMethod::getGroupId),
 			new FinderColumn<>(
 				"commerceTaxMethod.", "engineKey", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTaxMethod::getEngineKey));
@@ -756,10 +759,10 @@ public class CommerceTaxMethodPersistenceImpl
 			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
 			_SQL_SELECT_COMMERCETAXMETHOD_WHERE,
 			_SQL_COUNT_COMMERCETAXMETHOD_WHERE,
-			CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceTaxMethodModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceTaxMethod.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, CommerceTaxMethod::getGroupId),
+				true, true, CommerceTaxMethod::getGroupId),
 			new FinderColumn<>(
 				"commerceTaxMethod.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceTaxMethod::isActive));
@@ -833,4 +836,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:57622854
+// LIFERAY-SERVICE-BUILDER-HASH:-1928194015

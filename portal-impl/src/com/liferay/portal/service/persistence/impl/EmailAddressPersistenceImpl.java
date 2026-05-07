@@ -1766,7 +1766,7 @@ public class EmailAddressPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
-			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"emailAddress.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, EmailAddress::getUuid));
@@ -1796,10 +1796,10 @@ public class EmailAddressPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_EMAILADDRESS_WHERE,
 				_SQL_COUNT_EMAILADDRESS_WHERE,
-				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, EmailAddress::getUuid),
+					true, true, EmailAddress::getUuid),
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getCompanyId));
@@ -1828,7 +1828,7 @@ public class EmailAddressPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_EMAILADDRESS_WHERE,
 				_SQL_COUNT_EMAILADDRESS_WHERE,
-				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getCompanyId));
@@ -1856,7 +1856,7 @@ public class EmailAddressPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_EMAILADDRESS_WHERE,
 				_SQL_COUNT_EMAILADDRESS_WHERE,
-				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, EmailAddress::getUserId));
@@ -1884,10 +1884,10 @@ public class EmailAddressPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
-			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"emailAddress.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, EmailAddress::getCompanyId),
+				true, EmailAddress::getCompanyId),
 			new FinderColumn<>(
 				"emailAddress.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, EmailAddress::getClassNameId));
@@ -1919,13 +1919,13 @@ public class EmailAddressPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_EMAILADDRESS_WHERE, _SQL_COUNT_EMAILADDRESS_WHERE,
-			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"emailAddress.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, EmailAddress::getCompanyId),
+				true, EmailAddress::getCompanyId),
 			new FinderColumn<>(
 				"emailAddress.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, EmailAddress::getClassNameId),
+				true, true, EmailAddress::getClassNameId),
 			new FinderColumn<>(
 				"emailAddress.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, EmailAddress::getClassPK));
@@ -1965,16 +1965,16 @@ public class EmailAddressPersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_C_P,
 				_finderPathCountByC_C_C_P, _SQL_SELECT_EMAILADDRESS_WHERE,
 				_SQL_COUNT_EMAILADDRESS_WHERE,
-				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				EmailAddressModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"emailAddress.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, EmailAddress::getCompanyId),
+					true, true, EmailAddress::getCompanyId),
 				new FinderColumn<>(
 					"emailAddress.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, EmailAddress::getClassNameId),
+					true, true, EmailAddress::getClassNameId),
 				new FinderColumn<>(
 					"emailAddress.", "classPK", FinderColumn.Type.LONG, "=",
-					true, false, EmailAddress::getClassPK),
+					true, true, EmailAddress::getClassPK),
 				new FinderColumn<>(
 					"emailAddress.", "primary", FinderColumn.Type.BOOLEAN, "=",
 					true, true, EmailAddress::isPrimary));
@@ -1983,13 +1983,14 @@ public class EmailAddressPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			EmailAddress::getExternalReferenceCode, EmailAddress::getCompanyId);
+			convertNullFunction(EmailAddress::getExternalReferenceCode),
+			EmailAddress::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_EMAILADDRESS_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_EMAILADDRESS_WHERE, "",
 			new FinderColumn<>(
 				"emailAddress.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				EmailAddress::getExternalReferenceCode),
 			new FinderColumn<>(
 				"emailAddress.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -2031,4 +2032,4 @@ public class EmailAddressPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:566641247
+// LIFERAY-SERVICE-BUILDER-HASH:-1851609456

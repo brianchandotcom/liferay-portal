@@ -878,10 +878,10 @@ public class TicketPersistenceImpl
 		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
 			new String[] {String.class.getName()}, new String[] {"key_"}, false,
-			Ticket::getKey);
+			convertNullFunction(Ticket::getKey));
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_TICKET_WHERE,
+			this, _finderPathFetchByKey, _SQL_SELECT_TICKET_WHERE, "",
 			new FinderColumn<>(
 				"ticket.", "key", FinderColumn.Type.STRING, "=", true, true,
 				Ticket::getKey));
@@ -913,13 +913,13 @@ public class TicketPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Ticket::getCompanyId),
+				"ticket.", "companyId", FinderColumn.Type.LONG, "=", true, true,
+				Ticket::getCompanyId),
 			new FinderColumn<>(
 				"ticket.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, Ticket::getClassNameId),
+				true, Ticket::getClassNameId),
 			new FinderColumn<>(
 				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getClassPK));
@@ -953,12 +953,12 @@ public class TicketPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_T,
 			_finderPathWithoutPaginationFindByC_C_T, _finderPathCountByC_C_T,
 			_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
-			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ticket.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, Ticket::getClassNameId),
+				true, Ticket::getClassNameId),
 			new FinderColumn<>(
-				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, false,
+				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getClassPK),
 			new FinderColumn<>(
 				"ticket.", "type", FinderColumn.Type.INTEGER, "=", true, true,
@@ -999,16 +999,16 @@ public class TicketPersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_C_T,
 				_finderPathCountByC_C_C_T, _SQL_SELECT_TICKET_WHERE,
 				_SQL_COUNT_TICKET_WHERE, TicketModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, Ticket::getCompanyId),
+					true, Ticket::getCompanyId),
 				new FinderColumn<>(
 					"ticket.", "classNameId", FinderColumn.Type.LONG, "=", true,
-					false, Ticket::getClassNameId),
+					true, Ticket::getClassNameId),
 				new FinderColumn<>(
 					"ticket.", "classPK", FinderColumn.Type.LONG, "=", true,
-					false, Ticket::getClassPK),
+					true, Ticket::getClassPK),
 				new FinderColumn<>(
 					"ticket.", "type", FinderColumn.Type.INTEGER, "=", true,
 					true, Ticket::getType));
@@ -1049,4 +1049,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1403205391
+// LIFERAY-SERVICE-BUILDER-HASH:296128074

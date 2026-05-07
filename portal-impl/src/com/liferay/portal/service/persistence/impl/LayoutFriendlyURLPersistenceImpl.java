@@ -2623,7 +2623,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 			_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
-			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, LayoutFriendlyURL::getUuid));
@@ -2632,13 +2632,15 @@ public class LayoutFriendlyURLPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			LayoutFriendlyURL::getUuid, LayoutFriendlyURL::getGroupId);
+			convertNullFunction(LayoutFriendlyURL::getUuid),
+			LayoutFriendlyURL::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
+			"",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, LayoutFriendlyURL::getUuid),
+				true, true, LayoutFriendlyURL::getUuid),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutFriendlyURL::getGroupId));
@@ -2669,9 +2671,10 @@ public class LayoutFriendlyURLPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 				_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
 				LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutFriendlyURL.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LayoutFriendlyURL::getUuid),
+					true, true, LayoutFriendlyURL::getUuid),
 				new FinderColumn<>(
 					"layoutFriendlyURL.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutFriendlyURL::getCompanyId));
@@ -2701,6 +2704,7 @@ public class LayoutFriendlyURLPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 				_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
 				LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutFriendlyURL.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutFriendlyURL::getGroupId));
@@ -2731,6 +2735,7 @@ public class LayoutFriendlyURLPersistenceImpl
 				_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 				_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
 				LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutFriendlyURL.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutFriendlyURL::getCompanyId));
@@ -2756,7 +2761,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
 			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 			_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
-			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, LayoutFriendlyURL::getPlid));
@@ -2785,10 +2790,10 @@ public class LayoutFriendlyURLPersistenceImpl
 			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
 			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 			_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
-			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutFriendlyURL::getCompanyId),
+				true, true, LayoutFriendlyURL::getCompanyId),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
 				"=", true, true, LayoutFriendlyURL::getFriendlyURL));
@@ -2817,10 +2822,10 @@ public class LayoutFriendlyURLPersistenceImpl
 			_finderPathWithoutPaginationFindByP_F, _finderPathCountByP_F,
 			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 			_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
-			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "plid", FinderColumn.Type.LONG, "=", true,
-				false, LayoutFriendlyURL::getPlid),
+				true, LayoutFriendlyURL::getPlid),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
 				"=", true, true, LayoutFriendlyURL::getFriendlyURL));
@@ -2843,7 +2848,8 @@ public class LayoutFriendlyURLPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_L",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"plid", "languageId"}, false,
-			LayoutFriendlyURL::getPlid, LayoutFriendlyURL::getLanguageId);
+			LayoutFriendlyURL::getPlid,
+			convertNullFunction(LayoutFriendlyURL::getLanguageId));
 
 		_finderPathCountByP_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
@@ -2885,13 +2891,13 @@ public class LayoutFriendlyURLPersistenceImpl
 			_finderPathWithoutPaginationFindByG_P_F, _finderPathCountByG_P_F,
 			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
 			_SQL_COUNT_LAYOUTFRIENDLYURL_WHERE,
-			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutFriendlyURLModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutFriendlyURL::getGroupId),
+				true, true, LayoutFriendlyURL::getGroupId),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "privateLayout",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				LayoutFriendlyURL::isPrivateLayout),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
@@ -2908,22 +2914,22 @@ public class LayoutFriendlyURLPersistenceImpl
 			},
 			false, LayoutFriendlyURL::getGroupId,
 			LayoutFriendlyURL::isPrivateLayout,
-			LayoutFriendlyURL::getFriendlyURL,
-			LayoutFriendlyURL::getLanguageId);
+			convertNullFunction(LayoutFriendlyURL::getFriendlyURL),
+			convertNullFunction(LayoutFriendlyURL::getLanguageId));
 
 		_uniquePersistenceFinderByG_P_F_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_F_L,
-			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE,
+			_SQL_SELECT_LAYOUTFRIENDLYURL_WHERE, "",
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutFriendlyURL::getGroupId),
+				true, true, LayoutFriendlyURL::getGroupId),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "privateLayout",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				LayoutFriendlyURL::isPrivateLayout),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "friendlyURL", FinderColumn.Type.STRING,
-				"=", true, false, LayoutFriendlyURL::getFriendlyURL),
+				"=", true, true, LayoutFriendlyURL::getFriendlyURL),
 			new FinderColumn<>(
 				"layoutFriendlyURL.", "languageId", FinderColumn.Type.STRING,
 				"=", true, true, LayoutFriendlyURL::getLanguageId));
@@ -2964,4 +2970,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1886330042
+// LIFERAY-SERVICE-BUILDER-HASH:2090194511

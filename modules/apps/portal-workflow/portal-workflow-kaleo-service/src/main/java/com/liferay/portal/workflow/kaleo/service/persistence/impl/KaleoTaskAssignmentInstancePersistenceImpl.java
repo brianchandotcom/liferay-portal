@@ -1775,7 +1775,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1812,7 +1812,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1844,7 +1844,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1881,7 +1881,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "kaleoTaskInstanceTokenId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1913,7 +1913,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "assigneeClassName",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1946,10 +1946,10 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "groupId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTaskAssignmentInstance::getGroupId),
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "assigneeClassPK",
@@ -1986,10 +1986,10 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "kaleoTaskInstanceTokenId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTaskAssignmentInstance::getKaleoTaskInstanceTokenId),
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "assigneeClassName",
@@ -2023,10 +2023,10 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENTINSTANCE_WHERE,
 				KaleoTaskAssignmentInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "assigneeClassName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KaleoTaskAssignmentInstance::getAssigneeClassName),
 				new FinderColumn<>(
 					"kaleoTaskAssignmentInstance.", "assigneeClassPK",
@@ -2103,4 +2103,4 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:88177354
+// LIFERAY-SERVICE-BUILDER-HASH:-1571354721

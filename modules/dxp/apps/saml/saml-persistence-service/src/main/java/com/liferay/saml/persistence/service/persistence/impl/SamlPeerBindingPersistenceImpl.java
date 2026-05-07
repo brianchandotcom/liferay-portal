@@ -668,12 +668,13 @@ public class SamlPeerBindingPersistenceImpl
 				_finderPathCountByC_D_SNIV, _SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, SamlPeerBinding::getCompanyId),
+					"=", true, true, SamlPeerBinding::getCompanyId),
 				new FinderColumn<>(
 					"samlPeerBinding.", "deleted", FinderColumn.Type.BOOLEAN,
-					"=", true, false, SamlPeerBinding::isDeleted),
+					"=", true, true, SamlPeerBinding::isDeleted),
 				new FinderColumn<>(
 					"samlPeerBinding.", "samlNameIdValue",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -715,15 +716,16 @@ public class SamlPeerBindingPersistenceImpl
 				_finderPathCountByC_U_SPEI_D, _SQL_SELECT_SAMLPEERBINDING_WHERE,
 				_SQL_COUNT_SAMLPEERBINDING_WHERE,
 				SamlPeerBindingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"samlPeerBinding.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, SamlPeerBinding::getCompanyId),
+					"=", true, true, SamlPeerBinding::getCompanyId),
 				new FinderColumn<>(
 					"samlPeerBinding.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, SamlPeerBinding::getUserId),
+					true, true, SamlPeerBinding::getUserId),
 				new FinderColumn<>(
 					"samlPeerBinding.", "samlPeerEntityId",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					SamlPeerBinding::getSamlPeerEntityId),
 				new FinderColumn<>(
 					"samlPeerBinding.", "deleted", FinderColumn.Type.BOOLEAN,
@@ -795,4 +797,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1945281765
+// LIFERAY-SERVICE-BUILDER-HASH:153487446

@@ -522,7 +522,7 @@ public class EntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_ENTRY_WHERE,
 				_SQL_COUNT_ENTRY_WHERE, EntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"entry.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					Entry::getUserId));
@@ -531,12 +531,12 @@ public class EntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "emailAddress"}, false, Entry::getUserId,
-			Entry::getEmailAddress);
+			convertNullFunction(Entry::getEmailAddress));
 
 		_uniquePersistenceFinderByU_EA = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_EA, _SQL_SELECT_ENTRY_WHERE,
+			this, _finderPathFetchByU_EA, _SQL_SELECT_ENTRY_WHERE, "",
 			new FinderColumn<>(
-				"entry.", "userId", FinderColumn.Type.LONG, "=", true, false,
+				"entry.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				Entry::getUserId),
 			new FinderColumn<>(
 				"entry.", "emailAddress", FinderColumn.Type.STRING, "=", true,
@@ -608,4 +608,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2143064071
+// LIFERAY-SERVICE-BUILDER-HASH:-1890025299

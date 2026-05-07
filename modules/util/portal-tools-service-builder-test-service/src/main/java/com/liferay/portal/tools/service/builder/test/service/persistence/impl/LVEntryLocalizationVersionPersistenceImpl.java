@@ -1127,7 +1127,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryLocalizationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1145,10 +1145,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 		_uniquePersistenceFinderByLvEntryLocalizationId_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByLvEntryLocalizationId_Version,
-				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
+				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryLocalizationId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryLocalizationId),
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "version",
@@ -1181,7 +1181,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1216,10 +1216,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryId),
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "version",
@@ -1256,10 +1256,10 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATIONVERSION_WHERE,
 				LVEntryLocalizationVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryId),
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "languageId",
@@ -1274,20 +1274,20 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			},
 			new String[] {"lvEntryId", "languageId", "version"}, false,
 			LVEntryLocalizationVersion::getLvEntryId,
-			LVEntryLocalizationVersion::getLanguageId,
+			convertNullFunction(LVEntryLocalizationVersion::getLanguageId),
 			LVEntryLocalizationVersion::getVersion);
 
 		_uniquePersistenceFinderByLvEntryId_LanguageId_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByLvEntryId_LanguageId_Version,
-				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE,
+				_SQL_SELECT_LVENTRYLOCALIZATIONVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "lvEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					LVEntryLocalizationVersion::getLvEntryId),
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "languageId",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					LVEntryLocalizationVersion::getLanguageId),
 				new FinderColumn<>(
 					"lvEntryLocalizationVersion.", "version",
@@ -1333,4 +1333,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1692568766
+// LIFERAY-SERVICE-BUILDER-HASH:981895011

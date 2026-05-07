@@ -2356,7 +2356,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByLvEntryId,
 				_finderPathCountByLvEntryId, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "lvEntryId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getLvEntryId));
@@ -2370,10 +2370,10 @@ public class LVEntryVersionPersistenceImpl
 		_uniquePersistenceFinderByLvEntryId_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByLvEntryId_Version,
-				_SQL_SELECT_LVENTRYVERSION_WHERE,
+				_SQL_SELECT_LVENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "lvEntryId", FinderColumn.Type.LONG, "=",
-					true, false, LVEntryVersion::getLvEntryId),
+					true, true, LVEntryVersion::getLvEntryId),
 				new FinderColumn<>(
 					"lvEntryVersion.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, LVEntryVersion::getVersion));
@@ -2400,7 +2400,7 @@ public class LVEntryVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LVENTRYVERSION_WHERE, _SQL_COUNT_LVENTRYVERSION_WHERE,
-			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, LVEntryVersion::getUuid));
@@ -2431,10 +2431,10 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByUuid_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LVEntryVersion::getUuid),
+					true, true, LVEntryVersion::getUuid),
 				new FinderColumn<>(
 					"lvEntryVersion.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, LVEntryVersion::getVersion));
@@ -2464,10 +2464,10 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LVEntryVersion::getUuid),
+					true, true, LVEntryVersion::getUuid),
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getGroupId));
@@ -2479,19 +2479,19 @@ public class LVEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, false,
-			LVEntryVersion::getUuid, LVEntryVersion::getGroupId,
-			LVEntryVersion::getVersion);
+			convertNullFunction(LVEntryVersion::getUuid),
+			LVEntryVersion::getGroupId, LVEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByUUID_G_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByUUID_G_Version,
-				_SQL_SELECT_LVENTRYVERSION_WHERE,
+				_SQL_SELECT_LVENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LVEntryVersion::getUuid),
+					true, true, LVEntryVersion::getUuid),
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, LVEntryVersion::getGroupId),
+					true, true, LVEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"lvEntryVersion.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, LVEntryVersion::getVersion));
@@ -2521,10 +2521,10 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LVEntryVersion::getUuid),
+					true, true, LVEntryVersion::getUuid),
 				new FinderColumn<>(
 					"lvEntryVersion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getCompanyId));
@@ -2561,13 +2561,13 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByUuid_C_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, LVEntryVersion::getUuid),
+					true, true, LVEntryVersion::getUuid),
 				new FinderColumn<>(
 					"lvEntryVersion.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, LVEntryVersion::getCompanyId),
+					true, true, LVEntryVersion::getCompanyId),
 				new FinderColumn<>(
 					"lvEntryVersion.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, LVEntryVersion::getVersion));
@@ -2596,7 +2596,7 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LVEntryVersion::getGroupId));
@@ -2627,10 +2627,10 @@ public class LVEntryVersionPersistenceImpl
 				_finderPathCountByGroupId_Version,
 				_SQL_SELECT_LVENTRYVERSION_WHERE,
 				_SQL_COUNT_LVENTRYVERSION_WHERE,
-				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, LVEntryVersion::getGroupId),
+					true, true, LVEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"lvEntryVersion.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, LVEntryVersion::getVersion));
@@ -2658,10 +2658,10 @@ public class LVEntryVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByG_UGK,
 			_finderPathWithoutPaginationFindByG_UGK, _finderPathCountByG_UGK,
 			_SQL_SELECT_LVENTRYVERSION_WHERE, _SQL_COUNT_LVENTRYVERSION_WHERE,
-			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LVEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, LVEntryVersion::getGroupId),
+				true, LVEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"lvEntryVersion.", "uniqueGroupKey", FinderColumn.Type.STRING,
 				"=", true, true, LVEntryVersion::getUniqueGroupKey));
@@ -2673,18 +2673,19 @@ public class LVEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "uniqueGroupKey", "version"}, false,
-			LVEntryVersion::getGroupId, LVEntryVersion::getUniqueGroupKey,
+			LVEntryVersion::getGroupId,
+			convertNullFunction(LVEntryVersion::getUniqueGroupKey),
 			LVEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByG_UGK_Version = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_UGK_Version,
-			_SQL_SELECT_LVENTRYVERSION_WHERE,
+			_SQL_SELECT_LVENTRYVERSION_WHERE, "",
 			new FinderColumn<>(
 				"lvEntryVersion.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, LVEntryVersion::getGroupId),
+				true, LVEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"lvEntryVersion.", "uniqueGroupKey", FinderColumn.Type.STRING,
-				"=", true, false, LVEntryVersion::getUniqueGroupKey),
+				"=", true, true, LVEntryVersion::getUniqueGroupKey),
 			new FinderColumn<>(
 				"lvEntryVersion.", "version", FinderColumn.Type.INTEGER, "=",
 				true, true, LVEntryVersion::getVersion));
@@ -2745,4 +2746,4 @@ public class LVEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:668257107
+// LIFERAY-SERVICE-BUILDER-HASH:1131505401

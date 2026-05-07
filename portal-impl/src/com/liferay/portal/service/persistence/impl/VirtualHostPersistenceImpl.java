@@ -1427,7 +1427,7 @@ public class VirtualHostPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_VIRTUALHOST_WHERE,
 				_SQL_COUNT_VIRTUALHOST_WHERE,
-				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"virtualHost.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, VirtualHost::getCompanyId));
@@ -1435,10 +1435,10 @@ public class VirtualHostPersistenceImpl
 		_finderPathFetchByHostname = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
 			new String[] {String.class.getName()}, new String[] {"hostname"},
-			false, VirtualHost::getHostname);
+			false, convertNullFunction(VirtualHost::getHostname));
 
 		_uniquePersistenceFinderByHostname = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHostname, _SQL_SELECT_VIRTUALHOST_WHERE,
+			this, _finderPathFetchByHostname, _SQL_SELECT_VIRTUALHOST_WHERE, "",
 			new FinderColumn<>(
 				"virtualHost.", "hostname", FinderColumn.Type.STRING, "=", true,
 				true, VirtualHost::getHostname));
@@ -1466,10 +1466,10 @@ public class VirtualHostPersistenceImpl
 			this, _finderPathWithPaginationFindByC_L,
 			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
 			_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
-			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"virtualHost.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, VirtualHost::getCompanyId),
+				true, VirtualHost::getCompanyId),
 			new FinderColumn<>(
 				"virtualHost.", "layoutSetId", FinderColumn.Type.LONG, "=",
 				true, true, VirtualHost::getLayoutSetId));
@@ -1521,4 +1521,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-682050532
+// LIFERAY-SERVICE-BUILDER-HASH:458409243

@@ -598,6 +598,7 @@ public class SamlIdpSpSessionPersistenceImpl
 				_SQL_SELECT_SAMLIDPSPSESSION_WHERE,
 				_SQL_COUNT_SAMLIDPSPSESSION_WHERE,
 				SamlIdpSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"samlIdpSpSession.", "createDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlIdpSpSession::getCreateDate));
@@ -628,6 +629,7 @@ public class SamlIdpSpSessionPersistenceImpl
 				_SQL_SELECT_SAMLIDPSPSESSION_WHERE,
 				_SQL_COUNT_SAMLIDPSPSESSION_WHERE,
 				SamlIdpSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"samlIdpSpSession.", "samlIdpSsoSessionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -699,4 +701,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:196960773
+// LIFERAY-SERVICE-BUILDER-HASH:343946693

@@ -769,7 +769,7 @@ public class ObjectFilterPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTFILTER_WHERE, _SQL_COUNT_OBJECTFILTER_WHERE,
-			ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectFilter.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectFilter::getUuid));
@@ -799,10 +799,10 @@ public class ObjectFilterPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTFILTER_WHERE,
 				_SQL_COUNT_OBJECTFILTER_WHERE,
-				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectFilter.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ObjectFilter::getUuid),
+					true, true, ObjectFilter::getUuid),
 				new FinderColumn<>(
 					"objectFilter.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectFilter::getCompanyId));
@@ -831,7 +831,7 @@ public class ObjectFilterPersistenceImpl
 				_finderPathWithoutPaginationFindByObjectFieldId,
 				_finderPathCountByObjectFieldId, _SQL_SELECT_OBJECTFILTER_WHERE,
 				_SQL_COUNT_OBJECTFILTER_WHERE,
-				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFilterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectFilter.", "objectFieldId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectFilter::getObjectFieldId));
@@ -905,4 +905,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:85782263
+// LIFERAY-SERVICE-BUILDER-HASH:-577998832

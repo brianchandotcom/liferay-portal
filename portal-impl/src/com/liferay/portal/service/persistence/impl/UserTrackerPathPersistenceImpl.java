@@ -429,6 +429,7 @@ public class UserTrackerPathPersistenceImpl
 				_SQL_SELECT_USERTRACKERPATH_WHERE,
 				_SQL_COUNT_USERTRACKERPATH_WHERE,
 				UserTrackerPathModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"userTrackerPath.", "userTrackerId", FinderColumn.Type.LONG,
 					"=", true, true, UserTrackerPath::getUserTrackerId));
@@ -469,4 +470,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-673784344
+// LIFERAY-SERVICE-BUILDER-HASH:-1684139030

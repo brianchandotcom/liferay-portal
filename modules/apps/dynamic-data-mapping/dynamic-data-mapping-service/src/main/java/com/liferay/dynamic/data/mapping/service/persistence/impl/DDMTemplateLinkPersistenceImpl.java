@@ -605,6 +605,7 @@ public class DDMTemplateLinkPersistenceImpl
 				_finderPathCountByTemplateId, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
 				_SQL_COUNT_DDMTEMPLATELINK_WHERE,
 				DDMTemplateLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddmTemplateLink.", "templateId", FinderColumn.Type.LONG,
 					"=", true, true, DDMTemplateLink::getTemplateId));
@@ -616,10 +617,10 @@ public class DDMTemplateLinkPersistenceImpl
 			DDMTemplateLink::getClassNameId, DDMTemplateLink::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_DDMTEMPLATELINK_WHERE,
+			this, _finderPathFetchByC_C, _SQL_SELECT_DDMTEMPLATELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmTemplateLink.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, DDMTemplateLink::getClassNameId),
+				true, true, DDMTemplateLink::getClassNameId),
 			new FinderColumn<>(
 				"ddmTemplateLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, DDMTemplateLink::getClassPK));
@@ -693,4 +694,4 @@ public class DDMTemplateLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2096762343
+// LIFERAY-SERVICE-BUILDER-HASH:-1104110816

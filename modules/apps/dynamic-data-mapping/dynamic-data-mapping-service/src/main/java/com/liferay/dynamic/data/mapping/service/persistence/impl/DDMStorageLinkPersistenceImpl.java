@@ -1605,7 +1605,7 @@ public class DDMStorageLinkPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DDMSTORAGELINK_WHERE, _SQL_COUNT_DDMSTORAGELINK_WHERE,
-			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmStorageLink.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMStorageLink::getUuid));
@@ -1635,10 +1635,10 @@ public class DDMStorageLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
-				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmStorageLink.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DDMStorageLink::getUuid),
+					true, true, DDMStorageLink::getUuid),
 				new FinderColumn<>(
 					"ddmStorageLink.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStorageLink::getCompanyId));
@@ -1650,6 +1650,7 @@ public class DDMStorageLinkPersistenceImpl
 
 		_uniquePersistenceFinderByClassPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassPK, _SQL_SELECT_DDMSTORAGELINK_WHERE,
+			"",
 			new FinderColumn<>(
 				"ddmStorageLink.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, DDMStorageLink::getClassPK));
@@ -1678,7 +1679,7 @@ public class DDMStorageLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByStructureId,
 				_finderPathCountByStructureId, _SQL_SELECT_DDMSTORAGELINK_WHERE,
 				_SQL_COUNT_DDMSTORAGELINK_WHERE,
-				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DDMStorageLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmStorageLink.", "structureId", FinderColumn.Type.LONG,
 					"=", true, true, DDMStorageLink::getStructureId));
@@ -1778,4 +1779,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1289220463
+// LIFERAY-SERVICE-BUILDER-HASH:-1686212389

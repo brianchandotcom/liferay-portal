@@ -1725,7 +1725,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceSubscriptionEntry::getUuid));
@@ -1734,15 +1734,15 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CommerceSubscriptionEntry::getUuid,
+			convertNullFunction(CommerceSubscriptionEntry::getUuid),
 			CommerceSubscriptionEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, CommerceSubscriptionEntry::getUuid),
+				"=", true, true, CommerceSubscriptionEntry::getUuid),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CommerceSubscriptionEntry::getGroupId));
@@ -1774,10 +1774,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceSubscriptionEntry::getUuid),
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "companyId",
@@ -1810,7 +1810,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1842,7 +1842,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1857,7 +1857,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		_uniquePersistenceFinderByCommerceOrderItemId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCommerceOrderItemId,
-				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE, "",
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "commerceOrderItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1889,7 +1889,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 				_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 				CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceSubscriptionEntry.", "subscriptionStatus",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -1920,10 +1920,10 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceSubscriptionEntry::getCompanyId),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "userId", FinderColumn.Type.LONG,
@@ -1958,13 +1958,13 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			_SQL_COUNT_COMMERCESUBSCRIPTIONENTRY_WHERE,
 			CommerceSubscriptionEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceSubscriptionEntry::getGroupId),
+				"=", true, true, CommerceSubscriptionEntry::getGroupId),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceSubscriptionEntry::getCompanyId),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "userId", FinderColumn.Type.LONG,
@@ -1979,20 +1979,21 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {
 				"CPInstanceUuid", "CProductId", "commerceOrderItemId"
 			},
-			false, CommerceSubscriptionEntry::getCPInstanceUuid,
+			false,
+			convertNullFunction(CommerceSubscriptionEntry::getCPInstanceUuid),
 			CommerceSubscriptionEntry::getCProductId,
 			CommerceSubscriptionEntry::getCommerceOrderItemId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE,
+			_SQL_SELECT_COMMERCESUBSCRIPTIONENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "CPInstanceUuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceSubscriptionEntry::getCPInstanceUuid),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "CProductId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceSubscriptionEntry::getCProductId),
 			new FinderColumn<>(
 				"commerceSubscriptionEntry.", "commerceOrderItemId",
@@ -2068,4 +2069,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471927224
+// LIFERAY-SERVICE-BUILDER-HASH:904082403

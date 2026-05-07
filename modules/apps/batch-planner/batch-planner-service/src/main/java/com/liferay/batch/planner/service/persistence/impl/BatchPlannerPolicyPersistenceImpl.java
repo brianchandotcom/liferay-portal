@@ -558,6 +558,7 @@ public class BatchPlannerPolicyPersistenceImpl
 				_SQL_SELECT_BATCHPLANNERPOLICY_WHERE,
 				_SQL_COUNT_BATCHPLANNERPOLICY_WHERE,
 				BatchPlannerPolicyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"batchPlannerPolicy.", "batchPlannerPlanId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -568,14 +569,14 @@ public class BatchPlannerPolicyPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"batchPlannerPlanId", "name"}, false,
 			BatchPlannerPolicy::getBatchPlannerPlanId,
-			BatchPlannerPolicy::getName);
+			convertNullFunction(BatchPlannerPolicy::getName));
 
 		_uniquePersistenceFinderByBPPI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByBPPI_N,
-			_SQL_SELECT_BATCHPLANNERPOLICY_WHERE,
+			_SQL_SELECT_BATCHPLANNERPOLICY_WHERE, "",
 			new FinderColumn<>(
 				"batchPlannerPolicy.", "batchPlannerPlanId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				BatchPlannerPolicy::getBatchPlannerPlanId),
 			new FinderColumn<>(
 				"batchPlannerPolicy.", "name", FinderColumn.Type.STRING, "=",
@@ -647,4 +648,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-434361537
+// LIFERAY-SERVICE-BUILDER-HASH:1398348665

@@ -554,7 +554,7 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"localizedEntryId", "languageId"}, false,
 			LocalizedEntryLocalization::getLocalizedEntryId,
-			LocalizedEntryLocalization::getLanguageId);
+			convertNullFunction(LocalizedEntryLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
@@ -635,4 +635,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1204054251
+// LIFERAY-SERVICE-BUILDER-HASH:-1524250902

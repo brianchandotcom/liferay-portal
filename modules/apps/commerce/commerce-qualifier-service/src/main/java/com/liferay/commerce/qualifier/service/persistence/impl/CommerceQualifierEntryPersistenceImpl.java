@@ -1161,9 +1161,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassPK",
@@ -1195,9 +1196,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassPK",
@@ -1242,13 +1244,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassPK),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassNameId",
@@ -1293,13 +1296,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassPK",
@@ -1323,18 +1327,18 @@ public class CommerceQualifierEntryPersistenceImpl
 
 		_uniquePersistenceFinderByS_S_T_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_S_T_T,
-			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
+			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassPK),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassNameId),
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "targetClassPK",
@@ -1413,4 +1417,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1727668592
+// LIFERAY-SERVICE-BUILDER-HASH:-256346957

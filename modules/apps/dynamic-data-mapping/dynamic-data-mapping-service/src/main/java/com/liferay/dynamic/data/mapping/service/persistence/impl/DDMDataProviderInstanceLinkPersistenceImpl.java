@@ -804,7 +804,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmDataProviderInstanceLink.", "dataProviderInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -836,7 +836,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCELINK_WHERE,
 				DDMDataProviderInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmDataProviderInstanceLink.", "structureId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -851,10 +851,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 
 		_uniquePersistenceFinderByD_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_S,
-			_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE,
+			_SQL_SELECT_DDMDATAPROVIDERINSTANCELINK_WHERE, "",
 			new FinderColumn<>(
 				"ddmDataProviderInstanceLink.", "dataProviderInstanceId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMDataProviderInstanceLink::getDataProviderInstanceId),
 			new FinderColumn<>(
 				"ddmDataProviderInstanceLink.", "structureId",
@@ -931,4 +931,4 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1466026551
+// LIFERAY-SERVICE-BUILDER-HASH:-2025964726

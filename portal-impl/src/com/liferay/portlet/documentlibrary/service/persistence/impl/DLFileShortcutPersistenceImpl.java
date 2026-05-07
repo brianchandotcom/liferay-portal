@@ -3119,7 +3119,7 @@ public class DLFileShortcutPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
-			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileShortcut::getUuid));
@@ -3127,14 +3127,16 @@ public class DLFileShortcutPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DLFileShortcut::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DLFileShortcut::getUuid),
 			DLFileShortcut::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DLFileShortcut::getUuid),
+				true, DLFileShortcut::getUuid),
 			new FinderColumn<>(
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileShortcut::getGroupId));
@@ -3164,10 +3166,10 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DLFileShortcut::getUuid),
+					true, true, DLFileShortcut::getUuid),
 				new FinderColumn<>(
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getCompanyId));
@@ -3196,7 +3198,7 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getGroupId));
@@ -3225,7 +3227,7 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileShortcut::getCompanyId));
@@ -3255,7 +3257,7 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathCountByToFileEntryId,
 				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "toFileEntryId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileShortcut::getToFileEntryId));
@@ -3283,10 +3285,10 @@ public class DLFileShortcutPersistenceImpl
 			this, _finderPathWithPaginationFindByG_F,
 			_finderPathWithoutPaginationFindByG_F, _finderPathCountByG_F,
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
-			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileShortcut::getGroupId),
+				true, DLFileShortcut::getGroupId),
 			new FinderColumn<>(
 				"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
 				true, true, DLFileShortcut::getFolderId));
@@ -3311,10 +3313,10 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathWithPaginationCountByC_NotS,
 				_SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, DLFileShortcut::getCompanyId),
+					true, true, DLFileShortcut::getCompanyId),
 				new FinderColumn<>(
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, DLFileShortcut::getStatus));
@@ -3348,13 +3350,13 @@ public class DLFileShortcutPersistenceImpl
 			this, _finderPathWithPaginationFindByG_F_A,
 			_finderPathWithoutPaginationFindByG_F_A, _finderPathCountByG_F_A,
 			_SQL_SELECT_DLFILESHORTCUT_WHERE, _SQL_COUNT_DLFILESHORTCUT_WHERE,
-			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileShortcut::getGroupId),
+				true, DLFileShortcut::getGroupId),
 			new FinderColumn<>(
 				"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
-				true, false, DLFileShortcut::getFolderId),
+				true, true, DLFileShortcut::getFolderId),
 			new FinderColumn<>(
 				"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, DLFileShortcut::isActive));
@@ -3391,16 +3393,16 @@ public class DLFileShortcutPersistenceImpl
 				_finderPathWithoutPaginationFindByG_F_A_S,
 				_finderPathCountByG_F_A_S, _SQL_SELECT_DLFILESHORTCUT_WHERE,
 				_SQL_COUNT_DLFILESHORTCUT_WHERE,
-				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileShortcutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, DLFileShortcut::getGroupId),
+					true, true, DLFileShortcut::getGroupId),
 				new FinderColumn<>(
 					"dlFileShortcut.", "folderId", FinderColumn.Type.LONG, "=",
-					true, false, DLFileShortcut::getFolderId),
+					true, true, DLFileShortcut::getFolderId),
 				new FinderColumn<>(
 					"dlFileShortcut.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, false, DLFileShortcut::isActive),
+					true, true, DLFileShortcut::isActive),
 				new FinderColumn<>(
 					"dlFileShortcut.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, DLFileShortcut::getStatus));
@@ -3409,14 +3411,14 @@ public class DLFileShortcutPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			DLFileShortcut::getExternalReferenceCode,
+			convertNullFunction(DLFileShortcut::getExternalReferenceCode),
 			DLFileShortcut::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILESHORTCUT_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILESHORTCUT_WHERE, "",
 			new FinderColumn<>(
 				"dlFileShortcut.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DLFileShortcut::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dlFileShortcut.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -3481,4 +3483,4 @@ public class DLFileShortcutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1841155727
+// LIFERAY-SERVICE-BUILDER-HASH:1433616611

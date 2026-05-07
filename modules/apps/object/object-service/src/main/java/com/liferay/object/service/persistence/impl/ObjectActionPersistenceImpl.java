@@ -1687,7 +1687,7 @@ public class ObjectActionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
-			ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectAction.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectAction::getUuid));
@@ -1717,10 +1717,10 @@ public class ObjectActionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTACTION_WHERE,
 				_SQL_COUNT_OBJECTACTION_WHERE,
-				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectAction.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ObjectAction::getUuid),
+					true, true, ObjectAction::getUuid),
 				new FinderColumn<>(
 					"objectAction.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectAction::getCompanyId));
@@ -1749,7 +1749,7 @@ public class ObjectActionPersistenceImpl
 				_finderPathWithoutPaginationFindByObjectDefinitionId,
 				_finderPathCountByObjectDefinitionId,
 				_SQL_SELECT_OBJECTACTION_WHERE, _SQL_COUNT_OBJECTACTION_WHERE,
-				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectAction.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1759,13 +1759,14 @@ public class ObjectActionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "name"}, false,
-			ObjectAction::getObjectDefinitionId, ObjectAction::getName);
+			ObjectAction::getObjectDefinitionId,
+			convertNullFunction(ObjectAction::getName));
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTACTION_WHERE,
+			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTACTION_WHERE, "",
 			new FinderColumn<>(
 				"objectAction.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectAction::getObjectDefinitionId),
+				"=", true, true, ObjectAction::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectAction.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ObjectAction::getName));
@@ -1795,10 +1796,10 @@ public class ObjectActionPersistenceImpl
 				_finderPathWithoutPaginationFindByA_OAEK,
 				_finderPathCountByA_OAEK, _SQL_SELECT_OBJECTACTION_WHERE,
 				_SQL_COUNT_OBJECTACTION_WHERE,
-				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, false, ObjectAction::isActive),
+					true, true, ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionExecutorKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1813,18 +1814,19 @@ public class ObjectActionPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false, ObjectAction::getExternalReferenceCode,
+			false, convertNullFunction(ObjectAction::getExternalReferenceCode),
 			ObjectAction::getCompanyId, ObjectAction::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI, _SQL_SELECT_OBJECTACTION_WHERE,
+			"",
 			new FinderColumn<>(
 				"objectAction.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ObjectAction::getExternalReferenceCode),
 			new FinderColumn<>(
 				"objectAction.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ObjectAction::getCompanyId),
+				true, ObjectAction::getCompanyId),
 			new FinderColumn<>(
 				"objectAction.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectAction::getObjectDefinitionId));
@@ -1863,13 +1865,13 @@ public class ObjectActionPersistenceImpl
 				_finderPathWithoutPaginationFindByC_A_OATK,
 				_finderPathCountByC_A_OATK, _SQL_SELECT_OBJECTACTION_WHERE,
 				_SQL_COUNT_OBJECTACTION_WHERE,
-				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectAction.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, ObjectAction::getCompanyId),
+					true, true, ObjectAction::getCompanyId),
 				new FinderColumn<>(
 					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, false, ObjectAction::isActive),
+					true, true, ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionTriggerKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1915,14 +1917,14 @@ public class ObjectActionPersistenceImpl
 				_finderPathWithoutPaginationFindByO_A_OATK,
 				_finderPathCountByO_A_OATK, _SQL_SELECT_OBJECTACTION_WHERE,
 				_SQL_COUNT_OBJECTACTION_WHERE,
-				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectAction.", "objectDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectAction::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=",
-					true, false, ObjectAction::isActive),
+					true, true, ObjectAction::isActive),
 				new FinderColumn<>(
 					"objectAction.", "objectActionTriggerKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1939,20 +1941,21 @@ public class ObjectActionPersistenceImpl
 				"objectActionTriggerKey"
 			},
 			false, ObjectAction::getObjectDefinitionId, ObjectAction::isActive,
-			ObjectAction::getName, ObjectAction::getObjectActionTriggerKey);
+			convertNullFunction(ObjectAction::getName),
+			convertNullFunction(ObjectAction::getObjectActionTriggerKey));
 
 		_uniquePersistenceFinderByODI_A_N_OATK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_A_N_OATK,
-			_SQL_SELECT_OBJECTACTION_WHERE,
+			_SQL_SELECT_OBJECTACTION_WHERE, "",
 			new FinderColumn<>(
 				"objectAction.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectAction::getObjectDefinitionId),
+				"=", true, true, ObjectAction::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectAction.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				false, ObjectAction::isActive),
+				true, ObjectAction::isActive),
 			new FinderColumn<>(
 				"objectAction.", "name", FinderColumn.Type.STRING, "=", true,
-				false, ObjectAction::getName),
+				true, ObjectAction::getName),
 			new FinderColumn<>(
 				"objectAction.", "objectActionTriggerKey",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2027,4 +2030,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2084428625
+// LIFERAY-SERVICE-BUILDER-HASH:-444620568

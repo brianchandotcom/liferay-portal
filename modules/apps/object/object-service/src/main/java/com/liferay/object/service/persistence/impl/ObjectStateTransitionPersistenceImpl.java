@@ -1105,6 +1105,7 @@ public class ObjectStateTransitionPersistenceImpl
 			_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 			_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 			ObjectStateTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectStateTransition.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectStateTransition::getUuid));
@@ -1136,10 +1137,10 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectStateTransition.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, ObjectStateTransition::getUuid),
+					"=", true, true, ObjectStateTransition::getUuid),
 				new FinderColumn<>(
 					"objectStateTransition.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1171,7 +1172,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectStateTransition.", "objectStateFlowId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1203,7 +1204,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectStateTransition.", "sourceObjectStateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1235,7 +1236,7 @@ public class ObjectStateTransitionPersistenceImpl
 				_SQL_SELECT_OBJECTSTATETRANSITION_WHERE,
 				_SQL_COUNT_OBJECTSTATETRANSITION_WHERE,
 				ObjectStateTransitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectStateTransition.", "targetObjectStateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1310,4 +1311,4 @@ public class ObjectStateTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-612450510
+// LIFERAY-SERVICE-BUILDER-HASH:1709144127

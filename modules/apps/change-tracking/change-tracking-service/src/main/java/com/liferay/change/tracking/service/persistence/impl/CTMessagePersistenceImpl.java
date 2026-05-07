@@ -414,7 +414,7 @@ public class CTMessagePersistenceImpl
 				_finderPathWithoutPaginationFindByCtCollectionId,
 				_finderPathCountByCtCollectionId, _SQL_SELECT_CTMESSAGE_WHERE,
 				_SQL_COUNT_CTMESSAGE_WHERE, CTMessageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctMessage.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTMessage::getCtCollectionId));
@@ -485,4 +485,4 @@ public class CTMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1834091645
+// LIFERAY-SERVICE-BUILDER-HASH:-405570047

@@ -795,7 +795,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntryAssetCategoryRel.", "assetEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -827,7 +827,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 				_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE,
 				AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntryAssetCategoryRel.", "assetCategoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -842,10 +842,10 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		_uniquePersistenceFinderByA_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_A,
-			_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE,
+			_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetEntryAssetCategoryRel.", "assetEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				AssetEntryAssetCategoryRel::getAssetEntryId),
 			new FinderColumn<>(
 				"assetEntryAssetCategoryRel.", "assetCategoryId",
@@ -921,4 +921,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:550264348
+// LIFERAY-SERVICE-BUILDER-HASH:2140112155

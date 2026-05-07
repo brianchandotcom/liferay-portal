@@ -337,12 +337,12 @@ public class RenameFinderColumnEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByColumnToRename",
 			new String[] {String.class.getName()},
 			new String[] {"columnToRename"}, false,
-			RenameFinderColumnEntry::getColumnToRename);
+			convertNullFunction(RenameFinderColumnEntry::getColumnToRename));
 
 		_uniquePersistenceFinderByColumnToRename =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByColumnToRename,
-				_SQL_SELECT_RENAMEFINDERCOLUMNENTRY_WHERE,
+				_SQL_SELECT_RENAMEFINDERCOLUMNENTRY_WHERE, "",
 				new FinderColumn<>(
 					"renameFinderColumnEntry.", "columnToRename",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -384,4 +384,4 @@ public class RenameFinderColumnEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1114503638
+// LIFERAY-SERVICE-BUILDER-HASH:-1932960312

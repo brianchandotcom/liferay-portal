@@ -885,7 +885,7 @@ public class ContactPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CONTACT_WHERE,
 				_SQL_COUNT_CONTACT_WHERE, ContactModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"contact.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Contact::getCompanyId));
@@ -913,7 +913,7 @@ public class ContactPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_CONTACT_WHERE,
 				_SQL_COUNT_CONTACT_WHERE, ContactModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"contact.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, Contact::getUserId));
@@ -941,10 +941,10 @@ public class ContactPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U,
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"contact.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Contact::getCompanyId),
+				true, Contact::getCompanyId),
 			new FinderColumn<>(
 				"contact.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				Contact::getUserId));
@@ -972,10 +972,10 @@ public class ContactPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_CONTACT_WHERE, _SQL_COUNT_CONTACT_WHERE,
-			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ContactModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"contact.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, Contact::getClassNameId),
+				true, Contact::getClassNameId),
 			new FinderColumn<>(
 				"contact.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Contact::getClassPK));
@@ -1013,4 +1013,4 @@ public class ContactPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-70813902
+// LIFERAY-SERVICE-BUILDER-HASH:1030522716

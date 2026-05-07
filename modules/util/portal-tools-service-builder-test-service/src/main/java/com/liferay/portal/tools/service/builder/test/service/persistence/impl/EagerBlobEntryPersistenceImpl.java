@@ -516,7 +516,7 @@ public class EagerBlobEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_EAGERBLOBENTRY_WHERE, _SQL_COUNT_EAGERBLOBENTRY_WHERE,
-			EagerBlobEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			EagerBlobEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"eagerBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, EagerBlobEntry::getUuid));
@@ -524,14 +524,16 @@ public class EagerBlobEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, EagerBlobEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(EagerBlobEntry::getUuid),
 			EagerBlobEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_EAGERBLOBENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"eagerBlobEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, EagerBlobEntry::getUuid),
+				true, EagerBlobEntry::getUuid),
 			new FinderColumn<>(
 				"eagerBlobEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, EagerBlobEntry::getGroupId));
@@ -572,4 +574,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1001407676
+// LIFERAY-SERVICE-BUILDER-HASH:-43516158

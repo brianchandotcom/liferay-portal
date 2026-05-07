@@ -1008,6 +1008,7 @@ public class SegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1039,9 +1040,10 @@ public class SegmentsEntryRelPersistenceImpl
 				_finderPathCountByCN_CPK, _SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsEntryRel.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsEntryRel::getClassNameId),
+					"=", true, true, SegmentsEntryRel::getClassNameId),
 				new FinderColumn<>(
 					"segmentsEntryRel.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRel::getClassPK));
@@ -1076,12 +1078,13 @@ public class SegmentsEntryRelPersistenceImpl
 				_finderPathCountByG_CN_CPK, _SQL_SELECT_SEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_SEGMENTSENTRYREL_WHERE,
 				SegmentsEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsEntryRel.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, SegmentsEntryRel::getGroupId),
+					true, true, SegmentsEntryRel::getGroupId),
 				new FinderColumn<>(
 					"segmentsEntryRel.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsEntryRel::getClassNameId),
+					"=", true, true, SegmentsEntryRel::getClassNameId),
 				new FinderColumn<>(
 					"segmentsEntryRel.", "classPK", FinderColumn.Type.LONG, "=",
 					true, true, SegmentsEntryRel::getClassPK));
@@ -1097,13 +1100,13 @@ public class SegmentsEntryRelPersistenceImpl
 
 		_uniquePersistenceFinderByS_CN_CPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_CN_CPK,
-			_SQL_SELECT_SEGMENTSENTRYREL_WHERE,
+			_SQL_SELECT_SEGMENTSENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"segmentsEntryRel.", "segmentsEntryId", FinderColumn.Type.LONG,
-				"=", true, false, SegmentsEntryRel::getSegmentsEntryId),
+				"=", true, true, SegmentsEntryRel::getSegmentsEntryId),
 			new FinderColumn<>(
 				"segmentsEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsEntryRel::getClassNameId),
+				true, true, SegmentsEntryRel::getClassNameId),
 			new FinderColumn<>(
 				"segmentsEntryRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, SegmentsEntryRel::getClassPK));
@@ -1177,4 +1180,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:523707506
+// LIFERAY-SERVICE-BUILDER-HASH:-1995971730

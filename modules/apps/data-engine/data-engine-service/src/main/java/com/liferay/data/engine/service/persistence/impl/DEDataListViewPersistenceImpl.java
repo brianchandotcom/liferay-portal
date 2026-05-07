@@ -1171,7 +1171,7 @@ public class DEDataListViewPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DEDATALISTVIEW_WHERE, _SQL_COUNT_DEDATALISTVIEW_WHERE,
-			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DEDataListView::getUuid));
@@ -1179,14 +1179,16 @@ public class DEDataListViewPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DEDataListView::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DEDataListView::getUuid),
 			DEDataListView::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEDATALISTVIEW_WHERE,
+			"",
 			new FinderColumn<>(
 				"deDataListView.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DEDataListView::getUuid),
+				true, DEDataListView::getUuid),
 			new FinderColumn<>(
 				"deDataListView.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DEDataListView::getGroupId));
@@ -1216,10 +1218,10 @@ public class DEDataListViewPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
-				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"deDataListView.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DEDataListView::getUuid),
+					true, true, DEDataListView::getUuid),
 				new FinderColumn<>(
 					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DEDataListView::getCompanyId));
@@ -1249,7 +1251,7 @@ public class DEDataListViewPersistenceImpl
 				_finderPathCountByDDMStructureId,
 				_SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
-				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
 					"=", true, true, DEDataListView::getDdmStructureId));
@@ -1283,13 +1285,13 @@ public class DEDataListViewPersistenceImpl
 				_finderPathWithoutPaginationFindByG_C_DDMSI,
 				_finderPathCountByG_C_DDMSI, _SQL_SELECT_DEDATALISTVIEW_WHERE,
 				_SQL_COUNT_DEDATALISTVIEW_WHERE,
-				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DEDataListViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"deDataListView.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, DEDataListView::getGroupId),
+					true, true, DEDataListView::getGroupId),
 				new FinderColumn<>(
 					"deDataListView.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, DEDataListView::getCompanyId),
+					true, true, DEDataListView::getCompanyId),
 				new FinderColumn<>(
 					"deDataListView.", "ddmStructureId", FinderColumn.Type.LONG,
 					"=", true, true, DEDataListView::getDdmStructureId));
@@ -1366,4 +1368,4 @@ public class DEDataListViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-644580803
+// LIFERAY-SERVICE-BUILDER-HASH:56622180

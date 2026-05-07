@@ -1225,7 +1225,7 @@ public class ObjectDefinitionSettingPersistenceImpl
 			_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
 			_SQL_COUNT_OBJECTDEFINITIONSETTING_WHERE,
 			ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, ObjectDefinitionSetting::getUuid));
@@ -1257,10 +1257,10 @@ public class ObjectDefinitionSettingPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
 				_SQL_COUNT_OBJECTDEFINITIONSETTING_WHERE,
 				ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectDefinitionSetting.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					ObjectDefinitionSetting::getUuid),
 				new FinderColumn<>(
 					"objectDefinitionSetting.", "companyId",
@@ -1293,7 +1293,7 @@ public class ObjectDefinitionSettingPersistenceImpl
 				_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
 				_SQL_COUNT_OBJECTDEFINITIONSETTING_WHERE,
 				ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectDefinitionSetting.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1324,10 +1324,10 @@ public class ObjectDefinitionSettingPersistenceImpl
 			_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
 			_SQL_COUNT_OBJECTDEFINITIONSETTING_WHERE,
 			ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectDefinitionSetting::getCompanyId),
+				"=", true, true, ObjectDefinitionSetting::getCompanyId),
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "name", FinderColumn.Type.STRING,
 				"=", true, true, ObjectDefinitionSetting::getName));
@@ -1337,14 +1337,14 @@ public class ObjectDefinitionSettingPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "name"}, false,
 			ObjectDefinitionSetting::getObjectDefinitionId,
-			ObjectDefinitionSetting::getName);
+			convertNullFunction(ObjectDefinitionSetting::getName));
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_N,
-			_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
+			_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE, "",
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "objectDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectDefinitionSetting::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "name", FinderColumn.Type.STRING,
@@ -1381,13 +1381,13 @@ public class ObjectDefinitionSettingPersistenceImpl
 			_SQL_SELECT_OBJECTDEFINITIONSETTING_WHERE,
 			_SQL_COUNT_OBJECTDEFINITIONSETTING_WHERE,
 			ObjectDefinitionSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectDefinitionSetting::getCompanyId),
+				"=", true, true, ObjectDefinitionSetting::getCompanyId),
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "name", FinderColumn.Type.STRING,
-				"=", true, false, ObjectDefinitionSetting::getName),
+				"=", true, true, ObjectDefinitionSetting::getName),
 			new FinderColumn<>(
 				"objectDefinitionSetting.", "value", FinderColumn.Type.STRING,
 				"=", true, true, ObjectDefinitionSetting::getValue));
@@ -1461,4 +1461,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2049394902
+// LIFERAY-SERVICE-BUILDER-HASH:-431796096

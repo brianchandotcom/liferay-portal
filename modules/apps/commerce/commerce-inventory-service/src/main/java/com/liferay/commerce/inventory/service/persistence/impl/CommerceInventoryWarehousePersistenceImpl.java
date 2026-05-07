@@ -2938,7 +2938,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceInventoryWarehouse::getUuid));
@@ -2970,10 +2970,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryWarehouse::getUuid),
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
@@ -3006,7 +3006,7 @@ public class CommerceInventoryWarehousePersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 				CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouse.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3037,10 +3037,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouse::getCompanyId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "active",
@@ -3072,10 +3072,10 @@ public class CommerceInventoryWarehousePersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouse::getCompanyId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "countryTwoLettersISOCode",
@@ -3116,14 +3116,14 @@ public class CommerceInventoryWarehousePersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSE_WHERE,
 			CommerceInventoryWarehouseModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouse::getCompanyId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "active",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				CommerceInventoryWarehouse::isActive),
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "countryTwoLettersISOCode",
@@ -3134,15 +3134,16 @@ public class CommerceInventoryWarehousePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceInventoryWarehouse::getExternalReferenceCode,
+			convertNullFunction(
+				CommerceInventoryWarehouse::getExternalReferenceCode),
 			CommerceInventoryWarehouse::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE,
+			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSE_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryWarehouse::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceInventoryWarehouse.", "companyId",
@@ -3246,4 +3247,4 @@ public class CommerceInventoryWarehousePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1932256613
+// LIFERAY-SERVICE-BUILDER-HASH:1403162916

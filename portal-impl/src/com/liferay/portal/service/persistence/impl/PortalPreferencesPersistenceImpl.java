@@ -509,6 +509,7 @@ public class PortalPreferencesPersistenceImpl
 				_SQL_SELECT_PORTALPREFERENCES_WHERE,
 				_SQL_COUNT_PORTALPREFERENCES_WHERE,
 				PortalPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"portalPreferences.", "ownerType",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -522,9 +523,10 @@ public class PortalPreferencesPersistenceImpl
 
 		_uniquePersistenceFinderByO_O = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O, _SQL_SELECT_PORTALPREFERENCES_WHERE,
+			"",
 			new FinderColumn<>(
 				"portalPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
-				true, false, PortalPreferences::getOwnerId),
+				true, true, PortalPreferences::getOwnerId),
 			new FinderColumn<>(
 				"portalPreferences.", "ownerType", FinderColumn.Type.INTEGER,
 				"=", true, true, PortalPreferences::getOwnerType));
@@ -562,4 +564,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-615957016
+// LIFERAY-SERVICE-BUILDER-HASH:-514965449

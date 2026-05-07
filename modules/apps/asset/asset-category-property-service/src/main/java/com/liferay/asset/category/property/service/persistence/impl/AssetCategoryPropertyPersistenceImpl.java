@@ -1174,7 +1174,7 @@ public class AssetCategoryPropertyPersistenceImpl
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategoryProperty.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1206,7 +1206,7 @@ public class AssetCategoryPropertyPersistenceImpl
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategoryProperty.", "categoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1237,9 +1237,10 @@ public class AssetCategoryPropertyPersistenceImpl
 			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 			_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 			AssetCategoryPropertyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategoryProperty::getCompanyId),
+				"=", true, true, AssetCategoryProperty::getCompanyId),
 			new FinderColumn<>(
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
@@ -1249,14 +1250,14 @@ public class AssetCategoryPropertyPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"categoryId", "key_"}, false,
 			AssetCategoryProperty::getCategoryId,
-			AssetCategoryProperty::getKey);
+			convertNullFunction(AssetCategoryProperty::getKey));
 
 		_uniquePersistenceFinderByCA_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCA_K,
-			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
+			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "categoryId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategoryProperty::getCategoryId),
+				"=", true, true, AssetCategoryProperty::getCategoryId),
 			new FinderColumn<>(
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
@@ -1265,15 +1266,16 @@ public class AssetCategoryPropertyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			AssetCategoryProperty::getExternalReferenceCode,
+			convertNullFunction(
+				AssetCategoryProperty::getExternalReferenceCode),
 			AssetCategoryProperty::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
+			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AssetCategoryProperty::getExternalReferenceCode),
 			new FinderColumn<>(
 				"assetCategoryProperty.", "companyId", FinderColumn.Type.LONG,
@@ -1351,4 +1353,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-577802182
+// LIFERAY-SERVICE-BUILDER-HASH:656202417

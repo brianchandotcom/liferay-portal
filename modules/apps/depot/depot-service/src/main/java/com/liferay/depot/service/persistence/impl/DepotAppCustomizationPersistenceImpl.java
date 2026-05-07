@@ -724,7 +724,7 @@ public class DepotAppCustomizationPersistenceImpl
 				_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
 				_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE,
 				DepotAppCustomizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"depotAppCustomization.", "depotEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -739,10 +739,10 @@ public class DepotAppCustomizationPersistenceImpl
 
 		_uniquePersistenceFinderByD_E = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_E,
-			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
+			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DepotAppCustomization::getDepotEntryId),
 			new FinderColumn<>(
 				"depotAppCustomization.", "enabled", FinderColumn.Type.BOOLEAN,
@@ -753,14 +753,14 @@ public class DepotAppCustomizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"depotEntryId", "portletId"}, false,
 			DepotAppCustomization::getDepotEntryId,
-			DepotAppCustomization::getPortletId);
+			convertNullFunction(DepotAppCustomization::getPortletId));
 
 		_uniquePersistenceFinderByD_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByD_P,
-			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
+			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DepotAppCustomization::getDepotEntryId),
 			new FinderColumn<>(
 				"depotAppCustomization.", "portletId", FinderColumn.Type.STRING,
@@ -835,4 +835,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1457813209
+// LIFERAY-SERVICE-BUILDER-HASH:-562291562

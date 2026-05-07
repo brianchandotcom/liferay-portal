@@ -1083,7 +1083,7 @@ public class SystemEventPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_SYSTEMEVENT_WHERE,
 				_SQL_COUNT_SYSTEMEVENT_WHERE,
-				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SystemEvent::getGroupId));
@@ -1111,10 +1111,10 @@ public class SystemEventPersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
-			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, SystemEvent::getGroupId),
+				true, SystemEvent::getGroupId),
 			new FinderColumn<>(
 				"systemEvent.", "systemEventSetKey", FinderColumn.Type.LONG,
 				"=", true, true, SystemEvent::getSystemEventSetKey));
@@ -1146,13 +1146,13 @@ public class SystemEventPersistenceImpl
 			this, _finderPathWithPaginationFindByG_C_C,
 			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
 			_SQL_SELECT_SYSTEMEVENT_WHERE, _SQL_COUNT_SYSTEMEVENT_WHERE,
-			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"systemEvent.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, SystemEvent::getGroupId),
+				true, SystemEvent::getGroupId),
 			new FinderColumn<>(
 				"systemEvent.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SystemEvent::getClassNameId),
+				true, true, SystemEvent::getClassNameId),
 			new FinderColumn<>(
 				"systemEvent.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SystemEvent::getClassPK));
@@ -1189,16 +1189,16 @@ public class SystemEventPersistenceImpl
 				_finderPathWithoutPaginationFindByG_C_C_T,
 				_finderPathCountByG_C_C_T, _SQL_SELECT_SYSTEMEVENT_WHERE,
 				_SQL_COUNT_SYSTEMEVENT_WHERE,
-				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SystemEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"systemEvent.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, SystemEvent::getGroupId),
+					true, true, SystemEvent::getGroupId),
 				new FinderColumn<>(
 					"systemEvent.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, SystemEvent::getClassNameId),
+					true, true, SystemEvent::getClassNameId),
 				new FinderColumn<>(
 					"systemEvent.", "classPK", FinderColumn.Type.LONG, "=",
-					true, false, SystemEvent::getClassPK),
+					true, true, SystemEvent::getClassPK),
 				new FinderColumn<>(
 					"systemEvent.", "type", FinderColumn.Type.INTEGER, "=",
 					true, true, SystemEvent::getType));
@@ -1239,4 +1239,4 @@ public class SystemEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1292372119
+// LIFERAY-SERVICE-BUILDER-HASH:-574441907

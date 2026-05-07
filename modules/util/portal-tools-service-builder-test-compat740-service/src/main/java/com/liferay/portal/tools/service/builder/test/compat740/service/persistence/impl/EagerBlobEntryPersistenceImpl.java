@@ -536,7 +536,8 @@ public class EagerBlobEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, EagerBlobEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(EagerBlobEntry::getUuid),
 			EagerBlobEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
@@ -611,4 +612,4 @@ public class EagerBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1138423252
+// LIFERAY-SERVICE-BUILDER-HASH:-2052538525

@@ -340,6 +340,7 @@ public class CompanyInfoPersistenceImpl
 
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCompanyId, _SQL_SELECT_COMPANYINFO_WHERE,
+			"",
 			new FinderColumn<>(
 				"companyInfo.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CompanyInfo::getCompanyId));
@@ -377,4 +378,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:333425942
+// LIFERAY-SERVICE-BUILDER-HASH:755687963

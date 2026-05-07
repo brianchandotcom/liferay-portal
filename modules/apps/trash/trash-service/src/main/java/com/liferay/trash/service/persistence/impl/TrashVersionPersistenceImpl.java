@@ -766,7 +766,7 @@ public class TrashVersionPersistenceImpl
 				_finderPathWithoutPaginationFindByEntryId,
 				_finderPathCountByEntryId, _SQL_SELECT_TRASHVERSION_WHERE,
 				_SQL_COUNT_TRASHVERSION_WHERE,
-				TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"trashVersion.", "entryId", FinderColumn.Type.LONG, "=",
 					true, true, TrashVersion::getEntryId));
@@ -794,10 +794,10 @@ public class TrashVersionPersistenceImpl
 			this, _finderPathWithPaginationFindByE_CN,
 			_finderPathWithoutPaginationFindByE_CN, _finderPathCountByE_CN,
 			_SQL_SELECT_TRASHVERSION_WHERE, _SQL_COUNT_TRASHVERSION_WHERE,
-			TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TrashVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"trashVersion.", "entryId", FinderColumn.Type.LONG, "=", true,
-				false, TrashVersion::getEntryId),
+				true, TrashVersion::getEntryId),
 			new FinderColumn<>(
 				"trashVersion.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, TrashVersion::getClassNameId));
@@ -809,10 +809,10 @@ public class TrashVersionPersistenceImpl
 			TrashVersion::getClassNameId, TrashVersion::getClassPK);
 
 		_uniquePersistenceFinderByCN_CPK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHVERSION_WHERE,
+			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHVERSION_WHERE, "",
 			new FinderColumn<>(
 				"trashVersion.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, TrashVersion::getClassNameId),
+				true, true, TrashVersion::getClassNameId),
 			new FinderColumn<>(
 				"trashVersion.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, TrashVersion::getClassPK));
@@ -886,4 +886,4 @@ public class TrashVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1376689729
+// LIFERAY-SERVICE-BUILDER-HASH:-1130532417

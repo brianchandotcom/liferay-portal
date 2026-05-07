@@ -1064,6 +1064,7 @@ public class JournalArticleResourcePersistenceImpl
 			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE,
 			_SQL_COUNT_JOURNALARTICLERESOURCE_WHERE,
 			JournalArticleResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, JournalArticleResource::getUuid));
@@ -1072,15 +1073,15 @@ public class JournalArticleResourcePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			JournalArticleResource::getUuid,
+			convertNullFunction(JournalArticleResource::getUuid),
 			JournalArticleResource::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE,
+			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, JournalArticleResource::getUuid),
+				"=", true, true, JournalArticleResource::getUuid),
 			new FinderColumn<>(
 				"journalArticleResource.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, JournalArticleResource::getGroupId));
@@ -1112,10 +1113,10 @@ public class JournalArticleResourcePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE,
 				_SQL_COUNT_JOURNALARTICLERESOURCE_WHERE,
 				JournalArticleResourceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalArticleResource.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, JournalArticleResource::getUuid),
+					"=", true, true, JournalArticleResource::getUuid),
 				new FinderColumn<>(
 					"journalArticleResource.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1147,7 +1148,7 @@ public class JournalArticleResourcePersistenceImpl
 				_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE,
 				_SQL_COUNT_JOURNALARTICLERESOURCE_WHERE,
 				JournalArticleResourceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalArticleResource.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1158,14 +1159,14 @@ public class JournalArticleResourcePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "articleId"}, false,
 			JournalArticleResource::getGroupId,
-			JournalArticleResource::getArticleId);
+			convertNullFunction(JournalArticleResource::getArticleId));
 
 		_uniquePersistenceFinderByG_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_A,
-			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE,
+			_SQL_SELECT_JOURNALARTICLERESOURCE_WHERE, "",
 			new FinderColumn<>(
 				"journalArticleResource.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, JournalArticleResource::getGroupId),
+				"=", true, true, JournalArticleResource::getGroupId),
 			new FinderColumn<>(
 				"journalArticleResource.", "articleId",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1243,4 +1244,4 @@ public class JournalArticleResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1259977886
+// LIFERAY-SERVICE-BUILDER-HASH:1733445787

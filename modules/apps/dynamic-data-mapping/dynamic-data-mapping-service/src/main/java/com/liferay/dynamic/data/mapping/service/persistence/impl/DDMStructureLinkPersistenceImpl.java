@@ -789,6 +789,7 @@ public class DDMStructureLinkPersistenceImpl
 				_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 				_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
 				DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddmStructureLink.", "structureId", FinderColumn.Type.LONG,
 					"=", true, true, DDMStructureLink::getStructureId));
@@ -817,10 +818,10 @@ public class DDMStructureLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_DDMSTRUCTURELINK_WHERE,
 			_SQL_COUNT_DDMSTRUCTURELINK_WHERE,
-			DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMStructureLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmStructureLink.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, DDMStructureLink::getClassNameId),
+				true, true, DDMStructureLink::getClassNameId),
 			new FinderColumn<>(
 				"ddmStructureLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getClassPK));
@@ -836,12 +837,13 @@ public class DDMStructureLinkPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_S, _SQL_SELECT_DDMSTRUCTURELINK_WHERE,
+			"",
 			new FinderColumn<>(
 				"ddmStructureLink.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, DDMStructureLink::getClassNameId),
+				true, true, DDMStructureLink::getClassNameId),
 			new FinderColumn<>(
 				"ddmStructureLink.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, DDMStructureLink::getClassPK),
+				true, true, DDMStructureLink::getClassPK),
 			new FinderColumn<>(
 				"ddmStructureLink.", "structureId", FinderColumn.Type.LONG, "=",
 				true, true, DDMStructureLink::getStructureId));
@@ -915,4 +917,4 @@ public class DDMStructureLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1344538927
+// LIFERAY-SERVICE-BUILDER-HASH:2120812387

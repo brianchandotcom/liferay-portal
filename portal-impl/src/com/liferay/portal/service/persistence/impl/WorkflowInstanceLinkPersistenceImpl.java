@@ -1025,7 +1025,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 		_uniquePersistenceFinderByWorkflowInstanceId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByWorkflowInstanceId,
-				_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
+				_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE, "",
 				new FinderColumn<>(
 					"workflowInstanceLink.", "workflowInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1056,9 +1056,10 @@ public class WorkflowInstanceLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 			_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 			WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"workflowInstanceLink.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, WorkflowInstanceLink::getCompanyId),
+				"=", true, true, WorkflowInstanceLink::getCompanyId),
 			new FinderColumn<>(
 				"workflowInstanceLink.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowInstanceLink::getClassNameId));
@@ -1092,12 +1093,13 @@ public class WorkflowInstanceLinkPersistenceImpl
 			_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 			_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 			WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"workflowInstanceLink.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, WorkflowInstanceLink::getGroupId),
+				true, true, WorkflowInstanceLink::getGroupId),
 			new FinderColumn<>(
 				"workflowInstanceLink.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, WorkflowInstanceLink::getCompanyId),
+				"=", true, true, WorkflowInstanceLink::getCompanyId),
 			new FinderColumn<>(
 				"workflowInstanceLink.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowInstanceLink::getClassNameId));
@@ -1139,17 +1141,17 @@ public class WorkflowInstanceLinkPersistenceImpl
 				_SQL_SELECT_WORKFLOWINSTANCELINK_WHERE,
 				_SQL_COUNT_WORKFLOWINSTANCELINK_WHERE,
 				WorkflowInstanceLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowInstanceLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, WorkflowInstanceLink::getGroupId),
+					"=", true, true, WorkflowInstanceLink::getGroupId),
 				new FinderColumn<>(
 					"workflowInstanceLink.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowInstanceLink::getCompanyId),
 				new FinderColumn<>(
 					"workflowInstanceLink.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowInstanceLink::getClassNameId),
 				new FinderColumn<>(
 					"workflowInstanceLink.", "classPK", FinderColumn.Type.LONG,
@@ -1188,4 +1190,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2144102179
+// LIFERAY-SERVICE-BUILDER-HASH:25688494

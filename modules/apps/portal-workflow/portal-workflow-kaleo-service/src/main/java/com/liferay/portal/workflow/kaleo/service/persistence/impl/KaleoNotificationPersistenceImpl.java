@@ -1089,6 +1089,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoNotification.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoNotification::getCompanyId));
@@ -1124,6 +1125,7 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1155,9 +1157,10 @@ public class KaleoNotificationPersistenceImpl
 				_finderPathCountByKCN_KCPK, _SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KaleoNotification::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassPK",
@@ -1200,13 +1203,14 @@ public class KaleoNotificationPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATION_WHERE,
 				_SQL_COUNT_KALEONOTIFICATION_WHERE,
 				KaleoNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KaleoNotification::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoNotification.", "kaleoClassPK",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoNotification::getKaleoClassPK),
 				new FinderColumn<>(
 					"kaleoNotification.", "executionType",
@@ -1282,4 +1286,4 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1214632405
+// LIFERAY-SERVICE-BUILDER-HASH:-735483606

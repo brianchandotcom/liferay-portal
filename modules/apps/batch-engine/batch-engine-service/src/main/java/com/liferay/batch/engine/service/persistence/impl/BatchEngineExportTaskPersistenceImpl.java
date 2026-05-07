@@ -1126,6 +1126,7 @@ public class BatchEngineExportTaskPersistenceImpl
 			_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE,
 			_SQL_COUNT_BATCHENGINEEXPORTTASK_WHERE,
 			BatchEngineExportTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"batchEngineExportTask.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, BatchEngineExportTask::getUuid));
@@ -1157,10 +1158,10 @@ public class BatchEngineExportTaskPersistenceImpl
 				_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEEXPORTTASK_WHERE,
 				BatchEngineExportTaskModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"batchEngineExportTask.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, BatchEngineExportTask::getUuid),
+					"=", true, true, BatchEngineExportTask::getUuid),
 				new FinderColumn<>(
 					"batchEngineExportTask.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1192,7 +1193,7 @@ public class BatchEngineExportTaskPersistenceImpl
 				_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEEXPORTTASK_WHERE,
 				BatchEngineExportTaskModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"batchEngineExportTask.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1224,7 +1225,7 @@ public class BatchEngineExportTaskPersistenceImpl
 				_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE,
 				_SQL_COUNT_BATCHENGINEEXPORTTASK_WHERE,
 				BatchEngineExportTaskModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"batchEngineExportTask.", "executeStatus",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1234,15 +1235,16 @@ public class BatchEngineExportTaskPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			BatchEngineExportTask::getExternalReferenceCode,
+			convertNullFunction(
+				BatchEngineExportTask::getExternalReferenceCode),
 			BatchEngineExportTask::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE,
+			_SQL_SELECT_BATCHENGINEEXPORTTASK_WHERE, "",
 			new FinderColumn<>(
 				"batchEngineExportTask.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				BatchEngineExportTask::getExternalReferenceCode),
 			new FinderColumn<>(
 				"batchEngineExportTask.", "companyId", FinderColumn.Type.LONG,
@@ -1317,4 +1319,4 @@ public class BatchEngineExportTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:663318790
+// LIFERAY-SERVICE-BUILDER-HASH:463187087

@@ -347,10 +347,10 @@ public class FaroProjectUsagePersistenceImpl
 			FaroProjectUsage::getFaroProjectId, FaroProjectUsage::getUsageTime);
 
 		_uniquePersistenceFinderByF_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_U, _SQL_SELECT_FAROPROJECTUSAGE_WHERE,
+			this, _finderPathFetchByF_U, _SQL_SELECT_FAROPROJECTUSAGE_WHERE, "",
 			new FinderColumn<>(
 				"faroProjectUsage.", "faroProjectId", FinderColumn.Type.LONG,
-				"=", true, false, FaroProjectUsage::getFaroProjectId),
+				"=", true, true, FaroProjectUsage::getFaroProjectId),
 			new FinderColumn<>(
 				"faroProjectUsage.", "usageTime", FinderColumn.Type.LONG, "=",
 				true, true, FaroProjectUsage::getUsageTime));
@@ -418,4 +418,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1259211380
+// LIFERAY-SERVICE-BUILDER-HASH:1343221095

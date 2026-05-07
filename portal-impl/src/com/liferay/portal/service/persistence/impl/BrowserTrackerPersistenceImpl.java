@@ -326,6 +326,7 @@ public class BrowserTrackerPersistenceImpl
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_BROWSERTRACKER_WHERE,
+			"",
 			new FinderColumn<>(
 				"browserTracker.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, BrowserTracker::getUserId));
@@ -360,4 +361,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:245734863
+// LIFERAY-SERVICE-BUILDER-HASH:-140977384

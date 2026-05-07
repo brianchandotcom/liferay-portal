@@ -1034,7 +1034,7 @@ public class CommercePriceListDiscountRelPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 			CommercePriceListDiscountRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commercePriceListDiscountRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1067,10 +1067,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 				CommercePriceListDiscountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListDiscountRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommercePriceListDiscountRel::getUuid),
 				new FinderColumn<>(
 					"commercePriceListDiscountRel.", "companyId",
@@ -1103,7 +1103,7 @@ public class CommercePriceListDiscountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
 				CommercePriceListDiscountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListDiscountRel.", "commercePriceListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1118,10 +1118,10 @@ public class CommercePriceListDiscountRelPersistenceImpl
 
 		_uniquePersistenceFinderByCDI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_CPI,
-			_SQL_SELECT_COMMERCEPRICELISTDISCOUNTREL_WHERE,
+			_SQL_SELECT_COMMERCEPRICELISTDISCOUNTREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceListDiscountRel.", "commerceDiscountId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePriceListDiscountRel::getCommerceDiscountId),
 			new FinderColumn<>(
 				"commercePriceListDiscountRel.", "commercePriceListId",
@@ -1201,4 +1201,4 @@ public class CommercePriceListDiscountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-90137419
+// LIFERAY-SERVICE-BUILDER-HASH:1912417715

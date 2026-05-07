@@ -1086,7 +1086,7 @@ public class DDMFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByStorageId,
 				_finderPathCountByStorageId, _SQL_SELECT_DDMFIELD_WHERE,
 				_SQL_COUNT_DDMFIELD_WHERE, DDMFieldModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 					true, DDMField::getStorageId));
@@ -1115,7 +1115,7 @@ public class DDMFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByStructureVersionId,
 				_finderPathCountByStructureVersionId,
 				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
-				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "structureVersionId", FinderColumn.Type.LONG,
 					"=", true, true, DDMField::getStructureVersionId));
@@ -1143,10 +1143,10 @@ public class DDMFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByC_F,
 			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
-			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmField.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DDMField::getCompanyId),
+				true, DDMField::getCompanyId),
 			new FinderColumn<>(
 				"ddmField.", "fieldType", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldType));
@@ -1174,10 +1174,10 @@ public class DDMFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByS_F,
 			_finderPathWithoutPaginationFindByS_F, _finderPathCountByS_F,
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
-			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
-				false, DDMField::getStorageId),
+				true, DDMField::getStorageId),
 			new FinderColumn<>(
 				"ddmField.", "fieldName", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldName));
@@ -1186,13 +1186,14 @@ public class DDMFieldPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"storageId", "instanceId"}, false,
-			DDMField::getStorageId, DDMField::getInstanceId);
+			DDMField::getStorageId,
+			convertNullFunction(DDMField::getInstanceId));
 
 		_uniquePersistenceFinderByS_I = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_I, _SQL_SELECT_DDMFIELD_WHERE,
+			this, _finderPathFetchByS_I, _SQL_SELECT_DDMFIELD_WHERE, "",
 			new FinderColumn<>(
 				"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
-				false, DDMField::getStorageId),
+				true, DDMField::getStorageId),
 			new FinderColumn<>(
 				"ddmField.", "instanceId", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getInstanceId));
@@ -1266,4 +1267,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:360064938
+// LIFERAY-SERVICE-BUILDER-HASH:274161946

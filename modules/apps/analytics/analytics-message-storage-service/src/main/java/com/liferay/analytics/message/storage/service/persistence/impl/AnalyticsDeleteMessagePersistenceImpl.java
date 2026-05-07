@@ -893,7 +893,7 @@ public class AnalyticsDeleteMessagePersistenceImpl
 				_SQL_SELECT_ANALYTICSDELETEMESSAGE_WHERE,
 				_SQL_COUNT_ANALYTICSDELETEMESSAGE_WHERE,
 				AnalyticsDeleteMessageModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"analyticsDeleteMessage.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -919,9 +919,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			_SQL_SELECT_ANALYTICSDELETEMESSAGE_WHERE,
 			_SQL_COUNT_ANALYTICSDELETEMESSAGE_WHERE,
 			AnalyticsDeleteMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"analyticsDeleteMessage.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AnalyticsDeleteMessage::getCompanyId),
+				"=", true, true, AnalyticsDeleteMessage::getCompanyId),
 			new FinderColumn<>(
 				"analyticsDeleteMessage.", "modifiedDate",
 				FinderColumn.Type.DATE, ">", true, true,
@@ -947,9 +948,10 @@ public class AnalyticsDeleteMessagePersistenceImpl
 			_SQL_SELECT_ANALYTICSDELETEMESSAGE_WHERE,
 			_SQL_COUNT_ANALYTICSDELETEMESSAGE_WHERE,
 			AnalyticsDeleteMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"analyticsDeleteMessage.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AnalyticsDeleteMessage::getCompanyId),
+				"=", true, true, AnalyticsDeleteMessage::getCompanyId),
 			new FinderColumn<>(
 				"analyticsDeleteMessage.", "modifiedDate",
 				FinderColumn.Type.DATE, "<", true, true,
@@ -1024,4 +1026,4 @@ public class AnalyticsDeleteMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-949347672
+// LIFERAY-SERVICE-BUILDER-HASH:-1919789330

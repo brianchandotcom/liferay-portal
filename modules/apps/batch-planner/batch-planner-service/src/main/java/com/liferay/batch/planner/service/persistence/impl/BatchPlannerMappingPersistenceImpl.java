@@ -581,7 +581,7 @@ public class BatchPlannerMappingPersistenceImpl
 				_SQL_SELECT_BATCHPLANNERMAPPING_WHERE,
 				_SQL_COUNT_BATCHPLANNERMAPPING_WHERE,
 				BatchPlannerMappingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"batchPlannerMapping.", "batchPlannerPlanId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -597,19 +597,19 @@ public class BatchPlannerMappingPersistenceImpl
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
 			false, BatchPlannerMapping::getBatchPlannerPlanId,
-			BatchPlannerMapping::getExternalFieldName,
-			BatchPlannerMapping::getInternalFieldName);
+			convertNullFunction(BatchPlannerMapping::getExternalFieldName),
+			convertNullFunction(BatchPlannerMapping::getInternalFieldName));
 
 		_uniquePersistenceFinderByBPPI_EFN_IFN = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByBPPI_EFN_IFN,
-			_SQL_SELECT_BATCHPLANNERMAPPING_WHERE,
+			_SQL_SELECT_BATCHPLANNERMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"batchPlannerMapping.", "batchPlannerPlanId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				BatchPlannerMapping::getBatchPlannerPlanId),
 			new FinderColumn<>(
 				"batchPlannerMapping.", "externalFieldName",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				BatchPlannerMapping::getExternalFieldName),
 			new FinderColumn<>(
 				"batchPlannerMapping.", "internalFieldName",
@@ -682,4 +682,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2074634634
+// LIFERAY-SERVICE-BUILDER-HASH:-15034833

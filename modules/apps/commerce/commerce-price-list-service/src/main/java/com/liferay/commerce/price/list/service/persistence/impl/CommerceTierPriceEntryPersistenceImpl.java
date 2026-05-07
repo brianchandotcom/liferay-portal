@@ -2257,6 +2257,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 			_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 			CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceTierPriceEntry::getUuid));
@@ -2288,10 +2289,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 				_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 				_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 				CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, CommerceTierPriceEntry::getUuid),
+					"=", true, true, CommerceTierPriceEntry::getUuid),
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2323,7 +2324,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 				_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 				_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 				CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2356,7 +2357,7 @@ public class CommerceTierPriceEntryPersistenceImpl
 				_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 				_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 				CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "commercePriceEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2371,10 +2372,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 
 		_uniquePersistenceFinderByC_M = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_M,
-			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
+			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "commercePriceEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTierPriceEntry::getCommercePriceEntryId),
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "minQuantity",
@@ -2402,10 +2403,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 				_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 				_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 				CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "commercePriceEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTierPriceEntry::getCommercePriceEntryId),
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "minQuantity",
@@ -2437,9 +2438,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 			_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 			CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "commercePriceEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTierPriceEntry::getCommercePriceEntryId),
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "status", FinderColumn.Type.INTEGER,
@@ -2465,9 +2467,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 			_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 			CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "displayDate",
-				FinderColumn.Type.DATE, "<", true, false,
+				FinderColumn.Type.DATE, "<", true, true,
 				CommerceTierPriceEntry::getDisplayDate),
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "status", FinderColumn.Type.INTEGER,
@@ -2493,9 +2496,10 @@ public class CommerceTierPriceEntryPersistenceImpl
 			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 			_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 			CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "expirationDate",
-				FinderColumn.Type.DATE, "<", true, false,
+				FinderColumn.Type.DATE, "<", true, true,
 				CommerceTierPriceEntry::getExpirationDate),
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "status", FinderColumn.Type.INTEGER,
@@ -2527,14 +2531,14 @@ public class CommerceTierPriceEntryPersistenceImpl
 				_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
 				_SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE,
 				CommerceTierPriceEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "commercePriceEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceTierPriceEntry::getCommercePriceEntryId),
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "minQuantity",
-					FinderColumn.Type.BIG_DECIMAL, "<=", true, false,
+					FinderColumn.Type.BIG_DECIMAL, "<=", true, true,
 					CommerceTierPriceEntry::getMinQuantity),
 				new FinderColumn<>(
 					"commerceTierPriceEntry.", "status",
@@ -2545,15 +2549,16 @@ public class CommerceTierPriceEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceTierPriceEntry::getExternalReferenceCode,
+			convertNullFunction(
+				CommerceTierPriceEntry::getExternalReferenceCode),
 			CommerceTierPriceEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE,
+			_SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceTierPriceEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceTierPriceEntry.", "companyId", FinderColumn.Type.LONG,
@@ -2631,4 +2636,4 @@ public class CommerceTierPriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-835442446
+// LIFERAY-SERVICE-BUILDER-HASH:1313627794

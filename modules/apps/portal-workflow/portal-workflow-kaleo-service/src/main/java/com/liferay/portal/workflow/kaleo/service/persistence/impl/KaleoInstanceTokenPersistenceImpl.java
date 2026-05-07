@@ -1271,6 +1271,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoInstanceToken::getCompanyId));
@@ -1306,6 +1307,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1337,6 +1339,7 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1368,9 +1371,10 @@ public class KaleoInstanceTokenPersistenceImpl
 				_finderPathCountByC_PKITI, _SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, KaleoInstanceToken::getCompanyId),
+					"=", true, true, KaleoInstanceToken::getCompanyId),
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "parentKaleoInstanceTokenId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1416,12 +1420,13 @@ public class KaleoInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOINSTANCETOKEN_WHERE,
 				KaleoInstanceTokenModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, KaleoInstanceToken::getCompanyId),
+					"=", true, true, KaleoInstanceToken::getCompanyId),
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "parentKaleoInstanceTokenId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoInstanceToken::getParentKaleoInstanceTokenId),
 				new FinderColumn<>(
 					"kaleoInstanceToken.", "completionDate",
@@ -1497,4 +1502,4 @@ public class KaleoInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1426347335
+// LIFERAY-SERVICE-BUILDER-HASH:-1288003182

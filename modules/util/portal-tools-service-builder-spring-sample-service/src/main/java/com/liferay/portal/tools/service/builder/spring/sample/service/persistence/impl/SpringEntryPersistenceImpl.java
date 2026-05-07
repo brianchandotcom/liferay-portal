@@ -745,7 +745,7 @@ public class SpringEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SPRINGENTRY_WHERE, _SQL_COUNT_SPRINGENTRY_WHERE,
-			SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"springEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SpringEntry::getUuid));
@@ -775,10 +775,10 @@ public class SpringEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SPRINGENTRY_WHERE,
 				_SQL_COUNT_SPRINGENTRY_WHERE,
-				SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"springEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, SpringEntry::getUuid),
+					true, SpringEntry::getUuid),
 				new FinderColumn<>(
 					"springEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SpringEntry::getCompanyId));
@@ -807,7 +807,7 @@ public class SpringEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SPRINGENTRY_WHERE,
 				_SQL_COUNT_SPRINGENTRY_WHERE,
-				SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SpringEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"springEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SpringEntry::getCompanyId));
@@ -854,4 +854,4 @@ public class SpringEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-97708492
+// LIFERAY-SERVICE-BUILDER-HASH:-1239164297

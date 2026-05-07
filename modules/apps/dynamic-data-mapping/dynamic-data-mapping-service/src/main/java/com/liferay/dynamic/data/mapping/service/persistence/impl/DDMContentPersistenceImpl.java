@@ -1127,7 +1127,7 @@ public class DDMContentPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DDMCONTENT_WHERE, _SQL_COUNT_DDMCONTENT_WHERE,
-			DDMContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmContent.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DDMContent::getUuid));
@@ -1135,14 +1135,14 @@ public class DDMContentPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DDMContent::getUuid,
-			DDMContent::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DDMContent::getUuid), DDMContent::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMCONTENT_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DDMCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"ddmContent.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DDMContent::getUuid),
+				true, DDMContent::getUuid),
 			new FinderColumn<>(
 				"ddmContent.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DDMContent::getGroupId));
@@ -1172,10 +1172,10 @@ public class DDMContentPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DDMCONTENT_WHERE,
 				_SQL_COUNT_DDMCONTENT_WHERE, DDMContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmContent.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, DDMContent::getUuid),
+					true, DDMContent::getUuid),
 				new FinderColumn<>(
 					"ddmContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMContent::getCompanyId));
@@ -1204,7 +1204,7 @@ public class DDMContentPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DDMCONTENT_WHERE,
 				_SQL_COUNT_DDMCONTENT_WHERE, DDMContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmContent.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DDMContent::getGroupId));
@@ -1233,7 +1233,7 @@ public class DDMContentPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DDMCONTENT_WHERE,
 				_SQL_COUNT_DDMCONTENT_WHERE, DDMContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DDMContent::getCompanyId));
@@ -1310,4 +1310,4 @@ public class DDMContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-922870015
+// LIFERAY-SERVICE-BUILDER-HASH:636956856

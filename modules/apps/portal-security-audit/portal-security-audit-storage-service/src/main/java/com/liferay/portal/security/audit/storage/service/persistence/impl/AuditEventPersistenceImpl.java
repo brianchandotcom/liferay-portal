@@ -431,7 +431,7 @@ public class AuditEventPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_AUDITEVENT_WHERE,
 				_SQL_COUNT_AUDITEVENT_WHERE, AuditEventModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"auditEvent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AuditEvent::getCompanyId));
@@ -496,4 +496,4 @@ public class AuditEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2031904749
+// LIFERAY-SERVICE-BUILDER-HASH:-612857455

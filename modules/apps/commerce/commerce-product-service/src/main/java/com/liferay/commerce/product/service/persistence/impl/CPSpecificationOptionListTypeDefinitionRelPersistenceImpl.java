@@ -879,7 +879,7 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpSpecificationOptionListTypeDefinitionRel.",
 					"CPSpecificationOptionId", FinderColumn.Type.LONG, "=",
@@ -915,7 +915,7 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpSpecificationOptionListTypeDefinitionRel.",
 					"listTypeDefinitionId", FinderColumn.Type.LONG, "=", true,
@@ -935,11 +935,11 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_L,
-			_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
+			_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE, "",
 			new FinderColumn<>(
 				"cpSpecificationOptionListTypeDefinitionRel.",
 				"CPSpecificationOptionId", FinderColumn.Type.LONG, "=", true,
-				false,
+				true,
 				CPSpecificationOptionListTypeDefinitionRel::
 					getCPSpecificationOptionId),
 			new FinderColumn<>(
@@ -1024,4 +1024,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1709037793
+// LIFERAY-SERVICE-BUILDER-HASH:-930198730

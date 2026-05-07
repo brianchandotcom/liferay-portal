@@ -508,11 +508,11 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			UndefinedDefaultOrderEntry::getName);
+			convertNullFunction(UndefinedDefaultOrderEntry::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
-			_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
+			_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"undefinedDefaultOrderEntry.", "name", FinderColumn.Type.STRING,
 				"=", true, true, UndefinedDefaultOrderEntry::getName));
@@ -542,7 +542,7 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 				_SQL_SELECT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				_SQL_COUNT_UNDEFINEDDEFAULTORDERENTRY_WHERE,
 				UndefinedDefaultOrderEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"undefinedDefaultOrderEntry.", "name",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -587,4 +587,4 @@ public class UndefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:706878958
+// LIFERAY-SERVICE-BUILDER-HASH:200198814

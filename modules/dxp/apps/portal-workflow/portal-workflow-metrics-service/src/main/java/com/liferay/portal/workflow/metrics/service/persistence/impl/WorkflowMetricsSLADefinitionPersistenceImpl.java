@@ -1772,7 +1772,7 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1782,15 +1782,15 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			WorkflowMetricsSLADefinition::getUuid,
+			convertNullFunction(WorkflowMetricsSLADefinition::getUuid),
 			WorkflowMetricsSLADefinition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
+			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinition::getUuid),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "groupId",
@@ -1824,10 +1824,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					WorkflowMetricsSLADefinition::getUuid),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "companyId",
@@ -1843,11 +1843,11 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 
 		_uniquePersistenceFinderByWMSLAD_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWMSLAD_A,
-			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
+			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.",
 				"workflowMetricsSLADefinitionId", FinderColumn.Type.LONG, "=",
-				true, false,
+				true, true,
 				WorkflowMetricsSLADefinition::
 					getWorkflowMetricsSLADefinitionId),
 			new FinderColumn<>(
@@ -1880,10 +1880,10 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinition::getCompanyId),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "status",
@@ -1921,14 +1921,14 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 			WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowMetricsSLADefinition::getCompanyId),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "active",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				WorkflowMetricsSLADefinition::isActive),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinition.", "processId",
@@ -1969,18 +1969,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "active",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "name",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					WorkflowMetricsSLADefinition::getName),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "processId",
@@ -2022,18 +2022,18 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "active",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "processId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getProcessId),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "status",
@@ -2072,22 +2072,22 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITION_WHERE,
 				WorkflowMetricsSLADefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getCompanyId),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "active",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					WorkflowMetricsSLADefinition::isActive),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "processId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowMetricsSLADefinition::getProcessId),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "processVersion",
-					FinderColumn.Type.STRING, "!=", true, false,
+					FinderColumn.Type.STRING, "!=", true, true,
 					WorkflowMetricsSLADefinition::getProcessVersion),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinition.", "status",
@@ -2164,4 +2164,4 @@ public class WorkflowMetricsSLADefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1808320728
+// LIFERAY-SERVICE-BUILDER-HASH:1463587017

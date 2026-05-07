@@ -6069,7 +6069,7 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetCategory::getUuid));
@@ -6077,14 +6077,15 @@ public class AssetCategoryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, AssetCategory::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(AssetCategory::getUuid),
 			AssetCategory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETCATEGORY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, AssetCategory::getUuid),
+				true, AssetCategory::getUuid),
 			new FinderColumn<>(
 				"assetCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, AssetCategory::getGroupId));
@@ -6114,10 +6115,10 @@ public class AssetCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ASSETCATEGORY_WHERE,
 				_SQL_COUNT_ASSETCATEGORY_WHERE,
-				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategory.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, AssetCategory::getUuid),
+					true, true, AssetCategory::getUuid),
 				new FinderColumn<>(
 					"assetCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getCompanyId));
@@ -6146,7 +6147,7 @@ public class AssetCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_ASSETCATEGORY_WHERE,
 				_SQL_COUNT_ASSETCATEGORY_WHERE,
-				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AssetCategory::getGroupId));
@@ -6175,7 +6176,7 @@ public class AssetCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByParentCategoryId,
 				_finderPathCountByParentCategoryId,
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategory.", "parentCategoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -6205,7 +6206,7 @@ public class AssetCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByVocabularyId,
 				_finderPathCountByVocabularyId, _SQL_SELECT_ASSETCATEGORY_WHERE,
 				_SQL_COUNT_ASSETCATEGORY_WHERE,
-				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategory.", "vocabularyId", FinderColumn.Type.LONG,
 					"=", true, true, AssetCategory::getVocabularyId));
@@ -6233,10 +6234,10 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_P,
 			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, AssetCategory::getGroupId),
+				true, AssetCategory::getGroupId),
 			new FinderColumn<>(
 				"assetCategory.", "parentCategoryId", FinderColumn.Type.LONG,
 				"=", true, true, AssetCategory::getParentCategoryId));
@@ -6288,10 +6289,10 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByP_N,
 			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "parentCategoryId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategory::getParentCategoryId),
+				"=", true, true, AssetCategory::getParentCategoryId),
 			new FinderColumn<>(
 				"assetCategory.", "name", FinderColumn.Type.STRING, "=", true,
 				true, AssetCategory::getName));
@@ -6319,10 +6320,10 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByP_V,
 			_finderPathWithoutPaginationFindByP_V, _finderPathCountByP_V,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "parentCategoryId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategory::getParentCategoryId),
+				"=", true, true, AssetCategory::getParentCategoryId),
 			new FinderColumn<>(
 				"assetCategory.", "vocabularyId", FinderColumn.Type.LONG, "=",
 				true, true, AssetCategory::getVocabularyId));
@@ -6350,10 +6351,10 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByN_V,
 			_finderPathWithoutPaginationFindByN_V, _finderPathCountByN_V,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "name", FinderColumn.Type.STRING, "=", true,
-				false, AssetCategory::getName),
+				true, AssetCategory::getName),
 			new FinderColumn<>(
 				"assetCategory.", "vocabularyId", FinderColumn.Type.LONG, "=",
 				true, true, AssetCategory::getVocabularyId));
@@ -6386,13 +6387,13 @@ public class AssetCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_P_V,
 			_finderPathWithoutPaginationFindByG_P_V, _finderPathCountByG_P_V,
 			_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, AssetCategory::getGroupId),
+				true, AssetCategory::getGroupId),
 			new FinderColumn<>(
 				"assetCategory.", "parentCategoryId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategory::getParentCategoryId),
+				"=", true, true, AssetCategory::getParentCategoryId),
 			new FinderColumn<>(
 				"assetCategory.", "vocabularyId", FinderColumn.Type.LONG, "=",
 				true, true, AssetCategory::getVocabularyId));
@@ -6419,13 +6420,13 @@ public class AssetCategoryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_LikeT_V, null,
 				_finderPathWithPaginationCountByG_LikeT_V,
 				_SQL_SELECT_ASSETCATEGORY_WHERE, _SQL_COUNT_ASSETCATEGORY_WHERE,
-				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AssetCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetCategory.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, AssetCategory::getGroupId),
+					true, true, AssetCategory::getGroupId),
 				new FinderColumn<>(
 					"assetCategory.", "treePath", FinderColumn.Type.STRING,
-					"LIKE", true, false, AssetCategory::getTreePath),
+					"LIKE", true, true, AssetCategory::getTreePath),
 				new FinderColumn<>(
 					"assetCategory.", "vocabularyId", FinderColumn.Type.LONG,
 					"=", true, true, AssetCategory::getVocabularyId));
@@ -6454,17 +6455,18 @@ public class AssetCategoryPersistenceImpl
 				Long.class.getName()
 			},
 			new String[] {"parentCategoryId", "name", "vocabularyId"}, false,
-			AssetCategory::getParentCategoryId, AssetCategory::getName,
+			AssetCategory::getParentCategoryId,
+			convertNullFunction(AssetCategory::getName),
 			AssetCategory::getVocabularyId);
 
 		_uniquePersistenceFinderByP_N_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByP_N_V, _SQL_SELECT_ASSETCATEGORY_WHERE,
+			this, _finderPathFetchByP_N_V, _SQL_SELECT_ASSETCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategory.", "parentCategoryId", FinderColumn.Type.LONG,
-				"=", true, false, AssetCategory::getParentCategoryId),
+				"=", true, true, AssetCategory::getParentCategoryId),
 			new FinderColumn<>(
 				"assetCategory.", "name", FinderColumn.Type.STRING, "=", true,
-				false, AssetCategory::getName),
+				true, AssetCategory::getName),
 			new FinderColumn<>(
 				"assetCategory.", "vocabularyId", FinderColumn.Type.LONG, "=",
 				true, true, AssetCategory::getVocabularyId));
@@ -6473,13 +6475,14 @@ public class AssetCategoryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			AssetCategory::getExternalReferenceCode, AssetCategory::getGroupId);
+			convertNullFunction(AssetCategory::getExternalReferenceCode),
+			AssetCategory::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETCATEGORY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategory.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AssetCategory::getExternalReferenceCode),
 			new FinderColumn<>(
 				"assetCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -6544,4 +6547,4 @@ public class AssetCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-955986794
+// LIFERAY-SERVICE-BUILDER-HASH:-1008489763

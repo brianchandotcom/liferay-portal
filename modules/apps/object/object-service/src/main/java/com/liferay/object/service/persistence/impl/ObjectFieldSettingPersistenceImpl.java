@@ -877,7 +877,7 @@ public class ObjectFieldSettingPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTFIELDSETTING_WHERE,
 			_SQL_COUNT_OBJECTFIELDSETTING_WHERE,
-			ObjectFieldSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectFieldSetting.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectFieldSetting::getUuid));
@@ -908,9 +908,10 @@ public class ObjectFieldSettingPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTFIELDSETTING_WHERE,
 				_SQL_COUNT_OBJECTFIELDSETTING_WHERE,
 				ObjectFieldSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectFieldSetting.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, ObjectFieldSetting::getUuid),
+					"=", true, true, ObjectFieldSetting::getUuid),
 				new FinderColumn<>(
 					"objectFieldSetting.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectFieldSetting::getCompanyId));
@@ -941,6 +942,7 @@ public class ObjectFieldSettingPersistenceImpl
 				_SQL_SELECT_OBJECTFIELDSETTING_WHERE,
 				_SQL_COUNT_OBJECTFIELDSETTING_WHERE,
 				ObjectFieldSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectFieldSetting.", "objectFieldId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -950,13 +952,15 @@ public class ObjectFieldSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByOFI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectFieldId", "name"}, false,
-			ObjectFieldSetting::getObjectFieldId, ObjectFieldSetting::getName);
+			ObjectFieldSetting::getObjectFieldId,
+			convertNullFunction(ObjectFieldSetting::getName));
 
 		_uniquePersistenceFinderByOFI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByOFI_N, _SQL_SELECT_OBJECTFIELDSETTING_WHERE,
+			"",
 			new FinderColumn<>(
 				"objectFieldSetting.", "objectFieldId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectFieldSetting::getObjectFieldId),
+				"=", true, true, ObjectFieldSetting::getObjectFieldId),
 			new FinderColumn<>(
 				"objectFieldSetting.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ObjectFieldSetting::getName));
@@ -1030,4 +1034,4 @@ public class ObjectFieldSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-522080485
+// LIFERAY-SERVICE-BUILDER-HASH:-1680073266

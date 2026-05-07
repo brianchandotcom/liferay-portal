@@ -1646,7 +1646,7 @@ public class ERCVersionedEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, false,
-			ERCVersionedEntryVersion::getUuid,
+			convertNullFunction(ERCVersionedEntryVersion::getUuid),
 			ERCVersionedEntryVersion::getGroupId,
 			ERCVersionedEntryVersion::getVersion);
 
@@ -1820,4 +1820,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:32851573
+// LIFERAY-SERVICE-BUILDER-HASH:-1179150511

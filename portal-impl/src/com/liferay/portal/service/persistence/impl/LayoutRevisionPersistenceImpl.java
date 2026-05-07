@@ -5,14 +5,11 @@
 
 package com.liferay.portal.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchLayoutRevisionException;
@@ -1318,6 +1315,8 @@ public class LayoutRevisionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByL_L_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_L_P;
 	private FinderPath _finderPathCountByL_L_P;
+	private CollectionPersistenceFinder<LayoutRevision>
+		_collectionPersistenceFinderByL_L_P;
 
 	/**
 	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
@@ -1406,111 +1405,10 @@ public class LayoutRevisionPersistenceImpl
 		int end, OrderByComparator<LayoutRevision> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByL_L_P;
-				finderArgs = new Object[] {
-					layoutSetBranchId, layoutBranchId, plid
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByL_L_P;
-			finderArgs = new Object[] {
-				layoutSetBranchId, layoutBranchId, plid, start, end,
-				orderByComparator
-			};
-		}
-
-		List<LayoutRevision> list = null;
-
-		if (useFinderCache) {
-			list = (List<LayoutRevision>)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (LayoutRevision layoutRevision : list) {
-					if ((layoutSetBranchId !=
-							layoutRevision.getLayoutSetBranchId()) ||
-						(layoutBranchId !=
-							layoutRevision.getLayoutBranchId()) ||
-						(plid != layoutRevision.getPlid())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
-
-			sb.append(_FINDER_COLUMN_L_L_P_LAYOUTSETBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_P_LAYOUTBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_P_PLID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(LayoutRevisionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(layoutSetBranchId);
-
-				queryPos.add(layoutBranchId);
-
-				queryPos.add(plid);
-
-				list = (List<LayoutRevision>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					FinderCacheUtil.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByL_L_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, layoutBranchId, plid}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1536,22 +1434,10 @@ public class LayoutRevisionPersistenceImpl
 			return layoutRevision;
 		}
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("layoutSetBranchId=");
-		sb.append(layoutSetBranchId);
-
-		sb.append(", layoutBranchId=");
-		sb.append(layoutBranchId);
-
-		sb.append(", plid=");
-		sb.append(plid);
-
-		sb.append("}");
-
-		throw new NoSuchLayoutRevisionException(sb.toString());
+		throw new NoSuchLayoutRevisionException(
+			_collectionPersistenceFinderByL_L_P.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {layoutSetBranchId, layoutBranchId, plid}));
 	}
 
 	/**
@@ -1568,14 +1454,10 @@ public class LayoutRevisionPersistenceImpl
 		long layoutSetBranchId, long layoutBranchId, long plid,
 		OrderByComparator<LayoutRevision> orderByComparator) {
 
-		List<LayoutRevision> list = findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByL_L_P.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, layoutBranchId, plid},
+			orderByComparator);
 	}
 
 	/**
@@ -1589,13 +1471,9 @@ public class LayoutRevisionPersistenceImpl
 	public void removeByL_L_P(
 		long layoutSetBranchId, long layoutBranchId, long plid) {
 
-		for (LayoutRevision layoutRevision :
-				findByL_L_P(
-					layoutSetBranchId, layoutBranchId, plid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(layoutRevision);
-		}
+		_collectionPersistenceFinderByL_L_P.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, layoutBranchId, plid});
 	}
 
 	/**
@@ -1610,66 +1488,10 @@ public class LayoutRevisionPersistenceImpl
 	public int countByL_L_P(
 		long layoutSetBranchId, long layoutBranchId, long plid) {
 
-		FinderPath finderPath = _finderPathCountByL_L_P;
-
-		Object[] finderArgs = new Object[] {
-			layoutSetBranchId, layoutBranchId, plid
-		};
-
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_LAYOUTREVISION_WHERE);
-
-			sb.append(_FINDER_COLUMN_L_L_P_LAYOUTSETBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_P_LAYOUTBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_P_PLID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(layoutSetBranchId);
-
-				queryPos.add(layoutBranchId);
-
-				queryPos.add(plid);
-
-				count = (Long)query.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByL_L_P.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetBranchId, layoutBranchId, plid});
 	}
-
-	private static final String _FINDER_COLUMN_L_L_P_LAYOUTSETBRANCHID_2 =
-		"layoutRevision.layoutSetBranchId = ? AND ";
-
-	private static final String _FINDER_COLUMN_L_L_P_LAYOUTBRANCHID_2 =
-		"layoutRevision.layoutBranchId = ? AND ";
-
-	private static final String _FINDER_COLUMN_L_L_P_PLID_2 =
-		"layoutRevision.plid = ? AND layoutRevision.status != 5";
 
 	private FinderPath _finderPathWithPaginationFindByL_P_P;
 	private FinderPath _finderPathWithoutPaginationFindByL_P_P;
@@ -2609,7 +2431,7 @@ public class LayoutRevisionPersistenceImpl
 				_finderPathCountByLayoutSetBranchId,
 				_SQL_SELECT_LAYOUTREVISION_WHERE,
 				_SQL_COUNT_LAYOUTREVISION_WHERE,
-				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutRevision.", "layoutSetBranchId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2635,7 +2457,7 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByPlid,
 			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, LayoutRevision::getPlid));
@@ -2664,7 +2486,7 @@ public class LayoutRevisionPersistenceImpl
 				_finderPathWithoutPaginationFindByStatus,
 				_finderPathCountByStatus, _SQL_SELECT_LAYOUTREVISION_WHERE,
 				_SQL_COUNT_LAYOUTREVISION_WHERE,
-				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutRevision.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, LayoutRevision::getStatus));
@@ -2692,10 +2514,10 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_H,
 			_finderPathWithoutPaginationFindByL_H, _finderPathCountByL_H,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, LayoutRevision::isHead));
@@ -2723,10 +2545,10 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_P,
 			_finderPathWithoutPaginationFindByL_P, _finderPathCountByL_P,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, LayoutRevision::getPlid));
@@ -2754,10 +2576,10 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_S,
 			_finderPathWithoutPaginationFindByL_S, _finderPathCountByL_S,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, LayoutRevision::getStatus));
@@ -2785,10 +2607,10 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByH_P,
 			_finderPathWithoutPaginationFindByH_P, _finderPathCountByH_P,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "head", FinderColumn.Type.BOOLEAN, "=", true,
-				false, LayoutRevision::isHead),
+				true, LayoutRevision::isHead),
 			new FinderColumn<>(
 				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, LayoutRevision::getPlid));
@@ -2813,10 +2635,10 @@ public class LayoutRevisionPersistenceImpl
 				_finderPathWithPaginationCountByP_NotS,
 				_SQL_SELECT_LAYOUTREVISION_WHERE,
 				_SQL_COUNT_LAYOUTREVISION_WHERE,
-				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutRevision.", "plid", FinderColumn.Type.LONG, "=",
-					true, false, LayoutRevision::getPlid),
+					true, true, LayoutRevision::getPlid),
 				new FinderColumn<>(
 					"layoutRevision.", "status", FinderColumn.Type.INTEGER,
 					"!=", true, true, LayoutRevision::getStatus));
@@ -2844,6 +2666,22 @@ public class LayoutRevisionPersistenceImpl
 			},
 			new String[] {"layoutSetBranchId", "layoutBranchId", "plid"},
 			false);
+
+		_collectionPersistenceFinderByL_L_P = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByL_L_P,
+			_finderPathWithoutPaginationFindByL_L_P, _finderPathCountByL_L_P,
+			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"layoutRevision.status != 5",
+			new FinderColumn<>(
+				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
+			new FinderColumn<>(
+				"layoutRevision.", "layoutBranchId", FinderColumn.Type.LONG,
+				"=", true, true, LayoutRevision::getLayoutBranchId),
+			new FinderColumn<>(
+				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
+				true, LayoutRevision::getPlid));
 
 		_finderPathWithPaginationFindByL_P_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P_P",
@@ -2881,13 +2719,13 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_P_P,
 			_finderPathWithoutPaginationFindByL_P_P, _finderPathCountByL_P_P,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "parentLayoutRevisionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				LayoutRevision::getParentLayoutRevisionId),
 			new FinderColumn<>(
 				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
@@ -2926,14 +2764,14 @@ public class LayoutRevisionPersistenceImpl
 				_finderPathCountByL_H_P_Collection,
 				_SQL_SELECT_LAYOUTREVISION_WHERE,
 				_SQL_COUNT_LAYOUTREVISION_WHERE,
-				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutRevision.", "layoutSetBranchId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					LayoutRevision::getLayoutSetBranchId),
 				new FinderColumn<>(
 					"layoutRevision.", "head", FinderColumn.Type.BOOLEAN, "=",
-					true, false, LayoutRevision::isHead),
+					true, true, LayoutRevision::isHead),
 				new FinderColumn<>(
 					"layoutRevision.", "plid", FinderColumn.Type.LONG, "=",
 					true, true, LayoutRevision::getPlid));
@@ -2967,13 +2805,13 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_H_S,
 			_finderPathWithoutPaginationFindByL_H_S, _finderPathCountByL_H_S,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "head", FinderColumn.Type.BOOLEAN, "=", true,
-				false, LayoutRevision::isHead),
+				true, LayoutRevision::isHead),
 			new FinderColumn<>(
 				"layoutRevision.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, LayoutRevision::getStatus));
@@ -3007,13 +2845,13 @@ public class LayoutRevisionPersistenceImpl
 			this, _finderPathWithPaginationFindByL_P_S,
 			_finderPathWithoutPaginationFindByL_P_S, _finderPathCountByL_P_S,
 			_SQL_SELECT_LAYOUTREVISION_WHERE, _SQL_COUNT_LAYOUTREVISION_WHERE,
-			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutRevisionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutRevision.", "layoutSetBranchId", FinderColumn.Type.LONG,
-				"=", true, false, LayoutRevision::getLayoutSetBranchId),
+				"=", true, true, LayoutRevision::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"layoutRevision.", "plid", FinderColumn.Type.LONG, "=", true,
-				false, LayoutRevision::getPlid),
+				true, LayoutRevision::getPlid),
 			new FinderColumn<>(
 				"layoutRevision.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, LayoutRevision::getStatus));
@@ -3051,4 +2889,4 @@ public class LayoutRevisionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1483160396
+// LIFERAY-SERVICE-BUILDER-HASH:1763607697

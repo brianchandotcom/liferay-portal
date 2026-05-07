@@ -633,7 +633,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2ApplicationScopeAliases.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -665,7 +665,7 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 				_SQL_SELECT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATIONSCOPEALIASES_WHERE,
 				OAuth2ApplicationScopeAliasesModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2ApplicationScopeAliases.", "oAuth2ApplicationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -742,4 +742,4 @@ public class OAuth2ApplicationScopeAliasesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2019227631
+// LIFERAY-SERVICE-BUILDER-HASH:-1399034453

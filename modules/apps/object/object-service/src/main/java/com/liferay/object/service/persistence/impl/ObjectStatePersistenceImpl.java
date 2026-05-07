@@ -1019,7 +1019,7 @@ public class ObjectStatePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
-			ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectState.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectState::getUuid));
@@ -1049,10 +1049,10 @@ public class ObjectStatePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTSTATE_WHERE,
 				_SQL_COUNT_OBJECTSTATE_WHERE,
-				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, ObjectState::getUuid),
+					true, ObjectState::getUuid),
 				new FinderColumn<>(
 					"objectState.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectState::getCompanyId));
@@ -1081,7 +1081,7 @@ public class ObjectStatePersistenceImpl
 				_finderPathWithoutPaginationFindByListTypeEntryId,
 				_finderPathCountByListTypeEntryId,
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
-				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "listTypeEntryId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getListTypeEntryId));
@@ -1110,7 +1110,7 @@ public class ObjectStatePersistenceImpl
 				_finderPathWithoutPaginationFindByObjectStateFlowId,
 				_finderPathCountByObjectStateFlowId,
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
-				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "objectStateFlowId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getObjectStateFlowId));
@@ -1123,9 +1123,10 @@ public class ObjectStatePersistenceImpl
 
 		_uniquePersistenceFinderByLTEI_OSFI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByLTEI_OSFI, _SQL_SELECT_OBJECTSTATE_WHERE,
+			"",
 			new FinderColumn<>(
 				"objectState.", "listTypeEntryId", FinderColumn.Type.LONG, "=",
-				true, false, ObjectState::getListTypeEntryId),
+				true, true, ObjectState::getListTypeEntryId),
 			new FinderColumn<>(
 				"objectState.", "objectStateFlowId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectState::getObjectStateFlowId));
@@ -1199,4 +1200,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:858801542
+// LIFERAY-SERVICE-BUILDER-HASH:-323203686

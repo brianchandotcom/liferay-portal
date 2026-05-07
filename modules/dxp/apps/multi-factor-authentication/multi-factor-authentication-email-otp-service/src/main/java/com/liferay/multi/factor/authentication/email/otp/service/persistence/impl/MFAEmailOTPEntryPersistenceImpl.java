@@ -364,6 +364,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_MFAEMAILOTPENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"mfaEmailOTPEntry.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, MFAEmailOTPEntry::getUserId));
@@ -431,4 +432,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1999435387
+// LIFERAY-SERVICE-BUILDER-HASH:-528380960

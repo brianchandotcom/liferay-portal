@@ -1602,6 +1602,7 @@ public class ObjectValidationRulePersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectValidationRule.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectValidationRule::getUuid));
@@ -1633,10 +1634,10 @@ public class ObjectValidationRulePersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectValidationRule.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, ObjectValidationRule::getUuid),
+					"=", true, true, ObjectValidationRule::getUuid),
 				new FinderColumn<>(
 					"objectValidationRule.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1668,7 +1669,7 @@ public class ObjectValidationRulePersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 				ObjectValidationRuleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectValidationRule.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1699,9 +1700,10 @@ public class ObjectValidationRulePersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectValidationRule.", "objectDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectValidationRule::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
@@ -1732,9 +1734,10 @@ public class ObjectValidationRulePersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectValidationRule.", "objectDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectValidationRule::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
@@ -1765,9 +1768,10 @@ public class ObjectValidationRulePersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectValidationRule.", "objectDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectValidationRule::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectValidationRule.", "outputType", FinderColumn.Type.STRING,
@@ -1798,9 +1802,10 @@ public class ObjectValidationRulePersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULE_WHERE,
 			ObjectValidationRuleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"objectValidationRule.", "active", FinderColumn.Type.BOOLEAN,
-				"=", true, false, ObjectValidationRule::isActive),
+				"=", true, true, ObjectValidationRule::isActive),
 			new FinderColumn<>(
 				"objectValidationRule.", "engine", FinderColumn.Type.STRING,
 				"=", true, true, ObjectValidationRule::getEngine));
@@ -1814,20 +1819,21 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false, ObjectValidationRule::getExternalReferenceCode,
+			false,
+			convertNullFunction(ObjectValidationRule::getExternalReferenceCode),
 			ObjectValidationRule::getCompanyId,
 			ObjectValidationRule::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI,
-			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE,
+			_SQL_SELECT_OBJECTVALIDATIONRULE_WHERE, "",
 			new FinderColumn<>(
 				"objectValidationRule.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ObjectValidationRule::getExternalReferenceCode),
 			new FinderColumn<>(
 				"objectValidationRule.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectValidationRule::getCompanyId),
+				"=", true, true, ObjectValidationRule::getCompanyId),
 			new FinderColumn<>(
 				"objectValidationRule.", "objectDefinitionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1902,4 +1908,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-189894568
+// LIFERAY-SERVICE-BUILDER-HASH:1524159359

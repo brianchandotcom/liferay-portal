@@ -854,7 +854,7 @@ public class CPConfigurationListRelPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 				CPConfigurationListRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpConfigurationListRel.", "CPConfigurationListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -885,9 +885,10 @@ public class CPConfigurationListRelPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONLISTREL_WHERE,
 			CPConfigurationListRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationListRel::getClassNameId),
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "CPConfigurationListId",
@@ -906,14 +907,14 @@ public class CPConfigurationListRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE,
+			_SQL_SELECT_CPCONFIGURATIONLISTREL_WHERE, "",
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationListRel::getClassNameId),
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "classPK", FinderColumn.Type.LONG,
-				"=", true, false, CPConfigurationListRel::getClassPK),
+				"=", true, true, CPConfigurationListRel::getClassPK),
 			new FinderColumn<>(
 				"cpConfigurationListRel.", "CPConfigurationListId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -988,4 +989,4 @@ public class CPConfigurationListRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1636608261
+// LIFERAY-SERVICE-BUILDER-HASH:-918392175

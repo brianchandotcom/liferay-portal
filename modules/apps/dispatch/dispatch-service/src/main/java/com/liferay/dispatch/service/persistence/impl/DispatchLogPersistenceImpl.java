@@ -620,7 +620,7 @@ public class DispatchLogPersistenceImpl
 				_finderPathWithoutPaginationFindByDispatchTriggerId,
 				_finderPathCountByDispatchTriggerId,
 				_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
-				DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dispatchLog.", "dispatchTriggerId", FinderColumn.Type.LONG,
 					"=", true, true, DispatchLog::getDispatchTriggerId));
@@ -648,10 +648,10 @@ public class DispatchLogPersistenceImpl
 			this, _finderPathWithPaginationFindByDTI_S,
 			_finderPathWithoutPaginationFindByDTI_S, _finderPathCountByDTI_S,
 			_SQL_SELECT_DISPATCHLOG_WHERE, _SQL_COUNT_DISPATCHLOG_WHERE,
-			DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DispatchLogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dispatchLog.", "dispatchTriggerId", FinderColumn.Type.LONG,
-				"=", true, false, DispatchLog::getDispatchTriggerId),
+				"=", true, true, DispatchLog::getDispatchTriggerId),
 			new FinderColumn<>(
 				"dispatchLog.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, DispatchLog::getStatus));
@@ -725,4 +725,4 @@ public class DispatchLogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:389844402
+// LIFERAY-SERVICE-BUILDER-HASH:2040209467

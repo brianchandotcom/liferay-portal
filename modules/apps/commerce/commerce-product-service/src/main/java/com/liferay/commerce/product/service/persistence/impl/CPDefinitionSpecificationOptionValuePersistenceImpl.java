@@ -2369,7 +2369,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2379,15 +2379,15 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CPDefinitionSpecificationOptionValue::getUuid,
+			convertNullFunction(CPDefinitionSpecificationOptionValue::getUuid),
 			CPDefinitionSpecificationOptionValue::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
+			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getUuid),
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "groupId",
@@ -2421,10 +2421,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CPDefinitionSpecificationOptionValue::getUuid),
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.", "companyId",
@@ -2457,7 +2457,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2489,7 +2489,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2525,7 +2525,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.",
 					"CPSpecificationOptionId", FinderColumn.Type.LONG, "=",
@@ -2559,7 +2559,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 				_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 				CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionSpecificationOptionValue.",
 					"CPOptionCategoryId", FinderColumn.Type.LONG, "=", true,
@@ -2578,11 +2578,11 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 
 		_uniquePersistenceFinderByC_CSOVI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_CSOVI,
-			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
+			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.",
 				"CPDefinitionSpecificationOptionValueId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionSpecificationOptionValue::
 					getCPDefinitionSpecificationOptionValueId),
 			new FinderColumn<>(
@@ -2615,10 +2615,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "CPDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getCPDefinitionId),
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.",
@@ -2652,10 +2652,10 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			_SQL_COUNT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
 			CPDefinitionSpecificationOptionValueModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "CPDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getCPDefinitionId),
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "CPOptionCategoryId",
@@ -2667,14 +2667,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "key_"}, false,
 			CPDefinitionSpecificationOptionValue::getCPDefinitionId,
-			CPDefinitionSpecificationOptionValue::getKey);
+			convertNullFunction(CPDefinitionSpecificationOptionValue::getKey));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K,
-			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
+			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "CPDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPDefinitionSpecificationOptionValue::getCPDefinitionId),
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "key",
@@ -2685,16 +2685,17 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CPDefinitionSpecificationOptionValue::getExternalReferenceCode,
+			convertNullFunction(
+				CPDefinitionSpecificationOptionValue::getExternalReferenceCode),
 			CPDefinitionSpecificationOptionValue::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE,
+			_SQL_SELECT_CPDEFINITIONSPECIFICATIONOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.",
 				"externalReferenceCode", FinderColumn.Type.STRING, "=", true,
-				false,
+				true,
 				CPDefinitionSpecificationOptionValue::getExternalReferenceCode),
 			new FinderColumn<>(
 				"cpDefinitionSpecificationOptionValue.", "companyId",
@@ -2777,4 +2778,4 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1813350670
+// LIFERAY-SERVICE-BUILDER-HASH:-607619816

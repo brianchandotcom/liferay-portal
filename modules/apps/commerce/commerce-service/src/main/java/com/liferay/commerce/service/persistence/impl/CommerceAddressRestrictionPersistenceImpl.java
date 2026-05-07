@@ -733,7 +733,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 				_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 				_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 				CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceAddressRestriction.", "countryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -764,10 +764,10 @@ public class CommerceAddressRestrictionPersistenceImpl
 			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
 			_SQL_COUNT_COMMERCEADDRESSRESTRICTION_WHERE,
 			CommerceAddressRestrictionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceAddressRestriction::getClassNameId),
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classPK",
@@ -786,14 +786,14 @@ public class CommerceAddressRestrictionPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE,
+			_SQL_SELECT_COMMERCEADDRESSRESTRICTION_WHERE, "",
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceAddressRestriction::getClassNameId),
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "classPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceAddressRestriction::getClassPK),
 			new FinderColumn<>(
 				"commerceAddressRestriction.", "countryId",
@@ -866,4 +866,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-426042024
+// LIFERAY-SERVICE-BUILDER-HASH:-245814036

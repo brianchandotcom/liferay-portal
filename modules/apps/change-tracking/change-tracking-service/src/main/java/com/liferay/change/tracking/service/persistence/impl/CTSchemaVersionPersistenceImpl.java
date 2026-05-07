@@ -421,6 +421,7 @@ public class CTSchemaVersionPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_CTSCHEMAVERSION_WHERE,
 				_SQL_COUNT_CTSCHEMAVERSION_WHERE,
 				CTSchemaVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ctSchemaVersion.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CTSchemaVersion::getCompanyId));
@@ -491,4 +492,4 @@ public class CTSchemaVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1910621174
+// LIFERAY-SERVICE-BUILDER-HASH:1301208392

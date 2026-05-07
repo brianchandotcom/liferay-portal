@@ -812,7 +812,7 @@ public class FaroProjectPersistenceImpl
 			false, FaroProject::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByGroupId, _SQL_SELECT_FAROPROJECT_WHERE,
+			this, _finderPathFetchByGroupId, _SQL_SELECT_FAROPROJECT_WHERE, "",
 			new FinderColumn<>(
 				"faroProject.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FaroProject::getGroupId));
@@ -840,7 +840,7 @@ public class FaroProjectPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_FAROPROJECT_WHERE,
 				_SQL_COUNT_FAROPROJECT_WHERE,
-				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, FaroProject::getUserId));
@@ -849,12 +849,12 @@ public class FaroProjectPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
 			new String[] {String.class.getName()},
 			new String[] {"corpProjectUuid"}, false,
-			FaroProject::getCorpProjectUuid);
+			convertNullFunction(FaroProject::getCorpProjectUuid));
 
 		_uniquePersistenceFinderByCorpProjectUuid =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCorpProjectUuid,
-				_SQL_SELECT_FAROPROJECT_WHERE,
+				_SQL_SELECT_FAROPROJECT_WHERE, "",
 				new FinderColumn<>(
 					"faroProject.", "corpProjectUuid", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getCorpProjectUuid));
@@ -883,7 +883,7 @@ public class FaroProjectPersistenceImpl
 				_finderPathWithoutPaginationFindByServerLocation,
 				_finderPathCountByServerLocation, _SQL_SELECT_FAROPROJECT_WHERE,
 				_SQL_COUNT_FAROPROJECT_WHERE,
-				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "serverLocation", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getServerLocation));
@@ -891,10 +891,11 @@ public class FaroProjectPersistenceImpl
 		_finderPathFetchByWeDeployKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
 			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			false, FaroProject::getWeDeployKey);
+			false, convertNullFunction(FaroProject::getWeDeployKey));
 
 		_uniquePersistenceFinderByWeDeployKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWeDeployKey, _SQL_SELECT_FAROPROJECT_WHERE,
+			"",
 			new FinderColumn<>(
 				"faroProject.", "weDeployKey", FinderColumn.Type.STRING, "=",
 				true, true, FaroProject::getWeDeployKey));
@@ -968,4 +969,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1208162292
+// LIFERAY-SERVICE-BUILDER-HASH:932806899

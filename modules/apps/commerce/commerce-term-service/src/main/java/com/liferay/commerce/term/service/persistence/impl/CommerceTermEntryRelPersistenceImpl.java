@@ -735,7 +735,7 @@ public class CommerceTermEntryRelPersistenceImpl
 				_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 				CommerceTermEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTermEntryRel.", "commerceTermEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -766,9 +766,10 @@ public class CommerceTermEntryRelPersistenceImpl
 			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
 			_SQL_COUNT_COMMERCETERMENTRYREL_WHERE,
 			CommerceTermEntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceTermEntryRel::getClassNameId),
+				"=", true, true, CommerceTermEntryRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "commerceTermEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -786,13 +787,13 @@ public class CommerceTermEntryRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE,
+			_SQL_SELECT_COMMERCETERMENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceTermEntryRel::getClassNameId),
+				"=", true, true, CommerceTermEntryRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, CommerceTermEntryRel::getClassPK),
+				true, true, CommerceTermEntryRel::getClassPK),
 			new FinderColumn<>(
 				"commerceTermEntryRel.", "commerceTermEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -864,4 +865,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:764269997
+// LIFERAY-SERVICE-BUILDER-HASH:969859211

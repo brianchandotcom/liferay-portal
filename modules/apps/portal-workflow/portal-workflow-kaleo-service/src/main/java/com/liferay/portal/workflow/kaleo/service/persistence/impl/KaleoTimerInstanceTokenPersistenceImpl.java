@@ -1039,7 +1039,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1054,10 +1054,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		_uniquePersistenceFinderByKITI_KTI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKITI_KTI,
-			_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
+			_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE, "",
 			new FinderColumn<>(
 				"kaleoTimerInstanceToken.", "kaleoInstanceTokenId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				KaleoTimerInstanceToken::getKaleoInstanceTokenId),
 			new FinderColumn<>(
 				"kaleoTimerInstanceToken.", "kaleoTimerId",
@@ -1091,10 +1091,10 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceTokenId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTimerInstanceToken::getKaleoInstanceTokenId),
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "completed",
@@ -1137,14 +1137,14 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				_SQL_SELECT_KALEOTIMERINSTANCETOKEN_WHERE,
 				_SQL_COUNT_KALEOTIMERINSTANCETOKEN_WHERE,
 				KaleoTimerInstanceTokenModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "kaleoInstanceTokenId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTimerInstanceToken::getKaleoInstanceTokenId),
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "blocking",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					KaleoTimerInstanceToken::isBlocking),
 				new FinderColumn<>(
 					"kaleoTimerInstanceToken.", "completed",
@@ -1220,4 +1220,4 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1193737332
+// LIFERAY-SERVICE-BUILDER-HASH:141719482

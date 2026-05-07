@@ -1486,7 +1486,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Authorization::getUserId));
@@ -1517,7 +1517,7 @@ public class OAuth2AuthorizationPersistenceImpl
 				_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "oAuth2ApplicationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1549,10 +1549,10 @@ public class OAuth2AuthorizationPersistenceImpl
 				_finderPathCountByC_ATCH, _SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, OAuth2Authorization::getCompanyId),
+					"=", true, true, OAuth2Authorization::getCompanyId),
 				new FinderColumn<>(
 					"oAuth2Authorization.", "accessTokenContentHash",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1584,10 +1584,10 @@ public class OAuth2AuthorizationPersistenceImpl
 				_finderPathCountByC_RTCH, _SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 				_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 				OAuth2AuthorizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"oAuth2Authorization.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, OAuth2Authorization::getCompanyId),
+					"=", true, true, OAuth2Authorization::getCompanyId),
 				new FinderColumn<>(
 					"oAuth2Authorization.", "refreshTokenContentHash",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1633,12 +1633,13 @@ public class OAuth2AuthorizationPersistenceImpl
 			_SQL_SELECT_OAUTH2AUTHORIZATION_WHERE,
 			_SQL_COUNT_OAUTH2AUTHORIZATION_WHERE,
 			OAuth2AuthorizationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"oAuth2Authorization.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, OAuth2Authorization::getUserId),
+				true, true, OAuth2Authorization::getUserId),
 			new FinderColumn<>(
 				"oAuth2Authorization.", "oAuth2ApplicationId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				OAuth2Authorization::getOAuth2ApplicationId),
 			new FinderColumn<>(
 				"oAuth2Authorization.", "rememberDeviceContent",
@@ -1720,4 +1721,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1717724663
+// LIFERAY-SERVICE-BUILDER-HASH:-274080493

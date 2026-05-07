@@ -1077,6 +1077,7 @@ public class KaleoTransitionPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoTransition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTransition::getCompanyId));
@@ -1112,6 +1113,7 @@ public class KaleoTransitionPersistenceImpl
 				_SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoTransition.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1143,6 +1145,7 @@ public class KaleoTransitionPersistenceImpl
 				_SQL_SELECT_KALEOTRANSITION_WHERE,
 				_SQL_COUNT_KALEOTRANSITION_WHERE,
 				KaleoTransitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoTransition.", "kaleoNodeId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTransition::getKaleoNodeId));
@@ -1151,13 +1154,15 @@ public class KaleoTransitionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByKNI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoNodeId", "name"}, false,
-			KaleoTransition::getKaleoNodeId, KaleoTransition::getName);
+			KaleoTransition::getKaleoNodeId,
+			convertNullFunction(KaleoTransition::getName));
 
 		_uniquePersistenceFinderByKNI_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKNI_N, _SQL_SELECT_KALEOTRANSITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoTransition.", "kaleoNodeId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoTransition::getKaleoNodeId),
+				true, true, KaleoTransition::getKaleoNodeId),
 			new FinderColumn<>(
 				"kaleoTransition.", "name", FinderColumn.Type.STRING, "=", true,
 				true, KaleoTransition::getName));
@@ -1171,9 +1176,10 @@ public class KaleoTransitionPersistenceImpl
 
 		_uniquePersistenceFinderByKNI_DT = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKNI_DT, _SQL_SELECT_KALEOTRANSITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoTransition.", "kaleoNodeId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoTransition::getKaleoNodeId),
+				true, true, KaleoTransition::getKaleoNodeId),
 			new FinderColumn<>(
 				"kaleoTransition.", "defaultTransition",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1248,4 +1254,4 @@ public class KaleoTransitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:475198365
+// LIFERAY-SERVICE-BUILDER-HASH:1653095886

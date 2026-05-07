@@ -854,7 +854,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceNotificationTemplateCommerceAccountGroupRel.",
 					"commerceNotificationTemplateId", FinderColumn.Type.LONG,
@@ -893,7 +893,7 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceNotificationTemplateCommerceAccountGroupRelModelImpl.
 					ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceNotificationTemplateCommerceAccountGroupRel.",
 					"commerceAccountGroupId", FinderColumn.Type.LONG, "=", true,
@@ -916,10 +916,11 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C,
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATECOMMERCEACCOUNTGROUPREL_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceNotificationTemplateCommerceAccountGroupRel.",
 				"commerceNotificationTemplateId", FinderColumn.Type.LONG, "=",
-				true, false,
+				true, true,
 				CommerceNotificationTemplateCommerceAccountGroupRel::
 					getCommerceNotificationTemplateId),
 			new FinderColumn<>(
@@ -1007,4 +1008,4 @@ public class CommerceNotificationTemplateCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1830907722
+// LIFERAY-SERVICE-BUILDER-HASH:286077323

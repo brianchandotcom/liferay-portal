@@ -1664,6 +1664,7 @@ public class DDMFieldAttributePersistenceImpl
 				_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG,
 					"=", true, true, DDMFieldAttribute::getStorageId));
@@ -1692,10 +1693,10 @@ public class DDMFieldAttributePersistenceImpl
 			_finderPathWithoutPaginationFindByS_AN, _finderPathCountByS_AN,
 			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
-			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG, "=",
-				true, false, DDMFieldAttribute::getStorageId),
+				true, true, DDMFieldAttribute::getStorageId),
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "attributeName", FinderColumn.Type.STRING,
 				"=", true, true, DDMFieldAttribute::getAttributeName));
@@ -1750,9 +1751,10 @@ public class DDMFieldAttributePersistenceImpl
 				_finderPathCountByAN_SAV, _SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ddmFieldAttribute.", "attributeName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					DDMFieldAttribute::getAttributeName),
 				new FinderColumn<>(
 					"ddmFieldAttribute.", "smallAttributeValue",
@@ -1766,17 +1768,19 @@ public class DDMFieldAttributePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"fieldId", "attributeName", "languageId"}, false,
-			DDMFieldAttribute::getFieldId, DDMFieldAttribute::getAttributeName,
-			DDMFieldAttribute::getLanguageId);
+			DDMFieldAttribute::getFieldId,
+			convertNullFunction(DDMFieldAttribute::getAttributeName),
+			convertNullFunction(DDMFieldAttribute::getLanguageId));
 
 		_uniquePersistenceFinderByF_AN_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_AN_L, _SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
+			"",
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "fieldId", FinderColumn.Type.LONG, "=",
-				true, false, DDMFieldAttribute::getFieldId),
+				true, true, DDMFieldAttribute::getFieldId),
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "attributeName", FinderColumn.Type.STRING,
-				"=", true, false, DDMFieldAttribute::getAttributeName),
+				"=", true, true, DDMFieldAttribute::getAttributeName),
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "languageId", FinderColumn.Type.STRING,
 				"=", true, true, DDMFieldAttribute::getLanguageId));
@@ -1850,4 +1854,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1334951445
+// LIFERAY-SERVICE-BUILDER-HASH:-1145172862

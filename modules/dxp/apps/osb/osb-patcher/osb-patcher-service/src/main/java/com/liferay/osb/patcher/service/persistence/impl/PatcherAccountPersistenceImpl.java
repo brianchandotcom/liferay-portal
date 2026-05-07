@@ -1491,7 +1491,7 @@ public class PatcherAccountPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
-				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
@@ -1500,12 +1500,12 @@ public class PatcherAccountPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByAccountEntryCode",
 			new String[] {String.class.getName()},
 			new String[] {"accountEntryCode"}, false,
-			PatcherAccount::getAccountEntryCode);
+			convertNullFunction(PatcherAccount::getAccountEntryCode));
 
 		_uniquePersistenceFinderByAccountEntryCode =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByAccountEntryCode,
-				_SQL_SELECT_PATCHERACCOUNT_WHERE,
+				_SQL_SELECT_PATCHERACCOUNT_WHERE, "",
 				new FinderColumn<>(
 					"patcherAccount.", "accountEntryCode",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1531,10 +1531,10 @@ public class PatcherAccountPersistenceImpl
 				_finderPathWithPaginationCountByC_LikeA,
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
-				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, PatcherAccount::getCompanyId),
+					true, true, PatcherAccount::getCompanyId),
 				new FinderColumn<>(
 					"patcherAccount.", "accountEntryCode",
 					FinderColumn.Type.STRING, "LIKE", true, true,
@@ -1637,4 +1637,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1849808785
+// LIFERAY-SERVICE-BUILDER-HASH:-1946729586

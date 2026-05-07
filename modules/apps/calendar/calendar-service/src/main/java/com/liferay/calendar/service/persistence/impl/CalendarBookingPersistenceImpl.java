@@ -2680,7 +2680,7 @@ public class CalendarBookingPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
-			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CalendarBooking::getUuid));
@@ -2688,14 +2688,16 @@ public class CalendarBookingPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, CalendarBooking::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(CalendarBooking::getUuid),
 			CalendarBooking::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
+			"",
 			new FinderColumn<>(
 				"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, CalendarBooking::getUuid),
+				true, CalendarBooking::getUuid),
 			new FinderColumn<>(
 				"calendarBooking.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CalendarBooking::getGroupId));
@@ -2726,9 +2728,10 @@ public class CalendarBookingPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"calendarBooking.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CalendarBooking::getUuid),
+					true, true, CalendarBooking::getUuid),
 				new FinderColumn<>(
 					"calendarBooking.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCompanyId));
@@ -2758,6 +2761,7 @@ public class CalendarBookingPersistenceImpl
 				_finderPathCountByCalendarId, _SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"calendarBooking.", "calendarId", FinderColumn.Type.LONG,
 					"=", true, true, CalendarBooking::getCalendarId));
@@ -2788,6 +2792,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"calendarBooking.", "calendarResourceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2823,6 +2828,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"calendarBooking.", "parentCalendarBookingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2859,6 +2865,7 @@ public class CalendarBookingPersistenceImpl
 				_SQL_SELECT_CALENDARBOOKING_WHERE,
 				_SQL_COUNT_CALENDARBOOKING_WHERE,
 				CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"calendarBooking.", "recurringCalendarBookingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2872,10 +2879,10 @@ public class CalendarBookingPersistenceImpl
 			CalendarBooking::getParentCalendarBookingId);
 
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_P, _SQL_SELECT_CALENDARBOOKING_WHERE,
+			this, _finderPathFetchByC_P, _SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "calendarId", FinderColumn.Type.LONG, "=",
-				true, false, CalendarBooking::getCalendarId),
+				true, true, CalendarBooking::getCalendarId),
 			new FinderColumn<>(
 				"calendarBooking.", "parentCalendarBookingId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -2885,13 +2892,14 @@ public class CalendarBookingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"calendarId", "vEventUid"}, false,
-			CalendarBooking::getCalendarId, CalendarBooking::getVEventUid);
+			CalendarBooking::getCalendarId,
+			convertNullFunction(CalendarBooking::getVEventUid));
 
 		_uniquePersistenceFinderByC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_V, _SQL_SELECT_CALENDARBOOKING_WHERE,
+			this, _finderPathFetchByC_V, _SQL_SELECT_CALENDARBOOKING_WHERE, "",
 			new FinderColumn<>(
 				"calendarBooking.", "calendarId", FinderColumn.Type.LONG, "=",
-				true, false, CalendarBooking::getCalendarId),
+				true, true, CalendarBooking::getCalendarId),
 			new FinderColumn<>(
 				"calendarBooking.", "vEventUid", FinderColumn.Type.STRING, "=",
 				true, true, CalendarBooking::getVEventUid));
@@ -2943,10 +2951,10 @@ public class CalendarBookingPersistenceImpl
 			this, _finderPathWithPaginationFindByP_S,
 			_finderPathWithoutPaginationFindByP_S, _finderPathCountByP_S,
 			_SQL_SELECT_CALENDARBOOKING_WHERE, _SQL_COUNT_CALENDARBOOKING_WHERE,
-			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CalendarBookingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"calendarBooking.", "parentCalendarBookingId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CalendarBooking::getParentCalendarBookingId),
 			new FinderColumn<>(
 				"calendarBooking.", "status", FinderColumn.Type.INTEGER, "=",
@@ -2956,14 +2964,15 @@ public class CalendarBookingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			CalendarBooking::getExternalReferenceCode,
+			convertNullFunction(CalendarBooking::getExternalReferenceCode),
 			CalendarBooking::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_CALENDARBOOKING_WHERE,
+			"",
 			new FinderColumn<>(
 				"calendarBooking.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CalendarBooking::getExternalReferenceCode),
 			new FinderColumn<>(
 				"calendarBooking.", "groupId", FinderColumn.Type.LONG, "=",
@@ -3041,4 +3050,4 @@ public class CalendarBookingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1486262000
+// LIFERAY-SERVICE-BUILDER-HASH:2047026163

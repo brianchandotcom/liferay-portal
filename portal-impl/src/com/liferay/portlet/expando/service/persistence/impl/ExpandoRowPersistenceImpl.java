@@ -769,7 +769,7 @@ public class ExpandoRowPersistenceImpl
 				_finderPathWithoutPaginationFindByTableId,
 				_finderPathCountByTableId, _SQL_SELECT_EXPANDOROW_WHERE,
 				_SQL_COUNT_EXPANDOROW_WHERE, ExpandoRowModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoRow.", "tableId", FinderColumn.Type.LONG, "=", true,
 					true, ExpandoRow::getTableId));
@@ -798,7 +798,7 @@ public class ExpandoRowPersistenceImpl
 				_finderPathWithoutPaginationFindByClassPK,
 				_finderPathCountByClassPK, _SQL_SELECT_EXPANDOROW_WHERE,
 				_SQL_COUNT_EXPANDOROW_WHERE, ExpandoRowModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoRow.", "classPK", FinderColumn.Type.LONG, "=", true,
 					true, ExpandoRow::getClassPK));
@@ -810,10 +810,10 @@ public class ExpandoRowPersistenceImpl
 			ExpandoRow::getClassPK);
 
 		_uniquePersistenceFinderByT_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_C, _SQL_SELECT_EXPANDOROW_WHERE,
+			this, _finderPathFetchByT_C, _SQL_SELECT_EXPANDOROW_WHERE, "",
 			new FinderColumn<>(
 				"expandoRow.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoRow::getTableId),
+				true, ExpandoRow::getTableId),
 			new FinderColumn<>(
 				"expandoRow.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoRow::getClassPK));
@@ -854,4 +854,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:217676045
+// LIFERAY-SERVICE-BUILDER-HASH:1086253424

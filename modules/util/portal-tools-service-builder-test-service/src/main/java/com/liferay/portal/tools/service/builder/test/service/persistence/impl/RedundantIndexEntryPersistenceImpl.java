@@ -334,13 +334,15 @@ public class RedundantIndexEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false,
-			RedundantIndexEntry::getCompanyId, RedundantIndexEntry::getName);
+			RedundantIndexEntry::getCompanyId,
+			convertNullFunction(RedundantIndexEntry::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_REDUNDANTINDEXENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"redundantIndexEntry.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, RedundantIndexEntry::getCompanyId),
+				"=", true, true, RedundantIndexEntry::getCompanyId),
 			new FinderColumn<>(
 				"redundantIndexEntry.", "name", FinderColumn.Type.STRING, "=",
 				true, true, RedundantIndexEntry::getName));
@@ -381,4 +383,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1273665394
+// LIFERAY-SERVICE-BUILDER-HASH:117031414

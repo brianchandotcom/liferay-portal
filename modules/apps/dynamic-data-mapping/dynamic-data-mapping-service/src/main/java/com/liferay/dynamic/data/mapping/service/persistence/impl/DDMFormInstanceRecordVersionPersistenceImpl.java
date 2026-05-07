@@ -1404,7 +1404,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "formInstanceRecordId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1435,10 +1435,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "userId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceRecordVersion::getUserId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceId",
@@ -1470,10 +1470,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceRecordVersion::getFormInstanceId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceVersion",
@@ -1485,14 +1485,14 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"formInstanceRecordId", "version"}, false,
 			DDMFormInstanceRecordVersion::getFormInstanceRecordId,
-			DDMFormInstanceRecordVersion::getVersion);
+			convertNullFunction(DDMFormInstanceRecordVersion::getVersion));
 
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_V,
-			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
+			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceRecordId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceRecordVersion::getFormInstanceRecordId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "version",
@@ -1524,10 +1524,10 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 			DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "formInstanceRecordId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceRecordVersion::getFormInstanceRecordId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecordVersion.", "status",
@@ -1577,18 +1577,18 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORDVERSION_WHERE,
 				DDMFormInstanceRecordVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "userId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					DDMFormInstanceRecordVersion::getUserId),
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "formInstanceId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					DDMFormInstanceRecordVersion::getFormInstanceId),
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "formInstanceVersion",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					DDMFormInstanceRecordVersion::getFormInstanceVersion),
 				new FinderColumn<>(
 					"ddmFormInstanceRecordVersion.", "status",
@@ -1665,4 +1665,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:858220398
+// LIFERAY-SERVICE-BUILDER-HASH:98200628

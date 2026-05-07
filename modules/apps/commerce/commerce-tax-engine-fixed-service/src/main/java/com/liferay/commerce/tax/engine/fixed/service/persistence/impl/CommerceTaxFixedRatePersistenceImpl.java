@@ -714,7 +714,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 				_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE,
 				CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxFixedRate.", "CPTaxCategoryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -746,7 +746,7 @@ public class CommerceTaxFixedRatePersistenceImpl
 				_SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
 				_SQL_COUNT_COMMERCETAXFIXEDRATE_WHERE,
 				CommerceTaxFixedRateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceTaxFixedRate.", "commerceTaxMethodId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -761,9 +761,10 @@ public class CommerceTaxFixedRatePersistenceImpl
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_COMMERCETAXFIXEDRATE_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceTaxFixedRate.", "CPTaxCategoryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceTaxFixedRate::getCPTaxCategoryId),
 			new FinderColumn<>(
 				"commerceTaxFixedRate.", "commerceTaxMethodId",
@@ -836,4 +837,4 @@ public class CommerceTaxFixedRatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1995300531
+// LIFERAY-SERVICE-BUILDER-HASH:1108571772

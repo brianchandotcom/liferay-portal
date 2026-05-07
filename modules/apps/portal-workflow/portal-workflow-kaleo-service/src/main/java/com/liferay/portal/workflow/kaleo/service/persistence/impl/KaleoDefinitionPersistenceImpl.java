@@ -2174,7 +2174,7 @@ public class KaleoDefinitionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_KALEODEFINITION_WHERE, _SQL_COUNT_KALEODEFINITION_WHERE,
-			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KaleoDefinition::getUuid));
@@ -2182,14 +2182,16 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, KaleoDefinition::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(KaleoDefinition::getUuid),
 			KaleoDefinition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_KALEODEFINITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, KaleoDefinition::getUuid),
+				true, KaleoDefinition::getUuid),
 			new FinderColumn<>(
 				"kaleoDefinition.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, KaleoDefinition::getGroupId));
@@ -2220,9 +2222,10 @@ public class KaleoDefinitionPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_KALEODEFINITION_WHERE,
 				_SQL_COUNT_KALEODEFINITION_WHERE,
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoDefinition.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, KaleoDefinition::getUuid),
+					true, true, KaleoDefinition::getUuid),
 				new FinderColumn<>(
 					"kaleoDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoDefinition::getCompanyId));
@@ -2252,6 +2255,7 @@ public class KaleoDefinitionPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_KALEODEFINITION_WHERE,
 				_SQL_COUNT_KALEODEFINITION_WHERE,
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoDefinition.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoDefinition::getCompanyId));
@@ -2281,6 +2285,7 @@ public class KaleoDefinitionPersistenceImpl
 				_finderPathCountByActive, _SQL_SELECT_KALEODEFINITION_WHERE,
 				_SQL_COUNT_KALEODEFINITION_WHERE,
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, KaleoDefinition::isActive));
@@ -2289,13 +2294,14 @@ public class KaleoDefinitionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false,
-			KaleoDefinition::getCompanyId, KaleoDefinition::getName);
+			KaleoDefinition::getCompanyId,
+			convertNullFunction(KaleoDefinition::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_KALEODEFINITION_WHERE,
+			this, _finderPathFetchByC_N, _SQL_SELECT_KALEODEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getCompanyId),
+				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "name", FinderColumn.Type.STRING, "=", true,
 				true, KaleoDefinition::getName));
@@ -2323,10 +2329,10 @@ public class KaleoDefinitionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_A,
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_KALEODEFINITION_WHERE, _SQL_COUNT_KALEODEFINITION_WHERE,
-			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getCompanyId),
+				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, KaleoDefinition::isActive));
@@ -2360,13 +2366,13 @@ public class KaleoDefinitionPersistenceImpl
 			this, _finderPathWithPaginationFindByG_C_S,
 			_finderPathWithoutPaginationFindByG_C_S, _finderPathCountByG_C_S,
 			_SQL_SELECT_KALEODEFINITION_WHERE, _SQL_COUNT_KALEODEFINITION_WHERE,
-			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kaleoDefinition.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getGroupId),
+				true, true, KaleoDefinition::getGroupId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getCompanyId),
+				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "scope", FinderColumn.Type.STRING, "=",
 				true, true, KaleoDefinition::getScope));
@@ -2378,17 +2384,19 @@ public class KaleoDefinitionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"companyId", "name", "version"}, false,
-			KaleoDefinition::getCompanyId, KaleoDefinition::getName,
+			KaleoDefinition::getCompanyId,
+			convertNullFunction(KaleoDefinition::getName),
 			KaleoDefinition::getVersion);
 
 		_uniquePersistenceFinderByC_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_V, _SQL_SELECT_KALEODEFINITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getCompanyId),
+				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "name", FinderColumn.Type.STRING, "=", true,
-				false, KaleoDefinition::getName),
+				true, KaleoDefinition::getName),
 			new FinderColumn<>(
 				"kaleoDefinition.", "version", FinderColumn.Type.INTEGER, "=",
 				true, true, KaleoDefinition::getVersion));
@@ -2400,17 +2408,19 @@ public class KaleoDefinitionPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"companyId", "name", "active_"}, false,
-			KaleoDefinition::getCompanyId, KaleoDefinition::getName,
+			KaleoDefinition::getCompanyId,
+			convertNullFunction(KaleoDefinition::getName),
 			KaleoDefinition::isActive);
 
 		_uniquePersistenceFinderByC_N_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_A, _SQL_SELECT_KALEODEFINITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, KaleoDefinition::getCompanyId),
+				true, true, KaleoDefinition::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinition.", "name", FinderColumn.Type.STRING, "=", true,
-				false, KaleoDefinition::getName),
+				true, KaleoDefinition::getName),
 			new FinderColumn<>(
 				"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, KaleoDefinition::isActive));
@@ -2448,15 +2458,16 @@ public class KaleoDefinitionPersistenceImpl
 				_finderPathCountByG_C_S_A, _SQL_SELECT_KALEODEFINITION_WHERE,
 				_SQL_COUNT_KALEODEFINITION_WHERE,
 				KaleoDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoDefinition.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, KaleoDefinition::getGroupId),
+					true, true, KaleoDefinition::getGroupId),
 				new FinderColumn<>(
 					"kaleoDefinition.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, KaleoDefinition::getCompanyId),
+					"=", true, true, KaleoDefinition::getCompanyId),
 				new FinderColumn<>(
 					"kaleoDefinition.", "scope", FinderColumn.Type.STRING, "=",
-					true, false, KaleoDefinition::getScope),
+					true, true, KaleoDefinition::getScope),
 				new FinderColumn<>(
 					"kaleoDefinition.", "active", FinderColumn.Type.BOOLEAN,
 					"=", true, true, KaleoDefinition::isActive));
@@ -2465,14 +2476,15 @@ public class KaleoDefinitionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			KaleoDefinition::getExternalReferenceCode,
+			convertNullFunction(KaleoDefinition::getExternalReferenceCode),
 			KaleoDefinition::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_KALEODEFINITION_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoDefinition.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				KaleoDefinition::getExternalReferenceCode),
 			new FinderColumn<>(
 				"kaleoDefinition.", "companyId", FinderColumn.Type.LONG, "=",
@@ -2550,4 +2562,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1195842812
+// LIFERAY-SERVICE-BUILDER-HASH:1773773637

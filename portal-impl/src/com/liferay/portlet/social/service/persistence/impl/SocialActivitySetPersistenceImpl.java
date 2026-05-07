@@ -1436,6 +1436,7 @@ public class SocialActivitySetPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"socialActivitySet.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivitySet::getGroupId));
@@ -1464,6 +1465,7 @@ public class SocialActivitySetPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialActivitySet::getUserId));
@@ -1498,13 +1500,13 @@ public class SocialActivitySetPersistenceImpl
 			_finderPathWithoutPaginationFindByG_U_T, _finderPathCountByG_U_T,
 			_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
-			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivitySet.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivitySet::getGroupId),
+				true, true, SocialActivitySet::getGroupId),
 			new FinderColumn<>(
 				"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivitySet::getUserId),
+				true, true, SocialActivitySet::getUserId),
 			new FinderColumn<>(
 				"socialActivitySet.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, SocialActivitySet::getType));
@@ -1539,13 +1541,13 @@ public class SocialActivitySetPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C_T, _finderPathCountByC_C_T,
 			_SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
-			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivitySet.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivitySet::getClassNameId),
+				"=", true, true, SocialActivitySet::getClassNameId),
 			new FinderColumn<>(
 				"socialActivitySet.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivitySet::getClassPK),
+				true, true, SocialActivitySet::getClassPK),
 			new FinderColumn<>(
 				"socialActivitySet.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, SocialActivitySet::getType));
@@ -1583,15 +1585,16 @@ public class SocialActivitySetPersistenceImpl
 				_finderPathCountByG_U_C_T, _SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"socialActivitySet.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, SocialActivitySet::getGroupId),
+					"=", true, true, SocialActivitySet::getGroupId),
 				new FinderColumn<>(
 					"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, SocialActivitySet::getUserId),
+					true, true, SocialActivitySet::getUserId),
 				new FinderColumn<>(
 					"socialActivitySet.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SocialActivitySet::getClassNameId),
+					"=", true, true, SocialActivitySet::getClassNameId),
 				new FinderColumn<>(
 					"socialActivitySet.", "type", FinderColumn.Type.INTEGER,
 					"=", true, true, SocialActivitySet::getType));
@@ -1629,15 +1632,16 @@ public class SocialActivitySetPersistenceImpl
 				_finderPathCountByU_C_C_T, _SQL_SELECT_SOCIALACTIVITYSET_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYSET_WHERE,
 				SocialActivitySetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"socialActivitySet.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, SocialActivitySet::getUserId),
+					true, true, SocialActivitySet::getUserId),
 				new FinderColumn<>(
 					"socialActivitySet.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SocialActivitySet::getClassNameId),
+					"=", true, true, SocialActivitySet::getClassNameId),
 				new FinderColumn<>(
 					"socialActivitySet.", "classPK", FinderColumn.Type.LONG,
-					"=", true, false, SocialActivitySet::getClassPK),
+					"=", true, true, SocialActivitySet::getClassPK),
 				new FinderColumn<>(
 					"socialActivitySet.", "type", FinderColumn.Type.INTEGER,
 					"=", true, true, SocialActivitySet::getType));
@@ -1678,4 +1682,4 @@ public class SocialActivitySetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2060987130
+// LIFERAY-SERVICE-BUILDER-HASH:1884160242

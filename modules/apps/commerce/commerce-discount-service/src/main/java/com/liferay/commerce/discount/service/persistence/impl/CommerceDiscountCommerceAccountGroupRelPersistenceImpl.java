@@ -790,7 +790,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountCommerceAccountGroupRel.",
 					"commerceDiscountId", FinderColumn.Type.LONG, "=", true,
@@ -828,7 +828,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountCommerceAccountGroupRel.",
 					"commerceAccountGroupId", FinderColumn.Type.LONG, "=", true,
@@ -846,10 +846,10 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 
 		_uniquePersistenceFinderByCDI_CAGI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDI_CAGI,
-			_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
+			_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceDiscountCommerceAccountGroupRel.",
-				"commerceDiscountId", FinderColumn.Type.LONG, "=", true, false,
+				"commerceDiscountId", FinderColumn.Type.LONG, "=", true, true,
 				CommerceDiscountCommerceAccountGroupRel::getCommerceDiscountId),
 			new FinderColumn<>(
 				"commerceDiscountCommerceAccountGroupRel.",
@@ -931,4 +931,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1741785146
+// LIFERAY-SERVICE-BUILDER-HASH:-1005618401

@@ -1350,6 +1350,7 @@ public class MBSuspiciousActivityPersistenceImpl
 			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 			_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 			MBSuspiciousActivityModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, MBSuspiciousActivity::getUuid));
@@ -1358,14 +1359,15 @@ public class MBSuspiciousActivityPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			MBSuspiciousActivity::getUuid, MBSuspiciousActivity::getGroupId);
+			convertNullFunction(MBSuspiciousActivity::getUuid),
+			MBSuspiciousActivity::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
+			_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE, "",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, MBSuspiciousActivity::getUuid),
+				true, true, MBSuspiciousActivity::getUuid),
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, MBSuspiciousActivity::getGroupId));
@@ -1397,10 +1399,10 @@ public class MBSuspiciousActivityPersistenceImpl
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbSuspiciousActivity.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, MBSuspiciousActivity::getUuid),
+					"=", true, true, MBSuspiciousActivity::getUuid),
 				new FinderColumn<>(
 					"mbSuspiciousActivity.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1432,7 +1434,7 @@ public class MBSuspiciousActivityPersistenceImpl
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbSuspiciousActivity.", "messageId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1464,7 +1466,7 @@ public class MBSuspiciousActivityPersistenceImpl
 				_SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
 				_SQL_COUNT_MBSUSPICIOUSACTIVITY_WHERE,
 				MBSuspiciousActivityModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbSuspiciousActivity.", "threadId", FinderColumn.Type.LONG,
 					"=", true, true, MBSuspiciousActivity::getThreadId));
@@ -1478,9 +1480,10 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		_uniquePersistenceFinderByU_M = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_M, _SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
+			"",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, MBSuspiciousActivity::getUserId),
+				true, true, MBSuspiciousActivity::getUserId),
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "messageId", FinderColumn.Type.LONG,
 				"=", true, true, MBSuspiciousActivity::getMessageId));
@@ -1493,9 +1496,10 @@ public class MBSuspiciousActivityPersistenceImpl
 
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_T, _SQL_SELECT_MBSUSPICIOUSACTIVITY_WHERE,
+			"",
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, MBSuspiciousActivity::getUserId),
+				true, true, MBSuspiciousActivity::getUserId),
 			new FinderColumn<>(
 				"mbSuspiciousActivity.", "threadId", FinderColumn.Type.LONG,
 				"=", true, true, MBSuspiciousActivity::getThreadId));
@@ -1572,4 +1576,4 @@ public class MBSuspiciousActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1474248657
+// LIFERAY-SERVICE-BUILDER-HASH:1524713740

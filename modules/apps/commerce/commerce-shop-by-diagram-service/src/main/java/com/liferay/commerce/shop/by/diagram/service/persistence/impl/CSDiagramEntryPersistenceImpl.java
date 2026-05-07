@@ -1146,7 +1146,7 @@ public class CSDiagramEntryPersistenceImpl
 				_finderPathCountByCPDefinitionId,
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
-				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CPDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPDefinitionId));
@@ -1176,7 +1176,7 @@ public class CSDiagramEntryPersistenceImpl
 				_finderPathCountByCPInstanceId,
 				_SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
-				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CPInstanceId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCPInstanceId));
@@ -1205,7 +1205,7 @@ public class CSDiagramEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCProductId,
 				_finderPathCountByCProductId, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
 				_SQL_COUNT_CSDIAGRAMENTRY_WHERE,
-				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CSDiagramEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"csDiagramEntry.", "CProductId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramEntry::getCProductId));
@@ -1214,13 +1214,15 @@ public class CSDiagramEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "sequence"}, false,
-			CSDiagramEntry::getCPDefinitionId, CSDiagramEntry::getSequence);
+			CSDiagramEntry::getCPDefinitionId,
+			convertNullFunction(CSDiagramEntry::getSequence));
 
 		_uniquePersistenceFinderByCPDI_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCPDI_S, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"csDiagramEntry.", "CPDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, CSDiagramEntry::getCPDefinitionId),
+				"=", true, true, CSDiagramEntry::getCPDefinitionId),
 			new FinderColumn<>(
 				"csDiagramEntry.", "sequence", FinderColumn.Type.STRING, "=",
 				true, true, CSDiagramEntry::getSequence));
@@ -1229,14 +1231,14 @@ public class CSDiagramEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CSDiagramEntry::getExternalReferenceCode,
+			convertNullFunction(CSDiagramEntry::getExternalReferenceCode),
 			CSDiagramEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CSDIAGRAMENTRY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CSDIAGRAMENTRY_WHERE, "",
 			new FinderColumn<>(
 				"csDiagramEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CSDiagramEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"csDiagramEntry.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1311,4 +1313,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1504569430
+// LIFERAY-SERVICE-BUILDER-HASH:800205250

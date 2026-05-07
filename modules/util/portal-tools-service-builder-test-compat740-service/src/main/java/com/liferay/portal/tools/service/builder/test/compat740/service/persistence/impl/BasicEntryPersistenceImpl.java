@@ -880,7 +880,7 @@ public class BasicEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false, BasicEntry::getCompanyId,
-			BasicEntry::getName);
+			convertNullFunction(BasicEntry::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_BASICENTRY_WHERE,
@@ -963,4 +963,4 @@ public class BasicEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1973338623
+// LIFERAY-SERVICE-BUILDER-HASH:1231801634

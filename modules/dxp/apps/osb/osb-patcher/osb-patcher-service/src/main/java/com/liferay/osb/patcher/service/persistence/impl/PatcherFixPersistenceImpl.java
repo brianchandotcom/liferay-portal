@@ -5681,7 +5681,7 @@ public class PatcherFixPersistenceImpl
 				_finderPathWithoutPaginationFindByPatcherProjectVersionId,
 				_finderPathCountByPatcherProjectVersionId,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -5719,14 +5719,14 @@ public class PatcherFixPersistenceImpl
 			this, _finderPathWithPaginationFindByP_L_T,
 			_finderPathWithoutPaginationFindByP_L_T, _finderPathCountByP_L_T,
 			_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-			PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"patcherFix.", "patcherProjectVersionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PatcherFix::getPatcherProjectVersionId),
 			new FinderColumn<>(
 				"patcherFix.", "latestFix", FinderColumn.Type.BOOLEAN, "=",
-				true, false, PatcherFix::isLatestFix),
+				true, true, PatcherFix::isLatestFix),
 			new FinderColumn<>(
 				"patcherFix.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, PatcherFix::getType));
@@ -5755,14 +5755,14 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByP_L_NotT, null,
 				_finderPathWithPaginationCountByP_L_NotT,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFix::getPatcherProjectVersionId),
 				new FinderColumn<>(
 					"patcherFix.", "latestFix", FinderColumn.Type.BOOLEAN, "=",
-					true, false, PatcherFix::isLatestFix),
+					true, true, PatcherFix::isLatestFix),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
 					true, true, PatcherFix::getType));
@@ -5789,13 +5789,13 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByK_GtKV_NotT, null,
 				_finderPathWithPaginationCountByK_GtKV_NotT,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
-					false, PatcherFix::getKey),
+					true, PatcherFix::getKey),
 				new FinderColumn<>(
 					"patcherFix.", "keyVersion", FinderColumn.Type.DOUBLE, ">",
-					true, false, PatcherFix::getKeyVersion),
+					true, true, PatcherFix::getKeyVersion),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
 					true, true, PatcherFix::getType));
@@ -5822,13 +5822,13 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByK_LtKV_NotT, null,
 				_finderPathWithPaginationCountByK_LtKV_NotT,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
-					false, PatcherFix::getKey),
+					true, PatcherFix::getKey),
 				new FinderColumn<>(
 					"patcherFix.", "keyVersion", FinderColumn.Type.DOUBLE, "<",
-					true, false, PatcherFix::getKeyVersion),
+					true, true, PatcherFix::getKeyVersion),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
 					true, true, PatcherFix::getType));
@@ -5855,13 +5855,13 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByK_L_NotT, null,
 				_finderPathWithPaginationCountByK_L_NotT,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
-					false, PatcherFix::getKey),
+					true, PatcherFix::getKey),
 				new FinderColumn<>(
 					"patcherFix.", "latestFix", FinderColumn.Type.BOOLEAN, "=",
-					true, false, PatcherFix::isLatestFix),
+					true, true, PatcherFix::isLatestFix),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
 					true, true, PatcherFix::getType));
@@ -5914,17 +5914,17 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByP_L_N_NotT, null,
 				_finderPathWithPaginationCountByP_L_N_NotT,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFix::getPatcherProjectVersionId),
 				new FinderColumn<>(
 					"patcherFix.", "latestFix", FinderColumn.Type.BOOLEAN, "=",
-					true, false, PatcherFix::isLatestFix),
+					true, true, PatcherFix::isLatestFix),
 				new FinderColumn<>(
 					"patcherFix.", "name", FinderColumn.Type.STRING, "=", true,
-					false, PatcherFix::getName),
+					true, PatcherFix::getName),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
 					true, true, PatcherFix::getType));
@@ -5958,17 +5958,17 @@ public class PatcherFixPersistenceImpl
 				this, _finderPathWithPaginationFindByP_L_NotT_S, null,
 				_finderPathWithPaginationCountByP_L_NotT_S,
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
-				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFix::getPatcherProjectVersionId),
 				new FinderColumn<>(
 					"patcherFix.", "latestFix", FinderColumn.Type.BOOLEAN, "=",
-					true, false, PatcherFix::isLatestFix),
+					true, true, PatcherFix::isLatestFix),
 				new FinderColumn<>(
 					"patcherFix.", "type", FinderColumn.Type.INTEGER, "!=",
-					true, false, PatcherFix::getType),
+					true, true, PatcherFix::getType),
 				new FinderColumn<>(
 					"patcherFix.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, PatcherFix::getStatus));
@@ -6084,4 +6084,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1993782527
+// LIFERAY-SERVICE-BUILDER-HASH:1271627153

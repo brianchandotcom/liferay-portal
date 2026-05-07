@@ -1325,7 +1325,7 @@ public class SocialActivityAchievementPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 				SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialActivityAchievement.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1356,10 +1356,10 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getGroupId),
+				"=", true, true, SocialActivityAchievement::getGroupId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "userId", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityAchievement::getUserId));
@@ -1389,10 +1389,10 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getGroupId),
+				"=", true, true, SocialActivityAchievement::getGroupId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "name", FinderColumn.Type.STRING,
 				"=", true, true, SocialActivityAchievement::getName));
@@ -1422,10 +1422,10 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getGroupId),
+				"=", true, true, SocialActivityAchievement::getGroupId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "firstInGroup",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1440,17 +1440,17 @@ public class SocialActivityAchievementPersistenceImpl
 			new String[] {"groupId", "userId", "name"}, false,
 			SocialActivityAchievement::getGroupId,
 			SocialActivityAchievement::getUserId,
-			SocialActivityAchievement::getName);
+			convertNullFunction(SocialActivityAchievement::getName));
 
 		_uniquePersistenceFinderByG_U_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U_N,
-			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
+			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getGroupId),
+				"=", true, true, SocialActivityAchievement::getGroupId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "userId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getUserId),
+				"=", true, true, SocialActivityAchievement::getUserId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "name", FinderColumn.Type.STRING,
 				"=", true, true, SocialActivityAchievement::getName));
@@ -1486,13 +1486,13 @@ public class SocialActivityAchievementPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYACHIEVEMENT_WHERE,
 			SocialActivityAchievementModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialActivityAchievement.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getGroupId),
+				"=", true, true, SocialActivityAchievement::getGroupId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "userId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityAchievement::getUserId),
+				"=", true, true, SocialActivityAchievement::getUserId),
 			new FinderColumn<>(
 				"socialActivityAchievement.", "firstInGroup",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1532,4 +1532,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1302224597
+// LIFERAY-SERVICE-BUILDER-HASH:71795934

@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {GenericOperator, GenericProperty} from './condition_builder/types';
+import type {FilterOperator, FilterProperty} from './types';
 
 // Booleans use an implicit `eq` operator (auto-set when the field is selected
 // in ConditionBuilder) and render their value as a single Is True / Is False
 // picker via DefaultValueInput. No explicit operator picker is needed.
 
-const BOOLEAN_OPERATORS: GenericOperator[] = [];
+const BOOLEAN_OPERATORS: FilterOperator[] = [];
 
-const COMPARISON_OPERATORS: GenericOperator[] = [
+const COMPARISON_OPERATORS: FilterOperator[] = [
 	{label: Liferay.Language.get('equals'), value: 'eq'},
 	{label: Liferay.Language.get('not-equals'), value: 'not-eq'},
 	{label: Liferay.Language.get('greater-than'), value: 'gt'},
@@ -21,14 +21,14 @@ const COMPARISON_OPERATORS: GenericOperator[] = [
 	{label: Liferay.Language.get('between'), value: 'between'},
 ];
 
-const DEFAULT_OPERATORS: GenericOperator[] = [
+const DEFAULT_OPERATORS: FilterOperator[] = [
 	{label: Liferay.Language.get('contains'), value: 'contains'},
 	{label: Liferay.Language.get('does-not-contain'), value: 'not-contains'},
 ];
 
 export function getCollectionOperators(
-	property: GenericProperty
-): GenericOperator[] {
+	property: FilterProperty
+): FilterOperator[] {
 	switch (property.type) {
 		case 'boolean':
 			return BOOLEAN_OPERATORS;
@@ -45,14 +45,14 @@ export function getCollectionOperators(
 	}
 }
 
-const QUANTIFIER_OPTIONS: GenericOperator[] = [
+const QUANTIFIER_OPTIONS: FilterOperator[] = [
 	{label: Liferay.Language.get('any-of-the-following'), value: 'any'},
 	{label: Liferay.Language.get('all-of-the-following'), value: 'all'},
 ];
 
 export function getCollectionQuantifierOptions(
-	property: GenericProperty
-): GenericOperator[] | null {
+	property: FilterProperty
+): FilterOperator[] | null {
 	switch (property.type) {
 		case 'asset-categories':
 		case 'asset-tags':

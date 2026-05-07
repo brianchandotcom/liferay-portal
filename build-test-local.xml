@@ -507,15 +507,23 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 								input="@{custom.suite.testcase}"
 								override="true"
 								property="testcase.file.name"
-								regexp="(.*?)\/(main)\/([^\/]+$)"
+								regexp="([^\/]+)\/([^\/]+)\/([^\/]+)$"
 								select="\1"
+							/>
+
+							<propertyregex
+								input="@{custom.suite.testcase}"
+								override="true"
+								property="testcase.variant"
+								regexp="([^\/]+)\/([^\/]+)\/([^\/]+)$"
+								select="\2"
 							/>
 
 							<replaceregexp
 								file="${project.dir}/test.properties"
 								flags="g"
 								match="(playwright\.projects\.includes\[playwright-js-tomcat101-postgresql163\]\[portal-release-acceptance\]=\\\n)"
-								replace="\1        ${testcase.file.name}.main,\\\\${line.separator}"
+								replace="\1        ${testcase.file.name}.${testcase.variant},\\\\${line.separator}"
 							/>
 						</then>
 					</elseif>

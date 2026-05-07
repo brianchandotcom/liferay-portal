@@ -400,25 +400,26 @@ public abstract class BaseWorkspaceGitRepository
 
 		System.out.println(toString());
 
-		try {
-			if (JenkinsResultsParserUtil.isBuildCachingEnabled(
-					System.getenv("JOB_NAME"),
-					System.getenv("CI_TEST_SUITE"))) {
+		boolean gitArchiveEnabled = isGitArchiveEnabled();
 
+		try {
+			if (gitArchiveEnabled) {
 				checkAvailableGitArchive();
+
+				if (isSnapshot()) {
+					useGitArchive();
+				}
 			}
 
 			if (!isSnapshot()) {
 				prepareGitWorkingDirectory();
 
-				prepareGitArchive();
-
-				setSetUp(true);
+				if (gitArchiveEnabled) {
+					prepareGitArchive();
+				}
 			}
 
-			if (!isSetUp() && isSnapshot()) {
-				useGitArchive();
-			}
+			setUpAdditionalCaches();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -692,6 +693,18 @@ public abstract class BaseWorkspaceGitRepository
 		return _propertyOptions;
 	}
 
+	protected boolean isGitArchiveEnabled() {
+		try {
+			return Boolean.parseBoolean(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"git.archive.enabled", System.getenv("JOB_NAME"),
+					System.getenv("CI_TEST_SUITE")));
+		}
+		catch (IOException ioException) {
+			return true;
+		}
+	}
+
 	protected boolean isSetUp() {
 		return _setUp;
 	}
@@ -787,6 +800,9 @@ public abstract class BaseWorkspaceGitRepository
 
 	protected void setSetUp(boolean setUp) {
 		_setUp = setUp;
+	}
+
+	protected void setUpAdditionalCaches() throws IOException {
 	}
 
 	protected void useGitArchive() throws IOException {

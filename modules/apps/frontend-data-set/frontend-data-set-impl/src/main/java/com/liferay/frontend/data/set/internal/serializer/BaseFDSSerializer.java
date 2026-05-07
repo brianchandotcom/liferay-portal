@@ -64,6 +64,12 @@ public abstract class BaseFDSSerializer {
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
+			ObjectEntryManager objectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getStorageType()));
+
 			long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
 			ObjectDefinition objectDefinition =
@@ -82,12 +88,6 @@ public abstract class BaseFDSSerializer {
 			Set<Long> sharingEntriesClassPKs = SetUtil.fromCollection(
 				TransformUtil.transform(
 					sharingEntries, SharingEntry::getClassPK));
-
-			ObjectEntryManager objectEntryManager =
-				DefaultObjectEntryManagerProvider.provide(
-					objectEntryManagerRegistry.getObjectEntryManager(
-						objectDefinition.getCompanyId(),
-						objectDefinition.getStorageType()));
 
 			Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 				companyId, objectDefinition, null, null,

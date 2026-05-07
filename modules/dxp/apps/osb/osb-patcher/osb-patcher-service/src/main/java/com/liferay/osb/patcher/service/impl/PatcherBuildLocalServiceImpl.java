@@ -191,8 +191,6 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setUserId(user.getUserId());
 		patcherBuild.setUserName(user.getFullName());
 
-		patcherBuild.setCreateDate(new Date());
-
 		PatcherAccount patcherAccount =
 			_patcherAccountLocalService.fetchPatcherAccount(accountEntryCode);
 

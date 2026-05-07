@@ -34,7 +34,7 @@
 					"name": "LATAM"
 				}
 			],
-			"name": "One Account Region"
+			"name": "Account Region"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_TIER",
@@ -70,7 +70,7 @@
 					"name": "Community"
 				}
 			],
-			"name": "One Account Tier"
+			"name": "Account Tier"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_STATUS",
@@ -96,141 +96,43 @@
 					"name": "Expired"
 				}
 			],
-			"name": "One Account Status"
+			"name": "Account Status"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_FLAG_CODE",
+			"listTypeEntries": [
+			],
+			"name": "Account Flag Code"
+		},
+		{
+			"externalReferenceCode": "C_ACCOUNT_FLAG_VALUE",
+			"listTypeEntries": [
+			],
+			"name": "Account Flag Value"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_NOTE_FORMAT",
 			"listTypeEntries": [
 			],
-			"name": "One Account Note Format"
+			"name": "Account Note Format"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_NOTE_TYPE",
 			"listTypeEntries": [
 			],
-			"name": "One Account Note Type"
+			"name": "Account Note Type"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_NOTE_PRIORITY",
 			"listTypeEntries": [
 			],
-			"name": "One Account Note Priority"
+			"name": "Account Note Priority"
 		},
 		{
 			"externalReferenceCode": "C_ACCOUNT_NOTE_STATUS",
 			"listTypeEntries": [
 			],
-			"name": "One Account Note Status"
-		},
-		{
-			"externalReferenceCode": "C_PUBLISHER_APPROVAL_STATUS",
-			"listTypeEntries": [
-			],
-			"name": "One Publisher Approval Status"
-		},
-		{
-			"externalReferenceCode": "C_ENVIRONMENT_TYPE",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_TYPE_CLOUD_NATIVE",
-					"key": "cloudNative",
-					"name": "Cloud Native"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_TYPE_ON_PREM",
-					"key": "onPrem",
-					"name": "On-Prem"
-				}
-			],
-			"name": "One Environment Type"
-		},
-		{
-			"externalReferenceCode": "C_ENVIRONMENT_NAME",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_NAME_PRODUCTION",
-					"key": "production",
-					"name": "Production"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_NAME_NON_PRODUCTION",
-					"key": "nonProduction",
-					"name": "Non-Production"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_NAME_DEVELOPMENT",
-					"key": "development",
-					"name": "Development"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_NAME_BACKUP",
-					"key": "backup",
-					"name": "Backup"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_NAME_HA_PRODUCTION",
-					"key": "hAProduction",
-					"name": "HA Production"
-				}
-			],
-			"name": "One Environment Name"
-		},
-		{
-			"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XS",
-					"key": "xS",
-					"name": "XS"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_S",
-					"key": "s",
-					"name": "S"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_M",
-					"key": "m",
-					"name": "M"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_L",
-					"key": "l",
-					"name": "L"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XL",
-					"key": "xL",
-					"name": "XL"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_INSTANCE_SIZE_XXL",
-					"key": "xXL",
-					"name": "XXL"
-				}
-			],
-			"name": "One Environment Instance Size"
-		},
-		{
-			"externalReferenceCode": "C_ENVIRONMENT_STATUS",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_STATUS_ACTIVE",
-					"key": "active",
-					"name": "Active"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_STATUS_DECOMMISSIONED",
-					"key": "decommissioned",
-					"name": "Decommissioned"
-				},
-				{
-					"externalReferenceCode": "C_ENVIRONMENT_STATUS_SUSPENDED",
-					"key": "suspended",
-					"name": "Suspended"
-				}
-			],
-			"name": "One Environment Status"
+			"name": "Account Note Status"
 		},
 		{
 			"externalReferenceCode": "C_ENTITLEMENT_RULE_TYPE",
@@ -246,7 +148,7 @@
 					"name": "Scripted"
 				}
 			],
-			"name": "One Entitlement Rule Type"
+			"name": "Entitlement Rule Type"
 		},
 		{
 			"externalReferenceCode": "C_ENTITLEMENT_STATUS",
@@ -262,7 +164,63 @@
 					"name": "Inactive"
 				}
 			],
-			"name": "One Entitlement Status"
+			"name": "Entitlement Status"
+		},
+		{
+			"externalReferenceCode": "C_PRODUCT_FAMILY",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_DXP",
+					"key": "dXP",
+					"name": "DXP"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_PORTAL",
+					"key": "portal",
+					"name": "Portal"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_ANALYTICS",
+					"key": "analytics",
+					"name": "Analytics"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_COMMERCE",
+					"key": "commerce",
+					"name": "Commerce"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_AI_HUB",
+					"key": "aIHub",
+					"name": "AIHub"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_CMP",
+					"key": "cMP",
+					"name": "CMP"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_PARTNER",
+					"key": "partner",
+					"name": "Partner"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_SUPPORT",
+					"key": "support",
+					"name": "Support"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_TRAINING",
+					"key": "training",
+					"name": "Training"
+				},
+				{
+					"externalReferenceCode": "C_PRODUCT_FAMILY_OTHER",
+					"key": "other",
+					"name": "Other"
+				}
+			],
+			"name": "Product Family"
 		}
 	]
 }

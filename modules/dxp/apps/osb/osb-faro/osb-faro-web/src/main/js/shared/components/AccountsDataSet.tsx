@@ -103,6 +103,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 						value: string;
 					}) =>
 						columns.nameAndLinkRenderer({
+							channelId,
 							groupId,
 							itemData,
 							route: Routes.CONTACTS_ACCOUNT,

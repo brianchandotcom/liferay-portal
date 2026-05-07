@@ -231,7 +231,7 @@
 	<#if _insertAssetEntry>
 		<@insertAssetEntry
 			_categoryAndTag = true
-			_entry = dataFactory.newObjectValuePair(journalArticleModel, journalArticleLocalizationModel)
+			_entry = dataFactory.newTuple(journalArticleModel, journalArticleLocalizationModel)
 		/>
 	</#if>
 </#macro>

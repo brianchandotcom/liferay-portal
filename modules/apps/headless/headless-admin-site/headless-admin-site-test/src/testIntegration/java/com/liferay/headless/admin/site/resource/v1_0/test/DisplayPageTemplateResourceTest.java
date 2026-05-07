@@ -62,7 +62,6 @@ import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -1489,10 +1488,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 
@@ -1843,10 +1841,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 
@@ -2303,10 +2300,9 @@ public class DisplayPageTemplateResourceTest
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 

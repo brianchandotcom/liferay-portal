@@ -178,9 +178,8 @@ public class PatcherBuildLocalServiceImpl
 	@Override
 	public PatcherBuild preparePatcherBuild(
 			long userId, long patcherProductVersionId,
-			long patcherProjectVersionId, String accountEntryCode,
-			int type, Locale locale, String patcherBuildName,
-			boolean useExistingHotfix)
+			long patcherProjectVersionId, String accountEntryCode, int type,
+			Locale locale, String patcherBuildName, boolean useExistingHotfix)
 		throws Exception {
 
 		PatcherBuild patcherBuild = patcherBuildPersistence.create(
@@ -191,6 +190,7 @@ public class PatcherBuildLocalServiceImpl
 		patcherBuild.setCompanyId(user.getCompanyId());
 		patcherBuild.setUserId(user.getUserId());
 		patcherBuild.setUserName(user.getFullName());
+
 		patcherBuild.setCreateDate(new Date());
 
 		PatcherAccount patcherAccount =

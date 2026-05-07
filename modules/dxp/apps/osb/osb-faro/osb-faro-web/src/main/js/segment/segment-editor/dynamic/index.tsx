@@ -292,9 +292,15 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 									<div className='form-body'>
 										<div className='criteria-builder-section-sidebar'>
 											<CriteriaSidebar
+												channelId={channelId}
+												criteriaString={
+													criteriaString ?? undefined
+												}
+												groupId={groupId}
 												propertyGroupsIList={
 													propertyGroupsIList
 												}
+												type={type}
 											/>
 										</div>
 

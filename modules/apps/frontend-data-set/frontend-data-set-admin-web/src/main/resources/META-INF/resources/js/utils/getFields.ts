@@ -11,7 +11,7 @@ import {
 } from '@liferay/frontend-data-set-web';
 
 import openDefaultFailureToast from './openDefaultFailureToast';
-import {EFieldFormat, EFieldType, IField, IProperties, ISchemas} from './types';
+import {EFieldType, IField, IProperties, ISchemas} from './types';
 
 export const BLACKLISTED_FIELDS = [
 	'actions',
@@ -161,7 +161,6 @@ function getFilterableFields({
 
 		const field: IField = {
 			entityFieldType,
-			format: type,
 			label: item,
 			name: item,
 			type,
@@ -173,7 +172,7 @@ function getFilterableFields({
 				| EFieldType.COLLECTION_STRING;
 		}
 
-		if (field.type === EFieldFormat.F_DATE_TIME) {
+		if (field.type === EFieldType.DATE_TIME) {
 			field.entityFieldType = EFieldType.STRING;
 		}
 

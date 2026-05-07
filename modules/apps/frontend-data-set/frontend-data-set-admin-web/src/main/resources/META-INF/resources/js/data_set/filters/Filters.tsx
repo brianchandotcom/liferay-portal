@@ -59,7 +59,8 @@ const FILTER_TYPES: Record<EFilterType, IFilterTypeProps> = {
 		availableFieldsFilter: (item: IField) =>
 			item.format === EFieldFormat.DATE ||
 			item.format === EFieldFormat.DATE_TIME ||
-			item.format === EFieldFormat.F_DATE_TIME,
+			item.type === EFieldType.DATE ||
+			item.type === EFieldType.DATE_TIME,
 		displayType: () => Liferay.Language.get('date-filter'),
 		fdsViewRelationship: OBJECT_RELATIONSHIP.DATA_SET_DATE_FILTERS,
 		label: Liferay.Language.get('date-range'),

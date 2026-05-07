@@ -28,6 +28,37 @@ public class ObjectEntryValuesException extends PortalException {
 		return _messageKey;
 	}
 
+	public static class BlockedEmailAddressDomain
+		extends ObjectEntryValuesException {
+
+		public BlockedEmailAddressDomain(
+			String domain, String objectFieldName) {
+
+			super(
+				Arrays.asList(domain, objectFieldName),
+				StringBundler.concat(
+					"The email address domain \"", domain,
+					"\" is blocked for object field \"", objectFieldName, "\""),
+				"the-email-address-domain-is-not-allowed-enter-an-email-" +
+					"address-with-a-different-domain");
+
+			_domain = domain;
+			_objectFieldName = objectFieldName;
+		}
+
+		public String getDomain() {
+			return _domain;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _domain;
+		private final String _objectFieldName;
+
+	}
+
 	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 
 		public ExceedsIntegerSize(int maxLength, String objectFieldName) {
@@ -170,6 +201,35 @@ public class ObjectEntryValuesException extends PortalException {
 		}
 
 		private final int _maxLength;
+		private final String _objectFieldName;
+
+	}
+
+	public static class InvalidEmailAddress extends ObjectEntryValuesException {
+
+		public InvalidEmailAddress(
+			String emailAddress, String objectFieldName) {
+
+			super(
+				Arrays.asList(emailAddress, objectFieldName),
+				StringBundler.concat(
+					"The email address \"", emailAddress,
+					"\" is invalid for object field \"", objectFieldName, "\""),
+				"please-enter-a-valid-email-address");
+
+			_emailAddress = emailAddress;
+			_objectFieldName = objectFieldName;
+		}
+
+		public String getEmailAddress() {
+			return _emailAddress;
+		}
+
+		public String getObjectFieldName() {
+			return _objectFieldName;
+		}
+
+		private final String _emailAddress;
 		private final String _objectFieldName;
 
 	}

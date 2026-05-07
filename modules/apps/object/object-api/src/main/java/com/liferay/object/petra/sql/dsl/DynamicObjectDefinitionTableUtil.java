@@ -112,7 +112,14 @@ public class DynamicObjectDefinitionTableUtil {
 
 	public static int getMaxLength(String businessType) {
 		if (StringUtil.equals(
-				businessType, ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_EMAIL_ADDRESS)) {
+
+			return 254;
+		}
+		else if (StringUtil.equals(
+					businessType,
+					ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT)) {
 
 			return 65000;
 		}

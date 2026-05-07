@@ -78,7 +78,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	private DSLQuery _createDSLQuery(Date date, int end, int start, User user) {
 		return DSLQueryFactoryUtil.selectDistinct(
-			TicketTable.INSTANCE.ticketId
+			TicketTable.INSTANCE
 		).from(
 			TicketTable.INSTANCE
 		).innerJoinON(
@@ -103,17 +103,6 @@ public class UserModelListener extends BaseModelListener<User> {
 		);
 	}
 
-	private boolean _isTicketForUser(Ticket ticket, User user) {
-		if ((ticket == null) ||
-			!StringUtil.equalsIgnoreCase(
-				ticket.getExtraInfo(), user.getEmailAddress())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _updateSharingEntries(User user) {
 		Date date = new Date();
 
@@ -126,15 +115,16 @@ public class UserModelListener extends BaseModelListener<User> {
 
 				intervalActionProcessor.setPerformIntervalActionMethod(
 					(start, end) -> {
-						List<Long> ticketIds =
-							(List<Long>)_ticketLocalService.dslQuery(
+						List<Ticket> tickets =
+							(List<Ticket>)_ticketLocalService.dslQuery(
 								_createDSLQuery(date, end, start, user));
 
-						for (Long ticketId : ticketIds) {
-							Ticket ticket = _ticketLocalService.fetchTicket(
-								ticketId);
+						for (Ticket ticket : tickets) {
+							if ((ticket == null) ||
+								!StringUtil.equalsIgnoreCase(
+									ticket.getExtraInfo(),
+									user.getEmailAddress())) {
 
-							if (!_isTicketForUser(ticket, user)) {
 								intervalActionProcessor.incrementStart();
 
 								continue;
@@ -142,7 +132,8 @@ public class UserModelListener extends BaseModelListener<User> {
 
 							for (SharingEntry sharingEntry :
 									_sharingEntryLocalService.
-										getToTicketSharingEntries(ticketId)) {
+										getToTicketSharingEntries(
+											ticket.getTicketId())) {
 
 								_updateSharingEntry(sharingEntry, user);
 							}

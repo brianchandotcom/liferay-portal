@@ -65,6 +65,6 @@ public class WebIdToCompanyConfigurationPluginImplTest {
 	}
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 }

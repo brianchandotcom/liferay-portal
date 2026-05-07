@@ -151,22 +151,22 @@ public class FIPSComplianceChecker {
 			return;
 		}
 
-		String providerInfo = "";
+		String providerInfoString = "";
 
 		if (provider != null) {
-			providerInfo = " (provided by " + provider.getName() + ")";
+			providerInfoString = " (provided by " + provider.getName() + ")";
 		}
 
 		throw new SecurityException(
 			StringBundler.concat(
 				"FIPS check failed: ", algorithmName,
-				" should not be accessible in FIPS mode", providerInfo));
+				" should not be accessible in FIPS mode", providerInfoString));
 	}
 
 	private static void _checkFIPSProviderIntegrity(Provider fipsProvider) {
-		String name = fipsProvider.getName();
+		String nameString = fipsProvider.getName();
 
-		if (name.equals("BCFIPS")) {
+		if (nameString.equals("BCFIPS")) {
 			_executeFIPSProviderIntegrityCheck(
 				() -> {
 					Class<?> fipsStatus = Class.forName(
@@ -179,14 +179,15 @@ public class FIPSComplianceChecker {
 					);
 
 					if (!ready) {
-						String msg = (String)ReflectionUtil.getDeclaredMethod(
-							fipsStatus, "getStatusMessage"
-						).invoke(
-							null
-						);
+						String messageString =
+							(String)ReflectionUtil.getDeclaredMethod(
+								fipsStatus, "getStatusMessage"
+							).invoke(
+								null
+							);
 
 						throw new SecurityException(
-							"BCFIPS integrity failure: " + msg);
+							"\"BCFIPS\" integrity failure: " + messageString);
 					}
 
 					Class<?> cryptoServicesRegistrar = Class.forName(
@@ -201,11 +202,11 @@ public class FIPSComplianceChecker {
 
 					if (!approved) {
 						throw new SecurityException(
-							"BCFIPS not in approved-only mode");
+							"\"BCFIPS\" not in approved-only mode");
 					}
 				});
 		}
-		else if (name.equals("AmazonCorrettoCryptoProvider")) {
+		else if (nameString.equals("AmazonCorrettoCryptoProvider")) {
 			_executeFIPSProviderIntegrityCheck(
 				() -> {
 					Class<?> amazonCorrettoCryptoProvider = Class.forName(
@@ -225,9 +226,12 @@ public class FIPSComplianceChecker {
 							instance
 						);
 
+					String failurePrefixString =
+						"\"AmazonCorrettoCryptoProvider\" integrity failure: ";
+
 					if (loadingErrorThrowable != null) {
 						throw new SecurityException(
-							"AmazonCorrettoCryptoProvider integrity failure: " +
+							failurePrefixString +
 								loadingErrorThrowable.getMessage(),
 							loadingErrorThrowable);
 					}
@@ -253,14 +257,13 @@ public class FIPSComplianceChecker {
 
 					if (!Objects.equals(String.valueOf(status), "PASSED")) {
 						throw new SecurityException(
-							"AmazonCorrettoCryptoProvider integrity failure: " +
-								status);
+							failurePrefixString + status);
 					}
 				});
 		}
 		else {
 			throw new SecurityException(
-				"No integrity check implemented for: " + name);
+				"No integrity check implemented for: " + nameString);
 		}
 	}
 

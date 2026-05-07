@@ -37,6 +37,18 @@ List<String> modelResources = null;
 if (Validator.isNotNull(portletResource)) {
 	modelResources = ResourceActionsUtil.getPortletModelResources(portletResource);
 }
+
+ObjectDefinition objectDefinition = null;
+
+if (Validator.isNotNull(portletResource)) {
+	String className = portletResource;
+
+	if (portletResource.startsWith(ObjectPortletKeys.OBJECT_DEFINITIONS + StringPool.UNDERLINE)) {
+		className = ObjectDefinitionConstants.CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION + portletResource.substring(ObjectPortletKeys.OBJECT_DEFINITIONS.length() + 1);
+	}
+
+	objectDefinition = ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(company.getCompanyId(), className);
+}
 %>
 
 <portlet:actionURL name="updateActions" var="editRolePermissionsURL">
@@ -72,6 +84,13 @@ if (Validator.isNotNull(portletResource)) {
 			applicationPermissionsLabel = "general-permissions";
 		}
 		%>
+
+		<c:if test="<%= (objectDefinition != null) && !objectDefinition.isAllowStandaloneObjectEntry() && objectDefinition.isRootDescendantNode() %>">
+			<clay:alert
+				displayType="info"
+				message="standalone-entries-are-disabled"
+			/>
+		</c:if>
 
 		<clay:sheet-section>
 			<c:if test="<%= Validator.isNotNull(applicationPermissionsLabel) %>">

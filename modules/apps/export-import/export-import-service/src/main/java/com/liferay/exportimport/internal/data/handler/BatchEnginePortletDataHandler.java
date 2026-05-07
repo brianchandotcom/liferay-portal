@@ -273,8 +273,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			return super.getSectionKey();
 		}
 
-		return sections.iterator(
-		).next();
+		Iterator<String> iterator = sections.iterator();
+
+		return iterator.next();
 	}
 
 	@Override

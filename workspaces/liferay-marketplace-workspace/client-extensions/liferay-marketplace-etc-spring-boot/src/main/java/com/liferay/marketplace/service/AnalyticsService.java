@@ -55,8 +55,8 @@ public class AnalyticsService extends BaseService {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					StringBundler.concat(
-						"Unable to get Analytics project: ", corpProjectUuid,
-						" \n",
+						"Unable to get Analytics Cloud project: ",
+						corpProjectUuid, " \n",
 						webClientResponseException.getResponseBodyAsString()));
 			}
 

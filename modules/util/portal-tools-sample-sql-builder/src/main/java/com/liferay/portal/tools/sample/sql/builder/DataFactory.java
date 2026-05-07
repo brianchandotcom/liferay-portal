@@ -312,7 +312,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -1271,13 +1270,11 @@ public class DataFactory {
 			String.valueOf(objectEntryModel.getObjectEntryId()));
 	}
 
-	public AssetEntryModel newAssetEntryModel(
-		ObjectValuePair<JournalArticleModel, JournalArticleLocalizationModel>
-			objectValuePair) {
-
-		JournalArticleModel journalArticleModel = objectValuePair.getKey();
+	public AssetEntryModel newAssetEntryModel(Tuple tuple) {
+		JournalArticleModel journalArticleModel =
+			(JournalArticleModel)tuple.getObject(0);
 		JournalArticleLocalizationModel journalArticleLocalizationModel =
-			objectValuePair.getValue();
+			(JournalArticleLocalizationModel)tuple.getObject(1);
 
 		long resourcePrimKey = journalArticleModel.getResourcePrimKey();
 
@@ -1416,7 +1413,7 @@ public class DataFactory {
 				assetPublisherQueryName = "assetTags";
 			}
 
-			ObjectValuePair<String[], Integer> objectValuePair = null;
+			Tuple tuple = null;
 
 			Integer startIndex = _assetPublisherQueryStartIndexes.get(groupId);
 
@@ -1432,7 +1429,7 @@ public class DataFactory {
 					assetCategoryModelsMap.get(
 						getNextAssetClassNameId(groupId));
 
-				objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
+				tuple = getAssetPublisherAssetCategoriesQueryValues(
 					assetCategoryModels, startIndex);
 			}
 			else {
@@ -1442,11 +1439,11 @@ public class DataFactory {
 				List<AssetTagModel> assetTagModels = assetTagModelsMap.get(
 					getNextAssetClassNameId(groupId));
 
-				objectValuePair = getAssetPublisherAssetTagsQueryValues(
+				tuple = getAssetPublisherAssetTagsQueryValues(
 					assetTagModels, startIndex);
 			}
 
-			String[] assetPublisherQueryValues = objectValuePair.getKey();
+			String[] assetPublisherQueryValues = (String[])tuple.getObject(0);
 
 			map.put("queryAndOperator0", Boolean.FALSE.toString());
 			map.put("queryAndOperator1", Boolean.FALSE.toString());
@@ -6263,10 +6260,6 @@ public class DataFactory {
 		return objectStateTransitionModels;
 	}
 
-	public <K, V> ObjectValuePair<K, V> newObjectValuePair(K key, V value) {
-		return new ObjectValuePair<>(key, value);
-	}
-
 	public PortalPreferencesModel newPortalPreferencesModel(long ownerId) {
 		PortalPreferencesModel portalPreferencesModel =
 			new PortalPreferencesModelImpl();
@@ -6325,7 +6318,7 @@ public class DataFactory {
 			assetPublisherQueryName = "assetTags";
 		}
 
-		ObjectValuePair<String[], Integer> objectValuePair = null;
+		Tuple tuple = null;
 
 		Integer startIndex = _assetPublisherQueryStartIndexes.get(groupId);
 
@@ -6344,7 +6337,7 @@ public class DataFactory {
 				return newPortletPreferencesModel(plid, portletId);
 			}
 
-			objectValuePair = getAssetPublisherAssetCategoriesQueryValues(
+			tuple = getAssetPublisherAssetCategoriesQueryValues(
 				assetCategoryModels, startIndex);
 		}
 		else {
@@ -6358,12 +6351,12 @@ public class DataFactory {
 				return newPortletPreferencesModel(plid, portletId);
 			}
 
-			objectValuePair = getAssetPublisherAssetTagsQueryValues(
+			tuple = getAssetPublisherAssetTagsQueryValues(
 				assetTagModels, startIndex);
 		}
 
 		_assetPublisherQueryStartIndexes.put(
-			groupId, objectValuePair.getValue());
+			groupId, (Integer)tuple.getObject(1));
 
 		return newPortletPreferencesModel(plid, portletId);
 	}
@@ -7030,6 +7023,10 @@ public class DataFactory {
 			getClassNameId(MBThread.class), mBThreadModel.getThreadId());
 	}
 
+	public Tuple newTuple(Object... objects) {
+		return new Tuple(objects);
+	}
+
 	public List<UserModel> newUserModels() {
 		List<UserModel> userModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_COMPANY_USER_COUNT);
@@ -7267,9 +7264,8 @@ public class DataFactory {
 			leftPrimaryKey, ", ", rightPrimaryKey, ", 0, null);");
 	}
 
-	protected ObjectValuePair<String[], Integer>
-		getAssetPublisherAssetCategoriesQueryValues(
-			List<AssetCategoryModel> assetCategoryModels, int index) {
+	protected Tuple getAssetPublisherAssetCategoriesQueryValues(
+		List<AssetCategoryModel> assetCategoryModels, int index) {
 
 		String[] categoryIds = new String[4];
 
@@ -7286,15 +7282,14 @@ public class DataFactory {
 			categoryIds[i] = String.valueOf(assetCategoryModel.getCategoryId());
 		}
 
-		return new ObjectValuePair<>(
+		return new Tuple(
 			categoryIds,
 			index +
 				BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT);
 	}
 
-	protected ObjectValuePair<String[], Integer>
-		getAssetPublisherAssetTagsQueryValues(
-			List<AssetTagModel> assetTagModels, int index) {
+	protected Tuple getAssetPublisherAssetTagsQueryValues(
+		List<AssetTagModel> assetTagModels, int index) {
 
 		String[] assetTagNames = new String[4];
 
@@ -7310,7 +7305,7 @@ public class DataFactory {
 			assetTagNames[i] = String.valueOf(assetTagModel.getName());
 		}
 
-		return new ObjectValuePair<>(
+		return new Tuple(
 			assetTagNames,
 			index + BenchmarksPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT);
 	}

@@ -327,6 +327,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 
 			throw throwable;
 		}
+		finally {
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+		}
 	}
 
 	@Override

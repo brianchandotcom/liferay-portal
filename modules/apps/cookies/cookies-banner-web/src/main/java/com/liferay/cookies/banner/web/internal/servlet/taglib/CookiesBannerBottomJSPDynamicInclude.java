@@ -70,10 +70,6 @@ public class CookiesBannerBottomJSPDynamicInclude
 			}
 
 			httpServletRequest.setAttribute(
-				CookiesBannerWebKeys.GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE,
-				_globalPrivacyControlProvider.isSignalActive(
-					httpServletRequest));
-			httpServletRequest.setAttribute(
 				CookiesBannerWebKeys.CUSTOM_FLOATING_ICON_IMAGE_ID,
 				cookiesPreferenceHandlingConfiguration.
 					customFloatingIconImageId());
@@ -83,6 +79,10 @@ public class CookiesBannerBottomJSPDynamicInclude
 			httpServletRequest.setAttribute(
 				CookiesBannerWebKeys.FLOATING_ICON_ENABLED,
 				cookiesPreferenceHandlingConfiguration.floatingIconEnabled());
+			httpServletRequest.setAttribute(
+				CookiesBannerWebKeys.GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE,
+				_globalPrivacyControlProvider.isSignalActive(
+					httpServletRequest));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

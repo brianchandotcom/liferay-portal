@@ -36,6 +36,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
+		'LPD-70673': {enabled: true}, // Email field type
 		'LPD-83570': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -509,6 +510,130 @@ test.describe('Localized object entries are saved correctly', () => {
 		await expect(dateInput).toHaveValue('11/01/2025');
 
 		await expect(dateTimeInput).toHaveValue('20/02/2025 22:00');
+	});
+
+	test('Email fields', async ({apiHelpers, page, viewObjectEntriesPage}) => {
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				{
+					businessType: 'EmailAddress',
+					localized: true,
+				},
+			],
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinitionLabel);
+
+		const emailInput = page.locator(
+			`[data-field-name="${objectFields[0].name}"] input[type="text"]`
+		);
+
+		const englishEmail = 'user@example.com';
+		const catalanEmail = 'usuario@ejemplo.es';
+
+		// with english locale, fill the email field
+
+		await emailInput.fill(englishEmail);
+
+		// switch to catalan locale
+
+		await page.getByRole('button', {name: 'en-us'}).first().click();
+
+		const catalanOption = page.getByRole('menuitem', {
+			name: 'català (Espanya)',
+		});
+
+		await catalanOption.click();
+
+		// with catalan locale selected for the first time, value should be copied from english
+
+		await expect(emailInput).toHaveValue(englishEmail);
+
+		// change the email for catalan
+
+		await emailInput.fill(catalanEmail);
+
+		await page.getByRole('button', {name: 'ca-es'}).last().click();
+
+		// catalan should show as translated, english as default
+
+		await expect(catalanOption.getByText('translated')).toBeVisible();
+
+		await expect(
+			page
+				.getByRole('menuitem', {name: 'English (United States)'})
+				.getByText('default')
+		).toBeVisible();
+
+		// save
+
+		const responsePromise = page.waitForResponse(
+			`**${objectDefinition.restContextPath}`
+		);
+
+		await catalanOption.click();
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		const response = await responsePromise;
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		// go back to list
+
+		await viewObjectEntriesPage.backButton.click();
+
+		const responseBody = await response.json();
+
+		// navigate to the entry
+
+		await page.getByRole('link', {name: responseBody.id}).click();
+
+		// verify english value is preserved
+
+		await expect(emailInput).toHaveValue(englishEmail);
+
+		// switch to catalan and verify its value
+
+		await page.getByRole('button', {name: 'en-us'}).first().click();
+
+		await catalanOption.first().click();
+
+		await expect(emailInput).toHaveValue(catalanEmail);
 	});
 
 	test('Multiselect Picklist fields', async ({

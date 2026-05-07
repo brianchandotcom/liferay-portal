@@ -3396,7 +3396,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://localhost:8080/o/c/object9s/"
+			"url": "http://localhost:[$SERVER_PORT$]/o/c/object9s/"
 		}
 	]
 }

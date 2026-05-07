@@ -7169,7 +7169,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://localhost:8080/o/c/object1s/"
+			"url": "http://localhost:[$SERVER_PORT$]/o/c/object1s/"
 		}
 	]
 }

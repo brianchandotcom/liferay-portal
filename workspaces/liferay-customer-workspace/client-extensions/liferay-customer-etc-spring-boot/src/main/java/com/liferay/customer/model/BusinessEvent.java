@@ -48,7 +48,7 @@ public class BusinessEvent extends JiraAssetObject {
 		_lastComment = getAttributeValue(
 			jiraAssetObjectJSONObject,
 			BusinessEventConstants.ATTRIBUTE_LAST_COMMENT);
-		_lastUpdatedAuthor = getAttributeValue(
+		_lastUpdatedAuthorEmailAddress = getAttributeValue(
 			jiraAssetObjectJSONObject,
 			BusinessEventConstants.ATTRIBUTE_LAST_UPDATED_AUTHOR);
 		_name = getAttributeValue(
@@ -76,6 +76,7 @@ public class BusinessEvent extends JiraAssetObject {
 		_accountExternalKey = accountExternalReferenceCode;
 		_businessEventId = StringPool.BLANK;
 		_currentLiferayVersionName = StringPool.BLANK;
+		_lastUpdatedAuthorEmailAddress = authorEmailAddress;
 		_newLiferayVersionName = StringPool.BLANK;
 
 		JSONObject jsonObject = new JSONObject(attributesJSON);
@@ -88,7 +89,6 @@ public class BusinessEvent extends JiraAssetObject {
 		_eventStatusName = jsonObject.optString("eventStatus");
 		_eventTypeName = jsonObject.optString("eventType");
 		_lastComment = jsonObject.optString("lastComment");
-		_lastUpdatedAuthor = jsonObject.optString("author");
 		_name = jsonObject.optString("name");
 		_newLiferayVersionKey = jsonObject.optString("newLiferayVersion");
 		_plannedEventDate = jsonObject.optString("plannedEventDate");
@@ -147,8 +147,8 @@ public class BusinessEvent extends JiraAssetObject {
 		return _lastComment;
 	}
 
-	public String getLastUpdatedAuthor() {
-		return _lastUpdatedAuthor;
+	public String getLastUpdatedAuthorEmailAddress() {
+		return _lastUpdatedAuthorEmailAddress;
 	}
 
 	public String getName() {
@@ -254,7 +254,7 @@ public class BusinessEvent extends JiraAssetObject {
 	private final String _eventStatusName;
 	private final String _eventTypeName;
 	private final String _lastComment;
-	private final String _lastUpdatedAuthor;
+	private final String _lastUpdatedAuthorEmailAddress;
 	private final String _name;
 	private final String _newLiferayVersionKey;
 	private final String _newLiferayVersionName;

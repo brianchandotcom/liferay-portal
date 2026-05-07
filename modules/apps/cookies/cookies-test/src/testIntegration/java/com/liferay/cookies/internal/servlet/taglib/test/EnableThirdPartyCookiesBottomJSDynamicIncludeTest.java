@@ -8,8 +8,7 @@ package com.liferay.cookies.internal.servlet.taglib.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,9 +20,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,35 +41,14 @@ public class EnableThirdPartyCookiesBottomJSDynamicIncludeTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-
-		_companyConfigurationPid =
-			ConfigurationTestUtil.createFactoryConfiguration(
-				_SCOPED_FACTORY_PID,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"companyId", _companyId
-				).build());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_companyConfigurationPid != null) {
-			ConfigurationTestUtil.deleteFactoryConfiguration(
-				_companyConfigurationPid, _SCOPED_FACTORY_PID);
-		}
-	}
-
 	@Test
 	public void testInclude() throws Exception {
-		try (ConfigurationTemporarySwapper
+		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						_companyConfigurationPid,
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CookiesPreferenceHandlingConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"companyId", _companyId
-						).put(
 							"enabled", true
 						).put(
 							"globalPrivacyControlEnabled", true
@@ -93,13 +69,12 @@ public class EnableThirdPartyCookiesBottomJSDynamicIncludeTest {
 				content, content.contains("suppressThirdPartyCookies("));
 		}
 
-		try (ConfigurationTemporarySwapper
+		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						_companyConfigurationPid,
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CookiesPreferenceHandlingConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"companyId", _companyId
-						).put(
 							"enabled", true
 						).put(
 							"globalPrivacyControlEnabled", false
@@ -113,13 +88,12 @@ public class EnableThirdPartyCookiesBottomJSDynamicIncludeTest {
 				content, content.contains("suppressThirdPartyCookies("));
 		}
 
-		try (ConfigurationTemporarySwapper
+		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
-					new ConfigurationTemporarySwapper(
-						_companyConfigurationPid,
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CookiesPreferenceHandlingConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"companyId", _companyId
-						).put(
 							"enabled", false
 						).put(
 							"globalPrivacyControlEnabled", true
@@ -138,19 +112,21 @@ public class EnableThirdPartyCookiesBottomJSDynamicIncludeTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(WebKeys.COMPANY_ID, _companyId);
+		if (secGPCHeader != null) {
+			mockHttpServletRequest.addHeader("Sec-GPC", secGPCHeader);
+		}
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_companyLocalService.fetchCompany(_companyId));
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setServerName(StringPool.BLANK);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		if (secGPCHeader != null) {
-			mockHttpServletRequest.addHeader("Sec-GPC", secGPCHeader);
-		}
 
 		return mockHttpServletRequest;
 	}
@@ -167,12 +143,6 @@ public class EnableThirdPartyCookiesBottomJSDynamicIncludeTest {
 
 		return mockHttpServletResponse.getContentAsString();
 	}
-
-	private static final String _SCOPED_FACTORY_PID =
-		CookiesPreferenceHandlingConfiguration.class.getName() + ".scoped";
-
-	private String _companyConfigurationPid;
-	private long _companyId;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

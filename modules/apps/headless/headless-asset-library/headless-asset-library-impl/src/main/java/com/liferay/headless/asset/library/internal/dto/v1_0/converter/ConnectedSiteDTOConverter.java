@@ -84,6 +84,14 @@ public class ConnectedSiteDTOConverter
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getNameMap()));
 				setSearchable(depotEntryGroupRel::isSearchable);
+				setType(
+					() -> {
+						if (group.isLayoutSetPrototype()) {
+							return ConnectedSite.Type.SITE_TEMPLATE;
+						}
+
+						return ConnectedSite.Type.SITE;
+					});
 			}
 		};
 	}

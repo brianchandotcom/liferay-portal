@@ -239,4 +239,5 @@ on:
             -   .github/workflows/ci-publish-cloud-scripts.yaml
             -   cloud/scripts/versions.json
 permissions:
+    contents: read
     id-token: write

@@ -9,6 +9,10 @@ definition {
 
 	setUp {
 		CommerceConfiguration.commerceSetUp();
+
+		task ("Enable CKE4") {
+			PagesAdmin.enableCKE4();
+		}
 	}
 
 	tearDown {

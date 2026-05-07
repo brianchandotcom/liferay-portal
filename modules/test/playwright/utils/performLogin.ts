@@ -145,10 +145,6 @@ export async function performLogout(page: Page) {
 	}).toPass();
 }
 
-export async function performLogoutViaApi(page: Page) {
-	await page.goto('/c/portal/logout');
-}
-
 export async function performUserSwitch(
 	page: Page,
 	screenName: LoginScreenName | string
@@ -162,7 +158,7 @@ export async function performUserSwitchViaApi(
 	page: Page,
 	screenName: LoginScreenName | string
 ) {
-	await performLogoutViaApi(page);
+	await page.waitForURL((url) => !url.pathname.endsWith('/c/portal/logout'));
 
 	await performLoginViaApi({page, screenName});
 }

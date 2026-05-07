@@ -360,12 +360,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		expectedDisplayPageTemplate.setThumbnailURLReference(
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(
-						fileEntry.getExternalReferenceCode());
-				}
-			});
+			ThumbnailUtil.thumbnailURLReference(fileEntry));
 
 		_testPatchSiteDisplayPageTemplate(
 			expectedDisplayPageTemplate,
@@ -1206,12 +1201,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		randomDisplayPageTemplate.setThumbnailURLReference(
-			() -> new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(
-						fileEntry.getExternalReferenceCode());
-				}
-			});
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
@@ -1810,12 +1800,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		displayPageTemplate.setThumbnailURLReference(
-			() -> new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(
-						fileEntry.getExternalReferenceCode());
-				}
-			});
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -2228,12 +2213,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
 		displayPageTemplate.setThumbnailURLReference(
-			() -> new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(
-						fileEntry1.getExternalReferenceCode());
-				}
-			});
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry1));
 
 		DisplayPageTemplate putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
@@ -2248,12 +2228,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putDisplayPageTemplate.setThumbnailURLReference(
-			() -> new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(
-						fileEntry2.getExternalReferenceCode());
-				}
-			});
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry2));
 
 		putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(

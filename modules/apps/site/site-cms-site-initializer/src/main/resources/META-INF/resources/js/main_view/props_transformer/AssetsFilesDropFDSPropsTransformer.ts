@@ -6,6 +6,7 @@
 import {IBulkActionItem, IView} from '@liferay/frontend-data-set-web';
 
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../common/utils/constants';
+import {allFDSAtom} from '../quick_filters/atoms';
 import AssetsFDSPropsTransformer, {
 	AdditionalProps,
 } from './AssetsFDSPropsTransformer';
@@ -37,6 +38,7 @@ export default function AssetsFilesDropFDSPropsTransformer({
 
 	return {
 		...assetsData,
+		atom: allFDSAtom,
 		bulkActions: (assetsData.bulkActions || []).map(
 			(action: IBulkActionItem) => {
 				if (action?.data?.id !== 'find-and-replace') {

@@ -36,11 +36,11 @@ public class AssetSummaryTypeController extends BaseFaroController {
 	public FaroFDSResultsDisplay getAssetSummaryTypes(
 			@PathParam("groupId") long groupId,
 			@QueryParam("channelId") long channelId,
+			@QueryParam("page") int page,
+			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
 			@QueryParam("rangeEnd") String rangeEnd,
 			@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
-			@QueryParam("rangeStart") String rangeStart,
-			@QueryParam("cur") int cur,
-			@DefaultValue("20") @QueryParam("delta") int delta)
+			@QueryParam("rangeStart") String rangeStart)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -48,13 +48,13 @@ public class AssetSummaryTypeController extends BaseFaroController {
 
 		Results<AssetSummaryType> results =
 			contactsEngineClient.getAssetSummaryTypes(
-				faroProject, channelId, rangeEnd, rangeKey, rangeStart, cur,
-				delta);
+				faroProject, channelId, rangeEnd, rangeKey, rangeStart, page,
+				pageSize);
 
 		Function<AssetSummaryType, AssetSummaryTypeDisplay> function =
 			AssetSummaryTypeDisplay::new;
 
-		return new FaroFDSResultsDisplay(results, function, cur, delta);
+		return new FaroFDSResultsDisplay(results, function, page, pageSize);
 	}
 
 }

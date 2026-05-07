@@ -1487,7 +1487,7 @@ public class DisplayPageTemplateResourceTest
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
 						() ->
-							"http://localhost:8080/" +
+							"http://invalid.example.test/" +
 								RandomTestUtil.randomString());
 				}
 			};
@@ -1840,7 +1840,7 @@ public class DisplayPageTemplateResourceTest
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
 						() ->
-							"http://localhost:8080/" +
+							"http://invalid.example.test/" +
 								RandomTestUtil.randomString());
 				}
 			};
@@ -2299,7 +2299,7 @@ public class DisplayPageTemplateResourceTest
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
 						() ->
-							"http://localhost:8080/" +
+							"http://invalid.example.test/" +
 								RandomTestUtil.randomString());
 				}
 			};

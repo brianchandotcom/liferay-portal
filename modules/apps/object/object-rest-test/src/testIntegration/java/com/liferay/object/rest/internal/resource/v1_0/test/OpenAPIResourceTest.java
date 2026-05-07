@@ -30,7 +30,6 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -472,11 +471,8 @@ public class OpenAPIResourceTest {
 		throws Exception {
 
 		JSONAssert.assertEquals(
-			StringUtil.replace(
-				new String(
-					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
-				"localhost:<serverPort>",
-				"localhost:" + PortalUtil.getPortalServerPort(false)),
+			new String(
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
 			HTTPTestUtil.invokeToJSONObject(
 				null, objectDefinition.getRESTContextPath() + "/openapi.json",
 				Http.Method.GET

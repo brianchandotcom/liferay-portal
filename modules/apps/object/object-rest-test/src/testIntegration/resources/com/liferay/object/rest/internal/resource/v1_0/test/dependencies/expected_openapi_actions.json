@@ -434,7 +434,7 @@
 							"delete": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -446,7 +446,7 @@
 							"get": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -458,7 +458,7 @@
 							"permissions": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}/permissions",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}/permissions",
 										"type": "string"
 									},
 									"method": {
@@ -470,7 +470,7 @@
 							"replace": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -482,7 +482,7 @@
 							"update": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -839,7 +839,7 @@
 							"create": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/",
+										"default": "http://localhost:8080/o/c/object1s/",
 										"type": "string"
 									},
 									"method": {
@@ -851,7 +851,7 @@
 							"createBatch": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/batch",
+										"default": "http://localhost:8080/o/c/object1s/batch",
 										"type": "string"
 									},
 									"method": {
@@ -863,7 +863,7 @@
 							"deleteBatch": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/batch",
+										"default": "http://localhost:8080/o/c/object1s/batch",
 										"type": "string"
 									},
 									"method": {
@@ -875,7 +875,7 @@
 							"updateBatch": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/batch",
+										"default": "http://localhost:8080/o/c/object1s/batch",
 										"type": "string"
 									},
 									"method": {
@@ -932,7 +932,7 @@
 							"delete": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -944,7 +944,7 @@
 							"get": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -956,7 +956,7 @@
 							"permissions": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}/permissions",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}/permissions",
 										"type": "string"
 									},
 									"method": {
@@ -968,7 +968,7 @@
 							"replace": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -980,7 +980,7 @@
 							"update": {
 								"properties": {
 									"href": {
-										"default": "http://localhost:<serverPort>/o/c/object1s/{object1Id}",
+										"default": "http://localhost:8080/o/c/object1s/{object1Id}",
 										"type": "string"
 									},
 									"method": {
@@ -3747,7 +3747,7 @@
 	},
 	"servers": [
 		{
-			"url": "http://localhost:<serverPort>/o/c/object1s/"
+			"url": "http://localhost:8080/o/c/object1s/"
 		}
 	]
 }

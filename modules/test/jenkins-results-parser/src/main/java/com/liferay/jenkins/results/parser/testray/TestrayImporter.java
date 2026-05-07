@@ -1193,9 +1193,7 @@ public class TestrayImporter {
 		}
 
 		throw new RuntimeException(
-			JenkinsResultsParserUtil.combine(
-				"Unable to resolve '", basePropertyName,
-				"' Build database has no jobs"));
+			"Unable to get job property " + basePropertyName);
 	}
 
 	private String _getMajorPortalVersion() {

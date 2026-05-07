@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -471,8 +472,11 @@ public class OpenAPIResourceTest {
 		throws Exception {
 
 		JSONAssert.assertEquals(
-			new String(
-				FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+			StringUtil.replace(
+				new String(
+					FileUtil.getBytes(getClass(), "dependencies/" + fileName)),
+				"[$SERVER_PORT$]",
+				String.valueOf(PortalUtil.getPortalServerPort(false))),
 			HTTPTestUtil.invokeToJSONObject(
 				null, objectDefinition.getRESTContextPath() + "/openapi.json",
 				Http.Method.GET

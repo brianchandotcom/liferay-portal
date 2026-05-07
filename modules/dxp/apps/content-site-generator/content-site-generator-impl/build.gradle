@@ -3,6 +3,8 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:batch-engine:batch-engine-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:object:object-rest-api")
+	compileOnly project(":apps:portal-odata:portal-odata-api")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-executor")
 	compileOnly project(":core:petra:petra-function")

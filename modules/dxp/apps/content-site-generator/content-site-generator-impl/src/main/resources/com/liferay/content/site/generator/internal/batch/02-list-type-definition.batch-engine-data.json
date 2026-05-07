@@ -13,40 +13,40 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_CSG_RUN_STATUS",
+			"externalReferenceCode": "L_AI_HUB_GENERATION_STATUSES",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "L_CSG_RUN_STATUS_REFINING",
+					"externalReferenceCode": "REFINING",
 					"key": "refining",
 					"name": "Refining",
 					"system": true
 				},
 				{
-					"externalReferenceCode": "L_CSG_RUN_STATUS_GENERATING",
+					"externalReferenceCode": "GENERATING",
 					"key": "generating",
 					"name": "Generating",
 					"system": true
 				},
 				{
-					"externalReferenceCode": "L_CSG_RUN_STATUS_READY",
+					"externalReferenceCode": "READY",
 					"key": "ready",
 					"name": "Ready",
 					"system": true
 				},
 				{
-					"externalReferenceCode": "L_CSG_RUN_STATUS_COMMITTED",
+					"externalReferenceCode": "COMMITTED",
 					"key": "committed",
 					"name": "Committed",
 					"system": true
 				},
 				{
-					"externalReferenceCode": "L_CSG_RUN_STATUS_FAILED",
+					"externalReferenceCode": "FAILED",
 					"key": "failed",
 					"name": "Failed",
 					"system": true
 				}
 			],
-			"name": "Content Generator Run Status",
+			"name": "AI Hub Generation Statuses",
 			"system": true
 		}
 	]

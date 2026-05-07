@@ -13,11 +13,11 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_CSG_FOLDER",
+			"externalReferenceCode": "L_AI_HUB_GENERATIONS_FOLDER",
 			"label": {
-				"en_US": "Content Site Generator"
+				"en_US": "AI Hub Generations"
 			},
-			"name": "ContentSiteGenerator",
+			"name": "AIHubGenerations",
 			"objectFolderItems": [
 			]
 		}

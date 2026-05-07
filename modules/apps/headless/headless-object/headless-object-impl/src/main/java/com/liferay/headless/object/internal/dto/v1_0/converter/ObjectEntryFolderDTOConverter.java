@@ -63,13 +63,6 @@ public class ObjectEntryFolderDTOConverter
 
 		Group group = _groupLocalService.fetchGroup(
 			objectEntryFolder.getGroupId());
-		SharingEntry nestedSharingEntry = NestedFieldsSupplier.supply(
-			"systemProperties.collaboratorBrief",
-			nestedField -> _sharingEntryLocalService.fetchSharingEntry(
-				dtoConverterContext.getUserId(),
-				_classNameLocalService.getClassNameId(
-					com.liferay.object.model.ObjectEntryFolder.class.getName()),
-				objectEntryFolder.getObjectEntryFolderId()));
 		com.liferay.object.model.ObjectEntryFolder parentObjectEntryFolder =
 			_getParentObjectEntryFolder(objectEntryFolder);
 
@@ -206,15 +199,25 @@ public class ObjectEntryFolderDTOConverter
 					});
 				setSystemProperties(
 					() -> {
-						if (nestedSharingEntry == null) {
+						SharingEntry sharingEntry = NestedFieldsSupplier.supply(
+							"systemProperties.collaboratorBrief",
+							nestedField ->
+								_sharingEntryLocalService.fetchSharingEntry(
+									dtoConverterContext.getUserId(),
+									_classNameLocalService.getClassNameId(
+										com.liferay.object.model.
+											ObjectEntryFolder.class.getName()),
+									objectEntryFolder.
+										getObjectEntryFolderId()));
+
+						if (sharingEntry == null) {
 							return null;
 						}
 
 						return new SystemProperties() {
 							{
 								setCollaboratorBrief(
-									() -> _toCollaboratorBrief(
-										nestedSharingEntry));
+									() -> _toCollaboratorBrief(sharingEntry));
 							}
 						};
 					});

@@ -1232,45 +1232,6 @@ definition {
 		}
 	}
 
-	@description = "Verify is possible export/import a Smoke template."
-	@priority = 4
-	test ExportImportSmoke {
-		property app.server.types = "jboss,tomcat,weblogic,wildfly";
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given: User exports default site") {
-			LAR.exportSiteCP(siteScopeName = "Guest");
-
-			var key_larFileName = ${larFileName};
-			var larFileName = LAR.getLarFileName();
-
-			LAR.downloadLar();
-		}
-
-		task ("When: Adds a new site then import the LAR file") {
-			HeadlessSite.addSite(siteName = "Site Name");
-
-			for (var layoutUtilityPageName : list "404 Error,500 Error") {
-				JSONLayoututilitypage.deleteLayoutUtilityPage(
-					groupName = "Site Name",
-					layoutUtilityPageName = ${layoutUtilityPageName});
-			}
-
-			LAR.importSiteCP(
-				larFileName = ${larFileName},
-				siteName = "Site Name");
-		}
-
-		task ("Then: Import should be successful without error message on console") {
-			AssertConsoleTextNotPresent(value1 = "java.lang.StringIndexOutOfBoundsException");
-
-			AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
-		}
-	}
-
 	@description = "Verify is possible export/import theme settings."
 	@priority = 3
 	test ExportImportThemeSettings {

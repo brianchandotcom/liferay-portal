@@ -3183,12 +3183,11 @@ jdbc.default.password=${database.password}</echo>
 				<and>
 					<equals arg1="${portal.version}" arg2="6.1.30" />
 					<equals arg1="${database.type}" arg2="postgresql" />
-					<not>
-						<contains string="@{url}" substring="?" />
-					</not>
 				</and>
 				<then>
-					<property name="database.url.parameters" value="?autosave=conservative&amp;reWriteBatchedInserts=true" />
+					<condition else="?autosave=conservative&amp;reWriteBatchedInserts=true" property="database.url.parameters" value="&amp;autosave=conservative&amp;reWriteBatchedInserts=true">
+						<contains string="@{url}" substring="?" />
+					</condition>
 				</then>
 				<else>
 					<property name="database.url.parameters" value="" />
@@ -12996,6 +12995,8 @@ ${update.properties}</echo>
 		<get-database-property property.name="database.url" />
 		<get-database-property property.name="database.username" />
 		<get-database-property property.name="database.version" />
+
+		<local name="database.url.parameters" />
 
 		<prepare-database-url-parameters url="${database.url}" />
 

@@ -13,7 +13,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -130,10 +129,6 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		String taskName = ParamUtil.getString(actionRequest, "name");
 
-		if (Validator.isNull(taskName)) {
-			taskName = _language.get(actionRequest.getLocale(), "export");
-		}
-
 		return _exportImportConfigurationLocalService.
 			addDraftExportImportConfiguration(
 				themeDisplay.getUserId(), taskName,
@@ -181,9 +176,6 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ExportImportService _exportImportService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

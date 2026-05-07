@@ -1031,7 +1031,6 @@ test(
 				dataSetERC,
 				fieldName: 'status.label',
 				label_i18n: {en_US: 'Status'},
-				renderer: 'integer',
 			});
 		});
 

@@ -8,6 +8,7 @@ import {
 	FieldBase,
 	FileData,
 	MultipleFileUploader,
+	UploadBatchesCallback,
 	UploadRequestCallback,
 	openToast,
 } from 'frontend-js-components-web';
@@ -18,6 +19,9 @@ import SpaceSelector from '../../common/components/SpaceSelector';
 import ApiHelper from '../../common/services/ApiHelper';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {Space} from '../../common/types/Space';
+
+const sequentialUploadBatches: UploadBatchesCallback = (files) =>
+	files.map((file) => [file]);
 
 export default function MultipleFilesUploadModalContent({
 	assetLibraries,
@@ -182,6 +186,7 @@ export default function MultipleFilesUploadModalContent({
 						</div>
 					) : undefined
 				}
+				uploadBatches={sequentialUploadBatches}
 				uploadRequest={uploadRequest}
 			/>
 		</>

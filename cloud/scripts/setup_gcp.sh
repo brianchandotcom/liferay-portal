@@ -304,6 +304,24 @@ function _recover_kubectl_context {
 	exit "${exit_code}"
 }
 
+function _set_up_gcp_gitops {
+	local bucket_name="${1}"
+	local deployment_name="${2}"
+	local region="${3}"
+
+	_pushd "${_ROOT_CLOUD_DIR}/terraform/gcp/gitops"
+
+	echo "Setting up the Google GCP GitOps infrastructure."
+
+	_terraform_init_and_apply "./platform" "gitops/platform" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
+
+	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
+
+	echo "Google GCP GitOps infrastructure setup complete."
+
+	_popd
+}
+
 function _set_up_gcp_gke {
 	local bucket_name="${1}"
 	local deployment_name="${2}"
@@ -326,24 +344,6 @@ function _set_up_gcp_gke {
 		--project "$(terraform output -raw project_id)"
 
 	echo "Google GKE cluster setup complete."
-
-	_popd
-}
-
-function _set_up_gcp_gitops {
-	local bucket_name="${1}"
-	local deployment_name="${2}"
-	local region="${3}"
-
-	_pushd "${_ROOT_CLOUD_DIR}/terraform/gcp/gitops"
-
-	echo "Setting up the Google GCP GitOps infrastructure."
-
-	_terraform_init_and_apply "./platform" "gitops/platform" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
-
-	_terraform_init_and_apply "./resources" "gitops/resources" "${bucket_name}" "${deployment_name}" "${region}" "${@:4}"
-
-	echo "Google GCP GitOps infrastructure setup complete."
 
 	_popd
 }

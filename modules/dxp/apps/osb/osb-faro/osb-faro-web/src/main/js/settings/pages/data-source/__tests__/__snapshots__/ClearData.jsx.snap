@@ -406,7 +406,7 @@ exports[`ClearData should render 1`] = `
                       class="sheet-body"
                     >
                       <div>
-                        To complete, copy the following sentence to confirm your intention and click clear data. Once you have deleted This data, you can not undo this operation.
+                        To complete, copy the following sentence to confirm your action and click clear data. Once you delete this data, you can not undo this operation.
                       </div>
                       <div
                         class="copy-container"

@@ -43,7 +43,7 @@ exports[`AccessTokenList should display the "Generate Token" card  above the tab
             <span
               class="text-secondary mr-1"
             >
-              Token ending in
+              Token Ending In
             </span>
             <strong
               class="font-weight-bold"
@@ -483,7 +483,7 @@ exports[`AccessTokenList should render 1`] = `
                             <span
                               class="text-secondary mr-1"
                             >
-                              Token ending in
+                              Token Ending In
                             </span>
                             <strong
                               class="font-weight-bold"
@@ -607,7 +607,7 @@ exports[`AccessTokenList should show the generated token in a list and the "Gene
             <span
               class="text-secondary mr-1"
             >
-              Token ending in
+              Token Ending In
             </span>
             <strong
               class="font-weight-bold"

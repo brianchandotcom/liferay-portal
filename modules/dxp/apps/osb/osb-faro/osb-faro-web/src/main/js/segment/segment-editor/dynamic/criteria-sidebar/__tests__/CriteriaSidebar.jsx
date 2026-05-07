@@ -68,7 +68,7 @@ describe('CriteriaSidebar', () => {
 		);
 
 		expect(
-			screen.getByText('Interests', {selector: '.dropdown-toggle *'})
+			screen.getByText('Interests', {selector: '[role="combobox"]'})
 		).toBeInTheDocument();
 		expect(screen.getByText('Page Views')).toBeInTheDocument();
 		expect(screen.getByText('DXP Custom Fields')).toBeInTheDocument();

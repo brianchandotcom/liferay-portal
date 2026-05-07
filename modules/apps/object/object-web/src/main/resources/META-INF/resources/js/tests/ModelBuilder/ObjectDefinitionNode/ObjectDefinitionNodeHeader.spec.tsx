@@ -31,6 +31,19 @@ jest.mock('react-flow-renderer', () => {
 	};
 });
 
+const baseProps = {
+	allowStandaloneObjectEntry: false,
+	dbTableName: '',
+	dropDownItems: [],
+	handleSelectObjectDefinitionNode: () => {},
+	isLinkedObjectDefinition: false,
+	isRootDescendantNode: false,
+	isRootNode: false,
+	objectDefinitionLabel: 'Object Definition',
+	status: {code: 0, label: 'approved', label_i18n: 'Approved'},
+	system: false,
+};
+
 describe('Object Definition Node Header', () => {
 	afterAll(() => {
 		window.Liferay.FeatureFlags['LPD-34594'] = false;
@@ -43,15 +56,9 @@ describe('Object Definition Node Header', () => {
 	it('has root object label when it is a parent', () => {
 		render(
 			<ObjectDefinitionNodeHeader
-				dbTableName=""
-				dropDownItems={[]}
-				handleSelectObjectDefinitionNode={() => {}}
-				isLinkedObjectDefinition={false}
-				isRootDescendantNode={false}
+				{...baseProps}
 				isRootNode={true}
 				objectDefinitionLabel="Parent Object Definition"
-				status={{code: 0, label: 'approved', label_i18n: 'Approved'}}
-				system={false}
 			/>
 		);
 
@@ -67,15 +74,9 @@ describe('Object Definition Node Header', () => {
 	it('has inherited object label when it is a child', () => {
 		render(
 			<ObjectDefinitionNodeHeader
-				dbTableName=""
-				dropDownItems={[]}
-				handleSelectObjectDefinitionNode={() => {}}
-				isLinkedObjectDefinition={false}
+				{...baseProps}
 				isRootDescendantNode={true}
-				isRootNode={false}
 				objectDefinitionLabel="Child Object Definition"
-				status={{code: 0, label: 'approved', label_i18n: 'Approved'}}
-				system={false}
 			/>
 		);
 
@@ -91,15 +92,8 @@ describe('Object Definition Node Header', () => {
 	it('has standard object label when it is not in a tree structure', () => {
 		render(
 			<ObjectDefinitionNodeHeader
-				dbTableName=""
-				dropDownItems={[]}
-				handleSelectObjectDefinitionNode={() => {}}
-				isLinkedObjectDefinition={false}
-				isRootDescendantNode={false}
-				isRootNode={false}
+				{...baseProps}
 				objectDefinitionLabel="Standard Object Definition"
-				status={{code: 0, label: 'approved', label_i18n: 'Approved'}}
-				system={false}
 			/>
 		);
 
@@ -110,5 +104,90 @@ describe('Object Definition Node Header', () => {
 		expect(objecDefinitionNodeInheritanceLabel).toHaveTextContent(
 			'standard'
 		);
+	});
+
+	it('shows lock icon and strict tooltip on a descendant when standalone entries are disabled', () => {
+		render(
+			<ObjectDefinitionNodeHeader
+				{...baseProps}
+				allowStandaloneObjectEntry={false}
+				isRootDescendantNode={true}
+			/>
+		);
+
+		const [inheritanceLabel] =
+			document.getElementsByClassName('label-inverse-info');
+
+		expect(inheritanceLabel).toHaveAttribute(
+			'title',
+			'strict-inheritance-tooltip'
+		);
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-lock')
+		).toBeTruthy();
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-unlock')
+		).toBeFalsy();
+	});
+
+	it('shows unlock icon and flexible tooltip on a descendant when standalone entries are allowed', () => {
+		render(
+			<ObjectDefinitionNodeHeader
+				{...baseProps}
+				allowStandaloneObjectEntry={true}
+				isRootDescendantNode={true}
+			/>
+		);
+
+		const [inheritanceLabel] =
+			document.getElementsByClassName('label-inverse-info');
+
+		expect(inheritanceLabel).toHaveAttribute(
+			'title',
+			'flexible-inheritance-tooltip'
+		);
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-unlock')
+		).toBeTruthy();
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-lock')
+		).toBeFalsy();
+	});
+
+	it('does not show a lock or unlock icon on a root node', () => {
+		render(
+			<ObjectDefinitionNodeHeader
+				{...baseProps}
+				allowStandaloneObjectEntry={false}
+				isRootNode={true}
+			/>
+		);
+
+		const [inheritanceLabel] =
+			document.getElementsByClassName('label-inverse-info');
+
+		expect(inheritanceLabel).not.toHaveAttribute('title');
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-lock')
+		).toBeFalsy();
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-unlock')
+		).toBeFalsy();
+	});
+
+	it('does not show a lock or unlock icon on a standard (non-tree) object', () => {
+		render(<ObjectDefinitionNodeHeader {...baseProps} />);
+
+		const [inheritanceLabel] = document.getElementsByClassName(
+			'label-inverse-secondary'
+		);
+
+		expect(inheritanceLabel).not.toHaveAttribute('title');
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-lock')
+		).toBeFalsy();
+		expect(
+			inheritanceLabel.querySelector('.lexicon-icon-unlock')
+		).toBeFalsy();
 	});
 });

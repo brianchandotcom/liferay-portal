@@ -64,11 +64,8 @@ public abstract class BaseFDSSerializer {
 		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
-			ObjectEntryManager objectEntryManager =
-				DefaultObjectEntryManagerProvider.provide(
-					objectEntryManagerRegistry.getObjectEntryManager(
-						objectDefinition.getCompanyId(),
-						objectDefinition.getStorageType()));
+			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
+			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();
 
 			long companyId = PortalUtil.getCompanyId(httpServletRequest);
 
@@ -76,6 +73,12 @@ public abstract class BaseFDSSerializer {
 				objectDefinitionLocalService.
 					fetchObjectDefinitionByExternalReferenceCode(
 						"L_DATA_SET_SNAPSHOT", companyId);
+
+			ObjectEntryManager objectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getCompanyId(),
+						objectDefinition.getStorageType()));
 
 			long userId = PortalUtil.getUserId(httpServletRequest);
 
@@ -96,9 +99,6 @@ public abstract class BaseFDSSerializer {
 					LocaleUtil.getMostRelevantLocale(), null, null),
 				_getFilterString(fdsName, sharingEntriesClassPKs, userId), null,
 				null, null);
-
-			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
-			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();
 
 			for (ObjectEntry objectEntry : page.getItems()) {
 				if (sharingEntriesClassPKs.contains(objectEntry.getId())) {

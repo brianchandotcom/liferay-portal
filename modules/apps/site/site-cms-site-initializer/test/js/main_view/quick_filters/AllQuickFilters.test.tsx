@@ -26,10 +26,28 @@ jest.mock('@liferay/frontend-js-state-web/react', () => ({
 	useLiferayState: () => [mockFDSState, mockSetAllFDSState],
 }));
 
+const liferayEventHandlers: Record<string, Function[]> = {};
+
 (global as any).Liferay = {
 	Language: {
 		get: jest.fn((key: string) => key),
 	},
+	detach: jest.fn((event: string, handler: Function) => {
+		liferayEventHandlers[event] = (
+			liferayEventHandlers[event] ?? []
+		).filter((registered) => registered !== handler);
+	}),
+	fire: jest.fn((event: string, payload?: unknown) => {
+		(liferayEventHandlers[event] ?? []).forEach((handler) =>
+			handler(payload)
+		);
+	}),
+	on: jest.fn((event: string, handler: Function) => {
+		liferayEventHandlers[event] = [
+			...(liferayEventHandlers[event] ?? []),
+			handler,
+		];
+	}),
 };
 
 function findChipButton(label: string) {
@@ -40,6 +58,9 @@ describe('AllQuickFilters', () => {
 	beforeEach(() => {
 		mockFetch.mockClear();
 		mockSetAllFDSState.mockClear();
+		Object.keys(liferayEventHandlers).forEach(
+			(key) => delete liferayEventHandlers[key]
+		);
 
 		mockFDSState = {
 			filters: [
@@ -237,6 +258,40 @@ describe('AllQuickFilters', () => {
 				]),
 			})
 		);
+	});
+
+	it('refetches the asset statistics when the FDS display is updated', async () => {
+		mockFetch.mockResolvedValueOnce({
+			json: async () => ({
+				expiredCount: 1,
+				expiringSoonCount: 0,
+				inDraftCount: 0,
+				reviewDateOverdueCount: 0,
+			}),
+			ok: true,
+		} as Response);
+
+		render(<AllQuickFilters />);
+
+		await screen.findByText('1');
+
+		expect(mockFetch).toHaveBeenCalledTimes(1);
+
+		mockFetch.mockResolvedValueOnce({
+			json: async () => ({
+				expiredCount: 4,
+				expiringSoonCount: 0,
+				inDraftCount: 0,
+				reviewDateOverdueCount: 0,
+			}),
+			ok: true,
+		} as Response);
+
+		(global as any).Liferay.fire('fds-display-updated');
+
+		await screen.findByText('4');
+
+		expect(mockFetch).toHaveBeenCalledTimes(2);
 	});
 
 	it('applies the review date upper bound when the Review Date Overdue chip is clicked', async () => {

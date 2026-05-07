@@ -63,6 +63,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
+		'LPD-70673': {enabled: true}, // Email Address field
 		'LPD-83570': {enabled: true}, // Phone Number field
 		'LPS-178052': {enabled: true},
 	}),
@@ -2781,6 +2782,152 @@ test.describe('Manage object entries through View Object Entries', () => {
 		).toHaveText('Jun 1, 2023, 12:00:00 PM');
 	});
 
+	test(
+		'can create an object entry with email address field',
+		{tag: ['@LPD-70673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const email = 'user@example.com';
+
+			let objectDefinition: ObjectDefinition;
+			let objectFields: ObjectField[];
+
+			await test.step('Create an object definition with an Email Address field', async () => {
+				objectFields = generateObjectFields({
+					objectFieldBusinessTypes: [
+						{
+							businessType: 'EmailAddress',
+						},
+					],
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate to the object definition and add an entry', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label.en_US
+				);
+			});
+
+			await test.step('Fill the email field and save the entry', async () => {
+				await page.getByLabel(objectFields[0].label.en_US).fill(email);
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(
+					viewObjectEntriesPage.successMessage
+				).toBeVisible();
+			});
+
+			await test.step('Verify the email field value is saved', async () => {
+				await viewObjectEntriesPage.backButton.click();
+
+				await viewObjectEntriesPage.frontendDatasetItems
+					.first()
+					.click();
+
+				await expect(
+					page.getByLabel(objectFields[0].label.en_US)
+				).toHaveValue(email);
+			});
+		}
+	);
+
+	test(
+		'can create an object entry with email address field and autocomplete enabled',
+		{tag: ['@LPD-70673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const autocompleteDomain = '@liferay.com';
+
+			let objectDefinition: ObjectDefinition;
+			let objectFields: ObjectField[];
+
+			await test.step('Create an object definition with autocomplete enabled', async () => {
+				objectFields = generateObjectFields({
+					objectFieldBusinessTypes: [
+						{
+							businessType: 'EmailAddress',
+							objectFieldSettings: [
+								{
+									name: 'autocompleteEnabled',
+									value: 'true',
+								},
+								{
+									name: 'autocompleteDomains',
+									value: '@liferay.com,@gmail.com',
+								},
+							],
+						},
+					],
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate to the object definition and add an entry', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+			});
+
+			await test.step('Type a partial email and select a domain suggestion', async () => {
+				await page
+					.getByLabel(objectFields[0].label.en_US)
+					.fill('user@li');
+
+				await expect(page.getByText(autocompleteDomain)).toBeVisible();
+
+				await expect(page.getByText('@gmail.com')).not.toBeVisible();
+
+				await page.getByText(autocompleteDomain).click();
+
+				await expect(
+					page.getByLabel(objectFields[0].label.en_US)
+				).toHaveValue('user@liferay.com');
+			});
+
+			await test.step('Save the entry and verify the stored value', async () => {
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(
+					viewObjectEntriesPage.successMessage
+				).toBeVisible();
+
+				await viewObjectEntriesPage.backButton.click();
+
+				await viewObjectEntriesPage.frontendDatasetItems
+					.first()
+					.click();
+
+				await expect(
+					page.getByLabel(objectFields[0].label.en_US)
+				).toHaveValue('user@liferay.com');
+			});
+		}
+	);
+
 	test('can create an object entry with special characters on a text field named Name', async ({
 		apiHelpers,
 		page,
@@ -5350,6 +5497,118 @@ test.describe('Manage object entries through View Object Entries', () => {
 			});
 
 			expect(test.info().errors).toHaveLength(0);
+		}
+	);
+
+	test(
+		'shows an error when entering an email address with a blocked domain',
+		{tag: ['@LPD-70673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const blockedDomain = '@yahoo.com';
+
+			let objectDefinition: ObjectDefinition;
+			let objectFields: ObjectField[];
+
+			await test.step('Create an object definition with a blocked domain', async () => {
+				objectFields = generateObjectFields({
+					objectFieldBusinessTypes: [
+						{
+							businessType: 'EmailAddress',
+							objectFieldSettings: [
+								{
+									name: 'blockedDomains',
+									value: blockedDomain,
+								},
+							],
+						},
+					],
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate and attempt to save an entry with the blocked domain', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				await page
+					.getByLabel(objectFields[0].label.en_US)
+					.fill(`user${blockedDomain}`);
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+			});
+
+			await test.step('Verify the blocked domain error is shown', async () => {
+				await expect(
+					page.getByText(
+						'The email address domain is not allowed. Enter an email address with a different domain.'
+					)
+				).toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'shows an error when entering an invalid email',
+		{tag: ['@LPD-70673']},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const invalidEmailAddress = 'user@liferay';
+
+			let objectDefinition: ObjectDefinition;
+			let objectFields: ObjectField[];
+
+			await test.step('Create an object definition with a blocked domain', async () => {
+				objectFields = generateObjectFields({
+					objectFieldBusinessTypes: [
+						{
+							businessType: 'EmailAddress',
+						},
+					],
+				});
+
+				objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Navigate and attempt to save an entry with the invalid email', async () => {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await viewObjectEntriesPage.clickAddObjectEntry(
+					objectDefinition.label['en_US']
+				);
+
+				await page
+					.getByLabel(objectFields[0].label.en_US)
+					.fill(invalidEmailAddress);
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+			});
+
+			await test.step('Verify the invalid email error is shown', async () => {
+				await expect(
+					page.getByText('Please enter a valid email address.')
+				).toBeVisible();
+			});
 		}
 	);
 

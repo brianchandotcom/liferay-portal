@@ -12,6 +12,7 @@ export class EditVocabularyPage {
 	readonly page: Page;
 
 	private readonly descriptionInput: Locator;
+	private readonly externalReferenceCodeInput: Locator;
 	private readonly nameInput: Locator;
 
 	readonly assetTypeCheckbox: Locator;
@@ -38,6 +39,9 @@ export class EditVocabularyPage {
 			name: 'Associated Asset Types',
 		});
 		this.descriptionInput = this.page.getByLabel('Description');
+		this.externalReferenceCodeInput = this.page.getByLabel(
+			'External Reference Code'
+		);
 		this.generalButton = this.page.getByRole('button', {name: 'General'});
 		this.multiSelectToggle = this.page.getByLabel('Multi Value');
 		this.nameInput = this.page.getByLabel('Name');
@@ -62,9 +66,11 @@ export class EditVocabularyPage {
 
 	async changeGeneralInfo({
 		description,
+		externalReferenceCode,
 		name,
 	}: {
 		description?: string;
+		externalReferenceCode?: string;
 		name?: string;
 	}) {
 		await this.page.getByText('Basic Info').waitFor();
@@ -72,6 +78,11 @@ export class EditVocabularyPage {
 		if (description !== undefined) {
 			await this.descriptionInput.fill(description);
 			await this.descriptionInput.blur();
+		}
+
+		if (externalReferenceCode !== undefined) {
+			await this.externalReferenceCodeInput.fill(externalReferenceCode);
+			await this.externalReferenceCodeInput.blur();
 		}
 
 		if (name !== undefined) {

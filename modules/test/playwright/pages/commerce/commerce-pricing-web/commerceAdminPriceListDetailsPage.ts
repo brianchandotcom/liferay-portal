@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
@@ -180,6 +180,42 @@ export class CommerceAdminPriceListDetailsPage extends CommerceDNDTablePage {
 		this.specificOrderTypesRadio = page.getByRole('radio', {
 			name: 'Specific Order Types',
 		});
+	}
+
+	async assertUOMSelectedInSidePanel({
+		linkName,
+		rowText,
+		scope,
+		uomKeys = ['uomKey1', 'uomKey2'],
+	}: {
+		linkName: string;
+		rowText: string;
+		scope?: FrameLocator;
+		uomKeys?: string[];
+	}) {
+		const container = scope ?? this.page;
+
+		const sidePanelFrame = container.frameLocator('.is-visible iframe');
+
+		const closeButton = sidePanelFrame
+			.locator('.side-panel-iframe-header')
+			.getByRole('button');
+
+		const uomSelect = sidePanelFrame.getByLabel('Unit of Measure');
+
+		for (const uomKey of uomKeys) {
+			const row = container
+				.getByRole('row')
+				.filter({hasText: rowText})
+				.filter({hasText: uomKey});
+
+			await row.getByRole('link', {name: linkName}).click();
+
+			await expect(uomSelect).toBeDisabled();
+			await expect(uomSelect).toHaveValue(uomKey);
+
+			await closeButton.click();
+		}
 	}
 
 	async addEligibilityEntry(placeholder: string, entryName: string) {

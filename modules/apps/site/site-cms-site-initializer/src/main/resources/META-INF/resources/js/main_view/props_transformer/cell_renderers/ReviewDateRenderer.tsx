@@ -5,6 +5,8 @@
 
 import React, {useMemo} from 'react';
 
+import {isReviewDateOverdue} from '../../../common/utils/reviewDateStatus';
+
 function getDateOptions(): Intl.DateTimeFormatOptions {
 	return {
 		day: 'numeric',
@@ -12,42 +14,6 @@ function getDateOptions(): Intl.DateTimeFormatOptions {
 		timeZone: Liferay.ThemeDisplay.getTimeZone(),
 		year: 'numeric',
 	};
-}
-
-function getCalendarDayOptions(): Intl.DateTimeFormatOptions {
-	return {
-		day: '2-digit',
-		month: '2-digit',
-		timeZone: Liferay.ThemeDisplay.getTimeZone(),
-		year: 'numeric',
-	};
-}
-
-let _calendarDayFormatter: Intl.DateTimeFormat | null = null;
-
-function getCalendarDayFormatter(): Intl.DateTimeFormat {
-	if (!_calendarDayFormatter) {
-		_calendarDayFormatter = new Intl.DateTimeFormat(
-			'en-US',
-			getCalendarDayOptions()
-		);
-	}
-
-	return _calendarDayFormatter;
-}
-
-function getCalendarDayKey(date: Date): number {
-	const parts: Record<string, string> = {};
-
-	for (const part of getCalendarDayFormatter().formatToParts(date)) {
-		parts[part.type] = part.value;
-	}
-
-	return (
-		Number(parts.year) * 10000 +
-		Number(parts.month) * 100 +
-		Number(parts.day)
-	);
 }
 
 const ReviewDateRenderer = ({
@@ -71,10 +37,11 @@ const ReviewDateRenderer = ({
 	}
 
 	const date = new Date(rawValue);
-	const reviewed = getCalendarDayKey(date) <= getCalendarDayKey(new Date());
 
 	return (
-		<span className={reviewed ? 'text-warning' : 'text-dark'}>
+		<span
+			className={isReviewDateOverdue(date) ? 'text-warning' : 'text-dark'}
+		>
 			{formatter.format(date)}
 		</span>
 	);

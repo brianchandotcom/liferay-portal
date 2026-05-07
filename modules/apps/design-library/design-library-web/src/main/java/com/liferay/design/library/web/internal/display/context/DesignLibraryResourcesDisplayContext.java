@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -34,6 +33,7 @@ import jakarta.portlet.PortletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -115,11 +115,8 @@ public class DesignLibraryResourcesDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"addStyleBookEntryURL",
 			_getAddStyleBookEntryURL(
-				depotGroupId, designLibraryEntryId,
-				depotEntry.getGroup(
-				).getName(
-					_themeDisplay.getLocale()
-				))
+				depotEntry.getGroup(), designLibraryEntryId,
+				_themeDisplay.getLocale())
 		).put(
 			"canAddStyleBook", true
 		).put(
@@ -206,11 +203,12 @@ public class DesignLibraryResourcesDisplayContext {
 	}
 
 	private String _getAddStyleBookEntryURL(
-		long depotGroupId, long designLibraryEntryId, String backURLTitle) {
+		Group depotGroup, long designLibraryEntryId, Locale locale) {
 
 		return PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				_httpServletRequest, StyleBookPortletKeys.STYLE_BOOK,
+			PortalUtil.getControlPanelPortletURL(
+				_httpServletRequest, depotGroup,
+				StyleBookPortletKeys.STYLE_BOOK, 0, 0,
 				PortletRequest.ACTION_PHASE)
 		).setActionName(
 			"/style_book/add_style_book_entry"
@@ -224,9 +222,7 @@ public class DesignLibraryResourcesDisplayContext {
 				designLibraryEntryId
 			).buildString()
 		).setParameter(
-			"backURLTitle", backURLTitle
-		).setParameter(
-			"groupId", depotGroupId
+			"backURLTitle", depotGroup.getName(locale)
 		).buildString();
 	}
 

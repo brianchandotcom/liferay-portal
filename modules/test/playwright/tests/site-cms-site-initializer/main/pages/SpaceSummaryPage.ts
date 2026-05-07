@@ -93,6 +93,8 @@ export class SpaceSummaryPage {
 			})
 			.check();
 
+		await expect(triggerText).toContainText(roleName);
+
 		await this.closeButton.click();
 	}
 

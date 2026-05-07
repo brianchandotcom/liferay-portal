@@ -16,11 +16,11 @@ Tomcat is running when an HTTP request to `http://localhost:${PORT}` succeeds.
 
 ## Start
 
-Run **Probe** first. When it succeeds, Tomcat is already running and there is nothing to do. Otherwise run `startup.sh` from `<tomcat>/bin` and wait until **Probe** succeeds.
+Run **Probe** first. When it succeeds, Tomcat is already running and there is nothing to do. Otherwise, run `startup.sh` from `<tomcat>/bin` and wait until **Probe** succeeds.
 
 ## Stop
 
-Run **Probe** first. When it fails, Tomcat is already stopped and there is nothing to do. Otherwise run `shutdown.sh` from `<tomcat>/bin` and wait until **Probe** fails.
+Run **Probe** first. When it fails, Tomcat is already stopped and there is nothing to do. Otherwise, run `shutdown.sh` from `<tomcat>/bin` and wait until **Probe** fails.
 
 ## Bounce
 

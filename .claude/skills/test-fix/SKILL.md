@@ -28,7 +28,7 @@ Verify all of these once at the start of the run. Fail fast with a clear message
 
 ### Failure Data
 
-Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise the procedure returns these fields:
+Fetched at the start of the run by following [`references/testray.md`](references/testray.md), which covers authentication, name-to-ID resolution, and how to derive each field. When a test name was passed and the resolution aborts, surface the reason and ask the user to retry with the case result ID directly. When the case result is already `PASSED`, skip the workflow and exit with `Verdict: No fix needed`. Otherwise, the procedure returns these fields:
 
 - **errorTrace** — error trace produced by the test framework.
 - **firstFailSha** — first commit where the test failed (may be `null` when the case has no recorded failure history).
@@ -121,7 +121,7 @@ This step runs **before** any range or commit analysis. The test may already pas
 
 #### 1.1. Set Feature Flags
 
-Inspect the test source to discover which feature flags it depends on. Mirror the CI setup before reproducing, otherwise the test path differs.
+Inspect the test source to discover which feature flags it depends on. Mirror the CI setup before reproducing. Otherwise, the test path differs.
 
 - **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 4. Bounce Tomcat for the new flag values to take effect.
 
@@ -159,7 +159,7 @@ Work on `master` with uncommitted changes — the branch is created later. For e
 
 When the test turns green, do **not** lock in the verdict immediately — keep reading the remaining suspects to confirm none of them is a stronger explanation. Settling on the first green fix is how a wrong fix gets shipped; only commit once no better candidate surfaces.
 
-When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again. Up to **three rounds**. After the third without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analysed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 4 and exit.
+When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analysed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 4 and exit.
 
 Once the verdict is locked in (only ever after a green local run — never file a ticket or commit otherwise), record the offending commit (short SHA + subject) and one sentence explaining how it broke the test — reused in the PR body's Root Cause section (see **Pull Request**).
 

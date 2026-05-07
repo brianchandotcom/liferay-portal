@@ -23,7 +23,7 @@ export ACCESS_TOKEN=$(curl \
 
 ## Resolve a Test Name to a Case Result ID
 
-Skip when the input is already a positive integer. Otherwise resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
+Skip when the input is already a positive integer. Otherwise, resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
 
 1. Resolve the master project ID from the most recent `[master]` build:
 
@@ -97,7 +97,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
 ```
 
-When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise return all four fields.
+When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise, return all four fields.
 
 ### Name
 
@@ -118,7 +118,7 @@ curl \
 
 When `<name>` contains `PortalLogAssertor`, the type is `Java Log Assertor` and **no history is fetched**.
 
-Otherwise fetch the case type via `r_caseTypeToCases_c_caseTypeId` and map the matching item's `name`. Names not in the table pass through unchanged.
+Otherwise, fetch the case type via `r_caseTypeToCases_c_caseTypeId` and map the matching item's `name`. Names not in the table pass through unchanged.
 
 ```bash
 curl \
@@ -145,7 +145,7 @@ The `errors` field of the case result.
 
 ### Last Pass SHA and First Fail SHA
 
-Both are `null` when the case name is `Top Level Build` or contains `PortalLogAssertor`. Skipped entirely for `Java Log Assertor`. Otherwise compute them from the case history filtered to the supplied case result's routine.
+Both are `null` when the case name is `Top Level Build` or contains `PortalLogAssertor`. They are skipped entirely for `Java Log Assertor`. Otherwise, compute them from the case history filtered to the supplied case result's routine.
 
 Resolve the routine ID by fetching the build at `/o/c/builds/<buildId>` (where `<buildId>` is `r_buildToCaseResult_c_buildId` from the case result) and reading `r_routineToBuilds_c_routineId` as `<routineId>`.
 

@@ -261,12 +261,12 @@ export default function StructureTree({search}: {search: string}) {
 	);
 
 	useEffect(() => {
-		for (const uuid of selection) {
-			if (!selectedKeys.has(uuid)) {
-				setSelectedKeys(new Set(selection));
+		const added = selection.filter((uuid) => !selectedKeys.has(uuid));
 
-				setExpandedKeys((current) => new Set([...current, uuid]));
-			}
+		setSelectedKeys(new Set(selection));
+
+		if (added.length) {
+			setExpandedKeys((current) => new Set([...current, ...added]));
 		}
 
 		// eslint-disable-next-line

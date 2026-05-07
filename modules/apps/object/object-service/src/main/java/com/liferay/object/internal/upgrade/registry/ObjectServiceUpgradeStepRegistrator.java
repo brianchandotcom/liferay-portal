@@ -703,6 +703,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"11.0.0", "12.0.0",
 			new com.liferay.object.internal.upgrade.v12_0_0.
 				ObjectFieldUpgradeProcess());
+
+		registry.register(
+			"12.0.0", "12.1.0",
+			new com.liferay.object.internal.upgrade.v12_1_0.
+				ObjectDefinitionSettingUpgradeProcess());
 	}
 
 	@Reference

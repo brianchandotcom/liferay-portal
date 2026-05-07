@@ -18,7 +18,7 @@ const SequentialEventOrderPopover: React.FC = () => {
 					onMouseLeave={() => setShow(false)}
 				>
 					<ClaySticker displayType='info' shape='circle' size='sm'>
-						S
+						{'S'}
 					</ClaySticker>
 				</span>
 			}

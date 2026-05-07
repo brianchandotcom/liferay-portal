@@ -72,13 +72,18 @@ const ConnectableActions = ({
 		}
 
 		onConnectionDisconnected(site);
+
+		const successMessage = isTemplate
+			? Liferay.Language.get(
+					'site-template-x-was-successfully-disconnected-from-the-space'
+				)
+			: Liferay.Language.get(
+					'site-x-was-successfully-disconnected-from-the-space'
+				);
+
 		showSuccessMessage(
 			sub(
-				Liferay.Language.get(
-					isTemplate
-						? 'site-template-x-was-successfully-disconnected-from-the-space'
-						: 'site-x-was-successfully-disconnected-from-the-space'
-				),
+				successMessage,
 				`<strong>${Liferay.Util.escapeHTML(site.descriptiveName)}</strong>`
 			)
 		);

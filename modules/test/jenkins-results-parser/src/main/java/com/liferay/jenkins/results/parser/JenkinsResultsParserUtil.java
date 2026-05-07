@@ -1428,6 +1428,14 @@ public class JenkinsResultsParserUtil {
 	public static Properties getBuildProperties(boolean checkCache)
 		throws IOException {
 
+		if (_getCacheURL() == null) {
+			System.out.println(
+				combine(
+					"Build properties are not loaded. Set the environment ",
+					"variable \"CACHE_DIR\" to a directory containing a ",
+					JENKINS_REPOSITORY_NAME, " checkout."));
+		}
+
 		Properties properties = new SecureProperties();
 
 		synchronized (_buildProperties) {
@@ -6766,12 +6774,7 @@ public class JenkinsResultsParserUtil {
 			return _cacheURL;
 		}
 
-		throw new RuntimeException(
-			combine(
-				"Unable to locate local ", JENKINS_REPOSITORY_NAME,
-				" repository at ", cacheDirPath,
-				". Set the environment variable \"CACHE_DIR\" to a directory ",
-				"containing a ", JENKINS_REPOSITORY_NAME, " checkout."));
+		return null;
 	}
 
 	private static String _getCanonicalPath(File canonicalFile) {

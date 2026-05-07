@@ -149,12 +149,12 @@ test(
 
 		await page.reload();
 
-		await documentLibraryPage.searchInDL('test');
+		await documentLibraryPage.search('test');
 
 		await documentLibraryPage.orderBy('relevance');
 
 		await expect(
-			page.locator('dd.list-group-item[data-title="test"]')
+			page.locator('dd[data-title="test"]')
 		).toHaveAttribute('id', /_entries_1$/);
 	}
 );
@@ -294,6 +294,7 @@ test(
 		apiHelpers,
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
+		documentLibraryPage,
 		site,
 	}) => {
 		const dTypeTitle = getRandomString();
@@ -312,6 +313,8 @@ test(
 				viewableBy: 'Members',
 			}
 		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
 
 		await documentLibraryEditFilePage.goToNewFileDifferentType(
 			dTypeTitle,

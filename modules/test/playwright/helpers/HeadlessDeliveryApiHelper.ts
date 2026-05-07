@@ -406,6 +406,14 @@ export class HeadlessDeliveryApiHelper {
 		documentId: number;
 		file?: fs.ReadStream;
 	}) {
+		const multipart: {document: string; file?: fs.ReadStream} = {
+			document: JSON.stringify(document),
+		};
+
+		if (file) {
+			multipart.file = file;
+		}
+
 		return this.apiHelpers.patchRequestOptions(
 			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`,
 			{
@@ -413,10 +421,7 @@ export class HeadlessDeliveryApiHelper {
 				headers: {
 					...(await this.apiHelpers.getCSRFTokenHeader()),
 				},
-				multipart: {
-					document: JSON.stringify(document),
-					file,
-				},
+				multipart,
 			}
 		);
 	}

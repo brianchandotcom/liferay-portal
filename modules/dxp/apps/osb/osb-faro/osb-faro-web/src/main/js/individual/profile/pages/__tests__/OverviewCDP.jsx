@@ -4,53 +4,82 @@ import OverviewCDP from '../OverviewCDP';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';
-import {MockedProvider} from '@apollo/client/testing';
-import {
-	mockEventMetrics,
-	mockPreferenceReq,
-	mockSessions,
-	mockTimeRangeReq
-} from 'test/graphql-data';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
-import {waitForLoadingToBeRemoved} from 'test/helpers';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useDataSource} from 'shared/hooks/useDataSource';
+import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
 
-const variables = {channelId: undefined};
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: jest.fn()
+}));
+
+jest.mock('shared/hooks/useDataSource', () => ({
+	useDataSource: jest.fn()
+}));
+
+jest.mock('shared/hooks/useRequest', () => ({
+	useRequest: jest.fn()
+}));
+
+jest.mock('../../components/ContextualInformation', () => ({
+	__esModule: true,
+	default: ({children, showEmptyState}) =>
+		showEmptyState ? <>{children}</> : null
+}));
+
+jest.mock('../../hoc/ProfileCardCDP', () => ({
+	__esModule: true,
+	default: ({children, showEmptyState}) =>
+		showEmptyState ? <>{children}</> : null
+}));
+
+const mockedUseCurrentUser = useCurrentUser;
+const mockedUseDataSource = useDataSource;
+const mockedUseRequest = useRequest;
+
+const mockIndividual = data.getImmutableMock(Individual, data.mockIndividual);
+
+const renderComponent = () =>
+	render(
+		<Provider store={mockStore()}>
+			<StaticRouter>
+				<OverviewCDP groupId='23' individual={mockIndividual} />
+			</StaticRouter>
+		</Provider>
+	);
 
 describe('IndividualOverview', () => {
-	afterEach(cleanup);
+	afterEach(() => {
+		jest.clearAllMocks();
+		cleanup();
+	});
 
-	it('should render', async () => {
-		const {container} = render(
-			<MockedProvider
-				mocks={[
-					mockEventMetrics(variables),
-					mockTimeRangeReq(),
-					mockPreferenceReq(),
-					mockSessions(variables)
-				]}
-			>
-				<Provider store={mockStore()}>
-					<StaticRouter>
-						<OverviewCDP
-							groupId='23'
-							id='test'
-							individual={data.getImmutableMock(
-								Individual,
-								data.mockIndividual
-							)}
-						/>
-					</StaticRouter>
-				</Provider>
-			</MockedProvider>
-		);
+	it('should show connect data source button when no data sources exist', () => {
+		mockedUseCurrentUser.mockReturnValue({isAdmin: () => true});
+		mockedUseDataSource.mockReturnValue({empty: true});
+		mockedUseRequest.mockReturnValue({
+			data: {items: [], total: 0},
+			loading: false
+		});
 
-		jest.runAllTimers();
+		const {getAllByText} = renderComponent();
 
-		await waitForLoadingToBeRemoved(container);
+		expect(getAllByText('Connect Data Source').length).toBeGreaterThan(0);
+	});
 
-		expect(container).toMatchSnapshot();
+	it('should not show connect data source button when connected but no site data synced', () => {
+		mockedUseCurrentUser.mockReturnValue({isAdmin: () => true});
+		mockedUseDataSource.mockReturnValue({empty: false});
+		mockedUseRequest.mockReturnValue({
+			data: {items: [{sitesSelected: false}], total: 1},
+			loading: false
+		});
+
+		const {queryByText} = renderComponent();
+
+		expect(queryByText('Connect Data Source')).not.toBeInTheDocument();
 	});
 });

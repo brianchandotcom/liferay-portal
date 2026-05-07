@@ -575,8 +575,7 @@ public class PatcherFixLocalServiceImpl extends PatcherFixLocalServiceBaseImpl {
 				invalidPatcherFixNames, StringPool.COMMA_AND_SPACE);
 
 			throw new PortalException(
-				"Patcher fix names are invalid: " +
-					invalidPatcherFixNamesString);
+				"Invalid patcher fix names: " + invalidPatcherFixNamesString);
 		}
 	}
 

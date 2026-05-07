@@ -1,4 +1,3 @@
-import React from 'react';
 import {columns} from '../frontend-data-set';
 import {render, screen} from '@testing-library/react';
 import {Routes} from '../router';

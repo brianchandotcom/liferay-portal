@@ -8,19 +8,21 @@ import {JSXElementConstructor} from 'react';
 export enum EFieldFormat {
 	DATE = 'date',
 	DATE_TIME = 'date-time',
-	F_DATE_TIME = 'date_time',
 	INT32 = 'int32',
 	INT64 = 'int64',
 }
 
 export enum EFieldType {
 	ARRAY = 'array',
+	BOOLEAN = 'boolean',
+	COLLECTION_INTEGER = 'collection-integer',
+	COLLECTION_STRING = 'collection-string',
+	DATE = 'date',
+	DATE_TIME = 'date_time',
+	ID = 'id',
 	INTEGER = 'integer',
 	OBJECT = 'object',
 	STRING = 'string',
-	BOOLEAN = 'boolean',
-	COLLECTION_STRING = 'collection-string',
-	COLLECTION_INTEGER = 'collection-integer',
 }
 
 export enum EFilterType {
@@ -124,7 +126,7 @@ export interface IDateFilter extends IFilter {
 export interface IField {
 	children?: Array<IField>;
 	entityFieldType?: EFieldType;
-	format?: EFieldFormat | EFieldType;
+	format?: EFieldFormat;
 	id?: string;
 	label?: string;
 	name: string;

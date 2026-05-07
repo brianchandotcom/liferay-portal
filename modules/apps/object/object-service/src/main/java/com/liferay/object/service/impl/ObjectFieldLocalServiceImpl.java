@@ -946,6 +946,14 @@ public class ObjectFieldLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		if (!FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-70673") &&
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_EMAIL)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-83570") &&
 			Objects.equals(
 				businessType,
@@ -1608,6 +1616,14 @@ public class ObjectFieldLocalServiceImpl
 
 		ObjectField oldObjectField = objectFieldPersistence.findByPrimaryKey(
 			objectFieldId);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				oldObjectField.getCompanyId(), "LPD-70673") &&
+			Objects.equals(
+				businessType, ObjectFieldConstants.BUSINESS_TYPE_EMAIL)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				oldObjectField.getCompanyId(), "LPD-83570") &&

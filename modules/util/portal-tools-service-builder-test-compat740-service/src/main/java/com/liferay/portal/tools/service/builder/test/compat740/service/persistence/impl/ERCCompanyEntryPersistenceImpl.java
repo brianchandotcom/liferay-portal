@@ -770,7 +770,7 @@ public class ERCCompanyEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ERCCOMPANYENTRY_WHERE, _SQL_COUNT_ERCCOMPANYENTRY_WHERE,
-			ERCCompanyEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ERCCompanyEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ercCompanyEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ERCCompanyEntry::getUuid));
@@ -801,9 +801,10 @@ public class ERCCompanyEntryPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_ERCCOMPANYENTRY_WHERE,
 				_SQL_COUNT_ERCCOMPANYENTRY_WHERE,
 				ERCCompanyEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"ercCompanyEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ERCCompanyEntry::getUuid),
+					true, true, ERCCompanyEntry::getUuid),
 				new FinderColumn<>(
 					"ercCompanyEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ERCCompanyEntry::getCompanyId));
@@ -817,9 +818,10 @@ public class ERCCompanyEntryPersistenceImpl
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_ERCCOMPANYENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"ercCompanyEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ERCCompanyEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"ercCompanyEntry.", "companyId", FinderColumn.Type.LONG, "=",
@@ -894,4 +896,4 @@ public class ERCCompanyEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:663183925
+// LIFERAY-SERVICE-BUILDER-HASH:1289194307

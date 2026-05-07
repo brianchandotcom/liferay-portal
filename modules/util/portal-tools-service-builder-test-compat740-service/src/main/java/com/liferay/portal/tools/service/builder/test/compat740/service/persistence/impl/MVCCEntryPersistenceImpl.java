@@ -501,7 +501,7 @@ public class MVCCEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_MVCCENTRY_WHERE,
 				_SQL_COUNT_MVCCENTRY_WHERE, MVCCEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mvccEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MVCCEntry::getCompanyId));
@@ -513,10 +513,10 @@ public class MVCCEntryPersistenceImpl
 			convertNullFunction(MVCCEntry::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_MVCCENTRY_WHERE,
+			this, _finderPathFetchByC_N, _SQL_SELECT_MVCCENTRY_WHERE, "",
 			new FinderColumn<>(
 				"mvccEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, MVCCEntry::getCompanyId),
+				true, MVCCEntry::getCompanyId),
 			new FinderColumn<>(
 				"mvccEntry.", "name", FinderColumn.Type.STRING, "=", true, true,
 				MVCCEntry::getName));
@@ -587,4 +587,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-17313168
+// LIFERAY-SERVICE-BUILDER-HASH:932433971

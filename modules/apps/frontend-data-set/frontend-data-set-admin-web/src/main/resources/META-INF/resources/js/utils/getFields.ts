@@ -150,10 +150,6 @@ function getFilterableFields({
 
 	const filterableItemList = Object.keys(filterablePaths);
 
-	if (!filterableItemList) {
-		return [];
-	}
-
 	const filterableFields: Array<IField> = [];
 
 	filterableItemList.forEach((item) => {

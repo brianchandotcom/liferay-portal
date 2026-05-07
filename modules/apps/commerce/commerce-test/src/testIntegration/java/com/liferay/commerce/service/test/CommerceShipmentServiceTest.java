@@ -9,9 +9,13 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
@@ -19,9 +23,13 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -49,6 +57,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,27 +83,26 @@ public class CommerceShipmentServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		_company = _companyLocalService.getCompany(group.getCompanyId());
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
-			_group.getCompanyId());
+		CommerceCurrency commerceCurrency =
+			CommerceCurrencyTestUtil.addCommerceCurrency(group.getCompanyId());
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		_commerceChannel = _commerceChannelLocalService.addCommerceChannel(
-			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			_group.getGroupId(), "Test Channel",
-			CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
-			_commerceCurrency.getCode(), _serviceContext);
+			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, group.getGroupId(),
+			"Test Channel", CommerceChannelConstants.CHANNEL_TYPE_SITE, null,
+			commerceCurrency.getCode(), _serviceContext);
 
 		CPInstance cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
-			_group.getGroupId());
+			group.getGroupId());
 
 		_commerceOrder = CommerceTestUtil.createCommerceOrderForShipping(
 			TestPropsValues.getUserId(), _commerceChannel.getGroupId(),
-			_commerceCurrency.getCommerceCurrencyId(),
+			commerceCurrency.getCommerceCurrencyId(),
 			cpInstance.getCPInstanceId(),
 			BigDecimal.valueOf(RandomTestUtil.nextDouble()), BigDecimal.ONE, 1);
 
@@ -112,6 +121,15 @@ public class CommerceShipmentServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
+		for (CommerceShipment commerceShipment :
+				_commerceShipmentLocalService.getCommerceShipments(
+					new long[] {_commerceChannel.getGroupId()},
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			_commerceShipmentLocalService.deleteCommerceShipment(
+				commerceShipment, false);
+		}
+
 		_commerceOrderLocalService.deleteCommerceOrders(
 			_commerceChannel.getGroupId());
 	}
@@ -128,9 +146,14 @@ public class CommerceShipmentServiceTest {
 		}
 		catch (Exception exception) {
 			_assertMessage(
-				CommerceActionKeys.ADD_COMMERCE_SHIPMENT,
-				exception.getMessage(), _user.getUserId());
+				ActionKeys.VIEW, exception.getMessage(), _user.getUserId());
 		}
+
+		RoleTestUtil.addResourcePermission(
+			_role, CommerceOrderConstants.RESOURCE_NAME,
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_company.getCompanyId()),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		RoleTestUtil.addResourcePermission(
 			_role, CommerceConstants.RESOURCE_NAME_COMMERCE_SHIPMENT,
@@ -285,6 +308,20 @@ public class CommerceShipmentServiceTest {
 			String.valueOf(_commerceShipment.getCommerceShipmentId()),
 			_role.getRoleId(), new String[] {ActionKeys.UPDATE});
 
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrder.getCommerceOrderItems();
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse();
+
+		_commerceShipmentItemLocalService.addCommerceShipmentItem(
+			null, _commerceShipment.getCommerceShipmentId(),
+			commerceOrderItem.getCommerceOrderItemId(),
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			commerceOrderItem.getQuantity(), null, false, _serviceContext);
+
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user))) {
 
@@ -307,7 +344,6 @@ public class CommerceShipmentServiceTest {
 	@Inject
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	private CommerceCurrency _commerceCurrency;
 	private CommerceOrder _commerceOrder;
 
 	@Inject
@@ -316,15 +352,18 @@ public class CommerceShipmentServiceTest {
 	private CommerceShipment _commerceShipment;
 
 	@Inject
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
+
+	@Inject
+	private CommerceShipmentLocalService _commerceShipmentLocalService;
+
+	@Inject
 	private CommerceShipmentService _commerceShipmentService;
 
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

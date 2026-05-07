@@ -265,7 +265,7 @@ public class ImportPreviewResourceTest
 			}
 		}
 
-		return 0L;
+		return 0;
 	}
 
 	private ObjectDefinition _publishObjectDefinitionWithEntries(

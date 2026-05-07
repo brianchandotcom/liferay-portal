@@ -18,6 +18,8 @@ export interface FailedFile {
 	size?: number;
 }
 
+export type UploadBatchesCallback = (files: FileData[]) => FileData[][];
+
 export type UploadRequestCallback = ({
 	fileData,
 }: {

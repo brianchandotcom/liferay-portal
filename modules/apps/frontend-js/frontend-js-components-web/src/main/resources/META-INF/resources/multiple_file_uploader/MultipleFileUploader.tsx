@@ -20,6 +20,7 @@ import {LoadingMessage} from './LoadingMessage';
 import {
 	FailedFile,
 	FileData,
+	UploadBatchesCallback,
 	UploadMessages,
 	UploadRequestCallback,
 } from './types';
@@ -54,37 +55,9 @@ interface MultipleFileUploaderProps {
 		successFiles: string[];
 	}) => void;
 	scopeSelectorElement?: JSX.Element;
+	uploadBatches?: UploadBatchesCallback;
 	uploadRequest: UploadRequestCallback;
 	validExtensions?: string;
-}
-
-function getBaseName(filename: string): string {
-	const index = filename.lastIndexOf('.');
-
-	return index > 0 ? filename.substring(0, index) : filename;
-}
-
-function getUploadBatches(files: FileData[]): FileData[][] {
-	const batches: {baseNames: Set<string>; files: FileData[]}[] = [];
-
-	for (const fileData of files) {
-		const baseName = getBaseName(fileData.name);
-
-		const batch = batches.find((batch) => !batch.baseNames.has(baseName));
-
-		if (batch) {
-			batch.files.push(fileData);
-			batch.baseNames.add(baseName);
-		}
-		else {
-			batches.push({
-				baseNames: new Set([baseName]),
-				files: [fileData],
-			});
-		}
-	}
-
-	return batches.map((batch) => batch.files);
 }
 
 export default function MultipleFileUploader({
@@ -97,6 +70,7 @@ export default function MultipleFileUploader({
 	onModalClose,
 	onUploadComplete,
 	scopeSelectorElement,
+	uploadBatches = (files) => [files],
 	uploadRequest,
 	validExtensions = '*',
 }: MultipleFileUploaderProps) {
@@ -224,7 +198,7 @@ export default function MultipleFileUploader({
 		const failedFiles: FailedFile[] = [];
 		const uploadedFiles: string[] = [];
 
-		for (const uploadBatch of getUploadBatches(filesToUpload)) {
+		for (const uploadBatch of uploadBatches(filesToUpload)) {
 			await Promise.allSettled(
 				uploadBatch.map(async (fileData: FileData) => {
 					try {

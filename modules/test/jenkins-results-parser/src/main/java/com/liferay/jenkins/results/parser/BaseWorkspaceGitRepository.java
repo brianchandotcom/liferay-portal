@@ -589,23 +589,10 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
-		boolean useSnapshot = false;
-
-		if (_isDotGitDirArchiveRequired()) {
-			if (_isGitArchiveAvailable() && _isDotGitArchiveAvailable()) {
-				CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
-				CloudBucketUtil.touchS3File(_getDotGitArchiveS3BucketPath());
-
-				useSnapshot = true;
-			}
-		}
-		else if (_isGitArchiveAvailable()) {
+		if (_isGitArchiveAvailable() && _isDotGitArchiveAvailable()) {
 			CloudBucketUtil.touchS3File(_getGitArchiveS3BucketPath());
+			CloudBucketUtil.touchS3File(_getDotGitArchiveS3BucketPath());
 
-			useSnapshot = true;
-		}
-
-		if (useSnapshot) {
 			_setSnapshot(true);
 
 			_updateBuildDatabase();
@@ -731,15 +718,13 @@ public abstract class BaseWorkspaceGitRepository
 
 			JenkinsResultsParserUtil.delete(archiveFile);
 
-			if (_isDotGitDirArchiveRequired()) {
-				File dotGitDirArchiveFile = _archiveDotGitDir();
+			File dotGitDirArchiveFile = _archiveDotGitDir();
 
-				CloudBucketUtil.uploadS3File(
-					_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
-					dotGitDirArchiveFile);
+			CloudBucketUtil.uploadS3File(
+				_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
+				dotGitDirArchiveFile);
 
-				JenkinsResultsParserUtil.delete(dotGitDirArchiveFile);
-			}
+			JenkinsResultsParserUtil.delete(dotGitDirArchiveFile);
 		}
 
 		if (!jobName.contains("root-cause-analysis-tool")) {

@@ -37,8 +37,9 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _formatHeaders(content);
 		content = replace(content);
+
+		content = _formatHeaders(content);
 
 		return replaceTaglibURIs(content);
 	}

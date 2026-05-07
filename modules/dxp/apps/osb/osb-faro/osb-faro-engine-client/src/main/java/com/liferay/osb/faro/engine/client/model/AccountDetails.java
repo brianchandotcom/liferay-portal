@@ -5,8 +5,6 @@
 
 package com.liferay.osb.faro.engine.client.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +31,6 @@ public class AccountDetails {
 			return _dataSourceName;
 		}
 
-		@JsonProperty("modifiedDate")
 		public Date getModifiedDate() {
 			return _modifiedDate;
 		}

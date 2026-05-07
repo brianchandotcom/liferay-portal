@@ -311,7 +311,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.thumbnailURLReference(fileEntry);
+			ThumbnailUtil.thumbnailURLReference(fileEntry, null);
 
 		utilityPage.setThumbnailURLReference(thumbnailURLReference);
 
@@ -741,7 +741,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		randomUtilityPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.thumbnailURLReference(fileEntry));
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry, null));
 
 		UtilityPage postUtilityPage = testPostSiteUtilityPage_addUtilityPage(
 			randomUtilityPage);
@@ -914,7 +914,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		utilityPage1.setThumbnailURLReference(
-			() -> ThumbnailUtil.thumbnailURLReference(fileEntry));
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry, null));
 
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
 
@@ -933,7 +933,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			repository.getDlFolderId());
 
 		utilityPage1.setThumbnailURLReference(
-			() -> ThumbnailUtil.thumbnailURLReference(newFileEntry));
+			() -> ThumbnailUtil.thumbnailURLReference(newFileEntry, null));
 
 		utilityPageResource.patchSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
@@ -1179,7 +1179,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
 		utilityPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.thumbnailURLReference(fileEntry1));
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry1, null));
 
 		UtilityPage putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),
@@ -1192,7 +1192,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putUtilityPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.thumbnailURLReference(fileEntry2));
+			() -> ThumbnailUtil.thumbnailURLReference(fileEntry2, null));
 
 		putUtilityPage = utilityPageResource.putSiteUtilityPage(
 			testGroup.getExternalReferenceCode(),

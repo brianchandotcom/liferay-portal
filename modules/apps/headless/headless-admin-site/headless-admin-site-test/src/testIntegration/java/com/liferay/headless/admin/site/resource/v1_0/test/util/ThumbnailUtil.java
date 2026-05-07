@@ -28,13 +28,14 @@ public class ThumbnailUtil {
 	}
 
 	public static ThumbnailURLReference thumbnailURLReference(
-		FileEntry fileEntry) {
+		FileEntry fileEntry, String url) {
 
 		ThumbnailURLReference thumbnailURLReference =
 			new ThumbnailURLReference();
 
 		thumbnailURLReference.setExternalReferenceCode(
 			fileEntry::getExternalReferenceCode);
+		thumbnailURLReference.setUrl(() -> url);
 
 		return thumbnailURLReference;
 	}

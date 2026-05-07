@@ -11,6 +11,7 @@ export {
 export {default as AssigneeAvatar} from './Assignee/Avatar';
 export {default as Attachment} from './Attachment/Attachment';
 export {default as AutoIncrement} from './AutoIncrement/AutoIncrement';
+export {default as EmailAddress} from './EmailAddress/EmailAddress';
 export {default as MultiselectPicklist} from './MultiselectPicklist/MultiselectPicklist';
 export {default as ObjectRelationship} from './ObjectRelationship/ObjectRelationship';
 export {default as PhoneNumber} from './PhoneNumber/PhoneNumber';

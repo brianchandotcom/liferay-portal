@@ -7,6 +7,7 @@ package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.DuplicateVocabularyException;
 import com.liferay.asset.kernel.exception.DuplicateVocabularyExternalReferenceCodeException;
+import com.liferay.asset.kernel.exception.VocabularyExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.VocabularyNameException;
 import com.liferay.asset.kernel.exception.VocabularyVisibilityTypeException;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
@@ -744,6 +745,16 @@ public class AssetVocabularyLocalServiceImpl
 
 		if (Validator.isNull(externalReferenceCode)) {
 			return;
+		}
+
+		int maxLength = ModelHintsUtil.getMaxLength(
+			AssetVocabulary.class.getName(), "externalReferenceCode");
+
+		if (externalReferenceCode.length() > maxLength) {
+			throw new VocabularyExternalReferenceCodeException(
+				StringBundler.concat(
+					"External reference code length cannot exceed ", maxLength,
+					" characters"));
 		}
 
 		AssetVocabulary assetVocabulary =

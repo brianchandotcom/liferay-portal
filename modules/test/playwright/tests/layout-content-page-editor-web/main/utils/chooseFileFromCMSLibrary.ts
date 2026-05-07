@@ -25,10 +25,12 @@ export default async function chooseFileFromCMSLibrary({
 		trigger,
 	});
 
-	await expect(() => {
-		dialog.locator('.card', {hasText: fileName}).click();
+	await expect(async () => {
+		await dialog.locator('.card', {hasText: fileName}).click();
 
-		expect(dialog.getByRole('button', {name: 'Select'})).toBeEnabled();
+		await expect(
+			dialog.getByRole('button', {name: 'Select'})
+		).toBeEnabled();
 	}).toPass();
 
 	await clickAndExpectToBeHidden({

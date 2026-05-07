@@ -25,6 +25,7 @@ import handlePublishStructure from '../../../../src/main/resources/META-INF/reso
 import handleSaveStructure from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/handleSaveStructure';
 import isReferenced from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/isReferenced';
 import isRenamable from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/isRenamable';
+import openHelpModal from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/openHelpModal';
 import openReferencedStructureModal from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/openReferencedStructureModal';
 import {MockCacheProvider} from '../mocks/MockCacheProvider';
 import {MockStateProvider} from '../mocks/MockStateProvider';
@@ -65,6 +66,11 @@ jest.mock(
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/isReferenced',
+	() => jest.fn()
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/openHelpModal',
 	() => jest.fn()
 );
 
@@ -231,5 +237,13 @@ describe('ShortcutManager', () => {
 		fireEvent.keyDown(document.body, {code: 'KeyP', ctrlKey: true});
 
 		expect(handlePublishStructure).toHaveBeenCalled();
+	});
+
+	it('opens help modal with Shift+?', () => {
+		renderComponent();
+
+		fireEvent.keyDown(document.body, {key: '?', shiftKey: true});
+
+		expect(openHelpModal).toHaveBeenCalled();
 	});
 });

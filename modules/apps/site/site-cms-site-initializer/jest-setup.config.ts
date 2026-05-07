@@ -63,6 +63,10 @@ class MockBroadcastChannel {
 
 (globalThis as any).Liferay = {
 	...(globalThis.Liferay || {}),
+	Browser: {
+		...(globalThis.Liferay.Browser || {}),
+		isMac: () => false,
+	},
 	Language: {
 		...(globalThis.Liferay.Language || {}),
 		direction: {en_US: 'rtl'},

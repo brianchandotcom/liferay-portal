@@ -6,6 +6,7 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -14,6 +15,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import {
+	createInheritanceRelationship,
+	setAllowStandaloneObjectEntry,
+} from './utils/objectInheritance';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -203,5 +208,131 @@ test(
 			roleDefinePermissionsPage.accessInControlPanel
 		).toHaveCount(0);
 		await expect(roleDefinePermissionsPage.addToPage).toHaveCount(0);
+	}
+);
+
+test(
+	'Show or hide inactive permissions banner based on standalone entries setting',
+	{tag: ['@LPD-88002']},
+	async ({
+		apiHelpers,
+		page,
+		roleDefinePermissionsPage,
+		rolePage,
+		rolesPage,
+	}) => {
+		const parentObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const standaloneDisabledChild =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const standaloneEnabledChild =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		// The push order matters: cleanup iterates apiHelpers.data.reverse(),
+		// so the parent must be cleaned up first to disable edge=true
+		// relationships and cascade-delete them before the children are
+		// deleted.
+
+		apiHelpers.data.push({
+			id: standaloneDisabledChild.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: standaloneEnabledChild.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: parentObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		await createInheritanceRelationship(
+			objectRelationshipAPIClient,
+			parentObjectDefinition,
+			standaloneDisabledChild,
+			'inheritedDisabled'
+		);
+		await createInheritanceRelationship(
+			objectRelationshipAPIClient,
+			parentObjectDefinition,
+			standaloneEnabledChild,
+			'inheritedEnabled'
+		);
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		await setAllowStandaloneObjectEntry(
+			objectDefinitionAPIClient,
+			standaloneDisabledChild,
+			'false'
+		);
+		await setAllowStandaloneObjectEntry(
+			objectDefinitionAPIClient,
+			standaloneEnabledChild,
+			'true'
+		);
+
+		const banner = page.getByText(
+			"Standalone entries are disabled. Some of these permissions are not active and will take effect when standalone entries are enabled in the object's settings."
+		);
+
+		await rolesPage.goto();
+
+		await rolesPage.userLink.click();
+
+		await rolePage.definePermissionsLink.click();
+
+		await roleDefinePermissionsPage.searchInput.click();
+
+		await roleDefinePermissionsPage.searchInput.fill('object');
+
+		await test.step('Banner is visible for child with standalone entries disabled', async () => {
+			await roleDefinePermissionsPage
+				.menuItemByTestId(`object_${standaloneDisabledChild.id}`)
+				.click();
+
+			await expect(roleDefinePermissionsPage.loading).toHaveCount(0);
+			await expect(
+				roleDefinePermissionsPage.portletResourceLabel
+			).toHaveText(standaloneDisabledChild.name);
+			await expect(banner).toBeVisible();
+		});
+
+		await test.step('Banner is hidden for child with standalone entries enabled', async () => {
+			await roleDefinePermissionsPage
+				.menuItemByTestId(`object_${standaloneEnabledChild.id}`)
+				.click();
+
+			await expect(roleDefinePermissionsPage.loading).toHaveCount(0);
+			await expect(
+				roleDefinePermissionsPage.portletResourceLabel
+			).toHaveText(standaloneEnabledChild.name);
+			await expect(banner).toBeHidden();
+		});
+
+		await test.step('Banner is hidden for root object', async () => {
+			await roleDefinePermissionsPage
+				.menuItemByTestId(`object_${parentObjectDefinition.id}`)
+				.click();
+
+			await expect(roleDefinePermissionsPage.loading).toHaveCount(0);
+			await expect(
+				roleDefinePermissionsPage.portletResourceLabel
+			).toHaveText(parentObjectDefinition.name);
+			await expect(banner).toBeHidden();
+		});
 	}
 );

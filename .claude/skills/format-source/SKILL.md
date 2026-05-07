@@ -373,7 +373,7 @@ When the value is reused for a second lookup in the same scope, reassign `index`
 +foo.setGamma(gamma);
 ```
 
-**Exception:** When the receiver is a Service Builder entity (anything backed by a `*ModelImpl` — `FragmentEntryVersion`, `User`, `Group`, etc.), the auto-formatter's `JavaServiceObjectCheck` rewrites the setter block into model-field declaration order, not alphabetical. Leave entity setter blocks as the formatter produces them; alphabetizing by hand will be reverted on the next `formatSource` run.
+**Exception:** When the receiver is a Service Builder entity (anything backed by a `*ModelImpl` — `FragmentEntryVersion`, `User`, `Group`, etc.), the automatic formatter's `JavaServiceObjectCheck` rewrites the setter block into model-field declaration order, not alphabetical order. Leave entity setter blocks as the formatter produces them; alphabetizing by hand will be reverted on the next `formatSource` run.
 
 ### Rule 18: Use Complete Sentences in User-Facing Messages
 

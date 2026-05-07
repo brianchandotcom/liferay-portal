@@ -83,21 +83,6 @@ public abstract class BaseFDSSerializer {
 				TransformUtil.transform(
 					sharingEntries, SharingEntry::getClassPK));
 
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("(fdsName eq '");
-			sb.append(fdsName);
-			sb.append("' and (creatorId eq ");
-			sb.append(userId);
-
-			if (!sharingEntriesClassPKs.isEmpty()) {
-				sb.append(" or id in ('");
-				sb.append(StringUtil.merge(sharingEntriesClassPKs, "','"));
-				sb.append("')");
-			}
-
-			sb.append("))");
-
 			ObjectEntryManager objectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
 					objectEntryManagerRegistry.getObjectEntryManager(
@@ -109,7 +94,8 @@ public abstract class BaseFDSSerializer {
 				new DefaultDTOConverterContext(
 					false, null, null, null, null,
 					LocaleUtil.getMostRelevantLocale(), null, null),
-				sb.toString(), null, null, null);
+				_getFilterString(fdsName, sharingEntriesClassPKs, userId), null,
+				null, null);
 
 			List<ObjectEntry> ownedObjectEntries = new ArrayList<>();
 			List<ObjectEntry> sharedObjectEntries = new ArrayList<>();
@@ -171,6 +157,27 @@ public abstract class BaseFDSSerializer {
 
 	@Reference
 	protected SharingEntryLocalService sharingEntryLocalService;
+
+	private String _getFilterString(
+		String fdsName, Set<Long> sharingEntriesClassPKs, long userId) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("(fdsName eq '");
+		sb.append(fdsName);
+		sb.append("' and (creatorId eq ");
+		sb.append(userId);
+
+		if (!sharingEntriesClassPKs.isEmpty()) {
+			sb.append(" or id in ('");
+			sb.append(StringUtil.merge(sharingEntriesClassPKs, "','"));
+			sb.append("')");
+		}
+
+		sb.append("))");
+
+		return sb.toString();
+	}
 
 	private JSONArray _toJSONArray(List<ObjectEntry> objectEntries)
 		throws Exception {

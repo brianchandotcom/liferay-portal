@@ -12,7 +12,6 @@ import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,6 +38,11 @@ public class ExportImportReportEntryLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+	}
 
 	@Test
 	@TestInfo("LPD-77587")
@@ -169,14 +174,12 @@ public class ExportImportReportEntryLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
-		Company company = CompanyTestUtil.addCompany();
-
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomLong(), _company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			exportImportConfigurationId, RandomTestUtil.randomString());
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomLong(), _company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
@@ -187,8 +190,6 @@ public class ExportImportReportEntryLocalServiceTest {
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), 1,
 			exportImportReportEntries.size());
-
-		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -212,15 +213,13 @@ public class ExportImportReportEntryLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
-		Company company = CompanyTestUtil.addCompany();
-
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomLong(), _company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			exportImportConfigurationId, RandomTestUtil.randomString());
 
 		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), company.getCompanyId(),
+			RandomTestUtil.randomLong(), _company.getCompanyId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString());
 
@@ -230,8 +229,6 @@ public class ExportImportReportEntryLocalServiceTest {
 				getExportImportReportEntriesCount(
 					TestPropsValues.getCompanyId(),
 					exportImportConfigurationId));
-
-		_companyLocalService.deleteCompany(company);
 	}
 
 	@Test
@@ -507,8 +504,7 @@ public class ExportImportReportEntryLocalServiceTest {
 			updateExportImportReportEntry(exportImportReportEntry);
 	}
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
+	private static Company _company;
 
 	@Inject
 	private ExportImportReportEntryLocalService

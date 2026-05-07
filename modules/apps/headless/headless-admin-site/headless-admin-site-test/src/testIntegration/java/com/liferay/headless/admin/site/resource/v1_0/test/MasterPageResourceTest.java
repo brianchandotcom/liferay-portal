@@ -33,7 +33,6 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -1065,10 +1064,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 
@@ -1263,10 +1261,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 
@@ -1511,10 +1508,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				{
 					setExternalReferenceCode(RandomTestUtil.randomString());
 					setUrl(
-						() -> StringBundler.concat(
-							"http://localhost:",
-							PortalUtil.getPortalServerPort(false), "/",
-							RandomTestUtil.randomString()));
+						() ->
+							"http://invalid.example.test/" +
+								RandomTestUtil.randomString());
 				}
 			};
 

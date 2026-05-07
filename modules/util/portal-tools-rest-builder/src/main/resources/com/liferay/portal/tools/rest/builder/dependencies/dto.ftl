@@ -367,6 +367,13 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 		return Objects.equals(toString(), ${schemaVarName}.toString());
 	}
 
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
 	<#if jsonMapPropertyNames?has_content>
 		public Object getPropertyValue(String propertyName) {
 			<#list properties?keys as propertyName>
@@ -461,13 +468,6 @@ public <#if schema.discriminator?has_content>abstract</#if> class ${schemaName} 
 
 		}
 	</#if>
-
-	@Override
-	public int hashCode() {
-		String string = toString();
-
-		return string.hashCode();
-	}
 
 	public String toString() {
 		StringBundler sb = new StringBundler();

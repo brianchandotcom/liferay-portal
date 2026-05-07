@@ -693,19 +693,18 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				bundle.stop();
 			}
 
-			AssignToObjectBulkSelectionAction assignToBulkAction =
-				new AssignToObjectBulkSelectionAction();
+			BulkAction bulkAction = new AssignToObjectBulkSelectionAction();
 
-			assignToBulkAction.setBulkActionItems(
+			bulkAction.setBulkActionItems(
 				new BulkActionItem[] {new BulkActionItem()});
-			assignToBulkAction.setType(
+			bulkAction.setType(
 				BulkAction.Type.ASSIGN_TO_OBJECT_BULK_SELECTION_ACTION);
 
 			assertHttpResponseStatusCode(
 				400,
 				bulkActionResource.postBulkActionHttpResponse(
 					null, null, null, null, null, null, null, null,
-					assignToBulkAction));
+					bulkAction));
 		}
 		finally {
 			if (bundle != null) {
@@ -1272,10 +1271,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	}
 
 	private void _testPostBulkActionWithTypeDuplicate() throws Exception {
-		DuplicateObjectBulkSelectionAction duplicateBulkAction =
-			new DuplicateObjectBulkSelectionAction();
+		BulkAction bulkAction = new DuplicateObjectBulkSelectionAction();
 
-		duplicateBulkAction.setType(
+		bulkAction.setType(
 			BulkAction.Type.DUPLICATE_OBJECT_BULK_SELECTION_ACTION);
 
 		ObjectEntryFolder sourceObjectEntryFolder =
@@ -1292,7 +1290,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				_depotEntry1.getGroupId(),
 				sourceObjectEntryFolder.getObjectEntryFolderId());
 
-		duplicateBulkAction.setBulkActionItems(
+		bulkAction.setBulkActionItems(
 			_toBulkActionItems(
 				_cmsBasicWebContentObjectDefinition, objectEntry,
 				objectEntryFolder));
@@ -1311,18 +1309,16 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				sourceObjectEntryFolder.getObjectEntryFolderId()));
 
 		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
-			null, null, null, null, null, null, null, null,
-			duplicateBulkAction);
+			null, null, null, null, null, null, null, null, bulkAction);
 
 		Assert.assertNotNull(bulkActionTask.getId());
 
 		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
 
-		ObjectEntry duplicateBulkActionObjectEntry =
+		ObjectEntry bulkActionObjectEntry =
 			_objectEntryLocalService.getObjectEntry(bulkActionTask.getId());
 
-		Map<String, Serializable> values =
-			duplicateBulkActionObjectEntry.getValues();
+		Map<String, Serializable> values = bulkActionObjectEntry.getValues();
 
 		Assert.assertEquals(0, values.get("numberOfFailedItems"));
 

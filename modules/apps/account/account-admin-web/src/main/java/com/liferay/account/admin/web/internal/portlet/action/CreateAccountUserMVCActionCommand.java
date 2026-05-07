@@ -10,11 +10,14 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
@@ -38,11 +41,15 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.service.SharingEntryLocalService;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
 import java.time.Month;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,7 +93,9 @@ public class CreateAccountUserMVCActionCommand
 				return;
 			}
 
-			_addUser(actionRequest, ticket.getExtraInfo());
+			user = _addUser(actionRequest, ticket.getExtraInfo());
+
+			_updateSharingEntry(ticket, user);
 		}
 		else {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -206,6 +215,35 @@ public class CreateAccountUserMVCActionCommand
 		}
 	}
 
+	private void _updateSharingEntry(Ticket ticket, User user) {
+		List<SharingEntry> toTicketSharingEntries =
+			_sharingEntryLocalService.getToTicketSharingEntries(
+				ticket.getTicketId());
+
+		if (toTicketSharingEntries.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"No sharing entry found for ticket ",
+						ticket.getTicketId(),
+						"; collaborator access will not be granted to user ",
+						user.getUserId()));
+			}
+
+			return;
+		}
+
+		for (SharingEntry sharingEntry : toTicketSharingEntries) {
+			sharingEntry.setToTicketId(0);
+			sharingEntry.setToUserId(user.getUserId());
+
+			_sharingEntryLocalService.updateSharingEntry(sharingEntry);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CreateAccountUserMVCActionCommand.class);
+
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
@@ -223,6 +261,9 @@ public class CreateAccountUserMVCActionCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private TicketLocalService _ticketLocalService;

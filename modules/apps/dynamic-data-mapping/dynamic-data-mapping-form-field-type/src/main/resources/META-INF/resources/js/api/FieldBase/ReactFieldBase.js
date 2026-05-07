@@ -291,6 +291,7 @@ export default function FieldBase({
 		type === 'date' ||
 		type === 'date_time' ||
 		type === 'document_library' ||
+		type === 'email-address' ||
 		type === 'image' ||
 		type === 'localizable_text' ||
 		type === 'numeric' ||

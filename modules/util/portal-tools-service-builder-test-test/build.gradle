@@ -3,6 +3,7 @@ dependencies {
 	testIntegrationImplementation group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	testIntegrationImplementation project(":apps:change-tracking:change-tracking-api")
 	testIntegrationImplementation project(":apps:object:object-api")
+	testIntegrationImplementation project(":apps:portal-cache:portal-cache-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 	testIntegrationImplementation project(":util:portal-tools-service-builder-test-api")
 }

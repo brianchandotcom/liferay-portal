@@ -121,21 +121,21 @@ public class GlobalPrivacyControlProviderImplTest {
 							"globalPrivacyControlEnabled", true
 						).build())) {
 
-			Assert.assertFalse(
+			Assert.assertTrue(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest(false, null)));
+					_createMockHttpServletRequest(false, " 1 ")));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
 					_createMockHttpServletRequest(false, "0")));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
+					_createMockHttpServletRequest(false, "0, 1")));
+			Assert.assertFalse(
+				_globalPrivacyControlProvider.isSignalActive(
 					_createMockHttpServletRequest(false, "true")));
 			Assert.assertFalse(
 				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest(false, "0, 1")));
-			Assert.assertTrue(
-				_globalPrivacyControlProvider.isSignalActive(
-					_createMockHttpServletRequest(false, " 1 ")));
+					_createMockHttpServletRequest(false, null)));
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_createMockHttpServletRequest(false, "0");

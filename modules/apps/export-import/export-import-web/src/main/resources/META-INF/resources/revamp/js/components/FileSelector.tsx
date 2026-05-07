@@ -12,6 +12,7 @@ import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import {formatStorage} from 'frontend-js-web';
 
 import DragZone from './forms/DragZone';
 
@@ -117,7 +118,7 @@ export default function FileSelector({
 							</p>
 
 							<p className="mb-1">
-								{Liferay.Util.formatStorage(file.size, {
+								{formatStorage(file.size, {
 									addSpaceBeforeSuffix: true,
 								})}
 							</p>

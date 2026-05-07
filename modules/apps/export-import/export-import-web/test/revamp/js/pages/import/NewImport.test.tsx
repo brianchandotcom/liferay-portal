@@ -35,7 +35,7 @@ jest.mock(
 					exportDate: '2000-07-27T00:00:00Z',
 					fileEntryId: 1,
 					fileName: 'site.lar',
-					fileSize: 4,
+					fileSize: 4096,
 					portletDataHandlerSections: [],
 				},
 				error: null,
@@ -76,12 +76,6 @@ const uploadFile = async (fileName = 'site.lar') => {
 };
 
 describe('NewImport', () => {
-	beforeAll(() => {
-		global.Liferay.Util.formatStorage = jest.fn(
-			(bytes: number) => `${bytes} B`
-		);
-	});
-
 	beforeEach(() => {
 		user = userEvent.setup();
 	});
@@ -220,6 +214,6 @@ describe('NewImport', () => {
 		expect(screen.getAllByText('site.lar').length).toBeGreaterThan(0);
 		expect(screen.getByText('Test User')).toBeInTheDocument();
 		expect(screen.getByText('5 days ago')).toBeInTheDocument();
-		expect(screen.getByText('4 B')).toBeInTheDocument();
+		expect(screen.getByText('4 KB')).toBeInTheDocument();
 	});
 });

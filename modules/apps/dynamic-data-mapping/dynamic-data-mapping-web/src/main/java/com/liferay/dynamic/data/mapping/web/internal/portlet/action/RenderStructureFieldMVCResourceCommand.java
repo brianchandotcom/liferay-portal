@@ -113,9 +113,8 @@ public class RenderStructureFieldMVCResourceCommand
 			createDDMFormFieldRenderingContext(
 				httpServletRequest, httpServletResponse);
 
-		String ddmFormFieldHTML = HtmlUtil.escapeAttribute(
-			ddmFormFieldRenderer.render(
-				ddmFormField, ddmFormFieldRenderingContext));
+		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+			ddmFormField, ddmFormFieldRenderingContext);
 
 		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
 

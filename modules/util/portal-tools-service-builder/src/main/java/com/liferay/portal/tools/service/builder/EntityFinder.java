@@ -8,7 +8,6 @@ package com.liferay.portal.tools.service.builder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,7 +175,7 @@ public class EntityFinder {
 			return false;
 		}
 
-		return Validator.isNull(_where);
+		return true;
 	}
 
 	public boolean isPretouch() {

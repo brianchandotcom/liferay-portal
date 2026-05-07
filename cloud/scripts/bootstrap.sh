@@ -45,7 +45,6 @@ function _check_utils {
 
 function _download_and_extract_files {
 	local provider="${1}"
-
 	local version="${2}"
 
 	local bucket_name="liferay-cloud-native-bootstrap"

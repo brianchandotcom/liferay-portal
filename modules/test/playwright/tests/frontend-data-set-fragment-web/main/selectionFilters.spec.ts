@@ -414,7 +414,7 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 	});
 });
 
-test('Selection filter of type "Object Picklist" can be configured to use single or multiple selection', async ({
+test('Selection filter of type "Object Picklist" can be enabled and disabled', async ({
 	dataSetFragmentPage,
 	dataSetManagerApiHelpers,
 	layout,

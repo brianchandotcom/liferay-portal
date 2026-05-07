@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,6 +95,11 @@ public class CookiesBannerDisplayContext
 		).put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
+		).put(
+			"previewMode",
+			GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(
+					CookiesBannerWebKeys.COOKIES_PREVIEW))
 		).put(
 			"requiredConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())

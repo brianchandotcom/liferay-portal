@@ -38,6 +38,7 @@ export default function ({
 	modifiedDate = 0,
 	namespace,
 	optionalConsentCookieTypeNames,
+	previewMode = false,
 	requiredConsentCookieTypeNames,
 	title,
 }) {
@@ -54,6 +55,11 @@ export default function ({
 		`${namespace}storeConsent`
 	);
 	const cookieBanner = document.querySelector('.cookies-banner');
+
+	if (!cookieBanner) {
+		return;
+	}
+
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
@@ -93,7 +99,31 @@ export default function ({
 			'.product-analytics-banner'
 		);
 
-		if (
+		if (previewMode) {
+			cookieBanner.style.display = 'block';
+
+			document.documentElement.classList.add('cookies-preview-mode');
+
+			const previewStyle = document.createElement('style');
+
+			previewStyle.textContent =
+				'.cookies-preview-mode body { pointer-events: none; }' +
+				'.cookies-preview-mode .cookies-banner,' +
+				'.cookies-preview-mode .cookies-banner *,' +
+				'.cookies-preview-mode .floating-icon-button,' +
+				'.cookies-preview-mode .custom-floating-icon-image,' +
+				'.cookies-preview-mode .modal,' +
+				'.cookies-preview-mode .modal * { pointer-events: auto; }';
+
+			document.head.appendChild(previewStyle);
+
+			cookieBanner.querySelectorAll('a').forEach((link) => {
+				link.addEventListener('click', (event) => {
+					event.preventDefault();
+				});
+			});
+		}
+		else if (
 			globalPrivacyControlSignalActive ||
 			consentManager ||
 			(productAnalyticsBanner &&
@@ -134,6 +164,10 @@ export default function ({
 		});
 
 		acceptAllButton.addEventListener('click', () => {
+			if (previewMode) {
+				return;
+			}
+
 			cookieBanner.style.display = 'none';
 
 			storeConsentCheckbox = document.getElementById(
@@ -185,6 +219,10 @@ export default function ({
 							'use-necessary-cookies-only'
 						),
 						onClick() {
+							if (previewMode) {
+								return;
+							}
+
 							declineAllCookies(
 								consentRenewalPeriod,
 								consentRenewalPeriodTimeUnit,
@@ -210,6 +248,10 @@ export default function ({
 						displayType: 'secondary',
 						label: Liferay.Language.get('accept-selected'),
 						onClick() {
+							if (previewMode) {
+								return;
+							}
+
 							Object.entries(cookiePreferences).forEach(
 								([key, value]) => {
 									let renewalPeriod = consentRenewalPeriod;
@@ -257,6 +299,10 @@ export default function ({
 						displayType: 'secondary',
 						label: Liferay.Language.get('accept-all'),
 						onClick() {
+							if (previewMode) {
+								return;
+							}
+
 							acceptAllCookies(
 								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
@@ -294,6 +340,10 @@ export default function ({
 
 		if (declineAllButton !== null) {
 			declineAllButton.addEventListener('click', () => {
+				if (previewMode) {
+					return;
+				}
+
 				cookieBanner.style.display = 'none';
 
 				storeConsentCheckbox = document.getElementById(

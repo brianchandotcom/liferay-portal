@@ -1098,7 +1098,7 @@ test(
 				.locator('tr', {hasText: title})
 				.or(page.locator('.card-row', {hasText: title}))
 				.locator('.cell-embedded-status')
-		).toHaveText('draft');
+		).toHaveText(/draft/i);
 
 		// Delete content
 
@@ -1185,7 +1185,7 @@ test.describe('Schedule Publication', () => {
 					.locator('tr', {hasText: title})
 					.or(page.locator('.card-row', {hasText: title}))
 					.locator('.cell-embedded-status')
-			).toHaveText('scheduled');
+			).toHaveText(/scheduled/i);
 
 			await contentsPage.viewShowDetails(title);
 

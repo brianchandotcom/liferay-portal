@@ -51,7 +51,6 @@ import {sub} from 'frontend-js-web';
 import AICreator from '../plugins/AICreator';
 import HeadlessItemSelector from '../plugins/HeadlessItemSelector';
 import ItemSelector from '../plugins/ItemSelector';
-import VideoEmbed from '../plugins/VideoEmbed';
 import {EEditorConfigPreset, EEditorVariant} from './types';
 
 const getDefaultEditorConfig = ({
@@ -150,7 +149,6 @@ const getDefaultEditorConfig = ({
 		TableCaption,
 		TableProperties,
 		TableToolbar,
-		VideoEmbed,
 	];
 
 	if (editorVariant === EEditorVariant.CLASSIC) {
@@ -250,6 +248,16 @@ const getDefaultEditorConfig = ({
 			],
 		},
 		mediaEmbed: {
+			extraProviders: [
+				{
+					html: ([url]: string[]) =>
+						'<div style="position: relative; padding-bottom: 56.2493%; height: 0;">' +
+						`<video controls src="${url}" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;"></video>` +
+						'</div>',
+					name: 'directVideo',
+					url: /^.+\.(mp4|webm|ogg|ogv|mov|avi|m4v|mkv|wmv)(?:[/?].*)?$/i,
+				},
+			],
 			previewsInData: true,
 		},
 		plugins: advancedPlugins,

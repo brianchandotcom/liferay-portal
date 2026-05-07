@@ -119,22 +119,17 @@ class HeadlessItemSelector extends Plugin {
 					groupId: getGroupId(),
 					itemTypeLabel: Liferay.Language.get('video'),
 					onSelect: (items) => {
-						const fileURL = items[0]?.embedded?.file?.link?.href;
-						const videoURL = items[0]?.embedded?.videoURL;
+						const url =
+							items[0]?.embedded?.videoURL ||
+							items[0]?.embedded?.file?.link?.href;
 
-						let html;
-
-						if (videoURL) {
-							html = `<oembed url="${videoURL}"></oembed>`;
-						}
-						else if (fileURL) {
-							html = `<video controls src="${fileURL}"></video>`;
-						}
-						else {
+						if (!url) {
 							return;
 						}
 
-						const viewFragment = editor.data.processor.toView(html);
+						const viewFragment = editor.data.processor.toView(
+							`<oembed url="${url}"></oembed>`
+						);
 
 						const modelFragment = editor.data.toModel(viewFragment);
 

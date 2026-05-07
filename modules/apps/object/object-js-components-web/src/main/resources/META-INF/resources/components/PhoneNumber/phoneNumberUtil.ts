@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {parsePhoneNumberFromString} from 'libphonenumber-js';
+import parsePhoneNumber from 'libphonenumber-js';
 
 export interface CountryInfo {
 	a2: string;
@@ -176,7 +176,7 @@ export function parsePhoneValue(
 		return {countryA2: '', localNumber: value || ''};
 	}
 
-	const parsed = parsePhoneNumberFromString(value);
+	const parsed = parsePhoneNumber(value);
 
 	if (parsed?.country) {
 		const isSupportedCountry = countries.some(

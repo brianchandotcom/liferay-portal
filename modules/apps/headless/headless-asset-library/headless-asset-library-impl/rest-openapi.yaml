@@ -168,6 +168,10 @@ components:
                 searchable:
                     default: true
                     type: boolean
+                type:
+                    enum: [Site, SiteTemplate]
+                    readOnly: true
+                    type: string
             type: object
         Creator:
             description:

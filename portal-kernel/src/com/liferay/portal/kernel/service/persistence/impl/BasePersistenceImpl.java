@@ -903,6 +903,13 @@ public class BasePersistenceImpl
 		}
 	}
 
+	protected static <T> Function<T, Object> convertNullFunction(
+		Function<T, String> stringFunction) {
+
+		return baseModel -> Objects.toString(
+			stringFunction.apply(baseModel), "");
+	}
+
 	protected static String removeConjunction(String sql) {
 		int pos = sql.indexOf(" AND ");
 

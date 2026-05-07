@@ -301,6 +301,7 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 		}
 	]
 		.filter(({type}) => isDataSourceVisible(type, subscriptionName))
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		.map(({type, ...item}) => item);
 
 	const renderDataSourcesDropdown = () => (

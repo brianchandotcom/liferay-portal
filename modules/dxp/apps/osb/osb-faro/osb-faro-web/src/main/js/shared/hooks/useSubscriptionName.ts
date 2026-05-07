@@ -9,5 +9,8 @@ export const useSubscriptionName = ({
 	groupId: string;
 }): string | null =>
 	useSelector((state: RootState) =>
-		state.getIn(['projects', groupId, 'data', 'faroSubscription', 'name'], null)
+		state.getIn(
+			['projects', groupId, 'data', 'faroSubscription', 'name'],
+			null
+		)
 	);

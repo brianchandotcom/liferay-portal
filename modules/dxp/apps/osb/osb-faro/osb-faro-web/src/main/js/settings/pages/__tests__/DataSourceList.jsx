@@ -365,10 +365,7 @@ describe('isDataSourceVisible', () => {
 			DataSourceTypes.Salesforce
 		].forEach(type => {
 			expect(
-				isDataSourceVisible(
-					type,
-					SubscriptionNames.LiferayDataPlatform
-				)
+				isDataSourceVisible(type, SubscriptionNames.LiferayDataPlatform)
 			).toBe(true);
 		});
 	});

@@ -5,6 +5,8 @@
 
 package com.liferay.osb.faro.engine.client.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 
@@ -27,12 +29,13 @@ public class AccountDetails {
 			return _dataSourceId;
 		}
 
-		public Date getDataSourceModifiedDate() {
-			return _dataSourceModifiedDate;
-		}
-
 		public String getDataSourceName() {
 			return _dataSourceName;
+		}
+
+		@JsonProperty("modifiedDate")
+		public Date getModifiedDate() {
+			return _modifiedDate;
 		}
 
 		public String getName() {
@@ -47,12 +50,12 @@ public class AccountDetails {
 			_dataSourceId = dataSourceId;
 		}
 
-		public void setDataSourceModifiedDate(Date dataSourceModifiedDate) {
-			_dataSourceModifiedDate = dataSourceModifiedDate;
-		}
-
 		public void setDataSourceName(String dataSourceName) {
 			_dataSourceName = dataSourceName;
+		}
+
+		public void setModifiedDate(Date modifiedDate) {
+			_modifiedDate = modifiedDate;
 		}
 
 		public void setName(String name) {
@@ -64,8 +67,8 @@ public class AccountDetails {
 		}
 
 		private Long _dataSourceId;
-		private Date _dataSourceModifiedDate;
 		private String _dataSourceName;
+		private Date _modifiedDate;
 		private String _name;
 		private String _value;
 

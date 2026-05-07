@@ -52,7 +52,6 @@ module.exports = {
 		'highlight.js/lib/languages/java': ['*', 'default'],
 		'highlight.js/lib/languages/javascript': ['*', 'default'],
 		'highlight.js/lib/languages/plaintext': ['*', 'default'],
-		'libphonenumber-js': ['*', 'default'],
 		'liferay-ckeditor': [],
 		'moment': ['*', 'default'],
 		'moment/min/moment-with-locales': ['*', 'default'],

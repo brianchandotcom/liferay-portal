@@ -770,6 +770,93 @@ public class ObjectDefinitionTreeUtilTest {
 	}
 
 	@Test
+	public void testBindObjectDefinitionsWithModifiableSystemObjectDefinition()
+		throws Exception {
+
+		// Modifiable system as child
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.publishSystemObjectDefinition();
+
+		_testBindObjectDefinitions(
+			_objectDefinitionA, modifiableSystemObjectDefinition,
+			(objectDefinition1, objectDefinition2) ->
+				TreeTestUtil.assertRootObjectDefinitionIds(
+					LinkedHashMapBuilder.put(
+						objectDefinition1,
+						new ObjectDefinition[] {objectDefinition1}
+					).put(
+						objectDefinition2,
+						new ObjectDefinition[] {objectDefinition1}
+					).build()));
+
+		TreeTestUtil.unbind(
+			_objectDefinitionA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, _objectDefinitionA,
+				modifiableSystemObjectDefinition);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Collections.singletonList(objectRelationship));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				_objectDefinitionA, new ObjectDefinition[] {_objectDefinitionA}
+			).put(
+				modifiableSystemObjectDefinition,
+				new ObjectDefinition[] {_objectDefinitionA}
+			).build());
+
+		TreeTestUtil.unbind(
+			_objectDefinitionA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		// Modifiable system as parent
+
+		_testBindObjectDefinitions(
+			modifiableSystemObjectDefinition, _objectDefinitionB,
+			(objectDefinition1, objectDefinition2) ->
+				TreeTestUtil.assertRootObjectDefinitionIds(
+					LinkedHashMapBuilder.put(
+						objectDefinition1,
+						new ObjectDefinition[] {objectDefinition1}
+					).put(
+						objectDefinition2,
+						new ObjectDefinition[] {objectDefinition1}
+					).build()));
+
+		TreeTestUtil.unbind(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, modifiableSystemObjectDefinition,
+			_objectDefinitionB);
+
+		TreeTestUtil.bind(
+			_objectRelationshipLocalService,
+			Collections.singletonList(objectRelationship));
+
+		TreeTestUtil.assertRootObjectDefinitionIds(
+			LinkedHashMapBuilder.put(
+				modifiableSystemObjectDefinition,
+				new ObjectDefinition[] {modifiableSystemObjectDefinition}
+			).put(
+				_objectDefinitionB,
+				new ObjectDefinition[] {modifiableSystemObjectDefinition}
+			).build());
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {modifiableSystemObjectDefinition.getName()},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
 	public void testBindObjectDefinitionsWithObjectEntries() throws Exception {
 		ObjectEntry objectEntryA1 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinitionA.getObjectDefinitionId(), Map.of());

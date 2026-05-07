@@ -35,6 +35,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestU
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -1482,15 +1483,7 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate displayPageTemplate2 = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		displayPageTemplate2.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1835,15 +1828,7 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		displayPageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
@@ -2294,15 +2279,7 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		displayPageTemplate.setThumbnailURLReference(thumbnailURLReference);
 

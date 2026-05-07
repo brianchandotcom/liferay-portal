@@ -31,6 +31,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -1490,15 +1491,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			newFileEntry.getExternalReferenceCode());
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		pageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1725,15 +1718,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		pageTemplate = randomPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		pageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1996,15 +1981,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			true, putPageTemplate.getExternalReferenceCode(), null);
 
 		ThumbnailURLReference thumbnailURLReference =
-			new ThumbnailURLReference() {
-				{
-					setExternalReferenceCode(RandomTestUtil.randomString());
-					setUrl(
-						() ->
-							"http://invalid.example.test/" +
-								RandomTestUtil.randomString());
-				}
-			};
+			ThumbnailUtil.randomThumbnailURLReference();
 
 		putPageTemplate.setThumbnailURLReference(thumbnailURLReference);
 

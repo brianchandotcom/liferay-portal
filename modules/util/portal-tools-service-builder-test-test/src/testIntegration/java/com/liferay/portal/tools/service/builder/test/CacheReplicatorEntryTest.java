@@ -118,11 +118,9 @@ public class CacheReplicatorEntryTest implements Serializable {
 			}
 
 			String[][] events = {
-				{cacheNames[0], "removeAll", "removeAll"},
-				{cacheNames[1], "remove"},
-				{cacheNames[2], "remove", "remove", "remove", "remove"},
-				{cacheNames[3], "removeAll", "removeAll"},
-				{cacheNames[4], "removeAll", "removeAll"}
+				{cacheNames[0], "removeAll"}, {cacheNames[1], "remove"},
+				{cacheNames[2], "remove", "remove"},
+				{cacheNames[3], "removeAll"}, {cacheNames[4], "removeAll"}
 			};
 
 			_tomcatNode1.syncExecute(
@@ -156,11 +154,8 @@ public class CacheReplicatorEntryTest implements Serializable {
 					Assert.assertArrayEquals(
 						"Node 1 replicator events mismatch",
 						new String[][] {
-							{cacheNames[0], "removeAll"},
-							{cacheNames[1], "remove"},
-							{cacheNames[2], "remove", "remove"},
-							{cacheNames[3], "removeAll"},
-							{cacheNames[4], "removeAll"}
+							{cacheNames[0]}, {cacheNames[1], "remove"},
+							{cacheNames[2]}, {cacheNames[3]}, {cacheNames[4]}
 						},
 						TestPortalCacheReplicator.getEvents());
 
@@ -180,10 +175,8 @@ public class CacheReplicatorEntryTest implements Serializable {
 					Assert.assertArrayEquals(
 						"Node 2 replicator events mismatch",
 						new String[][] {
-							{cacheNames[0], "removeAll"}, {cacheNames[1]},
-							{cacheNames[2], "remove", "remove"},
-							{cacheNames[3], "removeAll"},
-							{cacheNames[4], "removeAll"}
+							{cacheNames[0]}, {cacheNames[1]}, {cacheNames[2]},
+							{cacheNames[3]}, {cacheNames[4]}
 						},
 						TestPortalCacheReplicator.getEvents());
 

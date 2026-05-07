@@ -422,4 +422,43 @@ describe('RulesSidebar', () => {
 			})
 		).toHaveTextContent('select');
 	});
+
+	it('preserves the fragment when the action changes for a readOnly action', async () => {
+		renderComponent({
+			editingRule: {
+				...DEFAULT_RULE,
+				actions: [
+					{
+						id: 'action-1',
+						itemId: 'item1',
+						readOnly: true,
+						type: 'show',
+					},
+				],
+				conditions: [
+					{
+						field: 'user',
+						id: 'condition-1',
+						options: {type: 'equal', value: 'userId1'},
+						type: 'user',
+					},
+				],
+			},
+		});
+
+		await selectPickerOption('select-action', 'hide');
+
+		await userEvent.click(screen.getByText('save'));
+
+		expect(addRule).toBeCalledWith(
+			expect.objectContaining({
+				actions: [
+					expect.objectContaining({
+						itemId: 'item1',
+						type: 'hide',
+					}),
+				],
+			})
+		);
+	});
 });

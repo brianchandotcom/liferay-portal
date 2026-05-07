@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.site.cms.site.initializer.constants.CMSConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -103,6 +104,11 @@ public class AssetStatisticsResourceImpl
 					() -> _getCount(
 						groupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.reviewDate.lt(date)));
+				setTotalCount(
+					() -> _getCount(
+						groupIds, objectDefinitionIds,
+						ObjectEntryTable.INSTANCE.status.in(
+							CMSConstants.CMS_WORKFLOW_STATUSES)));
 			}
 		};
 	}
@@ -131,6 +137,7 @@ public class AssetStatisticsResourceImpl
 				setExpiringSoonCount(() -> 0L);
 				setInDraftCount(() -> 0L);
 				setReviewDateOverdueCount(() -> 0L);
+				setTotalCount(() -> 0L);
 			}
 		};
 	}

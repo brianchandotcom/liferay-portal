@@ -26,7 +26,9 @@ export class SXPBlueprintsAndElementsViewPage {
 			.getByLabel('New Search Blueprint');
 		this.addBlueprintElementModal = page.locator('.modal-dialog');
 		this.blueprintElementTable = page.locator('.fds table');
-		this.blueprintElementSearchBar = page.getByPlaceholder('Search');
+		this.blueprintElementSearchBar = page
+			.getByTestId('managementToolbar')
+			.getByRole('searchbox', {name: 'Search'});
 		this.blueprintsTab = page.getByRole('link', {name: 'Blueprints'});
 		this.elementsTab = page.getByRole('link', {name: 'Elements'});
 		this.globalMenuPage = new GlobalMenuPage(page);

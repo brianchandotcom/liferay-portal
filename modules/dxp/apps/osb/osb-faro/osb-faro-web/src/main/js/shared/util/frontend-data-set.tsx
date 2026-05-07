@@ -37,11 +37,13 @@ export const columns = {
 		<div>{value && formatUTCDate(value, CUSTOM_DATE_FORMAT)}</div>
 	),
 	nameAndLinkRenderer: ({
+		channelId,
 		groupId,
 		itemData,
 		route,
 		value
 	}: {
+		channelId: string;
 		groupId: string;
 		itemData: {id: string | number};
 		route: string;
@@ -53,6 +55,7 @@ export const columns = {
 			<ClayLink
 				className='font-weight-semi-bold text-dark'
 				href={toRoute(route, {
+					channelId,
 					groupId,
 					id: itemData.id
 				})}

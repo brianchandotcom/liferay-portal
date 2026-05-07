@@ -586,6 +586,12 @@ public class PullRequest {
 			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
 	}
 
+	public String getMergeableState() {
+		_refreshJSONObject();
+
+		return _jsonObject.getString("mergeable_state");
+	}
+
 	public String getNumber() {
 		return String.valueOf(_number);
 	}

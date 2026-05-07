@@ -132,125 +132,7 @@ public class ObjectEntryFolderResourceTest
 		_testGetObjectEntryFolderActionsWithSharingEnabled();
 		_testGetObjectEntryFolderActionsWithSystemSharingDisabled();
 		_testGetObjectEntryFolderActionsWithoutUpdatePermission();
-	}
-
-	@FeatureFlag("LPD-17564")
-	@Test
-	@TestInfo("LPD-83639")
-	public void testGetObjectEntryFolderShareAction() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			null, DepotConstants.TYPE_SPACE,
-			new ServiceContext() {
-				{
-					setCompanyId(testGroup.getCompanyId());
-					setUserId(TestPropsValues.getUserId());
-				}
-			});
-
-		String password = RandomTestUtil.randomString();
-
-		User user = UserTestUtil.addUser(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			password, RandomTestUtil.randomString() + "@liferay.com",
-			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			ServiceContextTestUtil.getServiceContext());
-
-		user.setEmailAddressVerified(true);
-
-		user = UserLocalServiceUtil.updateUser(user);
-
-		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
-			_addObjectEntryFolder(
-				depotEntry,
-				ServiceContextTestUtil.getServiceContext(
-					depotEntry.getGroupId()),
-				depotEntry.getUserId());
-
-		// With asset library administrator role
-
-		Role role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
-
-		UserGroupRole userGroupRole =
-			_userGroupRoleLocalService.addUserGroupRole(
-				user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
-
-		JSONObject jsonObject = _getActionsJSONObject(
-			objectEntryFolder, password, user);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
-
-		// With asset library content reviewer role
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(),
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
-
-		userGroupRole = _userGroupRoleLocalService.addUserGroupRole(
-			user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
-
-		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
-
-		Assert.assertFalse(jsonObject.has("share"));
-
-		// With asset library content reviewer role and shared object entry
-		// folder
-
-		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
-			_classNameLocalService.getClassNameId(
-				objectEntryFolder.getModelClassName()),
-			objectEntryFolder.getObjectEntryFolderId(), depotEntry.getGroupId(),
-			true, List.of(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				depotEntry.getGroupId(), TestPropsValues.getUserId()));
-
-		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
-
-		_sharingEntryLocalService.deleteSharingEntry(
-			sharingEntry.getSharingEntryId());
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
-
-		// With CMS administrator role
-
-		role = _roleLocalService.fetchRole(
-			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
-
-		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
-
-		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		_roleLocalService.deleteUserRole(user.getUserId(), role.getRoleId());
-
-		// With user as creator
-
-		com.liferay.object.model.ObjectEntryFolder objectEntryFolder2 =
-			_addObjectEntryFolder(
-				depotEntry,
-				ServiceContextTestUtil.getServiceContext(
-					depotEntry.getGroupId(), user.getUserId()),
-				user.getUserId());
-
-		jsonObject = _getActionsJSONObject(objectEntryFolder2, password, user);
-
-		Assert.assertTrue(jsonObject.has("share"));
-
-		// Without role
-
-		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
-
-		Assert.assertFalse(jsonObject.has("share"));
+		_testGetObjectEntryFolderShareAction();
 	}
 
 	@Override
@@ -1134,6 +1016,123 @@ public class ObjectEntryFolderResourceTest
 
 			_testGetObjectEntryFolderActions(false);
 		}
+	}
+
+	@TestInfo("LPD-83639")
+	private void _testGetObjectEntryFolderShareAction() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			new ServiceContext() {
+				{
+					setCompanyId(testGroup.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		user.setEmailAddressVerified(true);
+
+		user = UserLocalServiceUtil.updateUser(user);
+
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder =
+			_addObjectEntryFolder(
+				depotEntry,
+				ServiceContextTestUtil.getServiceContext(
+					depotEntry.getGroupId()),
+				depotEntry.getUserId());
+
+		// With asset library administrator role
+
+		Role role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR);
+
+		UserGroupRole userGroupRole =
+			_userGroupRoleLocalService.addUserGroupRole(
+				user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
+
+		JSONObject jsonObject = _getActionsJSONObject(
+			objectEntryFolder, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		// With asset library content reviewer role
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(),
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		userGroupRole = _userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), depotEntry.getGroupId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertFalse(jsonObject.has("share"));
+
+		// With asset library content reviewer role and shared object entry
+		// folder
+
+		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), 0, 0, user.getUserId(),
+			_classNameLocalService.getClassNameId(
+				objectEntryFolder.getModelClassName()),
+			objectEntryFolder.getObjectEntryFolderId(), depotEntry.getGroupId(),
+			true, List.of(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				depotEntry.getGroupId(), TestPropsValues.getUserId()));
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		_sharingEntryLocalService.deleteSharingEntry(
+			sharingEntry.getSharingEntryId());
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_userGroupRoleLocalService.deleteUserGroupRole(userGroupRole);
+
+		// With CMS administrator role
+
+		role = _roleLocalService.fetchRole(
+			TestPropsValues.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		_roleLocalService.deleteUserRole(user.getUserId(), role.getRoleId());
+
+		// With user as creator
+
+		com.liferay.object.model.ObjectEntryFolder objectEntryFolder2 =
+			_addObjectEntryFolder(
+				depotEntry,
+				ServiceContextTestUtil.getServiceContext(
+					depotEntry.getGroupId(), user.getUserId()),
+				user.getUserId());
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder2, password, user);
+
+		Assert.assertTrue(jsonObject.has("share"));
+
+		// Without role
+
+		jsonObject = _getActionsJSONObject(objectEntryFolder, password, user);
+
+		Assert.assertFalse(jsonObject.has("share"));
 	}
 
 	private void _testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringEqualsFolderIdAndTitle()

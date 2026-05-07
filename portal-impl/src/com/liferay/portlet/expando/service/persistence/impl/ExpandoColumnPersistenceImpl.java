@@ -1499,7 +1499,7 @@ public class ExpandoColumnPersistenceImpl
 				_finderPathWithoutPaginationFindByTableId,
 				_finderPathCountByTableId, _SQL_SELECT_EXPANDOCOLUMN_WHERE,
 				_SQL_COUNT_EXPANDOCOLUMN_WHERE,
-				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ExpandoColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoColumn.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoColumn::getTableId));
@@ -1522,7 +1522,7 @@ public class ExpandoColumnPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"tableId", "name"}, false, ExpandoColumn::getTableId,
-			ExpandoColumn::getName);
+			convertNullFunction(ExpandoColumn::getName));
 
 		_finderPathCountByT_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_N",
@@ -1593,4 +1593,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:160189785
+// LIFERAY-SERVICE-BUILDER-HASH:834666984

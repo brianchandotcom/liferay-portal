@@ -371,7 +371,7 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId,
-			_SQL_SELECT_MFATIMEBASEDOTPENTRY_WHERE,
+			_SQL_SELECT_MFATIMEBASEDOTPENTRY_WHERE, "",
 			new FinderColumn<>(
 				"mfaTimeBasedOTPEntry.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, MFATimeBasedOTPEntry::getUserId));
@@ -439,4 +439,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-332937411
+// LIFERAY-SERVICE-BUILDER-HASH:467125092

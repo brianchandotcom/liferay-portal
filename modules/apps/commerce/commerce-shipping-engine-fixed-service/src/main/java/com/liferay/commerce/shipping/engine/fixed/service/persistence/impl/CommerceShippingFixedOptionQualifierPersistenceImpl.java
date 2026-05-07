@@ -827,7 +827,7 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE,
 				CommerceShippingFixedOptionQualifierModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShippingFixedOptionQualifier.",
 					"commerceShippingFixedOptionId", FinderColumn.Type.LONG,
@@ -863,10 +863,10 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE,
 			_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE,
 			CommerceShippingFixedOptionQualifierModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceShippingFixedOptionQualifier.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShippingFixedOptionQualifier::getClassNameId),
 			new FinderColumn<>(
 				"commerceShippingFixedOptionQualifier.",
@@ -890,14 +890,14 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE,
+			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONQUALIFIER_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingFixedOptionQualifier.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShippingFixedOptionQualifier::getClassNameId),
 			new FinderColumn<>(
 				"commerceShippingFixedOptionQualifier.", "classPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShippingFixedOptionQualifier::getClassPK),
 			new FinderColumn<>(
 				"commerceShippingFixedOptionQualifier.",
@@ -979,4 +979,4 @@ public class CommerceShippingFixedOptionQualifierPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1032090619
+// LIFERAY-SERVICE-BUILDER-HASH:1796933731

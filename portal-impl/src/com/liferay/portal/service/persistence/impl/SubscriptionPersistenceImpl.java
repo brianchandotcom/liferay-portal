@@ -1526,7 +1526,7 @@ public class SubscriptionPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_SUBSCRIPTION_WHERE,
 				_SQL_COUNT_SUBSCRIPTION_WHERE,
-				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"subscription.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, Subscription::getUserId));
@@ -1554,10 +1554,10 @@ public class SubscriptionPersistenceImpl
 			this, _finderPathWithPaginationFindByG_U,
 			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"subscription.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, Subscription::getGroupId),
+				true, Subscription::getGroupId),
 			new FinderColumn<>(
 				"subscription.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getUserId));
@@ -1585,10 +1585,10 @@ public class SubscriptionPersistenceImpl
 			this, _finderPathWithPaginationFindByU_C,
 			_finderPathWithoutPaginationFindByU_C, _finderPathCountByU_C,
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"subscription.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, Subscription::getUserId),
+				true, Subscription::getUserId),
 			new FinderColumn<>(
 				"subscription.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, Subscription::getClassNameId));
@@ -1620,13 +1620,13 @@ public class SubscriptionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_SUBSCRIPTION_WHERE, _SQL_COUNT_SUBSCRIPTION_WHERE,
-			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SubscriptionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"subscription.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Subscription::getCompanyId),
+				true, Subscription::getCompanyId),
 			new FinderColumn<>(
 				"subscription.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, Subscription::getClassNameId),
+				true, true, Subscription::getClassNameId),
 			new FinderColumn<>(
 				"subscription.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, Subscription::getClassPK));
@@ -1712,4 +1712,4 @@ public class SubscriptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1675136403
+// LIFERAY-SERVICE-BUILDER-HASH:413669405

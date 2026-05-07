@@ -2586,7 +2586,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, AssetEntry::getGroupId));
@@ -2615,7 +2615,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AssetEntry::getCompanyId));
@@ -2644,7 +2644,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByClassUuid,
 				_finderPathCountByClassUuid, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "classUuid", FinderColumn.Type.STRING, "=",
 					true, true, AssetEntry::getClassUuid));
@@ -2673,7 +2673,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByVisible,
 				_finderPathCountByVisible, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "visible", FinderColumn.Type.BOOLEAN, "=",
 					true, true, AssetEntry::isVisible));
@@ -2702,7 +2702,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByPublishDate,
 				_finderPathCountByPublishDate, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "publishDate", FinderColumn.Type.DATE, "=",
 					true, true, AssetEntry::getPublishDate));
@@ -2731,7 +2731,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByExpirationDate,
 				_finderPathCountByExpirationDate, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "expirationDate", FinderColumn.Type.DATE,
 					"=", true, true, AssetEntry::getExpirationDate));
@@ -2760,7 +2760,7 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByLayoutUuid,
 				_finderPathCountByLayoutUuid, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "layoutUuid", FinderColumn.Type.STRING, "=",
 					true, true, AssetEntry::getLayoutUuid));
@@ -2769,13 +2769,14 @@ public class AssetEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "classUuid"}, false,
-			AssetEntry::getGroupId, AssetEntry::getClassUuid);
+			AssetEntry::getGroupId,
+			convertNullFunction(AssetEntry::getClassUuid));
 
 		_uniquePersistenceFinderByG_CU = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_CU, _SQL_SELECT_ASSETENTRY_WHERE,
+			this, _finderPathFetchByG_CU, _SQL_SELECT_ASSETENTRY_WHERE, "",
 			new FinderColumn<>(
 				"assetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, AssetEntry::getGroupId),
+				true, AssetEntry::getGroupId),
 			new FinderColumn<>(
 				"assetEntry.", "classUuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetEntry::getClassUuid));
@@ -2803,10 +2804,10 @@ public class AssetEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_CN,
 			_finderPathWithoutPaginationFindByC_CN, _finderPathCountByC_CN,
 			_SQL_SELECT_ASSETENTRY_WHERE, _SQL_COUNT_ASSETENTRY_WHERE,
-			AssetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, AssetEntry::getCompanyId),
+				true, AssetEntry::getCompanyId),
 			new FinderColumn<>(
 				"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, AssetEntry::getClassNameId));
@@ -2818,10 +2819,10 @@ public class AssetEntryPersistenceImpl
 			AssetEntry::getClassNameId, AssetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_ASSETENTRY_WHERE,
+			this, _finderPathFetchByC_C, _SQL_SELECT_ASSETENTRY_WHERE, "",
 			new FinderColumn<>(
 				"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, AssetEntry::getClassNameId),
+				true, AssetEntry::getClassNameId),
 			new FinderColumn<>(
 				"assetEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, AssetEntry::getClassPK));
@@ -2855,13 +2856,13 @@ public class AssetEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_C_V,
 			_finderPathWithoutPaginationFindByG_C_V, _finderPathCountByG_C_V,
 			_SQL_SELECT_ASSETENTRY_WHERE, _SQL_COUNT_ASSETENTRY_WHERE,
-			AssetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, AssetEntry::getGroupId),
+				true, AssetEntry::getGroupId),
 			new FinderColumn<>(
 				"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, AssetEntry::getClassNameId),
+				true, AssetEntry::getClassNameId),
 			new FinderColumn<>(
 				"assetEntry.", "visible", FinderColumn.Type.BOOLEAN, "=", true,
 				true, AssetEntry::isVisible));
@@ -2907,16 +2908,16 @@ public class AssetEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_C_P_E,
 				_finderPathCountByG_C_P_E, _SQL_SELECT_ASSETENTRY_WHERE,
 				_SQL_COUNT_ASSETENTRY_WHERE, AssetEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, AssetEntry::getGroupId),
+					true, AssetEntry::getGroupId),
 				new FinderColumn<>(
 					"assetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, AssetEntry::getClassNameId),
+					true, true, AssetEntry::getClassNameId),
 				new FinderColumn<>(
 					"assetEntry.", "publishDate", FinderColumn.Type.DATE, "=",
-					true, false, AssetEntry::getPublishDate),
+					true, true, AssetEntry::getPublishDate),
 				new FinderColumn<>(
 					"assetEntry.", "expirationDate", FinderColumn.Type.DATE,
 					"=", true, true, AssetEntry::getExpirationDate));
@@ -2962,4 +2963,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1490206712
+// LIFERAY-SERVICE-BUILDER-HASH:971217825

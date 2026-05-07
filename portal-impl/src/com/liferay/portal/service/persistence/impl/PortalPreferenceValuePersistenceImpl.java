@@ -1536,9 +1536,10 @@ public class PortalPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PortalPreferenceValue::getPortalPreferencesId),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
@@ -1575,13 +1576,14 @@ public class PortalPreferenceValuePersistenceImpl
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PortalPreferenceValue::getPortalPreferencesId),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
-				true, false, PortalPreferenceValue::getKey),
+				true, true, PortalPreferenceValue::getKey),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
@@ -1594,22 +1596,23 @@ public class PortalPreferenceValuePersistenceImpl
 			},
 			new String[] {"portalPreferencesId", "index_", "key_", "namespace"},
 			false, PortalPreferenceValue::getPortalPreferencesId,
-			PortalPreferenceValue::getIndex, PortalPreferenceValue::getKey,
-			PortalPreferenceValue::getNamespace);
+			PortalPreferenceValue::getIndex,
+			convertNullFunction(PortalPreferenceValue::getKey),
+			convertNullFunction(PortalPreferenceValue::getNamespace));
 
 		_uniquePersistenceFinderByP_I_K_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByP_I_K_N,
-			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
+			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE, "",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				PortalPreferenceValue::getPortalPreferencesId),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "index", FinderColumn.Type.INTEGER,
-				"=", true, false, PortalPreferenceValue::getIndex),
+				"=", true, true, PortalPreferenceValue::getIndex),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "key", FinderColumn.Type.STRING, "=",
-				true, false, PortalPreferenceValue::getKey),
+				true, true, PortalPreferenceValue::getKey),
 			new FinderColumn<>(
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
@@ -1657,17 +1660,17 @@ public class PortalPreferenceValuePersistenceImpl
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portalPreferenceValue.", "portalPreferencesId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					PortalPreferenceValue::getPortalPreferencesId),
 				new FinderColumn<>(
 					"portalPreferenceValue.", "key", FinderColumn.Type.STRING,
-					"=", true, false, PortalPreferenceValue::getKey),
+					"=", true, true, PortalPreferenceValue::getKey),
 				new FinderColumn<>(
 					"portalPreferenceValue.", "namespace",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					PortalPreferenceValue::getNamespace),
 				new FinderColumn<>(
 					"portalPreferenceValue.", "smallValue",
@@ -1710,4 +1713,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:524497222
+// LIFERAY-SERVICE-BUILDER-HASH:-2142281679

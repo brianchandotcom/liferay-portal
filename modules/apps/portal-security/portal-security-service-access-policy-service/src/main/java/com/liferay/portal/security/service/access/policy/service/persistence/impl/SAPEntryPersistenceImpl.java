@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -25,10 +24,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
+import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.service.access.policy.exception.NoSuchEntryException;
@@ -44,7 +43,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1562,6 +1560,7 @@ public class SAPEntryPersistenceImpl
 		"sapEntry.defaultSAPEntry = ?";
 
 	private FinderPath _finderPathFetchByC_N;
+	private UniquePersistenceFinder<SAPEntry> _uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the sap entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -1578,23 +1577,15 @@ public class SAPEntryPersistenceImpl
 		SAPEntry sapEntry = fetchByC_N(companyId, name);
 
 		if (sapEntry == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", name=");
-			sb.append(name);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchEntryException(sb.toString());
+			throw new NoSuchEntryException(message);
 		}
 
 		return sapEntry;
@@ -1624,111 +1615,8 @@ public class SAPEntryPersistenceImpl
 	public SAPEntry fetchByC_N(
 		long companyId, String name, boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {companyId, name};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_finderPathFetchByC_N, finderArgs, this);
-		}
-
-		if (result instanceof SAPEntry) {
-			SAPEntry sapEntry = (SAPEntry)result;
-
-			if ((companyId != sapEntry.getCompanyId()) ||
-				!Objects.equals(name, sapEntry.getName())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_SELECT_SAPENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_N_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_N_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_N_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(StringUtil.toLowerCase(name));
-				}
-
-				List<SAPEntry> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathFetchByC_N, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {companyId, name};
-							}
-
-							_log.warn(
-								"SAPEntryPersistenceImpl.fetchByC_N(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					SAPEntry sapEntry = list.get(0);
-
-					result = sapEntry;
-
-					cacheResult(sapEntry);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (SAPEntry)result;
-		}
+		return _uniquePersistenceFinderByC_N.fetch(
+			finderCache, new Object[] {companyId, name}, useFinderCache);
 	}
 
 	/**
@@ -1756,23 +1644,9 @@ public class SAPEntryPersistenceImpl
 	 */
 	@Override
 	public int countByC_N(long companyId, String name) {
-		SAPEntry sapEntry = fetchByC_N(companyId, name);
-
-		if (sapEntry == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_N.count(
+			finderCache, new Object[] {companyId, name});
 	}
-
-	private static final String _FINDER_COLUMN_C_N_COMPANYID_2 =
-		"sapEntry.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_2 =
-		"lower(sapEntry.name) = ?";
-
-	private static final String _FINDER_COLUMN_C_N_NAME_3 =
-		"(sapEntry.name IS NULL OR sapEntry.name = '')";
 
 	public SAPEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -2011,7 +1885,7 @@ public class SAPEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sapEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				SAPEntry::getUuid));
@@ -2041,10 +1915,10 @@ public class SAPEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SAPENTRY_WHERE,
 				_SQL_COUNT_SAPENTRY_WHERE, SAPEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sapEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, SAPEntry::getUuid),
+					true, SAPEntry::getUuid),
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId));
@@ -2073,7 +1947,7 @@ public class SAPEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SAPENTRY_WHERE,
 				_SQL_COUNT_SAPENTRY_WHERE, SAPEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, SAPEntry::getCompanyId));
@@ -2101,10 +1975,10 @@ public class SAPEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_D,
 			_finderPathWithoutPaginationFindByC_D, _finderPathCountByC_D,
 			_SQL_SELECT_SAPENTRY_WHERE, _SQL_COUNT_SAPENTRY_WHERE,
-			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SAPEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, SAPEntry::getCompanyId),
+				true, SAPEntry::getCompanyId),
 			new FinderColumn<>(
 				"sapEntry.", "defaultSAPEntry", FinderColumn.Type.BOOLEAN, "=",
 				true, true, SAPEntry::isDefaultSAPEntry));
@@ -2113,7 +1987,16 @@ public class SAPEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false, SAPEntry::getCompanyId,
-			SAPEntry::getName);
+			convertNullFunction(SAPEntry::getName));
+
+		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_N, _SQL_SELECT_SAPENTRY_WHERE, "",
+			new FinderColumn<>(
+				"sapEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
+				true, SAPEntry::getCompanyId),
+			new FinderColumn<>(
+				"sapEntry.", "name", FinderColumn.Type.STRING, "=", false, true,
+				SAPEntry::getName));
 
 		SAPEntryUtil.setPersistence(this);
 	}
@@ -2207,4 +2090,4 @@ public class SAPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1074605381
+// LIFERAY-SERVICE-BUILDER-HASH:-1040275703

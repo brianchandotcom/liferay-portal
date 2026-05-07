@@ -1016,10 +1016,10 @@ public class DLContentPersistenceImpl
 			this, _finderPathWithPaginationFindByC_R,
 			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DLContent::getCompanyId),
+				true, DLContent::getCompanyId),
 			new FinderColumn<>(
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
 				true, DLContent::getRepositoryId));
@@ -1053,13 +1053,13 @@ public class DLContentPersistenceImpl
 			this, _finderPathWithPaginationFindByC_R_P,
 			_finderPathWithoutPaginationFindByC_R_P, _finderPathCountByC_R_P,
 			_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DLContent::getCompanyId),
+				true, DLContent::getCompanyId),
 			new FinderColumn<>(
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
-				false, DLContent::getRepositoryId),
+				true, DLContent::getRepositoryId),
 			new FinderColumn<>(
 				"dlContent.", "path", FinderColumn.Type.STRING, "=", true, true,
 				DLContent::getPath));
@@ -1086,13 +1086,13 @@ public class DLContentPersistenceImpl
 				this, _finderPathWithPaginationFindByC_R_LikeP, null,
 				_finderPathWithPaginationCountByC_R_LikeP,
 				_SQL_SELECT_DLCONTENT_WHERE, _SQL_COUNT_DLCONTENT_WHERE,
-				DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlContent.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, DLContent::getCompanyId),
+					true, true, DLContent::getCompanyId),
 				new FinderColumn<>(
 					"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=",
-					true, false, DLContent::getRepositoryId),
+					true, true, DLContent::getRepositoryId),
 				new FinderColumn<>(
 					"dlContent.", "path", FinderColumn.Type.STRING, "LIKE",
 					true, true, DLContent::getPath));
@@ -1105,19 +1105,20 @@ public class DLContentPersistenceImpl
 			},
 			new String[] {"companyId", "repositoryId", "path_", "version"},
 			false, DLContent::getCompanyId, DLContent::getRepositoryId,
-			DLContent::getPath, DLContent::getVersion);
+			convertNullFunction(DLContent::getPath),
+			convertNullFunction(DLContent::getVersion));
 
 		_uniquePersistenceFinderByC_R_P_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R_P_V, _SQL_SELECT_DLCONTENT_WHERE,
+			this, _finderPathFetchByC_R_P_V, _SQL_SELECT_DLCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"dlContent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DLContent::getCompanyId),
+				true, DLContent::getCompanyId),
 			new FinderColumn<>(
 				"dlContent.", "repositoryId", FinderColumn.Type.LONG, "=", true,
-				false, DLContent::getRepositoryId),
+				true, DLContent::getRepositoryId),
 			new FinderColumn<>(
-				"dlContent.", "path", FinderColumn.Type.STRING, "=", true,
-				false, DLContent::getPath),
+				"dlContent.", "path", FinderColumn.Type.STRING, "=", true, true,
+				DLContent::getPath),
 			new FinderColumn<>(
 				"dlContent.", "version", FinderColumn.Type.STRING, "=", true,
 				true, DLContent::getVersion));
@@ -1194,4 +1195,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1747416761
+// LIFERAY-SERVICE-BUILDER-HASH:-1527239183

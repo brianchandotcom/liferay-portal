@@ -662,7 +662,7 @@ public class CTSParentPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTSPARENT_WHERE,
 				_SQL_COUNT_CTSPARENT_WHERE, CTSParentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsParent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSParent::getCompanyId));
@@ -690,10 +690,10 @@ public class CTSParentPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_CTSPARENT_WHERE, _SQL_COUNT_CTSPARENT_WHERE,
-			CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTSParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctsParent.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTSParent::getCompanyId),
+				true, CTSParent::getCompanyId),
 			new FinderColumn<>(
 				"ctsParent.", "ctsGrandParentId", FinderColumn.Type.LONG, "=",
 				true, true, CTSParent::getCtsGrandParentId));
@@ -767,4 +767,4 @@ public class CTSParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-406047957
+// LIFERAY-SERVICE-BUILDER-HASH:1220840512

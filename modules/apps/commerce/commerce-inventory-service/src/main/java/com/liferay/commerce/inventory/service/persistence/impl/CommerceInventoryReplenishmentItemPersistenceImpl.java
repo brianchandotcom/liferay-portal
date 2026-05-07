@@ -1701,7 +1701,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1734,10 +1734,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryReplenishmentItem::getUuid),
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "companyId",
@@ -1776,7 +1776,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.",
 					"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
@@ -1810,7 +1810,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "availabilityDate",
 					FinderColumn.Type.DATE, "=", true, true,
@@ -1838,7 +1838,7 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "sku",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1875,14 +1875,14 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 			CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryReplenishmentItem::getCompanyId),
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "sku",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryReplenishmentItem::getSku),
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "unitOfMeasureKey",
@@ -1923,14 +1923,14 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
 				CommerceInventoryReplenishmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "availabilityDate",
-					FinderColumn.Type.DATE, "=", true, false,
+					FinderColumn.Type.DATE, "=", true, true,
 					CommerceInventoryReplenishmentItem::getAvailabilityDate),
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "sku",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceInventoryReplenishmentItem::getSku),
 				new FinderColumn<>(
 					"commerceInventoryReplenishmentItem.", "unitOfMeasureKey",
@@ -1941,15 +1941,16 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceInventoryReplenishmentItem::getExternalReferenceCode,
+			convertNullFunction(
+				CommerceInventoryReplenishmentItem::getExternalReferenceCode),
 			CommerceInventoryReplenishmentItem::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE,
+			_SQL_SELECT_COMMERCEINVENTORYREPLENISHMENTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceInventoryReplenishmentItem::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceInventoryReplenishmentItem.", "companyId",
@@ -2028,4 +2029,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1807980737
+// LIFERAY-SERVICE-BUILDER-HASH:-1769890878

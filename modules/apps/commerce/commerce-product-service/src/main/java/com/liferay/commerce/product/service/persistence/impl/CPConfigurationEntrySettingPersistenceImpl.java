@@ -1125,7 +1125,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 			_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 			CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1135,15 +1135,15 @@ public class CPConfigurationEntrySettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CPConfigurationEntrySetting::getUuid,
+			convertNullFunction(CPConfigurationEntrySetting::getUuid),
 			CPConfigurationEntrySetting::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
+			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE, "",
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CPConfigurationEntrySetting::getUuid),
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "groupId",
@@ -1177,10 +1177,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpConfigurationEntrySetting.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CPConfigurationEntrySetting::getUuid),
 				new FinderColumn<>(
 					"cpConfigurationEntrySetting.", "companyId",
@@ -1213,7 +1213,7 @@ public class CPConfigurationEntrySettingPersistenceImpl
 				_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				_SQL_COUNT_CPCONFIGURATIONENTRYSETTING_WHERE,
 				CPConfigurationEntrySettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpConfigurationEntrySetting.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1228,10 +1228,10 @@ public class CPConfigurationEntrySettingPersistenceImpl
 
 		_uniquePersistenceFinderByC_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_T,
-			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE,
+			_SQL_SELECT_CPCONFIGURATIONENTRYSETTING_WHERE, "",
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "CPConfigurationEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPConfigurationEntrySetting::getCPConfigurationEntryId),
 			new FinderColumn<>(
 				"cpConfigurationEntrySetting.", "type",
@@ -1311,4 +1311,4 @@ public class CPConfigurationEntrySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2127650685
+// LIFERAY-SERVICE-BUILDER-HASH:1098272139

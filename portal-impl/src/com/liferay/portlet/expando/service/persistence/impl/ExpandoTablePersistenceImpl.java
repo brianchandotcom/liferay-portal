@@ -612,10 +612,10 @@ public class ExpandoTablePersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_EXPANDOTABLE_WHERE, _SQL_COUNT_EXPANDOTABLE_WHERE,
-			ExpandoTableModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoTableModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoTable.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoTable::getCompanyId),
+				true, ExpandoTable::getCompanyId),
 			new FinderColumn<>(
 				"expandoTable.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, ExpandoTable::getClassNameId));
@@ -628,16 +628,16 @@ public class ExpandoTablePersistenceImpl
 			},
 			new String[] {"companyId", "classNameId", "name"}, false,
 			ExpandoTable::getCompanyId, ExpandoTable::getClassNameId,
-			ExpandoTable::getName);
+			convertNullFunction(ExpandoTable::getName));
 
 		_uniquePersistenceFinderByC_C_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_N, _SQL_SELECT_EXPANDOTABLE_WHERE,
+			this, _finderPathFetchByC_C_N, _SQL_SELECT_EXPANDOTABLE_WHERE, "",
 			new FinderColumn<>(
 				"expandoTable.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoTable::getCompanyId),
+				true, ExpandoTable::getCompanyId),
 			new FinderColumn<>(
 				"expandoTable.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, ExpandoTable::getClassNameId),
+				true, true, ExpandoTable::getClassNameId),
 			new FinderColumn<>(
 				"expandoTable.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ExpandoTable::getName));
@@ -675,4 +675,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1609102078
+// LIFERAY-SERVICE-BUILDER-HASH:-1315741085

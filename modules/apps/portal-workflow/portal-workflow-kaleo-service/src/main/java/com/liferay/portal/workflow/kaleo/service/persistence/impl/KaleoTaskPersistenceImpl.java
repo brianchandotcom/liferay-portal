@@ -790,7 +790,7 @@ public class KaleoTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_KALEOTASK_WHERE,
 				_SQL_COUNT_KALEOTASK_WHERE, KaleoTaskModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTask.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoTask::getCompanyId));
@@ -824,7 +824,7 @@ public class KaleoTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId,
 				_finderPathCountByKaleoDefinitionVersionId,
 				_SQL_SELECT_KALEOTASK_WHERE, _SQL_COUNT_KALEOTASK_WHERE,
-				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KaleoTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTask.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -837,6 +837,7 @@ public class KaleoTaskPersistenceImpl
 
 		_uniquePersistenceFinderByKaleoNodeId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKaleoNodeId, _SQL_SELECT_KALEOTASK_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoTask.", "kaleoNodeId", FinderColumn.Type.LONG, "=", true,
 				true, KaleoTask::getKaleoNodeId));
@@ -910,4 +911,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:862827419
+// LIFERAY-SERVICE-BUILDER-HASH:-1353300968

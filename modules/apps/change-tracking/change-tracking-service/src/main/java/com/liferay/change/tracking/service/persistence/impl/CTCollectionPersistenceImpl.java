@@ -3405,7 +3405,7 @@ public class CTCollectionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
-			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctCollection.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CTCollection::getUuid));
@@ -3435,10 +3435,10 @@ public class CTCollectionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CTCOLLECTION_WHERE,
 				_SQL_COUNT_CTCOLLECTION_WHERE,
-				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctCollection.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CTCollection::getUuid),
+					true, true, CTCollection::getUuid),
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId));
@@ -3467,7 +3467,7 @@ public class CTCollectionPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTCOLLECTION_WHERE,
 				_SQL_COUNT_CTCOLLECTION_WHERE,
-				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctCollection.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTCollection::getCompanyId));
@@ -3495,10 +3495,10 @@ public class CTCollectionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U,
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
-			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctCollection.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTCollection::getCompanyId),
+				true, CTCollection::getCompanyId),
 			new FinderColumn<>(
 				"ctCollection.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, CTCollection::getUserId));
@@ -3526,10 +3526,10 @@ public class CTCollectionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_SVI,
 			_finderPathWithoutPaginationFindByC_SVI, _finderPathCountByC_SVI,
 			_SQL_SELECT_CTCOLLECTION_WHERE, _SQL_COUNT_CTCOLLECTION_WHERE,
-			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctCollection.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, CTCollection::getCompanyId),
+				true, CTCollection::getCompanyId),
 			new FinderColumn<>(
 				"ctCollection.", "schemaVersionId", FinderColumn.Type.LONG, "=",
 				true, true, CTCollection::getSchemaVersionId));
@@ -3562,13 +3562,14 @@ public class CTCollectionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CTCollection::getExternalReferenceCode, CTCollection::getCompanyId);
+			convertNullFunction(CTCollection::getExternalReferenceCode),
+			CTCollection::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CTCOLLECTION_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CTCOLLECTION_WHERE, "",
 			new FinderColumn<>(
 				"ctCollection.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CTCollection::getExternalReferenceCode),
 			new FinderColumn<>(
 				"ctCollection.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -3666,4 +3667,4 @@ public class CTCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:484600061
+// LIFERAY-SERVICE-BUILDER-HASH:-659264428

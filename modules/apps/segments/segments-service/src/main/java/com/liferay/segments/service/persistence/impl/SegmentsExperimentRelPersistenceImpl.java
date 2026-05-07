@@ -840,7 +840,7 @@ public class SegmentsExperimentRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE,
 				SegmentsExperimentRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsExperimentRel.", "segmentsExperimentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -873,7 +873,7 @@ public class SegmentsExperimentRelPersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIMENTREL_WHERE,
 				SegmentsExperimentRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"segmentsExperimentRel.", "segmentsExperienceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -888,10 +888,10 @@ public class SegmentsExperimentRelPersistenceImpl
 
 		_uniquePersistenceFinderByS_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_S,
-			_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE,
+			_SQL_SELECT_SEGMENTSEXPERIMENTREL_WHERE, "",
 			new FinderColumn<>(
 				"segmentsExperimentRel.", "segmentsExperimentId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				SegmentsExperimentRel::getSegmentsExperimentId),
 			new FinderColumn<>(
 				"segmentsExperimentRel.", "segmentsExperienceId",
@@ -967,4 +967,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1224333071
+// LIFERAY-SERVICE-BUILDER-HASH:-392437598

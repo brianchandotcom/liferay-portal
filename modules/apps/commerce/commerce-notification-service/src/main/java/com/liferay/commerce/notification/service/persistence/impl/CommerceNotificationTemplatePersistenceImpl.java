@@ -1938,7 +1938,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1948,15 +1948,15 @@ public class CommerceNotificationTemplatePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CommerceNotificationTemplate::getUuid,
+			convertNullFunction(CommerceNotificationTemplate::getUuid),
 			CommerceNotificationTemplate::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
+			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationTemplate::getUuid),
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "groupId",
@@ -1990,10 +1990,10 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceNotificationTemplate::getUuid),
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "companyId",
@@ -2026,7 +2026,7 @@ public class CommerceNotificationTemplatePersistenceImpl
 				_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 				CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceNotificationTemplate.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2057,10 +2057,10 @@ public class CommerceNotificationTemplatePersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "groupId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceNotificationTemplate::getGroupId),
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "enabled",
@@ -2098,14 +2098,14 @@ public class CommerceNotificationTemplatePersistenceImpl
 			_SQL_SELECT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_COMMERCENOTIFICATIONTEMPLATE_WHERE,
 			CommerceNotificationTemplateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "groupId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceNotificationTemplate::getGroupId),
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "type",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceNotificationTemplate::getType),
 			new FinderColumn<>(
 				"commerceNotificationTemplate.", "enabled",
@@ -2210,4 +2210,4 @@ public class CommerceNotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1993849939
+// LIFERAY-SERVICE-BUILDER-HASH:1603819765

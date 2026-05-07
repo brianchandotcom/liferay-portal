@@ -1640,7 +1640,7 @@ public class SXPBlueprintPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SXPBLUEPRINT_WHERE, _SQL_COUNT_SXPBLUEPRINT_WHERE,
-			SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sxpBlueprint.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SXPBlueprint::getUuid));
@@ -1670,10 +1670,10 @@ public class SXPBlueprintPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SXPBLUEPRINT_WHERE,
 				_SQL_COUNT_SXPBLUEPRINT_WHERE,
-				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sxpBlueprint.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, SXPBlueprint::getUuid),
+					true, true, SXPBlueprint::getUuid),
 				new FinderColumn<>(
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
@@ -1702,7 +1702,7 @@ public class SXPBlueprintPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SXPBLUEPRINT_WHERE,
 				_SQL_COUNT_SXPBLUEPRINT_WHERE,
-				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SXPBlueprintModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPBlueprint::getCompanyId));
@@ -1711,13 +1711,14 @@ public class SXPBlueprintPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			SXPBlueprint::getExternalReferenceCode, SXPBlueprint::getCompanyId);
+			convertNullFunction(SXPBlueprint::getExternalReferenceCode),
+			SXPBlueprint::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPBLUEPRINT_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPBLUEPRINT_WHERE, "",
 			new FinderColumn<>(
 				"sxpBlueprint.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SXPBlueprint::getExternalReferenceCode),
 			new FinderColumn<>(
 				"sxpBlueprint.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -1815,4 +1816,4 @@ public class SXPBlueprintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1974267572
+// LIFERAY-SERVICE-BUILDER-HASH:-1399708859

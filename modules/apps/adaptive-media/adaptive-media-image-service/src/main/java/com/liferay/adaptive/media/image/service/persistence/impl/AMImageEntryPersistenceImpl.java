@@ -1714,7 +1714,7 @@ public class AMImageEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_AMIMAGEENTRY_WHERE, _SQL_COUNT_AMIMAGEENTRY_WHERE,
-			AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"amImageEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AMImageEntry::getUuid));
@@ -1722,14 +1722,15 @@ public class AMImageEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, AMImageEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(AMImageEntry::getUuid),
 			AMImageEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_AMIMAGEENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_AMIMAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"amImageEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, AMImageEntry::getUuid),
+				true, AMImageEntry::getUuid),
 			new FinderColumn<>(
 				"amImageEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, AMImageEntry::getGroupId));
@@ -1759,10 +1760,10 @@ public class AMImageEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_AMIMAGEENTRY_WHERE,
 				_SQL_COUNT_AMIMAGEENTRY_WHERE,
-				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"amImageEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, AMImageEntry::getUuid),
+					true, true, AMImageEntry::getUuid),
 				new FinderColumn<>(
 					"amImageEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AMImageEntry::getCompanyId));
@@ -1791,7 +1792,7 @@ public class AMImageEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_AMIMAGEENTRY_WHERE,
 				_SQL_COUNT_AMIMAGEENTRY_WHERE,
-				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"amImageEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, AMImageEntry::getGroupId));
@@ -1820,7 +1821,7 @@ public class AMImageEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_AMIMAGEENTRY_WHERE,
 				_SQL_COUNT_AMIMAGEENTRY_WHERE,
-				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"amImageEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AMImageEntry::getCompanyId));
@@ -1849,7 +1850,7 @@ public class AMImageEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByConfigurationUuid,
 				_finderPathCountByConfigurationUuid,
 				_SQL_SELECT_AMIMAGEENTRY_WHERE, _SQL_COUNT_AMIMAGEENTRY_WHERE,
-				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"amImageEntry.", "configurationUuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1879,7 +1880,7 @@ public class AMImageEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFileVersionId,
 				_finderPathCountByFileVersionId, _SQL_SELECT_AMIMAGEENTRY_WHERE,
 				_SQL_COUNT_AMIMAGEENTRY_WHERE,
-				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"amImageEntry.", "fileVersionId", FinderColumn.Type.LONG,
 					"=", true, true, AMImageEntry::getFileVersionId));
@@ -1907,10 +1908,10 @@ public class AMImageEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_AMIMAGEENTRY_WHERE, _SQL_COUNT_AMIMAGEENTRY_WHERE,
-			AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AMImageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"amImageEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, AMImageEntry::getCompanyId),
+				true, AMImageEntry::getCompanyId),
 			new FinderColumn<>(
 				"amImageEntry.", "configurationUuid", FinderColumn.Type.STRING,
 				"=", true, true, AMImageEntry::getConfigurationUuid));
@@ -1919,13 +1920,14 @@ public class AMImageEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"configurationUuid", "fileVersionId"}, false,
-			AMImageEntry::getConfigurationUuid, AMImageEntry::getFileVersionId);
+			convertNullFunction(AMImageEntry::getConfigurationUuid),
+			AMImageEntry::getFileVersionId);
 
 		_uniquePersistenceFinderByC_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_F, _SQL_SELECT_AMIMAGEENTRY_WHERE,
+			this, _finderPathFetchByC_F, _SQL_SELECT_AMIMAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"amImageEntry.", "configurationUuid", FinderColumn.Type.STRING,
-				"=", true, false, AMImageEntry::getConfigurationUuid),
+				"=", true, true, AMImageEntry::getConfigurationUuid),
 			new FinderColumn<>(
 				"amImageEntry.", "fileVersionId", FinderColumn.Type.LONG, "=",
 				true, true, AMImageEntry::getFileVersionId));
@@ -2002,4 +2004,4 @@ public class AMImageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1260513449
+// LIFERAY-SERVICE-BUILDER-HASH:529237465

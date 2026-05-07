@@ -899,7 +899,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 			_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 			CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpdAvailabilityEstimate.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPDAvailabilityEstimate::getUuid));
@@ -931,10 +931,10 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 				CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpdAvailabilityEstimate.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CPDAvailabilityEstimate::getUuid),
 				new FinderColumn<>(
 					"cpdAvailabilityEstimate.", "companyId",
@@ -973,7 +973,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 				_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_CPDAVAILABILITYESTIMATE_WHERE,
 				CPDAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpdAvailabilityEstimate.",
 					"commerceAvailabilityEstimateId", FinderColumn.Type.LONG,
@@ -988,7 +988,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 
 		_uniquePersistenceFinderByCProductId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCProductId,
-			_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE,
+			_SQL_SELECT_CPDAVAILABILITYESTIMATE_WHERE, "",
 			new FinderColumn<>(
 				"cpdAvailabilityEstimate.", "CProductId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1063,4 +1063,4 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1122702210
+// LIFERAY-SERVICE-BUILDER-HASH:-618774214

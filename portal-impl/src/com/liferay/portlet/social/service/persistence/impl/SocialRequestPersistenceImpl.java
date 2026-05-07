@@ -2336,7 +2336,7 @@ public class SocialRequestPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRequest.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SocialRequest::getUuid));
@@ -2344,14 +2344,15 @@ public class SocialRequestPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, SocialRequest::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(SocialRequest::getUuid),
 			SocialRequest::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOCIALREQUEST_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOCIALREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"socialRequest.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, SocialRequest::getUuid),
+				true, SocialRequest::getUuid),
 			new FinderColumn<>(
 				"socialRequest.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SocialRequest::getGroupId));
@@ -2381,10 +2382,10 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SOCIALREQUEST_WHERE,
 				_SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, SocialRequest::getUuid),
+					true, true, SocialRequest::getUuid),
 				new FinderColumn<>(
 					"socialRequest.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getCompanyId));
@@ -2413,7 +2414,7 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SOCIALREQUEST_WHERE,
 				_SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getCompanyId));
@@ -2441,7 +2442,7 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_SOCIALREQUEST_WHERE,
 				_SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SocialRequest::getUserId));
@@ -2470,7 +2471,7 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByReceiverUserId,
 				_finderPathCountByReceiverUserId,
 				_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, SocialRequest::getReceiverUserId));
@@ -2498,10 +2499,10 @@ public class SocialRequestPersistenceImpl
 			this, _finderPathWithPaginationFindByU_S,
 			_finderPathWithoutPaginationFindByU_S, _finderPathCountByU_S,
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRequest.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, SocialRequest::getUserId),
+				true, SocialRequest::getUserId),
 			new FinderColumn<>(
 				"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, SocialRequest::getStatus));
@@ -2529,10 +2530,10 @@ public class SocialRequestPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRequest.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SocialRequest::getClassNameId),
+				true, true, SocialRequest::getClassNameId),
 			new FinderColumn<>(
 				"socialRequest.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SocialRequest::getClassPK));
@@ -2560,10 +2561,10 @@ public class SocialRequestPersistenceImpl
 			this, _finderPathWithPaginationFindByR_S,
 			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
 			_SQL_SELECT_SOCIALREQUEST_WHERE, _SQL_COUNT_SOCIALREQUEST_WHERE,
-			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"socialRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
-				true, false, SocialRequest::getReceiverUserId),
+				true, true, SocialRequest::getReceiverUserId),
 			new FinderColumn<>(
 				"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, SocialRequest::getStatus));
@@ -2584,18 +2585,19 @@ public class SocialRequestPersistenceImpl
 
 		_uniquePersistenceFinderByU_C_C_T_R = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_C_C_T_R, _SQL_SELECT_SOCIALREQUEST_WHERE,
+			"",
 			new FinderColumn<>(
 				"socialRequest.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, SocialRequest::getUserId),
+				true, SocialRequest::getUserId),
 			new FinderColumn<>(
 				"socialRequest.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SocialRequest::getClassNameId),
+				true, true, SocialRequest::getClassNameId),
 			new FinderColumn<>(
 				"socialRequest.", "classPK", FinderColumn.Type.LONG, "=", true,
-				false, SocialRequest::getClassPK),
+				true, SocialRequest::getClassPK),
 			new FinderColumn<>(
 				"socialRequest.", "type", FinderColumn.Type.INTEGER, "=", true,
-				false, SocialRequest::getType),
+				true, SocialRequest::getType),
 			new FinderColumn<>(
 				"socialRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
 				true, true, SocialRequest::getReceiverUserId));
@@ -2643,19 +2645,19 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByU_C_C_T_S,
 				_finderPathCountByU_C_C_T_S, _SQL_SELECT_SOCIALREQUEST_WHERE,
 				_SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "userId", FinderColumn.Type.LONG, "=",
-					true, false, SocialRequest::getUserId),
+					true, true, SocialRequest::getUserId),
 				new FinderColumn<>(
 					"socialRequest.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SocialRequest::getClassNameId),
+					"=", true, true, SocialRequest::getClassNameId),
 				new FinderColumn<>(
 					"socialRequest.", "classPK", FinderColumn.Type.LONG, "=",
-					true, false, SocialRequest::getClassPK),
+					true, true, SocialRequest::getClassPK),
 				new FinderColumn<>(
 					"socialRequest.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, SocialRequest::getType),
+					true, true, SocialRequest::getType),
 				new FinderColumn<>(
 					"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, SocialRequest::getStatus));
@@ -2703,19 +2705,19 @@ public class SocialRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_T_R_S,
 				_finderPathCountByC_C_T_R_S, _SQL_SELECT_SOCIALREQUEST_WHERE,
 				_SQL_COUNT_SOCIALREQUEST_WHERE,
-				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SocialRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialRequest.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, SocialRequest::getClassNameId),
+					"=", true, true, SocialRequest::getClassNameId),
 				new FinderColumn<>(
 					"socialRequest.", "classPK", FinderColumn.Type.LONG, "=",
-					true, false, SocialRequest::getClassPK),
+					true, true, SocialRequest::getClassPK),
 				new FinderColumn<>(
 					"socialRequest.", "type", FinderColumn.Type.INTEGER, "=",
-					true, false, SocialRequest::getType),
+					true, true, SocialRequest::getType),
 				new FinderColumn<>(
 					"socialRequest.", "receiverUserId", FinderColumn.Type.LONG,
-					"=", true, false, SocialRequest::getReceiverUserId),
+					"=", true, true, SocialRequest::getReceiverUserId),
 				new FinderColumn<>(
 					"socialRequest.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, SocialRequest::getStatus));
@@ -2756,4 +2758,4 @@ public class SocialRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2040300096
+// LIFERAY-SERVICE-BUILDER-HASH:-887813297

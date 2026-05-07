@@ -1022,11 +1022,11 @@ public class PushNotificationsDevicePersistenceImpl
 		_finderPathFetchByToken = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
 			new String[] {String.class.getName()}, new String[] {"token"},
-			false, PushNotificationsDevice::getToken);
+			false, convertNullFunction(PushNotificationsDevice::getToken));
 
 		_uniquePersistenceFinderByToken = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByToken,
-			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE,
+			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE, "",
 			new FinderColumn<>(
 				"pushNotificationsDevice.", "token", FinderColumn.Type.STRING,
 				"=", true, true, PushNotificationsDevice::getToken));
@@ -1121,4 +1121,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1557472705
+// LIFERAY-SERVICE-BUILDER-HASH:662520029

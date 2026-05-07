@@ -2224,7 +2224,7 @@ public class SharingEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SharingEntry::getUuid));
@@ -2232,14 +2232,15 @@ public class SharingEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, SharingEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(SharingEntry::getUuid),
 			SharingEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SHARINGENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_SHARINGENTRY_WHERE, "",
 			new FinderColumn<>(
 				"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, SharingEntry::getUuid),
+				true, SharingEntry::getUuid),
 			new FinderColumn<>(
 				"sharingEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getGroupId));
@@ -2269,10 +2270,10 @@ public class SharingEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SHARINGENTRY_WHERE,
 				_SQL_COUNT_SHARINGENTRY_WHERE,
-				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sharingEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, SharingEntry::getUuid),
+					true, true, SharingEntry::getUuid),
 				new FinderColumn<>(
 					"sharingEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getCompanyId));
@@ -2301,7 +2302,7 @@ public class SharingEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_SHARINGENTRY_WHERE,
 				_SQL_COUNT_SHARINGENTRY_WHERE,
-				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sharingEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getGroupId));
@@ -2329,7 +2330,7 @@ public class SharingEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_SHARINGENTRY_WHERE,
 				_SQL_COUNT_SHARINGENTRY_WHERE,
-				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sharingEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getUserId));
@@ -2358,7 +2359,7 @@ public class SharingEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByToUserId,
 				_finderPathCountByToUserId, _SQL_SELECT_SHARINGENTRY_WHERE,
 				_SQL_COUNT_SHARINGENTRY_WHERE,
-				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sharingEntry.", "toUserId", FinderColumn.Type.LONG, "=",
 					true, true, SharingEntry::getToUserId));
@@ -2381,7 +2382,7 @@ public class SharingEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByLtExpirationDate, null,
 				_finderPathWithPaginationCountByLtExpirationDate,
 				_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sharingEntry.", "expirationDate", FinderColumn.Type.DATE,
 					"<", true, true, SharingEntry::getExpirationDate));
@@ -2409,10 +2410,10 @@ public class SharingEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_CN,
 			_finderPathWithoutPaginationFindByC_CN, _finderPathCountByC_CN,
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sharingEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, SharingEntry::getCompanyId),
+				true, SharingEntry::getCompanyId),
 			new FinderColumn<>(
 				"sharingEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SharingEntry::getClassNameId));
@@ -2440,10 +2441,10 @@ public class SharingEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByU_C,
 			_finderPathWithoutPaginationFindByU_C, _finderPathCountByU_C,
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sharingEntry.", "userId", FinderColumn.Type.LONG, "=", true,
-				false, SharingEntry::getUserId),
+				true, SharingEntry::getUserId),
 			new FinderColumn<>(
 				"sharingEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SharingEntry::getClassNameId));
@@ -2471,10 +2472,10 @@ public class SharingEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByTU_C,
 			_finderPathWithoutPaginationFindByTU_C, _finderPathCountByTU_C,
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sharingEntry.", "toUserId", FinderColumn.Type.LONG, "=", true,
-				false, SharingEntry::getToUserId),
+				true, SharingEntry::getToUserId),
 			new FinderColumn<>(
 				"sharingEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, SharingEntry::getClassNameId));
@@ -2502,10 +2503,10 @@ public class SharingEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_SHARINGENTRY_WHERE, _SQL_COUNT_SHARINGENTRY_WHERE,
-			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SharingEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sharingEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SharingEntry::getClassNameId),
+				true, true, SharingEntry::getClassNameId),
 			new FinderColumn<>(
 				"sharingEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getClassPK));
@@ -2526,19 +2527,19 @@ public class SharingEntryPersistenceImpl
 
 		_uniquePersistenceFinderByTT_TUG_TU_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByTT_TUG_TU_C_C,
-			_SQL_SELECT_SHARINGENTRY_WHERE,
+			_SQL_SELECT_SHARINGENTRY_WHERE, "",
 			new FinderColumn<>(
 				"sharingEntry.", "toTicketId", FinderColumn.Type.LONG, "=",
-				true, false, SharingEntry::getToTicketId),
+				true, true, SharingEntry::getToTicketId),
 			new FinderColumn<>(
 				"sharingEntry.", "toUserGroupId", FinderColumn.Type.LONG, "=",
-				true, false, SharingEntry::getToUserGroupId),
+				true, true, SharingEntry::getToUserGroupId),
 			new FinderColumn<>(
 				"sharingEntry.", "toUserId", FinderColumn.Type.LONG, "=", true,
-				false, SharingEntry::getToUserId),
+				true, SharingEntry::getToUserId),
 			new FinderColumn<>(
 				"sharingEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, SharingEntry::getClassNameId),
+				true, true, SharingEntry::getClassNameId),
 			new FinderColumn<>(
 				"sharingEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, SharingEntry::getClassPK));
@@ -2547,13 +2548,14 @@ public class SharingEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			SharingEntry::getExternalReferenceCode, SharingEntry::getGroupId);
+			convertNullFunction(SharingEntry::getExternalReferenceCode),
+			SharingEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_SHARINGENTRY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_SHARINGENTRY_WHERE, "",
 			new FinderColumn<>(
 				"sharingEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SharingEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"sharingEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -2628,4 +2630,4 @@ public class SharingEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1035219468
+// LIFERAY-SERVICE-BUILDER-HASH:-1482380816

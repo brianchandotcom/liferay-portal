@@ -506,7 +506,7 @@ public class PortletPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_PORTLET_WHERE,
 				_SQL_COUNT_PORTLET_WHERE, PortletModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portlet.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Portlet::getCompanyId));
@@ -515,13 +515,13 @@ public class PortletPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "portletId"}, true,
-			Portlet::getCompanyId, Portlet::getPortletId);
+			Portlet::getCompanyId, convertNullFunction(Portlet::getPortletId));
 
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_P, _SQL_SELECT_PORTLET_WHERE,
+			this, _finderPathFetchByC_P, _SQL_SELECT_PORTLET_WHERE, "",
 			new FinderColumn<>(
 				"portlet.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Portlet::getCompanyId),
+				true, Portlet::getCompanyId),
 			new FinderColumn<>(
 				"portlet.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, Portlet::getPortletId));
@@ -562,4 +562,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-36232271
+// LIFERAY-SERVICE-BUILDER-HASH:-1634027311

@@ -2756,7 +2756,7 @@ public class SXPElementPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, SXPElement::getUuid));
@@ -2786,10 +2786,10 @@ public class SXPElementPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SXPELEMENT_WHERE,
 				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, SXPElement::getUuid),
+					true, SXPElement::getUuid),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
@@ -2818,7 +2818,7 @@ public class SXPElementPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SXPELEMENT_WHERE,
 				_SQL_COUNT_SXPELEMENT_WHERE, SXPElementModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
@@ -2846,10 +2846,10 @@ public class SXPElementPersistenceImpl
 			this, _finderPathWithPaginationFindByC_R,
 			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
 			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, SXPElement::getCompanyId),
+				true, SXPElement::getCompanyId),
 			new FinderColumn<>(
 				"sxpElement.", "readOnly", FinderColumn.Type.BOOLEAN, "=", true,
 				true, SXPElement::isReadOnly));
@@ -2877,10 +2877,10 @@ public class SXPElementPersistenceImpl
 			this, _finderPathWithPaginationFindByC_T,
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, SXPElement::getCompanyId),
+				true, SXPElement::getCompanyId),
 			new FinderColumn<>(
 				"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, SXPElement::getType));
@@ -2914,13 +2914,13 @@ public class SXPElementPersistenceImpl
 			this, _finderPathWithPaginationFindByC_T_S,
 			_finderPathWithoutPaginationFindByC_T_S, _finderPathCountByC_T_S,
 			_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
-			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, SXPElement::getCompanyId),
+				true, SXPElement::getCompanyId),
 			new FinderColumn<>(
 				"sxpElement.", "type", FinderColumn.Type.INTEGER, "=", true,
-				false, SXPElement::getType),
+				true, SXPElement::getType),
 			new FinderColumn<>(
 				"sxpElement.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, SXPElement::getStatus));
@@ -2929,13 +2929,14 @@ public class SXPElementPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			SXPElement::getExternalReferenceCode, SXPElement::getCompanyId);
+			convertNullFunction(SXPElement::getExternalReferenceCode),
+			SXPElement::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPELEMENT_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_SXPELEMENT_WHERE, "",
 			new FinderColumn<>(
 				"sxpElement.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SXPElement::getExternalReferenceCode),
 			new FinderColumn<>(
 				"sxpElement.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -3033,4 +3034,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1777978331
+// LIFERAY-SERVICE-BUILDER-HASH:-1432819158

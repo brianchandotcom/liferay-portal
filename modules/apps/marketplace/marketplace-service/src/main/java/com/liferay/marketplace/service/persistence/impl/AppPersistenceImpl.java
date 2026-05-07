@@ -971,7 +971,7 @@ public class AppPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_APP_WHERE, _SQL_COUNT_APP_WHERE,
-			AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AppModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"app.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				App::getUuid));
@@ -1001,9 +1001,9 @@ public class AppPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_APP_WHERE,
 				_SQL_COUNT_APP_WHERE, AppModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"app.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+					"app.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					App::getUuid),
 				new FinderColumn<>(
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -1033,7 +1033,7 @@ public class AppPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_APP_WHERE,
 				_SQL_COUNT_APP_WHERE, AppModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"app.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, App::getCompanyId));
@@ -1044,7 +1044,7 @@ public class AppPersistenceImpl
 			false, App::getRemoteAppId);
 
 		_uniquePersistenceFinderByRemoteAppId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByRemoteAppId, _SQL_SELECT_APP_WHERE,
+			this, _finderPathFetchByRemoteAppId, _SQL_SELECT_APP_WHERE, "",
 			new FinderColumn<>(
 				"app.", "remoteAppId", FinderColumn.Type.LONG, "=", true, true,
 				App::getRemoteAppId));
@@ -1073,7 +1073,7 @@ public class AppPersistenceImpl
 				_finderPathWithoutPaginationFindByCategory,
 				_finderPathCountByCategory, _SQL_SELECT_APP_WHERE,
 				_SQL_COUNT_APP_WHERE, AppModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"app.", "category", FinderColumn.Type.STRING, "=", true,
 					true, App::getCategory));
@@ -1146,4 +1146,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:492608026
+// LIFERAY-SERVICE-BUILDER-HASH:1314011300

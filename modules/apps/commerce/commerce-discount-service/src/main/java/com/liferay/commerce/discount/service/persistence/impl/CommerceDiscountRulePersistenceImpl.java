@@ -477,7 +477,7 @@ public class CommerceDiscountRulePersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTRULE_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTRULE_WHERE,
 				CommerceDiscountRuleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountRule.", "commerceDiscountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -552,4 +552,4 @@ public class CommerceDiscountRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1693688684
+// LIFERAY-SERVICE-BUILDER-HASH:1424022610

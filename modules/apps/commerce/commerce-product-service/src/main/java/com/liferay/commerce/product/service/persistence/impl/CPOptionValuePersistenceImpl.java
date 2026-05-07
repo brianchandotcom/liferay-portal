@@ -1316,7 +1316,7 @@ public class CPOptionValuePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CPOPTIONVALUE_WHERE, _SQL_COUNT_CPOPTIONVALUE_WHERE,
-			CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPOptionValue::getUuid));
@@ -1346,10 +1346,10 @@ public class CPOptionValuePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CPOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPOPTIONVALUE_WHERE,
-				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CPOptionValue::getUuid),
+					true, true, CPOptionValue::getUuid),
 				new FinderColumn<>(
 					"cpOptionValue.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCompanyId));
@@ -1378,7 +1378,7 @@ public class CPOptionValuePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CPOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPOPTIONVALUE_WHERE,
-				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCompanyId));
@@ -1407,7 +1407,7 @@ public class CPOptionValuePersistenceImpl
 				_finderPathWithoutPaginationFindByCPOptionId,
 				_finderPathCountByCPOptionId, _SQL_SELECT_CPOPTIONVALUE_WHERE,
 				_SQL_COUNT_CPOPTIONVALUE_WHERE,
-				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CPOptionValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpOptionValue.", "CPOptionId", FinderColumn.Type.LONG, "=",
 					true, true, CPOptionValue::getCPOptionId));
@@ -1416,13 +1416,14 @@ public class CPOptionValuePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPOptionId", "key_"}, false,
-			CPOptionValue::getCPOptionId, CPOptionValue::getKey);
+			CPOptionValue::getCPOptionId,
+			convertNullFunction(CPOptionValue::getKey));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_K, _SQL_SELECT_CPOPTIONVALUE_WHERE,
+			this, _finderPathFetchByC_K, _SQL_SELECT_CPOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "CPOptionId", FinderColumn.Type.LONG, "=",
-				true, false, CPOptionValue::getCPOptionId),
+				true, true, CPOptionValue::getCPOptionId),
 			new FinderColumn<>(
 				"cpOptionValue.", "key", FinderColumn.Type.STRING, "=", true,
 				true, CPOptionValue::getKey));
@@ -1431,14 +1432,14 @@ public class CPOptionValuePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CPOptionValue::getExternalReferenceCode,
+			convertNullFunction(CPOptionValue::getExternalReferenceCode),
 			CPOptionValue::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPOPTIONVALUE_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CPOPTIONVALUE_WHERE, "",
 			new FinderColumn<>(
 				"cpOptionValue.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CPOptionValue::getExternalReferenceCode),
 			new FinderColumn<>(
 				"cpOptionValue.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1516,4 +1517,4 @@ public class CPOptionValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1981864709
+// LIFERAY-SERVICE-BUILDER-HASH:202350078

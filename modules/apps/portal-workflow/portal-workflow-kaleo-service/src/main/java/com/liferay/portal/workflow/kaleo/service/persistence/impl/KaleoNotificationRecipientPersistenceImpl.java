@@ -903,7 +903,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNotificationRecipient.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -940,7 +940,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNotificationRecipient.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -972,7 +972,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 				_SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_KALEONOTIFICATIONRECIPIENT_WHERE,
 				KaleoNotificationRecipientModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNotificationRecipient.", "kaleoNotificationId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1047,4 +1047,4 @@ public class KaleoNotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-567318080
+// LIFERAY-SERVICE-BUILDER-HASH:-68663618

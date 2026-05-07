@@ -803,7 +803,7 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 				_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 				CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceInventoryWarehouseRel.",
 					"commerceInventoryWarehouseId", FinderColumn.Type.LONG, "=",
@@ -836,10 +836,10 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			_SQL_COUNT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
 			CommerceInventoryWarehouseRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouseRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.",
@@ -860,14 +860,14 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_CIWI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_CIWI,
-			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE,
+			_SQL_SELECT_COMMERCEINVENTORYWAREHOUSEREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouseRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.", "classPK",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceInventoryWarehouseRel::getClassPK),
 			new FinderColumn<>(
 				"commerceInventoryWarehouseRel.",
@@ -949,4 +949,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:811056374
+// LIFERAY-SERVICE-BUILDER-HASH:-799685148

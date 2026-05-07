@@ -1735,7 +1735,7 @@ public class CPTaxCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CPTAXCATEGORY_WHERE, _SQL_COUNT_CPTAXCATEGORY_WHERE,
-			CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CPTaxCategory::getUuid));
@@ -1765,10 +1765,10 @@ public class CPTaxCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CPTAXCATEGORY_WHERE,
 				_SQL_COUNT_CPTAXCATEGORY_WHERE,
-				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpTaxCategory.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CPTaxCategory::getUuid),
+					true, true, CPTaxCategory::getUuid),
 				new FinderColumn<>(
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
@@ -1797,7 +1797,7 @@ public class CPTaxCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CPTAXCATEGORY_WHERE,
 				_SQL_COUNT_CPTAXCATEGORY_WHERE,
-				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CPTaxCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CPTaxCategory::getCompanyId));
@@ -1806,14 +1806,14 @@ public class CPTaxCategoryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CPTaxCategory::getExternalReferenceCode,
+			convertNullFunction(CPTaxCategory::getExternalReferenceCode),
 			CPTaxCategory::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CPTAXCATEGORY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CPTAXCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"cpTaxCategory.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CPTaxCategory::getExternalReferenceCode),
 			new FinderColumn<>(
 				"cpTaxCategory.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1914,4 +1914,4 @@ public class CPTaxCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2144062697
+// LIFERAY-SERVICE-BUILDER-HASH:1960388202

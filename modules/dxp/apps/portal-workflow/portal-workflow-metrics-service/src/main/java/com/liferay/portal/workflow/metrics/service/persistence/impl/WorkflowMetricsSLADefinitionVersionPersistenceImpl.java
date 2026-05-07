@@ -1059,7 +1059,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 			_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 			WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1069,15 +1069,15 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			WorkflowMetricsSLADefinitionVersion::getUuid,
+			convertNullFunction(WorkflowMetricsSLADefinitionVersion::getUuid),
 			WorkflowMetricsSLADefinitionVersion::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
+			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getUuid),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "groupId",
@@ -1111,10 +1111,10 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinitionVersion.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					WorkflowMetricsSLADefinitionVersion::getUuid),
 				new FinderColumn<>(
 					"workflowMetricsSLADefinitionVersion.", "companyId",
@@ -1153,7 +1153,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 				_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				_SQL_COUNT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
 				WorkflowMetricsSLADefinitionVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"workflowMetricsSLADefinitionVersion.",
 					"workflowMetricsSLADefinitionId", FinderColumn.Type.LONG,
@@ -1165,16 +1165,17 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByV_WMSLAD",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"version", "wmSLADefinitionId"}, false,
-			WorkflowMetricsSLADefinitionVersion::getVersion,
+			convertNullFunction(
+				WorkflowMetricsSLADefinitionVersion::getVersion),
 			WorkflowMetricsSLADefinitionVersion::
 				getWorkflowMetricsSLADefinitionId);
 
 		_uniquePersistenceFinderByV_WMSLAD = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByV_WMSLAD,
-			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE,
+			_SQL_SELECT_WORKFLOWMETRICSSLADEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.", "version",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				WorkflowMetricsSLADefinitionVersion::getVersion),
 			new FinderColumn<>(
 				"workflowMetricsSLADefinitionVersion.",
@@ -1259,4 +1260,4 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1226328562
+// LIFERAY-SERVICE-BUILDER-HASH:294810049

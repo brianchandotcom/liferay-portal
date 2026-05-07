@@ -337,6 +337,7 @@ public class DLStorageQuotaPersistenceImpl
 
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCompanyId, _SQL_SELECT_DLSTORAGEQUOTA_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlStorageQuota.", "companyId", FinderColumn.Type.LONG, "=",
 				true, true, DLStorageQuota::getCompanyId));
@@ -404,4 +405,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1247639046
+// LIFERAY-SERVICE-BUILDER-HASH:207230141

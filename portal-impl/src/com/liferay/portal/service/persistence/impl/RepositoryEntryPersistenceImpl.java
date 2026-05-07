@@ -1082,7 +1082,7 @@ public class RepositoryEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_REPOSITORYENTRY_WHERE, _SQL_COUNT_REPOSITORYENTRY_WHERE,
-			RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"repositoryEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RepositoryEntry::getUuid));
@@ -1090,14 +1090,16 @@ public class RepositoryEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, RepositoryEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(RepositoryEntry::getUuid),
 			RepositoryEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_REPOSITORYENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"repositoryEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, RepositoryEntry::getUuid),
+				true, RepositoryEntry::getUuid),
 			new FinderColumn<>(
 				"repositoryEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, RepositoryEntry::getGroupId));
@@ -1128,9 +1130,10 @@ public class RepositoryEntryPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_REPOSITORYENTRY_WHERE,
 				_SQL_COUNT_REPOSITORYENTRY_WHERE,
 				RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"repositoryEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, RepositoryEntry::getUuid),
+					true, true, RepositoryEntry::getUuid),
 				new FinderColumn<>(
 					"repositoryEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, RepositoryEntry::getCompanyId));
@@ -1161,6 +1164,7 @@ public class RepositoryEntryPersistenceImpl
 				_SQL_SELECT_REPOSITORYENTRY_WHERE,
 				_SQL_COUNT_REPOSITORYENTRY_WHERE,
 				RepositoryEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"repositoryEntry.", "repositoryId", FinderColumn.Type.LONG,
 					"=", true, true, RepositoryEntry::getRepositoryId));
@@ -1169,13 +1173,14 @@ public class RepositoryEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"repositoryId", "mappedId"}, false,
-			RepositoryEntry::getRepositoryId, RepositoryEntry::getMappedId);
+			RepositoryEntry::getRepositoryId,
+			convertNullFunction(RepositoryEntry::getMappedId));
 
 		_uniquePersistenceFinderByR_M = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_M, _SQL_SELECT_REPOSITORYENTRY_WHERE,
+			this, _finderPathFetchByR_M, _SQL_SELECT_REPOSITORYENTRY_WHERE, "",
 			new FinderColumn<>(
 				"repositoryEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
-				true, false, RepositoryEntry::getRepositoryId),
+				true, true, RepositoryEntry::getRepositoryId),
 			new FinderColumn<>(
 				"repositoryEntry.", "mappedId", FinderColumn.Type.STRING, "=",
 				true, true, RepositoryEntry::getMappedId));
@@ -1216,4 +1221,4 @@ public class RepositoryEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:269596672
+// LIFERAY-SERVICE-BUILDER-HASH:1176539041

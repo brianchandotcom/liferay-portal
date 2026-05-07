@@ -1174,7 +1174,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 			_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 			ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1207,10 +1207,10 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					ObjectValidationRuleSetting::getUuid),
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "companyId",
@@ -1247,7 +1247,7 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "objectValidationRuleId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1280,10 +1280,10 @@ public class ObjectValidationRuleSettingPersistenceImpl
 				_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
 				_SQL_COUNT_OBJECTVALIDATIONRULESETTING_WHERE,
 				ObjectValidationRuleSettingModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "objectValidationRuleId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectValidationRuleSetting::getObjectValidationRuleId),
 				new FinderColumn<>(
 					"objectValidationRuleSetting.", "name",
@@ -1294,15 +1294,15 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_V",
 			new String[] {String.class.getName(), String.class.getName()},
 			new String[] {"name", "value"}, false,
-			ObjectValidationRuleSetting::getName,
-			ObjectValidationRuleSetting::getValue);
+			convertNullFunction(ObjectValidationRuleSetting::getName),
+			convertNullFunction(ObjectValidationRuleSetting::getValue));
 
 		_uniquePersistenceFinderByN_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByN_V,
-			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
+			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE, "",
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "name",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ObjectValidationRuleSetting::getName),
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "value",
@@ -1317,19 +1317,19 @@ public class ObjectValidationRuleSettingPersistenceImpl
 			},
 			new String[] {"objectValidationRuleId", "name", "value"}, false,
 			ObjectValidationRuleSetting::getObjectValidationRuleId,
-			ObjectValidationRuleSetting::getName,
-			ObjectValidationRuleSetting::getValue);
+			convertNullFunction(ObjectValidationRuleSetting::getName),
+			convertNullFunction(ObjectValidationRuleSetting::getValue));
 
 		_uniquePersistenceFinderByOVRI_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByOVRI_N_V,
-			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE,
+			_SQL_SELECT_OBJECTVALIDATIONRULESETTING_WHERE, "",
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "objectValidationRuleId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectValidationRuleSetting::getObjectValidationRuleId),
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "name",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ObjectValidationRuleSetting::getName),
 			new FinderColumn<>(
 				"objectValidationRuleSetting.", "value",
@@ -1406,4 +1406,4 @@ public class ObjectValidationRuleSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1762500764
+// LIFERAY-SERVICE-BUILDER-HASH:1591295528

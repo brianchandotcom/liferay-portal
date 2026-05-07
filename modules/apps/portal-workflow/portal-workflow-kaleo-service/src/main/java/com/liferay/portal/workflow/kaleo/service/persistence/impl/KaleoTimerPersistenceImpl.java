@@ -746,10 +746,10 @@ public class KaleoTimerPersistenceImpl
 				_finderPathWithoutPaginationFindByKCN_KCPK,
 				_finderPathCountByKCN_KCPK, _SQL_SELECT_KALEOTIMER_WHERE,
 				_SQL_COUNT_KALEOTIMER_WHERE, KaleoTimerModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimer.", "kaleoClassName", FinderColumn.Type.STRING,
-					"=", true, false, KaleoTimer::getKaleoClassName),
+					"=", true, true, KaleoTimer::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoTimer.", "kaleoClassPK", FinderColumn.Type.LONG, "=",
 					true, true, KaleoTimer::getKaleoClassPK));
@@ -787,13 +787,13 @@ public class KaleoTimerPersistenceImpl
 				_finderPathWithoutPaginationFindByKCN_KCPK_Blocking,
 				_finderPathCountByKCN_KCPK_Blocking,
 				_SQL_SELECT_KALEOTIMER_WHERE, _SQL_COUNT_KALEOTIMER_WHERE,
-				KaleoTimerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KaleoTimerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTimer.", "kaleoClassName", FinderColumn.Type.STRING,
-					"=", true, false, KaleoTimer::getKaleoClassName),
+					"=", true, true, KaleoTimer::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoTimer.", "kaleoClassPK", FinderColumn.Type.LONG, "=",
-					true, false, KaleoTimer::getKaleoClassPK),
+					true, true, KaleoTimer::getKaleoClassPK),
 				new FinderColumn<>(
 					"kaleoTimer.", "blocking", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KaleoTimer::isBlocking));
@@ -867,4 +867,4 @@ public class KaleoTimerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1702862935
+// LIFERAY-SERVICE-BUILDER-HASH:1893699968

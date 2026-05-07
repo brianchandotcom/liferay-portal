@@ -1059,7 +1059,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 			_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 			_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 			CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceDiscountAccountRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CommerceDiscountAccountRel::getUuid));
@@ -1091,10 +1091,10 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceDiscountAccountRel::getUuid),
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "companyId",
@@ -1127,7 +1127,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "commerceAccountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1159,7 +1159,7 @@ public class CommerceDiscountAccountRelPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
 				CommerceDiscountAccountRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountAccountRel.", "commerceDiscountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1174,10 +1174,10 @@ public class CommerceDiscountAccountRelPersistenceImpl
 
 		_uniquePersistenceFinderByCAI_CDI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCAI_CDI,
-			_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE,
+			_SQL_SELECT_COMMERCEDISCOUNTACCOUNTREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceDiscountAccountRel.", "commerceAccountId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceDiscountAccountRel::getCommerceAccountId),
 			new FinderColumn<>(
 				"commerceDiscountAccountRel.", "commerceDiscountId",
@@ -1253,4 +1253,4 @@ public class CommerceDiscountAccountRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2103438190
+// LIFERAY-SERVICE-BUILDER-HASH:-1089224488

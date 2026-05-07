@@ -664,7 +664,7 @@ public class CTCollectionTemplatePersistenceImpl
 				_SQL_SELECT_CTCOLLECTIONTEMPLATE_WHERE,
 				_SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE,
 				CTCollectionTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctCollectionTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -760,4 +760,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1606600015
+// LIFERAY-SERVICE-BUILDER-HASH:-1918968781

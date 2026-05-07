@@ -1573,6 +1573,7 @@ public class LayoutSetBranchPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId));
@@ -1600,10 +1601,10 @@ public class LayoutSetBranchPersistenceImpl
 			this, _finderPathWithPaginationFindByG_P,
 			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 			_SQL_SELECT_LAYOUTSETBRANCH_WHERE, _SQL_COUNT_LAYOUTSETBRANCH_WHERE,
-			LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutSetBranch::getGroupId),
+				true, true, LayoutSetBranch::getGroupId),
 			new FinderColumn<>(
 				"layoutSetBranch.", "privateLayout", FinderColumn.Type.BOOLEAN,
 				"=", true, true, LayoutSetBranch::isPrivateLayout));
@@ -1616,16 +1617,17 @@ public class LayoutSetBranchPersistenceImpl
 			},
 			new String[] {"groupId", "privateLayout", "name"}, false,
 			LayoutSetBranch::getGroupId, LayoutSetBranch::isPrivateLayout,
-			LayoutSetBranch::getName);
+			convertNullFunction(LayoutSetBranch::getName));
 
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_N, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+			"",
 			new FinderColumn<>(
 				"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutSetBranch::getGroupId),
+				true, true, LayoutSetBranch::getGroupId),
 			new FinderColumn<>(
 				"layoutSetBranch.", "privateLayout", FinderColumn.Type.BOOLEAN,
-				"=", true, false, LayoutSetBranch::isPrivateLayout),
+				"=", true, true, LayoutSetBranch::isPrivateLayout),
 			new FinderColumn<>(
 				"layoutSetBranch.", "name", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSetBranch::getName));
@@ -1659,13 +1661,13 @@ public class LayoutSetBranchPersistenceImpl
 			this, _finderPathWithPaginationFindByG_P_M,
 			_finderPathWithoutPaginationFindByG_P_M, _finderPathCountByG_P_M,
 			_SQL_SELECT_LAYOUTSETBRANCH_WHERE, _SQL_COUNT_LAYOUTSETBRANCH_WHERE,
-			LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutSetBranch::getGroupId),
+				true, true, LayoutSetBranch::getGroupId),
 			new FinderColumn<>(
 				"layoutSetBranch.", "privateLayout", FinderColumn.Type.BOOLEAN,
-				"=", true, false, LayoutSetBranch::isPrivateLayout),
+				"=", true, true, LayoutSetBranch::isPrivateLayout),
 			new FinderColumn<>(
 				"layoutSetBranch.", "master", FinderColumn.Type.BOOLEAN, "=",
 				true, true, LayoutSetBranch::isMaster));
@@ -1729,4 +1731,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:968969527
+// LIFERAY-SERVICE-BUILDER-HASH:-519079702

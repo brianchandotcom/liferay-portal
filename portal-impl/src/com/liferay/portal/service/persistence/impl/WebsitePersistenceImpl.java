@@ -1577,7 +1577,7 @@ public class WebsitePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"website.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Website::getUuid));
@@ -1607,10 +1607,10 @@ public class WebsitePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_WEBSITE_WHERE,
 				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"website.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Website::getUuid),
+					true, Website::getUuid),
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getCompanyId));
@@ -1639,7 +1639,7 @@ public class WebsitePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_WEBSITE_WHERE,
 				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getCompanyId));
@@ -1667,7 +1667,7 @@ public class WebsitePersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_WEBSITE_WHERE,
 				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"website.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, Website::getUserId));
@@ -1695,10 +1695,10 @@ public class WebsitePersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Website::getCompanyId),
+				true, Website::getCompanyId),
 			new FinderColumn<>(
 				"website.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Website::getClassNameId));
@@ -1730,13 +1730,13 @@ public class WebsitePersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_WEBSITE_WHERE, _SQL_COUNT_WEBSITE_WHERE,
-			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WebsiteModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Website::getCompanyId),
+				true, Website::getCompanyId),
 			new FinderColumn<>(
 				"website.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, Website::getClassNameId),
+				true, Website::getClassNameId),
 			new FinderColumn<>(
 				"website.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Website::getClassPK));
@@ -1776,16 +1776,16 @@ public class WebsitePersistenceImpl
 				_finderPathWithoutPaginationFindByC_C_C_P,
 				_finderPathCountByC_C_C_P, _SQL_SELECT_WEBSITE_WHERE,
 				_SQL_COUNT_WEBSITE_WHERE, WebsiteModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"website.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, Website::getCompanyId),
+					true, Website::getCompanyId),
 				new FinderColumn<>(
 					"website.", "classNameId", FinderColumn.Type.LONG, "=",
-					true, false, Website::getClassNameId),
+					true, true, Website::getClassNameId),
 				new FinderColumn<>(
 					"website.", "classPK", FinderColumn.Type.LONG, "=", true,
-					false, Website::getClassPK),
+					true, Website::getClassPK),
 				new FinderColumn<>(
 					"website.", "primary", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Website::isPrimary));
@@ -1794,13 +1794,14 @@ public class WebsitePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			Website::getExternalReferenceCode, Website::getCompanyId);
+			convertNullFunction(Website::getExternalReferenceCode),
+			Website::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_WEBSITE_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_WEBSITE_WHERE, "",
 			new FinderColumn<>(
 				"website.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, Website::getExternalReferenceCode),
+				"=", true, true, Website::getExternalReferenceCode),
 			new FinderColumn<>(
 				"website.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Website::getCompanyId));
@@ -1841,4 +1842,4 @@ public class WebsitePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1861655702
+// LIFERAY-SERVICE-BUILDER-HASH:-1996402031

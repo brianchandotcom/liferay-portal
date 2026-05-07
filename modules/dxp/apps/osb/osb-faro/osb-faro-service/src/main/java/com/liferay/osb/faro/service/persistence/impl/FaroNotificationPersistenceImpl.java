@@ -2856,6 +2856,7 @@ public class FaroNotificationPersistenceImpl
 				_SQL_SELECT_FARONOTIFICATION_WHERE,
 				_SQL_COUNT_FARONOTIFICATION_WHERE,
 				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"faroNotification.", "createTime", FinderColumn.Type.LONG,
 					"<", true, true, FaroNotification::getCreateTime));
@@ -2998,4 +2999,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-879931205
+// LIFERAY-SERVICE-BUILDER-HASH:-1082452999

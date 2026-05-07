@@ -497,7 +497,7 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 
 		_uniquePersistenceFinderByFileEntryId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByFileEntryId,
-			_SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE,
+			_SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE, "",
 			new FinderColumn<>(
 				"dlOpenerFileEntryReference.", "fileEntryId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -507,15 +507,15 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_F",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"referenceType", "fileEntryId"}, false,
-			DLOpenerFileEntryReference::getReferenceType,
+			convertNullFunction(DLOpenerFileEntryReference::getReferenceType),
 			DLOpenerFileEntryReference::getFileEntryId);
 
 		_uniquePersistenceFinderByR_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByR_F,
-			_SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE,
+			_SQL_SELECT_DLOPENERFILEENTRYREFERENCE_WHERE, "",
 			new FinderColumn<>(
 				"dlOpenerFileEntryReference.", "referenceType",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DLOpenerFileEntryReference::getReferenceType),
 			new FinderColumn<>(
 				"dlOpenerFileEntryReference.", "fileEntryId",
@@ -588,4 +588,4 @@ public class DLOpenerFileEntryReferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-272543496
+// LIFERAY-SERVICE-BUILDER-HASH:1784034403

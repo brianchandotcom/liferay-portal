@@ -2111,7 +2111,7 @@ public class OAuth2ApplicationPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 			_SQL_COUNT_OAUTH2APPLICATION_WHERE,
-			OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, OAuth2Application::getUuid));
@@ -2142,9 +2142,10 @@ public class OAuth2ApplicationPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuth2Application.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, OAuth2Application::getUuid),
+					true, true, OAuth2Application::getUuid),
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
@@ -2175,6 +2176,7 @@ public class OAuth2ApplicationPersistenceImpl
 				_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 				_SQL_COUNT_OAUTH2APPLICATION_WHERE,
 				OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuth2Application.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuth2Application::getCompanyId));
@@ -2183,13 +2185,15 @@ public class OAuth2ApplicationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "clientId"}, false,
-			OAuth2Application::getCompanyId, OAuth2Application::getClientId);
+			OAuth2Application::getCompanyId,
+			convertNullFunction(OAuth2Application::getClientId));
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
+			"",
 			new FinderColumn<>(
 				"oAuth2Application.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OAuth2Application::getCompanyId),
+				true, true, OAuth2Application::getCompanyId),
 			new FinderColumn<>(
 				"oAuth2Application.", "clientId", FinderColumn.Type.STRING, "=",
 				true, true, OAuth2Application::getClientId));
@@ -2218,10 +2222,10 @@ public class OAuth2ApplicationPersistenceImpl
 			_finderPathWithoutPaginationFindByC_CP, _finderPathCountByC_CP,
 			_SQL_SELECT_OAUTH2APPLICATION_WHERE,
 			_SQL_COUNT_OAUTH2APPLICATION_WHERE,
-			OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			OAuth2ApplicationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"oAuth2Application.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OAuth2Application::getCompanyId),
+				true, true, OAuth2Application::getCompanyId),
 			new FinderColumn<>(
 				"oAuth2Application.", "clientProfile",
 				FinderColumn.Type.INTEGER, "=", true, true,
@@ -2231,14 +2235,15 @@ public class OAuth2ApplicationPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			OAuth2Application::getExternalReferenceCode,
+			convertNullFunction(OAuth2Application::getExternalReferenceCode),
 			OAuth2Application::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OAUTH2APPLICATION_WHERE,
+			"",
 			new FinderColumn<>(
 				"oAuth2Application.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				OAuth2Application::getExternalReferenceCode),
 			new FinderColumn<>(
 				"oAuth2Application.", "companyId", FinderColumn.Type.LONG, "=",
@@ -2336,4 +2341,4 @@ public class OAuth2ApplicationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:944919123
+// LIFERAY-SERVICE-BUILDER-HASH:-1541747081

@@ -1673,7 +1673,7 @@ public class LaunchSetPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LAUNCHSET_WHERE, _SQL_COUNT_LAUNCHSET_WHERE,
-			LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"launchSet.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LaunchSet::getUuid));
@@ -1703,10 +1703,10 @@ public class LaunchSetPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LAUNCHSET_WHERE,
 				_SQL_COUNT_LAUNCHSET_WHERE, LaunchSetModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"launchSet.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, LaunchSet::getUuid),
+					true, LaunchSet::getUuid),
 				new FinderColumn<>(
 					"launchSet.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchSet::getCompanyId));
@@ -1735,7 +1735,7 @@ public class LaunchSetPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_LAUNCHSET_WHERE,
 				_SQL_COUNT_LAUNCHSET_WHERE, LaunchSetModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"launchSet.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, LaunchSet::getCompanyId));
@@ -1763,10 +1763,10 @@ public class LaunchSetPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U,
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_LAUNCHSET_WHERE, _SQL_COUNT_LAUNCHSET_WHERE,
-			LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LaunchSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"launchSet.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, LaunchSet::getCompanyId),
+				true, LaunchSet::getCompanyId),
 			new FinderColumn<>(
 				"launchSet.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				LaunchSet::getUserId));
@@ -1799,13 +1799,14 @@ public class LaunchSetPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			LaunchSet::getExternalReferenceCode, LaunchSet::getCompanyId);
+			convertNullFunction(LaunchSet::getExternalReferenceCode),
+			LaunchSet::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_LAUNCHSET_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_LAUNCHSET_WHERE, "",
 			new FinderColumn<>(
 				"launchSet.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, LaunchSet::getExternalReferenceCode),
+				"=", true, true, LaunchSet::getExternalReferenceCode),
 			new FinderColumn<>(
 				"launchSet.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, LaunchSet::getCompanyId));
@@ -1879,4 +1880,4 @@ public class LaunchSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2001738712
+// LIFERAY-SERVICE-BUILDER-HASH:937640926

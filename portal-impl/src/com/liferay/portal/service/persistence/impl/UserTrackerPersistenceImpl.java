@@ -716,7 +716,7 @@ public class UserTrackerPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_USERTRACKER_WHERE,
 				_SQL_COUNT_USERTRACKER_WHERE,
-				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userTracker.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserTracker::getCompanyId));
@@ -744,7 +744,7 @@ public class UserTrackerPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_USERTRACKER_WHERE,
 				_SQL_COUNT_USERTRACKER_WHERE,
-				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userTracker.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, UserTracker::getUserId));
@@ -773,7 +773,7 @@ public class UserTrackerPersistenceImpl
 				_finderPathWithoutPaginationFindBySessionId,
 				_finderPathCountBySessionId, _SQL_SELECT_USERTRACKER_WHERE,
 				_SQL_COUNT_USERTRACKER_WHERE,
-				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				UserTrackerModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userTracker.", "sessionId", FinderColumn.Type.STRING, "=",
 					true, true, UserTracker::getSessionId));
@@ -811,4 +811,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1834903213
+// LIFERAY-SERVICE-BUILDER-HASH:1803637781

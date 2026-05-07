@@ -1650,6 +1650,7 @@ public class NotificationTemplatePersistenceImpl
 			_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE,
 			_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 			NotificationTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"notificationTemplate.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, NotificationTemplate::getUuid));
@@ -1681,10 +1682,10 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, NotificationTemplate::getUuid),
+					"=", true, true, NotificationTemplate::getUuid),
 				new FinderColumn<>(
 					"notificationTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1716,7 +1717,7 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE,
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1726,15 +1727,15 @@ public class NotificationTemplatePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			NotificationTemplate::getExternalReferenceCode,
+			convertNullFunction(NotificationTemplate::getExternalReferenceCode),
 			NotificationTemplate::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE,
+			_SQL_SELECT_NOTIFICATIONTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"notificationTemplate.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				NotificationTemplate::getExternalReferenceCode),
 			new FinderColumn<>(
 				"notificationTemplate.", "companyId", FinderColumn.Type.LONG,
@@ -1833,4 +1834,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:894699843
+// LIFERAY-SERVICE-BUILDER-HASH:521296670

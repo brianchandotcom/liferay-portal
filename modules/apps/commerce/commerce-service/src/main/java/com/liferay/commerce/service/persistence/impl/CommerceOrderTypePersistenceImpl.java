@@ -2819,7 +2819,7 @@ public class CommerceOrderTypePersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
-			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderType.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceOrderType::getUuid));
@@ -2850,9 +2850,10 @@ public class CommerceOrderTypePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceOrderType.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CommerceOrderType::getUuid),
+					true, true, CommerceOrderType::getUuid),
 				new FinderColumn<>(
 					"commerceOrderType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderType::getCompanyId));
@@ -2883,6 +2884,7 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceOrderType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderType::getCompanyId));
@@ -2911,10 +2913,10 @@ public class CommerceOrderTypePersistenceImpl
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
-			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderType.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, CommerceOrderType::getCompanyId),
+				true, true, CommerceOrderType::getCompanyId),
 			new FinderColumn<>(
 				"commerceOrderType.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceOrderType::isActive));
@@ -2938,10 +2940,10 @@ public class CommerceOrderTypePersistenceImpl
 			_finderPathWithPaginationCountByLtD_S,
 			_SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
-			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderType.", "displayDate", FinderColumn.Type.DATE,
-				"<", true, false, CommerceOrderType::getDisplayDate),
+				"<", true, true, CommerceOrderType::getDisplayDate),
 			new FinderColumn<>(
 				"commerceOrderType.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CommerceOrderType::getStatus));
@@ -2965,10 +2967,10 @@ public class CommerceOrderTypePersistenceImpl
 			_finderPathWithPaginationCountByLtE_S,
 			_SQL_SELECT_COMMERCEORDERTYPE_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
-			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceOrderType.", "expirationDate", FinderColumn.Type.DATE,
-				"<", true, false, CommerceOrderType::getExpirationDate),
+				"<", true, true, CommerceOrderType::getExpirationDate),
 			new FinderColumn<>(
 				"commerceOrderType.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, CommerceOrderType::getStatus));
@@ -2977,14 +2979,15 @@ public class CommerceOrderTypePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceOrderType::getExternalReferenceCode,
+			convertNullFunction(CommerceOrderType::getExternalReferenceCode),
 			CommerceOrderType::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCEORDERTYPE_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceOrderType.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceOrderType::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceOrderType.", "companyId", FinderColumn.Type.LONG, "=",
@@ -3082,4 +3085,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087503884
+// LIFERAY-SERVICE-BUILDER-HASH:-1476779898

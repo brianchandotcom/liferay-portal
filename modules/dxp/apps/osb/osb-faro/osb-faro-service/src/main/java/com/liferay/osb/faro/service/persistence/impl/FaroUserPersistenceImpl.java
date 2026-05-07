@@ -1451,7 +1451,7 @@ public class FaroUserPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_FAROUSER_WHERE,
 				_SQL_COUNT_FAROUSER_WHERE, FaroUserModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, FaroUser::getGroupId));
@@ -1480,7 +1480,7 @@ public class FaroUserPersistenceImpl
 				_finderPathWithoutPaginationFindByLiveUserId,
 				_finderPathCountByLiveUserId, _SQL_SELECT_FAROUSER_WHERE,
 				_SQL_COUNT_FAROUSER_WHERE, FaroUserModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=",
 					true, true, FaroUser::getLiveUserId));
@@ -1488,10 +1488,10 @@ public class FaroUserPersistenceImpl
 		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
 			new String[] {String.class.getName()}, new String[] {"key_"}, false,
-			FaroUser::getKey);
+			convertNullFunction(FaroUser::getKey));
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_FAROUSER_WHERE,
+			this, _finderPathFetchByKey, _SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
 				"faroUser.", "key", FinderColumn.Type.STRING, "=", true, true,
 				FaroUser::getKey));
@@ -1503,10 +1503,10 @@ public class FaroUserPersistenceImpl
 			FaroUser::getLiveUserId);
 
 		_uniquePersistenceFinderByG_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_L, _SQL_SELECT_FAROUSER_WHERE,
+			this, _finderPathFetchByG_L, _SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
-				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FaroUser::getGroupId),
+				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				FaroUser::getGroupId),
 			new FinderColumn<>(
 				"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=", true,
 				true, FaroUser::getLiveUserId));
@@ -1534,10 +1534,10 @@ public class FaroUserPersistenceImpl
 			this, _finderPathWithPaginationFindByG_R,
 			_finderPathWithoutPaginationFindByG_R, _finderPathCountByG_R,
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
-			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FaroUser::getGroupId),
+				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				FaroUser::getGroupId),
 			new FinderColumn<>(
 				"faroUser.", "roleId", FinderColumn.Type.LONG, "=", true, true,
 				FaroUser::getRoleId));
@@ -1546,13 +1546,14 @@ public class FaroUserPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "emailAddress"}, false,
-			FaroUser::getGroupId, FaroUser::getEmailAddress);
+			FaroUser::getGroupId,
+			convertNullFunction(FaroUser::getEmailAddress));
 
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_E, _SQL_SELECT_FAROUSER_WHERE,
+			this, _finderPathFetchByG_E, _SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
-				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FaroUser::getGroupId),
+				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				FaroUser::getGroupId),
 			new FinderColumn<>(
 				"faroUser.", "emailAddress", FinderColumn.Type.STRING, "=",
 				true, true, FaroUser::getEmailAddress));
@@ -1580,10 +1581,10 @@ public class FaroUserPersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
-			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FaroUser::getGroupId),
+				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				FaroUser::getGroupId),
 			new FinderColumn<>(
 				"faroUser.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, FaroUser::getStatus));
@@ -1611,10 +1612,10 @@ public class FaroUserPersistenceImpl
 			this, _finderPathWithPaginationFindByL_S,
 			_finderPathWithoutPaginationFindByL_S, _finderPathCountByL_S,
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
-			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=", true,
-				false, FaroUser::getLiveUserId),
+				true, FaroUser::getLiveUserId),
 			new FinderColumn<>(
 				"faroUser.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, FaroUser::getStatus));
@@ -1642,10 +1643,10 @@ public class FaroUserPersistenceImpl
 			this, _finderPathWithPaginationFindByE_S,
 			_finderPathWithoutPaginationFindByE_S, _finderPathCountByE_S,
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
-			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"faroUser.", "emailAddress", FinderColumn.Type.STRING, "=",
-				true, false, FaroUser::getEmailAddress),
+				true, true, FaroUser::getEmailAddress),
 			new FinderColumn<>(
 				"faroUser.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, FaroUser::getStatus));
@@ -1719,4 +1720,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-183233419
+// LIFERAY-SERVICE-BUILDER-HASH:928056396

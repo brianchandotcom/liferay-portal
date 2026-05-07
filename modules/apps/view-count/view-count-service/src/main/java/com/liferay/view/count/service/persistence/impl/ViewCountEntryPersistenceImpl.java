@@ -438,10 +438,10 @@ public class ViewCountEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_CN,
 			_finderPathWithoutPaginationFindByC_CN, _finderPathCountByC_CN,
 			_SQL_SELECT_VIEWCOUNTENTRY_WHERE, _SQL_COUNT_VIEWCOUNTENTRY_WHERE,
-			ViewCountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ViewCountEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"viewCountEntry.", "id.companyId", FinderColumn.Type.LONG, "=",
-				true, false, ViewCountEntry::getCompanyId),
+				true, true, ViewCountEntry::getCompanyId),
 			new FinderColumn<>(
 				"viewCountEntry.", "id.classNameId", FinderColumn.Type.LONG,
 				"=", true, true, ViewCountEntry::getClassNameId));
@@ -515,4 +515,4 @@ public class ViewCountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2147232512
+// LIFERAY-SERVICE-BUILDER-HASH:-412096313

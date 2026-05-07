@@ -575,7 +575,7 @@ public class PatcherFixRelPersistenceImpl
 				_finderPathWithoutPaginationFindByChildPatcherFixId,
 				_finderPathCountByChildPatcherFixId,
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
-				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFixRel.", "childPatcherFixId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -605,7 +605,7 @@ public class PatcherFixRelPersistenceImpl
 				_finderPathWithoutPaginationFindByParentPatcherFixId,
 				_finderPathCountByParentPatcherFixId,
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
-				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherFixRel.", "parentPatcherFixId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -677,4 +677,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:676853620
+// LIFERAY-SERVICE-BUILDER-HASH:1350349748

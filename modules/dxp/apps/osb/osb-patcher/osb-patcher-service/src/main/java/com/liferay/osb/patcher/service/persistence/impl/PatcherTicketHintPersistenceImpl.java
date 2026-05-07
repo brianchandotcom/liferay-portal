@@ -380,7 +380,7 @@ public class PatcherTicketHintPersistenceImpl
 		_uniquePersistenceFinderByPatcherProductVersionId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByPatcherProductVersionId,
-				_SQL_SELECT_PATCHERTICKETHINT_WHERE,
+				_SQL_SELECT_PATCHERTICKETHINT_WHERE, "",
 				new FinderColumn<>(
 					"patcherTicketHint.", "patcherProductVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -449,4 +449,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-102170691
+// LIFERAY-SERVICE-BUILDER-HASH:1904500822

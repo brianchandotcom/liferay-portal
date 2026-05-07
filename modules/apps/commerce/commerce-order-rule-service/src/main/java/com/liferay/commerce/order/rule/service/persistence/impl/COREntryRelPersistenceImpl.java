@@ -708,7 +708,7 @@ public class COREntryRelPersistenceImpl
 				_finderPathWithoutPaginationFindByCOREntryId,
 				_finderPathCountByCOREntryId, _SQL_SELECT_CORENTRYREL_WHERE,
 				_SQL_COUNT_CORENTRYREL_WHERE,
-				COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=",
 					true, true, COREntryRel::getCOREntryId));
@@ -736,10 +736,10 @@ public class COREntryRelPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_CORENTRYREL_WHERE, _SQL_COUNT_CORENTRYREL_WHERE,
-			COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			COREntryRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, COREntryRel::getClassNameId),
+				true, true, COREntryRel::getClassNameId),
 			new FinderColumn<>(
 				"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=", true,
 				true, COREntryRel::getCOREntryId));
@@ -754,13 +754,13 @@ public class COREntryRelPersistenceImpl
 			COREntryRel::getCOREntryId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C, _SQL_SELECT_CORENTRYREL_WHERE,
+			this, _finderPathFetchByC_C_C, _SQL_SELECT_CORENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"corEntryRel.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, COREntryRel::getClassNameId),
+				true, true, COREntryRel::getClassNameId),
 			new FinderColumn<>(
 				"corEntryRel.", "classPK", FinderColumn.Type.LONG, "=", true,
-				false, COREntryRel::getClassPK),
+				true, COREntryRel::getClassPK),
 			new FinderColumn<>(
 				"corEntryRel.", "COREntryId", FinderColumn.Type.LONG, "=", true,
 				true, COREntryRel::getCOREntryId));
@@ -831,4 +831,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1889044259
+// LIFERAY-SERVICE-BUILDER-HASH:1659468045

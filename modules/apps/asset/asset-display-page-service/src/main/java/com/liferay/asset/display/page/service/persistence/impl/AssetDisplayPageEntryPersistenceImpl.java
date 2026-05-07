@@ -1460,6 +1460,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 			_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 			AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AssetDisplayPageEntry::getUuid));
@@ -1468,14 +1469,15 @@ public class AssetDisplayPageEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			AssetDisplayPageEntry::getUuid, AssetDisplayPageEntry::getGroupId);
+			convertNullFunction(AssetDisplayPageEntry::getUuid),
+			AssetDisplayPageEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
+			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, AssetDisplayPageEntry::getUuid),
+				true, true, AssetDisplayPageEntry::getUuid),
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getGroupId));
@@ -1507,10 +1509,10 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, AssetDisplayPageEntry::getUuid),
+					"=", true, true, AssetDisplayPageEntry::getUuid),
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1542,7 +1544,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, AssetDisplayPageEntry::getGroupId));
@@ -1578,7 +1580,7 @@ public class AssetDisplayPageEntryPersistenceImpl
 				_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 				_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 				AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetDisplayPageEntry.", "layoutPageTemplateEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1609,9 +1611,10 @@ public class AssetDisplayPageEntryPersistenceImpl
 			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
 			_SQL_COUNT_ASSETDISPLAYPAGEENTRY_WHERE,
 			AssetDisplayPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, AssetDisplayPageEntry::getGroupId),
+				"=", true, true, AssetDisplayPageEntry::getGroupId),
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getClassNameId));
@@ -1628,13 +1631,13 @@ public class AssetDisplayPageEntryPersistenceImpl
 
 		_uniquePersistenceFinderByG_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_C_C,
-			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE,
+			_SQL_SELECT_ASSETDISPLAYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, AssetDisplayPageEntry::getGroupId),
+				"=", true, true, AssetDisplayPageEntry::getGroupId),
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, AssetDisplayPageEntry::getClassNameId),
+				"=", true, true, AssetDisplayPageEntry::getClassNameId),
 			new FinderColumn<>(
 				"assetDisplayPageEntry.", "classPK", FinderColumn.Type.LONG,
 				"=", true, true, AssetDisplayPageEntry::getClassPK));
@@ -1711,4 +1714,4 @@ public class AssetDisplayPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-82818890
+// LIFERAY-SERVICE-BUILDER-HASH:-530698331

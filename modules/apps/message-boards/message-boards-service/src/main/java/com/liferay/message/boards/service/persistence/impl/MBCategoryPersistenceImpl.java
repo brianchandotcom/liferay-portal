@@ -8040,7 +8040,7 @@ public class MBCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
-			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBCategory::getUuid));
@@ -8048,14 +8048,14 @@ public class MBCategoryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, MBCategory::getUuid,
-			MBCategory::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(MBCategory::getUuid), MBCategory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBCATEGORY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, MBCategory::getUuid),
+				true, MBCategory::getUuid),
 			new FinderColumn<>(
 				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBCategory::getGroupId));
@@ -8085,10 +8085,10 @@ public class MBCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_MBCATEGORY_WHERE,
 				_SQL_COUNT_MBCATEGORY_WHERE, MBCategoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbCategory.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, MBCategory::getUuid),
+					true, MBCategory::getUuid),
 				new FinderColumn<>(
 					"mbCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBCategory::getCompanyId));
@@ -8117,7 +8117,7 @@ public class MBCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_MBCATEGORY_WHERE,
 				_SQL_COUNT_MBCATEGORY_WHERE, MBCategoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId));
@@ -8146,7 +8146,7 @@ public class MBCategoryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_MBCATEGORY_WHERE,
 				_SQL_COUNT_MBCATEGORY_WHERE, MBCategoryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbCategory.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBCategory::getCompanyId));
@@ -8179,13 +8179,14 @@ public class MBCategoryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "friendlyURL"}, false,
-			MBCategory::getGroupId, MBCategory::getFriendlyURL);
+			MBCategory::getGroupId,
+			convertNullFunction(MBCategory::getFriendlyURL));
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F, _SQL_SELECT_MBCATEGORY_WHERE,
+			this, _finderPathFetchByG_F, _SQL_SELECT_MBCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, MBCategory::getGroupId),
+				true, MBCategory::getGroupId),
 			new FinderColumn<>(
 				"mbCategory.", "friendlyURL", FinderColumn.Type.STRING, "=",
 				true, true, MBCategory::getFriendlyURL));
@@ -8213,10 +8214,10 @@ public class MBCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
-			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, MBCategory::getGroupId),
+				true, MBCategory::getGroupId),
 			new FinderColumn<>(
 				"mbCategory.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, MBCategory::getStatus));
@@ -8244,10 +8245,10 @@ public class MBCategoryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
-			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbCategory.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, MBCategory::getCompanyId),
+				true, MBCategory::getCompanyId),
 			new FinderColumn<>(
 				"mbCategory.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, MBCategory::getStatus));
@@ -8346,13 +8347,14 @@ public class MBCategoryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			MBCategory::getExternalReferenceCode, MBCategory::getGroupId);
+			convertNullFunction(MBCategory::getExternalReferenceCode),
+			MBCategory::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_MBCATEGORY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_MBCATEGORY_WHERE, "",
 			new FinderColumn<>(
 				"mbCategory.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				MBCategory::getExternalReferenceCode),
 			new FinderColumn<>(
 				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -8453,4 +8455,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1057610856
+// LIFERAY-SERVICE-BUILDER-HASH:-559140737

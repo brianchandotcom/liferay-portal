@@ -2973,7 +2973,7 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectField::getUuid));
@@ -3003,10 +3003,10 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, ObjectField::getUuid),
+					true, ObjectField::getUuid),
 				new FinderColumn<>(
 					"objectField.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectField::getCompanyId));
@@ -3035,7 +3035,7 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectField::getCompanyId));
@@ -3065,7 +3065,7 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByListTypeDefinitionId,
 				_finderPathCountByListTypeDefinitionId,
 				_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "listTypeDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3095,7 +3095,7 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByObjectDefinitionId,
 				_finderPathCountByObjectDefinitionId,
 				_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3124,10 +3124,10 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U,
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ObjectField::getCompanyId),
+				true, ObjectField::getCompanyId),
 			new FinderColumn<>(
 				"objectField.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, ObjectField::getUserId));
@@ -3155,10 +3155,10 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByC_BT,
 			_finderPathWithoutPaginationFindByC_BT, _finderPathCountByC_BT,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ObjectField::getCompanyId),
+				true, ObjectField::getCompanyId),
 			new FinderColumn<>(
 				"objectField.", "businessType", FinderColumn.Type.STRING, "=",
 				true, true, ObjectField::getBusinessType));
@@ -3188,10 +3188,10 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByLTDI_S,
 				_finderPathCountByLTDI_S, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "listTypeDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getListTypeDefinitionId),
 				new FinderColumn<>(
 					"objectField.", "state", FinderColumn.Type.BOOLEAN, "=",
@@ -3222,10 +3222,10 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByODI_BT,
 				_finderPathCountByODI_BT, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "objectDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectField.", "businessType", FinderColumn.Type.STRING,
@@ -3256,10 +3256,10 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByODI_DTN,
 				_finderPathCountByODI_DTN, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "objectDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectField.", "dbTableName", FinderColumn.Type.STRING,
@@ -3288,10 +3288,10 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByODI_I,
 			_finderPathWithoutPaginationFindByODI_I, _finderPathCountByODI_I,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectField::getObjectDefinitionId),
+				"=", true, true, ObjectField::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectField.", "indexed", FinderColumn.Type.BOOLEAN, "=", true,
 				true, ObjectField::isIndexed));
@@ -3319,10 +3319,10 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByODI_L,
 			_finderPathWithoutPaginationFindByODI_L, _finderPathCountByODI_L,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectField::getObjectDefinitionId),
+				"=", true, true, ObjectField::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectField.", "localized", FinderColumn.Type.BOOLEAN, "=",
 				true, true, ObjectField::isLocalized));
@@ -3331,13 +3331,14 @@ public class ObjectFieldPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"objectDefinitionId", "name"}, false,
-			ObjectField::getObjectDefinitionId, ObjectField::getName);
+			ObjectField::getObjectDefinitionId,
+			convertNullFunction(ObjectField::getName));
 
 		_uniquePersistenceFinderByODI_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTFIELD_WHERE,
+			this, _finderPathFetchByODI_N, _SQL_SELECT_OBJECTFIELD_WHERE, "",
 			new FinderColumn<>(
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectField::getObjectDefinitionId),
+				"=", true, true, ObjectField::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectField.", "name", FinderColumn.Type.STRING, "=", true,
 				true, ObjectField::getName));
@@ -3365,10 +3366,10 @@ public class ObjectFieldPersistenceImpl
 			this, _finderPathWithPaginationFindByODI_S,
 			_finderPathWithoutPaginationFindByODI_S, _finderPathCountByODI_S,
 			_SQL_SELECT_OBJECTFIELD_WHERE, _SQL_COUNT_OBJECTFIELD_WHERE,
-			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
-				"=", true, false, ObjectField::getObjectDefinitionId),
+				"=", true, true, ObjectField::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectField.", "system", FinderColumn.Type.BOOLEAN, "=", true,
 				true, ObjectField::isSystem));
@@ -3382,18 +3383,19 @@ public class ObjectFieldPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false, ObjectField::getExternalReferenceCode,
+			false, convertNullFunction(ObjectField::getExternalReferenceCode),
 			ObjectField::getCompanyId, ObjectField::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C_ODI, _SQL_SELECT_OBJECTFIELD_WHERE,
+			"",
 			new FinderColumn<>(
 				"objectField.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ObjectField::getExternalReferenceCode),
 			new FinderColumn<>(
 				"objectField.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ObjectField::getCompanyId),
+				true, ObjectField::getCompanyId),
 			new FinderColumn<>(
 				"objectField.", "objectDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, ObjectField::getObjectDefinitionId));
@@ -3429,14 +3431,14 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByODI_DBT_I,
 				_finderPathCountByODI_DBT_I, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "objectDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectField.", "dbType", FinderColumn.Type.STRING, "=",
-					true, false, ObjectField::getDBType),
+					true, true, ObjectField::getDBType),
 				new FinderColumn<>(
 					"objectField.", "indexed", FinderColumn.Type.BOOLEAN, "=",
 					true, true, ObjectField::isIndexed));
@@ -3472,14 +3474,14 @@ public class ObjectFieldPersistenceImpl
 				_finderPathWithoutPaginationFindByODI_L_S,
 				_finderPathCountByODI_L_S, _SQL_SELECT_OBJECTFIELD_WHERE,
 				_SQL_COUNT_OBJECTFIELD_WHERE,
-				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectField.", "objectDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					ObjectField::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectField.", "localized", FinderColumn.Type.BOOLEAN, "=",
-					true, false, ObjectField::isLocalized),
+					true, true, ObjectField::isLocalized),
 				new FinderColumn<>(
 					"objectField.", "system", FinderColumn.Type.BOOLEAN, "=",
 					true, true, ObjectField::isSystem));
@@ -3553,4 +3555,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1688652029
+// LIFERAY-SERVICE-BUILDER-HASH:967358882

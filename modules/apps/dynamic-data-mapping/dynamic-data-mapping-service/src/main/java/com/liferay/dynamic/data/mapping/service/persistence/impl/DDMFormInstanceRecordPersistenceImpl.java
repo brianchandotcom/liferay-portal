@@ -1512,6 +1512,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 			DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, DDMFormInstanceRecord::getUuid));
@@ -1520,14 +1521,15 @@ public class DDMFormInstanceRecordPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			DDMFormInstanceRecord::getUuid, DDMFormInstanceRecord::getGroupId);
+			convertNullFunction(DDMFormInstanceRecord::getUuid),
+			DDMFormInstanceRecord::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
+			_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE, "",
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, DDMFormInstanceRecord::getUuid),
+				true, true, DDMFormInstanceRecord::getUuid),
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, DDMFormInstanceRecord::getGroupId));
@@ -1559,10 +1561,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 				DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceRecord.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, DDMFormInstanceRecord::getUuid),
+					"=", true, true, DDMFormInstanceRecord::getUuid),
 				new FinderColumn<>(
 					"ddmFormInstanceRecord.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1594,7 +1596,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 				DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceRecord.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1626,7 +1628,7 @@ public class DDMFormInstanceRecordPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 				DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceRecord.", "formInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1657,9 +1659,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 			DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, DDMFormInstanceRecord::getUserId),
+				true, true, DDMFormInstanceRecord::getUserId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "formInstanceId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1690,9 +1693,10 @@ public class DDMFormInstanceRecordPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCERECORD_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCERECORD_WHERE,
 			DDMFormInstanceRecordModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "formInstanceId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceRecord::getFormInstanceId),
 			new FinderColumn<>(
 				"ddmFormInstanceRecord.", "formInstanceVersion",
@@ -1771,4 +1775,4 @@ public class DDMFormInstanceRecordPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505483647
+// LIFERAY-SERVICE-BUILDER-HASH:570960806

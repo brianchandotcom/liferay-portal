@@ -1981,7 +1981,7 @@ public class CTEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CTENTRY_WHERE, _SQL_COUNT_CTENTRY_WHERE,
-			CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				CTEntry::getUuid));
@@ -2011,10 +2011,10 @@ public class CTEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_CTENTRY_WHERE,
 				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, CTEntry::getUuid),
+					true, CTEntry::getUuid),
 				new FinderColumn<>(
 					"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getCompanyId));
@@ -2042,7 +2042,7 @@ public class CTEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_CTENTRY_WHERE,
 				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, CTEntry::getUserId));
@@ -2071,7 +2071,7 @@ public class CTEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCtCollectionId,
 				_finderPathCountByCtCollectionId, _SQL_SELECT_CTENTRY_WHERE,
 				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTEntry::getCtCollectionId));
@@ -2101,10 +2101,10 @@ public class CTEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByC_MCNI,
 				_finderPathCountByC_MCNI, _SQL_SELECT_CTENTRY_WHERE,
 				_SQL_COUNT_CTENTRY_WHERE, CTEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=",
-					true, false, CTEntry::getCtCollectionId),
+					true, true, CTEntry::getCtCollectionId),
 				new FinderColumn<>(
 					"ctEntry.", "modelClassNameId", FinderColumn.Type.LONG, "=",
 					true, true, CTEntry::getModelClassNameId));
@@ -2119,13 +2119,13 @@ public class CTEntryPersistenceImpl
 			CTEntry::getModelClassPK);
 
 		_uniquePersistenceFinderByC_MCNI_MCPK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_MCNI_MCPK, _SQL_SELECT_CTENTRY_WHERE,
+			this, _finderPathFetchByC_MCNI_MCPK, _SQL_SELECT_CTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ctEntry.", "ctCollectionId", FinderColumn.Type.LONG, "=", true,
-				false, CTEntry::getCtCollectionId),
+				true, CTEntry::getCtCollectionId),
 			new FinderColumn<>(
 				"ctEntry.", "modelClassNameId", FinderColumn.Type.LONG, "=",
-				true, false, CTEntry::getModelClassNameId),
+				true, true, CTEntry::getModelClassNameId),
 			new FinderColumn<>(
 				"ctEntry.", "modelClassPK", FinderColumn.Type.LONG, "=", true,
 				true, CTEntry::getModelClassPK));
@@ -2152,13 +2152,14 @@ public class CTEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CTEntry::getExternalReferenceCode, CTEntry::getCompanyId);
+			convertNullFunction(CTEntry::getExternalReferenceCode),
+			CTEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_CTENTRY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_CTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ctEntry.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, CTEntry::getExternalReferenceCode),
+				"=", true, true, CTEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"ctEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CTEntry::getCompanyId));
@@ -2232,4 +2233,4 @@ public class CTEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-262877705
+// LIFERAY-SERVICE-BUILDER-HASH:512297600

@@ -551,7 +551,7 @@ public class LikeFinderEntryPersistenceImpl
 			},
 			new String[] {"ownerId", "ownerType", "portletId"}, false,
 			LikeFinderEntry::getOwnerId, LikeFinderEntry::getOwnerType,
-			LikeFinderEntry::getPortletId);
+			convertNullFunction(LikeFinderEntry::getPortletId));
 
 		_uniquePersistenceFinderByO_O_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByO_O_P, _SQL_SELECT_LIKEFINDERENTRY_WHERE,
@@ -671,4 +671,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-10880837
+// LIFERAY-SERVICE-BUILDER-HASH:1612910979

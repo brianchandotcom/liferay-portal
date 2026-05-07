@@ -2850,7 +2850,7 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2883,10 +2883,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceMLForecastAlertEntry::getUuid),
 				new FinderColumn<>(
 					"commerceMLForecastAlertEntry.", "companyId",
@@ -2905,14 +2905,14 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_T,
-			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceMLForecastAlertEntry::getCompanyId),
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "commerceAccountId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceMLForecastAlertEntry::getCommerceAccountId),
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "timestamp",
@@ -3078,4 +3078,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1315503609
+// LIFERAY-SERVICE-BUILDER-HASH:1986182207

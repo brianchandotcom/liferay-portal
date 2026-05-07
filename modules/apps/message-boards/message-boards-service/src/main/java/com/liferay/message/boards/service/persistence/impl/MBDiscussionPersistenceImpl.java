@@ -1009,7 +1009,7 @@ public class MBDiscussionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_MBDISCUSSION_WHERE, _SQL_COUNT_MBDISCUSSION_WHERE,
-			MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, MBDiscussion::getUuid));
@@ -1017,14 +1017,15 @@ public class MBDiscussionPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, MBDiscussion::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(MBDiscussion::getUuid),
 			MBDiscussion::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBDISCUSSION_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBDISCUSSION_WHERE, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, MBDiscussion::getUuid),
+				true, MBDiscussion::getUuid),
 			new FinderColumn<>(
 				"mbDiscussion.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getGroupId));
@@ -1054,10 +1055,10 @@ public class MBDiscussionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_MBDISCUSSION_WHERE,
 				_SQL_COUNT_MBDISCUSSION_WHERE,
-				MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				MBDiscussionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbDiscussion.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, MBDiscussion::getUuid),
+					true, true, MBDiscussion::getUuid),
 				new FinderColumn<>(
 					"mbDiscussion.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, MBDiscussion::getCompanyId));
@@ -1069,6 +1070,7 @@ public class MBDiscussionPersistenceImpl
 
 		_uniquePersistenceFinderByThreadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByThreadId, _SQL_SELECT_MBDISCUSSION_WHERE,
+			"",
 			new FinderColumn<>(
 				"mbDiscussion.", "threadId", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getThreadId));
@@ -1080,10 +1082,10 @@ public class MBDiscussionPersistenceImpl
 			MBDiscussion::getClassNameId, MBDiscussion::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_MBDISCUSSION_WHERE,
+			this, _finderPathFetchByC_C, _SQL_SELECT_MBDISCUSSION_WHERE, "",
 			new FinderColumn<>(
 				"mbDiscussion.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, MBDiscussion::getClassNameId),
+				true, true, MBDiscussion::getClassNameId),
 			new FinderColumn<>(
 				"mbDiscussion.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, MBDiscussion::getClassPK));
@@ -1160,4 +1162,4 @@ public class MBDiscussionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:172148629
+// LIFERAY-SERVICE-BUILDER-HASH:-1024614122

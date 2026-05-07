@@ -4966,7 +4966,7 @@ public class CountryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"country.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Country::getUuid));
@@ -4996,10 +4996,10 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Country::getUuid),
+					true, Country::getUuid),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -5028,7 +5028,7 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
@@ -5057,7 +5057,7 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByActive,
 				_finderPathCountByActive, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
@@ -5066,13 +5066,13 @@ public class CountryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "a2"}, false, Country::getCompanyId,
-			Country::getA2);
+			convertNullFunction(Country::getA2));
 
 		_uniquePersistenceFinderByC_A2 = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_A2, _SQL_SELECT_COUNTRY_WHERE,
+			this, _finderPathFetchByC_A2, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "a2", FinderColumn.Type.STRING, "=", true, true,
 				Country::getA2));
@@ -5081,13 +5081,13 @@ public class CountryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "a3"}, false, Country::getCompanyId,
-			Country::getA3);
+			convertNullFunction(Country::getA3));
 
 		_uniquePersistenceFinderByC_A3 = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_A3, _SQL_SELECT_COUNTRY_WHERE,
+			this, _finderPathFetchByC_A3, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "a3", FinderColumn.Type.STRING, "=", true, true,
 				Country::getA3));
@@ -5117,10 +5117,10 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByC_Active,
 				_finderPathCountByC_Active, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, Country::getCompanyId),
+					true, Country::getCompanyId),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
@@ -5129,13 +5129,13 @@ public class CountryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Name",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false, Country::getCompanyId,
-			Country::getName);
+			convertNullFunction(Country::getName));
 
 		_uniquePersistenceFinderByC_Name = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_Name, _SQL_SELECT_COUNTRY_WHERE,
+			this, _finderPathFetchByC_Name, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "name", FinderColumn.Type.STRING, "=", true, true,
 				Country::getName));
@@ -5144,13 +5144,13 @@ public class CountryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "number_"}, false, Country::getCompanyId,
-			Country::getNumber);
+			convertNullFunction(Country::getNumber));
 
 		_uniquePersistenceFinderByC_Number = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_Number, _SQL_SELECT_COUNTRY_WHERE,
+			this, _finderPathFetchByC_Number, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "number", FinderColumn.Type.STRING, "=", true, true,
 				Country::getNumber));
@@ -5184,13 +5184,13 @@ public class CountryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_A_B,
 			_finderPathWithoutPaginationFindByC_A_B, _finderPathCountByC_A_B,
 			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				false, Country::isActive),
+				true, Country::isActive),
 			new FinderColumn<>(
 				"country.", "billingAllowed", FinderColumn.Type.BOOLEAN, "=",
 				true, true, Country::isBillingAllowed));
@@ -5224,13 +5224,13 @@ public class CountryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_A_S,
 			_finderPathWithoutPaginationFindByC_A_S, _finderPathCountByC_A_S,
 			_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, Country::getCompanyId),
+				true, Country::getCompanyId),
 			new FinderColumn<>(
 				"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-				false, Country::isActive),
+				true, Country::isActive),
 			new FinderColumn<>(
 				"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN, "=",
 				true, true, Country::isShippingAllowed));
@@ -5276,16 +5276,16 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByC_A_B_G,
 				_finderPathCountByC_A_B_G, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
-					false, Country::getCountryId),
+					true, Country::getCountryId),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					false, Country::isActive),
+					true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
-					"=", true, false, Country::isBillingAllowed),
+					"=", true, true, Country::isBillingAllowed),
 				new FinderColumn<>(
 					"country.", "groupFilterEnabled", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isGroupFilterEnabled));
@@ -5331,16 +5331,16 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByC_A_G_S,
 				_finderPathCountByC_A_G_S, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
-					false, Country::getCountryId),
+					true, Country::getCountryId),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					false, Country::isActive),
+					true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "groupFilterEnabled", FinderColumn.Type.BOOLEAN,
-					"=", true, false, Country::isGroupFilterEnabled),
+					"=", true, true, Country::isGroupFilterEnabled),
 				new FinderColumn<>(
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
@@ -5391,19 +5391,19 @@ public class CountryPersistenceImpl
 				_finderPathWithoutPaginationFindByC_A_B_G_S,
 				_finderPathCountByC_A_B_G_S, _SQL_SELECT_COUNTRY_WHERE,
 				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"country.", "countryId", FinderColumn.Type.LONG, "=", true,
-					false, Country::getCountryId),
+					true, Country::getCountryId),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
-					false, Country::isActive),
+					true, Country::isActive),
 				new FinderColumn<>(
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
-					"=", true, false, Country::isBillingAllowed),
+					"=", true, true, Country::isBillingAllowed),
 				new FinderColumn<>(
 					"country.", "groupFilterEnabled", FinderColumn.Type.BOOLEAN,
-					"=", true, false, Country::isGroupFilterEnabled),
+					"=", true, true, Country::isGroupFilterEnabled),
 				new FinderColumn<>(
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
@@ -5470,4 +5470,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-147260370
+// LIFERAY-SERVICE-BUILDER-HASH:-1579141576

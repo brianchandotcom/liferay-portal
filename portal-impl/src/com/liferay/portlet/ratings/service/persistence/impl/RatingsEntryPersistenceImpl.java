@@ -1711,7 +1711,7 @@ public class RatingsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ratingsEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, RatingsEntry::getUuid));
@@ -1741,10 +1741,10 @@ public class RatingsEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_RATINGSENTRY_WHERE,
 				_SQL_COUNT_RATINGSENTRY_WHERE,
-				RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ratingsEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, RatingsEntry::getUuid),
+					true, true, RatingsEntry::getUuid),
 				new FinderColumn<>(
 					"ratingsEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, RatingsEntry::getCompanyId));
@@ -1772,10 +1772,10 @@ public class RatingsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ratingsEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, RatingsEntry::getClassNameId),
+				true, true, RatingsEntry::getClassNameId),
 			new FinderColumn<>(
 				"ratingsEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, RatingsEntry::getClassPK));
@@ -1848,13 +1848,13 @@ public class RatingsEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_S,
 			_finderPathWithoutPaginationFindByC_C_S, _finderPathCountByC_C_S,
 			_SQL_SELECT_RATINGSENTRY_WHERE, _SQL_COUNT_RATINGSENTRY_WHERE,
-			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			RatingsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ratingsEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, RatingsEntry::getClassNameId),
+				true, true, RatingsEntry::getClassNameId),
 			new FinderColumn<>(
 				"ratingsEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
-				false, RatingsEntry::getClassPK),
+				true, RatingsEntry::getClassPK),
 			new FinderColumn<>(
 				"ratingsEntry.", "score", FinderColumn.Type.DOUBLE, "=", true,
 				true, RatingsEntry::getScore));
@@ -1895,4 +1895,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:847523096
+// LIFERAY-SERVICE-BUILDER-HASH:276303397

@@ -2501,7 +2501,7 @@ public class CommerceCatalogPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCECATALOG_WHERE, _SQL_COUNT_COMMERCECATALOG_WHERE,
-			CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CommerceCatalog::getUuid));
@@ -2532,9 +2532,10 @@ public class CommerceCatalogPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCECATALOG_WHERE,
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CommerceCatalog::getUuid),
+					true, true, CommerceCatalog::getUuid),
 				new FinderColumn<>(
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId));
@@ -2564,6 +2565,7 @@ public class CommerceCatalogPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_COMMERCECATALOG_WHERE,
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId));
@@ -2594,6 +2596,7 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_SELECT_COMMERCECATALOG_WHERE,
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceCatalog.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2622,10 +2625,10 @@ public class CommerceCatalogPersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_COMMERCECATALOG_WHERE, _SQL_COUNT_COMMERCECATALOG_WHERE,
-			CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceCatalog.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, CommerceCatalog::getCompanyId),
+				true, true, CommerceCatalog::getCompanyId),
 			new FinderColumn<>(
 				"commerceCatalog.", "system", FinderColumn.Type.BOOLEAN, "=",
 				true, true, CommerceCatalog::isSystem));
@@ -2634,14 +2637,15 @@ public class CommerceCatalogPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceCatalog::getExternalReferenceCode,
+			convertNullFunction(CommerceCatalog::getExternalReferenceCode),
 			CommerceCatalog::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECATALOG_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceCatalog.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceCatalog::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceCatalog.", "companyId", FinderColumn.Type.LONG, "=",
@@ -2742,4 +2746,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-161722890
+// LIFERAY-SERVICE-BUILDER-HASH:-460417396

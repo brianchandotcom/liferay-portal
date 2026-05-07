@@ -938,7 +938,7 @@ public class ObjectViewColumnPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTVIEWCOLUMN_WHERE,
 			_SQL_COUNT_OBJECTVIEWCOLUMN_WHERE,
-			ObjectViewColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectViewColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectViewColumn.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectViewColumn::getUuid));
@@ -969,9 +969,10 @@ public class ObjectViewColumnPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTVIEWCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWCOLUMN_WHERE,
 				ObjectViewColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectViewColumn.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ObjectViewColumn::getUuid),
+					true, true, ObjectViewColumn::getUuid),
 				new FinderColumn<>(
 					"objectViewColumn.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectViewColumn::getCompanyId));
@@ -1002,6 +1003,7 @@ public class ObjectViewColumnPersistenceImpl
 				_SQL_SELECT_OBJECTVIEWCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWCOLUMN_WHERE,
 				ObjectViewColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectViewColumn.", "objectViewId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectViewColumn::getObjectViewId));
@@ -1032,9 +1034,10 @@ public class ObjectViewColumnPersistenceImpl
 				_finderPathCountByOVI_OFN, _SQL_SELECT_OBJECTVIEWCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWCOLUMN_WHERE,
 				ObjectViewColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectViewColumn.", "objectViewId", FinderColumn.Type.LONG,
-					"=", true, false, ObjectViewColumn::getObjectViewId),
+					"=", true, true, ObjectViewColumn::getObjectViewId),
 				new FinderColumn<>(
 					"objectViewColumn.", "objectFieldName",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1109,4 +1112,4 @@ public class ObjectViewColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1134418344
+// LIFERAY-SERVICE-BUILDER-HASH:662245678

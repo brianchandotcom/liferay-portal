@@ -988,7 +988,7 @@ public class SocialActivityLimitPersistenceImpl
 				_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 				SocialActivityLimitModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialActivityLimit.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivityLimit::getGroupId));
@@ -1017,7 +1017,7 @@ public class SocialActivityLimitPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 				SocialActivityLimitModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"socialActivityLimit.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivityLimit::getUserId));
@@ -1047,9 +1047,10 @@ public class SocialActivityLimitPersistenceImpl
 			_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYLIMIT_WHERE,
 			SocialActivityLimitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"socialActivityLimit.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityLimit::getClassNameId),
+				"=", true, true, SocialActivityLimit::getClassNameId),
 			new FinderColumn<>(
 				"socialActivityLimit.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, SocialActivityLimit::getClassPK));
@@ -1069,26 +1070,26 @@ public class SocialActivityLimitPersistenceImpl
 			SocialActivityLimit::getUserId, SocialActivityLimit::getClassNameId,
 			SocialActivityLimit::getClassPK,
 			SocialActivityLimit::getActivityType,
-			SocialActivityLimit::getActivityCounterName);
+			convertNullFunction(SocialActivityLimit::getActivityCounterName));
 
 		_uniquePersistenceFinderByG_U_C_C_A_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_U_C_C_A_A,
-			_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE,
+			_SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE, "",
 			new FinderColumn<>(
 				"socialActivityLimit.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivityLimit::getGroupId),
+				true, true, SocialActivityLimit::getGroupId),
 			new FinderColumn<>(
 				"socialActivityLimit.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivityLimit::getUserId),
+				true, true, SocialActivityLimit::getUserId),
 			new FinderColumn<>(
 				"socialActivityLimit.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, SocialActivityLimit::getClassNameId),
+				"=", true, true, SocialActivityLimit::getClassNameId),
 			new FinderColumn<>(
 				"socialActivityLimit.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, SocialActivityLimit::getClassPK),
+				true, true, SocialActivityLimit::getClassPK),
 			new FinderColumn<>(
 				"socialActivityLimit.", "activityType",
-				FinderColumn.Type.INTEGER, "=", true, false,
+				FinderColumn.Type.INTEGER, "=", true, true,
 				SocialActivityLimit::getActivityType),
 			new FinderColumn<>(
 				"socialActivityLimit.", "activityCounterName",
@@ -1128,4 +1129,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2069176703
+// LIFERAY-SERVICE-BUILDER-HASH:-1966181044

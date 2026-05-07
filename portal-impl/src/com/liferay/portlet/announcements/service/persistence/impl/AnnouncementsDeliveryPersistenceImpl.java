@@ -777,7 +777,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"announcementsDelivery.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -808,7 +808,7 @@ public class AnnouncementsDeliveryPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSDELIVERY_WHERE,
 				AnnouncementsDeliveryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"announcementsDelivery.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsDelivery::getUserId));
@@ -817,14 +817,15 @@ public class AnnouncementsDeliveryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"userId", "type_"}, false,
-			AnnouncementsDelivery::getUserId, AnnouncementsDelivery::getType);
+			AnnouncementsDelivery::getUserId,
+			convertNullFunction(AnnouncementsDelivery::getType));
 
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_T,
-			_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE,
+			_SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE, "",
 			new FinderColumn<>(
 				"announcementsDelivery.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, AnnouncementsDelivery::getUserId),
+				true, true, AnnouncementsDelivery::getUserId),
 			new FinderColumn<>(
 				"announcementsDelivery.", "type", FinderColumn.Type.STRING, "=",
 				true, true, AnnouncementsDelivery::getType));
@@ -865,4 +866,4 @@ public class AnnouncementsDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:331416204
+// LIFERAY-SERVICE-BUILDER-HASH:2027542458

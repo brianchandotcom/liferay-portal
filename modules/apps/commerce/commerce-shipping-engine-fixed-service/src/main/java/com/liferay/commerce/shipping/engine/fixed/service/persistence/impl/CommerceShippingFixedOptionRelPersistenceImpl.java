@@ -869,7 +869,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 				CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShippingFixedOptionRel.",
 					"commerceShippingFixedOptionId", FinderColumn.Type.LONG,
@@ -908,7 +908,7 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 				CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShippingFixedOptionRel.",
 					"commerceShippingMethodId", FinderColumn.Type.LONG, "=",
@@ -950,11 +950,11 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 			_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE,
 			CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceShippingFixedOptionRel.",
 				"commerceShippingFixedOptionId", FinderColumn.Type.LONG, "=",
-				true, false,
+				true, true,
 				CommerceShippingFixedOptionRel::
 					getCommerceShippingFixedOptionId),
 			new FinderColumn<>(
@@ -1034,4 +1034,4 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1953682442
+// LIFERAY-SERVICE-BUILDER-HASH:615197965

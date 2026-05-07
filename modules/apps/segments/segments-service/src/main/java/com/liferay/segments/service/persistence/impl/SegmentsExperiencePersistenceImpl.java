@@ -7183,7 +7183,7 @@ public class SegmentsExperiencePersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 			_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
-			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"segmentsExperience.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, SegmentsExperience::getUuid));
@@ -7192,14 +7192,15 @@ public class SegmentsExperiencePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			SegmentsExperience::getUuid, SegmentsExperience::getGroupId);
+			convertNullFunction(SegmentsExperience::getUuid),
+			SegmentsExperience::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
+			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE, "",
 			new FinderColumn<>(
 				"segmentsExperience.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, SegmentsExperience::getUuid),
+				true, true, SegmentsExperience::getUuid),
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, SegmentsExperience::getGroupId));
@@ -7230,9 +7231,10 @@ public class SegmentsExperiencePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, SegmentsExperience::getUuid),
+					"=", true, true, SegmentsExperience::getUuid),
 				new FinderColumn<>(
 					"segmentsExperience.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, SegmentsExperience::getCompanyId));
@@ -7262,6 +7264,7 @@ public class SegmentsExperiencePersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SegmentsExperience::getGroupId));
@@ -7290,10 +7293,10 @@ public class SegmentsExperiencePersistenceImpl
 			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 			_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
-			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getGroupId),
+				true, true, SegmentsExperience::getGroupId),
 			new FinderColumn<>(
 				"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, SegmentsExperience::getPlid));
@@ -7349,9 +7352,10 @@ public class SegmentsExperiencePersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperience::getSegmentsEntryERC),
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryScopeERC",
@@ -7400,12 +7404,13 @@ public class SegmentsExperiencePersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsExperience::getGroupId),
+					"=", true, true, SegmentsExperience::getGroupId),
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperience::getSegmentsEntryERC),
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryScopeERC",
@@ -7420,18 +7425,18 @@ public class SegmentsExperiencePersistenceImpl
 			},
 			new String[] {"groupId", "segmentsExperienceKey", "plid"}, false,
 			SegmentsExperience::getGroupId,
-			SegmentsExperience::getSegmentsExperienceKey,
+			convertNullFunction(SegmentsExperience::getSegmentsExperienceKey),
 			SegmentsExperience::getPlid);
 
 		_uniquePersistenceFinderByG_SEK_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_SEK_P,
-			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
+			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE, "",
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getGroupId),
+				true, true, SegmentsExperience::getGroupId),
 			new FinderColumn<>(
 				"segmentsExperience.", "segmentsExperienceKey",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SegmentsExperience::getSegmentsExperienceKey),
 			new FinderColumn<>(
 				"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
@@ -7449,12 +7454,13 @@ public class SegmentsExperiencePersistenceImpl
 
 		_uniquePersistenceFinderByG_P_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_P, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
+			"",
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getGroupId),
+				true, true, SegmentsExperience::getGroupId),
 			new FinderColumn<>(
 				"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getPlid),
+				true, true, SegmentsExperience::getPlid),
 			new FinderColumn<>(
 				"segmentsExperience.", "priority", FinderColumn.Type.INTEGER,
 				"=", true, true, SegmentsExperience::getPriority));
@@ -7483,12 +7489,13 @@ public class SegmentsExperiencePersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsExperience::getGroupId),
+					"=", true, true, SegmentsExperience::getGroupId),
 				new FinderColumn<>(
 					"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
-					true, false, SegmentsExperience::getPlid),
+					true, true, SegmentsExperience::getPlid),
 				new FinderColumn<>(
 					"segmentsExperience.", "priority",
 					FinderColumn.Type.INTEGER, ">", true, true,
@@ -7518,12 +7525,13 @@ public class SegmentsExperiencePersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsExperience::getGroupId),
+					"=", true, true, SegmentsExperience::getGroupId),
 				new FinderColumn<>(
 					"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
-					true, false, SegmentsExperience::getPlid),
+					true, true, SegmentsExperience::getPlid),
 				new FinderColumn<>(
 					"segmentsExperience.", "priority",
 					FinderColumn.Type.INTEGER, "<", true, true,
@@ -7559,13 +7567,13 @@ public class SegmentsExperiencePersistenceImpl
 			_finderPathWithoutPaginationFindByG_P_A, _finderPathCountByG_P_A,
 			_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 			_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
-			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getGroupId),
+				true, true, SegmentsExperience::getGroupId),
 			new FinderColumn<>(
 				"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
-				true, false, SegmentsExperience::getPlid),
+				true, true, SegmentsExperience::getPlid),
 			new FinderColumn<>(
 				"segmentsExperience.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, SegmentsExperience::isActive));
@@ -7614,16 +7622,17 @@ public class SegmentsExperiencePersistenceImpl
 				_SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
 				_SQL_COUNT_SEGMENTSEXPERIENCE_WHERE,
 				SegmentsExperienceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"segmentsExperience.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, SegmentsExperience::getGroupId),
+					"=", true, true, SegmentsExperience::getGroupId),
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperience::getSegmentsEntryERC),
 				new FinderColumn<>(
 					"segmentsExperience.", "segmentsEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					SegmentsExperience::getSegmentsEntryScopeERC),
 				new FinderColumn<>(
 					"segmentsExperience.", "plid", FinderColumn.Type.LONG, "=",
@@ -7688,14 +7697,15 @@ public class SegmentsExperiencePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			SegmentsExperience::getExternalReferenceCode,
+			convertNullFunction(SegmentsExperience::getExternalReferenceCode),
 			SegmentsExperience::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_SEGMENTSEXPERIENCE_WHERE,
+			"",
 			new FinderColumn<>(
 				"segmentsExperience.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				SegmentsExperience::getExternalReferenceCode),
 			new FinderColumn<>(
 				"segmentsExperience.", "groupId", FinderColumn.Type.LONG, "=",
@@ -7796,4 +7806,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1491575911
+// LIFERAY-SERVICE-BUILDER-HASH:-766725450

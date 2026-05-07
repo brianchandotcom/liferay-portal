@@ -729,6 +729,7 @@ public class NotificationRecipientPersistenceImpl
 			_SQL_SELECT_NOTIFICATIONRECIPIENT_WHERE,
 			_SQL_COUNT_NOTIFICATIONRECIPIENT_WHERE,
 			NotificationRecipientModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"notificationRecipient.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, NotificationRecipient::getUuid));
@@ -760,10 +761,10 @@ public class NotificationRecipientPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONRECIPIENT_WHERE,
 				_SQL_COUNT_NOTIFICATIONRECIPIENT_WHERE,
 				NotificationRecipientModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationRecipient.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, NotificationRecipient::getUuid),
+					"=", true, true, NotificationRecipient::getUuid),
 				new FinderColumn<>(
 					"notificationRecipient.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -776,7 +777,7 @@ public class NotificationRecipientPersistenceImpl
 
 		_uniquePersistenceFinderByClassPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassPK,
-			_SQL_SELECT_NOTIFICATIONRECIPIENT_WHERE,
+			_SQL_SELECT_NOTIFICATIONRECIPIENT_WHERE, "",
 			new FinderColumn<>(
 				"notificationRecipient.", "classPK", FinderColumn.Type.LONG,
 				"=", true, true, NotificationRecipient::getClassPK));
@@ -850,4 +851,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-281560801
+// LIFERAY-SERVICE-BUILDER-HASH:1319520371

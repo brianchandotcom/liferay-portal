@@ -1078,6 +1078,7 @@ public class BigDecimalEntryPersistenceImpl
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"bigDecimalEntry.", "bigDecimalValue",
 					FinderColumn.Type.BIG_DECIMAL, "=", true, true,
@@ -1103,6 +1104,7 @@ public class BigDecimalEntryPersistenceImpl
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"bigDecimalEntry.", "bigDecimalValue",
 					FinderColumn.Type.BIG_DECIMAL, ">", true, true,
@@ -1128,6 +1130,7 @@ public class BigDecimalEntryPersistenceImpl
 				_SQL_SELECT_BIGDECIMALENTRY_WHERE,
 				_SQL_COUNT_BIGDECIMALENTRY_WHERE,
 				BigDecimalEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"bigDecimalEntry.", "bigDecimalValue",
 					FinderColumn.Type.BIG_DECIMAL, "<", true, true,
@@ -1182,4 +1185,4 @@ public class BigDecimalEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1106155441
+// LIFERAY-SERVICE-BUILDER-HASH:-2004921037

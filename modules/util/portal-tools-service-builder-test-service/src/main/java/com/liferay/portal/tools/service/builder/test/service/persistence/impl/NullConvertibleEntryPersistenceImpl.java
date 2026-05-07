@@ -325,11 +325,11 @@ public class NullConvertibleEntryPersistenceImpl
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			NullConvertibleEntry::getName);
+			convertNullFunction(NullConvertibleEntry::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
-			_SQL_SELECT_NULLCONVERTIBLEENTRY_WHERE,
+			_SQL_SELECT_NULLCONVERTIBLEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"nullConvertibleEntry.", "name", FinderColumn.Type.STRING, "=",
 				true, true, NullConvertibleEntry::getName));
@@ -364,4 +364,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:716135265
+// LIFERAY-SERVICE-BUILDER-HASH:989148525

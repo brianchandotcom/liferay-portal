@@ -1036,7 +1036,7 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "commercePriceModifierId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1069,10 +1069,10 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "commercePriceModifierId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceModifierRel::getCommercePriceModifierId),
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "classNameId",
@@ -1106,10 +1106,10 @@ public class CommercePriceModifierRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICEMODIFIERREL_WHERE,
 				CommercePriceModifierRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePriceModifierRel::getClassNameId),
 				new FinderColumn<>(
 					"commercePriceModifierRel.", "classPK",
@@ -1128,14 +1128,14 @@ public class CommercePriceModifierRelPersistenceImpl
 
 		_uniquePersistenceFinderByCPM_CN_CPK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCPM_CN_CPK,
-			_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE,
+			_SQL_SELECT_COMMERCEPRICEMODIFIERREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceModifierRel.", "commercePriceModifierId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePriceModifierRel::getCommercePriceModifierId),
 			new FinderColumn<>(
 				"commercePriceModifierRel.", "classNameId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommercePriceModifierRel::getClassNameId),
 			new FinderColumn<>(
 				"commercePriceModifierRel.", "classPK", FinderColumn.Type.LONG,
@@ -1210,4 +1210,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:272337407
+// LIFERAY-SERVICE-BUILDER-HASH:-255434192

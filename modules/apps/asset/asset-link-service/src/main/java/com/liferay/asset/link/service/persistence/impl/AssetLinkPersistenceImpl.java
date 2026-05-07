@@ -1283,7 +1283,7 @@ public class AssetLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByEntryId1,
 				_finderPathCountByEntryId1, _SQL_SELECT_ASSETLINK_WHERE,
 				_SQL_COUNT_ASSETLINK_WHERE, AssetLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId1));
@@ -1312,7 +1312,7 @@ public class AssetLinkPersistenceImpl
 				_finderPathWithoutPaginationFindByEntryId2,
 				_finderPathCountByEntryId2, _SQL_SELECT_ASSETLINK_WHERE,
 				_SQL_COUNT_ASSETLINK_WHERE, AssetLinkModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 					true, AssetLink::getEntryId2));
@@ -1340,10 +1340,10 @@ public class AssetLinkPersistenceImpl
 			this, _finderPathWithPaginationFindByE_E,
 			_finderPathWithoutPaginationFindByE_E, _finderPathCountByE_E,
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
-				false, AssetLink::getEntryId1),
+				true, AssetLink::getEntryId1),
 			new FinderColumn<>(
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
 				true, AssetLink::getEntryId2));
@@ -1371,10 +1371,10 @@ public class AssetLinkPersistenceImpl
 			this, _finderPathWithPaginationFindByE1_T,
 			_finderPathWithoutPaginationFindByE1_T, _finderPathCountByE1_T,
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
-				false, AssetLink::getEntryId1),
+				true, AssetLink::getEntryId1),
 			new FinderColumn<>(
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
@@ -1402,10 +1402,10 @@ public class AssetLinkPersistenceImpl
 			this, _finderPathWithPaginationFindByE2_T,
 			_finderPathWithoutPaginationFindByE2_T, _finderPathCountByE2_T,
 			_SQL_SELECT_ASSETLINK_WHERE, _SQL_COUNT_ASSETLINK_WHERE,
-			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AssetLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
-				false, AssetLink::getEntryId2),
+				true, AssetLink::getEntryId2),
 			new FinderColumn<>(
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
@@ -1420,13 +1420,13 @@ public class AssetLinkPersistenceImpl
 			AssetLink::getEntryId1, AssetLink::getEntryId2, AssetLink::getType);
 
 		_uniquePersistenceFinderByE_E_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByE_E_T, _SQL_SELECT_ASSETLINK_WHERE,
+			this, _finderPathFetchByE_E_T, _SQL_SELECT_ASSETLINK_WHERE, "",
 			new FinderColumn<>(
 				"assetLink.", "entryId1", FinderColumn.Type.LONG, "=", true,
-				false, AssetLink::getEntryId1),
+				true, AssetLink::getEntryId1),
 			new FinderColumn<>(
 				"assetLink.", "entryId2", FinderColumn.Type.LONG, "=", true,
-				false, AssetLink::getEntryId2),
+				true, AssetLink::getEntryId2),
 			new FinderColumn<>(
 				"assetLink.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, AssetLink::getType));
@@ -1503,4 +1503,4 @@ public class AssetLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1947735586
+// LIFERAY-SERVICE-BUILDER-HASH:251975200

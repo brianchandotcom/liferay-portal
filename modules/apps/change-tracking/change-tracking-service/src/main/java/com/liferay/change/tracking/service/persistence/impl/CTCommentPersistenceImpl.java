@@ -584,7 +584,7 @@ public class CTCommentPersistenceImpl
 				_finderPathWithoutPaginationFindByCtCollectionId,
 				_finderPathCountByCtCollectionId, _SQL_SELECT_CTCOMMENT_WHERE,
 				_SQL_COUNT_CTCOMMENT_WHERE, CTCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctComment.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtCollectionId));
@@ -613,7 +613,7 @@ public class CTCommentPersistenceImpl
 				_finderPathWithoutPaginationFindByCtEntryId,
 				_finderPathCountByCtEntryId, _SQL_SELECT_CTCOMMENT_WHERE,
 				_SQL_COUNT_CTCOMMENT_WHERE, CTCommentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctComment.", "ctEntryId", FinderColumn.Type.LONG, "=",
 					true, true, CTComment::getCtEntryId));
@@ -684,4 +684,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1338852424
+// LIFERAY-SERVICE-BUILDER-HASH:-2041672132

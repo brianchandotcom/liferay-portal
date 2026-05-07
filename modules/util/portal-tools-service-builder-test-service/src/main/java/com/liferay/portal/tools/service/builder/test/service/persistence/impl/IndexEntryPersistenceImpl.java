@@ -2162,7 +2162,7 @@ public class IndexEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByOwnerId,
 				_finderPathCountByOwnerId, _SQL_SELECT_INDEXENTRY_WHERE,
 				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
 					true, IndexEntry::getOwnerId));
@@ -2187,7 +2187,7 @@ public class IndexEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByPlid,
 			_finderPathWithoutPaginationFindByPlid, _finderPathCountByPlid,
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid));
@@ -2216,7 +2216,7 @@ public class IndexEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByPortletId,
 				_finderPathCountByPortletId, _SQL_SELECT_INDEXENTRY_WHERE,
 				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, IndexEntry::getPortletId));
@@ -2244,10 +2244,10 @@ public class IndexEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByO_P,
 			_finderPathWithoutPaginationFindByO_P, _finderPathCountByO_P,
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-				true, false, IndexEntry::getOwnerType),
+				true, true, IndexEntry::getOwnerType),
 			new FinderColumn<>(
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
 				true, IndexEntry::getPortletId));
@@ -2275,9 +2275,9 @@ public class IndexEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByP_P,
 			_finderPathWithoutPaginationFindByP_P, _finderPathCountByP_P,
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, false,
+				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid),
 			new FinderColumn<>(
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
@@ -2312,13 +2312,13 @@ public class IndexEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByO_O_P,
 			_finderPathWithoutPaginationFindByO_O_P, _finderPathCountByO_O_P,
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
-				false, IndexEntry::getOwnerId),
+				true, IndexEntry::getOwnerId),
 			new FinderColumn<>(
 				"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-				true, false, IndexEntry::getOwnerType),
+				true, true, IndexEntry::getOwnerType),
 			new FinderColumn<>(
 				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid));
@@ -2354,13 +2354,13 @@ public class IndexEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByO_O_PI,
 				_finderPathCountByO_O_PI, _SQL_SELECT_INDEXENTRY_WHERE,
 				_SQL_COUNT_INDEXENTRY_WHERE, IndexEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
-					false, IndexEntry::getOwnerId),
+					true, IndexEntry::getOwnerId),
 				new FinderColumn<>(
 					"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-					true, false, IndexEntry::getOwnerType),
+					true, true, IndexEntry::getOwnerType),
 				new FinderColumn<>(
 					"indexEntry.", "portletId", FinderColumn.Type.STRING, "=",
 					true, true, IndexEntry::getPortletId));
@@ -2394,12 +2394,12 @@ public class IndexEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByO_P_P,
 			_finderPathWithoutPaginationFindByO_P_P, _finderPathCountByO_P_P,
 			_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-				true, false, IndexEntry::getOwnerType),
+				true, true, IndexEntry::getOwnerType),
 			new FinderColumn<>(
-				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, false,
+				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid),
 			new FinderColumn<>(
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
@@ -2430,16 +2430,16 @@ public class IndexEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByC_O_O_LikeP, null,
 				_finderPathWithPaginationCountByC_O_O_LikeP,
 				_SQL_SELECT_INDEXENTRY_WHERE, _SQL_COUNT_INDEXENTRY_WHERE,
-				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				IndexEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"indexEntry.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, IndexEntry::getCompanyId),
+					true, true, IndexEntry::getCompanyId),
 				new FinderColumn<>(
 					"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
-					false, IndexEntry::getOwnerId),
+					true, IndexEntry::getOwnerId),
 				new FinderColumn<>(
 					"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-					true, false, IndexEntry::getOwnerType),
+					true, true, IndexEntry::getOwnerType),
 				new FinderColumn<>(
 					"indexEntry.", "portletId", FinderColumn.Type.STRING,
 					"LIKE", true, true, IndexEntry::getPortletId));
@@ -2452,18 +2452,18 @@ public class IndexEntryPersistenceImpl
 			},
 			new String[] {"ownerId", "ownerType", "plid", "portletId"}, false,
 			IndexEntry::getOwnerId, IndexEntry::getOwnerType,
-			IndexEntry::getPlid, IndexEntry::getPortletId);
+			IndexEntry::getPlid, convertNullFunction(IndexEntry::getPortletId));
 
 		_uniquePersistenceFinderByO_O_P_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByO_O_P_P, _SQL_SELECT_INDEXENTRY_WHERE,
+			this, _finderPathFetchByO_O_P_P, _SQL_SELECT_INDEXENTRY_WHERE, "",
 			new FinderColumn<>(
 				"indexEntry.", "ownerId", FinderColumn.Type.LONG, "=", true,
-				false, IndexEntry::getOwnerId),
+				true, IndexEntry::getOwnerId),
 			new FinderColumn<>(
 				"indexEntry.", "ownerType", FinderColumn.Type.INTEGER, "=",
-				true, false, IndexEntry::getOwnerType),
+				true, true, IndexEntry::getOwnerType),
 			new FinderColumn<>(
-				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, false,
+				"indexEntry.", "plid", FinderColumn.Type.LONG, "=", true, true,
 				IndexEntry::getPlid),
 			new FinderColumn<>(
 				"indexEntry.", "portletId", FinderColumn.Type.STRING, "=", true,
@@ -2473,13 +2473,14 @@ public class IndexEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			IndexEntry::getExternalReferenceCode, IndexEntry::getCompanyId);
+			convertNullFunction(IndexEntry::getExternalReferenceCode),
+			IndexEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_INDEXENTRY_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_INDEXENTRY_WHERE, "",
 			new FinderColumn<>(
 				"indexEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				IndexEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"indexEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -2527,4 +2528,4 @@ public class IndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:464212999
+// LIFERAY-SERVICE-BUILDER-HASH:384497914

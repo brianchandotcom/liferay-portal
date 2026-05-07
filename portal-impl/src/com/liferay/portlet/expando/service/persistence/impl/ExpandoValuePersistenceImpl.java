@@ -1884,7 +1884,7 @@ public class ExpandoValuePersistenceImpl
 				_finderPathWithoutPaginationFindByTableId,
 				_finderPathCountByTableId, _SQL_SELECT_EXPANDOVALUE_WHERE,
 				_SQL_COUNT_EXPANDOVALUE_WHERE,
-				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getTableId));
@@ -1913,7 +1913,7 @@ public class ExpandoValuePersistenceImpl
 				_finderPathWithoutPaginationFindByColumnId,
 				_finderPathCountByColumnId, _SQL_SELECT_EXPANDOVALUE_WHERE,
 				_SQL_COUNT_EXPANDOVALUE_WHERE,
-				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "columnId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getColumnId));
@@ -1939,7 +1939,7 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByRowId,
 			_finderPathWithoutPaginationFindByRowId, _finderPathCountByRowId,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
@@ -1967,10 +1967,10 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByT_C,
 			_finderPathWithoutPaginationFindByT_C, _finderPathCountByT_C,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getTableId),
+				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId));
@@ -1998,10 +1998,10 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByT_R,
 			_finderPathWithoutPaginationFindByT_R, _finderPathCountByT_R,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getTableId),
+				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
@@ -2029,10 +2029,10 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByT_CPK,
 			_finderPathWithoutPaginationFindByT_CPK, _finderPathCountByT_CPK,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getTableId),
+				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
@@ -2044,10 +2044,10 @@ public class ExpandoValuePersistenceImpl
 			ExpandoValue::getColumnId, ExpandoValue::getRowId);
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R, _SQL_SELECT_EXPANDOVALUE_WHERE,
+			this, _finderPathFetchByC_R, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getColumnId),
+				true, ExpandoValue::getColumnId),
 			new FinderColumn<>(
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
@@ -2075,10 +2075,10 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, ExpandoValue::getClassNameId),
+				true, true, ExpandoValue::getClassNameId),
 			new FinderColumn<>(
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
@@ -2093,13 +2093,13 @@ public class ExpandoValuePersistenceImpl
 			ExpandoValue::getClassPK);
 
 		_uniquePersistenceFinderByT_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_C_C, _SQL_SELECT_EXPANDOVALUE_WHERE,
+			this, _finderPathFetchByT_C_C, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getTableId),
+				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getColumnId),
+				true, ExpandoValue::getColumnId),
 			new FinderColumn<>(
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
@@ -2133,13 +2133,13 @@ public class ExpandoValuePersistenceImpl
 			this, _finderPathWithPaginationFindByT_C_D,
 			_finderPathWithoutPaginationFindByT_C_D, _finderPathCountByT_C_D,
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
-			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getTableId),
+				true, ExpandoValue::getTableId),
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
-				false, ExpandoValue::getColumnId),
+				true, ExpandoValue::getColumnId),
 			new FinderColumn<>(
 				"expandoValue.", "data", FinderColumn.Type.STRING, "=", true,
 				true, ExpandoValue::getData));
@@ -2180,4 +2180,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:494354990
+// LIFERAY-SERVICE-BUILDER-HASH:-1713705016

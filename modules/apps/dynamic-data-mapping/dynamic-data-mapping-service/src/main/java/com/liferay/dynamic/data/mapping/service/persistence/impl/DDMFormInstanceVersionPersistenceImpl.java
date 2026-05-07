@@ -838,7 +838,7 @@ public class DDMFormInstanceVersionPersistenceImpl
 				_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 				DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmFormInstanceVersion.", "formInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -849,14 +849,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"formInstanceId", "version"}, false,
 			DDMFormInstanceVersion::getFormInstanceId,
-			DDMFormInstanceVersion::getVersion);
+			convertNullFunction(DDMFormInstanceVersion::getVersion));
 
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_V,
-			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
+			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "formInstanceId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceVersion::getFormInstanceId),
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "version", FinderColumn.Type.STRING,
@@ -887,9 +887,10 @@ public class DDMFormInstanceVersionPersistenceImpl
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 			DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "formInstanceId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DDMFormInstanceVersion::getFormInstanceId),
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "status", FinderColumn.Type.INTEGER,
@@ -967,4 +968,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-576116160
+// LIFERAY-SERVICE-BUILDER-HASH:56309201

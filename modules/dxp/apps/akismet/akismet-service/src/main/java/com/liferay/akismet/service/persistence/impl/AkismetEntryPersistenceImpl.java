@@ -532,7 +532,7 @@ public class AkismetEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByLtModifiedDate, null,
 				_finderPathWithPaginationCountByLtModifiedDate,
 				_SQL_SELECT_AKISMETENTRY_WHERE, _SQL_COUNT_AKISMETENTRY_WHERE,
-				AkismetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AkismetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"akismetEntry.", "modifiedDate", FinderColumn.Type.DATE,
 					"<", true, true, AkismetEntry::getModifiedDate));
@@ -544,10 +544,10 @@ public class AkismetEntryPersistenceImpl
 			AkismetEntry::getClassNameId, AkismetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_AKISMETENTRY_WHERE,
+			this, _finderPathFetchByC_C, _SQL_SELECT_AKISMETENTRY_WHERE, "",
 			new FinderColumn<>(
 				"akismetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, AkismetEntry::getClassNameId),
+				true, true, AkismetEntry::getClassNameId),
 			new FinderColumn<>(
 				"akismetEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, AkismetEntry::getClassPK));
@@ -621,4 +621,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1815054842
+// LIFERAY-SERVICE-BUILDER-HASH:1486756159

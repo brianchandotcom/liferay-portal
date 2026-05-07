@@ -786,10 +786,10 @@ public class MemberRequestPersistenceImpl
 		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
 			new String[] {String.class.getName()}, new String[] {"key_"}, false,
-			MemberRequest::getKey);
+			convertNullFunction(MemberRequest::getKey));
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_MEMBERREQUEST_WHERE,
+			this, _finderPathFetchByKey, _SQL_SELECT_MEMBERREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"memberRequest.", "key", FinderColumn.Type.STRING, "=", true,
 				true, MemberRequest::getKey));
@@ -818,7 +818,7 @@ public class MemberRequestPersistenceImpl
 				_finderPathWithoutPaginationFindByReceiverUserId,
 				_finderPathCountByReceiverUserId,
 				_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
-				MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"memberRequest.", "receiverUserId", FinderColumn.Type.LONG,
 					"=", true, true, MemberRequest::getReceiverUserId));
@@ -846,10 +846,10 @@ public class MemberRequestPersistenceImpl
 			this, _finderPathWithPaginationFindByR_S,
 			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
 			_SQL_SELECT_MEMBERREQUEST_WHERE, _SQL_COUNT_MEMBERREQUEST_WHERE,
-			MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MemberRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"memberRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
-				true, false, MemberRequest::getReceiverUserId),
+				true, true, MemberRequest::getReceiverUserId),
 			new FinderColumn<>(
 				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, MemberRequest::getStatus));
@@ -865,13 +865,13 @@ public class MemberRequestPersistenceImpl
 			MemberRequest::getStatus);
 
 		_uniquePersistenceFinderByG_R_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_R_S, _SQL_SELECT_MEMBERREQUEST_WHERE,
+			this, _finderPathFetchByG_R_S, _SQL_SELECT_MEMBERREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"memberRequest.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, MemberRequest::getGroupId),
+				true, MemberRequest::getGroupId),
 			new FinderColumn<>(
 				"memberRequest.", "receiverUserId", FinderColumn.Type.LONG, "=",
-				true, false, MemberRequest::getReceiverUserId),
+				true, true, MemberRequest::getReceiverUserId),
 			new FinderColumn<>(
 				"memberRequest.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, MemberRequest::getStatus));
@@ -945,4 +945,4 @@ public class MemberRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1499930784
+// LIFERAY-SERVICE-BUILDER-HASH:-1520849632

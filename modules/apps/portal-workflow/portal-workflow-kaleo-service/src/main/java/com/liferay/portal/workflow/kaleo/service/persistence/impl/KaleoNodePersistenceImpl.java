@@ -892,7 +892,7 @@ public class KaleoNodePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_KALEONODE_WHERE,
 				_SQL_COUNT_KALEONODE_WHERE, KaleoNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNode.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KaleoNode::getCompanyId));
@@ -926,7 +926,7 @@ public class KaleoNodePersistenceImpl
 				_finderPathWithoutPaginationFindByKaleoDefinitionVersionId,
 				_finderPathCountByKaleoDefinitionVersionId,
 				_SQL_SELECT_KALEONODE_WHERE, _SQL_COUNT_KALEONODE_WHERE,
-				KaleoNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				KaleoNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNode.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -957,10 +957,10 @@ public class KaleoNodePersistenceImpl
 				_finderPathWithoutPaginationFindByC_KDVI,
 				_finderPathCountByC_KDVI, _SQL_SELECT_KALEONODE_WHERE,
 				_SQL_COUNT_KALEONODE_WHERE, KaleoNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoNode.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, KaleoNode::getCompanyId),
+					true, true, KaleoNode::getCompanyId),
 				new FinderColumn<>(
 					"kaleoNode.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1038,4 +1038,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1679161440
+// LIFERAY-SERVICE-BUILDER-HASH:-1913370967

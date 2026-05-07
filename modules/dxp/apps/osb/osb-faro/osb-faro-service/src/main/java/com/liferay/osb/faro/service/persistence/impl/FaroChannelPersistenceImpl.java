@@ -812,7 +812,7 @@ public class FaroChannelPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_FAROCHANNEL_WHERE,
 				_SQL_COUNT_FAROCHANNEL_WHERE,
-				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroChannel.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, FaroChannel::getGroupId));
@@ -841,7 +841,7 @@ public class FaroChannelPersistenceImpl
 				_finderPathWithoutPaginationFindByWorkspaceGroupId,
 				_finderPathCountByWorkspaceGroupId,
 				_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
-				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroChannel.", "workspaceGroupId", FinderColumn.Type.LONG,
 					"=", true, true, FaroChannel::getWorkspaceGroupId));
@@ -869,10 +869,10 @@ public class FaroChannelPersistenceImpl
 			this, _finderPathWithPaginationFindByG_U,
 			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
 			_SQL_SELECT_FAROCHANNEL_WHERE, _SQL_COUNT_FAROCHANNEL_WHERE,
-			FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FaroChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"faroChannel.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, FaroChannel::getGroupId),
+				true, FaroChannel::getGroupId),
 			new FinderColumn<>(
 				"faroChannel.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, FaroChannel::getUserId));
@@ -881,13 +881,14 @@ public class FaroChannelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_W",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"channelId", "workspaceGroupId"}, false,
-			FaroChannel::getChannelId, FaroChannel::getWorkspaceGroupId);
+			convertNullFunction(FaroChannel::getChannelId),
+			FaroChannel::getWorkspaceGroupId);
 
 		_uniquePersistenceFinderByC_W = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_W, _SQL_SELECT_FAROCHANNEL_WHERE,
+			this, _finderPathFetchByC_W, _SQL_SELECT_FAROCHANNEL_WHERE, "",
 			new FinderColumn<>(
 				"faroChannel.", "channelId", FinderColumn.Type.STRING, "=",
-				true, false, FaroChannel::getChannelId),
+				true, true, FaroChannel::getChannelId),
 			new FinderColumn<>(
 				"faroChannel.", "workspaceGroupId", FinderColumn.Type.LONG, "=",
 				true, true, FaroChannel::getWorkspaceGroupId));
@@ -958,4 +959,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-833682425
+// LIFERAY-SERVICE-BUILDER-HASH:-496194662

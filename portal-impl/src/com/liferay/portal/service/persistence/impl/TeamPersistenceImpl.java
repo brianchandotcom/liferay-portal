@@ -2074,7 +2074,7 @@ public class TeamPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
-			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Team::getUuid));
@@ -2082,13 +2082,13 @@ public class TeamPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, Team::getUuid,
-			Team::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(Team::getUuid), Team::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_TEAM_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_TEAM_WHERE, "",
 			new FinderColumn<>(
-				"team.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Team::getUuid),
 			new FinderColumn<>(
 				"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -2119,9 +2119,9 @@ public class TeamPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_TEAM_WHERE,
 				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"team.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+					"team.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					Team::getUuid),
 				new FinderColumn<>(
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -2151,7 +2151,7 @@ public class TeamPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_TEAM_WHERE,
 				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"team.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Team::getCompanyId));
@@ -2180,7 +2180,7 @@ public class TeamPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_TEAM_WHERE,
 				_SQL_COUNT_TEAM_WHERE, TeamModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 					Team::getGroupId));
@@ -2189,12 +2189,12 @@ public class TeamPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false, Team::getGroupId,
-			Team::getName);
+			convertNullFunction(Team::getName));
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N, _SQL_SELECT_TEAM_WHERE,
+			this, _finderPathFetchByG_N, _SQL_SELECT_TEAM_WHERE, "",
 			new FinderColumn<>(
-				"team.", "groupId", FinderColumn.Type.LONG, "=", true, false,
+				"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Team::getGroupId),
 			new FinderColumn<>(
 				"team.", "name", FinderColumn.Type.STRING, "=", true, true,
@@ -2273,4 +2273,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:76664826
+// LIFERAY-SERVICE-BUILDER-HASH:138198719

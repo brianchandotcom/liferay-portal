@@ -367,10 +367,11 @@ public class PatcherFixComponentPersistenceImpl
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			PatcherFixComponent::getName);
+			convertNullFunction(PatcherFixComponent::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName, _SQL_SELECT_PATCHERFIXCOMPONENT_WHERE,
+			"",
 			new FinderColumn<>(
 				"patcherFixComponent.", "name", FinderColumn.Type.STRING, "=",
 				true, true, PatcherFixComponent::getName));
@@ -438,4 +439,4 @@ public class PatcherFixComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2061297823
+// LIFERAY-SERVICE-BUILDER-HASH:609668669

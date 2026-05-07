@@ -444,7 +444,7 @@ public class ContactsCardTemplatePersistenceImpl
 				_SQL_SELECT_CONTACTSCARDTEMPLATE_WHERE,
 				_SQL_COUNT_CONTACTSCARDTEMPLATE_WHERE,
 				ContactsCardTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"contactsCardTemplate.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ContactsCardTemplate::getGroupId));
@@ -518,4 +518,4 @@ public class ContactsCardTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1020822466
+// LIFERAY-SERVICE-BUILDER-HASH:-1766925764

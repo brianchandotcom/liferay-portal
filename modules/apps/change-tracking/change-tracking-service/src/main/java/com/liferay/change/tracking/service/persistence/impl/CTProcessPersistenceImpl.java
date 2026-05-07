@@ -1356,7 +1356,7 @@ public class CTProcessPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTPROCESS_WHERE,
 				_SQL_COUNT_CTPROCESS_WHERE, CTProcessModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctProcess.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCompanyId));
@@ -1385,7 +1385,7 @@ public class CTProcessPersistenceImpl
 				_finderPathWithoutPaginationFindByCtCollectionId,
 				_finderPathCountByCtCollectionId, _SQL_SELECT_CTPROCESS_WHERE,
 				_SQL_COUNT_CTPROCESS_WHERE, CTProcessModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
 					true, true, CTProcess::getCtCollectionId));
@@ -1413,10 +1413,10 @@ public class CTProcessPersistenceImpl
 			this, _finderPathWithPaginationFindByC_T,
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_CTPROCESS_WHERE, _SQL_COUNT_CTPROCESS_WHERE,
-			CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CTProcessModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ctProcess.", "ctCollectionId", FinderColumn.Type.LONG, "=",
-				true, false, CTProcess::getCtCollectionId),
+				true, true, CTProcess::getCtCollectionId),
 			new FinderColumn<>(
 				"ctProcess.", "type", FinderColumn.Type.INTEGER, "=", true,
 				true, CTProcess::getType));
@@ -1513,4 +1513,4 @@ public class CTProcessPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-350399541
+// LIFERAY-SERVICE-BUILDER-HASH:-554528518

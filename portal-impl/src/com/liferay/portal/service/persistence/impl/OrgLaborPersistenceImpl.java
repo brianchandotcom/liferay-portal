@@ -404,7 +404,7 @@ public class OrgLaborPersistenceImpl
 				_finderPathWithoutPaginationFindByOrganizationId,
 				_finderPathCountByOrganizationId, _SQL_SELECT_ORGLABOR_WHERE,
 				_SQL_COUNT_ORGLABOR_WHERE, OrgLaborModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"orgLabor.", "organizationId", FinderColumn.Type.LONG, "=",
 					true, true, OrgLabor::getOrganizationId));
@@ -442,4 +442,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-85303373
+// LIFERAY-SERVICE-BUILDER-HASH:-286044363

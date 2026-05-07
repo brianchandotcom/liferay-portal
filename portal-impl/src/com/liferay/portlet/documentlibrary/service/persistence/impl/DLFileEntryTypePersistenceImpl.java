@@ -2712,7 +2712,7 @@ public class DLFileEntryTypePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFILEENTRYTYPE_WHERE, _SQL_COUNT_DLFILEENTRYTYPE_WHERE,
-			DLFileEntryTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntryType.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntryType::getUuid));
@@ -2720,14 +2720,16 @@ public class DLFileEntryTypePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DLFileEntryType::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DLFileEntryType::getUuid),
 			DLFileEntryType::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileEntryType.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DLFileEntryType::getUuid),
+				true, DLFileEntryType::getUuid),
 			new FinderColumn<>(
 				"dlFileEntryType.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, DLFileEntryType::getGroupId));
@@ -2758,9 +2760,10 @@ public class DLFileEntryTypePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
 				_SQL_COUNT_DLFILEENTRYTYPE_WHERE,
 				DLFileEntryTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dlFileEntryType.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, DLFileEntryType::getUuid),
+					true, true, DLFileEntryType::getUuid),
 				new FinderColumn<>(
 					"dlFileEntryType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntryType::getCompanyId));
@@ -2813,6 +2816,7 @@ public class DLFileEntryTypePersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
 				_SQL_COUNT_DLFILEENTRYTYPE_WHERE,
 				DLFileEntryTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"dlFileEntryType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntryType::getCompanyId));
@@ -2825,9 +2829,10 @@ public class DLFileEntryTypePersistenceImpl
 
 		_uniquePersistenceFinderByG_DDI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_DDI, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileEntryType.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, DLFileEntryType::getGroupId),
+				true, true, DLFileEntryType::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntryType.", "dataDefinitionId", FinderColumn.Type.LONG,
 				"=", true, true, DLFileEntryType::getDataDefinitionId));
@@ -2836,13 +2841,14 @@ public class DLFileEntryTypePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "fileEntryTypeKey"}, false,
-			DLFileEntryType::getGroupId, DLFileEntryType::getFileEntryTypeKey);
+			DLFileEntryType::getGroupId,
+			convertNullFunction(DLFileEntryType::getFileEntryTypeKey));
 
 		_uniquePersistenceFinderByG_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
+			this, _finderPathFetchByG_F, _SQL_SELECT_DLFILEENTRYTYPE_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntryType.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, DLFileEntryType::getGroupId),
+				true, true, DLFileEntryType::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntryType.", "fileEntryTypeKey",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2852,14 +2858,15 @@ public class DLFileEntryTypePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			DLFileEntryType::getExternalReferenceCode,
+			convertNullFunction(DLFileEntryType::getExternalReferenceCode),
 			DLFileEntryType::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILEENTRYTYPE_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileEntryType.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DLFileEntryType::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dlFileEntryType.", "groupId", FinderColumn.Type.LONG, "=",
@@ -2933,4 +2940,4 @@ public class DLFileEntryTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1063311095
+// LIFERAY-SERVICE-BUILDER-HASH:1746182549

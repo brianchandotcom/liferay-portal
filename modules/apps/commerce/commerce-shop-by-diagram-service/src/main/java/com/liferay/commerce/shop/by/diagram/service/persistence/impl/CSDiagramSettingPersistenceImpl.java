@@ -826,7 +826,7 @@ public class CSDiagramSettingPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 			_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
-			CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"csDiagramSetting.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CSDiagramSetting::getUuid));
@@ -857,9 +857,10 @@ public class CSDiagramSettingPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_CSDIAGRAMSETTING_WHERE,
 				_SQL_COUNT_CSDIAGRAMSETTING_WHERE,
 				CSDiagramSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"csDiagramSetting.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CSDiagramSetting::getUuid),
+					true, true, CSDiagramSetting::getUuid),
 				new FinderColumn<>(
 					"csDiagramSetting.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CSDiagramSetting::getCompanyId));
@@ -873,7 +874,7 @@ public class CSDiagramSettingPersistenceImpl
 		_uniquePersistenceFinderByCPDefinitionId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCPDefinitionId,
-				_SQL_SELECT_CSDIAGRAMSETTING_WHERE,
+				_SQL_SELECT_CSDIAGRAMSETTING_WHERE, "",
 				new FinderColumn<>(
 					"csDiagramSetting.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -951,4 +952,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-852410712
+// LIFERAY-SERVICE-BUILDER-HASH:221295714

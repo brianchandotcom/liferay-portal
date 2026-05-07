@@ -3123,7 +3123,7 @@ public class LVEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
-			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LVEntry::getUuid));
@@ -3153,10 +3153,10 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_Head,
 				_finderPathCountByUuid_Head, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, LVEntry::getUuid),
+					true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 					true, LVEntry::isHead));
@@ -3186,10 +3186,10 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, LVEntry::getUuid),
+					true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getGroupId));
@@ -3200,16 +3200,17 @@ public class LVEntryPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "head"}, false, LVEntry::getUuid,
-			LVEntry::getGroupId, LVEntry::isHead);
+			new String[] {"uuid_", "groupId", "head"}, false,
+			convertNullFunction(LVEntry::getUuid), LVEntry::getGroupId,
+			LVEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G_Head, _SQL_SELECT_LVENTRY_WHERE,
+			this, _finderPathFetchByUUID_G_Head, _SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
-				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				LVEntry::getUuid),
 			new FinderColumn<>(
-				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, false,
+				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getGroupId),
 			new FinderColumn<>(
 				"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -3240,10 +3241,10 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, LVEntry::getUuid),
+					true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, LVEntry::getCompanyId));
@@ -3279,13 +3280,13 @@ public class LVEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C_Head,
 				_finderPathCountByUuid_C_Head, _SQL_SELECT_LVENTRY_WHERE,
 				_SQL_COUNT_LVENTRY_WHERE, LVEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, LVEntry::getUuid),
+					true, LVEntry::getUuid),
 				new FinderColumn<>(
 					"lvEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, LVEntry::getCompanyId),
+					true, LVEntry::getCompanyId),
 				new FinderColumn<>(
 					"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 					true, LVEntry::isHead));
@@ -3360,9 +3361,9 @@ public class LVEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_UGK,
 			_finderPathWithoutPaginationFindByG_UGK, _finderPathCountByG_UGK,
 			_SQL_SELECT_LVENTRY_WHERE, _SQL_COUNT_LVENTRY_WHERE,
-			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LVEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, false,
+				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getGroupId),
 			new FinderColumn<>(
 				"lvEntry.", "uniqueGroupKey", FinderColumn.Type.STRING, "=",
@@ -3375,16 +3376,17 @@ public class LVEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "uniqueGroupKey", "head"}, false,
-			LVEntry::getGroupId, LVEntry::getUniqueGroupKey, LVEntry::isHead);
+			LVEntry::getGroupId,
+			convertNullFunction(LVEntry::getUniqueGroupKey), LVEntry::isHead);
 
 		_uniquePersistenceFinderByG_UGK_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_UGK_Head, _SQL_SELECT_LVENTRY_WHERE,
+			this, _finderPathFetchByG_UGK_Head, _SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
-				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, false,
+				"lvEntry.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getGroupId),
 			new FinderColumn<>(
 				"lvEntry.", "uniqueGroupKey", FinderColumn.Type.STRING, "=",
-				true, false, LVEntry::getUniqueGroupKey),
+				true, true, LVEntry::getUniqueGroupKey),
 			new FinderColumn<>(
 				"lvEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true, true,
 				LVEntry::isHead));
@@ -3395,7 +3397,7 @@ public class LVEntryPersistenceImpl
 			LVEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHeadId, _SQL_SELECT_LVENTRY_WHERE,
+			this, _finderPathFetchByHeadId, _SQL_SELECT_LVENTRY_WHERE, "",
 			new FinderColumn<>(
 				"lvEntry.", "headId", FinderColumn.Type.LONG, "=", true, true,
 				LVEntry::getHeadId));
@@ -3455,4 +3457,4 @@ public class LVEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1197861044
+// LIFERAY-SERVICE-BUILDER-HASH:1363122237

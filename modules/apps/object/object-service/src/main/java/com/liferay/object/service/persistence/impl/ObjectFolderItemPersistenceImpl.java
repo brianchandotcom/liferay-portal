@@ -1028,7 +1028,7 @@ public class ObjectFolderItemPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTFOLDERITEM_WHERE,
 			_SQL_COUNT_OBJECTFOLDERITEM_WHERE,
-			ObjectFolderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectFolderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectFolderItem.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectFolderItem::getUuid));
@@ -1059,9 +1059,10 @@ public class ObjectFolderItemPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTFOLDERITEM_WHERE,
 				_SQL_COUNT_OBJECTFOLDERITEM_WHERE,
 				ObjectFolderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectFolderItem.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, ObjectFolderItem::getUuid),
+					true, true, ObjectFolderItem::getUuid),
 				new FinderColumn<>(
 					"objectFolderItem.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectFolderItem::getCompanyId));
@@ -1092,6 +1093,7 @@ public class ObjectFolderItemPersistenceImpl
 				_SQL_SELECT_OBJECTFOLDERITEM_WHERE,
 				_SQL_COUNT_OBJECTFOLDERITEM_WHERE,
 				ObjectFolderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectFolderItem.", "objectDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1123,6 +1125,7 @@ public class ObjectFolderItemPersistenceImpl
 				_SQL_SELECT_OBJECTFOLDERITEM_WHERE,
 				_SQL_COUNT_OBJECTFOLDERITEM_WHERE,
 				ObjectFolderItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"objectFolderItem.", "objectFolderId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1137,9 +1140,10 @@ public class ObjectFolderItemPersistenceImpl
 
 		_uniquePersistenceFinderByODI_OFI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByODI_OFI, _SQL_SELECT_OBJECTFOLDERITEM_WHERE,
+			"",
 			new FinderColumn<>(
 				"objectFolderItem.", "objectDefinitionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				ObjectFolderItem::getObjectDefinitionId),
 			new FinderColumn<>(
 				"objectFolderItem.", "objectFolderId", FinderColumn.Type.LONG,
@@ -1214,4 +1218,4 @@ public class ObjectFolderItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:918617411
+// LIFERAY-SERVICE-BUILDER-HASH:-1819433879

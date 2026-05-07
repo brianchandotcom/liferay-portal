@@ -1691,8 +1691,8 @@ public class ERCVersionedEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "head"}, false,
-			ERCVersionedEntry::getUuid, ERCVersionedEntry::getGroupId,
-			ERCVersionedEntry::isHead);
+			convertNullFunction(ERCVersionedEntry::getUuid),
+			ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
@@ -1823,7 +1823,7 @@ public class ERCVersionedEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"externalReferenceCode", "groupId", "head"}, false,
-			ERCVersionedEntry::getExternalReferenceCode,
+			convertNullFunction(ERCVersionedEntry::getExternalReferenceCode),
 			ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
@@ -1920,4 +1920,4 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:705622292
+// LIFERAY-SERVICE-BUILDER-HASH:742203291

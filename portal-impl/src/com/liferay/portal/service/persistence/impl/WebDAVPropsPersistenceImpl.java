@@ -359,10 +359,10 @@ public class WebDAVPropsPersistenceImpl
 			WebDAVProps::getClassNameId, WebDAVProps::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_WEBDAVPROPS_WHERE,
+			this, _finderPathFetchByC_C, _SQL_SELECT_WEBDAVPROPS_WHERE, "",
 			new FinderColumn<>(
 				"webDAVProps.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, WebDAVProps::getClassNameId),
+				true, true, WebDAVProps::getClassNameId),
 			new FinderColumn<>(
 				"webDAVProps.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, WebDAVProps::getClassPK));
@@ -397,4 +397,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-756203934
+// LIFERAY-SERVICE-BUILDER-HASH:273761813

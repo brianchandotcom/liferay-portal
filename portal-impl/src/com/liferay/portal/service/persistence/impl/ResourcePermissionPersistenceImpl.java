@@ -4519,7 +4519,7 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"resourcePermission.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getName));
@@ -4571,6 +4571,7 @@ public class ResourcePermissionPersistenceImpl
 				_finderPathCountByRoleId, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"resourcePermission.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getRoleId));
@@ -4596,9 +4597,10 @@ public class ResourcePermissionPersistenceImpl
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, ResourcePermission::getCompanyId),
+					"=", true, true, ResourcePermission::getCompanyId),
 				new FinderColumn<>(
 					"resourcePermission.", "primKey", FinderColumn.Type.STRING,
 					"LIKE", true, true, ResourcePermission::getPrimKey));
@@ -4633,13 +4635,13 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByC_N_S, _finderPathCountByC_N_S,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, ResourcePermission::getCompanyId),
+				true, true, ResourcePermission::getCompanyId),
 			new FinderColumn<>(
 				"resourcePermission.", "name", FinderColumn.Type.STRING, "=",
-				true, false, ResourcePermission::getName),
+				true, true, ResourcePermission::getName),
 			new FinderColumn<>(
 				"resourcePermission.", "scope", FinderColumn.Type.INTEGER, "=",
 				true, true, ResourcePermission::getScope));
@@ -4674,13 +4676,13 @@ public class ResourcePermissionPersistenceImpl
 			_finderPathWithoutPaginationFindByC_S_P, _finderPathCountByC_S_P,
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
-			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"resourcePermission.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, ResourcePermission::getCompanyId),
+				true, true, ResourcePermission::getCompanyId),
 			new FinderColumn<>(
 				"resourcePermission.", "scope", FinderColumn.Type.INTEGER, "=",
-				true, false, ResourcePermission::getScope),
+				true, true, ResourcePermission::getScope),
 			new FinderColumn<>(
 				"resourcePermission.", "primKey", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getPrimKey));
@@ -4752,15 +4754,16 @@ public class ResourcePermissionPersistenceImpl
 				_finderPathCountByC_N_S_R, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"resourcePermission.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, ResourcePermission::getCompanyId),
+					"=", true, true, ResourcePermission::getCompanyId),
 				new FinderColumn<>(
 					"resourcePermission.", "name", FinderColumn.Type.STRING,
-					"=", true, false, ResourcePermission::getName),
+					"=", true, true, ResourcePermission::getName),
 				new FinderColumn<>(
 					"resourcePermission.", "scope", FinderColumn.Type.INTEGER,
-					"=", true, false, ResourcePermission::getScope),
+					"=", true, true, ResourcePermission::getScope),
 				new FinderColumn<>(
 					"resourcePermission.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getRoleId));
@@ -4795,8 +4798,10 @@ public class ResourcePermissionPersistenceImpl
 			},
 			new String[] {"companyId", "name", "scope", "primKey", "roleId"},
 			false, ResourcePermission::getCompanyId,
-			ResourcePermission::getName, ResourcePermission::getScope,
-			ResourcePermission::getPrimKey, ResourcePermission::getRoleId);
+			convertNullFunction(ResourcePermission::getName),
+			ResourcePermission::getScope,
+			convertNullFunction(ResourcePermission::getPrimKey),
+			ResourcePermission::getRoleId);
 
 		_finderPathCountByC_N_S_P_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S_P_R",
@@ -4900,4 +4905,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1295104218
+// LIFERAY-SERVICE-BUILDER-HASH:1647465951

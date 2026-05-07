@@ -1202,7 +1202,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "commerceWishListId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1234,7 +1234,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "CPInstanceUuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1266,7 +1266,7 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "CProductId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1299,10 +1299,10 @@ public class CommerceWishListItemPersistenceImpl
 				_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 				_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 				CommerceWishListItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceWishListItem.", "commerceWishListId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceWishListItem::getCommerceWishListId),
 				new FinderColumn<>(
 					"commerceWishListItem.", "CPInstanceUuid",
@@ -1334,9 +1334,10 @@ public class CommerceWishListItemPersistenceImpl
 			_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
 			_SQL_COUNT_COMMERCEWISHLISTITEM_WHERE,
 			CommerceWishListItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceWishListItem.", "commerceWishListId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceWishListItem::getCommerceWishListId),
 			new FinderColumn<>(
 				"commerceWishListItem.", "CProductId", FinderColumn.Type.LONG,
@@ -1350,19 +1351,19 @@ public class CommerceWishListItemPersistenceImpl
 			},
 			new String[] {"commerceWishListId", "CPInstanceUuid", "CProductId"},
 			false, CommerceWishListItem::getCommerceWishListId,
-			CommerceWishListItem::getCPInstanceUuid,
+			convertNullFunction(CommerceWishListItem::getCPInstanceUuid),
 			CommerceWishListItem::getCProductId);
 
 		_uniquePersistenceFinderByCW_CPI_CP = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCW_CPI_CP,
-			_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE,
+			_SQL_SELECT_COMMERCEWISHLISTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceWishListItem.", "commerceWishListId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceWishListItem::getCommerceWishListId),
 			new FinderColumn<>(
 				"commerceWishListItem.", "CPInstanceUuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceWishListItem::getCPInstanceUuid),
 			new FinderColumn<>(
 				"commerceWishListItem.", "CProductId", FinderColumn.Type.LONG,
@@ -1434,4 +1435,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:654839704
+// LIFERAY-SERVICE-BUILDER-HASH:-1539216070

@@ -476,7 +476,7 @@ public class DDMFormInstanceReportPersistenceImpl
 		_uniquePersistenceFinderByFormInstanceId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByFormInstanceId,
-				_SQL_SELECT_DDMFORMINSTANCEREPORT_WHERE,
+				_SQL_SELECT_DDMFORMINSTANCEREPORT_WHERE, "",
 				new FinderColumn<>(
 					"ddmFormInstanceReport.", "formInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -551,4 +551,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1118156813
+// LIFERAY-SERVICE-BUILDER-HASH:593561500

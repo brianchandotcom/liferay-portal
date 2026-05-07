@@ -540,7 +540,8 @@ public class LazyBlobEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, LazyBlobEntry::getUuid,
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(LazyBlobEntry::getUuid),
 			LazyBlobEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
@@ -621,4 +622,4 @@ public class LazyBlobEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1107324506
+// LIFERAY-SERVICE-BUILDER-HASH:1758071239

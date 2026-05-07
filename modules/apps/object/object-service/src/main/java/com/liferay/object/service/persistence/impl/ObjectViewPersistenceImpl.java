@@ -940,7 +940,7 @@ public class ObjectViewPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-			ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectView.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectView::getUuid));
@@ -970,10 +970,10 @@ public class ObjectViewPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTVIEW_WHERE,
 				_SQL_COUNT_OBJECTVIEW_WHERE, ObjectViewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectView.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, ObjectView::getUuid),
+					true, ObjectView::getUuid),
 				new FinderColumn<>(
 					"objectView.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectView::getCompanyId));
@@ -1002,7 +1002,7 @@ public class ObjectViewPersistenceImpl
 				_finderPathWithoutPaginationFindByObjectDefinitionId,
 				_finderPathCountByObjectDefinitionId,
 				_SQL_SELECT_OBJECTVIEW_WHERE, _SQL_COUNT_OBJECTVIEW_WHERE,
-				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				ObjectViewModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectView.", "objectDefinitionId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectView::getObjectDefinitionId));
@@ -1032,10 +1032,10 @@ public class ObjectViewPersistenceImpl
 				_finderPathWithoutPaginationFindByODI_DOV,
 				_finderPathCountByODI_DOV, _SQL_SELECT_OBJECTVIEW_WHERE,
 				_SQL_COUNT_OBJECTVIEW_WHERE, ObjectViewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectView.", "objectDefinitionId", FinderColumn.Type.LONG,
-					"=", true, false, ObjectView::getObjectDefinitionId),
+					"=", true, true, ObjectView::getObjectDefinitionId),
 				new FinderColumn<>(
 					"objectView.", "defaultObjectView",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -1110,4 +1110,4 @@ public class ObjectViewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1398567938
+// LIFERAY-SERVICE-BUILDER-HASH:1015251666

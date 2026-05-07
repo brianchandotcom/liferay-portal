@@ -1286,7 +1286,7 @@ public class AnalyticsAssociationPersistenceImpl
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"analyticsAssociation.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1312,9 +1312,10 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AnalyticsAssociation::getCompanyId),
+				"=", true, true, AnalyticsAssociation::getCompanyId),
 			new FinderColumn<>(
 				"analyticsAssociation.", "modifiedDate", FinderColumn.Type.DATE,
 				"<", true, true, AnalyticsAssociation::getModifiedDate));
@@ -1344,9 +1345,10 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AnalyticsAssociation::getCompanyId),
+				"=", true, true, AnalyticsAssociation::getCompanyId),
 			new FinderColumn<>(
 				"analyticsAssociation.", "associationClassName",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1378,14 +1380,14 @@ public class AnalyticsAssociationPersistenceImpl
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"analyticsAssociation.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					AnalyticsAssociation::getCompanyId),
 				new FinderColumn<>(
 					"analyticsAssociation.", "modifiedDate",
-					FinderColumn.Type.DATE, ">", true, false,
+					FinderColumn.Type.DATE, ">", true, true,
 					AnalyticsAssociation::getModifiedDate),
 				new FinderColumn<>(
 					"analyticsAssociation.", "associationClassName",
@@ -1432,12 +1434,13 @@ public class AnalyticsAssociationPersistenceImpl
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"analyticsAssociation.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, AnalyticsAssociation::getCompanyId),
+				"=", true, true, AnalyticsAssociation::getCompanyId),
 			new FinderColumn<>(
 				"analyticsAssociation.", "associationClassName",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AnalyticsAssociation::getAssociationClassName),
 			new FinderColumn<>(
 				"analyticsAssociation.", "associationClassPK",
@@ -1513,4 +1516,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1076281348
+// LIFERAY-SERVICE-BUILDER-HASH:-1237188054

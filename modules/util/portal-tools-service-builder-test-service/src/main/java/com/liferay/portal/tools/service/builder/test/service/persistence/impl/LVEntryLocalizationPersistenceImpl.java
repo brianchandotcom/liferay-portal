@@ -601,7 +601,7 @@ public class LVEntryLocalizationPersistenceImpl
 				_SQL_SELECT_LVENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_LVENTRYLOCALIZATION_WHERE,
 				LVEntryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lvEntryLocalization.", "lvEntryId", FinderColumn.Type.LONG,
 					"=", true, true, LVEntryLocalization::getLvEntryId));
@@ -611,15 +611,15 @@ public class LVEntryLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"lvEntryId", "languageId"}, false,
 			LVEntryLocalization::getLvEntryId,
-			LVEntryLocalization::getLanguageId);
+			convertNullFunction(LVEntryLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByLvEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByLvEntryId_LanguageId,
-				_SQL_SELECT_LVENTRYLOCALIZATION_WHERE,
+				_SQL_SELECT_LVENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"lvEntryLocalization.", "lvEntryId", FinderColumn.Type.LONG,
-					"=", true, false, LVEntryLocalization::getLvEntryId),
+					"=", true, true, LVEntryLocalization::getLvEntryId),
 				new FinderColumn<>(
 					"lvEntryLocalization.", "languageId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -632,7 +632,7 @@ public class LVEntryLocalizationPersistenceImpl
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId,
-			_SQL_SELECT_LVENTRYLOCALIZATION_WHERE,
+			_SQL_SELECT_LVENTRYLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"lvEntryLocalization.", "headId", FinderColumn.Type.LONG, "=",
 				true, true, LVEntryLocalization::getHeadId));
@@ -676,4 +676,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1834119017
+// LIFERAY-SERVICE-BUILDER-HASH:-1907556516

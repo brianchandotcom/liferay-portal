@@ -1003,7 +1003,7 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				CommerceDiscountUsageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceDiscountId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1036,10 +1036,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				CommerceDiscountUsageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceAccountId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountUsageEntry::getCommerceAccountId),
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceDiscountId",
@@ -1073,10 +1073,10 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				CommerceDiscountUsageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceOrderId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountUsageEntry::getCommerceOrderId),
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceDiscountId",
@@ -1123,14 +1123,14 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTUSAGEENTRY_WHERE,
 				CommerceDiscountUsageEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceAccountId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountUsageEntry::getCommerceAccountId),
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceOrderId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceDiscountUsageEntry::getCommerceOrderId),
 				new FinderColumn<>(
 					"commerceDiscountUsageEntry.", "commerceDiscountId",
@@ -1203,4 +1203,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1364783894
+// LIFERAY-SERVICE-BUILDER-HASH:-517891700

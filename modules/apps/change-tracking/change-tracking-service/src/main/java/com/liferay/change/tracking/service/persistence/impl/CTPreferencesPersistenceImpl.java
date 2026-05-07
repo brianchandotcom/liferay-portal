@@ -666,7 +666,7 @@ public class CTPreferencesPersistenceImpl
 				_finderPathWithoutPaginationFindByCtCollectionId,
 				_finderPathCountByCtCollectionId,
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
-				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctPreferences.", "ctCollectionId", FinderColumn.Type.LONG,
 					"=", true, true, CTPreferences::getCtCollectionId));
@@ -699,7 +699,7 @@ public class CTPreferencesPersistenceImpl
 				_finderPathWithoutPaginationFindByPreviousCtCollectionId,
 				_finderPathCountByPreviousCtCollectionId,
 				_SQL_SELECT_CTPREFERENCES_WHERE, _SQL_COUNT_CTPREFERENCES_WHERE,
-				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctPreferences.", "previousCtCollectionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -712,10 +712,10 @@ public class CTPreferencesPersistenceImpl
 			CTPreferences::getCompanyId, CTPreferences::getUserId);
 
 		_uniquePersistenceFinderByC_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_U, _SQL_SELECT_CTPREFERENCES_WHERE,
+			this, _finderPathFetchByC_U, _SQL_SELECT_CTPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"ctPreferences.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, CTPreferences::getCompanyId),
+				true, true, CTPreferences::getCompanyId),
 			new FinderColumn<>(
 				"ctPreferences.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, CTPreferences::getUserId));
@@ -786,4 +786,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:893382013
+// LIFERAY-SERVICE-BUILDER-HASH:-563559136

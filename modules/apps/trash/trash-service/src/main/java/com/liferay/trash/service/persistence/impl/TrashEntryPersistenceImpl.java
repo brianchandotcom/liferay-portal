@@ -1276,7 +1276,7 @@ public class TrashEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_TRASHENTRY_WHERE,
 				_SQL_COUNT_TRASHENTRY_WHERE, TrashEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, TrashEntry::getGroupId));
@@ -1305,7 +1305,7 @@ public class TrashEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_TRASHENTRY_WHERE,
 				_SQL_COUNT_TRASHENTRY_WHERE, TrashEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"trashEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, TrashEntry::getCompanyId));
@@ -1329,10 +1329,10 @@ public class TrashEntryPersistenceImpl
 				this, _finderPathWithPaginationFindByG_LtCD, null,
 				_finderPathWithPaginationCountByG_LtCD,
 				_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, TrashEntry::getGroupId),
+					true, TrashEntry::getGroupId),
 				new FinderColumn<>(
 					"trashEntry.", "createDate", FinderColumn.Type.DATE, "<",
 					true, true, TrashEntry::getCreateDate));
@@ -1360,10 +1360,10 @@ public class TrashEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_CN,
 			_finderPathWithoutPaginationFindByG_CN, _finderPathCountByG_CN,
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"trashEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, TrashEntry::getGroupId),
+				true, TrashEntry::getGroupId),
 			new FinderColumn<>(
 				"trashEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getClassNameId));
@@ -1391,10 +1391,10 @@ public class TrashEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_CN,
 			_finderPathWithoutPaginationFindByC_CN, _finderPathCountByC_CN,
 			_SQL_SELECT_TRASHENTRY_WHERE, _SQL_COUNT_TRASHENTRY_WHERE,
-			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			TrashEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"trashEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, TrashEntry::getCompanyId),
+				true, TrashEntry::getCompanyId),
 			new FinderColumn<>(
 				"trashEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getClassNameId));
@@ -1406,10 +1406,10 @@ public class TrashEntryPersistenceImpl
 			TrashEntry::getClassNameId, TrashEntry::getClassPK);
 
 		_uniquePersistenceFinderByCN_CPK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHENTRY_WHERE,
+			this, _finderPathFetchByCN_CPK, _SQL_SELECT_TRASHENTRY_WHERE, "",
 			new FinderColumn<>(
 				"trashEntry.", "classNameId", FinderColumn.Type.LONG, "=", true,
-				false, TrashEntry::getClassNameId),
+				true, TrashEntry::getClassNameId),
 			new FinderColumn<>(
 				"trashEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, TrashEntry::getClassPK));
@@ -1483,4 +1483,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-772368684
+// LIFERAY-SERVICE-BUILDER-HASH:-383943018

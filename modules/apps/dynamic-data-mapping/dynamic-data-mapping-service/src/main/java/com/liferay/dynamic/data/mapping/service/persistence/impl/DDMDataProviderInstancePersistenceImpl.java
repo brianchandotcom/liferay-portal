@@ -2006,7 +2006,7 @@ public class DDMDataProviderInstancePersistenceImpl
 			_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE,
 			_SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE,
 			DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"ddmDataProviderInstance.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, DDMDataProviderInstance::getUuid));
@@ -2015,15 +2015,15 @@ public class DDMDataProviderInstancePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			DDMDataProviderInstance::getUuid,
+			convertNullFunction(DDMDataProviderInstance::getUuid),
 			DDMDataProviderInstance::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE,
+			_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE, "",
 			new FinderColumn<>(
 				"ddmDataProviderInstance.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, DDMDataProviderInstance::getUuid),
+				"=", true, true, DDMDataProviderInstance::getUuid),
 			new FinderColumn<>(
 				"ddmDataProviderInstance.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, DDMDataProviderInstance::getGroupId));
@@ -2055,10 +2055,10 @@ public class DDMDataProviderInstancePersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE,
 				DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmDataProviderInstance.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					DDMDataProviderInstance::getUuid),
 				new FinderColumn<>(
 					"ddmDataProviderInstance.", "companyId",
@@ -2114,7 +2114,7 @@ public class DDMDataProviderInstancePersistenceImpl
 				_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE,
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE,
 				DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmDataProviderInstance.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2220,4 +2220,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1725111395
+// LIFERAY-SERVICE-BUILDER-HASH:-199958860

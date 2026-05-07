@@ -2219,6 +2219,7 @@ public class ClientExtensionEntryPersistenceImpl
 			_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 			_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 			ClientExtensionEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ClientExtensionEntry::getUuid));
@@ -2250,10 +2251,10 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, ClientExtensionEntry::getUuid),
+					"=", true, true, ClientExtensionEntry::getUuid),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2285,7 +2286,7 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"clientExtensionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2316,9 +2317,10 @@ public class ClientExtensionEntryPersistenceImpl
 			_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
 			_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 			ClientExtensionEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"clientExtensionEntry.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, ClientExtensionEntry::getCompanyId),
+				"=", true, true, ClientExtensionEntry::getCompanyId),
 			new FinderColumn<>(
 				"clientExtensionEntry.", "type", FinderColumn.Type.STRING, "=",
 				true, true, ClientExtensionEntry::getType));
@@ -2327,15 +2329,15 @@ public class ClientExtensionEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			ClientExtensionEntry::getExternalReferenceCode,
+			convertNullFunction(ClientExtensionEntry::getExternalReferenceCode),
 			ClientExtensionEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE,
+			_SQL_SELECT_CLIENTEXTENSIONENTRY_WHERE, "",
 			new FinderColumn<>(
 				"clientExtensionEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				ClientExtensionEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"clientExtensionEntry.", "companyId", FinderColumn.Type.LONG,
@@ -2437,4 +2439,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-695609115
+// LIFERAY-SERVICE-BUILDER-HASH:-613274063

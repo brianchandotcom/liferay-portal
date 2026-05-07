@@ -6203,7 +6203,7 @@ public class FragmentEntryLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
-			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentEntryLink::getUuid));
@@ -6212,13 +6212,15 @@ public class FragmentEntryLinkPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			FragmentEntryLink::getUuid, FragmentEntryLink::getGroupId);
+			convertNullFunction(FragmentEntryLink::getUuid),
+			FragmentEntryLink::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, FragmentEntryLink::getUuid),
+				true, true, FragmentEntryLink::getUuid),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentEntryLink::getGroupId));
@@ -6249,9 +6251,10 @@ public class FragmentEntryLinkPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, FragmentEntryLink::getUuid),
+					true, true, FragmentEntryLink::getUuid),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getCompanyId));
@@ -6281,6 +6284,7 @@ public class FragmentEntryLinkPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getGroupId));
@@ -6311,6 +6315,7 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "rendererKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -6339,7 +6344,7 @@ public class FragmentEntryLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
-			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, FragmentEntryLink::getType));
@@ -6368,10 +6373,10 @@ public class FragmentEntryLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
-			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, FragmentEntryLink::getGroupId),
+				true, true, FragmentEntryLink::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntryLink::getPlid));
@@ -6427,9 +6432,10 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
@@ -6472,12 +6478,13 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "originalFragmentEntryLinkERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getOriginalFragmentEntryLinkERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=",
@@ -6525,12 +6532,13 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
@@ -6595,13 +6603,13 @@ public class FragmentEntryLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
-			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, FragmentEntryLink::getGroupId),
+				true, true, FragmentEntryLink::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, FragmentEntryLink::getClassNameId),
+				"=", true, true, FragmentEntryLink::getClassNameId),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, FragmentEntryLink::getClassPK));
@@ -6636,13 +6644,13 @@ public class FragmentEntryLinkPersistenceImpl
 			_finderPathWithoutPaginationFindByG_P_D, _finderPathCountByG_P_D,
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
-			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, FragmentEntryLink::getGroupId),
+				true, true, FragmentEntryLink::getGroupId),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=", true,
-				false, FragmentEntryLink::getPlid),
+				true, FragmentEntryLink::getPlid),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN, "=",
 				true, true, FragmentEntryLink::isDeleted));
@@ -6689,13 +6697,14 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN,
@@ -6748,16 +6757,17 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "classNameId", FinderColumn.Type.LONG,
@@ -6807,16 +6817,17 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=",
@@ -6869,16 +6880,17 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN,
@@ -6926,16 +6938,17 @@ public class FragmentEntryLinkPersistenceImpl
 				_finderPathCountByG_S_C_C, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "segmentsExperienceId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryLink::getSegmentsExperienceId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getClassNameId),
+					"=", true, true, FragmentEntryLink::getClassNameId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassPK));
@@ -7020,16 +7033,17 @@ public class FragmentEntryLinkPersistenceImpl
 				_finderPathCountByG_S_P_R, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "segmentsExperienceId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					FragmentEntryLink::getSegmentsExperienceId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=",
-					true, false, FragmentEntryLink::getPlid),
+					true, true, FragmentEntryLink::getPlid),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "rendererKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -7085,20 +7099,21 @@ public class FragmentEntryLinkPersistenceImpl
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getGroupId),
+					"=", true, true, FragmentEntryLink::getGroupId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "fragmentEntryScopeERC",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "classNameId", FinderColumn.Type.LONG,
-					"=", true, false, FragmentEntryLink::getClassNameId),
+					"=", true, true, FragmentEntryLink::getClassNameId),
 				new FinderColumn<>(
 					"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassPK));
@@ -7107,14 +7122,15 @@ public class FragmentEntryLinkPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			FragmentEntryLink::getExternalReferenceCode,
+			convertNullFunction(FragmentEntryLink::getExternalReferenceCode),
 			FragmentEntryLink::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				FragmentEntryLink::getExternalReferenceCode),
 			new FinderColumn<>(
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
@@ -7192,4 +7208,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:101115507
+// LIFERAY-SERVICE-BUILDER-HASH:-1093730901

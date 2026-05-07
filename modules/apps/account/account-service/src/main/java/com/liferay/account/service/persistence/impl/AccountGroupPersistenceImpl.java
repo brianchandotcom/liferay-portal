@@ -2568,6 +2568,8 @@ public class AccountGroupPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_LikeN;
 	private FinderPath _finderPathWithPaginationCountByC_LikeN;
+	private CollectionPersistenceFinder<AccountGroup>
+		_collectionPersistenceFinderByC_LikeN;
 
 	/**
 	 * Returns all the account groups where companyId = &#63; and name LIKE &#63;.
@@ -2646,106 +2648,9 @@ public class AccountGroupPersistenceImpl
 		OrderByComparator<AccountGroup> orderByComparator,
 		boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByC_LikeN;
-		finderArgs = new Object[] {
-			companyId, name, start, end, orderByComparator
-		};
-
-		List<AccountGroup> list = null;
-
-		if (useFinderCache) {
-			list = (List<AccountGroup>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AccountGroup accountGroup : list) {
-					if ((companyId != accountGroup.getCompanyId()) ||
-						!StringUtil.wildcardMatches(
-							accountGroup.getName(), name, '_', '%', '\\',
-							false)) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_ACCOUNTGROUP_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(AccountGroupModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(StringUtil.toLowerCase(name));
-				}
-
-				list = (List<AccountGroup>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_LikeN.find(
+			finderCache, new Object[] {companyId, name}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2770,19 +2675,9 @@ public class AccountGroupPersistenceImpl
 			return accountGroup;
 		}
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("companyId=");
-		sb.append(companyId);
-
-		sb.append(", nameLIKE");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchGroupException(sb.toString());
+		throw new NoSuchGroupException(
+			_collectionPersistenceFinderByC_LikeN.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
 	}
 
 	/**
@@ -2798,14 +2693,8 @@ public class AccountGroupPersistenceImpl
 		long companyId, String name,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		List<AccountGroup> list = findByC_LikeN(
-			companyId, name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_LikeN.fetchFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -2978,13 +2867,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public void removeByC_LikeN(long companyId, String name) {
-		for (AccountGroup accountGroup :
-				findByC_LikeN(
-					companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(accountGroup);
-		}
+		_collectionPersistenceFinderByC_LikeN.remove(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -2996,62 +2880,8 @@ public class AccountGroupPersistenceImpl
 	 */
 	@Override
 	public int countByC_LikeN(long companyId, String name) {
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = _finderPathWithPaginationCountByC_LikeN;
-
-		Object[] finderArgs = new Object[] {companyId, name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_ACCOUNTGROUP_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_LIKEN_COMPANYID_2);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_C_LIKEN_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				if (bindName) {
-					queryPos.add(StringUtil.toLowerCase(name));
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_LikeN.count(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -3940,7 +3770,7 @@ public class AccountGroupPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
-			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AccountGroup::getUuid));
@@ -3970,10 +3800,10 @@ public class AccountGroupPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_ACCOUNTGROUP_WHERE,
 				_SQL_COUNT_ACCOUNTGROUP_WHERE,
-				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountGroup.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, AccountGroup::getUuid),
+					true, true, AccountGroup::getUuid),
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId));
@@ -4025,7 +3855,7 @@ public class AccountGroupPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_ACCOUNTGROUP_WHERE,
 				_SQL_COUNT_ACCOUNTGROUP_WHERE,
-				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, AccountGroup::getCompanyId));
@@ -4053,10 +3883,10 @@ public class AccountGroupPersistenceImpl
 			this, _finderPathWithPaginationFindByC_D,
 			_finderPathWithoutPaginationFindByC_D, _finderPathCountByC_D,
 			_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
-			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountGroup.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, AccountGroup::getCompanyId),
+				true, AccountGroup::getCompanyId),
 			new FinderColumn<>(
 				"accountGroup.", "defaultAccountGroup",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -4075,6 +3905,19 @@ public class AccountGroupPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "name"}, false);
+
+		_collectionPersistenceFinderByC_LikeN =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_LikeN, null,
+				_finderPathWithPaginationCountByC_LikeN,
+				_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
+				AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"accountGroup.", "companyId", FinderColumn.Type.LONG, "=",
+					true, true, AccountGroup::getCompanyId),
+				new FinderColumn<>(
+					"accountGroup.", "name", FinderColumn.Type.STRING, "LIKE",
+					false, true, AccountGroup::getName));
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
@@ -4099,10 +3942,10 @@ public class AccountGroupPersistenceImpl
 			this, _finderPathWithPaginationFindByC_T,
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_ACCOUNTGROUP_WHERE, _SQL_COUNT_ACCOUNTGROUP_WHERE,
-			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountGroup.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, AccountGroup::getCompanyId),
+				true, AccountGroup::getCompanyId),
 			new FinderColumn<>(
 				"accountGroup.", "type", FinderColumn.Type.STRING, "=", true,
 				true, AccountGroup::getType));
@@ -4111,13 +3954,14 @@ public class AccountGroupPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			AccountGroup::getExternalReferenceCode, AccountGroup::getCompanyId);
+			convertNullFunction(AccountGroup::getExternalReferenceCode),
+			AccountGroup::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTGROUP_WHERE,
+			this, _finderPathFetchByERC_C, _SQL_SELECT_ACCOUNTGROUP_WHERE, "",
 			new FinderColumn<>(
 				"accountGroup.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AccountGroup::getExternalReferenceCode),
 			new FinderColumn<>(
 				"accountGroup.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -4215,4 +4059,4 @@ public class AccountGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-233099022
+// LIFERAY-SERVICE-BUILDER-HASH:1697098786

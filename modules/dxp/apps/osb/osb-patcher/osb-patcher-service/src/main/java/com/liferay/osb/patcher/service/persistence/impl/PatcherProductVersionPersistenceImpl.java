@@ -766,7 +766,7 @@ public class PatcherProductVersionPersistenceImpl
 				_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
 				_SQL_COUNT_PATCHERPRODUCTVERSION_WHERE,
 				PatcherProductVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"patcherProductVersion.", "fixDeliveryMethod",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -775,11 +775,11 @@ public class PatcherProductVersionPersistenceImpl
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
 			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			PatcherProductVersion::getName);
+			convertNullFunction(PatcherProductVersion::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
-			_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE,
+			_SQL_SELECT_PATCHERPRODUCTVERSION_WHERE, "",
 			new FinderColumn<>(
 				"patcherProductVersion.", "name", FinderColumn.Type.STRING, "=",
 				true, true, PatcherProductVersion::getName));
@@ -875,4 +875,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1712598537
+// LIFERAY-SERVICE-BUILDER-HASH:-942575027

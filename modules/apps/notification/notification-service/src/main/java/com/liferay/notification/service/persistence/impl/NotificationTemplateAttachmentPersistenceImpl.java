@@ -574,7 +574,7 @@ public class NotificationTemplateAttachmentPersistenceImpl
 				_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
 				_SQL_COUNT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
 				NotificationTemplateAttachmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"notificationTemplateAttachment.", "notificationTemplateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -589,10 +589,10 @@ public class NotificationTemplateAttachmentPersistenceImpl
 
 		_uniquePersistenceFinderByNTI_OFI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByNTI_OFI,
-			_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE,
+			_SQL_SELECT_NOTIFICATIONTEMPLATEATTACHMENT_WHERE, "",
 			new FinderColumn<>(
 				"notificationTemplateAttachment.", "notificationTemplateId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				NotificationTemplateAttachment::getNotificationTemplateId),
 			new FinderColumn<>(
 				"notificationTemplateAttachment.", "objectFieldId",
@@ -671,4 +671,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-124729357
+// LIFERAY-SERVICE-BUILDER-HASH:-2130671948

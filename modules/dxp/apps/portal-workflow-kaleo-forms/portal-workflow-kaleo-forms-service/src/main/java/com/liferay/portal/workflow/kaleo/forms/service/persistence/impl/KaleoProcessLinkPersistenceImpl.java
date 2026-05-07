@@ -524,6 +524,7 @@ public class KaleoProcessLinkPersistenceImpl
 				_SQL_SELECT_KALEOPROCESSLINK_WHERE,
 				_SQL_COUNT_KALEOPROCESSLINK_WHERE,
 				KaleoProcessLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"kaleoProcessLink.", "kaleoProcessId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -534,13 +535,14 @@ public class KaleoProcessLinkPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"kaleoProcessId", "workflowTaskName"}, false,
 			KaleoProcessLink::getKaleoProcessId,
-			KaleoProcessLink::getWorkflowTaskName);
+			convertNullFunction(KaleoProcessLink::getWorkflowTaskName));
 
 		_uniquePersistenceFinderByKPI_WTN = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKPI_WTN, _SQL_SELECT_KALEOPROCESSLINK_WHERE,
+			"",
 			new FinderColumn<>(
 				"kaleoProcessLink.", "kaleoProcessId", FinderColumn.Type.LONG,
-				"=", true, false, KaleoProcessLink::getKaleoProcessId),
+				"=", true, true, KaleoProcessLink::getKaleoProcessId),
 			new FinderColumn<>(
 				"kaleoProcessLink.", "workflowTaskName",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -612,4 +614,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-121607859
+// LIFERAY-SERVICE-BUILDER-HASH:-211972039

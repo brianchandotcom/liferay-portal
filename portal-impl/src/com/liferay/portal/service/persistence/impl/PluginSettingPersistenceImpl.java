@@ -530,7 +530,7 @@ public class PluginSettingPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_PLUGINSETTING_WHERE,
 				_SQL_COUNT_PLUGINSETTING_WHERE,
-				PluginSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				PluginSettingModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"pluginSetting.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PluginSetting::getCompanyId));
@@ -542,17 +542,18 @@ public class PluginSettingPersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "pluginId", "pluginType"}, false,
-			PluginSetting::getCompanyId, PluginSetting::getPluginId,
-			PluginSetting::getPluginType);
+			PluginSetting::getCompanyId,
+			convertNullFunction(PluginSetting::getPluginId),
+			convertNullFunction(PluginSetting::getPluginType));
 
 		_uniquePersistenceFinderByC_P_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_P_P, _SQL_SELECT_PLUGINSETTING_WHERE,
+			this, _finderPathFetchByC_P_P, _SQL_SELECT_PLUGINSETTING_WHERE, "",
 			new FinderColumn<>(
 				"pluginSetting.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, PluginSetting::getCompanyId),
+				true, true, PluginSetting::getCompanyId),
 			new FinderColumn<>(
 				"pluginSetting.", "pluginId", FinderColumn.Type.STRING, "=",
-				true, false, PluginSetting::getPluginId),
+				true, true, PluginSetting::getPluginId),
 			new FinderColumn<>(
 				"pluginSetting.", "pluginType", FinderColumn.Type.STRING, "=",
 				true, true, PluginSetting::getPluginType));
@@ -593,4 +594,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-920263802
+// LIFERAY-SERVICE-BUILDER-HASH:-876857145

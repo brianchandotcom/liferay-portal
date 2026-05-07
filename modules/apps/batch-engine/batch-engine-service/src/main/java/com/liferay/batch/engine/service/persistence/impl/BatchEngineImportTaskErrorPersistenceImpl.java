@@ -482,7 +482,7 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 				_SQL_SELECT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				BatchEngineImportTaskErrorModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"batchEngineImportTaskError.", "batchEngineImportTaskId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -554,4 +554,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-414956717
+// LIFERAY-SERVICE-BUILDER-HASH:-1557979307

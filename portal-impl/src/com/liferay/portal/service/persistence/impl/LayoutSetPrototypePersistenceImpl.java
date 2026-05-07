@@ -1970,7 +1970,7 @@ public class LayoutSetPrototypePersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE,
 			_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
-			LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSetPrototype.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, LayoutSetPrototype::getUuid));
@@ -2001,9 +2001,10 @@ public class LayoutSetPrototypePersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutSetPrototype.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, LayoutSetPrototype::getUuid),
+					"=", true, true, LayoutSetPrototype::getUuid),
 				new FinderColumn<>(
 					"layoutSetPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutSetPrototype::getCompanyId));
@@ -2034,6 +2035,7 @@ public class LayoutSetPrototypePersistenceImpl
 				_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE,
 				_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
 				LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"layoutSetPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutSetPrototype::getCompanyId));
@@ -2062,10 +2064,10 @@ public class LayoutSetPrototypePersistenceImpl
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE,
 			_SQL_COUNT_LAYOUTSETPROTOTYPE_WHERE,
-			LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSetPrototype.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, LayoutSetPrototype::getCompanyId),
+				true, true, LayoutSetPrototype::getCompanyId),
 			new FinderColumn<>(
 				"layoutSetPrototype.", "active", FinderColumn.Type.BOOLEAN, "=",
 				true, true, LayoutSetPrototype::isActive));
@@ -2129,4 +2131,4 @@ public class LayoutSetPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1274784148
+// LIFERAY-SERVICE-BUILDER-HASH:1115823024

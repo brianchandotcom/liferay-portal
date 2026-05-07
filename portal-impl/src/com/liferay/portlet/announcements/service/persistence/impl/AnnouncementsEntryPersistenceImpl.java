@@ -3671,7 +3671,7 @@ public class AnnouncementsEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 			_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"announcementsEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, AnnouncementsEntry::getUuid));
@@ -3702,9 +3702,10 @@ public class AnnouncementsEntryPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, AnnouncementsEntry::getUuid),
+					"=", true, true, AnnouncementsEntry::getUuid),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
@@ -3735,6 +3736,7 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
@@ -3763,6 +3765,7 @@ public class AnnouncementsEntryPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsEntry.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getUserId));
@@ -3791,10 +3794,10 @@ public class AnnouncementsEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 			_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"announcementsEntry.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, AnnouncementsEntry::getClassNameId),
+				"=", true, true, AnnouncementsEntry::getClassNameId),
 			new FinderColumn<>(
 				"announcementsEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AnnouncementsEntry::getClassPK));
@@ -3827,13 +3830,13 @@ public class AnnouncementsEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 			_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"announcementsEntry.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, AnnouncementsEntry::getCompanyId),
+				true, true, AnnouncementsEntry::getCompanyId),
 			new FinderColumn<>(
 				"announcementsEntry.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, AnnouncementsEntry::getClassNameId),
+				"=", true, true, AnnouncementsEntry::getClassNameId),
 			new FinderColumn<>(
 				"announcementsEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AnnouncementsEntry::getClassPK));
@@ -3868,13 +3871,13 @@ public class AnnouncementsEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByC_C_A, _finderPathCountByC_C_A,
 			_SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 			_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
-			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"announcementsEntry.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, AnnouncementsEntry::getClassNameId),
+				"=", true, true, AnnouncementsEntry::getClassNameId),
 			new FinderColumn<>(
 				"announcementsEntry.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, AnnouncementsEntry::getClassPK),
+				true, true, AnnouncementsEntry::getClassPK),
 			new FinderColumn<>(
 				"announcementsEntry.", "alert", FinderColumn.Type.BOOLEAN, "=",
 				true, true, AnnouncementsEntry::isAlert));
@@ -3915,16 +3918,17 @@ public class AnnouncementsEntryPersistenceImpl
 				_finderPathCountByC_C_C_A, _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
-					"=", true, false, AnnouncementsEntry::getCompanyId),
+					"=", true, true, AnnouncementsEntry::getCompanyId),
 				new FinderColumn<>(
 					"announcementsEntry.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					AnnouncementsEntry::getClassNameId),
 				new FinderColumn<>(
 					"announcementsEntry.", "classPK", FinderColumn.Type.LONG,
-					"=", true, false, AnnouncementsEntry::getClassPK),
+					"=", true, true, AnnouncementsEntry::getClassPK),
 				new FinderColumn<>(
 					"announcementsEntry.", "alert", FinderColumn.Type.BOOLEAN,
 					"=", true, true, AnnouncementsEntry::isAlert));
@@ -3988,4 +3992,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1785283434
+// LIFERAY-SERVICE-BUILDER-HASH:828029239

@@ -796,7 +796,7 @@ public class SamlSpSessionPersistenceImpl
 				_finderPathWithoutPaginationFindBySamlPeerBindingId,
 				_finderPathCountBySamlPeerBindingId,
 				_SQL_SELECT_SAMLSPSESSION_WHERE, _SQL_COUNT_SAMLSPSESSION_WHERE,
-				SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"samlSpSession.", "samlPeerBindingId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -805,10 +805,11 @@ public class SamlSpSessionPersistenceImpl
 		_finderPathFetchByJSessionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByJSessionId",
 			new String[] {String.class.getName()}, new String[] {"jSessionId"},
-			false, SamlSpSession::getJSessionId);
+			false, convertNullFunction(SamlSpSession::getJSessionId));
 
 		_uniquePersistenceFinderByJSessionId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByJSessionId, _SQL_SELECT_SAMLSPSESSION_WHERE,
+			"",
 			new FinderColumn<>(
 				"samlSpSession.", "jSessionId", FinderColumn.Type.STRING, "=",
 				true, true, SamlSpSession::getJSessionId));
@@ -817,12 +818,12 @@ public class SamlSpSessionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlSpSessionKey",
 			new String[] {String.class.getName()},
 			new String[] {"samlSpSessionKey"}, false,
-			SamlSpSession::getSamlSpSessionKey);
+			convertNullFunction(SamlSpSession::getSamlSpSessionKey));
 
 		_uniquePersistenceFinderBySamlSpSessionKey =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchBySamlSpSessionKey,
-				_SQL_SELECT_SAMLSPSESSION_WHERE,
+				_SQL_SELECT_SAMLSPSESSION_WHERE, "",
 				new FinderColumn<>(
 					"samlSpSession.", "samlSpSessionKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -851,10 +852,10 @@ public class SamlSpSessionPersistenceImpl
 			this, _finderPathWithPaginationFindByC_SI,
 			_finderPathWithoutPaginationFindByC_SI, _finderPathCountByC_SI,
 			_SQL_SELECT_SAMLSPSESSION_WHERE, _SQL_COUNT_SAMLSPSESSION_WHERE,
-			SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SamlSpSessionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"samlSpSession.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, SamlSpSession::getCompanyId),
+				true, true, SamlSpSession::getCompanyId),
 			new FinderColumn<>(
 				"samlSpSession.", "sessionIndex", FinderColumn.Type.STRING, "=",
 				true, true, SamlSpSession::getSessionIndex));
@@ -928,4 +929,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1453445546
+// LIFERAY-SERVICE-BUILDER-HASH:-1954576257

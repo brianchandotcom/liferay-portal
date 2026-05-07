@@ -3692,7 +3692,7 @@ public class FragmentCollectionPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 			_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
-			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentCollection::getUuid));
@@ -3701,14 +3701,15 @@ public class FragmentCollectionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			FragmentCollection::getUuid, FragmentCollection::getGroupId);
+			convertNullFunction(FragmentCollection::getUuid),
+			FragmentCollection::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
+			_SQL_SELECT_FRAGMENTCOLLECTION_WHERE, "",
 			new FinderColumn<>(
 				"fragmentCollection.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, FragmentCollection::getUuid),
+				true, true, FragmentCollection::getUuid),
 			new FinderColumn<>(
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentCollection::getGroupId));
@@ -3739,9 +3740,10 @@ public class FragmentCollectionPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
 				_SQL_COUNT_FRAGMENTCOLLECTION_WHERE,
 				FragmentCollectionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"fragmentCollection.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, FragmentCollection::getUuid),
+					"=", true, true, FragmentCollection::getUuid),
 				new FinderColumn<>(
 					"fragmentCollection.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentCollection::getCompanyId));
@@ -3774,13 +3776,14 @@ public class FragmentCollectionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "fragmentCollectionKey"}, false,
 			FragmentCollection::getGroupId,
-			FragmentCollection::getFragmentCollectionKey);
+			convertNullFunction(FragmentCollection::getFragmentCollectionKey));
 
 		_uniquePersistenceFinderByG_FCK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_FCK, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, FragmentCollection::getGroupId),
+				true, true, FragmentCollection::getGroupId),
 			new FinderColumn<>(
 				"fragmentCollection.", "fragmentCollectionKey",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -3845,14 +3848,15 @@ public class FragmentCollectionPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			FragmentCollection::getExternalReferenceCode,
+			convertNullFunction(FragmentCollection::getExternalReferenceCode),
 			FragmentCollection::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTCOLLECTION_WHERE,
+			"",
 			new FinderColumn<>(
 				"fragmentCollection.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				FragmentCollection::getExternalReferenceCode),
 			new FinderColumn<>(
 				"fragmentCollection.", "groupId", FinderColumn.Type.LONG, "=",
@@ -3930,4 +3934,4 @@ public class FragmentCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1851627513
+// LIFERAY-SERVICE-BUILDER-HASH:2010196342

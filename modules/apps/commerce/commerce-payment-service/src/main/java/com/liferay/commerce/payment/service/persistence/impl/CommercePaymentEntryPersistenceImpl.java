@@ -2193,7 +2193,7 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2228,12 +2228,13 @@ public class CommercePaymentEntryPersistenceImpl
 			_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 			CommercePaymentEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commercePaymentEntry.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, CommercePaymentEntry::getCompanyId),
+				"=", true, true, CommercePaymentEntry::getCompanyId),
 			new FinderColumn<>(
 				"commercePaymentEntry.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommercePaymentEntry::getClassNameId),
+				"=", true, true, CommercePaymentEntry::getClassNameId),
 			new FinderColumn<>(
 				"commercePaymentEntry.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, CommercePaymentEntry::getClassPK));
@@ -2275,18 +2276,18 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentEntry::getCompanyId),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentEntry::getClassNameId),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "classPK", FinderColumn.Type.LONG,
-					"=", true, false, CommercePaymentEntry::getClassPK),
+					"=", true, true, CommercePaymentEntry::getClassPK),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "type", FinderColumn.Type.INTEGER,
 					"=", true, true, CommercePaymentEntry::getType));
@@ -2336,21 +2337,21 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentEntry::getCompanyId),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "classNameId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommercePaymentEntry::getClassNameId),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "classPK", FinderColumn.Type.LONG,
-					"=", true, false, CommercePaymentEntry::getClassPK),
+					"=", true, true, CommercePaymentEntry::getClassPK),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "paymentStatus",
-					FinderColumn.Type.INTEGER, "=", true, false,
+					FinderColumn.Type.INTEGER, "=", true, true,
 					CommercePaymentEntry::getPaymentStatus),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "type", FinderColumn.Type.INTEGER,
@@ -2360,15 +2361,15 @@ public class CommercePaymentEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommercePaymentEntry::getExternalReferenceCode,
+			convertNullFunction(CommercePaymentEntry::getExternalReferenceCode),
 			CommercePaymentEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE,
+			_SQL_SELECT_COMMERCEPAYMENTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commercePaymentEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommercePaymentEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commercePaymentEntry.", "companyId", FinderColumn.Type.LONG,
@@ -2467,4 +2468,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1214830264
+// LIFERAY-SERVICE-BUILDER-HASH:-1790118727

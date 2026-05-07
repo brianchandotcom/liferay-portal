@@ -4196,7 +4196,7 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, StyleBookEntry::getUuid));
@@ -4226,10 +4226,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_Head,
 				_finderPathCountByUuid_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getUuid),
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4259,10 +4259,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUUID_G,
 				_finderPathCountByUUID_G, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getUuid),
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
@@ -4274,18 +4274,18 @@ public class StyleBookEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "head"}, false,
-			StyleBookEntry::getUuid, StyleBookEntry::getGroupId,
-			StyleBookEntry::isHead);
+			convertNullFunction(StyleBookEntry::getUuid),
+			StyleBookEntry::getGroupId, StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G_Head,
-			_SQL_SELECT_STYLEBOOKENTRY_WHERE,
+			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, StyleBookEntry::getUuid),
+				true, StyleBookEntry::getUuid),
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
@@ -4315,10 +4315,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getUuid),
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId));
@@ -4354,13 +4354,13 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C_Head,
 				_finderPathCountByUuid_C_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getUuid),
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getCompanyId),
+					true, true, StyleBookEntry::getCompanyId),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4389,7 +4389,7 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
@@ -4420,10 +4420,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathCountByGroupId_Head,
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4451,10 +4451,10 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_D,
 			_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "defaultStyleBookEntry",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -4491,13 +4491,13 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_D_Head,
 				_finderPathCountByG_D_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "defaultStyleBookEntry",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					StyleBookEntry::isDefaultStyleBookEntry),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
@@ -4526,10 +4526,10 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_N,
 			_finderPathWithoutPaginationFindByG_N, _finderPathCountByG_N,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, StyleBookEntry::getName));
@@ -4565,13 +4565,13 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_N_Head,
 				_finderPathCountByG_N_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "name", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getName),
+					true, true, StyleBookEntry::getName),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4596,10 +4596,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithPaginationCountByG_LikeN,
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "name", FinderColumn.Type.STRING, "LIKE",
 					true, true, StyleBookEntry::getName));
@@ -4627,13 +4627,13 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithPaginationCountByG_LikeN_Head,
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "name", FinderColumn.Type.STRING, "LIKE",
-					true, false, StyleBookEntry::getName),
+					true, true, StyleBookEntry::getName),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4663,10 +4663,10 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_SBEK,
 				_finderPathCountByG_SBEK, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "styleBookEntryKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -4679,18 +4679,19 @@ public class StyleBookEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"groupId", "styleBookEntryKey", "head"}, false,
-			StyleBookEntry::getGroupId, StyleBookEntry::getStyleBookEntryKey,
+			StyleBookEntry::getGroupId,
+			convertNullFunction(StyleBookEntry::getStyleBookEntryKey),
 			StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByG_SBEK_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_SBEK_Head,
-			_SQL_SELECT_STYLEBOOKENTRY_WHERE,
+			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "styleBookEntryKey",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				StyleBookEntry::getStyleBookEntryKey),
 			new FinderColumn<>(
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
@@ -4719,10 +4720,10 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_T,
 			_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntry::getThemeId));
@@ -4758,13 +4759,13 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_T_Head,
 				_finderPathCountByG_T_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getThemeId),
+					true, true, StyleBookEntry::getThemeId),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4799,13 +4800,13 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_D_T,
 			_finderPathWithoutPaginationFindByG_D_T, _finderPathCountByG_D_T,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "defaultStyleBookEntry",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				StyleBookEntry::isDefaultStyleBookEntry),
 			new FinderColumn<>(
 				"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
@@ -4852,17 +4853,17 @@ public class StyleBookEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByG_D_T_Head,
 				_finderPathCountByG_D_T_Head, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
-				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, false, StyleBookEntry::getGroupId),
+					true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "defaultStyleBookEntry",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					StyleBookEntry::isDefaultStyleBookEntry),
 				new FinderColumn<>(
 					"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
-					true, false, StyleBookEntry::getThemeId),
+					true, true, StyleBookEntry::getThemeId),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -4890,10 +4891,10 @@ public class StyleBookEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByERC_G,
 			_finderPathWithoutPaginationFindByERC_G, _finderPathCountByERC_G,
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
-			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				StyleBookEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -4906,19 +4907,19 @@ public class StyleBookEntryPersistenceImpl
 				Boolean.class.getName()
 			},
 			new String[] {"externalReferenceCode", "groupId", "head"}, false,
-			StyleBookEntry::getExternalReferenceCode,
+			convertNullFunction(StyleBookEntry::getExternalReferenceCode),
 			StyleBookEntry::getGroupId, StyleBookEntry::isHead);
 
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_G_Head,
-			_SQL_SELECT_STYLEBOOKENTRY_WHERE,
+			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
 				"styleBookEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				StyleBookEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, StyleBookEntry::getGroupId),
+				true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=", true,
 				true, StyleBookEntry::isHead));
@@ -4930,6 +4931,7 @@ public class StyleBookEntryPersistenceImpl
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_STYLEBOOKENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"styleBookEntry.", "headId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getHeadId));
@@ -5006,4 +5008,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1886153261
+// LIFERAY-SERVICE-BUILDER-HASH:1087600945

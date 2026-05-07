@@ -1152,7 +1152,7 @@ public class LayoutSetPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_LAYOUTSET_WHERE,
 				_SQL_COUNT_LAYOUTSET_WHERE, LayoutSetModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutSet.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, LayoutSet::getGroupId));
@@ -1185,7 +1185,7 @@ public class LayoutSetPersistenceImpl
 				_finderPathWithoutPaginationFindByLayoutSetPrototypeUuid,
 				_finderPathCountByLayoutSetPrototypeUuid,
 				_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
-				LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layoutSet.", "layoutSetPrototypeUuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1198,10 +1198,10 @@ public class LayoutSetPersistenceImpl
 			LayoutSet::getGroupId, LayoutSet::isPrivateLayout);
 
 		_uniquePersistenceFinderByG_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P, _SQL_SELECT_LAYOUTSET_WHERE,
+			this, _finderPathFetchByG_P, _SQL_SELECT_LAYOUTSET_WHERE, "",
 			new FinderColumn<>(
 				"layoutSet.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, LayoutSet::getGroupId),
+				true, LayoutSet::getGroupId),
 			new FinderColumn<>(
 				"layoutSet.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 				true, true, LayoutSet::isPrivateLayout));
@@ -1229,10 +1229,10 @@ public class LayoutSetPersistenceImpl
 			this, _finderPathWithPaginationFindByC_L,
 			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
 			_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
-			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSet.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, LayoutSet::getCompanyId),
+				true, LayoutSet::getCompanyId),
 			new FinderColumn<>(
 				"layoutSet.", "layoutSetPrototypeUuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1261,10 +1261,10 @@ public class LayoutSetPersistenceImpl
 			this, _finderPathWithPaginationFindByP_L,
 			_finderPathWithoutPaginationFindByP_L, _finderPathCountByP_L,
 			_SQL_SELECT_LAYOUTSET_WHERE, _SQL_COUNT_LAYOUTSET_WHERE,
-			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LayoutSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layoutSet.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
-				true, false, LayoutSet::isPrivateLayout),
+				true, true, LayoutSet::isPrivateLayout),
 			new FinderColumn<>(
 				"layoutSet.", "logoId", FinderColumn.Type.LONG, "=", true, true,
 				LayoutSet::getLogoId));
@@ -1305,4 +1305,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2071193089
+// LIFERAY-SERVICE-BUILDER-HASH:-1586629684

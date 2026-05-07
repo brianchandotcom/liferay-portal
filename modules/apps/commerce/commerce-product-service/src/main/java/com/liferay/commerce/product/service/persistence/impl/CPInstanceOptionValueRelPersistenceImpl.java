@@ -1610,7 +1610,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 			_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 			CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, CPInstanceOptionValueRel::getUuid));
@@ -1619,15 +1619,15 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CPInstanceOptionValueRel::getUuid,
+			convertNullFunction(CPInstanceOptionValueRel::getUuid),
 			CPInstanceOptionValueRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
+			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE, "",
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, CPInstanceOptionValueRel::getUuid),
+				"=", true, true, CPInstanceOptionValueRel::getUuid),
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, CPInstanceOptionValueRel::getGroupId));
@@ -1659,10 +1659,10 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CPInstanceOptionValueRel::getUuid),
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "companyId",
@@ -1699,7 +1699,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionRelId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1731,7 +1731,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPInstanceId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1764,10 +1764,10 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				_SQL_COUNT_CPINSTANCEOPTIONVALUEREL_WHERE,
 				CPInstanceOptionValueRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionRelId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CPInstanceOptionValueRel::getCPDefinitionOptionRelId),
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPInstanceId",
@@ -1783,10 +1783,10 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		_uniquePersistenceFinderByCDOVRI_CII = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCDOVRI_CII,
-			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
+			_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE, "",
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "CPDefinitionOptionValueRelId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId),
 			new FinderColumn<>(
 				"cpInstanceOptionValueRel.", "CPInstanceId",
@@ -1809,14 +1809,14 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		_uniquePersistenceFinderByCDORI_CDOVRI_CII =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCDORI_CDOVRI_CII,
-				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE,
+				_SQL_SELECT_CPINSTANCEOPTIONVALUEREL_WHERE, "",
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionRelId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CPInstanceOptionValueRel::getCPDefinitionOptionRelId),
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPDefinitionOptionValueRelId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId),
 				new FinderColumn<>(
 					"cpInstanceOptionValueRel.", "CPInstanceId",
@@ -1895,4 +1895,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1673116677
+// LIFERAY-SERVICE-BUILDER-HASH:1904246181

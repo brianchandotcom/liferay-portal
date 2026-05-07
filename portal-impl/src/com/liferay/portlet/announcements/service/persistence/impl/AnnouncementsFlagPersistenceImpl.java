@@ -783,6 +783,7 @@ public class AnnouncementsFlagPersistenceImpl
 				_SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
 				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsFlag.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getCompanyId));
@@ -812,6 +813,7 @@ public class AnnouncementsFlagPersistenceImpl
 				_finderPathCountByEntryId, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
 				_SQL_COUNT_ANNOUNCEMENTSFLAG_WHERE,
 				AnnouncementsFlagModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"announcementsFlag.", "entryId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsFlag::getEntryId));
@@ -828,12 +830,13 @@ public class AnnouncementsFlagPersistenceImpl
 
 		_uniquePersistenceFinderByU_E_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_E_V, _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE,
+			"",
 			new FinderColumn<>(
 				"announcementsFlag.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, AnnouncementsFlag::getUserId),
+				true, true, AnnouncementsFlag::getUserId),
 			new FinderColumn<>(
 				"announcementsFlag.", "entryId", FinderColumn.Type.LONG, "=",
-				true, false, AnnouncementsFlag::getEntryId),
+				true, true, AnnouncementsFlag::getEntryId),
 			new FinderColumn<>(
 				"announcementsFlag.", "value", FinderColumn.Type.INTEGER, "=",
 				true, true, AnnouncementsFlag::getValue));
@@ -871,4 +874,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:272509585
+// LIFERAY-SERVICE-BUILDER-HASH:-899604478

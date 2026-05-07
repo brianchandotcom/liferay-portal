@@ -1085,7 +1085,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 			_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 			CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commercePriceListCommerceAccountGroupRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1118,10 +1118,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListCommerceAccountGroupRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommercePriceListCommerceAccountGroupRel::getUuid),
 				new FinderColumn<>(
 					"commercePriceListCommerceAccountGroupRel.", "companyId",
@@ -1154,7 +1154,7 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommercePriceListCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePriceListCommerceAccountGroupRel.",
 					"commercePriceListId", FinderColumn.Type.LONG, "=", true,
@@ -1173,10 +1173,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 
 		_uniquePersistenceFinderByCAGI_CPI = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCAGI_CPI,
-			_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE,
+			_SQL_SELECT_COMMERCEPRICELISTCOMMERCEACCOUNTGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"commercePriceListCommerceAccountGroupRel.",
-				"commercePriceListId", FinderColumn.Type.LONG, "=", true, false,
+				"commercePriceListId", FinderColumn.Type.LONG, "=", true, true,
 				CommercePriceListCommerceAccountGroupRel::
 					getCommercePriceListId),
 			new FinderColumn<>(
@@ -1264,4 +1264,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1260756054
+// LIFERAY-SERVICE-BUILDER-HASH:-905688604

@@ -5581,7 +5581,7 @@ public class BackgroundTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_BACKGROUNDTASK_WHERE,
 				_SQL_COUNT_BACKGROUNDTASK_WHERE,
-				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"backgroundTask.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, BackgroundTask::getGroupId));
@@ -5610,7 +5610,7 @@ public class BackgroundTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_BACKGROUNDTASK_WHERE,
 				_SQL_COUNT_BACKGROUNDTASK_WHERE,
-				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"backgroundTask.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, BackgroundTask::getCompanyId));
@@ -5639,7 +5639,7 @@ public class BackgroundTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByCompleted,
 				_finderPathCountByCompleted, _SQL_SELECT_BACKGROUNDTASK_WHERE,
 				_SQL_COUNT_BACKGROUNDTASK_WHERE,
-				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"backgroundTask.", "completed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, BackgroundTask::isCompleted));
@@ -5668,7 +5668,7 @@ public class BackgroundTaskPersistenceImpl
 				_finderPathWithoutPaginationFindByStatus,
 				_finderPathCountByStatus, _SQL_SELECT_BACKGROUNDTASK_WHERE,
 				_SQL_COUNT_BACKGROUNDTASK_WHERE,
-				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"backgroundTask.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, BackgroundTask::getStatus));
@@ -5720,10 +5720,10 @@ public class BackgroundTaskPersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_BACKGROUNDTASK_WHERE, _SQL_COUNT_BACKGROUNDTASK_WHERE,
-			BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BackgroundTaskModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"backgroundTask.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, BackgroundTask::getGroupId),
+				true, BackgroundTask::getGroupId),
 			new FinderColumn<>(
 				"backgroundTask.", "status", FinderColumn.Type.INTEGER, "=",
 				true, true, BackgroundTask::getStatus));
@@ -5967,4 +5967,4 @@ public class BackgroundTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2063860520
+// LIFERAY-SERVICE-BUILDER-HASH:1054897465

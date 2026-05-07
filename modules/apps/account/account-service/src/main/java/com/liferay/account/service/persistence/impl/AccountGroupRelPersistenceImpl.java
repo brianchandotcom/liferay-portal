@@ -879,6 +879,7 @@ public class AccountGroupRelPersistenceImpl
 				_SQL_SELECT_ACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_ACCOUNTGROUPREL_WHERE,
 				AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"accountGroupRel.", "accountGroupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -907,10 +908,10 @@ public class AccountGroupRelPersistenceImpl
 			this, _finderPathWithPaginationFindByA_C,
 			_finderPathWithoutPaginationFindByA_C, _finderPathCountByA_C,
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
-			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountGroupRel.", "accountGroupId", FinderColumn.Type.LONG,
-				"=", true, false, AccountGroupRel::getAccountGroupId),
+				"=", true, true, AccountGroupRel::getAccountGroupId),
 			new FinderColumn<>(
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassNameId));
@@ -938,10 +939,10 @@ public class AccountGroupRelPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_ACCOUNTGROUPREL_WHERE, _SQL_COUNT_ACCOUNTGROUPREL_WHERE,
-			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			AccountGroupRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, AccountGroupRel::getClassNameId),
+				true, true, AccountGroupRel::getClassNameId),
 			new FinderColumn<>(
 				"accountGroupRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassPK));
@@ -957,12 +958,13 @@ public class AccountGroupRelPersistenceImpl
 
 		_uniquePersistenceFinderByA_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C_C, _SQL_SELECT_ACCOUNTGROUPREL_WHERE,
+			"",
 			new FinderColumn<>(
 				"accountGroupRel.", "accountGroupId", FinderColumn.Type.LONG,
-				"=", true, false, AccountGroupRel::getAccountGroupId),
+				"=", true, true, AccountGroupRel::getAccountGroupId),
 			new FinderColumn<>(
 				"accountGroupRel.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, AccountGroupRel::getClassNameId),
+				true, true, AccountGroupRel::getClassNameId),
 			new FinderColumn<>(
 				"accountGroupRel.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, AccountGroupRel::getClassPK));
@@ -1033,4 +1035,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-505899560
+// LIFERAY-SERVICE-BUILDER-HASH:-125930301

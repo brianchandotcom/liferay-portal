@@ -2480,7 +2480,7 @@ public class CommerceChannelPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_COMMERCECHANNEL_WHERE, _SQL_COUNT_COMMERCECHANNEL_WHERE,
-			CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, CommerceChannel::getUuid));
@@ -2511,9 +2511,10 @@ public class CommerceChannelPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CommerceChannel::getUuid),
+					true, true, CommerceChannel::getUuid),
 				new FinderColumn<>(
 					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getCompanyId));
@@ -2543,6 +2544,7 @@ public class CommerceChannelPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getCompanyId));
@@ -2573,6 +2575,7 @@ public class CommerceChannelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceChannel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2604,6 +2607,7 @@ public class CommerceChannelPersistenceImpl
 				_SQL_SELECT_COMMERCECHANNEL_WHERE,
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"commerceChannel.", "siteGroupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getSiteGroupId));
@@ -2612,14 +2616,15 @@ public class CommerceChannelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceChannel::getExternalReferenceCode,
+			convertNullFunction(CommerceChannel::getExternalReferenceCode),
 			CommerceChannel::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_COMMERCECHANNEL_WHERE,
+			"",
 			new FinderColumn<>(
 				"commerceChannel.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceChannel::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceChannel.", "companyId", FinderColumn.Type.LONG, "=",
@@ -2720,4 +2725,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:646820828
+// LIFERAY-SERVICE-BUILDER-HASH:-1378191579

@@ -820,6 +820,7 @@ public class RecentLayoutBranchPersistenceImpl
 				_finderPathCountByGroupId, _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTBRANCH_WHERE,
 				RecentLayoutBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"recentLayoutBranch.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutBranch::getGroupId));
@@ -848,6 +849,7 @@ public class RecentLayoutBranchPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTBRANCH_WHERE,
 				RecentLayoutBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"recentLayoutBranch.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, RecentLayoutBranch::getUserId));
@@ -878,6 +880,7 @@ public class RecentLayoutBranchPersistenceImpl
 				_SQL_SELECT_RECENTLAYOUTBRANCH_WHERE,
 				_SQL_COUNT_RECENTLAYOUTBRANCH_WHERE,
 				RecentLayoutBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"recentLayoutBranch.", "layoutBranchId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -895,12 +898,13 @@ public class RecentLayoutBranchPersistenceImpl
 
 		_uniquePersistenceFinderByU_L_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_L_P, _SQL_SELECT_RECENTLAYOUTBRANCH_WHERE,
+			"",
 			new FinderColumn<>(
 				"recentLayoutBranch.", "userId", FinderColumn.Type.LONG, "=",
-				true, false, RecentLayoutBranch::getUserId),
+				true, true, RecentLayoutBranch::getUserId),
 			new FinderColumn<>(
 				"recentLayoutBranch.", "layoutSetBranchId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				RecentLayoutBranch::getLayoutSetBranchId),
 			new FinderColumn<>(
 				"recentLayoutBranch.", "plid", FinderColumn.Type.LONG, "=",
@@ -939,4 +943,4 @@ public class RecentLayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237503464
+// LIFERAY-SERVICE-BUILDER-HASH:-58393697

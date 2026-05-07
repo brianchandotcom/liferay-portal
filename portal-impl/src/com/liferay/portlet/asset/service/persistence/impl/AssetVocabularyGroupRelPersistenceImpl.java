@@ -1225,7 +1225,7 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 			_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 			AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, AssetVocabularyGroupRel::getUuid));
@@ -1234,15 +1234,15 @@ public class AssetVocabularyGroupRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			AssetVocabularyGroupRel::getUuid,
+			convertNullFunction(AssetVocabularyGroupRel::getUuid),
 			AssetVocabularyGroupRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
+			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "uuid", FinderColumn.Type.STRING,
-				"=", true, false, AssetVocabularyGroupRel::getUuid),
+				"=", true, true, AssetVocabularyGroupRel::getUuid),
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, AssetVocabularyGroupRel::getGroupId));
@@ -1274,10 +1274,10 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetVocabularyGroupRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					AssetVocabularyGroupRel::getUuid),
 				new FinderColumn<>(
 					"assetVocabularyGroupRel.", "companyId",
@@ -1310,7 +1310,7 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetVocabularyGroupRel.", "groupId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1342,7 +1342,7 @@ public class AssetVocabularyGroupRelPersistenceImpl
 				_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
 				_SQL_COUNT_ASSETVOCABULARYGROUPREL_WHERE,
 				AssetVocabularyGroupRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetVocabularyGroupRel.", "vocabularyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1357,10 +1357,10 @@ public class AssetVocabularyGroupRelPersistenceImpl
 
 		_uniquePersistenceFinderByG_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_V,
-			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE,
+			_SQL_SELECT_ASSETVOCABULARYGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, AssetVocabularyGroupRel::getGroupId),
+				"=", true, true, AssetVocabularyGroupRel::getGroupId),
 			new FinderColumn<>(
 				"assetVocabularyGroupRel.", "vocabularyId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1403,4 +1403,4 @@ public class AssetVocabularyGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:359118960
+// LIFERAY-SERVICE-BUILDER-HASH:-86993052

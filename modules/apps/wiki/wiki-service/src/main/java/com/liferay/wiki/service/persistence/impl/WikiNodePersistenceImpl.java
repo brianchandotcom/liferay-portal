@@ -2128,7 +2128,7 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid));
@@ -2136,13 +2136,13 @@ public class WikiNodePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, WikiNode::getUuid,
-			WikiNode::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(WikiNode::getUuid), WikiNode::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKINODE_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
-				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getUuid),
 			new FinderColumn<>(
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -2173,10 +2173,10 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"wikiNode.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, WikiNode::getUuid),
+					true, WikiNode::getUuid),
 				new FinderColumn<>(
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
@@ -2205,7 +2205,7 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getGroupId));
@@ -2234,7 +2234,7 @@ public class WikiNodePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_WIKINODE_WHERE,
 				_SQL_COUNT_WIKINODE_WHERE, WikiNodeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, WikiNode::getCompanyId));
@@ -2243,13 +2243,13 @@ public class WikiNodePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, false, WikiNode::getGroupId,
-			WikiNode::getName);
+			convertNullFunction(WikiNode::getName));
 
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N, _SQL_SELECT_WIKINODE_WHERE,
+			this, _finderPathFetchByG_N, _SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
-				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, WikiNode::getGroupId),
+				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				WikiNode::getGroupId),
 			new FinderColumn<>(
 				"wikiNode.", "name", FinderColumn.Type.STRING, "=", true, true,
 				WikiNode::getName));
@@ -2277,10 +2277,10 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByG_S,
 			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, WikiNode::getGroupId),
+				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				WikiNode::getGroupId),
 			new FinderColumn<>(
 				"wikiNode.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiNode::getStatus));
@@ -2308,10 +2308,10 @@ public class WikiNodePersistenceImpl
 			this, _finderPathWithPaginationFindByC_S,
 			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
 			_SQL_SELECT_WIKINODE_WHERE, _SQL_COUNT_WIKINODE_WHERE,
-			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			WikiNodeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"wikiNode.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, WikiNode::getCompanyId),
+				true, WikiNode::getCompanyId),
 			new FinderColumn<>(
 				"wikiNode.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, WikiNode::getStatus));
@@ -2320,13 +2320,14 @@ public class WikiNodePersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			WikiNode::getExternalReferenceCode, WikiNode::getGroupId);
+			convertNullFunction(WikiNode::getExternalReferenceCode),
+			WikiNode::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_WIKINODE_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_WIKINODE_WHERE, "",
 			new FinderColumn<>(
 				"wikiNode.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, WikiNode::getExternalReferenceCode),
+				"=", true, true, WikiNode::getExternalReferenceCode),
 			new FinderColumn<>(
 				"wikiNode.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				WikiNode::getGroupId));
@@ -2426,4 +2427,4 @@ public class WikiNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:277269212
+// LIFERAY-SERVICE-BUILDER-HASH:-1700354925

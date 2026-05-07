@@ -1184,7 +1184,7 @@ public class SourcePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_SOURCE_WHERE, _SQL_COUNT_SOURCE_WHERE,
-			SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			SourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"source.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Source::getUuid));
@@ -1192,13 +1192,13 @@ public class SourcePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, Source::getUuid,
-			Source::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(Source::getUuid), Source::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOURCE_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_SOURCE_WHERE, "",
 			new FinderColumn<>(
-				"source.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"source.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Source::getUuid),
 			new FinderColumn<>(
 				"source.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -1229,10 +1229,10 @@ public class SourcePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_SOURCE_WHERE,
 				_SQL_COUNT_SOURCE_WHERE, SourceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"source.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Source::getUuid),
+					true, Source::getUuid),
 				new FinderColumn<>(
 					"source.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getCompanyId));
@@ -1261,7 +1261,7 @@ public class SourcePersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_SOURCE_WHERE,
 				_SQL_COUNT_SOURCE_WHERE, SourceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"source.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getGroupId));
@@ -1290,7 +1290,7 @@ public class SourcePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_SOURCE_WHERE,
 				_SQL_COUNT_SOURCE_WHERE, SourceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"source.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Source::getCompanyId));
@@ -1387,4 +1387,4 @@ public class SourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-91896588
+// LIFERAY-SERVICE-BUILDER-HASH:-1520850083

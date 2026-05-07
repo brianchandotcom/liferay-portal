@@ -1202,7 +1202,7 @@ public class DefinitionPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DEFINITION_WHERE, _SQL_COUNT_DEFINITION_WHERE,
-			DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"definition.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, Definition::getUuid));
@@ -1210,14 +1210,14 @@ public class DefinitionPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, Definition::getUuid,
-			Definition::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(Definition::getUuid), Definition::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEFINITION_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DEFINITION_WHERE, "",
 			new FinderColumn<>(
 				"definition.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, Definition::getUuid),
+				true, Definition::getUuid),
 			new FinderColumn<>(
 				"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, Definition::getGroupId));
@@ -1247,10 +1247,10 @@ public class DefinitionPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DEFINITION_WHERE,
 				_SQL_COUNT_DEFINITION_WHERE, DefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"definition.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Definition::getUuid),
+					true, Definition::getUuid),
 				new FinderColumn<>(
 					"definition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Definition::getCompanyId));
@@ -1279,7 +1279,7 @@ public class DefinitionPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DEFINITION_WHERE,
 				_SQL_COUNT_DEFINITION_WHERE, DefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"definition.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Definition::getGroupId));
@@ -1308,7 +1308,7 @@ public class DefinitionPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DEFINITION_WHERE,
 				_SQL_COUNT_DEFINITION_WHERE, DefinitionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"definition.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, Definition::getCompanyId));
@@ -1405,4 +1405,4 @@ public class DefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1909920100
+// LIFERAY-SERVICE-BUILDER-HASH:-649948619

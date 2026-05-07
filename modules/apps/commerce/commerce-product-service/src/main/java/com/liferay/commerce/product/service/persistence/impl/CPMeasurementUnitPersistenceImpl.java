@@ -15,14 +15,11 @@ import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersist
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitUtil;
 import com.liferay.commerce.product.service.persistence.impl.constants.CommercePersistenceConstants;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -676,6 +672,8 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 	private FinderPath _finderPathFetchByC_K;
+	private UniquePersistenceFinder<CPMeasurementUnit>
+		_uniquePersistenceFinderByC_K;
 
 	/**
 	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -692,23 +690,15 @@ public class CPMeasurementUnitPersistenceImpl
 		CPMeasurementUnit cpMeasurementUnit = fetchByC_K(companyId, key);
 
 		if (cpMeasurementUnit == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", key=");
-			sb.append(key);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchCPMeasurementUnitException(sb.toString());
+			throw new NoSuchCPMeasurementUnitException(message);
 		}
 
 		return cpMeasurementUnit;
@@ -742,96 +732,8 @@ public class CPMeasurementUnitPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPMeasurementUnit.class)) {
 
-			key = Objects.toString(key, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {companyId, key};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = finderCache.getResult(
-					_finderPathFetchByC_K, finderArgs, this);
-			}
-
-			if (result instanceof CPMeasurementUnit) {
-				CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)result;
-
-				if ((companyId != cpMeasurementUnit.getCompanyId()) ||
-					!Objects.equals(key, cpMeasurementUnit.getKey())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_CPMEASUREMENTUNIT_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_K_COMPANYID_2);
-
-				boolean bindKey = false;
-
-				if (key.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_K_KEY_3);
-				}
-				else {
-					bindKey = true;
-
-					sb.append(_FINDER_COLUMN_C_K_KEY_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindKey) {
-						queryPos.add(StringUtil.toLowerCase(key));
-					}
-
-					List<CPMeasurementUnit> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							finderCache.putResult(
-								_finderPathFetchByC_K, finderArgs, list);
-						}
-					}
-					else {
-						CPMeasurementUnit cpMeasurementUnit = list.get(0);
-
-						result = cpMeasurementUnit;
-
-						cacheResult(cpMeasurementUnit);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (CPMeasurementUnit)result;
-			}
+			return _uniquePersistenceFinderByC_K.fetch(
+				finderCache, new Object[] {companyId, key}, useFinderCache);
 		}
 	}
 
@@ -860,23 +762,9 @@ public class CPMeasurementUnitPersistenceImpl
 	 */
 	@Override
 	public int countByC_K(long companyId, String key) {
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_K(companyId, key);
-
-		if (cpMeasurementUnit == null) {
-			return 0;
-		}
-
-		return 1;
+		return _uniquePersistenceFinderByC_K.count(
+			finderCache, new Object[] {companyId, key});
 	}
-
-	private static final String _FINDER_COLUMN_C_K_COMPANYID_2 =
-		"cpMeasurementUnit.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_K_KEY_2 =
-		"lower(cpMeasurementUnit.key) = ?";
-
-	private static final String _FINDER_COLUMN_C_K_KEY_3 =
-		"(cpMeasurementUnit.key IS NULL OR cpMeasurementUnit.key = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
@@ -1731,7 +1619,7 @@ public class CPMeasurementUnitPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
-			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CPMeasurementUnit::getUuid));
@@ -1740,13 +1628,15 @@ public class CPMeasurementUnitPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CPMeasurementUnit::getUuid, CPMeasurementUnit::getGroupId);
+			convertNullFunction(CPMeasurementUnit::getUuid),
+			CPMeasurementUnit::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
+			"",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, CPMeasurementUnit::getUuid),
+				true, true, CPMeasurementUnit::getUuid),
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CPMeasurementUnit::getGroupId));
@@ -1777,9 +1667,10 @@ public class CPMeasurementUnitPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"cpMeasurementUnit.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, CPMeasurementUnit::getUuid),
+					true, true, CPMeasurementUnit::getUuid),
 				new FinderColumn<>(
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
@@ -1810,6 +1701,7 @@ public class CPMeasurementUnitPersistenceImpl
 				_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 				_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
 				CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CPMeasurementUnit::getCompanyId));
@@ -1818,7 +1710,18 @@ public class CPMeasurementUnitPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, false,
-			CPMeasurementUnit::getCompanyId, CPMeasurementUnit::getKey);
+			CPMeasurementUnit::getCompanyId,
+			convertNullFunction(CPMeasurementUnit::getKey));
+
+		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_K, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
+			"",
+			new FinderColumn<>(
+				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
+				true, true, CPMeasurementUnit::getCompanyId),
+			new FinderColumn<>(
+				"cpMeasurementUnit.", "key", FinderColumn.Type.STRING, "=",
+				false, true, CPMeasurementUnit::getKey));
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
@@ -1844,10 +1747,10 @@ public class CPMeasurementUnitPersistenceImpl
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
-			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, CPMeasurementUnit::getCompanyId),
+				true, true, CPMeasurementUnit::getCompanyId),
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, CPMeasurementUnit::getType));
@@ -1882,13 +1785,13 @@ public class CPMeasurementUnitPersistenceImpl
 			_finderPathWithoutPaginationFindByC_P_T, _finderPathCountByC_P_T,
 			_SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
 			_SQL_COUNT_CPMEASUREMENTUNIT_WHERE,
-			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			CPMeasurementUnitModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, CPMeasurementUnit::getCompanyId),
+				true, true, CPMeasurementUnit::getCompanyId),
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "primary", FinderColumn.Type.BOOLEAN, "=",
-				true, false, CPMeasurementUnit::isPrimary),
+				true, true, CPMeasurementUnit::isPrimary),
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, CPMeasurementUnit::getType));
@@ -1897,14 +1800,15 @@ public class CPMeasurementUnitPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CPMeasurementUnit::getExternalReferenceCode,
+			convertNullFunction(CPMeasurementUnit::getExternalReferenceCode),
 			CPMeasurementUnit::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_CPMEASUREMENTUNIT_WHERE,
+			"",
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CPMeasurementUnit::getExternalReferenceCode),
 			new FinderColumn<>(
 				"cpMeasurementUnit.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1982,4 +1886,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1653294895
+// LIFERAY-SERVICE-BUILDER-HASH:1540616569

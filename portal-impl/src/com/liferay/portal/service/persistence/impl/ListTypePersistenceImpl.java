@@ -1005,7 +1005,7 @@ public class ListTypePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
-			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"listType.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				ListType::getUuid));
@@ -1035,10 +1035,10 @@ public class ListTypePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LISTTYPE_WHERE,
 				_SQL_COUNT_LISTTYPE_WHERE, ListTypeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"listType.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, ListType::getUuid),
+					true, ListType::getUuid),
 				new FinderColumn<>(
 					"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, ListType::getCompanyId));
@@ -1067,7 +1067,7 @@ public class ListTypePersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_LISTTYPE_WHERE,
 				_SQL_COUNT_LISTTYPE_WHERE, ListTypeModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, ListType::getCompanyId));
@@ -1095,10 +1095,10 @@ public class ListTypePersistenceImpl
 			this, _finderPathWithPaginationFindByC_T,
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_LISTTYPE_WHERE, _SQL_COUNT_LISTTYPE_WHERE,
-			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			ListTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ListType::getCompanyId),
+				true, ListType::getCompanyId),
 			new FinderColumn<>(
 				"listType.", "type", FinderColumn.Type.STRING, "=", true, true,
 				ListType::getType));
@@ -1110,15 +1110,16 @@ public class ListTypePersistenceImpl
 				String.class.getName()
 			},
 			new String[] {"companyId", "name", "type_"}, false,
-			ListType::getCompanyId, ListType::getName, ListType::getType);
+			ListType::getCompanyId, convertNullFunction(ListType::getName),
+			convertNullFunction(ListType::getType));
 
 		_uniquePersistenceFinderByC_N_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N_T, _SQL_SELECT_LISTTYPE_WHERE,
+			this, _finderPathFetchByC_N_T, _SQL_SELECT_LISTTYPE_WHERE, "",
 			new FinderColumn<>(
 				"listType.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, ListType::getCompanyId),
+				true, ListType::getCompanyId),
 			new FinderColumn<>(
-				"listType.", "name", FinderColumn.Type.STRING, "=", true, false,
+				"listType.", "name", FinderColumn.Type.STRING, "=", true, true,
 				ListType::getName),
 			new FinderColumn<>(
 				"listType.", "type", FinderColumn.Type.STRING, "=", true, true,
@@ -1160,4 +1161,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-922489332
+// LIFERAY-SERVICE-BUILDER-HASH:1121419093

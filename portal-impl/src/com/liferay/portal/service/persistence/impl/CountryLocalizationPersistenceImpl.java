@@ -612,7 +612,7 @@ public class CountryLocalizationPersistenceImpl
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_COUNTRYLOCALIZATION_WHERE,
 				CountryLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
 					"=", true, true, CountryLocalization::getCountryId));
@@ -622,15 +622,15 @@ public class CountryLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"countryId", "languageId"}, false,
 			CountryLocalization::getCountryId,
-			CountryLocalization::getLanguageId);
+			convertNullFunction(CountryLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByCountryId_LanguageId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCountryId_LanguageId,
-				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE,
+				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
-					"=", true, false, CountryLocalization::getCountryId),
+					"=", true, true, CountryLocalization::getCountryId),
 				new FinderColumn<>(
 					"countryLocalization.", "languageId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -669,4 +669,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1557164247
+// LIFERAY-SERVICE-BUILDER-HASH:292757949

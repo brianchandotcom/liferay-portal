@@ -1885,7 +1885,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalContentSearch.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1917,7 +1917,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalContentSearch.", "portletId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1949,7 +1949,7 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalContentSearch.", "articleId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -1980,9 +1980,10 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, JournalContentSearch::getGroupId),
+				true, true, JournalContentSearch::getGroupId),
 			new FinderColumn<>(
 				"journalContentSearch.", "privateLayout",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -2013,9 +2014,10 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, JournalContentSearch::getGroupId),
+				true, true, JournalContentSearch::getGroupId),
 			new FinderColumn<>(
 				"journalContentSearch.", "articleId", FinderColumn.Type.STRING,
 				"=", true, true, JournalContentSearch::getArticleId));
@@ -2051,12 +2053,13 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, JournalContentSearch::getGroupId),
+				true, true, JournalContentSearch::getGroupId),
 			new FinderColumn<>(
 				"journalContentSearch.", "privateLayout",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				JournalContentSearch::isPrivateLayout),
 			new FinderColumn<>(
 				"journalContentSearch.", "layoutId", FinderColumn.Type.LONG,
@@ -2093,12 +2096,13 @@ public class JournalContentSearchPersistenceImpl
 			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 			_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 			JournalContentSearchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, JournalContentSearch::getGroupId),
+				true, true, JournalContentSearch::getGroupId),
 			new FinderColumn<>(
 				"journalContentSearch.", "privateLayout",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				JournalContentSearch::isPrivateLayout),
 			new FinderColumn<>(
 				"journalContentSearch.", "articleId", FinderColumn.Type.STRING,
@@ -2141,17 +2145,17 @@ public class JournalContentSearchPersistenceImpl
 				_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
 				_SQL_COUNT_JOURNALCONTENTSEARCH_WHERE,
 				JournalContentSearchModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"journalContentSearch.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, JournalContentSearch::getGroupId),
+					"=", true, true, JournalContentSearch::getGroupId),
 				new FinderColumn<>(
 					"journalContentSearch.", "privateLayout",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					JournalContentSearch::isPrivateLayout),
 				new FinderColumn<>(
 					"journalContentSearch.", "layoutId", FinderColumn.Type.LONG,
-					"=", true, false, JournalContentSearch::getLayoutId),
+					"=", true, true, JournalContentSearch::getLayoutId),
 				new FinderColumn<>(
 					"journalContentSearch.", "portletId",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -2170,25 +2174,25 @@ public class JournalContentSearchPersistenceImpl
 			false, JournalContentSearch::getGroupId,
 			JournalContentSearch::isPrivateLayout,
 			JournalContentSearch::getLayoutId,
-			JournalContentSearch::getPortletId,
-			JournalContentSearch::getArticleId);
+			convertNullFunction(JournalContentSearch::getPortletId),
+			convertNullFunction(JournalContentSearch::getArticleId));
 
 		_uniquePersistenceFinderByG_P_L_P_A = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_P_L_P_A,
-			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE,
+			_SQL_SELECT_JOURNALCONTENTSEARCH_WHERE, "",
 			new FinderColumn<>(
 				"journalContentSearch.", "groupId", FinderColumn.Type.LONG, "=",
-				true, false, JournalContentSearch::getGroupId),
+				true, true, JournalContentSearch::getGroupId),
 			new FinderColumn<>(
 				"journalContentSearch.", "privateLayout",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				JournalContentSearch::isPrivateLayout),
 			new FinderColumn<>(
 				"journalContentSearch.", "layoutId", FinderColumn.Type.LONG,
-				"=", true, false, JournalContentSearch::getLayoutId),
+				"=", true, true, JournalContentSearch::getLayoutId),
 			new FinderColumn<>(
 				"journalContentSearch.", "portletId", FinderColumn.Type.STRING,
-				"=", true, false, JournalContentSearch::getPortletId),
+				"=", true, true, JournalContentSearch::getPortletId),
 			new FinderColumn<>(
 				"journalContentSearch.", "articleId", FinderColumn.Type.STRING,
 				"=", true, true, JournalContentSearch::getArticleId));
@@ -2262,4 +2266,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-605250332
+// LIFERAY-SERVICE-BUILDER-HASH:-190994184

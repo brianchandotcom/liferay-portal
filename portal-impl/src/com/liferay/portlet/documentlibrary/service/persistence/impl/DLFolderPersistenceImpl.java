@@ -6328,7 +6328,7 @@ public class DLFolderPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DLFolder::getUuid));
@@ -6336,13 +6336,13 @@ public class DLFolderPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DLFolder::getUuid,
-			DLFolder::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DLFolder::getUuid), DLFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFOLDER_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFOLDER_WHERE, "",
 			new FinderColumn<>(
-				"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				DLFolder::getUuid),
 			new FinderColumn<>(
 				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -6373,10 +6373,10 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, DLFolder::getUuid),
+					true, DLFolder::getUuid),
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getCompanyId));
@@ -6405,7 +6405,7 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getGroupId));
@@ -6434,7 +6434,7 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, DLFolder::getCompanyId));
@@ -6463,7 +6463,7 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByRepositoryId,
 				_finderPathCountByRepositoryId, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, DLFolder::getRepositoryId));
@@ -6491,10 +6491,10 @@ public class DLFolderPersistenceImpl
 			this, _finderPathWithPaginationFindByG_P,
 			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFolder::getGroupId),
+				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				DLFolder::getGroupId),
 			new FinderColumn<>(
 				"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 				true, true, DLFolder::getParentFolderId));
@@ -6518,10 +6518,10 @@ public class DLFolderPersistenceImpl
 				this, _finderPathWithPaginationFindByC_NotS, null,
 				_finderPathWithPaginationCountByC_NotS,
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getCompanyId),
+					true, DLFolder::getCompanyId),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, DLFolder::getStatus));
@@ -6533,10 +6533,10 @@ public class DLFolderPersistenceImpl
 			DLFolder::getRepositoryId, DLFolder::isMountPoint);
 
 		_uniquePersistenceFinderByR_M = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_M, _SQL_SELECT_DLFOLDER_WHERE,
+			this, _finderPathFetchByR_M, _SQL_SELECT_DLFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"dlFolder.", "repositoryId", FinderColumn.Type.LONG, "=", true,
-				false, DLFolder::getRepositoryId),
+				true, DLFolder::getRepositoryId),
 			new FinderColumn<>(
 				"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=", true,
 				true, DLFolder::isMountPoint));
@@ -6564,10 +6564,10 @@ public class DLFolderPersistenceImpl
 			this, _finderPathWithPaginationFindByR_P,
 			_finderPathWithoutPaginationFindByR_P, _finderPathCountByR_P,
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFolder.", "repositoryId", FinderColumn.Type.LONG, "=", true,
-				false, DLFolder::getRepositoryId),
+				true, DLFolder::getRepositoryId),
 			new FinderColumn<>(
 				"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 				true, true, DLFolder::getParentFolderId));
@@ -6595,10 +6595,10 @@ public class DLFolderPersistenceImpl
 			this, _finderPathWithPaginationFindByP_N,
 			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-				true, false, DLFolder::getParentFolderId),
+				true, true, DLFolder::getParentFolderId),
 			new FinderColumn<>(
 				"dlFolder.", "name", FinderColumn.Type.STRING, "=", true, true,
 				DLFolder::getName));
@@ -6624,13 +6624,13 @@ public class DLFolderPersistenceImpl
 				this, _finderPathWithPaginationFindByGtF_C_P, null,
 				_finderPathWithPaginationCountByGtF_C_P,
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "folderId", FinderColumn.Type.LONG, ">", true,
-					false, DLFolder::getFolderId),
+					true, DLFolder::getFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getCompanyId),
+					true, DLFolder::getCompanyId),
 				new FinderColumn<>(
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 					true, true, DLFolder::getParentFolderId));
@@ -6664,13 +6664,13 @@ public class DLFolderPersistenceImpl
 			this, _finderPathWithPaginationFindByG_M_P,
 			_finderPathWithoutPaginationFindByG_M_P, _finderPathCountByG_M_P,
 			_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFolder::getGroupId),
+				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				DLFolder::getGroupId),
 			new FinderColumn<>(
 				"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=", true,
-				false, DLFolder::isMountPoint),
+				true, DLFolder::isMountPoint),
 			new FinderColumn<>(
 				"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
 				true, true, DLFolder::getParentFolderId));
@@ -6683,16 +6683,16 @@ public class DLFolderPersistenceImpl
 			},
 			new String[] {"groupId", "parentFolderId", "name"}, false,
 			DLFolder::getGroupId, DLFolder::getParentFolderId,
-			DLFolder::getName);
+			convertNullFunction(DLFolder::getName));
 
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_N, _SQL_SELECT_DLFOLDER_WHERE,
+			this, _finderPathFetchByG_P_N, _SQL_SELECT_DLFOLDER_WHERE, "",
 			new FinderColumn<>(
-				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFolder::getGroupId),
+				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
+				DLFolder::getGroupId),
 			new FinderColumn<>(
 				"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-				true, false, DLFolder::getParentFolderId),
+				true, true, DLFolder::getParentFolderId),
 			new FinderColumn<>(
 				"dlFolder.", "name", FinderColumn.Type.STRING, "=", true, true,
 				DLFolder::getName));
@@ -6722,16 +6722,16 @@ public class DLFolderPersistenceImpl
 				this, _finderPathWithPaginationFindByGtF_C_P_NotS, null,
 				_finderPathWithPaginationCountByGtF_C_P_NotS,
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "folderId", FinderColumn.Type.LONG, ">", true,
-					false, DLFolder::getFolderId),
+					true, DLFolder::getFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "companyId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getCompanyId),
+					true, DLFolder::getCompanyId),
 				new FinderColumn<>(
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-					true, false, DLFolder::getParentFolderId),
+					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, DLFolder::getStatus));
@@ -6771,16 +6771,16 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByG_M_P_H,
 				_finderPathCountByG_M_P_H, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getGroupId),
+					true, DLFolder::getGroupId),
 				new FinderColumn<>(
 					"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=",
-					true, false, DLFolder::isMountPoint),
+					true, true, DLFolder::isMountPoint),
 				new FinderColumn<>(
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-					true, false, DLFolder::getParentFolderId),
+					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
 					true, DLFolder::isHidden));
@@ -6810,16 +6810,16 @@ public class DLFolderPersistenceImpl
 				this, _finderPathWithPaginationFindByG_M_LikeT_H, null,
 				_finderPathWithPaginationCountByG_M_LikeT_H,
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getGroupId),
+					true, DLFolder::getGroupId),
 				new FinderColumn<>(
 					"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=",
-					true, false, DLFolder::isMountPoint),
+					true, true, DLFolder::isMountPoint),
 				new FinderColumn<>(
 					"dlFolder.", "treePath", FinderColumn.Type.STRING, "LIKE",
-					true, false, DLFolder::getTreePath),
+					true, true, DLFolder::getTreePath),
 				new FinderColumn<>(
 					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
 					true, DLFolder::isHidden));
@@ -6859,16 +6859,16 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByG_P_H_S,
 				_finderPathCountByG_P_H_S, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getGroupId),
+					true, DLFolder::getGroupId),
 				new FinderColumn<>(
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-					true, false, DLFolder::getParentFolderId),
+					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					false, DLFolder::isHidden),
+					true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, DLFolder::getStatus));
@@ -6916,19 +6916,19 @@ public class DLFolderPersistenceImpl
 				_finderPathWithoutPaginationFindByG_M_P_H_S,
 				_finderPathCountByG_M_P_H_S, _SQL_SELECT_DLFOLDER_WHERE,
 				_SQL_COUNT_DLFOLDER_WHERE, DLFolderModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getGroupId),
+					true, DLFolder::getGroupId),
 				new FinderColumn<>(
 					"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=",
-					true, false, DLFolder::isMountPoint),
+					true, true, DLFolder::isMountPoint),
 				new FinderColumn<>(
 					"dlFolder.", "parentFolderId", FinderColumn.Type.LONG, "=",
-					true, false, DLFolder::getParentFolderId),
+					true, true, DLFolder::getParentFolderId),
 				new FinderColumn<>(
 					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					false, DLFolder::isHidden),
+					true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, DLFolder::getStatus));
@@ -6963,19 +6963,19 @@ public class DLFolderPersistenceImpl
 				this, _finderPathWithPaginationFindByG_M_LikeT_H_NotS, null,
 				_finderPathWithPaginationCountByG_M_LikeT_H_NotS,
 				_SQL_SELECT_DLFOLDER_WHERE, _SQL_COUNT_DLFOLDER_WHERE,
-				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true,
-					false, DLFolder::getGroupId),
+					true, DLFolder::getGroupId),
 				new FinderColumn<>(
 					"dlFolder.", "mountPoint", FinderColumn.Type.BOOLEAN, "=",
-					true, false, DLFolder::isMountPoint),
+					true, true, DLFolder::isMountPoint),
 				new FinderColumn<>(
 					"dlFolder.", "treePath", FinderColumn.Type.STRING, "LIKE",
-					true, false, DLFolder::getTreePath),
+					true, true, DLFolder::getTreePath),
 				new FinderColumn<>(
 					"dlFolder.", "hidden", FinderColumn.Type.BOOLEAN, "=", true,
-					false, DLFolder::isHidden),
+					true, DLFolder::isHidden),
 				new FinderColumn<>(
 					"dlFolder.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, DLFolder::getStatus));
@@ -6984,13 +6984,14 @@ public class DLFolderPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			DLFolder::getExternalReferenceCode, DLFolder::getGroupId);
+			convertNullFunction(DLFolder::getExternalReferenceCode),
+			DLFolder::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFOLDER_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFOLDER_WHERE, "",
 			new FinderColumn<>(
 				"dlFolder.", "externalReferenceCode", FinderColumn.Type.STRING,
-				"=", true, false, DLFolder::getExternalReferenceCode),
+				"=", true, true, DLFolder::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dlFolder.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				DLFolder::getGroupId));
@@ -7063,4 +7064,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-687177724
+// LIFERAY-SERVICE-BUILDER-HASH:-1729244938

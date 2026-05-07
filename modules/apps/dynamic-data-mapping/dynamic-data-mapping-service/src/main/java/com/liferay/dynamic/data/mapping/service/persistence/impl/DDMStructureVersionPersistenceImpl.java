@@ -826,7 +826,7 @@ public class DDMStructureVersionPersistenceImpl
 				_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 				_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 				DDMStructureVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmStructureVersion.", "structureId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -837,13 +837,14 @@ public class DDMStructureVersionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"structureId", "version"}, false,
 			DDMStructureVersion::getStructureId,
-			DDMStructureVersion::getVersion);
+			convertNullFunction(DDMStructureVersion::getVersion));
 
 		_uniquePersistenceFinderByS_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByS_V, _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
+			"",
 			new FinderColumn<>(
 				"ddmStructureVersion.", "structureId", FinderColumn.Type.LONG,
-				"=", true, false, DDMStructureVersion::getStructureId),
+				"=", true, true, DDMStructureVersion::getStructureId),
 			new FinderColumn<>(
 				"ddmStructureVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, DDMStructureVersion::getVersion));
@@ -873,9 +874,10 @@ public class DDMStructureVersionPersistenceImpl
 			_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE,
 			_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE,
 			DDMStructureVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"ddmStructureVersion.", "structureId", FinderColumn.Type.LONG,
-				"=", true, false, DDMStructureVersion::getStructureId),
+				"=", true, true, DDMStructureVersion::getStructureId),
 			new FinderColumn<>(
 				"ddmStructureVersion.", "status", FinderColumn.Type.INTEGER,
 				"=", true, true, DDMStructureVersion::getStatus));
@@ -952,4 +954,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-622061298
+// LIFERAY-SERVICE-BUILDER-HASH:656803427

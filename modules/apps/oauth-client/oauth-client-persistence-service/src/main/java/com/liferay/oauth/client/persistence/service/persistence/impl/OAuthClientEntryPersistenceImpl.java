@@ -2501,7 +2501,7 @@ public class OAuthClientEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 			_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
-			OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, OAuthClientEntry::getUuid));
@@ -2532,9 +2532,10 @@ public class OAuthClientEntryPersistenceImpl
 				_finderPathCountByUuid_C, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
-					true, false, OAuthClientEntry::getUuid),
+					true, true, OAuthClientEntry::getUuid),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId));
@@ -2564,6 +2565,7 @@ public class OAuthClientEntryPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId));
@@ -2592,6 +2594,7 @@ public class OAuthClientEntryPersistenceImpl
 				_finderPathCountByUserId, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"oAuthClientEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, OAuthClientEntry::getUserId));
@@ -2620,10 +2623,10 @@ public class OAuthClientEntryPersistenceImpl
 			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
 			_SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
 			_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
-			OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OAuthClientEntry::getCompanyId),
+				true, true, OAuthClientEntry::getCompanyId),
 			new FinderColumn<>(
 				"oAuthClientEntry.", "authServerWellKnownURI",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2637,17 +2640,18 @@ public class OAuthClientEntryPersistenceImpl
 			},
 			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
 			false, OAuthClientEntry::getCompanyId,
-			OAuthClientEntry::getAuthServerWellKnownURI,
-			OAuthClientEntry::getClientId);
+			convertNullFunction(OAuthClientEntry::getAuthServerWellKnownURI),
+			convertNullFunction(OAuthClientEntry::getClientId));
 
 		_uniquePersistenceFinderByC_A_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A_C, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, OAuthClientEntry::getCompanyId),
+				true, true, OAuthClientEntry::getCompanyId),
 			new FinderColumn<>(
 				"oAuthClientEntry.", "authServerWellKnownURI",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientEntry::getAuthServerWellKnownURI),
 			new FinderColumn<>(
 				"oAuthClientEntry.", "clientId", FinderColumn.Type.STRING, "=",
@@ -2657,14 +2661,15 @@ public class OAuthClientEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			OAuthClientEntry::getExternalReferenceCode,
+			convertNullFunction(OAuthClientEntry::getExternalReferenceCode),
 			OAuthClientEntry::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C, _SQL_SELECT_OAUTHCLIENTENTRY_WHERE,
+			"",
 			new FinderColumn<>(
 				"oAuthClientEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				OAuthClientEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG, "=",
@@ -2762,4 +2767,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1137596655
+// LIFERAY-SERVICE-BUILDER-HASH:-855774998

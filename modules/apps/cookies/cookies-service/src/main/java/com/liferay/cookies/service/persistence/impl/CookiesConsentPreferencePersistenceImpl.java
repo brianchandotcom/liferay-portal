@@ -848,7 +848,7 @@ public class CookiesConsentPreferencePersistenceImpl
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cookiesConsentPreference.", "userId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -880,7 +880,7 @@ public class CookiesConsentPreferencePersistenceImpl
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cookiesConsentPreference.", "expirationDate",
 					FinderColumn.Type.DATE, "=", true, true,
@@ -911,10 +911,10 @@ public class CookiesConsentPreferencePersistenceImpl
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 			_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 			CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "userId", FinderColumn.Type.LONG,
-				"=", true, false, CookiesConsentPreference::getUserId),
+				"=", true, true, CookiesConsentPreference::getUserId),
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "domain", FinderColumn.Type.STRING,
 				"=", true, true, CookiesConsentPreference::getDomain));
@@ -927,18 +927,18 @@ public class CookiesConsentPreferencePersistenceImpl
 			},
 			new String[] {"userId", "domain", "name"}, false,
 			CookiesConsentPreference::getUserId,
-			CookiesConsentPreference::getDomain,
-			CookiesConsentPreference::getName);
+			convertNullFunction(CookiesConsentPreference::getDomain),
+			convertNullFunction(CookiesConsentPreference::getName));
 
 		_uniquePersistenceFinderByU_D_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_D_N,
-			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
+			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE, "",
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "userId", FinderColumn.Type.LONG,
-				"=", true, false, CookiesConsentPreference::getUserId),
+				"=", true, true, CookiesConsentPreference::getUserId),
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "domain", FinderColumn.Type.STRING,
-				"=", true, false, CookiesConsentPreference::getDomain),
+				"=", true, true, CookiesConsentPreference::getDomain),
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "name", FinderColumn.Type.STRING,
 				"=", true, true, CookiesConsentPreference::getName));
@@ -1009,4 +1009,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:957745879
+// LIFERAY-SERVICE-BUILDER-HASH:-1209786025

@@ -1503,7 +1503,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 			_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 			CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"commerceAvailabilityEstimate.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1536,10 +1536,10 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					CommerceAvailabilityEstimate::getUuid),
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "companyId",
@@ -1572,7 +1572,7 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_SQL_SELECT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1676,4 +1676,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1387552294
+// LIFERAY-SERVICE-BUILDER-HASH:-802633549

@@ -5,17 +5,16 @@
 
 package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -33,7 +32,6 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * The persistence implementation for the finder where clause entry service.
@@ -67,6 +65,8 @@ public class FinderWhereClauseEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByName_Nickname;
 	private FinderPath _finderPathWithoutPaginationFindByName_Nickname;
 	private FinderPath _finderPathCountByName_Nickname;
+	private CollectionPersistenceFinder<FinderWhereClauseEntry>
+		_collectionPersistenceFinderByName_Nickname;
 
 	/**
 	 * Returns all the finder where clause entries where name = &#63;.
@@ -140,106 +140,9 @@ public class FinderWhereClauseEntryPersistenceImpl
 		OrderByComparator<FinderWhereClauseEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByName_Nickname;
-				finderArgs = new Object[] {name};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByName_Nickname;
-			finderArgs = new Object[] {name, start, end, orderByComparator};
-		}
-
-		List<FinderWhereClauseEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<FinderWhereClauseEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FinderWhereClauseEntry finderWhereClauseEntry : list) {
-					if (!name.equals(finderWhereClauseEntry.getName())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_FINDERWHERECLAUSEENTRY_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NICKNAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NICKNAME_NAME_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FinderWhereClauseEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				list = (List<FinderWhereClauseEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByName_Nickname.find(
+			finderCache, new Object[] {name}, start, end, orderByComparator,
+			useFinderCache);
 	}
 
 	/**
@@ -263,16 +166,9 @@ public class FinderWhereClauseEntryPersistenceImpl
 			return finderWhereClauseEntry;
 		}
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("name=");
-		sb.append(name);
-
-		sb.append("}");
-
-		throw new NoSuchFinderWhereClauseEntryException(sb.toString());
+		throw new NoSuchFinderWhereClauseEntryException(
+			_collectionPersistenceFinderByName_Nickname.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
 	}
 
 	/**
@@ -287,14 +183,8 @@ public class FinderWhereClauseEntryPersistenceImpl
 		String name,
 		OrderByComparator<FinderWhereClauseEntry> orderByComparator) {
 
-		List<FinderWhereClauseEntry> list = findByName_Nickname(
-			name, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByName_Nickname.fetchFirst(
+			finderCache, new Object[] {name}, orderByComparator);
 	}
 
 	/**
@@ -304,12 +194,8 @@ public class FinderWhereClauseEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByName_Nickname(String name) {
-		for (FinderWhereClauseEntry finderWhereClauseEntry :
-				findByName_Nickname(
-					name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(finderWhereClauseEntry);
-		}
+		_collectionPersistenceFinderByName_Nickname.remove(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -320,65 +206,9 @@ public class FinderWhereClauseEntryPersistenceImpl
 	 */
 	@Override
 	public int countByName_Nickname(String name) {
-		name = Objects.toString(name, "");
-
-		FinderPath finderPath = _finderPathCountByName_Nickname;
-
-		Object[] finderArgs = new Object[] {name};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_FINDERWHERECLAUSEENTRY_WHERE);
-
-			boolean bindName = false;
-
-			if (name.isEmpty()) {
-				sb.append(_FINDER_COLUMN_NAME_NICKNAME_NAME_3);
-			}
-			else {
-				bindName = true;
-
-				sb.append(_FINDER_COLUMN_NAME_NICKNAME_NAME_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindName) {
-					queryPos.add(name);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByName_Nickname.count(
+			finderCache, new Object[] {name});
 	}
-
-	private static final String _FINDER_COLUMN_NAME_NICKNAME_NAME_2 =
-		"finderWhereClauseEntry.name = ? AND finderWhereClauseEntry.nickname IS NOT NULL";
-
-	private static final String _FINDER_COLUMN_NAME_NICKNAME_NAME_3 =
-		"(finderWhereClauseEntry.name IS NULL OR finderWhereClauseEntry.name = '') AND finderWhereClauseEntry.nickname IS NOT NULL";
 
 	public FinderWhereClauseEntryPersistenceImpl() {
 		setModelClass(FinderWhereClauseEntry.class);
@@ -581,6 +411,20 @@ public class FinderWhereClauseEntryPersistenceImpl
 			new String[] {String.class.getName()}, new String[] {"name"},
 			false);
 
+		_collectionPersistenceFinderByName_Nickname =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByName_Nickname,
+				_finderPathWithoutPaginationFindByName_Nickname,
+				_finderPathCountByName_Nickname,
+				_SQL_SELECT_FINDERWHERECLAUSEENTRY_WHERE,
+				_SQL_COUNT_FINDERWHERECLAUSEENTRY_WHERE,
+				FinderWhereClauseEntryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX,
+				"finderWhereClauseEntry.nickname IS NOT NULL",
+				new FinderColumn<>(
+					"finderWhereClauseEntry.", "name", FinderColumn.Type.STRING,
+					"=", true, true, FinderWhereClauseEntry::getName));
+
 		FinderWhereClauseEntryUtil.setPersistence(this);
 	}
 
@@ -620,4 +464,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1316367068
+// LIFERAY-SERVICE-BUILDER-HASH:1932692274

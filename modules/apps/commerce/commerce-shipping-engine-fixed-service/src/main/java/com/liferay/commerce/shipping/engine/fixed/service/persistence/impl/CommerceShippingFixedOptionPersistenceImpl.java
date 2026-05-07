@@ -598,7 +598,7 @@ public class CommerceShippingFixedOptionPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
 				CommerceShippingFixedOptionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShippingFixedOption.", "commerceShippingMethodId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -609,14 +609,14 @@ public class CommerceShippingFixedOptionPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "key_"}, false,
 			CommerceShippingFixedOption::getCompanyId,
-			CommerceShippingFixedOption::getKey);
+			convertNullFunction(CommerceShippingFixedOption::getKey));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_K,
-			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE,
+			_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTION_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingFixedOption.", "companyId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShippingFixedOption::getCompanyId),
 			new FinderColumn<>(
 				"commerceShippingFixedOption.", "key", FinderColumn.Type.STRING,
@@ -692,4 +692,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-663445337
+// LIFERAY-SERVICE-BUILDER-HASH:-340702209

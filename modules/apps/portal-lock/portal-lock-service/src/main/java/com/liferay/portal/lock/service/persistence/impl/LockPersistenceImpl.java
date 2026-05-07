@@ -1305,7 +1305,7 @@ public class LockPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"lock_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Lock::getUuid));
@@ -1335,10 +1335,10 @@ public class LockPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_LOCK__WHERE,
 				_SQL_COUNT_LOCK__WHERE, LockModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"lock_.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, Lock::getUuid),
+					"lock_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+					Lock::getUuid),
 				new FinderColumn<>(
 					"lock_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Lock::getCompanyId));
@@ -1367,7 +1367,7 @@ public class LockPersistenceImpl
 				_finderPathWithoutPaginationFindByClassName,
 				_finderPathCountByClassName, _SQL_SELECT_LOCK__WHERE,
 				_SQL_COUNT_LOCK__WHERE, LockModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lock_.", "className", FinderColumn.Type.STRING, "=", true,
 					true, Lock::getClassName));
@@ -1390,7 +1390,7 @@ public class LockPersistenceImpl
 				this, _finderPathWithPaginationFindByLtExpirationDate, null,
 				_finderPathWithPaginationCountByLtExpirationDate,
 				_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"lock_.", "expirationDate", FinderColumn.Type.DATE, "<",
 					true, true, Lock::getExpirationDate));
@@ -1418,9 +1418,9 @@ public class LockPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C,
 			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, false,
+				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Lock::getCompanyId),
 			new FinderColumn<>(
 				"lock_.", "className", FinderColumn.Type.STRING, "=", true,
@@ -1429,14 +1429,15 @@ public class LockPersistenceImpl
 		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"className", "key_"}, false, Lock::getClassName,
-			Lock::getKey);
+			new String[] {"className", "key_"}, false,
+			convertNullFunction(Lock::getClassName),
+			convertNullFunction(Lock::getKey));
 
 		_uniquePersistenceFinderByC_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_K, _SQL_SELECT_LOCK__WHERE,
+			this, _finderPathFetchByC_K, _SQL_SELECT_LOCK__WHERE, "",
 			new FinderColumn<>(
 				"lock_.", "className", FinderColumn.Type.STRING, "=", true,
-				false, Lock::getClassName),
+				true, Lock::getClassName),
 			new FinderColumn<>(
 				"lock_.", "key", FinderColumn.Type.STRING, "=", true, true,
 				Lock::getKey));
@@ -1470,12 +1471,12 @@ public class LockPersistenceImpl
 			this, _finderPathWithPaginationFindByC_U_C,
 			_finderPathWithoutPaginationFindByC_U_C, _finderPathCountByC_U_C,
 			_SQL_SELECT_LOCK__WHERE, _SQL_COUNT_LOCK__WHERE,
-			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			LockModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, false,
+				"lock_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Lock::getCompanyId),
 			new FinderColumn<>(
-				"lock_.", "userId", FinderColumn.Type.LONG, "=", true, false,
+				"lock_.", "userId", FinderColumn.Type.LONG, "=", true, true,
 				Lock::getUserId),
 			new FinderColumn<>(
 				"lock_.", "className", FinderColumn.Type.STRING, "=", true,
@@ -1550,4 +1551,4 @@ public class LockPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-783711251
+// LIFERAY-SERVICE-BUILDER-HASH:907496562

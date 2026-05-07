@@ -7441,7 +7441,7 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getUuid));
@@ -7449,14 +7449,14 @@ public class DLFileEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, DLFileEntry::getUuid,
-			DLFileEntry::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(DLFileEntry::getUuid), DLFileEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEENTRY_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, DLFileEntry::getUuid),
+				true, DLFileEntry::getUuid),
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getGroupId));
@@ -7486,10 +7486,10 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, DLFileEntry::getUuid),
+					true, DLFileEntry::getUuid),
 				new FinderColumn<>(
 					"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getCompanyId));
@@ -7518,7 +7518,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getGroupId));
@@ -7547,7 +7547,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getCompanyId));
@@ -7576,7 +7576,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByRepositoryId,
 				_finderPathCountByRepositoryId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getRepositoryId));
@@ -7605,7 +7605,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByMimeType,
 				_finderPathCountByMimeType, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "mimeType", FinderColumn.Type.STRING, "=",
 					true, true, DLFileEntry::getMimeType));
@@ -7634,7 +7634,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByFileEntryTypeId,
 				_finderPathCountByFileEntryTypeId,
 				_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "fileEntryTypeId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getFileEntryTypeId));
@@ -7663,7 +7663,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindBySmallImageId,
 				_finderPathCountBySmallImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getSmallImageId));
@@ -7692,7 +7692,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByLargeImageId,
 				_finderPathCountByLargeImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "largeImageId", FinderColumn.Type.LONG, "=",
 					true, true, DLFileEntry::getLargeImageId));
@@ -7721,7 +7721,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCustom1ImageId,
 				_finderPathCountByCustom1ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "custom1ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom1ImageId));
@@ -7750,7 +7750,7 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByCustom2ImageId,
 				_finderPathCountByCustom2ImageId, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "custom2ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom2ImageId));
@@ -7778,10 +7778,10 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByG_U,
 			_finderPathWithoutPaginationFindByG_U, _finderPathCountByG_U,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getGroupId),
+				true, DLFileEntry::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntry.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getUserId));
@@ -7833,10 +7833,10 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByR_F,
 			_finderPathWithoutPaginationFindByR_F, _finderPathCountByR_F,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "repositoryId", FinderColumn.Type.LONG, "=",
-				true, false, DLFileEntry::getRepositoryId),
+				true, true, DLFileEntry::getRepositoryId),
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getFolderId));
@@ -7864,10 +7864,10 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByF_N,
 			_finderPathWithoutPaginationFindByF_N, _finderPathCountByF_N,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getFolderId),
+				true, DLFileEntry::getFolderId),
 			new FinderColumn<>(
 				"dlFileEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getName));
@@ -7910,16 +7910,16 @@ public class DLFileEntryPersistenceImpl
 			},
 			new String[] {"groupId", "folderId", "name"}, false,
 			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			DLFileEntry::getName);
+			convertNullFunction(DLFileEntry::getName));
 
 		_uniquePersistenceFinderByG_F_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_N, _SQL_SELECT_DLFILEENTRY_WHERE,
+			this, _finderPathFetchByG_F_N, _SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getGroupId),
+				true, DLFileEntry::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getFolderId),
+				true, DLFileEntry::getFolderId),
 			new FinderColumn<>(
 				"dlFileEntry.", "name", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getName));
@@ -7932,16 +7932,16 @@ public class DLFileEntryPersistenceImpl
 			},
 			new String[] {"groupId", "folderId", "fileName"}, false,
 			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			DLFileEntry::getFileName);
+			convertNullFunction(DLFileEntry::getFileName));
 
 		_uniquePersistenceFinderByG_F_FN = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_FN, _SQL_SELECT_DLFILEENTRY_WHERE,
+			this, _finderPathFetchByG_F_FN, _SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getGroupId),
+				true, DLFileEntry::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getFolderId),
+				true, DLFileEntry::getFolderId),
 			new FinderColumn<>(
 				"dlFileEntry.", "fileName", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getFileName));
@@ -7954,16 +7954,16 @@ public class DLFileEntryPersistenceImpl
 			},
 			new String[] {"groupId", "folderId", "title"}, false,
 			DLFileEntry::getGroupId, DLFileEntry::getFolderId,
-			DLFileEntry::getTitle);
+			convertNullFunction(DLFileEntry::getTitle));
 
 		_uniquePersistenceFinderByG_F_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_F_T, _SQL_SELECT_DLFILEENTRY_WHERE,
+			this, _finderPathFetchByG_F_T, _SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getGroupId),
+				true, DLFileEntry::getGroupId),
 			new FinderColumn<>(
 				"dlFileEntry.", "folderId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getFolderId),
+				true, DLFileEntry::getFolderId),
 			new FinderColumn<>(
 				"dlFileEntry.", "title", FinderColumn.Type.STRING, "=", true,
 				true, DLFileEntry::getTitle));
@@ -8025,13 +8025,13 @@ public class DLFileEntryPersistenceImpl
 			this, _finderPathWithPaginationFindByC_C_C,
 			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
 			_SQL_SELECT_DLFILEENTRY_WHERE, _SQL_COUNT_DLFILEENTRY_WHERE,
-			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "companyId", FinderColumn.Type.LONG, "=", true,
-				false, DLFileEntry::getCompanyId),
+				true, DLFileEntry::getCompanyId),
 			new FinderColumn<>(
 				"dlFileEntry.", "classNameId", FinderColumn.Type.LONG, "=",
-				true, false, DLFileEntry::getClassNameId),
+				true, true, DLFileEntry::getClassNameId),
 			new FinderColumn<>(
 				"dlFileEntry.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, DLFileEntry::getClassPK));
@@ -8080,16 +8080,16 @@ public class DLFileEntryPersistenceImpl
 				_finderPathWithoutPaginationFindByS_L_C1_C2,
 				_finderPathCountByS_L_C1_C2, _SQL_SELECT_DLFILEENTRY_WHERE,
 				_SQL_COUNT_DLFILEENTRY_WHERE,
-				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				DLFileEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileEntry.", "smallImageId", FinderColumn.Type.LONG, "=",
-					true, false, DLFileEntry::getSmallImageId),
+					true, true, DLFileEntry::getSmallImageId),
 				new FinderColumn<>(
 					"dlFileEntry.", "largeImageId", FinderColumn.Type.LONG, "=",
-					true, false, DLFileEntry::getLargeImageId),
+					true, true, DLFileEntry::getLargeImageId),
 				new FinderColumn<>(
 					"dlFileEntry.", "custom1ImageId", FinderColumn.Type.LONG,
-					"=", true, false, DLFileEntry::getCustom1ImageId),
+					"=", true, true, DLFileEntry::getCustom1ImageId),
 				new FinderColumn<>(
 					"dlFileEntry.", "custom2ImageId", FinderColumn.Type.LONG,
 					"=", true, true, DLFileEntry::getCustom2ImageId));
@@ -8098,13 +8098,14 @@ public class DLFileEntryPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "groupId"}, false,
-			DLFileEntry::getExternalReferenceCode, DLFileEntry::getGroupId);
+			convertNullFunction(DLFileEntry::getExternalReferenceCode),
+			DLFileEntry::getGroupId);
 
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILEENTRY_WHERE,
+			this, _finderPathFetchByERC_G, _SQL_SELECT_DLFILEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"dlFileEntry.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				DLFileEntry::getExternalReferenceCode),
 			new FinderColumn<>(
 				"dlFileEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
@@ -8169,4 +8170,4 @@ public class DLFileEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1702238250
+// LIFERAY-SERVICE-BUILDER-HASH:-793353919

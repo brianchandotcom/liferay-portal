@@ -4114,7 +4114,7 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "styleBookEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -4130,10 +4130,10 @@ public class StyleBookEntryVersionPersistenceImpl
 		_uniquePersistenceFinderByStyleBookEntryId_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByStyleBookEntryId_Version,
-				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
+				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "styleBookEntryId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					StyleBookEntryVersion::getStyleBookEntryId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4164,6 +4164,7 @@ public class StyleBookEntryVersionPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntryVersion::getUuid));
@@ -4195,10 +4196,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getUuid),
+					"=", true, true, StyleBookEntryVersion::getUuid),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4231,10 +4232,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getUuid),
+					"=", true, true, StyleBookEntryVersion::getUuid),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, StyleBookEntryVersion::getGroupId));
@@ -4246,19 +4247,20 @@ public class StyleBookEntryVersionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"uuid_", "groupId", "version"}, false,
-			StyleBookEntryVersion::getUuid, StyleBookEntryVersion::getGroupId,
+			convertNullFunction(StyleBookEntryVersion::getUuid),
+			StyleBookEntryVersion::getGroupId,
 			StyleBookEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByUUID_G_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByUUID_G_Version,
-				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
+				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getUuid),
+					"=", true, true, StyleBookEntryVersion::getUuid),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4291,10 +4293,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getUuid),
+					"=", true, true, StyleBookEntryVersion::getUuid),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -4333,13 +4335,13 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getUuid),
+					"=", true, true, StyleBookEntryVersion::getUuid),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "companyId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					StyleBookEntryVersion::getCompanyId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4372,7 +4374,7 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, StyleBookEntryVersion::getGroupId));
@@ -4404,10 +4406,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4438,9 +4440,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, StyleBookEntryVersion::getGroupId),
+				"=", true, true, StyleBookEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "defaultStyleBookEntry",
 				FinderColumn.Type.BOOLEAN, "=", true, true,
@@ -4480,13 +4483,13 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "defaultStyleBookEntry",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					StyleBookEntryVersion::isDefaultStyleBookEntry),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4518,9 +4521,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, StyleBookEntryVersion::getGroupId),
+				"=", true, true, StyleBookEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "name", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntryVersion::getName));
@@ -4558,13 +4562,13 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "name", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getName),
+					"=", true, true, StyleBookEntryVersion::getName),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4597,10 +4601,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "name", FinderColumn.Type.STRING,
 					"=", true, true, StyleBookEntryVersion::getName));
@@ -4638,13 +4642,13 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "name", FinderColumn.Type.STRING,
-					"=", true, false, StyleBookEntryVersion::getName),
+					"=", true, true, StyleBookEntryVersion::getName),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
 					FinderColumn.Type.INTEGER, "=", true, true,
@@ -4677,10 +4681,10 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "styleBookEntryKey",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -4694,19 +4698,19 @@ public class StyleBookEntryVersionPersistenceImpl
 			},
 			new String[] {"groupId", "styleBookEntryKey", "version"}, false,
 			StyleBookEntryVersion::getGroupId,
-			StyleBookEntryVersion::getStyleBookEntryKey,
+			convertNullFunction(StyleBookEntryVersion::getStyleBookEntryKey),
 			StyleBookEntryVersion::getVersion);
 
 		_uniquePersistenceFinderByG_SBEK_Version =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByG_SBEK_Version,
-				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
+				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "styleBookEntryKey",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntryVersion::getStyleBookEntryKey),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4738,9 +4742,10 @@ public class StyleBookEntryVersionPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, StyleBookEntryVersion::getGroupId),
+				"=", true, true, StyleBookEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "themeId", FinderColumn.Type.STRING,
 				"=", true, true, StyleBookEntryVersion::getThemeId));
@@ -4778,13 +4783,13 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "themeId",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntryVersion::getThemeId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4823,12 +4828,13 @@ public class StyleBookEntryVersionPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-				"=", true, false, StyleBookEntryVersion::getGroupId),
+				"=", true, true, StyleBookEntryVersion::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "defaultStyleBookEntry",
-				FinderColumn.Type.BOOLEAN, "=", true, false,
+				FinderColumn.Type.BOOLEAN, "=", true, true,
 				StyleBookEntryVersion::isDefaultStyleBookEntry),
 			new FinderColumn<>(
 				"styleBookEntryVersion.", "themeId", FinderColumn.Type.STRING,
@@ -4877,17 +4883,17 @@ public class StyleBookEntryVersionPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
-					"=", true, false, StyleBookEntryVersion::getGroupId),
+					"=", true, true, StyleBookEntryVersion::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "defaultStyleBookEntry",
-					FinderColumn.Type.BOOLEAN, "=", true, false,
+					FinderColumn.Type.BOOLEAN, "=", true, true,
 					StyleBookEntryVersion::isDefaultStyleBookEntry),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "themeId",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntryVersion::getThemeId),
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "version",
@@ -4966,4 +4972,4 @@ public class StyleBookEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1954466146
+// LIFERAY-SERVICE-BUILDER-HASH:-1960095693

@@ -1203,7 +1203,7 @@ public class KBTemplatePersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_KBTEMPLATE_WHERE, _SQL_COUNT_KBTEMPLATE_WHERE,
-			KBTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			KBTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, KBTemplate::getUuid));
@@ -1211,14 +1211,14 @@ public class KBTemplatePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, KBTemplate::getUuid,
-			KBTemplate::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(KBTemplate::getUuid), KBTemplate::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBTEMPLATE_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBTEMPLATE_WHERE, "",
 			new FinderColumn<>(
 				"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
-				false, KBTemplate::getUuid),
+				true, KBTemplate::getUuid),
 			new FinderColumn<>(
 				"kbTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBTemplate::getGroupId));
@@ -1248,10 +1248,10 @@ public class KBTemplatePersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_KBTEMPLATE_WHERE,
 				_SQL_COUNT_KBTEMPLATE_WHERE, KBTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbTemplate.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, KBTemplate::getUuid),
+					true, KBTemplate::getUuid),
 				new FinderColumn<>(
 					"kbTemplate.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBTemplate::getCompanyId));
@@ -1280,7 +1280,7 @@ public class KBTemplatePersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_KBTEMPLATE_WHERE,
 				_SQL_COUNT_KBTEMPLATE_WHERE, KBTemplateModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBTemplate::getGroupId));
@@ -1380,4 +1380,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:556771526
+// LIFERAY-SERVICE-BUILDER-HASH:390100347

@@ -716,7 +716,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 				_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE,
 				_SQL_COUNT_CPDEFINITIONLOCALIZATION_WHERE,
 				CPDefinitionLocalizationModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cpDefinitionLocalization.", "CPDefinitionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -727,15 +727,15 @@ public class CPDefinitionLocalizationPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"CPDefinitionId", "languageId"}, false,
 			CPDefinitionLocalization::getCPDefinitionId,
-			CPDefinitionLocalization::getLanguageId);
+			convertNullFunction(CPDefinitionLocalization::getLanguageId));
 
 		_uniquePersistenceFinderByCPDefinitionId_LanguageId =
 			new UniquePersistenceFinder<>(
 				this, _finderPathFetchByCPDefinitionId_LanguageId,
-				_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE,
+				_SQL_SELECT_CPDEFINITIONLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"cpDefinitionLocalization.", "CPDefinitionId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CPDefinitionLocalization::getCPDefinitionId),
 				new FinderColumn<>(
 					"cpDefinitionLocalization.", "languageId",
@@ -811,4 +811,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-512699704
+// LIFERAY-SERVICE-BUILDER-HASH:-561351076

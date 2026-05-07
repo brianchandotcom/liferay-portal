@@ -840,7 +840,7 @@ public class KaleoDefinitionVersionPersistenceImpl
 				_SQL_SELECT_KALEODEFINITIONVERSION_WHERE,
 				_SQL_COUNT_KALEODEFINITIONVERSION_WHERE,
 				KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoDefinitionVersion.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -871,9 +871,10 @@ public class KaleoDefinitionVersionPersistenceImpl
 			_SQL_SELECT_KALEODEFINITIONVERSION_WHERE,
 			_SQL_COUNT_KALEODEFINITIONVERSION_WHERE,
 			KaleoDefinitionVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"kaleoDefinitionVersion.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, KaleoDefinitionVersion::getCompanyId),
+				"=", true, true, KaleoDefinitionVersion::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinitionVersion.", "name", FinderColumn.Type.STRING,
 				"=", true, true, KaleoDefinitionVersion::getName));
@@ -886,18 +887,18 @@ public class KaleoDefinitionVersionPersistenceImpl
 			},
 			new String[] {"companyId", "name", "version"}, false,
 			KaleoDefinitionVersion::getCompanyId,
-			KaleoDefinitionVersion::getName,
-			KaleoDefinitionVersion::getVersion);
+			convertNullFunction(KaleoDefinitionVersion::getName),
+			convertNullFunction(KaleoDefinitionVersion::getVersion));
 
 		_uniquePersistenceFinderByC_N_V = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N_V,
-			_SQL_SELECT_KALEODEFINITIONVERSION_WHERE,
+			_SQL_SELECT_KALEODEFINITIONVERSION_WHERE, "",
 			new FinderColumn<>(
 				"kaleoDefinitionVersion.", "companyId", FinderColumn.Type.LONG,
-				"=", true, false, KaleoDefinitionVersion::getCompanyId),
+				"=", true, true, KaleoDefinitionVersion::getCompanyId),
 			new FinderColumn<>(
 				"kaleoDefinitionVersion.", "name", FinderColumn.Type.STRING,
-				"=", true, false, KaleoDefinitionVersion::getName),
+				"=", true, true, KaleoDefinitionVersion::getName),
 			new FinderColumn<>(
 				"kaleoDefinitionVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, KaleoDefinitionVersion::getVersion));
@@ -971,4 +972,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1384754514
+// LIFERAY-SERVICE-BUILDER-HASH:1188127050

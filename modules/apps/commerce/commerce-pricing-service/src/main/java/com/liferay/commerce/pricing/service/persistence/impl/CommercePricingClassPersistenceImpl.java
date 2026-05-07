@@ -1769,6 +1769,7 @@ public class CommercePricingClassPersistenceImpl
 			_SQL_SELECT_COMMERCEPRICINGCLASS_WHERE,
 			_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 			CommercePricingClassModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commercePricingClass.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommercePricingClass::getUuid));
@@ -1800,10 +1801,10 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICINGCLASS_WHERE,
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePricingClass.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, CommercePricingClass::getUuid),
+					"=", true, true, CommercePricingClass::getUuid),
 				new FinderColumn<>(
 					"commercePricingClass.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1835,7 +1836,7 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_SELECT_COMMERCEPRICINGCLASS_WHERE,
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commercePricingClass.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1845,15 +1846,15 @@ public class CommercePricingClassPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommercePricingClass::getExternalReferenceCode,
+			convertNullFunction(CommercePricingClass::getExternalReferenceCode),
 			CommercePricingClass::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCEPRICINGCLASS_WHERE,
+			_SQL_SELECT_COMMERCEPRICINGCLASS_WHERE, "",
 			new FinderColumn<>(
 				"commercePricingClass.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommercePricingClass::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commercePricingClass.", "companyId", FinderColumn.Type.LONG,
@@ -1955,4 +1956,4 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1575826848
+// LIFERAY-SERVICE-BUILDER-HASH:1172693113

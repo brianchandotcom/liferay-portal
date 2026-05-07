@@ -1945,7 +1945,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 			AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX,
+			_ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "uuid",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -1955,15 +1955,15 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			AssetListEntrySegmentsEntryRel::getUuid,
+			convertNullFunction(AssetListEntrySegmentsEntryRel::getUuid),
 			AssetListEntrySegmentsEntryRel::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
+			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "uuid",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				AssetListEntrySegmentsEntryRel::getUuid),
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "groupId",
@@ -1997,10 +1997,10 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "uuid",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					AssetListEntrySegmentsEntryRel::getUuid),
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "companyId",
@@ -2033,7 +2033,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "assetListEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2065,7 +2065,7 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 				_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
 				AssetListEntrySegmentsEntryRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"assetListEntrySegmentsEntryRel.", "segmentsEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2080,10 +2080,10 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 
 		_uniquePersistenceFinderByA_S = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_S,
-			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE,
+			_SQL_SELECT_ASSETLISTENTRYSEGMENTSENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "assetListEntryId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				AssetListEntrySegmentsEntryRel::getAssetListEntryId),
 			new FinderColumn<>(
 				"assetListEntrySegmentsEntryRel.", "segmentsEntryId",
@@ -2189,4 +2189,4 @@ public class AssetListEntrySegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1491541740
+// LIFERAY-SERVICE-BUILDER-HASH:2125280098

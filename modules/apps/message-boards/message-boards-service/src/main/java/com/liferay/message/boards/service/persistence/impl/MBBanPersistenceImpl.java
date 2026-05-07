@@ -1356,7 +1356,7 @@ public class MBBanPersistenceImpl
 			this, _finderPathWithPaginationFindByUuid,
 			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_MBBAN_WHERE, _SQL_COUNT_MBBAN_WHERE,
-			MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			MBBanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBBan::getUuid));
@@ -1364,13 +1364,13 @@ public class MBBanPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false, MBBan::getUuid,
-			MBBan::getGroupId);
+			new String[] {"uuid_", "groupId"}, false,
+			convertNullFunction(MBBan::getUuid), MBBan::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBBAN_WHERE,
+			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBBAN_WHERE, "",
 			new FinderColumn<>(
-				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, false,
+				"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBBan::getUuid),
 			new FinderColumn<>(
 				"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true, true,
@@ -1401,10 +1401,10 @@ public class MBBanPersistenceImpl
 				_finderPathWithoutPaginationFindByUuid_C,
 				_finderPathCountByUuid_C, _SQL_SELECT_MBBAN_WHERE,
 				_SQL_COUNT_MBBAN_WHERE, MBBanModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true,
-					false, MBBan::getUuid),
+					"mbBan.", "uuid", FinderColumn.Type.STRING, "=", true, true,
+					MBBan::getUuid),
 				new FinderColumn<>(
 					"mbBan.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getCompanyId));
@@ -1433,7 +1433,7 @@ public class MBBanPersistenceImpl
 				_finderPathWithoutPaginationFindByGroupId,
 				_finderPathCountByGroupId, _SQL_SELECT_MBBAN_WHERE,
 				_SQL_COUNT_MBBAN_WHERE, MBBanModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getGroupId));
@@ -1461,7 +1461,7 @@ public class MBBanPersistenceImpl
 				_finderPathWithoutPaginationFindByUserId,
 				_finderPathCountByUserId, _SQL_SELECT_MBBAN_WHERE,
 				_SQL_COUNT_MBBAN_WHERE, MBBanModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbBan.", "userId", FinderColumn.Type.LONG, "=", true, true,
 					MBBan::getUserId));
@@ -1490,7 +1490,7 @@ public class MBBanPersistenceImpl
 				_finderPathWithoutPaginationFindByBanUserId,
 				_finderPathCountByBanUserId, _SQL_SELECT_MBBAN_WHERE,
 				_SQL_COUNT_MBBAN_WHERE, MBBanModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbBan.", "banUserId", FinderColumn.Type.LONG, "=", true,
 					true, MBBan::getBanUserId));
@@ -1502,9 +1502,9 @@ public class MBBanPersistenceImpl
 			MBBan::getBanUserId);
 
 		_uniquePersistenceFinderByG_B = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_B, _SQL_SELECT_MBBAN_WHERE,
+			this, _finderPathFetchByG_B, _SQL_SELECT_MBBAN_WHERE, "",
 			new FinderColumn<>(
-				"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true, false,
+				"mbBan.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				MBBan::getGroupId),
 			new FinderColumn<>(
 				"mbBan.", "banUserId", FinderColumn.Type.LONG, "=", true, true,
@@ -1582,4 +1582,4 @@ public class MBBanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1875799182
+// LIFERAY-SERVICE-BUILDER-HASH:1911229884

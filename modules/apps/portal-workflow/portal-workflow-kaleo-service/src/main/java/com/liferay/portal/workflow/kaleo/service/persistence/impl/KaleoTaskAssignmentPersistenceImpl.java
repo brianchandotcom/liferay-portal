@@ -1094,7 +1094,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENT_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENT_WHERE,
 				KaleoTaskAssignmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, KaleoTaskAssignment::getCompanyId));
@@ -1130,7 +1130,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENT_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENT_WHERE,
 				KaleoTaskAssignmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "kaleoDefinitionVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1163,10 +1163,10 @@ public class KaleoTaskAssignmentPersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENT_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENT_WHERE,
 				KaleoTaskAssignmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "kaleoClassName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KaleoTaskAssignment::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "kaleoClassPK",
@@ -1215,14 +1215,14 @@ public class KaleoTaskAssignmentPersistenceImpl
 				_SQL_SELECT_KALEOTASKASSIGNMENT_WHERE,
 				_SQL_COUNT_KALEOTASKASSIGNMENT_WHERE,
 				KaleoTaskAssignmentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "kaleoClassName",
-					FinderColumn.Type.STRING, "=", true, false,
+					FinderColumn.Type.STRING, "=", true, true,
 					KaleoTaskAssignment::getKaleoClassName),
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "kaleoClassPK",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					KaleoTaskAssignment::getKaleoClassPK),
 				new FinderColumn<>(
 					"kaleoTaskAssignment.", "assigneeClassName",
@@ -1298,4 +1298,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-18127251
+// LIFERAY-SERVICE-BUILDER-HASH:-125016900

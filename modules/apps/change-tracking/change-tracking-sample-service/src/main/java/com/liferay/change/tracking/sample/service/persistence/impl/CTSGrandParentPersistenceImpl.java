@@ -418,7 +418,7 @@ public class CTSGrandParentPersistenceImpl
 				_finderPathWithoutPaginationFindByCompanyId,
 				_finderPathCountByCompanyId, _SQL_SELECT_CTSGRANDPARENT_WHERE,
 				_SQL_COUNT_CTSGRANDPARENT_WHERE,
-				CTSGrandParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				CTSGrandParentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsGrandParent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSGrandParent::getCompanyId));
@@ -489,4 +489,4 @@ public class CTSGrandParentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:97072506
+// LIFERAY-SERVICE-BUILDER-HASH:1096979004

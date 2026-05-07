@@ -2610,6 +2610,7 @@ public class BatchPlannerPlanPersistenceImpl
 				_finderPathCountByCompanyId, _SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 				_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
 				BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
 				new FinderColumn<>(
 					"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, BatchPlannerPlan::getCompanyId));
@@ -2638,10 +2639,10 @@ public class BatchPlannerPlanPersistenceImpl
 			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
 			_SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 			_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
-			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, BatchPlannerPlan::getCompanyId),
+				true, true, BatchPlannerPlan::getCompanyId),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, BatchPlannerPlan::getUserId));
@@ -2670,10 +2671,10 @@ public class BatchPlannerPlanPersistenceImpl
 			_finderPathWithoutPaginationFindByC_E, _finderPathCountByC_E,
 			_SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 			_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
-			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, BatchPlannerPlan::getCompanyId),
+				true, true, BatchPlannerPlan::getCompanyId),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "export", FinderColumn.Type.BOOLEAN, "=",
 				true, true, BatchPlannerPlan::isExport));
@@ -2702,10 +2703,10 @@ public class BatchPlannerPlanPersistenceImpl
 			_finderPathWithoutPaginationFindByC_N, _finderPathCountByC_N,
 			_SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 			_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
-			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, BatchPlannerPlan::getCompanyId),
+				true, true, BatchPlannerPlan::getCompanyId),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "name", FinderColumn.Type.STRING, "=",
 				true, true, BatchPlannerPlan::getName));
@@ -2734,10 +2735,10 @@ public class BatchPlannerPlanPersistenceImpl
 			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 			_SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 			_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
-			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, BatchPlannerPlan::getCompanyId),
+				true, true, BatchPlannerPlan::getCompanyId),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "template", FinderColumn.Type.BOOLEAN, "=",
 				true, true, BatchPlannerPlan::isTemplate));
@@ -2772,13 +2773,13 @@ public class BatchPlannerPlanPersistenceImpl
 			_finderPathWithoutPaginationFindByC_E_T, _finderPathCountByC_E_T,
 			_SQL_SELECT_BATCHPLANNERPLAN_WHERE,
 			_SQL_COUNT_BATCHPLANNERPLAN_WHERE,
-			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			BatchPlannerPlanModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"batchPlannerPlan.", "companyId", FinderColumn.Type.LONG, "=",
-				true, false, BatchPlannerPlan::getCompanyId),
+				true, true, BatchPlannerPlan::getCompanyId),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "export", FinderColumn.Type.BOOLEAN, "=",
-				true, false, BatchPlannerPlan::isExport),
+				true, true, BatchPlannerPlan::isExport),
 			new FinderColumn<>(
 				"batchPlannerPlan.", "template", FinderColumn.Type.BOOLEAN, "=",
 				true, true, BatchPlannerPlan::isTemplate));
@@ -2875,4 +2876,4 @@ public class BatchPlannerPlanPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1739690191
+// LIFERAY-SERVICE-BUILDER-HASH:1575676997

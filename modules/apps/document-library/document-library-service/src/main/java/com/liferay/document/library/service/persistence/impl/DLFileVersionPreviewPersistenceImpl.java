@@ -896,7 +896,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileVersionPreview.", "fileEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -928,7 +928,7 @@ public class DLFileVersionPreviewPersistenceImpl
 				_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
 				_SQL_COUNT_DLFILEVERSIONPREVIEW_WHERE,
 				DLFileVersionPreviewModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"dlFileVersionPreview.", "fileVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -943,9 +943,10 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		_uniquePersistenceFinderByF_F = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_F, _SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
+			"",
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileEntryId", FinderColumn.Type.LONG,
-				"=", true, false, DLFileVersionPreview::getFileEntryId),
+				"=", true, true, DLFileVersionPreview::getFileEntryId),
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileVersionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -964,13 +965,13 @@ public class DLFileVersionPreviewPersistenceImpl
 
 		_uniquePersistenceFinderByF_F_P = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByF_F_P,
-			_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE,
+			_SQL_SELECT_DLFILEVERSIONPREVIEW_WHERE, "",
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileEntryId", FinderColumn.Type.LONG,
-				"=", true, false, DLFileVersionPreview::getFileEntryId),
+				"=", true, true, DLFileVersionPreview::getFileEntryId),
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "fileVersionId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				DLFileVersionPreview::getFileVersionId),
 			new FinderColumn<>(
 				"dlFileVersionPreview.", "previewStatus",
@@ -1046,4 +1047,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-822323394
+// LIFERAY-SERVICE-BUILDER-HASH:245803540

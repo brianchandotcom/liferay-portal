@@ -1238,6 +1238,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceOrderTypeRel::getUuid));
@@ -1269,10 +1270,10 @@ public class CommerceOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 				CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceOrderTypeRel.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, CommerceOrderTypeRel::getUuid),
+					"=", true, true, CommerceOrderTypeRel::getUuid),
 				new FinderColumn<>(
 					"commerceOrderTypeRel.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1304,7 +1305,7 @@ public class CommerceOrderTypeRelPersistenceImpl
 				_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 				_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 				CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceOrderTypeRel.", "commerceOrderTypeId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1335,9 +1336,10 @@ public class CommerceOrderTypeRelPersistenceImpl
 			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
 			_SQL_COUNT_COMMERCEORDERTYPEREL_WHERE,
 			CommerceOrderTypeRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceOrderTypeRel::getClassNameId),
+				"=", true, true, CommerceOrderTypeRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "commerceOrderTypeId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1355,13 +1357,13 @@ public class CommerceOrderTypeRelPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
+			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "classNameId", FinderColumn.Type.LONG,
-				"=", true, false, CommerceOrderTypeRel::getClassNameId),
+				"=", true, true, CommerceOrderTypeRel::getClassNameId),
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "classPK", FinderColumn.Type.LONG, "=",
-				true, false, CommerceOrderTypeRel::getClassPK),
+				true, true, CommerceOrderTypeRel::getClassPK),
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "commerceOrderTypeId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -1371,15 +1373,15 @@ public class CommerceOrderTypeRelPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceOrderTypeRel::getExternalReferenceCode,
+			convertNullFunction(CommerceOrderTypeRel::getExternalReferenceCode),
 			CommerceOrderTypeRel::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE,
+			_SQL_SELECT_COMMERCEORDERTYPEREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceOrderTypeRel::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceOrderTypeRel.", "companyId", FinderColumn.Type.LONG,
@@ -1454,4 +1456,4 @@ public class CommerceOrderTypeRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:297286868
+// LIFERAY-SERVICE-BUILDER-HASH:-321044467

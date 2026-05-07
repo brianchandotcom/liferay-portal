@@ -1852,6 +1852,7 @@ public class CommerceShipmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 			CommerceShipmentItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, CommerceShipmentItem::getUuid));
@@ -1860,14 +1861,15 @@ public class CommerceShipmentItemPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "groupId"}, false,
-			CommerceShipmentItem::getUuid, CommerceShipmentItem::getGroupId);
+			convertNullFunction(CommerceShipmentItem::getUuid),
+			CommerceShipmentItem::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUUID_G,
-			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
+			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "uuid", FinderColumn.Type.STRING, "=",
-				true, false, CommerceShipmentItem::getUuid),
+				true, true, CommerceShipmentItem::getUuid),
 			new FinderColumn<>(
 				"commerceShipmentItem.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, CommerceShipmentItem::getGroupId));
@@ -1899,10 +1901,10 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "uuid", FinderColumn.Type.STRING,
-					"=", true, false, CommerceShipmentItem::getUuid),
+					"=", true, true, CommerceShipmentItem::getUuid),
 				new FinderColumn<>(
 					"commerceShipmentItem.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1934,7 +1936,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceShipmentItem::getGroupId));
@@ -1965,7 +1967,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceShipmentId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1997,7 +1999,7 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceOrderItemId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2028,9 +2030,10 @@ public class CommerceShipmentItemPersistenceImpl
 			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 			_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 			CommerceShipmentItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+			"",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceShipmentId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShipmentItem::getCommerceShipmentId),
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceOrderItemId",
@@ -2052,14 +2055,14 @@ public class CommerceShipmentItemPersistenceImpl
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_C,
-			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
+			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceShipmentId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShipmentItem::getCommerceShipmentId),
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceOrderItemId",
-				FinderColumn.Type.LONG, "=", true, false,
+				FinderColumn.Type.LONG, "=", true, true,
 				CommerceShipmentItem::getCommerceOrderItemId),
 			new FinderColumn<>(
 				"commerceShipmentItem.", "commerceInventoryWarehouseId",
@@ -2096,14 +2099,14 @@ public class CommerceShipmentItemPersistenceImpl
 				_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
 				_SQL_COUNT_COMMERCESHIPMENTITEM_WHERE,
 				CommerceShipmentItemModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceShipmentId",
-					FinderColumn.Type.LONG, "=", true, false,
+					FinderColumn.Type.LONG, "=", true, true,
 					CommerceShipmentItem::getCommerceShipmentId),
 				new FinderColumn<>(
 					"commerceShipmentItem.", "commerceInventoryWarehouseId",
-					FinderColumn.Type.LONG, "!=", true, false,
+					FinderColumn.Type.LONG, "!=", true, true,
 					CommerceShipmentItem::getCommerceInventoryWarehouseId),
 				new FinderColumn<>(
 					"commerceShipmentItem.", "quantity",
@@ -2114,15 +2117,15 @@ public class CommerceShipmentItemPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"externalReferenceCode", "companyId"}, false,
-			CommerceShipmentItem::getExternalReferenceCode,
+			convertNullFunction(CommerceShipmentItem::getExternalReferenceCode),
 			CommerceShipmentItem::getCompanyId);
 
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByERC_C,
-			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE,
+			_SQL_SELECT_COMMERCESHIPMENTITEM_WHERE, "",
 			new FinderColumn<>(
 				"commerceShipmentItem.", "externalReferenceCode",
-				FinderColumn.Type.STRING, "=", true, false,
+				FinderColumn.Type.STRING, "=", true, true,
 				CommerceShipmentItem::getExternalReferenceCode),
 			new FinderColumn<>(
 				"commerceShipmentItem.", "companyId", FinderColumn.Type.LONG,
@@ -2197,4 +2200,4 @@ public class CommerceShipmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1346188449
+// LIFERAY-SERVICE-BUILDER-HASH:-953835568

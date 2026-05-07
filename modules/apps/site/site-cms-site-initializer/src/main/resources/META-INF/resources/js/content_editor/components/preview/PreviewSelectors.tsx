@@ -10,22 +10,24 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
 
 import AsyncPicker, {Status} from '../../../common/components/AsyncPicker';
 import {Site} from './usePreviewState';
 
 type Channel = {icon?: string; id: number; logoURL?: string; name: string};
 
-type Props = {
+type PreviewSelectorsProps = {
 	channels: Channel[];
 	displayPageTemplates: Site['displayPageTemplates'] | undefined;
+	externalURL: string;
 	isExternalURL: Boolean;
 	loadSites: () => Promise<Site[]>;
 	previewURL: string | undefined;
 	selectChannel: (key: React.Key) => void;
 	selectedChannelKey: React.Key | undefined;
 	selectedDisplayPageKey: React.Key | undefined;
+	setExternalURL: (value: string) => void;
 	setSelectedDisplayPageKey: (key: React.Key) => void;
 	showPreviewInNewTabLink?: boolean;
 	sitesStatus: Status;
@@ -35,17 +37,19 @@ type Props = {
 export default function PreviewSelectors({
 	channels,
 	displayPageTemplates,
+	externalURL,
 	isExternalURL,
 	loadSites,
 	previewURL,
 	selectChannel,
 	selectedChannelKey,
 	selectedDisplayPageKey,
+	setExternalURL,
 	setSelectedDisplayPageKey,
 	showPreviewInNewTabLink,
 	sitesStatus,
 	vertical = false,
-}: Props) {
+}: PreviewSelectorsProps) {
 	const labelClassName = classNames('font-weight-semi-bold text-3', {
 		'flex-shrink-0 mb-0': !vertical,
 	});
@@ -82,30 +86,11 @@ export default function PreviewSelectors({
 				})}
 			>
 				{isExternalURL ? (
-					<ClayInput.Group>
-						<ClayInput.GroupItem>
-							<ClayInput
-								aria-label={Liferay.Language.get(
-									'external-url'
-								)}
-								insetAfter={!vertical}
-								sizing={!vertical ? 'sm' : undefined}
-								type="text"
-							/>
-
-							{!vertical ? (
-								<ClayInput.GroupInsetItem after tag="span">
-									<ClayButtonWithIcon
-										aria-label={Liferay.Language.get(
-											'reload'
-										)}
-										displayType="unstyled"
-										symbol="reload"
-									/>
-								</ClayInput.GroupInsetItem>
-							) : null}
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
+					<ExternalURLInput
+						externalURL={externalURL}
+						setExternalURL={setExternalURL}
+						vertical={vertical}
+					/>
 				) : displayPageTemplates?.length ? (
 					<>
 						<span className={labelClassName}>
@@ -154,5 +139,45 @@ export default function PreviewSelectors({
 				) : null}
 			</div>
 		</>
+	);
+}
+
+type ExternalURLInputProps = {
+	externalURL: string;
+	setExternalURL: (value: string) => void;
+	vertical: boolean;
+};
+
+function ExternalURLInput({
+	externalURL,
+	setExternalURL,
+	vertical,
+}: ExternalURLInputProps) {
+	const [value, setValue] = useState<string>(externalURL);
+
+	return (
+		<ClayInput.Group>
+			<ClayInput.GroupItem>
+				<ClayInput
+					aria-label={Liferay.Language.get('external-url')}
+					insetAfter={!vertical}
+					onBlur={(event) => setExternalURL(event.target.value)}
+					onChange={(event) => setValue(event.target.value)}
+					sizing={!vertical ? 'sm' : undefined}
+					type="text"
+					value={value}
+				/>
+
+				{!vertical ? (
+					<ClayInput.GroupInsetItem after tag="span">
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							symbol="reload"
+							title={Liferay.Language.get('refresh')}
+						/>
+					</ClayInput.GroupInsetItem>
+				) : null}
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
 }

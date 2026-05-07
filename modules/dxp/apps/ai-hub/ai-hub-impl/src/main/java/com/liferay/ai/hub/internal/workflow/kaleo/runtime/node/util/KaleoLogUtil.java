@@ -34,21 +34,27 @@ public class KaleoLogUtil {
 		TokenUsage tokenUsage = chatResponseMetadata.tokenUsage();
 
 		try {
+			int inputTokenCount = tokenUsage.inputTokenCount();
+			int outputTokenCount = tokenUsage.outputTokenCount();
+			int totalTokenCount = tokenUsage.totalTokenCount();
+
+			int thoughtsTokenCount =
+				totalTokenCount - inputTokenCount - outputTokenCount;
+
 			KaleoLogLocalServiceUtil.addNodeUsageMetadataKaleoLog(
 				kaleoInstanceToken,
 				HashMapBuilder.<String, Serializable>put(
-					"inputTokensCount",
-					String.valueOf(tokenUsage.inputTokenCount())
+					"inputTokenCount", String.valueOf(inputTokenCount)
 				).put(
 					"output", output
 				).put(
-					"outputTokensCount",
-					String.valueOf(tokenUsage.outputTokenCount())
+					"outputTokenCount", String.valueOf(outputTokenCount)
 				).put(
 					"promptInput", prompt
 				).put(
-					"totalTokenCount",
-					String.valueOf(tokenUsage.totalTokenCount())
+					"thoughtsTokenCount", String.valueOf(thoughtsTokenCount)
+				).put(
+					"totalTokenCount", String.valueOf(totalTokenCount)
 				).put(
 					"userMessageInput", userMessage
 				).build(),

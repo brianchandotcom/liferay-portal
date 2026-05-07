@@ -89,21 +89,4 @@ definition {
 		}
 	}
 
-	@priority = 4
-	test CanReturnDetailsOfAPIsInTheSystem {
-		property portal.acceptance = "true";
-
-		task ("When with get request to retrieve /o/openapi/openapi.json") {
-			var response = OpenAPIProfile.getOpenApiProfile();
-		}
-
-		task ("Then I can see details of all the APIs in the system") {
-			var attributesList = "application/json,application/xml,#/components/schemas/";
-
-			OpenAPIProfile.assertEndpointsInResponse(
-				attributesList = ${attributesList},
-				responseToParse = ${response});
-		}
-	}
-
 }

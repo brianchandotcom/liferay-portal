@@ -205,27 +205,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DSRTemplate", "/digital-sales-room/templates"
 		).put(
-			"FDSAction", "/data-set-manager/actions"
-		).put(
-			"FDSCardsSection", "/data-set-manager/cards-sections"
-		).put(
-			"FDSClientExtensionFilter",
-			"/data-set-manager/client-extension-filters"
-		).put(
-			"FDSDateFilter", "/data-set-manager/date-filters"
-		).put(
-			"FDSDynamicFilter", "/data-set-manager/selection-filters"
-		).put(
-			"FDSEntry", "/data-set-manager/entries"
-		).put(
-			"FDSField", "/data-set-manager/table-sections"
-		).put(
-			"FDSListSection", "/data-set-manager/list-sections"
-		).put(
-			"FDSSort", "/data-set-manager/sorts"
-		).put(
-			"FDSView", "/data-set-manager/data-sets"
-		).put(
 			"FunctionalCookieEntry", "/functional-cookies-entries"
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"

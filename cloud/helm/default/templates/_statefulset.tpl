@@ -17,6 +17,7 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}
     namespace: {{ include "liferay.namespace" .root }}
 spec:
+    {{- $statefulset := merge .statefulset (dict "liferayname" (include "liferay.name" .root)) }}
     {{- if not .statefulset.autoscaling.enabled }}
     replicas: {{ .statefulset.replicaCount }}
     {{- end }}
@@ -43,25 +44,40 @@ spec:
             {{- end }}
             containers:
                 -   #
-                    {{- if or .statefulset.env .statefulset.customEnv }}
+                    {{- $statefulsetTemplates := default dict .statefulset.templates }}
+                    {{- $envTemplates := default dict $statefulsetTemplates.customEnv }}
+                    {{- if or .statefulset.env .statefulset.customEnv $envTemplates }}
                     env:
                         {{- with .statefulset.env }}
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnv }}
-                        {{- if and $v (gt (len $v) 0) }}
+                        {{- if and $v (gt (len $v) 0) (not (hasKey $envTemplates $k)) }}
                         {{- toYaml $v | nindent 22 }}
                         {{- end }}
                         {{- end }}
+                        {{- range $k, $v := $envTemplates }}
+                        {{- $rendered := tpl $v $.root | trim }}
+                        {{- if $rendered }}
+                        {{- $rendered | nindent 22 }}
+                        {{- end }}
+                        {{- end }}
                     {{- end }}
-                    {{- if or .statefulset.envFrom .statefulset.customEnvFrom }}
+                    {{- $envFromTemplates := default dict $statefulsetTemplates.customEnvFrom }}
+                    {{- if or .statefulset.envFrom .statefulset.customEnvFrom $envFromTemplates }}
                     envFrom:
                         {{- with .statefulset.envFrom }}
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customEnvFrom }}
-                        {{- if and $v (gt (len $v) 0) }}
+                        {{- if and $v (gt (len $v) 0) (not (hasKey $envFromTemplates $k)) }}
                         {{- toYaml $v | nindent 22 }}
+                        {{- end }}
+                        {{- end }}
+                        {{- range $k, $v := $envFromTemplates }}
+                        {{- $rendered := tpl $v $.root | trim }}
+                        {{- if $rendered }}
+                        {{- $rendered | nindent 22 }}
                         {{- end }}
                         {{- end }}
                     {{- end }}
@@ -97,14 +113,21 @@ spec:
                     startupProbe:
                         {{- toYaml . | nindent 22 }}
                     {{- end }}
-                    {{- if or .statefulset.volumeMounts .statefulset.customVolumeMounts}}
+                    {{- $volumeMountTemplates := default dict $statefulsetTemplates.customVolumeMounts }}
+                    {{- if or .statefulset.volumeMounts .statefulset.customVolumeMounts $volumeMountTemplates }}
                     volumeMounts:
                         {{- with .statefulset.volumeMounts }}
                         {{- toYaml . | nindent 22 }}
                         {{- end }}
                         {{- range $k, $v := .statefulset.customVolumeMounts }}
-                        {{- if and $v (gt (len $v) 0) }}
+                        {{- if and $v (gt (len $v) 0) (not (hasKey $volumeMountTemplates $k)) }}
                         {{- toYaml $v | nindent 22 }}
+                        {{- end }}
+                        {{- end }}
+                        {{- range $k, $v := $volumeMountTemplates }}
+                        {{- $rendered := tpl $v $.root | trim }}
+                        {{- if $rendered }}
+                        {{- $rendered | nindent 22 }}
                         {{- end }}
                         {{- end }}
                     {{- end }}
@@ -118,11 +141,13 @@ spec:
                 {{- end }}
             {{- end }}
             {{- if or .statefulset.initContainers .statefulset.customInitContainers }}
-            {{- $statefulset := merge .statefulset (dict "liferayname" (include "liferay.name" .root)) }}
             initContainers:
                 {{- range .statefulset.initContainers }}
                 {{- if .containerTemplate }}
-                {{- tpl .containerTemplate $statefulset | nindent 16 }}
+                {{- $rendered := tpl .containerTemplate $statefulset | trim }}
+                {{- if $rendered }}
+                {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- else }}
                 -   #
                     {{- toYaml . | nindent 18 }}
@@ -131,7 +156,10 @@ spec:
                 {{- range $k, $v := .statefulset.customInitContainers }}
                 {{- range $entry := $v }}
                 {{- if $entry.containerTemplate }}
-                {{- tpl $entry.containerTemplate $statefulset | nindent 16 }}
+                {{- $rendered := tpl $entry.containerTemplate $statefulset | trim }}
+                {{- if $rendered }}
+                {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- else }}
                 -   #
                     {{- toYaml $entry | nindent 18 }}
@@ -156,13 +184,22 @@ spec:
             tolerations:
             {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- if or .statefulset.volumes .statefulset.customVolumes }}
+            {{- $volumeTemplates := default dict (default dict .statefulset.templates).customVolumes }}
+            {{- if or .statefulset.volumes .statefulset.customVolumes $volumeTemplates }}
             volumes:
                 {{- with .statefulset.volumes }}
                 {{- toYaml . | nindent 16 }}
                 {{- end }}
                 {{- range $k, $v := .statefulset.customVolumes }}
+                {{- if not (hasKey $volumeTemplates $k) }}
                 {{- toYaml $v | nindent 16 }}
+                {{- end }}
+                {{- end }}
+                {{- range $k, $v := $volumeTemplates }}
+                {{- $rendered := tpl $v $.root | trim }}
+                {{- if $rendered }}
+                {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- end }}
             {{- end }}
     {{- with .statefulset.updateStrategy }}

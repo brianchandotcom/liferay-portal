@@ -31,9 +31,19 @@ data:
         {{- if .Values.portalProperties }}
         {{- .Values.portalProperties | nindent 8 }}
         {{- end }}
+        {{- $templates := default dict .Values.templates }}
+        {{- $depTemplates := default dict $templates.dependencies }}
         {{- range $k, $v := .Values.dependencies }}
-        {{- if $v.portalProperties }}
+        {{- if and $v.portalProperties (not (hasKey $depTemplates $k)) }}
         {{- $v.portalProperties | nindent 8 }}
+        {{- end }}
+        {{- end }}
+        {{- range $k, $v := $depTemplates }}
+        {{- if $v.portalProperties }}
+        {{- $rendered := tpl $v.portalProperties $ | trim }}
+        {{- if $rendered }}
+        {{- printf "%s\n" $rendered | nindent 8 }}
+        {{- end }}
         {{- end }}
         {{- end }}
         configuration.override.com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration_blacklistBundleSymbolicNames=[\
@@ -41,6 +51,16 @@ data:
             {{- range $bundle := .Values.portalBundleDenyList }}
             {{ $PREFIX }}{{ $bundle | quote }}\
             {{- $PREFIX = "," -}}
+            {{- end }}
+            {{- $bundleDenyListTemplate := default "" $templates.portalBundleDenyList }}
+            {{- if $bundleDenyListTemplate }}
+            {{- $renderedBundleDenyList := tpl $bundleDenyListTemplate $ | trim }}
+            {{- if $renderedBundleDenyList }}
+            {{- range $bundle := fromYamlArray $renderedBundleDenyList }}
+            {{ $PREFIX }}{{ $bundle | quote }}\
+            {{- $PREFIX = "," -}}
+            {{- end }}
+            {{- end }}
             {{- end }}
             {{- range $k, $v := .Values.dependencies }}
             {{- range $bundle := $v.portalBundleDenyList }}
@@ -78,8 +98,21 @@ data:
         {{- tpl (.Files.Get "resources/unicast.xml") $ | nindent 8 }}
     {{- end }}
     {{- end }}
-    {{- if .Values.configmap.data }}
-    {{- toYaml .Values.configmap.data | nindent 4 }}
+    {{- $configmapTemplates := default dict (default dict .Values.templates).configmap }}
+    {{- $configmapDataTemplates := default dict $configmapTemplates.data }}
+    {{- range $k, $v := .Values.configmap.data }}
+    {{- $trimmed := trim (default "" $v) }}
+    {{- if and $trimmed (not (hasKey $configmapDataTemplates $k)) }}
+    {{ $k }}: |
+        {{- $trimmed | nindent 8 }}
+    {{- end }}
+    {{- end }}
+    {{- range $k, $v := $configmapDataTemplates }}
+    {{- $rendered := tpl $v $ | trim }}
+    {{- if $rendered }}
+    {{ $k }}: |
+        {{- $rendered | nindent 8 }}
+    {{- end }}
     {{- end }}
 kind: ConfigMap
 metadata:

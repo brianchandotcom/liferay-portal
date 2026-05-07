@@ -12,6 +12,10 @@ definition {
 		task ("Enable private pages") {
 			PagesAdmin.enablePrivatePages();
 		}
+
+		task ("Enable CKE4") {
+			PagesAdmin.enableCKE4();
+		}
 	}
 
 	tearDown {

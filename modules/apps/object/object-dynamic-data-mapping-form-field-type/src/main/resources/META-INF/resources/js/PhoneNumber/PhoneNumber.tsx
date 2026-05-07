@@ -27,6 +27,8 @@ const PHONE_NUMBER_PATTERN = /^\+[0-9]{7,15}$/;
 interface BasePhoneNumberProps {
 	countries?: CountryInfo[];
 	disabled?: boolean;
+	displayErrors?: boolean;
+	errorMessage?: string;
 	fieldName: string;
 	id?: string;
 	label?: string;
@@ -37,6 +39,7 @@ interface BasePhoneNumberProps {
 	prefix?: string;
 	prefixType?: PrefixType;
 	readOnly?: boolean;
+	valid?: boolean;
 	[key: string]: unknown;
 }
 
@@ -70,14 +73,10 @@ const validate = (value: string) => {
 	};
 };
 
-const INITIAL_VALID_FIELD = {
-	displayErrors: false,
-	errorMessage: undefined as string | undefined,
-	valid: true,
-};
-
 const LocalizablePhoneNumber = ({
 	countries = [],
+	displayErrors,
+	errorMessage,
 	fieldName,
 	name,
 	onBlur,
@@ -87,29 +86,42 @@ const LocalizablePhoneNumber = ({
 	prefix,
 	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
+	valid = true,
 	value = {} as LocalizedValue<string>,
 	...otherProps
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
-	const [validField, setValidField] = useState(INITIAL_VALID_FIELD);
+	const [validField, setValidField] = useState({
+		displayErrors,
+		errorMessage,
+		valid,
+	});
 
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || otherProps.disabled;
-
-	const handleLocalChange = (event: {target: {value: string}}) => {
-		const nextValue = {
-			...value,
-			[editingLanguageId]: event.target.value,
-		} as LocalizedValue<string>;
-
-		onChange?.({target: {value: nextValue}});
-	};
 
 	const handleBlur = (event: React.FocusEvent) => {
 		setValidField(validate(currentValue));
 
 		onBlur?.(event);
+	};
+
+	const handleChange = (event: {target: {value: string}}) => {
+		const newValue = {
+			...value,
+			[editingLanguageId]: event.target.value,
+		} as LocalizedValue<string>;
+
+		// Re-validate on change only while an error is already visible,
+		// so the message clears live as the user fixes it (typing or
+		// country switch) without flashing on first entry.
+
+		if (validField.displayErrors) {
+			setValidField(validate(event.target.value));
+		}
+
+		onChange?.({target: {value: newValue}});
 	};
 
 	return (
@@ -127,7 +139,7 @@ const LocalizablePhoneNumber = ({
 					key={editingLanguageId}
 					name={name}
 					onBlur={handleBlur}
-					onChange={handleLocalChange}
+					onChange={handleChange}
 					onFocus={onFocus}
 					prefix={prefix}
 					prefixType={prefixType}
@@ -148,6 +160,8 @@ const LocalizablePhoneNumber = ({
 
 const NonLocalizablePhoneNumber = ({
 	countries = [],
+	displayErrors,
+	errorMessage,
 	name,
 	onBlur,
 	onChange,
@@ -156,13 +170,18 @@ const NonLocalizablePhoneNumber = ({
 	prefix,
 	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
+	valid = true,
 	value: initialValue,
 	...otherProps
 }: NonLocalizablePhoneNumberProps) => {
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
-	const [validField, setValidField] = useState(INITIAL_VALID_FIELD);
+	const [validField, setValidField] = useState({
+		displayErrors,
+		errorMessage,
+		valid,
+	});
 
 	const disabled = readOnly || otherProps.disabled;
 
@@ -170,6 +189,20 @@ const NonLocalizablePhoneNumber = ({
 		setValidField(validate(combinedValue));
 
 		onBlur?.(event);
+	};
+
+	const handleChange = (event: {target: {value: string}}) => {
+		setCombinedValue(event.target.value);
+
+		// Re-validate on change only while an error is already visible,
+		// so the message clears as the user fixes it without flashing on
+		// first entry.
+
+		if (validField.displayErrors) {
+			setValidField(validate(event.target.value));
+		}
+
+		onChange?.(event);
 	};
 
 	return (
@@ -186,10 +219,7 @@ const NonLocalizablePhoneNumber = ({
 					id={otherProps.id as string}
 					name={name}
 					onBlur={handleBlur}
-					onChange={(event) => {
-						setCombinedValue(event.target.value);
-						onChange?.(event);
-					}}
+					onChange={handleChange}
 					onFocus={onFocus}
 					prefix={prefix}
 					prefixType={prefixType}

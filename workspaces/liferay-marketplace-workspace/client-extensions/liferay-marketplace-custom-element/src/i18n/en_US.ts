@@ -428,6 +428,10 @@ export default {
 	'license-type': 'License Type',
 	'licenses': 'Licenses',
 	'licensing': 'Licensing',
+	'liferay-dsr-eula-disclaimer-prefix':
+		'This release of the Digital Sales Room (DSR) is a Beta. You acknowledge that Liferay is not obligated to provide support services while in Beta. For clarity, the Subscription benefits of any active Subscriptions you may have for Liferay Software shall not extend to cover the Beta release of the DSR and participation in the Beta does not grant access to any future GA version of the product. Use of DSR is subject to the Liferay Enterprise Services Agreement (ESA), applicable Appendix, and the Liferay Data Processing Addendum, each as available at',
+	'liferay-dsr-eula-disclaimer-suffix':
+		'provided that in the event the parties hereto have previously executed or otherwise entered into separate written agreements governing the subject matter thereof, respectively, the terms of such executed documents shall apply.',
 	'liferay-dxp-eula-disclaimer-prefix':
 		'Your use of Liferay DXP is subject to these terms and the Liferay End User License Agreement set forth at',
 	'liferay-dxp-eula-disclaimer-suffix':

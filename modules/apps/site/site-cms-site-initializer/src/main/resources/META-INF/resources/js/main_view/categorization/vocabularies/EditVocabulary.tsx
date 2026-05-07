@@ -151,7 +151,7 @@ export default function EditVocabulary({
 		if (status === 'CONFLICT') {
 			if (
 				error ===
-				'A taxonomy vocabulary with the same external reference code already exists.'
+				'A taxonomy vocabulary with the same external reference code already exists'
 			) {
 				const ercErrorMessage = Liferay.Language.get(
 					'please-enter-a-unique-external-reference-code'

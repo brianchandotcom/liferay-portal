@@ -79,14 +79,14 @@ public class CookiesBannerDisplayContext
 		).put(
 			"consentRenewalPeriodTimeUnit", getConsentRenewalPeriodTimeUnit()
 		).put(
-			"cookiesBannerSuppressed",
-			Boolean.TRUE.equals(
-				httpServletRequest.getAttribute(
-					CookiesBannerWebKeys.COOKIES_BANNER_SUPPRESSED))
-		).put(
 			"dissentRenewalPeriod", getDissentRenewalPeriod()
 		).put(
 			"dissentRenewalPeriodTimeUnit", getDissentRenewalPeriodTimeUnit()
+		).put(
+			"globalPrivacyControlSignalActive",
+			Boolean.TRUE.equals(
+				httpServletRequest.getAttribute(
+					CookiesBannerWebKeys.GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE))
 		).put(
 			"includeDeclineAllButton", isIncludeDeclineAllButton()
 		).put(

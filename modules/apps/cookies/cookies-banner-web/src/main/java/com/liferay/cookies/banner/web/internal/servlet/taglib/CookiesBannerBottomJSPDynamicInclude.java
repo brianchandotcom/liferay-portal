@@ -70,7 +70,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 			}
 
 			httpServletRequest.setAttribute(
-				CookiesBannerWebKeys.COOKIES_BANNER_SUPPRESSED,
+				CookiesBannerWebKeys.GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE,
 				_globalPrivacyControlProvider.isSignalActive(
 					httpServletRequest));
 			httpServletRequest.setAttribute(

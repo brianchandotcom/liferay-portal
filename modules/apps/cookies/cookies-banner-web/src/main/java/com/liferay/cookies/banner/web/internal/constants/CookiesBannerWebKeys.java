@@ -16,9 +16,6 @@ public class CookiesBannerWebKeys {
 	public static final String COOKIES_BANNER_DISPLAY_CONTEXT =
 		"COOKIES_BANNER_DISPLAY_CONTEXT";
 
-	public static final String COOKIES_BANNER_SUPPRESSED =
-		"COOKIES_BANNER_SUPPRESSED";
-
 	public static final String
 		COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT =
 			"COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT";
@@ -29,5 +26,8 @@ public class CookiesBannerWebKeys {
 	public static final String FLOATING_ICON = "FLOATING_ICON";
 
 	public static final String FLOATING_ICON_ENABLED = "FLOATING_ICON_ENABLED";
+
+	public static final String GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE =
+		"GLOBAL_PRIVACY_CONTROL_SIGNAL_ACTIVE";
 
 }

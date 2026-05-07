@@ -4,6 +4,8 @@ defaults:
 jobs:
     delete-packages-pr:
         if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == 'cloudnative-team/liferay-portal' && github.event_name == 'pull_request' && github.repository == 'cloudnative-team/liferay-portal'
+        permissions:
+            packages: write
         runs-on: ubuntu-latest
         steps:
             -   env:
@@ -65,7 +67,7 @@ jobs:
 
                         local tags
 
-                        tags=$(gh release list --limit 1000 --json tagName \ --jq ".[] | select(.tagName | test(\"${pattern}\")) | .tagName")
+                        tags=$(gh release list --limit 1000 --json tagName --jq ".[] | select(.tagName | test(\"${pattern}\")) | .tagName")
 
                         echo "${tags}" | while read -r tag
                         do
@@ -158,6 +160,9 @@ jobs:
             ECR_REGISTRY: 709825985650.dkr.ecr.us-east-1.amazonaws.com
         if: github.event_name == 'push' && github.repository == 'liferay/liferay-portal'
         needs: publish-aws
+        permissions:
+            contents: read
+            id-token: write
         runs-on: ubuntu-latest
         steps:
             -   name: Configure AWS credentials
@@ -299,7 +304,6 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     fetch-depth: 1
-                    spare-checkout-code-mode: true
                     sparse-checkout: |
                         cloud/helm
             -   name: Configure Git
@@ -334,6 +338,6 @@ on:
             -   .github/workflows/ci-reusable-publish-helm-chart-to-gar.yaml
             -   cloud/helm/**
 permissions:
-    contents: write
+    contents: read
     id-token: write
     packages: write

@@ -7,7 +7,7 @@ jobs:
             GITHUB_TOKEN: ${{github.token}}
             IS_PR: ${{inputs.pr_number != ''}}
         permissions:
-            contents: write
+            contents: read
             id-token: write
             packages: write
         runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v4
                 with:
-                    fetch-depth: 0
+                    fetch-depth: 1
                     filter: blob:none
                     show-progress: false
             -   if: ${{env.IS_PR == 'true'}}
@@ -91,12 +91,11 @@ jobs:
                 uses: google-github-actions/auth@v3
                 with:
                     project_id: ${{secrets.GCP_PROJECT_ID}}
-                    token_format: access_token
                     workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
             -   if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GAR
                 run: |
-                    echo "${{steps.auth.outputs.access_token}}" \
+                    echo "${{steps.auth.outputs.auth_token}}" \
                         | helm registry login "${{inputs.registry}}" \
                             --password-stdin \
                             --username oauth2accesstoken
@@ -163,6 +162,6 @@ on:
                 required: true
                 type: string
 permissions:
-    contents: write
+    contents: read
     id-token: write
     packages: write

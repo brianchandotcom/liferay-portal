@@ -294,17 +294,24 @@ public class ObjectDefinitionTestUtil {
 	public static ObjectDefinition publishSystemObjectDefinition()
 		throws Exception {
 
-		ObjectDefinition objectDefinition = addModifiableSystemObjectDefinition(
-			TestPropsValues.getUserId(), null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"Test", null, null,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+		return publishSystemObjectDefinition(
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())));
+	}
+
+	public static ObjectDefinition publishSystemObjectDefinition(
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = addModifiableSystemObjectDefinition(
+			TestPropsValues.getUserId(), null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"Test", null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, objectFields);
 
 		return ObjectDefinitionLocalServiceUtil.publishSystemObjectDefinition(
 			TestPropsValues.getUserId(),

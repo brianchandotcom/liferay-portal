@@ -246,30 +246,6 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"able", false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
 				null));
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Inheritance between modifiable system and custom object " +
-				"definitions is not allowed",
-			() -> _objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_modifiableSystemObjectDefinition.getObjectDefinitionId(),
-				_objectDefinition1.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Inheritance between modifiable system and custom object " +
-				"definitions is not allowed",
-			() -> _objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_modifiableSystemObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
 
 		ObjectDefinition userObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
@@ -1001,23 +977,6 @@ public class ObjectRelationshipLocalServiceTest {
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"},
 			_objectEntryLocalService, _objectRelationshipLocalService);
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Inheritance between modifiable system and custom object " +
-				"definitions is not allowed",
-			() -> _bindObjectDefinitions(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService,
-					_modifiableSystemObjectDefinition, _objectDefinition1)));
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Inheritance between modifiable system and custom object " +
-				"definitions is not allowed",
-			() -> _bindObjectDefinitions(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, _objectDefinition1,
-					_modifiableSystemObjectDefinition)));
 
 		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(

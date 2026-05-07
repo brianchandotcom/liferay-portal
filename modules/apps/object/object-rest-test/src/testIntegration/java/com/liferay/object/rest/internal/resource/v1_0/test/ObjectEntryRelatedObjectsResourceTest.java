@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -60,6 +61,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -658,6 +661,90 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testDeleteObjectEntryWithHierarchy() throws Exception {
+
+		// Modifiable system as child
+
+		String objectFieldName = "x" + RandomTestUtil.randomString();
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			_publishModifiableSystemObjectDefinition(objectFieldName);
+
+		ObjectRelationship objectRelationship = TreeTestUtil.bind(
+			_objectDefinition1.getObjectDefinitionId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			modifiableSystemObjectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, RandomTestUtil.randomString()
+			).put(
+				objectField.getName(), _objectEntry1.getPrimaryKey()
+			).build());
+
+		Assert.assertEquals(
+			204,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_getEndpoint(_objectDefinition1, _objectEntry1.getPrimaryKey()),
+				Http.Method.DELETE));
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_getEndpoint(
+					modifiableSystemObjectDefinition,
+					relatedObjectEntry.getPrimaryKey()),
+				Http.Method.GET));
+
+		// Modifiable system as parent
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			modifiableSystemObjectDefinition, objectFieldName,
+			RandomTestUtil.randomString());
+
+		objectRelationship = TreeTestUtil.bind(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntry.getPrimaryKey()
+			).build());
+
+		Assert.assertEquals(
+			204,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_getEndpoint(
+					modifiableSystemObjectDefinition,
+					objectEntry.getPrimaryKey()),
+				Http.Method.DELETE));
+
+		Assert.assertEquals(
+			404,
+			HTTPTestUtil.invokeToHttpCode(
+				null,
+				_getEndpoint(
+					_objectDefinition2, relatedObjectEntry.getPrimaryKey()),
+				Http.Method.GET));
+	}
+
+	@Test
 	public void testGetByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage()
 		throws Exception {
 
@@ -997,6 +1084,82 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testGetRelatedObjectEntriesWithHierarchy() throws Exception {
+
+		// Modifiable system as child
+
+		String objectFieldName = "x" + RandomTestUtil.randomString();
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			_publishModifiableSystemObjectDefinition(objectFieldName);
+
+		ObjectRelationship objectRelationship = TreeTestUtil.bind(
+			_objectDefinition1.getObjectDefinitionId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			modifiableSystemObjectDefinition,
+			HashMapBuilder.<String, Serializable>put(
+				objectFieldName, RandomTestUtil.randomString()
+			).put(
+				objectField.getName(), _objectEntry1.getPrimaryKey()
+			).build());
+
+		_assertEquals(
+			relatedObjectEntry,
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					objectRelationship.getName(), _objectDefinition1,
+					_objectEntry1.getPrimaryKey()),
+				Http.Method.GET
+			).getJSONArray(
+				"items"
+			));
+
+		// Modifiable system as parent
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			modifiableSystemObjectDefinition, objectFieldName,
+			RandomTestUtil.randomString());
+
+		objectRelationship = TreeTestUtil.bind(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		objectField = _objectFieldLocalService.fetchObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		relatedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_objectDefinition2,
+			HashMapBuilder.<String, Serializable>put(
+				objectField.getName(), objectEntry.getPrimaryKey()
+			).build());
+
+		_assertEquals(
+			relatedObjectEntry,
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				_getEndpoint(
+					objectRelationship.getName(),
+					modifiableSystemObjectDefinition,
+					objectEntry.getPrimaryKey()),
+				Http.Method.GET
+			).getJSONArray(
+				"items"
+			));
+	}
+
+	@Test
 	public void testGetRelatedSystemObjectsWhenRelationExists()
 		throws Exception {
 
@@ -1188,6 +1351,80 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			_addObjectRelationship(
 				_objectDefinition1, _userSystemObjectDefinition,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+	}
+
+	@Test
+	public void testPostRelatedObjectEntryWithHierarchy() throws Exception {
+
+		// Modifiable system as child
+
+		String objectFieldName = "x" + RandomTestUtil.randomString();
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			_publishModifiableSystemObjectDefinition(objectFieldName);
+
+		ObjectRelationship objectRelationship = TreeTestUtil.bind(
+			_objectDefinition1.getObjectDefinitionId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		String objectFieldValue1 = RandomTestUtil.randomString();
+
+		JSONObject relatedObjectEntryJSONObject =
+			HTTPTestUtil.invokeToJSONObject(
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					objectFieldName, objectFieldValue1
+				).toJSONString(),
+				_getEndpoint(
+					objectRelationship.getName(), _objectDefinition1,
+					_objectEntry1.getPrimaryKey()),
+				Http.Method.POST);
+
+		Assert.assertEquals(
+			0,
+			JSONUtil.getValue(
+				relatedObjectEntryJSONObject, "JSONObject/status",
+				"Object/code"));
+		Assert.assertEquals(
+			objectFieldValue1,
+			relatedObjectEntryJSONObject.get(objectFieldName));
+
+		// Modifiable system as parent
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			modifiableSystemObjectDefinition, objectFieldName,
+			RandomTestUtil.randomString());
+
+		objectRelationship = TreeTestUtil.bind(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationship);
+
+		String objectFieldValue2 = RandomTestUtil.randomString();
+
+		relatedObjectEntryJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				_OBJECT_FIELD_NAME_2, objectFieldValue2
+			).toJSONString(),
+			_getEndpoint(
+				objectRelationship.getName(), modifiableSystemObjectDefinition,
+				objectEntry.getPrimaryKey()),
+			Http.Method.POST);
+
+		Assert.assertEquals(
+			0,
+			JSONUtil.getValue(
+				relatedObjectEntryJSONObject, "JSONObject/status",
+				"Object/code"));
+		Assert.assertEquals(
+			objectFieldValue2,
+			relatedObjectEntryJSONObject.get(_OBJECT_FIELD_NAME_2));
 	}
 
 	@Test
@@ -1729,6 +1966,14 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
+	private String _getEndpoint(
+		ObjectDefinition objectDefinition, long primaryKey) {
+
+		return StringBundler.concat(
+			objectDefinition.getRESTContextPath(), StringPool.SLASH,
+			primaryKey);
+	}
+
 	private String _getEndpoint(String name) {
 		return StringBundler.concat(
 			_objectDefinition1.getRESTContextPath(), StringPool.SLASH,
@@ -1738,6 +1983,13 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	private String _getEndpoint(String name, long primaryKey) {
 		return StringBundler.concat(
 			_getEndpoint(name), StringPool.SLASH, primaryKey);
+	}
+
+	private String _getEndpoint(
+		String name, ObjectDefinition objectDefinition, long primaryKey) {
+
+		return StringBundler.concat(
+			_getEndpoint(objectDefinition, primaryKey), StringPool.SLASH, name);
 	}
 
 	private String _getEndpoint(
@@ -1777,6 +2029,23 @@ public class ObjectEntryRelatedObjectsResourceTest {
 		}
 
 		return systemObjectEntryJSONObject.getString("id");
+	}
+
+	private ObjectDefinition _publishModifiableSystemObjectDefinition(
+			String objectFieldName)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishSystemObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), objectFieldName)));
+
+		_objectDefinitions.add(objectDefinition);
+
+		return objectDefinition;
 	}
 
 	private void _testDeleteCustomObjectDefinition1WithCustomObjectDefinition2(

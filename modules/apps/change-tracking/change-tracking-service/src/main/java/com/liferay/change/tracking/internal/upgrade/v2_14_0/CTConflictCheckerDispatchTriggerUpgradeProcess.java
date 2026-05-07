@@ -23,6 +23,10 @@ public class CTConflictCheckerDispatchTriggerUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		if (!hasTable("DispatchTrigger")) {
+			return;
+		}
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select dispatchTriggerId, dispatchTaskSettings from " +
 					"DispatchTrigger where dispatchTaskSettings like " +

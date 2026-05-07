@@ -10,10 +10,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceOrderConstants;
+import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
@@ -23,12 +26,13 @@ import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
-import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService;
@@ -37,7 +41,9 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.context.TestCommerceContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -58,6 +64,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
@@ -98,8 +105,14 @@ public class CommerceOrderLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+				_serviceContext);
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
@@ -107,8 +120,38 @@ public class CommerceOrderLocalServiceTest {
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
+		CommerceTestUtil.addWarehouseCommerceChannelRel(
+			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+			_commerceChannel.getCommerceChannelId());
+
+		CommerceCatalog commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId(),
+			_commerceCurrency.getCode());
+
+		_cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			commerceCatalog.getGroupId(), BigDecimal.valueOf(25),
+			RandomTestUtil.randomString());
+
+		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+			_user.getUserId(), commerceInventoryWarehouse,
+			BigDecimal.valueOf(100), _cpInstance.getSku(), StringPool.BLANK);
+
+		CommerceTestUtil.updateBackOrderCPDefinitionInventory(
+			_cpInstance.getCPDefinition());
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(), "Test Business Account", null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
+
+		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
+			_commerceChannel.getSiteGroupId(), _user.getUserId(),
+			accountEntry.getAccountEntryId(),
+			_commerceCurrency.getCommerceCurrencyId());
+
+		_commerceContext = new TestCommerceContext(
+			accountEntry, _commerceCurrency, _commerceChannel, _user, _group,
+			_commerceOrder);
 	}
 
 	@Test
@@ -119,14 +162,10 @@ public class CommerceOrderLocalServiceTest {
 			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
 			_serviceContext);
 
-		Country country = _countryLocalService.addCountry(
-			null, "ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
-			"000", RandomTestUtil.randomDouble(), true, false, false,
-			_serviceContext);
+		Country country = CommerceInventoryTestUtil.addCountry(_serviceContext);
 
-		Region region = _regionLocalService.addRegion(
-			null, country.getCountryId(), true, RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), "ZZ", _serviceContext);
+		Region region = CommerceInventoryTestUtil.addRegion(
+			country.getCountryId(), _serviceContext);
 
 		CommerceAddress commerceAddress =
 			_commerceAddressLocalService.addCommerceAddress(
@@ -337,6 +376,34 @@ public class CommerceOrderLocalServiceTest {
 	}
 
 	@Test
+	public void testAddCommerceOrderItem() throws Exception {
+		_commerceOrderItemLocalService.addCommerceOrderItem(
+			_user.getUserId(), _commerceOrder.getCommerceOrderId(),
+			_cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+			BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+			_serviceContext);
+		_commerceOrderItemLocalService.addCommerceOrderItem(
+			_user.getUserId(), _commerceOrder.getCommerceOrderId(),
+			_cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+			BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+			_serviceContext);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrderItemLocalService.getCommerceOrderItems(
+				_commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrderItems.toString(), 2, commerceOrderItems.size());
+
+		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
+			Assert.assertTrue(
+				BigDecimalUtil.eq(
+					commerceOrderItem.getQuantity(), BigDecimal.ONE));
+		}
+	}
+
+	@Test
 	public void testAddCommerceOrderWithCPConfigurationEntryShippable()
 		throws Exception {
 
@@ -380,6 +447,34 @@ public class CommerceOrderLocalServiceTest {
 
 		Assert.assertEquals(
 			cpConfigurationEntry.isShippable(), commerceOrder.isShippable());
+	}
+
+	@Test
+	public void testAddOrUpdateCommerceOrderItem() throws Exception {
+		_commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
+			_user.getUserId(), _commerceOrder.getCommerceOrderId(),
+			_cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+			BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+			_serviceContext);
+		_commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
+			_user.getUserId(), _commerceOrder.getCommerceOrderId(),
+			_cpInstance.getCPInstanceId(), null, BigDecimal.ONE, 0,
+			BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+			_serviceContext);
+
+		List<CommerceOrderItem> commerceOrderItems =
+			_commerceOrderItemLocalService.getCommerceOrderItems(
+				_commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			commerceOrderItems.toString(), 1, commerceOrderItems.size());
+
+		CommerceOrderItem commerceOrderItem = commerceOrderItems.get(0);
+
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrderItem.getQuantity(), BigDecimal.valueOf(2)));
 	}
 
 	@Test
@@ -502,7 +597,12 @@ public class CommerceOrderLocalServiceTest {
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
 
+	private CommerceContext _commerceContext;
 	private CommerceCurrency _commerceCurrency;
+	private CommerceOrder _commerceOrder;
+
+	@Inject
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -532,9 +632,7 @@ public class CommerceOrderLocalServiceTest {
 	@Inject
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
-	@Inject
-	private CPConfigurationListLocalService _cpConfigurationListLocalService;
-
+	private CPInstance _cpInstance;
 	private Group _group;
 
 	@Inject

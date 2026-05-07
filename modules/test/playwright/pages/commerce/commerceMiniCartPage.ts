@@ -18,6 +18,7 @@ export class CommerceMiniCartPage {
 	readonly miniCartItemsContainer: Locator;
 	readonly miniCartItemPrice: (text: RegExp) => Locator;
 	readonly miniCartSaveButton: Locator;
+	readonly miniCartSku: (skuName: string) => Locator;
 	readonly miniCartTotalPrice: Locator;
 	readonly miniCartUnitOfMeasureSelector: Locator;
 	readonly page: Page;
@@ -74,6 +75,8 @@ export class CommerceMiniCartPage {
 				exact: true,
 				name: 'Save',
 			});
+		this.miniCartSku = (skuName: string) =>
+			page.getByText(skuName, {exact: true});
 		this.miniCartTotalPrice = page.locator(
 			`xpath=//div[text()='Total']/../following-sibling::div/div`
 		);

@@ -1137,7 +1137,7 @@ public class JiraService extends BaseService {
 			businessEvent.getLastComment()
 		).put(
 			_jiraBusinessEventAssetObjectTypeAttributeLastUpdatedAuthor,
-			businessEvent.getLastUpdatedAuthor()
+			businessEvent.getLastUpdatedAuthorEmailAddress()
 		).put(
 			_jiraBusinessEventAssetObjectTypeAttributeName,
 			businessEvent.getName()

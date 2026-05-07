@@ -45,11 +45,11 @@ public class QuotaUtil {
 			return;
 		}
 
+		long tokensCount = 0L;
+
 		VertexAIConfiguration vertexAIConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				VertexAIConfiguration.class, companyId);
-
-		long tokensCount = 0L;
 
 		String location = vertexAIConfiguration.location();
 		String modelName = vertexAIConfiguration.modelName();

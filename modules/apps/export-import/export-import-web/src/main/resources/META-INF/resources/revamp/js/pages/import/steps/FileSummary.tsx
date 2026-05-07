@@ -5,7 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {dateUtils} from 'frontend-js-web';
+import {dateUtils, formatStorage} from 'frontend-js-web';
 import React from 'react';
 
 import {ImportPreview} from '../../../types/exportImportPreview';
@@ -82,7 +82,7 @@ export default function FileSummary({
 						label={Liferay.Language.get('size')}
 						value={
 							typeof fileSize === 'number'
-								? Liferay.Util.formatStorage(fileSize, {
+								? formatStorage(fileSize, {
 										addSpaceBeforeSuffix: true,
 									})
 								: '—'

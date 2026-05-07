@@ -36,12 +36,6 @@ const valueOf = (label: string) =>
 	screen.getByText(label).nextElementSibling as HTMLElement;
 
 describe('FileSummary', () => {
-	beforeAll(() => {
-		global.Liferay.Util.formatStorage = jest.fn(
-			(bytes: number) => `${bytes} B`
-		);
-	});
-
 	it('renders the file name in the sheet header', () => {
 		render(<FileSummary importPreview={baseImportPreview} />);
 
@@ -53,7 +47,7 @@ describe('FileSummary', () => {
 
 		expect(valueOf('author')).toHaveTextContent('Jane Doe');
 		expect(valueOf('exported')).toHaveTextContent('5 days ago');
-		expect(valueOf('size')).toHaveTextContent('1024 B');
+		expect(valueOf('size')).toHaveTextContent('1 KB');
 	});
 
 	it('falls back to em-dash when author is null', () => {
@@ -92,12 +86,12 @@ describe('FileSummary', () => {
 		expect(valueOf('size')).toHaveTextContent('—');
 	});
 
-	it('renders 0 B (not em-dash) when fileSize is 0', () => {
+	it('renders 0 KB (not em-dash) when fileSize is 0', () => {
 		render(
 			<FileSummary importPreview={{...baseImportPreview, fileSize: 0}} />
 		);
 
-		expect(valueOf('size')).toHaveTextContent('0 B');
+		expect(valueOf('size')).toHaveTextContent('0 KB');
 	});
 
 	it('omits the file name node in the header when fileName is empty', () => {

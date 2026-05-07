@@ -17,6 +17,7 @@ import handlePublishStructure from '../utils/handlePublishStructure';
 import handleSaveStructure from '../utils/handleSaveStructure';
 import handleUngroupRepeatableGroup from '../utils/handleUngroupRepeatableGroup';
 import isCopyable from '../utils/isCopyable';
+import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
@@ -56,11 +57,9 @@ export default function ShortcutManager() {
 
 				const [uuid] = selection;
 
-				const item = findChild({root: structure, uuid})!;
-
 				if (
 					isReferenced({root: structure, uuid}) ||
-					('locked' in item && item.locked)
+					isLocked({root: structure, uuid})
 				) {
 					return false;
 				}

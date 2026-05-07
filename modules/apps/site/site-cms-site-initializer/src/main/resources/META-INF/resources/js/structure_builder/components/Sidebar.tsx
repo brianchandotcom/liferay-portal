@@ -17,7 +17,6 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
-import findChild from '../utils/findChild';
 import handleAddRepeatableGroup from '../utils/handleAddRepeatableGroup';
 import handleDeleteChildren from '../utils/handleDeleteChildren';
 import isCopyable from '../utils/isCopyable';
@@ -147,13 +146,11 @@ function Toolbar({
 		isCopyable({root: structure, uuid})
 	);
 
-	const duplicableUuids = selection.filter((uuid) => {
-		const item = findChild({root: structure, uuid});
-
-		return (
-			item && !isLocked(item) && !isReferenced({root: structure, uuid})
-		);
-	});
+	const duplicableUuids = selection.filter(
+		(uuid) =>
+			!isLocked({root: structure, uuid}) &&
+			!isReferenced({root: structure, uuid})
+	);
 
 	return (
 		<ManagementToolbar.Container

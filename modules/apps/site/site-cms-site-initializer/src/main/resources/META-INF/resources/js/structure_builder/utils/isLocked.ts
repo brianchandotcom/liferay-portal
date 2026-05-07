@@ -3,9 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {StructureChild} from '../types/Structure';
+import {
+	ReferencedStructure,
+	RepeatableGroup,
+	Structure,
+} from '../types/Structure';
+import {Uuid} from '../types/Uuid';
+import findChild from './findChild';
 import isField from './isField';
 
-export default function isLocked(child: StructureChild) {
-	return isField(child) && child.locked;
+export default function isLocked({
+	root,
+	uuid,
+}: {
+	root: ReferencedStructure | RepeatableGroup | Structure;
+	uuid: Uuid;
+}): boolean {
+	const item = findChild({root, uuid});
+
+	return !!item && isField(item) && !!item.locked;
 }

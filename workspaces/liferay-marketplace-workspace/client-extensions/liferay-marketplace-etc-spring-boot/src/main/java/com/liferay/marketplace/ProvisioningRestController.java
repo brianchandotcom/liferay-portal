@@ -367,12 +367,14 @@ public class ProvisioningRestController extends BaseRestController {
 			order.getAccountExternalReferenceCode());
 
 		if (analyticsProject == null) {
+			JSONObject analyticsFormJSONObject = jsonObject.getJSONObject(
+				"analyticsForm");
+
+			analyticsFormJSONObject.put(
+				"corpProjectUuid", order.getAccountExternalReferenceCode());
+
 			analyticsProject = _analyticsService.provision(
-				jsonObject.getJSONObject(
-					"analyticsForm"
-				).put(
-					"corpProjectUuid", order.getAccountExternalReferenceCode()
-				));
+				analyticsFormJSONObject);
 		}
 
 		_marketplaceService.updateOrder(

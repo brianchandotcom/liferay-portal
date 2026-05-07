@@ -1058,7 +1058,7 @@ test(
 			await waitForAlert(page);
 
 			await commerceAdminWarehouseEligibilityPage.linkTab.click();
-			await commerceAdminWarehouseEligibilityPage.specificChannelRadio.click();
+			await commerceAdminWarehouseEligibilityPage.specificChannelsRadio.click();
 			await commerceAdminWarehouseEligibilityPage.addChannels.fill(
 				channel.name
 			);

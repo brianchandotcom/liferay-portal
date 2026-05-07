@@ -9,16 +9,23 @@ import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalM
 
 export class CommerceAdminWarehousesPage {
 	readonly addButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly globalMenuPage: GlobalMenuPage;
-	readonly page: Page;
 	readonly modalFieldName: Locator;
 	readonly modalFrameLocator: FrameLocator;
 	readonly modalSubmitButton: Locator;
+	readonly page: Page;
+	readonly rowActionsButton: (warehouseName: string) => Locator;
+	readonly warehouseLink: (warehouseName: string) => Locator;
 
 	constructor(page: Page) {
 		this.addButton = page
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.globalMenuPage = new GlobalMenuPage(page);
 		this.modalFrameLocator = page.frameLocator('.fds-modal-body iframe');
 		this.modalFieldName =
@@ -28,6 +35,10 @@ export class CommerceAdminWarehousesPage {
 			name: 'Submit',
 		});
 		this.page = page;
+		this.rowActionsButton = (warehouseName: string) =>
+			page.getByRole('button', {name: `${warehouseName} Actions`});
+		this.warehouseLink = (warehouseName: string) =>
+			page.getByRole('link', {exact: true, name: warehouseName});
 	}
 
 	async goto() {

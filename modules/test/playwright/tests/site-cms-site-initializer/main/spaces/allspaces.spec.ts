@@ -48,7 +48,9 @@ test(
 		});
 
 		await test.step('delete space from All Spaces', async () => {
-			await page.getByRole('cell', {name: 'Actions'}).nth(2).click();
+			await page
+				.getByRole('button', {name: `${spaceName} Actions`})
+				.click();
 			await page.getByRole('menuitem', {name: 'Delete'}).click();
 			await page.getByRole('button', {name: 'Delete'}).click();
 

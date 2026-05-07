@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import '../../../css/components/InputGroupWithSelect.scss';
+
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
+import classNames from 'classnames';
 import React, {useId} from 'react';
 
 export interface InputGroupWithSelectProps {
@@ -26,7 +29,9 @@ export function InputGroupWithSelect({
 	const selectId = useId();
 
 	return (
-		<ClayForm.Group className={className}>
+		<ClayForm.Group
+			className={classNames('input-group-with-select', className)}
+		>
 			{label && (
 				<label className="d-block" htmlFor={selectId}>
 					{label}

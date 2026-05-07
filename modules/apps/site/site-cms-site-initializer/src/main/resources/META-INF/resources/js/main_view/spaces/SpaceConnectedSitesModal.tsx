@@ -248,109 +248,103 @@ const ConnectableSelector = ({
 	};
 
 	return (
-		<div className="p-4">
-			<div className="align-items-end autofit-row c-gap-3">
-				<div className="autofit-col autofit-col-expand">
-					<InputGroupWithSelect
-						label={Liferay.Language.get('sites')}
-						onSelectChange={(value) => {
-							setKind(value as ConnectableKind);
-							resetSelection();
-						}}
-						options={[
-							{
-								label: Liferay.Language.get('sites'),
-								value: ConnectableKind.SITES,
-							},
-							{
-								label: Liferay.Language.get('site-templates'),
-								value: ConnectableKind.SITE_TEMPLATES,
-							},
-						]}
-						selectValue={kind}
-					>
-						{kind === ConnectableKind.SITES ? (
-							<ItemSelector
-								apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
-								id="connectableSelector"
-								items={site ? [site] : []}
-								onItemsChange={(items: Site[]) => {
-									if (items.length) {
-										const item = items[0];
-										setSite(item);
-										setDisableConnectButton(
-											isAlreadyConnected(
-												item.externalReferenceCode
-											)
-										);
-									}
-									else {
-										setSite(undefined);
-										setDisableConnectButton(true);
-									}
-								}}
-								placeholder={Liferay.Language.get(
-									'select-a-site'
-								)}
-							>
-								{(item: Site) => (
-									<ItemSelector.Item
-										key={item.id}
-										textValue={Liferay.Util.escapeHTML(
-											item.descriptiveName
-										)}
-									>
-										{Liferay.Util.escapeHTML(
-											item.descriptiveName
-										)}
-									</ItemSelector.Item>
-								)}
-							</ItemSelector>
-						) : (
-							<ItemSelector
-								apiURL={`${location.origin}/o/headless-admin-site/v1.0/site-templates?active=true`}
-								id="connectableSelector"
-								items={siteTemplate ? [siteTemplate] : []}
-								onItemsChange={(items: SiteTemplate[]) => {
-									if (items.length) {
-										const item = items[0];
-										setSiteTemplate(item);
-										setDisableConnectButton(
-											isAlreadyConnected(item.id)
-										);
-									}
-									else {
-										setSiteTemplate(undefined);
-										setDisableConnectButton(true);
-									}
-								}}
-								placeholder={Liferay.Language.get(
-									'select-a-site-template'
-								)}
-							>
-								{(item: SiteTemplate) => (
-									<ItemSelector.Item
-										key={item.id}
-										textValue={Liferay.Util.escapeHTML(
-											item.name
-										)}
-									>
-										{Liferay.Util.escapeHTML(item.name)}
-									</ItemSelector.Item>
-								)}
-							</ItemSelector>
-						)}
-					</InputGroupWithSelect>
-				</div>
+		<div className="align-items-end autofit-row c-gap-3 c-mb-4">
+			<div className="autofit-col autofit-col-expand">
+				<InputGroupWithSelect
+					className="mb-0"
+					label={Liferay.Language.get('sites')}
+					onSelectChange={(value) => {
+						setKind(value as ConnectableKind);
+						resetSelection();
+					}}
+					options={[
+						{
+							label: Liferay.Language.get('sites'),
+							value: ConnectableKind.SITES,
+						},
+						{
+							label: Liferay.Language.get('site-templates'),
+							value: ConnectableKind.SITE_TEMPLATES,
+						},
+					]}
+					selectValue={kind}
+				>
+					{kind === ConnectableKind.SITES ? (
+						<ItemSelector
+							apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
+							id="connectableSelector"
+							items={site ? [site] : []}
+							onItemsChange={(items: Site[]) => {
+								if (items.length) {
+									const item = items[0];
+									setSite(item);
+									setDisableConnectButton(
+										isAlreadyConnected(
+											item.externalReferenceCode
+										)
+									);
+								}
+								else {
+									setSite(undefined);
+									setDisableConnectButton(true);
+								}
+							}}
+							placeholder={Liferay.Language.get('select-a-site')}
+						>
+							{(item: Site) => (
+								<ItemSelector.Item
+									key={item.id}
+									textValue={Liferay.Util.escapeHTML(
+										item.descriptiveName
+									)}
+								>
+									{Liferay.Util.escapeHTML(
+										item.descriptiveName
+									)}
+								</ItemSelector.Item>
+							)}
+						</ItemSelector>
+					) : (
+						<ItemSelector
+							apiURL={`${location.origin}/o/headless-admin-site/v1.0/site-templates?active=true`}
+							id="connectableSelector"
+							items={siteTemplate ? [siteTemplate] : []}
+							onItemsChange={(items: SiteTemplate[]) => {
+								if (items.length) {
+									const item = items[0];
+									setSiteTemplate(item);
+									setDisableConnectButton(
+										isAlreadyConnected(item.id)
+									);
+								}
+								else {
+									setSiteTemplate(undefined);
+									setDisableConnectButton(true);
+								}
+							}}
+							placeholder={Liferay.Language.get(
+								'select-a-site-template'
+							)}
+						>
+							{(item: SiteTemplate) => (
+								<ItemSelector.Item
+									key={item.id}
+									textValue={Liferay.Util.escapeHTML(
+										item.name
+									)}
+								>
+									{Liferay.Util.escapeHTML(item.name)}
+								</ItemSelector.Item>
+							)}
+						</ItemSelector>
+					)}
+				</InputGroupWithSelect>
+			</div>
 
-				<div className="autofit-col">
-					<ClayButton
-						disabled={disableConnectButton}
-						onClick={connect}
-					>
-						{Liferay.Language.get('connect')}
-					</ClayButton>
-				</div>
+			<div className="autofit-col">
+				<ClayButton disabled={disableConnectButton} onClick={connect}>
+					{Liferay.Language.get('connect')}
+				</ClayButton>
 			</div>
 		</div>
 	);

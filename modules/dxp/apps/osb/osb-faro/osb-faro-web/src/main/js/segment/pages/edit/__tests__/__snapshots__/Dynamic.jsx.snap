@@ -195,9 +195,24 @@ exports[`DynamicSegmentEdit should render in BATCH mode 1`] = `
             class="criteria-sidebar-root"
           >
             <div
+              class="sidebar-title"
+            >
+              Segment Criteria
+            </div>
+            <div
               class="sidebar-header"
             >
-              Properties
+              <button
+                aria-activedescendant=""
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                class="form-control form-control-select form-control-select-secondary"
+                role="combobox"
+                tabindex="0"
+                type="button"
+              >
+                Select an option
+              </button>
             </div>
             <div
               class="sidebar-search"

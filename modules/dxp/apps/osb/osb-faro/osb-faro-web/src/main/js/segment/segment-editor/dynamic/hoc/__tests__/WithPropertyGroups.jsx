@@ -159,7 +159,9 @@ describe('WithPropertyGroups', () => {
 	});
 
 	describe('Testing Conditional Requests', () => {
-		API.interests.searchKeywords = jest.fn();
+		beforeEach(() => {
+			API.interests.searchKeywords = jest.fn();
+		});
 
 		test('Should return mocked data when segmentType is Batch', async () => {
 			API.interests.searchKeywords.mockReturnValueOnce(

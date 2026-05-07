@@ -73,7 +73,7 @@ Only when the test was fixed (verdict `Bug in portal` or `Outdated test`): the U
 
 Decide the ticket type from the verdict:
 
-- **Bug** for `Bug in portal` — invoke the `jira-bug` skill. The title summarises the regression. The description carries the failing test name, the trace, and reproduction steps derived from the test scenario. The Bug key is the **commit key**.
+- **Bug** for `Bug in portal` — invoke the `jira-bug` skill. The title summarizes the regression. The description carries the failing test name, the trace, and reproduction steps derived from the test scenario. The Bug key is the **commit key**.
 - **Task** for `Outdated test` — invoke the `jira-task` skill with title `Fix <test name>`.
 
 Label the ticket with the `claude-test-fix` label so every ticket created by this skill stays searchable as a group.
@@ -123,17 +123,17 @@ This step runs **before** any range or commit analysis. The test may already pas
 
 Inspect the test source to discover which feature flags it depends on. Mirror the CI setup before reproducing. Otherwise, the test path differs.
 
-- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 4. Bounce Tomcat for the new flag values to take effect.
+- **Poshi tests** require flags in `<bundles>/portal-ext.properties` with Tomcat restarted to pick them up. Before editing the file for the first time in this run, snapshot it so it can be restored later. Then, strip every existing `feature.flag.*` entry and add only the flags the test requires — the file must end up with the test's flags and nothing else, so unrelated flags left over from previous runs cannot interfere. The original snapshot is restored later in step 4. Bounce Tomcat for the new flag values to take effect.
 
 - **Playwright tests** declare flags through the `featureFlagsTest` fixture under `modules/test/playwright/fixtures`. The fixture toggles them per test — no portal change is needed.
 
 #### 1.2. Run the Test
 
-Run the test, deploying first when the type requires it. For `Java Semantic Versioning`, the "test" is `<gradlew> baseline` from the failing module — strictly an API contract check, not a behavioural test. Then compare the local outcome with **errorTrace**:
+Run the test, deploying first when the type requires it. For `Java Semantic Versioning`, the "test" is `<gradlew> baseline` from the failing module — strictly an API contract check, not a behavioral test. Then compare the local outcome with **errorTrace**:
 
 - **Test passes** → exit with `Verdict: No fix needed`. **Do not** investigate further: skip step 2 (diagnosis) and step 3 (iteration). Run the cleanup in step 4 and exit.
 - **Same failure** → continue to step 2.
-- **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarising both traces (the one returned by the Testray fetch and the one observed locally) and exit.
+- **Different failure** → surface the diff and ask the user whether to proceed. When the user is unreachable or declines, mark the failure as `Unresolved` with a `Conclusion` summarizing both traces (the one returned by the Testray fetch and the one observed locally) and exit.
 
 ### 2. Identify Suspect Commits
 
@@ -151,7 +151,7 @@ Work on `master` with uncommitted changes — the branch is created later. For e
 	gh pr list --json number,title,body --repo brianchandotcom/liferay-portal --search "<sha>" --state merged
 	```
 
-	Look for explicit references to the failing test or asserted behaviour, and for any sign that the change deliberately drops the contract the assertion was checking.
+	Look for explicit references to the failing test or asserted behavior, and for any sign that the change deliberately drops the contract the assertion was checking.
 
 1. Apply a fix that touches the suspect's hunks. The fix must live inside the diff between `${LAST_PASS_SHA}` and `${FIRST_FAIL_SHA}` — that is the only place the regression can live, and a fix outside that range means the diagnosis is wrong. Never escalate the scope of the fix to force convergence. Adapt the test (`Outdated test`) — including removing, weakening, or `@Ignore`-ing an assertion — only when the offending commit's documentation (subject, linked Jira ticket, or PR body) explicitly states the contract change the assertion was checking; without that documented justification, the assertion is correct and the regression lives in product code (`Bug in portal`).
 
@@ -159,7 +159,7 @@ Work on `master` with uncommitted changes — the branch is created later. For e
 
 When the test turns green, do **not** lock in the verdict immediately — keep reading the remaining suspects to confirm none of them is a stronger explanation. Settling on the first green fix is how a wrong fix gets shipped; only commit once no better candidate surfaces.
 
-When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analysed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 4 and exit.
+When the current candidate set is exhausted without green, broaden it (next-ranked files, infrastructure) and iterate again — up to **three rounds**. After the third round without convergence, or when candidates are exhausted, mark the failure as `Unresolved` with a `Conclusion` listing the suspects analyzed, attempts made, what each changed about the failure, and the most plausible remaining lead. Run the cleanup in step 4 and exit.
 
 Once the verdict is locked in (only ever after a green local run — never file a ticket or commit otherwise), record the offending commit (short SHA + subject) and one sentence explaining how it broke the test — reused in the PR body's Root Cause section (see **Pull Request**).
 

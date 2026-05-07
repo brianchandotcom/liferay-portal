@@ -162,12 +162,12 @@ Use `"${SED_INPLACE[@]}" 's/osgi\.console=[0-9]*/osgi.console=<TARGET>/'` to han
 
 These get **wiped on rebuild** — always overwrite.
 
-Detect the Elasticsearch version by checking which configuration file already exists in `<BUNDLE>/osgi/configs`:
+Detect the Elasticsearch version by checking which configuration file already exists in `<bundles>/osgi/configs`:
 - `com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config` → elasticsearch8
 - `com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config` → elasticsearch7
 - Neither exists → default to elasticsearch8
 
-`<BUNDLE>/osgi/configs/com.liferay.portal.search.elasticsearch<VERSION>.configuration.ElasticsearchConfiguration.config`:
+`<bundles>/osgi/configs/com.liferay.portal.search.elasticsearch<VERSION>.configuration.ElasticsearchConfiguration.config`:
 
 ```
 sidecarHttpPort="<9201+N>"
@@ -176,13 +176,13 @@ networkBindHost="127.0.0.1"
 networkPublishHost="127.0.0.1"
 ```
 
-`<BUNDLE>/osgi/configs/com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnector.config`:
+`<bundles>/osgi/configs/com.liferay.arquillian.extension.junit.bridge.connector.ArquillianConnector.config`:
 
 ```
 port="<32763+N>"
 ```
 
-`<BUNDLE>/osgi/configs/com.liferay.data.guard.connector.DataGuardConnector.config`:
+`<bundles>/osgi/configs/com.liferay.data.guard.connector.DataGuardConnector.config`:
 
 ```
 port="<42763+N>"
@@ -190,7 +190,7 @@ port="<42763+N>"
 
 #### 4f. Patch glowroot/admin.json
 
-File: `<BUNDLE>/glowroot/admin.json`
+File: `<bundles>/glowroot/admin.json`
 
 Use `jq` to set `.web.port` to `4000+N`. Skip if already correct (survives rebuild).
 
@@ -200,7 +200,7 @@ jq '.web.port = <TARGET>' admin.json > admin.json.tmp && mv admin.json.tmp admin
 
 #### 4g. Patch portal-ext.properties
 
-File: `<BUNDLE>/portal-ext.properties`
+File: `<bundles>/portal-ext.properties`
 
 Ensure these lines are present (remove old values first, then append):
 
@@ -310,7 +310,7 @@ liferay-portal-LPD-12345                 8082     STOPPED    2         lportal_l
 
 ## Status Check
 
-Read `<BUNDLE>/.worktree-port-offset` and print the port table for a single worktree. No modifications.
+Read `<bundles>/.worktree-port-offset` and print the port table for a single worktree. No modifications.
 
 ## Cleanup
 

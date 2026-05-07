@@ -71,7 +71,7 @@ Logs are available at `<bundles>/logs/liferay.<yyyy-MM-dd>.log`. Check them when
 
 Liferay DXP is heavily tested. Every change must include test coverage.
 
-Tests that exercise the runtime (Integration, Playwright, Poshi) run against the bundle, not the source — deploy any modules under test first, or the rerun executes the previous bundle.
+Tests that exercise the runtime (Integration, Playwright, Poshi) run against the bundle, not the source — deploy any modules under test first, or the test runs against the previously deployed bundle.
 
 #### Unit Tests
 

@@ -454,10 +454,7 @@ export class StructureBuilderPage {
 	}) {
 		await page.goToCreateStructure();
 
-		if (!spaces) {
-			await page.enableForAllSpaces();
-		}
-		else {
+		if (spaces) {
 			await this.selectSpaces(spaces);
 		}
 

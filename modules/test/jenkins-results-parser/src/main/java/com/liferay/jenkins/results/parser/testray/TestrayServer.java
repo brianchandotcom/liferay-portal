@@ -112,71 +112,77 @@ public class TestrayServer {
 	}
 
 	public TestrayCaseType getTestrayCaseTypeByID(long testrayCaseTypeID) {
-		TestrayCaseType testrayCaseType = _testrayCaseTypesID.get(
-			testrayCaseTypeID);
+		synchronized (_testrayCaseTypesID) {
+			TestrayCaseType testrayCaseType = _testrayCaseTypesID.get(
+				testrayCaseTypeID);
 
-		if (testrayCaseType != null) {
-			return testrayCaseType;
-		}
-
-		try {
-			Set<JSONObject> entityJSONObjects = requestGraphQL(
-				"caseTypes", TestrayCaseType.FIELD_NAMES,
-				"id eq '" + testrayCaseTypeID + "'", null, 1, 1);
-
-			if (entityJSONObjects.isEmpty()) {
-				return null;
+			if (testrayCaseType != null) {
+				return testrayCaseType;
 			}
 
-			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+			try {
+				Set<JSONObject> entityJSONObjects = requestGraphQL(
+					"caseTypes", TestrayCaseType.FIELD_NAMES,
+					"id eq '" + testrayCaseTypeID + "'", null, 1, 1);
 
-			testrayCaseType = TestrayFactory.newTestrayCaseType(
-				this, iterator.next());
+				if (entityJSONObjects.isEmpty()) {
+					return null;
+				}
 
-			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
-			_testrayCaseTypesName.put(
-				testrayCaseType.getName(), testrayCaseType);
+				Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+				testrayCaseType = TestrayFactory.newTestrayCaseType(
+					this, iterator.next());
+
+				_testrayCaseTypesID.put(
+					testrayCaseType.getID(), testrayCaseType);
+				_testrayCaseTypesName.put(
+					testrayCaseType.getName(), testrayCaseType);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			return _testrayCaseTypesID.get(testrayCaseTypeID);
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _testrayCaseTypesID.get(testrayCaseTypeID);
 	}
 
 	public TestrayCaseType getTestrayCaseTypeByName(
 		String testrayCaseTypeName) {
 
-		TestrayCaseType testrayCaseType = _testrayCaseTypesName.get(
-			testrayCaseTypeName);
+		synchronized (_testrayCaseTypesID) {
+			TestrayCaseType testrayCaseType = _testrayCaseTypesName.get(
+				testrayCaseTypeName);
 
-		if (testrayCaseType != null) {
-			return testrayCaseType;
-		}
-
-		try {
-			Set<JSONObject> entityJSONObjects = requestGraphQL(
-				"caseTypes", TestrayCaseType.FIELD_NAMES,
-				"name eq '" + testrayCaseTypeName + "'", null, 1, 1);
-
-			if (entityJSONObjects.isEmpty()) {
-				return null;
+			if (testrayCaseType != null) {
+				return testrayCaseType;
 			}
 
-			Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+			try {
+				Set<JSONObject> entityJSONObjects = requestGraphQL(
+					"caseTypes", TestrayCaseType.FIELD_NAMES,
+					"name eq '" + testrayCaseTypeName + "'", null, 1, 1);
 
-			testrayCaseType = TestrayFactory.newTestrayCaseType(
-				this, iterator.next());
+				if (entityJSONObjects.isEmpty()) {
+					return null;
+				}
 
-			_testrayCaseTypesID.put(testrayCaseType.getID(), testrayCaseType);
-			_testrayCaseTypesName.put(
-				testrayCaseType.getName(), testrayCaseType);
+				Iterator<JSONObject> iterator = entityJSONObjects.iterator();
+
+				testrayCaseType = TestrayFactory.newTestrayCaseType(
+					this, iterator.next());
+
+				_testrayCaseTypesID.put(
+					testrayCaseType.getID(), testrayCaseType);
+				_testrayCaseTypesName.put(
+					testrayCaseType.getName(), testrayCaseType);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			return _testrayCaseTypesName.get(testrayCaseTypeName);
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
-		return _testrayCaseTypesName.get(testrayCaseTypeName);
 	}
 
 	public TestrayProject getTestrayProjectByID(long projectID) {

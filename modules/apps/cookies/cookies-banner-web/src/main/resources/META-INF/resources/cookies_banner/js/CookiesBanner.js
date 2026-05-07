@@ -31,9 +31,9 @@ export default function ({
 	configurationURL,
 	consentRenewalPeriod = 12,
 	consentRenewalPeriodTimeUnit = 'months',
-	cookiesBannerSuppressed = false,
 	dissentRenewalPeriod = consentRenewalPeriod,
 	dissentRenewalPeriodTimeUnit = consentRenewalPeriodTimeUnit,
+	globalPrivacyControlSignalActive = false,
 	includeDeclineAllButton,
 	modifiedDate = 0,
 	namespace,
@@ -57,7 +57,7 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
-		if (!cookiesBannerSuppressed) {
+		if (!globalPrivacyControlSignalActive) {
 			isCookiesPreferenceHandlingConfigurationModified(modifiedDate).then(
 				(value) => {
 					if (value) {
@@ -94,7 +94,7 @@ export default function ({
 		);
 
 		if (
-			cookiesBannerSuppressed ||
+			globalPrivacyControlSignalActive ||
 			consentManager ||
 			(productAnalyticsBanner &&
 				productAnalyticsBanner.style.display === 'block')

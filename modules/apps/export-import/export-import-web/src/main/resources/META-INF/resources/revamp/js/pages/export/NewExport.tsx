@@ -20,7 +20,7 @@ import {
 	ExportPreviewParams,
 	ExportPreviewQuery,
 	getExportPreview,
-} from '../../services/exportPreviewService';
+} from '../../services/getExportPreview';
 import {ExportPreview} from '../../types/exportImportPreview';
 import {flattenContentSelection} from '../../utils/flattenContentSelection';
 import DataSelection from './components/DataSelection';

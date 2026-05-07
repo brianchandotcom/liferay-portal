@@ -9,7 +9,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 import {FormikFieldText} from '../../../components/forms/formik';
 import {FormikFieldFileSelector} from '../../../components/forms/formik/FormikFieldFileSelector';
-import {postImportPreview} from '../../../services/importPreviewService';
+import {postImportPreview} from '../../../services/postImportPreview';
 import {useWizard} from '../NewImport';
 
 export default function FileSelectionStep() {

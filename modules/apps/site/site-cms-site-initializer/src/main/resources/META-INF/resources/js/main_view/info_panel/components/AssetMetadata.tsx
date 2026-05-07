@@ -20,6 +20,7 @@ import React, {
 import SpaceService from '../../../common/services/SpaceService';
 import {Space} from '../../../common/types/Space';
 import dateFormat from '../../../common/utils/dateFormat';
+import {isReviewDateOverdue} from '../../../common/utils/reviewDateStatus';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
 import {SpaceSticker} from '../../../index';
 import {
@@ -111,6 +112,8 @@ const AssetMetadata = () => {
 			displayErrorToast();
 		}
 	}, [actions, asset, type]);
+
+	const reviewOverdue = isReviewDateOverdue(asset?.reviewDate as string);
 
 	return (
 		<ClayPanel
@@ -319,7 +322,13 @@ const AssetMetadata = () => {
 								{Liferay.Language.get('review-date')}
 							</p>
 
-							<p className="d-block">
+							<p
+								className={
+									reviewOverdue
+										? 'd-block text-warning'
+										: 'd-block'
+								}
+							>
 								{asset?.reviewDate
 									? dateFormat(
 											DATE_PATTERN,

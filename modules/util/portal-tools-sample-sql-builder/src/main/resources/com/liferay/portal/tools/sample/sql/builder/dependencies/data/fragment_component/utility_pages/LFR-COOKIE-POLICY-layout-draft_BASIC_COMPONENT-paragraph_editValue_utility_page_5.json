@@ -1,0 +1,11 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"config": {
+				"mapperType": "link"
+			},
+			"defaultValue": "<p>A paragraph is a self-contained unit of a discourse in writing dealing with a particular point or idea. Paragraphs are usually an expected part of formal writing, used to organize longer prose.</p>",
+			"en_US": "These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and Internet device. If you do not allow these cookies, you will experience less targeted advertising."
+		}
+	}
+}

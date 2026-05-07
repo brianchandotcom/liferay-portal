@@ -1430,6 +1430,8 @@ public class JenkinsResultsParserUtil {
 
 		if (_getCacheURL() == null) {
 			System.out.println("WARNING: Unable to get build properties");
+
+			return new SecureProperties();
 		}
 
 		Properties properties = new SecureProperties();

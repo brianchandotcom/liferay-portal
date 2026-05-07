@@ -58,7 +58,7 @@ test(
 				)
 			).toBeVisible();
 
-			expect(page.getByText(file1Title)).toBeVisible();
+			await expect(page.getByText(file1Title)).toBeVisible();
 		}
 		finally {
 			await apiHelpers.objectEntry.deleteObjectEntry(
@@ -115,7 +115,7 @@ test(
 		await spaceSummaryPage.viewAllFilesLink.click();
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
-		expect(page.getByRole('link', {name: 'Files'})).toBeVisible();
+		await expect(page.getByRole('link', {name: 'Files'})).toBeVisible();
 	}
 );
 
@@ -200,7 +200,7 @@ test(
 		await spaceSummaryPage.viewAllContentLink.click();
 
 		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
-		expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
+		await expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
 	}
 );
 
@@ -307,7 +307,7 @@ test(
 
 		await spaceSummaryPage.goto(spaceName);
 
-		expect(globalSiteLocator).not.toBeVisible();
+		await expect(globalSiteLocator).not.toBeVisible();
 
 		await spaceSummaryPage.connectSite(siteName);
 
@@ -322,7 +322,7 @@ test(
 			.click();
 		await page.getByRole('menuitem', {name: 'Disconnect'}).click();
 
-		expect(globalSiteLocator).not.toBeVisible();
+		await expect(globalSiteLocator).not.toBeVisible();
 	}
 );
 

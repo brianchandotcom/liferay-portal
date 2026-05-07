@@ -127,7 +127,7 @@
 		[#assign restArticle = (restClient.get("/headless-delivery/v1.0/structured-contents/${displayObject.resourcePrimKey}?fields=contentFields"))!{} /]
 
 		[#list restArticle.contentFields as field]
-			[#if field.name == "category"]
+			[#if field.fieldReference == "category"]
 				[#assign parentCategoryId = field.contentFieldValue.data]
 				[#break /]
 			[/#if]

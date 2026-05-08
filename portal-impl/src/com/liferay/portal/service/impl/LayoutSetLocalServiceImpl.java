@@ -283,6 +283,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
 			groupId, privateLayout);
 
+		String previousLayoutSetPrototypeUuid =
+			layoutSet.getLayoutSetPrototypeUuid();
+
 		LayoutSetBranch layoutSetBranch = _getLayoutSetBranch(layoutSet);
 
 		if (layoutSetBranch == null) {
@@ -333,6 +336,13 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 				layoutSetPrototypeLinkEnabled);
 
 			_layoutSetBranchPersistence.update(layoutSetBranch);
+		}
+
+		if (!layoutSetPrototypeLinkEnabled ||
+			Validator.isNotNull(previousLayoutSetPrototypeUuid) ||
+			Validator.isNull(layoutSetPrototypeUuid)) {
+
+			return;
 		}
 
 		try {

@@ -40,6 +40,7 @@ export class StructuresPage {
 			| 'Edit'
 			| 'Export as JSON'
 			| 'Import and Override'
+			| 'Permissions'
 			| 'View Usages';
 		filter: string;
 		timeout?: number;

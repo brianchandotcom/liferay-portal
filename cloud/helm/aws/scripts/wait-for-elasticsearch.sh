@@ -6,22 +6,22 @@ set -o nounset
 main() {
 	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
 
-	local protocol="http"
+	_protocol="http"
 
 	case "${ELASTICSEARCH_URL}" in
-		https://*) protocol="https" ;;
+		https://*) _protocol="https" ;;
 	esac
 
-	local authenticated_health_url="${protocol}://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
+	_authenticated_health_url="${_protocol}://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
 
-	local wget_args=""
+	_wget_args=""
 
-	if [ "${protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
+	if [ "${_protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
 	then
-		wget_args="--no-check-certificate"
+		_wget_args="--no-check-certificate"
 	fi
 
-	until wget ${wget_args} -qO- "${authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
+	until wget ${_wget_args} -qO- "${_authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
 	do
 		_log_json "Waiting for Elasticsearch (current status: \"red\" or \"unreachable\")."
 
@@ -32,21 +32,15 @@ main() {
 }
 
 _log_json() {
-	local escaped_message
+	_escaped_message=$(echo "${1}" | sed 's/"/\\"/g')
 
-	escaped_message=$(echo "${1}" | sed 's/"/\\"/g')
+	_script_name=$(basename "${0}")
 
-	local script_name
+	_severity="${2:-INFO}"
 
-	script_name=$(basename "${0}")
+	_timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
-	local severity="${2:-INFO}"
-
-	local timestamp
-
-	timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-
-	printf '{"message": "%s", "script": "%s", "severity": "%s", "timestamp": "%s"}\n' "${escaped_message}" "${script_name}" "${severity}" "${timestamp}"
+	printf '{"message": "%s", "script": "%s", "severity": "%s", "timestamp": "%s"}\n' "${_escaped_message}" "${_script_name}" "${_severity}" "${_timestamp}"
 }
 
 main

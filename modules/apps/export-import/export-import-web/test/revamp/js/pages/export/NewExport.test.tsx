@@ -11,7 +11,7 @@ import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import {NewExport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/export/NewExport';
-import {mockExportPreview} from '../../mocks/mockExportPreview';
+import {mockPortletDataHandlerSections} from '../../mocks/mockPortletDataHandlerSections';
 
 const renderComponent = () => {
 	return render(
@@ -25,7 +25,12 @@ const renderComponent = () => {
 describe('NewExport', () => {
 	beforeEach(() => {
 		fetch.resetMocks();
-		fetch.mockResponse(JSON.stringify(mockExportPreview));
+		fetch.mockResponse(
+			JSON.stringify({
+				additionCount: 42,
+				portletDataHandlerSections: mockPortletDataHandlerSections,
+			})
+		);
 	});
 
 	it('renders the export form', async () => {

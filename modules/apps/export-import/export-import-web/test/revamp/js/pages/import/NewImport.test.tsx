@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
+import {mockPortletDataHandlerSections} from '../../mocks/mockPortletDataHandlerSections';
 
 jest.mock('frontend-js-web', () => {
 	const actual = jest.requireActual('frontend-js-web');
@@ -36,7 +37,7 @@ jest.mock(
 					fileEntryId: 1,
 					fileName: 'site.lar',
 					fileSize: 4096,
-					portletDataHandlerSections: [],
+					portletDataHandlerSections: mockPortletDataHandlerSections,
 				},
 				error: null,
 			})
@@ -195,7 +196,7 @@ describe('NewImport', () => {
 		expect(nameInput).toHaveValue('');
 	});
 
-	it('forwards the upload metadata to the FileSummary card on the Data Selection step', async () => {
+	it('shows the file summary and the lar contents on the Data Selection step after uploading a file and clicking Continue', async () => {
 		renderComponent();
 
 		await user.type(screen.getByLabelText(/^name/i), 'My import');
@@ -215,5 +216,8 @@ describe('NewImport', () => {
 		expect(screen.getByText('Test User')).toBeInTheDocument();
 		expect(screen.getByText('5 days ago')).toBeInTheDocument();
 		expect(screen.getByText('4 KB')).toBeInTheDocument();
+
+		expect(screen.getByText('Design')).toBeInTheDocument();
+		expect(screen.getByText('Theme Settings')).toBeInTheDocument();
 	});
 });

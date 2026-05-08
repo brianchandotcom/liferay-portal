@@ -327,8 +327,11 @@ const EventInput: React.FC<IEventInputProps> = ({
 		<div className='criteria-statement'>
 			<SafeResults {...result} page={false} pageDisplay={false}>
 				{(data: any) => {
-					const attributes =
+					const rawAttributes =
 						data?.eventProperties?.eventProperties || [];
+					const attributes = rawAttributes.map((attr: Attribute) => ({
+						...attr
+					}));
 
 					return (
 						<>

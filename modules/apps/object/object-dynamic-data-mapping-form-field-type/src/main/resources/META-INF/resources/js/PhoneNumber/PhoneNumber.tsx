@@ -57,7 +57,7 @@ type PhoneNumberProps =
 	| (LocalizablePhoneNumberProps & {localizedObjectField: true})
 	| (NonLocalizablePhoneNumberProps & {localizedObjectField?: false});
 
-const validate = (value: string) => {
+const getValidationState = (value: string) => {
 	if (!value) {
 		return {displayErrors: false, errorMessage: undefined, valid: true};
 	}
@@ -92,7 +92,7 @@ const LocalizablePhoneNumber = ({
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
-	const [validField, setValidField] = useState({
+	const [validationState, setValidationState] = useState({
 		displayErrors,
 		errorMessage,
 		valid,
@@ -102,14 +102,16 @@ const LocalizablePhoneNumber = ({
 	const disabled = readOnly || otherProps.disabled;
 
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidField(validate(currentValue));
+		setValidationState(getValidationState(currentValue));
 
 		onBlur?.(event);
 	};
 
 	const handleLanguageClicked = (localeId: Liferay.Language.Locale) => {
-		if (validField.displayErrors) {
-			setValidField(validate(value[localeId] ?? predefinedValue ?? ''));
+		if (validationState.displayErrors) {
+			setValidationState(
+				getValidationState(value[localeId] ?? predefinedValue ?? '')
+			);
 		}
 	};
 
@@ -119,12 +121,12 @@ const LocalizablePhoneNumber = ({
 			[editingLanguageId]: event.target.value,
 		} as LocalizedValue<string>;
 
-		// Re-validate on change only while an error is already visible,
+		// Re-getValidationState on change only while an error is already visible,
 		// so the message clears live as the user fixes it (typing or
 		// country switch) without flashing on first entry.
 
-		if (validField.displayErrors) {
-			setValidField(validate(event.target.value));
+		if (validationState.displayErrors) {
+			setValidationState(getValidationState(event.target.value));
 		}
 
 		onChange?.({target: {value: newValue}});
@@ -133,7 +135,7 @@ const LocalizablePhoneNumber = ({
 	return (
 		<FieldBase
 			{...otherProps}
-			{...validField}
+			{...validationState}
 			name={name}
 			readOnly={disabled}
 		>
@@ -184,7 +186,7 @@ const NonLocalizablePhoneNumber = ({
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
-	const [validField, setValidField] = useState({
+	const [validationState, setValidationState] = useState({
 		displayErrors,
 		errorMessage,
 		valid,
@@ -193,7 +195,7 @@ const NonLocalizablePhoneNumber = ({
 	const disabled = readOnly || otherProps.disabled;
 
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidField(validate(combinedValue));
+		setValidationState(getValidationState(combinedValue));
 
 		onBlur?.(event);
 	};
@@ -201,12 +203,12 @@ const NonLocalizablePhoneNumber = ({
 	const handleChange = (event: {target: {value: string}}) => {
 		setCombinedValue(event.target.value);
 
-		// Re-validate on change only while an error is already visible,
+		// Re-getValidationState on change only while an error is already visible,
 		// so the message clears as the user fixes it without flashing on
 		// first entry.
 
-		if (validField.displayErrors) {
-			setValidField(validate(event.target.value));
+		if (validationState.displayErrors) {
+			setValidationState(getValidationState(event.target.value));
 		}
 
 		onChange?.(event);
@@ -215,7 +217,7 @@ const NonLocalizablePhoneNumber = ({
 	return (
 		<FieldBase
 			{...otherProps}
-			{...validField}
+			{...validationState}
 			name={name}
 			readOnly={disabled}
 		>

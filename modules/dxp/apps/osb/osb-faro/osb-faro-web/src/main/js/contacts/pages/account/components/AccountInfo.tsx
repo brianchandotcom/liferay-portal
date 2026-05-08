@@ -7,6 +7,7 @@ import React, {useState} from 'react';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
+import {useParams} from 'react-router-dom';
 
 export interface IAccount {
 	accountName?: string;
@@ -18,7 +19,6 @@ export interface IAccount {
 		name: string;
 		value?: string;
 	}>;
-	id?: string;
 	industry?: string;
 	numberOfEmployees?: number;
 }
@@ -59,6 +59,7 @@ const infoItem = (label: string, value?: string, link?: boolean) => (
 
 const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+	const {id: accountId} = useParams<{id: string}>();
 
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
 		if (!account) {
@@ -122,10 +123,10 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 				</Card.Body>
 			</Card>
 
-			{isDetailsModalOpen && account?.id && (
+			{isDetailsModalOpen && accountId && (
 				<AccountDetailsModal
-					accountId={account.id}
-					accountName={account.accountName}
+					accountId={accountId}
+					accountName={account?.accountName}
 					onClose={() => setIsDetailsModalOpen(false)}
 				/>
 			)}

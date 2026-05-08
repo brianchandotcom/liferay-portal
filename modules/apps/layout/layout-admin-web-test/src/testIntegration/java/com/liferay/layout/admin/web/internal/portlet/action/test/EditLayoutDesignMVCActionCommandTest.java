@@ -394,7 +394,7 @@ public class EditLayoutDesignMVCActionCommandTest {
 			draftLayout.getDescriptionMap(), draftLayout.getKeywordsMap(),
 			draftLayout.getRobotsMap(), draftLayout.getType(),
 			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
-			null, styleBookEntry.getExternalReferenceCode(),
+			null, styleBookEntry.getExternalReferenceCode(), null,
 			fileEntry.getExternalReferenceCode(), faviconFileEntryScopeERC,
 			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

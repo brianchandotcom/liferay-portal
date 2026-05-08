@@ -2805,6 +2805,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				type, pageJSONObject.getBoolean("hidden"),
 				layout.getFriendlyURLMap(), layout.getIconImage(), null,
 				layout.getStyleBookEntryERC(),
+				layout.getStyleBookEntryScopeERC(),
 				pageJSONObject.getString("faviconFileEntryERC"),
 				pageJSONObject.getString("faviconFileEntryScopeERC"),
 				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);

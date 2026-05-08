@@ -1,8 +1,7 @@
 import {buildLanguages} from '../buildLanguages';
-import {ConnectorConfig} from '../types';
+import {ConnectorConfig, Entity} from '../types';
 import {DataSourceTypes} from 'shared/util/constants';
 import {fetchConnectorEntityCount} from 'shared/api/connector';
-import {sub} from 'shared/util/lang';
 
 const SLUG = 'hubspot';
 
@@ -13,17 +12,9 @@ const hubspotConfig: ConnectorConfig = {
 	endpointPath: '/api/hubspot_webhooks',
 	entities: [
 		{
-			accessor: 'contacts',
-			description: sub(
-				Liferay.Language.get(
-					'represents-fields-from-the-account-object-within-x'
-				),
-				[displayName]
-			) as string,
+			entity: Entity.Events,
 			fetchCount: params =>
-				fetchConnectorEntityCount(SLUG, 'contacts', params),
-			icon: 'users',
-			label: Liferay.Language.get('contacts')
+				fetchConnectorEntityCount(SLUG, Entity.Events, params)
 		}
 	],
 	languages: buildLanguages(displayName),

@@ -2,46 +2,27 @@ jest.unmock('react-dom');
 
 import ConnectorEntities from '../ConnectorEntities';
 import React from 'react';
-import {ConnectorEntityDescriptor} from '../types';
+import {Entity} from '../types';
 import {render} from '@testing-library/react';
 
-const buildEntity = (
-	overrides: Partial<ConnectorEntityDescriptor> = {}
-): ConnectorEntityDescriptor => ({
-	accessor: 'contacts',
-	description: 'Contact records',
-	icon: 'users',
-	label: 'Contacts',
-	...overrides
-});
-
 describe('ConnectorEntities', () => {
-	it('renders one item per entity with its label and description', () => {
-		const entities = [
-			buildEntity({accessor: 'a', description: 'desc-a', label: 'A'}),
-			buildEntity({accessor: 'b', description: 'desc-b', label: 'B'})
-		];
-
+	it('renders one item per entity with its derived label', () => {
 		const {getByText} = render(
 			<ConnectorEntities
-				connectionStatus='connected'
-				entities={entities}
+				entities={[{entity: Entity.Accounts}, {entity: Entity.Events}]}
 				syncedCounts={{}}
 			/>
 		);
 
-		expect(getByText('A')).toBeTruthy();
-		expect(getByText('B')).toBeTruthy();
-		expect(getByText('desc-a')).toBeTruthy();
-		expect(getByText('desc-b')).toBeTruthy();
+		expect(getByText('Accounts')).toBeTruthy();
+		expect(getByText('Events')).toBeTruthy();
 	});
 
 	it('renders the synced count when it is a non-negative number', () => {
 		const {getByText} = render(
 			<ConnectorEntities
-				connectionStatus='connected'
-				entities={[buildEntity()]}
-				syncedCounts={{contacts: 42}}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 42}}
 			/>
 		);
 
@@ -51,9 +32,8 @@ describe('ConnectorEntities', () => {
 	it('renders the synced count when it is zero', () => {
 		const {getByText} = render(
 			<ConnectorEntities
-				connectionStatus='connected'
-				entities={[buildEntity()]}
-				syncedCounts={{contacts: 0}}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 0}}
 			/>
 		);
 
@@ -63,8 +43,7 @@ describe('ConnectorEntities', () => {
 	it('hides the synced count when no value is provided', () => {
 		const {queryByText} = render(
 			<ConnectorEntities
-				connectionStatus='connected'
-				entities={[buildEntity()]}
+				entities={[{entity: Entity.Accounts}]}
 				syncedCounts={{}}
 			/>
 		);
@@ -72,37 +51,42 @@ describe('ConnectorEntities', () => {
 		expect(queryByText(/Items Synced/i)).toBeNull();
 	});
 
-	it('renders the connected label with success display when status is connected', () => {
+	it('renders the Configured label with success display when count is greater than zero', () => {
 		const {getByText} = render(
 			<ConnectorEntities
-				connectionStatus='connected'
-				entities={[buildEntity()]}
-				syncedCounts={{}}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 5}}
 			/>
 		);
 
-		expect(getByText('Connected')).toBeTruthy();
+		expect(getByText('Configured')).toBeTruthy();
 	});
 
-	it('renders the disconnected label when status is disconnected', () => {
+	it('renders the Unconfigured label when count is zero', () => {
 		const {getByText} = render(
 			<ConnectorEntities
-				connectionStatus='disconnected'
-				entities={[buildEntity()]}
+				entities={[{entity: Entity.Accounts}]}
+				syncedCounts={{[Entity.Accounts]: 0}}
+			/>
+		);
+
+		expect(getByText('Unconfigured')).toBeTruthy();
+	});
+
+	it('renders the Unconfigured label when no count is provided', () => {
+		const {getByText} = render(
+			<ConnectorEntities
+				entities={[{entity: Entity.Accounts}]}
 				syncedCounts={{}}
 			/>
 		);
 
-		expect(getByText('Disconnected')).toBeTruthy();
+		expect(getByText('Unconfigured')).toBeTruthy();
 	});
 
 	it('renders nothing inside the list when no entities are provided', () => {
 		const {container} = render(
-			<ConnectorEntities
-				connectionStatus='connected'
-				entities={[]}
-				syncedCounts={{}}
-			/>
+			<ConnectorEntities entities={[]} syncedCounts={{}} />
 		);
 
 		expect(container.querySelectorAll('.list-group-item')).toHaveLength(0);

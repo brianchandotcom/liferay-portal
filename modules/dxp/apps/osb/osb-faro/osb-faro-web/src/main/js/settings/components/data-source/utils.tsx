@@ -10,6 +10,7 @@ interface IUseDisconnectDataSourceParams {
 		message: string;
 		timeout?: boolean;
 	}) => any;
+	beforeSubmit?: () => Promise<any> | any;
 	close: () => any;
 	groupId: string;
 	id: string;
@@ -19,6 +20,7 @@ interface IUseDisconnectDataSourceParams {
 
 const useDisconnectDataSource = ({
 	addAlert,
+	beforeSubmit,
 	close,
 	groupId,
 	id,
@@ -38,6 +40,10 @@ const useDisconnectDataSource = ({
 			onClose: close,
 			onSubmit: async () => {
 				try {
+					if (beforeSubmit) {
+						await beforeSubmit();
+					}
+
 					await disconnect({groupId, id});
 
 					await onSubmit();
@@ -64,7 +70,7 @@ const useDisconnectDataSource = ({
 			title: Liferay.Language.get('disconnect-data-source'),
 			titleIcon: 'warning-full'
 		});
-	}, [addAlert, close, groupId, id, open]);
+	}, [addAlert, beforeSubmit, close, groupId, id, open]);
 
 	return {handleDisconnect};
 };

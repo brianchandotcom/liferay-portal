@@ -3,6 +3,7 @@ import InputWithEditToggle from 'shared/components/InputWithEditToggle';
 import React, {useCallback, useRef} from 'react';
 import {DataSource} from 'shared/util/records';
 import {sequence} from 'shared/util/promise';
+import {Text} from '@clayui/core';
 import {
 	toPromise,
 	validateMaxLength,
@@ -12,6 +13,7 @@ import {validateUniqueName} from 'shared/util/data-sources';
 
 interface IDataSourceEditableTitleProps {
 	dataSource: DataSource;
+	description?: React.ReactNode;
 	displayType?: string;
 	editable?: boolean;
 	groupId: string;
@@ -21,6 +23,7 @@ interface IDataSourceEditableTitleProps {
 
 const DataSourceEditableTitle = ({
 	dataSource,
+	description,
 	displayType,
 	editable,
 	groupId,
@@ -84,6 +87,14 @@ const DataSourceEditableTitle = ({
 				])}
 				value={dataSource.name || ''}
 			/>
+
+			{description && (
+				<div className='mt-1'>
+					<Text color='secondary' size={2}>
+						{description}
+					</Text>
+				</div>
+			)}
 		</div>
 	);
 };

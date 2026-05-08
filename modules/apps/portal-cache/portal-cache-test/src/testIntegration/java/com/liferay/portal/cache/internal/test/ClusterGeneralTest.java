@@ -34,6 +34,7 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.process.local.LocalProcessLauncher;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -849,12 +850,8 @@ public class ClusterGeneralTest implements Serializable {
 
 		Future<?> future = masterTomcatNode.execute(
 			() -> {
-				TestExportImportLifecycleListener
-					testExportImportLifecycleListener =
-						TestExportImportLifecycleListener.register(
-							String.valueOf(exportImportConfigurationId));
-
-				testExportImportLifecycleListener.await();
+				TestExportImportLifecycleListener.await(
+					String.valueOf(exportImportConfigurationId));
 
 				return null;
 			});
@@ -1380,31 +1377,26 @@ public class ClusterGeneralTest implements Serializable {
 	private static class TestExportImportLifecycleListener
 		implements ExportImportLifecycleListener {
 
-		public static TestExportImportLifecycleListener register(
-			String processId) {
-
+		public static void await(String processId) throws Exception {
 			BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+			CountDownLatch countDownLatch = new CountDownLatch(1);
 
 			TestExportImportLifecycleListener
 				testExportImportLifecycleListener =
-					new TestExportImportLifecycleListener(processId);
+					new TestExportImportLifecycleListener(
+						countDownLatch, processId);
 
-			testExportImportLifecycleListener._serviceRegistration =
+			ServiceRegistration<?> serviceRegistration =
 				bundleContext.registerService(
 					ExportImportLifecycleListener.class,
 					testExportImportLifecycleListener, null);
 
-			return testExportImportLifecycleListener;
-		}
+			countDownLatch.await();
 
-		public void await() throws Exception {
-			_countDownLatch.await();
+			serviceRegistration.unregister();
 
-			_serviceRegistration.unregister();
-
-			if (_throwable != null) {
-				throw new AssertionError(_throwable);
-			}
+			testExportImportLifecycleListener._rethrow();
 		}
 
 		@Override
@@ -1446,13 +1438,21 @@ public class ClusterGeneralTest implements Serializable {
 			}
 		}
 
-		private TestExportImportLifecycleListener(String processId) {
+		private TestExportImportLifecycleListener(
+			CountDownLatch countDownLatch, String processId) {
+
+			_countDownLatch = countDownLatch;
 			_processId = processId;
 		}
 
-		private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+		private void _rethrow() {
+			if (_throwable != null) {
+				ReflectionUtil.throwException(_throwable);
+			}
+		}
+
+		private final CountDownLatch _countDownLatch;
 		private final String _processId;
-		private ServiceRegistration<?> _serviceRegistration;
 		private volatile Throwable _throwable;
 
 	}

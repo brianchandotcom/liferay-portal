@@ -9,6 +9,8 @@ import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorRegistry;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
@@ -183,6 +185,14 @@ public class AnalyticsDXPEntityBatchExporterImpl
 			LocalDateTime localDateTime)
 		throws Exception {
 
+		DispatchTaskExecutor dispatchTaskExecutor =
+			_dispatchTaskExecutorRegistry.fetchDispatchTaskExecutor(
+				dispatchTriggerName);
+
+		if (dispatchTaskExecutor == null) {
+			return null;
+		}
+
 		User user = _userLocalService.fetchUserByScreenName(
 			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
 
@@ -192,8 +202,8 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 		DispatchTrigger dispatchTrigger =
 			_dispatchTriggerLocalService.addDispatchTrigger(
-				null, user.getUserId(), dispatchTriggerName, null,
-				dispatchTriggerName, false);
+				null, user.getUserId(), dispatchTaskExecutor,
+				dispatchTriggerName, null, dispatchTriggerName, false);
 
 		return _dispatchTriggerLocalService.updateDispatchTrigger(
 			dispatchTrigger.getDispatchTriggerId(), true, _CRON_EXPRESSION,
@@ -213,6 +223,9 @@ public class AnalyticsDXPEntityBatchExporterImpl
 
 	@Reference
 	private DispatchLogLocalService _dispatchLogLocalService;
+
+	@Reference
+	private DispatchTaskExecutorRegistry _dispatchTaskExecutorRegistry;
 
 	@Reference
 	private DispatchTriggerLocalService _dispatchTriggerLocalService;

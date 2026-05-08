@@ -101,7 +101,7 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		Mockito.when(
 			_httpServletRequest.getParameter("fieldName")
 		).thenReturn(
-			HtmlUtil.escapeAttribute(_SCRIPT)
+			_SCRIPT
 		);
 
 		DDMFormField mockDDMFormField = Mockito.mock(DDMFormField.class);
@@ -109,20 +109,18 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		Mockito.when(
 			mockDDMFormField.getName()
 		).thenReturn(
-			HtmlUtil.escapeAttribute(_SCRIPT)
+			_SCRIPT
 		);
 
 		ReflectionTestUtil.setFieldValue(
 			_renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
-			_mockDDMFormDeserializer(
-				HtmlUtil.escapeAttribute(_SCRIPT), mockDDMFormField));
+			_mockDDMFormDeserializer(_SCRIPT, mockDDMFormField));
 
 		DDMFormField ddmFormField =
 			_renderStructureFieldMVCResourceCommand.getDDMFormField(
 				_httpServletRequest);
 
-		Assert.assertEquals(
-			HtmlUtil.escapeAttribute(_SCRIPT), ddmFormField.getName());
+		Assert.assertEquals(_SCRIPT, ddmFormField.getName());
 	}
 
 	@Test

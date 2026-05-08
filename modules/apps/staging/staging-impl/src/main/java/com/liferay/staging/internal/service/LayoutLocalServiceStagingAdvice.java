@@ -123,7 +123,8 @@ public class LayoutLocalServiceStagingAdvice {
 			Map<Locale, String> robotsMap, String type, boolean hidden,
 			Map<Locale, String> friendlyURLMap, boolean hasIconImage,
 			byte[] iconBytes, String styleBookEntryERC,
-			String faviconFileEntryERC, String faviconFileEntryScopeERC,
+			String styleBookEntryScopeERC, String faviconFileEntryERC,
+			String faviconFileEntryScopeERC,
 			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -183,8 +184,9 @@ public class LayoutLocalServiceStagingAdvice {
 				groupId, privateLayout, layoutId, parentLayoutId, nameMap,
 				titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden,
 				friendlyURLMap, hasIconImage, iconBytes, styleBookEntryERC,
-				faviconFileEntryERC, faviconFileEntryScopeERC,
-				masterLayoutPageTemplateEntryERC, serviceContext);
+				styleBookEntryScopeERC, faviconFileEntryERC,
+				faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
+				serviceContext);
 		}
 
 		layoutLocalService.updateAsset(
@@ -808,7 +810,7 @@ public class LayoutLocalServiceStagingAdvice {
 			}
 			else if (methodName.equals("updateLayout") &&
 					 ((arguments.length == 15) || (arguments.length == 16) ||
-					  (arguments.length == 19))) {
+					  (arguments.length == 20))) {
 
 				Map<Locale, String> friendlyURLMap = null;
 
@@ -824,6 +826,7 @@ public class LayoutLocalServiceStagingAdvice {
 				}
 
 				String styleBookEntryERC = null;
+				String styleBookEntryScopeERC = null;
 				String faviconFileEntryERC = null;
 				String faviconFileEntryScopeERC = null;
 				String masterLayoutPageTemplateEntryERC = null;
@@ -838,13 +841,14 @@ public class LayoutLocalServiceStagingAdvice {
 
 					serviceContext = (ServiceContext)arguments[15];
 				}
-				else if (arguments.length == 19) {
+				else if (arguments.length == 20) {
 					styleBookEntryERC = (String)arguments[14];
-					faviconFileEntryERC = (String)arguments[15];
-					faviconFileEntryScopeERC = (String)arguments[16];
-					masterLayoutPageTemplateEntryERC = (String)arguments[17];
+					styleBookEntryScopeERC = (String)arguments[15];
+					faviconFileEntryERC = (String)arguments[16];
+					faviconFileEntryScopeERC = (String)arguments[17];
+					masterLayoutPageTemplateEntryERC = (String)arguments[18];
 
-					serviceContext = (ServiceContext)arguments[18];
+					serviceContext = (ServiceContext)arguments[19];
 				}
 
 				returnValue = updateLayout(
@@ -857,9 +861,9 @@ public class LayoutLocalServiceStagingAdvice {
 					(Map<Locale, String>)arguments[8], (String)arguments[9],
 					(Boolean)arguments[10], friendlyURLMap,
 					(Boolean)arguments[12], (byte[])arguments[13],
-					styleBookEntryERC, faviconFileEntryERC,
-					faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
-					serviceContext);
+					styleBookEntryERC, styleBookEntryScopeERC,
+					faviconFileEntryERC, faviconFileEntryScopeERC,
+					masterLayoutPageTemplateEntryERC, serviceContext);
 			}
 			else {
 				if (methodName.equals("updateLayout") &&

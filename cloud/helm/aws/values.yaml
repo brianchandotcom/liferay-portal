@@ -166,6 +166,11 @@ liferay-default:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+    customVolumes:
+        x-liferay-aws-search-config:
+            -   configMap:
+                    name: liferay-search-config-aws
+                name: liferay-search-config-aws
     network:
         enabled: true
         timeouts:
@@ -202,37 +207,6 @@ liferay-default:
         engine: opensearch
         opensearch2DownloadBaseURL: https://releases.liferay.com/opensearch2
     templates:
-        configmap:
-            data:
-                com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
-                    {{- if eq .Values.search.engine "elasticsearch" }}
-                    authenticationEnabled=B"true"
-                    httpSSLEnabled=B"false"
-                    networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
-                    operationMode="REMOTE"
-                    password="$[env:ELASTICSEARCH_PASSWORD]"
-                    productionModeEnabled=B"true"
-                    username="$[env:ELASTICSEARCH_USERNAME]"
-                    {{- end }}
-                com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
-                    {{- if eq .Values.search.engine "elasticsearch" }}
-                    authenticationEnabled=B"true"
-                    httpSSLEnabled=B"false"
-                    networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
-                    password="$[env:ELASTICSEARCH_PASSWORD]"
-                    productionModeEnabled=B"true"
-                    username="$[env:ELASTICSEARCH_USERNAME]"
-                    {{- end }}
-                com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |
-                    {{- if eq .Values.search.engine "opensearch" }}
-                    active=B"true"
-                    authenticationEnabled=B"true"
-                    connectionId="REMOTE"
-                    httpSSLEnabled=B"false"
-                    networkHostAddresses=["https://$[env:OPENSEARCH_ENDPOINT]"]
-                    password="$[env:OPENSEARCH_PASSWORD]"
-                    username="$[env:OPENSEARCH_USERNAME]"
-                    {{- end }}
         customEnv:
             x-liferay-aws-opensearch: |
                 {{- if eq .Values.search.engine "opensearch" }}
@@ -258,16 +232,16 @@ liferay-default:
             x-liferay-aws-elasticsearch: |
                 {{- if eq .Values.search.engine "elasticsearch" }}
                 -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
-                    name: liferay-configmap
+                    name: liferay-search-config-aws
                     subPath: com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
                 -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
-                    name: liferay-configmap
+                    name: liferay-search-config-aws
                     subPath: com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
                 {{- end }}
             x-liferay-aws-opensearch: |
                 {{- if eq .Values.search.engine "opensearch" }}
                 -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-                    name: liferay-configmap
+                    name: liferay-search-config-aws
                     subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
                 {{- end }}
         customVolumes:

@@ -98,22 +98,11 @@ data:
         {{- tpl (.Files.Get "resources/unicast.xml") $ | nindent 8 }}
     {{- end }}
     {{- end }}
-    {{- $configmapTemplates := default dict (default dict .Values.templates).configmap }}
-    {{- $configmapDataTemplates := default dict $configmapTemplates.data }}
     {{- range $k, $v := .Values.configmap.data }}
     {{- $trimmed := trim (default "" $v) }}
-    {{- if and $trimmed (not (hasKey $configmapDataTemplates $k)) }}
+    {{- if $trimmed }}
     {{ $k }}: |
         {{- $trimmed | nindent 8 }}
-    {{- end }}
-    {{- end }}
-    {{- range $k, $v := $configmapDataTemplates }}
-    {{- if $v }}
-    {{- $rendered := tpl $v $ | trim }}
-    {{- if $rendered }}
-    {{ $k }}: |
-        {{- $rendered | nindent 8 }}
-    {{- end }}
     {{- end }}
     {{- end }}
 kind: ConfigMap

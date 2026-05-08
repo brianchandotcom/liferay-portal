@@ -1,0 +1,33 @@
+{{- $engine := index .Values "liferay-default" "search" "engine" -}}
+apiVersion: v1
+data:
+    {{- if eq $engine "elasticsearch" }}
+    com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
+        authenticationEnabled=B"true"
+        httpSSLEnabled=B"false"
+        networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+        operationMode="REMOTE"
+        password="$[env:ELASTICSEARCH_PASSWORD]"
+        productionModeEnabled=B"true"
+        username="$[env:ELASTICSEARCH_USERNAME]"
+    com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
+        authenticationEnabled=B"true"
+        httpSSLEnabled=B"false"
+        networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+        password="$[env:ELASTICSEARCH_PASSWORD]"
+        productionModeEnabled=B"true"
+        username="$[env:ELASTICSEARCH_USERNAME]"
+    {{- else if eq $engine "opensearch" }}
+    com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |
+        active=B"true"
+        authenticationEnabled=B"true"
+        connectionId="REMOTE"
+        httpSSLEnabled=B"false"
+        networkHostAddresses=["https://$[env:OPENSEARCH_ENDPOINT]"]
+        password="$[env:OPENSEARCH_PASSWORD]"
+        username="$[env:OPENSEARCH_USERNAME]"
+    {{- end }}
+kind: ConfigMap
+metadata:
+    name: liferay-search-config-aws
+    namespace: {{ .Release.Namespace }}

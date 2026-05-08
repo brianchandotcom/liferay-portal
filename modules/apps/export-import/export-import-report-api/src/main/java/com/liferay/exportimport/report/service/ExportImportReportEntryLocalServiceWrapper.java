@@ -79,6 +79,19 @@ public class ExportImportReportEntryLocalServiceWrapper
 			exportImportReportEntry);
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		addMissingReferenceExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		return _exportImportReportEntryLocalService.
+			addMissingReferenceExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -379,6 +392,19 @@ public class ExportImportReportEntryLocalServiceWrapper
 				errorStacktrace, modelNameLanguageKey);
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		getOrAddMissingReferenceExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		return _exportImportReportEntryLocalService.
+			getOrAddMissingReferenceExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -455,4 +481,4 @@ public class ExportImportReportEntryLocalServiceWrapper
 		_exportImportReportEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:601233165
+// LIFERAY-SERVICE-BUILDER-HASH:-624051149

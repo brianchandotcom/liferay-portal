@@ -7,6 +7,25 @@ import updateEditableValuesAction from '../actions/updateEditableValues';
 import FragmentService from '../services/FragmentService';
 import {clearPageContents} from '../utils/usePageContents';
 
+const pendingRequests = new Map();
+
+function enqueueByKey(key, work) {
+	const previous = pendingRequests.get(key) ?? Promise.resolve();
+
+	const current = previous
+		.catch(() => {})
+		.then(() => work(() => pendingRequests.get(key) === current))
+		.finally(() => {
+			if (pendingRequests.get(key) === current) {
+				pendingRequests.delete(key);
+			}
+		});
+
+	pendingRequests.set(key, current);
+
+	return current;
+}
+
 export default function updateEditableValues({
 	editableValues,
 	fragmentEntryLinkId,
@@ -14,13 +33,16 @@ export default function updateEditableValues({
 	return (dispatch, getState) => {
 		const {languageId, segmentsExperienceId} = getState();
 
-		return FragmentService.updateEditableValues({
-			editableValues,
-			fragmentEntryLinkId,
-			languageId,
-			onNetworkStatus: dispatch,
-			segmentsExperienceId,
-		}).then(({fragmentEntryLink}) => {
+		return enqueueByKey(fragmentEntryLinkId, async (isLastInQueue) => {
+			const {fragmentEntryLink} =
+				await FragmentService.updateEditableValues({
+					editableValues,
+					fragmentEntryLinkId,
+					languageId,
+					onNetworkStatus: dispatch,
+					segmentsExperienceId,
+				});
+
 			dispatch(
 				updateEditableValuesAction({
 					content: fragmentEntryLink.content,
@@ -30,7 +52,9 @@ export default function updateEditableValues({
 				})
 			);
 
-			clearPageContents();
+			if (isLastInQueue()) {
+				clearPageContents();
+			}
 		});
 	};
 }

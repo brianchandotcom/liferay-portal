@@ -2049,6 +2049,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						// No namespace
 
+						@SuppressWarnings("PMD.UnusedLocalVariable")
 						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 						Assert.assertTrue(
@@ -2092,6 +2093,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						// Using the configured namespace ${configYAML.getGraphQLNamespace()}
 
+						@SuppressWarnings("PMD.UnusedLocalVariable")
 						${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 						Assert.assertTrue(
@@ -2144,6 +2146,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						// Using the namespace ${graphQLNamespace}
 
+						@SuppressWarnings("PMD.UnusedLocalVariable")
 						${schemaName} ${schemaVarName}2 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 						Assert.assertTrue(

@@ -2788,6 +2788,15 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#list entity.entityFinders as entityFinder>
 			<#assign entityColumns = entityFinder.entityColumns />
 
+			<#assign caseInsensitiveBitmask = 0 />
+			<#assign caseInsensitiveBit = 1 />
+			<#list entityColumns as entityColumn>
+				<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+					<#assign caseInsensitiveBitmask = caseInsensitiveBitmask + caseInsensitiveBit />
+				</#if>
+				<#assign caseInsensitiveBit = caseInsensitiveBit * 2 />
+			</#list>
+
 			<#if entityFinder.isCollection()>
 				_finderPathWithPaginationFindBy${entityFinder.name} =
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
@@ -2858,7 +2867,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									</#if>
 								</#list>
 								},
-							true
+							<#if serviceBuilder.isVersionGTE_7_4_0() && (caseInsensitiveBitmask > 0)>
+								${caseInsensitiveBitmask},
+								true,
+								null
+							<#else>
+								true
+							</#if>
 						<#elseif columnBitmaskEnabled>
 							,
 
@@ -2923,11 +2938,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							}
 						<#if serviceBuilder.isVersionGTE_7_4_0()>
 							,
+							${caseInsensitiveBitmask},
 							<#if entityFinder.isPretouch()>true<#else>false</#if>
 
 							<#list entityColumns as entityColumn>
 								,
-								<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+									convertCaseFunction(${entity.name}::get${entityColumn.methodName})
+								<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 									convertNullFunction(${entity.name}::get${entityColumn.methodName})
 								<#elseif stringUtil.equals(entityColumn.type, "Date")>
 									convertDateFunction(${entity.name}::get${entityColumn.methodName})
@@ -2992,7 +3010,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#if>
 						</#list>
 						},
-						false
+						<#if serviceBuilder.isVersionGTE_7_4_0() && (caseInsensitiveBitmask > 0)>
+							${caseInsensitiveBitmask},
+							false,
+							null
+						<#else>
+							false
+						</#if>
 					</#if>
 					);
 			</#if>

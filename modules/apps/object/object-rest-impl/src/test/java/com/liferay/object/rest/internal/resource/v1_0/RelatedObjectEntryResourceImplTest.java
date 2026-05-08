@@ -49,15 +49,19 @@ public class RelatedObjectEntryResourceImplTest {
 			_systemObjectDefinitionManagerRegistry);
 		ReflectionTestUtil.setFieldValue(
 			_relatedObjectEntryResourceImpl, "_uriInfo", _uriInfo);
+
+		_setUpJaxRsApplicationDescriptor();
+		_setUpObjectDefinition();
+		_setUpObjectDefinitionLocalService();
+		_setUpSystemObjectDefinitionManager();
+		_setUpSystemObjectDefinitionManagerRegistry();
 	}
 
 	@Test
 	public void testGetSystemObjectDefinitionManagerWithCustomContextPath()
 		throws Exception {
 
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_mockSystemObjectDefinitionManager(
-				"/myportal/o/headless-admin-user/");
+		_setUpUriInfo("/myportal/o/headless-admin-user/");
 
 		Object result = ReflectionTestUtil.invoke(
 			_relatedObjectEntryResourceImpl,
@@ -65,15 +69,14 @@ public class RelatedObjectEntryResourceImplTest {
 			new Class<?>[] {long.class, String.class}, _COMPANY_ID,
 			"user-accounts");
 
-		Assert.assertSame(systemObjectDefinitionManager, result);
+		Assert.assertSame(_systemObjectDefinitionManager, result);
 	}
 
 	@Test
 	public void testGetSystemObjectDefinitionManagerWithRootContextPath()
 		throws Exception {
 
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_mockSystemObjectDefinitionManager("/o/headless-admin-user/");
+		_setUpUriInfo("/o/headless-admin-user/");
 
 		Object result = ReflectionTestUtil.invoke(
 			_relatedObjectEntryResourceImpl,
@@ -81,67 +84,71 @@ public class RelatedObjectEntryResourceImplTest {
 			new Class<?>[] {long.class, String.class}, _COMPANY_ID,
 			"user-accounts");
 
-		Assert.assertSame(systemObjectDefinitionManager, result);
+		Assert.assertSame(_systemObjectDefinitionManager, result);
 	}
 
-	private SystemObjectDefinitionManager _mockSystemObjectDefinitionManager(
-			String basePath)
-		throws Exception {
+	private void _setUpJaxRsApplicationDescriptor() {
+		Mockito.when(
+			_jaxRsApplicationDescriptor.getRESTContextPath()
+		).thenReturn(
+			"headless-admin-user/v1.0/user-accounts"
+		);
+	}
 
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor = Mockito.mock(
-			JaxRsApplicationDescriptor.class);
-		ObjectDefinition objectDefinition = Mockito.mock(
-			ObjectDefinition.class);
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			Mockito.mock(SystemObjectDefinitionManager.class);
+	private void _setUpObjectDefinition() {
+		Mockito.when(
+			_objectDefinition.getName()
+		).thenReturn(
+			"User"
+		);
+	}
 
+	private void _setUpObjectDefinitionLocalService() {
 		Mockito.when(
 			_objectDefinitionLocalService.
 				getUnmodifiableSystemObjectDefinitions(_COMPANY_ID)
 		).thenReturn(
-			Collections.singletonList(objectDefinition)
+			Collections.singletonList(_objectDefinition)
 		);
+	}
 
+	private void _setUpSystemObjectDefinitionManager() {
 		Mockito.when(
-			objectDefinition.getName()
+			_systemObjectDefinitionManager.getJaxRsApplicationDescriptor()
 		).thenReturn(
-			"User"
+			_jaxRsApplicationDescriptor
 		);
+	}
 
+	private void _setUpSystemObjectDefinitionManagerRegistry() {
 		Mockito.when(
 			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager("User")
 		).thenReturn(
-			systemObjectDefinitionManager
+			_systemObjectDefinitionManager
 		);
+	}
 
-		Mockito.when(
-			systemObjectDefinitionManager.getJaxRsApplicationDescriptor()
-		).thenReturn(
-			jaxRsApplicationDescriptor
-		);
-
-		Mockito.when(
-			jaxRsApplicationDescriptor.getRESTContextPath()
-		).thenReturn(
-			"headless-admin-user/v1.0/user-accounts"
-		);
-
+	private void _setUpUriInfo(String basePath) {
 		Mockito.when(
 			_uriInfo.getBaseUri()
 		).thenReturn(
 			URI.create("http://localhost:8080" + basePath)
 		);
-
-		return systemObjectDefinitionManager;
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 
+	private final JaxRsApplicationDescriptor _jaxRsApplicationDescriptor =
+		Mockito.mock(JaxRsApplicationDescriptor.class);
+	private final ObjectDefinition _objectDefinition = Mockito.mock(
+		ObjectDefinition.class);
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
 		Mockito.mock(ObjectDefinitionLocalService.class);
 	private final RelatedObjectEntryResourceImpl
 		_relatedObjectEntryResourceImpl = new RelatedObjectEntryResourceImpl();
+	private final SystemObjectDefinitionManager _systemObjectDefinitionManager =
+		Mockito.mock(SystemObjectDefinitionManager.class);
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry = Mockito.mock(
 			SystemObjectDefinitionManagerRegistry.class);

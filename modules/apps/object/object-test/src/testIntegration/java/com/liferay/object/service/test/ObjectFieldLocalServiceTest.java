@@ -44,6 +44,7 @@ import com.liferay.object.field.builder.AutoIncrementObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
+import com.liferay.object.field.builder.EmailAddressObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
@@ -107,6 +108,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -1893,7 +1895,9 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-83570")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-70673"), @FeatureFlag("LPD-83570")}
+	)
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 
@@ -2519,6 +2523,74 @@ public class ObjectFieldLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"date", "2025-12-01"
 			).build());
+
+		// Business type email
+
+		defaultValue = "USER@LIFERAY.COM";
+
+		ObjectField emailObjectField = _addCustomObjectField(
+			new EmailAddressObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS
+					).value(
+						"@LIFERAY.COM,@Gmail.com"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED
+					).value(
+						StringPool.TRUE
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS
+					).value(
+						"@example.com,@TEST.COM"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+					).value(
+						defaultValue
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+					).build())
+			).build());
+
+		_assertObjectFieldSettingsValues(
+			emailObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_DOMAINS,
+				"@liferay.com,@gmail.com"
+			).put(
+				ObjectFieldSettingConstants.NAME_AUTOCOMPLETE_ENABLED,
+				StringPool.TRUE
+			).put(
+				ObjectFieldSettingConstants.NAME_BLOCKED_DOMAINS,
+				"@example.com,@test.com"
+			).put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE,
+				"user@liferay.com"
+			).put(
+				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE,
+				ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+			).build());
+
+		_assertObjectEntryDefaultValue(
+			"user@liferay.com", emailObjectField, new HashMap<>());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 

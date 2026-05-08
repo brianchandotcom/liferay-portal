@@ -57,9 +57,11 @@ spec:
                         {{- end }}
                         {{- end }}
                         {{- range $k, $v := $envTemplates }}
+                        {{- if $v }}
                         {{- $rendered := tpl $v $.root | trim }}
                         {{- if $rendered }}
                         {{- $rendered | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                         {{- end }}
                     {{- end }}
@@ -75,9 +77,11 @@ spec:
                         {{- end }}
                         {{- end }}
                         {{- range $k, $v := $envFromTemplates }}
+                        {{- if $v }}
                         {{- $rendered := tpl $v $.root | trim }}
                         {{- if $rendered }}
                         {{- $rendered | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                         {{- end }}
                     {{- end }}
@@ -125,9 +129,11 @@ spec:
                         {{- end }}
                         {{- end }}
                         {{- range $k, $v := $volumeMountTemplates }}
+                        {{- if $v }}
                         {{- $rendered := tpl $v $.root | trim }}
                         {{- if $rendered }}
                         {{- $rendered | nindent 22 }}
+                        {{- end }}
                         {{- end }}
                         {{- end }}
                     {{- end }}
@@ -196,9 +202,11 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- range $k, $v := $volumeTemplates }}
+                {{- if $v }}
                 {{- $rendered := tpl $v $.root | trim }}
                 {{- if $rendered }}
                 {{- $rendered | nindent 16 }}
+                {{- end }}
                 {{- end }}
                 {{- end }}
             {{- end }}

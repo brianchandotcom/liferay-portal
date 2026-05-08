@@ -39,7 +39,7 @@ data:
         {{- end }}
         {{- end }}
         {{- range $k, $v := $depTemplates }}
-        {{- if $v.portalProperties }}
+        {{- if and $v $v.portalProperties }}
         {{- $rendered := tpl $v.portalProperties $ | trim }}
         {{- if $rendered }}
         {{- printf "%s\n" $rendered | nindent 8 }}
@@ -108,10 +108,12 @@ data:
     {{- end }}
     {{- end }}
     {{- range $k, $v := $configmapDataTemplates }}
+    {{- if $v }}
     {{- $rendered := tpl $v $ | trim }}
     {{- if $rendered }}
     {{ $k }}: |
         {{- $rendered | nindent 8 }}
+    {{- end }}
     {{- end }}
     {{- end }}
 kind: ConfigMap

@@ -669,3 +669,44 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'New fields can be added and removed on Basic Web Content but existing fields are locked',
+	{tag: '@LPD-89302'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+		await structuresPage.goto();
+
+		await page.getByRole('link', {name: 'Basic Web Content'}).click();
+
+		const contentTreeItem = page.locator('.treeview-link', {
+			hasText: 'Content',
+		});
+		const titleTreeItem = page.locator('.treeview-link', {
+			hasText: 'Title',
+		});
+
+		await structureBuilderPage.selectFields([{label: 'Content'}]);
+
+		await expect(
+			contentTreeItem.getByLabel('Field Options')
+		).not.toBeVisible();
+
+		await structureBuilderPage.selectFields([{label: 'Title'}]);
+
+		await expect(
+			titleTreeItem.getByLabel('Field Options')
+		).not.toBeVisible();
+
+		await structureBuilderPage.addField('Long Text');
+
+		const longTextTreeItem = page.locator('.treeview-link', {
+			hasText: 'Long Text',
+		});
+
+		await expect(longTextTreeItem).toBeVisible();
+
+		await structureBuilderPage.deleteFields([{label: 'Long Text'}]);
+
+		await expect(longTextTreeItem).not.toBeVisible();
+	}
+);

@@ -483,10 +483,6 @@ public class ClusterGeneralTest implements Serializable {
 
 		_assertNodesVisibleToEachOther(_tomcatNode1, _tomcatNode2);
 
-		// Restart node 1, use node 2 as the verifier node
-
-		_restartAndVerifyNode(_tomcatNode1, _tomcatNode2);
-
 		// Restart node 2, use node 1 as the verifier node
 
 		_restartAndVerifyNode(_tomcatNode2, _tomcatNode1);

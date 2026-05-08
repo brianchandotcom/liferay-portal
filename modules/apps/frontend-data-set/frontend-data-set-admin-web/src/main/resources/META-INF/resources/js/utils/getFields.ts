@@ -10,7 +10,6 @@ import {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from '@liferay/frontend-data-set-web';
 
-import openDefaultFailureToast from './openDefaultFailureToast';
 import {EFieldType, IField, IProperties, ISchemas} from './types';
 
 export const BLACKLISTED_FIELDS = [
@@ -137,8 +136,6 @@ function getFilterableFields({
 	schemas: ISchemas;
 }): IField[] {
 	if (!schemas[restSchema]['x-filterable']) {
-		openDefaultFailureToast();
-
 		return [];
 	}
 

@@ -17,7 +17,9 @@ metadata:
     name: {{ include "liferay.name" .root }}{{ $suffix }}
     namespace: {{ include "liferay.namespace" .root }}
 spec:
+    {{- if not .statefulset.autoscaling.enabled }}
     replicas: {{ .statefulset.replicaCount }}
+    {{- end }}
     selector:
         matchLabels:
             app: {{ include "liferay.name" .root }}{{ $suffix }}

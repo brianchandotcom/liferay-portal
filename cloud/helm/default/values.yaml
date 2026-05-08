@@ -28,6 +28,11 @@ autoscaling:
                     metricName: hikari_active_connections
                     query: max(hikaricp_ActiveConnections{namespace="{{ include "liferay.namespace" . }}"})
                     threshold: "50"
+            jvm-memory-heap-used-percent:
+                metadata:
+                    metricName: jvm_memory_heap_used_percent
+                    query: max(jvm_memory_used_bytes{area="heap",namespace="{{ include "liferay.namespace" . }}"} / jvm_memory_max_bytes{area="heap",namespace="{{ include "liferay.namespace" . }}"} * 100)
+                    threshold: "80"
             jvm-threads-current:
                 metadata:
                     metricName: jvm_threads_current

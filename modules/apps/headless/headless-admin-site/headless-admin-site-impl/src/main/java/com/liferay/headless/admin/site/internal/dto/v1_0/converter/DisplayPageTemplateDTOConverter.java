@@ -13,7 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SubtypeUtil;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailURLReferenceUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -137,7 +137,7 @@ public class DisplayPageTemplateDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"thumbnail",
 						fieldName ->
-							ThumbnailUtil.
+							ThumbnailURLReferenceUtil.
 								getPortletFileEntryThumbnailURLReference(
 									layoutPageTemplateEntry.
 										getPreviewFileEntryId())));

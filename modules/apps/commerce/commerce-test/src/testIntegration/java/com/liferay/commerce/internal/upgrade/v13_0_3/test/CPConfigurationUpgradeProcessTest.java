@@ -211,6 +211,9 @@ public class CPConfigurationUpgradeProcessTest {
 			"CPConfigurationUpgradeProcess";
 
 	@Inject
+	private static Portal _portal;
+
+	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Inject
@@ -223,14 +226,11 @@ public class CPConfigurationUpgradeProcessTest {
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
-	private static Portal _portal;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 }

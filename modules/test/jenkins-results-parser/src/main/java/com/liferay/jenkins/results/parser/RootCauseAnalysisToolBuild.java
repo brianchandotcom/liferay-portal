@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -126,7 +126,7 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 	protected Element getCommitDateCellElement(LocalGitCommit localGitCommit) {
 		return Dom4JUtil.getNewElement(
 			"td", null,
-			StringEscapeUtils.escapeXml(
+			StringEscapeUtils.escapeXml10(
 				JenkinsResultsParserUtil.toDateString(
 					localGitCommit.getCommitDate(), _DATE_FORMAT_COMMIT,
 					"PST")));
@@ -332,7 +332,7 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 
 		return Dom4JUtil.getNewElement(
 			"td", null,
-			StringEscapeUtils.escapeXml(localGitCommit.getMessage()));
+			StringEscapeUtils.escapeXml10(localGitCommit.getMessage()));
 	}
 
 	protected Element getEmptyCellElement() {

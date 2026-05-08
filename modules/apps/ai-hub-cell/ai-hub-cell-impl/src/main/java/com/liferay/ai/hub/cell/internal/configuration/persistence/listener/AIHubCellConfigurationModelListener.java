@@ -27,9 +27,7 @@ public class AIHubCellConfigurationModelListener
 	public void onBeforeSave(
 		String pid, Dictionary<String, Object> properties) {
 
-		int sha256BlockSize = 64;
-
-		byte[] secretBytes = new byte[sha256BlockSize];
+		byte[] secretBytes = new byte[64];
 
 		for (int i = 0; i < secretBytes.length; i++) {
 			secretBytes[i] = SecureRandomUtil.nextByte();

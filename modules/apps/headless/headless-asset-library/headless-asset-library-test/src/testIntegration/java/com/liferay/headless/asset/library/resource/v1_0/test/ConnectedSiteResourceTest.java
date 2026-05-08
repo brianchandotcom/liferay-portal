@@ -8,14 +8,24 @@ package com.liferay.headless.asset.library.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.asset.library.client.dto.v1_0.ConnectedSite;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -41,6 +51,15 @@ public class ConnectedSiteResourceTest
 	@Override
 	@Test
 	public void testBatchEngineDeleteImportTask() {
+	}
+
+	@Override
+	@Test
+	public void testPutAssetLibraryConnectedSite() throws Exception {
+		super.testPutAssetLibraryConnectedSite();
+
+		_testPutAssetLibraryConnectedSiteReturnsTypeSite();
+		_testPutAssetLibraryConnectedSiteReturnsTypeSiteTemplate();
 	}
 
 	@Override
@@ -148,8 +167,47 @@ public class ConnectedSiteResourceTest
 		};
 	}
 
+	private void _testPutAssetLibraryConnectedSiteReturnsTypeSite()
+		throws Exception {
+
+		ConnectedSite connectedSite =
+			connectedSiteResource.putAssetLibraryConnectedSite(
+				testDepotEntry.getGroup(
+				).getExternalReferenceCode(),
+				_testConnectedSite.getExternalReferenceCode(),
+				new ConnectedSite());
+
+		Assert.assertEquals(ConnectedSite.Type.SITE, connectedSite.getType());
+	}
+
+	private void _testPutAssetLibraryConnectedSiteReturnsTypeSiteTemplate()
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.addLayoutSetPrototype(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				HashMapBuilder.put(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()
+				).build(),
+				new HashMap<>(), true, true, new ServiceContext());
+
+		ConnectedSite connectedSite =
+			connectedSiteResource.putAssetLibraryConnectedSite(
+				testDepotEntry.getGroup(
+				).getExternalReferenceCode(),
+				layoutSetPrototype.getGroup(
+				).getExternalReferenceCode(),
+				new ConnectedSite());
+
+		Assert.assertEquals(
+			ConnectedSite.Type.SITE_TEMPLATE, connectedSite.getType());
+	}
+
 	@DeleteAfterTestRun
 	private List<Group> _groups = new ArrayList<>();
+
+	@Inject
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
 	private ConnectedSite _testConnectedSite;
 

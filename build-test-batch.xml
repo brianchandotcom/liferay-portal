@@ -10261,10 +10261,11 @@ ${output.content}</echo>
 
 				import java.io.File;
 
-				String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 				String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
 
 				String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
+
+				String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 
 				File libDir = new File(project.getBaseDir(), libPath);
 
@@ -10345,7 +10346,6 @@ ${output.content}</echo>
 
 						import java.io.File;
 
-						String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 						String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
 
 						String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
@@ -10359,6 +10359,8 @@ ${output.content}</echo>
 
 							throw new RuntimeException(message);
 						}
+
+						String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 
 						File libDir = new File(project.getBaseDir(), libPath);
 

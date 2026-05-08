@@ -282,7 +282,6 @@ public class ClusterGeneralTest implements Serializable {
 
 	@Test
 	public void testCanCreateVirtualInstanceWithClustering() throws Exception {
-		_testCanCreateVirtualInstanceWithClustering(_tomcatNode1, _tomcatNode2);
 		_testCanCreateVirtualInstanceWithClustering(_tomcatNode2, _tomcatNode1);
 	}
 

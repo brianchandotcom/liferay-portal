@@ -251,6 +251,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote1 = testGraphQLDeleteOrderNote_addOrderNote();
 
 		Assert.assertTrue(
@@ -281,6 +282,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote2 = testGraphQLDeleteOrderNote_addOrderNote();
 
 		Assert.assertTrue(
@@ -424,6 +426,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote1 =
 			testGraphQLDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
@@ -463,6 +466,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderNote orderNote2 =
 			testGraphQLDeleteOrderNoteByExternalReferenceCode_addOrderNote();
 
@@ -2384,4 +2388,4 @@ public abstract class BaseOrderNoteResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-131159261
+// LIFERAY-REST-BUILDER-HASH:-396080805

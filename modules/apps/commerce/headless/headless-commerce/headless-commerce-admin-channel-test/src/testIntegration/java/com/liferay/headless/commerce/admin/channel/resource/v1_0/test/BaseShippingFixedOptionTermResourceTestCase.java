@@ -232,6 +232,7 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
 			testGraphQLDeleteShippingFixedOptionTerm_addShippingFixedOptionTerm();
 
@@ -252,6 +253,7 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ShippingFixedOptionTerm shippingFixedOptionTerm2 =
 			testGraphQLDeleteShippingFixedOptionTerm_addShippingFixedOptionTerm();
 
@@ -1749,4 +1751,4 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		ShippingFixedOptionTermResource _shippingFixedOptionTermResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1419058002
+// LIFERAY-REST-BUILDER-HASH:1200186766

@@ -275,6 +275,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WorkflowDefinition workflowDefinition1 =
 			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
 
@@ -310,6 +311,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		// Using the namespace headlessAdminWorkflow_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WorkflowDefinition workflowDefinition2 =
 			testGraphQLDeleteWorkflowDefinition_addWorkflowDefinition();
 
@@ -3055,4 +3057,4 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1096582574
+// LIFERAY-REST-BUILDER-HASH:85947228

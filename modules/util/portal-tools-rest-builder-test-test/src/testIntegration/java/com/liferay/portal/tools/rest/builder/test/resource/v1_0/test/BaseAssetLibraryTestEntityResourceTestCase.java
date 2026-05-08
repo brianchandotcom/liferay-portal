@@ -273,6 +273,7 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AssetLibraryTestEntity assetLibraryTestEntity1 =
 			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_addAssetLibraryTestEntity();
 
@@ -300,6 +301,7 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AssetLibraryTestEntity assetLibraryTestEntity2 =
 			testGraphQLDeleteAssetLibraryAssetLibraryTestEntityByExternalReferenceCode_addAssetLibraryTestEntity();
 
@@ -1439,4 +1441,4 @@ public abstract class BaseAssetLibraryTestEntityResourceTestCase {
 		AssetLibraryTestEntityResource _assetLibraryTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:494831849
+// LIFERAY-REST-BUILDER-HASH:-1660944291

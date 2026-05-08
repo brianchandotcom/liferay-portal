@@ -244,6 +244,7 @@ public abstract class BaseWishListResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WishList wishList1 = testGraphQLDeleteWishList_addWishList();
 
 		Assert.assertTrue(
@@ -274,6 +275,7 @@ public abstract class BaseWishListResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WishList wishList2 = testGraphQLDeleteWishList_addWishList();
 
 		Assert.assertTrue(
@@ -1866,4 +1868,4 @@ public abstract class BaseWishListResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1842761006
+// LIFERAY-REST-BUILDER-HASH:1476878654

@@ -276,6 +276,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage();
 
@@ -311,6 +312,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage();
 
@@ -437,6 +439,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
@@ -472,6 +475,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteMessageBoardMessageMyRating_addMessageBoardMessage();
 
@@ -560,6 +564,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage1 =
 			testGraphQLDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
@@ -607,6 +612,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage2 =
 			testGraphQLDeleteSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
@@ -5714,4 +5720,4 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1256201189
+// LIFERAY-REST-BUILDER-HASH:-1599782253

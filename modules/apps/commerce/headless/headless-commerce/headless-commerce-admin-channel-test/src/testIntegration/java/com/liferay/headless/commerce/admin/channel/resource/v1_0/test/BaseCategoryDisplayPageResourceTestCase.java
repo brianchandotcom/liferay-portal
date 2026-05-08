@@ -263,6 +263,7 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CategoryDisplayPage categoryDisplayPage1 =
 			testGraphQLDeleteCategoryDisplayPage_addCategoryDisplayPage();
 
@@ -294,6 +295,7 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CategoryDisplayPage categoryDisplayPage2 =
 			testGraphQLDeleteCategoryDisplayPage_addCategoryDisplayPage();
 
@@ -2740,4 +2742,4 @@ public abstract class BaseCategoryDisplayPageResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-633120937
+// LIFERAY-REST-BUILDER-HASH:-590129855

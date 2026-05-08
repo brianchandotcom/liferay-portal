@@ -282,6 +282,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ScopedTestEntity scopedTestEntity1 =
 			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
@@ -332,6 +333,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ScopedTestEntity scopedTestEntity2 =
 			testGraphQLDeleteAssetLibraryScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
@@ -442,6 +444,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ScopedTestEntity scopedTestEntity1 =
 			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
@@ -489,6 +492,7 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ScopedTestEntity scopedTestEntity2 =
 			testGraphQLDeleteSiteScopedTestEntityByExternalReferenceCode_addScopedTestEntity();
 
@@ -2725,4 +2729,4 @@ public abstract class BaseScopedTestEntityResourceTestCase {
 		ScopedTestEntityResource _scopedTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1807044529
+// LIFERAY-REST-BUILDER-HASH:-1230778735

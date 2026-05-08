@@ -252,6 +252,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		EmailAddress emailAddress1 =
 			testGraphQLDeleteEmailAddress_addEmailAddress();
 
@@ -283,6 +284,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		EmailAddress emailAddress2 =
 			testGraphQLDeleteEmailAddress_addEmailAddress();
 
@@ -442,6 +444,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		EmailAddress emailAddress1 =
 			testGraphQLDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
 
@@ -482,6 +485,7 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		EmailAddress emailAddress2 =
 			testGraphQLDeleteEmailAddressByExternalReferenceCode_addEmailAddress();
 
@@ -2567,4 +2571,4 @@ public abstract class BaseEmailAddressResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:445088949
+// LIFERAY-REST-BUILDER-HASH:-1137151331

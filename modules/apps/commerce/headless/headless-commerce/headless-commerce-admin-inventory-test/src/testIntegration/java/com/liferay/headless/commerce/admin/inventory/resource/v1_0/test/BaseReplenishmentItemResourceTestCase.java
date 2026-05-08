@@ -263,6 +263,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem1 =
 			testGraphQLDeleteReplenishmentItem_addReplenishmentItem();
 
@@ -298,6 +299,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem2 =
 			testGraphQLDeleteReplenishmentItem_addReplenishmentItem();
 
@@ -464,6 +466,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem1 =
 			testGraphQLDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
@@ -504,6 +507,7 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReplenishmentItem replenishmentItem2 =
 			testGraphQLDeleteReplenishmentItemByExternalReferenceCode_addReplenishmentItem();
 
@@ -2960,4 +2964,4 @@ public abstract class BaseReplenishmentItemResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1402020711
+// LIFERAY-REST-BUILDER-HASH:1442066385

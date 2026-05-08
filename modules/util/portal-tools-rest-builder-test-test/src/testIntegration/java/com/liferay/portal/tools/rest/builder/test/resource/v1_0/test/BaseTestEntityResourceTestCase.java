@@ -260,6 +260,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TestEntity testEntity1 = testGraphQLDeleteTestEntity_addTestEntity();
 
 		Assert.assertTrue(
@@ -290,6 +291,7 @@ public abstract class BaseTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TestEntity testEntity2 = testGraphQLDeleteTestEntity_addTestEntity();
 
 		Assert.assertTrue(
@@ -2507,4 +2509,4 @@ public abstract class BaseTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:957021000
+// LIFERAY-REST-BUILDER-HASH:834232420

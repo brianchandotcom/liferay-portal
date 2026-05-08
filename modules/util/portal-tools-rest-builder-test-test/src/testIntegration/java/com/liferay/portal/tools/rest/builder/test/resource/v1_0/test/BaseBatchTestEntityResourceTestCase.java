@@ -264,6 +264,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BatchTestEntity batchTestEntity1 =
 			testGraphQLDeleteBatchTestEntityByExternalReferenceCode_addBatchTestEntity();
 
@@ -304,6 +305,7 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BatchTestEntity batchTestEntity2 =
 			testGraphQLDeleteBatchTestEntityByExternalReferenceCode_addBatchTestEntity();
 
@@ -2128,4 +2130,4 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:348557549
+// LIFERAY-REST-BUILDER-HASH:-1110755449

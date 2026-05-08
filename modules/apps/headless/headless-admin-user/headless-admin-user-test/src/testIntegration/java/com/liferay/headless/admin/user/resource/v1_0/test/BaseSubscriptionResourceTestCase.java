@@ -216,6 +216,7 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Subscription subscription1 =
 			testGraphQLDeleteMyUserAccountSubscription_addSubscription();
 
@@ -247,6 +248,7 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Subscription subscription2 =
 			testGraphQLDeleteMyUserAccountSubscription_addSubscription();
 
@@ -1421,4 +1423,4 @@ public abstract class BaseSubscriptionResourceTestCase {
 		_subscriptionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1930764469
+// LIFERAY-REST-BUILDER-HASH:281432201

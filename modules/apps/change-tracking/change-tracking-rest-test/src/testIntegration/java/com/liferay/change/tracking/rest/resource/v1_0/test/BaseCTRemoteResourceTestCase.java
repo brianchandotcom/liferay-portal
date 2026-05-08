@@ -259,6 +259,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTRemote ctRemote1 = testGraphQLDeleteCTRemote_addCTRemote();
 
 		Assert.assertTrue(
@@ -289,6 +290,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		// Using the namespace changeTracking_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTRemote ctRemote2 = testGraphQLDeleteCTRemote_addCTRemote();
 
 		Assert.assertTrue(
@@ -2353,4 +2355,4 @@ public abstract class BaseCTRemoteResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1478202038
+// LIFERAY-REST-BUILDER-HASH:602935952

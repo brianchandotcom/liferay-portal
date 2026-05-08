@@ -272,6 +272,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartItem cartItem1 = testGraphQLDeleteCartItem_addCartItem();
 
 		Assert.assertTrue(
@@ -302,6 +303,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartItem cartItem2 = testGraphQLDeleteCartItem_addCartItem();
 
 		Assert.assertTrue(
@@ -437,6 +439,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartItem cartItem1 =
 			testGraphQLDeleteCartItemByExternalReferenceCode_addCartItem();
 
@@ -476,6 +479,7 @@ public abstract class BaseCartItemResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartItem cartItem2 =
 			testGraphQLDeleteCartItemByExternalReferenceCode_addCartItem();
 
@@ -3564,4 +3568,4 @@ public abstract class BaseCartItemResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:747833589
+// LIFERAY-REST-BUILDER-HASH:-1290955655

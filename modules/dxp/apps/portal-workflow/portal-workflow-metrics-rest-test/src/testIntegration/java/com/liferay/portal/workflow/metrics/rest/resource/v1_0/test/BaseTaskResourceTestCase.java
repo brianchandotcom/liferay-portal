@@ -229,6 +229,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Task task1 = testGraphQLDeleteProcessTask_addTask();
 
 		Assert.assertTrue(
@@ -267,6 +268,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Task task2 = testGraphQLDeleteProcessTask_addTask();
 
 		Assert.assertTrue(
@@ -2155,4 +2157,4 @@ public abstract class BaseTaskResourceTestCase {
 		_taskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1626911283
+// LIFERAY-REST-BUILDER-HASH:-272074853

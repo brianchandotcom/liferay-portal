@@ -254,6 +254,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionValue optionValue1 =
 			testGraphQLDeleteOptionValue_addOptionValue();
 
@@ -285,6 +286,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionValue optionValue2 =
 			testGraphQLDeleteOptionValue_addOptionValue();
 
@@ -439,6 +441,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionValue optionValue1 =
 			testGraphQLDeleteOptionValueByExternalReferenceCode_addOptionValue();
 
@@ -478,6 +481,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionValue optionValue2 =
 			testGraphQLDeleteOptionValueByExternalReferenceCode_addOptionValue();
 
@@ -2671,4 +2675,4 @@ public abstract class BaseOptionValueResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1986685705
+// LIFERAY-REST-BUILDER-HASH:1116956287

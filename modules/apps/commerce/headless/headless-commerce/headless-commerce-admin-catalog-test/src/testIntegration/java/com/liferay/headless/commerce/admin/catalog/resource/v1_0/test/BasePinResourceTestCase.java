@@ -215,6 +215,7 @@ public abstract class BasePinResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Pin pin1 = testGraphQLDeletePin_addPin();
 
 		Assert.assertTrue(
@@ -231,6 +232,7 @@ public abstract class BasePinResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Pin pin2 = testGraphQLDeletePin_addPin();
 
 		Assert.assertTrue(
@@ -1705,4 +1707,4 @@ public abstract class BasePinResourceTestCase {
 			_pinResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1427218200
+// LIFERAY-REST-BUILDER-HASH:1187288120

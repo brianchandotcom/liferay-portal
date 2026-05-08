@@ -264,6 +264,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition1 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
@@ -297,6 +298,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition2 =
 			testGraphQLDeleteDataDefinition_addDataDefinition();
 
@@ -426,6 +428,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition1 =
 			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition();
 
@@ -479,6 +482,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataDefinition dataDefinition2 =
 			testGraphQLDeleteSiteDataDefinitionByContentTypeByExternalReferenceCode_addDataDefinition();
 
@@ -3589,4 +3593,4 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2047407981
+// LIFERAY-REST-BUILDER-HASH:1506257591

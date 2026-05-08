@@ -227,6 +227,7 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseOrderType warehouseOrderType1 =
 			testGraphQLDeleteWarehouseOrderType_addWarehouseOrderType();
 
@@ -247,6 +248,7 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseOrderType warehouseOrderType2 =
 			testGraphQLDeleteWarehouseOrderType_addWarehouseOrderType();
 
@@ -2047,4 +2049,4 @@ public abstract class BaseWarehouseOrderTypeResourceTestCase {
 		WarehouseOrderTypeResource _warehouseOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1185484249
+// LIFERAY-REST-BUILDER-HASH:-1671325423

@@ -280,6 +280,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectRelationship objectRelationship1 =
 			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
@@ -315,6 +316,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectRelationship objectRelationship2 =
 			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
@@ -3830,4 +3832,4 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2113191657
+// LIFERAY-REST-BUILDER-HASH:1249126993

@@ -261,6 +261,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku1 = testGraphQLDeleteSku_addSku();
 
 		Assert.assertTrue(
@@ -291,6 +292,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku2 = testGraphQLDeleteSku_addSku();
 
 		Assert.assertTrue(
@@ -420,6 +422,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku1 = testGraphQLDeleteSkuByExternalReferenceCode_addSku();
 
 		Assert.assertTrue(
@@ -455,6 +458,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Sku sku2 = testGraphQLDeleteSkuByExternalReferenceCode_addSku();
 
 		Assert.assertTrue(
@@ -3897,4 +3901,4 @@ public abstract class BaseSkuResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:998173404
+// LIFERAY-REST-BUILDER-HASH:-1880851996

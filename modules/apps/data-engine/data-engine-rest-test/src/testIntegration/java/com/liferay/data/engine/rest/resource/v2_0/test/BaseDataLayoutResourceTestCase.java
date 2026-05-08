@@ -262,6 +262,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataLayout dataLayout1 =
 			testGraphQLDeleteDataDefinitionDataLayout_addDataLayout();
 
@@ -282,6 +283,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataLayout dataLayout2 =
 			testGraphQLDeleteDataDefinitionDataLayout_addDataLayout();
 
@@ -347,6 +349,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataLayout dataLayout1 = testGraphQLDeleteDataLayout_addDataLayout();
 
 		Assert.assertTrue(
@@ -377,6 +380,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataLayout dataLayout2 = testGraphQLDeleteDataLayout_addDataLayout();
 
 		Assert.assertTrue(
@@ -2727,4 +2731,4 @@ public abstract class BaseDataLayoutResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:498702078
+// LIFERAY-REST-BUILDER-HASH:-395995808

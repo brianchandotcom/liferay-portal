@@ -225,6 +225,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountChannel discountChannel1 =
 			testGraphQLDeleteDiscountChannel_addDiscountChannel();
 
@@ -244,6 +245,7 @@ public abstract class BaseDiscountChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountChannel discountChannel2 =
 			testGraphQLDeleteDiscountChannel_addDiscountChannel();
 
@@ -1962,4 +1964,4 @@ public abstract class BaseDiscountChannelResourceTestCase {
 		DiscountChannelResource _discountChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1651259195
+// LIFERAY-REST-BUILDER-HASH:-816643973

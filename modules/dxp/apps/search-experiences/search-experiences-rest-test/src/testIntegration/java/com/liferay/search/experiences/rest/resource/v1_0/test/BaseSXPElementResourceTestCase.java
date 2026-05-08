@@ -268,6 +268,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPElement sxpElement1 = testGraphQLDeleteSXPElement_addSXPElement();
 
 		Assert.assertTrue(
@@ -298,6 +299,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 		// Using the namespace searchExperiences_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPElement sxpElement2 = testGraphQLDeleteSXPElement_addSXPElement();
 
 		Assert.assertTrue(
@@ -3069,4 +3071,4 @@ public abstract class BaseSXPElementResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1355289418
+// LIFERAY-REST-BUILDER-HASH:-655943966

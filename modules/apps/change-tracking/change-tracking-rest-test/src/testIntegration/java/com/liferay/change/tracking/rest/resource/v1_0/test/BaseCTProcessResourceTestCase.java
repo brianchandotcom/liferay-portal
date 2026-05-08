@@ -252,6 +252,7 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTProcess ctProcess1 = testGraphQLDeleteCTProcess_addCTProcess();
 
 		Assert.assertTrue(
@@ -282,6 +283,7 @@ public abstract class BaseCTProcessResourceTestCase {
 
 		// Using the namespace changeTracking_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTProcess ctProcess2 = testGraphQLDeleteCTProcess_addCTProcess();
 
 		Assert.assertTrue(
@@ -2032,4 +2034,4 @@ public abstract class BaseCTProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-169307221
+// LIFERAY-REST-BUILDER-HASH:1158050341

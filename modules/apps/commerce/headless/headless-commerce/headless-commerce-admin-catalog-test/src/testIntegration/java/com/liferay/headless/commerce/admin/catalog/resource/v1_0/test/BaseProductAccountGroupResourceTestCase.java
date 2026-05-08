@@ -257,6 +257,7 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductAccountGroup productAccountGroup1 =
 			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
@@ -288,6 +289,7 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductAccountGroup productAccountGroup2 =
 			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
@@ -2007,4 +2009,4 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-237747876
+// LIFERAY-REST-BUILDER-HASH:-2049417594

@@ -252,6 +252,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Process process1 = testGraphQLDeleteProcess_addProcess();
 
 		Assert.assertTrue(
@@ -282,6 +283,7 @@ public abstract class BaseProcessResourceTestCase {
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Process process2 = testGraphQLDeleteProcess_addProcess();
 
 		Assert.assertTrue(
@@ -1900,4 +1902,4 @@ public abstract class BaseProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-739985611
+// LIFERAY-REST-BUILDER-HASH:340413513

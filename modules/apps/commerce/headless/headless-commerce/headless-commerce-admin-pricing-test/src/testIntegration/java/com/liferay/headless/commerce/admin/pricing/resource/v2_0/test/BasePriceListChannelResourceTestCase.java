@@ -225,6 +225,7 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListChannel priceListChannel1 =
 			testGraphQLDeletePriceListChannel_addPriceListChannel();
 
@@ -244,6 +245,7 @@ public abstract class BasePriceListChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListChannel priceListChannel2 =
 			testGraphQLDeletePriceListChannel_addPriceListChannel();
 
@@ -1997,4 +1999,4 @@ public abstract class BasePriceListChannelResourceTestCase {
 		PriceListChannelResource _priceListChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1279432790
+// LIFERAY-REST-BUILDER-HASH:281291910

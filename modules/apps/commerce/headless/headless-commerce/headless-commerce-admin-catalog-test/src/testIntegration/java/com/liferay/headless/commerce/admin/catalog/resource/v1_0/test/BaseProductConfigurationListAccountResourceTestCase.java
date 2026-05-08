@@ -246,6 +246,7 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListAccount productConfigurationListAccount1 =
 			testGraphQLDeleteProductConfigurationListAccount_addProductConfigurationListAccount();
 
@@ -267,6 +268,7 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListAccount productConfigurationListAccount2 =
 			testGraphQLDeleteProductConfigurationListAccount_addProductConfigurationListAccount();
 
@@ -2168,4 +2170,4 @@ public abstract class BaseProductConfigurationListAccountResourceTestCase {
 			_productConfigurationListAccountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1079019413
+// LIFERAY-REST-BUILDER-HASH:1690476429

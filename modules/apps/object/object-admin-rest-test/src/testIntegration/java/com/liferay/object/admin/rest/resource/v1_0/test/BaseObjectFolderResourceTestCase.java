@@ -256,6 +256,7 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectFolder objectFolder1 =
 			testGraphQLDeleteObjectFolder_addObjectFolder();
 
@@ -287,6 +288,7 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectFolder objectFolder2 =
 			testGraphQLDeleteObjectFolder_addObjectFolder();
 
@@ -2278,4 +2280,4 @@ public abstract class BaseObjectFolderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-46283215
+// LIFERAY-REST-BUILDER-HASH:-1294254289

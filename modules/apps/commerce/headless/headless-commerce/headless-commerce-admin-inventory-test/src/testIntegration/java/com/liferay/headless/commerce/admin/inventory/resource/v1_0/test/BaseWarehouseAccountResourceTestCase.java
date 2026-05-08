@@ -225,6 +225,7 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseAccount warehouseAccount1 =
 			testGraphQLDeleteWarehouseAccount_addWarehouseAccount();
 
@@ -244,6 +245,7 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseAccount warehouseAccount2 =
 			testGraphQLDeleteWarehouseAccount_addWarehouseAccount();
 
@@ -1971,4 +1973,4 @@ public abstract class BaseWarehouseAccountResourceTestCase {
 		WarehouseAccountResource _warehouseAccountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-453488672
+// LIFERAY-REST-BUILDER-HASH:-335128298

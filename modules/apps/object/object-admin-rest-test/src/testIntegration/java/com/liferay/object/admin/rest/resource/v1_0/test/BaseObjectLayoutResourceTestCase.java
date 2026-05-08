@@ -256,6 +256,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectLayout objectLayout1 =
 			testGraphQLDeleteObjectLayout_addObjectLayout();
 
@@ -287,6 +288,7 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectLayout objectLayout2 =
 			testGraphQLDeleteObjectLayout_addObjectLayout();
 
@@ -2844,4 +2846,4 @@ public abstract class BaseObjectLayoutResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-752770674
+// LIFERAY-REST-BUILDER-HASH:122083572

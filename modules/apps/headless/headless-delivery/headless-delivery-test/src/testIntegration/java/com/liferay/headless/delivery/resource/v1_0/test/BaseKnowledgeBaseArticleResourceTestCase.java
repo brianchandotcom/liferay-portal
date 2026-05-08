@@ -280,6 +280,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
@@ -315,6 +316,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteKnowledgeBaseArticle_addKnowledgeBaseArticle();
 
@@ -442,6 +444,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
 
@@ -478,6 +481,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteKnowledgeBaseArticleMyRating_addKnowledgeBaseArticle();
 
@@ -566,6 +570,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
 
@@ -614,6 +619,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle2 =
 			testGraphQLDeleteSiteKnowledgeBaseArticleByExternalReferenceCode_addKnowledgeBaseArticle();
 
@@ -5722,4 +5728,4 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1327569364
+// LIFERAY-REST-BUILDER-HASH:1647199096

@@ -260,6 +260,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup1 =
 			testGraphQLDeleteAccountGroup_addAccountGroup();
 
@@ -291,6 +292,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup2 =
 			testGraphQLDeleteAccountGroup_addAccountGroup();
 
@@ -450,6 +452,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup1 =
 			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
 
@@ -490,6 +493,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup2 =
 			testGraphQLDeleteAccountGroupByExternalReferenceCode_addAccountGroup();
 
@@ -579,6 +583,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup1 =
 			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
 
@@ -606,6 +611,7 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountGroup accountGroup2 =
 			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode_addAccountGroup();
 
@@ -3383,4 +3389,4 @@ public abstract class BaseAccountGroupResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1123781273
+// LIFERAY-REST-BUILDER-HASH:-1043916251

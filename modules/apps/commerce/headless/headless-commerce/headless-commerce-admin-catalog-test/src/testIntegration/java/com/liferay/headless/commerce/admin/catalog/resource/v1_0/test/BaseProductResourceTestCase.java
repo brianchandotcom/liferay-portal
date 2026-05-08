@@ -262,6 +262,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product1 = testGraphQLDeleteProduct_addProduct();
 
 		Assert.assertTrue(
@@ -292,6 +293,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product2 = testGraphQLDeleteProduct_addProduct();
 
 		Assert.assertTrue(
@@ -423,6 +425,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product1 =
 			testGraphQLDeleteProductByExternalReferenceCode_addProduct();
 
@@ -461,6 +464,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product2 =
 			testGraphQLDeleteProductByExternalReferenceCode_addProduct();
 
@@ -552,6 +556,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product1 =
 			testGraphQLDeleteProductByExternalReferenceCodeByVersion_addProduct();
 
@@ -592,6 +597,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product2 =
 			testGraphQLDeleteProductByExternalReferenceCodeByVersion_addProduct();
 
@@ -675,6 +681,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product1 = testGraphQLDeleteProductByVersion_addProduct();
 
 		Assert.assertTrue(
@@ -707,6 +714,7 @@ public abstract class BaseProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Product product2 = testGraphQLDeleteProductByVersion_addProduct();
 
 		Assert.assertTrue(
@@ -4423,4 +4431,4 @@ public abstract class BaseProductResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1619381661
+// LIFERAY-REST-BUILDER-HASH:-1798462695

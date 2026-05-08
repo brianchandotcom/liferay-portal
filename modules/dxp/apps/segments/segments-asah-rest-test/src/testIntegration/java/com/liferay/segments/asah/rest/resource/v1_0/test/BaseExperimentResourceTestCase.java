@@ -227,6 +227,7 @@ public abstract class BaseExperimentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Experiment experiment1 = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
@@ -261,6 +262,7 @@ public abstract class BaseExperimentResourceTestCase {
 
 		// Using the namespace segmentsAsah_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Experiment experiment2 = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
@@ -1502,4 +1504,4 @@ public abstract class BaseExperimentResourceTestCase {
 		_experimentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1076389109
+// LIFERAY-REST-BUILDER-HASH:-1974178467

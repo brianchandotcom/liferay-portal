@@ -313,6 +313,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -363,6 +364,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteAssetLibraryTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -473,6 +475,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -520,6 +523,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteSiteTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -610,6 +614,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
@@ -645,6 +650,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
@@ -789,6 +795,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory1 =
 			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -837,6 +844,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyCategory taxonomyCategory2 =
 			testGraphQLDeleteTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
@@ -6900,4 +6908,4 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			TaxonomyCategoryResource _taxonomyCategoryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:879945695
+// LIFERAY-REST-BUILDER-HASH:-1348191875

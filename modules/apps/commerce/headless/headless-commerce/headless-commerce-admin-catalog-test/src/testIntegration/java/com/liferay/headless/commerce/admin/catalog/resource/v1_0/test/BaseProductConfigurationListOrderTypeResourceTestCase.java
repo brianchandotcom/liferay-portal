@@ -249,6 +249,7 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListOrderType productConfigurationListOrderType1 =
 			testGraphQLDeleteProductConfigurationListOrderType_addProductConfigurationListOrderType();
 
@@ -270,6 +271,7 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListOrderType productConfigurationListOrderType2 =
 			testGraphQLDeleteProductConfigurationListOrderType_addProductConfigurationListOrderType();
 
@@ -2222,4 +2224,4 @@ public abstract class BaseProductConfigurationListOrderTypeResourceTestCase {
 			_productConfigurationListOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1103212652
+// LIFERAY-REST-BUILDER-HASH:-1417374960

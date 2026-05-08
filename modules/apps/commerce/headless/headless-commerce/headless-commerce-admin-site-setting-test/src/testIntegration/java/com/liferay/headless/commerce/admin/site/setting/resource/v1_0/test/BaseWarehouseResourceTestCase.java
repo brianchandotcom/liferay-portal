@@ -253,6 +253,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse1 = testGraphQLDeleteWarehouse_addWarehouse();
 
 		Assert.assertTrue(
@@ -283,6 +284,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse2 = testGraphQLDeleteWarehouse_addWarehouse();
 
 		Assert.assertTrue(
@@ -2142,4 +2144,4 @@ public abstract class BaseWarehouseResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1316444514
+// LIFERAY-REST-BUILDER-HASH:2070836636

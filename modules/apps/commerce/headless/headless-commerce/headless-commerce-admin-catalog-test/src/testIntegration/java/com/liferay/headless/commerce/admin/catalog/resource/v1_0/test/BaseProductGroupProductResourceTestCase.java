@@ -228,6 +228,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductGroupProduct productGroupProduct1 =
 			testGraphQLDeleteProductGroupProduct_addProductGroupProduct();
 
@@ -245,6 +246,7 @@ public abstract class BaseProductGroupProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductGroupProduct productGroupProduct2 =
 			testGraphQLDeleteProductGroupProduct_addProductGroupProduct();
 
@@ -1827,4 +1829,4 @@ public abstract class BaseProductGroupProductResourceTestCase {
 		ProductGroupProductResource _productGroupProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1779262975
+// LIFERAY-REST-BUILDER-HASH:-1373787773

@@ -265,6 +265,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeDefinition listTypeDefinition1 =
 			testGraphQLDeleteListTypeDefinition_addListTypeDefinition();
 
@@ -300,6 +301,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		// Using the namespace headlessAdminListType_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeDefinition listTypeDefinition2 =
 			testGraphQLDeleteListTypeDefinition_addListTypeDefinition();
 
@@ -2815,4 +2817,4 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2027611960
+// LIFERAY-REST-BUILDER-HASH:819760018

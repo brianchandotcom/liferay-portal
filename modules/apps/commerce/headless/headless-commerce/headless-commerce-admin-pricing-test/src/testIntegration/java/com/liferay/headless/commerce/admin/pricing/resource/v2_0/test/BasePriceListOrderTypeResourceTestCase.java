@@ -224,6 +224,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListOrderType priceListOrderType1 =
 			testGraphQLDeletePriceListOrderType_addPriceListOrderType();
 
@@ -244,6 +245,7 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListOrderType priceListOrderType2 =
 			testGraphQLDeletePriceListOrderType_addPriceListOrderType();
 
@@ -1775,4 +1777,4 @@ public abstract class BasePriceListOrderTypeResourceTestCase {
 		PriceListOrderTypeResource _priceListOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1889049265
+// LIFERAY-REST-BUILDER-HASH:283607485

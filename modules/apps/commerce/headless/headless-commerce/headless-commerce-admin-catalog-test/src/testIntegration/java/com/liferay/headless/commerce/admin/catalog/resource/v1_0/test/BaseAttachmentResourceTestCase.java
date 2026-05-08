@@ -231,6 +231,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment1 = testGraphQLDeleteAttachment_addAttachment();
 
 		Assert.assertTrue(
@@ -247,6 +248,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment2 = testGraphQLDeleteAttachment_addAttachment();
 
 		Assert.assertTrue(
@@ -357,6 +359,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment1 =
 			testGraphQLDeleteAttachmentByExternalReferenceCode_addAttachment();
 
@@ -396,6 +399,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment2 =
 			testGraphQLDeleteAttachmentByExternalReferenceCode_addAttachment();
 
@@ -3133,4 +3137,4 @@ public abstract class BaseAttachmentResourceTestCase {
 			AttachmentResource _attachmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2064463368
+// LIFERAY-REST-BUILDER-HASH:1848822646

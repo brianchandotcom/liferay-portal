@@ -240,6 +240,7 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType1 =
 			testGraphQLDeletePaymentMethodGroupRelOrderType_addPaymentMethodGroupRelOrderType();
 
@@ -261,6 +262,7 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType2 =
 			testGraphQLDeletePaymentMethodGroupRelOrderType_addPaymentMethodGroupRelOrderType();
 
@@ -1845,4 +1847,4 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 			_paymentMethodGroupRelOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:726025485
+// LIFERAY-REST-BUILDER-HASH:-1466950493

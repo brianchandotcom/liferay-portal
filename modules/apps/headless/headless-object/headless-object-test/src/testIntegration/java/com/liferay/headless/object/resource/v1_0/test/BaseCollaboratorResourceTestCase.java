@@ -241,6 +241,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Collaborator collaborator1 =
 			testGraphQLDeleteObjectEntryFolderCollaboratorByTypeCollaborator_addCollaborator();
 
@@ -283,6 +284,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		// Using the namespace headlessObject_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Collaborator collaborator2 =
 			testGraphQLDeleteObjectEntryFolderCollaboratorByTypeCollaborator_addCollaborator();
 
@@ -413,6 +415,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Collaborator collaborator1 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_addCollaborator();
 
@@ -471,6 +474,7 @@ public abstract class BaseCollaboratorResourceTestCase {
 
 		// Using the namespace headlessObject_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Collaborator collaborator2 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator_addCollaborator();
 
@@ -2545,4 +2549,4 @@ public abstract class BaseCollaboratorResourceTestCase {
 		_collaboratorResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1973543879
+// LIFERAY-REST-BUILDER-HASH:-2027261415

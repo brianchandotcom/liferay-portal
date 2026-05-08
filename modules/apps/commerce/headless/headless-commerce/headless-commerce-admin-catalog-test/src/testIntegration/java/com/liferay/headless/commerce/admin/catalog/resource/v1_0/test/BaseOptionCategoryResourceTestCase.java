@@ -259,6 +259,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
@@ -290,6 +291,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory2 =
 			testGraphQLDeleteOptionCategory_addOptionCategory();
 
@@ -448,6 +450,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory1 =
 			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
 
@@ -488,6 +491,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OptionCategory optionCategory2 =
 			testGraphQLDeleteOptionCategoryByExternalReferenceCode_addOptionCategory();
 
@@ -2633,4 +2637,4 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1121310747
+// LIFERAY-REST-BUILDER-HASH:-634801353

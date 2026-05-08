@@ -273,6 +273,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPBlueprint sxpBlueprint1 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
@@ -304,6 +305,7 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 		// Using the namespace searchExperiences_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SXPBlueprint sxpBlueprint2 =
 			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
@@ -3047,4 +3049,4 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2061497306
+// LIFERAY-REST-BUILDER-HASH:-293981340

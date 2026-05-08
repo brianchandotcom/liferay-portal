@@ -276,6 +276,7 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry1 =
 			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
@@ -307,6 +308,7 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry2 =
 			testGraphQLDeleteSkuVirtualSettingsFileEntry_addSkuVirtualSettingsFileEntry();
 
@@ -2068,4 +2070,4 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1114591930
+// LIFERAY-REST-BUILDER-HASH:-399452184

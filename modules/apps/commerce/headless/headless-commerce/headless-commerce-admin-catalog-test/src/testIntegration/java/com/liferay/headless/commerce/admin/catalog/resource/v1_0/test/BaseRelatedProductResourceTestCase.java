@@ -254,6 +254,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		RelatedProduct relatedProduct1 =
 			testGraphQLDeleteRelatedProduct_addRelatedProduct();
 
@@ -285,6 +286,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		RelatedProduct relatedProduct2 =
 			testGraphQLDeleteRelatedProduct_addRelatedProduct();
 
@@ -2011,4 +2013,4 @@ public abstract class BaseRelatedProductResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2086887582
+// LIFERAY-REST-BUILDER-HASH:-1571898472

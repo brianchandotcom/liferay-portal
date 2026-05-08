@@ -246,6 +246,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxCategory taxCategory1 =
 			testGraphQLDeleteTaxCategory_addTaxCategory();
 
@@ -277,6 +278,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxCategory taxCategory2 =
 			testGraphQLDeleteTaxCategory_addTaxCategory();
 
@@ -1658,4 +1660,4 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1409232970
+// LIFERAY-REST-BUILDER-HASH:1296388892

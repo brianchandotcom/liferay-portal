@@ -257,6 +257,7 @@ public abstract class BaseTermResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term1 = testGraphQLDeleteTerm_addTerm();
 
 		Assert.assertTrue(
@@ -287,6 +288,7 @@ public abstract class BaseTermResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term2 = testGraphQLDeleteTerm_addTerm();
 
 		Assert.assertTrue(
@@ -416,6 +418,7 @@ public abstract class BaseTermResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term1 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
 
 		Assert.assertTrue(
@@ -451,6 +454,7 @@ public abstract class BaseTermResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Term term2 = testGraphQLDeleteTermByExternalReferenceCode_addTerm();
 
 		Assert.assertTrue(
@@ -2900,4 +2904,4 @@ public abstract class BaseTermResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:541130453
+// LIFERAY-REST-BUILDER-HASH:-105451743

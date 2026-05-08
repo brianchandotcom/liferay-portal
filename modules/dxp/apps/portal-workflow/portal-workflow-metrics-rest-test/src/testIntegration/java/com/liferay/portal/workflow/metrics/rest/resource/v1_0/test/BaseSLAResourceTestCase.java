@@ -251,6 +251,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SLA sla1 = testGraphQLDeleteSLA_addSLA();
 
 		Assert.assertTrue(
@@ -281,6 +282,7 @@ public abstract class BaseSLAResourceTestCase {
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SLA sla2 = testGraphQLDeleteSLA_addSLA();
 
 		Assert.assertTrue(
@@ -2104,4 +2106,4 @@ public abstract class BaseSLAResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2132534075
+// LIFERAY-REST-BUILDER-HASH:1362664195

@@ -246,6 +246,7 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WebUrl webUrl1 = testGraphQLDeleteWebUrl_addWebUrl();
 
 		Assert.assertTrue(
@@ -276,6 +277,7 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WebUrl webUrl2 = testGraphQLDeleteWebUrl_addWebUrl();
 
 		Assert.assertTrue(
@@ -406,6 +408,7 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WebUrl webUrl1 =
 			testGraphQLDeleteWebUrlByExternalReferenceCode_addWebUrl();
 
@@ -444,6 +447,7 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WebUrl webUrl2 =
 			testGraphQLDeleteWebUrlByExternalReferenceCode_addWebUrl();
 
@@ -2407,4 +2411,4 @@ public abstract class BaseWebUrlResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-59683990
+// LIFERAY-REST-BUILDER-HASH:-187614842

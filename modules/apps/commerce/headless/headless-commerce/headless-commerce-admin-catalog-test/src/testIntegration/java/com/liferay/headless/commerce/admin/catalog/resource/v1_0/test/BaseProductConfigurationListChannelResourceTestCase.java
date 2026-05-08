@@ -246,6 +246,7 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListChannel productConfigurationListChannel1 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
@@ -267,6 +268,7 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductConfigurationListChannel productConfigurationListChannel2 =
 			testGraphQLDeleteProductConfigurationListChannel_addProductConfigurationListChannel();
 
@@ -2195,4 +2197,4 @@ public abstract class BaseProductConfigurationListChannelResourceTestCase {
 			_productConfigurationListChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1846894520
+// LIFERAY-REST-BUILDER-HASH:1838188254

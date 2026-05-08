@@ -248,6 +248,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecord dataRecord1 = testGraphQLDeleteDataRecord_addDataRecord();
 
 		Assert.assertTrue(
@@ -278,6 +279,7 @@ public abstract class BaseDataRecordResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecord dataRecord2 = testGraphQLDeleteDataRecord_addDataRecord();
 
 		Assert.assertTrue(
@@ -2624,4 +2626,4 @@ public abstract class BaseDataRecordResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:245370634
+// LIFERAY-REST-BUILDER-HASH:-1619456208

@@ -251,6 +251,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Region region1 = testGraphQLDeleteRegion_addRegion();
 
 		Assert.assertTrue(
@@ -281,6 +282,7 @@ public abstract class BaseRegionResourceTestCase {
 
 		// Using the namespace headlessAdminAddress_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Region region2 = testGraphQLDeleteRegion_addRegion();
 
 		Assert.assertTrue(
@@ -2522,4 +2524,4 @@ public abstract class BaseRegionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1144880904
+// LIFERAY-REST-BUILDER-HASH:677489906

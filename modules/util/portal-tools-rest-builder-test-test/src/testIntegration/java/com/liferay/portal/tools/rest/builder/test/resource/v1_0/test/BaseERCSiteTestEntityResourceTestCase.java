@@ -257,6 +257,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCSiteTestEntity ercSiteTestEntity1 =
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
 
@@ -307,6 +308,7 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCSiteTestEntity ercSiteTestEntity2 =
 			testGraphQLDeleteSiteERCSiteTestEntity_addERCSiteTestEntity();
 
@@ -2101,4 +2103,4 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 		ERCSiteTestEntityResource _ercSiteTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1976244674
+// LIFERAY-REST-BUILDER-HASH:1106591320

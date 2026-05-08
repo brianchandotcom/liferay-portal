@@ -263,6 +263,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeEntry listTypeEntry1 =
 			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
@@ -294,6 +295,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 
 		// Using the namespace headlessAdminListType_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeEntry listTypeEntry2 =
 			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
@@ -3272,4 +3274,4 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-830447906
+// LIFERAY-REST-BUILDER-HASH:-1910026264

@@ -225,6 +225,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountSku discountSku1 =
 			testGraphQLDeleteDiscountSku_addDiscountSku();
 
@@ -244,6 +245,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountSku discountSku2 =
 			testGraphQLDeleteDiscountSku_addDiscountSku();
 
@@ -2014,4 +2016,4 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		DiscountSkuResource _discountSkuResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-100072170
+// LIFERAY-REST-BUILDER-HASH:-1931185164

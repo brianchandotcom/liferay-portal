@@ -20,6 +20,8 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncContextThreadLocal;
+import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncSessionManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
@@ -476,6 +478,8 @@ public class SitesImpl implements Sites {
 		throws Exception {
 
 		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+
 			return;
 		}
 
@@ -485,6 +489,8 @@ public class SitesImpl implements Sites {
 			layoutSet.getLayoutSetId());
 
 		if (!isLayoutSetMergeable(group, layoutSet)) {
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+
 			return;
 		}
 
@@ -972,6 +978,8 @@ public class SitesImpl implements Sites {
 			ExportImportThreadLocal.isImportInProcess() ||
 			ExportImportThreadLocal.isStagingInProcess()) {
 
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+
 			return;
 		}
 
@@ -983,6 +991,8 @@ public class SitesImpl implements Sites {
 					"Layout set prototype merge is in progress for layout " +
 						"set " + layoutSet.getLayoutSetId());
 			}
+
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -1000,6 +1010,13 @@ public class SitesImpl implements Sites {
 			new String[] {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
+
+		String syncSessionId =
+			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
+
+		if (Validator.isNotNull(syncSessionId)) {
+			parameterMap.put("syncSessionId", new String[] {syncSessionId});
+		}
 
 		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
 
@@ -1027,6 +1044,8 @@ public class SitesImpl implements Sites {
 			_log.error(
 				"Unable to add draft export-import configuration",
 				portalException);
+
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -1132,6 +1151,18 @@ public class SitesImpl implements Sites {
 		}
 
 		return owner;
+	}
+
+	private void _recordSyncResultIfTracked(int backgroundTaskStatus) {
+		String syncSessionId =
+			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
+
+		if (Validator.isNull(syncSessionId)) {
+			return;
+		}
+
+		_layoutSetPrototypeSyncSessionManager.recordBackgroundTaskStatus(
+			backgroundTaskStatus, syncSessionId);
 	}
 
 	private void _releaseLock(String className, long classPK, String owner) {
@@ -1240,6 +1271,10 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private LayoutSetPrototypeSyncSessionManager
+		_layoutSetPrototypeSyncSessionManager;
 
 	@Reference
 	private LayoutSetService _layoutSetService;

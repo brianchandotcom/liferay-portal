@@ -888,7 +888,7 @@ public class PortalImplUnitTest {
 
 		Assert.assertSame(
 			noSuchImageException,
-			mockHttpServletRequest.getAttribute(WebKeys.STATUS_EXCEPTION));
+			mockHttpServletRequest.getAttribute(WebKeys.PORTAL_STATUS_EXCEPTION));
 	}
 
 	@Test

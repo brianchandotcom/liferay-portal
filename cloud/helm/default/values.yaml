@@ -216,6 +216,10 @@ env:
     -   name: JMX_AGENT_YAML
         value: |
             rules:
+            -   pattern: 'com.zaxxer.hikari<type=Pool \(([^)]+)\)><>(\w+)'
+                name: hikaricp_$2
+                labels:
+                    pool: "$1"
             -   pattern: ".*"
     -   name: LIFERAY_CLUSTER_PERIOD_LINK_PERIOD_BIND_PERIOD_ADDR_OPENBRACKET__QUOTE_CLUSTER_MINUS_LINK_MINUS_CONTROL_QUOTE__CLOSEBRACKET_
         value: ${env.POD_IP}

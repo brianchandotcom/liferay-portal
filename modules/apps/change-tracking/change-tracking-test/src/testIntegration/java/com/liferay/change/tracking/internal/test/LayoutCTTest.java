@@ -1327,6 +1327,7 @@ public class LayoutCTTest {
 					layout.getRobotsMap(), layout.getType(), layout.isHidden(),
 					layout.getFriendlyURLMap(), false, null,
 					layout.getStyleBookEntryERC(),
+					layout.getStyleBookEntryScopeERC(),
 					layout.getFaviconFileEntryERC(),
 					layout.getFaviconFileEntryScopeERC(),
 					layout.getMasterLayoutPageTemplateEntryERC(),

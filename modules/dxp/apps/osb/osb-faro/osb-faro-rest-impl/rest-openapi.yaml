@@ -1,0 +1,169 @@
+components:
+    schemas:
+        AssetSummaryMetric:
+            description:
+                "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal,
+                object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date
+                range to the previous date range. Use `getSiteAssetSummariesPage` to list these sets of metrics."
+            properties:
+                assetId:
+                    description:
+                        "Identifier of the tracked asset."
+                    readOnly: true
+                    type: string
+                assetTitle:
+                    description:
+                        "Display title of the asset, e.g. the page title or blog post title."
+                    readOnly: true
+                    type: string
+                assetType:
+                    description:
+                        "Asset category, e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE'."
+                    readOnly: true
+                    type: string
+                downloads:
+                    description:
+                        "Download count over the selected date range. Null when the asset type doesn't track downloads."
+                    format: double
+                    readOnly: true
+                    type: number
+                downloadsTrendPercentage:
+                    description:
+                        "Percentage change in downloads compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                impressions:
+                    description:
+                        "Impression count (asset rendered into a viewport but not necessarily interacted with)."
+                    format: double
+                    readOnly: true
+                    type: number
+                impressionsTrendPercentage:
+                    description:
+                        "Percentage change in impressions compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                reads:
+                    description:
+                        "Read count (full-content engagement, distinct from impressions)."
+                    format: double
+                    readOnly: true
+                    type: number
+                readsTrendPercentage:
+                    description:
+                        "Percentage change in reads compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                views:
+                    description:
+                        "View count (asset opened/loaded by an individual)."
+                    format: double
+                    readOnly: true
+                    type: number
+                viewsTrendPercentage:
+                    description:
+                        "Percentage change in views compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+            type: object
+info:
+    license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+    title: Faro Headless REST API
+    version: v1.0
+    x-class-name: FaroRest
+openapi: 3.0.1
+paths:
+    "/workspace/{groupId}/asset-summaries":
+        get:
+            description:
+                "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object
+                entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read,
+                and view counts along with their period-over-period trend percentages. Optionally narrow results to a
+                single channel (also known as property) or to a date range. Use this to answer 'what content is
+                performing best' and to pick assets for deeper drill-down via `getSitePagesPage`."
+            operationId: getSiteAssetSummariesPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Optional id to scope results to a single channel."
+                    name: channelId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
+                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
+                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
+                        are ignored."
+                    name: rangeKey
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeStart
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Free-text keyword search across asset titles. Empty or null returns all matching assets."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to `views:desc` when omitted. Common columns:
+                        views, downloads, impressions, reads."
+                    example: views:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetSummaryMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetSummaryMetric"
+                                type: array
+            tags: ["AssetSummaryMetric"]

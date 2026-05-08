@@ -775,14 +775,14 @@ public class CIForwardProcessor {
 			return false;
 		}
 
-		String senderSHA = _pullRequest.getSenderSHA();
-		String receiverSHA = receiverRemoteGitBranch.getSHA();
 		String expectedMergeBaseSHA = mergeBaseCommit.getSHA();
+		String receiverSHA = receiverRemoteGitBranch.getSHA();
+		String senderSHA = _pullRequest.getSenderSHA();
 
 		Date mergeBaseCommitDate = mergeBaseCommit.getCommitDate();
 
-		gitWorkingDirectory.fetch(senderRemoteGitBranch, mergeBaseCommitDate);
 		gitWorkingDirectory.fetch(receiverRemoteGitBranch, mergeBaseCommitDate);
+		gitWorkingDirectory.fetch(senderRemoteGitBranch, mergeBaseCommitDate);
 
 		if (!_localMergeBaseMatches(
 				gitWorkingDirectory, senderSHA, receiverSHA,
@@ -791,8 +791,8 @@ public class CIForwardProcessor {
 			Date bufferedDate = new Date(
 				mergeBaseCommitDate.getTime() - _MERGE_BASE_DATE_BUFFER_MILLIS);
 
-			gitWorkingDirectory.fetch(senderRemoteGitBranch, bufferedDate);
 			gitWorkingDirectory.fetch(receiverRemoteGitBranch, bufferedDate);
+			gitWorkingDirectory.fetch(senderRemoteGitBranch, bufferedDate);
 
 			if (!_localMergeBaseMatches(
 					gitWorkingDirectory, senderSHA, receiverSHA,

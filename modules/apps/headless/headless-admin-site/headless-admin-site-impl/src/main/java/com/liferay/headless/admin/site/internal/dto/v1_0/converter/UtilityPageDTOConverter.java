@@ -85,7 +85,7 @@ public class UtilityPageDTOConverter
 						"thumbnail",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
-								getPortletFileEntryThumbnailURLReference(
+								getFileEntryThumbnailURLReference(
 									layoutUtilityPageEntry.
 										getPreviewFileEntryId())));
 				setType(() -> _getType(layoutUtilityPageEntry.getType()));

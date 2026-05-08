@@ -126,7 +126,7 @@ public class PageTemplateDTOConverter
 						"thumbnail",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
-								getPortletFileEntryThumbnailURLReference(
+								getFileEntryThumbnailURLReference(
 									layoutPageTemplateEntry.
 										getPreviewFileEntryId())));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
@@ -227,7 +227,7 @@ public class PageTemplateDTOConverter
 						"thumbnail",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
-								getPortletFileEntryThumbnailURLReference(
+								getFileEntryThumbnailURLReference(
 									layoutPageTemplateEntry.
 										getPreviewFileEntryId())));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);

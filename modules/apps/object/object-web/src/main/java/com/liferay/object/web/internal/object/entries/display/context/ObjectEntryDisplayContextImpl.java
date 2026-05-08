@@ -1622,6 +1622,19 @@ public class ObjectEntryDisplayContextImpl
 			values.put("creator", creator.getName());
 		}
 
+		Date displayDate = objectEntry.getDisplayDate();
+
+		if (displayDate != null) {
+			values.put("displayDate", new Timestamp(displayDate.getTime()));
+		}
+
+		Date expirationDate = objectEntry.getExpirationDate();
+
+		if (expirationDate != null) {
+			values.put(
+				"expirationDate", new Timestamp(expirationDate.getTime()));
+		}
+
 		values.put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode());
 		values.put("id", objectEntry.getId());
@@ -1630,6 +1643,12 @@ public class ObjectEntryDisplayContextImpl
 
 		if (dateModified != null) {
 			values.put("modifiedDate", new Timestamp(dateModified.getTime()));
+		}
+
+		Date reviewDate = objectEntry.getReviewDate();
+
+		if (reviewDate != null) {
+			values.put("reviewDate", new Timestamp(reviewDate.getTime()));
 		}
 
 		Status status = objectEntry.getStatus();

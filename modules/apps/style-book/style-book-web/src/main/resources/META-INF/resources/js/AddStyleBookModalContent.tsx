@@ -187,6 +187,7 @@ const AddStyleBookModalContent = ({
 
 						{hasProviders && (
 							<ClayButton
+								aria-busy={loading}
 								disabled={Boolean(errorMessage)}
 								displayType="primary"
 								form={formId}

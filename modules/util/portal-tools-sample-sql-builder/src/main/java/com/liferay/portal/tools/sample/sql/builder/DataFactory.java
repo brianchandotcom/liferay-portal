@@ -7132,14 +7132,14 @@ public class DataFactory {
 				layoutModel, segmentsExperienceModels);
 
 			List<Tuple>
-				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples =
-					_utilityPageFragmentEntryLinkRendererKeyAndPositionTuplesMap.
+				utilityPageFragmentEntryLinkTuples =
+					_utilityPageFragmentEntryLinkTuplesMap.
 						get(externalReferenceCode);
 
 			originalFragmentEntryLinkModels.addAll(
 				newUtilityPageFragmentEntryLinkModels(
 					layoutModel, segmentsExperienceId,
-					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
+					utilityPageFragmentEntryLinkTuples,
 					externalReferenceCode, renderNamespace));
 		}
 
@@ -8985,7 +8985,7 @@ public class DataFactory {
 			newUtilityPageFragmentEntryLinkModels(
 				LayoutModel layoutModel, long segmentsExperienceId,
 				List<Tuple>
-					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
+					utilityPageFragmentEntryLinkTuples,
 				String externalReferenceCode, String renderNamespace)
 		throws Exception {
 
@@ -8998,7 +8998,7 @@ public class DataFactory {
 		int position = 0;
 
 		int utilityPageFragmentEntryLinkItemCount =
-			utilityPageFragmentEntryLinkRendererKeyAndPositionTuples.size();
+			utilityPageFragmentEntryLinkTuples.size();
 
 		if (utilityPageFragmentEntryLinkItemCount == 1) {
 			type = FragmentConstants.TYPE_PORTLET;
@@ -9021,16 +9021,16 @@ public class DataFactory {
 			new ArrayList<>();
 
 		for (int i = 0; i < utilityPageFragmentEntryLinkItemCount; i++) {
-			Tuple utilityPageFragmentEntryLinkRendererKeyAndPositionTuple =
-				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples.get(i);
+			Tuple utilityPageFragmentEntryLinkTuple =
+				utilityPageFragmentEntryLinkTuples.get(i);
 
 			rendererKey =
 				(String)
-					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+					utilityPageFragmentEntryLinkTuple.
 						getObject(0);
 			position =
 				(Integer)
-					utilityPageFragmentEntryLinkRendererKeyAndPositionTuple.
+					utilityPageFragmentEntryLinkTuple.
 						getObject(1);
 
 			String editValueFileName = StringPool.BLANK;
@@ -9756,7 +9756,7 @@ public class DataFactory {
 	private static final PortletPreferencesFactory _portletPreferencesFactory =
 		new PortletPreferencesFactoryImpl();
 	private static final Map<String, List<Tuple>>
-		_utilityPageFragmentEntryLinkRendererKeyAndPositionTuplesMap =
+		_utilityPageFragmentEntryLinkTuplesMap =
 			HashMapBuilder.<String, List<Tuple>>put(
 				"LFR-404-ERROR-layout-draft",
 				Arrays.asList(

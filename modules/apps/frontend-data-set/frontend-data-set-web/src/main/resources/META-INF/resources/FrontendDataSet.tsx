@@ -469,7 +469,7 @@ const FrontendDataSetContent = ({
 					selectedItems:
 						newSelectionFilter.selectedData?.selectedItems.map(
 							(newItem) => {
-								const selectedItem = selectionFilter.items.find(
+								const selectedItem = selectionFilter.items?.find(
 									(item: ISelectionFilterStateItem) =>
 										item.value === newItem.value
 								);

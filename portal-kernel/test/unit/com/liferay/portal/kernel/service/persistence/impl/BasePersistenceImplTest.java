@@ -31,7 +31,10 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertNullFunction(testModel -> null);
 
-		Assert.assertEquals("", function.apply(_TEST_MODEL));
+		Assert.assertEquals(
+			"null must convert to \"\" so the finder invalidation key " +
+				"matches the cache key for a null input",
+			"", function.apply(_TEST_MODEL));
 	}
 
 	@Test

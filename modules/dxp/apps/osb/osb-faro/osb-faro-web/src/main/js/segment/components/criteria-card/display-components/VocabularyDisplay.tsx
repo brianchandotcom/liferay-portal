@@ -96,7 +96,9 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 						catIndex,
 						'value'
 					]) as any
-				)?.toJS?.()?.map((c: {name: string}) => c.name) ?? []
+				)
+					?.toJS?.()
+					?.map((c: {name: string}) => c.name) ?? []
 			);
 		}
 
@@ -120,7 +122,8 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 					(i: any) => i.get?.('propertyName') === 'categories/name'
 				);
 
-				if (nameItem) names.push((nameItem.get?.('value') as string) ?? '');
+				if (nameItem)
+					names.push((nameItem.get?.('value') as string) ?? '');
 			});
 
 			return names;
@@ -130,7 +133,9 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 			(i: any) => i.get?.('propertyName') === 'categories/name'
 		);
 
-		return catNameItem ? [(catNameItem.get?.('value') as string) ?? ''] : [];
+		return catNameItem
+			? [(catNameItem.get?.('value') as string) ?? '']
+			: [];
 	})();
 
 	const vocNameIndex = valueIMap

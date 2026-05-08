@@ -19,9 +19,7 @@ const VOCABULARY_OPERATORS = new Set([
 	NotOperators.NotVocabulariesFilter
 ]);
 
-function extractVocabularies(
-	criteria: any
-): Array<{id: string; name: string}> {
+function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
 	if (!criteria) return [];
 
 	if (criteria.items) {

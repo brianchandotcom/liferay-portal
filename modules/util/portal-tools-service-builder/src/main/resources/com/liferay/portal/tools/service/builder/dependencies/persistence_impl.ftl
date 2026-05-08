@@ -2929,6 +2929,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								,
 								<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 									convertNullFunction(${entity.name}::get${entityColumn.methodName})
+								<#elseif stringUtil.equals(entityColumn.type, "Date")>
+									convertDateFunction(${entity.name}::get${entityColumn.methodName})
 								<#else>
 									${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
 								</#if>

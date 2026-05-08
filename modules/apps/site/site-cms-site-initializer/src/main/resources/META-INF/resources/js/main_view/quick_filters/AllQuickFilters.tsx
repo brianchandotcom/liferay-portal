@@ -20,6 +20,7 @@ import React, {
 } from 'react';
 
 import {
+	CMSSiteInitializerFDSNames,
 	EXPIRING_SOON_THRESHOLD_DAYS,
 	FDS_EVENT_DISPLAY_UPDATED,
 	FDS_FILTER_ID,
@@ -137,10 +138,16 @@ export default function AllQuickFilters() {
 	useEffect(() => {
 		fetchCounts();
 
-		Liferay.on(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+		const handleDisplayUpdated = (event?: {id?: string}) => {
+			if (event?.id?.endsWith(CMSSiteInitializerFDSNames.ALL_SECTION)) {
+				fetchCounts();
+			}
+		};
+
+		Liferay.on(FDS_EVENT_DISPLAY_UPDATED, handleDisplayUpdated);
 
 		return () => {
-			Liferay.detach(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+			Liferay.detach(FDS_EVENT_DISPLAY_UPDATED, handleDisplayUpdated);
 		};
 	}, [fetchCounts]);
 

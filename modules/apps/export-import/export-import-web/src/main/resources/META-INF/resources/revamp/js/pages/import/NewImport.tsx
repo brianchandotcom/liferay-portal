@@ -35,7 +35,9 @@ export function NewImport({
 					name: '',
 				}}
 				isStepValid={(values) =>
-					values.fileSelector instanceof File && !!values.name.trim()
+					values.fileSelector instanceof File &&
+					!!values.name.trim() &&
+					!!importPreview
 				}
 				title={Liferay.Language.get('setup')}
 			>
@@ -49,6 +51,10 @@ export function NewImport({
 				description={Liferay.Language.get(
 					'select-the-data-from-your-file-that-you-would-like-to-import'
 				)}
+				initialValues={{
+					contentSelection: undefined,
+				}}
+				isStepValid={(values) => !!values.contentSelection}
 				title={Liferay.Language.get('data-selection')}
 			>
 				<DataSelectionStep importPreview={importPreview} />

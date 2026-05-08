@@ -6,7 +6,14 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
+const SITE_TEMPLATE_TYPE = 'SiteTemplate';
+
 const SiteRenderer = ({itemData, value}: {itemData: any; value: string}) => {
+	const label =
+		itemData.type === SITE_TEMPLATE_TYPE
+			? `${value} (${Liferay.Language.get('site-template')})`
+			: value;
+
 	return (
 		<span className="align-items-center d-flex">
 			<ClaySticker
@@ -15,10 +22,10 @@ const SiteRenderer = ({itemData, value}: {itemData: any; value: string}) => {
 				shape="circle"
 				size="lg"
 			>
-				<ClaySticker.Image alt={value} src={itemData.logo} />
+				<ClaySticker.Image alt={label} src={itemData.logo} />
 			</ClaySticker>
 
-			{value}
+			{label}
 		</span>
 	);
 };

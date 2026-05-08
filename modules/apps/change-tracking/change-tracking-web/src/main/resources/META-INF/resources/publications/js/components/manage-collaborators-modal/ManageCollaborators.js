@@ -765,14 +765,6 @@ const ManageCollaborators = ({
 									loadingState={networkStatus}
 									onChange={handleChange}
 									onItemsChange={handleItemsChange}
-									onPaste={(event) => {
-										event.preventDefault();
-
-										const pastedText =
-											event.clipboardData.getData('Text');
-
-										handleChange(pastedText);
-									}}
 									placeholder={Liferay.Language.get(
 										'enter-name-or-email-address'
 									)}

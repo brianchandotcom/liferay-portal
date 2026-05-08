@@ -591,3 +591,43 @@ test(
 		await expect(contentCountBadge).toHaveText(String(initialCount + 1));
 	}
 );
+
+test(
+	'Content Structures of type Content and of type File can be created',
+	{tag: '@LPD-89342'},
+	async ({structureBuilderPage, structuresPage}) => {
+		const contentLabel = getRandomString();
+		const fileLabel = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			label: contentLabel,
+			page: structureBuilderPage,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: fileLabel,
+			page: structureBuilderPage,
+			type: 'file',
+		});
+
+		await structuresPage.goto();
+
+		await structuresPage.dataSetFragmentPage.search(contentLabel);
+
+		const contentRow = structuresPage.getItem(contentLabel);
+
+		await expect(contentRow).toBeVisible();
+		await expect(
+			contentRow.getByRole('cell', {exact: true, name: 'Content'})
+		).toBeVisible();
+
+		await structuresPage.dataSetFragmentPage.search(fileLabel);
+
+		const fileRow = structuresPage.getItem(fileLabel);
+
+		await expect(fileRow).toBeVisible();
+		await expect(
+			fileRow.getByRole('cell', {exact: true, name: 'File'})
+		).toBeVisible();
+	}
+);

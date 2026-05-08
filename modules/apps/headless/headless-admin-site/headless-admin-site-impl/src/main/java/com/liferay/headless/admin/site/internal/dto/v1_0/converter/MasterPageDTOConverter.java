@@ -85,7 +85,7 @@ public class MasterPageDTOConverter
 						"thumbnail",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
-								getPortletFileEntryThumbnailURLReference(
+								getFileEntryThumbnailURLReference(
 									layoutPageTemplateEntry.
 										getPreviewFileEntryId())));
 				setUuid(layoutPageTemplateEntry::getUuid);

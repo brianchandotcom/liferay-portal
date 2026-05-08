@@ -1,3 +1,11 @@
+module "argocd_sso" {
+	argocd_sso_config={
+		dex_config=var.argocd_sso_config.dex_config
+		enable_sso=var.argocd_sso_config.enable_sso
+		rbac=var.argocd_sso_config.rbac
+	}
+	source="./modules/argocd-sso"
+}
 resource "helm_release" "argocd" {
 	chart="argo-cd"
 	create_namespace=false
@@ -186,12 +194,4 @@ resource "kubernetes_secret" "argocd_secret" {
 resource "random_password" "argocd_server_secretkey" {
 	length=32
 	special=false
-}
-module "argocd_sso" {
-	argocd_sso_config={
-		dex_config=var.argocd_sso_config.dex_config
-		enable_sso=var.argocd_sso_config.enable_sso
-		rbac=var.argocd_sso_config.rbac
-	}
-	source="./modules/argocd-sso"
 }

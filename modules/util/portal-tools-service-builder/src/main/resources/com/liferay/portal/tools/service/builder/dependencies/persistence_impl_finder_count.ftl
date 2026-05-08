@@ -64,6 +64,10 @@ public int countBy${entityFinder.name}(
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 			</#if>
+
+			<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+				${entityColumn.name} = StringUtil.toLowerCase(${entityColumn.name});
+			</#if>
 		</#list>
 
 		FinderPath finderPath =

@@ -228,6 +228,10 @@ that may or may not be enforced with a unique index at the database level. Case
 				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 				</#if>
+
+				<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+					${entityColumn.name} = StringUtil.toLowerCase(${entityColumn.name});
+				</#if>
 			</#list>
 
 			FinderPath finderPath = null;
@@ -2445,6 +2449,10 @@ that may or may not be enforced with a unique index at the database level. Case
 			<#list entityColumns as entityColumn>
 				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+				</#if>
+
+				<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+					${entityColumn.name} = StringUtil.toLowerCase(${entityColumn.name});
 				</#if>
 			</#list>
 

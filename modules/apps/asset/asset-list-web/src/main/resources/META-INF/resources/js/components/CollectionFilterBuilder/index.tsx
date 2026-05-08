@@ -14,6 +14,37 @@ import type {
 	FilterPropertyGroup,
 } from './types';
 
+function normalizeDateTime(value: string) {
+	if (!value) {
+		return value;
+	}
+
+	// The picker emits "--:--" when the time portion isn't filled. Default
+	// to midnight so a date-only entry still serializes cleanly.
+
+	const normalized = value.replace('--:--', '00:00');
+	const date = new Date(normalized.replace(' ', 'T'));
+
+	return Number.isNaN(date.getTime()) ? '' : normalized;
+}
+
+function serializeValue(
+	property: FilterProperty | undefined,
+	value: FilterCondition['value']
+): FilterCondition['value'] {
+	if (property?.type !== 'date-time' || value === null) {
+		return value;
+	}
+
+	if (Array.isArray(value)) {
+		return value.map((entry) =>
+			typeof entry === 'string' ? normalizeDateTime(entry) : entry
+		);
+	}
+
+	return typeof value === 'string' ? normalizeDateTime(value) : value;
+}
+
 interface CollectionFilterBuilderProps {
 	categorySelectorURL?: string;
 	groupIds?: string[];
@@ -84,13 +115,34 @@ export default function CollectionFilterBuilder({
 		[properties]
 	);
 
+	const flatProperties = useMemo(
+		() => propertiesWithAssetFields.flatMap((group) => group.items),
+		[propertiesWithAssetFields]
+	);
+
 	const filterValuesAndOmitID = (conditions: FilterCondition[]) =>
 		conditions
-			.filter(
-				({operatorName, propertyName, value}) =>
-					operatorName && propertyName && value
-			)
-			.map(({id: _id, ...props}) => props);
+			.map(({id: _id, ...props}) => {
+				const property = flatProperties.find(
+					(p) =>
+						p.name === props.propertyName &&
+						p.classNameId === props.classNameId &&
+						p.classTypeId === props.classTypeId
+				);
+
+				return {...props, value: serializeValue(property, props.value)};
+			})
+			.filter(({operatorName, propertyName, value}) => {
+				if (!operatorName || !propertyName || !value) {
+					return false;
+				}
+
+				if (Array.isArray(value)) {
+					return value.every(Boolean);
+				}
+
+				return true;
+			});
 
 	useEffect(() => {
 		if (!propertiesURL) {

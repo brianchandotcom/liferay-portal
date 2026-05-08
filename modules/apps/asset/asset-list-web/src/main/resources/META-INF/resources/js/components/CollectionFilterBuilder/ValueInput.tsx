@@ -4,7 +4,9 @@
  */
 
 import {Option, Picker} from '@clayui/core';
+import DatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
+import MultiSelect from '@clayui/multi-select';
 import {
 	AssetTagsSelector,
 	AssetVocabularyCategoriesSelector,
@@ -185,14 +187,81 @@ export default function ValueInput({
 	}
 
 	if (type === 'date' || type === 'date-time') {
+		const isDateTime = type === 'date-time';
+		const dateFormat = 'yyyy-MM-dd';
+		const placeholder = isDateTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
+		const years = {
+			end: new Date().getFullYear() + 25,
+			start: new Date().getFullYear() - 50,
+		};
+
+		if (operator === 'between') {
+			const [from, to] = (value as string[]) || [];
+
+			if (!isDateTime) {
+				const rangeValue = from && to ? `${from} - ${to}` : from ?? '';
+
+				return (
+					<DatePicker
+						className="form-control-sm"
+						dateFormat={dateFormat}
+						inputName={`${property.name}-${index}`}
+						onChange={(newValue: any) => {
+							const [newFrom = '', newTo = ''] = (
+								newValue as string
+							).split(' - ');
+
+							onChange([newFrom, newTo] as string[]);
+						}}
+						placeholder={placeholder}
+						range
+						value={rangeValue}
+						years={years}
+					/>
+				);
+			}
+
+			return (
+				<div className="c-gap-2 d-flex flex-grow-1">
+					<DatePicker
+						className="form-control-sm"
+						dateFormat={dateFormat}
+						inputName={`${property.name}-from-${index}`}
+						onChange={(newValue: any) =>
+							onChange([newValue as string, to] as string[])
+						}
+						placeholder={placeholder}
+						time={isDateTime}
+						value={from ?? ''}
+						years={years}
+					/>
+
+					<DatePicker
+						className="form-control-sm"
+						dateFormat={dateFormat}
+						inputName={`${property.name}-to-${index}`}
+						onChange={(newValue: any) =>
+							onChange([from, newValue as string] as string[])
+						}
+						placeholder={placeholder}
+						time={isDateTime}
+						value={to ?? ''}
+						years={years}
+					/>
+				</div>
+			);
+		}
+
 		return (
-			<ClayInput
-				aria-label={Liferay.Language.get('value')}
+			<DatePicker
 				className="form-control-sm"
-				id={`${property.name}-${index}`}
-				onChange={(event) => onChange(event.target.value)}
-				type={type === 'date-time' ? 'datetime-local' : 'date'}
+				dateFormat={dateFormat}
+				inputName={`${property.name}-${index}`}
+				onChange={(newValue: any) => onChange(newValue as string)}
+				placeholder={placeholder}
+				time={isDateTime}
 				value={(value as string) ?? ''}
+				years={years}
 			/>
 		);
 	}

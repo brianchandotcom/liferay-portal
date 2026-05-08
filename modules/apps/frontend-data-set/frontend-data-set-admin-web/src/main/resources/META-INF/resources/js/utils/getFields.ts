@@ -150,9 +150,7 @@ function getFilterableFields({
 
 	const filterableItemList = Object.keys(filterablePaths);
 
-	const filterableFields: Array<IField> = [];
-
-	filterableItemList.forEach((item) => {
+	return filterableItemList.map((item) => {
 		const type = filterablePaths[item].type;
 		const entityFieldType =
 			type === EFieldType.ARRAY
@@ -176,10 +174,8 @@ function getFilterableFields({
 			field.entityFieldType = EFieldType.STRING;
 		}
 
-		filterableFields.push(field);
+		return field;
 	});
-
-	return filterableFields;
 }
 
 export {getValidFields, getFilterableFields};

@@ -30,6 +30,20 @@ public class FinderColumnTest {
 	}
 
 	@Test
+	public void testMatchesEqualsCaseInsensitive() {
+		FinderColumn<TestModel> finderColumn = new FinderColumn<>(
+			"t.", "name", FinderColumn.Type.STRING, "=", false, true,
+			entity -> "Alice");
+
+		Assert.assertTrue(
+			"case-insensitive match must lowercase the entity value",
+			finderColumn.matches(_TEST_MODEL, "alice"));
+		Assert.assertFalse(
+			"\"Alice\" must not match \"bob\"",
+			finderColumn.matches(_TEST_MODEL, "bob"));
+	}
+
+	@Test
 	public void testMatchesGreaterThanDate() {
 		Date entityDate = new Date(2_000_000L);
 
@@ -143,6 +157,18 @@ public class FinderColumnTest {
 			"entity 3 != input 5", finderColumn.matches(_TEST_MODEL, 5));
 		Assert.assertFalse(
 			"entity 3 not != input 3", finderColumn.matches(_TEST_MODEL, 3));
+	}
+
+	@Test
+	public void testNormalizeValueLowercasesCaseInsensitiveString() {
+		FinderColumn<TestModel> finderColumn = new FinderColumn<>(
+			"t.", "name", FinderColumn.Type.STRING, "=", false, true,
+			entity -> "ignored");
+
+		Assert.assertEquals(
+			"case-insensitive String must lowercase so the cache key matches " +
+				"across casings",
+			"alice", finderColumn.normalizeValue("Alice"));
 	}
 
 	private static final TestModel _TEST_MODEL =

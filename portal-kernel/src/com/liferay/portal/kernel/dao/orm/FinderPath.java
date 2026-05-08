@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -44,20 +46,26 @@ public class FinderPath {
 		String cacheName, String methodName, String[] params,
 		String[] columnNames, boolean baseModelResult) {
 
-		this(
-			cacheName, methodName, params, columnNames, baseModelResult,
-			_EMPTY_ARGS_EXTRACTOR_FUNCTION);
+		this(cacheName, methodName, params, columnNames, 0, baseModelResult, null);
 	}
 
 	public FinderPath(
 		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean baseModelResult,
+		String[] columnNames, int caseInsensitiveBitmask,
+		boolean baseModelResult,
 		Function<Object, Object[]> argsExtractorFunction) {
 
 		_cacheName = cacheName;
 		_columnNames = columnNames;
+		_caseInsensitiveBitmask = caseInsensitiveBitmask;
 		_baseModelResult = baseModelResult;
-		_argsExtractorFunction = argsExtractorFunction;
+
+		if (argsExtractorFunction == null) {
+			_argsExtractorFunction = _EMPTY_ARGS_EXTRACTOR_FUNCTION;
+		}
+		else {
+			_argsExtractorFunction = argsExtractorFunction;
+		}
 
 		_initCacheKeyPrefix(methodName, params);
 
@@ -97,6 +105,19 @@ public class FinderPath {
 		}
 
 		return true;
+	}
+
+	public Object normalizeArgument(int columnIndex, Object value) {
+		if (value instanceof Date date) {
+			return date.getTime();
+		}
+
+		if (_isCaseInsensitive(columnIndex)) {
+			value = Objects.toString(
+				StringUtil.toLowerCase((String)value), "");
+		}
+
+		return value;
 	}
 
 	public void touch() {
@@ -143,6 +164,14 @@ public class FinderPath {
 		_cacheKeyPrefix = sb.toString();
 	}
 
+	private boolean _isCaseInsensitive(int columnIndex) {
+		if ((_caseInsensitiveBitmask & (1 << columnIndex)) != 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final String _ARGS_SEPARATOR = "_A_";
 
 	private static final long _COOL_DOWN_PERIOD = GetterUtil.getLong(
@@ -163,6 +192,7 @@ public class FinderPath {
 	private final boolean _baseModelResult;
 	private String _cacheKeyPrefix;
 	private final String _cacheName;
+	private final int _caseInsensitiveBitmask;
 	private final String[] _columnNames;
 	private final boolean _singleResult;
 	private volatile long _timestamp;

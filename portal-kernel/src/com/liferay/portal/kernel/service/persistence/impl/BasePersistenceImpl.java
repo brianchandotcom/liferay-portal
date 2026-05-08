@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -903,6 +904,13 @@ public class BasePersistenceImpl
 		}
 	}
 
+	protected static <T> Function<T, Object> convertCaseFunction(
+		Function<T, String> stringFunction) {
+
+		return baseModel -> Objects.toString(
+			StringUtil.toLowerCase(stringFunction.apply(baseModel)), "");
+	}
+
 	protected static <T> Function<T, Object> convertDateFunction(
 		Function<T, Date> dateFunction) {
 
@@ -999,11 +1007,12 @@ public class BasePersistenceImpl
 	@SafeVarargs
 	protected final FinderPath createUniqueFinderPath(
 		String cacheName, String methodName, String[] params,
-		String[] columnNames, boolean pretouch,
+		String[] columnNames, int caseInsensitiveBitmask, boolean pretouch,
 		Function<? super T, ?>... argsExtractors) {
 
 		FinderPath finderPath = new FinderPath(
-			cacheName, methodName, params, columnNames, true,
+			cacheName, methodName, params, columnNames, caseInsensitiveBitmask,
+			true,
 			baseModel -> {
 				Object[] args = new Object[argsExtractors.length];
 

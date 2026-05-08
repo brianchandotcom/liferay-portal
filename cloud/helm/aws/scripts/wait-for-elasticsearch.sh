@@ -6,7 +6,13 @@ set -o nounset
 function main {
 	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
 
-	local authenticated_health_url="http://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
+	local protocol="http"
+
+	case "${ELASTICSEARCH_URL}" in
+		https://*) protocol="https" ;;
+	esac
+
+	local authenticated_health_url="${protocol}://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
 
 	until wget -qO- "${authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
 	do

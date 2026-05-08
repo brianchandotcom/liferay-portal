@@ -12,6 +12,8 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.SiteDTOConverterContext;
 import com.liferay.analytics.settings.rest.internal.util.SortUtil;
 import com.liferay.analytics.settings.rest.resource.v1_0.SiteResource;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -64,11 +67,13 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				analyticsChannel.getId(), analyticsChannel.getName());
 		}
 
+		long[] classNameIds = _getClassNameIds(contextCompany.getCompanyId());
+
 		return Page.of(
 			transform(
 				_groupService.search(
-					contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
-					keywords, _getParams(), pagination.getStartPosition(),
+					contextCompany.getCompanyId(), classNameIds, keywords,
+					_getParams(), pagination.getStartPosition(),
 					pagination.getEndPosition(),
 					SortUtil.getIgnoreCaseOrderByComparator(
 						contextAcceptLanguage.getPreferredLocale(), sorts)),
@@ -80,8 +85,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					group)),
 			pagination,
 			_groupService.searchCount(
-				contextCompany.getCompanyId(), _classNameIdsSupplier.get(),
-				keywords, _getParams()));
+				contextCompany.getCompanyId(), classNameIds, keywords,
+				_getParams()));
 	}
 
 	@Activate
@@ -89,6 +94,22 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		_analyticsCloudClient = new AnalyticsCloudClient(_http);
 		_classNameIdsSupplier = _classNameLocalService.getClassNameIdsSupplier(
 			new String[] {Group.class.getName(), Organization.class.getName()});
+	}
+
+	private long[] _getClassNameIds(long companyId) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					"L_DSR_ROOM", companyId);
+
+		if (objectDefinition == null) {
+			return _classNameIdsSupplier.get();
+		}
+
+		return ArrayUtil.append(
+			_classNameIdsSupplier.get(),
+			_classNameLocalService.getClassNameId(
+				objectDefinition.getClassName()));
 	}
 
 	private LinkedHashMap<String, Object> _getParams() {
@@ -113,6 +134,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.analytics.settings.rest.internal.dto.v1_0.converter.SiteDTOConverter)"

@@ -111,13 +111,14 @@ test('LPD-67788 Cookie Panel toggle switches have aria-labels', async ({
 			.first()
 			.waitFor({state: 'attached'});
 
-		const toggles = cookiesPanel.locator('.toggle-switch-check');
-		const count = await toggles.count();
+		const toggles = await cookiesPanel
+			.locator('.toggle-switch-check')
+			.all();
 
-		expect(count).toBeGreaterThan(0);
+		expect(toggles.length).toBeGreaterThan(0);
 
-		for (let i = 0; i < count; i++) {
-			const ariaLabel = await toggles.nth(i).getAttribute('aria-label');
+		for (const toggle of toggles) {
+			const ariaLabel = await toggle.getAttribute('aria-label');
 
 			expect(ariaLabel).toBeTruthy();
 		}

@@ -1,0 +1,50 @@
+================================================================================
+  PUBLIC FRIENDLY URL MAPPING DISABLING PRE-CHECK
+================================================================================
+
+Generated:        TIMESTAMP
+Instance ID:      20120
+
+--------------------------------------------------------------------------------
+  SUMMARY
+--------------------------------------------------------------------------------
+
+Total conflicts found:        2
+
+Recommendation: DO NOT DISABLE the Public Friendly URL Mapping (removing the /web/) until resolving all the existing items in this report.
+
+================================================================================
+  CONFLICT DETAILS
+================================================================================
+
+--------------------------------------------------------------------------------
+#1 — Friendly URL Collision
+--------------------------------------------------------------------------------
+
+Path in conflict:   /precheck-conflict-demo
+
+Conflicting items:
+  - Page  : "Precheck Conflict Demo"
+           Site : "Liferay DXP Site"   (friendly URL: /guest)
+           Page ID  : 41807
+
+  - Site  : "Precheck Conflict Demo"
+           Site ID  : 41205
+           Friendly URL: /precheck-conflict-demo
+
+
+--------------------------------------------------------------------------------
+#2 — Reserved Path Conflict
+--------------------------------------------------------------------------------
+
+Path in conflict:   /group
+
+Conflicting item:
+  - Page  : "Group Resources"
+           Site : "Intranet"   (friendly URL: /intranet)
+           Page ID  : 39112
+
+
+================================================================================
+  END OF REPORT
+================================================================================

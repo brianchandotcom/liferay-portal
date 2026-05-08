@@ -21,29 +21,43 @@ import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.model.FriendlyURLEntryMapping;
 import com.liferay.friendly.url.service.base.FriendlyURLEntryLocalServiceBaseImpl;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryMappingPersistence;
+import com.liferay.friendly.url.util.FriendlyURLEntryReportUtil;
 import com.liferay.friendly.url.util.comparator.FriendlyURLEntryCreateDateComparator;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FriendlyURLKeywordsUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.model.SiteFriendlyURL;
+import com.liferay.site.service.SiteFriendlyURLLocalService;
 
 import java.io.Serializable;
 
@@ -59,6 +73,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
+ * @author David Truong
  */
 @Component(
 	property = "model.class.name=com.liferay.friendly.url.model.FriendlyURLEntry",
@@ -425,6 +440,46 @@ public class FriendlyURLEntryLocalServiceImpl
 	}
 
 	@Override
+	public JSONArray getFriendlyURLPublicMappingConflicts(long companyId)
+		throws PortalException {
+
+		JSONArray conflictsJSONArray = _jsonFactory.createJSONArray();
+
+		Group group = _groupLocalService.fetchGroup(
+			companyId, PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+
+		if (group == null) {
+			return conflictsJSONArray;
+		}
+
+		Map<String, Group> siteFriendlyURLsMap = new HashMap<>();
+
+		for (Group siteGroup :
+				_groupLocalService.getGroups(
+					companyId, GroupConstants.ANY_PARENT_GROUP_ID, true)) {
+
+			String siteGroupFriendlyURL = siteGroup.getFriendlyURL();
+
+			if (Validator.isNotNull(siteGroupFriendlyURL)) {
+				siteFriendlyURLsMap.put(siteGroupFriendlyURL, siteGroup);
+			}
+
+			for (SiteFriendlyURL siteFriendlyURL :
+					_siteFriendlyURLLocalService.getSiteFriendlyURLs(
+						companyId, siteGroup.getGroupId())) {
+
+				siteFriendlyURLsMap.put(
+					siteFriendlyURL.getFriendlyURL(), siteGroup);
+			}
+		}
+
+		_checkLayoutFriendlyURLConflicts(
+			group, siteFriendlyURLsMap, conflictsJSONArray);
+
+		return conflictsJSONArray;
+	}
+
+	@Override
 	public FriendlyURLEntry getMainFriendlyURLEntry(
 			Class<?> clazz, long classPK)
 		throws PortalException {
@@ -644,6 +699,131 @@ public class FriendlyURLEntryLocalServiceImpl
 		validate(
 			groupId, classNameId, 0,
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()), urlTitle);
+	}
+
+	private JSONObject _buildPageItemJSONObject(Group group, Layout layout)
+		throws PortalException {
+
+		return JSONUtil.put(
+			"name", layout.getName(LocaleUtil.getSiteDefault())
+		).put(
+			"pageId", layout.getPlid()
+		).put(
+			"siteFriendlyURL", group.getFriendlyURL()
+		).put(
+			"siteName", group.getDescriptiveName()
+		).put(
+			"type", FriendlyURLEntryReportUtil.TYPE_PAGE
+		);
+	}
+
+	private void _checkLayoutFriendlyURLConflicts(
+			Group group, Map<String, Group> siteFriendlyURLsMap,
+			JSONArray conflictsJSONArray)
+		throws PortalException {
+
+		long layoutClassNameId = _layoutFriendlyURLEntryHelper.getClassNameId(
+			false);
+
+		List<Layout> layouts = _layoutLocalService.getLayouts(
+			group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		for (Layout layout : layouts) {
+			FriendlyURLEntry friendlyURLEntry = fetchMainFriendlyURLEntry(
+				layoutClassNameId, layout.getPlid());
+
+			if (friendlyURLEntry == null) {
+				_collectLayoutConflicts(
+					group, layout, layout.getFriendlyURL(), siteFriendlyURLsMap,
+					conflictsJSONArray);
+
+				continue;
+			}
+
+			List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+				getFriendlyURLEntryLocalizations(
+					friendlyURLEntry.getFriendlyURLEntryId());
+
+			for (FriendlyURLEntryLocalization friendlyURLEntryLocalization :
+					friendlyURLEntryLocalizations) {
+
+				_collectLayoutConflicts(
+					group, layout, friendlyURLEntryLocalization.getUrlTitle(),
+					siteFriendlyURLsMap, conflictsJSONArray);
+			}
+		}
+	}
+
+	private void _collectLayoutConflicts(
+			Group group, Layout layout, String pageURL,
+			Map<String, Group> siteFriendlyURLsMap,
+			JSONArray conflictsJSONArray)
+		throws PortalException {
+
+		if (Validator.isNull(pageURL)) {
+			return;
+		}
+
+		_collectPageSiteConflict(
+			group, layout, pageURL, siteFriendlyURLsMap, conflictsJSONArray);
+		_collectReservedPathConflict(
+			group, layout, pageURL, conflictsJSONArray);
+	}
+
+	private void _collectPageSiteConflict(
+			Group group, Layout layout, String pageURL,
+			Map<String, Group> siteFriendlyURLsMap,
+			JSONArray conflictsJSONArray)
+		throws PortalException {
+
+		Group conflictingGroup = siteFriendlyURLsMap.get(pageURL);
+
+		if (conflictingGroup == null) {
+			return;
+		}
+
+		conflictsJSONArray.put(
+			JSONUtil.put(
+				"category",
+				FriendlyURLEntryReportUtil.CATEGORY_FRIENDLY_URL_COLLISION
+			).put(
+				"items",
+				JSONUtil.putAll(
+					_buildPageItemJSONObject(group, layout),
+					JSONUtil.put(
+						"friendlyURL", pageURL
+					).put(
+						"name", conflictingGroup.getDescriptiveName()
+					).put(
+						"siteId", conflictingGroup.getGroupId()
+					).put(
+						"type", FriendlyURLEntryReportUtil.TYPE_SITE
+					))
+			).put(
+				"path", pageURL
+			));
+	}
+
+	private void _collectReservedPathConflict(
+			Group group, Layout layout, String pageURL,
+			JSONArray conflictsJSONArray)
+		throws PortalException {
+
+		if (!FriendlyURLKeywordsUtil.hasFriendlyURLKeyword(pageURL)) {
+			return;
+		}
+
+		conflictsJSONArray.put(
+			JSONUtil.put(
+				"category",
+				FriendlyURLEntryReportUtil.CATEGORY_RESERVED_PATH_CONFLICT
+			).put(
+				"items",
+				JSONUtil.putAll(_buildPageItemJSONObject(group, layout))
+			).put(
+				"path", pageURL
+			));
 	}
 
 	private boolean _containsAllURLTitles(
@@ -950,9 +1130,21 @@ public class FriendlyURLEntryLocalServiceImpl
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
 
 	@Reference
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;
 
 }

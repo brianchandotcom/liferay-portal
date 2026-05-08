@@ -146,11 +146,19 @@ public class FileUtil {
 	}
 
 	public static void write(File file, String content) throws Exception {
-		write(file, content, null);
+		write(file, content, null, true);
 	}
 
 	public static void write(
 			File file, String content, Collection<File> modifiedFiles)
+		throws Exception {
+
+		write(file, content, modifiedFiles, true);
+	}
+
+	public static void write(
+			File file, String content, Collection<File> modifiedFiles,
+			boolean addHash)
 		throws Exception {
 
 		if (!file.exists()) {
@@ -168,15 +176,17 @@ public class FileUtil {
 		if (StringUtil.endsWith(file.getName(), ".java")) {
 			int contentHash = content.hashCode();
 
-			int index = oldContent.lastIndexOf(
-				_LIFERAY_REST_BUILDER_HASH_PREFIX);
+			if (addHash) {
+				int index = oldContent.lastIndexOf(
+					_LIFERAY_REST_BUILDER_HASH_PREFIX);
 
-			if (index != -1) {
-				String hashLine = oldContent.substring(
-					index + _LIFERAY_REST_BUILDER_HASH_PREFIX.length());
+				if (index != -1) {
+					String hashLine = oldContent.substring(
+						index + _LIFERAY_REST_BUILDER_HASH_PREFIX.length());
 
-				if (GetterUtil.getInteger(hashLine) == contentHash) {
-					return;
+					if (GetterUtil.getInteger(hashLine) == contentHash) {
+						return;
+					}
 				}
 			}
 
@@ -185,8 +195,12 @@ public class FileUtil {
 
 			JavaParser.parse(file, 80);
 
-			String parsedContent =
-				read(file) + _LIFERAY_REST_BUILDER_HASH_PREFIX + contentHash;
+			String parsedContent = read(file);
+
+			if (addHash) {
+				parsedContent +=
+					_LIFERAY_REST_BUILDER_HASH_PREFIX + contentHash;
+			}
 
 			Files.write(
 				file.toPath(), parsedContent.getBytes(StandardCharsets.UTF_8));

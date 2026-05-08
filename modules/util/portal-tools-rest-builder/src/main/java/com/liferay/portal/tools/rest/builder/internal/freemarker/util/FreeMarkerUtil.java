@@ -37,13 +37,25 @@ public class FreeMarkerUtil {
 		throws Exception {
 
 		processTemplate(
-			copyrightFile, copyrightYear, name, context, outputFile, null);
+			copyrightFile, copyrightYear, name, context, outputFile, null,
+			true);
 	}
 
 	public static void processTemplate(
 			File copyrightFile, String copyrightYear, String name,
 			Map<String, Object> context, File outputFile,
 			Collection<File> modifiedFiles)
+		throws Exception {
+
+		processTemplate(
+			copyrightFile, copyrightYear, name, context, outputFile,
+			modifiedFiles, true);
+	}
+
+	public static void processTemplate(
+			File copyrightFile, String copyrightYear, String name,
+			Map<String, Object> context, File outputFile,
+			Collection<File> modifiedFiles, boolean addHash)
 		throws Exception {
 
 		String content = processTemplate(
@@ -53,7 +65,7 @@ public class FreeMarkerUtil {
 			content = _removeUnusedSchemaImports(content, context);
 		}
 
-		FileUtil.write(outputFile, content, modifiedFiles);
+		FileUtil.write(outputFile, content, modifiedFiles, addHash);
 	}
 
 	private static int _indexOfStandalone(

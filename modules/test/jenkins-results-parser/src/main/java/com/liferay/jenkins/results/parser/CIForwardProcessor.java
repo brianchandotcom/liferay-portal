@@ -801,14 +801,7 @@ public class CIForwardProcessor {
 					expectedMergeBaseSHA)) {
 
 				System.out.println(
-					JenkinsResultsParserUtil.combine(
-						"Skipping merge conflict precheck: local merge ",
-						"base for ", senderRemoteGitBranch.getUsername(), ":",
-						senderRemoteGitBranch.getName(), " and ",
-						_recipientUsername, ":", upstreamBranchName,
-						" does not match GitHub-reported merge base ",
-						expectedMergeBaseSHA,
-						" after deepening the shallow clone."));
+					"WARNING: Unable to identify merge base SHA");
 
 				return false;
 			}
@@ -851,13 +844,8 @@ public class CIForwardProcessor {
 			}
 
 			System.out.println(
-				JenkinsResultsParserUtil.combine(
-					"Skipping merge conflict precheck: rebase failed ",
-					"without a content-conflict marker between ",
-					senderRemoteGitBranch.getUsername(), ":",
-					senderRemoteGitBranch.getName(), " and ",
-					_recipientUsername, ":", upstreamBranchName, "\n",
-					String.valueOf(message)));
+				"WARNING: Unable to detect merge conflict marker but rebase " +
+					"failed\n" + String.valueOf(message));
 
 			return false;
 		}

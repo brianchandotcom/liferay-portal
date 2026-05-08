@@ -337,7 +337,9 @@ public class LayoutLocalServiceTest {
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getType(), false,
 				layout.getFriendlyURLMap(), layout.isIconImage(), null,
-				layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
+				layout.getStyleBookEntryERC(),
+				layout.getStyleBookEntryScopeERC(),
+				layout.getFaviconFileEntryERC(),
 				layout.getFaviconFileEntryScopeERC(),
 				layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
 
@@ -439,7 +441,8 @@ public class LayoutLocalServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), friendlyURLMap, layout.isIconImage(), null,
-			layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
+			layout.getStyleBookEntryERC(), layout.getStyleBookEntryScopeERC(),
+			layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
 
@@ -506,6 +509,7 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, "/friendly-url-2"
 			).build(),
 			false, null, layout1.getStyleBookEntryERC(),
+			layout1.getStyleBookEntryScopeERC(),
 			layout1.getFaviconFileEntryERC(),
 			layout1.getFaviconFileEntryScopeERC(),
 			layout1.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
@@ -826,7 +830,7 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, "/friendly-url-2"
 			).build(),
 			false, null, layout.getStyleBookEntryERC(),
-			layout.getFaviconFileEntryERC(),
+			layout.getStyleBookEntryScopeERC(), layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
 
@@ -840,6 +844,7 @@ public class LayoutLocalServiceTest {
 			draftLayout.getRobotsMap(), draftLayout.getType(),
 			draftLayout.isHidden(), draftLayout.getFriendlyURLMap(), false,
 			null, draftLayout.getStyleBookEntryERC(),
+			draftLayout.getStyleBookEntryScopeERC(),
 			draftLayout.getFaviconFileEntryERC(),
 			draftLayout.getFaviconFileEntryScopeERC(),
 			draftLayout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
@@ -872,7 +877,7 @@ public class LayoutLocalServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
-			null, null, null, null, serviceContext);
+			null, null, null, null, null, serviceContext);
 
 		Assert.assertEquals(
 			friendlyURL, layout.getFriendlyURL(LocaleUtil.GERMANY));
@@ -900,7 +905,7 @@ public class LayoutLocalServiceTest {
 				LocaleUtil.US, ""
 			).build(),
 			false, null, layout.getStyleBookEntryERC(),
-			layout.getFaviconFileEntryERC(),
+			layout.getStyleBookEntryScopeERC(), layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
 
@@ -930,7 +935,7 @@ public class LayoutLocalServiceTest {
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
 			layout.getIconImage(), null, layout.getStyleBookEntryERC(),
-			layout.getFaviconFileEntryERC(),
+			layout.getStyleBookEntryScopeERC(), layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layoutPageTemplateEntry.getExternalReferenceCode(),
 			_serviceContext);
@@ -1121,7 +1126,7 @@ public class LayoutLocalServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, null, null, null, null,
+			layout.getIconImage(), null, null, null, null, null, null,
 			serviceContext);
 
 		Layout updatedLayout = _layoutLocalService.getLayout(layout.getPlid());

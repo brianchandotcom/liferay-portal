@@ -97,32 +97,11 @@ public class RenderStructureFieldMVCResourceCommandTest {
 	}
 
 	@Test
-	public void testGetDDMFormField() {
+	public void testGetDDMFormField() throws Exception {
 		Mockito.when(
 			_httpServletRequest.getParameter("fieldName")
 		).thenReturn(
 			HtmlUtil.escapeAttribute(_SCRIPT)
-		);
-
-		DDMFormDeserializer ddmFormDeserializer = Mockito.mock(
-			DDMFormDeserializer.class);
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse = Mockito.mock(
-				DDMFormDeserializerDeserializeResponse.class);
-
-		Mockito.when(
-			ddmFormDeserializer.deserialize(Mockito.any())
-		).thenReturn(
-			ddmFormDeserializerDeserializeResponse
-		);
-
-		DDMForm ddmForm = Mockito.mock(DDMForm.class);
-
-		Mockito.when(
-			ddmFormDeserializerDeserializeResponse.getDDMForm()
-		).thenReturn(
-			ddmForm
 		);
 
 		DDMFormField mockDDMFormField = Mockito.mock(DDMFormField.class);
@@ -133,16 +112,10 @@ public class RenderStructureFieldMVCResourceCommandTest {
 			HtmlUtil.escapeAttribute(_SCRIPT)
 		);
 
-		Mockito.when(
-			ddmForm.getDDMFormFieldsMap(true)
-		).thenReturn(
-			Collections.singletonMap(
-				HtmlUtil.escapeAttribute(_SCRIPT), mockDDMFormField)
-		);
-
 		ReflectionTestUtil.setFieldValue(
 			_renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
-			ddmFormDeserializer);
+			_mockDDMFormDeserializer(
+				HtmlUtil.escapeAttribute(_SCRIPT), mockDDMFormField));
 
 		DDMFormField ddmFormField =
 			_renderStructureFieldMVCResourceCommand.getDDMFormField(

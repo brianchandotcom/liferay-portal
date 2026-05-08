@@ -173,6 +173,10 @@ jobs:
                     role-to-assume: arn:aws:iam::831926597587:role/GitHubActionsRole
             -   name: Log in to ECR
                 run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
                     aws ecr get-login-password --region us-east-1 \
                         | helm registry login "${ECR_REGISTRY}" \
                             --password-stdin \
@@ -188,6 +192,8 @@ jobs:
                 name: Verify Helm chart version
                 run: |
                     set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
                     function main {
                         CHART_VERSION=$(cat ./Chart.yaml | yq .version)
@@ -214,6 +220,8 @@ jobs:
                 name: Package and push Helm chart
                 run: |
                     set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
                     function main {
                         local dist_dir="${{runner.temp}}/aws-marketplace/dist"
@@ -308,8 +316,12 @@ jobs:
                         cloud/helm
             -   name: Configure Git
                 run: |
-                    git config user.name "$GITHUB_ACTOR"
-                    git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
+                    git config user.name "${GITHUB_ACTOR}"
+                    git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
             -   name: Install Helm
                 uses: azure/setup-helm@v4
             -   name: Run chart-releaser

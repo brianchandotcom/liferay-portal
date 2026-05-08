@@ -335,6 +335,16 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			_layoutSetBranchPersistence.update(layoutSetBranch);
 		}
 
+		String previousLayoutSetPrototypeUuid =
+			layoutSet.getLayoutSetPrototypeUuid();
+
+		if (!layoutSetPrototypeLinkEnabled ||
+			Validator.isNotNull(previousLayoutSetPrototypeUuid) ||
+			Validator.isNull(layoutSetPrototypeUuid)) {
+
+			return;
+		}
+
 		try {
 			MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 

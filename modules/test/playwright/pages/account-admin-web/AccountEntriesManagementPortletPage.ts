@@ -21,7 +21,9 @@ export class AccountEntriesManagementPortletPage {
 	readonly accountEntriesTableRowSelectedCheck: (
 		accountName: string
 	) => Promise<Locator>;
+	readonly accountName: (accountName: string) => Locator;
 	readonly accountNameLink: (accountName: string) => Locator;
+	readonly editMenuItem: Locator;
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly noAccountsFoundMessage: Locator;
 	readonly page: Page;
@@ -92,11 +94,14 @@ export class AccountEntriesManagementPortletPage {
 				`Cannot locate account row with accountName ${accountName}`
 			);
 		};
+		this.accountName = (accountName: string) =>
+			this.accountEntriesTable.getByText(accountName, {exact: false});
 		this.accountNameLink = (accountName: string) =>
 			this.accountEntriesTable.getByRole('link', {
 				exact: true,
 				name: accountName,
 			});
+		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
 		this.layoutsPage = new CommerceLayoutsPage(page);
 		this.noAccountsFoundMessage = page
 			.getByText('No accounts were found.')

@@ -12,9 +12,18 @@ export class OrderDetailsPage {
 	readonly couponCodeHeading: (code: string) => Locator;
 	readonly couponCodeUsageLimitError: Locator;
 	readonly discountNotApplicableError: Locator;
+	readonly editButton: Locator;
 	readonly enterPromoCodeInput: Locator;
+	readonly notesButton: Locator;
 	readonly orderTotal: (amount: string) => Locator;
 	readonly page: Page;
+	readonly processQuoteButton: Locator;
+	readonly quoteProcessedStatus: Locator;
+	readonly quoteRequestedStatus: Locator;
+	readonly requestAQuoteButton: Locator;
+	readonly requestAQuoteDialog: Locator;
+	readonly requestAQuoteNoteInput: Locator;
+	readonly requestAQuoteSubmitButton: Locator;
 	readonly totalDiscountLabel: Locator;
 
 	constructor(page: Page) {
@@ -37,9 +46,31 @@ export class OrderDetailsPage {
 		this.discountNotApplicableError = page.getByText(
 			'The discount is not applicable to the current order.'
 		);
+		this.editButton = page.getByRole('button', {name: 'Edit'});
 		this.enterPromoCodeInput = page.getByPlaceholder('Enter Promo Code');
+		this.notesButton = page.locator('span[title="Notes"] a');
 		this.orderTotal = (amount: string) => page.getByText(amount).first();
 		this.page = page;
+		this.processQuoteButton = page.getByRole('button', {
+			name: 'Process Quote',
+		});
+		this.quoteProcessedStatus = page.getByText('Quote Processed', {
+			exact: true,
+		});
+		this.quoteRequestedStatus = page.getByText('Quote Requested', {
+			exact: true,
+		});
+		this.requestAQuoteButton = page.locator('button.request-quote');
+		this.requestAQuoteDialog = page.locator('.modal-dialog').filter({
+			has: page.locator('.modal-title', {hasText: 'Request a Quote'}),
+		});
+		this.requestAQuoteNoteInput = this.requestAQuoteDialog.getByPlaceholder(
+			'Type your note here.'
+		);
+		this.requestAQuoteSubmitButton = this.requestAQuoteDialog.getByRole(
+			'button',
+			{name: 'Submit'}
+		);
 		this.totalDiscountLabel = page.getByText('Total Discount').first();
 	}
 

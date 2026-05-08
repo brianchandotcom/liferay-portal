@@ -34,7 +34,7 @@ export class JSONWebServicesResourcePermissionApiHelper {
 		urlSearchParams.append('roleId', roleId);
 		urlSearchParams.append('actionId', actionId);
 
-		this.apiHelpers.post(
+		await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-resource-permission`,
 			{
 				data: urlSearchParams.toString(),
@@ -63,7 +63,7 @@ export class JSONWebServicesResourcePermissionApiHelper {
 		urlSearchParams.append('roleId', roleId);
 		urlSearchParams.append('actionId', actionId);
 
-		this.apiHelpers.post(
+		await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/remove-resource-permission`,
 			{
 				data: urlSearchParams.toString(),

@@ -369,6 +369,19 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		);
 	}
 
+	async getProductByName(name: string) {
+		const {items} = await this.getProducts(
+			new URLSearchParams({
+				filter: `name eq '${name}'`,
+				nestedFields: 'skus',
+			})
+		);
+
+		return items.find(
+			(item: {name: {en_US: string}}) => item.name.en_US === name
+		);
+	}
+
 	async getProducts(searchParams = new URLSearchParams()) {
 		if (!searchParams.has('nestedFields')) {
 			searchParams.append('nestedFields', 'skus');

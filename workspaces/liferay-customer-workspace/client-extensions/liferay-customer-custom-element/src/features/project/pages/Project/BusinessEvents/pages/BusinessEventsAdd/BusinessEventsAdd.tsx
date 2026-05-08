@@ -177,7 +177,8 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			plannedEventDate: getFormattedEventDateTime(
 				businessEvent.plannedEventDate,
-				businessEvent.plannedEventTime
+				businessEvent.plannedEventTime,
+				businessEvent.timeZone?.key
 			),
 			timeZone: businessEvent.timeZone?.key,
 		};

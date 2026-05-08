@@ -27,6 +27,7 @@ import useAccountsTickets from '../../../hooks/useAccountsTickets';
 import usecanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
+import {normalizeEventDateTime} from '../../../utils/getFormattedEventDate';
 import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 
 const BusinessEventsItemDetails = () => {
@@ -293,7 +294,10 @@ const BusinessEventsItemDetails = () => {
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.plannedEventDate,
+										normalizeEventDateTime(
+											businessEvent?.plannedEventDate,
+											businessEvent?.timeZone?.key
+										),
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -301,7 +305,10 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.plannedEventDate,
+										normalizeEventDateTime(
+											businessEvent?.plannedEventDate,
+											businessEvent?.timeZone?.key
+										),
 										'UTC'
 									)}
 								</div>
@@ -318,7 +325,10 @@ const BusinessEventsItemDetails = () => {
 							<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
 								<div className="text-neutral-10">
 									{getFormattedDate(
-										businessEvent?.actualEventDate,
+										normalizeEventDateTime(
+											businessEvent?.actualEventDate,
+											businessEvent?.timeZone?.key
+										),
 										'day2DMonthSYearN',
 										'UTC'
 									)}
@@ -326,7 +336,10 @@ const BusinessEventsItemDetails = () => {
 
 								<div className="be-subtitle text-neutral-7">
 									{getFormattedTime(
-										businessEvent?.actualEventDate,
+										normalizeEventDateTime(
+											businessEvent?.actualEventDate,
+											businessEvent?.timeZone?.key
+										),
 										'UTC'
 									)}
 								</div>

@@ -982,7 +982,7 @@ public class FriendlyURLServletTest {
 				StringPool.SLASH + RandomTestUtil.randomString()
 			).build(),
 			layout.isIconImage(), null, layout.getStyleBookEntryERC(),
-			layout.getFaviconFileEntryERC(),
+			layout.getStyleBookEntryScopeERC(), layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layout.getMasterLayoutPageTemplateEntryERC(),
 			ServiceContextTestUtil.getServiceContext());

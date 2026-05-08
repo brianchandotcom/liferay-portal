@@ -17,7 +17,10 @@ resource "aws_iam_policy" "secret_store_policy" {
 						],
 						[
 							for git_repo_auth_config in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${git_repo_auth_config.credentials_secret_name}*"
-						])
+						],
+						var.argocd_sso_config.enable_sso ? [
+							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${var.argocd_sso_config.credentials_secret_name}*",
+						] : [])
 				},
 			]
 			Version="2012-10-17"

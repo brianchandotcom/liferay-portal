@@ -8,8 +8,8 @@ resource "helm_release" "argocd" {
 	name="argocd"
 	namespace=var.argocd_namespace
 	repository="https://argoproj.github.io/argo-helm"
-	values=[
-		yamlencode(
+	values=concat(
+		[yamlencode(
 			{
 				applicationSet={
 					resources={
@@ -24,6 +24,7 @@ resource "helm_release" "argocd" {
 				}
 				configs={
 					cm={
+						"admin.enabled"=var.argocd_sso_config.enable_admin_login
 						"application.resourceTrackingMethod"="annotation"
 						"controller.diff.timeout"="120s"
 						"kustomize.buildOptions"="--enable-helm"
@@ -146,8 +147,9 @@ resource "helm_release" "argocd" {
 						type="ClusterIP"
 					}
 				}
-			}),
-	]
+			})],
+		var.argocd_sso_config.enable_sso ? module.argocd_sso.auth_sso_values : [],
+	)
 	version=var.argocd_helm_chart_version
 	wait=true
 }
@@ -184,4 +186,11 @@ resource "kubernetes_secret" "argocd_secret" {
 resource "random_password" "argocd_server_secretkey" {
 	length=32
 	special=false
+}
+module "argocd_sso" {
+	argocd_sso_config={
+		custom_values_yaml=var.argocd_sso_config.custom_values_yaml
+		enable_sso=var.argocd_sso_config.enable_sso
+	}
+	source="./modules/argocd-sso"
 }

@@ -308,11 +308,39 @@ describe('AllQuickFilters', () => {
 			ok: true,
 		} as Response);
 
-		(global as any).Liferay.fire('fds-display-updated');
+		(global as any).Liferay.fire('fds-display-updated', {
+			id: 'com.liferay.site.cms.site.initializer-allSection',
+		});
 
 		await screen.findByText('4');
 
 		expect(mockFetch).toHaveBeenCalledTimes(2);
+	});
+
+	it('does not refetch the asset statistics when a different FDS fires the display-updated event', async () => {
+		mockFetch.mockResolvedValueOnce({
+			json: async () => ({
+				expiredCount: 1,
+				expiringSoonCount: 0,
+				inDraftCount: 0,
+				reviewDateOverdueCount: 0,
+				totalCount: 1,
+			}),
+			ok: true,
+		} as Response);
+
+		render(<AllQuickFilters />);
+
+		await screen.findByText('1');
+
+		expect(mockFetch).toHaveBeenCalledTimes(1);
+
+		(global as any).Liferay.fire('fds-display-updated', {
+			id: 'com.liferay.site.cms.site.initializer-filesSection',
+		});
+		(global as any).Liferay.fire('fds-display-updated');
+
+		expect(mockFetch).toHaveBeenCalledTimes(1);
 	});
 
 	it('applies the review date upper bound when the Review Date Overdue chip is clicked', async () => {

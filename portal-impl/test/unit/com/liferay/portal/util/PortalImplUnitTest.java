@@ -854,14 +854,15 @@ public class PortalImplUnitTest {
 				0, exception, mockHttpServletRequest,
 				new MockHttpServletResponse());
 
+			Assert.assertSame(
+				exception,
+				mockHttpServletRequest.getAttribute(
+					WebKeys.PORTAL_STATUS_EXCEPTION));
+
 			sessionErrorsMockedStatic.verify(
 				() -> SessionErrors.add(
 					mockHttpSession, Exception.class, exception));
 		}
-
-		Assert.assertSame(
-			exception,
-			mockHttpServletRequest.getAttribute(WebKeys.PORTAL_STATUS_EXCEPTION));
 	}
 
 	@Test

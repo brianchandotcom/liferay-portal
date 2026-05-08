@@ -276,6 +276,7 @@ const ConnectableSelector = ({
 							apiURL={`${location.origin}/o/headless-admin-site/v1.0/sites?active=true`}
 							id="connectableSelector"
 							items={site ? [site] : []}
+							key="sites"
 							onItemsChange={(items: Site[]) => {
 								if (items.length) {
 									const item = items[0];
@@ -311,6 +312,7 @@ const ConnectableSelector = ({
 							apiURL={`${location.origin}/o/headless-admin-site/v1.0/site-templates?active=true`}
 							id="connectableSelector"
 							items={siteTemplate ? [siteTemplate] : []}
+							key="site-templates"
 							onItemsChange={(items: SiteTemplate[]) => {
 								if (items.length) {
 									const item = items[0];

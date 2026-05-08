@@ -9,3 +9,7 @@ declare module 'asset-taglib' {
 	export const AssetTagsSelector: ComponentType<any>;
 	export const AssetVocabularyCategoriesSelector: ComponentType<any>;
 }
+
+declare module '@liferay/layout-js-components-web' {
+	export function RowBuilder<T>(props: any): JSX.Element | null;
+}

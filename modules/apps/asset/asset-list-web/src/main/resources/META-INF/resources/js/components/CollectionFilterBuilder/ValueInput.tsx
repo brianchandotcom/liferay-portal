@@ -22,6 +22,12 @@ interface SelectedItem {
 	value: string;
 }
 
+function _handlePreventEnterSubmit(event: React.KeyboardEvent) {
+	if (event.key === 'Enter') {
+		event.preventDefault();
+	}
+}
+
 interface ValueInputProps {
 	categorySelectorURL?: string;
 	groupIds?: string[];
@@ -131,6 +137,7 @@ export default function ValueInput({
 
 					onChange(uniqueNewItems as Array<string | object>);
 				}}
+				onKeyDown={_handlePreventEnterSubmit}
 				size="sm"
 				sourceItems={options}
 			/>
@@ -150,6 +157,7 @@ export default function ValueInput({
 						onChange={(event) =>
 							onChange([event.target.value, to] as string[])
 						}
+						onKeyDown={_handlePreventEnterSubmit}
 						placeholder={Liferay.Language.get('from')}
 						step={type === 'decimal' ? '0.001' : '1'}
 						type="number"
@@ -163,6 +171,7 @@ export default function ValueInput({
 						onChange={(event) =>
 							onChange([from, event.target.value] as string[])
 						}
+						onKeyDown={_handlePreventEnterSubmit}
 						placeholder={Liferay.Language.get('to')}
 						step={type === 'decimal' ? '0.001' : '1'}
 						type="number"
@@ -178,6 +187,7 @@ export default function ValueInput({
 				className="form-control-sm"
 				id={`${property.name}-${index}`}
 				onChange={(event) => onChange(event.target.value)}
+				onKeyDown={_handlePreventEnterSubmit}
 				placeholder={Liferay.Language.get('enter-value')}
 				step={type === 'decimal' ? '0.001' : '1'}
 				type="number"
@@ -272,6 +282,7 @@ export default function ValueInput({
 			className="form-control-sm"
 			id={`${property.name}-${index}`}
 			onChange={(event) => onChange(event.target.value)}
+			onKeyDown={_handlePreventEnterSubmit}
 			placeholder={Liferay.Language.get('enter-value')}
 			type="text"
 			value={(value as string) ?? ''}

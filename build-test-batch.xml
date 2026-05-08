@@ -10269,12 +10269,12 @@ ${output.content}</echo>
 				File jarFile = new File(libDir, "com.liferay.source.formatter.jar");
 
 				if (!jarFile.exists()) {
-					throw new RuntimeException("Source formatter jar missing at " + jarFile);
+					throw new RuntimeException("Unable to find " + jarFile);
 				}
 
 				CloudBucketUtil.syncS3Files(s3LibPath, libDir.getAbsolutePath());
 
-				System.out.println("Published source-formatter lib to S3 at tree SHA " + treeSHA);
+				System.out.println("Published source-formatter to S3 at tree SHA " + treeSHA);
 			]]>
 		</beanshell>
 	</target>
@@ -10349,9 +10349,11 @@ ${output.content}</echo>
 						String s3JarPath = s3LibPath + "/com.liferay.source.formatter.jar";
 
 						if (!CloudBucketUtil.isS3ObjectPathAvailable(s3JarPath)) {
-							System.out.println("S3 lib not found at " + s3LibPath);
+							String message = "Unable to find " + s3JarPath;
 
-							throw new RuntimeException("S3 miss");
+							System.out.println(message);
+
+							throw new RuntimeException(message);
 						}
 
 						File libDir = new File(project.getBaseDir(), libPath);
@@ -10361,17 +10363,19 @@ ${output.content}</echo>
 						File jarFile = new File(libDir, "com.liferay.source.formatter.jar");
 
 						if (!jarFile.exists() || (jarFile.length() == 0)) {
-							System.out.println("S3 sync produced no jar at " + jarFile);
+							String message = "Unable to find " + jarFile;
 
-							throw new RuntimeException("S3 sync empty");
+							System.out.println(message);
+
+							throw new RuntimeException(message);
 						}
 
-						System.out.println("Resolved source-formatter lib from S3 at tree SHA " + treeSHA);
+						System.out.println("Resolved source-formatter from S3 at tree SHA " + treeSHA);
 					]]>
 				</beanshell>
 			</try>
 			<catch>
-				<echo>S3 resolve missed; falling back to build SF jar from source.</echo>
+				<echo>Unable to find cached source-formatter. Building from source.</echo>
 
 				<antcall target="compile" />
 

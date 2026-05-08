@@ -1,3 +1,11 @@
+variable "argocd_sso_config" {
+	default={}
+	type=object({
+		custom_values_yaml=optional(string)
+		enable_admin_login=optional(bool, true)
+		enable_sso=optional(bool, false)
+	})
+}
 variable "argo_workflows_helm_chart_version" {
 	type=string
 }

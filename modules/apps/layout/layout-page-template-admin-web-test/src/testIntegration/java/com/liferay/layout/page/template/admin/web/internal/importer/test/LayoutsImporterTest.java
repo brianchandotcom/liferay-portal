@@ -2303,7 +2303,7 @@ public class LayoutsImporterTest {
 		ContentLayoutTestUtil.publishLayout(
 			_layoutLocalService.updateStyleBookEntryERC(
 				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-				draftLayout.getLayoutId(), styleBookEntryERC),
+				draftLayout.getLayoutId(), styleBookEntryERC, null),
 			layout);
 
 		_assertStyleBookEntryERC(layoutPageTemplateEntry, styleBookEntryERC);

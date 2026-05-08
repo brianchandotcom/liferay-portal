@@ -903,6 +903,20 @@ public class BasePersistenceImpl
 		}
 	}
 
+	protected static <T> Function<T, Object> convertDateFunction(
+		Function<T, Date> dateFunction) {
+
+		return baseModel -> {
+			Date date = dateFunction.apply(baseModel);
+
+			if (date == null) {
+				return null;
+			}
+
+			return date.getTime();
+		};
+	}
+
 	protected static <T> Function<T, Object> convertNullFunction(
 		Function<T, String> stringFunction) {
 

@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.service.persistence.impl;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.util.Date;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -17,6 +18,30 @@ import org.junit.Test;
  * @author Shuyang Zhou
  */
 public class BasePersistenceImplTest {
+
+	@Test
+	public void testConvertDateFunctionReturnsLongForPopulatedValue() {
+		Date date = new Date(1_234_567_890L);
+
+		Function<TestModel, Object> function =
+			BasePersistenceImpl.convertDateFunction(testModel -> date);
+
+		Assert.assertEquals(
+			"Date must convert to long so the finder invalidation key " +
+				"matches the cache key",
+			1_234_567_890L, function.apply(_TEST_MODEL));
+	}
+
+	@Test
+	public void testConvertDateFunctionReturnsNullForNullValue() {
+		Function<TestModel, Object> function =
+			BasePersistenceImpl.convertDateFunction(testModel -> null);
+
+		Assert.assertNull(
+			"null Date must remain null so the finder invalidation key " +
+				"matches the cache key for a null input",
+			function.apply(_TEST_MODEL));
+	}
 
 	@Test
 	public void testConvertNullFunctionReturnsEmptyStringForEmptyValue() {

@@ -189,8 +189,9 @@ resource "random_password" "argocd_server_secretkey" {
 }
 module "argocd_sso" {
 	argocd_sso_config={
-		custom_values_yaml=var.argocd_sso_config.custom_values_yaml
+		dex_config=var.argocd_sso_config.dex_config
 		enable_sso=var.argocd_sso_config.enable_sso
+		rbac=var.argocd_sso_config.rbac
 	}
 	source="./modules/argocd-sso"
 }

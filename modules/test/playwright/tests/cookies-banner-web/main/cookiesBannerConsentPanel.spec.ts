@@ -123,9 +123,9 @@ test(
 
 		await waitForAlert(page);
 
-		const cookiesBanner = page.getByRole('dialog', {
-			name: 'banner cookies',
-		});
+		const cookiesBanner = page.locator(
+			'div[role="dialog"][aria-modal="true"]'
+		);
 
 		await cookiesBanner.waitFor();
 
@@ -209,9 +209,9 @@ test(
 		await test.step('Open the Cookie Banner Consent Panel', async () => {
 			await page.goto('/');
 
-			const cookiesBanner = page.getByRole('dialog', {
-				name: 'banner cookies',
-			});
+			const cookiesBanner = page.locator(
+				'div[role="dialog"][aria-modal="true"]'
+			);
 
 			await cookiesBanner.waitFor();
 

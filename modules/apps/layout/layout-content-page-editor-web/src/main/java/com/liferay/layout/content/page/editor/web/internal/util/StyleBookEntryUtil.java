@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.model.StyleBookEntry;
 
 import java.util.LinkedHashMap;
@@ -70,7 +71,8 @@ public class StyleBookEntryUtil {
 							frontendTokenCategoryJSONObject.getString("label"),
 							frontendTokenJSONObject,
 							frontendTokenSetJSONObject.getString("label"),
-							frontendTokenValuesJSONObject));
+							frontendTokenValuesJSONObject,
+							frontendTokenDefinition.getThemeId()));
 				}
 			}
 		}
@@ -92,13 +94,21 @@ public class StyleBookEntryUtil {
 
 	private static Map<String, Object> _getProcessedFrontendTokenValue(
 		String frontendTokenCategoryLabel, JSONObject frontendTokenJSONObject,
-		String frontendTokenSetLabel,
-		JSONObject frontendTokenValuesJSONObject) {
+		String frontendTokenSetLabel, JSONObject frontendTokenValuesJSONObject,
+		String themeId) {
 
 		String name = frontendTokenJSONObject.getString("name");
 
-		JSONObject valueJSONObject =
-			frontendTokenValuesJSONObject.getJSONObject(name);
+		JSONObject valueJSONObject = null;
+
+		if (Validator.isNotNull(themeId)) {
+			valueJSONObject = frontendTokenValuesJSONObject.getJSONObject(
+				themeId + StringPool.COLON + name);
+		}
+
+		if (valueJSONObject == null) {
+			valueJSONObject = frontendTokenValuesJSONObject.getJSONObject(name);
+		}
 
 		String value = StringPool.BLANK;
 

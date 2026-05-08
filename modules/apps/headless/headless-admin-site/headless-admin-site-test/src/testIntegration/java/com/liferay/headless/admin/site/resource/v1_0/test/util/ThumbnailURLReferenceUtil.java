@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 /**
  * @author Lourdes Fernández Besada
  */
-public class ThumbnailUtil {
+public class ThumbnailURLReferenceUtil {
 
 	public static ThumbnailURLReference getRandomThumbnailURLReference() {
 		ThumbnailURLReference thumbnailURLReference =

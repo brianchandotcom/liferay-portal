@@ -10263,9 +10263,11 @@ ${output.content}</echo>
 
 				String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 				String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
+
 				String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
 
 				File libDir = new File(project.getBaseDir(), libPath);
+
 				File jarFile = new File(libDir, "com.liferay.source.formatter.jar");
 
 				if (!jarFile.exists()) {
@@ -10345,7 +10347,9 @@ ${output.content}</echo>
 
 						String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
 						String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
+
 						String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
+
 						String s3JarPath = s3LibPath + "/com.liferay.source.formatter.jar";
 
 						if (!CloudBucketUtil.isS3ObjectPathAvailable(s3JarPath)) {

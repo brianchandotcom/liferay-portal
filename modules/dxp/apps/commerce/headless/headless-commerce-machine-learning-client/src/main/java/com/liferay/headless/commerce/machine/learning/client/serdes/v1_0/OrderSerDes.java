@@ -53,6 +53,20 @@ public class OrderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (order.getAccountExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(order.getAccountExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (order.getAccountId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -292,6 +306,15 @@ public class OrderSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (order.getAccountExternalReferenceCode() == null) {
+			map.put("accountExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"accountExternalReferenceCode",
+				String.valueOf(order.getAccountExternalReferenceCode()));
+		}
+
 		if (order.getAccountId() == null) {
 			map.put("accountId", null);
 		}
@@ -445,7 +468,12 @@ public class OrderSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountExternalReferenceCode")) {
+
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "channelId")) {
@@ -513,7 +541,15 @@ public class OrderSerDes {
 			Order order, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "accountId")) {
+			if (Objects.equals(
+					jsonParserFieldName, "accountExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					order.setAccountExternalReferenceCode(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "accountId")) {
 				if (jsonParserFieldValue != null) {
 					order.setAccountId(
 						Long.valueOf((String)jsonParserFieldValue));
@@ -709,4 +745,4 @@ public class OrderSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1437882757
+// LIFERAY-REST-BUILDER-HASH:-570275343

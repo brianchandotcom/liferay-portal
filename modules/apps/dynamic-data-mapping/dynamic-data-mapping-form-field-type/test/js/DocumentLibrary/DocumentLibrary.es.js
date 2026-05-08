@@ -381,8 +381,10 @@ describe('Field DocumentLibrary', () => {
 	});
 
 	describe('file deletion lifecycle', () => {
+		const originalSendBeacon = navigator.sendBeacon;
 		const originalXMLHttpRequest = global.XMLHttpRequest;
 
+		let beaconCalls;
 		let xhrInstances;
 		let eventBus;
 
@@ -402,6 +404,12 @@ describe('Field DocumentLibrary', () => {
 		const triggerBeforeUnload = () => {
 			act(() => {
 				window.dispatchEvent(new Event('beforeunload'));
+			});
+		};
+
+		const triggerBeforeNavigate = () => {
+			act(() => {
+				Liferay.fire('beforeNavigate');
 			});
 		};
 
@@ -437,8 +445,8 @@ describe('Field DocumentLibrary', () => {
 
 		const valueParsed = (id) => JSON.parse(valueWithFileEntry(id));
 
-		const deleteCalls = () =>
-			xhrInstances
+		const deleteCalls = () => {
+			const xhrDeletes = xhrInstances
 				.filter((instance) => instance.url === fileEntryDeleteURL)
 				.map((instance) =>
 					Number(
@@ -448,6 +456,15 @@ describe('Field DocumentLibrary', () => {
 						)
 					)
 				);
+
+			const beaconDeletes = beaconCalls
+				.filter((call) => call.url === fileEntryDeleteURL)
+				.map((call) =>
+					Number(formDataValue(call.formData, 'oldFileEntryId'))
+				);
+
+			return [...xhrDeletes, ...beaconDeletes];
+		};
 
 		const expectDeleted = (...ids) =>
 			expect(deleteCalls().sort()).toEqual([...ids].sort());
@@ -505,7 +522,14 @@ describe('Field DocumentLibrary', () => {
 		beforeEach(() => {
 			openSelectionModal.mockReset();
 
+			beaconCalls = [];
 			xhrInstances = [];
+
+			navigator.sendBeacon = jest.fn((url, formData) => {
+				beaconCalls.push({formData, url});
+
+				return true;
+			});
 
 			global.XMLHttpRequest = jest.fn(() => {
 				const instance = {
@@ -560,6 +584,7 @@ describe('Field DocumentLibrary', () => {
 
 		afterEach(() => {
 			global.XMLHttpRequest = originalXMLHttpRequest;
+			navigator.sendBeacon = originalSendBeacon;
 		});
 
 		it('cleans up intermediate replacements on unload after multiple replaces in edit mode', () => {
@@ -650,6 +675,21 @@ describe('Field DocumentLibrary', () => {
 			triggerBeforeUnload();
 
 			expectNoDeletes();
+		});
+
+		it('cleans up the orphan on SPA navigation away from a replaced entry', () => {
+			Liferay.ThemeDisplay.isSignedIn = jest.fn(() => false);
+
+			renderField({
+				allowGuestUsers: true,
+				value: valueWithFileEntry(42),
+			});
+
+			triggerGuestUpload();
+			completeUpload(99);
+			triggerBeforeNavigate();
+
+			expectDeleted(99);
 		});
 
 		it('does not delete on unload when read-only (LPP-63922)', () => {

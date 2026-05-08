@@ -30,7 +30,7 @@ For OSGi modules — run only the specific test class, batching counterparts wit
 	:<path>:test
 ```
 
-`--continue` keeps Gradle going if a downstream task fails so the test results still surface; `-Dtest.ignore.failures=false` overrides Liferay's default of swallowing test failures.
+`--continue` keeps Gradle going when a downstream task fails so the test results still surface; `-Dtest.ignore.failures=false` overrides Liferay's default of swallowing test failures.
 
 For portal-core — `test-class` (defined in `build-common.xml`) is the target that filters by `test.class` (`test-unit` ignores it and runs the full suite):
 
@@ -38,11 +38,11 @@ For portal-core — `test-class` (defined in `build-common.xml`) is the target t
 (cd "${REPO_ROOT}/portal-impl" && ant test-class -Dtest.class="<ClassA>.class **/<ClassB>")
 ```
 
-The Ant fileset multi-include pattern is the same one used by **Structural Smoke** — see that file for the explanation.
+The space-separated Ant fileset pattern is the same one used by **Structural Smoke** — see that file for the explanation.
 
 ## Checklist
 
-Add one sub-item per affected module:
+Add one subitem per affected module:
 
 ```
 - [ ] <module path>: <test class names>

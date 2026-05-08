@@ -22,7 +22,7 @@ Fires when both conditions hold:
 
 Locate the counterpart spec by parallel name: `Foo.tsx` → `Foo.test.tsx` or `Foo.spec.tsx`, often under a `__tests__` directory or a sibling `tests` tree. The module's `package.json` `jest.testMatch` or `testRegex` declares the exact convention — read it to confirm the spec lookup pattern. Verify each counterpart file exists before scheduling it.
 
-**Lockfile changes.** When `package-lock.json` or `yarn.lock` is in the diff, run the module's full Jest suite regardless of size — parallel-name lookup yields nothing for a lockfile, and a transitive-dependency pin can affect any code path that touches the runtime, so blast radius is the whole module.
+**Lockfile changes.** When `package-lock.json` or `yarn.lock` is in the diff, run the module's full Jest suite regardless of size — parallel-name lookup yields nothing for a lockfile, and a transitive-dependency pin can affect any code path that touches the runtime, so the blast radius is the whole module.
 
 **Deletion handling.** A deleted JS or TS file has no parallel-name counterpart to run, but its consumers can still break. Two layered checks:
 
@@ -46,7 +46,7 @@ For lockfile changes or high-risk deletions, run the module's full suite instead
 
 ## Checklist
 
-Add one sub-item per affected module:
+Add one subitem per affected module:
 
 ```
 - [ ] <module path>: <spec names, or "full suite" for lockfile or high-risk-deletion>

@@ -1,24 +1,24 @@
 ---
 
 allowed-tools: [Agent, Bash, Edit, Glob, Grep, Read, Skill, Write]
-description: Checks that a PR is ready to be sent for review.
+description: Check that a PR is ready to be sent for review.
 name: pr-check
 
 ---
 
 # PR Check
 
-Run pre-merge checks against the current branch. The skill iterates through the validations under `validations/`, runs each one whose trigger matches the diff, and reports PASS or FAIL. Integration tests, Playwright tests, and Poshi tests are out of scope. Use the `test-plan` skill when their coverage is needed.
+Run premerge checks against the current branch. The skill iterates through the validations under `validations`, runs each one whose trigger matches the diff, and reports PASS or FAIL. Integration tests, Playwright tests, and Poshi tests are out of scope. Use the `test-plan` skill when their coverage is needed.
 
 ## Preconditions
 
-- **Branch rebased on local `master`.** Compare `git merge-base HEAD master` to `git rev-parse master`; when they differ, abort and tell the developer to rebase (`git rebase master`). The `format-source-current-branch` validation diffs against the local `master` tip to decide which files to format — when the branch's merge-base lags behind that tip, SF picks up reverse-direction diffs from the master commits the branch has not absorbed and the `<TICKET> SF` auto-commit captures unrelated rewrites.
+- **Branch rebased on local `master`.** Compare `git merge-base HEAD master` to `git rev-parse master`; when they differ, abort and tell the developer to rebase (`git rebase master`). The `format-source-current-branch` validation diffs against the local `master` tip to decide which files to format — when the branch's merge-base lags behind that tip, SF picks up reverse-direction diffs from the master commits the branch has not absorbed and the `<TICKET> SF` autocommit captures unrelated rewrites.
 
-- **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first — the auto-commit steps inside drift validations would otherwise capture their uncommitted edits.
+- **Working tree clean.** `git status --porcelain` must return empty. When dirty, abort and ask the developer to commit first — the autocommit steps inside drift validations would otherwise capture their uncommitted edits.
 
 - **Diff baseline is local `master`.** The skill never fetches from a remote and does not compare against an `upstream/master` ref. Whether local `master` is up to date is the developer's call.
 
-- **Diff is non-empty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
+- **Diff is nonempty.** When the three-dot diff produces no files, exit with a one-line message — no validation produces useful signal on a clean branch.
 
 ## Input
 
@@ -32,7 +32,7 @@ git diff --name-status "$(git merge-base HEAD master)...HEAD"
 
 **`PASS`** or **`FAIL`**.
 
-The procedure runs in two passes over the validations, in the order below. The order is dependency-driven: drift first (later validations see the post-regen tree), then formatting, then build, then tests.
+The procedure runs in two passes over the validations, in the order below. The order is dependency-driven: drift first (later validations see the regenerated tree), then formatting, then build, then tests.
 
 1. [Instance Wrapper Build](validations/instance-wrapper-build.md)
 
@@ -64,7 +64,7 @@ Process each validation in a subagent.
 
 ### Pass 1: Estimate
 
-Read every validation file under `.claude/skills/pr-check/validations/` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
+Read every validation file under `.claude/skills/pr-check/validations` in a single parallel batch — one Read tool call per file, all in the same tool-use turn. From each file, take the regex inside its `## Match` section.
 
 In your next turn, compose a single bash script that:
 
@@ -72,13 +72,13 @@ In your next turn, compose a single bash script that:
 - for each validation, tests its regex against the diff and prints the validation name when it fires (a leading `!` in the regex inverts: fire when any diff path does *not* match the rest)
 - runs as a single Bash tool invocation
 
-From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g. Service Builder output-only catch-up).
+From the script's output, sum the matched validations' `## Time Estimate` values for the cumulative total. The matching is mechanical; consult each file's prose `## Trigger` only when a result needs human-judgment context (e.g., Service Builder output-only catch-up).
 
 When the total exceeds 20 minutes, surface the breakdown and ask the developer whether to trim a validation or proceed.
 
 ### Pass 2: Execute
 
-For each matched validation, spawn one subagent. **Pass it only the `## Command` and `## Auto-Commit` sections of the validation file, not the full file.** Record PASS or FAIL. Do not halt on FAIL — continue so the developer sees the full picture.
+For each matched validation, spawn one subagent. **Pass it only the `## Command` and `## Autocommit` sections of the validation file, not the full file.** Record PASS or FAIL. Do not halt on FAIL — continue so the developer sees the full picture.
 
 When the validation's **Command** is a build (gradle, ant, npm, jest), bound the output:
 
@@ -88,4 +88,4 @@ When the validation's **Command** is a build (gradle, ant, npm, jest), bound the
 
 Decide PASS/FAIL from the build tool's success markers in the captured output (`BUILD SUCCESSFUL` / `BUILD FAILED`, `Tests: N passed, M failed`, etc.). Apply only to build commands. Leave inert commands like `git status --porcelain` and `git diff --quiet` untouched.
 
-If all validations pass, report `PASS`. When any fail, report `FAIL` and surface the failed validations.
+When all validations pass, report `PASS`. When any fail, report `FAIL` and surface the failed validations.

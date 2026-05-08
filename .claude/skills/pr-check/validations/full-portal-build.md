@@ -26,7 +26,7 @@ ant all -Dgradle.stop.daemon.enabled=false
 
 ## Notes
 
-When this fires, **Per-Module Deploy** still runs for any non-`.lfrbuild-portal` modules in the touched set (`ant all`'s marketplace branch only deploys modules with the marker), and **Integration Test Compile** is obviated for `.lfrbuild-portal` modules.
+When this fires, **Per-Module Deploy** still runs for any modules in the touched set without a `.lfrbuild-portal` marker (`ant all`'s marketplace branch only deploys modules with the marker), and **Integration Test Compile** is obviated for `.lfrbuild-portal` modules.
 
 ## Time Estimate
 

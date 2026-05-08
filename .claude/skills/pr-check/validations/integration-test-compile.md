@@ -4,7 +4,7 @@
 
 A Java file changed in an OSGi module (excluding `modules/dxp/apps/saml/saml-admin-rest-test/**` and `modules/sdk/**`) AND **Full Portal Build** did not fire.
 
-Catches IT compile breaks without running ITs — IT execution is out of scope; use `test-plan` for that.
+This catches IT compile breaks without running ITs — IT execution is out of scope; use `test-plan` for that.
 
 ## Match
 
@@ -23,7 +23,7 @@ Per affected module:
 
 ## Checklist
 
-Add one sub-item per affected module:
+Add one subitem per affected module:
 
 ```
 - [ ] Compile testIntegration: <module path>

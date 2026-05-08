@@ -4,7 +4,7 @@
 
 A `*.jsp` or `*.jspf` changed in an OSGi module.
 
-`compileJSP` is auto-wired into every OSGi module by `LiferayOSGiPlugin` (via `JspCPlugin` / `JspCDefaultsPlugin`), but it is **not** in the `assemble`/`build`/`deploy` task graph — so `gradlew :path:deploy` bundles JSPs without compiling them, and scriptlet typos (e.g. `Validator.isURL` instead of `Validator.isUrl`) only fail at Tomcat-Jasper render time. Invoke `compileJSP` explicitly.
+`compileJSP` is autowired into every OSGi module by `LiferayOSGiPlugin` (via `JspCPlugin` / `JspCDefaultsPlugin`), but it is **not** in the `assemble`/`build`/`deploy` task graph — so `gradlew :path:deploy` bundles JSPs without compiling them, and scriptlet typos (e.g., `Validator.isURL` instead of `Validator.isUrl`) only fail at Tomcat-Jasper render time. Invoke `compileJSP` explicitly.
 
 ## Match
 

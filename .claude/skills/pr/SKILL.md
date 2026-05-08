@@ -2,22 +2,22 @@
 
 allowed-tools: [Bash, Glob, Grep, Read, Skill]
 argument-hint: "[optional target-org/repo, message hint, or --skip-pr-check]"
-description: Create a GitHub pull request for the current branch. Use when the user asks to create a PR, send a PR, or invokes /pr.
+description: Create a GitHub PR for the current branch. Use when the user asks to create a PR, send a PR, or invokes /pr.
 name: pr
 
 ---
 
 # Create a Pull Request
 
-Create a GitHub pull request for the current branch, transition the linked Jira ticket to review, and record the pull request URL on that ticket.
+Create a GitHub PR for the current branch, transition the linked Jira ticket to review, and record the PR URL on that ticket.
 
 ## Preconditions
 
-- At least one commit adds tests. When none do, ask the user for a rationale and refuse to proceed without one. The only exceptions are pull requests with no code changes (e.g., language key updates or markdown changes).
+- At least one commit adds tests. When none do, ask the user for a rationale and refuse to proceed without one. The only exceptions are PRs with no code changes (e.g., language key updates or markdown changes).
 
 - The current branch is a development branch, not `master` or any other protected branch.
 
-- The `pr-check` skill must pass. Skip only if `${ARGUMENTS}` contains `--skip-pr-check`.
+- The `pr-check` skill must pass. Skip only when `${ARGUMENTS}` contains `--skip-pr-check`.
 
 ## Input
 
@@ -62,7 +62,7 @@ The following short aliases resolve to a target repository:
 
 - `brian` → `brianchandotcom/liferay-portal`
 
-The pull request head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
+The PR head is `<github-username>:<branch-name>` (the GitHub username is read from the user's `origin` remote URL — e.g., `git@github.com:brianchandotcom/liferay-portal.git` yields `brianchandotcom`), and the base is `master`.
 
 ## Expected Output
 
@@ -102,11 +102,11 @@ tests. It should contain the rationale provided by the user.
 
 Use a direct, to-the-point style. Avoid being verbose. Present the proposed title and body to the user before submitting, and proceed once they approve.
 
-If pr-check passed, invoke the `pr-check-publish` skill with the newly created pull request URL.
+When pr-check passes, invoke the `pr-check-publish` skill with the newly created PR URL.
 
 ### Transitioned Jira Ticket
 
-Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the pull request URL is recorded:
+Fetch the input ticket (issue type, status, subtasks) and resolve the **target ticket** — the one whose status reflects active work and on which the PR URL is recorded:
 
 | Ticket Type | Target |
 | --- | --- |
@@ -128,29 +128,29 @@ Then transition it to review:
 | Bug | In Review | `71` |
 | Technical Task | In Peer Review | `31` |
 
-When the review transition fails (for example, because the ticket is already in a later status), still proceed to record the pull request URL.
+When the review transition fails (for example, because the ticket is already in a later status), still proceed to record the PR URL.
 
-Set the **Git Pull Request** field (`customfield_10201`) on the target ticket to the new pull request URL.
+Set the **Git Pull Request** field (`customfield_10201`) on the target ticket to the new PR URL.
 
 ### Existing Pull Request
 
-When the **Git Pull Request** field already holds one or more pull request URLs, ask the user whether the new pull request **supersedes** the existing one or is **added** alongside it.
+When the **Git Pull Request** field already holds one or more PR URLs, ask the user whether the new PR **supersedes** the existing one or is **added** alongside it.
 
 When the user chooses **supersede**:
 
-1. Overwrite **Git Pull Request** with the new pull request URL, dropping the previous value.
+1. Overwrite **Git Pull Request** with the new PR URL, dropping the previous value.
 
-1. Add a comment on the previous pull request, linking to the new one (for example, `Superseded by <new-pr-url>.`).
+1. Add a comment on the previous PR, linking to the new one (for example, `Superseded by <new-pr-url>.`).
 
-1. Close the previous pull request when possible. When the user lacks permission to close it directly, add a `ci:close` comment instead, so the CI bot closes it.
+1. Close the previous PR when possible. When the user lacks permission to close it directly, add a `ci:close` comment instead, so the CI bot closes it.
 
 When the user chooses **add**:
 
-1. Append the new pull request URL to the existing value, separating each URL with a comma and a space.
+1. Append the new PR URL to the existing value, separating each URL with a comma and a space.
 
 ### Summary
 
 Report back to the user with:
 
 - The Jira ticket status and link.
-- The pull request URL.
+- The PR URL.

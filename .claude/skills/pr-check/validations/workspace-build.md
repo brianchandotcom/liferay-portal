@@ -18,7 +18,7 @@ Per affected workspace:
 
 ## Checklist
 
-Add one sub-item per affected workspace:
+Add one subitem per affected workspace:
 
 ```
 - [ ] Build: <workspace dir>

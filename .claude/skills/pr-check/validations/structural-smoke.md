@@ -31,7 +31,7 @@ The five tests live in three places: two in `portal-impl/test/unit`, two in `por
 	:util:portal-tools-sample-sql-builder:test
 ```
 
-The `ant test-class` target in `build-common.xml` evaluates `test.includes="**/${test.class}.class"`, and Ant filesets accept space-separated patterns inside that attribute, so passing two classes in one invocation works. The first arg includes the `.class` suffix (so `**/${test.class}.class` expands to `**/ConfigurationEnvBuilderTest.class`); the second arg starts with `**/` so the second pattern reads `**/Log4jConfigUtilTest.class` after the `.class` suffix is appended. This collapses five JVM forks down to three.
+The `ant test-class` target in `build-common.xml` evaluates `test.includes="**/${test.class}.class"`, and Ant filesets accept space-separated patterns inside that attribute, so passing two classes in one invocation works. The first argument includes the `.class` suffix (so `**/${test.class}.class` expands to `**/ConfigurationEnvBuilderTest.class`); the second argument starts with `**/`, so the second pattern reads `**/Log4jConfigUtilTest.class` after the `.class` suffix is appended. This collapses five JVM forks down to three.
 
 ## Checklist
 
@@ -43,7 +43,7 @@ The `ant test-class` target in `build-common.xml` evaluates `test.includes="**/$
 
 ## Notes
 
-Do not re-pick these classes when computing **Java Unit Tests** — they are already covered here.
+Do not pick these classes again when computing **Java Unit Tests** — they are already covered here.
 
 ## Time Estimate
 

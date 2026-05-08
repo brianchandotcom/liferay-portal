@@ -405,9 +405,7 @@ function CMSFilesItemSelectorModal({
 				id: modalId,
 				views: currentViews,
 			}}
-			filesUploaderComponent={
-				selectedSpace ? CMSFileUploaderComponent : undefined
-			}
+			filesUploaderComponent={CMSFileUploaderComponent}
 			groupId={selectedSpace ? Number(selectedSpace.id) : undefined}
 			itemTypeLabel={Liferay.Language.get(
 				selectedSpace ? 'files' : 'space'

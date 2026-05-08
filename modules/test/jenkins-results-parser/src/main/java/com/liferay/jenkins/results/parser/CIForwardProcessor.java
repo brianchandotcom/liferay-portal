@@ -777,16 +777,10 @@ public class CIForwardProcessor {
 
 		String senderSHA = _pullRequest.getSenderSHA();
 
-		if (!gitWorkingDirectory.localSHAExists(senderSHA)) {
-			gitWorkingDirectory.fetch(senderRemoteGitBranch);
-		}
+		Date mergeBaseCommitDate = mergeBaseCommit.getCommitDate();
 
-		if (!gitWorkingDirectory.localSHAExists(
-				receiverRemoteGitBranch.getSHA())) {
-
-			gitWorkingDirectory.fetch(
-				receiverRemoteGitBranch, mergeBaseCommit.getCommitDate());
-		}
+		gitWorkingDirectory.fetch(senderRemoteGitBranch, mergeBaseCommitDate);
+		gitWorkingDirectory.fetch(receiverRemoteGitBranch, mergeBaseCommitDate);
 
 		LocalGitBranch receiverLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
@@ -816,7 +810,8 @@ public class CIForwardProcessor {
 						"Detected merge conflict between ",
 						senderRemoteGitBranch.getUsername(), ":",
 						senderRemoteGitBranch.getName(), " and ",
-						_recipientUsername, ":", upstreamBranchName));
+						_recipientUsername, ":", upstreamBranchName, "\n",
+						message));
 
 				return true;
 			}

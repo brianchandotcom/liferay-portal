@@ -5,10 +5,12 @@
 
 package com.liferay.headless.admin.site.internal.util;
 
+import com.liferay.exportimport.report.missing.reference.MissingReferenceManager;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.scope.Scope;
 
@@ -32,6 +34,9 @@ public class LogUtil {
 
 			_log.warn(sb.toString());
 		}
+
+		_reportMissingReference(
+			modelClass.getName(), modelExternalReferenceCode, scopeId);
 	}
 
 	public static void logOptionalReference(
@@ -52,6 +57,8 @@ public class LogUtil {
 
 			_log.warn(sb.toString());
 		}
+
+		_reportMissingReference(className, null, 0);
 	}
 
 	public static void logOptionalReference(
@@ -80,8 +87,28 @@ public class LogUtil {
 
 			_log.warn(sb.toString());
 		}
+
+		_reportMissingReference(className, externalReferenceCode, scopeId);
+	}
+
+	private static void _reportMissingReference(
+		String className, String externalReferenceCode, long scopeId) {
+
+		MissingReferenceManager missingReferenceManager =
+			_missingReferenceManagerSnapshot.get();
+
+		if (missingReferenceManager == null) {
+			return;
+		}
+
+		missingReferenceManager.reportMissingReference(
+			className, externalReferenceCode, scopeId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LogUtil.class);
+
+	private static final Snapshot<MissingReferenceManager>
+		_missingReferenceManagerSnapshot = new Snapshot<>(
+			LogUtil.class, MissingReferenceManager.class);
 
 }

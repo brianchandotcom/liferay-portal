@@ -23,7 +23,7 @@ enum ConnectableKind {
 	SITE_TEMPLATES = 'site-templates',
 }
 
-const SITE_TEMPLATE_TYPE = 'site-template';
+const SITE_TEMPLATE_TYPE = 'SiteTemplate';
 
 const showErrorMessage = (message: string) => {
 	openToast({
@@ -215,17 +215,14 @@ const ConnectableSelector = ({
 			return;
 		}
 
-		if (kind === ConnectableKind.SITE_TEMPLATES && siteTemplate) {
-
-			// TODO LPD-82494: confirm the URL parameter and request body
-			// shape when Balázs lands the unified endpoint. The current
-			// guess passes the template id as the path parameter and a
-			// `type` discriminator in the body.
-
+		if (
+			kind === ConnectableKind.SITE_TEMPLATES &&
+			siteTemplate?.siteExternalReferenceCode
+		) {
 			const {data, error} = await ConnectedSiteService.connectSiteToSpace(
 				externalReferenceCode,
-				siteTemplate.id,
-				{type: SITE_TEMPLATE_TYPE}
+				siteTemplate.siteExternalReferenceCode,
+				{}
 			);
 
 			if (data) {
@@ -319,7 +316,10 @@ const ConnectableSelector = ({
 									const item = items[0];
 									setSiteTemplate(item);
 									setDisableConnectButton(
-										isAlreadyConnected(item.id)
+										!item.siteExternalReferenceCode ||
+											isAlreadyConnected(
+												item.siteExternalReferenceCode
+											)
 									);
 								}
 								else {

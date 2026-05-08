@@ -10,9 +10,5 @@ export type Site = {
 	logo: string;
 	name: string;
 	searchable: boolean;
-
-	// TODO LPD-82494: confirm the field name and value set when Balázs lands
-	// the unified ConnectedSite schema. Likely 'site' | 'site-template'.
-
-	type?: 'site' | 'site-template';
+	type?: 'Site' | 'SiteTemplate';
 };

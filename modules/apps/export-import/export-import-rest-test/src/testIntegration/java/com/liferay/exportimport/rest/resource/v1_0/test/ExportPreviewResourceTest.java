@@ -71,9 +71,14 @@ public class ExportPreviewResourceTest
 
 		_user = UserTestUtil.addUser(testCompany);
 
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			_user.getUserId(), password, password, false, true);
+
 		_exportPreviewResource = ExportPreviewResource.builder(
 		).authentication(
-			_user.getEmailAddress(), RandomTestUtil.randomString()
+			_user.getEmailAddress(), password
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(

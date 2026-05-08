@@ -7136,7 +7136,7 @@ public class DataFactory {
 						get(externalReferenceCode);
 
 			originalFragmentEntryLinkModels.addAll(
-				newUtilityPageFragmentEntryLinkModel(
+				newUtilityPageFragmentEntryLinkModels(
 					layoutModel, segmentsExperienceId,
 					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
 					externalReferenceCode, renderNamespace));
@@ -8980,11 +8980,12 @@ public class DataFactory {
 		return userModel;
 	}
 
-	protected List<FragmentEntryLinkModel> newUtilityPageFragmentEntryLinkModel(
-			LayoutModel layoutModel, long segmentsExperienceId,
-			List<Tuple>
-				utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
-			String externalReferenceCode, String renderNamespace)
+	protected List<FragmentEntryLinkModel>
+			newUtilityPageFragmentEntryLinkModels(
+				LayoutModel layoutModel, long segmentsExperienceId,
+				List<Tuple>
+					utilityPageFragmentEntryLinkRendererKeyAndPositionTuples,
+				String externalReferenceCode, String renderNamespace)
 		throws Exception {
 
 		String configuration = StringPool.BLANK;

@@ -39,7 +39,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="G_D" return-type="Collection">
 			<finder-column name="groupId" />
@@ -58,7 +58,7 @@
 			<finder-column name="styleBookEntryKey" />
 		</finder>
 		<finder name="G_T" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 			<finder-column name="themeId" />
 		</finder>
 		<finder name="G_D_T" return-type="Collection">

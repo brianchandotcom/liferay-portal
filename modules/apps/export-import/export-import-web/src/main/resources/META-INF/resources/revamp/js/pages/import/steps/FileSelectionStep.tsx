@@ -41,6 +41,7 @@ export default function FileSelectionStep({
 		}
 
 		if (!currentFile) {
+			setFieldValue('contentSelection', undefined);
 			setImportPreview(undefined);
 		}
 	}, [values.fileSelector, values.name, setFieldValue, setImportPreview]);

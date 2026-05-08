@@ -232,6 +232,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Instance instance1 = testGraphQLDeleteProcessInstance_addInstance();
 
 		Assert.assertTrue(
@@ -270,6 +271,7 @@ public abstract class BaseInstanceResourceTestCase {
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Instance instance2 = testGraphQLDeleteProcessInstance_addInstance();
 
 		Assert.assertTrue(
@@ -2365,4 +2367,4 @@ public abstract class BaseInstanceResourceTestCase {
 			_instanceResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-285615544
+// LIFERAY-REST-BUILDER-HASH:1682836598

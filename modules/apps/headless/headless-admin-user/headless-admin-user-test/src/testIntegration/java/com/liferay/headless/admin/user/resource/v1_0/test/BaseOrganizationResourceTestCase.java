@@ -272,6 +272,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
 
@@ -318,6 +319,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeOrganization_addOrganization();
 
@@ -425,6 +427,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteAccountOrganization_addOrganization();
 
@@ -466,6 +469,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteAccountOrganization_addOrganization();
 
@@ -555,6 +559,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteOrganization_addOrganization();
 
@@ -590,6 +595,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteOrganization_addOrganization();
 
@@ -751,6 +757,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteOrganizationByExternalReferenceCode_addOrganization();
 
@@ -791,6 +798,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteOrganizationByExternalReferenceCode_addOrganization();
 
@@ -880,6 +888,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization();
 
@@ -908,6 +917,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountByEmailAddress_addOrganization();
 
@@ -982,6 +992,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
 
@@ -1004,6 +1015,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteOrganizationByExternalReferenceCodeUserAccountsByEmailAddress_addOrganization();
 
@@ -1067,6 +1079,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteUserAccountByEmailAddress_addOrganization();
 
@@ -1092,6 +1105,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteUserAccountByEmailAddress_addOrganization();
 
@@ -1159,6 +1173,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization1 =
 			testGraphQLDeleteUserAccountsByEmailAddress_addOrganization();
 
@@ -1178,6 +1193,7 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Organization organization2 =
 			testGraphQLDeleteUserAccountsByEmailAddress_addOrganization();
 
@@ -8033,4 +8049,4 @@ public abstract class BaseOrganizationResourceTestCase {
 		_organizationResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:901312355
+// LIFERAY-REST-BUILDER-HASH:-1727984397

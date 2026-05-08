@@ -253,6 +253,7 @@ public abstract class BaseCountryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Country country1 = testGraphQLDeleteCountry_addCountry();
 
 		Assert.assertTrue(
@@ -283,6 +284,7 @@ public abstract class BaseCountryResourceTestCase {
 
 		// Using the namespace headlessAdminAddress_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Country country2 = testGraphQLDeleteCountry_addCountry();
 
 		Assert.assertTrue(
@@ -2734,4 +2736,4 @@ public abstract class BaseCountryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-770432218
+// LIFERAY-REST-BUILDER-HASH:578009198

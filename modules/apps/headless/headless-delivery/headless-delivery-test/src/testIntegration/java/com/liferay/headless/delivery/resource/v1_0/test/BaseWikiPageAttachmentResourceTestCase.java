@@ -297,6 +297,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPageAttachment wikiPageAttachment1 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
 
@@ -359,6 +360,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPageAttachment wikiPageAttachment2 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCodeWikiPageExternalReferenceCodeWikiPageAttachmentByExternalReferenceCode_addWikiPageAttachment();
 
@@ -480,6 +482,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPageAttachment wikiPageAttachment1 =
 			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
 
@@ -515,6 +518,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPageAttachment wikiPageAttachment2 =
 			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
 
@@ -2684,4 +2688,4 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-572571844
+// LIFERAY-REST-BUILDER-HASH:-1970449478

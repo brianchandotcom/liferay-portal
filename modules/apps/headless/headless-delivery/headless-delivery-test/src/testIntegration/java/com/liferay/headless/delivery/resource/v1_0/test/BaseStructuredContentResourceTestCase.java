@@ -326,6 +326,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
 
@@ -376,6 +377,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteAssetLibraryStructuredContentByExternalReferenceCode_addStructuredContent();
 
@@ -486,6 +488,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 
@@ -533,6 +536,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteSiteStructuredContentByExternalReferenceCode_addStructuredContent();
 
@@ -625,6 +629,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
@@ -660,6 +665,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContent_addStructuredContent();
 
@@ -783,6 +789,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
 
@@ -818,6 +825,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContentMyRating_addStructuredContent();
 
@@ -7259,4 +7267,4 @@ public abstract class BaseStructuredContentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1547811153
+// LIFERAY-REST-BUILDER-HASH:-623562215

@@ -242,6 +242,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the configured namespace admin
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent1 =
 			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
 
@@ -290,6 +291,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		// Using the namespace headlessAdminContent_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent2 =
 			testGraphQLDeleteStructuredContentByVersion_addStructuredContent();
 
@@ -2911,4 +2913,4 @@ public abstract class BaseStructuredContentResourceTestCase {
 			StructuredContentResource _structuredContentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1110864704
+// LIFERAY-REST-BUILDER-HASH:1594913436

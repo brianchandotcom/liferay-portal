@@ -235,6 +235,7 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm1 =
 			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 
@@ -255,6 +256,7 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm2 =
 			testGraphQLDeletePaymentMethodGroupRelTerm_addPaymentMethodGroupRelTerm();
 
@@ -1774,4 +1776,4 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 		PaymentMethodGroupRelTermResource _paymentMethodGroupRelTermResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1713500246
+// LIFERAY-REST-BUILDER-HASH:322019806

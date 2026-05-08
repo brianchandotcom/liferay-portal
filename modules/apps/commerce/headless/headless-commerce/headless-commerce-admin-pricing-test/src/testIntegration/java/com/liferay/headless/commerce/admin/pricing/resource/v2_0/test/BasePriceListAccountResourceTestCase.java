@@ -225,6 +225,7 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListAccount priceListAccount1 =
 			testGraphQLDeletePriceListAccount_addPriceListAccount();
 
@@ -244,6 +245,7 @@ public abstract class BasePriceListAccountResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListAccount priceListAccount2 =
 			testGraphQLDeletePriceListAccount_addPriceListAccount();
 
@@ -1997,4 +1999,4 @@ public abstract class BasePriceListAccountResourceTestCase {
 		PriceListAccountResource _priceListAccountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1193237084
+// LIFERAY-REST-BUILDER-HASH:-1352416312

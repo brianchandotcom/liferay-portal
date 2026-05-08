@@ -226,6 +226,7 @@ public abstract class BasePriceListDiscountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListDiscount priceListDiscount1 =
 			testGraphQLDeletePriceListDiscount_addPriceListDiscount();
 
@@ -246,6 +247,7 @@ public abstract class BasePriceListDiscountResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceListDiscount priceListDiscount2 =
 			testGraphQLDeletePriceListDiscount_addPriceListDiscount();
 
@@ -1765,4 +1767,4 @@ public abstract class BasePriceListDiscountResourceTestCase {
 		PriceListDiscountResource _priceListDiscountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1695591187
+// LIFERAY-REST-BUILDER-HASH:-664697635

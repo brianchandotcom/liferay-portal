@@ -282,6 +282,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGraphQLDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
 
@@ -316,6 +317,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelShippingOption accountChannelShippingOption2 =
 			testGraphQLDeleteAccountChannelShippingOption_addAccountChannelShippingOption();
 
@@ -2452,4 +2454,4 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-231776837
+// LIFERAY-REST-BUILDER-HASH:-1603710721

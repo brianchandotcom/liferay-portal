@@ -260,6 +260,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment cartComment1 =
 			testGraphQLDeleteCartComment_addCartComment();
 
@@ -291,6 +292,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment cartComment2 =
 			testGraphQLDeleteCartComment_addCartComment();
 
@@ -445,6 +447,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment cartComment1 =
 			testGraphQLDeleteCartCommentByExternalReferenceCode_addCartComment();
 
@@ -484,6 +487,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryCart_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CartComment cartComment2 =
 			testGraphQLDeleteCartCommentByExternalReferenceCode_addCartComment();
 
@@ -2762,4 +2766,4 @@ public abstract class BaseCartCommentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:330638811
+// LIFERAY-REST-BUILDER-HASH:-1648577613

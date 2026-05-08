@@ -254,6 +254,7 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Currency currency1 = testGraphQLDeleteCurrency_addCurrency();
 
 		Assert.assertTrue(
@@ -284,6 +285,7 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Currency currency2 = testGraphQLDeleteCurrency_addCurrency();
 
 		Assert.assertTrue(
@@ -419,6 +421,7 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Currency currency1 =
 			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
 
@@ -458,6 +461,7 @@ public abstract class BaseCurrencyResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Currency currency2 =
 			testGraphQLDeleteCurrencyByExternalReferenceCode_addCurrency();
 
@@ -2681,4 +2685,4 @@ public abstract class BaseCurrencyResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1343090244
+// LIFERAY-REST-BUILDER-HASH:691444888

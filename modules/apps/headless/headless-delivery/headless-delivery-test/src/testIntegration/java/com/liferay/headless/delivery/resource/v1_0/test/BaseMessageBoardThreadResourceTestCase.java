@@ -275,6 +275,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread messageBoardThread1 =
 			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
@@ -310,6 +311,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread messageBoardThread2 =
 			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
@@ -435,6 +437,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread messageBoardThread1 =
 			testGraphQLDeleteMessageBoardThreadMyRating_addMessageBoardThread();
 
@@ -470,6 +473,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardThread messageBoardThread2 =
 			testGraphQLDeleteMessageBoardThreadMyRating_addMessageBoardThread();
 
@@ -5253,4 +5257,4 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1929794541
+// LIFERAY-REST-BUILDER-HASH:-261410251

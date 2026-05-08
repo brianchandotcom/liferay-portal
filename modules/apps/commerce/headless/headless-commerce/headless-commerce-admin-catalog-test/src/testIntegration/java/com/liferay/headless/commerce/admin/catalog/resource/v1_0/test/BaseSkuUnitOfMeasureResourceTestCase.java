@@ -253,6 +253,7 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SkuUnitOfMeasure skuUnitOfMeasure1 =
 			testGraphQLDeleteSkuUnitOfMeasure_addSkuUnitOfMeasure();
 
@@ -284,6 +285,7 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SkuUnitOfMeasure skuUnitOfMeasure2 =
 			testGraphQLDeleteSkuUnitOfMeasure_addSkuUnitOfMeasure();
 
@@ -2306,4 +2308,4 @@ public abstract class BaseSkuUnitOfMeasureResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1887800406
+// LIFERAY-REST-BUILDER-HASH:-1053858412

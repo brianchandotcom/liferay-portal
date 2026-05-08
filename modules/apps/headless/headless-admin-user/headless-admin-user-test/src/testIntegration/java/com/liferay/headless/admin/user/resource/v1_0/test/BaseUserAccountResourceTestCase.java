@@ -311,6 +311,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
@@ -360,6 +361,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_addUserAccount();
 
@@ -469,6 +471,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccount_addUserAccount();
 
@@ -506,6 +509,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccount_addUserAccount();
 
@@ -594,6 +598,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
 
@@ -618,6 +623,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountByEmailAddress_addUserAccount();
 
@@ -698,6 +704,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
 
@@ -724,6 +731,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountByExternalReferenceCodeByEmailAddress_addUserAccount();
 
@@ -801,6 +809,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
 
@@ -821,6 +830,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountsByEmailAddress_addUserAccount();
 
@@ -897,6 +907,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
 
@@ -919,6 +930,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteAccountUserAccountsByExternalReferenceCodeByEmailAddress_addUserAccount();
 
@@ -988,6 +1000,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
@@ -1019,6 +1032,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteUserAccount_addUserAccount();
 
@@ -1172,6 +1186,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount1 =
 			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
 
@@ -1211,6 +1226,7 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserAccount userAccount2 =
 			testGraphQLDeleteUserAccountByExternalReferenceCode_addUserAccount();
 
@@ -9584,4 +9600,4 @@ public abstract class BaseUserAccountResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1493557006
+// LIFERAY-REST-BUILDER-HASH:-1249198074

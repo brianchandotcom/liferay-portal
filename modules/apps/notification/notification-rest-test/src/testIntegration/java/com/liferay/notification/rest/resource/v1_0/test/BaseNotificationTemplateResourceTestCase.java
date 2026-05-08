@@ -279,6 +279,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationTemplate notificationTemplate1 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
@@ -314,6 +315,7 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 
 		// Using the namespace notification_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationTemplate notificationTemplate2 =
 			testGraphQLDeleteNotificationTemplate_addNotificationTemplate();
 
@@ -3250,4 +3252,4 @@ public abstract class BaseNotificationTemplateResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:271774021
+// LIFERAY-REST-BUILDER-HASH:636075695

@@ -299,6 +299,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteDocumentFolder_addDocumentFolder();
 
@@ -332,6 +333,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteDocumentFolder_addDocumentFolder();
 
@@ -451,6 +453,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteDocumentFolderMyRating_addDocumentFolder();
 
@@ -484,6 +487,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteDocumentFolderMyRating_addDocumentFolder();
 
@@ -572,6 +576,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder1 =
 			testGraphQLDeleteSiteDocumentsFolderByExternalReferenceCode_addDocumentFolder();
 
@@ -618,6 +623,7 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentFolder documentFolder2 =
 			testGraphQLDeleteSiteDocumentsFolderByExternalReferenceCode_addDocumentFolder();
 
@@ -5679,4 +5685,4 @@ public abstract class BaseDocumentFolderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:810397384
+// LIFERAY-REST-BUILDER-HASH:1094690208

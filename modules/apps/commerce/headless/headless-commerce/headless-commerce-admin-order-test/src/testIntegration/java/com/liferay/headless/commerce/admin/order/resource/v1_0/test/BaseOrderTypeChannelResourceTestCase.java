@@ -224,6 +224,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderTypeChannel orderTypeChannel1 =
 			testGraphQLDeleteOrderTypeChannel_addOrderTypeChannel();
 
@@ -243,6 +244,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderTypeChannel orderTypeChannel2 =
 			testGraphQLDeleteOrderTypeChannel_addOrderTypeChannel();
 
@@ -1865,4 +1867,4 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		OrderTypeChannelResource _orderTypeChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1780106717
+// LIFERAY-REST-BUILDER-HASH:1795034763

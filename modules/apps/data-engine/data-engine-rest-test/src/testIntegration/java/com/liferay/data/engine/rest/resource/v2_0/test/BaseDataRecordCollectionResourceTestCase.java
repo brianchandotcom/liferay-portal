@@ -265,6 +265,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection1 =
 			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
 
@@ -300,6 +301,7 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection2 =
 			testGraphQLDeleteDataRecordCollection_addDataRecordCollection();
 
@@ -2540,4 +2542,4 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1121441358
+// LIFERAY-REST-BUILDER-HASH:1841236672

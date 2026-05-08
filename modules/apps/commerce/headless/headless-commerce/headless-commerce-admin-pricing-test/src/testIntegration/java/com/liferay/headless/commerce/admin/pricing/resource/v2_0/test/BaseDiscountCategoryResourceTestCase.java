@@ -225,6 +225,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountCategory discountCategory1 =
 			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
@@ -244,6 +245,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountCategory discountCategory2 =
 			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
@@ -1969,4 +1971,4 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 		DiscountCategoryResource _discountCategoryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1902423450
+// LIFERAY-REST-BUILDER-HASH:1499229124

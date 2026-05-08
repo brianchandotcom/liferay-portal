@@ -274,6 +274,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PostalAddress postalAddress1 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
@@ -305,6 +306,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PostalAddress postalAddress2 =
 			testGraphQLDeletePostalAddress_addPostalAddress();
 
@@ -464,6 +466,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PostalAddress postalAddress1 =
 			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
 
@@ -504,6 +507,7 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PostalAddress postalAddress2 =
 			testGraphQLDeletePostalAddressByExternalReferenceCode_addPostalAddress();
 
@@ -3677,4 +3681,4 @@ public abstract class BasePostalAddressResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1378172914
+// LIFERAY-REST-BUILDER-HASH:448632766

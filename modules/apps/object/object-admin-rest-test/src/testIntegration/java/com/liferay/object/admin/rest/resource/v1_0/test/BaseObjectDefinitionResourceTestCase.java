@@ -287,6 +287,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectDefinition objectDefinition1 =
 			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
@@ -322,6 +323,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectDefinition objectDefinition2 =
 			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
@@ -4260,4 +4262,4 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1578445093
+// LIFERAY-REST-BUILDER-HASH:1066934113

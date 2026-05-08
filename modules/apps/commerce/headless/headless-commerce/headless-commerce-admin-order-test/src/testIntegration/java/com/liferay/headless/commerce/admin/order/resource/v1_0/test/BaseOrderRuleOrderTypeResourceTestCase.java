@@ -224,6 +224,7 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRuleOrderType orderRuleOrderType1 =
 			testGraphQLDeleteOrderRuleOrderType_addOrderRuleOrderType();
 
@@ -244,6 +245,7 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRuleOrderType orderRuleOrderType2 =
 			testGraphQLDeleteOrderRuleOrderType_addOrderRuleOrderType();
 
@@ -1748,4 +1750,4 @@ public abstract class BaseOrderRuleOrderTypeResourceTestCase {
 		OrderRuleOrderTypeResource _orderRuleOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1217383695
+// LIFERAY-REST-BUILDER-HASH:-1343290855

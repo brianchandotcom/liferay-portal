@@ -336,6 +336,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document1 =
 			testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
 
@@ -385,6 +386,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 =
 			testGraphQLDeleteAssetLibraryDocumentByExternalReferenceCode_addDocument();
 
@@ -477,6 +479,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document1 = testGraphQLDeleteDocument_addDocument();
 
 		Assert.assertTrue(
@@ -507,6 +510,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 = testGraphQLDeleteDocument_addDocument();
 
 		Assert.assertTrue(
@@ -611,6 +615,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document1 = testGraphQLDeleteDocumentMyRating_addDocument();
 
 		Assert.assertTrue(
@@ -641,6 +646,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 = testGraphQLDeleteDocumentMyRating_addDocument();
 
 		Assert.assertTrue(
@@ -719,6 +725,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document1 =
 			testGraphQLDeleteSiteDocumentByExternalReferenceCode_addDocument();
 
@@ -762,6 +769,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document2 =
 			testGraphQLDeleteSiteDocumentByExternalReferenceCode_addDocument();
 
@@ -6575,4 +6583,4 @@ public abstract class BaseDocumentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-234703611
+// LIFERAY-REST-BUILDER-HASH:698936203

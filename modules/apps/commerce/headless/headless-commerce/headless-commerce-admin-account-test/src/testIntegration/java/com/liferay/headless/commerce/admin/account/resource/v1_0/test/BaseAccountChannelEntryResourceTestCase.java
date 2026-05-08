@@ -227,6 +227,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelBillingAddressId_addAccountChannelEntry();
 
@@ -259,6 +260,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelBillingAddressId_addAccountChannelEntry();
 
@@ -337,6 +339,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelCurrencyId_addAccountChannelEntry();
 
@@ -368,6 +371,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelCurrencyId_addAccountChannelEntry();
 
@@ -448,6 +452,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelDeliveryTermId_addAccountChannelEntry();
 
@@ -480,6 +485,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelDeliveryTermId_addAccountChannelEntry();
 
@@ -558,6 +564,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelDiscountId_addAccountChannelEntry();
 
@@ -589,6 +596,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelDiscountId_addAccountChannelEntry();
 
@@ -669,6 +677,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
 
@@ -701,6 +710,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelPaymentMethodId_addAccountChannelEntry();
 
@@ -781,6 +791,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelPaymentTermId_addAccountChannelEntry();
 
@@ -812,6 +823,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelPaymentTermId_addAccountChannelEntry();
 
@@ -891,6 +903,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelPriceListId_addAccountChannelEntry();
 
@@ -922,6 +935,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelPriceListId_addAccountChannelEntry();
 
@@ -1002,6 +1016,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelShippingAddressId_addAccountChannelEntry();
 
@@ -1034,6 +1049,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelShippingAddressId_addAccountChannelEntry();
 
@@ -1111,6 +1127,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry1 =
 			testGraphQLDeleteAccountChannelUserId_addAccountChannelEntry();
 
@@ -1142,6 +1159,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountChannelEntry accountChannelEntry2 =
 			testGraphQLDeleteAccountChannelUserId_addAccountChannelEntry();
 
@@ -7799,4 +7817,4 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		AccountChannelEntryResource _accountChannelEntryResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2047720254
+// LIFERAY-REST-BUILDER-HASH:1388246750

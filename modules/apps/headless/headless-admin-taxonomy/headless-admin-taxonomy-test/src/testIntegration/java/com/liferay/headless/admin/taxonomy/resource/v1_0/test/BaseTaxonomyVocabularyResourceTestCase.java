@@ -337,6 +337,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 
@@ -387,6 +388,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary2 =
 			testGraphQLDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 
@@ -497,6 +499,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLDeleteSiteTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 
@@ -544,6 +547,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary2 =
 			testGraphQLDeleteSiteTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 
@@ -636,6 +640,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 
@@ -671,6 +676,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TaxonomyVocabulary taxonomyVocabulary2 =
 			testGraphQLDeleteTaxonomyVocabulary_addTaxonomyVocabulary();
 
@@ -5239,4 +5245,4 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:548415840
+// LIFERAY-REST-BUILDER-HASH:1106484798

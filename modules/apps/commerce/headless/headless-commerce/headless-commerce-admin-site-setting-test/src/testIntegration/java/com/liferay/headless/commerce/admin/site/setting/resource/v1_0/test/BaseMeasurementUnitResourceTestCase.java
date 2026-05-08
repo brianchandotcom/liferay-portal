@@ -261,6 +261,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
@@ -292,6 +293,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
@@ -452,6 +454,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
 
@@ -492,6 +495,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnitByExternalReferenceCode_addMeasurementUnit();
 
@@ -578,6 +582,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit1 =
 			testGraphQLDeleteMeasurementUnitByKey_addMeasurementUnit();
 
@@ -611,6 +616,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MeasurementUnit measurementUnit2 =
 			testGraphQLDeleteMeasurementUnitByKey_addMeasurementUnit();
 
@@ -3419,4 +3425,4 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1044840096
+// LIFERAY-REST-BUILDER-HASH:-752974976

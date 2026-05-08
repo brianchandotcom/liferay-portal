@@ -234,6 +234,7 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountAddressChannel accountAddressChannel1 =
 			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
 
@@ -254,6 +255,7 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountAddressChannel accountAddressChannel2 =
 			testGraphQLDeleteAccountAddressChannel_addAccountAddressChannel();
 
@@ -2066,4 +2068,4 @@ public abstract class BaseAccountAddressChannelResourceTestCase {
 		AccountAddressChannelResource _accountAddressChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2132117210
+// LIFERAY-REST-BUILDER-HASH:1883702848

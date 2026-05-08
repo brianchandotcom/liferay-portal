@@ -297,6 +297,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity1 =
 			testGraphQLDeleteAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -349,6 +350,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity2 =
 			testGraphQLDeleteAssetLibraryERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -437,6 +439,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity1 =
 			testGraphQLDeleteERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -458,6 +461,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity2 =
 			testGraphQLDeleteERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -564,6 +568,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity1 =
 			testGraphQLDeleteSiteERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -614,6 +619,7 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCScopedTestEntity ercScopedTestEntity2 =
 			testGraphQLDeleteSiteERCScopedTestEntity_addERCScopedTestEntity();
 
@@ -3581,4 +3587,4 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 		ERCScopedTestEntityResource _ercScopedTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1123517031
+// LIFERAY-REST-BUILDER-HASH:-1282532697

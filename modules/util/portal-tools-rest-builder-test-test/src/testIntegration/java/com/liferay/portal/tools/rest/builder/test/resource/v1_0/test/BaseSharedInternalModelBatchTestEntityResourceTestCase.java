@@ -257,6 +257,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SharedInternalModelBatchTestEntity sharedInternalModelBatchTestEntity1 =
 			testGraphQLDeleteSharedInternalModelBatchTestEntityByExternalReferenceCode_addSharedInternalModelBatchTestEntity();
 
@@ -297,6 +298,7 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SharedInternalModelBatchTestEntity sharedInternalModelBatchTestEntity2 =
 			testGraphQLDeleteSharedInternalModelBatchTestEntityByExternalReferenceCode_addSharedInternalModelBatchTestEntity();
 
@@ -1741,4 +1743,4 @@ public abstract class BaseSharedInternalModelBatchTestEntityResourceTestCase {
 			_sharedInternalModelBatchTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-479235009
+// LIFERAY-REST-BUILDER-HASH:-128115107

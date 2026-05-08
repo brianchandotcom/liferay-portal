@@ -222,6 +222,7 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TermOrderType termOrderType1 =
 			testGraphQLDeleteTermOrderType_addTermOrderType();
 
@@ -241,6 +242,7 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		TermOrderType termOrderType2 =
 			testGraphQLDeleteTermOrderType_addTermOrderType();
 
@@ -1664,4 +1666,4 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		TermOrderTypeResource _termOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1556628993
+// LIFERAY-REST-BUILDER-HASH:-402193743

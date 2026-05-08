@@ -253,6 +253,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse1 =
 			testGraphQLDeleteWarehouseByExternalReferenceCode_addWarehouse();
 
@@ -292,6 +293,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse2 =
 			testGraphQLDeleteWarehouseByExternalReferenceCode_addWarehouse();
 
@@ -370,6 +372,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse1 = testGraphQLDeleteWarehouseId_addWarehouse();
 
 		Assert.assertTrue(
@@ -400,6 +403,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Warehouse warehouse2 = testGraphQLDeleteWarehouseId_addWarehouse();
 
 		Assert.assertTrue(
@@ -2714,4 +2718,4 @@ public abstract class BaseWarehouseResourceTestCase {
 		WarehouseResource _warehouseResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1287276297
+// LIFERAY-REST-BUILDER-HASH:-914126137

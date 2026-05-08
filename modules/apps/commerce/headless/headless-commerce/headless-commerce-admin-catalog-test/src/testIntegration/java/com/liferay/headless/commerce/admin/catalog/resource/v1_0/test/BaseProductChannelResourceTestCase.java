@@ -257,6 +257,7 @@ public abstract class BaseProductChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductChannel productChannel1 =
 			testGraphQLDeleteProductChannel_addProductChannel();
 
@@ -288,6 +289,7 @@ public abstract class BaseProductChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductChannel productChannel2 =
 			testGraphQLDeleteProductChannel_addProductChannel();
 
@@ -2075,4 +2077,4 @@ public abstract class BaseProductChannelResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:625195275
+// LIFERAY-REST-BUILDER-HASH:1601746081

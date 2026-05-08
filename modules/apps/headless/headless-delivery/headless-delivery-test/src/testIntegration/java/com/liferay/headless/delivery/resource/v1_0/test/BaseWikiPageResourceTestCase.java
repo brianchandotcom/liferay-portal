@@ -276,6 +276,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage1 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 
@@ -319,6 +320,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage2 =
 			testGraphQLDeleteSiteWikiPageByExternalReferenceCode_addWikiPage();
 
@@ -399,6 +401,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage1 = testGraphQLDeleteWikiPage_addWikiPage();
 
 		Assert.assertTrue(
@@ -429,6 +432,7 @@ public abstract class BaseWikiPageResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiPage wikiPage2 = testGraphQLDeleteWikiPage_addWikiPage();
 
 		Assert.assertTrue(
@@ -3387,4 +3391,4 @@ public abstract class BaseWikiPageResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1596130317
+// LIFERAY-REST-BUILDER-HASH:-760704121

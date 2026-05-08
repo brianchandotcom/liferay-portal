@@ -282,6 +282,7 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CompanyTestEntity companyTestEntity1 =
 			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
 
@@ -322,6 +323,7 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CompanyTestEntity companyTestEntity2 =
 			testGraphQLDeleteCompanyTestEntityByExternalReferenceCode_addCompanyTestEntity();
 
@@ -2419,4 +2421,4 @@ public abstract class BaseCompanyTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2121257773
+// LIFERAY-REST-BUILDER-HASH:-1953055289

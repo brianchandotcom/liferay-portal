@@ -248,6 +248,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Phone phone1 = testGraphQLDeletePhone_addPhone();
 
 		Assert.assertTrue(
@@ -278,6 +279,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Phone phone2 = testGraphQLDeletePhone_addPhone();
 
 		Assert.assertTrue(
@@ -408,6 +410,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Phone phone1 = testGraphQLDeletePhoneByExternalReferenceCode_addPhone();
 
 		Assert.assertTrue(
@@ -445,6 +448,7 @@ public abstract class BasePhoneResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Phone phone2 = testGraphQLDeletePhoneByExternalReferenceCode_addPhone();
 
 		Assert.assertTrue(
@@ -2472,4 +2476,4 @@ public abstract class BasePhoneResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1933816602
+// LIFERAY-REST-BUILDER-HASH:232783810

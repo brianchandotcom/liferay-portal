@@ -271,6 +271,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductSpecification productSpecification1 =
 			testGraphQLDeleteProductSpecification_addProductSpecification();
 
@@ -302,6 +303,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductSpecification productSpecification2 =
 			testGraphQLDeleteProductSpecification_addProductSpecification();
 
@@ -467,6 +469,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductSpecification productSpecification1 =
 			testGraphQLDeleteProductSpecificationByExternalReferenceCode_addProductSpecification();
 
@@ -507,6 +510,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductSpecification productSpecification2 =
 			testGraphQLDeleteProductSpecificationByExternalReferenceCode_addProductSpecification();
 
@@ -2902,4 +2906,4 @@ public abstract class BaseProductSpecificationResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2024496398
+// LIFERAY-REST-BUILDER-HASH:1023850662

@@ -264,6 +264,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList priceList1 = testGraphQLDeletePriceList_addPriceList();
 
 		Assert.assertTrue(
@@ -294,6 +295,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList priceList2 = testGraphQLDeletePriceList_addPriceList();
 
 		Assert.assertTrue(
@@ -438,6 +440,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList priceList1 =
 			testGraphQLDeletePriceListByExternalReferenceCode_addPriceList();
 
@@ -477,6 +480,7 @@ public abstract class BasePriceListResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceList priceList2 =
 			testGraphQLDeletePriceListByExternalReferenceCode_addPriceList();
 
@@ -3464,4 +3468,4 @@ public abstract class BasePriceListResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1968251906
+// LIFERAY-REST-BUILDER-HASH:160241658

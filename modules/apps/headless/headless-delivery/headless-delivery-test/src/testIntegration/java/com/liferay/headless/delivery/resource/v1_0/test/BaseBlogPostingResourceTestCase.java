@@ -273,6 +273,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteBlogPosting_addBlogPosting();
 
@@ -304,6 +305,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteBlogPosting_addBlogPosting();
 
@@ -416,6 +418,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteBlogPostingMyRating_addBlogPosting();
 
@@ -447,6 +450,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteBlogPostingMyRating_addBlogPosting();
 
@@ -530,6 +534,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting1 =
 			testGraphQLDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 
@@ -575,6 +580,7 @@ public abstract class BaseBlogPostingResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting2 =
 			testGraphQLDeleteSiteBlogPostingByExternalReferenceCode_addBlogPosting();
 
@@ -4191,4 +4197,4 @@ public abstract class BaseBlogPostingResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1487002752
+// LIFERAY-REST-BUILDER-HASH:1225098516

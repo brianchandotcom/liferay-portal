@@ -264,6 +264,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTCollection ctCollection1 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
@@ -295,6 +296,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		// Using the namespace changeTracking_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTCollection ctCollection2 =
 			testGraphQLDeleteCTCollection_addCTCollection();
 
@@ -454,6 +456,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTCollection ctCollection1 =
 			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
 
@@ -494,6 +497,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		// Using the namespace changeTracking_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTCollection ctCollection2 =
 			testGraphQLDeleteCTCollectionByExternalReferenceCode_addCTCollection();
 
@@ -3056,4 +3060,4 @@ public abstract class BaseCTCollectionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1453209521
+// LIFERAY-REST-BUILDER-HASH:2084228065

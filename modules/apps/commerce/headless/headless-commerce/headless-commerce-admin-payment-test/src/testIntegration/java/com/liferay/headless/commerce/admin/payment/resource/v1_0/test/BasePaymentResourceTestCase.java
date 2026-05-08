@@ -284,6 +284,7 @@ public abstract class BasePaymentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Payment payment1 = testGraphQLDeletePayment_addPayment();
 
 		Assert.assertTrue(
@@ -314,6 +315,7 @@ public abstract class BasePaymentResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPayment_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Payment payment2 = testGraphQLDeletePayment_addPayment();
 
 		Assert.assertTrue(
@@ -445,6 +447,7 @@ public abstract class BasePaymentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Payment payment1 =
 			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
 
@@ -483,6 +486,7 @@ public abstract class BasePaymentResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPayment_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Payment payment2 =
 			testGraphQLDeletePaymentByExternalReferenceCode_addPayment();
 
@@ -3874,4 +3878,4 @@ public abstract class BasePaymentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1121044306
+// LIFERAY-REST-BUILDER-HASH:1478557850

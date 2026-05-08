@@ -282,6 +282,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationQueueEntry notificationQueueEntry1 =
 			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
@@ -317,6 +318,7 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 
 		// Using the namespace notification_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NotificationQueueEntry notificationQueueEntry2 =
 			testGraphQLDeleteNotificationQueueEntry_addNotificationQueueEntry();
 
@@ -2731,4 +2733,4 @@ public abstract class BaseNotificationQueueEntryResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1556722451
+// LIFERAY-REST-BUILDER-HASH:-725456909

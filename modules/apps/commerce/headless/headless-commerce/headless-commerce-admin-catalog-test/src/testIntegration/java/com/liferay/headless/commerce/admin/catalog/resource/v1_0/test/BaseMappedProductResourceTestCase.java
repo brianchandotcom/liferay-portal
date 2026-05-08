@@ -227,6 +227,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MappedProduct mappedProduct1 =
 			testGraphQLDeleteMappedProduct_addMappedProduct();
 
@@ -244,6 +245,7 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MappedProduct mappedProduct2 =
 			testGraphQLDeleteMappedProduct_addMappedProduct();
 
@@ -2504,4 +2506,4 @@ public abstract class BaseMappedProductResourceTestCase {
 		MappedProductResource _mappedProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-628000271
+// LIFERAY-REST-BUILDER-HASH:249692233

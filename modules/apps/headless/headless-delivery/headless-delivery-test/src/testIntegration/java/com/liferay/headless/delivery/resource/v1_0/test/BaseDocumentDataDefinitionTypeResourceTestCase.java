@@ -314,6 +314,7 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentDataDefinitionType documentDataDefinitionType1 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
@@ -349,6 +350,7 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentDataDefinitionType documentDataDefinitionType2 =
 			testGraphQLDeleteDocumentDataDefinitionType_addDocumentDataDefinitionType();
 
@@ -3673,4 +3675,4 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1139926656
+// LIFERAY-REST-BUILDER-HASH:1010914168

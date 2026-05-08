@@ -215,6 +215,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Node node1 = testGraphQLDeleteProcessNode_addNode();
 
 		Assert.assertTrue(
@@ -235,6 +236,7 @@ public abstract class BaseNodeResourceTestCase {
 
 		// Using the namespace portalWorkflowMetrics_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Node node2 = testGraphQLDeleteProcessNode_addNode();
 
 		Assert.assertTrue(
@@ -1566,4 +1568,4 @@ public abstract class BaseNodeResourceTestCase {
 		_nodeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2136350892
+// LIFERAY-REST-BUILDER-HASH:1921332010

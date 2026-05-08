@@ -278,6 +278,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 =
 			testGraphQLDeleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -307,6 +308,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 =
 			testGraphQLDeleteOrganizationRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -406,6 +408,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 =
 			testGraphQLDeleteOrganizationRoleUserAccountAssociation_addRole();
 
@@ -432,6 +435,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 =
 			testGraphQLDeleteOrganizationRoleUserAccountAssociation_addRole();
 
@@ -505,6 +509,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 = testGraphQLDeleteRole_addRole();
 
 		Assert.assertTrue(
@@ -535,6 +540,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 = testGraphQLDeleteRole_addRole();
 
 		Assert.assertTrue(
@@ -664,6 +670,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 = testGraphQLDeleteRoleByExternalReferenceCode_addRole();
 
 		Assert.assertTrue(
@@ -699,6 +706,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 = testGraphQLDeleteRoleByExternalReferenceCode_addRole();
 
 		Assert.assertTrue(
@@ -784,6 +792,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 =
 			testGraphQLDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -809,6 +818,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 =
 			testGraphQLDeleteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -882,6 +892,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 = testGraphQLDeleteRoleUserAccountAssociation_addRole();
 
 		Assert.assertTrue(
@@ -902,6 +913,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 = testGraphQLDeleteRoleUserAccountAssociation_addRole();
 
 		Assert.assertTrue(
@@ -984,6 +996,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 =
 			testGraphQLDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -1015,6 +1028,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 =
 			testGraphQLDeleteSiteRoleByExternalReferenceCodeUserAccountAssociation_addRole();
 
@@ -1109,6 +1123,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role1 = testGraphQLDeleteSiteRoleUserAccountAssociation_addRole();
 
 		Assert.assertTrue(
@@ -1136,6 +1151,7 @@ public abstract class BaseRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Role role2 = testGraphQLDeleteSiteRoleUserAccountAssociation_addRole();
 
 		Assert.assertTrue(
@@ -3586,4 +3602,4 @@ public abstract class BaseRoleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:805518790
+// LIFERAY-REST-BUILDER-HASH:1861813402

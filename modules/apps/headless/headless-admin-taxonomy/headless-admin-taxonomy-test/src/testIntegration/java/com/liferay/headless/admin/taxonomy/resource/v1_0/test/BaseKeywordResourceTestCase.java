@@ -316,6 +316,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword1 =
 			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
 
@@ -364,6 +365,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword2 =
 			testGraphQLDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword();
 
@@ -455,6 +457,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword1 = testGraphQLDeleteKeyword_addKeyword();
 
 		Assert.assertTrue(
@@ -485,6 +488,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword2 = testGraphQLDeleteKeyword_addKeyword();
 
 		Assert.assertTrue(
@@ -595,6 +599,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword1 =
 			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
 
@@ -637,6 +642,7 @@ public abstract class BaseKeywordResourceTestCase {
 
 		// Using the namespace headlessAdminTaxonomy_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Keyword keyword2 =
 			testGraphQLDeleteSiteKeywordByExternalReferenceCode_addKeyword();
 
@@ -4427,4 +4433,4 @@ public abstract class BaseKeywordResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1626130719
+// LIFERAY-REST-BUILDER-HASH:-2107657177

@@ -227,6 +227,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountAccountGroup discountAccountGroup1 =
 			testGraphQLDeleteDiscountAccountGroup_addDiscountAccountGroup();
 
@@ -244,6 +245,7 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountAccountGroup discountAccountGroup2 =
 			testGraphQLDeleteDiscountAccountGroup_addDiscountAccountGroup();
 
@@ -1693,4 +1695,4 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 		DiscountAccountGroupResource _discountAccountGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1332697238
+// LIFERAY-REST-BUILDER-HASH:-2111968402

@@ -253,6 +253,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectView objectView1 = testGraphQLDeleteObjectView_addObjectView();
 
 		Assert.assertTrue(
@@ -283,6 +284,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectView objectView2 = testGraphQLDeleteObjectView_addObjectView();
 
 		Assert.assertTrue(
@@ -2864,4 +2866,4 @@ public abstract class BaseObjectViewResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1517380943
+// LIFERAY-REST-BUILDER-HASH:-1217206489

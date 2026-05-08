@@ -289,6 +289,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder1 =
 			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
 
@@ -324,6 +325,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		// Using the namespace headlessObject_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder2 =
 			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
 
@@ -467,6 +469,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder1 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
 
@@ -517,6 +520,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 		// Using the namespace headlessObject_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectEntryFolder objectEntryFolder2 =
 			testGraphQLDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCode_addObjectEntryFolder();
 
@@ -3704,4 +3708,4 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1223936848
+// LIFERAY-REST-BUILDER-HASH:7286664

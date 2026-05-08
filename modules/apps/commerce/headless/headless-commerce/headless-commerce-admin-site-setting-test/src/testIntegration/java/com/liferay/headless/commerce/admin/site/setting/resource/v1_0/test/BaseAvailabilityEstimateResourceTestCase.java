@@ -254,6 +254,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AvailabilityEstimate availabilityEstimate1 =
 			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
@@ -285,6 +286,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminSiteSetting_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AvailabilityEstimate availabilityEstimate2 =
 			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
@@ -1740,4 +1742,4 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:354407301
+// LIFERAY-REST-BUILDER-HASH:-432363659

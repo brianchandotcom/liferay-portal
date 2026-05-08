@@ -234,6 +234,7 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseAccountGroup warehouseAccountGroup1 =
 			testGraphQLDeleteWarehouseAccountGroup_addWarehouseAccountGroup();
 
@@ -254,6 +255,7 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseAccountGroup warehouseAccountGroup2 =
 			testGraphQLDeleteWarehouseAccountGroup_addWarehouseAccountGroup();
 
@@ -2055,4 +2057,4 @@ public abstract class BaseWarehouseAccountGroupResourceTestCase {
 		WarehouseAccountGroupResource _warehouseAccountGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-518532170
+// LIFERAY-REST-BUILDER-HASH:-1972637560

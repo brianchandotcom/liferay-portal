@@ -232,6 +232,7 @@ public abstract class BaseCookiesConsentPreferenceResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CookiesConsentPreference cookiesConsentPreference1 =
 			testGraphQLDeleteCookiesConsentPreferenceByName_addCookiesConsentPreference();
 
@@ -270,6 +271,7 @@ public abstract class BaseCookiesConsentPreferenceResourceTestCase {
 
 		// Using the namespace cookies_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CookiesConsentPreference cookiesConsentPreference2 =
 			testGraphQLDeleteCookiesConsentPreferenceByName_addCookiesConsentPreference();
 
@@ -1429,4 +1431,4 @@ public abstract class BaseCookiesConsentPreferenceResourceTestCase {
 			_cookiesConsentPreferenceResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-356762024
+// LIFERAY-REST-BUILDER-HASH:-1682291530

@@ -268,6 +268,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection messageBoardSection1 =
 			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
@@ -303,6 +304,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardSection messageBoardSection2 =
 			testGraphQLDeleteMessageBoardSection_addMessageBoardSection();
 
@@ -3858,4 +3860,4 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-861647217
+// LIFERAY-REST-BUILDER-HASH:352387173

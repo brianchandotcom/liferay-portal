@@ -314,6 +314,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
@@ -364,6 +365,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
@@ -465,6 +467,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteDocumentMetadataSet_addDocumentMetadataSet();
 
@@ -500,6 +503,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteDocumentMetadataSet_addDocumentMetadataSet();
 
@@ -631,6 +635,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet1 =
 			testGraphQLDeleteSiteDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
@@ -678,6 +683,7 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentMetadataSet documentMetadataSet2 =
 			testGraphQLDeleteSiteDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet();
 
@@ -3783,4 +3789,4 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2123985532
+// LIFERAY-REST-BUILDER-HASH:-1927271644

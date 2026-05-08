@@ -239,6 +239,7 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ShippingFixedOptionOrderType shippingFixedOptionOrderType1 =
 			testGraphQLDeleteShippingFixedOptionOrderType_addShippingFixedOptionOrderType();
 
@@ -260,6 +261,7 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ShippingFixedOptionOrderType shippingFixedOptionOrderType2 =
 			testGraphQLDeleteShippingFixedOptionOrderType_addShippingFixedOptionOrderType();
 
@@ -1824,4 +1826,4 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 			_shippingFixedOptionOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1066791235
+// LIFERAY-REST-BUILDER-HASH:-2811401

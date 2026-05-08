@@ -259,6 +259,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseItem warehouseItem1 =
 			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
@@ -290,6 +291,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseItem warehouseItem2 =
 			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
@@ -448,6 +450,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseItem warehouseItem1 =
 			testGraphQLDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
@@ -488,6 +491,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseItem warehouseItem2 =
 			testGraphQLDeleteWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
@@ -2796,4 +2800,4 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2051350671
+// LIFERAY-REST-BUILDER-HASH:1012746793

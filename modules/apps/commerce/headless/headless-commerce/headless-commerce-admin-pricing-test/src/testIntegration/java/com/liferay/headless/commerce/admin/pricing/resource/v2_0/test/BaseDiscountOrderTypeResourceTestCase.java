@@ -227,6 +227,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountOrderType discountOrderType1 =
 			testGraphQLDeleteDiscountOrderType_addDiscountOrderType();
 
@@ -247,6 +248,7 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountOrderType discountOrderType2 =
 			testGraphQLDeleteDiscountOrderType_addDiscountOrderType();
 
@@ -2011,4 +2013,4 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		DiscountOrderTypeResource _discountOrderTypeResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:392515326
+// LIFERAY-REST-BUILDER-HASH:1418001946

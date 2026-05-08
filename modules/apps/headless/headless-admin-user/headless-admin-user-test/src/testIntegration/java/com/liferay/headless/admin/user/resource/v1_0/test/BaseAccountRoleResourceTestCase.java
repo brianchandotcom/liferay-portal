@@ -240,6 +240,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole1 =
 			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_addAccountRole();
 
@@ -266,6 +267,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole2 =
 			testGraphQLDeleteAccountAccountRoleUserAccountAssociation_addAccountRole();
 
@@ -366,6 +368,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole();
 
@@ -399,6 +402,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByEmailAddress_addAccountRole();
 
@@ -497,6 +501,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole();
 
@@ -529,6 +534,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleByExternalReferenceCodeUserAccountByExternalReferenceCode_addAccountRole();
 
@@ -628,6 +634,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole();
 
@@ -657,6 +664,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_addAccountRole();
 
@@ -750,6 +758,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole();
 
@@ -778,6 +787,7 @@ public abstract class BaseAccountRoleResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountRole accountRole2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole();
 
@@ -3534,4 +3544,4 @@ public abstract class BaseAccountRoleResourceTestCase {
 		_accountRoleResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1121790545
+// LIFERAY-REST-BUILDER-HASH:-1331616529

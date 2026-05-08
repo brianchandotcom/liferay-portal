@@ -274,6 +274,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectField objectField1 =
 			testGraphQLDeleteObjectField_addObjectField();
 
@@ -305,6 +306,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectField objectField2 =
 			testGraphQLDeleteObjectField_addObjectField();
 
@@ -3750,4 +3752,4 @@ public abstract class BaseObjectFieldResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:936210215
+// LIFERAY-REST-BUILDER-HASH:-1626438829

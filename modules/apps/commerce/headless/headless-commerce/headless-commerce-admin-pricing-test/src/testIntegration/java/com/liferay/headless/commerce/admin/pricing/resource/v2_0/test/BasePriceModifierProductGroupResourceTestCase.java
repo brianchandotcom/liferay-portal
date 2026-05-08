@@ -240,6 +240,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceModifierProductGroup priceModifierProductGroup1 =
 			testGraphQLDeletePriceModifierProductGroup_addPriceModifierProductGroup();
 
@@ -260,6 +261,7 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		PriceModifierProductGroup priceModifierProductGroup2 =
 			testGraphQLDeletePriceModifierProductGroup_addPriceModifierProductGroup();
 
@@ -2096,4 +2098,4 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 		PriceModifierProductGroupResource _priceModifierProductGroupResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1984778281
+// LIFERAY-REST-BUILDER-HASH:1004158353

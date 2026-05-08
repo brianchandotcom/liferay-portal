@@ -310,6 +310,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity1 =
 			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 
@@ -362,6 +363,7 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 
 		// Using the namespace test_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ERCAssetLibraryTestEntity ercAssetLibraryTestEntity2 =
 			testGraphQLDeleteAssetLibraryERCAssetLibraryTestEntity_addERCAssetLibraryTestEntity();
 
@@ -2292,4 +2294,4 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 		ERCAssetLibraryTestEntityResource _ercAssetLibraryTestEntityResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-751652908
+// LIFERAY-REST-BUILDER-HASH:-804967948

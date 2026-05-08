@@ -244,6 +244,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountMember accountMember1 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountMember_addAccountMember();
 
@@ -286,6 +287,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountMember accountMember2 =
 			testGraphQLDeleteAccountByExternalReferenceCodeAccountMember_addAccountMember();
 
@@ -389,6 +391,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountMember accountMember1 =
 			testGraphQLDeleteAccountIdAccountMember_addAccountMember();
 
@@ -426,6 +429,7 @@ public abstract class BaseAccountMemberResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminAccount_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AccountMember accountMember2 =
 			testGraphQLDeleteAccountIdAccountMember_addAccountMember();
 
@@ -2159,4 +2163,4 @@ public abstract class BaseAccountMemberResourceTestCase {
 		AccountMemberResource _accountMemberResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:453948577
+// LIFERAY-REST-BUILDER-HASH:1969163321

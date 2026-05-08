@@ -224,6 +224,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment1 =
 			testGraphQLDeletePlacedOrderAttachment_addAttachment();
 
@@ -245,6 +246,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment2 =
 			testGraphQLDeletePlacedOrderAttachment_addAttachment();
 
@@ -322,6 +324,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment1 =
 			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
 
@@ -350,6 +353,7 @@ public abstract class BaseAttachmentResourceTestCase {
 
 		// Using the namespace headlessCommerceDeliveryOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Attachment attachment2 =
 			testGraphQLDeletePlacedOrderByExternalReferenceCodeAttachmentByExternalReferenceCodeAttachmentExternalReferenceCode_addAttachment();
 
@@ -2446,4 +2450,4 @@ public abstract class BaseAttachmentResourceTestCase {
 		AttachmentResource _attachmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1404594650
+// LIFERAY-REST-BUILDER-HASH:936393440

@@ -265,6 +265,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectAction objectAction1 =
 			testGraphQLDeleteObjectAction_addObjectAction();
 
@@ -296,6 +297,7 @@ public abstract class BaseObjectActionResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectAction objectAction2 =
 			testGraphQLDeleteObjectAction_addObjectAction();
 
@@ -3255,4 +3257,4 @@ public abstract class BaseObjectActionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-700206651
+// LIFERAY-REST-BUILDER-HASH:-1924393229

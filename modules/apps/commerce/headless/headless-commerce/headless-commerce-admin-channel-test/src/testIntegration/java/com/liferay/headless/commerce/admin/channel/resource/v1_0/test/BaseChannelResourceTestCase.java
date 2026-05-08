@@ -260,6 +260,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel1 = testGraphQLDeleteChannel_addChannel();
 
 		Assert.assertTrue(
@@ -290,6 +291,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel2 = testGraphQLDeleteChannel_addChannel();
 
 		Assert.assertTrue(
@@ -421,6 +423,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel1 =
 			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
 
@@ -459,6 +462,7 @@ public abstract class BaseChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminChannel_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Channel channel2 =
 			testGraphQLDeleteChannelByExternalReferenceCode_addChannel();
 
@@ -2925,4 +2929,4 @@ public abstract class BaseChannelResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1630331061
+// LIFERAY-REST-BUILDER-HASH:1671495827

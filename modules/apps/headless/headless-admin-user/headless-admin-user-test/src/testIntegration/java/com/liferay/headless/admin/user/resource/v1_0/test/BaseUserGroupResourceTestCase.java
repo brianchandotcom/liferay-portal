@@ -255,6 +255,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup1 = testGraphQLDeleteUserGroup_addUserGroup();
 
 		Assert.assertTrue(
@@ -285,6 +286,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup2 = testGraphQLDeleteUserGroup_addUserGroup();
 
 		Assert.assertTrue(
@@ -428,6 +430,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup1 =
 			testGraphQLDeleteUserGroupByExternalReferenceCode_addUserGroup();
 
@@ -467,6 +470,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup2 =
 			testGraphQLDeleteUserGroupByExternalReferenceCode_addUserGroup();
 
@@ -547,6 +551,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup1 =
 			testGraphQLDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
 
@@ -569,6 +574,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup2 =
 			testGraphQLDeleteUserGroupByExternalReferenceCodeUsers_addUserGroup();
 
@@ -623,6 +629,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup1 = testGraphQLDeleteUserGroupUsers_addUserGroup();
 
 		Assert.assertTrue(
@@ -639,6 +646,7 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		// Using the namespace headlessAdminUser_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		UserGroup userGroup2 = testGraphQLDeleteUserGroupUsers_addUserGroup();
 
 		Assert.assertTrue(
@@ -3064,4 +3072,4 @@ public abstract class BaseUserGroupResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:711700095
+// LIFERAY-REST-BUILDER-HASH:-454764017

@@ -263,6 +263,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
@@ -296,6 +297,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu navigationMenu2 =
 			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
@@ -424,6 +426,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu navigationMenu1 =
 			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 
@@ -470,6 +473,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		NavigationMenu navigationMenu2 =
 			testGraphQLDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
 
@@ -3129,4 +3133,4 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1725980433
+// LIFERAY-REST-BUILDER-HASH:1802850025

@@ -291,6 +291,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentShortcut documentShortcut1 =
 			testGraphQLDeleteDocumentShortcut_addDocumentShortcut();
 
@@ -326,6 +327,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentShortcut documentShortcut2 =
 			testGraphQLDeleteDocumentShortcut_addDocumentShortcut();
 
@@ -456,6 +458,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentShortcut documentShortcut1 =
 			testGraphQLDeleteSiteDocumentShortcutByExternalReferenceCode_addDocumentShortcut();
 
@@ -503,6 +506,7 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentShortcut documentShortcut2 =
 			testGraphQLDeleteSiteDocumentShortcutByExternalReferenceCode_addDocumentShortcut();
 
@@ -3188,4 +3192,4 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-918898748
+// LIFERAY-REST-BUILDER-HASH:607746442

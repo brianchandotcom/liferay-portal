@@ -256,6 +256,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		FormDocument formDocument1 =
 			testGraphQLDeleteFormDocument_addFormDocument();
 
@@ -287,6 +288,7 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 		// Using the namespace headlessForm_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		FormDocument formDocument2 =
 			testGraphQLDeleteFormDocument_addFormDocument();
 
@@ -1785,4 +1787,4 @@ public abstract class BaseFormDocumentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1382159555
+// LIFERAY-REST-BUILDER-HASH:1784882137

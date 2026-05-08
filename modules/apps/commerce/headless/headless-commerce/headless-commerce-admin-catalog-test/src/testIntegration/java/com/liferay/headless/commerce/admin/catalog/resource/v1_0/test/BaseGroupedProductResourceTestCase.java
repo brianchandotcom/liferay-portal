@@ -222,6 +222,7 @@ public abstract class BaseGroupedProductResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		GroupedProduct groupedProduct1 =
 			testGraphQLDeleteGroupedProduct_addGroupedProduct();
 
@@ -241,6 +242,7 @@ public abstract class BaseGroupedProductResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		GroupedProduct groupedProduct2 =
 			testGraphQLDeleteGroupedProduct_addGroupedProduct();
 
@@ -1723,4 +1725,4 @@ public abstract class BaseGroupedProductResourceTestCase {
 		GroupedProductResource _groupedProductResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2061564009
+// LIFERAY-REST-BUILDER-HASH:-741035969

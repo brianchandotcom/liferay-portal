@@ -225,6 +225,7 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseChannel warehouseChannel1 =
 			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
 
@@ -244,6 +245,7 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminInventory_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WarehouseChannel warehouseChannel2 =
 			testGraphQLDeleteWarehouseChannel_addWarehouseChannel();
 
@@ -1971,4 +1973,4 @@ public abstract class BaseWarehouseChannelResourceTestCase {
 		WarehouseChannelResource _warehouseChannelResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2051477308
+// LIFERAY-REST-BUILDER-HASH:1151332414

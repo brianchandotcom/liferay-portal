@@ -261,6 +261,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule1 = testGraphQLDeleteOrderRule_addOrderRule();
 
 		Assert.assertTrue(
@@ -291,6 +292,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule2 = testGraphQLDeleteOrderRule_addOrderRule();
 
 		Assert.assertTrue(
@@ -434,6 +436,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule1 =
 			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
 
@@ -473,6 +476,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRule orderRule2 =
 			testGraphQLDeleteOrderRuleByExternalReferenceCode_addOrderRule();
 
@@ -3116,4 +3120,4 @@ public abstract class BaseOrderRuleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:666275209
+// LIFERAY-REST-BUILDER-HASH:1779040193

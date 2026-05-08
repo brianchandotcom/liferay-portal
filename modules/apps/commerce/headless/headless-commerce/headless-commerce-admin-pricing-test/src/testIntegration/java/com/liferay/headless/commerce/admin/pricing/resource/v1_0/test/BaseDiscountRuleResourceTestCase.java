@@ -252,6 +252,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountRule discountRule1 =
 			testGraphQLDeleteDiscountRule_addDiscountRule();
 
@@ -283,6 +284,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminPricing_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DiscountRule discountRule2 =
 			testGraphQLDeleteDiscountRule_addDiscountRule();
 
@@ -1954,4 +1956,4 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-293871186
+// LIFERAY-REST-BUILDER-HASH:-179381804

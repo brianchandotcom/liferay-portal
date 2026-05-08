@@ -267,6 +267,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
@@ -302,6 +303,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
@@ -433,6 +435,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
 			testGraphQLDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
 
@@ -480,6 +483,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
 			testGraphQLDeleteSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
 
@@ -3539,4 +3543,4 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-233886473
+// LIFERAY-REST-BUILDER-HASH:-352053543

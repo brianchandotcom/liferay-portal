@@ -222,6 +222,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeDefinition listTypeDefinition1 =
 			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
 
@@ -245,6 +246,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ListTypeDefinition listTypeDefinition2 =
 			testGraphQLDeleteSpecificationListTypeDefinition_addListTypeDefinition();
 
@@ -1640,4 +1642,4 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 		ListTypeDefinitionResource _listTypeDefinitionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1816535355
+// LIFERAY-REST-BUILDER-HASH:489050253

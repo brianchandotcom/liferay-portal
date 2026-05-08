@@ -272,6 +272,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode1 =
 			testGraphQLDeleteSiteWikiNodeByExternalReferenceCode_addWikiNode();
 
@@ -315,6 +316,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode2 =
 			testGraphQLDeleteSiteWikiNodeByExternalReferenceCode_addWikiNode();
 
@@ -396,6 +398,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode1 = testGraphQLDeleteWikiNode_addWikiNode();
 
 		Assert.assertTrue(
@@ -426,6 +429,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		// Using the namespace headlessDelivery_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		WikiNode wikiNode2 = testGraphQLDeleteWikiNode_addWikiNode();
 
 		Assert.assertTrue(
@@ -3050,4 +3054,4 @@ public abstract class BaseWikiNodeResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2112217913
+// LIFERAY-REST-BUILDER-HASH:1662203571

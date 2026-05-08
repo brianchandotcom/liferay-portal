@@ -274,6 +274,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectValidationRule objectValidationRule1 =
 			testGraphQLDeleteObjectValidationRule_addObjectValidationRule();
 
@@ -309,6 +310,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 
 		// Using the namespace objectAdmin_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ObjectValidationRule objectValidationRule2 =
 			testGraphQLDeleteObjectValidationRule_addObjectValidationRule();
 
@@ -3395,4 +3397,4 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1651094958
+// LIFERAY-REST-BUILDER-HASH:-1844448166

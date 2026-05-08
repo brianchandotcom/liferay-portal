@@ -264,6 +264,7 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductOption productOption1 =
 			testGraphQLDeleteProductOption_addProductOption();
 
@@ -295,6 +296,7 @@ public abstract class BaseProductOptionResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminCatalog_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ProductOption productOption2 =
 			testGraphQLDeleteProductOption_addProductOption();
 
@@ -2800,4 +2802,4 @@ public abstract class BaseProductOptionResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:370441572
+// LIFERAY-REST-BUILDER-HASH:1631889388

@@ -259,6 +259,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView1 =
 			testGraphQLDeleteDataDefinitionDataListView_addDataListView();
 
@@ -279,6 +280,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView2 =
 			testGraphQLDeleteDataDefinitionDataListView_addDataListView();
 
@@ -347,6 +349,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView1 =
 			testGraphQLDeleteDataListView_addDataListView();
 
@@ -378,6 +381,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		// Using the namespace dataEngine_v2_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataListView dataListView2 =
 			testGraphQLDeleteDataListView_addDataListView();
 
@@ -2412,4 +2416,4 @@ public abstract class BaseDataListViewResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:811083255
+// LIFERAY-REST-BUILDER-HASH:922653571

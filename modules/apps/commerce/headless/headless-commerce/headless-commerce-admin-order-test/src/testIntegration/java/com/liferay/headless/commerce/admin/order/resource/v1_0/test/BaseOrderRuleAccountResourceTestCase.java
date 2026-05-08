@@ -225,6 +225,7 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 
 		// No namespace
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRuleAccount orderRuleAccount1 =
 			testGraphQLDeleteOrderRuleAccount_addOrderRuleAccount();
 
@@ -244,6 +245,7 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 
 		// Using the namespace headlessCommerceAdminOrder_v1_0
 
+		@SuppressWarnings("PMD.UnusedLocalVariable")
 		OrderRuleAccount orderRuleAccount2 =
 			testGraphQLDeleteOrderRuleAccount_addOrderRuleAccount();
 
@@ -1970,4 +1972,4 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 		OrderRuleAccountResource _orderRuleAccountResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1042642070
+// LIFERAY-REST-BUILDER-HASH:-604446690

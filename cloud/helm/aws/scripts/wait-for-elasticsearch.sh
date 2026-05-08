@@ -34,7 +34,7 @@ main() {
 }
 
 _log_json() {
-	_escaped_message=$(echo "${1}" | sed 's/"/\\"/g')
+	_escaped_message=$(printf '%s' "${1}" | sed 's/\\/\\\\/g; s/"/\\"/g')
 
 	_script_name=$(basename "${0}")
 

@@ -7131,16 +7131,15 @@ public class DataFactory {
 			long segmentsExperienceId = _getSegmentsExperienceId(
 				layoutModel, segmentsExperienceModels);
 
-			List<Tuple>
-				utilityPageFragmentEntryLinkTuples =
-					_utilityPageFragmentEntryLinkTuplesMap.
-						get(externalReferenceCode);
+			List<Tuple> utilityPageFragmentEntryLinkTuples =
+				_utilityPageFragmentEntryLinkTuplesMap.get(
+					externalReferenceCode);
 
 			originalFragmentEntryLinkModels.addAll(
 				newUtilityPageFragmentEntryLinkModels(
 					layoutModel, segmentsExperienceId,
-					utilityPageFragmentEntryLinkTuples,
-					externalReferenceCode, renderNamespace));
+					utilityPageFragmentEntryLinkTuples, externalReferenceCode,
+					renderNamespace));
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(
@@ -8984,8 +8983,7 @@ public class DataFactory {
 	protected List<FragmentEntryLinkModel>
 			newUtilityPageFragmentEntryLinkModels(
 				LayoutModel layoutModel, long segmentsExperienceId,
-				List<Tuple>
-					utilityPageFragmentEntryLinkTuples,
+				List<Tuple> utilityPageFragmentEntryLinkTuples,
 				String externalReferenceCode, String renderNamespace)
 		throws Exception {
 
@@ -9024,14 +9022,9 @@ public class DataFactory {
 			Tuple utilityPageFragmentEntryLinkTuple =
 				utilityPageFragmentEntryLinkTuples.get(i);
 
-			rendererKey =
-				(String)
-					utilityPageFragmentEntryLinkTuple.
-						getObject(0);
-			position =
-				(Integer)
-					utilityPageFragmentEntryLinkTuple.
-						getObject(1);
+			rendererKey = (String)utilityPageFragmentEntryLinkTuple.getObject(
+				0);
+			position = (Integer)utilityPageFragmentEntryLinkTuple.getObject(1);
 
 			String editValueFileName = StringPool.BLANK;
 

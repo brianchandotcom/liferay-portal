@@ -39,6 +39,9 @@ spec:
                 {{- $_ := set $trigger "authenticationRef" (dict "name" $triggerAuthenticationName) }}
             {{- end }}
             {{- $triggers = append $triggers $trigger }}
+            {{- if hasKey $trigger.metadata "query" }}
+                {{- $_ := set $trigger.metadata "query" (tpl $trigger.metadata.query $) }}
+            {{- end }}
         {{- end }}
     {{- end }}
     {{- with $triggers }}

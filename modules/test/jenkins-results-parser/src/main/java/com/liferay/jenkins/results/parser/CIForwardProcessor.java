@@ -788,11 +788,13 @@ public class CIForwardProcessor {
 				gitWorkingDirectory, senderSHA, receiverSHA,
 				expectedMergeBaseSHA)) {
 
-			Date bufferedDate = new Date(
-				mergeBaseCommitDate.getTime() - _MERGE_BASE_DATE_BUFFER_MILLIS);
+			Date deepenedSinceDate = new Date(
+				mergeBaseCommitDate.getTime() -
+					_BRANCH_DEEPENING_STEP_SIZE_MILLIS);
 
-			gitWorkingDirectory.fetch(receiverRemoteGitBranch, bufferedDate);
-			gitWorkingDirectory.fetch(senderRemoteGitBranch, bufferedDate);
+			gitWorkingDirectory.fetch(
+				receiverRemoteGitBranch, deepenedSinceDate);
+			gitWorkingDirectory.fetch(senderRemoteGitBranch, deepenedSinceDate);
 
 			if (!_localMergeBaseMatches(
 					gitWorkingDirectory, senderSHA, receiverSHA,
@@ -897,7 +899,7 @@ public class CIForwardProcessor {
 		}
 	}
 
-	private static final long _MERGE_BASE_DATE_BUFFER_MILLIS =
+	private static final long _BRANCH_DEEPENING_STEP_SIZE_MILLIS =
 		24L * 60L * 60L * 1000L;
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;

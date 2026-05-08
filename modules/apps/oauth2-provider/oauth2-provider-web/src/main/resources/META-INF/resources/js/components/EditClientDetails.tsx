@@ -11,6 +11,7 @@ interface IEditClientDetailsProps extends React.HTMLAttributes<HTMLElement> {
 	baseResourceURL: string;
 	clientId: string;
 	clientSecret: string;
+	externalReferenceCode: string;
 	portletNamespace: string;
 }
 
@@ -40,6 +41,17 @@ const EditClientDetails: React.FC<IEditClientDetailsProps> = (props) => {
 				title={Liferay.Language.get('edit-client-secret')}
 				tooltip={Liferay.Language.get('client-secret-help[oauth2]')}
 				type="password"
+			/>
+
+			<ReadOnlyInput
+				editable={false}
+				id={`${props.portletNamespace}externalReferenceCode`}
+				initialValue={props.externalReferenceCode}
+				label={Liferay.Language.get('external-reference-code')}
+				title={Liferay.Language.get('edit-external-reference-code')}
+				tooltip={Liferay.Language.get(
+					'external-reference-code-help[oauth2]'
+				)}
 			/>
 		</>
 	);

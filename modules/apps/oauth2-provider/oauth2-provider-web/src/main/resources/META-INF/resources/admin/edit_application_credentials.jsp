@@ -14,6 +14,7 @@ OAuth2Application oAuth2Application = oAuth2AdminPortletDisplayContext.getOAuth2
 
 String clientId = (oAuth2Application == null) ? "" : oAuth2Application.getClientId();
 String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getClientSecret();
+String externalReferenceCode = (oAuth2Application == null) ? "" : oAuth2Application.getExternalReferenceCode();
 %>
 
 <portlet:actionURL name="/oauth2_provider/update_oauth2_application" var="updateOAuth2ApplicationURL">
@@ -97,6 +98,8 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 										"clientId", clientId
 									).put(
 										"clientSecret", clientSecret
+									).put(
+										"externalReferenceCode", externalReferenceCode
 									).build()
 								%>'
 							/>

@@ -556,6 +556,9 @@ public interface SharingEntryLocalService
 			String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SharingEntry> getToTicketSharingEntries(long toTicketId);
+
 	/**
 	 * Returns the list of sharing entries for resources shared with the user.
 	 *
@@ -729,4 +732,4 @@ public interface SharingEntryLocalService
 	public SharingEntry updateSharingEntry(SharingEntry sharingEntry);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-916700364
+// LIFERAY-SERVICE-BUILDER-HASH:1624958331

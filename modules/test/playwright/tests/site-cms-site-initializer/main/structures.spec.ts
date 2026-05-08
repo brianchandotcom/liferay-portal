@@ -4,7 +4,7 @@
  */
 
 import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -629,5 +629,68 @@ test(
 		await expect(
 			fileRow.getByRole('cell', {exact: true, name: 'File'})
 		).toBeVisible();
+	}
+);
+
+async function applySpaceFilter(
+	page: Page,
+	{exclude = false, space}: {exclude?: boolean; space: string}
+) {
+	await page.getByRole('button', {exact: true, name: 'Filter'}).click();
+	await page.getByRole('menuitem', {exact: true, name: 'Space'}).click();
+	await page.getByRole('checkbox', {exact: true, name: space}).check();
+
+	if (exclude) {
+		await page.getByRole('switch', {exact: true, name: 'Exclude'}).click();
+	}
+
+	await page.getByRole('button', {exact: true, name: 'Add Filter'}).click();
+
+	const chipName = exclude ? `Space: (Exclude) ${space}` : `Space: ${space}`;
+
+	await expect(page.getByRole('button', {name: chipName})).toBeVisible();
+}
+
+test(
+	'Content Structures list can be filtered by space with include and exclude',
+	{tag: '@LPD-89342'},
+	async ({apiHelpers, page, structureBuilderPage, structuresPage}) => {
+		const spaceName1 = `Space ${getRandomString()}`;
+		const spaceName2 = `Space ${getRandomString()}`;
+		const structureLabel = `Structure${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName1,
+			settings: {},
+		});
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName2,
+			settings: {},
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+			spaces: [spaceName1],
+		});
+
+		const row = structuresPage.getItem(structureLabel);
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {space: spaceName1});
+		await expect(row).toBeVisible();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {space: spaceName2});
+		await expect(row).toBeHidden();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {exclude: true, space: spaceName1});
+		await expect(row).toBeHidden();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {exclude: true, space: spaceName2});
+		await expect(row).toBeVisible();
 	}
 );

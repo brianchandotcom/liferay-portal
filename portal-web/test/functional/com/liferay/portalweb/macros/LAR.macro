@@ -710,7 +710,11 @@ definition {
 
 		var portalURL = JSONCompany.getPortalURL();
 
-		var larFileName = RegexUtil.replace(${valueName}, "${portalURL}/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", 1);
+		var sourceFileName = RegexUtil.replace(${valueName}, "${portalURL}/documents/portlet_file_entry/[0-9]*/([a-zA-z0-9_.-]*)[(0-9KB)]*", 1);
+
+		var titleName = RegexUtil.replace(${sourceFileName}, "(.*)-[0-9]+\.lar", 1);
+
+		var larFileName = "${titleName}.lar";
 
 		echo("lar file name ${larFileName}");
 

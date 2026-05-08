@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
@@ -33,7 +34,7 @@ const AddStyleBookModalContent = ({
 	const [loading, setLoading] = useState(false);
 	const [name, setName] = useState<string>('');
 	const [themeId, setThemeId] = useState<React.Key>(
-		frontendTokenDefinitionProviders[0].themeId
+		frontendTokenDefinitionProviders[0]?.themeId ?? ''
 	);
 
 	const validateName = (name: string) => {
@@ -78,13 +79,18 @@ const AddStyleBookModalContent = ({
 					});
 				}
 			})
-			.catch(({error}) => {
-				setErrorMessage(error || '');
+			.catch((error) => {
+				setErrorMessage(
+					error?.error ||
+						Liferay.Language.get('an-unexpected-error-occurred')
+				);
+				setLoading(false);
 			});
 	};
 
 	const formId = `${namespace}form`;
 	const frontendTokenDefinitionProviderId = `${namespace}frontendTokenDefinitionProvider`;
+	const hasProviders = Boolean(frontendTokenDefinitionProviders.length);
 	const nameId = `${namespace}name`;
 
 	return (
@@ -96,63 +102,75 @@ const AddStyleBookModalContent = ({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayForm id={formId} onSubmit={handleSubmit}>
-					<FieldBase
-						helpMessage={Liferay.Language.get(
-							'the-style-book-will-be-created-based-on-the-provided-frontend-token-definition'
-						)}
-						id={frontendTokenDefinitionProviderId}
-						label={Liferay.Language.get('create-style-book-for')}
-					>
-						<Picker
-							defaultSelectedKey={themeId}
-							id={frontendTokenDefinitionProviderId}
-							items={frontendTokenDefinitionProviders}
-							messages={{
-								itemDescribedby: Liferay.Language.get(
-									'you-are-currently-on-a-text-element,-inside-of-a-list-box'
-								),
-								itemSelected:
-									Liferay.Language.get('x-selected'),
-								scrollToBottomAriaLabel:
-									Liferay.Language.get('scroll-to-bottom'),
-								scrollToTopAriaLabel:
-									Liferay.Language.get('scroll-to-top'),
-							}}
-							onSelectionChange={setThemeId}
-							selectedKey={themeId}
-						>
-							{(item) => (
-								<Option
-									key={item.themeId}
-									textValue={item.name}
-								>
-									{item.name}
-								</Option>
+				{hasProviders ? (
+					<ClayForm id={formId} onSubmit={handleSubmit}>
+						<FieldBase
+							helpMessage={Liferay.Language.get(
+								'the-style-book-will-be-created-based-on-the-provided-frontend-token-definition'
 							)}
-						</Picker>
-					</FieldBase>
+							id={frontendTokenDefinitionProviderId}
+							label={Liferay.Language.get(
+								'create-style-book-for'
+							)}
+						>
+							<Picker
+								defaultSelectedKey={themeId}
+								id={frontendTokenDefinitionProviderId}
+								items={frontendTokenDefinitionProviders}
+								messages={{
+									itemDescribedby: Liferay.Language.get(
+										'you-are-currently-on-a-text-element,-inside-of-a-list-box'
+									),
+									itemSelected:
+										Liferay.Language.get('x-selected'),
+									scrollToBottomAriaLabel:
+										Liferay.Language.get(
+											'scroll-to-bottom'
+										),
+									scrollToTopAriaLabel:
+										Liferay.Language.get('scroll-to-top'),
+								}}
+								onSelectionChange={setThemeId}
+								selectedKey={themeId}
+							>
+								{(item) => (
+									<Option
+										key={item.themeId}
+										textValue={item.name}
+									>
+										{item.name}
+									</Option>
+								)}
+							</Picker>
+						</FieldBase>
 
-					<FieldBase
-						className="mb-0"
-						errorMessage={errorMessage}
-						id={nameId}
-						label={Liferay.Language.get('name')}
-						required
-					>
-						<ClayInput
+						<FieldBase
+							className="mb-0"
+							errorMessage={errorMessage}
 							id={nameId}
-							onChange={(event) => {
-								const name = event.target.value;
+							label={Liferay.Language.get('name')}
+							required
+						>
+							<ClayInput
+								id={nameId}
+								onChange={(event) => {
+									const name = event.target.value;
 
-								setName(name);
+									setName(name);
 
-								validateName(name);
-							}}
-							value={name}
-						/>
-					</FieldBase>
-				</ClayForm>
+									validateName(name);
+								}}
+								value={name}
+							/>
+						</FieldBase>
+					</ClayForm>
+				) : (
+					<ClayAlert displayType="warning">
+						{Liferay.Language.get(
+							'no-themes-are-available-to-create-a-style-book'
+						)}
+					</ClayAlert>
+				)}
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -162,26 +180,30 @@ const AddStyleBookModalContent = ({
 							displayType="secondary"
 							onClick={closeModal}
 						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton
-							disabled={Boolean(errorMessage)}
-							displayType="primary"
-							form={formId}
-							type="submit"
-						>
-							{loading && (
-								<span className="inline-item inline-item-before">
-									<span
-										aria-hidden="true"
-										className="loading-animation"
-									></span>
-								</span>
+							{Liferay.Language.get(
+								hasProviders ? 'cancel' : 'close'
 							)}
-
-							{Liferay.Language.get('save')}
 						</ClayButton>
+
+						{hasProviders && (
+							<ClayButton
+								disabled={Boolean(errorMessage)}
+								displayType="primary"
+								form={formId}
+								type="submit"
+							>
+								{loading && (
+									<span className="inline-item inline-item-before">
+										<span
+											aria-hidden="true"
+											className="loading-animation"
+										></span>
+									</span>
+								)}
+
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						)}
 					</ClayButton.Group>
 				}
 			/>

@@ -1782,19 +1782,27 @@ test(
 
 		yesterday.setDate(yesterday.getDate() - 1);
 
-		const tomorrow = new Date(today);
-
-		tomorrow.setDate(tomorrow.getDate() + 1);
-
 		const formatDate = (d: Date) =>
 			`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-		await page.getByLabel('From').fill(formatDate(yesterday));
 		await page
-			.getByRole('textbox', {name: 'To'})
-			.fill(formatDate(tomorrow));
+			.getByRole('textbox', {name: 'From'})
+			.fill(formatDate(yesterday));
+
+		await page.getByRole('textbox', {name: 'To'}).fill(formatDate(today));
 
 		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		const formatDisplayDate = (d: Date) =>
+			`${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+
+		await expect(page.getByText('1 Result Found for:')).toBeVisible();
+
+		await expect(
+			page.getByRole('button', {
+				name: `Create Date: ${formatDisplayDate(yesterday)} - ${formatDisplayDate(today)}`,
+			})
+		).toBeVisible();
 
 		await expect(page.getByText('Entry Test').first()).toBeVisible();
 	}
@@ -1882,19 +1890,27 @@ test(
 
 		yesterday.setDate(yesterday.getDate() - 1);
 
-		const tomorrow = new Date(today);
-
-		tomorrow.setDate(tomorrow.getDate() + 1);
-
 		const formatDate = (d: Date) =>
 			`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
-		await page.getByLabel('From').fill(formatDate(yesterday));
 		await page
-			.getByRole('textbox', {name: 'To'})
-			.fill(formatDate(tomorrow));
+			.getByRole('textbox', {name: 'From'})
+			.fill(formatDate(yesterday));
+
+		await page.getByRole('textbox', {name: 'To'}).fill(formatDate(today));
 
 		await page.getByRole('button', {name: 'Add Filter'}).click();
+
+		const formatDisplayDate = (d: Date) =>
+			`${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
+
+		await expect(page.getByText('1 Result Found for:')).toBeVisible();
+
+		await expect(
+			page.getByRole('button', {
+				name: `Modified Date: ${formatDisplayDate(yesterday)} - ${formatDisplayDate(today)}`,
+			})
+		).toBeVisible();
 
 		await expect(page.getByText('Entry Test').first()).toBeVisible();
 	}

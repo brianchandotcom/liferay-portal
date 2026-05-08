@@ -26,12 +26,12 @@ autoscaling:
             hikari-active-connections:
                 metadata:
                     metricName: hikari_active_connections
-                    query: max({__name__=~"com_zaxxer_hikari_pool_hikaripool_.*_activeconnections"})
+                    query: max(hikaricp_ActiveConnections{namespace="{{ include "liferay.namespace" . }}"})
                     threshold: "50"
             jvm-threads-current:
                 metadata:
                     metricName: jvm_threads_current
-                    query: jvm_threads_current
+                    query: max(jvm_threads_current{namespace="{{ include "liferay.namespace" . }}"})
                     threshold: "500"
     type: hpa
 configmap:

@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -251,18 +252,32 @@ public class BackgroundTaskLocalServiceImpl
 		List<BackgroundTask> backgroundTasks =
 			backgroundTaskPersistence.findByCompleted(false);
 
+		List<BackgroundTask> staleBackgroundTasks = new ArrayList<>();
+
 		for (BackgroundTask backgroundTask : backgroundTasks) {
 			if ((backgroundTask.getStatus() ==
 					BackgroundTaskConstants.STATUS_IN_PROGRESS) &&
 				!BackgroundTaskInExecutionUtil.isInExecution(
 					backgroundTask.getBackgroundTaskId())) {
 
-				backgroundTask.setCompleted(true);
-				backgroundTask.setStatus(BackgroundTaskConstants.STATUS_FAILED);
-
-				backgroundTask = backgroundTaskPersistence.update(
-					backgroundTask);
+				staleBackgroundTasks.add(backgroundTask);
 			}
+			else if ((backgroundTask.getStatus() ==
+						BackgroundTaskConstants.STATUS_QUEUED) &&
+					 !_backgroundTaskLockHelper.isLockedBackgroundTask(
+						 new BackgroundTaskImpl(backgroundTask))) {
+
+				cleanUpBackgroundTask(
+					backgroundTask.getBackgroundTaskId(),
+					backgroundTask.getStatus());
+			}
+		}
+
+		for (BackgroundTask backgroundTask : staleBackgroundTasks) {
+			backgroundTask.setCompleted(true);
+			backgroundTask.setStatus(BackgroundTaskConstants.STATUS_FAILED);
+
+			backgroundTask = backgroundTaskPersistence.update(backgroundTask);
 
 			cleanUpBackgroundTask(
 				backgroundTask.getBackgroundTaskId(),

@@ -10,6 +10,7 @@ import React from 'react';
 import EditObjectDetails from '../../components/ObjectDetails/EditObjectDetails';
 
 const editObjectDetailsProps = {
+	allowStandaloneObjectEntry: false,
 	backURL: '',
 	companies: [],
 	dbTableName: '',

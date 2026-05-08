@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -27,7 +28,9 @@ interface ManagementToolbarProps {
 	hasUpdatePermission: boolean;
 	helpMessage: string;
 	inheritanceClassName?: string;
+	inheritanceIconSymbol?: string;
 	inheritanceLabel?: string;
+	inheritanceTitle?: string;
 	isApproved?: boolean;
 	isRootDescendantNode?: boolean;
 	label: string;
@@ -53,7 +56,9 @@ export function ManagementToolbar({
 	hasUpdatePermission,
 	helpMessage,
 	inheritanceClassName,
+	inheritanceIconSymbol,
 	inheritanceLabel,
+	inheritanceTitle,
 	isApproved,
 	isRootDescendantNode,
 	label,
@@ -89,11 +94,26 @@ export function ManagementToolbar({
 
 						{Liferay.FeatureFlags['LPD-34594'] &&
 							inheritanceLabel && (
-								<strong
-									className={`${inheritanceClassName} label`}
-								>
-									{inheritanceLabel}
-								</strong>
+								<ClayTooltipProvider>
+									<strong
+										className={`${inheritanceClassName} label`}
+										title={inheritanceTitle}
+									>
+										<span className="align-items-center d-inline-flex">
+											{inheritanceLabel}
+
+											{inheritanceIconSymbol && (
+												<ClayIcon
+													aria-hidden="true"
+													className="c-ml-1"
+													symbol={
+														inheritanceIconSymbol
+													}
+												/>
+											)}
+										</span>
+									</strong>
+								</ClayTooltipProvider>
 							)}
 
 						{badgeLabel && (

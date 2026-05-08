@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -165,6 +166,9 @@ public class FrontendJSWebDynamicJSImportMapsContributorTest {
 			frontendJSWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
 			_mockHashedFileRegistry());
 		ReflectionTestUtils.setField(
+			frontendJSWebDynamicJSImportMapsContributor, "_language",
+			_mockLanguage());
+		ReflectionTestUtils.setField(
 			frontendJSWebDynamicJSImportMapsContributor, "_portal",
 			_mockPortal());
 
@@ -245,6 +249,18 @@ public class FrontendJSWebDynamicJSImportMapsContributorTest {
 		return hashedFilesRegistry;
 	}
 
+	private Language _mockLanguage() {
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.getLanguageId(Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			"en_US"
+		);
+
+		return language;
+	}
+
 	private Portal _mockPortal() throws Exception {
 		Portal portal = Mockito.mock(Portal.class);
 
@@ -276,85 +292,87 @@ public class FrontendJSWebDynamicJSImportMapsContributorTest {
 	}
 
 	private static final String[] _RESULTS = {
-		"\"@liferay/language/\": \"/o/js/language/\"",
-		"\"@liferay/language/\": \"/liferay/o/js/language/\"",
-		"\"@liferay/language/\": \"/dxp/o/js/language/\"",
-		"\"@liferay/language/\": \"/liferay/dxp/o/js/language/\"",
-		"\"@liferay/language/\": \"http://cdn.com/o/js/language/\"",
-		"\"@liferay/language/\": \"http://cdn.com/liferay/o/js/language/\"",
-		"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/\"",
-		"\"@liferay/language/\": \"http://cdn.com/liferay/dxp/o/js/language/\"",
+		"\"@liferay/language/\": \"/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"/liferay/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"/dxp/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"/liferay/dxp/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"http://cdn.com/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"http://cdn.com/liferay/o/js/language/en_US" +
+			"/\"",
+		"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/en_US/\"",
+		"\"@liferay/language/\": \"http://cdn.com/liferay/dxp/o/js/language" +
+			"/en_US/\"",
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/o/js/language/\", ",
+			"\"@liferay/language/\": \"/o/js/language/en_US/\", ",
 			"\"/o/frontend-js-web/__liferay__/index.js\": ",
 			"\"/o/frontend-js-web/__liferay__/index.(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/liferay/o/js/language/\", ",
+			"\"@liferay/language/\": \"/liferay/o/js/language/en_US/\", ",
 			"\"/liferay/o/frontend-js-web/__liferay__/index.js\": ",
 			"\"/liferay/o/frontend-js-web/__liferay__/index.(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/dxp/o/js/language/\", ",
+			"\"@liferay/language/\": \"/dxp/o/js/language/en_US/\", ",
 			"\"/dxp/o/frontend-js-web/__liferay__/index.js\": ",
 			"\"/dxp/o/frontend-js-web/__liferay__/index.(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/liferay/dxp/o/js/language/\", ",
+			"\"@liferay/language/\": \"/liferay/dxp/o/js/language/en_US/\", ",
 			"\"/liferay/dxp/o/frontend-js-web/__liferay__/index.js\": ",
 			"\"/liferay/dxp/o/frontend-js-web/__liferay__/index.(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"http://cdn.com/o/js/language/\", ",
+			"\"@liferay/language/\": \"http://cdn.com/o/js/language/en_US/\", ",
 			"\"http://cdn.com/o/frontend-js-web/__liferay__/index.js\": ",
 			"\"http://cdn.com/o/frontend-js-web/__liferay__/index.(HASH).js\""),
 		StringBundler.concat(
 			"\"@liferay/language/\": ",
-			"\"http://cdn.com/liferay/o/js/language/\", ",
+			"\"http://cdn.com/liferay/o/js/language/en_US/\", ",
 			"\"http://cdn.com/liferay/o/frontend-js-web/__liferay__/index.",
 			"js\": ",
 			"\"http://cdn.com/liferay/o/frontend-js-web/__liferay__/index.",
 			"(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/\", ",
-			"\"http://cdn.com/dxp/o/frontend-js-web/__liferay__/index.js\": ",
-			"\"http://cdn.com/dxp/o/frontend-js-web/__liferay__/index.(HASH).",
-			"js\""),
+			"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/en_US",
+			"/\", \"http://cdn.com/dxp/o/frontend-js-web/__liferay__/index.js",
+			"\": \"http://cdn.com/dxp/o/frontend-js-web/__liferay__/index.(",
+			"HASH).js\""),
 		StringBundler.concat(
 			"\"@liferay/language/\": ",
-			"\"http://cdn.com/liferay/dxp/o/js/language/\", ",
+			"\"http://cdn.com/liferay/dxp/o/js/language/en_US/\", ",
 			"\"http://cdn.com/liferay/dxp/o/frontend-js-web/__liferay__",
 			"/index.js\": ",
 			"\"http://cdn.com/liferay/dxp/o/frontend-js-web/__liferay__",
 			"/index.(HASH).js\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/o/js/language/\", ",
+			"\"@liferay/language/\": \"/o/js/language/en_US/\", ",
 			"\"/o/js/-/frontend-js-web/\": ",
 			"\"/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/liferay/o/js/language/\", ",
+			"\"@liferay/language/\": \"/liferay/o/js/language/en_US/\", ",
 			"\"/liferay/o/js/-/frontend-js-web/\": ",
 			"\"/liferay/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/dxp/o/js/language/\", ",
+			"\"@liferay/language/\": \"/dxp/o/js/language/en_US/\", ",
 			"\"/dxp/o/js/-/frontend-js-web/\": ",
 			"\"/dxp/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"/liferay/dxp/o/js/language/\", ",
+			"\"@liferay/language/\": \"/liferay/dxp/o/js/language/en_US/\", ",
 			"\"/liferay/dxp/o/js/-/frontend-js-web/\": ",
 			"\"/liferay/dxp/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"http://cdn.com/o/js/language/\", ",
+			"\"@liferay/language/\": \"http://cdn.com/o/js/language/en_US/\", ",
 			"\"http://cdn.com/o/js/-/frontend-js-web/\": ",
 			"\"http://cdn.com/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
 			"\"@liferay/language/\": ",
-			"\"http://cdn.com/liferay/o/js/language/\", ",
+			"\"http://cdn.com/liferay/o/js/language/en_US/\", ",
 			"\"http://cdn.com/liferay/o/js/-/frontend-js-web/\": ",
 			"\"http://cdn.com/liferay/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
-			"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/\", ",
-			"\"http://cdn.com/dxp/o/js/-/frontend-js-web/\": ",
-			"\"http://cdn.com/dxp/o/js/-/frontend-js-web(HASH)/\""),
+			"\"@liferay/language/\": \"http://cdn.com/dxp/o/js/language/en_US",
+			"/\", \"http://cdn.com/dxp/o/js/-/frontend-js-web/\": \"http:",
+			"//cdn.com/dxp/o/js/-/frontend-js-web(HASH)/\""),
 		StringBundler.concat(
 			"\"@liferay/language/\": ",
-			"\"http://cdn.com/liferay/dxp/o/js/language/\", ",
+			"\"http://cdn.com/liferay/dxp/o/js/language/en_US/\", ",
 			"\"http://cdn.com/liferay/dxp/o/js/-/frontend-js-web/\": ",
 			"\"http://cdn.com/liferay/dxp/o/js/-/frontend-js-web(HASH)/\"")
 	};

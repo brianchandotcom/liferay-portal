@@ -74,6 +74,17 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().addExportImportReportEntry(exportImportReportEntry);
 	}
 
+	public static ExportImportReportEntry
+		addMissingReferenceExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		return getService().addMissingReferenceExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Creates a new export import report entry with the primary key. Does not add the export import report entry to the database.
 	 *
@@ -325,6 +336,17 @@ public class ExportImportReportEntryLocalServiceUtil {
 			modelNameLanguageKey);
 	}
 
+	public static ExportImportReportEntry
+		getOrAddMissingReferenceExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		return getService().getOrAddMissingReferenceExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -379,4 +401,4 @@ public class ExportImportReportEntryLocalServiceUtil {
 			ExportImportReportEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1063489840
+// LIFERAY-SERVICE-BUILDER-HASH:2122073420

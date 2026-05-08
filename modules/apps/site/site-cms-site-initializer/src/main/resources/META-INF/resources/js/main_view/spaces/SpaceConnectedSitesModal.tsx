@@ -157,19 +157,12 @@ const ConnectableSelector = ({
 		useState<boolean>(true);
 
 	const isAlreadyConnected = (id: string) =>
-		connections.some((connection) => {
-			if (kind === ConnectableKind.SITES) {
-				return (
-					!isSiteTemplate(connection) &&
-					connection.externalReferenceCode === id
-				);
-			}
-
-			return (
-				isSiteTemplate(connection) &&
-				connection.externalReferenceCode === id
-			);
-		});
+		connections.some(
+			(connection) =>
+				connection.externalReferenceCode === id &&
+				isSiteTemplate(connection) ===
+					(kind === ConnectableKind.SITE_TEMPLATES)
+		);
 
 	const resetSelection = () => {
 		setSite(undefined);

@@ -776,17 +776,47 @@ public class CIForwardProcessor {
 		}
 
 		String senderSHA = _pullRequest.getSenderSHA();
+		String receiverSHA = receiverRemoteGitBranch.getSHA();
+		String expectedMergeBaseSHA = mergeBaseCommit.getSHA();
 
 		Date mergeBaseCommitDate = mergeBaseCommit.getCommitDate();
 
 		gitWorkingDirectory.fetch(senderRemoteGitBranch, mergeBaseCommitDate);
 		gitWorkingDirectory.fetch(receiverRemoteGitBranch, mergeBaseCommitDate);
 
+		if (!_localMergeBaseMatches(
+				gitWorkingDirectory, senderSHA, receiverSHA,
+				expectedMergeBaseSHA)) {
+
+			Date bufferedDate = new Date(
+				mergeBaseCommitDate.getTime() - _MERGE_BASE_DATE_BUFFER_MILLIS);
+
+			gitWorkingDirectory.fetch(senderRemoteGitBranch, bufferedDate);
+			gitWorkingDirectory.fetch(receiverRemoteGitBranch, bufferedDate);
+
+			if (!_localMergeBaseMatches(
+					gitWorkingDirectory, senderSHA, receiverSHA,
+					expectedMergeBaseSHA)) {
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Skipping merge conflict precheck: local merge ",
+						"base for ", senderRemoteGitBranch.getUsername(), ":",
+						senderRemoteGitBranch.getName(), " and ",
+						_recipientUsername, ":", upstreamBranchName,
+						" does not match GitHub-reported merge base ",
+						expectedMergeBaseSHA,
+						" after deepening the shallow clone."));
+
+				return false;
+			}
+		}
+
 		LocalGitBranch receiverLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
 				JenkinsResultsParserUtil.combine(
 					_recipientUsername, "-", upstreamBranchName, "-precheck"),
-				true, receiverRemoteGitBranch.getSHA());
+				true, receiverSHA);
 
 		LocalGitBranch senderLocalGitBranch =
 			gitWorkingDirectory.createLocalGitBranch(
@@ -804,7 +834,9 @@ public class CIForwardProcessor {
 
 			String message = gitWorkingDirectoryRuntimeException.getMessage();
 
-			if ((message != null) && message.contains("Unable to rebase ")) {
+			if ((message != null) && message.contains("Unable to rebase ") &&
+				message.contains("CONFLICT (")) {
+
 				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Detected merge conflict between ",
@@ -816,7 +848,16 @@ public class CIForwardProcessor {
 				return true;
 			}
 
-			throw gitWorkingDirectoryRuntimeException;
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Skipping merge conflict precheck: rebase failed ",
+					"without a content-conflict marker between ",
+					senderRemoteGitBranch.getUsername(), ":",
+					senderRemoteGitBranch.getName(), " and ",
+					_recipientUsername, ":", upstreamBranchName, "\n",
+					String.valueOf(message)));
+
+			return false;
 		}
 	}
 
@@ -833,6 +874,31 @@ public class CIForwardProcessor {
 
 		return failedRequiredPassingTestSuiteNames.isEmpty();
 	}
+
+	private boolean _localMergeBaseMatches(
+		GitWorkingDirectory gitWorkingDirectory, String senderSHA,
+		String receiverSHA, String expectedMergeBaseSHA) {
+
+		try {
+			String localMergeBaseSHA =
+				gitWorkingDirectory.getMergeBaseCommitSHA(
+					senderSHA, receiverSHA);
+
+			if (localMergeBaseSHA != null) {
+				localMergeBaseSHA = localMergeBaseSHA.trim();
+			}
+
+			return expectedMergeBaseSHA.equals(localMergeBaseSHA);
+		}
+		catch (GitWorkingDirectory.GitWorkingDirectoryRuntimeException
+					gitWorkingDirectoryRuntimeException) {
+
+			return false;
+		}
+	}
+
+	private static final long _MERGE_BASE_DATE_BUFFER_MILLIS =
+		24L * 60L * 60L * 1000L;
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;
 

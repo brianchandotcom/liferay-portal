@@ -518,19 +518,29 @@ const Main = ({
 	};
 
 	const deleteFileEntry = useCallback(
-		(fileEntryId) => {
+		(fileEntryId, {beacon = false} = {}) => {
 			if (!fileEntryId || !fileEntryDeleteURL) {
+				return;
+			}
+
+			const formData = convertToFormData({
+				[`${portletNamespace}oldFileEntryId`]: fileEntryId,
+			});
+
+			// Use sendBeacon on unload because async XHRs are cancelled when
+			// the page tears down; foreground paths keep XHR for parity with
+			// the rest of the field.
+
+			if (beacon && navigator.sendBeacon) {
+				navigator.sendBeacon(fileEntryDeleteURL, formData);
+
 				return;
 			}
 
 			const request = new XMLHttpRequest();
 
 			request.open('POST', fileEntryDeleteURL);
-			request.send(
-				convertToFormData({
-					[`${portletNamespace}oldFileEntryId`]: fileEntryId,
-				})
-			);
+			request.send(formData);
 		},
 		[fileEntryDeleteURL, portletNamespace]
 	);
@@ -641,6 +651,13 @@ const Main = ({
 		showUploadPermissionMessage;
 
 	useEffect(() => {
+
+		// Capture the file entry that was attached when the page loaded.
+		// The unload handler later compares this against the *current* value
+		// to decide whether the user replaced the file without saving — so it
+		// must reflect the page-load state, not the latest edit. That is why
+		// the deps array is empty.
+
 		originalFileEntryIdRef.current = getFileEntryId(value);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -659,20 +676,22 @@ const Main = ({
 				currentFileEntryId &&
 				currentFileEntryId !== originalFileEntryId
 			) {
-				deleteFileEntry(currentFileEntryId);
+				deleteFileEntry(currentFileEntryId, {beacon: true});
 			}
 
 			pendingDeletionsRef.current.forEach((fileEntryId) => {
 				if (fileEntryId !== originalFileEntryId) {
-					deleteFileEntry(fileEntryId);
+					deleteFileEntry(fileEntryId, {beacon: true});
 				}
 			});
 		};
 
 		window.addEventListener('beforeunload', handleBeforeUnload);
+		Liferay.on('beforeNavigate', handleBeforeUnload);
 
 		return () => {
 			window.removeEventListener('beforeunload', handleBeforeUnload);
+			Liferay.detach('beforeNavigate', handleBeforeUnload);
 		};
 	}, [currentValue, deleteFileEntry, readOnly]);
 

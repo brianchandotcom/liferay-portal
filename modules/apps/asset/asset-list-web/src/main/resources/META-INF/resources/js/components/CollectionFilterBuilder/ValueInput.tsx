@@ -110,17 +110,28 @@ export default function ValueInput({
 	}
 
 	if (type === 'picklist' && options?.length) {
+		const items = (Array.isArray(value) ? value : []) as SelectedItem[];
+
 		return (
-			<Picker
+			<MultiSelect
+				allowsCustomLabel={false}
 				aria-label={Liferay.Language.get('value')}
-				as={TriggerLabel}
-				items={options}
-				onSelectionChange={(key) => onChange(key as string)}
-				placeholder={Liferay.Language.get('select')}
-				selectedKey={value as string}
-			>
-				{(item) => <Option key={item.value}>{item.label}</Option>}
-			</Picker>
+				inputName={`${namespace}${property.name}-${index}`}
+				items={items}
+				onItemsChange={(newItems) => {
+					const uniqueNewItems = newItems
+						.filter(
+							(item, index, self) =>
+								index ===
+								self.findIndex((p) => p.value === item.value)
+						)
+						.map(({label, value}) => ({label, value}));
+
+					onChange(uniqueNewItems as Array<string | object>);
+				}}
+				size="sm"
+				sourceItems={options}
+			/>
 		);
 	}
 

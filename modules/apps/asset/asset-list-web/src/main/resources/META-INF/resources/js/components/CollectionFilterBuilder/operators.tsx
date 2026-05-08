@@ -56,6 +56,7 @@ export function getCollectionQuantifierOptions(
 	switch (property.type) {
 		case 'asset-categories':
 		case 'asset-tags':
+		case 'picklist':
 		case 'string':
 			return QUANTIFIER_OPTIONS;
 		default:

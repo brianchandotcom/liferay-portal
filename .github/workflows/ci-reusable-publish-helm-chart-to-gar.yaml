@@ -21,6 +21,10 @@ jobs:
             -   if: ${{env.IS_PR == 'true'}}
                 name: Modify version for pull request
                 run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
                     function main {
                         local chart_version
 
@@ -43,6 +47,8 @@ jobs:
                 name: Verify Helm chart version
                 run: |
                     set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
                     function main {
                         CHART_VERSION=$(cat ./Chart.yaml | yq .version)
@@ -95,6 +101,10 @@ jobs:
             -   if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GAR
                 run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
                     echo "${{steps.auth.outputs.auth_token}}" \
                         | helm registry login "${{inputs.registry}}" \
                             --password-stdin \
@@ -102,6 +112,10 @@ jobs:
             -   if: ${{env.IS_PR == 'true' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GHCR
                 run: |
+                    set -o errexit
+                    set -o nounset
+                    set -o pipefail
+
                     echo "${{github.token}}" \
                         | helm registry login ghcr.io \
                             --password-stdin \
@@ -110,6 +124,8 @@ jobs:
                 name: Package Helm chart
                 run: |
                     set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
                     function main {
                         local dist_dir="${{runner.temp}}/${{inputs.chart_name}}/dist"
@@ -131,6 +147,8 @@ jobs:
                 name: Publish Helm chart
                 run: |
                     set -o errexit
+                    set -o nounset
+                    set -o pipefail
 
                     function main {
                         local dist_dir="${{runner.temp}}/${{inputs.chart_name}}/dist"

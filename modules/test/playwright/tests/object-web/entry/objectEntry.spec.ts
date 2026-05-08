@@ -1119,6 +1119,85 @@ cmsTest.describe('Manage object entries schedule properties', () => {
 	);
 
 	cmsTest(
+		'can submit an object entry with scheduling dates via a custom layout',
+		{tag: ['@LPP-63890']},
+		async ({objectLayoutsPage, page, viewObjectEntriesPage}) => {
+			const objectLayoutName = getRandomString();
+
+			await objectLayoutsPage.goto(_objectDefinition.label['en_US']);
+
+			await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+			await page.getByRole('link', {name: objectLayoutName}).click();
+
+			await objectLayoutsPage.setObjectLayoutAsDefault();
+
+			await objectLayoutsPage.createObjectLayoutContent({
+				objectFieldNames: [
+					'Display Date',
+					'Expiration Date',
+					'Review Date',
+				],
+				objectLayoutName,
+				objectLayoutRegularBlockName: getRandomString(),
+				objectLayoutTabName: getRandomString(),
+			});
+
+			await objectLayoutsPage.saveUpdateLayoutButton.click();
+
+			await viewObjectEntriesPage.goto(_objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				_objectDefinition.label['en_US']
+			);
+
+			const date = new Date();
+
+			date.setDate(date.getDate() + 1);
+
+			await page
+				.locator('[data-field-name*="displayDate"]')
+				.getByLabel('Display Date', {exact: true})
+				.fill(getObjectEntryUIDateTimeFormat(date));
+
+			await page
+				.locator('[data-field-name*="expirationDate"]')
+				.getByLabel('Expiration Date', {exact: true})
+				.fill(getObjectEntryUIDateTimeFormat(date));
+
+			await page
+				.locator('[data-field-name*="reviewDate"]')
+				.getByLabel('Review Date', {exact: true})
+				.fill(getObjectEntryUIDateTimeFormat(date));
+
+			const objectEntryRequestPromise = page.waitForRequest(
+				(request) =>
+					request.method() === 'POST' &&
+					request.url().includes('/o/c/')
+			);
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			const objectEntryRequest = await objectEntryRequestPromise;
+
+			const objectEntryRequestPayload =
+				objectEntryRequest.postDataJSON() as Record<string, string>;
+
+			for (const fieldName of [
+				'displayDate',
+				'expirationDate',
+				'reviewDate',
+			]) {
+				expect(objectEntryRequestPayload[fieldName]).toMatch(
+					/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?Z$/
+				);
+			}
+
+			await waitForAlert(page);
+		}
+	);
+
+	cmsTest(
 		'cannot submit an empty displayDate',
 		async ({page, viewObjectEntriesPage}) => {
 			await viewObjectEntriesPage.goto(_objectDefinition.className);

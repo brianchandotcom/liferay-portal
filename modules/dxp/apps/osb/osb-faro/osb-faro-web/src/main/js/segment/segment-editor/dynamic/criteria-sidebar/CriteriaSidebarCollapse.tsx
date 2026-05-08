@@ -24,7 +24,7 @@ import {useParams} from 'react-router-dom';
 /**
  * Returns a default value for a property provided.
  */
-const getDefaultValue = (property: Property): any => {
+export const getDefaultValue = (property: Property): any => {
 	const {name, options, type} = property;
 
 	switch (type) {

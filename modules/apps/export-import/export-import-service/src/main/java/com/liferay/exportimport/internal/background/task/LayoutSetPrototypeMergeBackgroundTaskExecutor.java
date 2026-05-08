@@ -11,6 +11,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -141,19 +142,30 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 						layoutSet.isPrivateLayout(), null, parameterMap,
 						user.getLocale(), user.getTimeZone());
 
+			ExportImportConfiguration importExportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addExportImportConfiguration(
+						user.getUserId(), layoutSet.getGroupId(),
+						StringPool.BLANK, StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						importLayoutSettingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
+
 			TransactionInvokerUtil.invoke(
 				transactionConfig,
 				new LayoutImportCallable(
-					_exportImportConfigurationLocalService.
-						addExportImportConfiguration(
-							user.getUserId(), layoutSet.getGroupId(),
-							StringPool.BLANK, StringPool.BLANK,
-							ExportImportConfigurationConstants.
-								TYPE_IMPORT_LAYOUT,
-							importLayoutSettingsMap,
-							WorkflowConstants.STATUS_DRAFT,
-							new ServiceContext()),
-					cacheFile, layoutSet));
+					importExportImportConfiguration, cacheFile, layoutSet));
+
+			int count =
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntriesCount(
+						importExportImportConfiguration.getCompanyId(),
+						importExportImportConfiguration.
+							getExportImportConfigurationId());
+
+			if (count > 0) {
+				return BackgroundTaskResult.COMPLETED_WITH_ERRORS;
+			}
 
 			return BackgroundTaskResult.SUCCESS;
 		}
@@ -230,6 +242,10 @@ public class LayoutSetPrototypeMergeBackgroundTaskExecutor
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;
+
+	@Reference
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

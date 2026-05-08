@@ -7,8 +7,11 @@ package com.liferay.layout.set.prototype.internal.helper;
 
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
+import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncContextThreadLocal;
+import com.liferay.layout.set.prototype.sync.LayoutSetPrototypeSyncSessionManager;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,10 +37,13 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.sites.kernel.util.Sites;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -63,11 +69,32 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
+		List<LayoutSet> mergeableLayoutSets = new ArrayList<>();
+
 		for (LayoutSet layoutSet :
 				_layoutSetLocalService.getLayoutSetsByLayoutSetPrototypeUuid(
 					layoutSetPrototype.getUuid())) {
 
+			if (_sites.isLayoutSetMergeable(layoutSet.getGroup(), layoutSet)) {
+				mergeableLayoutSets.add(layoutSet);
+			}
+		}
+
+		String syncSessionId = PortalUUIDUtil.generate();
+
+		_layoutSetPrototypeSyncSessionManager.openSession(
+			mergeableLayoutSets.size(),
+			layoutSetPrototype.getName(LocaleUtil.US), syncSessionId, userId);
+
+		if (mergeableLayoutSets.isEmpty()) {
+			return;
+		}
+
+		for (LayoutSet layoutSet : mergeableLayoutSets) {
 			try {
+				LayoutSetPrototypeSyncContextThreadLocal.setSyncSessionId(
+					syncSessionId);
+
 				executeLayoutSetSync(layoutSet);
 			}
 			catch (Exception exception) {
@@ -75,6 +102,13 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					"Unable to start site template sync for layout set " +
 						layoutSet.getLayoutSetId(),
 					exception);
+
+				_layoutSetPrototypeSyncSessionManager.
+					recordBackgroundTaskStatus(
+						BackgroundTaskConstants.STATUS_FAILED, syncSessionId);
+			}
+			finally {
+				LayoutSetPrototypeSyncContextThreadLocal.setSyncSessionId(null);
 			}
 		}
 	}
@@ -586,6 +620,10 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private LayoutSetPrototypeSyncSessionManager
+		_layoutSetPrototypeSyncSessionManager;
 
 	@Reference
 	private Sites _sites;

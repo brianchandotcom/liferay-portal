@@ -198,7 +198,9 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
-		if (commerceTierPriceEntry == null) {
+		if ((commerceTierPriceEntry == null) ||
+			(commerceTierPriceEntry.getDiscountLevel1() == null)) {
+
 			return StringPool.BLANK;
 		}
 
@@ -213,7 +215,9 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
-		if (commerceTierPriceEntry == null) {
+		if ((commerceTierPriceEntry == null) ||
+			(commerceTierPriceEntry.getDiscountLevel2() == null)) {
+
 			return StringPool.BLANK;
 		}
 
@@ -228,7 +232,9 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
-		if (commerceTierPriceEntry == null) {
+		if ((commerceTierPriceEntry == null) ||
+			(commerceTierPriceEntry.getDiscountLevel3() == null)) {
+
 			return StringPool.BLANK;
 		}
 
@@ -243,7 +249,9 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
-		if (commerceTierPriceEntry == null) {
+		if ((commerceTierPriceEntry == null) ||
+			(commerceTierPriceEntry.getDiscountLevel4() == null)) {
+
 			return StringPool.BLANK;
 		}
 

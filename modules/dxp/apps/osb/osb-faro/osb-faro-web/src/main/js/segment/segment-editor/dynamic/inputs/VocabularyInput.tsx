@@ -75,7 +75,7 @@ const DEFAULT_CONJUNCTION_CRITERION = {
 	value: TimeSpans.Last24Hours
 } as Criterion & {touched: boolean; valid: boolean};
 
-function buildValue(
+export function buildValue(
 	eventType: React.Key,
 	assetType: React.Key,
 	occurrenceOperator: React.Key,
@@ -180,7 +180,7 @@ function buildValue(
 	]);
 }
 
-function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
 	if (!value) return 'any';
 
 	const appIdIndex = getIndexFromPropertyName(value, 'applicationId');
@@ -203,7 +203,7 @@ function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
 	return 'any';
 }
 
-function getEventTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getEventTypeFromValue(value: CustomValue | undefined): React.Key {
 	if (!value) return 'all';
 
 	const eventIdIndex = getIndexFromPropertyName(value, 'eventId');
@@ -243,7 +243,7 @@ export function getConjunctionCriterionFromValue(
 	);
 }
 
-function getCategoriesFromValue(
+export function getCategoriesFromValue(
 	value: CustomValue | undefined
 ): CategoryItem[] {
 	if (!value) return [];

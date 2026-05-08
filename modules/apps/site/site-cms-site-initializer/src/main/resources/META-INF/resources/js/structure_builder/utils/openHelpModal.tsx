@@ -18,7 +18,7 @@ type Section = {
 	shortcuts: Shortcut[];
 };
 
-const IS_MAC = Liferay.Browser.isMac();
+const IS_MAC = Liferay.Browser?.isMac();
 
 const META = IS_MAC ? '⌘' : 'Ctrl';
 const SHIFT = IS_MAC ? '⇧' : 'Shift';

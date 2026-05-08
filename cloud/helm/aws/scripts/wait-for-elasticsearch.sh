@@ -12,7 +12,9 @@ main() {
 		https://*) _protocol="https" ;;
 	esac
 
-	_authenticated_health_url="${_protocol}://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
+	_auth_header_value=$(printf '%s:%s' "${ELASTICSEARCH_USERNAME}" "${ELASTICSEARCH_PASSWORD}" | base64 | tr -d '\n')
+
+	_health_url="${_protocol}://${ELASTICSEARCH_URL#*//}/_cluster/health"
 
 	_wget_args=""
 
@@ -21,7 +23,7 @@ main() {
 		_wget_args="--no-check-certificate"
 	fi
 
-	until wget ${_wget_args} -qO- "${_authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
+	until wget --header="Authorization: Basic ${_auth_header_value}" ${_wget_args} -qO- "${_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
 	do
 		_log_json "Waiting for Elasticsearch (current status: \"red\" or \"unreachable\")."
 

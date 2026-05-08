@@ -1330,9 +1330,18 @@ public class ObjectDefinitionLocalServiceImpl
 
 		long oldObjectFolderId = objectDefinition.getObjectFolderId();
 
-		objectDefinition.setObjectFolderId(
-			_getObjectFolderId(
-				objectDefinition.getCompanyId(), objectFolderId));
+		if (objectFolderId == oldObjectFolderId) {
+			return objectDefinition;
+		}
+
+		long newObjectFolderId = _getObjectFolderId(
+			objectDefinition.getCompanyId(), objectFolderId);
+
+		if (newObjectFolderId == oldObjectFolderId) {
+			return objectDefinition;
+		}
+
+		objectDefinition.setObjectFolderId(newObjectFolderId);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
 

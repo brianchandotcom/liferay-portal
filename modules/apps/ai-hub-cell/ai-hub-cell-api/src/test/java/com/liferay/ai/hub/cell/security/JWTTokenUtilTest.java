@@ -96,13 +96,17 @@ public class JWTTokenUtilTest {
 		}
 	}
 
-	private AIHubCellConfiguration _mockAIHubCellConfiguration() {
+	private MockedStatic<ConfigurationProviderUtil>
+		_mockConfigurationProviderUtil() {
+
+		MockedStatic<ConfigurationProviderUtil>
+			configurationProviderUtilMockedStatic = Mockito.mockStatic(
+				ConfigurationProviderUtil.class);
+
 		AIHubCellConfiguration aiHubCellConfiguration = Mockito.mock(
 			AIHubCellConfiguration.class);
 
-		int sha256BlockSize = 64;
-
-		byte[] secretBytes = new byte[sha256BlockSize];
+		byte[] secretBytes = new byte[64];
 
 		for (int i = 0; i < secretBytes.length; i++) {
 			secretBytes[i] = SecureRandomUtil.nextByte();
@@ -113,19 +117,6 @@ public class JWTTokenUtilTest {
 		).thenReturn(
 			Base64.encode(secretBytes)
 		);
-
-		return aiHubCellConfiguration;
-	}
-
-	private MockedStatic<ConfigurationProviderUtil>
-		_mockConfigurationProviderUtil() {
-
-		MockedStatic<ConfigurationProviderUtil>
-			configurationProviderUtilMockedStatic = Mockito.mockStatic(
-				ConfigurationProviderUtil.class);
-
-		AIHubCellConfiguration aiHubCellConfiguration =
-			_mockAIHubCellConfiguration();
 
 		configurationProviderUtilMockedStatic.when(
 			() -> ConfigurationProviderUtil.getCompanyConfiguration(

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -21,9 +20,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -153,8 +150,6 @@ public class ConnectedSiteResourceTest
 	private ConnectedSite _addConnectedSite() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		_groups.add(group);
-
 		return new ConnectedSite() {
 			{
 				externalReferenceCode = group.getExternalReferenceCode();
@@ -202,9 +197,6 @@ public class ConnectedSiteResourceTest
 		Assert.assertEquals(
 			ConnectedSite.Type.SITE_TEMPLATE, connectedSite.getType());
 	}
-
-	@DeleteAfterTestRun
-	private List<Group> _groups = new ArrayList<>();
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

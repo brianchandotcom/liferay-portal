@@ -1146,7 +1146,8 @@ public class RESTBuilder {
 
 		FreeMarkerUtil.processTemplate(
 			_copyrightFile, FileUtil.getCopyrightYear(file),
-			"dto_action_metadata_provider", context, file, _modifiedFiles);
+			"dto_action_metadata_provider", context, file, _modifiedFiles,
+			false);
 	}
 
 	private void _createDTOActionProviderFile(
@@ -1387,7 +1388,7 @@ public class RESTBuilder {
 
 		FreeMarkerUtil.processTemplate(
 			_copyrightFile, FileUtil.getCopyrightYear(file), "resource_impl",
-			context, file, _modifiedFiles);
+			context, file, _modifiedFiles, false);
 	}
 
 	private void _createResourceTestFile(
@@ -1410,7 +1411,7 @@ public class RESTBuilder {
 
 		FreeMarkerUtil.processTemplate(
 			_copyrightFile, FileUtil.getCopyrightYear(file), "resource_test",
-			context, file, _modifiedFiles);
+			context, file, _modifiedFiles, false);
 	}
 
 	private String _fixOpenAPIContentApplicationXML(

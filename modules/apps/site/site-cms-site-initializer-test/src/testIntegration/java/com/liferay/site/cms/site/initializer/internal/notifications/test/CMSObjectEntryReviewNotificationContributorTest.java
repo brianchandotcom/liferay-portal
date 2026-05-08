@@ -75,7 +75,7 @@ public class CMSObjectEntryReviewNotificationContributorTest {
 	}
 
 	@Test
-	public void testContributeWritesNotificationLink() throws Exception {
+	public void testContribute() throws Exception {
 		ObjectEntry objectEntry = _addCMSObjectEntry();
 
 		JSONObject payloadJSONObject = JSONFactoryUtil.createJSONObject();

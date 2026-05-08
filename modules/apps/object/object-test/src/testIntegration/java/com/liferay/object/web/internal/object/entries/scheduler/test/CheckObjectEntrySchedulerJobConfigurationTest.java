@@ -255,11 +255,11 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			objectEntry1.getObjectEntryId(),
 			payloadJSONObject.getLong("classPK"));
 		Assert.assertEquals(
-			"x-has-reached-its-review-date",
-			payloadJSONObject.getString("notificationMessageKey"));
-		Assert.assertEquals(
 			objectEntry1.getTitleValue(),
 			payloadJSONObject.getString("notificationMessageArg"));
+		Assert.assertEquals(
+			"x-has-reached-its-review-date",
+			payloadJSONObject.getString("notificationMessageKey"));
 	}
 
 	@Test

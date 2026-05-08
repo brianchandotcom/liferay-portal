@@ -66,7 +66,12 @@ public class StatusStrutsAction implements StrutsAction {
 		PipingServletResponse pipingServletResponse = new PipingServletResponse(
 			httpServletResponse, unsyncStringWriter);
 
-		SessionErrors.clear(httpServletRequest);
+		Exception exception = (Exception)httpServletRequest.getAttribute(
+			WebKeys.PORTAL_STATUS_EXCEPTION);
+
+		if (exception != null) {
+			SessionErrors.remove(httpServletRequest, exception.getClass());
+		}
 
 		requestDispatcher.include(httpServletRequest, pipingServletResponse);
 

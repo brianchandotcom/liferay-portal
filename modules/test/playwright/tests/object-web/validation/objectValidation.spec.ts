@@ -910,7 +910,7 @@ test.describe('Object Expression Builder Validation', () => {
 
 		await modalAddObjectValidationPage.fillObjectValidationInputs(
 			'',
-			'Groovy'
+			'Composite Key'
 		);
 
 		await expect(page.getByText('Required')).toBeVisible();

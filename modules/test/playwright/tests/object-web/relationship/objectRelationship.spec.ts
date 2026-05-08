@@ -1033,7 +1033,7 @@ test.describe('Manage object relationships through Model Builder', () => {
 					objectFolderName: 'Default',
 				});
 
-				const searchInput = page.getByPlaceholder('Search');
+				const searchInput = page.getByRole('textbox', {name: 'Search'});
 
 				await searchInput.fill(objectDefinition2.label.en_US);
 			});

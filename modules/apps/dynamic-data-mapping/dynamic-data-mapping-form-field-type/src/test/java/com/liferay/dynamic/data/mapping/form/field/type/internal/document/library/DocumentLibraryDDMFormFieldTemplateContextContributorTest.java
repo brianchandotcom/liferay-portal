@@ -253,6 +253,33 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 	}
 
 	@Test
+	public void testGetParametersInReadOnlyContextDoesNotEmitFileEntryDeleteURL() {
+		ThemeDisplay themeDisplay = _mockThemeDisplay();
+
+		Mockito.when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			Boolean.TRUE
+		);
+
+		DocumentLibraryDDMFormFieldTemplateContextContributor
+			documentLibraryDDMFormFieldTemplateContextContributor = _createSpy(
+				true, themeDisplay);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			_createDDMFormFieldRenderingContext();
+
+		ddmFormFieldRenderingContext.setReadOnly(true);
+
+		Map<String, Object> parameters =
+			documentLibraryDDMFormFieldTemplateContextContributor.getParameters(
+				new DDMFormField("field", "document_library"),
+				ddmFormFieldRenderingContext);
+
+		Assert.assertNull(parameters.get("fileEntryDeleteURL"));
+	}
+
+	@Test
 	public void testGetParametersShouldContainFileEntryURL()
 		throws PortalException {
 

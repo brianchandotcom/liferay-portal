@@ -6,6 +6,8 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 export class CommerceThemeMiniumCatalogPage {
+	readonly accountSelectorAccount: (accountName: string) => Locator;
+	readonly accountSelectorBackButton: Locator;
 	readonly accountSelectorButton: Locator;
 	readonly accountSelectorOrdersList: Locator;
 	readonly accountSelectorOrderWorkflowStatus: Locator;
@@ -43,6 +45,13 @@ export class CommerceThemeMiniumCatalogPage {
 	readonly productLink: (productName: string) => Locator;
 
 	constructor(page: Page) {
+		this.accountSelectorAccount = (accountName: string) =>
+			page
+				.locator('.dropdown-menu.show')
+				.getByText(accountName, {exact: false});
+		this.accountSelectorBackButton = page
+			.locator('.dropdown-menu.show')
+			.getByRole('button', {name: 'Back'});
 		this.accountSelectorButton = page
 			.locator('.account-selector-dropdown')
 			.getByRole('button');
@@ -201,6 +210,14 @@ export class CommerceThemeMiniumCatalogPage {
 		await this.productCardAddToCartButton(productName).click();
 
 		await this.page.waitForLoadState('networkidle');
+	}
+
+	async openAccountSelectorDropdown() {
+		await this.accountSelectorButton.click();
+
+		if (await this.accountSelectorBackButton.isVisible()) {
+			await this.accountSelectorBackButton.click();
+		}
 	}
 
 	async checkQuantitiesInPopOverMessages(

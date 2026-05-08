@@ -161,7 +161,12 @@ function ExternalURLInput({
 				<ClayInput
 					aria-label={Liferay.Language.get('external-url')}
 					insetAfter={!vertical}
-					onBlur={(event) => setExternalURL(event.target.value)}
+					onBlur={(event) => {
+						const absoluteURL = toAbsoluteURL(event.target.value);
+
+						setValue(absoluteURL);
+						setExternalURL(absoluteURL);
+					}}
 					onChange={(event) => setValue(event.target.value)}
 					sizing={!vertical ? 'sm' : undefined}
 					type="text"
@@ -180,4 +185,14 @@ function ExternalURLInput({
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
 	);
+}
+
+function toAbsoluteURL(url: string): string {
+	const trimmedURL = url.trim();
+
+	if (!trimmedURL || /^https?:\/\//i.test(trimmedURL)) {
+		return trimmedURL;
+	}
+
+	return `https://${trimmedURL}`;
 }

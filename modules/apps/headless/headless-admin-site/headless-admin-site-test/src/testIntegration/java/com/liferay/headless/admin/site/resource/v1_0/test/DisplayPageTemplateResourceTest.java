@@ -35,7 +35,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestU
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
-import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -361,7 +361,8 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		expectedDisplayPageTemplate.setThumbnailURLReference(
-			ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		_testPatchSiteDisplayPageTemplate(
 			expectedDisplayPageTemplate,
@@ -1203,7 +1204,8 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		randomDisplayPageTemplate.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(
@@ -1429,7 +1431,7 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		displayPageTemplate1.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
 				fileEntry, RandomTestUtil.randomString()));
 
 		DisplayPageTemplateResource displayPageTemplateResource =
@@ -1450,7 +1452,7 @@ public class DisplayPageTemplateResourceTest
 			repository.getDlFolderId());
 
 		displayPageTemplate1.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
 				newFileEntry, RandomTestUtil.randomString()));
 
 		displayPageTemplateResource.patchSiteDisplayPageTemplate(
@@ -1465,7 +1467,7 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate displayPageTemplate2 = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		displayPageTemplate2.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1792,7 +1794,8 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		displayPageTemplate.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1805,7 +1808,7 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		displayPageTemplate.setThumbnailURLReference(thumbnailURLReference);
 
@@ -2205,7 +2208,8 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
 		displayPageTemplate.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry1, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry1, null));
 
 		DisplayPageTemplate putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
@@ -2220,7 +2224,8 @@ public class DisplayPageTemplateResourceTest
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putDisplayPageTemplate.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry2, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry2, null));
 
 		putDisplayPageTemplate =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
@@ -2246,7 +2251,7 @@ public class DisplayPageTemplateResourceTest
 		displayPageTemplate = randomDisplayPageTemplate();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		displayPageTemplate.setThumbnailURLReference(thumbnailURLReference);
 

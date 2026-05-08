@@ -27,7 +27,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplat
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
-import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
@@ -185,7 +185,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		randomMasterPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		MasterPage postMasterPage = testPostSiteMasterPage_addMasterPage(
 			randomMasterPage);
@@ -1016,7 +1017,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		masterPage1.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		MasterPageResource masterPageResource = _getMasterPageResource();
 
@@ -1033,7 +1035,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			repository.getDlFolderId());
 
 		masterPage1.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(newFileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				newFileEntry, null));
 
 		masterPageResource.patchSiteMasterPage(
 			testGroup.getExternalReferenceCode(),
@@ -1046,7 +1049,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		MasterPage masterPage2 = randomMasterPage();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		masterPage2.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1216,7 +1219,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
 
 		masterPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry, null));
 
 		MasterPage postMasterPage = masterPageResource.postSiteMasterPage(
 			testGroup.getExternalReferenceCode(), masterPage);
@@ -1230,7 +1234,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		masterPage = randomMasterPage();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		masterPage.setThumbnailURLReference(thumbnailURLReference);
 
@@ -1424,7 +1428,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry1 = _addPortletFileEntry(repository.getDlFolderId());
 
 		masterPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry1, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry1, null));
 
 		MasterPage putMasterPage = masterPageResource.putSiteMasterPage(
 			testGroup.getExternalReferenceCode(),
@@ -1437,7 +1442,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		FileEntry fileEntry2 = _addPortletFileEntry(repository.getDlFolderId());
 
 		putMasterPage.setThumbnailURLReference(
-			() -> ThumbnailUtil.getThumbnailURLReference(fileEntry2, null));
+			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(
+				fileEntry2, null));
 
 		putMasterPage = masterPageResource.putSiteMasterPage(
 			testGroup.getExternalReferenceCode(),
@@ -1459,7 +1465,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		masterPage = randomMasterPage();
 
 		ThumbnailURLReference thumbnailURLReference =
-			ThumbnailUtil.getRandomThumbnailURLReference();
+			ThumbnailURLReferenceUtil.getRandomThumbnailURLReference();
 
 		masterPage.setThumbnailURLReference(thumbnailURLReference);
 

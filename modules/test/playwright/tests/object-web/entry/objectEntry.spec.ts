@@ -4230,7 +4230,9 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await viewObjectEntriesPage.goto(objectDefinition.className);
 
 		await expect(
-			page.getByText('Add ' + objectDefinition.label.en_US)
+			page
+				.getByTestId('managementToolbar')
+				.locator('[data-testid="fdsCreationActionButton"]')
 		).toBeVisible();
 
 		await expect(

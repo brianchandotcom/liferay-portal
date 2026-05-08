@@ -710,3 +710,40 @@ test(
 		await expect(longTextTreeItem).not.toBeVisible();
 	}
 );
+
+test(
+	'Basic Web Content usages list includes assets that use the structure',
+	{tag: '@LPD-89302'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const title = `Content ${getRandomString()}`;
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title,
+			},
+			applicationName,
+			'Default'
+		);
+
+		try {
+			await structuresPage.goto();
+
+			await structuresPage.execItemAction({
+				action: 'View Usages',
+				filter: 'Basic Web Content',
+			});
+
+			await page.locator('.fds').waitFor();
+
+			await expect(page.getByRole('row', {name: title})).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+		}
+	}
+);

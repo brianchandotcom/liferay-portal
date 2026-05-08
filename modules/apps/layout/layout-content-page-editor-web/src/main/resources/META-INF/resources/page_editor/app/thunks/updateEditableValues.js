@@ -7,47 +7,30 @@ import updateEditableValuesAction from '../actions/updateEditableValues';
 import FragmentService from '../services/FragmentService';
 import {clearPageContents} from '../utils/usePageContents';
 
-let nextRequestId = 0;
-const latestRequestIds = new Map();
-
 export default function updateEditableValues({
 	editableValues,
 	fragmentEntryLinkId,
 }) {
-	return async (dispatch, getState) => {
-		const requestId = ++nextRequestId;
-
-		latestRequestIds.set(fragmentEntryLinkId, requestId);
-
+	return (dispatch, getState) => {
 		const {languageId, segmentsExperienceId} = getState();
 
-		const {fragmentEntryLink} = await FragmentService.updateEditableValues({
+		return FragmentService.updateEditableValues({
 			editableValues,
 			fragmentEntryLinkId,
 			languageId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId,
+		}).then(({fragmentEntryLink}) => {
+			dispatch(
+				updateEditableValuesAction({
+					content: fragmentEntryLink.content,
+					editableValues,
+					fragmentEntryLinkId,
+					segmentsExperienceId,
+				})
+			);
+
+			clearPageContents();
 		});
-
-		// If a newer request started for this fragment, skip this response
-		// so we don't replace the latest state with old data. Nothing is
-		// lost: each request sends the full editable values.
-
-		if (latestRequestIds.get(fragmentEntryLinkId) !== requestId) {
-			return;
-		}
-
-		latestRequestIds.delete(fragmentEntryLinkId);
-
-		dispatch(
-			updateEditableValuesAction({
-				content: fragmentEntryLink.content,
-				editableValues,
-				fragmentEntryLinkId,
-				segmentsExperienceId,
-			})
-		);
-
-		clearPageContents();
 	};
 }

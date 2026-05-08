@@ -11,6 +11,7 @@
 	import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 	import java.util.ArrayList;
+	import java.util.Date;
 	import java.util.List;
 	import java.util.Map;
 	import java.util.Objects;
@@ -115,12 +116,20 @@ class ${entity.name}ModelArgumentsResolver implements ArgumentsResolver {
 		for (int i = 0; i < arguments.length; i ++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ${entity.variableName}ModelImpl.getColumnOriginalValue(columnName);
+				value = ${entity.variableName}ModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = ${entity.variableName}ModelImpl.getColumnValue(columnName);
+				value = ${entity.variableName}ModelImpl.getColumnValue(columnName);
 			}
+
+			if (value instanceof Date date) {
+				value = date.getTime();
+			}
+
+			arguments[i] = value;
 		}
 
 		return arguments;

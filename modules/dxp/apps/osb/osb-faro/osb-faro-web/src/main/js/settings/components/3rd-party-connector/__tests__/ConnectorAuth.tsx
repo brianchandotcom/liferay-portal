@@ -28,12 +28,8 @@ const buildConfig = (
 	languages: {
 		connectDescription: 'desc',
 		connectTitle: 'Connect Acme',
-		disconnectedAlert: 'disconnected',
 		endpointHelper: 'helper text',
 		endpointLabel: 'ENDPOINT_LABEL_ACME',
-		reconnectHelper: 'reconnect',
-		successAlert: 'success',
-		syncHelper: 'sync',
 		tokenLabel: 'TOKEN_LABEL_ACME'
 	},
 	singleton: true,

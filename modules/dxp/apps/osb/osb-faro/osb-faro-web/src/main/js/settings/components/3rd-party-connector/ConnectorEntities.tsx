@@ -4,45 +4,38 @@ import ClaySticker from '@clayui/sticker';
 import Label from '@clayui/label';
 import React from 'react';
 import {ConnectorEntityDescriptor} from './types';
+import {getEntityDisplay} from './getEntityDisplay';
 import {sub} from 'shared/util/lang';
 
-type ConnectionStatus = 'connected' | 'disconnected';
-
 interface IConnectorEntitiesProps {
-	connectionStatus: ConnectionStatus;
 	entities: ConnectorEntityDescriptor[];
-	syncedCounts: {[accessor: string]: number | undefined};
+	syncedCounts: {[entity: string]: number | undefined};
 }
 
 const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
-	connectionStatus,
 	entities,
 	syncedCounts
 }) => (
 	<div className='pt-1'>
 		<ClayList className='mb-0'>
-			{entities.map(entity => {
-				const count = syncedCounts[entity.accessor];
+			{entities.map(({entity}) => {
+				const {icon, label} = getEntityDisplay(entity);
+				const count = syncedCounts[entity];
+				const configured = typeof count === 'number' && count > 0;
 
 				return (
-					<ClayList.Item flex key={entity.accessor}>
+					<ClayList.Item flex key={entity}>
 						<ClayList.ItemField>
 							<ClaySticker displayType='unstyled'>
 								<ClayIcon
 									className='text-secondary'
-									symbol={entity.icon}
+									symbol={icon}
 								/>
 							</ClaySticker>
 						</ClayList.ItemField>
 
 						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								{entity.label}
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>
-								{entity.description}
-							</ClayList.ItemText>
+							<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
 
 							{typeof count === 'number' && count >= 0 && (
 								<ClayList.ItemText>
@@ -57,14 +50,12 @@ const ConnectorEntities: React.FC<IConnectorEntitiesProps> = ({
 						<ClayList.ItemField className='justify-content-center'>
 							<Label
 								displayType={
-									connectionStatus === 'connected'
-										? 'success'
-										: 'secondary'
+									configured ? 'success' : 'secondary'
 								}
 							>
-								{connectionStatus === 'connected'
-									? Liferay.Language.get('connected')
-									: Liferay.Language.get('disconnected')}
+								{Liferay.Language.get(
+									configured ? 'configured' : 'unconfigured'
+								)}
 							</Label>
 						</ClayList.ItemField>
 					</ClayList.Item>

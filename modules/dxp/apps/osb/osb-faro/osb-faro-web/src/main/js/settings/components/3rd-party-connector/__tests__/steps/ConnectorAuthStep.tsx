@@ -41,12 +41,8 @@ const buildConfig = (
 	languages: {
 		connectDescription: 'connectDescription',
 		connectTitle: 'connectTitle',
-		disconnectedAlert: 'disconnectedAlert',
 		endpointHelper: 'endpointHelper',
 		endpointLabel: 'endpointLabel',
-		reconnectHelper: 'reconnectHelper',
-		successAlert: 'successAlert',
-		syncHelper: 'syncHelper',
 		tokenLabel: 'tokenLabel'
 	},
 	singleton: false,

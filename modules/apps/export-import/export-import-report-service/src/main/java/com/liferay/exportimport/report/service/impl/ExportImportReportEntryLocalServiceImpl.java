@@ -113,6 +113,49 @@ public class ExportImportReportEntryLocalServiceImpl
 			exportImportReportEntry);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public ExportImportReportEntry addMissingReferenceExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId,
+		String modelNameLanguageKey) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntryPersistence.create(
+				counterLocalService.increment());
+
+		exportImportReportEntry.setGroupId(groupId);
+		exportImportReportEntry.setCompanyId(companyId);
+		exportImportReportEntry.setClassExternalReferenceCode(
+			classExternalReferenceCode);
+		exportImportReportEntry.setClassNameId(classNameId);
+		exportImportReportEntry.setExportImportConfigurationId(
+			exportImportConfigurationId);
+		exportImportReportEntry.setErrorMessage(
+			_language.format(
+				LocaleUtil.US,
+				"missing-reference-entity-x-with-external-reference-code-x-" +
+					"in-scope-x-was-not-found-please-ensure-the-referenced-" +
+						"entity-is-imported",
+				new String[] {
+					GetterUtil.getString(modelNameLanguageKey, "<unknown>"),
+					GetterUtil.getString(
+						classExternalReferenceCode, "<unknown>"),
+					String.valueOf(groupId)
+				}));
+		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
+		exportImportReportEntry.setOrigin(
+			ExportImportReportEntryUtil.getOrigin());
+		exportImportReportEntry.setType(
+			ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE);
+		exportImportReportEntry.setStatus(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
+
+		return exportImportReportEntryPersistence.update(
+			exportImportReportEntry);
+	}
+
 	@Override
 	public List<ExportImportReportEntry> getExportImportReportEntries(
 		long companyId, long exportImportConfigurationId) {
@@ -173,6 +216,29 @@ public class ExportImportReportEntryLocalServiceImpl
 				groupId, companyId, classExternalReferenceCode, classNameId,
 				classPK, exportImportConfigurationId, errorMessage,
 				errorStacktrace, modelNameLanguageKey);
+	}
+
+	@Override
+	public ExportImportReportEntry
+		getOrAddMissingReferenceExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE, false);
+
+		if (exportImportReportEntry != null) {
+			return exportImportReportEntry;
+		}
+
+		return exportImportReportEntryLocalService.
+			addMissingReferenceExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelNameLanguageKey);
 	}
 
 	@Override

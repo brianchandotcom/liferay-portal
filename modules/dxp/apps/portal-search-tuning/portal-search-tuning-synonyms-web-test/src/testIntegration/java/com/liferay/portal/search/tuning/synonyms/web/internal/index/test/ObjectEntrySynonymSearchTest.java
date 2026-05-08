@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -45,6 +46,7 @@ import jakarta.portlet.ActionRequest;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -93,7 +95,14 @@ public class ObjectEntrySynonymSearchTest {
 
 		_addSynonymSets();
 
-		_objectDefinition = _addLocalizedObjectDefinition();
+		_objectDefinition = _addObjectDefinition();
+
+		// The synonym test values are placed in the localized "body" field
+		// (not the title field). The "title" field holds a random value with a
+		// non-synonym prefix so the wildcard query against the separately
+		// indexed "objectEntryTitle" field cannot match any synonym token and
+		// produce false positives, isolating the search to the
+		// nestedFieldArray.value_<lang> path the fix targets.
 
 		_addObjectEntry("Query Builder Initiative");
 		_addObjectEntry("UQB Initiative");
@@ -137,9 +146,7 @@ public class ObjectEntrySynonymSearchTest {
 		_assertSearchCount("uqb", 2);
 	}
 
-	private static ObjectDefinition _addLocalizedObjectDefinition()
-		throws Exception {
-
+	private static ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, _user.getUserId(), 0, null, true, false, true, false,
@@ -152,14 +159,32 @@ public class ObjectEntrySynonymSearchTest {
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.emptyList(),
-				Collections.singletonList(
+				Arrays.asList(
+					new TextObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Body")
+					).localized(
+						true
+					).name(
+						_BODY_FIELD_NAME
+					).build(),
+					new TextObjectFieldBuilder(
+					).indexed(
+						true
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("Summary")
+					).localized(
+						true
+					).name(
+						_SUMMARY_FIELD_NAME
+					).build(),
 					new TextObjectFieldBuilder(
 					).indexed(
 						true
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap("Title")
-					).localized(
-						true
 					).name(
 						_TITLE_FIELD_NAME
 					).build()),
@@ -179,16 +204,26 @@ public class ObjectEntrySynonymSearchTest {
 			_user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private static void _addObjectEntry(String englishValue) throws Exception {
+	private static void _addObjectEntry(String bodyEnglishValue)
+		throws Exception {
+
 		_objectEntryLocalService.addObjectEntry(
 			0, _user.getUserId(), _objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				_TITLE_FIELD_NAME + "_i18n",
+				_BODY_FIELD_NAME + "_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US), englishValue
+					LocaleUtil.toLanguageId(LocaleUtil.US), bodyEnglishValue
 				).build()
+			).put(
+				_SUMMARY_FIELD_NAME + "_i18n",
+				HashMapBuilder.put(
+					LocaleUtil.toLanguageId(LocaleUtil.US),
+					_NOISE_PREFIX + RandomTestUtil.randomString()
+				).build()
+			).put(
+				_TITLE_FIELD_NAME, _NOISE_PREFIX + RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -244,11 +279,17 @@ public class ObjectEntrySynonymSearchTest {
 			expectedCount, documents.size());
 	}
 
+	private static final String _BODY_FIELD_NAME = "body";
+
+	private static final String _NOISE_PREFIX = "noise";
+
+	private static final String _SUMMARY_FIELD_NAME = "summary";
+
 	private static final String[] _SYNONYM_SETS = {
 		"product delivery,PD", "query,uqb"
 	};
 
-	private static final String _TITLE_FIELD_NAME = "able";
+	private static final String _TITLE_FIELD_NAME = "title";
 
 	private static Long _companyId;
 

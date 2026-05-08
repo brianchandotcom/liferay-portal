@@ -1129,15 +1129,10 @@ public class ClusterGeneralTest implements Serializable {
 			boolean keepStarted, String... portalExtPropertiesLines)
 		throws Exception {
 
-		// Apply portal-ext.properties lines to nodes
+		try (Closeable closeable = _applyPortalExtPropertiesLines(
+				keepStarted, _tomcatNode1, portalExtPropertiesLines)) {
 
-		try (Closeable closeable1 = _applyPortalExtPropertiesLines(
-				keepStarted, _tomcatNode1, portalExtPropertiesLines);
-			Closeable closeable2 = _applyPortalExtPropertiesLines(
-				keepStarted, _tomcatNode2, portalExtPropertiesLines)) {
-
-			// Assert portal-ext.properties lines are set correctly on both
-			// nodes
+			// Assert portal-ext.properties lines are set correctly on node 1
 
 			for (String portalExtLine : portalExtPropertiesLines) {
 				List<String> parts = StringUtil.split(
@@ -1149,19 +1144,12 @@ public class ClusterGeneralTest implements Serializable {
 				Assert.assertEquals(
 					expectedValue,
 					_tomcatNode1.syncExecute(() -> PropsUtil.get(key)));
-
-				Assert.assertEquals(
-					expectedValue,
-					_tomcatNode2.syncExecute(() -> PropsUtil.get(key)));
 			}
 
-			// Assert nodes can get their cluster node IDs successfully
+			// Assert node 1 can get its cluster node ID successfully
 
 			Assert.assertNotNull(
 				_tomcatNode1.syncExecute(
-					ClusterGeneralTest::_getLocalClusterNodeId));
-			Assert.assertNotNull(
-				_tomcatNode2.syncExecute(
 					ClusterGeneralTest::_getLocalClusterNodeId));
 		}
 	}

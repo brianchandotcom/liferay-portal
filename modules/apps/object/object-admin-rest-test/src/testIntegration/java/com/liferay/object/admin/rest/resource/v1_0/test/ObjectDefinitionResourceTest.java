@@ -556,6 +556,47 @@ public class ObjectDefinitionResourceTest
 			},
 			emptyObjectDefinition.getStatus());
 
+		// Empty system object definition created by relationship object field
+
+		ObjectDefinition randomSystemObjectDefinition =
+			_randomModifiableSystemObjectDefinition();
+
+		externalReferenceCode =
+			ObjectDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
+
+		ObjectField systemRelationshipObjectField =
+			_createRelationshipObjectField(externalReferenceCode);
+
+		randomSystemObjectDefinition.setObjectFields(
+			ArrayUtil.append(
+				randomSystemObjectDefinition.getObjectFields(),
+				systemRelationshipObjectField));
+
+		testPostObjectDefinition_addObjectDefinition(
+			randomSystemObjectDefinition);
+
+		emptyObjectDefinition =
+			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
+				externalReferenceCode);
+
+		Assert.assertEquals(
+			new Status() {
+				{
+					code = WorkflowConstants.STATUS_EMPTY;
+					label = WorkflowConstants.getStatusLabel(
+						WorkflowConstants.STATUS_EMPTY);
+					label_i18n = _language.get(
+						LanguageResources.getResourceBundle(
+							LocaleUtil.getDefault()),
+						WorkflowConstants.getStatusLabel(
+							WorkflowConstants.STATUS_EMPTY));
+				}
+			},
+			emptyObjectDefinition.getStatus());
+		Assert.assertTrue(emptyObjectDefinition.getSystem());
+
 		// Enable index search
 
 		randomObjectDefinition = randomObjectDefinition();

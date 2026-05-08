@@ -183,7 +183,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
-		if (commerceTierPriceEntry == null) {
+		if ((commerceTierPriceEntry == null) || (discount == null)) {
 			return StringPool.BLANK;
 		}
 

@@ -747,3 +747,71 @@ test(
 		}
 	}
 );
+
+test(
+	'Permissions of a Content Structure can be modified',
+	{tag: '@LPD-89302'},
+	async ({apiHelpers, page, structuresPage}) => {
+		const objectDefinition =
+			(await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'L_CMS_CONTENT_STRUCTURES',
+				scope: 'depot',
+				status: {code: 0},
+			})) as ObjectDefinition;
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const structureName = objectDefinition.name;
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Permissions',
+			filter: structureName,
+		});
+
+		const permissionsDialog = page.getByRole('dialog', {
+			name: 'Permissions',
+		});
+		const permissionsFrame = permissionsDialog.frameLocator('iframe');
+
+		const siteMemberDeleteCheckbox = permissionsFrame.getByLabel(
+			'Give Delete permission to users with the Site Member role.'
+		);
+		const siteMemberPermissionsCheckbox = permissionsFrame.getByLabel(
+			'Give Permissions permission to users with the Site Member role.'
+		);
+		const siteMemberUpdateCheckbox = permissionsFrame.getByLabel(
+			'Give Update permission to users with the Site Member role.'
+		);
+		const siteMemberViewCheckbox = permissionsFrame.getByLabel(
+			'Give View permission to users with the Site Member role.'
+		);
+
+		await siteMemberDeleteCheckbox.check();
+		await siteMemberPermissionsCheckbox.check();
+		await siteMemberUpdateCheckbox.check();
+		await siteMemberViewCheckbox.check();
+
+		await permissionsFrame.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(permissionsFrame);
+
+		await permissionsDialog.getByLabel('Close', {exact: true}).click();
+
+		await expect(permissionsDialog).not.toBeAttached();
+
+		await structuresPage.execItemAction({
+			action: 'Permissions',
+			filter: structureName,
+		});
+
+		await expect(siteMemberDeleteCheckbox).toBeChecked();
+		await expect(siteMemberPermissionsCheckbox).toBeChecked();
+		await expect(siteMemberUpdateCheckbox).toBeChecked();
+		await expect(siteMemberViewCheckbox).toBeChecked();
+	}
+);

@@ -16,9 +16,9 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
@@ -62,7 +63,6 @@ import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Collection;
@@ -622,24 +622,24 @@ public class DBUpgrader {
 
 	private static void _updateCompanyKey() throws Exception {
 		try (Connection connection = DataAccess.getConnection();
-			 PreparedStatement selectPreparedStatement =
-				 connection.prepareStatement(
-					 "select companyId from CompanyInfo");
-			 ResultSet resultSet = selectPreparedStatement.executeQuery();
-			 PreparedStatement updatePreparedStatement =
-				 connection.prepareStatement(
-					 "update CompanyInfo set key_ = ? where companyId = ?")) {
 
-			while (resultSet.next()) {
-				long companyId = resultSet.getLong("companyId");
+			PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update CompanyInfo set key_ = ? where companyId = ?")) {
 
-				updatePreparedStatement.setString(
-					1,
-					EncryptorUtil.serializeKey(EncryptorUtil.generateKey()));
-				updatePreparedStatement.setLong(2, companyId);
+			CompanyLocalServiceUtil.forEachCompany(
+				company -> {
+					preparedStatement.setString(
+						1,
+						EncryptorUtil.serializeKey(
+							EncryptorUtil.generateKey()));
+					preparedStatement.setLong(2, company.getCompanyId());
 
-				updatePreparedStatement.executeUpdate();
-			}
+					preparedStatement.addBatch();
+				});
+
+			preparedStatement.executeBatch();
 		}
 	}
 

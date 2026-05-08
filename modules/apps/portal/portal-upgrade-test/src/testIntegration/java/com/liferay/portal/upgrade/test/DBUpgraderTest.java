@@ -13,6 +13,7 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
@@ -217,7 +218,8 @@ public class DBUpgraderTest {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select companyId, key_ from CompanyInfo");
-			 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
 				originalKeys.put(
@@ -239,34 +241,32 @@ public class DBUpgraderTest {
 			try (PreparedStatement preparedStatement =
 					_connection.prepareStatement(
 						"select companyId, key_ from CompanyInfo");
-				 ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				while (resultSet.next()) {
-					long companyId = resultSet.getLong("companyId");
 					String key = resultSet.getString("key_");
 
-					Assert.assertNotNull(
-						"key_ must not be null for companyId " + companyId,
-						key);
-					Assert.assertNotNull(
-						"key_ must deserialize to a valid Key for companyId " +
-							companyId,
-						EncryptorUtil.deserializeKey(key));
+					Assert.assertNotNull(key);
+					Assert.assertNotNull(EncryptorUtil.deserializeKey(key));
 				}
 			}
 		}
 		finally {
-			for (Map.Entry<Long, String> entry : originalKeys.entrySet()) {
-				try (PreparedStatement preparedStatement =
-						_connection.prepareStatement(
-							"update CompanyInfo set key_ = ? where " +
-								"companyId = ?")) {
+			String sql = "update CompanyInfo set key_ = ? where companyId = ?";
 
+			try (PreparedStatement preparedStatement =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						_connection, sql)) {
+
+				for (Map.Entry<Long, String> entry : originalKeys.entrySet()) {
 					preparedStatement.setString(1, entry.getValue());
 					preparedStatement.setLong(2, entry.getKey());
 
-					preparedStatement.executeUpdate();
+					preparedStatement.addBatch();
 				}
+
+				preparedStatement.executeBatch();
 			}
 		}
 	}

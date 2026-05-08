@@ -477,31 +477,10 @@ public class SitesImpl implements Sites {
 	public void mergeLayoutSetPrototypeLayouts(Group group, LayoutSet layoutSet)
 		throws Exception {
 
-		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
-
-		layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			layoutSet.getLayoutSetId());
-
-		if (!isLayoutSetMergeable(group, layoutSet)) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
-
-			return;
-		}
-
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		mergeLayoutSetPrototypeLayoutsInBackground(
-			layoutSetPrototype, layoutSet);
+		_mergeLayoutSetPrototypeLayouts(
+			group, layoutSet,
+			Validator.isNull(
+				LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId()));
 	}
 
 	@Override
@@ -777,7 +756,9 @@ public class SitesImpl implements Sites {
 		return cacheFile;
 	}
 
-	protected Map<String, String[]> getLayoutSetPrototypesParameters() {
+	protected Map<String, String[]> getLayoutSetPrototypesParameters(
+		boolean initialPropagation) {
+
 		return LinkedHashMapBuilder.put(
 			PortletDataHandlerKeys.DATA_STRATEGY,
 			new String[] {PortletDataHandlerKeys.DATA_STRATEGY_MIRROR}
@@ -812,7 +793,7 @@ public class SitesImpl implements Sites {
 			PortletDataHandlerKeys.LOGO, new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PERMISSIONS,
-			new String[] {Boolean.TRUE.toString()}
+			new String[] {String.valueOf(initialPropagation)}
 		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
@@ -971,7 +952,8 @@ public class SitesImpl implements Sites {
 	}
 
 	protected void mergeLayoutSetPrototypeLayoutsInBackground(
-			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet)
+			LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet,
+			boolean initialPropagation)
 		throws PortalException {
 
 		if (ExportImportThreadLocal.isExportInProcess() ||
@@ -997,7 +979,8 @@ public class SitesImpl implements Sites {
 			return;
 		}
 
-		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters();
+		Map<String, String[]> parameterMap = getLayoutSetPrototypesParameters(
+			initialPropagation);
 
 		parameterMap.put(
 			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
@@ -1083,7 +1066,7 @@ public class SitesImpl implements Sites {
 
 						importLayoutSetPrototype(
 							layoutSetPrototype, groupId, privateLayout,
-							getLayoutSetPrototypesParameters(), true);
+							getLayoutSetPrototypesParameters(true), true);
 					}
 					finally {
 						MergeLayoutPrototypesThreadLocal.setInProgress(
@@ -1151,6 +1134,37 @@ public class SitesImpl implements Sites {
 		}
 
 		return owner;
+	}
+
+	private void _mergeLayoutSetPrototypeLayouts(
+			Group group, LayoutSet layoutSet, boolean initialPropagation)
+		throws Exception {
+
+		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+
+			return;
+		}
+
+		MergeLayoutPrototypesThreadLocal.setSkipMerge(true);
+
+		layoutSet = _layoutSetLocalService.fetchLayoutSet(
+			layoutSet.getLayoutSetId());
+
+		if (!isLayoutSetMergeable(group, layoutSet)) {
+			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+
+			return;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		mergeLayoutSetPrototypeLayoutsInBackground(
+			layoutSetPrototype, layoutSet, initialPropagation);
 	}
 
 	private void _recordSyncResultIfTracked(int backgroundTaskStatus) {

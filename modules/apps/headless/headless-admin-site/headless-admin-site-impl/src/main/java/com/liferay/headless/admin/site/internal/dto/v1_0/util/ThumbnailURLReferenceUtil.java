@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Lourdes Fernández Besada
  */
-public class ThumbnailUtil {
+public class ThumbnailURLReferenceUtil {
 
 	public static ThumbnailURLReference
 			getPortletFileEntryThumbnailURLReference(long fileEntryId)

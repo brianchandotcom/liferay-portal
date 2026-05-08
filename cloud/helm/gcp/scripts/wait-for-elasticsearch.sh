@@ -14,7 +14,14 @@ main() {
 
 	local authenticated_health_url="${protocol}://${ELASTICSEARCH_USERNAME}:${ELASTICSEARCH_PASSWORD}@${ELASTICSEARCH_URL#*//}/_cluster/health"
 
-	until wget -qO- "${authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
+	local wget_args=""
+
+	if [ "${protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
+	then
+		wget_args="--no-check-certificate"
+	fi
+
+	until wget ${wget_args} -qO- "${authenticated_health_url}" | grep -qE "\"status\":\"(green|yellow)\""
 	do
 		_log_json "Waiting for Elasticsearch (current status: \"red\" or \"unreachable\")."
 

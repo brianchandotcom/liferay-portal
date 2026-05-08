@@ -19,7 +19,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderItemObjectDefinitionIdException;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -306,27 +305,28 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				serviceBuilderObjectDefinition.getObjectDefinitionId());
 		}
 
-		com.liferay.object.model.ObjectFolder
-			defaultServiceBuilderObjectFolder =
-				_objectFolderService.getObjectFolderByExternalReferenceCode(
-					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_DEFAULT,
-					contextCompany.getCompanyId());
+		if (!objectFolderItems.isEmpty()) {
+			com.liferay.object.model.ObjectFolder
+				defaultServiceBuilderObjectFolder =
+					_objectFolderLocalService.getDefaultObjectFolder(
+						contextCompany.getCompanyId());
 
-		for (Long objectDefinitionId : serviceBuilderObjectDefinitionIds) {
-			com.liferay.object.model.ObjectDefinition
-				serviceBuilderObjectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectDefinitionId);
+			for (Long objectDefinitionId : serviceBuilderObjectDefinitionIds) {
+				com.liferay.object.model.ObjectDefinition
+					serviceBuilderObjectDefinition =
+						_objectDefinitionLocalService.fetchObjectDefinition(
+							objectDefinitionId);
 
-			if (serviceBuilderObjectDefinition.isLinkedToObjectFolder(
-					objectFolderId)) {
+				if (serviceBuilderObjectDefinition.isLinkedToObjectFolder(
+						objectFolderId)) {
 
-				continue;
+					continue;
+				}
+
+				_objectDefinitionLocalService.updateObjectFolderId(
+					objectDefinitionId,
+					defaultServiceBuilderObjectFolder.getObjectFolderId());
 			}
-
-			_objectDefinitionLocalService.updateObjectFolderId(
-				objectDefinitionId,
-				defaultServiceBuilderObjectFolder.getObjectFolderId());
 		}
 
 		objectFolderItems.removeAll(unlinkedObjectFolderItems);

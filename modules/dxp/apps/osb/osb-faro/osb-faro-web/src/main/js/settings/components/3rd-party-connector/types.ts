@@ -49,3 +49,9 @@ export interface ConnectorConfig {
 	slug: string;
 	type: string;
 }
+
+export enum ConnectorStatus {
+	Active = 'ACTIVE',
+	Disconnected = 'DISCONNECTED',
+	Inactive = 'INACTIVE'
+}

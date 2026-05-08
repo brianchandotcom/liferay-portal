@@ -235,7 +235,8 @@ info:
     description:
         "Read-only headless REST API for Liferay Analytics Cloud. Exposes events, pages, and asset-summary metrics for
         use as MCP tools and external integrations. All endpoints are scoped to a provisioned Analytics Cloud
-        workspace."
+        workspace.. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        'com.liferay.osb.faro.rest.client', and version '1.0.0'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -252,7 +253,7 @@ paths:
                 and view counts along with their period-over-period trend percentages. Optionally narrow results to a
                 single channel (also known as property) or to a date range. Use this to answer 'what content is
                 performing best' and to pick assets for deeper drill-down via `getSitePagesPage`."
-            operationId: getSiteAssetSummariesPage
+            operationId: getWorkspaceGroupAssetSummariesPage
             parameters:
                 -   in: path
                     description:
@@ -338,7 +339,7 @@ paths:
                 "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a
                 date range. For aggregated metrics across events, prefer `getSiteAssetSummariesPage` or
                 `getSitePagesPage`."
-            operationId: getSiteChannelEventsPage
+            operationId: getWorkspaceGroupChannelEventsPage
             parameters:
                 -   in: path
                     description:
@@ -423,7 +424,7 @@ paths:
                 "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
                 optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
                 visitor, bounce, exit, and access-path metrics for each page. Use this for 'top pages' style queries."
-            operationId: getSitePagesPage
+            operationId: getWorkspaceGroupPagesPage
             parameters:
                 -   in: path
                     description:

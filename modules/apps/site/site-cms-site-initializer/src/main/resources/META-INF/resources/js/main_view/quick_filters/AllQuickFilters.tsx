@@ -25,6 +25,7 @@ import {
 	FDS_FILTER_ID,
 	WORKFLOW_STATUS,
 } from '../../common/utils/constants';
+import toDatePart from '../../common/utils/toDatePart';
 import {allFDSAtom} from './atoms';
 import {QUICK_FILTER_TYPES, QuickFilterType} from './constants';
 
@@ -36,14 +37,6 @@ interface QuickFilterCounts {
 	inDraft: number;
 	reviewDateOverdue: number;
 	total: number;
-}
-
-function toDatePart(date: Date) {
-	return {
-		day: date.getDate(),
-		month: date.getMonth() + 1,
-		year: date.getFullYear(),
-	};
 }
 
 function clearedFilter(filter: IBaseFilterState): IBaseFilterState {

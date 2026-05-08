@@ -44,25 +44,25 @@ public class FieldOrderConstants {
 	};
 
 	public static final String[] FIELD_ORDER_NAMES = {
-		"accountId", "channelId", "createDate", "currencyCode", "customFields",
-		"externalReferenceCode", "id", "modifiedDate", "orderDate",
-		"orderItems", "orderStatus", "orderTypeExternalReferenceCode",
-		"orderTypeId", "paymentMethod", "paymentStatus", "status", "total",
-		"userId"
+		"accountExternalReferenceCode", "accountId", "channelId", "createDate",
+		"currencyCode", "customFields", "externalReferenceCode", "id",
+		"modifiedDate", "orderDate", "orderItems", "orderStatus",
+		"orderTypeExternalReferenceCode", "orderTypeId", "paymentMethod",
+		"paymentStatus", "status", "total", "userId"
 	};
 
 	public static final String[] FIELD_ORDER_REQUIRED_NAMES = {
-		"accountId", "channelId", "createDate", "currencyCode", "customFields",
-		"externalReferenceCode", "id", "modifiedDate", "orderDate",
-		"orderItems", "orderStatus", "orderTypeExternalReferenceCode",
-		"orderTypeId", "paymentMethod", "paymentStatus", "status", "total",
-		"userId"
+		"accountExternalReferenceCode", "accountId", "channelId", "createDate",
+		"currencyCode", "customFields", "externalReferenceCode", "id",
+		"modifiedDate", "orderDate", "orderItems", "orderStatus",
+		"orderTypeExternalReferenceCode", "orderTypeId", "paymentMethod",
+		"paymentStatus", "status", "total", "userId"
 	};
 
 	public static final String[] FIELD_ORDER_TYPES = {
-		"Integer", "Integer", "String", "String", "Object", "String", "Integer",
-		"String", "String", "Array", "Integer", "String", "Integer", "String",
-		"Integer", "Integer", "BigDecimal", "Integer"
+		"String", "Integer", "Integer", "String", "String", "Object", "String",
+		"Integer", "String", "String", "Array", "Integer", "String", "Integer",
+		"String", "Integer", "Integer", "BigDecimal", "Integer"
 	};
 
 }

@@ -39,6 +39,8 @@ Skip generated files. The automatic formatter already does this via `BaseSourceP
 
 These files are overwritten on the next build, so manual edits are lost and only pollute the diff.
 
+// TODO: the automatic format source changes take precedence over the manual rule.
+
 ## Rules
 
 ### Rule 1: Chained Method Call Ordering
@@ -466,6 +468,7 @@ Update the call sites at the same time.
 
 ### Rule 23: No Blank Line Between Paired Statements
 
+// TODO: this is not a complete explanation, Brian uses new lines for grouping sections. If there is no new line the lines need to be sorted, if they cannot be sorted, then use a new line.
 **Why:** Two statements that form a tight pair (parallel setup, parallel assertions, paired declarations) read as one logical step; a blank line between them suggests two paragraphs and slows the reader down.
 
 **Examples:**
@@ -561,6 +564,8 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 29: Blank Line After a Logical Setup Block
 
+// TODO: Check this one agains the automatic rules, I believe when decalring a new variable source formatter already adds the new line.
+
 **Why:** Companion to Rule 23: when one logical setup block finishes (configuring a context object, mocking a service, building a fixture), a single blank line marks the boundary so the next block reads as a new paragraph.
 
 **Examples:**
@@ -605,6 +610,8 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 32: Prefer `@Before` and `@After` Over `@BeforeClass` and `@AfterClass`
 
+// TODO: this is too restrictive, sometimes setup class helps make tests faster.
+
 **Why:** Instance-level setup gives each test a fresh state; class-level setup creates hidden coupling between tests that share the static fixture, and the failure mode is silent when one test mutates it.
 
 **Examples:**
@@ -646,6 +653,8 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 35: Declare a Variable Inside the `try` Block When Used Only There
 
+// TODO: This is a particular case of the as used brian rule. Maybe we need to generalize it.
+
 **Why:** Hoisting a local out of the `try` only makes sense when the `catch` or `finally` needs it; otherwise the wider scope adds visual noise and a reader has to confirm the local is not reused later.
 
 **Examples:**
@@ -670,6 +679,8 @@ The noun form belongs in identifiers and section headers.
 ```
 
 ### Rule 36: One Dependency Per Line in Gradle `dependencies` Blocks
+
+// TODO: I believe this is fixed automatically by sf
 
 **Why:** Multiple dependencies on a single line obscure additions and removals in diffs and break the alphabetical order surrounding `build.gradle` files use.
 
@@ -698,6 +709,7 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 38: Use Passive Past Tense in Status and Error Messages
 
+// TODO: Isn't this a dupe or some other rule we have?
 **Why:** Status and error sentences read as complete clauses when they include the auxiliary verb; "X was not found" beats "X not found", and "Unable to delete X" beats "Cannot delete X" / "Failed to delete X" / "Error deleting X".
 
 **Examples:**
@@ -713,6 +725,8 @@ The noun form belongs in identifiers and section headers.
 ```
 
 ### Rule 39: Separate Must-Be-First or Must-Be-Last Items With a Blank Line
+
+// TODO: This is a special case of the sorting of blocks. We should consider generalizing with the other related rules.
 
 **Why:** When a list is mostly alphabetical but a few items must lead or trail (initialization, defaults, "all"), a blank line between the special items and the sorted block signals that the leading items are intentionally first and that the rest of the order has no further meaning.
 
@@ -746,6 +760,8 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 41: Combine Consecutive `StringBundler.append` of Literal Strings
 
+// TODO: I believe sf catches this.
+
 **Why:** Two literal-only `append` calls collapse to one without changing behavior, and the merged form lets the reader see the full literal in a single line.
 
 **Examples:**
@@ -757,6 +773,8 @@ The noun form belongs in identifiers and section headers.
 ```
 
 ### Rule 42: Drop the Fully-Qualified Class Name When the Class Is Imported
+
+// TODO: I believe sf catches this.
 
 **Why:** Once a class is in the import block, the fully-qualified form at the use site adds noise and forces a line wrap; the simple name is what every other reference in the file already uses.
 
@@ -787,6 +805,8 @@ The noun form belongs in identifiers and section headers.
 ```
 
 ### Rule 44: Class-Level Constants Live at the Top of the Class, Sorted
+
+// TODO: I believe sf catches this.
 
 **Why:** Constants scattered between methods force the reader to scan the whole class to confirm what is and is not a constant; a single sorted block at the top, after fields, is the canonical place to look.
 
@@ -842,6 +862,8 @@ The noun form belongs in identifiers and section headers.
 
 ### Rule 47: Hyphenation Is Consistent Within a File
 
+// TODO: I believe this could be too ambiguous, I'd rather delete it.
+
 **Why:** Mixing `non-account` and `nonaccount` (or any other hyphenation variant) inside a single file makes the term read as two different concepts; pick one form per file and apply it everywhere.
 
 **Examples:**
@@ -876,6 +898,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 
 **Why:** When an anonymous-class instance is referenced exactly once at the next call site, naming it adds a hop without adding meaning; passing the `new ...() {}` directly into the call removes the local.
 
+// TODO: I believe this is a specific case of the inline single use stuff. sf catches part of it, study and decide what to do.
+
 **Examples:**
 
 ```diff
@@ -886,6 +910,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 ```
 
 ### Rule 50: Constants in the Same Group Share a Value Shape
+
+// TODO: I believe this is too ambiguous and could cause issues.
 
 **Why:** When a contiguous block of constants names the same kind of thing (renderer keys, attribute names, action IDs), every value should follow the same shape — all class FQNs, or all symbolic strings, but not a mix — so a reader knows what to expect from the group at a glance.
 
@@ -916,6 +942,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 
 ### Rule 52: Blank Line Between Dependent Resources in `try`-With-Resources
 
+// TODO: Check if sf catches this
+
 **Why:** When a multi-resource `try` mixes independent resources with one that consumes them, a blank line between the independent group and the consumer makes the dependency visible at the resource declaration level instead of forcing the reader to trace it through the body.
 
 **Examples:**
@@ -929,6 +957,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 ```
 
 ### Rule 53: `HashMapBuilder` Is Overkill for Two or Three Static Entries
+
+// TODO: Too specific... I think this is just telling us to avoid unnecessary intermediate variables, computations, etc...
 
 **Why:** A `HashMapBuilder.put(...).put(...).build()` chain for a couple of static entries adds visual machinery that earns its keep only when the map gains more entries or conditional ones; for a two-or-three-way lookup, an `if/else` is shorter and reads as the code's intent.
 
@@ -954,6 +984,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 
 ### Rule 54: Extract Repeated Test Literals Into `private static final` Constants
 
+// TODO: I am not sure about this one... I actually avoid it in general... Check with brian.
+
 **Why:** A literal repeated across mock setups and assertions starts to read like a variable; promoting it to a `private static final` makes the value's identity explicit and prevents one of the call sites from drifting away from the others. Boundary with Rule 12: this rule catches the *repeated* case, while Rule 12 still inlines a *single-use* literal.
 
 **Examples:**
@@ -971,6 +1003,8 @@ When the system under test calls `_serviceA` first and `_serviceB` second:
 ```
 
 ### Rule 55: Do Not Wrap and Rethrow a Checked Exception
+
+// TODO: This is sometimes useful when the method signature does not allow exceptions. It needs to be refined as sometimes the method signature cannot be changed.
 
 **Why:** Wrapping a caught exception in a generic runtime exception (or a framework-specific equivalent) hides both the original type and the original stack frame; let the original propagate by declaring it on the method, or use a known utility for signature-blocked cases.
 

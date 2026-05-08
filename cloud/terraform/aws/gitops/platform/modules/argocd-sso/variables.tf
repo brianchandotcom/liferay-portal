@@ -1,6 +1,7 @@
 variable "argocd_sso_config" {
 	type=object({
-		custom_values_yaml=optional(string)
+		dex_config=optional(any)
 		enable_sso=optional(bool, false)
+		rbac=optional(any)
 	})
 }

@@ -591,7 +591,12 @@ public class PullRequest {
 
 			@Override
 			public String execute() {
-				_refreshJSONObject();
+				if (_firstAttempt) {
+					_firstAttempt = false;
+				}
+				else {
+					_refreshJSONObject();
+				}
 
 				String mergeableState = _jsonObject.getString(
 					"mergeable_state");
@@ -602,6 +607,8 @@ public class PullRequest {
 
 				return mergeableState;
 			}
+
+			private boolean _firstAttempt = true;
 
 		};
 

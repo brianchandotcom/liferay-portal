@@ -43,13 +43,6 @@ public class PropertiesPortalFileCheck extends BaseFileCheck {
 
 		String shortFileName = fileName.substring(pos + 1);
 
-		if (absolutePath.contains("/workspaces/") &&
-			!absolutePath.contains("/playwright/") &&
-			shortFileName.equals("portal-ext.properties")) {
-
-			return content;
-		}
-
 		if (shortFileName.equals("test-portal-impl.properties") ||
 			((isPortalSource() || isSubrepository()) &&
 			 shortFileName.startsWith("portal") &&

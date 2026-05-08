@@ -20,6 +20,28 @@ import org.junit.Test;
 public class BasePersistenceImplTest {
 
 	@Test
+	public void testConvertCaseFunctionReturnsEmptyStringForNullValue() {
+		Function<TestModel, Object> function =
+			BasePersistenceImpl.convertCaseFunction(testModel -> null);
+
+		Assert.assertEquals(
+			"null must convert to \"\" so the finder invalidation key " +
+				"matches the cache key for a null input",
+			"", function.apply(_TEST_MODEL));
+	}
+
+	@Test
+	public void testConvertCaseFunctionReturnsLowercaseForPopulatedValue() {
+		Function<TestModel, Object> function =
+			BasePersistenceImpl.convertCaseFunction(testModel -> "Alice");
+
+		Assert.assertEquals(
+			"value must lowercase so the finder invalidation key matches the " +
+				"cache key",
+			"alice", function.apply(_TEST_MODEL));
+	}
+
+	@Test
 	public void testConvertDateFunctionReturnsLongForPopulatedValue() {
 		Date date = new Date(1_234_567_890L);
 

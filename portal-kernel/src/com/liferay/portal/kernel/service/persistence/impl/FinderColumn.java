@@ -132,6 +132,10 @@ public class FinderColumn<T extends BaseModel<T>> {
 	public boolean matches(T entity, Object normalizedValue) {
 		Object entityValue = _valueExtractor.apply(entity);
 
+		if ((_type == Type.STRING) && !_caseSensitive) {
+			entityValue = StringUtil.toLowerCase((String)entityValue);
+		}
+
 		if (_comparator.equals("=")) {
 			return Objects.equals(entityValue, normalizedValue);
 		}
@@ -192,8 +196,14 @@ public class FinderColumn<T extends BaseModel<T>> {
 	}
 
 	public Object normalizeValue(Object value) {
-		if ((_type == Type.STRING) && _convertNull) {
-			return Objects.toString(value, "");
+		if (_type == Type.STRING) {
+			if (!_caseSensitive) {
+				value = StringUtil.toLowerCase((String)value);
+			}
+
+			if (_convertNull) {
+				value = Objects.toString(value, "");
+			}
 		}
 
 		return value;

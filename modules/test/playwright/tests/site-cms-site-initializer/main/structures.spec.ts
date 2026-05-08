@@ -815,3 +815,48 @@ test(
 		await expect(siteMemberViewCheckbox).toBeChecked();
 	}
 );
+
+test(
+	'Content Structure can be scoped to specific spaces',
+	{tag: '@LPD-89302'},
+	async ({apiHelpers, page, structureBuilderPage, structuresPage}) => {
+		const spaceName1 = `Space ${getRandomString()}`;
+		const spaceName2 = `Space ${getRandomString()}`;
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName1,
+			settings: {},
+			type: 'Space',
+		});
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName2,
+			settings: {},
+			type: 'Space',
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: structureLabel,
+			page: structureBuilderPage,
+			spaces: [spaceName1, spaceName2],
+		});
+
+		await structuresPage.goto();
+
+		const row = page.getByRole('row', {name: structureLabel});
+
+		await expect(row).toBeVisible();
+		await expect(row.getByText('All Spaces')).not.toBeVisible();
+
+		await page.getByRole('link', {name: structureLabel}).click();
+
+		await expect(
+			page.locator('.label-secondary', {hasText: spaceName1})
+		).toBeVisible();
+		await expect(
+			page.locator('.label-secondary', {hasText: spaceName2})
+		).toBeVisible();
+	}
+);

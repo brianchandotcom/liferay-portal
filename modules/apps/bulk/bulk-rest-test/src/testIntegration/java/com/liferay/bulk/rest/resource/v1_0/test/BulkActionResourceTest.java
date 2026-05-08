@@ -1301,7 +1301,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				sourceObjectEntryFolder.getGroupId(),
 				sourceObjectEntryFolder.getCompanyId(),
 				sourceObjectEntryFolder.getObjectEntryFolderId()));
-
 		Assert.assertEquals(
 			1,
 			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
@@ -1328,7 +1327,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				sourceObjectEntryFolder.getGroupId(),
 				sourceObjectEntryFolder.getCompanyId(),
 				sourceObjectEntryFolder.getObjectEntryFolderId()));
-
 		Assert.assertEquals(
 			2,
 			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(

@@ -500,6 +500,13 @@ public class FriendlyURLEntryLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static com.liferay.portal.kernel.json.JSONArray
+			getFriendlyURLPublicMappingConflicts(long companyId)
+		throws PortalException {
+
+		return getService().getFriendlyURLPublicMappingConflicts(companyId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -669,4 +676,4 @@ public class FriendlyURLEntryLocalServiceUtil {
 			FriendlyURLEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-721585294
+// LIFERAY-SERVICE-BUILDER-HASH:1729657485

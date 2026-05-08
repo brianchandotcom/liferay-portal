@@ -10,6 +10,11 @@ type Props = {
 	id: string;
 	key: string;
 	pageElements?: PageElement[];
+	widgetInstances?: Array<{
+		widgetConfig?: Record<string, any>;
+		widgetInstanceId?: string;
+		widgetName: string;
+	}>;
 };
 
 export default function getFragmentDefinition({
@@ -19,6 +24,7 @@ export default function getFragmentDefinition({
 	id,
 	key,
 	pageElements,
+	widgetInstances,
 }: Props): PageElement {
 	return {
 		definition: {
@@ -28,6 +34,7 @@ export default function getFragmentDefinition({
 			},
 			fragmentConfig,
 			fragmentFields,
+			widgetInstances,
 		},
 		id,
 		pageElements,

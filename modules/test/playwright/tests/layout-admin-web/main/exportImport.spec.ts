@@ -14,6 +14,7 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {captureScreenshot} from '../../../utils/captureScreenshot';
 import {compareScreenshots} from '../../../utils/compareScreenshots';
 import getRandomString from '../../../utils/getRandomString';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {exportImportPagesTest} from '../../export-import-web/main/fixtures/exportImportPagesTest';
 import getContainerDefinition from '../../layout-content-page-editor-web/main/utils/getContainerDefinition';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
@@ -441,5 +442,105 @@ test(
 		for (let i = 0; i < screenshotsA.length; i++) {
 			compareScreenshots(screenshotsA[i], screenshotsB[i]);
 		}
+	}
+);
+
+test(
+	'Can export and import a site with an embedded Web Content Display in a fragment',
+	{tag: '@LPS-96391'},
+	async ({apiHelpers, exportImportPage, page, site: siteA}) => {
+		test.slow();
+
+		const originalContent = `Original-${getRandomString()}`;
+		const webContentTitle = `WC-${getRandomString()}`;
+
+		// Create a web content on site A
+
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent(
+			{
+				content: originalContent,
+				ddmStructureId: basicWebContentStructureId,
+				groupId: siteA.id,
+				titleMap: {en_US: webContentTitle},
+			}
+		);
+
+		// Create a fragment whose HTML embeds a Web Content Display widget
+
+		const {fragmentCollectionId} =
+			await apiHelpers.jsonWebServicesFragmentCollection.addFragmentCollection(
+				{
+					groupId: siteA.id,
+					name: getRandomString(),
+				}
+			);
+
+		const fragmentEntryName = getRandomString();
+
+		await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
+			fragmentCollectionId,
+			groupId: siteA.id,
+			html: '<lfr-widget-web-content></lfr-widget-web-content>',
+			name: fragmentEntryName,
+		});
+
+		// Create a content page with the fragment, pre-configuring its
+		// embedded Web Content Display to point to the web content above
+
+		const fragmentDefinition = getFragmentDefinition({
+			id: getRandomString(),
+			key: fragmentEntryName,
+			widgetInstances: [
+				{
+					widgetConfig: {
+						articleExternalReferenceCode:
+							webContent.externalReferenceCode,
+						articleId: webContent.articleId,
+						groupId: String(siteA.id),
+					},
+					widgetName:
+						'com_liferay_journal_content_web_portlet_JournalContentPortlet',
+				},
+			],
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([fragmentDefinition]),
+			siteId: siteA.id,
+			title: `Page-${getRandomString()}`,
+		});
+
+		await page.goto(
+			`/web${siteA.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText(originalContent)).toBeVisible();
+
+		// Export site A as a LAR
+
+		await exportImportPage.goToExport(siteA.friendlyUrlPath);
+
+		const exportFilePath = await exportImportPage.export();
+
+		// Create site B and import the LAR into it
+
+		const siteB = await apiHelpers.headlessAdminSite.postSite({
+			name: getRandomString(),
+		});
+
+		await exportImportPage.goToImport(siteB.friendlyUrlPath);
+
+		await exportImportPage.import({filePath: exportFilePath});
+
+		// The imported page on site B shows the same web content
+
+		await page.goto(
+			`/web${siteB.friendlyUrlPath}${layout.friendlyUrlPath}`
+		);
+
+		await expect(page.getByText(originalContent)).toBeVisible();
 	}
 );

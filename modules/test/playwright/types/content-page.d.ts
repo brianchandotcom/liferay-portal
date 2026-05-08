@@ -115,6 +115,11 @@ type PageElement = {
 			widgetConfig?: Record<string, any>;
 			widgetName: string;
 		};
+		widgetInstances?: Array<{
+			widgetConfig?: Record<string, any>;
+			widgetInstanceId?: string;
+			widgetName: string;
+		}>;
 	};
 	id: string;
 	pageElements?: PageElement[];

@@ -236,8 +236,8 @@ describe('SpaceConnectedSitesModal', () => {
 			.closest('li')!;
 
 		expect(
-			within(templateRow).queryByText(/searchable-content/)
-		).not.toBeInTheDocument();
+			within(templateRow).getByText(/searchable-content: no/)
+		).toBeInTheDocument();
 	});
 
 	describe('when hasConnectSitesPermission is true', () => {
@@ -606,14 +606,11 @@ describe('SpaceConnectedSitesModal', () => {
 			await userEvent.click(actionsButton);
 
 			expect(
-				screen.queryByRole('menuitem', {name: 'make-unsearchable'})
-			).not.toBeInTheDocument();
-			expect(
-				screen.queryByRole('menuitem', {name: 'make-searchable'})
-			).not.toBeInTheDocument();
+				await screen.findByRole('menuitem', {name: 'make-searchable'})
+			).toBeInTheDocument();
 
 			await userEvent.click(
-				await screen.findByRole('menuitem', {name: 'disconnect'})
+				screen.getByRole('menuitem', {name: 'disconnect'})
 			);
 
 			await waitFor(() => {

@@ -5,7 +5,6 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
@@ -57,8 +56,6 @@ const ConnectableActions = ({
 	onConnectionDisconnected: (site: Site) => void;
 	site: Site;
 }) => {
-	const isTemplate = isSiteTemplate(site);
-
 	const disconnect = async () => {
 		const {error} = await ConnectedSiteService.disconnectSiteFromSpace(
 			externalReferenceCode,
@@ -73,7 +70,7 @@ const ConnectableActions = ({
 
 		onConnectionDisconnected(site);
 
-		const successMessage = isTemplate
+		const successMessage = isSiteTemplate(site)
 			? Liferay.Language.get(
 					'site-template-x-was-successfully-disconnected-from-the-space'
 				)
@@ -104,21 +101,18 @@ const ConnectableActions = ({
 		}
 	};
 
-	const items = [];
-
-	if (!isTemplate) {
-		items.push({
+	const items = [
+		{
 			label: site.searchable
 				? Liferay.Language.get('make-unsearchable')
 				: Liferay.Language.get('make-searchable'),
 			onClick: changeSearchable,
-		});
-	}
-
-	items.push({
-		label: Liferay.Language.get('disconnect'),
-		onClick: disconnect,
-	});
+		},
+		{
+			label: Liferay.Language.get('disconnect'),
+			onClick: disconnect,
+		},
+	];
 
 	const isSearchableLabel = site.searchable
 		? Liferay.Language.get('yes')
@@ -126,11 +120,9 @@ const ConnectableActions = ({
 
 	return (
 		<div className="align-items-center d-flex">
-			{!isTemplate && (
-				<span className="c-mr-3 text-2 text-secondary">
-					{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
-				</span>
-			)}
+			<span className="c-mr-3 text-2 text-secondary">
+				{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
+			</span>
 
 			<ClayDropDownWithItems
 				items={items}
@@ -489,14 +481,10 @@ export default function SpaceConnectedSitesModal({
 											shape="circle"
 											size="sm"
 										>
-											{isSiteTemplate(connection) ? (
-												<ClayIcon symbol="cloud" />
-											) : (
-												<ClaySticker.Image
-													alt=""
-													src={connection.logo}
-												/>
-											)}
+											<ClaySticker.Image
+												alt=""
+												src={connection.logo}
+											/>
 										</ClaySticker>
 
 										{getConnectionLabel(connection)}

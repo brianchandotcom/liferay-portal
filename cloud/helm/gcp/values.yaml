@@ -10,7 +10,7 @@ liferay-default:
         sidecar.opentelemetry.io/inject: "false"
     autoscaling:
         keda:
-            prometheusServerAddress: https://monitoring.googleapis.com/v1/projects/{{ .Values.global.gcp.projectId }}/location/global/prometheus/
+            prometheusServerAddress: https://monitoring.googleapis.com/v1/projects/{{ .Values.global.gcp.projectId }}/location/global/prometheus
             triggerAuthentication:
                 spec:
                     podIdentity:

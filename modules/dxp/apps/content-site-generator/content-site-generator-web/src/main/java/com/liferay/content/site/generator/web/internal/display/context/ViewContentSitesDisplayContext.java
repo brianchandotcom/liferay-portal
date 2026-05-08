@@ -50,7 +50,7 @@ public class ViewContentSitesDisplayContext {
 	public CreationMenu getCreationMenu() throws Exception {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref("#");
+				dropdownItem.setHref(_getNewRunURL());
 				dropdownItem.setIcon("stars");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new-generator"));
@@ -96,6 +96,14 @@ public class ViewContentSitesDisplayContext {
 			).getParameter(
 				"runId"
 			));
+	}
+
+	private String _getNewRunURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			"/view_content_site_generator.jsp"
+		).buildString();
 	}
 
 	private String _getViewRunURL() {

@@ -114,6 +114,47 @@ test('LPD-30098 Invite user as admin', async ({
 	);
 });
 
+test('LPD-89418 Paste email address to automatically add user in Invite Users modal', async ({
+	apiHelpers,
+	changeTrackingPage,
+	ctCollection,
+	page,
+}) => {
+	const user = await changeTrackingPage.addUserWithPublicationsUserRole();
+
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	await page.getByLabel('View Collaborators').click();
+
+	const input = page.getByPlaceholder('Enter name or email address.');
+
+	await input.click();
+
+	await input.evaluate((element: HTMLInputElement, emailAddress: string) => {
+		const dt = new DataTransfer();
+
+		dt.setData('text/plain', emailAddress);
+
+		element.dispatchEvent(
+			new ClipboardEvent('paste', {
+				bubbles: true,
+				cancelable: true,
+				clipboardData: dt,
+			})
+		);
+	}, user.emailAddress);
+
+	await expect(page.getByText(user.emailAddress)).toBeVisible();
+
+	await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+
+	await apiHelpers.headlessChangeTracking.deleteCTCollection(
+		ctCollection.body.id
+	);
+});
+
 test('LPD-65173 Assert that the Share Link tab is hidden for Publication Templates', async ({
 	changeTrackingTemplatesPage,
 	page,

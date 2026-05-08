@@ -70,6 +70,51 @@ public class StatusStrutsActionTest {
 	}
 
 	@Test
+	@TestInfo("LPD-85590")
+	public void testExecuteRemovesSeededPortalStatusExceptionFromSessionErrors()
+		throws Exception {
+
+		String bodyContentInit = _HTML_INIT + RandomTestUtil.randomString();
+		String bodyContentEnd = RandomTestUtil.randomString() + _HTML_END;
+
+		String expected = StringBundler.concat(
+			bodyContentInit, "\n  <div id=\"content\">\n   ",
+			_STATUS_PAGE_CONTENT, "\n  </div>", bodyContentEnd);
+		String html = StringBundler.concat(
+			bodyContentInit, "<div id=\"content\">",
+			RandomTestUtil.randomString(), "</div>", bodyContentEnd);
+
+		_sessionErrorsMockedStatic.clearInvocations();
+
+		_testExecute(expected, html);
+
+		_sessionErrorsMockedStatic.verifyNoInteractions();
+
+		Exception exception = new Exception();
+
+		Mockito.when(
+			_httpServletRequest.getAttribute(WebKeys.PORTAL_STATUS_EXCEPTION)
+		).thenReturn(
+			exception
+		);
+
+		_sessionErrorsMockedStatic.clearInvocations();
+
+		try {
+			_testExecute(expected, html);
+
+			_sessionErrorsMockedStatic.verify(
+				() -> SessionErrors.remove(
+					_httpServletRequest, Exception.class));
+		}
+		finally {
+			Mockito.reset(_httpServletRequest);
+
+			_setUpHttpServletRequest();
+		}
+	}
+
+	@Test
 	public void testExecuteWithThemeContainingElementWithIdContent()
 		throws Exception {
 

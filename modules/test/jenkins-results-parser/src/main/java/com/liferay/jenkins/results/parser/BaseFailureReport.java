@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.json.JSONObject;
 

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -251,7 +251,7 @@ public abstract class BaseStandaloneBuildTestrayCaseResult
 							warningsPropertyElement.addElement("value");
 
 						warningPropertyElement.addText(
-							StringEscapeUtils.escapeHtml(warning));
+							StringEscapeUtils.escapeHtml4(warning));
 					}
 				}
 

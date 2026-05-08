@@ -30,7 +30,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -926,7 +926,7 @@ public class TestrayAttachmentRecorder {
 
 		for (String warning : warnings) {
 			sb.append("<pre>");
-			sb.append(StringEscapeUtils.escapeHtml(warning));
+			sb.append(StringEscapeUtils.escapeHtml4(warning));
 			sb.append("</pre>\n");
 		}
 

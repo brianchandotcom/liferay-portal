@@ -134,7 +134,11 @@ function getOdataString({
 		}
 
 		if (entityFieldType === EEntityFieldType.BOOLEAN) {
-			let parsedValue = item.value;
+			let parsedValue =
+				typeof item.value === 'string'
+					? item.value
+					: String(item.value);
+
 			item.value === '0' && (parsedValue = `false`);
 			item.value === '1' && (parsedValue = `true`);
 

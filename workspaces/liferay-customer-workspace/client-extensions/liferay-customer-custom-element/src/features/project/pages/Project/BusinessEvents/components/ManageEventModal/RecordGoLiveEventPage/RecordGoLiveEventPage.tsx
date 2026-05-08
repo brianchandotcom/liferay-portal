@@ -125,7 +125,8 @@ const RecordGoLiveEventPage: React.FC<IProps> = ({
 			...businessEvent,
 			actualEventDate: getFormattedEventDateTime(
 				updatedBusinessEvent.actualEventDate,
-				updatedBusinessEvent.actualEventTime
+				updatedBusinessEvent.actualEventTime,
+				updatedBusinessEvent.timeZone?.key
 			),
 			currentLiferayVersion: businessEvent.currentLiferayVersion?.key,
 			eventStatus: 'Completed',

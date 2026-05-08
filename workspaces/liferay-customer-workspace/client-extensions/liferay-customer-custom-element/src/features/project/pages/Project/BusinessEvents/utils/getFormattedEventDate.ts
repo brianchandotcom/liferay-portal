@@ -5,9 +5,12 @@
 
 import {ITimeInput} from '~/utils/types';
 
+const UTC_OFFSET_PATTERN = /^UTC ([+-])(\d{1,2})$/;
+
 function getFormattedEventDateTime(
 	plannedEventDate: string | undefined,
-	plannedEventTime: string | ITimeInput | undefined
+	plannedEventTime: string | ITimeInput | undefined,
+	timeZone?: string
 ): string | undefined {
 	if (!plannedEventDate || !plannedEventTime) {
 		return undefined;
@@ -43,9 +46,53 @@ function getFormattedEventDateTime(
 			: plannedEventTime?.minutes ?? '00';
 	}
 
-	const formattedDateTime = `${formattedDate}T${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:00.000Z`;
+	const paddedHours = hours.padStart(2, '0');
+	const paddedMinutes = minutes.padStart(2, '0');
 
-	return formattedDateTime;
+	const match = timeZone?.match(UTC_OFFSET_PATTERN);
+	const offset = match
+		? `${match[1]}${match[2].padStart(2, '0')}:00`
+		: '+00:00';
+
+	return new Date(
+		`${formattedDate}T${paddedHours}:${paddedMinutes}:00${offset}`
+	).toISOString();
 }
 
-export {getFormattedEventDateTime};
+function getTimeZoneOffset(timeZone: string | undefined): number {
+	const match = timeZone?.match(UTC_OFFSET_PATTERN);
+
+	if (!match) {
+		return 0;
+	}
+
+	const hours = Number.parseInt(match[2], 10);
+	const sign = match[1] === '+' ? 1 : -1;
+
+	return sign * hours * 60 * 60 * 1000;
+}
+
+function normalizeEventDateTime(
+	dateISO: string | undefined,
+	timeZone: string | undefined
+): string | undefined {
+	if (!dateISO) {
+		return dateISO;
+	}
+
+	const offset = getTimeZoneOffset(timeZone);
+
+	if (offset === 0) {
+		return dateISO;
+	}
+
+	const utcDate = new Date(dateISO);
+
+	if (Number.isNaN(utcDate.getTime())) {
+		return dateISO;
+	}
+
+	return new Date(utcDate.getTime() + offset).toISOString();
+}
+
+export {getFormattedEventDateTime, normalizeEventDateTime};

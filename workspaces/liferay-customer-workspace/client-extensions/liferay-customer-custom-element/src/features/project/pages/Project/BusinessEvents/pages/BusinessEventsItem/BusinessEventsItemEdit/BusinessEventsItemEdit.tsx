@@ -32,7 +32,10 @@ import useCanViewTickets from '../../../hooks/useCanViewTickets';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
 import useHasAllEventsPermissions from '../../../hooks/useHasAllEventsPermissions';
 import {containsOption} from '../../../utils/containsOption';
-import {getFormattedEventDateTime} from '../../../utils/getFormattedEventDate';
+import {
+	getFormattedEventDateTime,
+	normalizeEventDateTime,
+} from '../../../utils/getFormattedEventDate';
 import parseAssociatedTickets from '../../../utils/parseAssociatedTickets';
 import useIsSaasOnly from '../../../utils/useIsSaasOnly';
 import BusinessEventsConfirmationPage from './components/BusinessEventsConfirmationPage';
@@ -198,7 +201,8 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 			newLiferayVersion: businessEvent.newLiferayVersion?.key,
 			plannedEventDate: getFormattedEventDateTime(
 				businessEvent.plannedEventDate,
-				businessEvent.plannedEventTime
+				businessEvent.plannedEventTime,
+				businessEvent.timeZone?.key
 			),
 			timeZone: businessEvent.timeZone?.key,
 		};
@@ -472,17 +476,20 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 									displayType="primary"
 									isLoading={isLoadingSubmitButton}
 									onClick={() => {
-										const newTargetGoLiveDateTime =
+										const newPlannedEventDateTime =
 											getFormattedEventDateTime(
 												businessEvent.plannedEventDate,
-												businessEvent.plannedEventTime
+												businessEvent.plannedEventTime,
+												businessEvent.timeZone?.key
 											);
 										if (
-											businessEvent.timeZone?.key !==
-												originalBusinessEvent.timeZone
-													?.key ||
-											newTargetGoLiveDateTime !==
-												originalBusinessEvent.plannedEventDate
+											new Date(
+												newPlannedEventDateTime || ''
+											).getTime() !==
+											new Date(
+												originalBusinessEvent.plannedEventDate ||
+													''
+											).getTime()
 										) {
 											setIsModalOpen(true);
 										}
@@ -836,10 +843,12 @@ const BusinessEventsItemEdit: React.FC = () => {
 		);
 	}
 
+	if (!businessEvent) {
+		return <div>{i18n.translate('no-data-found')}</div>;
+	}
+
 	if (
-		['Canceled', 'Completed'].includes(
-			businessEvent?.eventStatus?.key || ''
-		)
+		['Canceled', 'Completed'].includes(businessEvent.eventStatus?.key || '')
 	) {
 		return (
 			<div className="h6 mt-4">
@@ -848,14 +857,14 @@ const BusinessEventsItemEdit: React.FC = () => {
 		);
 	}
 
-	if (!businessEvent) {
-		return <div>{i18n.translate('no-data-found')}</div>;
-	}
+	const plannedEventDateISO =
+		normalizeEventDateTime(
+			businessEvent.plannedEventDate,
+			businessEvent.timeZone?.key
+		) ?? '';
 
-	const plannedEventDate = businessEvent.plannedEventDate || '';
-	const [datePart = '', timePart = ''] = plannedEventDate.split('T');
-	const plannedEventTime = timePart ? timePart.substring(0, 5) : '';
-
+	const [datePart = '', timePart = ''] = plannedEventDateISO.split('T');
+	const plannedEventTime = timePart.substring(0, 5);
 	const [year = '', month = '', day = ''] = datePart.split('-');
 
 	return (

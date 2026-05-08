@@ -28,6 +28,7 @@ import ManageEventModal from './components/ManageEventModal';
 import useFilters from './hooks/useFilters';
 import useGetBusinessEvents from './hooks/useGetBusinessEvents';
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
+import {normalizeEventDateTime} from './utils/getFormattedEventDate';
 import parseAssociatedTickets from './utils/parseAssociatedTickets';
 import useIsSaasOnly from './utils/useIsSaasOnly';
 
@@ -119,8 +120,12 @@ const BusinessEvents = () => {
 			const normalizedStatus = normalize(statusKey);
 
 			if (normalizedStatus === 'canceled') {
-				const modified = event.plannedEventDate
-					? new Date(event.plannedEventDate)
+				const normalizedDate = normalizeEventDateTime(
+					event.plannedEventDate,
+					event.timeZone?.key
+				);
+				const modified = normalizedDate
+					? new Date(normalizedDate)
 					: null;
 
 				if (modified && modified < oneYearAgo) {
@@ -129,9 +134,11 @@ const BusinessEvents = () => {
 			}
 
 			if (normalizedStatus === 'completed') {
-				const goLive = event.actualEventDate
-					? new Date(event.actualEventDate)
-					: null;
+				const normalizedDate = normalizeEventDateTime(
+					event.actualEventDate,
+					event.timeZone?.key
+				);
+				const goLive = normalizedDate ? new Date(normalizedDate) : null;
 
 				if (goLive && goLive < oneYearAgo) {
 					return false;
@@ -202,10 +209,11 @@ const BusinessEvents = () => {
 							: `1 Ticket`
 						: '';
 
-				const isGoLiveType = businessEvent?.eventType?.key === 'goLive';
+				const isGoLiveType =
+					businessEvent?.eventType?.key === 'Go-Live';
 
 				const isOtherEventType =
-					businessEvent?.eventType?.key === 'otherEvent';
+					businessEvent?.eventType?.key === 'Other Event';
 
 				const DetailsColumn = () => {
 					if (isGoLiveType) {
@@ -352,7 +360,10 @@ const BusinessEvents = () => {
 						<div>
 							<div className="text-neutral-10">
 								{getFormattedDate(
-									businessEvent?.plannedEventDate,
+									normalizeEventDateTime(
+										businessEvent?.plannedEventDate,
+										businessEvent?.timeZone?.key
+									),
 									'day2DMonthSYearN',
 									'UTC'
 								)}
@@ -360,7 +371,10 @@ const BusinessEvents = () => {
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
-									businessEvent?.plannedEventDate,
+									normalizeEventDateTime(
+										businessEvent?.plannedEventDate,
+										businessEvent?.timeZone?.key
+									),
 									'UTC'
 								)}
 							</div>

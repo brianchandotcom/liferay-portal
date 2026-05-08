@@ -249,8 +249,7 @@ function SelectionFilter({
 							: item.label;
 
 						return {
-							label:
-								rawLabel == null ? '' : String(rawLabel),
+							label: rawLabel === null ? '' : String(rawLabel),
 							value: itemKey
 								? getValueFromItem(item, itemKey.split('.'))
 								: item.value,

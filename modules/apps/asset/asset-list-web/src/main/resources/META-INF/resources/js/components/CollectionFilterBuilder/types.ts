@@ -13,7 +13,7 @@ export type PropertyType =
 	| 'integer'
 	| 'numeric'
 	| 'picklist'
-	| 'string';
+	| 'text';
 
 export interface PropertyOption {
 	label: string;

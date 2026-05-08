@@ -108,7 +108,7 @@ function ConditionRow({
 		[condition, onChange]
 	);
 
-	const propertyKey = (
+	const getPropertyKey = (
 		p: Pick<FilterProperty, 'classNameId' | 'classTypeId' | 'name'>
 	) => `${p.classNameId ?? ''}|${p.classTypeId ?? ''}|${p.name}`;
 
@@ -121,7 +121,7 @@ function ConditionRow({
 					items={properties}
 					onSelectionChange={(key) => {
 						const newProperty = flatProperties.find(
-							(p) => propertyKey(p) === key
+							(p) => getPropertyKey(p) === key
 						);
 
 						const operators = newProperty
@@ -141,7 +141,7 @@ function ConditionRow({
 					}}
 					placeholder={Liferay.Language.get('select')}
 					selectedKey={
-						selectedProperty ? propertyKey(selectedProperty) : ''
+						selectedProperty ? getPropertyKey(selectedProperty) : ''
 					}
 				>
 					{(item) =>
@@ -151,13 +151,13 @@ function ConditionRow({
 								items={item.items}
 							>
 								{(prop) => (
-									<Option key={propertyKey(prop)}>
+									<Option key={getPropertyKey(prop)}>
 										{prop.label}
 									</Option>
 								)}
 							</DropDown.Group>
 						) : (
-							<Option key={propertyKey(item)}>
+							<Option key={getPropertyKey(item)}>
 								{item.label}
 							</Option>
 						)

@@ -102,7 +102,7 @@ export default function CollectionFilterBuilder({
 					{
 						label: Liferay.Language.get('keywords'),
 						name: 'keywords',
-						type: 'string',
+						type: 'text',
 					},
 				],
 				label: '',

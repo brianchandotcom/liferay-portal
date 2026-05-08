@@ -39,7 +39,7 @@ export function getCollectionOperators(
 		case 'numeric':
 			return COMPARISON_OPERATORS;
 		case 'picklist':
-		case 'string':
+		case 'text':
 		default:
 			return DEFAULT_OPERATORS;
 	}
@@ -57,7 +57,7 @@ export function getCollectionQuantifierOptions(
 		case 'asset-categories':
 		case 'asset-tags':
 		case 'picklist':
-		case 'string':
+		case 'text':
 			return QUANTIFIER_OPTIONS;
 		default:
 			return null;

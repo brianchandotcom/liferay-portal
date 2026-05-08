@@ -10261,11 +10261,11 @@ ${output.content}</echo>
 
 				import java.io.File;
 
-				String libDirPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
-				String treeSha = project.getProperty("source.formatter.tree.sha").trim();
-				String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSha;
+				String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
+				String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
+				String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
 
-				File libDir = new File(project.getBaseDir(), libDirPath);
+				File libDir = new File(project.getBaseDir(), libPath);
 				File jarFile = new File(libDir, "com.liferay.source.formatter.jar");
 
 				if (!jarFile.exists()) {
@@ -10274,7 +10274,7 @@ ${output.content}</echo>
 
 				CloudBucketUtil.syncS3Files(s3LibPath, libDir.getAbsolutePath());
 
-				System.out.println("Published source-formatter lib to S3 at tree SHA " + treeSha);
+				System.out.println("Published source-formatter lib to S3 at tree SHA " + treeSHA);
 			]]>
 		</beanshell>
 	</target>
@@ -10343,18 +10343,18 @@ ${output.content}</echo>
 
 						import java.io.File;
 
-						String libDirPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
-						String treeSha = project.getProperty("source.formatter.tree.sha").trim();
-						String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSha;
-						String s3JarKey = s3LibPath + "/com.liferay.source.formatter.jar";
+						String libPath = "tools/sdk/dependencies/com.liferay.source.formatter/lib";
+						String treeSHA = project.getProperty("source.formatter.tree.sha").trim();
+						String s3LibPath = project.getProperty("source.formatter.s3.path") + "/snapshots/" + treeSHA;
+						String s3JarPath = s3LibPath + "/com.liferay.source.formatter.jar";
 
-						if (!CloudBucketUtil.isS3ObjectPathAvailable(s3JarKey)) {
+						if (!CloudBucketUtil.isS3ObjectPathAvailable(s3JarPath)) {
 							System.out.println("S3 lib not found at " + s3LibPath);
 
 							throw new RuntimeException("S3 miss");
 						}
 
-						File libDir = new File(project.getBaseDir(), libDirPath);
+						File libDir = new File(project.getBaseDir(), libPath);
 
 						CloudBucketUtil.syncS3Files(libDir.getAbsolutePath(), s3LibPath);
 
@@ -10366,7 +10366,7 @@ ${output.content}</echo>
 							throw new RuntimeException("S3 sync empty");
 						}
 
-						System.out.println("Resolved source-formatter lib from S3 at tree SHA " + treeSha);
+						System.out.println("Resolved source-formatter lib from S3 at tree SHA " + treeSHA);
 					]]>
 				</beanshell>
 			</try>

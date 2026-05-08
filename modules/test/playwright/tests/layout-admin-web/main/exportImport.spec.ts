@@ -459,14 +459,13 @@ test(
 		const basicWebContentStructureId =
 			await getBasicWebContentStructureId(apiHelpers);
 
-		const webContent = await apiHelpers.jsonWebServicesJournal.addWebContent(
-			{
+		const webContent =
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
 				content: originalContent,
 				ddmStructureId: basicWebContentStructureId,
 				groupId: siteA.id,
 				titleMap: {en_US: webContentTitle},
-			}
-		);
+			});
 
 		// Create a fragment whose HTML embeds a Web Content Display widget
 

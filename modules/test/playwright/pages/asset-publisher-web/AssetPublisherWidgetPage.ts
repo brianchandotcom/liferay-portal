@@ -26,9 +26,8 @@ export class AssetPublisherWidgetPage {
 		this.configurationIframe = this.page.frameLocator(
 			'iframe[title*="Configuration"]'
 		);
-		this.selectCollectionPanel = this.configurationIframe.getByRole(
-			'button',
-			{name: 'Select Collection'}
+		this.selectCollectionPanel = this.configurationIframe.locator(
+			'a[data-toggle="liferay-collapse"][aria-controls$="selectCollectionContent"]'
 		);
 		this.collectionInput = this.configurationIframe.getByRole('textbox', {
 			name: 'Collection',
@@ -54,7 +53,13 @@ export class AssetPublisherWidgetPage {
 	}
 
 	async selectCollection(assetListEntryName: string) {
-		await this.selectCollectionPanel.click();
+		if (
+			(await this.selectCollectionPanel.getAttribute('aria-expanded')) ===
+			'false'
+		) {
+			await this.selectCollectionPanel.click();
+		}
+
 		await this.collectionInput.click();
 		await this.collectionSelectorIframe
 			.getByRole('button', {name: `${assetListEntryName}`})

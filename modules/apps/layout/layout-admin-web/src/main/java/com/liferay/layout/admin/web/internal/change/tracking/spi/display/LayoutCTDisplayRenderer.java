@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
-import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -47,7 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import jakarta.portlet.PortletRequest;
 
@@ -247,15 +246,8 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 		).display(
 			"style-book",
 			() -> {
-				if (Validator.isNull(layout.getStyleBookEntryERC())) {
-					return null;
-				}
-
 				StyleBookEntry styleBookEntry =
-					_styleBookEntryLocalService.
-						fetchStyleBookEntryByExternalReferenceCode(
-							layout.getStyleBookEntryERC(),
-							_staging.getLiveGroupId(layout.getGroupId()));
+					DefaultStyleBookEntryUtil.getStyleBookEntry(layout);
 
 				if (styleBookEntry == null) {
 					return null;
@@ -521,12 +513,6 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference
-	private Staging _staging;
-
-	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

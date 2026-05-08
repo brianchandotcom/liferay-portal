@@ -92,7 +92,10 @@ public class CPSearchResultsPortletSharedSearchContributor
 			WebKeys.THEME_DISPLAY);
 
 		String parameterValue = GetterUtil.getString(
-			portletSharedSearchSettings.getParameter("q"));
+			portletSharedSearchSettings.getParameter(
+				GetterUtil.getString(
+					portletSharedSearchSettings.getKeywordsParameterName(),
+					"q")));
 
 		if (!Validator.isBlank(parameterValue)) {
 			if ((parameterValue.length() > 1) &&

@@ -65,7 +65,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.Arrays;
@@ -89,6 +88,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Miguel Pastor
@@ -830,15 +830,6 @@ public class PortalImplUnitTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		HttpServletResponse mockHttpServletResponse = Mockito.mock(
-			HttpServletResponse.class);
-
-		Mockito.when(
-			mockHttpServletResponse.isCommitted()
-		).thenReturn(
-			false
-		);
-
 		HttpSession mockHttpSession = Mockito.mock(HttpSession.class);
 
 		ServletContext mockServletContext = Mockito.mock(ServletContext.class);
@@ -878,7 +869,7 @@ public class PortalImplUnitTest {
 
 			_portalImpl.sendError(
 				0, noSuchImageException, mockHttpServletRequest,
-				mockHttpServletResponse);
+				new MockHttpServletResponse());
 
 			sessionErrorsMockedStatic.verify(
 				() -> SessionErrors.add(

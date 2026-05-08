@@ -192,6 +192,8 @@ public class UserGroupIndexerIndexedFieldsTest {
 		).put(
 			Field.NAME, userGroup.getName()
 		).put(
+			Field.STATUS, String.valueOf(userGroup.getStatus())
+		).put(
 			Field.USER_GROUP_ID, String.valueOf(userGroup.getUserGroupId())
 		).put(
 			Field.USER_ID, String.valueOf(userGroup.getUserId())

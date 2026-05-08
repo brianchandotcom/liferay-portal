@@ -6,55 +6,141 @@
 package com.liferay.user.groups.admin.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.staging.StagingGroupHelper;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
 
+import java.io.File;
+
+import org.hamcrest.CoreMatchers;
+
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Zsolt Berentey
+ * @author Balazs Breier
  */
 @RunWith(Arquillian.class)
-public class UserGroupsAdminPortletDataHandlerTest
-	extends BasePortletDataHandlerTestCase {
+public class UserGroupsAdminPortletDataHandlerTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Override
-	protected void addStagedModels() {
+	@Test
+	public void testExportImportUserGroups() throws Exception {
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									UserGroupsAdminPortletKeys.
+										USER_GROUPS_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build())));
+
+		_userGroupLocalService.deleteUserGroup(userGroup);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									UserGroupsAdminPortletKeys.
+										USER_GROUPS_ADMIN,
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		userGroup =
+			_userGroupLocalService.fetchUserGroupByExternalReferenceCode(
+				userGroup.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, userGroup.getStatus());
 	}
 
-	@Override
-	protected DataLevel getDataLevel() {
-		return DataLevel.PORTAL;
+	@Test
+	public void testPortletDataHandlerRegistration() throws Exception {
+		PortletDataHandler portletDataHandler =
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN);
+
+		Assert.assertThat(
+			ClassUtil.getClassName(portletDataHandler),
+			CoreMatchers.containsString("BatchEnginePortletDataHandler"));
+		Assert.assertEquals(
+			UserGroup.class.getName(), portletDataHandler.getClassNames()[0]);
+		Assert.assertEquals(
+			UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
+			portletDataHandler.getPortletId());
 	}
 
-	@Override
-	protected String getPortletId() {
-		return UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN;
-	}
+	@Inject
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
-	@Override
-	protected boolean isDataPortalLevel() {
-		return true;
-	}
+	@Inject
+	private ExportImportLocalService _exportImportLocalService;
 
-	@Override
-	protected boolean isDataPortletInstanceLevel() {
-		return false;
-	}
+	@Inject
+	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
-	@Override
-	protected boolean isDataSiteLevel() {
-		return false;
-	}
+	@Inject
+	private StagingGroupHelper _stagingGroupHelper;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 }

@@ -12,8 +12,10 @@ import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -153,6 +155,46 @@ public class ExportImportReportEntryLocalServiceTest {
 			count + 1,
 			_exportImportReportEntryLocalService.
 				getExportImportReportEntriesCount());
+	}
+
+	@Test
+	@TestInfo("LPD-65084")
+	public void testAddMissingReferenceExportImportReportEntry()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		try {
+			String classExternalReferenceCode = RandomTestUtil.randomString();
+			long classNameId = RandomTestUtil.randomLong();
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
+			String modelNameLanguageKey = RandomTestUtil.randomString();
+
+			ExportImportReportEntry exportImportReportEntry =
+				_exportImportReportEntryLocalService.
+					addMissingReferenceExportImportReportEntry(
+						group.getGroupId(), TestPropsValues.getCompanyId(),
+						classExternalReferenceCode, classNameId,
+						exportImportConfigurationId, modelNameLanguageKey);
+
+			Assert.assertEquals(
+				group.getGroupId(), exportImportReportEntry.getGroupId());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Missing Reference: Entity ", modelNameLanguageKey,
+					" with external reference code ",
+					classExternalReferenceCode, " in scope ",
+					group.getGroupId(),
+					" was not found. Please ensure the referenced entity is ",
+					"imported."),
+				exportImportReportEntry.getErrorMessage());
+			Assert.assertEquals(
+				ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE,
+				exportImportReportEntry.getType());
+		}
+		finally {
+			GroupTestUtil.deleteGroup(group);
+		}
 	}
 
 	@Test
@@ -365,6 +407,53 @@ public class ExportImportReportEntryLocalServiceTest {
 		Assert.assertEquals(
 			exportImportReportEntry.getExportImportReportEntryId(),
 			getExportImportReportEntry.getExportImportReportEntryId());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+	}
+
+	@Test
+	@TestInfo("LPD-65084")
+	public void testGetOrAddMissingReferenceExportImportReportEntry()
+		throws Exception {
+
+		int count =
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount();
+
+		long groupId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+		String modelNameLanguageKey = RandomTestUtil.randomString();
+
+		ExportImportReportEntry exportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddMissingReferenceExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId, modelNameLanguageKey);
+
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_MISSING_REFERENCE,
+			exportImportReportEntry.getType());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+
+		ExportImportReportEntry duplicateExportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddMissingReferenceExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId, modelNameLanguageKey);
+
+		Assert.assertEquals(
+			exportImportReportEntry.getExportImportReportEntryId(),
+			duplicateExportImportReportEntry.getExportImportReportEntryId());
 
 		Assert.assertEquals(
 			count + 1,

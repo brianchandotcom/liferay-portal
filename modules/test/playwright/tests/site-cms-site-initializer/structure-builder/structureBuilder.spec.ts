@@ -399,6 +399,30 @@ test(
 );
 
 test(
+	'Title and File fields are locked and cannot be removed on File Content Structures',
+	{tag: '@LPD-89342'},
+	async ({page, structureBuilderPage}) => {
+		await structureBuilderPage.goToCreateStructure('file');
+
+		for (const fieldName of ['Title', 'File']) {
+			const field = page.getByRole('treeitem', {
+				exact: true,
+				name: fieldName,
+			});
+
+			await expect(field).toBeVisible();
+			await expect(field.getByText('Locked Field')).toBeVisible();
+
+			await field.hover();
+
+			await expect(
+				field.getByRole('button', {name: 'Field Options'})
+			).toBeHidden();
+		}
+	}
+);
+
+test(
 	'Fields are sorted',
 	{
 		tag: '@LPD-61206',

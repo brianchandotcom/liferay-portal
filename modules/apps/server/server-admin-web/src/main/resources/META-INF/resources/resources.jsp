@@ -198,7 +198,68 @@ long usedMemory = totalMemory - runtime.freeMemory();
 						<aui:button cssClass="save-server-button" data-cmd="verifyMembershipPolicies" value="execute" />
 					</div>
 				</li>
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col autofit-col-expand">
+						<p class="list-group-title text-truncate">
+							<liferay-ui:message key="verify-the-public-friendly-url-mapping-can-be-safely-disabled" />
+						</p>
+					</div>
+
+					<div class="autofit-col">
+						<a
+							class="btn btn-secondary"
+							href="<%=
+								PortletURLBuilder.createRenderURL(
+									renderResponse
+								).setMVCRenderCommandName(
+									"/server_admin/view"
+								).setTabs1(
+									"resources"
+								).setParameter(
+									"runFriendlyURLPreCheck", true
+								).buildString()
+							%>"
+						>
+							<liferay-ui:message key="execute" />
+						</a>
+					</div>
+				</li>
 			</ul>
+
+			<c:if test='<%= ParamUtil.getBoolean(request, "runFriendlyURLPreCheck") %>'>
+
+				<%
+				JSONArray friendlyURLConflictsJSONArray = FriendlyURLEntryLocalServiceUtil.getFriendlyURLPublicMappingConflicts(themeDisplay.getCompanyId());
+				%>
+
+				<c:choose>
+					<c:when test="<%= friendlyURLConflictsJSONArray.length() == 0 %>">
+						<aui:script>
+							Liferay.Util.openToast({
+								autoClose: 10000,
+								message:
+									'<%= UnicodeFormatter.toString(LanguageUtil.format(request, "no-friendly-url-conflicts-were-found-the-x-property-can-be-safely-disabled", "layout.friendly.url.public.servlet.mapping.enabled")) %>',
+								type: 'success',
+							});
+						</aui:script>
+					</c:when>
+					<c:otherwise>
+
+						<%
+						String reportText = FriendlyURLEntryReportUtil.renderFriendlyURLPublicMappingConflictReport(friendlyURLConflictsJSONArray, themeDisplay.getCompanyId());
+						%>
+
+						<aui:script>
+							Liferay.Util.openToast({
+								autoClose: false,
+								message:
+									'<%= UnicodeFormatter.toString(LanguageUtil.format(request, "x-friendly-url-conflicts-were-found", String.valueOf(friendlyURLConflictsJSONArray.length()))) %> <a download="friendly-url-conflicts.txt" href="data:text/plain;charset=UTF-8;base64,<%= Base64.getEncoder().encodeToString(reportText.getBytes(StandardCharsets.UTF_8)) %>"><liferay-ui:message key="download-report" /></a>',
+								type: 'danger',
+							});
+						</aui:script>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="system-cleanup-actions">

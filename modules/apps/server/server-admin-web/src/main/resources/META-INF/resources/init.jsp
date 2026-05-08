@@ -28,6 +28,8 @@ page import="com.liferay.document.library.kernel.util.AudioConverter" %><%@
 page import="com.liferay.document.library.kernel.util.VideoConverter" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoBridge" %><%@
 page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
+page import="com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil" %><%@
+page import="com.liferay.friendly.url.util.FriendlyURLEntryReportUtil" %><%@
 page import="com.liferay.petra.function.transform.TransformUtil" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
@@ -41,6 +43,7 @@ page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %>
 page import="com.liferay.portal.kernel.captcha.CaptchaException" %><%@
 page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.json.JSONArray" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.log4j.Log4JUtil" %><%@
 page import="com.liferay.portal.kernel.model.*" %><%@
@@ -62,6 +65,7 @@ page import="com.liferay.portal.kernel.util.ReleaseInfo" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Time" %><%@
+page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
@@ -81,9 +85,12 @@ page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 <%@ page import="jakarta.portlet.PortletRequest" %><%@
 page import="jakarta.portlet.PortletURL" %>
 
+<%@ page import="java.nio.charset.StandardCharsets" %>
+
 <%@ page import="java.text.NumberFormat" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Base64" %><%@
 page import="java.util.Collection" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.List" %><%@

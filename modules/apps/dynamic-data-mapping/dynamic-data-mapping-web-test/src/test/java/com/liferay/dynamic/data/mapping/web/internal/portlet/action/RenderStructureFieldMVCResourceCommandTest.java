@@ -79,15 +79,11 @@ public class RenderStructureFieldMVCResourceCommandTest {
 			_SCRIPT
 		);
 
-		RenderStructureFieldMVCResourceCommand
-			renderStructureFieldMVCResourceCommand =
-				new RenderStructureFieldMVCResourceCommand();
-
 		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand, "_portal", _portal);
+			_renderStructureFieldMVCResourceCommand, "_portal", _portal);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			renderStructureFieldMVCResourceCommand.
+			_renderStructureFieldMVCResourceCommand.
 				createDDMFormFieldRenderingContext(
 					_httpServletRequest,
 					Mockito.mock(HttpServletResponse.class));
@@ -144,16 +140,12 @@ public class RenderStructureFieldMVCResourceCommandTest {
 				HtmlUtil.escapeAttribute(_SCRIPT), mockDDMFormField)
 		);
 
-		RenderStructureFieldMVCResourceCommand
-			renderStructureFieldMVCResourceCommand =
-				new RenderStructureFieldMVCResourceCommand();
-
 		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
+			_renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
 			ddmFormDeserializer);
 
 		DDMFormField ddmFormField =
-			renderStructureFieldMVCResourceCommand.getDDMFormField(
+			_renderStructureFieldMVCResourceCommand.getDDMFormField(
 				_httpServletRequest);
 
 		Assert.assertEquals(
@@ -185,24 +177,22 @@ public class RenderStructureFieldMVCResourceCommandTest {
 		String renderedHTML =
 			"<input name=\"" + fieldName + "\" type=\"text\" />";
 
-		RenderStructureFieldMVCResourceCommand
-			renderStructureFieldMVCResourceCommand =
-				new RenderStructureFieldMVCResourceCommand();
-
 		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand,
+			_renderStructureFieldMVCResourceCommand,
 			"_ddmFormFieldRendererRegistry",
 			_mockDDMFormFieldRendererRegistry(fieldType, renderedHTML));
+
 		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
+			_renderStructureFieldMVCResourceCommand, "_jsonDDMFormDeserializer",
 			_mockDDMFormDeserializer(fieldName, ddmFormField));
+
 		ReflectionTestUtil.setFieldValue(
-			renderStructureFieldMVCResourceCommand, "_portal", _portal);
+			_renderStructureFieldMVCResourceCommand, "_portal", _portal);
 
 		try (MockedStatic<ServletResponseUtil> servletResponseUtilMockedStatic =
 				Mockito.mockStatic(ServletResponseUtil.class)) {
 
-			renderStructureFieldMVCResourceCommand.doServeResource(
+			_renderStructureFieldMVCResourceCommand.doServeResource(
 				resourceRequest, resourceResponse);
 
 			servletResponseUtilMockedStatic.verify(
@@ -326,5 +316,8 @@ public class RenderStructureFieldMVCResourceCommandTest {
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final Portal _portal = Mockito.mock(Portal.class);
+	private final RenderStructureFieldMVCResourceCommand
+		_renderStructureFieldMVCResourceCommand =
+			new RenderStructureFieldMVCResourceCommand();
 
 }

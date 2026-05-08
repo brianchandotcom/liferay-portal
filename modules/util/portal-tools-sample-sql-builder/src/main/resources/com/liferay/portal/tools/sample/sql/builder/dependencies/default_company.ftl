@@ -31,7 +31,7 @@ ${csvFileWriter.write("company", defaultVirtualHostModel.hostname + "," + defaul
 <@insertContentPageLayout
 	_fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(guestHomePageContentLayoutModels, guestHomePageSegmentsExperienceModels)
 	_layoutModels = guestHomePageContentLayoutModels
-	_templateFileName = "default-homepage-layout-definition.json"
+	_layoutTemplateFileName = "default-homepage-layout-definition.json"
 />
 
 <#list dataFactory.layoutNames as layoutName>
@@ -47,7 +47,7 @@ ${csvFileWriter.write("company", defaultVirtualHostModel.hostname + "," + defaul
 	<@insertContentPageLayout
 		_fragmentEntryLinkModels = dataFactory.newUtilityPageLayoutsFragmentEntryLinkModels(utilityPageLayoutModels, utilityPageSegmentsExperienceModels)
 		_layoutModels = utilityPageLayoutModels
-		_templateFileName = dataFactory.getLayoutTemplateFileName(utilityPageLayoutModels)
+		_layoutTemplateFileName = dataFactory.getLayoutTemplateFileName(utilityPageLayoutModels)
 	/>
 </#list>
 

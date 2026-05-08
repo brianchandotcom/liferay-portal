@@ -114,6 +114,55 @@ public class ObjectFolderResourceTest extends BaseObjectFolderResourceTestCase {
 	}
 
 	@Override
+	@Test
+	public void testPutObjectFolder() throws Exception {
+		super.testPutObjectFolder();
+
+		ObjectDefinition finalObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ObjectFolder postObjectFolder = testPostObjectFolder_addObjectFolder(
+			new ObjectFolder() {
+				{
+					setExternalReferenceCode(RandomTestUtil.randomString());
+					setLabel(
+						Collections.singletonMap(
+							"en_US", RandomTestUtil.randomString()));
+					setName(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()));
+					setObjectFolderItems(
+						new ObjectFolderItem[] {
+							new ObjectFolderItem() {
+								{
+									setLinkedObjectDefinition(false);
+									setObjectDefinitionExternalReferenceCode(
+										finalObjectDefinition.
+											getExternalReferenceCode());
+									setPositionX(0);
+									setPositionY(0);
+								}
+							}
+						});
+				}
+			});
+
+		postObjectFolder.setObjectFolderItems(new ObjectFolderItem[0]);
+
+		ObjectFolder putObjectFolder = objectFolderResource.putObjectFolder(
+			postObjectFolder.getId(), postObjectFolder);
+
+		ObjectFolderItem[] objectFolderItems =
+			putObjectFolder.getObjectFolderItems();
+
+		Assert.assertEquals(
+			Arrays.toString(objectFolderItems), 1, objectFolderItems.length);
+
+		Assert.assertEquals(
+			finalObjectDefinition.getExternalReferenceCode(),
+			objectFolderItems[0].getObjectDefinitionExternalReferenceCode());
+	}
+
+	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"label"};
 	}

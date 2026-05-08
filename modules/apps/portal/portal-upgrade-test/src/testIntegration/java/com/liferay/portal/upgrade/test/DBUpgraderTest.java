@@ -13,7 +13,9 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -38,7 +40,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.After;
@@ -205,6 +209,66 @@ public class DBUpgraderTest {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
+		}
+	}
+
+	@Test
+	public void testUpdateCompanyKey() throws Exception {
+		Map<Long, String> originalKeys = new HashMap<>();
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select companyId, key_ from CompanyInfo");
+
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				originalKeys.put(
+					resultSet.getLong("companyId"),
+					resultSet.getString("key_"));
+			}
+		}
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"update CompanyInfo set key_ = null")) {
+
+			preparedStatement.executeUpdate();
+		}
+
+		try {
+			ReflectionTestUtil.invoke(
+				DBUpgrader.class, "_updateCompanyKey", new Class<?>[0]);
+
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"select companyId, key_ from CompanyInfo");
+
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+				while (resultSet.next()) {
+					long companyId = resultSet.getLong("companyId");
+					String key = resultSet.getString("key_");
+
+					Assert.assertNotEquals(originalKeys.get(companyId), key);
+					Assert.assertNotNull(EncryptorUtil.deserializeKey(key));
+				}
+			}
+		}
+		finally {
+			String sql = "update CompanyInfo set key_ = ? where companyId = ?";
+
+			try (PreparedStatement preparedStatement =
+					AutoBatchPreparedStatementUtil.autoBatch(
+						_connection, sql)) {
+
+				for (Map.Entry<Long, String> entry : originalKeys.entrySet()) {
+					preparedStatement.setString(1, entry.getValue());
+					preparedStatement.setLong(2, entry.getKey());
+
+					preparedStatement.addBatch();
+				}
+
+				preparedStatement.executeBatch();
+			}
 		}
 	}
 

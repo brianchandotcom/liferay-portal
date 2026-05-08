@@ -63,7 +63,7 @@ jobs:
                     set -o pipefail
 
                     function main {
-                        local pattern="0\\.0\\.0-pr-${PR_NUMBER}-"
+                        local pattern="-pr-${PR_NUMBER}-g[0-9a-f]+$"
 
                         local tags
 
@@ -99,7 +99,7 @@ jobs:
                             exit 0
                         fi
 
-                        local pattern="^0\\.0\\.0-pr-${PR_NUMBER}-"
+                        local pattern="-pr-${PR_NUMBER}-g[0-9a-f]+$"
 
                         yq --inplace \
                             ".entries |= with_entries(.value |= map(select(.version | test(\"${pattern}\") | not)))" \

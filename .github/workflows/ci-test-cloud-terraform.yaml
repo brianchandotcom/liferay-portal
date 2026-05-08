@@ -24,6 +24,7 @@ jobs:
                 run: |
                     function main {
                         local cloud="${{matrix.stack}}"
+
                         cloud="${cloud%%/*}"
 
                         local config="${GITHUB_WORKSPACE}/cloud/terraform/${cloud}/.tflint.hcl"

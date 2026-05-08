@@ -1462,6 +1462,69 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public void update(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		String scopeKey =
+			objectScopeProvider.isGroupAware() ?
+				GroupUtil.getScopeKey(parameters) : null;
+
+		UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
+			objectEntryUnsafeFunction = null;
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			objectEntryUnsafeFunction = objectEntry -> {
+				if (objectEntry.getId() != null) {
+					return patchObjectEntry(objectEntry.getId(), objectEntry);
+				}
+
+				if (scopeKey != null) {
+					return patchScopeScopeKeyByExternalReferenceCode(
+						scopeKey, objectEntry.getExternalReferenceCode(),
+						objectEntry);
+				}
+
+				return patchByExternalReferenceCode(
+					objectEntry.getExternalReferenceCode(), objectEntry);
+			};
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			objectEntryUnsafeFunction = objectEntry -> {
+				if (objectEntry.getId() != null) {
+					return putObjectEntry(objectEntry.getId(), objectEntry);
+				}
+
+				if (scopeKey != null) {
+					return putScopeScopeKeyByExternalReferenceCode(
+						scopeKey, objectEntry.getExternalReferenceCode(),
+						objectEntry);
+				}
+
+				return putByExternalReferenceCode(
+					objectEntry.getExternalReferenceCode(), objectEntry);
+			};
+		}
+
+		if (objectEntryUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectEntry");
+		}
+
+		_executeBatch(objectEntries, objectEntryUnsafeFunction);
+	}
+
+	@Override
 	protected String getApplicationPath() {
 		String restContextPath = null;
 
@@ -1580,6 +1643,27 @@ public class ObjectEntryResourceImpl
 			ArrayUtil.isEmpty(parentFile.list())) {
 
 			parentFile.delete();
+		}
+	}
+
+	private void _executeBatch(
+			Collection<ObjectEntry> objectEntries,
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
+				objectEntryUnsafeFunction)
+		throws Exception {
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntries, objectEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, objectEntryUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				objectEntryUnsafeFunction.apply(objectEntry);
+			}
 		}
 	}
 

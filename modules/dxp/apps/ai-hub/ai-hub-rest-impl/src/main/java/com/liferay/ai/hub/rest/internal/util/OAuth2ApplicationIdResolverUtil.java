@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.internal.agent;
+package com.liferay.ai.hub.rest.internal.util;
 
-import com.liferay.ai.hub.agent.OAuth2ApplicationIdResolver;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.petra.string.StringPool;
@@ -16,18 +15,14 @@ import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Christopher Kian
  */
-@Component(service = OAuth2ApplicationIdResolver.class)
-public class OAuth2ApplicationIdResolverImpl
-	implements OAuth2ApplicationIdResolver {
+public class OAuth2ApplicationIdResolverUtil {
 
-	@Override
-	public long resolve(HttpServletRequest httpServletRequest)
+	public static long resolve(
+			HttpServletRequest httpServletRequest,
+			OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService)
 		throws PrincipalException {
 
 		String authorization = httpServletRequest.getHeader(
@@ -39,7 +34,7 @@ public class OAuth2ApplicationIdResolverImpl
 
 		if (authorization.startsWith(_BEARER_PREFIX)) {
 			OAuth2Authorization oAuth2Authorization =
-				_oAuth2AuthorizationLocalService.
+				oAuth2AuthorizationLocalService.
 					fetchOAuth2AuthorizationByAccessTokenContent(
 						authorization.substring(_BEARER_PREFIX.length()));
 
@@ -54,8 +49,5 @@ public class OAuth2ApplicationIdResolverImpl
 
 	private static final String _BEARER_PREFIX =
 		HttpAuthorizationHeader.SCHEME_BEARER + StringPool.SPACE;
-
-	@Reference
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 }

@@ -31,11 +31,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertNullFunction(testModel -> null);
 
-		Assert.assertEquals(
-			"entity getter returning null must produce \"\" so the unique " +
-				"finder invalidation key matches the cache PUT key that " +
-					"normalizeValue produced for a null caller input",
-			"", function.apply(_TEST_MODEL));
+		Assert.assertEquals("", function.apply(_TEST_MODEL));
 	}
 
 	@Test

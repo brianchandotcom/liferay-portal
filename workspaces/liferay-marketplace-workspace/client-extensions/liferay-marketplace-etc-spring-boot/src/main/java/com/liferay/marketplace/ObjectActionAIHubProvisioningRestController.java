@@ -70,30 +70,30 @@ public class ObjectActionAIHubProvisioningRestController
 
 		Account account = order.getAccount();
 
-		String aiHub = _provisioningHubService.provisionAIHub(
-			new JSONObject(
-			).put(
-				"accountExternalReferenceCode",
-				order.getAccountExternalReferenceCode()
-			).put(
-				"accountName",
-				aiHubFormJSONObject.optString(
-					"aiHubAccountName", account.getName())
-			).put(
-				"userAccounts",
-				new JSONArray(
+		orderMetadataJSONObject.put(
+			"aiHub",
+			_provisioningHubService.provisionAIHub(
+				new JSONObject(
 				).put(
-					new JSONObject(
+					"accountExternalReferenceCode",
+					order.getAccountExternalReferenceCode()
+				).put(
+					"accountName",
+					aiHubFormJSONObject.optString(
+						"aiHubAccountName", account.getName())
+				).put(
+					"userAccounts",
+					new JSONArray(
 					).put(
-						"emailAddress",
-						aiHubFormJSONObject.optString(
-							"administratorEmailAddress",
-							order.getCreatorEmailAddress())
+						new JSONObject(
+						).put(
+							"emailAddress",
+							aiHubFormJSONObject.optString(
+								"administratorEmailAddress",
+								order.getCreatorEmailAddress())
+						)
 					)
-				)
-			));
-
-		orderMetadataJSONObject.put("aiHub", aiHub);
+				)));
 
 		_marketplaceService.updateOrder(
 			HashMapBuilder.put(

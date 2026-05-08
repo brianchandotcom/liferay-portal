@@ -888,7 +888,7 @@ public class CIForwardProcessor {
 	}
 
 	private static final long _BRANCH_DEEPENING_STEP_SIZE_MILLIS =
-		24L * 60L * 60L * 1000L;
+		1000L * 60L * 60L * 24L;
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;
 

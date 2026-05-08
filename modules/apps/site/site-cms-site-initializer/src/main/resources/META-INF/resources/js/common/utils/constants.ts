@@ -76,3 +76,18 @@ export type ItemSelectorItemType =
 export const CMSSiteInitializerFDSNames = {
 	ALL_SECTION: '-allSection',
 } as const;
+
+export const WORKFLOW_STATUS = {
+	APPROVED: 0,
+	DRAFT: 2,
+	EXPIRED: 3,
+} as const;
+
+export type WorkflowStatus =
+	(typeof WORKFLOW_STATUS)[keyof typeof WORKFLOW_STATUS];
+
+export const FDS_FILTER_ID = {
+	DATE_EXPIRATION: 'dateExpiration',
+	DATE_REVIEW: 'dateReview',
+	STATUS: 'status',
+} as const;

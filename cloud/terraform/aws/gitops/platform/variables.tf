@@ -1,12 +1,3 @@
-variable "argocd_sso_config" {
-	default={}
-	type=object({
-		dex_config=optional(any)
-		enable_admin_login=optional(bool, true)
-		enable_sso=optional(bool, false)
-		rbac=optional(any)
-	})
-}
 variable "argo_workflows_helm_chart_version" {
 	type=string
 }
@@ -17,9 +8,27 @@ variable "argo_workflows_namespace" {
 variable "argocd_helm_chart_version" {
 	type=string
 }
+variable "argocd_sso_config" {
+	default={}
+	type=object({
+		dex_config=optional(any)
+		enable_admin_login=optional(bool, true)
+		enable_sso=optional(bool, false)
+		rbac=optional(any)
+	})
+}
 variable "argocd_namespace" {
 	default="argocd-system"
 	type=string
+}
+variable "argocd_sso_config" {
+	default={}
+	type=object({
+		dex_config=optional(any)
+		enable_admin_login=optional(bool, true)
+		enable_sso=optional(bool, false)
+		rbac=optional(any)
+	})
 }
 variable "crossplane_helm_chart_version" {
 	type=string

@@ -4,6 +4,7 @@ Bundle-Version: 8.1.0
 Export-Package:\
 	com.liferay.exportimport.report.constants,\
 	com.liferay.exportimport.report.exception,\
+	com.liferay.exportimport.report.missing.reference,\
 	com.liferay.exportimport.report.model,\
 	com.liferay.exportimport.report.service,\
 	com.liferay.exportimport.report.service.persistence

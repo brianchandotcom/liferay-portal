@@ -5166,7 +5166,7 @@ public class DataFactory {
 				LayoutPageTemplateStructureModel
 					layoutPageTemplateStructureModel,
 				List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-				String templateFileName)
+				String layoutTemplateFileName)
 		throws Exception {
 
 		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
@@ -5213,7 +5213,8 @@ public class DataFactory {
 			fragmentEntryLinkModel.getSegmentsExperienceId());
 
 		layoutPageTemplateStructureRelModel.setData(
-			_generateData(targetFragmentEntryLinkModels, templateFileName));
+			_generateData(
+				targetFragmentEntryLinkModels, layoutTemplateFileName));
 		layoutPageTemplateStructureRelModel.setStatusByUserId(_sampleUserId);
 		layoutPageTemplateStructureRelModel.setStatusByUserName(
 			_SAMPLE_USER_NAME);
@@ -9377,12 +9378,12 @@ public class DataFactory {
 
 	private String _generateData(
 			List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-			String templateFileName)
+			String layoutTemplateFileName)
 		throws Exception {
 
-		if (templateFileName.startsWith("utility_page")) {
+		if (layoutTemplateFileName.startsWith("utility_page")) {
 			String data = _readFile(
-				"utility_page_templates/" + templateFileName);
+				"utility_page_templates/" + layoutTemplateFileName);
 
 			for (FragmentEntryLinkModel fragmentEntryLinkModel :
 					fragmentEntryLinkModels) {
@@ -9396,7 +9397,7 @@ public class DataFactory {
 			return data;
 		}
 
-		String data = _readFile("home_page_template/" + templateFileName);
+		String data = _readFile("home_page_template/" + layoutTemplateFileName);
 
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :
 				fragmentEntryLinkModels) {

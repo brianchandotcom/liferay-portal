@@ -3,7 +3,7 @@
 set -o errexit
 set -o nounset
 
-function main {
+main() {
 	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
 
 	local protocol="http"
@@ -24,7 +24,7 @@ function main {
 	_log_json "Elasticsearch is ready."
 }
 
-function _log_json {
+_log_json() {
 	local escaped_message
 
 	escaped_message=$(echo "${1}" | sed 's/"/\\"/g')

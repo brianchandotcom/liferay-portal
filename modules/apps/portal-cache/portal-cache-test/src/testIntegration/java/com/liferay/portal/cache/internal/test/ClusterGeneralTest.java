@@ -561,16 +561,12 @@ public class ClusterGeneralTest implements Serializable {
 	public void testValidatePublishOnTwoNodes() throws Exception {
 		long userId = TestPropsValues.getUserId();
 
-		TomcatNode masterTomcatNode;
-		TomcatNode slaveTomcatNode;
+		TomcatNode masterTomcatNode = _tomcatNode2;
+		TomcatNode slaveTomcatNode = _tomcatNode1;
 
 		if (_tomcatNode1.syncExecute(ClusterMasterExecutorUtil::isMaster)) {
 			masterTomcatNode = _tomcatNode1;
 			slaveTomcatNode = _tomcatNode2;
-		}
-		else {
-			masterTomcatNode = _tomcatNode2;
-			slaveTomcatNode = _tomcatNode1;
 		}
 
 		Object[] values = masterTomcatNode.syncExecute(
@@ -621,7 +617,6 @@ public class ClusterGeneralTest implements Serializable {
 			masterTomcatNode, slaveTomcatNode,
 			() -> LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				stagingLayout.getUuid(), liveGroupId, false));
-
 		_assertEqualOnBothNodes(
 			masterTomcatNode, slaveTomcatNode,
 			() -> BlogsEntryLocalServiceUtil.fetchBlogsEntryByUuidAndGroupId(

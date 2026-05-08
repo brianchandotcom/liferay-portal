@@ -1,7 +1,11 @@
 import * as data from 'test/data';
 import * as ODataUtil from '../odata';
 import * as Utils from '../utils';
-import {ALL_APPLICATION_IDS, ALL_EVENT_IDS, CustomFunctionOperators} from '../constants';
+import {
+	ALL_APPLICATION_IDS,
+	ALL_EVENT_IDS,
+	CustomFunctionOperators
+} from '../constants';
 import {CustomValue} from 'shared/util/records';
 import {List, Map} from 'immutable';
 
@@ -652,7 +656,9 @@ describe('odata', () => {
 		}
 
 		function buildVocabQuery(filterStr, operator = 'ge', count = 1) {
-			return `(activities.filterByCount(filter='${encodeFilter(filterStr)}',operator='${operator}',value=${count}))`;
+			return `(activities.filterByCount(filter='${encodeFilter(
+				filterStr
+			)}',operator='${operator}',value=${count}))`;
 		}
 
 		function makeVocabFilterCriteria(innerItems) {
@@ -673,9 +679,7 @@ describe('odata', () => {
 									conjunctionName: 'and',
 									criteriaGroupId: 'group_01',
 									items: new List(
-										innerItems.map(
-											(item) => new Map(item)
-										)
+										innerItems.map(item => new Map(item))
 									)
 								}),
 								operator: 'ge',
@@ -732,8 +736,8 @@ describe('odata', () => {
 		});
 
 		it('should build a vocabulary filter query for any asset type using applicationId in and eventId in', () => {
-			const appIds = ALL_APPLICATION_IDS.map((id) => `'${id}'`).join(',');
-			const eventIds = ALL_EVENT_IDS.map((id) => `'${id}'`).join(',');
+			const appIds = ALL_APPLICATION_IDS.map(id => `'${id}'`).join(',');
+			const eventIds = ALL_EVENT_IDS.map(id => `'${id}'`).join(',');
 
 			expect(
 				ODataUtil.buildQueryString(

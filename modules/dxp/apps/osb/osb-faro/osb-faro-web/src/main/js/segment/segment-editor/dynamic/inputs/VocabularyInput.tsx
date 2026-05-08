@@ -168,7 +168,9 @@ export function buildValue(
 	]);
 }
 
-export function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getAssetTypeFromValue(
+	value: CustomValue | undefined
+): React.Key {
 	if (!value) return 'any';
 
 	const appIdIndex = getIndexFromPropertyName(value, 'applicationId');
@@ -191,7 +193,9 @@ export function getAssetTypeFromValue(value: CustomValue | undefined): React.Key
 	return APPLICATION_ID_ASSET_TYPE_MAP[applicationId] ?? 'any';
 }
 
-export function getEventTypeFromValue(value: CustomValue | undefined): React.Key {
+export function getEventTypeFromValue(
+	value: CustomValue | undefined
+): React.Key {
 	if (!value) return 'all';
 
 	const activityKeyIndex = getIndexFromPropertyName(value, 'activityKey');

@@ -35,7 +35,12 @@ export class StructuresPage {
 		filter,
 		timeout,
 	}: {
-		action: 'Delete' | 'Edit' | 'View Usages';
+		action:
+			| 'Delete'
+			| 'Edit'
+			| 'Export as JSON'
+			| 'Import and Override'
+			| 'View Usages';
 		filter: string;
 		timeout?: number;
 	}) {

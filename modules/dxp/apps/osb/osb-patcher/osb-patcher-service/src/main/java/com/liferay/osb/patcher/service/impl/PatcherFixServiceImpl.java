@@ -56,5 +56,3 @@ public class PatcherFixServiceImpl extends PatcherFixServiceBaseImpl {
 	private RoleLocalService _roleLocalService;
 
 }
-
-// LIFERAY-SERVICE-BUILDER-HASH:1619952532

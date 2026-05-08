@@ -17,5 +17,3 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class GraphQLResourceTest extends BaseGraphQLResourceTestCase {
 }
-
-// LIFERAY-REST-BUILDER-HASH:160153401

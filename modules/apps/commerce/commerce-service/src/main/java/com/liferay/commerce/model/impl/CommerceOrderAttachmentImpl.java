@@ -11,5 +11,3 @@ package com.liferay.commerce.model.impl;
 public class CommerceOrderAttachmentImpl
 	extends CommerceOrderAttachmentBaseImpl {
 }
-
-// LIFERAY-SERVICE-BUILDER-HASH:-395984265

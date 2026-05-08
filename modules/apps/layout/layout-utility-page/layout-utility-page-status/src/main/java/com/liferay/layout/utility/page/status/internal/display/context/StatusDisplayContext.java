@@ -42,7 +42,7 @@ public class StatusDisplayContext {
 
 	public Exception getException() {
 		return (Exception)_httpServletRequest.getAttribute(
-			WebKeys.STATUS_EXCEPTION);
+			WebKeys.PORTAL_STATUS_EXCEPTION);
 	}
 
 	public boolean isNoSuchResourceException() {

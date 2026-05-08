@@ -78,12 +78,13 @@ const mockConnectedSiteTemplate: Site = {
 	logo: '',
 	name: 'Connected Template',
 	searchable: false,
-	type: 'site-template',
+	type: 'SiteTemplate',
 };
 
 const mockUnconnectedSiteTemplate: SiteTemplate = {
 	id: '102',
 	name: 'Unconnected Template',
+	siteExternalReferenceCode: '102-erc',
 };
 
 const DEFAULT_PROPS = {
@@ -525,12 +526,13 @@ describe('SpaceConnectedSitesModal', () => {
 			mockConnectSiteToSpace.mockResolvedValue({
 				data: {
 					descriptiveName: mockUnconnectedSiteTemplate.name,
-					externalReferenceCode: mockUnconnectedSiteTemplate.id,
+					externalReferenceCode:
+						mockUnconnectedSiteTemplate.siteExternalReferenceCode!,
 					id: mockUnconnectedSiteTemplate.id,
 					logo: '',
 					name: mockUnconnectedSiteTemplate.name,
 					searchable: false,
-					type: 'site-template',
+					type: 'SiteTemplate',
 				},
 				error: null,
 			});
@@ -568,8 +570,8 @@ describe('SpaceConnectedSitesModal', () => {
 			await waitFor(() => {
 				expect(mockConnectSiteToSpace).toHaveBeenCalledWith(
 					DEFAULT_PROPS.externalReferenceCode,
-					mockUnconnectedSiteTemplate.id,
-					{type: 'site-template'}
+					mockUnconnectedSiteTemplate.siteExternalReferenceCode,
+					{}
 				);
 			});
 

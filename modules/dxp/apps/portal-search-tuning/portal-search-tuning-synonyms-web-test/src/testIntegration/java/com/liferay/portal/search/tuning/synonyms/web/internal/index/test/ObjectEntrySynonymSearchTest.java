@@ -127,22 +127,14 @@ public class ObjectEntrySynonymSearchTest {
 	}
 
 	@Test
-	public void testMultiWordSynonymAcronymToFullPhrase() {
+	public void testMultiWordSynonym() {
 		_assertSearchCount("PD", 2);
-	}
-
-	@Test
-	public void testMultiWordSynonymFullPhraseToAcronym() {
 		_assertSearchCount("product delivery", 2);
 	}
 
 	@Test
-	public void testSingleWordSynonymQueryToUqb() {
+	public void testSynonym() {
 		_assertSearchCount("query", 2);
-	}
-
-	@Test
-	public void testSingleWordSynonymUqbToQuery() {
 		_assertSearchCount("uqb", 2);
 	}
 

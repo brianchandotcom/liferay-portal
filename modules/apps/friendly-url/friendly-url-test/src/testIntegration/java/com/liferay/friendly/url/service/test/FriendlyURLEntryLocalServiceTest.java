@@ -19,11 +19,20 @@ import com.liferay.friendly.url.exception.FriendlyURLLocalizationUrlTitleExcepti
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.friendly.url.util.FriendlyURLEntryReportUtil;
+import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -33,13 +42,18 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.service.SiteFriendlyURLLocalService;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -62,6 +76,9 @@ public class FriendlyURLEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_defaultGroup = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(),
+			PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser();
 	}
@@ -74,6 +91,12 @@ public class FriendlyURLEntryLocalServiceTest {
 		_friendlyURLEntryLocalService.deleteGroupFriendlyURLEntries(
 			_group.getGroupId(),
 			_classNameLocalService.getClassNameId(User.class));
+
+		if (_defaultGroup != null) {
+			_friendlyURLEntryLocalService.deleteGroupFriendlyURLEntries(
+				_defaultGroup.getGroupId(),
+				_layoutFriendlyURLEntryHelper.getClassNameId(false));
+		}
 	}
 
 	@Test
@@ -291,6 +314,106 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetFriendlyURLPublicMappingConflicts() throws Exception {
+		JSONArray initialConflictsJSONArray =
+			_friendlyURLEntryLocalService.getFriendlyURLPublicMappingConflicts(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			initialConflictsJSONArray.toString(), 0,
+			initialConflictsJSONArray.length());
+
+		Group siteGroup = GroupTestUtil.addGroup();
+
+		_groups.add(siteGroup);
+
+		_siteFriendlyURLLocalService.addSiteFriendlyURL(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			siteGroup.getGroupId(), "/conflict-default",
+			_language.getLanguageId(LocaleUtil.US), _getServiceContext());
+		_siteFriendlyURLLocalService.addSiteFriendlyURL(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			siteGroup.getGroupId(), "/conflict-locale",
+			_language.getLanguageId(LocaleUtil.SPAIN), _getServiceContext());
+
+		_layouts.add(_addLayout(_defaultGroup, "/conflict-default"));
+
+		Layout localizedConflictLayout = _addLayout(
+			_defaultGroup, "/" + RandomTestUtil.randomString());
+
+		_layouts.add(localizedConflictLayout);
+
+		_addLayoutFriendlyURLEntry(
+			_defaultGroup, localizedConflictLayout,
+			_language.getLanguageId(LocaleUtil.SPAIN), "/conflict-locale");
+
+		String defaultSiteFriendlyURL = _defaultGroup.getFriendlyURL();
+
+		Layout selfConflictLayout = _addLayout(
+			_defaultGroup, "/" + RandomTestUtil.randomString());
+
+		_layouts.add(selfConflictLayout);
+
+		_addLayoutFriendlyURLEntry(
+			_defaultGroup, selfConflictLayout,
+			_language.getLanguageId(LocaleUtil.US), defaultSiteFriendlyURL);
+
+		String reservedKeyword = _findUsableReservedKeyword();
+
+		if (reservedKeyword != null) {
+			Layout reservedPathLayout = _addLayout(
+				_defaultGroup, "/" + RandomTestUtil.randomString());
+
+			_layouts.add(reservedPathLayout);
+
+			_addLayoutFriendlyURLEntry(
+				_defaultGroup, reservedPathLayout,
+				_language.getLanguageId(LocaleUtil.US), "/" + reservedKeyword);
+		}
+
+		Group nondefaultSiteGroup = GroupTestUtil.addGroup();
+		Group nondefaultPageGroup = GroupTestUtil.addGroup();
+
+		_groups.add(nondefaultSiteGroup);
+		_groups.add(nondefaultPageGroup);
+
+		_siteFriendlyURLLocalService.addSiteFriendlyURL(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+			nondefaultSiteGroup.getGroupId(), "/non-default-conflict",
+			_language.getLanguageId(LocaleUtil.US), _getServiceContext());
+
+		_addLayout(nondefaultPageGroup, "/non-default-conflict");
+
+		JSONArray conflictsJSONArray =
+			_friendlyURLEntryLocalService.getFriendlyURLPublicMappingConflicts(
+				TestPropsValues.getCompanyId());
+
+		Assert.assertTrue(
+			conflictsJSONArray.toString(),
+			_containsConflictForPath(conflictsJSONArray, "/conflict-default"));
+		Assert.assertTrue(
+			conflictsJSONArray.toString(),
+			_containsConflictForPath(conflictsJSONArray, "/conflict-locale"));
+		Assert.assertTrue(
+			conflictsJSONArray.toString(),
+			_containsConflictForPath(
+				conflictsJSONArray, defaultSiteFriendlyURL));
+		Assert.assertFalse(
+			conflictsJSONArray.toString(),
+			_containsConflictForPath(
+				conflictsJSONArray, "/non-default-conflict"));
+
+		if (reservedKeyword != null) {
+			Assert.assertTrue(
+				conflictsJSONArray.toString(),
+				_containsConflictForPath(
+					conflictsJSONArray, "/" + reservedKeyword,
+					FriendlyURLEntryReportUtil.
+						CATEGORY_RESERVED_PATH_CONFLICT));
+		}
+	}
+
+	@Test
 	public void testGetUniqueUrlTitleNormalizesUrlTitle() throws Exception {
 		String urlTitle = "url title with spaces";
 
@@ -504,6 +627,32 @@ public class FriendlyURLEntryLocalServiceTest {
 			_getRandomURLTitle());
 	}
 
+	private Layout _addLayout(Group group, String friendlyURL)
+		throws Exception {
+
+		return _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_CONTENT, false, friendlyURL,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private FriendlyURLEntry _addLayoutFriendlyURLEntry(
+			Group group, Layout layout, String languageId, String urlTitle)
+		throws Exception {
+
+		return _friendlyURLEntryLocalService.addFriendlyURLEntry(
+			group.getGroupId(),
+			_layoutFriendlyURLEntryHelper.getClassNameId(false),
+			layout.getPlid(), RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				languageId, urlTitle
+			).build(),
+			_getServiceContext());
+	}
+
 	private void _addLocalizedAssetCategories(ServiceContext serviceContext)
 		throws Exception {
 
@@ -538,6 +687,45 @@ public class FriendlyURLEntryLocalServiceTest {
 			});
 	}
 
+	private boolean _containsConflictForPath(
+		JSONArray conflictsJSONArray, String path) {
+
+		return _containsConflictForPath(conflictsJSONArray, path, null);
+	}
+
+	private boolean _containsConflictForPath(
+		JSONArray conflictsJSONArray, String path, String category) {
+
+		for (int i = 0; i < conflictsJSONArray.length(); i++) {
+			JSONObject conflictJSONObject = conflictsJSONArray.getJSONObject(i);
+
+			if (!path.equals(conflictJSONObject.getString("path"))) {
+				continue;
+			}
+
+			if ((category == null) ||
+				Objects.equals(
+					conflictJSONObject.getString("category"), category)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private String _findUsableReservedKeyword() {
+		for (String keyword : PropsValues.LAYOUT_FRIENDLY_URL_KEYWORDS) {
+			if (!keyword.contains(StringPool.PERIOD) &&
+				!keyword.contains(StringPool.STAR)) {
+
+				return keyword;
+			}
+		}
+
+		return null;
+	}
+
 	private String _getRandomURLTitle() {
 		return StringUtil.randomString(
 			ModelHintsUtil.getMaxLength(
@@ -565,6 +753,8 @@ public class FriendlyURLEntryLocalServiceTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private Group _defaultGroup;
+
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
@@ -572,7 +762,25 @@ public class FriendlyURLEntryLocalServiceTest {
 	private Group _group;
 
 	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private final List<Group> _groups = new ArrayList<>();
+
+	@Inject
 	private Language _language;
+
+	@Inject
+	private LayoutFriendlyURLEntryHelper _layoutFriendlyURLEntryHelper;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@DeleteAfterTestRun
+	private final List<Layout> _layouts = new ArrayList<>();
+
+	@Inject
+	private SiteFriendlyURLLocalService _siteFriendlyURLLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

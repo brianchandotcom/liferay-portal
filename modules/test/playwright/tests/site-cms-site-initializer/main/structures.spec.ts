@@ -591,3 +591,81 @@ test(
 		await expect(contentCountBadge).toHaveText(String(initialCount + 1));
 	}
 );
+
+test(
+	'Content Structure can be exported as JSON and imported back to override changes',
+	{tag: '@LPD-89302'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: structureLabel,
+			page: structureBuilderPage,
+		});
+
+		await structuresPage.goto();
+
+		const downloadPromise = page.waitForEvent('download');
+
+		await structuresPage.execItemAction({
+			action: 'Export as JSON',
+			filter: structureLabel,
+		});
+
+		const download = await downloadPromise;
+
+		const jsonFilePath = `${getTempDir()}/${download.suggestedFilename()}`;
+
+		await download.saveAs(jsonFilePath);
+
+		await page.getByRole('link', {name: structureLabel}).click();
+
+		await structureBuilderPage.addField('Long Text');
+
+		await expect(
+			page.locator('.treeview-link', {hasText: 'Long Text'})
+		).toBeVisible();
+
+		await structureBuilderPage.publishStructure();
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Import and Override',
+			filter: structureLabel,
+		});
+
+		const importDialog = page.getByRole('dialog', {
+			name: 'Import and Override Content Structure',
+		});
+
+		const fileChooserPromise = page.waitForEvent('filechooser');
+
+		await importDialog.getByRole('button', {name: 'Add'}).click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(jsonFilePath);
+
+		const importButton = importDialog.getByRole('button', {
+			name: 'Import and Override',
+		});
+
+		await expect(importButton).toBeEnabled();
+
+		await importButton.click();
+
+		await expect(importDialog).not.toBeAttached();
+
+		await page.getByRole('link', {name: structureLabel}).click();
+
+		await expect(
+			page.getByRole('heading', {name: structureLabel})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.treeview-link', {hasText: 'Long Text'})
+		).not.toBeVisible();
+	}
+);

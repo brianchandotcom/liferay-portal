@@ -79,7 +79,7 @@ export const LIFERAY_PRODUCT_ORDER_TYPES: readonly OrderTypes[] = [
 
 export const orderTypeDocumentationURL: Partial<Record<OrderTypes, string>> = {
 	[OrderTypes.CMP]: 'https://learn.liferay.com/content-marketing-platform',
-	[OrderTypes.DSR]: 'https://learn.liferay.com/digital-sales-room',
+	[OrderTypes.DSR]: 'https://learn.liferay.com/w/digital-sales-room/index',
 	[OrderTypes.DXP]:
 		'https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/activating-liferay-dxp',
 };

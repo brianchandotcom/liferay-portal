@@ -41,10 +41,9 @@ const ExperienceDropdown = ({
 					}}
 					onSelectionChange={handleSelectionChange}
 					selectedKey={selectedKey}
-					selecteditem={selectedSegmentsExperience}
 				>
 					{(experience) => (
-						<Option key={experience.id} textValue={experience.name}>
+						<Option textValue={experience.name}>
 							<Layout.ContentRow>
 								<Layout.ContentCol className="c-pl-0" expand>
 									<Text size={3} weight="semi-bold">

@@ -1014,7 +1014,9 @@ public class SitemapManagerTest {
 	}
 
 	@Test
-	public void testSitemapWithCleanUrlEnabled() throws Exception {
+	public void testSitemapURLsWithLayoutFriendlyURLPublicServletMappingDisabled()
+		throws Exception {
+
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED",
@@ -1027,7 +1029,7 @@ public class SitemapManagerTest {
 				group,
 				_layoutLocalService.fetchFirstLayout(
 					group.getGroupId(), false, 0),
-				"localhost");
+				_company.getVirtualHostname());
 
 			String[] guestLayoutURLs = _getSitemapLayoutURLs(
 				group.getGroupId());
@@ -1286,7 +1288,7 @@ public class SitemapManagerTest {
 	}
 
 	private void _setUpThemeDisplay() throws Exception {
-		_setUpThemeDisplay(_group, _layout, "localhost");
+		_setUpThemeDisplay(_group, _layout, _company.getVirtualHostname());
 	}
 
 	private void _setUpThemeDisplay(
@@ -1305,6 +1307,7 @@ public class SitemapManagerTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _themeDisplay);
 
+		_themeDisplay.setPortalDomain(serverName);
 		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		_themeDisplay.setServerName(serverName);

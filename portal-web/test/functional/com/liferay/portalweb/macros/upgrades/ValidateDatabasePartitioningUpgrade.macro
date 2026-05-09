@@ -11,6 +11,8 @@ definition {
 
 		User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
+		User.searchCP(searchTerm = "test1");
+
 		User.viewCP(
 			userEmailAddress = "test1@www.able.com",
 			userFirstName = "Test1",
@@ -56,6 +58,8 @@ definition {
 			userEmailAddress = "test@www.baker.com");
 
 		User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
+
+		User.searchCP(searchTerm = "test2");
 
 		User.viewCP(
 			userEmailAddress = "test2@www.baker.com",

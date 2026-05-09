@@ -76,7 +76,7 @@ let channelName;
 let project;
 
 test(
-	'Add a dynamic segment using an individual property',
+	'Add a Batch segment using an individual property',
 	{
 		tag: '@LRAC-11460',
 	},

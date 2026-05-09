@@ -1507,6 +1507,46 @@ definition {
 				key_propertyOption = "Segment",
 				locator1 = "Segmentation#ADD_FIELD_TYPE");
 		}
+
+		task ("Click on USER field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "User");
+
+			for (var option : list "Country,Browser,Segment") {
+				AssertNotVisible(
+					key_propertyOption = ${option},
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on ORGANIZATION field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			for (var option : list "Date of Birth,Browser,Segment") {
+				AssertNotVisible(
+					key_propertyOption = ${option},
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on SESSION field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			for (var option : list "Date of Birth,Country,Segment") {
+				AssertNotVisible(
+					key_propertyOption = ${option},
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
+
+		task ("Click on SEGMENTS field type and assert if other properties are not displayed") {
+			Segmentation.gotoSidebar(fieldType = "Segments");
+
+			for (var option : list "Date of Birth,Country,Browser") {
+				AssertNotVisible(
+					key_propertyOption = ${option},
+					locator1 = "Segmentation#ADD_FIELD_TYPE");
+			}
+		}
 	}
 
 	@description = "LPS-135969 Validate if, on Segmentation, the user can't drag and drop fields into different Property section."
@@ -1555,50 +1595,6 @@ definition {
 			AssertElementPresent(
 				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
 				propertyName = "Country");
-		}
-	}
-
-	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of the others sections will be disabled."
-	@priority = 3
-	test ValidatePropertyNotDisplayedDifferentSection {
-		task ("Click on USER field type and assert if other properties are not displayed") {
-			LexiconEntry.gotoAdd();
-
-			for (var option : list "Country,Browser,Segment") {
-				AssertNotVisible(
-					key_propertyOption = ${option},
-					locator1 = "Segmentation#ADD_FIELD_TYPE");
-			}
-		}
-
-		task ("Click on ORGANIZATION field type and assert if other properties are not displayed") {
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			for (var option : list "Date of Birth,Browser,Segment") {
-				AssertNotVisible(
-					key_propertyOption = ${option},
-					locator1 = "Segmentation#ADD_FIELD_TYPE");
-			}
-		}
-
-		task ("Click on SESSION field type and assert if other properties are not displayed") {
-			Segmentation.gotoSidebar(fieldType = "Session");
-
-			for (var option : list "Date of Birth,Country,Segment") {
-				AssertNotVisible(
-					key_propertyOption = ${option},
-					locator1 = "Segmentation#ADD_FIELD_TYPE");
-			}
-		}
-
-		task ("Click on SEGMENTS field type and assert if other properties are not displayed") {
-			Segmentation.gotoSidebar(fieldType = "Segments");
-
-			for (var option : list "Date of Birth,Country,Browser") {
-				AssertNotVisible(
-					key_propertyOption = ${option},
-					locator1 = "Segmentation#ADD_FIELD_TYPE");
-			}
 		}
 	}
 

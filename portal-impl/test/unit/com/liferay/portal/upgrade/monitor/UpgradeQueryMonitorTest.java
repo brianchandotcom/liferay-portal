@@ -81,22 +81,22 @@ public class UpgradeQueryMonitorTest {
 			String id2 = RandomTestUtil.randomString();
 			String id3 = RandomTestUtil.randomString();
 			String id4 = RandomTestUtil.randomString();
-			String queryString1 = RandomTestUtil.randomString();
-			String queryString2 = RandomTestUtil.randomString();
-			String queryString3 = RandomTestUtil.randomString();
-			String queryString4 = RandomTestUtil.randomString();
+			String query1 = RandomTestUtil.randomString();
+			String query2 = RandomTestUtil.randomString();
+			String query3 = RandomTestUtil.randomString();
+			String query4 = RandomTestUtil.randomString();
 
 			String expectedMessage1 = StringBundler.concat(
-				"Query \"", queryString1, "\" (id ", id1,
+				"Query \"", query1, "\" (id ", id1,
 				"), which has been running for 30 seconds, is locked.");
 			String expectedMessage2 = StringBundler.concat(
-				"Query \"", queryString2, "\" (id ", id2,
+				"Query \"", query2, "\" (id ", id2,
 				"), which has been running for 300 seconds, is locked.");
 			String expectedMessage3 = StringBundler.concat(
-				"Query \"", queryString3, "\" (id ", id3,
+				"Query \"", query3, "\" (id ", id3,
 				"), which has been running for 600 seconds, is locked.");
 			String expectedMessage4 = StringBundler.concat(
-				"Query \"", queryString4, "\" (id ", id4,
+				"Query \"", query4, "\" (id ", id4,
 				"), which has been running for 900 seconds, is locked.");
 
 			DataSource originalDataSource = InfrastructureUtil.getDataSource();
@@ -122,7 +122,7 @@ public class UpgradeQueryMonitorTest {
 				).thenReturn(
 					Collections.singletonList(
 						new DB.QueryInfo(
-							30000, id1, queryString1,
+							30000, id1, query1,
 							RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()))
 				);
@@ -150,15 +150,15 @@ public class UpgradeQueryMonitorTest {
 				).thenReturn(
 					Arrays.asList(
 						new DB.QueryInfo(
-							300000, id2, queryString2,
+							300000, id2, query2,
 							RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()),
 						new DB.QueryInfo(
-							600000, id3, queryString3,
+							600000, id3, query3,
 							RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()),
 						new DB.QueryInfo(
-							900000, id4, queryString4,
+							900000, id4, query4,
 							RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()))
 				);

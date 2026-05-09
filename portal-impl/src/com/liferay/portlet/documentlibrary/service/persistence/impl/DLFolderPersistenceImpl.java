@@ -6316,13 +6316,13 @@ public class DLFolderPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -6336,7 +6336,7 @@ public class DLFolderPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(DLFolder::getUuid), DLFolder::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
@@ -6360,12 +6360,12 @@ public class DLFolderPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -6529,7 +6529,7 @@ public class DLFolderPersistenceImpl
 		_finderPathFetchByR_M = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_M",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"repositoryId", "mountPoint"}, false,
+			new String[] {"repositoryId", "mountPoint"}, 0, 0, false,
 			DLFolder::getRepositoryId, DLFolder::isMountPoint);
 
 		_uniquePersistenceFinderByR_M = new UniquePersistenceFinder<>(
@@ -6584,12 +6584,12 @@ public class DLFolderPersistenceImpl
 		_finderPathWithoutPaginationFindByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"parentFolderId", "name"}, true);
+			new String[] {"parentFolderId", "name"}, 0, 2, true, null);
 
 		_finderPathCountByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"parentFolderId", "name"}, false);
+			new String[] {"parentFolderId", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByP_N,
@@ -6681,7 +6681,7 @@ public class DLFolderPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "parentFolderId", "name"}, false,
+			new String[] {"groupId", "parentFolderId", "name"}, 0, 4, false,
 			DLFolder::getGroupId, DLFolder::getParentFolderId,
 			convertNullFunction(DLFolder::getName));
 
@@ -6983,7 +6983,7 @@ public class DLFolderPersistenceImpl
 		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, false,
+			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
 			convertNullFunction(DLFolder::getExternalReferenceCode),
 			DLFolder::getGroupId);
 
@@ -7064,4 +7064,4 @@ public class DLFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1729244938
+// LIFERAY-SERVICE-BUILDER-HASH:-926595978

@@ -53,7 +53,7 @@ public class PatcherFixPackModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = patcherFixPackModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(patcherFixPackModelImpl, columnNames, original);
+			return _getValue(patcherFixPackModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class PatcherFixPackModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(patcherFixPackModelImpl, columnNames, original);
+			return _getValue(patcherFixPackModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class PatcherFixPackModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		PatcherFixPackModelImpl patcherFixPackModelImpl, String[] columnNames,
+		PatcherFixPackModelImpl patcherFixPackModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = patcherFixPackModelImpl.getColumnOriginalValue(
+				value = patcherFixPackModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = patcherFixPackModelImpl.getColumnValue(
-					columnName);
+				value = patcherFixPackModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class PatcherFixPackModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1089122465
+// LIFERAY-SERVICE-BUILDER-HASH:-1486574484

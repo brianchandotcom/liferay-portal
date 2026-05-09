@@ -733,7 +733,7 @@ public class DepotAppCustomizationPersistenceImpl
 		_finderPathFetchByD_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"depotEntryId", "enabled"}, false,
+			new String[] {"depotEntryId", "enabled"}, 0, 0, false,
 			DepotAppCustomization::getDepotEntryId,
 			DepotAppCustomization::isEnabled);
 
@@ -751,7 +751,7 @@ public class DepotAppCustomizationPersistenceImpl
 		_finderPathFetchByD_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"depotEntryId", "portletId"}, false,
+			new String[] {"depotEntryId", "portletId"}, 0, 2, false,
 			DepotAppCustomization::getDepotEntryId,
 			convertNullFunction(DepotAppCustomization::getPortletId));
 
@@ -835,4 +835,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-562291562
+// LIFERAY-SERVICE-BUILDER-HASH:-692660112

@@ -53,7 +53,7 @@ public class PasswordTrackerModelArgumentsResolver
 		long columnBitmask = passwordTrackerModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(passwordTrackerModelImpl, columnNames, original);
+			return _getValue(passwordTrackerModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class PasswordTrackerModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(passwordTrackerModelImpl, columnNames, original);
+			return _getValue(passwordTrackerModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class PasswordTrackerModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		PasswordTrackerModelImpl passwordTrackerModelImpl, String[] columnNames,
-		boolean original) {
+		PasswordTrackerModelImpl passwordTrackerModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = passwordTrackerModelImpl.getColumnOriginalValue(
+				value = passwordTrackerModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = passwordTrackerModelImpl.getColumnValue(
-					columnName);
+				value = passwordTrackerModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -135,4 +140,4 @@ public class PasswordTrackerModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-31317503
+// LIFERAY-SERVICE-BUILDER-HASH:1474787504

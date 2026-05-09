@@ -55,7 +55,7 @@ public class AssetVocabularyGroupRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				assetVocabularyGroupRelModelImpl, columnNames, original);
+				assetVocabularyGroupRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -76,7 +76,7 @@ public class AssetVocabularyGroupRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				assetVocabularyGroupRelModelImpl, columnNames, original);
+				assetVocabularyGroupRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -94,22 +94,27 @@ public class AssetVocabularyGroupRelModelArgumentsResolver
 
 	private static Object[] _getValue(
 		AssetVocabularyGroupRelModelImpl assetVocabularyGroupRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					assetVocabularyGroupRelModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = assetVocabularyGroupRelModelImpl.getColumnValue(
+				value = assetVocabularyGroupRelModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = assetVocabularyGroupRelModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -119,4 +124,4 @@ public class AssetVocabularyGroupRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:310316851
+// LIFERAY-SERVICE-BUILDER-HASH:546429198

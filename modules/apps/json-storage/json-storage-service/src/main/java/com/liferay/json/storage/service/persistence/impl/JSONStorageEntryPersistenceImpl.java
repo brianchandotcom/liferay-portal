@@ -1196,7 +1196,7 @@ public class JSONStorageEntryPersistenceImpl
 			new String[] {
 				"companyId", "classNameId", "key_", "type_", "valueLong"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByC_CN_K_T_VL = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CN_K_T_VL",
@@ -1208,7 +1208,7 @@ public class JSONStorageEntryPersistenceImpl
 			new String[] {
 				"companyId", "classNameId", "key_", "type_", "valueLong"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByC_CN_K_T_VL =
 			new CollectionPersistenceFinder<>(
@@ -1246,7 +1246,7 @@ public class JSONStorageEntryPersistenceImpl
 				"classNameId", "classPK", "parentJSONStorageEntryId", "index_",
 				"key_"
 			},
-			false, JSONStorageEntry::getClassNameId,
+			0, 16, false, JSONStorageEntry::getClassNameId,
 			JSONStorageEntry::getClassPK,
 			JSONStorageEntry::getParentJSONStorageEntryId,
 			JSONStorageEntry::getIndex,
@@ -1344,4 +1344,4 @@ public class JSONStorageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-546804443
+// LIFERAY-SERVICE-BUILDER-HASH:-1814271384

@@ -55,7 +55,7 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				assetAutoTaggerEntryModelImpl, columnNames, original);
+				assetAutoTaggerEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				assetAutoTaggerEntryModelImpl, columnNames, original);
+				assetAutoTaggerEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		AssetAutoTaggerEntryModelImpl assetAutoTaggerEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					assetAutoTaggerEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = assetAutoTaggerEntryModelImpl.getColumnValue(
+				value = assetAutoTaggerEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = assetAutoTaggerEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class AssetAutoTaggerEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1495282870
+// LIFERAY-SERVICE-BUILDER-HASH:-1898053149

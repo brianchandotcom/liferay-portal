@@ -55,7 +55,7 @@ public class ObjectStateTransitionModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				objectStateTransitionModelImpl, columnNames, original);
+				objectStateTransitionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class ObjectStateTransitionModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				objectStateTransitionModelImpl, columnNames, original);
+				objectStateTransitionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class ObjectStateTransitionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ObjectStateTransitionModelImpl objectStateTransitionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					objectStateTransitionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = objectStateTransitionModelImpl.getColumnValue(
+				value = objectStateTransitionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = objectStateTransitionModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class ObjectStateTransitionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1163524185
+// LIFERAY-SERVICE-BUILDER-HASH:1213990608

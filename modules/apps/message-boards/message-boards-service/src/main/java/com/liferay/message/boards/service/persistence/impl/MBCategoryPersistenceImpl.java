@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -39,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -1028,7 +1028,8 @@ public class MBCategoryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_P;
 	private FinderPath _finderPathWithoutPaginationFindByG_P;
 	private FinderPath _finderPathCountByG_P;
-	private FinderPath _finderPathWithPaginationCountByG_P;
+	private CollectionPersistenceFinder<MBCategory>
+		_collectionPersistenceFinderByG_P;
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and parentCategoryId = &#63;.
@@ -1112,102 +1113,10 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_P;
-					finderArgs = new Object[] {groupId, parentCategoryId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_P;
-				finderArgs = new Object[] {
-					groupId, parentCategoryId, start, end, orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							(parentCategoryId !=
-								mbCategory.getParentCategoryId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P.find(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1261,14 +1170,9 @@ public class MBCategoryPersistenceImpl
 		long groupId, long parentCategoryId,
 		OrderByComparator<MBCategory> orderByComparator) {
 
-		List<MBCategory> list = findByG_P(
-			groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P.fetchFirst(
+			finderCache, new Object[] {groupId, new long[] {parentCategoryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1661,125 +1565,16 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
-		if (parentCategoryIds.length == 1) {
-			return findByG_P(
-				groupId, parentCategoryIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						groupId, StringUtil.merge(parentCategoryIds)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), start, end,
-					orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_P, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							!ArrayUtil.contains(
-								parentCategoryIds,
-								mbCategory.getParentCategoryId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_P, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P.find(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds)
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1791,13 +1586,8 @@ public class MBCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P(long groupId, long parentCategoryId) {
-		for (MBCategory mbCategory :
-				findByG_P(
-					groupId, parentCategoryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbCategory);
-		}
+		_collectionPersistenceFinderByG_P.remove(
+			finderCache, new Object[] {groupId, new long[] {parentCategoryId}});
 	}
 
 	/**
@@ -1813,50 +1603,9 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_P;
-
-			Object[] finderArgs = new Object[] {groupId, parentCategoryId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P.count(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}});
 		}
 	}
 
@@ -1869,74 +1618,15 @@ public class MBCategoryPersistenceImpl
 	 */
 	@Override
 	public int countByG_P(long groupId, long[] parentCategoryIds) {
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentCategoryIds)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_P, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_P, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P.count(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds)
+				});
 		}
 	}
 
@@ -2732,6 +2422,8 @@ public class MBCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByNotC_G_P;
 	private FinderPath _finderPathWithPaginationCountByNotC_G_P;
+	private CollectionPersistenceFinder<MBCategory>
+		_collectionPersistenceFinderByNotC_G_P;
 
 	/**
 	 * Returns all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63;.
@@ -2824,98 +2516,13 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByNotC_G_P;
-			finderArgs = new Object[] {
-				categoryId, groupId, parentCategoryId, start, end,
-				orderByComparator
-			};
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((categoryId == mbCategory.getCategoryId()) ||
-							(groupId != mbCategory.getGroupId()) ||
-							(parentCategoryId !=
-								mbCategory.getParentCategoryId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_CATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_PARENTCATEGORYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(categoryId);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByNotC_G_P.find(
+				finderCache,
+				new Object[] {
+					new long[] {categoryId}, groupId,
+					new long[] {parentCategoryId}
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2974,14 +2581,12 @@ public class MBCategoryPersistenceImpl
 		long categoryId, long groupId, long parentCategoryId,
 		OrderByComparator<MBCategory> orderByComparator) {
 
-		List<MBCategory> list = findByNotC_G_P(
-			categoryId, groupId, parentCategoryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByNotC_G_P.fetchFirst(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId}
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -3420,151 +3025,17 @@ public class MBCategoryPersistenceImpl
 		int end, OrderByComparator<MBCategory> orderByComparator,
 		boolean useFinderCache) {
 
-		if (categoryIds == null) {
-			categoryIds = new long[0];
-		}
-		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.sortedUnique(categoryIds);
-		}
-
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
-		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
-			return findByNotC_G_P(
-				categoryIds[0], groupId, parentCategoryIds[0], start, end,
-				orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(categoryIds), groupId,
-						StringUtil.merge(parentCategoryIds)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds), start, end,
-					orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					_finderPathWithPaginationFindByNotC_G_P, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if (!ArrayUtil.contains(
-								categoryIds, mbCategory.getCategoryId()) ||
-							(groupId != mbCategory.getGroupId()) ||
-							!ArrayUtil.contains(
-								parentCategoryIds,
-								mbCategory.getParentCategoryId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				if (categoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_CATEGORYID_7);
-
-					sb.append(StringUtil.merge(categoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByNotC_G_P, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByNotC_G_P.find(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(categoryIds), groupId,
+					ArrayUtil.sortedUnique(parentCategoryIds)
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3579,13 +3050,11 @@ public class MBCategoryPersistenceImpl
 	public void removeByNotC_G_P(
 		long categoryId, long groupId, long parentCategoryId) {
 
-		for (MBCategory mbCategory :
-				findByNotC_G_P(
-					categoryId, groupId, parentCategoryId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbCategory);
-		}
+		_collectionPersistenceFinderByNotC_G_P.remove(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId}
+			});
 	}
 
 	/**
@@ -3604,56 +3073,12 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = _finderPathWithPaginationCountByNotC_G_P;
-
-			Object[] finderArgs = new Object[] {
-				categoryId, groupId, parentCategoryId
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_CATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_PARENTCATEGORYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(categoryId);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByNotC_G_P.count(
+				finderCache,
+				new Object[] {
+					new long[] {categoryId}, groupId,
+					new long[] {parentCategoryId}
+				});
 		}
 	}
 
@@ -3669,97 +3094,16 @@ public class MBCategoryPersistenceImpl
 	public int countByNotC_G_P(
 		long[] categoryIds, long groupId, long[] parentCategoryIds) {
 
-		if (categoryIds == null) {
-			categoryIds = new long[0];
-		}
-		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.sortedUnique(categoryIds);
-		}
-
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(categoryIds), groupId,
-				StringUtil.merge(parentCategoryIds)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByNotC_G_P, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				if (categoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_CATEGORYID_7);
-
-					sb.append(StringUtil.merge(categoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByNotC_G_P, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByNotC_G_P.count(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(categoryIds), groupId,
+					ArrayUtil.sortedUnique(parentCategoryIds)
+				});
 		}
 	}
 
@@ -3953,7 +3297,8 @@ public class MBCategoryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_P_S;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
 	private FinderPath _finderPathCountByG_P_S;
-	private FinderPath _finderPathWithPaginationCountByG_P_S;
+	private CollectionPersistenceFinder<MBCategory>
+		_collectionPersistenceFinderByG_P_S;
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -4044,110 +3389,10 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_P_S;
-					finderArgs = new Object[] {
-						groupId, parentCategoryId, status
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_P_S;
-				finderArgs = new Object[] {
-					groupId, parentCategoryId, status, start, end,
-					orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							(parentCategoryId !=
-								mbCategory.getParentCategoryId()) ||
-							(status != mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P_S.find(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}, status},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4206,14 +3451,10 @@ public class MBCategoryPersistenceImpl
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
 
-		List<MBCategory> list = findByG_P_S(
-			groupId, parentCategoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_S.fetchFirst(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4636,133 +3877,16 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
-		if (parentCategoryIds.length == 1) {
-			return findByG_P_S(
-				groupId, parentCategoryIds[0], status, start, end,
-				orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						groupId, StringUtil.merge(parentCategoryIds), status
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status, start,
-					end, orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_P_S, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							!ArrayUtil.contains(
-								parentCategoryIds,
-								mbCategory.getParentCategoryId()) ||
-							(status != mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_P_S, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P_S.find(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds), status
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4775,13 +3899,9 @@ public class MBCategoryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_P_S(long groupId, long parentCategoryId, int status) {
-		for (MBCategory mbCategory :
-				findByG_P_S(
-					groupId, parentCategoryId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbCategory);
-		}
+		_collectionPersistenceFinderByG_P_S.remove(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status});
 	}
 
 	/**
@@ -4798,56 +3918,9 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_P_S;
-
-			Object[] finderArgs = new Object[] {
-				groupId, parentCategoryId, status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P_S.count(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}, status});
 		}
 	}
 
@@ -4863,81 +3936,15 @@ public class MBCategoryPersistenceImpl
 	public int countByG_P_S(
 		long groupId, long[] parentCategoryIds, int status) {
 
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentCategoryIds), status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_P_S, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_S_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_S_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_P_S_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_P_S, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P_S.count(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds), status
+				});
 		}
 	}
 
@@ -5111,6 +4118,8 @@ public class MBCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_P_NotS;
 	private FinderPath _finderPathWithPaginationCountByG_P_NotS;
+	private CollectionPersistenceFinder<MBCategory>
+		_collectionPersistenceFinderByG_P_NotS;
 
 	/**
 	 * Returns all the message boards categories where groupId = &#63; and parentCategoryId = &#63; and status &ne; &#63;.
@@ -5202,97 +4211,10 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByG_P_NotS;
-			finderArgs = new Object[] {
-				groupId, parentCategoryId, status, start, end, orderByComparator
-			};
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							(parentCategoryId !=
-								mbCategory.getParentCategoryId()) ||
-							(status == mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P_NotS.find(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}, status},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -5351,14 +4273,10 @@ public class MBCategoryPersistenceImpl
 		long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
 
-		List<MBCategory> list = findByG_P_NotS(
-			groupId, parentCategoryId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_P_NotS.fetchFirst(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5781,133 +4699,16 @@ public class MBCategoryPersistenceImpl
 		OrderByComparator<MBCategory> orderByComparator,
 		boolean useFinderCache) {
 
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
-		if (parentCategoryIds.length == 1) {
-			return findByG_P_NotS(
-				groupId, parentCategoryIds[0], status, start, end,
-				orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						groupId, StringUtil.merge(parentCategoryIds), status
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, StringUtil.merge(parentCategoryIds), status, start,
-					end, orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_P_NotS, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((groupId != mbCategory.getGroupId()) ||
-							!ArrayUtil.contains(
-								parentCategoryIds,
-								mbCategory.getParentCategoryId()) ||
-							(status == mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_P_NotS, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_P_NotS.find(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds), status
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -5922,13 +4723,9 @@ public class MBCategoryPersistenceImpl
 	public void removeByG_P_NotS(
 		long groupId, long parentCategoryId, int status) {
 
-		for (MBCategory mbCategory :
-				findByG_P_NotS(
-					groupId, parentCategoryId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(mbCategory);
-		}
+		_collectionPersistenceFinderByG_P_NotS.remove(
+			finderCache,
+			new Object[] {groupId, new long[] {parentCategoryId}, status});
 	}
 
 	/**
@@ -5947,56 +4744,9 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = _finderPathWithPaginationCountByG_P_NotS;
-
-			Object[] finderArgs = new Object[] {
-				groupId, parentCategoryId, status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P_NotS.count(
+				finderCache,
+				new Object[] {groupId, new long[] {parentCategoryId}, status});
 		}
 	}
 
@@ -6012,81 +4762,15 @@ public class MBCategoryPersistenceImpl
 	public int countByG_P_NotS(
 		long groupId, long[] parentCategoryIds, int status) {
 
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = new Object[] {
-				groupId, StringUtil.merge(parentCategoryIds), status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_P_NotS, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_P_NOTS_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_P_NOTS_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_P_NotS, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_P_NotS.count(
+				finderCache,
+				new Object[] {
+					groupId, ArrayUtil.sortedUnique(parentCategoryIds), status
+				});
 		}
 	}
 
@@ -6260,6 +4944,8 @@ public class MBCategoryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByNotC_G_P_S;
 	private FinderPath _finderPathWithPaginationCountByNotC_G_P_S;
+	private CollectionPersistenceFinder<MBCategory>
+		_collectionPersistenceFinderByNotC_G_P_S;
 
 	/**
 	 * Returns all the message boards categories where categoryId &ne; &#63; and groupId = &#63; and parentCategoryId = &#63; and status = &#63;.
@@ -6356,103 +5042,13 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			finderPath = _finderPathWithPaginationFindByNotC_G_P_S;
-			finderArgs = new Object[] {
-				categoryId, groupId, parentCategoryId, status, start, end,
-				orderByComparator
-			};
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if ((categoryId == mbCategory.getCategoryId()) ||
-							(groupId != mbCategory.getGroupId()) ||
-							(parentCategoryId !=
-								mbCategory.getParentCategoryId()) ||
-							(status != mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						6 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(6);
-				}
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_CATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_STATUS_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(categoryId);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByNotC_G_P_S.find(
+				finderCache,
+				new Object[] {
+					new long[] {categoryId}, groupId,
+					new long[] {parentCategoryId}, status
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -6516,15 +5112,13 @@ public class MBCategoryPersistenceImpl
 		long categoryId, long groupId, long parentCategoryId, int status,
 		OrderByComparator<MBCategory> orderByComparator) {
 
-		List<MBCategory> list = findByNotC_G_P_S(
-			categoryId, groupId, parentCategoryId, status, 0, 1,
+		return _collectionPersistenceFinderByNotC_G_P_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId},
+				status
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -6985,159 +5579,17 @@ public class MBCategoryPersistenceImpl
 		int start, int end, OrderByComparator<MBCategory> orderByComparator,
 		boolean useFinderCache) {
 
-		if (categoryIds == null) {
-			categoryIds = new long[0];
-		}
-		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.sortedUnique(categoryIds);
-		}
-
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
-		if ((categoryIds.length == 1) && (parentCategoryIds.length == 1)) {
-			return findByNotC_G_P_S(
-				categoryIds[0], groupId, parentCategoryIds[0], status, start,
-				end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(categoryIds), groupId,
-						StringUtil.merge(parentCategoryIds), status
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(categoryIds), groupId,
-					StringUtil.merge(parentCategoryIds), status, start, end,
-					orderByComparator
-				};
-			}
-
-			List<MBCategory> list = null;
-
-			if (useFinderCache) {
-				list = (List<MBCategory>)finderCache.getResult(
-					_finderPathWithPaginationFindByNotC_G_P_S, finderArgs,
-					this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (MBCategory mbCategory : list) {
-						if (!ArrayUtil.contains(
-								categoryIds, mbCategory.getCategoryId()) ||
-							(groupId != mbCategory.getGroupId()) ||
-							!ArrayUtil.contains(
-								parentCategoryIds,
-								mbCategory.getParentCategoryId()) ||
-							(status != mbCategory.getStatus())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_MBCATEGORY_WHERE);
-
-				if (categoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_S_CATEGORYID_7);
-
-					sb.append(StringUtil.merge(categoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_S_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(MBCategoryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					list = (List<MBCategory>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByNotC_G_P_S,
-							finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByNotC_G_P_S.find(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(categoryIds), groupId,
+					ArrayUtil.sortedUnique(parentCategoryIds), status
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -7153,13 +5605,12 @@ public class MBCategoryPersistenceImpl
 	public void removeByNotC_G_P_S(
 		long categoryId, long groupId, long parentCategoryId, int status) {
 
-		for (MBCategory mbCategory :
-				findByNotC_G_P_S(
-					categoryId, groupId, parentCategoryId, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(mbCategory);
-		}
+		_collectionPersistenceFinderByNotC_G_P_S.remove(
+			finderCache,
+			new Object[] {
+				new long[] {categoryId}, groupId, new long[] {parentCategoryId},
+				status
+			});
 	}
 
 	/**
@@ -7179,60 +5630,12 @@ public class MBCategoryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			FinderPath finderPath = _finderPathWithPaginationCountByNotC_G_P_S;
-
-			Object[] finderArgs = new Object[] {
-				categoryId, groupId, parentCategoryId, status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_CATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_PARENTCATEGORYID_2);
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_STATUS_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(categoryId);
-
-					queryPos.add(groupId);
-
-					queryPos.add(parentCategoryId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByNotC_G_P_S.count(
+				finderCache,
+				new Object[] {
+					new long[] {categoryId}, groupId,
+					new long[] {parentCategoryId}, status
+				});
 		}
 	}
 
@@ -7250,103 +5653,16 @@ public class MBCategoryPersistenceImpl
 		long[] categoryIds, long groupId, long[] parentCategoryIds,
 		int status) {
 
-		if (categoryIds == null) {
-			categoryIds = new long[0];
-		}
-		else if (categoryIds.length > 1) {
-			categoryIds = ArrayUtil.sortedUnique(categoryIds);
-		}
-
-		if (parentCategoryIds == null) {
-			parentCategoryIds = new long[0];
-		}
-		else if (parentCategoryIds.length > 1) {
-			parentCategoryIds = ArrayUtil.sortedUnique(parentCategoryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					MBCategory.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(categoryIds), groupId,
-				StringUtil.merge(parentCategoryIds), status
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByNotC_G_P_S, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_MBCATEGORY_WHERE);
-
-				if (categoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_S_CATEGORYID_7);
-
-					sb.append(StringUtil.merge(categoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_GROUPID_2);
-
-				if (parentCategoryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_NOTC_G_P_S_PARENTCATEGORYID_7);
-
-					sb.append(StringUtil.merge(parentCategoryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_NOTC_G_P_S_STATUS_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(status);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByNotC_G_P_S, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByNotC_G_P_S.count(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(categoryIds), groupId,
+					ArrayUtil.sortedUnique(parentCategoryIds), status
+				});
 		}
 	}
 
@@ -8028,13 +6344,13 @@ public class MBCategoryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -8048,7 +6364,7 @@ public class MBCategoryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(MBCategory::getUuid), MBCategory::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
@@ -8072,12 +6388,12 @@ public class MBCategoryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -8166,19 +6482,26 @@ public class MBCategoryPersistenceImpl
 			new String[] {"groupId", "parentCategoryId"}, true);
 
 		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "parentCategoryId"}, false);
-
-		_finderPathWithPaginationCountByG_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"groupId", "parentCategoryId"}, false);
 
+		_collectionPersistenceFinderByG_P = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_P,
+			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
+			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
+				true, MBCategory::getGroupId),
+			new ArrayableFinderColumn<>(
+				"mbCategory.", "parentCategoryId", FinderColumn.Type.LONG, "=",
+				false, true, true, MBCategory::getParentCategoryId));
+
 		_finderPathFetchByG_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "friendlyURL"}, false,
+			new String[] {"groupId", "friendlyURL"}, 0, 2, false,
 			MBCategory::getGroupId,
 			convertNullFunction(MBCategory::getFriendlyURL));
 
@@ -8269,6 +6592,22 @@ public class MBCategoryPersistenceImpl
 			},
 			new String[] {"categoryId", "groupId", "parentCategoryId"}, false);
 
+		_collectionPersistenceFinderByNotC_G_P =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByNotC_G_P, null,
+				_finderPathWithPaginationCountByNotC_G_P,
+				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
+				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"mbCategory.", "categoryId", FinderColumn.Type.LONG, "!=",
+					true, true, true, MBCategory::getCategoryId),
+				new FinderColumn<>(
+					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
+					true, MBCategory::getGroupId),
+				new ArrayableFinderColumn<>(
+					"mbCategory.", "parentCategoryId", FinderColumn.Type.LONG,
+					"=", false, true, true, MBCategory::getParentCategoryId));
+
 		_finderPathWithPaginationFindByG_P_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
 			new String[] {
@@ -8287,20 +6626,27 @@ public class MBCategoryPersistenceImpl
 			new String[] {"groupId", "parentCategoryId", "status"}, true);
 
 		_finderPathCountByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentCategoryId", "status"}, false);
-
-		_finderPathWithPaginationCountByG_P_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "parentCategoryId", "status"}, false);
+
+		_collectionPersistenceFinderByG_P_S = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_P_S,
+			_finderPathWithoutPaginationFindByG_P_S, _finderPathCountByG_P_S,
+			_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
+			MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
+				true, MBCategory::getGroupId),
+			new ArrayableFinderColumn<>(
+				"mbCategory.", "parentCategoryId", FinderColumn.Type.LONG, "=",
+				false, true, true, MBCategory::getParentCategoryId),
+			new FinderColumn<>(
+				"mbCategory.", "status", FinderColumn.Type.INTEGER, "=", true,
+				true, MBCategory::getStatus));
 
 		_finderPathWithPaginationFindByG_P_NotS = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_NotS",
@@ -8318,6 +6664,22 @@ public class MBCategoryPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"groupId", "parentCategoryId", "status"}, false);
+
+		_collectionPersistenceFinderByG_P_NotS =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_P_NotS, null,
+				_finderPathWithPaginationCountByG_P_NotS,
+				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
+				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
+					true, MBCategory::getGroupId),
+				new ArrayableFinderColumn<>(
+					"mbCategory.", "parentCategoryId", FinderColumn.Type.LONG,
+					"=", false, true, true, MBCategory::getParentCategoryId),
+				new FinderColumn<>(
+					"mbCategory.", "status", FinderColumn.Type.INTEGER, "!=",
+					true, true, MBCategory::getStatus));
 
 		_finderPathWithPaginationFindByNotC_G_P_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotC_G_P_S",
@@ -8343,10 +6705,29 @@ public class MBCategoryPersistenceImpl
 			},
 			false);
 
+		_collectionPersistenceFinderByNotC_G_P_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByNotC_G_P_S, null,
+				_finderPathWithPaginationCountByNotC_G_P_S,
+				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
+				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"mbCategory.", "categoryId", FinderColumn.Type.LONG, "!=",
+					true, true, true, MBCategory::getCategoryId),
+				new FinderColumn<>(
+					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
+					true, MBCategory::getGroupId),
+				new ArrayableFinderColumn<>(
+					"mbCategory.", "parentCategoryId", FinderColumn.Type.LONG,
+					"=", false, true, true, MBCategory::getParentCategoryId),
+				new FinderColumn<>(
+					"mbCategory.", "status", FinderColumn.Type.INTEGER, "=",
+					true, true, MBCategory::getStatus));
+
 		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, false,
+			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
 			convertNullFunction(MBCategory::getExternalReferenceCode),
 			MBCategory::getGroupId);
 
@@ -8455,4 +6836,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-559140737
+// LIFERAY-SERVICE-BUILDER-HASH:1407698044

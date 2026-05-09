@@ -55,7 +55,7 @@ public class DDLRecordSetVersionModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				ddlRecordSetVersionModelImpl, columnNames, original);
+				ddlRecordSetVersionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class DDLRecordSetVersionModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				ddlRecordSetVersionModelImpl, columnNames, original);
+				ddlRecordSetVersionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,26 @@ public class DDLRecordSetVersionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DDLRecordSetVersionModelImpl ddlRecordSetVersionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					ddlRecordSetVersionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = ddlRecordSetVersionModelImpl.getColumnValue(
+				value = ddlRecordSetVersionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = ddlRecordSetVersionModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +122,4 @@ public class DDLRecordSetVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:107060141
+// LIFERAY-SERVICE-BUILDER-HASH:1592740884

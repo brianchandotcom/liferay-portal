@@ -806,8 +806,8 @@ public class ExpandoRowPersistenceImpl
 		_finderPathFetchByT_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, false, ExpandoRow::getTableId,
-			ExpandoRow::getClassPK);
+			new String[] {"tableId", "classPK"}, 0, 0, false,
+			ExpandoRow::getTableId, ExpandoRow::getClassPK);
 
 		_uniquePersistenceFinderByT_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByT_C, _SQL_SELECT_EXPANDOROW_WHERE, "",
@@ -854,4 +854,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1086253424
+// LIFERAY-SERVICE-BUILDER-HASH:-1360805039

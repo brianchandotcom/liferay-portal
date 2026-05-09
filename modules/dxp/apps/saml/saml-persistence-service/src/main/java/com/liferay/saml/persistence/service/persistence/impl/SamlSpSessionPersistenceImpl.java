@@ -805,7 +805,7 @@ public class SamlSpSessionPersistenceImpl
 		_finderPathFetchByJSessionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByJSessionId",
 			new String[] {String.class.getName()}, new String[] {"jSessionId"},
-			false, convertNullFunction(SamlSpSession::getJSessionId));
+			0, 1, false, convertNullFunction(SamlSpSession::getJSessionId));
 
 		_uniquePersistenceFinderByJSessionId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByJSessionId, _SQL_SELECT_SAMLSPSESSION_WHERE,
@@ -817,7 +817,7 @@ public class SamlSpSessionPersistenceImpl
 		_finderPathFetchBySamlSpSessionKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlSpSessionKey",
 			new String[] {String.class.getName()},
-			new String[] {"samlSpSessionKey"}, false,
+			new String[] {"samlSpSessionKey"}, 0, 1, false,
 			convertNullFunction(SamlSpSession::getSamlSpSessionKey));
 
 		_uniquePersistenceFinderBySamlSpSessionKey =
@@ -841,12 +841,12 @@ public class SamlSpSessionPersistenceImpl
 		_finderPathWithoutPaginationFindByC_SI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_SI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "sessionIndex"}, true);
+			new String[] {"companyId", "sessionIndex"}, 0, 2, true, null);
 
 		_finderPathCountByC_SI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_SI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "sessionIndex"}, false);
+			new String[] {"companyId", "sessionIndex"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_SI = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_SI,
@@ -929,4 +929,4 @@ public class SamlSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1954576257
+// LIFERAY-SERVICE-BUILDER-HASH:120377726

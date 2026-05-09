@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -522,7 +522,8 @@ public class SegmentsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindBySegmentsEntryId;
 	private FinderPath _finderPathWithoutPaginationFindBySegmentsEntryId;
 	private FinderPath _finderPathCountBySegmentsEntryId;
-	private FinderPath _finderPathWithPaginationCountBySegmentsEntryId;
+	private CollectionPersistenceFinder<SegmentsEntry>
+		_collectionPersistenceFinderBySegmentsEntryId;
 
 	/**
 	 * Returns all the segments entries where segmentsEntryId = &#63;.
@@ -601,98 +602,9 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindBySegmentsEntryId;
-					finderArgs = new Object[] {segmentsEntryId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindBySegmentsEntryId;
-				finderArgs = new Object[] {
-					segmentsEntryId, start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (segmentsEntryId !=
-								segmentsEntry.getSegmentsEntryId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(segmentsEntryId);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderBySegmentsEntryId.find(
+				finderCache, new Object[] {new long[] {segmentsEntryId}}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -741,14 +653,9 @@ public class SegmentsEntryPersistenceImpl
 		long segmentsEntryId,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findBySegmentsEntryId(
-			segmentsEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderBySegmentsEntryId.fetchFirst(
+			finderCache, new Object[] {new long[] {segmentsEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -828,119 +735,14 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
-		if (segmentsEntryIds.length == 1) {
-			return findBySegmentsEntryId(
-				segmentsEntryIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(segmentsEntryIds)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(segmentsEntryIds), start, end,
-					orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					_finderPathWithPaginationFindBySegmentsEntryId, finderArgs,
-					this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (!ArrayUtil.contains(
-								segmentsEntryIds,
-								segmentsEntry.getSegmentsEntryId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				if (segmentsEntryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7);
-
-					sb.append(StringUtil.merge(segmentsEntryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindBySegmentsEntryId,
-							finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderBySegmentsEntryId.find(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(segmentsEntryIds)}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -951,13 +753,8 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeBySegmentsEntryId(long segmentsEntryId) {
-		for (SegmentsEntry segmentsEntry :
-				findBySegmentsEntryId(
-					segmentsEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntry);
-		}
+		_collectionPersistenceFinderBySegmentsEntryId.remove(
+			finderCache, new Object[] {new long[] {segmentsEntryId}});
 	}
 
 	/**
@@ -972,46 +769,8 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = _finderPathCountBySegmentsEntryId;
-
-			Object[] finderArgs = new Object[] {segmentsEntryId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(segmentsEntryId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderBySegmentsEntryId.count(
+				finderCache, new Object[] {new long[] {segmentsEntryId}});
 		}
 	}
 
@@ -1023,70 +782,13 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public int countBySegmentsEntryId(long[] segmentsEntryIds) {
-		if (segmentsEntryIds == null) {
-			segmentsEntryIds = new long[0];
-		}
-		else if (segmentsEntryIds.length > 1) {
-			segmentsEntryIds = ArrayUtil.sortedUnique(segmentsEntryIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(segmentsEntryIds)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountBySegmentsEntryId, finderArgs,
-				this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				if (segmentsEntryIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7);
-
-					sb.append(StringUtil.merge(segmentsEntryIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountBySegmentsEntryId,
-						finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderBySegmentsEntryId.count(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(segmentsEntryIds)});
 		}
 	}
 
@@ -1094,14 +796,11 @@ public class SegmentsEntryPersistenceImpl
 		_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_2 =
 			"segmentsEntry.segmentsEntryId = ?";
 
-	private static final String
-		_FINDER_COLUMN_SEGMENTSENTRYID_SEGMENTSENTRYID_7 =
-			"segmentsEntry.segmentsEntryId IN (";
-
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private FinderPath _finderPathWithPaginationCountByGroupId;
+	private CollectionPersistenceFinder<SegmentsEntry>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63;.
@@ -1177,95 +876,9 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByGroupId;
-					finderArgs = new Object[] {groupId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByGroupId;
-				finderArgs = new Object[] {
-					groupId, start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (groupId != segmentsEntry.getGroupId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				finderCache, new Object[] {new long[] {groupId}}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1312,14 +925,9 @@ public class SegmentsEntryPersistenceImpl
 	public SegmentsEntry fetchByGroupId_First(
 		long groupId, OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1690,113 +1298,13 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		if (groupIds.length == 1) {
-			return findByGroupId(groupIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {StringUtil.merge(groupIds)};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (!ArrayUtil.contains(
-								groupIds, segmentsEntry.getGroupId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByGroupId, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1807,12 +1315,8 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (SegmentsEntry segmentsEntry :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsEntry);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -1827,46 +1331,8 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = _finderPathCountByGroupId;
-
-			Object[] finderArgs = new Object[] {groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				finderCache, new Object[] {new long[] {groupId}});
 		}
 	}
 
@@ -1878,67 +1344,12 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByGroupId, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 		}
 	}
 
@@ -2484,7 +1895,8 @@ public class SegmentsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_A;
 	private FinderPath _finderPathCountByG_A;
-	private FinderPath _finderPathWithPaginationCountByG_A;
+	private CollectionPersistenceFinder<SegmentsEntry>
+		_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63; and active = &#63;.
@@ -2566,101 +1978,9 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_A;
-					finderArgs = new Object[] {groupId, active};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_A;
-				finderArgs = new Object[] {
-					groupId, active, start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if ((groupId != segmentsEntry.getGroupId()) ||
-							(active != segmentsEntry.isActive())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(active);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_A.find(
+				finderCache, new Object[] {new long[] {groupId}, active}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2714,14 +2034,9 @@ public class SegmentsEntryPersistenceImpl
 		long groupId, boolean active,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findByG_A(
-			groupId, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A.fetchFirst(
+			finderCache, new Object[] {new long[] {groupId}, active},
+			orderByComparator);
 	}
 
 	/**
@@ -3116,126 +2431,14 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		if (groupIds.length == 1) {
-			return findByG_A(
-				groupIds[0], active, start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(groupIds), active
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active, start, end,
-					orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_A, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (!ArrayUtil.contains(
-								groupIds, segmentsEntry.getGroupId()) ||
-							(active != segmentsEntry.isActive())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_A_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(active);
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_A, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_A.find(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(groupIds), active}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3247,13 +2450,8 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_A(long groupId, boolean active) {
-		for (SegmentsEntry segmentsEntry :
-				findByG_A(
-					groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntry);
-		}
+		_collectionPersistenceFinderByG_A.remove(
+			finderCache, new Object[] {new long[] {groupId}, active});
 	}
 
 	/**
@@ -3269,50 +2467,8 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_A;
-
-			Object[] finderArgs = new Object[] {groupId, active};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_A_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(active);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_A.count(
+				finderCache, new Object[] {new long[] {groupId}, active});
 		}
 	}
 
@@ -3325,76 +2481,13 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_A(long[] groupIds, boolean active) {
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_A_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_A_ACTIVE_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(active);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_A, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_A.count(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(groupIds), active});
 		}
 	}
 
@@ -3555,7 +2648,8 @@ public class SegmentsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_SRC;
 	private FinderPath _finderPathWithoutPaginationFindByG_SRC;
 	private FinderPath _finderPathCountByG_SRC;
-	private FinderPath _finderPathWithPaginationCountByG_SRC;
+	private CollectionPersistenceFinder<SegmentsEntry>
+		_collectionPersistenceFinderByG_SRC;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63; and source = &#63;.
@@ -3638,114 +2732,9 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			source = Objects.toString(source, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_SRC;
-					finderArgs = new Object[] {groupId, source};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_SRC;
-				finderArgs = new Object[] {
-					groupId, source, start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if ((groupId != segmentsEntry.getGroupId()) ||
-							!source.equals(segmentsEntry.getSource())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_SRC_GROUPID_2);
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_SRC.find(
+				finderCache, new Object[] {new long[] {groupId}, source}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3799,14 +2788,9 @@ public class SegmentsEntryPersistenceImpl
 		long groupId, String source,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findByG_SRC(
-			groupId, source, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_SRC.fetchFirst(
+			finderCache, new Object[] {new long[] {groupId}, source},
+			orderByComparator);
 	}
 
 	/**
@@ -4228,139 +3212,14 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		source = Objects.toString(source, "");
-
-		if (groupIds.length == 1) {
-			return findByG_SRC(
-				groupIds[0], source, start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(groupIds), source
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), source, start, end,
-					orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_SRC, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (!ArrayUtil.contains(
-								groupIds, segmentsEntry.getGroupId()) ||
-							!source.equals(segmentsEntry.getSource())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_SRC_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_2);
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_SRC, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_SRC.find(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(groupIds), source}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4372,13 +3231,8 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_SRC(long groupId, String source) {
-		for (SegmentsEntry segmentsEntry :
-				findByG_SRC(
-					groupId, source, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(segmentsEntry);
-		}
+		_collectionPersistenceFinderByG_SRC.remove(
+			finderCache, new Object[] {new long[] {groupId}, source});
 	}
 
 	/**
@@ -4394,63 +3248,8 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			source = Objects.toString(source, "");
-
-			FinderPath finderPath = _finderPathCountByG_SRC;
-
-			Object[] finderArgs = new Object[] {groupId, source};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_SRC_GROUPID_2);
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_SRC.count(
+				finderCache, new Object[] {new long[] {groupId}, source});
 		}
 	}
 
@@ -4463,90 +3262,13 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public int countByG_SRC(long[] groupIds, String source) {
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		source = Objects.toString(source, "");
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(groupIds), source
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_SRC, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_SRC_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_SRC_SOURCE_2);
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_SRC, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_SRC.count(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(groupIds), source});
 		}
 	}
 
@@ -4733,7 +3455,8 @@ public class SegmentsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_A_SRC;
 	private FinderPath _finderPathWithoutPaginationFindByG_A_SRC;
 	private FinderPath _finderPathCountByG_A_SRC;
-	private FinderPath _finderPathWithPaginationCountByG_A_SRC;
+	private CollectionPersistenceFinder<SegmentsEntry>
+		_collectionPersistenceFinderByG_A_SRC;
 
 	/**
 	 * Returns all the segments entries where groupId = &#63; and active = &#63; and source = &#63;.
@@ -4823,119 +3546,12 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			source = Objects.toString(source, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_A_SRC;
-					finderArgs = new Object[] {groupId, active, source};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_A_SRC;
-				finderArgs = new Object[] {
-					groupId, active, source, start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if ((groupId != segmentsEntry.getGroupId()) ||
-							(active != segmentsEntry.isActive()) ||
-							!source.equals(segmentsEntry.getSource())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						5 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(5);
-				}
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_ACTIVE_2);
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(active);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_A_SRC.find(
+				finderCache,
+				new Object[] {
+					new long[] {groupId}, active, new String[] {source}
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4994,14 +3610,10 @@ public class SegmentsEntryPersistenceImpl
 		long groupId, boolean active, String source,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
-		List<SegmentsEntry> list = findByG_A_SRC(
-			groupId, active, source, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_A_SRC.fetchFirst(
+			finderCache,
+			new Object[] {new long[] {groupId}, active, new String[] {source}},
+			orderByComparator);
 	}
 
 	/**
@@ -5471,167 +4083,17 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		if (sources == null) {
-			sources = new String[0];
-		}
-		else if (sources.length > 1) {
-			for (int i = 0; i < sources.length; i++) {
-				sources[i] = Objects.toString(sources[i], "");
-			}
-
-			sources = ArrayUtil.sortedUnique(sources);
-		}
-
-		if ((groupIds.length == 1) && (sources.length == 1)) {
-			return findByG_A_SRC(
-				groupIds[0], active, sources[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(groupIds), active,
-						StringUtil.merge(sources)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), active,
-					StringUtil.merge(sources), start, end, orderByComparator
-				};
-			}
-
-			List<SegmentsEntry> list = null;
-
-			if (useFinderCache) {
-				list = (List<SegmentsEntry>)finderCache.getResult(
-					_finderPathWithPaginationFindByG_A_SRC, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (SegmentsEntry segmentsEntry : list) {
-						if (!ArrayUtil.contains(
-								groupIds, segmentsEntry.getGroupId()) ||
-							(active != segmentsEntry.isActive()) ||
-							!ArrayUtil.contains(
-								sources, segmentsEntry.getSource())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_A_SRC_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_ACTIVE_2);
-
-				if (sources.length > 0) {
-					sb.append("(");
-
-					for (int i = 0; i < sources.length; i++) {
-						String source = sources[i];
-
-						if (source.isEmpty()) {
-							sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_3);
-						}
-						else {
-							sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_2);
-						}
-
-						if ((i + 1) < sources.length) {
-							sb.append(WHERE_OR);
-						}
-					}
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(SegmentsEntryModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(active);
-
-					for (String source : sources) {
-						if ((source != null) && !source.isEmpty()) {
-							queryPos.add(source);
-						}
-					}
-
-					list = (List<SegmentsEntry>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByG_A_SRC, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByG_A_SRC.find(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(groupIds), active,
+					ArrayUtil.sortedUnique(sources)
+				},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -5644,13 +4106,9 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByG_A_SRC(long groupId, boolean active, String source) {
-		for (SegmentsEntry segmentsEntry :
-				findByG_A_SRC(
-					groupId, active, source, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(segmentsEntry);
-		}
+		_collectionPersistenceFinderByG_A_SRC.remove(
+			finderCache,
+			new Object[] {new long[] {groupId}, active, new String[] {source}});
 	}
 
 	/**
@@ -5667,67 +4125,11 @@ public class SegmentsEntryPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			source = Objects.toString(source, "");
-
-			FinderPath finderPath = _finderPathCountByG_A_SRC;
-
-			Object[] finderArgs = new Object[] {groupId, active, source};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_GROUPID_2);
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_ACTIVE_2);
-
-				boolean bindSource = false;
-
-				if (source.isEmpty()) {
-					sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_3);
-				}
-				else {
-					bindSource = true;
-
-					sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					queryPos.add(active);
-
-					if (bindSource) {
-						queryPos.add(source);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_A_SRC.count(
+				finderCache,
+				new Object[] {
+					new long[] {groupId}, active, new String[] {source}
+				});
 		}
 	}
 
@@ -5743,115 +4145,16 @@ public class SegmentsEntryPersistenceImpl
 	public int countByG_A_SRC(
 		long[] groupIds, boolean active, String[] sources) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		if (sources == null) {
-			sources = new String[0];
-		}
-		else if (sources.length > 1) {
-			for (int i = 0; i < sources.length; i++) {
-				sources[i] = Objects.toString(sources[i], "");
-			}
-
-			sources = ArrayUtil.sortedUnique(sources);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					SegmentsEntry.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(groupIds), active, StringUtil.merge(sources)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByG_A_SRC, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_SEGMENTSENTRY_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_G_A_SRC_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_G_A_SRC_ACTIVE_2);
-
-				if (sources.length > 0) {
-					sb.append("(");
-
-					for (int i = 0; i < sources.length; i++) {
-						String source = sources[i];
-
-						if (source.isEmpty()) {
-							sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_3);
-						}
-						else {
-							sb.append(_FINDER_COLUMN_G_A_SRC_SOURCE_2);
-						}
-
-						if ((i + 1) < sources.length) {
-							sb.append(WHERE_OR);
-						}
-					}
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(active);
-
-					for (String source : sources) {
-						if ((source != null) && !source.isEmpty()) {
-							queryPos.add(source);
-						}
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByG_A_SRC, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByG_A_SRC.count(
+				finderCache,
+				new Object[] {
+					ArrayUtil.sortedUnique(groupIds), active,
+					ArrayUtil.sortedUnique(sources)
+				});
 		}
 	}
 
@@ -6561,13 +4864,13 @@ public class SegmentsEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -6581,7 +4884,7 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(SegmentsEntry::getUuid),
 			SegmentsEntry::getGroupId);
 
@@ -6606,12 +4909,12 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -6641,14 +4944,20 @@ public class SegmentsEntryPersistenceImpl
 			new String[] {"segmentsEntryId"}, true);
 
 		_finderPathCountBySegmentsEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySegmentsEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"segmentsEntryId"}, false);
-
-		_finderPathWithPaginationCountBySegmentsEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countBySegmentsEntryId",
 			new String[] {Long.class.getName()},
 			new String[] {"segmentsEntryId"}, false);
+
+		_collectionPersistenceFinderBySegmentsEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindBySegmentsEntryId,
+				_finderPathWithoutPaginationFindBySegmentsEntryId,
+				_finderPathCountBySegmentsEntryId,
+				_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "segmentsEntryId", FinderColumn.Type.LONG,
+					"=", false, true, true, SegmentsEntry::getSegmentsEntryId));
 
 		_finderPathWithPaginationFindByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
@@ -6664,14 +4973,20 @@ public class SegmentsEntryPersistenceImpl
 			true);
 
 		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
-		_finderPathWithPaginationCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_SEGMENTSENTRY_WHERE,
+				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, SegmentsEntry::getGroupId));
 
 		_finderPathWithPaginationFindByActive = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
@@ -6712,13 +5027,13 @@ public class SegmentsEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindBySource = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySource",
-			new String[] {String.class.getName()}, new String[] {"source"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"source"}, 0,
+			1, true, null);
 
 		_finderPathCountBySource = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySource",
-			new String[] {String.class.getName()}, new String[] {"source"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"source"}, 0,
+			1, false, null);
 
 		_collectionPersistenceFinderBySource =
 			new CollectionPersistenceFinder<>(
@@ -6734,7 +5049,7 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "segmentsEntryKey"}, false,
+			new String[] {"groupId", "segmentsEntryKey"}, 0, 2, false,
 			SegmentsEntry::getGroupId,
 			convertNullFunction(SegmentsEntry::getSegmentsEntryKey));
 
@@ -6762,14 +5077,21 @@ public class SegmentsEntryPersistenceImpl
 			new String[] {"groupId", "active_"}, true);
 
 		_finderPathCountByG_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "active_"}, false);
-
-		_finderPathWithPaginationCountByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
 			new String[] {"groupId", "active_"}, false);
+
+		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_A,
+			_finderPathWithoutPaginationFindByG_A, _finderPathCountByG_A,
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new ArrayableFinderColumn<>(
+				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", false,
+				true, true, SegmentsEntry::getGroupId),
+			new FinderColumn<>(
+				"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
+				true, true, SegmentsEntry::isActive));
 
 		_finderPathWithPaginationFindByG_SRC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SRC",
@@ -6783,17 +5105,24 @@ public class SegmentsEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByG_SRC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SRC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "source"}, true);
+			new String[] {"groupId", "source"}, 0, 2, true, null);
 
 		_finderPathCountByG_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SRC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "source"}, false);
-
-		_finderPathWithPaginationCountByG_SRC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_SRC",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "source"}, false);
+			new String[] {"groupId", "source"}, 0, 2, false, null);
+
+		_collectionPersistenceFinderByG_SRC = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByG_SRC,
+			_finderPathWithoutPaginationFindByG_SRC, _finderPathCountByG_SRC,
+			_SQL_SELECT_SEGMENTSENTRY_WHERE, _SQL_COUNT_SEGMENTSENTRY_WHERE,
+			SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new ArrayableFinderColumn<>(
+				"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=", false,
+				true, true, SegmentsEntry::getGroupId),
+			new FinderColumn<>(
+				"segmentsEntry.", "source", FinderColumn.Type.STRING, "=", true,
+				true, SegmentsEntry::getSource));
 
 		_finderPathWithPaginationFindByG_A_SRC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_SRC",
@@ -6810,28 +5139,37 @@ public class SegmentsEntryPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "active_", "source"}, true);
+			new String[] {"groupId", "active_", "source"}, 0, 4, true, null);
 
 		_finderPathCountByG_A_SRC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_SRC",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "active_", "source"}, false);
-
-		_finderPathWithPaginationCountByG_A_SRC = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_A_SRC",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "active_", "source"}, false);
+			new String[] {"groupId", "active_", "source"}, 0, 4, false, null);
+
+		_collectionPersistenceFinderByG_A_SRC =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_A_SRC,
+				_finderPathWithoutPaginationFindByG_A_SRC,
+				_finderPathCountByG_A_SRC, _SQL_SELECT_SEGMENTSENTRY_WHERE,
+				_SQL_COUNT_SEGMENTSENTRY_WHERE,
+				SegmentsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, SegmentsEntry::getGroupId),
+				new FinderColumn<>(
+					"segmentsEntry.", "active", FinderColumn.Type.BOOLEAN, "=",
+					true, true, SegmentsEntry::isActive),
+				new ArrayableFinderColumn<>(
+					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
+					false, true, true, SegmentsEntry::getSource));
 
 		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, false,
+			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
 			convertNullFunction(SegmentsEntry::getExternalReferenceCode),
 			SegmentsEntry::getGroupId);
 
@@ -6940,4 +5278,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1041744699
+// LIFERAY-SERVICE-BUILDER-HASH:579755425

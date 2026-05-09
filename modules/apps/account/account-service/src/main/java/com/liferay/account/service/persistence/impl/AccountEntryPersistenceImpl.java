@@ -2375,13 +2375,13 @@ public class AccountEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2404,12 +2404,12 @@ public class AccountEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2497,12 +2497,12 @@ public class AccountEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, true);
+			new String[] {"userId", "type_"}, 0, 2, true, null);
 
 		_finderPathCountByU_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, false);
+			new String[] {"userId", "type_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByU_T = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByU_T,
@@ -2519,7 +2519,7 @@ public class AccountEntryPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(AccountEntry::getExternalReferenceCode),
 			AccountEntry::getCompanyId);
 
@@ -2625,4 +2625,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:786514648
+// LIFERAY-SERVICE-BUILDER-HASH:739703511

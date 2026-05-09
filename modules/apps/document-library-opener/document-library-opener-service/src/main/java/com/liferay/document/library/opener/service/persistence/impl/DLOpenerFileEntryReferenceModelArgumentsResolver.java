@@ -57,7 +57,7 @@ public class DLOpenerFileEntryReferenceModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				dlOpenerFileEntryReferenceModelImpl, columnNames, original);
+				dlOpenerFileEntryReferenceModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class DLOpenerFileEntryReferenceModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				dlOpenerFileEntryReferenceModelImpl, columnNames, original);
+				dlOpenerFileEntryReferenceModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,23 +96,28 @@ public class DLOpenerFileEntryReferenceModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DLOpenerFileEntryReferenceModelImpl dlOpenerFileEntryReferenceModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					dlOpenerFileEntryReferenceModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					dlOpenerFileEntryReferenceModelImpl.getColumnValue(
-						columnName);
+				value = dlOpenerFileEntryReferenceModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -122,4 +127,4 @@ public class DLOpenerFileEntryReferenceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1542046384
+// LIFERAY-SERVICE-BUILDER-HASH:-916878415

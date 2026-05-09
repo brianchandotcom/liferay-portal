@@ -626,7 +626,7 @@ public class ExpandoTablePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "name"}, false,
+			new String[] {"companyId", "classNameId", "name"}, 0, 4, false,
 			ExpandoTable::getCompanyId, ExpandoTable::getClassNameId,
 			convertNullFunction(ExpandoTable::getName));
 
@@ -675,4 +675,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1315741085
+// LIFERAY-SERVICE-BUILDER-HASH:-1911705531

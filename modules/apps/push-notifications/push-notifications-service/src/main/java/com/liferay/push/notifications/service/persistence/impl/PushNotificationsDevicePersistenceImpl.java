@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -20,13 +18,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.push.notifications.exception.NoSuchDeviceException;
 import com.liferay.push.notifications.model.PushNotificationsDevice;
 import com.liferay.push.notifications.model.PushNotificationsDeviceTable;
@@ -43,7 +42,6 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.sql.DataSource;
 
@@ -169,7 +167,8 @@ public class PushNotificationsDevicePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByU_P;
 	private FinderPath _finderPathWithoutPaginationFindByU_P;
 	private FinderPath _finderPathCountByU_P;
-	private FinderPath _finderPathWithPaginationCountByU_P;
+	private CollectionPersistenceFinder<PushNotificationsDevice>
+		_collectionPersistenceFinderByU_P;
 
 	/**
 	 * Returns all the push notifications devices where userId = &#63; and platform = &#63;.
@@ -249,115 +248,9 @@ public class PushNotificationsDevicePersistenceImpl
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
 		boolean useFinderCache) {
 
-		platform = Objects.toString(platform, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByU_P;
-				finderArgs = new Object[] {userId, platform};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByU_P;
-			finderArgs = new Object[] {
-				userId, platform, start, end, orderByComparator
-			};
-		}
-
-		List<PushNotificationsDevice> list = null;
-
-		if (useFinderCache) {
-			list = (List<PushNotificationsDevice>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PushNotificationsDevice pushNotificationsDevice : list) {
-					if ((userId != pushNotificationsDevice.getUserId()) ||
-						!platform.equals(
-							pushNotificationsDevice.getPlatform())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_P_USERID_2);
-
-			boolean bindPlatform = false;
-
-			if (platform.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_3);
-			}
-			else {
-				bindPlatform = true;
-
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindPlatform) {
-					queryPos.add(platform);
-				}
-
-				list = (List<PushNotificationsDevice>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByU_P.find(
+			finderCache, new Object[] {new long[] {userId}, platform}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -410,14 +303,9 @@ public class PushNotificationsDevicePersistenceImpl
 		long userId, String platform,
 		OrderByComparator<PushNotificationsDevice> orderByComparator) {
 
-		List<PushNotificationsDevice> list = findByU_P(
-			userId, platform, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByU_P.fetchFirst(
+			finderCache, new Object[] {new long[] {userId}, platform},
+			orderByComparator);
 	}
 
 	/**
@@ -503,132 +391,10 @@ public class PushNotificationsDevicePersistenceImpl
 		OrderByComparator<PushNotificationsDevice> orderByComparator,
 		boolean useFinderCache) {
 
-		if (userIds == null) {
-			userIds = new long[0];
-		}
-		else if (userIds.length > 1) {
-			userIds = ArrayUtil.sortedUnique(userIds);
-		}
-
-		platform = Objects.toString(platform, "");
-
-		if (userIds.length == 1) {
-			return findByU_P(
-				userIds[0], platform, start, end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {StringUtil.merge(userIds), platform};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				StringUtil.merge(userIds), platform, start, end,
-				orderByComparator
-			};
-		}
-
-		List<PushNotificationsDevice> list = null;
-
-		if (useFinderCache) {
-			list = (List<PushNotificationsDevice>)finderCache.getResult(
-				_finderPathWithPaginationFindByU_P, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PushNotificationsDevice pushNotificationsDevice : list) {
-					if (!ArrayUtil.contains(
-							userIds, pushNotificationsDevice.getUserId()) ||
-						!platform.equals(
-							pushNotificationsDevice.getPlatform())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE);
-
-			if (userIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_U_P_USERID_7);
-
-				sb.append(StringUtil.merge(userIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindPlatform = false;
-
-			if (platform.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_3);
-			}
-			else {
-				bindPlatform = true;
-
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindPlatform) {
-					queryPos.add(platform);
-				}
-
-				list = (List<PushNotificationsDevice>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByU_P, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByU_P.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(userIds), platform}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -639,13 +405,8 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Override
 	public void removeByU_P(long userId, String platform) {
-		for (PushNotificationsDevice pushNotificationsDevice :
-				findByU_P(
-					userId, platform, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(pushNotificationsDevice);
-		}
+		_collectionPersistenceFinderByU_P.remove(
+			finderCache, new Object[] {new long[] {userId}, platform});
 	}
 
 	/**
@@ -657,62 +418,8 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Override
 	public int countByU_P(long userId, String platform) {
-		platform = Objects.toString(platform, "");
-
-		FinderPath finderPath = _finderPathCountByU_P;
-
-		Object[] finderArgs = new Object[] {userId, platform};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE);
-
-			sb.append(_FINDER_COLUMN_U_P_USERID_2);
-
-			boolean bindPlatform = false;
-
-			if (platform.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_3);
-			}
-			else {
-				bindPlatform = true;
-
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(userId);
-
-				if (bindPlatform) {
-					queryPos.add(platform);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByU_P.count(
+			finderCache, new Object[] {new long[] {userId}, platform});
 	}
 
 	/**
@@ -724,91 +431,13 @@ public class PushNotificationsDevicePersistenceImpl
 	 */
 	@Override
 	public int countByU_P(long[] userIds, String platform) {
-		if (userIds == null) {
-			userIds = new long[0];
-		}
-		else if (userIds.length > 1) {
-			userIds = ArrayUtil.sortedUnique(userIds);
-		}
-
-		platform = Objects.toString(platform, "");
-
-		Object[] finderArgs = new Object[] {
-			StringUtil.merge(userIds), platform
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByU_P, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE);
-
-			if (userIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_U_P_USERID_7);
-
-				sb.append(StringUtil.merge(userIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindPlatform = false;
-
-			if (platform.isEmpty()) {
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_3);
-			}
-			else {
-				bindPlatform = true;
-
-				sb.append(_FINDER_COLUMN_U_P_PLATFORM_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindPlatform) {
-					queryPos.add(platform);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByU_P, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByU_P.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(userIds), platform});
 	}
 
 	private static final String _FINDER_COLUMN_U_P_USERID_2 =
 		"pushNotificationsDevice.userId = ? AND ";
-
-	private static final String _FINDER_COLUMN_U_P_USERID_7 =
-		"pushNotificationsDevice.userId IN (";
 
 	private static final String _FINDER_COLUMN_U_P_PLATFORM_2 =
 		"pushNotificationsDevice.platform = ?";
@@ -1021,7 +650,7 @@ public class PushNotificationsDevicePersistenceImpl
 	public void activate() {
 		_finderPathFetchByToken = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByToken",
-			new String[] {String.class.getName()}, new String[] {"token"},
+			new String[] {String.class.getName()}, new String[] {"token"}, 0, 1,
 			false, convertNullFunction(PushNotificationsDevice::getToken));
 
 		_uniquePersistenceFinderByToken = new UniquePersistenceFinder<>(
@@ -1043,17 +672,27 @@ public class PushNotificationsDevicePersistenceImpl
 		_finderPathWithoutPaginationFindByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "platform"}, true);
+			new String[] {"userId", "platform"}, 0, 2, true, null);
 
 		_finderPathCountByU_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "platform"}, false);
-
-		_finderPathWithPaginationCountByU_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "platform"}, false);
+			new String[] {"userId", "platform"}, 0, 2, false, null);
+
+		_collectionPersistenceFinderByU_P = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByU_P,
+			_finderPathWithoutPaginationFindByU_P, _finderPathCountByU_P,
+			_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE,
+			_SQL_COUNT_PUSHNOTIFICATIONSDEVICE_WHERE,
+			PushNotificationsDeviceModelImpl.ORDER_BY_JPQL,
+			_ENTITY_ALIAS_PREFIX, "",
+			new ArrayableFinderColumn<>(
+				"pushNotificationsDevice.", "userId", FinderColumn.Type.LONG,
+				"=", false, true, true, PushNotificationsDevice::getUserId),
+			new FinderColumn<>(
+				"pushNotificationsDevice.", "platform",
+				FinderColumn.Type.STRING, "=", true, true,
+				PushNotificationsDevice::getPlatform));
 
 		PushNotificationsDeviceUtil.setPersistence(this);
 	}
@@ -1121,4 +760,4 @@ public class PushNotificationsDevicePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:662520029
+// LIFERAY-SERVICE-BUILDER-HASH:-1163708118

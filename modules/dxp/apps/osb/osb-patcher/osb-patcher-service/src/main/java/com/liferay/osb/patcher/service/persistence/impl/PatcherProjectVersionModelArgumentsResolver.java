@@ -55,7 +55,7 @@ public class PatcherProjectVersionModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				patcherProjectVersionModelImpl, columnNames, original);
+				patcherProjectVersionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class PatcherProjectVersionModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				patcherProjectVersionModelImpl, columnNames, original);
+				patcherProjectVersionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class PatcherProjectVersionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		PatcherProjectVersionModelImpl patcherProjectVersionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					patcherProjectVersionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = patcherProjectVersionModelImpl.getColumnValue(
+				value = patcherProjectVersionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = patcherProjectVersionModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class PatcherProjectVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:243578776
+// LIFERAY-SERVICE-BUILDER-HASH:2083809283

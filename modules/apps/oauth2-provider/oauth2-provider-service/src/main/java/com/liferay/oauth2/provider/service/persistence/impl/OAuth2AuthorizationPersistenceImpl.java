@@ -1614,7 +1614,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {
 				"userId", "oAuth2ApplicationId", "rememberDeviceContent"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByU_O_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_O_R",
@@ -1625,7 +1625,7 @@ public class OAuth2AuthorizationPersistenceImpl
 			new String[] {
 				"userId", "oAuth2ApplicationId", "rememberDeviceContent"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByU_O_R = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByU_O_R,
@@ -1721,4 +1721,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-274080493
+// LIFERAY-SERVICE-BUILDER-HASH:-1329075749

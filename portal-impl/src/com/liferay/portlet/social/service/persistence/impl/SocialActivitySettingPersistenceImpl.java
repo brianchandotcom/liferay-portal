@@ -1287,8 +1287,8 @@ public class SocialActivitySettingPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName(), String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "activityType", "name"},
-			false, SocialActivitySetting::getGroupId,
+			new String[] {"groupId", "classNameId", "activityType", "name"}, 0,
+			8, false, SocialActivitySetting::getGroupId,
 			SocialActivitySetting::getClassNameId,
 			SocialActivitySetting::getActivityType,
 			convertNullFunction(SocialActivitySetting::getName));
@@ -1343,4 +1343,4 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1306992875
+// LIFERAY-SERVICE-BUILDER-HASH:132817108

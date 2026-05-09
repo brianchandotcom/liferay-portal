@@ -54,7 +54,7 @@ public class UserNotificationEventModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				userNotificationEventModelImpl, columnNames, original);
+				userNotificationEventModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -82,7 +82,7 @@ public class UserNotificationEventModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				userNotificationEventModelImpl, columnNames, original);
+				userNotificationEventModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -100,22 +100,27 @@ public class UserNotificationEventModelArgumentsResolver
 
 	private static Object[] _getValue(
 		UserNotificationEventModelImpl userNotificationEventModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					userNotificationEventModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = userNotificationEventModelImpl.getColumnValue(
+				value = userNotificationEventModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = userNotificationEventModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -136,4 +141,4 @@ public class UserNotificationEventModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:108730378
+// LIFERAY-SERVICE-BUILDER-HASH:-1035892019

@@ -52,7 +52,7 @@ public class KBArticleModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = kbArticleModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kbArticleModelImpl, columnNames, original);
+			return _getValue(kbArticleModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class KBArticleModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kbArticleModelImpl, columnNames, original);
+			return _getValue(kbArticleModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class KBArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		KBArticleModelImpl kbArticleModelImpl, String[] columnNames,
+		KBArticleModelImpl kbArticleModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kbArticleModelImpl.getColumnOriginalValue(
-					columnName);
+				value = kbArticleModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = kbArticleModelImpl.getColumnValue(columnName);
+				value = kbArticleModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -131,4 +136,4 @@ public class KBArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1210464125
+// LIFERAY-SERVICE-BUILDER-HASH:368582576

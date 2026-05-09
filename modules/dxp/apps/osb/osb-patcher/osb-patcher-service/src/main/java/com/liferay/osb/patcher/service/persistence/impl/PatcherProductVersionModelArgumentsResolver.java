@@ -55,7 +55,7 @@ public class PatcherProductVersionModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				patcherProductVersionModelImpl, columnNames, original);
+				patcherProductVersionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class PatcherProductVersionModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				patcherProductVersionModelImpl, columnNames, original);
+				patcherProductVersionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class PatcherProductVersionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		PatcherProductVersionModelImpl patcherProductVersionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					patcherProductVersionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = patcherProductVersionModelImpl.getColumnValue(
+				value = patcherProductVersionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = patcherProductVersionModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class PatcherProductVersionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-649925628
+// LIFERAY-SERVICE-BUILDER-HASH:-1826601193

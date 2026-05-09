@@ -1143,12 +1143,12 @@ public class KaleoNotificationPersistenceImpl
 		_finderPathWithoutPaginationFindByKCN_KCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, true);
+			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, true, null);
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, false);
+			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByKCN_KCPK =
 			new CollectionPersistenceFinder<>(
@@ -1183,8 +1183,8 @@ public class KaleoNotificationPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"kaleoClassName", "kaleoClassPK", "executionType"},
-			true);
+			new String[] {"kaleoClassName", "kaleoClassPK", "executionType"}, 0,
+			5, true, null);
 
 		_finderPathCountByKCN_KCPK_ET = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK_ET",
@@ -1192,8 +1192,8 @@ public class KaleoNotificationPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"kaleoClassName", "kaleoClassPK", "executionType"},
-			false);
+			new String[] {"kaleoClassName", "kaleoClassPK", "executionType"}, 0,
+			5, false, null);
 
 		_collectionPersistenceFinderByKCN_KCPK_ET =
 			new CollectionPersistenceFinder<>(
@@ -1286,4 +1286,4 @@ public class KaleoNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-735483606
+// LIFERAY-SERVICE-BUILDER-HASH:944164143

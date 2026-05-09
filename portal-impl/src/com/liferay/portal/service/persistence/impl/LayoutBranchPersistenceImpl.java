@@ -1067,7 +1067,7 @@ public class LayoutBranchPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"layoutSetBranchId", "plid", "name"}, false,
+			new String[] {"layoutSetBranchId", "plid", "name"}, 0, 4, false,
 			LayoutBranch::getLayoutSetBranchId, LayoutBranch::getPlid,
 			convertNullFunction(LayoutBranch::getName));
 
@@ -1156,4 +1156,4 @@ public class LayoutBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-837624912
+// LIFERAY-SERVICE-BUILDER-HASH:-774240610

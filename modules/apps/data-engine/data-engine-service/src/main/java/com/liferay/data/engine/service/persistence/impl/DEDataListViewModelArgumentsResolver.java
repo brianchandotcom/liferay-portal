@@ -53,7 +53,7 @@ public class DEDataListViewModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = deDataListViewModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(deDataListViewModelImpl, columnNames, original);
+			return _getValue(deDataListViewModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class DEDataListViewModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(deDataListViewModelImpl, columnNames, original);
+			return _getValue(deDataListViewModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class DEDataListViewModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DEDataListViewModelImpl deDataListViewModelImpl, String[] columnNames,
+		DEDataListViewModelImpl deDataListViewModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = deDataListViewModelImpl.getColumnOriginalValue(
+				value = deDataListViewModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = deDataListViewModelImpl.getColumnValue(
-					columnName);
+				value = deDataListViewModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class DEDataListViewModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1333632615
+// LIFERAY-SERVICE-BUILDER-HASH:53923360

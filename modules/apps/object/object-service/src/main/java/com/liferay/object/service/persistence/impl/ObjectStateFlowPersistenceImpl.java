@@ -699,13 +699,13 @@ public class ObjectStateFlowPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -728,12 +728,12 @@ public class ObjectStateFlowPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -753,7 +753,7 @@ public class ObjectStateFlowPersistenceImpl
 		_finderPathFetchByObjectFieldId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId",
 			new String[] {Long.class.getName()}, new String[] {"objectFieldId"},
-			false, ObjectStateFlow::getObjectFieldId);
+			0, 0, false, ObjectStateFlow::getObjectFieldId);
 
 		_uniquePersistenceFinderByObjectFieldId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByObjectFieldId,
@@ -831,4 +831,4 @@ public class ObjectStateFlowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1153071614
+// LIFERAY-SERVICE-BUILDER-HASH:-1967505742

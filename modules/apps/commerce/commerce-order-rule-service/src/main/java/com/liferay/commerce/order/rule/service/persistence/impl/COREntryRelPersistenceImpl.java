@@ -749,7 +749,7 @@ public class COREntryRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "COREntryId"}, false,
+			new String[] {"classNameId", "classPK", "COREntryId"}, 0, 0, false,
 			COREntryRel::getClassNameId, COREntryRel::getClassPK,
 			COREntryRel::getCOREntryId);
 
@@ -831,4 +831,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1659468045
+// LIFERAY-SERVICE-BUILDER-HASH:-748656901

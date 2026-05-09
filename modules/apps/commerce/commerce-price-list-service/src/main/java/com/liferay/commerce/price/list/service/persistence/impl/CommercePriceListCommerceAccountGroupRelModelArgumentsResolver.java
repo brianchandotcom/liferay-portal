@@ -58,7 +58,7 @@ public class CommercePriceListCommerceAccountGroupRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commercePriceListCommerceAccountGroupRelModelImpl, columnNames,
+				commercePriceListCommerceAccountGroupRelModelImpl, finderPath,
 				original);
 		}
 
@@ -88,7 +88,7 @@ public class CommercePriceListCommerceAccountGroupRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commercePriceListCommerceAccountGroupRelModelImpl, columnNames,
+				commercePriceListCommerceAccountGroupRelModelImpl, finderPath,
 				original);
 		}
 
@@ -109,23 +109,29 @@ public class CommercePriceListCommerceAccountGroupRelModelArgumentsResolver
 	private static Object[] _getValue(
 		CommercePriceListCommerceAccountGroupRelModelImpl
 			commercePriceListCommerceAccountGroupRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commercePriceListCommerceAccountGroupRelModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
+				value =
 					commercePriceListCommerceAccountGroupRelModelImpl.
 						getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -147,4 +153,4 @@ public class CommercePriceListCommerceAccountGroupRelModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:434647555
+// LIFERAY-SERVICE-BUILDER-HASH:-477184786

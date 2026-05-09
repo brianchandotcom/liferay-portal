@@ -54,7 +54,7 @@ public class FragmentEntryLinkModelArgumentsResolver
 		long columnBitmask = fragmentEntryLinkModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(fragmentEntryLinkModelImpl, columnNames, original);
+			return _getValue(fragmentEntryLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -81,7 +81,7 @@ public class FragmentEntryLinkModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(fragmentEntryLinkModelImpl, columnNames, original);
+			return _getValue(fragmentEntryLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -99,22 +99,26 @@ public class FragmentEntryLinkModelArgumentsResolver
 
 	private static Object[] _getValue(
 		FragmentEntryLinkModelImpl fragmentEntryLinkModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					fragmentEntryLinkModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = fragmentEntryLinkModelImpl.getColumnValue(
+				value = fragmentEntryLinkModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = fragmentEntryLinkModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -139,4 +143,4 @@ public class FragmentEntryLinkModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-863156353
+// LIFERAY-SERVICE-BUILDER-HASH:257894604

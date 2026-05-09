@@ -833,7 +833,7 @@ public class KaleoTaskPersistenceImpl
 		_finderPathFetchByKaleoNodeId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKaleoNodeId",
 			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
-			false, KaleoTask::getKaleoNodeId);
+			0, 0, false, KaleoTask::getKaleoNodeId);
 
 		_uniquePersistenceFinderByKaleoNodeId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKaleoNodeId, _SQL_SELECT_KALEOTASK_WHERE,
@@ -911,4 +911,4 @@ public class KaleoTaskPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1353300968
+// LIFERAY-SERVICE-BUILDER-HASH:-710904893

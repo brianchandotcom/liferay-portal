@@ -57,7 +57,7 @@ public class AssetListEntrySegmentsEntryRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				assetListEntrySegmentsEntryRelModelImpl, columnNames, original);
+				assetListEntrySegmentsEntryRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class AssetListEntrySegmentsEntryRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				assetListEntrySegmentsEntryRelModelImpl, columnNames, original);
+				assetListEntrySegmentsEntryRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class AssetListEntrySegmentsEntryRelModelArgumentsResolver
 	private static Object[] _getValue(
 		AssetListEntrySegmentsEntryRelModelImpl
 			assetListEntrySegmentsEntryRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					assetListEntrySegmentsEntryRelModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					assetListEntrySegmentsEntryRelModelImpl.getColumnValue(
-						columnName);
+				value = assetListEntrySegmentsEntryRelModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class AssetListEntrySegmentsEntryRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1797097271
+// LIFERAY-SERVICE-BUILDER-HASH:-265331844

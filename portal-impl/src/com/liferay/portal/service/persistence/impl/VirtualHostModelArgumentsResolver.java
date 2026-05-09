@@ -52,7 +52,7 @@ public class VirtualHostModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = virtualHostModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(virtualHostModelImpl, columnNames, original);
+			return _getValue(virtualHostModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class VirtualHostModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(virtualHostModelImpl, columnNames, original);
+			return _getValue(virtualHostModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class VirtualHostModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		VirtualHostModelImpl virtualHostModelImpl, String[] columnNames,
+		VirtualHostModelImpl virtualHostModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = virtualHostModelImpl.getColumnOriginalValue(
-					columnName);
+				value = virtualHostModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = virtualHostModelImpl.getColumnValue(columnName);
+				value = virtualHostModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -128,4 +133,4 @@ public class VirtualHostModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:765698521
+// LIFERAY-SERVICE-BUILDER-HASH:-654464076

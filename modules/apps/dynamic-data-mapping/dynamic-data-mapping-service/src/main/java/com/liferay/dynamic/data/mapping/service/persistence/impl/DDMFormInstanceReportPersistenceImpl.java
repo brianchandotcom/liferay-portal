@@ -470,7 +470,7 @@ public class DDMFormInstanceReportPersistenceImpl
 		_finderPathFetchByFormInstanceId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFormInstanceId",
 			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, false,
+			new String[] {"formInstanceId"}, 0, 0, false,
 			DDMFormInstanceReport::getFormInstanceId);
 
 		_uniquePersistenceFinderByFormInstanceId =
@@ -551,4 +551,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:593561500
+// LIFERAY-SERVICE-BUILDER-HASH:361427159

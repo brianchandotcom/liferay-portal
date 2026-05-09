@@ -1219,12 +1219,12 @@ public class CommerceWishListItemPersistenceImpl
 		_finderPathWithoutPaginationFindByCPInstanceUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			new String[] {"CPInstanceUuid"}, true);
+			new String[] {"CPInstanceUuid"}, 0, 1, true, null);
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			new String[] {"CPInstanceUuid"}, false);
+			new String[] {"CPInstanceUuid"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByCPInstanceUuid =
 			new CollectionPersistenceFinder<>(
@@ -1284,12 +1284,14 @@ public class CommerceWishListItemPersistenceImpl
 		_finderPathWithoutPaginationFindByCW_CPI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commerceWishListId", "CPInstanceUuid"}, true);
+			new String[] {"commerceWishListId", "CPInstanceUuid"}, 0, 2, true,
+			null);
 
 		_finderPathCountByCW_CPI = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCW_CPI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commerceWishListId", "CPInstanceUuid"}, false);
+			new String[] {"commerceWishListId", "CPInstanceUuid"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByCW_CPI =
 			new CollectionPersistenceFinder<>(
@@ -1350,7 +1352,7 @@ public class CommerceWishListItemPersistenceImpl
 				Long.class.getName()
 			},
 			new String[] {"commerceWishListId", "CPInstanceUuid", "CProductId"},
-			false, CommerceWishListItem::getCommerceWishListId,
+			0, 2, false, CommerceWishListItem::getCommerceWishListId,
 			convertNullFunction(CommerceWishListItem::getCPInstanceUuid),
 			CommerceWishListItem::getCProductId);
 
@@ -1435,4 +1437,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1539216070
+// LIFERAY-SERVICE-BUILDER-HASH:898685267

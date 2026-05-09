@@ -564,7 +564,7 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		_finderPathFetchByU_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "configurationPid"}, false,
+			new String[] {"userId", "configurationPid"}, 0, 2, false,
 			SharepointOAuth2TokenEntry::getUserId,
 			convertNullFunction(
 				SharepointOAuth2TokenEntry::getConfigurationPid));
@@ -646,4 +646,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1296276564
+// LIFERAY-SERVICE-BUILDER-HASH:2107519199

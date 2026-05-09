@@ -739,7 +739,7 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		_finderPathFetchByA_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "organizationId"}, false,
+			new String[] {"accountEntryId", "organizationId"}, 0, 0, false,
 			AccountEntryOrganizationRel::getAccountEntryId,
 			AccountEntryOrganizationRel::getOrganizationId);
 
@@ -822,4 +822,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-596407505
+// LIFERAY-SERVICE-BUILDER-HASH:231267560

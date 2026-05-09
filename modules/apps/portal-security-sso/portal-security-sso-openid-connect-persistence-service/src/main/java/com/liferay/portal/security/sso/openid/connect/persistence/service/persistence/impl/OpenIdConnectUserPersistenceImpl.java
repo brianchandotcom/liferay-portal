@@ -568,7 +568,7 @@ public class OpenIdConnectUserPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "issuer", "subject"}, false,
+			new String[] {"companyId", "issuer", "subject"}, 0, 6, false,
 			OpenIdConnectUser::getCompanyId,
 			convertNullFunction(OpenIdConnectUser::getIssuer),
 			convertNullFunction(OpenIdConnectUser::getSubject));
@@ -652,4 +652,4 @@ public class OpenIdConnectUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1729294190
+// LIFERAY-SERVICE-BUILDER-HASH:429396672

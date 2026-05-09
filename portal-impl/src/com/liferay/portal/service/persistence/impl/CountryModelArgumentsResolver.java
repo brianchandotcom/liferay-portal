@@ -51,7 +51,7 @@ public class CountryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = countryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(countryModelImpl, columnNames, original);
+			return _getValue(countryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class CountryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(countryModelImpl, columnNames, original);
+			return _getValue(countryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,21 +95,26 @@ public class CountryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CountryModelImpl countryModelImpl, String[] columnNames,
+		CountryModelImpl countryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = countryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = countryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = countryModelImpl.getColumnValue(columnName);
+				value = countryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -129,4 +134,4 @@ public class CountryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-617319341
+// LIFERAY-SERVICE-BUILDER-HASH:1735261716

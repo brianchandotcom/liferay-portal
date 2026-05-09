@@ -437,7 +437,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false,
+			new String[] {"classNameId", "classPK"}, 0, 0, false,
 			FriendlyURLEntryMapping::getClassNameId,
 			FriendlyURLEntryMapping::getClassPK);
 
@@ -518,4 +518,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2128012075
+// LIFERAY-SERVICE-BUILDER-HASH:-1416963524

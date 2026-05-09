@@ -52,7 +52,7 @@ public class UserGroupRoleModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = userGroupRoleModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(userGroupRoleModelImpl, columnNames, original);
+			return _getValue(userGroupRoleModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class UserGroupRoleModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(userGroupRoleModelImpl, columnNames, original);
+			return _getValue(userGroupRoleModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,22 +88,27 @@ public class UserGroupRoleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		UserGroupRoleModelImpl userGroupRoleModelImpl, String[] columnNames,
+		UserGroupRoleModelImpl userGroupRoleModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = userGroupRoleModelImpl.getColumnOriginalValue(
+				value = userGroupRoleModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = userGroupRoleModelImpl.getColumnValue(
-					columnName);
+				value = userGroupRoleModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +118,4 @@ public class UserGroupRoleModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-692395480
+// LIFERAY-SERVICE-BUILDER-HASH:340922475

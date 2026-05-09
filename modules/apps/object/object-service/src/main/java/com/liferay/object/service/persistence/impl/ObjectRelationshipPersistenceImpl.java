@@ -3606,13 +3606,13 @@ public class ObjectRelationshipPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -3636,12 +3636,12 @@ public class ObjectRelationshipPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -3756,7 +3756,7 @@ public class ObjectRelationshipPersistenceImpl
 		_finderPathFetchByObjectFieldId2 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId2",
 			new String[] {Long.class.getName()},
-			new String[] {"objectFieldId2"}, false,
+			new String[] {"objectFieldId2"}, 0, 0, false,
 			ObjectRelationship::getObjectFieldId2);
 
 		_uniquePersistenceFinderByObjectFieldId2 =
@@ -3883,12 +3883,12 @@ public class ObjectRelationshipPersistenceImpl
 		_finderPathWithoutPaginationFindByODI1_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId1", "name"}, true);
+			new String[] {"objectDefinitionId1", "name"}, 0, 2, true, null);
 
 		_finderPathCountByODI1_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId1", "name"}, false);
+			new String[] {"objectDefinitionId1", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByODI1_N =
 			new CollectionPersistenceFinder<>(
@@ -4014,7 +4014,7 @@ public class ObjectRelationshipPersistenceImpl
 		_finderPathFetchByDTN_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByDTN_R",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"dbTableName", "reverse"}, false,
+			new String[] {"dbTableName", "reverse"}, 0, 1, false,
 			convertNullFunction(ObjectRelationship::getDBTableName),
 			ObjectRelationship::isReverse);
 
@@ -4037,7 +4037,7 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId1"
 			},
-			false,
+			0, 1, false,
 			convertNullFunction(ObjectRelationship::getExternalReferenceCode),
 			ObjectRelationship::getCompanyId,
 			ObjectRelationship::getObjectDefinitionId1);
@@ -4078,7 +4078,7 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"objectDefinitionId1", "objectDefinitionId2", "type_"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByODI1_ODI2_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_ODI2_T",
@@ -4089,7 +4089,7 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"objectDefinitionId1", "objectDefinitionId2", "type_"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByODI1_ODI2_T =
 			new CollectionPersistenceFinder<>(
@@ -4128,8 +4128,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"objectDefinitionId1", "deletionType", "reverse"},
-			true);
+			new String[] {"objectDefinitionId1", "deletionType", "reverse"}, 0,
+			2, true, null);
 
 		_finderPathCountByODI1_DT_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_DT_R",
@@ -4137,8 +4137,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"objectDefinitionId1", "deletionType", "reverse"},
-			false);
+			new String[] {"objectDefinitionId1", "deletionType", "reverse"}, 0,
+			2, false, null);
 
 		_collectionPersistenceFinderByODI1_DT_R =
 			new CollectionPersistenceFinder<>(
@@ -4176,7 +4176,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"objectDefinitionId1", "reverse", "type_"}, true);
+			new String[] {"objectDefinitionId1", "reverse", "type_"}, 0, 4,
+			true, null);
 
 		_finderPathCountByODI1_R_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_R_T",
@@ -4184,7 +4185,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"objectDefinitionId1", "reverse", "type_"}, false);
+			new String[] {"objectDefinitionId1", "reverse", "type_"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByODI1_R_T =
 			new CollectionPersistenceFinder<>(
@@ -4221,7 +4223,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"objectDefinitionId2", "reverse", "type_"}, true);
+			new String[] {"objectDefinitionId2", "reverse", "type_"}, 0, 4,
+			true, null);
 
 		_finderPathCountByODI2_R_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_R_T",
@@ -4229,7 +4232,8 @@ public class ObjectRelationshipPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"objectDefinitionId2", "reverse", "type_"}, false);
+			new String[] {"objectDefinitionId2", "reverse", "type_"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByODI2_R_T =
 			new CollectionPersistenceFinder<>(
@@ -4273,7 +4277,7 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
 			},
-			true);
+			0, 12, true, null);
 
 		_finderPathCountByODI1_ODI2_N_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_ODI2_N_T",
@@ -4284,7 +4288,7 @@ public class ObjectRelationshipPersistenceImpl
 			new String[] {
 				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
 			},
-			false);
+			0, 12, false, null);
 
 		_collectionPersistenceFinderByODI1_ODI2_N_T =
 			new CollectionPersistenceFinder<>(
@@ -4321,7 +4325,7 @@ public class ObjectRelationshipPersistenceImpl
 				"objectDefinitionId1", "objectDefinitionId2", "name", "reverse",
 				"type_"
 			},
-			false, ObjectRelationship::getObjectDefinitionId1,
+			0, 20, false, ObjectRelationship::getObjectDefinitionId1,
 			ObjectRelationship::getObjectDefinitionId2,
 			convertNullFunction(ObjectRelationship::getName),
 			ObjectRelationship::isReverse,
@@ -4418,4 +4422,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1250062286
+// LIFERAY-SERVICE-BUILDER-HASH:1440603090

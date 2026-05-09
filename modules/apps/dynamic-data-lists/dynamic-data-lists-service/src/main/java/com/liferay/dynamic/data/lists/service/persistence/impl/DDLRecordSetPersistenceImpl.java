@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -512,7 +512,8 @@ public class DDLRecordSetPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByGroupId;
 	private FinderPath _finderPathWithoutPaginationFindByGroupId;
 	private FinderPath _finderPathCountByGroupId;
-	private FinderPath _finderPathWithPaginationCountByGroupId;
+	private CollectionPersistenceFinder<DDLRecordSet>
+		_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns all the ddl record sets where groupId = &#63;.
@@ -588,95 +589,9 @@ public class DDLRecordSetPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByGroupId;
-					finderArgs = new Object[] {groupId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByGroupId;
-				finderArgs = new Object[] {
-					groupId, start, end, orderByComparator
-				};
-			}
-
-			List<DDLRecordSet> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDLRecordSet>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDLRecordSet ddlRecordSet : list) {
-						if (groupId != ddlRecordSet.getGroupId()) {
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DDLRECORDSET_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					list = (List<DDLRecordSet>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				finderCache, new Object[] {new long[] {groupId}}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -723,14 +638,9 @@ public class DDLRecordSetPersistenceImpl
 	public DDLRecordSet fetchByGroupId_First(
 		long groupId, OrderByComparator<DDLRecordSet> orderByComparator) {
 
-		List<DDLRecordSet> list = findByGroupId(
-			groupId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByGroupId.fetchFirst(
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1101,113 +1011,13 @@ public class DDLRecordSetPersistenceImpl
 		OrderByComparator<DDLRecordSet> orderByComparator,
 		boolean useFinderCache) {
 
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
-		if (groupIds.length == 1) {
-			return findByGroupId(groupIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {StringUtil.merge(groupIds)};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(groupIds), start, end, orderByComparator
-				};
-			}
-
-			List<DDLRecordSet> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDLRecordSet>)finderCache.getResult(
-					_finderPathWithPaginationFindByGroupId, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDLRecordSet ddlRecordSet : list) {
-						if (!ArrayUtil.contains(
-								groupIds, ddlRecordSet.getGroupId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_DDLRECORDSET_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DDLRecordSet>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByGroupId, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByGroupId.find(
+				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1218,12 +1028,8 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public void removeByGroupId(long groupId) {
-		for (DDLRecordSet ddlRecordSet :
-				findByGroupId(
-					groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ddlRecordSet);
-		}
+		_collectionPersistenceFinderByGroupId.remove(
+			finderCache, new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -1238,46 +1044,8 @@ public class DDLRecordSetPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			FinderPath finderPath = _finderPathCountByGroupId;
-
-			Object[] finderArgs = new Object[] {groupId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DDLRECORDSET_WHERE);
-
-				sb.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(groupId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				finderCache, new Object[] {new long[] {groupId}});
 		}
 	}
 
@@ -1289,67 +1057,12 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
-		if (groupIds == null) {
-			groupIds = new long[0];
-		}
-		else if (groupIds.length > 1) {
-			groupIds = ArrayUtil.sortedUnique(groupIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			Object[] finderArgs = new Object[] {StringUtil.merge(groupIds)};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByGroupId, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_DDLRECORDSET_WHERE);
-
-				if (groupIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
-
-					sb.append(StringUtil.merge(groupIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByGroupId, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByGroupId.count(
+				finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 		}
 	}
 
@@ -1489,7 +1202,8 @@ public class DDLRecordSetPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByDDMStructureId;
 	private FinderPath _finderPathWithoutPaginationFindByDDMStructureId;
 	private FinderPath _finderPathCountByDDMStructureId;
-	private FinderPath _finderPathWithPaginationCountByDDMStructureId;
+	private CollectionPersistenceFinder<DDLRecordSet>
+		_collectionPersistenceFinderByDDMStructureId;
 
 	/**
 	 * Returns all the ddl record sets where DDMStructureId = &#63;.
@@ -1568,98 +1282,9 @@ public class DDLRecordSetPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath =
-						_finderPathWithoutPaginationFindByDDMStructureId;
-					finderArgs = new Object[] {DDMStructureId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByDDMStructureId;
-				finderArgs = new Object[] {
-					DDMStructureId, start, end, orderByComparator
-				};
-			}
-
-			List<DDLRecordSet> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDLRecordSet>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDLRecordSet ddlRecordSet : list) {
-						if (DDMStructureId !=
-								ddlRecordSet.getDDMStructureId()) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						3 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(3);
-				}
-
-				sb.append(_SQL_SELECT_DDLRECORDSET_WHERE);
-
-				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(DDMStructureId);
-
-					list = (List<DDLRecordSet>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByDDMStructureId.find(
+				finderCache, new Object[] {new long[] {DDMStructureId}}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1708,14 +1333,9 @@ public class DDLRecordSetPersistenceImpl
 		long DDMStructureId,
 		OrderByComparator<DDLRecordSet> orderByComparator) {
 
-		List<DDLRecordSet> list = findByDDMStructureId(
-			DDMStructureId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByDDMStructureId.fetchFirst(
+			finderCache, new Object[] {new long[] {DDMStructureId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1795,119 +1415,14 @@ public class DDLRecordSetPersistenceImpl
 		OrderByComparator<DDLRecordSet> orderByComparator,
 		boolean useFinderCache) {
 
-		if (DDMStructureIds == null) {
-			DDMStructureIds = new long[0];
-		}
-		else if (DDMStructureIds.length > 1) {
-			DDMStructureIds = ArrayUtil.sortedUnique(DDMStructureIds);
-		}
-
-		if (DDMStructureIds.length == 1) {
-			return findByDDMStructureId(
-				DDMStructureIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						StringUtil.merge(DDMStructureIds)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(DDMStructureIds), start, end,
-					orderByComparator
-				};
-			}
-
-			List<DDLRecordSet> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDLRecordSet>)finderCache.getResult(
-					_finderPathWithPaginationFindByDDMStructureId, finderArgs,
-					this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDLRecordSet ddlRecordSet : list) {
-						if (!ArrayUtil.contains(
-								DDMStructureIds,
-								ddlRecordSet.getDDMStructureId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_DDLRECORDSET_WHERE);
-
-				if (DDMStructureIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7);
-
-					sb.append(StringUtil.merge(DDMStructureIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDLRecordSetModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					list = (List<DDLRecordSet>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByDDMStructureId,
-							finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByDDMStructureId.find(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(DDMStructureIds)}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -1918,13 +1433,8 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public void removeByDDMStructureId(long DDMStructureId) {
-		for (DDLRecordSet ddlRecordSet :
-				findByDDMStructureId(
-					DDMStructureId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddlRecordSet);
-		}
+		_collectionPersistenceFinderByDDMStructureId.remove(
+			finderCache, new Object[] {new long[] {DDMStructureId}});
 	}
 
 	/**
@@ -1939,46 +1449,8 @@ public class DDLRecordSetPersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			FinderPath finderPath = _finderPathCountByDDMStructureId;
-
-			Object[] finderArgs = new Object[] {DDMStructureId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(_SQL_COUNT_DDLRECORDSET_WHERE);
-
-				sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(DDMStructureId);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByDDMStructureId.count(
+				finderCache, new Object[] {new long[] {DDMStructureId}});
 		}
 	}
 
@@ -1990,78 +1462,18 @@ public class DDLRecordSetPersistenceImpl
 	 */
 	@Override
 	public int countByDDMStructureId(long[] DDMStructureIds) {
-		if (DDMStructureIds == null) {
-			DDMStructureIds = new long[0];
-		}
-		else if (DDMStructureIds.length > 1) {
-			DDMStructureIds = ArrayUtil.sortedUnique(DDMStructureIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDLRecordSet.class)) {
 
-			Object[] finderArgs = new Object[] {
-				StringUtil.merge(DDMStructureIds)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByDDMStructureId, finderArgs,
-				this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_DDLRECORDSET_WHERE);
-
-				if (DDMStructureIds.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7);
-
-					sb.append(StringUtil.merge(DDMStructureIds));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByDDMStructureId,
-						finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByDDMStructureId.count(
+				finderCache,
+				new Object[] {ArrayUtil.sortedUnique(DDMStructureIds)});
 		}
 	}
 
 	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_2 =
 		"ddlRecordSet.DDMStructureId = ?";
-
-	private static final String _FINDER_COLUMN_DDMSTRUCTUREID_DDMSTRUCTUREID_7 =
-		"ddlRecordSet.DDMStructureId IN (";
 
 	private FinderPath _finderPathFetchByG_R;
 	private UniquePersistenceFinder<DDLRecordSet> _uniquePersistenceFinderByG_R;
@@ -2476,13 +1888,13 @@ public class DDLRecordSetPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2496,7 +1908,7 @@ public class DDLRecordSetPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(DDLRecordSet::getUuid),
 			DDLRecordSet::getGroupId);
 
@@ -2521,12 +1933,12 @@ public class DDLRecordSetPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2556,14 +1968,20 @@ public class DDLRecordSetPersistenceImpl
 			true);
 
 		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
-		_finderPathWithPaginationCountByGroupId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 			new String[] {Long.class.getName()}, new String[] {"groupId"},
 			false);
+
+		_collectionPersistenceFinderByGroupId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_DDLRECORDSET_WHERE,
+				_SQL_COUNT_DDLRECORDSET_WHERE,
+				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"ddlRecordSet.", "groupId", FinderColumn.Type.LONG, "=",
+					false, true, true, DDLRecordSet::getGroupId));
 
 		_finderPathWithPaginationFindByDDMStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDDMStructureId",
@@ -2579,19 +1997,25 @@ public class DDLRecordSetPersistenceImpl
 			new String[] {"DDMStructureId"}, true);
 
 		_finderPathCountByDDMStructureId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDDMStructureId",
-			new String[] {Long.class.getName()},
-			new String[] {"DDMStructureId"}, false);
-
-		_finderPathWithPaginationCountByDDMStructureId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByDDMStructureId",
 			new String[] {Long.class.getName()},
 			new String[] {"DDMStructureId"}, false);
 
+		_collectionPersistenceFinderByDDMStructureId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByDDMStructureId,
+				_finderPathWithoutPaginationFindByDDMStructureId,
+				_finderPathCountByDDMStructureId,
+				_SQL_SELECT_DDLRECORDSET_WHERE, _SQL_COUNT_DDLRECORDSET_WHERE,
+				DDLRecordSetModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"ddlRecordSet.", "DDMStructureId", FinderColumn.Type.LONG,
+					"=", false, true, true, DDLRecordSet::getDDMStructureId));
+
 		_finderPathFetchByG_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_R",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "recordSetKey"}, false,
+			new String[] {"groupId", "recordSetKey"}, 0, 2, false,
 			DDLRecordSet::getGroupId,
 			convertNullFunction(DDLRecordSet::getRecordSetKey));
 
@@ -2699,4 +2123,4 @@ public class DDLRecordSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1601954982
+// LIFERAY-SERVICE-BUILDER-HASH:1788634933

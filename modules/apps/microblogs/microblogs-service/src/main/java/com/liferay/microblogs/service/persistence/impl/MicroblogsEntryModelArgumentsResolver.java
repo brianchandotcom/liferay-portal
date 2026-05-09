@@ -54,7 +54,7 @@ public class MicroblogsEntryModelArgumentsResolver
 		long columnBitmask = microblogsEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(microblogsEntryModelImpl, columnNames, original);
+			return _getValue(microblogsEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -81,7 +81,7 @@ public class MicroblogsEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(microblogsEntryModelImpl, columnNames, original);
+			return _getValue(microblogsEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -98,22 +98,27 @@ public class MicroblogsEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		MicroblogsEntryModelImpl microblogsEntryModelImpl, String[] columnNames,
-		boolean original) {
+		MicroblogsEntryModelImpl microblogsEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = microblogsEntryModelImpl.getColumnOriginalValue(
+				value = microblogsEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = microblogsEntryModelImpl.getColumnValue(
-					columnName);
+				value = microblogsEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -134,4 +139,4 @@ public class MicroblogsEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1099614466
+// LIFERAY-SERVICE-BUILDER-HASH:1473838657

@@ -1213,7 +1213,7 @@ public class CSDiagramEntryPersistenceImpl
 		_finderPathFetchByCPDI_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDI_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "sequence"}, false,
+			new String[] {"CPDefinitionId", "sequence"}, 0, 2, false,
 			CSDiagramEntry::getCPDefinitionId,
 			convertNullFunction(CSDiagramEntry::getSequence));
 
@@ -1230,7 +1230,7 @@ public class CSDiagramEntryPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(CSDiagramEntry::getExternalReferenceCode),
 			CSDiagramEntry::getCompanyId);
 
@@ -1313,4 +1313,4 @@ public class CSDiagramEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:800205250
+// LIFERAY-SERVICE-BUILDER-HASH:488409899

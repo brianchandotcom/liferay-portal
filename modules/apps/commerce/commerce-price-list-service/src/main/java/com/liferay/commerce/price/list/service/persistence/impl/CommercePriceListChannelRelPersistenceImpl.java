@@ -1019,13 +1019,13 @@ public class CommercePriceListChannelRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1051,12 +1051,12 @@ public class CommercePriceListChannelRelPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1111,8 +1111,8 @@ public class CommercePriceListChannelRelPersistenceImpl
 		_finderPathFetchByCCI_CPI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCCI_CPI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceChannelId", "commercePriceListId"}, false,
-			CommercePriceListChannelRel::getCommerceChannelId,
+			new String[] {"commerceChannelId", "commercePriceListId"}, 0, 0,
+			false, CommercePriceListChannelRel::getCommerceChannelId,
 			CommercePriceListChannelRel::getCommercePriceListId);
 
 		_uniquePersistenceFinderByCCI_CPI = new UniquePersistenceFinder<>(
@@ -1200,4 +1200,4 @@ public class CommercePriceListChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1132562084
+// LIFERAY-SERVICE-BUILDER-HASH:-683286020

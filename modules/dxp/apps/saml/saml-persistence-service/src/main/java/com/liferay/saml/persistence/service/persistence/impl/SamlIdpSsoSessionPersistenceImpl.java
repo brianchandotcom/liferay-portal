@@ -608,8 +608,8 @@ public class SamlIdpSsoSessionPersistenceImpl
 	public void activate() {
 		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
-			SamlIdpSsoSession::getUserId);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, 0, 0,
+			false, SamlIdpSsoSession::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_SAMLIDPSSOSESSION_WHERE,
@@ -646,7 +646,7 @@ public class SamlIdpSsoSessionPersistenceImpl
 		_finderPathFetchBySamlIdpSsoSessionKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSsoSessionKey",
 			new String[] {String.class.getName()},
-			new String[] {"samlIdpSsoSessionKey"}, false,
+			new String[] {"samlIdpSsoSessionKey"}, 0, 1, false,
 			convertNullFunction(SamlIdpSsoSession::getSamlIdpSsoSessionKey));
 
 		_uniquePersistenceFinderBySamlIdpSsoSessionKey =
@@ -724,4 +724,4 @@ public class SamlIdpSsoSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2011123371
+// LIFERAY-SERVICE-BUILDER-HASH:-2130764683

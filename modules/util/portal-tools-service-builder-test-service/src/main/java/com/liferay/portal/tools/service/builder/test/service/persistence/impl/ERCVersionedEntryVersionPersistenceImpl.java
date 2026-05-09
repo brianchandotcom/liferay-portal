@@ -1508,7 +1508,7 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		_finderPathFetchByErcVersionedEntryId_Version = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByErcVersionedEntryId_Version",
 			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ercVersionedEntryId", "version"}, false,
+			new String[] {"ercVersionedEntryId", "version"}, 0, 0, false,
 			ERCVersionedEntryVersion::getErcVersionedEntryId,
 			ERCVersionedEntryVersion::getVersion);
 
@@ -1535,13 +1535,13 @@ public class ERCVersionedEntryVersionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1566,12 +1566,12 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Version",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"uuid_", "version"}, true);
+			new String[] {"uuid_", "version"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Version",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"uuid_", "version"}, false);
+			new String[] {"uuid_", "version"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_Version =
 			new CollectionPersistenceFinder<>(
@@ -1603,12 +1603,12 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, true);
+			new String[] {"uuid_", "groupId"}, 0, 1, true, null);
 
 		_finderPathCountByUUID_G = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false);
+			new String[] {"uuid_", "groupId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUUID_G =
 			new CollectionPersistenceFinder<>(
@@ -1634,7 +1634,7 @@ public class ERCVersionedEntryVersionPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"uuid_", "groupId", "version"}, false,
+			new String[] {"uuid_", "groupId", "version"}, 0, 1, false,
 			convertNullFunction(ERCVersionedEntryVersion::getUuid),
 			ERCVersionedEntryVersion::getGroupId,
 			ERCVersionedEntryVersion::getVersion);
@@ -1668,12 +1668,12 @@ public class ERCVersionedEntryVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1708,7 +1708,7 @@ public class ERCVersionedEntryVersionPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"uuid_", "companyId", "version"}, true);
+			new String[] {"uuid_", "companyId", "version"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C_Version = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Version",
@@ -1716,7 +1716,7 @@ public class ERCVersionedEntryVersionPersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"uuid_", "companyId", "version"}, false);
+			new String[] {"uuid_", "companyId", "version"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C_Version =
 			new CollectionPersistenceFinder<>(
@@ -1782,4 +1782,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1427932710
+// LIFERAY-SERVICE-BUILDER-HASH:1120713972

@@ -1595,13 +1595,13 @@ public class RedirectEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1615,7 +1615,7 @@ public class RedirectEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(RedirectEntry::getUuid),
 			RedirectEntry::getGroupId);
 
@@ -1640,12 +1640,12 @@ public class RedirectEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1702,12 +1702,12 @@ public class RedirectEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByG_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "destinationURL"}, true);
+			new String[] {"groupId", "destinationURL"}, 0, 2, true, null);
 
 		_finderPathCountByG_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "destinationURL"}, false);
+			new String[] {"groupId", "destinationURL"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByG_D = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_D,
@@ -1724,7 +1724,7 @@ public class RedirectEntryPersistenceImpl
 		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "sourceURL"}, false,
+			new String[] {"groupId", "sourceURL"}, 0, 2, false,
 			RedirectEntry::getGroupId,
 			convertNullFunction(RedirectEntry::getSourceURL));
 
@@ -1829,4 +1829,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-356313224
+// LIFERAY-SERVICE-BUILDER-HASH:-260066875

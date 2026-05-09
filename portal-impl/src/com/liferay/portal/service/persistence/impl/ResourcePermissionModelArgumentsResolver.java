@@ -53,8 +53,7 @@ public class ResourcePermissionModelArgumentsResolver
 		long columnBitmask = resourcePermissionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				resourcePermissionModelImpl, columnNames, original);
+			return _getValue(resourcePermissionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,8 +72,7 @@ public class ResourcePermissionModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				resourcePermissionModelImpl, columnNames, original);
+			return _getValue(resourcePermissionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +90,26 @@ public class ResourcePermissionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ResourcePermissionModelImpl resourcePermissionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					resourcePermissionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = resourcePermissionModelImpl.getColumnValue(
+				value = resourcePermissionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = resourcePermissionModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +119,4 @@ public class ResourcePermissionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1568746040
+// LIFERAY-SERVICE-BUILDER-HASH:1843863301

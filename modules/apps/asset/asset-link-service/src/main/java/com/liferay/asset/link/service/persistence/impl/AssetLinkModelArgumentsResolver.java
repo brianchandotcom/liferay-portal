@@ -52,7 +52,7 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = assetLinkModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(assetLinkModelImpl, columnNames, original);
+			return _getValue(assetLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(assetLinkModelImpl, columnNames, original);
+			return _getValue(assetLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		AssetLinkModelImpl assetLinkModelImpl, String[] columnNames,
+		AssetLinkModelImpl assetLinkModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = assetLinkModelImpl.getColumnOriginalValue(
-					columnName);
+				value = assetLinkModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = assetLinkModelImpl.getColumnValue(columnName);
+				value = assetLinkModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class AssetLinkModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1338743670
+// LIFERAY-SERVICE-BUILDER-HASH:-126701901

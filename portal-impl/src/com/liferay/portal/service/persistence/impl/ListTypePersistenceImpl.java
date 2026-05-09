@@ -993,13 +993,13 @@ public class ListTypePersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1022,12 +1022,12 @@ public class ListTypePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1084,12 +1084,12 @@ public class ListTypePersistenceImpl
 		_finderPathWithoutPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, true);
+			new String[] {"companyId", "type_"}, 0, 2, true, null);
 
 		_finderPathCountByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "type_"}, false);
+			new String[] {"companyId", "type_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_T,
@@ -1109,7 +1109,7 @@ public class ListTypePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "type_"}, false,
+			new String[] {"companyId", "name", "type_"}, 0, 6, false,
 			ListType::getCompanyId, convertNullFunction(ListType::getName),
 			convertNullFunction(ListType::getType));
 
@@ -1161,4 +1161,4 @@ public class ListTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1121419093
+// LIFERAY-SERVICE-BUILDER-HASH:1626435928

@@ -833,7 +833,7 @@ public class DDLRecordSetVersionPersistenceImpl
 		_finderPathFetchByRS_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRS_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "version"}, false,
+			new String[] {"recordSetId", "version"}, 0, 2, false,
 			DDLRecordSetVersion::getRecordSetId,
 			convertNullFunction(DDLRecordSetVersion::getVersion));
 
@@ -952,4 +952,4 @@ public class DDLRecordSetVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:837602223
+// LIFERAY-SERVICE-BUILDER-HASH:839930023

@@ -328,7 +328,8 @@ public class CTScorePersistenceImpl
 		_finderPathFetchByCtCollectionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCtCollectionId",
 			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false, CTScore::getCtCollectionId);
+			new String[] {"ctCollectionId"}, 0, 0, false,
+			CTScore::getCtCollectionId);
 
 		_uniquePersistenceFinderByCtCollectionId =
 			new UniquePersistenceFinder<>(
@@ -401,4 +402,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-140384346
+// LIFERAY-SERVICE-BUILDER-HASH:836212279

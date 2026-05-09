@@ -51,7 +51,7 @@ public class PortletModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = portletModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(portletModelImpl, columnNames, original);
+			return _getValue(portletModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -70,7 +70,7 @@ public class PortletModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(portletModelImpl, columnNames, original);
+			return _getValue(portletModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -87,21 +87,26 @@ public class PortletModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		PortletModelImpl portletModelImpl, String[] columnNames,
+		PortletModelImpl portletModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = portletModelImpl.getColumnOriginalValue(
-					columnName);
+				value = portletModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = portletModelImpl.getColumnValue(columnName);
+				value = portletModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -111,4 +116,4 @@ public class PortletModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1474585736
+// LIFERAY-SERVICE-BUILDER-HASH:179811019

@@ -1675,13 +1675,13 @@ public class ObjectActionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1704,12 +1704,12 @@ public class ObjectActionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1758,7 +1758,7 @@ public class ObjectActionPersistenceImpl
 		_finderPathFetchByODI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "name"}, false,
+			new String[] {"objectDefinitionId", "name"}, 0, 2, false,
 			ObjectAction::getObjectDefinitionId,
 			convertNullFunction(ObjectAction::getName));
 
@@ -1783,12 +1783,14 @@ public class ObjectActionPersistenceImpl
 		_finderPathWithoutPaginationFindByA_OAEK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_OAEK",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "objectActionExecutorKey"}, true);
+			new String[] {"active_", "objectActionExecutorKey"}, 0, 2, true,
+			null);
 
 		_finderPathCountByA_OAEK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_OAEK",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "objectActionExecutorKey"}, false);
+			new String[] {"active_", "objectActionExecutorKey"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByA_OAEK =
 			new CollectionPersistenceFinder<>(
@@ -1814,7 +1816,8 @@ public class ObjectActionPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false, convertNullFunction(ObjectAction::getExternalReferenceCode),
+			0, 1, false,
+			convertNullFunction(ObjectAction::getExternalReferenceCode),
 			ObjectAction::getCompanyId, ObjectAction::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
@@ -1847,8 +1850,8 @@ public class ObjectActionPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "active_", "objectActionTriggerKey"},
-			true);
+			new String[] {"companyId", "active_", "objectActionTriggerKey"}, 0,
+			4, true, null);
 
 		_finderPathCountByC_A_OATK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_OATK",
@@ -1856,8 +1859,8 @@ public class ObjectActionPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "active_", "objectActionTriggerKey"},
-			false);
+			new String[] {"companyId", "active_", "objectActionTriggerKey"}, 0,
+			4, false, null);
 
 		_collectionPersistenceFinderByC_A_OATK =
 			new CollectionPersistenceFinder<>(
@@ -1898,7 +1901,7 @@ public class ObjectActionPersistenceImpl
 			new String[] {
 				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByO_A_OATK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByO_A_OATK",
@@ -1909,7 +1912,7 @@ public class ObjectActionPersistenceImpl
 			new String[] {
 				"objectDefinitionId", "active_", "objectActionTriggerKey"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByO_A_OATK =
 			new CollectionPersistenceFinder<>(
@@ -1940,8 +1943,8 @@ public class ObjectActionPersistenceImpl
 				"objectDefinitionId", "active_", "name",
 				"objectActionTriggerKey"
 			},
-			false, ObjectAction::getObjectDefinitionId, ObjectAction::isActive,
-			convertNullFunction(ObjectAction::getName),
+			0, 12, false, ObjectAction::getObjectDefinitionId,
+			ObjectAction::isActive, convertNullFunction(ObjectAction::getName),
 			convertNullFunction(ObjectAction::getObjectActionTriggerKey));
 
 		_uniquePersistenceFinderByODI_A_N_OATK = new UniquePersistenceFinder<>(
@@ -2030,4 +2033,4 @@ public class ObjectActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-444620568
+// LIFERAY-SERVICE-BUILDER-HASH:1485416063

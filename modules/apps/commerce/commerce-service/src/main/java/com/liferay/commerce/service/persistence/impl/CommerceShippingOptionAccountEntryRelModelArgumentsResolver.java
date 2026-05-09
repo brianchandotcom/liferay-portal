@@ -57,7 +57,7 @@ public class CommerceShippingOptionAccountEntryRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceShippingOptionAccountEntryRelModelImpl, columnNames,
+				commerceShippingOptionAccountEntryRelModelImpl, finderPath,
 				original);
 		}
 
@@ -79,7 +79,7 @@ public class CommerceShippingOptionAccountEntryRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceShippingOptionAccountEntryRelModelImpl, columnNames,
+				commerceShippingOptionAccountEntryRelModelImpl, finderPath,
 				original);
 		}
 
@@ -100,23 +100,29 @@ public class CommerceShippingOptionAccountEntryRelModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceShippingOptionAccountEntryRelModelImpl
 			commerceShippingOptionAccountEntryRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceShippingOptionAccountEntryRelModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
+				value =
 					commerceShippingOptionAccountEntryRelModelImpl.
 						getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -126,4 +132,4 @@ public class CommerceShippingOptionAccountEntryRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1876131457
+// LIFERAY-SERVICE-BUILDER-HASH:-66414798

@@ -332,8 +332,8 @@ public class DLStorageQuotaPersistenceImpl
 	public void activate() {
 		_finderPathFetchByCompanyId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false, DLStorageQuota::getCompanyId);
+			new String[] {Long.class.getName()}, new String[] {"companyId"}, 0,
+			0, false, DLStorageQuota::getCompanyId);
 
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCompanyId, _SQL_SELECT_DLSTORAGEQUOTA_WHERE,
@@ -405,4 +405,4 @@ public class DLStorageQuotaPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:207230141
+// LIFERAY-SERVICE-BUILDER-HASH:-1133674636

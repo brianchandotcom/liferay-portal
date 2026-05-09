@@ -959,13 +959,13 @@ public class AppPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -988,12 +988,12 @@ public class AppPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1041,7 +1041,7 @@ public class AppPersistenceImpl
 		_finderPathFetchByRemoteAppId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByRemoteAppId",
 			new String[] {Long.class.getName()}, new String[] {"remoteAppId"},
-			false, App::getRemoteAppId);
+			0, 0, false, App::getRemoteAppId);
 
 		_uniquePersistenceFinderByRemoteAppId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByRemoteAppId, _SQL_SELECT_APP_WHERE, "",
@@ -1059,13 +1059,13 @@ public class AppPersistenceImpl
 
 		_finderPathWithoutPaginationFindByCategory = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCategory",
-			new String[] {String.class.getName()}, new String[] {"category"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"category"}, 0,
+			1, true, null);
 
 		_finderPathCountByCategory = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCategory",
-			new String[] {String.class.getName()}, new String[] {"category"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"category"}, 0,
+			1, false, null);
 
 		_collectionPersistenceFinderByCategory =
 			new CollectionPersistenceFinder<>(
@@ -1146,4 +1146,4 @@ public class AppPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1314011300
+// LIFERAY-SERVICE-BUILDER-HASH:1469540610

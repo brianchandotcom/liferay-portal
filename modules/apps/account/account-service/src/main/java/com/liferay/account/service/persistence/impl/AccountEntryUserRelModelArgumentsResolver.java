@@ -55,7 +55,7 @@ public class AccountEntryUserRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				accountEntryUserRelModelImpl, columnNames, original);
+				accountEntryUserRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class AccountEntryUserRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				accountEntryUserRelModelImpl, columnNames, original);
+				accountEntryUserRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,26 @@ public class AccountEntryUserRelModelArgumentsResolver
 
 	private static Object[] _getValue(
 		AccountEntryUserRelModelImpl accountEntryUserRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					accountEntryUserRelModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = accountEntryUserRelModelImpl.getColumnValue(
+				value = accountEntryUserRelModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = accountEntryUserRelModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +122,4 @@ public class AccountEntryUserRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2090846780
+// LIFERAY-SERVICE-BUILDER-HASH:197843003

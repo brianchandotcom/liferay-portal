@@ -877,8 +877,8 @@ public class TicketPersistenceImpl
 	public void afterPropertiesSet() {
 		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, false,
-			convertNullFunction(Ticket::getKey));
+			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
+			false, convertNullFunction(Ticket::getKey));
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKey, _SQL_SELECT_TICKET_WHERE, "",
@@ -1049,4 +1049,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:296128074
+// LIFERAY-SERVICE-BUILDER-HASH:-1950132737

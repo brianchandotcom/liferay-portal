@@ -56,7 +56,7 @@ public class CommerceOrderAttachmentModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceOrderAttachmentModelImpl, columnNames, original);
+				commerceOrderAttachmentModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -85,7 +85,7 @@ public class CommerceOrderAttachmentModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceOrderAttachmentModelImpl, columnNames, original);
+				commerceOrderAttachmentModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -103,22 +103,27 @@ public class CommerceOrderAttachmentModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CommerceOrderAttachmentModelImpl commerceOrderAttachmentModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					commerceOrderAttachmentModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = commerceOrderAttachmentModelImpl.getColumnValue(
+				value = commerceOrderAttachmentModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = commerceOrderAttachmentModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -139,4 +144,4 @@ public class CommerceOrderAttachmentModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1007447564
+// LIFERAY-SERVICE-BUILDER-HASH:-1760098291

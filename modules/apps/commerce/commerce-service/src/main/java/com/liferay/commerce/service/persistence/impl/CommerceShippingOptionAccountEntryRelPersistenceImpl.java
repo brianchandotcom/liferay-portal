@@ -996,13 +996,13 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByCommerceShippingOptionKey",
 				new String[] {String.class.getName()},
-				new String[] {"commerceShippingOptionKey"}, true);
+				new String[] {"commerceShippingOptionKey"}, 0, 1, true, null);
 
 		_finderPathCountByCommerceShippingOptionKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByCommerceShippingOptionKey",
 			new String[] {String.class.getName()},
-			new String[] {"commerceShippingOptionKey"}, false);
+			new String[] {"commerceShippingOptionKey"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByCommerceShippingOptionKey =
 			new CollectionPersistenceFinder<>(
@@ -1023,7 +1023,7 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		_finderPathFetchByA_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "commerceChannelId"}, false,
+			new String[] {"accountEntryId", "commerceChannelId"}, 0, 0, false,
 			CommerceShippingOptionAccountEntryRel::getAccountEntryId,
 			CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
 
@@ -1112,4 +1112,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1519279696
+// LIFERAY-SERVICE-BUILDER-HASH:-1191699097

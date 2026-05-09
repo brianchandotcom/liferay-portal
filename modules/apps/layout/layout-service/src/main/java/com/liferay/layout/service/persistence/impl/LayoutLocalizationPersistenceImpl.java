@@ -1181,13 +1181,13 @@ public class LayoutLocalizationPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1202,7 +1202,7 @@ public class LayoutLocalizationPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(LayoutLocalization::getUuid),
 			LayoutLocalization::getGroupId);
 
@@ -1228,12 +1228,12 @@ public class LayoutLocalizationPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1279,7 +1279,7 @@ public class LayoutLocalizationPersistenceImpl
 		_finderPathFetchByL_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByL_P",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"languageId", "plid"}, false,
+			new String[] {"languageId", "plid"}, 0, 1, false,
 			convertNullFunction(LayoutLocalization::getLanguageId),
 			LayoutLocalization::getPlid);
 
@@ -1299,7 +1299,7 @@ public class LayoutLocalizationPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"groupId", "languageId", "plid"}, false,
+			new String[] {"groupId", "languageId", "plid"}, 0, 2, false,
 			LayoutLocalization::getGroupId,
 			convertNullFunction(LayoutLocalization::getLanguageId),
 			LayoutLocalization::getPlid);
@@ -1389,4 +1389,4 @@ public class LayoutLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1534347639
+// LIFERAY-SERVICE-BUILDER-HASH:-2087391077

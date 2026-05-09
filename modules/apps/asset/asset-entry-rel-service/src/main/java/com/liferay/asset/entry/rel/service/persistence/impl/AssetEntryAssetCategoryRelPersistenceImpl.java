@@ -836,7 +836,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		_finderPathFetchByA_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetEntryId", "assetCategoryId"}, false,
+			new String[] {"assetEntryId", "assetCategoryId"}, 0, 0, false,
 			AssetEntryAssetCategoryRel::getAssetEntryId,
 			AssetEntryAssetCategoryRel::getAssetCategoryId);
 
@@ -921,4 +921,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2140112155
+// LIFERAY-SERVICE-BUILDER-HASH:-1277440782

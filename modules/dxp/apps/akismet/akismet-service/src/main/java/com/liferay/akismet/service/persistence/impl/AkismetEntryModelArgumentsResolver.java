@@ -53,7 +53,7 @@ public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = akismetEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(akismetEntryModelImpl, columnNames, original);
+			return _getValue(akismetEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(akismetEntryModelImpl, columnNames, original);
+			return _getValue(akismetEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,27 @@ public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		AkismetEntryModelImpl akismetEntryModelImpl, String[] columnNames,
+		AkismetEntryModelImpl akismetEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = akismetEntryModelImpl.getColumnOriginalValue(
+				value = akismetEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = akismetEntryModelImpl.getColumnValue(columnName);
+				value = akismetEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +119,4 @@ public class AkismetEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1699087118
+// LIFERAY-SERVICE-BUILDER-HASH:597477591

@@ -53,7 +53,7 @@ public class KaleoProcessModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = kaleoProcessModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kaleoProcessModelImpl, columnNames, original);
+			return _getValue(kaleoProcessModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class KaleoProcessModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kaleoProcessModelImpl, columnNames, original);
+			return _getValue(kaleoProcessModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,27 @@ public class KaleoProcessModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		KaleoProcessModelImpl kaleoProcessModelImpl, String[] columnNames,
+		KaleoProcessModelImpl kaleoProcessModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kaleoProcessModelImpl.getColumnOriginalValue(
+				value = kaleoProcessModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = kaleoProcessModelImpl.getColumnValue(columnName);
+				value = kaleoProcessModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +119,4 @@ public class KaleoProcessModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1592692266
+// LIFERAY-SERVICE-BUILDER-HASH:-1817053857

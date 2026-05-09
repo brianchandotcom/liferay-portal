@@ -2303,13 +2303,13 @@ public class CommercePriceEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2333,12 +2333,12 @@ public class CommercePriceEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2429,12 +2429,12 @@ public class CommercePriceEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByCPInstanceUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			new String[] {"CPInstanceUuid"}, true);
+			new String[] {"CPInstanceUuid"}, 0, 1, true, null);
 
 		_finderPathCountByCPInstanceUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCPInstanceUuid",
 			new String[] {String.class.getName()},
-			new String[] {"CPInstanceUuid"}, false);
+			new String[] {"CPInstanceUuid"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByCPInstanceUuid =
 			new CollectionPersistenceFinder<>(
@@ -2462,12 +2462,14 @@ public class CommercePriceEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commercePriceListId", "CPInstanceUuid"}, true);
+			new String[] {"commercePriceListId", "CPInstanceUuid"}, 0, 2, true,
+			null);
 
 		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"commercePriceListId", "CPInstanceUuid"}, false);
+			new String[] {"commercePriceListId", "CPInstanceUuid"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_C,
@@ -2554,8 +2556,8 @@ public class CommercePriceEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"commercePriceListId", "CPInstanceUuid", "status"},
-			true);
+			new String[] {"commercePriceListId", "CPInstanceUuid", "status"}, 0,
+			2, true, null);
 
 		_finderPathCountByC_C_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
@@ -2563,8 +2565,8 @@ public class CommercePriceEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"commercePriceListId", "CPInstanceUuid", "status"},
-			false);
+			new String[] {"commercePriceListId", "CPInstanceUuid", "status"}, 0,
+			2, false, null);
 
 		_collectionPersistenceFinderByC_C_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_C_S,
@@ -2600,8 +2602,8 @@ public class CommercePriceEntryPersistenceImpl
 				String.class.getName(), BigDecimal.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"CPInstanceUuid", "quantity", "unitOfMeasureKey"},
-			true);
+			new String[] {"CPInstanceUuid", "quantity", "unitOfMeasureKey"}, 0,
+			5, true, null);
 
 		_finderPathCountByC_Q_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Q_U",
@@ -2609,8 +2611,8 @@ public class CommercePriceEntryPersistenceImpl
 				String.class.getName(), BigDecimal.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"CPInstanceUuid", "quantity", "unitOfMeasureKey"},
-			false);
+			new String[] {"CPInstanceUuid", "quantity", "unitOfMeasureKey"}, 0,
+			5, false, null);
 
 		_collectionPersistenceFinderByC_Q_U = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_Q_U,
@@ -2634,7 +2636,7 @@ public class CommercePriceEntryPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(CommercePriceEntry::getExternalReferenceCode),
 			CommercePriceEntry::getCompanyId);
 
@@ -2721,4 +2723,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-120171516
+// LIFERAY-SERVICE-BUILDER-HASH:30707780

@@ -1121,7 +1121,7 @@ public class OpenIdConnectSessionPersistenceImpl
 		_finderPathFetchByU_I = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_I",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "issuer"}, false,
+			new String[] {"userId", "issuer"}, 0, 2, false,
 			OpenIdConnectSession::getUserId,
 			convertNullFunction(OpenIdConnectSession::getIssuer));
 
@@ -1138,7 +1138,7 @@ public class OpenIdConnectSessionPersistenceImpl
 		_finderPathFetchByI_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByI_S",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"issuer", "sessionId"}, false,
+			new String[] {"issuer", "sessionId"}, 0, 3, false,
 			convertNullFunction(OpenIdConnectSession::getIssuer),
 			convertNullFunction(OpenIdConnectSession::getSessionId));
 
@@ -1168,8 +1168,8 @@ public class OpenIdConnectSessionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			true);
+			new String[] {"companyId", "authServerWellKnownURI", "clientId"}, 0,
+			6, true, null);
 
 		_finderPathCountByC_A_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_C",
@@ -1177,8 +1177,8 @@ public class OpenIdConnectSessionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			false);
+			new String[] {"companyId", "authServerWellKnownURI", "clientId"}, 0,
+			6, false, null);
 
 		_collectionPersistenceFinderByC_A_C = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_A_C,
@@ -1204,7 +1204,7 @@ public class OpenIdConnectSessionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"userId", "authServerWellKnownURI", "clientId"},
+			new String[] {"userId", "authServerWellKnownURI", "clientId"}, 0, 6,
 			false, OpenIdConnectSession::getUserId,
 			convertNullFunction(
 				OpenIdConnectSession::getAuthServerWellKnownURI),
@@ -1290,4 +1290,4 @@ public class OpenIdConnectSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1667374211
+// LIFERAY-SERVICE-BUILDER-HASH:-825701012

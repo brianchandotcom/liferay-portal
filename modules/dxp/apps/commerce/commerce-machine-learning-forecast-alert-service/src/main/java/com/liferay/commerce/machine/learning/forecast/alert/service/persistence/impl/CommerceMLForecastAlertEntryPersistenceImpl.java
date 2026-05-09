@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -28,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -503,7 +501,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_C_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
 	private FinderPath _finderPathCountByC_C_S;
-	private FinderPath _finderPathWithPaginationCountByC_C_S;
+	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
+		_collectionPersistenceFinderByC_C_S;
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
@@ -592,114 +591,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_C_S;
-				finderArgs = new Object[] {
-					companyId, commerceAccountId, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_C_S;
-			finderArgs = new Object[] {
-				companyId, commerceAccountId, status, start, end,
-				orderByComparator
-			};
-		}
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						(commerceAccountId !=
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_S.find(
+			finderCache,
+			new Object[] {companyId, new long[] {commerceAccountId}, status},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -758,14 +653,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long commerceAccountId, int status,
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
 
-		List<CommerceMLForecastAlertEntry> list = findByC_C_S(
-			companyId, commerceAccountId, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_C_S.fetchFirst(
+			finderCache,
+			new Object[] {companyId, new long[] {commerceAccountId}, status},
+			orderByComparator);
 	}
 
 	/**
@@ -861,131 +752,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		if (commerceAccountIds.length == 1) {
-			return findByC_C_S(
-				companyId, commerceAccountIds[0], status, start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(commerceAccountIds), status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				companyId, StringUtil.merge(commerceAccountIds), status, start,
-				end, orderByComparator
-			};
-		}
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_C_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						!ArrayUtil.contains(
-							commerceAccountIds,
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_C_S, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_S.find(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds), status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -999,13 +771,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public void removeByC_C_S(
 		long companyId, long commerceAccountId, int status) {
 
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findByC_C_S(
-					companyId, commerceAccountId, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
+		_collectionPersistenceFinderByC_C_S.remove(
+			finderCache,
+			new Object[] {companyId, new long[] {commerceAccountId}, status});
 	}
 
 	/**
@@ -1020,55 +788,9 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public int countByC_C_S(
 		long companyId, long commerceAccountId, int status) {
 
-		FinderPath finderPath = _finderPathCountByC_C_S;
-
-		Object[] finderArgs = new Object[] {
-			companyId, commerceAccountId, status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_S.count(
+			finderCache,
+			new Object[] {companyId, new long[] {commerceAccountId}, status});
 	}
 
 	/**
@@ -1083,75 +805,11 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public int countByC_C_S(
 		long companyId, long[] commerceAccountIds, int status) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		Object[] finderArgs = new Object[] {
-			companyId, StringUtil.merge(commerceAccountIds), status
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_C_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_C_S, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_S.count(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds), status
+			});
 	}
 
 	private static final String _FINDER_COLUMN_C_C_S_COMPANYID_2 =
@@ -1160,14 +818,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_2 =
 		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_C_S_COMMERCEACCOUNTID_7 =
-		"commerceMLForecastAlertEntry.commerceAccountId IN (";
-
 	private static final String _FINDER_COLUMN_C_C_S_STATUS_2 =
 		"commerceMLForecastAlertEntry.status = ?";
 
 	private FinderPath _finderPathWithPaginationFindByC_C_GtRc_S;
 	private FinderPath _finderPathWithPaginationCountByC_C_GtRc_S;
+	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
+		_collectionPersistenceFinderByC_C_GtRc_S;
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and relativeChange &gt; &#63; and status = &#63;.
@@ -1264,108 +921,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByC_C_GtRc_S;
-		finderArgs = new Object[] {
-			companyId, commerceAccountId, relativeChange, status, start, end,
-			orderByComparator
-		};
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						(commerceAccountId !=
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(relativeChange >=
-							commerceMLForecastAlertEntry.getRelativeChange()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_GtRc_S.find(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1432,15 +994,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		int status,
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
 
-		List<CommerceMLForecastAlertEntry> list = findByC_C_GtRc_S(
-			companyId, commerceAccountId, relativeChange, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_GtRc_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1542,139 +1102,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		if (commerceAccountIds.length == 1) {
-			return findByC_C_GtRc_S(
-				companyId, commerceAccountIds[0], relativeChange, status, start,
-				end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(commerceAccountIds),
-					relativeChange, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				companyId, StringUtil.merge(commerceAccountIds), relativeChange,
-				status, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_C_GtRc_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						!ArrayUtil.contains(
-							commerceAccountIds,
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(relativeChange >=
-							commerceMLForecastAlertEntry.getRelativeChange()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_C_GtRc_S, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_GtRc_S.find(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds),
+				relativeChange, status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1690,13 +1124,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long commerceAccountId, double relativeChange,
 		int status) {
 
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findByC_C_GtRc_S(
-					companyId, commerceAccountId, relativeChange, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
+		_collectionPersistenceFinderByC_C_GtRc_S.remove(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			});
 	}
 
 	/**
@@ -1713,59 +1146,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long commerceAccountId, double relativeChange,
 		int status) {
 
-		FinderPath finderPath = _finderPathWithPaginationCountByC_C_GtRc_S;
-
-		Object[] finderArgs = new Object[] {
-			companyId, commerceAccountId, relativeChange, status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_GtRc_S.count(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			});
 	}
 
 	/**
@@ -1782,81 +1168,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long[] commerceAccountIds, double relativeChange,
 		int status) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		Object[] finderArgs = new Object[] {
-			companyId, StringUtil.merge(commerceAccountIds), relativeChange,
-			status
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_C_GtRc_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_GTRC_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_C_GtRc_S, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_GtRc_S.count(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds),
+				relativeChange, status
+			});
 	}
 
 	private static final String _FINDER_COLUMN_C_C_GTRC_S_COMPANYID_2 =
@@ -1864,9 +1181,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_2 =
 		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_GTRC_S_COMMERCEACCOUNTID_7 =
-		"commerceMLForecastAlertEntry.commerceAccountId IN (";
 
 	private static final String _FINDER_COLUMN_C_C_GTRC_S_RELATIVECHANGE_2 =
 		"commerceMLForecastAlertEntry.relativeChange > ? AND ";
@@ -1876,6 +1190,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByC_C_LtRc_S;
 	private FinderPath _finderPathWithPaginationCountByC_C_LtRc_S;
+	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
+		_collectionPersistenceFinderByC_C_LtRc_S;
 
 	/**
 	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and relativeChange &lt; &#63; and status = &#63;.
@@ -1972,108 +1288,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByC_C_LtRc_S;
-		finderArgs = new Object[] {
-			companyId, commerceAccountId, relativeChange, status, start, end,
-			orderByComparator
-		};
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						(commerceAccountId !=
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(relativeChange <=
-							commerceMLForecastAlertEntry.getRelativeChange()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_LtRc_S.find(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2140,15 +1361,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		int status,
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
 
-		List<CommerceMLForecastAlertEntry> list = findByC_C_LtRc_S(
-			companyId, commerceAccountId, relativeChange, status, 0, 1,
+		return _collectionPersistenceFinderByC_C_LtRc_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2250,139 +1469,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		if (commerceAccountIds.length == 1) {
-			return findByC_C_LtRc_S(
-				companyId, commerceAccountIds[0], relativeChange, status, start,
-				end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(commerceAccountIds),
-					relativeChange, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				companyId, StringUtil.merge(commerceAccountIds), relativeChange,
-				status, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceMLForecastAlertEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceMLForecastAlertEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_C_LtRc_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-						list) {
-
-					if ((companyId !=
-							commerceMLForecastAlertEntry.getCompanyId()) ||
-						!ArrayUtil.contains(
-							commerceAccountIds,
-							commerceMLForecastAlertEntry.
-								getCommerceAccountId()) ||
-						(relativeChange <=
-							commerceMLForecastAlertEntry.getRelativeChange()) ||
-						(status != commerceMLForecastAlertEntry.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				list = (List<CommerceMLForecastAlertEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_C_LtRc_S, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_C_LtRc_S.find(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds),
+				relativeChange, status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2398,13 +1491,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long commerceAccountId, double relativeChange,
 		int status) {
 
-		for (CommerceMLForecastAlertEntry commerceMLForecastAlertEntry :
-				findByC_C_LtRc_S(
-					companyId, commerceAccountId, relativeChange, status,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(commerceMLForecastAlertEntry);
-		}
+		_collectionPersistenceFinderByC_C_LtRc_S.remove(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			});
 	}
 
 	/**
@@ -2421,59 +1513,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long commerceAccountId, double relativeChange,
 		int status) {
 
-		FinderPath finderPath = _finderPathWithPaginationCountByC_C_LtRc_S;
-
-		Object[] finderArgs = new Object[] {
-			companyId, commerceAccountId, relativeChange, status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(commerceAccountId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_LtRc_S.count(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {commerceAccountId}, relativeChange,
+				status
+			});
 	}
 
 	/**
@@ -2490,81 +1535,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		long companyId, long[] commerceAccountIds, double relativeChange,
 		int status) {
 
-		if (commerceAccountIds == null) {
-			commerceAccountIds = new long[0];
-		}
-		else if (commerceAccountIds.length > 1) {
-			commerceAccountIds = ArrayUtil.sortedUnique(commerceAccountIds);
-		}
-
-		Object[] finderArgs = new Object[] {
-			companyId, StringUtil.merge(commerceAccountIds), relativeChange,
-			status
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_C_LtRc_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2);
-
-			if (commerceAccountIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_7);
-
-				sb.append(StringUtil.merge(commerceAccountIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2);
-
-			sb.append(_FINDER_COLUMN_C_C_LTRC_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(relativeChange);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_C_LtRc_S, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_C_LtRc_S.count(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(commerceAccountIds),
+				relativeChange, status
+			});
 	}
 
 	private static final String _FINDER_COLUMN_C_C_LTRC_S_COMPANYID_2 =
@@ -2572,9 +1548,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 	private static final String _FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_2 =
 		"commerceMLForecastAlertEntry.commerceAccountId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_C_LTRC_S_COMMERCEACCOUNTID_7 =
-		"commerceMLForecastAlertEntry.commerceAccountId IN (";
 
 	private static final String _FINDER_COLUMN_C_C_LTRC_S_RELATIVECHANGE_2 =
 		"commerceMLForecastAlertEntry.relativeChange < ? AND ";
@@ -2836,13 +1809,13 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2868,12 +1841,12 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2898,10 +1871,10 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Date.class.getName()
 			},
-			new String[] {"companyId", "commerceAccountId", "timestamp"}, false,
-			CommerceMLForecastAlertEntry::getCompanyId,
+			new String[] {"companyId", "commerceAccountId", "timestamp"}, 0, 0,
+			false, CommerceMLForecastAlertEntry::getCompanyId,
 			CommerceMLForecastAlertEntry::getCommerceAccountId,
-			CommerceMLForecastAlertEntry::getTimestamp);
+			convertDateFunction(CommerceMLForecastAlertEntry::getTimestamp));
 
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_C_T,
@@ -2937,20 +1910,32 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			new String[] {"companyId", "commerceAccountId", "status"}, true);
 
 		_finderPathCountByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "status"}, false);
-
-		_finderPathWithPaginationCountByC_C_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
 			new String[] {"companyId", "commerceAccountId", "status"}, false);
+
+		_collectionPersistenceFinderByC_C_S = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C_S,
+			_finderPathWithoutPaginationFindByC_C_S, _finderPathCountByC_C_S,
+			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
+			_ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"commerceMLForecastAlertEntry.", "companyId",
+				FinderColumn.Type.LONG, "=", true, true,
+				CommerceMLForecastAlertEntry::getCompanyId),
+			new ArrayableFinderColumn<>(
+				"commerceMLForecastAlertEntry.", "commerceAccountId",
+				FinderColumn.Type.LONG, "=", false, true, true,
+				CommerceMLForecastAlertEntry::getCommerceAccountId),
+			new FinderColumn<>(
+				"commerceMLForecastAlertEntry.", "status",
+				FinderColumn.Type.INTEGER, "=", true, true,
+				CommerceMLForecastAlertEntry::getStatus));
 
 		_finderPathWithPaginationFindByC_C_GtRc_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_GtRc_S",
@@ -2976,6 +1961,31 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			},
 			false);
 
+		_collectionPersistenceFinderByC_C_GtRc_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_C_GtRc_S, null,
+				_finderPathWithPaginationCountByC_C_GtRc_S,
+				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceMLForecastAlertEntry::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"commerceMLForecastAlertEntry.", "commerceAccountId",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					CommerceMLForecastAlertEntry::getCommerceAccountId),
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "relativeChange",
+					FinderColumn.Type.DOUBLE, ">", true, true,
+					CommerceMLForecastAlertEntry::getRelativeChange),
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "status",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CommerceMLForecastAlertEntry::getStatus));
+
 		_finderPathWithPaginationFindByC_C_LtRc_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtRc_S",
 			new String[] {
@@ -2999,6 +2009,31 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				"companyId", "commerceAccountId", "relativeChange", "status"
 			},
 			false);
+
+		_collectionPersistenceFinderByC_C_LtRc_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_C_LtRc_S, null,
+				_finderPathWithPaginationCountByC_C_LtRc_S,
+				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
+				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "companyId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CommerceMLForecastAlertEntry::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"commerceMLForecastAlertEntry.", "commerceAccountId",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					CommerceMLForecastAlertEntry::getCommerceAccountId),
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "relativeChange",
+					FinderColumn.Type.DOUBLE, "<", true, true,
+					CommerceMLForecastAlertEntry::getRelativeChange),
+				new FinderColumn<>(
+					"commerceMLForecastAlertEntry.", "status",
+					FinderColumn.Type.INTEGER, "=", true, true,
+					CommerceMLForecastAlertEntry::getStatus));
 
 		CommerceMLForecastAlertEntryUtil.setPersistence(this);
 	}
@@ -3078,4 +2113,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1986182207
+// LIFERAY-SERVICE-BUILDER-HASH:429046001

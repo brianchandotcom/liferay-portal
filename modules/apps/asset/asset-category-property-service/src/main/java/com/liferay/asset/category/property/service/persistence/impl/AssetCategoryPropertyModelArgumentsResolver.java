@@ -55,7 +55,7 @@ public class AssetCategoryPropertyModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				assetCategoryPropertyModelImpl, columnNames, original);
+				assetCategoryPropertyModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class AssetCategoryPropertyModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				assetCategoryPropertyModelImpl, columnNames, original);
+				assetCategoryPropertyModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class AssetCategoryPropertyModelArgumentsResolver
 
 	private static Object[] _getValue(
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					assetCategoryPropertyModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = assetCategoryPropertyModelImpl.getColumnValue(
+				value = assetCategoryPropertyModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = assetCategoryPropertyModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class AssetCategoryPropertyModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1613229276
+// LIFERAY-SERVICE-BUILDER-HASH:-1623948137

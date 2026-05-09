@@ -57,7 +57,7 @@ public class DDMDataProviderInstanceLinkModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				ddmDataProviderInstanceLinkModelImpl, columnNames, original);
+				ddmDataProviderInstanceLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class DDMDataProviderInstanceLinkModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				ddmDataProviderInstanceLinkModelImpl, columnNames, original);
+				ddmDataProviderInstanceLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class DDMDataProviderInstanceLinkModelArgumentsResolver
 	private static Object[] _getValue(
 		DDMDataProviderInstanceLinkModelImpl
 			ddmDataProviderInstanceLinkModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					ddmDataProviderInstanceLinkModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					ddmDataProviderInstanceLinkModelImpl.getColumnValue(
-						columnName);
+				value = ddmDataProviderInstanceLinkModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class DDMDataProviderInstanceLinkModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1372390830
+// LIFERAY-SERVICE-BUILDER-HASH:-810995611

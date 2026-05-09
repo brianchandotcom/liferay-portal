@@ -54,7 +54,7 @@ public class ObjectLayoutTabModelArgumentsResolver
 		long columnBitmask = objectLayoutTabModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(objectLayoutTabModelImpl, columnNames, original);
+			return _getValue(objectLayoutTabModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class ObjectLayoutTabModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(objectLayoutTabModelImpl, columnNames, original);
+			return _getValue(objectLayoutTabModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -90,22 +90,27 @@ public class ObjectLayoutTabModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		ObjectLayoutTabModelImpl objectLayoutTabModelImpl, String[] columnNames,
-		boolean original) {
+		ObjectLayoutTabModelImpl objectLayoutTabModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = objectLayoutTabModelImpl.getColumnOriginalValue(
+				value = objectLayoutTabModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = objectLayoutTabModelImpl.getColumnValue(
-					columnName);
+				value = objectLayoutTabModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class ObjectLayoutTabModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2114779921
+// LIFERAY-SERVICE-BUILDER-HASH:-821598150

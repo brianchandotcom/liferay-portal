@@ -52,7 +52,7 @@ public class BrowserTrackerModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = browserTrackerModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(browserTrackerModelImpl, columnNames, original);
+			return _getValue(browserTrackerModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class BrowserTrackerModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(browserTrackerModelImpl, columnNames, original);
+			return _getValue(browserTrackerModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,22 +88,27 @@ public class BrowserTrackerModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		BrowserTrackerModelImpl browserTrackerModelImpl, String[] columnNames,
+		BrowserTrackerModelImpl browserTrackerModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = browserTrackerModelImpl.getColumnOriginalValue(
+				value = browserTrackerModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = browserTrackerModelImpl.getColumnValue(
-					columnName);
+				value = browserTrackerModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +118,4 @@ public class BrowserTrackerModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-518600702
+// LIFERAY-SERVICE-BUILDER-HASH:-1429374221

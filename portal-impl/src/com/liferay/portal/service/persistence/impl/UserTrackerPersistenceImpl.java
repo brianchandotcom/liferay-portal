@@ -760,12 +760,12 @@ public class UserTrackerPersistenceImpl
 		_finderPathWithoutPaginationFindBySessionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySessionId",
 			new String[] {String.class.getName()}, new String[] {"sessionId"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountBySessionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySessionId",
 			new String[] {String.class.getName()}, new String[] {"sessionId"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderBySessionId =
 			new CollectionPersistenceFinder<>(
@@ -811,4 +811,4 @@ public class UserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1803637781
+// LIFERAY-SERVICE-BUILDER-HASH:2127204671

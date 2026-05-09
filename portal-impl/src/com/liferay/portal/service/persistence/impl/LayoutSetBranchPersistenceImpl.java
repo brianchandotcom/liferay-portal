@@ -1615,7 +1615,7 @@ public class LayoutSetBranchPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "name"}, false,
+			new String[] {"groupId", "privateLayout", "name"}, 0, 4, false,
 			LayoutSetBranch::getGroupId, LayoutSetBranch::isPrivateLayout,
 			convertNullFunction(LayoutSetBranch::getName));
 
@@ -1731,4 +1731,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-519079702
+// LIFERAY-SERVICE-BUILDER-HASH:472682246

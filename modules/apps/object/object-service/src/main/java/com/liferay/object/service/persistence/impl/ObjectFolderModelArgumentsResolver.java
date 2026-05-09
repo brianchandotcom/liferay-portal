@@ -53,7 +53,7 @@ public class ObjectFolderModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = objectFolderModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(objectFolderModelImpl, columnNames, original);
+			return _getValue(objectFolderModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class ObjectFolderModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(objectFolderModelImpl, columnNames, original);
+			return _getValue(objectFolderModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,27 @@ public class ObjectFolderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		ObjectFolderModelImpl objectFolderModelImpl, String[] columnNames,
+		ObjectFolderModelImpl objectFolderModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = objectFolderModelImpl.getColumnOriginalValue(
+				value = objectFolderModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = objectFolderModelImpl.getColumnValue(columnName);
+				value = objectFolderModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +119,4 @@ public class ObjectFolderModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1280207884
+// LIFERAY-SERVICE-BUILDER-HASH:-349900343

@@ -51,7 +51,7 @@ public class TicketModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ticketModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ticketModelImpl, columnNames, original);
+			return _getValue(ticketModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class TicketModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ticketModelImpl, columnNames, original);
+			return _getValue(ticketModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,21 +95,26 @@ public class TicketModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		TicketModelImpl ticketModelImpl, String[] columnNames,
+		TicketModelImpl ticketModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ticketModelImpl.getColumnOriginalValue(
-					columnName);
+				value = ticketModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = ticketModelImpl.getColumnValue(columnName);
+				value = ticketModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -127,4 +132,4 @@ public class TicketModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1031320442
+// LIFERAY-SERVICE-BUILDER-HASH:-550674617

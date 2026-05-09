@@ -52,7 +52,7 @@ public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = dlFileEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dlFileEntryModelImpl, columnNames, original);
+			return _getValue(dlFileEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dlFileEntryModelImpl, columnNames, original);
+			return _getValue(dlFileEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DLFileEntryModelImpl dlFileEntryModelImpl, String[] columnNames,
+		DLFileEntryModelImpl dlFileEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dlFileEntryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = dlFileEntryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = dlFileEntryModelImpl.getColumnValue(columnName);
+				value = dlFileEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class DLFileEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:514509688
+// LIFERAY-SERVICE-BUILDER-HASH:1586814057

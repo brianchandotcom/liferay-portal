@@ -2472,13 +2472,13 @@ public class LayoutClassedModelUsagePersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2494,7 +2494,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(LayoutClassedModelUsage::getUuid),
 			LayoutClassedModelUsage::getGroupId);
 
@@ -2520,12 +2520,12 @@ public class LayoutClassedModelUsagePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2667,7 +2667,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			new String[] {
 				"companyId", "classExternalReferenceCode", "classNameId"
 			},
-			true);
+			0, 2, true, null);
 
 		_finderPathCountByC_CERC_CN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CERC_CN",
@@ -2678,7 +2678,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			new String[] {
 				"companyId", "classExternalReferenceCode", "classNameId"
 			},
-			false);
+			0, 2, false, null);
 
 		_collectionPersistenceFinderByC_CERC_CN =
 			new CollectionPersistenceFinder<>(
@@ -2812,7 +2812,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"containerKey", "containerType", "plid"}, true);
+			new String[] {"containerKey", "containerType", "plid"}, 0, 1, true,
+			null);
 
 		_finderPathCountByCK_CT_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCK_CT_P",
@@ -2820,7 +2821,8 @@ public class LayoutClassedModelUsagePersistenceImpl
 				String.class.getName(), Long.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"containerKey", "containerType", "plid"}, false);
+			new String[] {"containerKey", "containerType", "plid"}, 0, 1, false,
+			null);
 
 		_collectionPersistenceFinderByCK_CT_P =
 			new CollectionPersistenceFinder<>(
@@ -2868,7 +2870,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 				"companyId", "classExternalReferenceCode", "classNameId",
 				"type_"
 			},
-			true);
+			0, 2, true, null);
 
 		_finderPathCountByC_CERC_CN_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CERC_CN_T",
@@ -2880,7 +2882,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 				"companyId", "classExternalReferenceCode", "classNameId",
 				"type_"
 			},
-			false);
+			0, 2, false, null);
 
 		_collectionPersistenceFinderByC_CERC_CN_T =
 			new CollectionPersistenceFinder<>(
@@ -2921,7 +2923,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 				"groupId", "classExternalReferenceCode", "classNameId",
 				"classPK", "containerKey", "containerType", "plid"
 			},
-			false, LayoutClassedModelUsage::getGroupId,
+			0, 18, false, LayoutClassedModelUsage::getGroupId,
 			convertNullFunction(
 				LayoutClassedModelUsage::getClassExternalReferenceCode),
 			LayoutClassedModelUsage::getClassNameId,
@@ -3034,4 +3036,4 @@ public class LayoutClassedModelUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-536767206
+// LIFERAY-SERVICE-BUILDER-HASH:654131068

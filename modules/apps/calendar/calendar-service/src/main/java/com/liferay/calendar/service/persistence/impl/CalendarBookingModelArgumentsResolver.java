@@ -54,7 +54,7 @@ public class CalendarBookingModelArgumentsResolver
 		long columnBitmask = calendarBookingModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(calendarBookingModelImpl, columnNames, original);
+			return _getValue(calendarBookingModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -81,7 +81,7 @@ public class CalendarBookingModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(calendarBookingModelImpl, columnNames, original);
+			return _getValue(calendarBookingModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -98,22 +98,27 @@ public class CalendarBookingModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		CalendarBookingModelImpl calendarBookingModelImpl, String[] columnNames,
-		boolean original) {
+		CalendarBookingModelImpl calendarBookingModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = calendarBookingModelImpl.getColumnOriginalValue(
+				value = calendarBookingModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = calendarBookingModelImpl.getColumnValue(
-					columnName);
+				value = calendarBookingModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -136,4 +141,4 @@ public class CalendarBookingModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1066026549
+// LIFERAY-SERVICE-BUILDER-HASH:-15236256

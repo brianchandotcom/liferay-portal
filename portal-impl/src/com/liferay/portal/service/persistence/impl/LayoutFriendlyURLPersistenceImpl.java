@@ -2610,13 +2610,13 @@ public class LayoutFriendlyURLPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2631,7 +2631,7 @@ public class LayoutFriendlyURLPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(LayoutFriendlyURL::getUuid),
 			LayoutFriendlyURL::getGroupId);
 
@@ -2657,12 +2657,12 @@ public class LayoutFriendlyURLPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2778,12 +2778,12 @@ public class LayoutFriendlyURLPersistenceImpl
 		_finderPathWithoutPaginationFindByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, true);
+			new String[] {"companyId", "friendlyURL"}, 0, 2, true, null);
 
 		_finderPathCountByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, false);
+			new String[] {"companyId", "friendlyURL"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_F,
@@ -2810,12 +2810,12 @@ public class LayoutFriendlyURLPersistenceImpl
 		_finderPathWithoutPaginationFindByP_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "friendlyURL"}, true);
+			new String[] {"plid", "friendlyURL"}, 0, 2, true, null);
 
 		_finderPathCountByP_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "friendlyURL"}, false);
+			new String[] {"plid", "friendlyURL"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByP_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByP_F,
@@ -2842,19 +2842,19 @@ public class LayoutFriendlyURLPersistenceImpl
 		_finderPathWithoutPaginationFindByP_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "languageId"}, true);
+			new String[] {"plid", "languageId"}, 0, 2, true, null);
 
 		_finderPathFetchByP_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByP_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "languageId"}, false,
+			new String[] {"plid", "languageId"}, 0, 2, false,
 			LayoutFriendlyURL::getPlid,
 			convertNullFunction(LayoutFriendlyURL::getLanguageId));
 
 		_finderPathCountByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_L",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"plid", "languageId"}, false);
+			new String[] {"plid", "languageId"}, 0, 2, false, null);
 
 		_finderPathWithPaginationCountByP_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
@@ -2876,7 +2876,8 @@ public class LayoutFriendlyURLPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "friendlyURL"}, true);
+			new String[] {"groupId", "privateLayout", "friendlyURL"}, 0, 4,
+			true, null);
 
 		_finderPathCountByG_P_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_F",
@@ -2884,7 +2885,8 @@ public class LayoutFriendlyURLPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "friendlyURL"}, false);
+			new String[] {"groupId", "privateLayout", "friendlyURL"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByG_P_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_P_F,
@@ -2912,7 +2914,7 @@ public class LayoutFriendlyURLPersistenceImpl
 			new String[] {
 				"groupId", "privateLayout", "friendlyURL", "languageId"
 			},
-			false, LayoutFriendlyURL::getGroupId,
+			0, 12, false, LayoutFriendlyURL::getGroupId,
 			LayoutFriendlyURL::isPrivateLayout,
 			convertNullFunction(LayoutFriendlyURL::getFriendlyURL),
 			convertNullFunction(LayoutFriendlyURL::getLanguageId));
@@ -2970,4 +2972,4 @@ public class LayoutFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2090194511
+// LIFERAY-SERVICE-BUILDER-HASH:1878699162

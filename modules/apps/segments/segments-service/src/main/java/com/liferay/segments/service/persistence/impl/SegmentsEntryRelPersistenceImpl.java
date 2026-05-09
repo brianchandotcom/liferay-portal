@@ -1094,8 +1094,8 @@ public class SegmentsEntryRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"segmentsEntryId", "classNameId", "classPK"}, false,
-			SegmentsEntryRel::getSegmentsEntryId,
+			new String[] {"segmentsEntryId", "classNameId", "classPK"}, 0, 0,
+			false, SegmentsEntryRel::getSegmentsEntryId,
 			SegmentsEntryRel::getClassNameId, SegmentsEntryRel::getClassPK);
 
 		_uniquePersistenceFinderByS_CN_CPK = new UniquePersistenceFinder<>(
@@ -1180,4 +1180,4 @@ public class SegmentsEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1995971730
+// LIFERAY-SERVICE-BUILDER-HASH:-200994254

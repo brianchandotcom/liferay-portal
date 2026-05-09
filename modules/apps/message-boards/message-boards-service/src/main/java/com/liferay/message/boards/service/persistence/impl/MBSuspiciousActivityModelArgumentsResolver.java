@@ -55,7 +55,7 @@ public class MBSuspiciousActivityModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				mbSuspiciousActivityModelImpl, columnNames, original);
+				mbSuspiciousActivityModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class MBSuspiciousActivityModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				mbSuspiciousActivityModelImpl, columnNames, original);
+				mbSuspiciousActivityModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class MBSuspiciousActivityModelArgumentsResolver
 
 	private static Object[] _getValue(
 		MBSuspiciousActivityModelImpl mbSuspiciousActivityModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					mbSuspiciousActivityModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = mbSuspiciousActivityModelImpl.getColumnValue(
+				value = mbSuspiciousActivityModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = mbSuspiciousActivityModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class MBSuspiciousActivityModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-76359285
+// LIFERAY-SERVICE-BUILDER-HASH:2044406328

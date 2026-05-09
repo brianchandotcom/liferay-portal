@@ -57,7 +57,7 @@ public class LayoutSEOEntryCustomMetaTagModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				layoutSEOEntryCustomMetaTagModelImpl, columnNames, original);
+				layoutSEOEntryCustomMetaTagModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class LayoutSEOEntryCustomMetaTagModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				layoutSEOEntryCustomMetaTagModelImpl, columnNames, original);
+				layoutSEOEntryCustomMetaTagModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class LayoutSEOEntryCustomMetaTagModelArgumentsResolver
 	private static Object[] _getValue(
 		LayoutSEOEntryCustomMetaTagModelImpl
 			layoutSEOEntryCustomMetaTagModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					layoutSEOEntryCustomMetaTagModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					layoutSEOEntryCustomMetaTagModelImpl.getColumnValue(
-						columnName);
+				value = layoutSEOEntryCustomMetaTagModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class LayoutSEOEntryCustomMetaTagModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1285065677
+// LIFERAY-SERVICE-BUILDER-HASH:-281770500

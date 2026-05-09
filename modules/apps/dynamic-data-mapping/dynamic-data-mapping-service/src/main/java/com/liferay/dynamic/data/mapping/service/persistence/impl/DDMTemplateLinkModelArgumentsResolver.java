@@ -54,7 +54,7 @@ public class DDMTemplateLinkModelArgumentsResolver
 		long columnBitmask = ddmTemplateLinkModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ddmTemplateLinkModelImpl, columnNames, original);
+			return _getValue(ddmTemplateLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class DDMTemplateLinkModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ddmTemplateLinkModelImpl, columnNames, original);
+			return _getValue(ddmTemplateLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -90,22 +90,27 @@ public class DDMTemplateLinkModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl, String[] columnNames,
-		boolean original) {
+		DDMTemplateLinkModelImpl ddmTemplateLinkModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ddmTemplateLinkModelImpl.getColumnOriginalValue(
+				value = ddmTemplateLinkModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = ddmTemplateLinkModelImpl.getColumnValue(
-					columnName);
+				value = ddmTemplateLinkModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class DDMTemplateLinkModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:946280322
+// LIFERAY-SERVICE-BUILDER-HASH:655686625

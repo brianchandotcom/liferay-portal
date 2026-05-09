@@ -53,7 +53,7 @@ public class CTPreferencesModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ctPreferencesModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ctPreferencesModelImpl, columnNames, original);
+			return _getValue(ctPreferencesModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class CTPreferencesModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ctPreferencesModelImpl, columnNames, original);
+			return _getValue(ctPreferencesModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class CTPreferencesModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CTPreferencesModelImpl ctPreferencesModelImpl, String[] columnNames,
+		CTPreferencesModelImpl ctPreferencesModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ctPreferencesModelImpl.getColumnOriginalValue(
+				value = ctPreferencesModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = ctPreferencesModelImpl.getColumnValue(
-					columnName);
+				value = ctPreferencesModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class CTPreferencesModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1679495332
+// LIFERAY-SERVICE-BUILDER-HASH:-1897894437

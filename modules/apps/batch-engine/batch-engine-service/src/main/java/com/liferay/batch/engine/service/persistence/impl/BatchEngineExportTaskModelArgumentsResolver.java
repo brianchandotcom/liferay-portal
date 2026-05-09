@@ -55,7 +55,7 @@ public class BatchEngineExportTaskModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				batchEngineExportTaskModelImpl, columnNames, original);
+				batchEngineExportTaskModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class BatchEngineExportTaskModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				batchEngineExportTaskModelImpl, columnNames, original);
+				batchEngineExportTaskModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class BatchEngineExportTaskModelArgumentsResolver
 
 	private static Object[] _getValue(
 		BatchEngineExportTaskModelImpl batchEngineExportTaskModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					batchEngineExportTaskModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = batchEngineExportTaskModelImpl.getColumnValue(
+				value = batchEngineExportTaskModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = batchEngineExportTaskModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class BatchEngineExportTaskModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1709644625
+// LIFERAY-SERVICE-BUILDER-HASH:1923576320

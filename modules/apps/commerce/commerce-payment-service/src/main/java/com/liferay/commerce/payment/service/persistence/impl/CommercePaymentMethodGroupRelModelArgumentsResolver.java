@@ -57,7 +57,7 @@ public class CommercePaymentMethodGroupRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commercePaymentMethodGroupRelModelImpl, columnNames, original);
+				commercePaymentMethodGroupRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -86,7 +86,7 @@ public class CommercePaymentMethodGroupRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commercePaymentMethodGroupRelModelImpl, columnNames, original);
+				commercePaymentMethodGroupRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -105,23 +105,28 @@ public class CommercePaymentMethodGroupRelModelArgumentsResolver
 	private static Object[] _getValue(
 		CommercePaymentMethodGroupRelModelImpl
 			commercePaymentMethodGroupRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commercePaymentMethodGroupRelModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					commercePaymentMethodGroupRelModelImpl.getColumnValue(
-						columnName);
+				value = commercePaymentMethodGroupRelModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -142,4 +147,4 @@ public class CommercePaymentMethodGroupRelModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1567070273
+// LIFERAY-SERVICE-BUILDER-HASH:-1603375070

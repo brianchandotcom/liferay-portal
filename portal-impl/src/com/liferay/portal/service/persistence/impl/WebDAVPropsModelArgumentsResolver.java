@@ -52,7 +52,7 @@ public class WebDAVPropsModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = webDAVPropsModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(webDAVPropsModelImpl, columnNames, original);
+			return _getValue(webDAVPropsModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class WebDAVPropsModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(webDAVPropsModelImpl, columnNames, original);
+			return _getValue(webDAVPropsModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,21 +88,26 @@ public class WebDAVPropsModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		WebDAVPropsModelImpl webDAVPropsModelImpl, String[] columnNames,
+		WebDAVPropsModelImpl webDAVPropsModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = webDAVPropsModelImpl.getColumnOriginalValue(
-					columnName);
+				value = webDAVPropsModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = webDAVPropsModelImpl.getColumnValue(columnName);
+				value = webDAVPropsModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -112,4 +117,4 @@ public class WebDAVPropsModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-715673338
+// LIFERAY-SERVICE-BUILDER-HASH:-336938867

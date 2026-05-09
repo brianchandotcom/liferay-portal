@@ -2631,12 +2631,12 @@ public class AssetEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByClassUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByClassUuid",
 			new String[] {String.class.getName()}, new String[] {"classUuid"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountByClassUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByClassUuid",
 			new String[] {String.class.getName()}, new String[] {"classUuid"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderByClassUuid =
 			new CollectionPersistenceFinder<>(
@@ -2747,12 +2747,12 @@ public class AssetEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByLayoutUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLayoutUuid",
 			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountByLayoutUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLayoutUuid",
 			new String[] {String.class.getName()}, new String[] {"layoutUuid"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderByLayoutUuid =
 			new CollectionPersistenceFinder<>(
@@ -2768,7 +2768,7 @@ public class AssetEntryPersistenceImpl
 		_finderPathFetchByG_CU = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "classUuid"}, false,
+			new String[] {"groupId", "classUuid"}, 0, 2, false,
 			AssetEntry::getGroupId,
 			convertNullFunction(AssetEntry::getClassUuid));
 
@@ -2815,7 +2815,7 @@ public class AssetEntryPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false,
+			new String[] {"classNameId", "classPK"}, 0, 0, false,
 			AssetEntry::getClassNameId, AssetEntry::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
@@ -2963,4 +2963,4 @@ public class AssetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:971217825
+// LIFERAY-SERVICE-BUILDER-HASH:1930230115

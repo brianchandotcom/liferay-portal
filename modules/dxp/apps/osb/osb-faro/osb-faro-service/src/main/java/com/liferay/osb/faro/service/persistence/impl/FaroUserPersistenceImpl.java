@@ -1487,8 +1487,8 @@ public class FaroUserPersistenceImpl
 
 		_finderPathFetchByKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, false,
-			convertNullFunction(FaroUser::getKey));
+			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
+			false, convertNullFunction(FaroUser::getKey));
 
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKey, _SQL_SELECT_FAROUSER_WHERE, "",
@@ -1499,8 +1499,8 @@ public class FaroUserPersistenceImpl
 		_finderPathFetchByG_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "liveUserId"}, false, FaroUser::getGroupId,
-			FaroUser::getLiveUserId);
+			new String[] {"groupId", "liveUserId"}, 0, 0, false,
+			FaroUser::getGroupId, FaroUser::getLiveUserId);
 
 		_uniquePersistenceFinderByG_L = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByG_L, _SQL_SELECT_FAROUSER_WHERE, "",
@@ -1545,7 +1545,7 @@ public class FaroUserPersistenceImpl
 		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "emailAddress"}, false,
+			new String[] {"groupId", "emailAddress"}, 0, 2, false,
 			FaroUser::getGroupId,
 			convertNullFunction(FaroUser::getEmailAddress));
 
@@ -1632,12 +1632,12 @@ public class FaroUserPersistenceImpl
 		_finderPathWithoutPaginationFindByE_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_S",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"emailAddress", "status"}, true);
+			new String[] {"emailAddress", "status"}, 0, 1, true, null);
 
 		_finderPathCountByE_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_S",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"emailAddress", "status"}, false);
+			new String[] {"emailAddress", "status"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByE_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByE_S,
@@ -1720,4 +1720,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:928056396
+// LIFERAY-SERVICE-BUILDER-HASH:1206672154

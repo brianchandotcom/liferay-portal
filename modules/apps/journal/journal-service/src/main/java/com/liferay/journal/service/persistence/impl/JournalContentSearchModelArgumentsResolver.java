@@ -55,7 +55,7 @@ public class JournalContentSearchModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				journalContentSearchModelImpl, columnNames, original);
+				journalContentSearchModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class JournalContentSearchModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				journalContentSearchModelImpl, columnNames, original);
+				journalContentSearchModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class JournalContentSearchModelArgumentsResolver
 
 	private static Object[] _getValue(
 		JournalContentSearchModelImpl journalContentSearchModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					journalContentSearchModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = journalContentSearchModelImpl.getColumnValue(
+				value = journalContentSearchModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = journalContentSearchModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class JournalContentSearchModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:779255062
+// LIFERAY-SERVICE-BUILDER-HASH:1428089055

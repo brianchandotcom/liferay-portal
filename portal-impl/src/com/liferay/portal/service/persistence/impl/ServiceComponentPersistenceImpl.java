@@ -512,12 +512,12 @@ public class ServiceComponentPersistenceImpl
 		_finderPathWithoutPaginationFindByBuildNamespace = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByBuildNamespace",
 			new String[] {String.class.getName()},
-			new String[] {"buildNamespace"}, true);
+			new String[] {"buildNamespace"}, 0, 1, true, null);
 
 		_finderPathCountByBuildNamespace = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByBuildNamespace",
 			new String[] {String.class.getName()},
-			new String[] {"buildNamespace"}, false);
+			new String[] {"buildNamespace"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByBuildNamespace =
 			new CollectionPersistenceFinder<>(
@@ -536,7 +536,7 @@ public class ServiceComponentPersistenceImpl
 		_finderPathFetchByBNS_BNU = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBNS_BNU",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"buildNamespace", "buildNumber"}, false,
+			new String[] {"buildNamespace", "buildNumber"}, 0, 1, false,
 			convertNullFunction(ServiceComponent::getBuildNamespace),
 			ServiceComponent::getBuildNumber);
 
@@ -586,4 +586,4 @@ public class ServiceComponentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1209136553
+// LIFERAY-SERVICE-BUILDER-HASH:1411190377

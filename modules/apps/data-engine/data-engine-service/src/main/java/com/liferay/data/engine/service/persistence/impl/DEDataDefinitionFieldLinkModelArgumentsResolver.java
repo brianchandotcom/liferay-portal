@@ -56,7 +56,7 @@ public class DEDataDefinitionFieldLinkModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				deDataDefinitionFieldLinkModelImpl, columnNames, original);
+				deDataDefinitionFieldLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class DEDataDefinitionFieldLinkModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				deDataDefinitionFieldLinkModelImpl, columnNames, original);
+				deDataDefinitionFieldLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,23 +95,28 @@ public class DEDataDefinitionFieldLinkModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DEDataDefinitionFieldLinkModelImpl deDataDefinitionFieldLinkModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					deDataDefinitionFieldLinkModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					deDataDefinitionFieldLinkModelImpl.getColumnValue(
-						columnName);
+				value = deDataDefinitionFieldLinkModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -121,4 +126,4 @@ public class DEDataDefinitionFieldLinkModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:967040881
+// LIFERAY-SERVICE-BUILDER-HASH:-1158344668

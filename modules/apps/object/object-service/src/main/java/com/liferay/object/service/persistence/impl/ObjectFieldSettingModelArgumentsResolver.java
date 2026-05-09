@@ -54,8 +54,7 @@ public class ObjectFieldSettingModelArgumentsResolver
 		long columnBitmask = objectFieldSettingModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				objectFieldSettingModelImpl, columnNames, original);
+			return _getValue(objectFieldSettingModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,8 +73,7 @@ public class ObjectFieldSettingModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				objectFieldSettingModelImpl, columnNames, original);
+			return _getValue(objectFieldSettingModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +91,26 @@ public class ObjectFieldSettingModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ObjectFieldSettingModelImpl objectFieldSettingModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					objectFieldSettingModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = objectFieldSettingModelImpl.getColumnValue(
+				value = objectFieldSettingModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = objectFieldSettingModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +120,4 @@ public class ObjectFieldSettingModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2076278307
+// LIFERAY-SERVICE-BUILDER-HASH:1249816314

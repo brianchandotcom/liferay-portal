@@ -53,7 +53,7 @@ public class LayoutSEOSiteModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = layoutSEOSiteModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(layoutSEOSiteModelImpl, columnNames, original);
+			return _getValue(layoutSEOSiteModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class LayoutSEOSiteModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(layoutSEOSiteModelImpl, columnNames, original);
+			return _getValue(layoutSEOSiteModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class LayoutSEOSiteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		LayoutSEOSiteModelImpl layoutSEOSiteModelImpl, String[] columnNames,
+		LayoutSEOSiteModelImpl layoutSEOSiteModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = layoutSEOSiteModelImpl.getColumnOriginalValue(
+				value = layoutSEOSiteModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = layoutSEOSiteModelImpl.getColumnValue(
-					columnName);
+				value = layoutSEOSiteModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class LayoutSEOSiteModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-923256620
+// LIFERAY-SERVICE-BUILDER-HASH:511909079

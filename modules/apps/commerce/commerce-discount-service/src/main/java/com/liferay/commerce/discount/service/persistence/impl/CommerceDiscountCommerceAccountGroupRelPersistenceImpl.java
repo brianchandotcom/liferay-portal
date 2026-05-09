@@ -839,7 +839,7 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		_finderPathFetchByCDI_CAGI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CAGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commerceAccountGroupId"},
+			new String[] {"commerceDiscountId", "commerceAccountGroupId"}, 0, 0,
 			false,
 			CommerceDiscountCommerceAccountGroupRel::getCommerceDiscountId,
 			CommerceDiscountCommerceAccountGroupRel::getCommerceAccountGroupId);
@@ -931,4 +931,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1005618401
+// LIFERAY-SERVICE-BUILDER-HASH:1087337364

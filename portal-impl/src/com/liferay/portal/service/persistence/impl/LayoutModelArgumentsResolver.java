@@ -51,7 +51,7 @@ public class LayoutModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = layoutModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(layoutModelImpl, columnNames, original);
+			return _getValue(layoutModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class LayoutModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(layoutModelImpl, columnNames, original);
+			return _getValue(layoutModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,21 +95,26 @@ public class LayoutModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		LayoutModelImpl layoutModelImpl, String[] columnNames,
+		LayoutModelImpl layoutModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = layoutModelImpl.getColumnOriginalValue(
-					columnName);
+				value = layoutModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = layoutModelImpl.getColumnValue(columnName);
+				value = layoutModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -131,4 +136,4 @@ public class LayoutModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:63576351
+// LIFERAY-SERVICE-BUILDER-HASH:1583236968

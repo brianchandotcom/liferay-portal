@@ -333,7 +333,7 @@ public class RedundantIndexEntryPersistenceImpl
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false,
+			new String[] {"companyId", "name"}, 0, 2, false,
 			RedundantIndexEntry::getCompanyId,
 			convertNullFunction(RedundantIndexEntry::getName));
 
@@ -383,4 +383,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:117031414
+// LIFERAY-SERVICE-BUILDER-HASH:-200962899

@@ -1588,13 +1588,13 @@ public class ObjectValidationRulePersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1619,12 +1619,12 @@ public class ObjectValidationRulePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1721,12 +1721,12 @@ public class ObjectValidationRulePersistenceImpl
 		_finderPathWithoutPaginationFindByODI_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "engine"}, true);
+			new String[] {"objectDefinitionId", "engine"}, 0, 2, true, null);
 
 		_finderPathCountByODI_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "engine"}, false);
+			new String[] {"objectDefinitionId", "engine"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByODI_E = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByODI_E,
@@ -1755,12 +1755,14 @@ public class ObjectValidationRulePersistenceImpl
 		_finderPathWithoutPaginationFindByODI_O = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_O",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "outputType"}, true);
+			new String[] {"objectDefinitionId", "outputType"}, 0, 2, true,
+			null);
 
 		_finderPathCountByODI_O = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_O",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "outputType"}, false);
+			new String[] {"objectDefinitionId", "outputType"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByODI_O = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByODI_O,
@@ -1789,12 +1791,12 @@ public class ObjectValidationRulePersistenceImpl
 		_finderPathWithoutPaginationFindByA_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_E",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "engine"}, true);
+			new String[] {"active_", "engine"}, 0, 2, true, null);
 
 		_finderPathCountByA_E = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_E",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"active_", "engine"}, false);
+			new String[] {"active_", "engine"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByA_E = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByA_E,
@@ -1819,7 +1821,7 @@ public class ObjectValidationRulePersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false,
+			0, 1, false,
 			convertNullFunction(ObjectValidationRule::getExternalReferenceCode),
 			ObjectValidationRule::getCompanyId,
 			ObjectValidationRule::getObjectDefinitionId);
@@ -1908,4 +1910,4 @@ public class ObjectValidationRulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524159359
+// LIFERAY-SERVICE-BUILDER-HASH:-37605496

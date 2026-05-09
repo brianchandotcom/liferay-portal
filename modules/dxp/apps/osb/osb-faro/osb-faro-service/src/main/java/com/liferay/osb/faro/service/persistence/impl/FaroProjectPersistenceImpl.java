@@ -808,7 +808,7 @@ public class FaroProjectPersistenceImpl
 	public void activate() {
 		_finderPathFetchByGroupId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			new String[] {Long.class.getName()}, new String[] {"groupId"}, 0, 0,
 			false, FaroProject::getGroupId);
 
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
@@ -848,7 +848,7 @@ public class FaroProjectPersistenceImpl
 		_finderPathFetchByCorpProjectUuid = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
 			new String[] {String.class.getName()},
-			new String[] {"corpProjectUuid"}, false,
+			new String[] {"corpProjectUuid"}, 0, 1, false,
 			convertNullFunction(FaroProject::getCorpProjectUuid));
 
 		_uniquePersistenceFinderByCorpProjectUuid =
@@ -870,12 +870,12 @@ public class FaroProjectPersistenceImpl
 		_finderPathWithoutPaginationFindByServerLocation = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByServerLocation",
 			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, true);
+			new String[] {"serverLocation"}, 0, 1, true, null);
 
 		_finderPathCountByServerLocation = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByServerLocation",
 			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, false);
+			new String[] {"serverLocation"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByServerLocation =
 			new CollectionPersistenceFinder<>(
@@ -891,7 +891,7 @@ public class FaroProjectPersistenceImpl
 		_finderPathFetchByWeDeployKey = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
 			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			false, convertNullFunction(FaroProject::getWeDeployKey));
+			0, 1, false, convertNullFunction(FaroProject::getWeDeployKey));
 
 		_uniquePersistenceFinderByWeDeployKey = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByWeDeployKey, _SQL_SELECT_FAROPROJECT_WHERE,
@@ -969,4 +969,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:932806899
+// LIFERAY-SERVICE-BUILDER-HASH:1565826620

@@ -57,7 +57,7 @@ public class CommerceShippingFixedOptionQualifierModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceShippingFixedOptionQualifierModelImpl, columnNames,
+				commerceShippingFixedOptionQualifierModelImpl, finderPath,
 				original);
 		}
 
@@ -87,7 +87,7 @@ public class CommerceShippingFixedOptionQualifierModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceShippingFixedOptionQualifierModelImpl, columnNames,
+				commerceShippingFixedOptionQualifierModelImpl, finderPath,
 				original);
 		}
 
@@ -108,23 +108,29 @@ public class CommerceShippingFixedOptionQualifierModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceShippingFixedOptionQualifierModelImpl
 			commerceShippingFixedOptionQualifierModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceShippingFixedOptionQualifierModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
+				value =
 					commerceShippingFixedOptionQualifierModelImpl.
 						getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -146,4 +152,4 @@ public class CommerceShippingFixedOptionQualifierModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-276220063
+// LIFERAY-SERVICE-BUILDER-HASH:822916856

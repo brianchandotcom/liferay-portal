@@ -607,7 +607,7 @@ public class CommerceShippingFixedOptionPersistenceImpl
 		_finderPathFetchByC_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, false,
+			new String[] {"companyId", "key_"}, 0, 2, false,
 			CommerceShippingFixedOption::getCompanyId,
 			convertNullFunction(CommerceShippingFixedOption::getKey));
 
@@ -692,4 +692,4 @@ public class CommerceShippingFixedOptionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-340702209
+// LIFERAY-SERVICE-BUILDER-HASH:-797996226

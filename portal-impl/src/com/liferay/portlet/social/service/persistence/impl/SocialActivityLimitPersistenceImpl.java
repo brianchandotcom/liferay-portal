@@ -1066,7 +1066,7 @@ public class SocialActivityLimitPersistenceImpl
 				"groupId", "userId", "classNameId", "classPK", "activityType",
 				"activityCounterName"
 			},
-			false, SocialActivityLimit::getGroupId,
+			0, 32, false, SocialActivityLimit::getGroupId,
 			SocialActivityLimit::getUserId, SocialActivityLimit::getClassNameId,
 			SocialActivityLimit::getClassPK,
 			SocialActivityLimit::getActivityType,
@@ -1129,4 +1129,4 @@ public class SocialActivityLimitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1966181044
+// LIFERAY-SERVICE-BUILDER-HASH:418750269

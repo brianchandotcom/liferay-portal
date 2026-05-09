@@ -57,7 +57,7 @@ public class OAuthClientASLocalMetadataModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				oAuthClientASLocalMetadataModelImpl, columnNames, original);
+				oAuthClientASLocalMetadataModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class OAuthClientASLocalMetadataModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				oAuthClientASLocalMetadataModelImpl, columnNames, original);
+				oAuthClientASLocalMetadataModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,23 +96,28 @@ public class OAuthClientASLocalMetadataModelArgumentsResolver
 
 	private static Object[] _getValue(
 		OAuthClientASLocalMetadataModelImpl oAuthClientASLocalMetadataModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					oAuthClientASLocalMetadataModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					oAuthClientASLocalMetadataModelImpl.getColumnValue(
-						columnName);
+				value = oAuthClientASLocalMetadataModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -122,4 +127,4 @@ public class OAuthClientASLocalMetadataModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:172065842
+// LIFERAY-SERVICE-BUILDER-HASH:1765367371

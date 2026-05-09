@@ -898,12 +898,12 @@ public class CookiesConsentPreferencePersistenceImpl
 		_finderPathWithoutPaginationFindByU_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, true);
+			new String[] {"userId", "domain"}, 0, 2, true, null);
 
 		_finderPathCountByU_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, false);
+			new String[] {"userId", "domain"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByU_D = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByU_D,
@@ -925,7 +925,7 @@ public class CookiesConsentPreferencePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"userId", "domain", "name"}, false,
+			new String[] {"userId", "domain", "name"}, 0, 6, false,
 			CookiesConsentPreference::getUserId,
 			convertNullFunction(CookiesConsentPreference::getDomain),
 			convertNullFunction(CookiesConsentPreference::getName));
@@ -1009,4 +1009,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1209786025
+// LIFERAY-SERVICE-BUILDER-HASH:-1156525493

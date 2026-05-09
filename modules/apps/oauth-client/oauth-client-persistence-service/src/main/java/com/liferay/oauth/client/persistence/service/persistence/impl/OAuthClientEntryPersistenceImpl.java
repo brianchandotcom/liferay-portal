@@ -2488,13 +2488,13 @@ public class OAuthClientEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2518,12 +2518,12 @@ public class OAuthClientEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2611,12 +2611,14 @@ public class OAuthClientEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "authServerWellKnownURI"}, true);
+			new String[] {"companyId", "authServerWellKnownURI"}, 0, 2, true,
+			null);
 
 		_finderPathCountByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "authServerWellKnownURI"}, false);
+			new String[] {"companyId", "authServerWellKnownURI"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_A,
@@ -2638,8 +2640,8 @@ public class OAuthClientEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
-			false, OAuthClientEntry::getCompanyId,
+			new String[] {"companyId", "authServerWellKnownURI", "clientId"}, 0,
+			6, false, OAuthClientEntry::getCompanyId,
 			convertNullFunction(OAuthClientEntry::getAuthServerWellKnownURI),
 			convertNullFunction(OAuthClientEntry::getClientId));
 
@@ -2660,7 +2662,7 @@ public class OAuthClientEntryPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(OAuthClientEntry::getExternalReferenceCode),
 			OAuthClientEntry::getCompanyId);
 
@@ -2767,4 +2769,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-855774998
+// LIFERAY-SERVICE-BUILDER-HASH:-2833153

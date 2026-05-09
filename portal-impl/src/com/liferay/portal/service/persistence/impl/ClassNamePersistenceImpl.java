@@ -310,7 +310,7 @@ public class ClassNamePersistenceImpl
 	public void afterPropertiesSet() {
 		_finderPathFetchByValue = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByValue",
-			new String[] {String.class.getName()}, new String[] {"value"},
+			new String[] {String.class.getName()}, new String[] {"value"}, 0, 1,
 			false, convertNullFunction(ClassName::getValue));
 
 		_uniquePersistenceFinderByValue = new UniquePersistenceFinder<>(
@@ -349,4 +349,4 @@ public class ClassNamePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1126675556
+// LIFERAY-SERVICE-BUILDER-HASH:1562164466

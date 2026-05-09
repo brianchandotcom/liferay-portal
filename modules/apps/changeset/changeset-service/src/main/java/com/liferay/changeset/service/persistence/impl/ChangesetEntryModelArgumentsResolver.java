@@ -53,7 +53,7 @@ public class ChangesetEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = changesetEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(changesetEntryModelImpl, columnNames, original);
+			return _getValue(changesetEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class ChangesetEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(changesetEntryModelImpl, columnNames, original);
+			return _getValue(changesetEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class ChangesetEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		ChangesetEntryModelImpl changesetEntryModelImpl, String[] columnNames,
+		ChangesetEntryModelImpl changesetEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = changesetEntryModelImpl.getColumnOriginalValue(
+				value = changesetEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = changesetEntryModelImpl.getColumnValue(
-					columnName);
+				value = changesetEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class ChangesetEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:133655227
+// LIFERAY-SERVICE-BUILDER-HASH:-1932060628

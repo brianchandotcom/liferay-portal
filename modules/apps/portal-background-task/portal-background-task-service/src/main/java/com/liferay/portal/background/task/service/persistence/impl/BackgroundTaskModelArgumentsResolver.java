@@ -53,7 +53,7 @@ public class BackgroundTaskModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = backgroundTaskModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(backgroundTaskModelImpl, columnNames, original);
+			return _getValue(backgroundTaskModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class BackgroundTaskModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(backgroundTaskModelImpl, columnNames, original);
+			return _getValue(backgroundTaskModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class BackgroundTaskModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		BackgroundTaskModelImpl backgroundTaskModelImpl, String[] columnNames,
+		BackgroundTaskModelImpl backgroundTaskModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = backgroundTaskModelImpl.getColumnOriginalValue(
+				value = backgroundTaskModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = backgroundTaskModelImpl.getColumnValue(
-					columnName);
+				value = backgroundTaskModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -133,4 +138,4 @@ public class BackgroundTaskModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1499803136
+// LIFERAY-SERVICE-BUILDER-HASH:-1757641691

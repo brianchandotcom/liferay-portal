@@ -1132,12 +1132,12 @@ public class DDMFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, true);
+			new String[] {"companyId", "fieldType"}, 0, 2, true, null);
 
 		_finderPathCountByC_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, false);
+			new String[] {"companyId", "fieldType"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_F,
@@ -1163,12 +1163,12 @@ public class DDMFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByS_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, true);
+			new String[] {"storageId", "fieldName"}, 0, 2, true, null);
 
 		_finderPathCountByS_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, false);
+			new String[] {"storageId", "fieldName"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByS_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByS_F,
@@ -1185,7 +1185,7 @@ public class DDMFieldPersistenceImpl
 		_finderPathFetchByS_I = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "instanceId"}, false,
+			new String[] {"storageId", "instanceId"}, 0, 2, false,
 			DDMField::getStorageId,
 			convertNullFunction(DDMField::getInstanceId));
 
@@ -1267,4 +1267,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:274161946
+// LIFERAY-SERVICE-BUILDER-HASH:273995689

@@ -54,7 +54,7 @@ public class RedundantIndexEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				redundantIndexEntryModelImpl, columnNames, original);
+				redundantIndexEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,7 +74,7 @@ public class RedundantIndexEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				redundantIndexEntryModelImpl, columnNames, original);
+				redundantIndexEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +92,26 @@ public class RedundantIndexEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		RedundantIndexEntryModelImpl redundantIndexEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					redundantIndexEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = redundantIndexEntryModelImpl.getColumnValue(
+				value = redundantIndexEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = redundantIndexEntryModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +121,4 @@ public class RedundantIndexEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:665916734
+// LIFERAY-SERVICE-BUILDER-HASH:-233054515

@@ -54,7 +54,7 @@ public class SamlSpAuthRequestModelArgumentsResolver
 		long columnBitmask = samlSpAuthRequestModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(samlSpAuthRequestModelImpl, columnNames, original);
+			return _getValue(samlSpAuthRequestModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class SamlSpAuthRequestModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(samlSpAuthRequestModelImpl, columnNames, original);
+			return _getValue(samlSpAuthRequestModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,22 +91,26 @@ public class SamlSpAuthRequestModelArgumentsResolver
 
 	private static Object[] _getValue(
 		SamlSpAuthRequestModelImpl samlSpAuthRequestModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					samlSpAuthRequestModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = samlSpAuthRequestModelImpl.getColumnValue(
+				value = samlSpAuthRequestModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = samlSpAuthRequestModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -116,4 +120,4 @@ public class SamlSpAuthRequestModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1820401100
+// LIFERAY-SERVICE-BUILDER-HASH:51739075

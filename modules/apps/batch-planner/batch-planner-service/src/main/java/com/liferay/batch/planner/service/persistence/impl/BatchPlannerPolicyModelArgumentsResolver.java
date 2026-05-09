@@ -54,8 +54,7 @@ public class BatchPlannerPolicyModelArgumentsResolver
 		long columnBitmask = batchPlannerPolicyModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				batchPlannerPolicyModelImpl, columnNames, original);
+			return _getValue(batchPlannerPolicyModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -82,8 +81,7 @@ public class BatchPlannerPolicyModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				batchPlannerPolicyModelImpl, columnNames, original);
+			return _getValue(batchPlannerPolicyModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +99,26 @@ public class BatchPlannerPolicyModelArgumentsResolver
 
 	private static Object[] _getValue(
 		BatchPlannerPolicyModelImpl batchPlannerPolicyModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					batchPlannerPolicyModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = batchPlannerPolicyModelImpl.getColumnValue(
+				value = batchPlannerPolicyModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = batchPlannerPolicyModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +139,4 @@ public class BatchPlannerPolicyModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2067708250
+// LIFERAY-SERVICE-BUILDER-HASH:964642993

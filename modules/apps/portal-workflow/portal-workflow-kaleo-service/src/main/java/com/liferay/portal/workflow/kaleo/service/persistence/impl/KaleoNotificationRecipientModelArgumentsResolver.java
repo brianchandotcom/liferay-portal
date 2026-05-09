@@ -57,7 +57,7 @@ public class KaleoNotificationRecipientModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				kaleoNotificationRecipientModelImpl, columnNames, original);
+				kaleoNotificationRecipientModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -86,7 +86,7 @@ public class KaleoNotificationRecipientModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				kaleoNotificationRecipientModelImpl, columnNames, original);
+				kaleoNotificationRecipientModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -104,23 +104,28 @@ public class KaleoNotificationRecipientModelArgumentsResolver
 
 	private static Object[] _getValue(
 		KaleoNotificationRecipientModelImpl kaleoNotificationRecipientModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					kaleoNotificationRecipientModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					kaleoNotificationRecipientModelImpl.getColumnValue(
-						columnName);
+				value = kaleoNotificationRecipientModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -138,4 +143,4 @@ public class KaleoNotificationRecipientModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1036725004
+// LIFERAY-SERVICE-BUILDER-HASH:388592925

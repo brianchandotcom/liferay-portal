@@ -52,7 +52,7 @@ public class DLContentModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = dlContentModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dlContentModelImpl, columnNames, original);
+			return _getValue(dlContentModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class DLContentModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dlContentModelImpl, columnNames, original);
+			return _getValue(dlContentModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class DLContentModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DLContentModelImpl dlContentModelImpl, String[] columnNames,
+		DLContentModelImpl dlContentModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dlContentModelImpl.getColumnOriginalValue(
-					columnName);
+				value = dlContentModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = dlContentModelImpl.getColumnValue(columnName);
+				value = dlContentModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class DLContentModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-58763872
+// LIFERAY-SERVICE-BUILDER-HASH:395857513

@@ -56,7 +56,7 @@ public class MFAFIDO2CredentialEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				mfaFIDO2CredentialEntryModelImpl, columnNames, original);
+				mfaFIDO2CredentialEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class MFAFIDO2CredentialEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				mfaFIDO2CredentialEntryModelImpl, columnNames, original);
+				mfaFIDO2CredentialEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,22 +95,27 @@ public class MFAFIDO2CredentialEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		MFAFIDO2CredentialEntryModelImpl mfaFIDO2CredentialEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					mfaFIDO2CredentialEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = mfaFIDO2CredentialEntryModelImpl.getColumnValue(
+				value = mfaFIDO2CredentialEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = mfaFIDO2CredentialEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +125,4 @@ public class MFAFIDO2CredentialEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:627302703
+// LIFERAY-SERVICE-BUILDER-HASH:-1908899258

@@ -57,7 +57,7 @@ public class CommerceAvailabilityEstimateModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceAvailabilityEstimateModelImpl, columnNames, original);
+				commerceAvailabilityEstimateModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -86,7 +86,7 @@ public class CommerceAvailabilityEstimateModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceAvailabilityEstimateModelImpl, columnNames, original);
+				commerceAvailabilityEstimateModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -105,23 +105,28 @@ public class CommerceAvailabilityEstimateModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceAvailabilityEstimateModelImpl
 			commerceAvailabilityEstimateModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceAvailabilityEstimateModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					commerceAvailabilityEstimateModelImpl.getColumnValue(
-						columnName);
+				value = commerceAvailabilityEstimateModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -142,4 +147,4 @@ public class CommerceAvailabilityEstimateModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2006963788
+// LIFERAY-SERVICE-BUILDER-HASH:8655333

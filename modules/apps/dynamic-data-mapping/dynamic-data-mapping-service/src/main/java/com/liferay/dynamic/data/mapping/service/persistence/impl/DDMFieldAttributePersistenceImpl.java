@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -29,6 +27,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinde
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -48,7 +46,6 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -421,7 +418,8 @@ public class DDMFieldAttributePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByS_L;
 	private FinderPath _finderPathWithoutPaginationFindByS_L;
 	private FinderPath _finderPathCountByS_L;
-	private FinderPath _finderPathWithPaginationCountByS_L;
+	private CollectionPersistenceFinder<DDMFieldAttribute>
+		_collectionPersistenceFinderByS_L;
 
 	/**
 	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
@@ -506,115 +504,10 @@ public class DDMFieldAttributePersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMFieldAttribute.class)) {
 
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByS_L;
-					finderArgs = new Object[] {storageId, languageId};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByS_L;
-				finderArgs = new Object[] {
-					storageId, languageId, start, end, orderByComparator
-				};
-			}
-
-			List<DDMFieldAttribute> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDMFieldAttribute>)finderCache.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDMFieldAttribute ddmFieldAttribute : list) {
-						if ((storageId != ddmFieldAttribute.getStorageId()) ||
-							!languageId.equals(
-								ddmFieldAttribute.getLanguageId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-				}
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(storageId);
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					list = (List<DDMFieldAttribute>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByS_L.find(
+				finderCache,
+				new Object[] {storageId, new String[] {languageId}}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -668,14 +561,9 @@ public class DDMFieldAttributePersistenceImpl
 		long storageId, String languageId,
 		OrderByComparator<DDMFieldAttribute> orderByComparator) {
 
-		List<DDMFieldAttribute> list = findByS_L(
-			storageId, languageId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByS_L.fetchFirst(
+			finderCache, new Object[] {storageId, new String[] {languageId}},
+			orderByComparator);
 	}
 
 	/**
@@ -761,144 +649,14 @@ public class DDMFieldAttributePersistenceImpl
 		OrderByComparator<DDMFieldAttribute> orderByComparator,
 		boolean useFinderCache) {
 
-		if (languageIds == null) {
-			languageIds = new String[0];
-		}
-		else if (languageIds.length > 1) {
-			for (int i = 0; i < languageIds.length; i++) {
-				languageIds[i] = Objects.toString(languageIds[i], "");
-			}
-
-			languageIds = ArrayUtil.sortedUnique(languageIds);
-		}
-
-		if (languageIds.length == 1) {
-			return findByS_L(
-				storageId, languageIds[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMFieldAttribute.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						storageId, StringUtil.merge(languageIds)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					storageId, StringUtil.merge(languageIds), start, end,
-					orderByComparator
-				};
-			}
-
-			List<DDMFieldAttribute> list = null;
-
-			if (useFinderCache) {
-				list = (List<DDMFieldAttribute>)finderCache.getResult(
-					_finderPathWithPaginationFindByS_L, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (DDMFieldAttribute ddmFieldAttribute : list) {
-						if ((storageId != ddmFieldAttribute.getStorageId()) ||
-							!ArrayUtil.contains(
-								languageIds,
-								ddmFieldAttribute.getLanguageId())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-				if (languageIds.length > 0) {
-					sb.append("(");
-
-					for (int i = 0; i < languageIds.length; i++) {
-						String languageId = languageIds[i];
-
-						if (languageId.isEmpty()) {
-							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-						}
-						else {
-							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-						}
-
-						if ((i + 1) < languageIds.length) {
-							sb.append(WHERE_OR);
-						}
-					}
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(DDMFieldAttributeModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(storageId);
-
-					for (String languageId : languageIds) {
-						if ((languageId != null) && !languageId.isEmpty()) {
-							queryPos.add(languageId);
-						}
-					}
-
-					list = (List<DDMFieldAttribute>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						finderCache.putResult(
-							_finderPathWithPaginationFindByS_L, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByS_L.find(
+				finderCache,
+				new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)},
+				start, end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -910,13 +668,8 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public void removeByS_L(long storageId, String languageId) {
-		for (DDMFieldAttribute ddmFieldAttribute :
-				findByS_L(
-					storageId, languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(ddmFieldAttribute);
-		}
+		_collectionPersistenceFinderByS_L.remove(
+			finderCache, new Object[] {storageId, new String[] {languageId}});
 	}
 
 	/**
@@ -932,63 +685,9 @@ public class DDMFieldAttributePersistenceImpl
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMFieldAttribute.class)) {
 
-			languageId = Objects.toString(languageId, "");
-
-			FinderPath finderPath = _finderPathCountByS_L;
-
-			Object[] finderArgs = new Object[] {storageId, languageId};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-				boolean bindLanguageId = false;
-
-				if (languageId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-				}
-				else {
-					bindLanguageId = true;
-
-					sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(storageId);
-
-					if (bindLanguageId) {
-						queryPos.add(languageId);
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByS_L.count(
+				finderCache,
+				new Object[] {storageId, new String[] {languageId}});
 		}
 	}
 
@@ -1001,93 +700,13 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Override
 	public int countByS_L(long storageId, String[] languageIds) {
-		if (languageIds == null) {
-			languageIds = new String[0];
-		}
-		else if (languageIds.length > 1) {
-			for (int i = 0; i < languageIds.length; i++) {
-				languageIds[i] = Objects.toString(languageIds[i], "");
-			}
-
-			languageIds = ArrayUtil.sortedUnique(languageIds);
-		}
-
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					DDMFieldAttribute.class)) {
 
-			Object[] finderArgs = new Object[] {
-				storageId, StringUtil.merge(languageIds)
-			};
-
-			Long count = (Long)finderCache.getResult(
-				_finderPathWithPaginationCountByS_L, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE);
-
-				sb.append(_FINDER_COLUMN_S_L_STORAGEID_2);
-
-				if (languageIds.length > 0) {
-					sb.append("(");
-
-					for (int i = 0; i < languageIds.length; i++) {
-						String languageId = languageIds[i];
-
-						if (languageId.isEmpty()) {
-							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_3);
-						}
-						else {
-							sb.append(_FINDER_COLUMN_S_L_LANGUAGEID_2);
-						}
-
-						if ((i + 1) < languageIds.length) {
-							sb.append(WHERE_OR);
-						}
-					}
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(storageId);
-
-					for (String languageId : languageIds) {
-						if ((languageId != null) && !languageId.isEmpty()) {
-							queryPos.add(languageId);
-						}
-					}
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(
-						_finderPathWithPaginationCountByS_L, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByS_L.count(
+				finderCache,
+				new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)});
 		}
 	}
 
@@ -1681,12 +1300,12 @@ public class DDMFieldAttributePersistenceImpl
 		_finderPathWithoutPaginationFindByS_AN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_AN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "attributeName"}, true);
+			new String[] {"storageId", "attributeName"}, 0, 2, true, null);
 
 		_finderPathCountByS_AN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_AN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "attributeName"}, false);
+			new String[] {"storageId", "attributeName"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByS_AN = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByS_AN,
@@ -1713,17 +1332,25 @@ public class DDMFieldAttributePersistenceImpl
 		_finderPathWithoutPaginationFindByS_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "languageId"}, true);
+			new String[] {"storageId", "languageId"}, 0, 2, true, null);
 
 		_finderPathCountByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "languageId"}, false);
-
-		_finderPathWithPaginationCountByS_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "languageId"}, false);
+			new String[] {"storageId", "languageId"}, 0, 2, false, null);
+
+		_collectionPersistenceFinderByS_L = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByS_L,
+			_finderPathWithoutPaginationFindByS_L, _finderPathCountByS_L,
+			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
+			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
+			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG, "=",
+				true, true, DDMFieldAttribute::getStorageId),
+			new ArrayableFinderColumn<>(
+				"ddmFieldAttribute.", "languageId", FinderColumn.Type.STRING,
+				"=", false, true, true, DDMFieldAttribute::getLanguageId));
 
 		_finderPathWithPaginationFindByAN_SAV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAN_SAV",
@@ -1737,12 +1364,14 @@ public class DDMFieldAttributePersistenceImpl
 		_finderPathWithoutPaginationFindByAN_SAV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAN_SAV",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"attributeName", "smallAttributeValue"}, true);
+			new String[] {"attributeName", "smallAttributeValue"}, 0, 3, true,
+			null);
 
 		_finderPathCountByAN_SAV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_SAV",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"attributeName", "smallAttributeValue"}, false);
+			new String[] {"attributeName", "smallAttributeValue"}, 0, 3, false,
+			null);
 
 		_collectionPersistenceFinderByAN_SAV =
 			new CollectionPersistenceFinder<>(
@@ -1767,8 +1396,8 @@ public class DDMFieldAttributePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"fieldId", "attributeName", "languageId"}, false,
-			DDMFieldAttribute::getFieldId,
+			new String[] {"fieldId", "attributeName", "languageId"}, 0, 6,
+			false, DDMFieldAttribute::getFieldId,
 			convertNullFunction(DDMFieldAttribute::getAttributeName),
 			convertNullFunction(DDMFieldAttribute::getLanguageId));
 
@@ -1854,4 +1483,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1145172862
+// LIFERAY-SERVICE-BUILDER-HASH:-146000012

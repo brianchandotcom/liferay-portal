@@ -53,7 +53,7 @@ public class JournalFolderModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = journalFolderModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(journalFolderModelImpl, columnNames, original);
+			return _getValue(journalFolderModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class JournalFolderModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(journalFolderModelImpl, columnNames, original);
+			return _getValue(journalFolderModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class JournalFolderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		JournalFolderModelImpl journalFolderModelImpl, String[] columnNames,
+		JournalFolderModelImpl journalFolderModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = journalFolderModelImpl.getColumnOriginalValue(
+				value = journalFolderModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = journalFolderModelImpl.getColumnValue(
-					columnName);
+				value = journalFolderModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -135,4 +140,4 @@ public class JournalFolderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1714534311
+// LIFERAY-SERVICE-BUILDER-HASH:1722289510

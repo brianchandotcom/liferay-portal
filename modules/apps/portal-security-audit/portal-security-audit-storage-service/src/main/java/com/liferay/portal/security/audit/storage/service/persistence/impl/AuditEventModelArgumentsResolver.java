@@ -53,7 +53,7 @@ public class AuditEventModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = auditEventModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(auditEventModelImpl, columnNames, original);
+			return _getValue(auditEventModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class AuditEventModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(auditEventModelImpl, columnNames, original);
+			return _getValue(auditEventModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,26 @@ public class AuditEventModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		AuditEventModelImpl auditEventModelImpl, String[] columnNames,
+		AuditEventModelImpl auditEventModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = auditEventModelImpl.getColumnOriginalValue(
-					columnName);
+				value = auditEventModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = auditEventModelImpl.getColumnValue(columnName);
+				value = auditEventModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class AuditEventModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2115959039
+// LIFERAY-SERVICE-BUILDER-HASH:1905448462

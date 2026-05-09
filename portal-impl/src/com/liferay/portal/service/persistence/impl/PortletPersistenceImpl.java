@@ -514,7 +514,7 @@ public class PortletPersistenceImpl
 		_finderPathFetchByC_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "portletId"}, true,
+			new String[] {"companyId", "portletId"}, 0, 2, true,
 			Portlet::getCompanyId, convertNullFunction(Portlet::getPortletId));
 
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
@@ -562,4 +562,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1634027311
+// LIFERAY-SERVICE-BUILDER-HASH:-2072178406

@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -28,13 +26,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -235,7 +233,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_MCNI_SMCPK;
 	private FinderPath _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
 	private FinderPath _finderPathCountByC_MCNI_SMCPK;
-	private FinderPath _finderPathWithPaginationCountByC_MCNI_SMCPK;
+	private CollectionPersistenceFinder<CTAutoResolutionInfo>
+		_collectionPersistenceFinderByC_MCNI_SMCPK;
 
 	/**
 	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
@@ -327,112 +326,13 @@ public class CTAutoResolutionInfoPersistenceImpl
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
-				finderArgs = new Object[] {
-					ctCollectionId, modelClassNameId, sourceModelClassPK
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_MCNI_SMCPK;
-			finderArgs = new Object[] {
-				ctCollectionId, modelClassNameId, sourceModelClassPK, start,
-				end, orderByComparator
-			};
-		}
-
-		List<CTAutoResolutionInfo> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
-					if ((ctCollectionId !=
-							ctAutoResolutionInfo.getCtCollectionId()) ||
-						(modelClassNameId !=
-							ctAutoResolutionInfo.getModelClassNameId()) ||
-						(sourceModelClassPK !=
-							ctAutoResolutionInfo.getSourceModelClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_MODELCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				queryPos.add(sourceModelClassPK);
-
-				list = (List<CTAutoResolutionInfo>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.find(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				new long[] {sourceModelClassPK}
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -491,15 +391,13 @@ public class CTAutoResolutionInfoPersistenceImpl
 		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
 
-		List<CTAutoResolutionInfo> list = findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK, 0, 1,
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.fetchFirst(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				new long[] {sourceModelClassPK}
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -597,130 +495,13 @@ public class CTAutoResolutionInfoPersistenceImpl
 		OrderByComparator<CTAutoResolutionInfo> orderByComparator,
 		boolean useFinderCache) {
 
-		if (sourceModelClassPKs == null) {
-			sourceModelClassPKs = new long[0];
-		}
-		else if (sourceModelClassPKs.length > 1) {
-			sourceModelClassPKs = ArrayUtil.sortedUnique(sourceModelClassPKs);
-		}
-
-		if (sourceModelClassPKs.length == 1) {
-			return findByC_MCNI_SMCPK(
-				ctCollectionId, modelClassNameId, sourceModelClassPKs[0], start,
-				end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					ctCollectionId, modelClassNameId,
-					StringUtil.merge(sourceModelClassPKs)
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.find(
+			finderCache,
+			new Object[] {
 				ctCollectionId, modelClassNameId,
-				StringUtil.merge(sourceModelClassPKs), start, end,
-				orderByComparator
-			};
-		}
-
-		List<CTAutoResolutionInfo> list = null;
-
-		if (useFinderCache) {
-			list = (List<CTAutoResolutionInfo>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_MCNI_SMCPK, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CTAutoResolutionInfo ctAutoResolutionInfo : list) {
-					if ((ctCollectionId !=
-							ctAutoResolutionInfo.getCtCollectionId()) ||
-						(modelClassNameId !=
-							ctAutoResolutionInfo.getModelClassNameId()) ||
-						!ArrayUtil.contains(
-							sourceModelClassPKs,
-							ctAutoResolutionInfo.getSourceModelClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_MODELCLASSNAMEID_2);
-
-			if (sourceModelClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_7);
-
-				sb.append(StringUtil.merge(sourceModelClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				list = (List<CTAutoResolutionInfo>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_MCNI_SMCPK, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+				ArrayUtil.sortedUnique(sourceModelClassPKs)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -734,13 +515,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 	public void removeByC_MCNI_SMCPK(
 		long ctCollectionId, long modelClassNameId, long sourceModelClassPK) {
 
-		for (CTAutoResolutionInfo ctAutoResolutionInfo :
-				findByC_MCNI_SMCPK(
-					ctCollectionId, modelClassNameId, sourceModelClassPK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(ctAutoResolutionInfo);
-		}
+		_collectionPersistenceFinderByC_MCNI_SMCPK.remove(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				new long[] {sourceModelClassPK}
+			});
 	}
 
 	/**
@@ -755,55 +535,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 	public int countByC_MCNI_SMCPK(
 		long ctCollectionId, long modelClassNameId, long sourceModelClassPK) {
 
-		FinderPath finderPath = _finderPathCountByC_MCNI_SMCPK;
-
-		Object[] finderArgs = new Object[] {
-			ctCollectionId, modelClassNameId, sourceModelClassPK
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_MODELCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				queryPos.add(sourceModelClassPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.count(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				new long[] {sourceModelClassPK}
+			});
 	}
 
 	/**
@@ -819,75 +556,12 @@ public class CTAutoResolutionInfoPersistenceImpl
 		long ctCollectionId, long modelClassNameId,
 		long[] sourceModelClassPKs) {
 
-		if (sourceModelClassPKs == null) {
-			sourceModelClassPKs = new long[0];
-		}
-		else if (sourceModelClassPKs.length > 1) {
-			sourceModelClassPKs = ArrayUtil.sortedUnique(sourceModelClassPKs);
-		}
-
-		Object[] finderArgs = new Object[] {
-			ctCollectionId, modelClassNameId,
-			StringUtil.merge(sourceModelClassPKs)
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_MCNI_SMCPK, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2);
-
-			sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_MODELCLASSNAMEID_2);
-
-			if (sourceModelClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_7);
-
-				sb.append(StringUtil.merge(sourceModelClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(ctCollectionId);
-
-				queryPos.add(modelClassNameId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_MCNI_SMCPK, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_MCNI_SMCPK.count(
+			finderCache,
+			new Object[] {
+				ctCollectionId, modelClassNameId,
+				ArrayUtil.sortedUnique(sourceModelClassPKs)
+			});
 	}
 
 	private static final String _FINDER_COLUMN_C_MCNI_SMCPK_CTCOLLECTIONID_2 =
@@ -899,10 +573,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_2 =
 			"ctAutoResolutionInfo.sourceModelClassPK = ?";
-
-	private static final String
-		_FINDER_COLUMN_C_MCNI_SMCPK_SOURCEMODELCLASSPK_7 =
-			"ctAutoResolutionInfo.sourceModelClassPK IN (";
 
 	public CTAutoResolutionInfoPersistenceImpl() {
 		setModelClass(CTAutoResolutionInfo.class);
@@ -1156,16 +826,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 			true);
 
 		_finderPathCountByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			false);
-
-		_finderPathWithPaginationCountByC_MCNI_SMCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_MCNI_SMCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
@@ -1174,6 +834,28 @@ public class CTAutoResolutionInfoPersistenceImpl
 				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
 			},
 			false);
+
+		_collectionPersistenceFinderByC_MCNI_SMCPK =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_MCNI_SMCPK,
+				_finderPathWithoutPaginationFindByC_MCNI_SMCPK,
+				_finderPathCountByC_MCNI_SMCPK,
+				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
+				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
+				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"ctAutoResolutionInfo.", "ctCollectionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CTAutoResolutionInfo::getCtCollectionId),
+				new FinderColumn<>(
+					"ctAutoResolutionInfo.", "modelClassNameId",
+					FinderColumn.Type.LONG, "=", true, true,
+					CTAutoResolutionInfo::getModelClassNameId),
+				new ArrayableFinderColumn<>(
+					"ctAutoResolutionInfo.", "sourceModelClassPK",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					CTAutoResolutionInfo::getSourceModelClassPK));
 
 		CTAutoResolutionInfoUtil.setPersistence(this);
 	}
@@ -1241,4 +923,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1665662608
+// LIFERAY-SERVICE-BUILDER-HASH:-663968618

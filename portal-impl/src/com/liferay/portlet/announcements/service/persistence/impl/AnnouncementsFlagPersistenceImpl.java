@@ -824,7 +824,7 @@ public class AnnouncementsFlagPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"userId", "entryId", "value"}, false,
+			new String[] {"userId", "entryId", "value"}, 0, 0, false,
 			AnnouncementsFlag::getUserId, AnnouncementsFlag::getEntryId,
 			AnnouncementsFlag::getValue);
 
@@ -874,4 +874,4 @@ public class AnnouncementsFlagPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-899604478
+// LIFERAY-SERVICE-BUILDER-HASH:-634266347

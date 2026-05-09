@@ -52,7 +52,7 @@ public class RatingsEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ratingsEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ratingsEntryModelImpl, columnNames, original);
+			return _getValue(ratingsEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class RatingsEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ratingsEntryModelImpl, columnNames, original);
+			return _getValue(ratingsEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,21 +88,27 @@ public class RatingsEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		RatingsEntryModelImpl ratingsEntryModelImpl, String[] columnNames,
+		RatingsEntryModelImpl ratingsEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ratingsEntryModelImpl.getColumnOriginalValue(
+				value = ratingsEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = ratingsEntryModelImpl.getColumnValue(columnName);
+				value = ratingsEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -112,4 +118,4 @@ public class RatingsEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-280061550
+// LIFERAY-SERVICE-BUILDER-HASH:62736915

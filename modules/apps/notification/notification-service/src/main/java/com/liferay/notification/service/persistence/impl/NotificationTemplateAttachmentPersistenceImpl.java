@@ -583,8 +583,8 @@ public class NotificationTemplateAttachmentPersistenceImpl
 		_finderPathFetchByNTI_OFI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByNTI_OFI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"notificationTemplateId", "objectFieldId"}, false,
-			NotificationTemplateAttachment::getNotificationTemplateId,
+			new String[] {"notificationTemplateId", "objectFieldId"}, 0, 0,
+			false, NotificationTemplateAttachment::getNotificationTemplateId,
 			NotificationTemplateAttachment::getObjectFieldId);
 
 		_uniquePersistenceFinderByNTI_OFI = new UniquePersistenceFinder<>(
@@ -671,4 +671,4 @@ public class NotificationTemplateAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2130671948
+// LIFERAY-SERVICE-BUILDER-HASH:1639873985

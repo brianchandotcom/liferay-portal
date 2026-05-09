@@ -53,7 +53,7 @@ public class RememberMeTokenModelArgumentsResolver
 		long columnBitmask = rememberMeTokenModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(rememberMeTokenModelImpl, columnNames, original);
+			return _getValue(rememberMeTokenModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class RememberMeTokenModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(rememberMeTokenModelImpl, columnNames, original);
+			return _getValue(rememberMeTokenModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class RememberMeTokenModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		RememberMeTokenModelImpl rememberMeTokenModelImpl, String[] columnNames,
-		boolean original) {
+		RememberMeTokenModelImpl rememberMeTokenModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = rememberMeTokenModelImpl.getColumnOriginalValue(
+				value = rememberMeTokenModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = rememberMeTokenModelImpl.getColumnValue(
-					columnName);
+				value = rememberMeTokenModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class RememberMeTokenModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1147539350
+// LIFERAY-SERVICE-BUILDER-HASH:-173153727

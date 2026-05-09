@@ -54,7 +54,7 @@ public class NestedSetsTreeEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				nestedSetsTreeEntryModelImpl, columnNames, original);
+				nestedSetsTreeEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,7 +74,7 @@ public class NestedSetsTreeEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				nestedSetsTreeEntryModelImpl, columnNames, original);
+				nestedSetsTreeEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +92,26 @@ public class NestedSetsTreeEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		NestedSetsTreeEntryModelImpl nestedSetsTreeEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					nestedSetsTreeEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = nestedSetsTreeEntryModelImpl.getColumnValue(
+				value = nestedSetsTreeEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = nestedSetsTreeEntryModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +121,4 @@ public class NestedSetsTreeEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1034775422
+// LIFERAY-SERVICE-BUILDER-HASH:-937983863

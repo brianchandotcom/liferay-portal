@@ -335,8 +335,8 @@ public class CompanyInfoPersistenceImpl
 	public void afterPropertiesSet() {
 		_finderPathFetchByCompanyId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false, CompanyInfo::getCompanyId);
+			new String[] {Long.class.getName()}, new String[] {"companyId"}, 0,
+			0, false, CompanyInfo::getCompanyId);
 
 		_uniquePersistenceFinderByCompanyId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCompanyId, _SQL_SELECT_COMPANYINFO_WHERE,
@@ -378,4 +378,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:755687963
+// LIFERAY-SERVICE-BUILDER-HASH:-1509715950

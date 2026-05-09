@@ -1019,7 +1019,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 		_finderPathFetchByWorkflowInstanceId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByWorkflowInstanceId",
 			new String[] {Long.class.getName()},
-			new String[] {"workflowInstanceId"}, false,
+			new String[] {"workflowInstanceId"}, 0, 0, false,
 			WorkflowInstanceLink::getWorkflowInstanceId);
 
 		_uniquePersistenceFinderByWorkflowInstanceId =
@@ -1190,4 +1190,4 @@ public class WorkflowInstanceLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:25688494
+// LIFERAY-SERVICE-BUILDER-HASH:-1859962129

@@ -55,7 +55,7 @@ public class CTAutoResolutionInfoModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				ctAutoResolutionInfoModelImpl, columnNames, original);
+				ctAutoResolutionInfoModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class CTAutoResolutionInfoModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				ctAutoResolutionInfoModelImpl, columnNames, original);
+				ctAutoResolutionInfoModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class CTAutoResolutionInfoModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CTAutoResolutionInfoModelImpl ctAutoResolutionInfoModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					ctAutoResolutionInfoModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = ctAutoResolutionInfoModelImpl.getColumnValue(
+				value = ctAutoResolutionInfoModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = ctAutoResolutionInfoModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class CTAutoResolutionInfoModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1305588434
+// LIFERAY-SERVICE-BUILDER-HASH:520129253

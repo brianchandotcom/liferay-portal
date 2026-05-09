@@ -1274,13 +1274,13 @@ public class ModulePersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1303,12 +1303,12 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1360,12 +1360,12 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByBundleSymbolicName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByBundleSymbolicName", new String[] {String.class.getName()},
-			new String[] {"bundleSymbolicName"}, true);
+			new String[] {"bundleSymbolicName"}, 0, 1, true, null);
 
 		_finderPathCountByBundleSymbolicName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByBundleSymbolicName", new String[] {String.class.getName()},
-			new String[] {"bundleSymbolicName"}, false);
+			new String[] {"bundleSymbolicName"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByBundleSymbolicName =
 			new CollectionPersistenceFinder<>(
@@ -1389,12 +1389,12 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByContextName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContextName",
 			new String[] {String.class.getName()}, new String[] {"contextName"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountByContextName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContextName",
 			new String[] {String.class.getName()}, new String[] {"contextName"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderByContextName =
 			new CollectionPersistenceFinder<>(
@@ -1419,12 +1419,12 @@ public class ModulePersistenceImpl
 		_finderPathWithoutPaginationFindByA_CN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_CN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"appId", "contextName"}, true);
+			new String[] {"appId", "contextName"}, 0, 2, true, null);
 
 		_finderPathCountByA_CN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_CN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"appId", "contextName"}, false);
+			new String[] {"appId", "contextName"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByA_CN = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByA_CN,
@@ -1444,7 +1444,7 @@ public class ModulePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"appId", "bundleSymbolicName", "bundleVersion"},
+			new String[] {"appId", "bundleSymbolicName", "bundleVersion"}, 0, 6,
 			false, Module::getAppId,
 			convertNullFunction(Module::getBundleSymbolicName),
 			convertNullFunction(Module::getBundleVersion));
@@ -1530,4 +1530,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:196483448
+// LIFERAY-SERVICE-BUILDER-HASH:1168404651

@@ -1224,12 +1224,12 @@ public class AssetCategoryPropertyPersistenceImpl
 		_finderPathWithoutPaginationFindByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, true);
+			new String[] {"companyId", "key_"}, 0, 2, true, null);
 
 		_finderPathCountByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, false);
+			new String[] {"companyId", "key_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_K = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_K,
@@ -1248,7 +1248,7 @@ public class AssetCategoryPropertyPersistenceImpl
 		_finderPathFetchByCA_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"categoryId", "key_"}, false,
+			new String[] {"categoryId", "key_"}, 0, 2, false,
 			AssetCategoryProperty::getCategoryId,
 			convertNullFunction(AssetCategoryProperty::getKey));
 
@@ -1265,7 +1265,7 @@ public class AssetCategoryPropertyPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(
 				AssetCategoryProperty::getExternalReferenceCode),
 			AssetCategoryProperty::getCompanyId);
@@ -1353,4 +1353,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:656202417
+// LIFERAY-SERVICE-BUILDER-HASH:-846447957

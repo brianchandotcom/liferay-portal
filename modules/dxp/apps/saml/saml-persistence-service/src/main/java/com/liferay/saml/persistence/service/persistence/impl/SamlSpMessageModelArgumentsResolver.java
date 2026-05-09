@@ -53,7 +53,7 @@ public class SamlSpMessageModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = samlSpMessageModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(samlSpMessageModelImpl, columnNames, original);
+			return _getValue(samlSpMessageModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class SamlSpMessageModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(samlSpMessageModelImpl, columnNames, original);
+			return _getValue(samlSpMessageModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class SamlSpMessageModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		SamlSpMessageModelImpl samlSpMessageModelImpl, String[] columnNames,
+		SamlSpMessageModelImpl samlSpMessageModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = samlSpMessageModelImpl.getColumnOriginalValue(
+				value = samlSpMessageModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = samlSpMessageModelImpl.getColumnValue(
-					columnName);
+				value = samlSpMessageModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class SamlSpMessageModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:487610420
+// LIFERAY-SERVICE-BUILDER-HASH:-1718498237

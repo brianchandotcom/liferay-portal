@@ -53,7 +53,7 @@ public class ERCCompanyEntryModelArgumentsResolver
 		long columnBitmask = ercCompanyEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ercCompanyEntryModelImpl, columnNames, original);
+			return _getValue(ercCompanyEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class ERCCompanyEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ercCompanyEntryModelImpl, columnNames, original);
+			return _getValue(ercCompanyEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class ERCCompanyEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		ERCCompanyEntryModelImpl ercCompanyEntryModelImpl, String[] columnNames,
-		boolean original) {
+		ERCCompanyEntryModelImpl ercCompanyEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ercCompanyEntryModelImpl.getColumnOriginalValue(
+				value = ercCompanyEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = ercCompanyEntryModelImpl.getColumnValue(
-					columnName);
+				value = ercCompanyEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class ERCCompanyEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-468977730
+// LIFERAY-SERVICE-BUILDER-HASH:887455813

@@ -1162,13 +1162,13 @@ public class SiteFriendlyURLPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1182,7 +1182,7 @@ public class SiteFriendlyURLPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(SiteFriendlyURL::getUuid),
 			SiteFriendlyURL::getGroupId);
 
@@ -1208,12 +1208,12 @@ public class SiteFriendlyURLPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1264,7 +1264,7 @@ public class SiteFriendlyURLPersistenceImpl
 		_finderPathFetchByC_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, false,
+			new String[] {"companyId", "friendlyURL"}, 0, 2, false,
 			SiteFriendlyURL::getCompanyId,
 			convertNullFunction(SiteFriendlyURL::getFriendlyURL));
 
@@ -1283,7 +1283,7 @@ public class SiteFriendlyURLPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "companyId", "languageId"}, false,
+			new String[] {"groupId", "companyId", "languageId"}, 0, 4, false,
 			SiteFriendlyURL::getGroupId, SiteFriendlyURL::getCompanyId,
 			convertNullFunction(SiteFriendlyURL::getLanguageId));
 
@@ -1306,8 +1306,8 @@ public class SiteFriendlyURLPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "friendlyURL", "languageId"}, false,
-			SiteFriendlyURL::getCompanyId,
+			new String[] {"companyId", "friendlyURL", "languageId"}, 0, 6,
+			false, SiteFriendlyURL::getCompanyId,
 			convertNullFunction(SiteFriendlyURL::getFriendlyURL),
 			convertNullFunction(SiteFriendlyURL::getLanguageId));
 
@@ -1393,4 +1393,4 @@ public class SiteFriendlyURLPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-582808926
+// LIFERAY-SERVICE-BUILDER-HASH:1567546721

@@ -53,7 +53,7 @@ public class CTSContentModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ctsContentModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ctsContentModelImpl, columnNames, original);
+			return _getValue(ctsContentModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class CTSContentModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ctsContentModelImpl, columnNames, original);
+			return _getValue(ctsContentModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,26 @@ public class CTSContentModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CTSContentModelImpl ctsContentModelImpl, String[] columnNames,
+		CTSContentModelImpl ctsContentModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ctsContentModelImpl.getColumnOriginalValue(
-					columnName);
+				value = ctsContentModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = ctsContentModelImpl.getColumnValue(columnName);
+				value = ctsContentModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class CTSContentModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1938815145
+// LIFERAY-SERVICE-BUILDER-HASH:-1658812116

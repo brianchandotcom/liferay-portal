@@ -52,7 +52,7 @@ public class LockModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = lockModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(lockModelImpl, columnNames, original);
+			return _getValue(lockModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class LockModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(lockModelImpl, columnNames, original);
+			return _getValue(lockModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,19 +88,25 @@ public class LockModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		LockModelImpl lockModelImpl, String[] columnNames, boolean original) {
+		LockModelImpl lockModelImpl, FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = lockModelImpl.getColumnOriginalValue(columnName);
+				value = lockModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = lockModelImpl.getColumnValue(columnName);
+				value = lockModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -110,4 +116,4 @@ public class LockModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:244809993
+// LIFERAY-SERVICE-BUILDER-HASH:-813783154

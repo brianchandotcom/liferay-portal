@@ -359,8 +359,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 	public void activate() {
 		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
-			MFAEmailOTPEntry::getUserId);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, 0, 0,
+			false, MFAEmailOTPEntry::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId, _SQL_SELECT_MFAEMAILOTPENTRY_WHERE,
@@ -432,4 +432,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528380960
+// LIFERAY-SERVICE-BUILDER-HASH:-2136480457

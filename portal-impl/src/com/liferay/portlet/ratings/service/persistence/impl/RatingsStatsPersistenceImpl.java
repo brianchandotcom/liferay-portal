@@ -957,11 +957,11 @@ public class RatingsStatsPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false,
+			new String[] {"classNameId", "classPK"}, 0, 0, false,
 			RatingsStats::getClassNameId, RatingsStats::getClassPK);
 
 		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"classNameId", "classPK"}, false);
 
@@ -1003,4 +1003,4 @@ public class RatingsStatsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:486878643
+// LIFERAY-SERVICE-BUILDER-HASH:1161644949

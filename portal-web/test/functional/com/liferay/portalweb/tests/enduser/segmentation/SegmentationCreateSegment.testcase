@@ -1094,7 +1094,7 @@ definition {
 
 	@description = "LPS-130917 Given Instance Settings > Segments When the user clicks on Analytics Cloud Segments tab Then help text of Anonymous User Segments Cache Expiration Time will be: Define the time (in seconds) before clearing the Anonymous Segment cache."
 	@priority = 3
-	test AnonymousUserSegmentsCacheExpirationCheckText {
+	test CheckAnalyticsCloudSegmentsHelpTexts {
 		task ("Go to Instance Settings > Segments") {
 			PortalSettings.openInstanceSettingsAdmin();
 

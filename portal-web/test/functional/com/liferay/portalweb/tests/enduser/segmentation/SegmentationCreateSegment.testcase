@@ -1301,7 +1301,7 @@ definition {
 
 	@description = "LPS-135495 Validate if, Input title values can only be changed in edit mode."
 	@priority = 3
-	test CheckEditableTranslatedInputTitle {
+	test CheckTranslatedSegment {
 		task ("Create a segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Screen Name",

@@ -140,6 +140,97 @@ components:
                     readOnly: true
                     type: string
             type: object
+        PageMetric:
+            description:
+                "Analytics metrics for a single tracked page over the selected date range. Use `getSitePagesPage` to
+                list these metrics for a site."
+            properties:
+                assetId:
+                    description:
+                        "The canonical URL of the page."
+                    readOnly: true
+                    type: string
+                assetTitle:
+                    description:
+                        "Display title of the page."
+                    readOnly: true
+                    type: string
+                avgTimeOnPage:
+                    description:
+                        "Average time on page in seconds across all sessions in the date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                bounceRate:
+                    description:
+                        "Fraction of sessions that landed on this page and exited without further interaction. Expressed
+                        as a value between 0 to 1."
+                    format: double
+                    readOnly: true
+                    type: number
+                dataSourceId:
+                    description:
+                        "Identifier of the data source providing this page's analytics events."
+                    readOnly: true
+                    type: string
+                directAccess:
+                    description:
+                        "Total count of sessions where this page was the entry point with no referrer over the selected
+                        time range."
+                    format: double
+                    readOnly: true
+                    type: number
+                entrances:
+                    description:
+                        "Total count of sessions that started on this page over the selected time range."
+                    format: double
+                    readOnly: true
+                    type: number
+                exitRate:
+                    description:
+                        "Fraction of sessions on which this page was the last page viewed before exit. Expressed as a
+                        value between 0 to 1."
+                    format: double
+                    readOnly: true
+                    type: number
+                indirectAccess:
+                    description:
+                        "Visit count where this page was reached via a referrer (search engine, link, etc.)."
+                    format: double
+                    readOnly: true
+                    type: number
+                urls:
+                    description:
+                        "List of distinct URLs that resolve to this page."
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                views:
+                    description:
+                        "Total page view count over the selected date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                viewsTrendPercentage:
+                    description:
+                        "Percentage change in views compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                visitors:
+                    description:
+                        "Distinct visitor count over the selected date range."
+                    format: double
+                    readOnly: true
+                    type: number
+                visitorsTrendPercentage:
+                    description:
+                        "Percentage change in distinct visitors compared to the previous date range."
+                    format: double
+                    readOnly: true
+                    type: number
+            type: object
 info:
     license:
         name: Apache 2.0
@@ -322,3 +413,95 @@ paths:
                                     $ref: "#/components/schemas/Event"
                                 type: array
             tags: ["Event"]
+    "/workspace/{groupId}/pages":
+        get:
+            description:
+                "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
+                optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
+                visitor, bounce, exit, and access-path metrics for each page. Use this for 'top pages' style queries."
+            operationId: getSitePagesPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    description:
+                        "Optional channel ID to scope results to a single channel."
+                    name: channelId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Optional data source ID to scope results to a single data source."
+                    name: dataSourceId
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Page number."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeStart as a rangeKey
+                        alternative."
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
+                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
+                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
+                        are ignored."
+                    name: rangeKey
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeStart
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Free-text keyword search across page titles and URLs."
+                    name: search
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Sort expression `column:asc|desc`. Defaults to `views:desc`. Common columns: views, visitors,
+                        bounceRate, avgTimeOnPage."
+                    example: views:desc
+                    name: sort
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageMetric"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/PageMetric"
+                                type: array
+            tags: ["PageMetric"]

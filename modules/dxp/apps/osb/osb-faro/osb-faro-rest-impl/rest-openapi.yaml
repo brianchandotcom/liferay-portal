@@ -70,6 +70,76 @@ components:
                     readOnly: true
                     type: number
             type: object
+        Event:
+            description:
+                "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each
+                event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page
+                metadata. Use `getSiteChannelEventsPage` to retrieve a list of analytics events."
+            properties:
+                applicationId:
+                    description:
+                        "Identifier of the application that emitted the event."
+                    readOnly: true
+                    type: string
+                assetTitle:
+                    description:
+                        "Title of the asset associated with the event."
+                    readOnly: true
+                    type: string
+                attributes:
+                    additionalProperties:
+                        type: string
+                    description:
+                        "Free-form event properties as a key-value map."
+                    readOnly: true
+                    type: object
+                canonicalUrl:
+                    description:
+                        "Canonical URL of the page where the event was emitted."
+                    readOnly: true
+                    type: string
+                createDate:
+                    description:
+                        "Timestamp of when the event was recorded."
+                    format: date-time
+                    readOnly: true
+                    type: string
+                individualId:
+                    description:
+                        "Identifier of known individuals. Null for anonymous individuals."
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.)."
+                    readOnly: true
+                    type: string
+                pageDescription:
+                    description:
+                        "Meta description of the page that emitted the event."
+                    readOnly: true
+                    type: string
+                pageKeywords:
+                    description:
+                        "Meta keywords of the page that emitted the event. Comma-separated when there are multiple."
+                    readOnly: true
+                    type: string
+                pageTitle:
+                    description:
+                        "Title of the page that event occurred on."
+                    readOnly: true
+                    type: string
+                referrer:
+                    description:
+                        "Referring URL the visitor arrived from."
+                    readOnly: true
+                    type: string
+                url:
+                    description:
+                        "Full URL of the page where the event was emitted."
+                    readOnly: true
+                    type: string
+            type: object
 info:
     license:
         name: Apache 2.0
@@ -167,3 +237,88 @@ paths:
                                     $ref: "#/components/schemas/AssetSummaryMetric"
                                 type: array
             tags: ["AssetSummaryMetric"]
+    "/workspace/{groupId}/channels/{channelId}/events":
+        get:
+            description:
+                "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a
+                date range. For aggregated metrics across events, prefer `getSiteAssetSummariesPage` or
+                `getSitePagesPage`."
+            operationId: getSiteChannelEventsPage
+            parameters:
+                -   in: path
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace."
+                    name: groupId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    description:
+                        "Identifier of the channel whose events should be listed."
+                    name: channelId
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Include events from anonymous individuals if set to true."
+                    name: includeAnonymousUsers
+                    schema:
+                        type: boolean
+                -   in: query
+                    description:
+                        "Page number (starts at 1)."
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Page size."
+                    name: pageSize
+                    schema:
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeEnd
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
+                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
+                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
+                        are ignored."
+                    name: rangeKey
+                    schema:
+                        format: int32
+                        type: integer
+                -   in: query
+                    description:
+                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
+                        alternative."
+                    name: rangeStart
+                    schema:
+                        type: string
+                -   in: query
+                    description:
+                        "Free-text keyword search across asset titles. Empty or null returns all matching assets."
+                    name: search
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Event"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Event"
+                                type: array
+            tags: ["Event"]

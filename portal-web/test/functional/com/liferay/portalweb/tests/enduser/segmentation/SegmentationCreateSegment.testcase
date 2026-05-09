@@ -1109,6 +1109,12 @@ definition {
 				locator1 = "FormFields#HELP_TEXT",
 				value1 = "Define the time (in seconds) before clearing the Anonymous Segment cache.");
 		}
+
+		task ("Assert the Interest Terms cache help text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
+		}
 	}
 
 	@description = "Test Automation for LPS-92366: Segment names with script tags cause them to no longer be accessible"
@@ -1408,25 +1414,6 @@ definition {
 			AssertElementPresent(
 				key_rowEntry = "Original Segment",
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
-	}
-
-	@description = "LPS-130917 Given Instance Settings > Segments When the user clicks on Analytics Cloud Segments tab Then help text of Interest Terms Cache Expiration Time will be: Define the time (in seconds) before clearing the Interest Terms cache."
-	@priority = 3
-	test InterestTermsCacheCacheExpirationCheckText {
-		task ("Go to Instance Settings > Segments") {
-			PortalSettings.openInstanceSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Analytics Cloud Segments",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Assert the text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
 		}
 	}
 

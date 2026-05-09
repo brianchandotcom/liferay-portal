@@ -133,7 +133,9 @@ export async function dragAndDropCriteriaItem({
 		target = page.locator('.display-value').getByText(nestedSegmentField);
 	}
 	else {
-		target = page.locator('div.drop-zone-target').last();
+		target = page
+			.locator('.empty-drop-zone-target, div.drop-zone-target')
+			.last();
 	}
 
 	return await source.dragTo(target);

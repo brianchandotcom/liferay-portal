@@ -218,7 +218,11 @@ test('LPD-29088 Assert Publication Overview panel is visible', async ({
 	await page.goto(`/group/guest${PORTLET_URLS.tagsAdmin}`);
 	await page.getByRole('link', {name: 'Add Tag'}).click();
 	await page.getByPlaceholder('Name').fill(getRandomString());
-	await page.getByRole('button', {name: 'Save'}).click();
+
+	await Promise.all([
+		page.waitForLoadState('load'),
+		page.getByRole('button', {name: 'Save'}).click(),
+	]);
 
 	await apiHelpers.headlessDelivery.postMessageBoardThread({
 		articleBody: getRandomString(),

@@ -1212,16 +1212,16 @@ public class DBTest {
 	private String _getSlowQueryFragment() {
 		DBType dbType = db.getDBType();
 
+		if (dbType == DBType.DB2) {
+			return "select max(n) from t";
+		}
+
 		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 			return "sleep(2)";
 		}
 
 		if (dbType == DBType.SQLSERVER) {
 			return "waitfor delay";
-		}
-
-		if (dbType == DBType.DB2) {
-			return "select max(n) from t";
 		}
 
 		throw new UnsupportedOperationException(
@@ -1231,17 +1231,17 @@ public class DBTest {
 	private String _getSlowQuerySQL() {
 		DBType dbType = db.getDBType();
 
+		if (dbType == DBType.DB2) {
+			return "with t(n) as (values 1 union all select n + 1 from t " +
+				"where n < 5000000) select max(n) from t";
+		}
+
 		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
 			return "select sleep(2)";
 		}
 
 		if (dbType == DBType.SQLSERVER) {
 			return "waitfor delay '00:00:02'";
-		}
-
-		if (dbType == DBType.DB2) {
-			return "with t(n) as (values 1 union all select n + 1 from t " +
-				"where n < 5000000) select max(n) from t";
 		}
 
 		throw new UnsupportedOperationException(

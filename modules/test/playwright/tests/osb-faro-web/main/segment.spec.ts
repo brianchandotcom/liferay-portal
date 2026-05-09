@@ -39,6 +39,7 @@ import {
 	addNestedSegmentField,
 	addSegmentField,
 	addStaticMember,
+	createBatchSegment,
 	createDynamicSegment,
 	createStaticSegment,
 	editCriteriaAttributeValue,
@@ -128,11 +129,11 @@ test(
 			projectID: project.groupId,
 		});
 
-		await createDynamicSegment(page);
+		await createBatchSegment(page);
 
 		await test.step('Add email criteria and fill in', async () => {
 			await addSegmentField({
-				criterionName: 'email',
+				criterionName: 'Email Address',
 				criterionType: 'Individual Attributes',
 				page,
 			});

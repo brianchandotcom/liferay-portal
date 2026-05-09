@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {SegmentConditions} from './selectors';
 import {searchByTerm} from './utils';
 
@@ -70,6 +71,16 @@ export async function addStaticMember({
 	}
 
 	await page.getByRole('button', {exact: true, name: 'Add'}).click();
+}
+
+export async function createBatchSegment(page: Page) {
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Batch'}),
+		trigger: page
+			.getByRole('button', {name: 'Menu'})
+			.filter({hasText: 'New Segment'}),
+	});
 }
 
 export async function createDynamicSegment(page: Page) {

@@ -1394,12 +1394,18 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private boolean _isDotGitDirArchiveRequired() {
+		String jobName = System.getenv("JOB_NAME");
+
+		if (JenkinsResultsParserUtil.isTopLevelJobName(jobName)) {
+			return true;
+		}
+
 		try {
 			return Boolean.parseBoolean(
 				JenkinsResultsParserUtil.getBuildProperty(
 					"git.archive.dot.git.dir.required", getDirectoryName(),
 					System.getenv("CI_TEST_SUITE"), System.getenv("DIST_TYPE"),
-					System.getenv("JOB_NAME")));
+					jobName));
 		}
 		catch (IOException ioException) {
 			return false;

@@ -1475,7 +1475,7 @@ definition {
 
 	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of this section will be displayed."
 	@priority = 3
-	test ValidatePropertyDisplayedInSection {
+	test ValidatePropertyVisibilityBySection {
 		task ("Click on USER field type and asser if its properties are displayed.") {
 			LexiconEntry.gotoAdd();
 

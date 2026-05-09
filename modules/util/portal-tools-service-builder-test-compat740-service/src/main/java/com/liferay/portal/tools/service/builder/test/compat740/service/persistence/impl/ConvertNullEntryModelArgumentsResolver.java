@@ -54,7 +54,7 @@ public class ConvertNullEntryModelArgumentsResolver
 		long columnBitmask = convertNullEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(convertNullEntryModelImpl, columnNames, original);
+			return _getValue(convertNullEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class ConvertNullEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(convertNullEntryModelImpl, columnNames, original);
+			return _getValue(convertNullEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,21 +91,26 @@ public class ConvertNullEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ConvertNullEntryModelImpl convertNullEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = convertNullEntryModelImpl.getColumnOriginalValue(
+				value = convertNullEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = convertNullEntryModelImpl.getColumnValue(
-					columnName);
+				value = convertNullEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class ConvertNullEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1454813267
+// LIFERAY-SERVICE-BUILDER-HASH:385509924

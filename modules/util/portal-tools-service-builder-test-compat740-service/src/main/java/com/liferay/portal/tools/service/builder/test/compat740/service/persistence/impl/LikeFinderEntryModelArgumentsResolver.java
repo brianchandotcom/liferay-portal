@@ -54,7 +54,7 @@ public class LikeFinderEntryModelArgumentsResolver
 		long columnBitmask = likeFinderEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(likeFinderEntryModelImpl, columnNames, original);
+			return _getValue(likeFinderEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class LikeFinderEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(likeFinderEntryModelImpl, columnNames, original);
+			return _getValue(likeFinderEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -90,22 +90,27 @@ public class LikeFinderEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		LikeFinderEntryModelImpl likeFinderEntryModelImpl, String[] columnNames,
-		boolean original) {
+		LikeFinderEntryModelImpl likeFinderEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = likeFinderEntryModelImpl.getColumnOriginalValue(
+				value = likeFinderEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = likeFinderEntryModelImpl.getColumnValue(
-					columnName);
+				value = likeFinderEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class LikeFinderEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1378088387
+// LIFERAY-SERVICE-BUILDER-HASH:-909461460

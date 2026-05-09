@@ -20,7 +20,7 @@ public class FinderPathTest {
 		FinderPath finderPath = new FinderPath(
 			"TestImpl.List2", "findByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, true, null);
+			new String[] {"groupId", "name"}, 0, 0, true, null);
 
 		Assert.assertArrayEquals(
 			"null argsExtractorFunction returns empty Object[]", new Object[0],
@@ -28,15 +28,30 @@ public class FinderPathTest {
 	}
 
 	@Test
-	public void testNormalizeArgumentCoercesNullForCaseInsensitiveString() {
+	public void testNormalizeArgumentCoercesNullForCaseInsensitiveConvertNullString() {
 		FinderPath finderPath = new FinderPath(
 			"TestImpl.List2", "findByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0b10, true, null);
+			new String[] {"groupId", "name"}, 0b10, 0b10, true, null);
 
 		Assert.assertEquals(
-			"caseInsensitive on null returns \"\"", "",
+			"caseInsensitive + convertNull on null returns \"\"", "",
 			finderPath.normalizeArgument(1, null));
+	}
+
+	@Test
+	public void testNormalizeArgumentCoercesNullForConvertNullString() {
+		FinderPath finderPath = new FinderPath(
+			"TestImpl.List2", "findByC_EA",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "emailAddress"}, 0, 0b10, true, null);
+
+		Assert.assertEquals(
+			"convertNull on null returns \"\"", "",
+			finderPath.normalizeArgument(1, null));
+		Assert.assertEquals(
+			"convertNull on non-null preserves case", "Alice@example.com",
+			finderPath.normalizeArgument(1, "Alice@example.com"));
 	}
 
 	@Test
@@ -56,7 +71,7 @@ public class FinderPathTest {
 		FinderPath finderPath = new FinderPath(
 			"TestImpl.List2", "findByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0b10, true, null);
+			new String[] {"groupId", "name"}, 0b10, 0, true, null);
 
 		Assert.assertEquals(
 			"non-flagged Long passes through", Long.valueOf(123L),

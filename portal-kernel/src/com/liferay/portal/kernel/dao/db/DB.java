@@ -106,6 +106,13 @@ public interface DB {
 		return Collections.emptyList();
 	}
 
+	public default List<QueryInfo> getLongRunningQueryInfos(
+			Connection connection, long threshold)
+		throws SQLException {
+
+		return Collections.emptyList();
+	}
+
 	public int getMajorVersion();
 
 	public int getMinorVersion();

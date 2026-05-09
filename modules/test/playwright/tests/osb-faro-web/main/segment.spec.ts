@@ -149,17 +149,12 @@ test(
 				page,
 			});
 
-			await page.waitForTimeout(3000);
+			const dropdownItems = page.locator(
+				'.dropdown-menu.dropdown-menu-select.show .dropdown-item'
+			);
 
-			const dropdownItems = await page
-				.locator(
-					'.dropdown-menu.dropdown-menu-select.show .dropdown-item'
-				)
-				.all();
-
-			expect(dropdownItems.length).toBe(1);
-
-			expect(await dropdownItems[0].textContent()).toBe(
+			await expect(dropdownItems).toHaveCount(1);
+			await expect(dropdownItems).toHaveText(
 				`${individualName}@liferay.com`
 			);
 		});

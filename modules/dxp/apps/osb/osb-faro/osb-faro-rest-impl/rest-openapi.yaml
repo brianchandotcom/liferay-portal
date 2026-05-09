@@ -232,6 +232,10 @@ components:
                     type: number
             type: object
 info:
+    description:
+        "Read-only headless REST API for Liferay Analytics Cloud. Exposes events, pages, and asset-summary metrics for
+        use as MCP tools and external integrations. All endpoints are scoped to a provisioned Analytics Cloud
+        workspace."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html

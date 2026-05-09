@@ -53,7 +53,7 @@ public class PortalPreferencesModelArgumentsResolver
 		long columnBitmask = portalPreferencesModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(portalPreferencesModelImpl, columnNames, original);
+			return _getValue(portalPreferencesModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class PortalPreferencesModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(portalPreferencesModelImpl, columnNames, original);
+			return _getValue(portalPreferencesModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -90,22 +90,26 @@ public class PortalPreferencesModelArgumentsResolver
 
 	private static Object[] _getValue(
 		PortalPreferencesModelImpl portalPreferencesModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					portalPreferencesModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = portalPreferencesModelImpl.getColumnValue(
+				value = portalPreferencesModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = portalPreferencesModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +119,4 @@ public class PortalPreferencesModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-315965916
+// LIFERAY-SERVICE-BUILDER-HASH:1363205999

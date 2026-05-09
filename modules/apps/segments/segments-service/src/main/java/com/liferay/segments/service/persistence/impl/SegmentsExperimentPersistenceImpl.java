@@ -1576,13 +1576,13 @@ public class SegmentsExperimentPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1597,7 +1597,7 @@ public class SegmentsExperimentPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(SegmentsExperiment::getUuid),
 			SegmentsExperiment::getGroupId);
 
@@ -1623,12 +1623,12 @@ public class SegmentsExperimentPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1689,13 +1689,13 @@ public class SegmentsExperimentPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findBySegmentsExperimentKey",
 				new String[] {String.class.getName()},
-				new String[] {"segmentsExperimentKey"}, true);
+				new String[] {"segmentsExperimentKey"}, 0, 1, true, null);
 
 		_finderPathCountBySegmentsExperimentKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countBySegmentsExperimentKey",
 			new String[] {String.class.getName()},
-			new String[] {"segmentsExperimentKey"}, false);
+			new String[] {"segmentsExperimentKey"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderBySegmentsExperimentKey =
 			new CollectionPersistenceFinder<>(
@@ -1714,7 +1714,7 @@ public class SegmentsExperimentPersistenceImpl
 		_finderPathFetchByG_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "segmentsExperimentKey"}, false,
+			new String[] {"groupId", "segmentsExperimentKey"}, 0, 2, false,
 			SegmentsExperiment::getGroupId,
 			convertNullFunction(SegmentsExperiment::getSegmentsExperimentKey));
 
@@ -1734,8 +1734,8 @@ public class SegmentsExperimentPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "segmentsExperienceId", "plid"}, false,
-			SegmentsExperiment::getGroupId,
+			new String[] {"groupId", "segmentsExperienceId", "plid"}, 0, 0,
+			false, SegmentsExperiment::getGroupId,
 			SegmentsExperiment::getSegmentsExperienceId,
 			SegmentsExperiment::getPlid);
 
@@ -1848,4 +1848,4 @@ public class SegmentsExperimentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-599607075
+// LIFERAY-SERVICE-BUILDER-HASH:320297836

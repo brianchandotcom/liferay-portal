@@ -52,7 +52,7 @@ public class ManyColumnsEntryModelArgumentsResolver
 		if (!checkColumn ||
 			_hasModifiedColumns(manyColumnsEntryModelImpl, columnNames)) {
 
-			return _getValue(manyColumnsEntryModelImpl, columnNames, original);
+			return _getValue(manyColumnsEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -70,21 +70,26 @@ public class ManyColumnsEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ManyColumnsEntryModelImpl manyColumnsEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = manyColumnsEntryModelImpl.getColumnOriginalValue(
+				value = manyColumnsEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = manyColumnsEntryModelImpl.getColumnValue(
-					columnName);
+				value = manyColumnsEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -112,4 +117,4 @@ public class ManyColumnsEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1301015687
+// LIFERAY-SERVICE-BUILDER-HASH:-1004683445

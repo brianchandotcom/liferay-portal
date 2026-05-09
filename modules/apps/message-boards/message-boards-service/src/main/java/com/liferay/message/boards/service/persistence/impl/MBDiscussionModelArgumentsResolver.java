@@ -53,7 +53,7 @@ public class MBDiscussionModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = mbDiscussionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(mbDiscussionModelImpl, columnNames, original);
+			return _getValue(mbDiscussionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class MBDiscussionModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(mbDiscussionModelImpl, columnNames, original);
+			return _getValue(mbDiscussionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,27 @@ public class MBDiscussionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		MBDiscussionModelImpl mbDiscussionModelImpl, String[] columnNames,
+		MBDiscussionModelImpl mbDiscussionModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = mbDiscussionModelImpl.getColumnOriginalValue(
+				value = mbDiscussionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = mbDiscussionModelImpl.getColumnValue(columnName);
+				value = mbDiscussionModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +119,4 @@ public class MBDiscussionModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1710397885
+// LIFERAY-SERVICE-BUILDER-HASH:811049344

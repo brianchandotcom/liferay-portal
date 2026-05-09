@@ -55,7 +55,7 @@ public class ObjectViewSortColumnModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				objectViewSortColumnModelImpl, columnNames, original);
+				objectViewSortColumnModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class ObjectViewSortColumnModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				objectViewSortColumnModelImpl, columnNames, original);
+				objectViewSortColumnModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class ObjectViewSortColumnModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ObjectViewSortColumnModelImpl objectViewSortColumnModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					objectViewSortColumnModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = objectViewSortColumnModelImpl.getColumnValue(
+				value = objectViewSortColumnModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = objectViewSortColumnModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class ObjectViewSortColumnModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-735676617
+// LIFERAY-SERVICE-BUILDER-HASH:2041612168

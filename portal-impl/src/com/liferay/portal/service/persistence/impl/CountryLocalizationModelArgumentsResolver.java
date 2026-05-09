@@ -54,7 +54,7 @@ public class CountryLocalizationModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				countryLocalizationModelImpl, columnNames, original);
+				countryLocalizationModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,7 +74,7 @@ public class CountryLocalizationModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				countryLocalizationModelImpl, columnNames, original);
+				countryLocalizationModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +92,26 @@ public class CountryLocalizationModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CountryLocalizationModelImpl countryLocalizationModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					countryLocalizationModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = countryLocalizationModelImpl.getColumnValue(
+				value = countryLocalizationModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = countryLocalizationModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +121,4 @@ public class CountryLocalizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1020982142
+// LIFERAY-SERVICE-BUILDER-HASH:-1641569259

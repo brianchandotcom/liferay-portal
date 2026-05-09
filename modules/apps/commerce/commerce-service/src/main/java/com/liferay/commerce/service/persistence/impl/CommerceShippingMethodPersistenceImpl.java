@@ -770,7 +770,7 @@ public class CommerceShippingMethodPersistenceImpl
 		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, false,
+			new String[] {"groupId", "engineKey"}, 0, 2, false,
 			CommerceShippingMethod::getGroupId,
 			convertNullFunction(CommerceShippingMethod::getEngineKey));
 
@@ -854,4 +854,4 @@ public class CommerceShippingMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1525228051
+// LIFERAY-SERVICE-BUILDER-HASH:847632449

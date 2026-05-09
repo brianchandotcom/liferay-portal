@@ -54,7 +54,7 @@ public class MFAEmailOTPEntryModelArgumentsResolver
 		long columnBitmask = mfaEmailOTPEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(mfaEmailOTPEntryModelImpl, columnNames, original);
+			return _getValue(mfaEmailOTPEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class MFAEmailOTPEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(mfaEmailOTPEntryModelImpl, columnNames, original);
+			return _getValue(mfaEmailOTPEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,21 +91,26 @@ public class MFAEmailOTPEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		MFAEmailOTPEntryModelImpl mfaEmailOTPEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = mfaEmailOTPEntryModelImpl.getColumnOriginalValue(
+				value = mfaEmailOTPEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = mfaEmailOTPEntryModelImpl.getColumnValue(
-					columnName);
+				value = mfaEmailOTPEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class MFAEmailOTPEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1847747079
+// LIFERAY-SERVICE-BUILDER-HASH:-1241182644

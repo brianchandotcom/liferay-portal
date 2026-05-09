@@ -609,7 +609,7 @@ public class LVEntryLocalizationPersistenceImpl
 		_finderPathFetchByLvEntryId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, false,
+			new String[] {"lvEntryId", "languageId"}, 0, 2, false,
 			LVEntryLocalization::getLvEntryId,
 			convertNullFunction(LVEntryLocalization::getLanguageId));
 
@@ -627,8 +627,8 @@ public class LVEntryLocalizationPersistenceImpl
 
 		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
-			LVEntryLocalization::getHeadId);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, 0, 0,
+			false, LVEntryLocalization::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId,
@@ -676,4 +676,4 @@ public class LVEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1907556516
+// LIFERAY-SERVICE-BUILDER-HASH:-1651035868

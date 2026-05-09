@@ -57,7 +57,7 @@ public class LayoutPageTemplateStructureRelModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				layoutPageTemplateStructureRelModelImpl, columnNames, original);
+				layoutPageTemplateStructureRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class LayoutPageTemplateStructureRelModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				layoutPageTemplateStructureRelModelImpl, columnNames, original);
+				layoutPageTemplateStructureRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class LayoutPageTemplateStructureRelModelArgumentsResolver
 	private static Object[] _getValue(
 		LayoutPageTemplateStructureRelModelImpl
 			layoutPageTemplateStructureRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					layoutPageTemplateStructureRelModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					layoutPageTemplateStructureRelModelImpl.getColumnValue(
-						columnName);
+				value = layoutPageTemplateStructureRelModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class LayoutPageTemplateStructureRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-127736642
+// LIFERAY-SERVICE-BUILDER-HASH:175826699

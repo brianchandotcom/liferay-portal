@@ -755,7 +755,7 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 		_finderPathFetchByU_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "credentialKeyHash"}, false,
+			new String[] {"userId", "credentialKeyHash"}, 0, 0, false,
 			MFAFIDO2CredentialEntry::getUserId,
 			MFAFIDO2CredentialEntry::getCredentialKeyHash);
 
@@ -836,4 +836,4 @@ public class MFAFIDO2CredentialEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1561911741
+// LIFERAY-SERVICE-BUILDER-HASH:1564215706

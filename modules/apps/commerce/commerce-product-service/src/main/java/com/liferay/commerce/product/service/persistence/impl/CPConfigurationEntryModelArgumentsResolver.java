@@ -55,7 +55,7 @@ public class CPConfigurationEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cpConfigurationEntryModelImpl, columnNames, original);
+				cpConfigurationEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class CPConfigurationEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cpConfigurationEntryModelImpl, columnNames, original);
+				cpConfigurationEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class CPConfigurationEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CPConfigurationEntryModelImpl cpConfigurationEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					cpConfigurationEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = cpConfigurationEntryModelImpl.getColumnValue(
+				value = cpConfigurationEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = cpConfigurationEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class CPConfigurationEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2121459206
+// LIFERAY-SERVICE-BUILDER-HASH:522950451

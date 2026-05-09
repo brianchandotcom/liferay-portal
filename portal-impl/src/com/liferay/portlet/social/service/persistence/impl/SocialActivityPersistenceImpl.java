@@ -2445,7 +2445,7 @@ public class SocialActivityPersistenceImpl
 		_finderPathFetchByMirrorActivityId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByMirrorActivityId",
 			new String[] {Long.class.getName()},
-			new String[] {"mirrorActivityId"}, false,
+			new String[] {"mirrorActivityId"}, 0, 0, false,
 			SocialActivity::getMirrorActivityId);
 
 		_uniquePersistenceFinderByMirrorActivityId =
@@ -2706,7 +2706,7 @@ public class SocialActivityPersistenceImpl
 				"groupId", "userId", "createDate", "classNameId", "classPK",
 				"type_", "receiverUserId"
 			},
-			false, SocialActivity::getGroupId, SocialActivity::getUserId,
+			0, 0, false, SocialActivity::getGroupId, SocialActivity::getUserId,
 			SocialActivity::getCreateDate, SocialActivity::getClassNameId,
 			SocialActivity::getClassPK, SocialActivity::getType,
 			SocialActivity::getReceiverUserId);
@@ -2773,4 +2773,4 @@ public class SocialActivityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:111557145
+// LIFERAY-SERVICE-BUILDER-HASH:-337314348

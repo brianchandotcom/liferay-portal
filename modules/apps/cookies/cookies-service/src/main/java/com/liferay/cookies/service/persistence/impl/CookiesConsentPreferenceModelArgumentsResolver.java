@@ -56,7 +56,7 @@ public class CookiesConsentPreferenceModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cookiesConsentPreferenceModelImpl, columnNames, original);
+				cookiesConsentPreferenceModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class CookiesConsentPreferenceModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cookiesConsentPreferenceModelImpl, columnNames, original);
+				cookiesConsentPreferenceModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,22 +95,28 @@ public class CookiesConsentPreferenceModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CookiesConsentPreferenceModelImpl cookiesConsentPreferenceModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					cookiesConsentPreferenceModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] = cookiesConsentPreferenceModelImpl.getColumnValue(
+				value = cookiesConsentPreferenceModelImpl.getColumnValue(
 					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +126,4 @@ public class CookiesConsentPreferenceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-838596145
+// LIFERAY-SERVICE-BUILDER-HASH:904680552

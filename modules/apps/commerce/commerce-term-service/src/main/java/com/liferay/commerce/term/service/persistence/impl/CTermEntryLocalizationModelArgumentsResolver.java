@@ -55,7 +55,7 @@ public class CTermEntryLocalizationModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cTermEntryLocalizationModelImpl, columnNames, original);
+				cTermEntryLocalizationModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -76,7 +76,7 @@ public class CTermEntryLocalizationModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cTermEntryLocalizationModelImpl, columnNames, original);
+				cTermEntryLocalizationModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -94,22 +94,27 @@ public class CTermEntryLocalizationModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CTermEntryLocalizationModelImpl cTermEntryLocalizationModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					cTermEntryLocalizationModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = cTermEntryLocalizationModelImpl.getColumnValue(
+				value = cTermEntryLocalizationModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = cTermEntryLocalizationModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -119,4 +124,4 @@ public class CTermEntryLocalizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:785667805
+// LIFERAY-SERVICE-BUILDER-HASH:-640237730

@@ -53,7 +53,7 @@ public class KaleoConditionModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = kaleoConditionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kaleoConditionModelImpl, columnNames, original);
+			return _getValue(kaleoConditionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class KaleoConditionModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kaleoConditionModelImpl, columnNames, original);
+			return _getValue(kaleoConditionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class KaleoConditionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		KaleoConditionModelImpl kaleoConditionModelImpl, String[] columnNames,
+		KaleoConditionModelImpl kaleoConditionModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kaleoConditionModelImpl.getColumnOriginalValue(
+				value = kaleoConditionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = kaleoConditionModelImpl.getColumnValue(
-					columnName);
+				value = kaleoConditionModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class KaleoConditionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1544255367
+// LIFERAY-SERVICE-BUILDER-HASH:-598777916

@@ -2136,7 +2136,8 @@ public class PatcherProjectVersionPersistenceImpl
 		_finderPathFetchByCommittish = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommittish",
 			new String[] {String.class.getName()}, new String[] {"committish"},
-			false, convertNullFunction(PatcherProjectVersion::getCommittish));
+			0, 1, false,
+			convertNullFunction(PatcherProjectVersion::getCommittish));
 
 		_uniquePersistenceFinderByCommittish = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByCommittish,
@@ -2148,8 +2149,8 @@ public class PatcherProjectVersionPersistenceImpl
 
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			convertNullFunction(PatcherProjectVersion::getName));
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, convertNullFunction(PatcherProjectVersion::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -2214,12 +2215,14 @@ public class PatcherProjectVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByP_RN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_RN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"patcherProductVersionId", "repositoryName"}, true);
+			new String[] {"patcherProductVersionId", "repositoryName"}, 0, 2,
+			true, null);
 
 		_finderPathCountByP_RN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_RN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"patcherProductVersionId", "repositoryName"}, false);
+			new String[] {"patcherProductVersionId", "repositoryName"}, 0, 2,
+			false, null);
 
 		_collectionPersistenceFinderByP_RN = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByP_RN,
@@ -2328,4 +2331,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1572328606
+// LIFERAY-SERVICE-BUILDER-HASH:4356846

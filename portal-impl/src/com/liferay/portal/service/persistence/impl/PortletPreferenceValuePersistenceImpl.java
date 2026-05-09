@@ -1219,12 +1219,12 @@ public class PortletPreferenceValuePersistenceImpl
 		_finderPathWithoutPaginationFindByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portletPreferencesId", "name"}, true);
+			new String[] {"portletPreferencesId", "name"}, 0, 2, true, null);
 
 		_finderPathCountByP_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portletPreferencesId", "name"}, false);
+			new String[] {"portletPreferencesId", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByP_N,
@@ -1256,7 +1256,7 @@ public class PortletPreferenceValuePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "smallValue"}, true);
+			new String[] {"companyId", "name", "smallValue"}, 0, 6, true, null);
 
 		_finderPathCountByC_N_SV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_SV",
@@ -1264,7 +1264,8 @@ public class PortletPreferenceValuePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "smallValue"}, false);
+			new String[] {"companyId", "name", "smallValue"}, 0, 6, false,
+			null);
 
 		_collectionPersistenceFinderByC_N_SV =
 			new CollectionPersistenceFinder<>(
@@ -1293,8 +1294,8 @@ public class PortletPreferenceValuePersistenceImpl
 				Long.class.getName(), Integer.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"portletPreferencesId", "index_", "name"}, false,
-			PortletPreferenceValue::getPortletPreferencesId,
+			new String[] {"portletPreferencesId", "index_", "name"}, 0, 4,
+			false, PortletPreferenceValue::getPortletPreferencesId,
 			PortletPreferenceValue::getIndex,
 			convertNullFunction(PortletPreferenceValue::getName));
 
@@ -1327,7 +1328,8 @@ public class PortletPreferenceValuePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"portletPreferencesId", "name", "smallValue"}, true);
+			new String[] {"portletPreferencesId", "name", "smallValue"}, 0, 6,
+			true, null);
 
 		_finderPathCountByP_N_SV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_SV",
@@ -1335,7 +1337,8 @@ public class PortletPreferenceValuePersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"portletPreferencesId", "name", "smallValue"}, false);
+			new String[] {"portletPreferencesId", "name", "smallValue"}, 0, 6,
+			false, null);
 
 		_collectionPersistenceFinderByP_N_SV =
 			new CollectionPersistenceFinder<>(
@@ -1394,4 +1397,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1358349961
+// LIFERAY-SERVICE-BUILDER-HASH:-116053127

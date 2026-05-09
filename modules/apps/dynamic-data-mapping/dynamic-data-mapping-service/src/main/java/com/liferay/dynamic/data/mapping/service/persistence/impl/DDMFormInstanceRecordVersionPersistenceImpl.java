@@ -1457,12 +1457,14 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByF_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "formInstanceVersion"}, true);
+			new String[] {"formInstanceId", "formInstanceVersion"}, 0, 2, true,
+			null);
 
 		_finderPathCountByF_F = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_F",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "formInstanceVersion"}, false);
+			new String[] {"formInstanceId", "formInstanceVersion"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByF_F = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByF_F,
@@ -1483,7 +1485,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 		_finderPathFetchByF_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceRecordId", "version"}, false,
+			new String[] {"formInstanceRecordId", "version"}, 0, 2, false,
 			DDMFormInstanceRecordVersion::getFormInstanceRecordId,
 			convertNullFunction(DDMFormInstanceRecordVersion::getVersion));
 
@@ -1556,7 +1558,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			new String[] {
 				"userId", "formInstanceId", "formInstanceVersion", "status"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByU_F_F_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_F_F_S",
@@ -1567,7 +1569,7 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 			new String[] {
 				"userId", "formInstanceId", "formInstanceVersion", "status"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByU_F_F_S =
 			new CollectionPersistenceFinder<>(
@@ -1665,4 +1667,4 @@ public class DDMFormInstanceRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:98200628
+// LIFERAY-SERVICE-BUILDER-HASH:337728875

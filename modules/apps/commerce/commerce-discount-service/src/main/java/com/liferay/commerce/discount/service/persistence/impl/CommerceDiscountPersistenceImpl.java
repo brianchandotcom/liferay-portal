@@ -3409,13 +3409,13 @@ public class CommerceDiscountPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -3439,12 +3439,12 @@ public class CommerceDiscountPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -3503,12 +3503,12 @@ public class CommerceDiscountPersistenceImpl
 		_finderPathWithoutPaginationFindByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "couponCode"}, true);
+			new String[] {"companyId", "couponCode"}, 2, 2, true, null);
 
 		_finderPathCountByC_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "couponCode"}, false);
+			new String[] {"companyId", "couponCode"}, 2, 2, false, null);
 
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_C,
@@ -3583,9 +3583,9 @@ public class CommerceDiscountPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"companyId", "couponCode", "active_"}, false,
+			new String[] {"companyId", "couponCode", "active_"}, 2, 2, false,
 			CommerceDiscount::getCompanyId,
-			convertNullFunction(CommerceDiscount::getCouponCode),
+			convertCaseFunction(CommerceDiscount::getCouponCode),
 			CommerceDiscount::isActive);
 
 		_uniquePersistenceFinderByC_C_A = new UniquePersistenceFinder<>(
@@ -3617,7 +3617,8 @@ public class CommerceDiscountPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(), Integer.class.getName()
 			},
-			new String[] {"companyId", "levelType", "active_", "status"}, true);
+			new String[] {"companyId", "levelType", "active_", "status"}, 0, 2,
+			true, null);
 
 		_finderPathCountByC_L_A_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L_A_S",
@@ -3625,8 +3626,8 @@ public class CommerceDiscountPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName(), Integer.class.getName()
 			},
-			new String[] {"companyId", "levelType", "active_", "status"},
-			false);
+			new String[] {"companyId", "levelType", "active_", "status"}, 0, 2,
+			false, null);
 
 		_collectionPersistenceFinderByC_L_A_S =
 			new CollectionPersistenceFinder<>(
@@ -3652,7 +3653,7 @@ public class CommerceDiscountPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(CommerceDiscount::getExternalReferenceCode),
 			CommerceDiscount::getCompanyId);
 
@@ -3759,4 +3760,4 @@ public class CommerceDiscountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1512064328
+// LIFERAY-SERVICE-BUILDER-HASH:1366190531

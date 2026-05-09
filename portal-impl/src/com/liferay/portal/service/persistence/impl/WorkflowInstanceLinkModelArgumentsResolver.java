@@ -54,7 +54,7 @@ public class WorkflowInstanceLinkModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				workflowInstanceLinkModelImpl, columnNames, original);
+				workflowInstanceLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -82,7 +82,7 @@ public class WorkflowInstanceLinkModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				workflowInstanceLinkModelImpl, columnNames, original);
+				workflowInstanceLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -100,22 +100,27 @@ public class WorkflowInstanceLinkModelArgumentsResolver
 
 	private static Object[] _getValue(
 		WorkflowInstanceLinkModelImpl workflowInstanceLinkModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					workflowInstanceLinkModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = workflowInstanceLinkModelImpl.getColumnValue(
+				value = workflowInstanceLinkModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = workflowInstanceLinkModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -136,4 +141,4 @@ public class WorkflowInstanceLinkModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1254446220
+// LIFERAY-SERVICE-BUILDER-HASH:-133375485

@@ -1902,12 +1902,12 @@ public class JournalContentSearchPersistenceImpl
 		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
 			new String[] {String.class.getName()}, new String[] {"portletId"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountByPortletId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
 			new String[] {String.class.getName()}, new String[] {"portletId"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderByPortletId =
 			new CollectionPersistenceFinder<>(
@@ -1934,12 +1934,12 @@ public class JournalContentSearchPersistenceImpl
 		_finderPathWithoutPaginationFindByArticleId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticleId",
 			new String[] {String.class.getName()}, new String[] {"articleId"},
-			true);
+			0, 1, true, null);
 
 		_finderPathCountByArticleId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
 			new String[] {String.class.getName()}, new String[] {"articleId"},
-			false);
+			0, 1, false, null);
 
 		_collectionPersistenceFinderByArticleId =
 			new CollectionPersistenceFinder<>(
@@ -2001,12 +2001,12 @@ public class JournalContentSearchPersistenceImpl
 		_finderPathWithoutPaginationFindByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, true);
+			new String[] {"groupId", "articleId"}, 0, 2, true, null);
 
 		_finderPathCountByG_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "articleId"}, false);
+			new String[] {"groupId", "articleId"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByG_A = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_A,
@@ -2080,7 +2080,8 @@ public class JournalContentSearchPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "articleId"}, true);
+			new String[] {"groupId", "privateLayout", "articleId"}, 0, 4, true,
+			null);
 
 		_finderPathCountByG_P_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_A",
@@ -2088,7 +2089,8 @@ public class JournalContentSearchPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "privateLayout", "articleId"}, false);
+			new String[] {"groupId", "privateLayout", "articleId"}, 0, 4, false,
+			null);
 
 		_collectionPersistenceFinderByG_P_A = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_P_A,
@@ -2126,7 +2128,7 @@ public class JournalContentSearchPersistenceImpl
 				Long.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "privateLayout", "layoutId", "portletId"},
-			true);
+			0, 8, true, null);
 
 		_finderPathCountByG_P_L_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P",
@@ -2135,7 +2137,7 @@ public class JournalContentSearchPersistenceImpl
 				Long.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "privateLayout", "layoutId", "portletId"},
-			false);
+			0, 8, false, null);
 
 		_collectionPersistenceFinderByG_P_L_P =
 			new CollectionPersistenceFinder<>(
@@ -2171,7 +2173,7 @@ public class JournalContentSearchPersistenceImpl
 			new String[] {
 				"groupId", "privateLayout", "layoutId", "portletId", "articleId"
 			},
-			false, JournalContentSearch::getGroupId,
+			0, 24, false, JournalContentSearch::getGroupId,
 			JournalContentSearch::isPrivateLayout,
 			JournalContentSearch::getLayoutId,
 			convertNullFunction(JournalContentSearch::getPortletId),
@@ -2266,4 +2268,4 @@ public class JournalContentSearchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-190994184
+// LIFERAY-SERVICE-BUILDER-HASH:815115640

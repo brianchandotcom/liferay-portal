@@ -53,7 +53,7 @@ public class RepositoryEntryModelArgumentsResolver
 		long columnBitmask = repositoryEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(repositoryEntryModelImpl, columnNames, original);
+			return _getValue(repositoryEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class RepositoryEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(repositoryEntryModelImpl, columnNames, original);
+			return _getValue(repositoryEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class RepositoryEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		RepositoryEntryModelImpl repositoryEntryModelImpl, String[] columnNames,
-		boolean original) {
+		RepositoryEntryModelImpl repositoryEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = repositoryEntryModelImpl.getColumnOriginalValue(
+				value = repositoryEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = repositoryEntryModelImpl.getColumnValue(
-					columnName);
+				value = repositoryEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class RepositoryEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-27413076
+// LIFERAY-SERVICE-BUILDER-HASH:-1325585625

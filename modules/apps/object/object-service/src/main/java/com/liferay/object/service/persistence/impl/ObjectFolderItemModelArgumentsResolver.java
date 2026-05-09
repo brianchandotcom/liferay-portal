@@ -54,7 +54,7 @@ public class ObjectFolderItemModelArgumentsResolver
 		long columnBitmask = objectFolderItemModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(objectFolderItemModelImpl, columnNames, original);
+			return _getValue(objectFolderItemModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class ObjectFolderItemModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(objectFolderItemModelImpl, columnNames, original);
+			return _getValue(objectFolderItemModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,21 +91,26 @@ public class ObjectFolderItemModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ObjectFolderItemModelImpl objectFolderItemModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = objectFolderItemModelImpl.getColumnOriginalValue(
+				value = objectFolderItemModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = objectFolderItemModelImpl.getColumnValue(
-					columnName);
+				value = objectFolderItemModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class ObjectFolderItemModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1562942534
+// LIFERAY-SERVICE-BUILDER-HASH:-730771273

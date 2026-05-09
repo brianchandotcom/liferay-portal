@@ -355,7 +355,7 @@ public class WebDAVPropsPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false,
+			new String[] {"classNameId", "classPK"}, 0, 0, false,
 			WebDAVProps::getClassNameId, WebDAVProps::getClassPK);
 
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
@@ -397,4 +397,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:273761813
+// LIFERAY-SERVICE-BUILDER-HASH:1969173208

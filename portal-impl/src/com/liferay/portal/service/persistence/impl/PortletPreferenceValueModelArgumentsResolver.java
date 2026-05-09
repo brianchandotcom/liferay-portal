@@ -54,7 +54,7 @@ public class PortletPreferenceValueModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				portletPreferenceValueModelImpl, columnNames, original);
+				portletPreferenceValueModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class PortletPreferenceValueModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				portletPreferenceValueModelImpl, columnNames, original);
+				portletPreferenceValueModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class PortletPreferenceValueModelArgumentsResolver
 
 	private static Object[] _getValue(
 		PortletPreferenceValueModelImpl portletPreferenceValueModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					portletPreferenceValueModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = portletPreferenceValueModelImpl.getColumnValue(
+				value = portletPreferenceValueModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = portletPreferenceValueModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class PortletPreferenceValueModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:268916377
+// LIFERAY-SERVICE-BUILDER-HASH:-2066915636

@@ -926,8 +926,8 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		_finderPathFetchByC_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"},
-			false,
+			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"}, 0,
+			0, false,
 			CPSpecificationOptionListTypeDefinitionRel::
 				getCPSpecificationOptionId,
 			CPSpecificationOptionListTypeDefinitionRel::
@@ -1024,4 +1024,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930198730
+// LIFERAY-SERVICE-BUILDER-HASH:1964099073

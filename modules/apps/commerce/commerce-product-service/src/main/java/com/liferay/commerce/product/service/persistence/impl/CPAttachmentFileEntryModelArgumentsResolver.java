@@ -55,7 +55,7 @@ public class CPAttachmentFileEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cpAttachmentFileEntryModelImpl, columnNames, original);
+				cpAttachmentFileEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class CPAttachmentFileEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cpAttachmentFileEntryModelImpl, columnNames, original);
+				cpAttachmentFileEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class CPAttachmentFileEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CPAttachmentFileEntryModelImpl cpAttachmentFileEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = cpAttachmentFileEntryModelImpl.getColumnValue(
+				value = cpAttachmentFileEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = cpAttachmentFileEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class CPAttachmentFileEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-728284050
+// LIFERAY-SERVICE-BUILDER-HASH:-627327473

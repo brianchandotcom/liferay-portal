@@ -910,12 +910,12 @@ public class PLOEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, true);
+			new String[] {"companyId", "key_"}, 0, 2, true, null);
 
 		_finderPathCountByC_K = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, false);
+			new String[] {"companyId", "key_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_K = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_K,
@@ -941,12 +941,12 @@ public class PLOEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "languageId"}, true);
+			new String[] {"companyId", "languageId"}, 0, 2, true, null);
 
 		_finderPathCountByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "languageId"}, false);
+			new String[] {"companyId", "languageId"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_L,
@@ -966,7 +966,7 @@ public class PLOEntryPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "key_", "languageId"}, false,
+			new String[] {"companyId", "key_", "languageId"}, 0, 6, false,
 			PLOEntry::getCompanyId, convertNullFunction(PLOEntry::getKey),
 			convertNullFunction(PLOEntry::getLanguageId));
 
@@ -1051,4 +1051,4 @@ public class PLOEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1290934514
+// LIFERAY-SERVICE-BUILDER-HASH:1602340187

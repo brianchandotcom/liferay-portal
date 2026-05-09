@@ -1138,7 +1138,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				FINDER_CLASS_NAME_ENTITY,
 				"fetchByLvEntryLocalizationId_Version",
 				new String[] {Long.class.getName(), Integer.class.getName()},
-				new String[] {"lvEntryLocalizationId", "version"}, false,
+				new String[] {"lvEntryLocalizationId", "version"}, 0, 0, false,
 				LVEntryLocalizationVersion::getLvEntryLocalizationId,
 				LVEntryLocalizationVersion::getVersion);
 
@@ -1240,13 +1240,13 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, true);
+			new String[] {"lvEntryId", "languageId"}, 0, 2, true, null);
 
 		_finderPathCountByLvEntryId_LanguageId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLvEntryId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"lvEntryId", "languageId"}, false);
+			new String[] {"lvEntryId", "languageId"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByLvEntryId_LanguageId =
 			new CollectionPersistenceFinder<>(
@@ -1272,7 +1272,7 @@ public class LVEntryLocalizationVersionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"lvEntryId", "languageId", "version"}, false,
+			new String[] {"lvEntryId", "languageId", "version"}, 0, 2, false,
 			LVEntryLocalizationVersion::getLvEntryId,
 			convertNullFunction(LVEntryLocalizationVersion::getLanguageId),
 			LVEntryLocalizationVersion::getVersion);
@@ -1333,4 +1333,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:981895011
+// LIFERAY-SERVICE-BUILDER-HASH:1402587433

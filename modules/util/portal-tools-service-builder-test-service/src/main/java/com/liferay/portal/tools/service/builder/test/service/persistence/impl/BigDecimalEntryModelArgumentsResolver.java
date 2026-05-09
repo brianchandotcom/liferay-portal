@@ -53,7 +53,7 @@ public class BigDecimalEntryModelArgumentsResolver
 		long columnBitmask = bigDecimalEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(bigDecimalEntryModelImpl, columnNames, original);
+			return _getValue(bigDecimalEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class BigDecimalEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(bigDecimalEntryModelImpl, columnNames, original);
+			return _getValue(bigDecimalEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class BigDecimalEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		BigDecimalEntryModelImpl bigDecimalEntryModelImpl, String[] columnNames,
-		boolean original) {
+		BigDecimalEntryModelImpl bigDecimalEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = bigDecimalEntryModelImpl.getColumnOriginalValue(
+				value = bigDecimalEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = bigDecimalEntryModelImpl.getColumnValue(
-					columnName);
+				value = bigDecimalEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -133,4 +138,4 @@ public class BigDecimalEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1421702646
+// LIFERAY-SERVICE-BUILDER-HASH:582364767

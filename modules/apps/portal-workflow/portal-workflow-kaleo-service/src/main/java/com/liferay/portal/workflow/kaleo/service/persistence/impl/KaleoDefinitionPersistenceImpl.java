@@ -2162,13 +2162,13 @@ public class KaleoDefinitionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2182,7 +2182,7 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(KaleoDefinition::getUuid),
 			KaleoDefinition::getGroupId);
 
@@ -2208,12 +2208,12 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2293,7 +2293,7 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false,
+			new String[] {"companyId", "name"}, 0, 2, false,
 			KaleoDefinition::getCompanyId,
 			convertNullFunction(KaleoDefinition::getName));
 
@@ -2352,7 +2352,7 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "companyId", "scope"}, true);
+			new String[] {"groupId", "companyId", "scope"}, 0, 4, true, null);
 
 		_finderPathCountByG_C_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_S",
@@ -2360,7 +2360,7 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "companyId", "scope"}, false);
+			new String[] {"groupId", "companyId", "scope"}, 0, 4, false, null);
 
 		_collectionPersistenceFinderByG_C_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_C_S,
@@ -2383,7 +2383,7 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"companyId", "name", "version"}, false,
+			new String[] {"companyId", "name", "version"}, 0, 2, false,
 			KaleoDefinition::getCompanyId,
 			convertNullFunction(KaleoDefinition::getName),
 			KaleoDefinition::getVersion);
@@ -2407,7 +2407,7 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"companyId", "name", "active_"}, false,
+			new String[] {"companyId", "name", "active_"}, 0, 2, false,
 			KaleoDefinition::getCompanyId,
 			convertNullFunction(KaleoDefinition::getName),
 			KaleoDefinition::isActive);
@@ -2441,7 +2441,8 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Boolean.class.getName()
 			},
-			new String[] {"groupId", "companyId", "scope", "active_"}, true);
+			new String[] {"groupId", "companyId", "scope", "active_"}, 0, 4,
+			true, null);
 
 		_finderPathCountByG_C_S_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_S_A",
@@ -2449,7 +2450,8 @@ public class KaleoDefinitionPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Boolean.class.getName()
 			},
-			new String[] {"groupId", "companyId", "scope", "active_"}, false);
+			new String[] {"groupId", "companyId", "scope", "active_"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByG_C_S_A =
 			new CollectionPersistenceFinder<>(
@@ -2475,7 +2477,7 @@ public class KaleoDefinitionPersistenceImpl
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(KaleoDefinition::getExternalReferenceCode),
 			KaleoDefinition::getCompanyId);
 
@@ -2562,4 +2564,4 @@ public class KaleoDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1773773637
+// LIFERAY-SERVICE-BUILDER-HASH:-740177833

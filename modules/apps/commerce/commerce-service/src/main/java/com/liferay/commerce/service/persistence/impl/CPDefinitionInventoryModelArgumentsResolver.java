@@ -55,7 +55,7 @@ public class CPDefinitionInventoryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cpDefinitionInventoryModelImpl, columnNames, original);
+				cpDefinitionInventoryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class CPDefinitionInventoryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cpDefinitionInventoryModelImpl, columnNames, original);
+				cpDefinitionInventoryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class CPDefinitionInventoryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CPDefinitionInventoryModelImpl cpDefinitionInventoryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					cpDefinitionInventoryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = cpDefinitionInventoryModelImpl.getColumnValue(
+				value = cpDefinitionInventoryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = cpDefinitionInventoryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class CPDefinitionInventoryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1481111750
+// LIFERAY-SERVICE-BUILDER-HASH:-572104891

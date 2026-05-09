@@ -53,7 +53,7 @@ public class UserTrackerPathModelArgumentsResolver
 		long columnBitmask = userTrackerPathModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(userTrackerPathModelImpl, columnNames, original);
+			return _getValue(userTrackerPathModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class UserTrackerPathModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(userTrackerPathModelImpl, columnNames, original);
+			return _getValue(userTrackerPathModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class UserTrackerPathModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		UserTrackerPathModelImpl userTrackerPathModelImpl, String[] columnNames,
-		boolean original) {
+		UserTrackerPathModelImpl userTrackerPathModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = userTrackerPathModelImpl.getColumnOriginalValue(
+				value = userTrackerPathModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = userTrackerPathModelImpl.getColumnValue(
-					columnName);
+				value = userTrackerPathModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class UserTrackerPathModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-361719016
+// LIFERAY-SERVICE-BUILDER-HASH:-600201925

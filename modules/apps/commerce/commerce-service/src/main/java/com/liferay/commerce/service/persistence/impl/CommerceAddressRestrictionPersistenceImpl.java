@@ -779,7 +779,7 @@ public class CommerceAddressRestrictionPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "countryId"}, false,
+			new String[] {"classNameId", "classPK", "countryId"}, 0, 0, false,
 			CommerceAddressRestriction::getClassNameId,
 			CommerceAddressRestriction::getClassPK,
 			CommerceAddressRestriction::getCountryId);
@@ -866,4 +866,4 @@ public class CommerceAddressRestrictionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-245814036
+// LIFERAY-SERVICE-BUILDER-HASH:17285738

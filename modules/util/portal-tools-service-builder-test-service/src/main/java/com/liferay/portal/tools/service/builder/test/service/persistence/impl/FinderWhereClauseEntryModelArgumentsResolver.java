@@ -54,7 +54,7 @@ public class FinderWhereClauseEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				finderWhereClauseEntryModelImpl, columnNames, original);
+				finderWhereClauseEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class FinderWhereClauseEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				finderWhereClauseEntryModelImpl, columnNames, original);
+				finderWhereClauseEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class FinderWhereClauseEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		FinderWhereClauseEntryModelImpl finderWhereClauseEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					finderWhereClauseEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = finderWhereClauseEntryModelImpl.getColumnValue(
+				value = finderWhereClauseEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = finderWhereClauseEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class FinderWhereClauseEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1964454990
+// LIFERAY-SERVICE-BUILDER-HASH:134438875

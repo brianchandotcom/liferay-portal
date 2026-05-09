@@ -54,7 +54,7 @@ public class KaleoTransitionModelArgumentsResolver
 		long columnBitmask = kaleoTransitionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kaleoTransitionModelImpl, columnNames, original);
+			return _getValue(kaleoTransitionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -81,7 +81,7 @@ public class KaleoTransitionModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kaleoTransitionModelImpl, columnNames, original);
+			return _getValue(kaleoTransitionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -98,22 +98,27 @@ public class KaleoTransitionModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		KaleoTransitionModelImpl kaleoTransitionModelImpl, String[] columnNames,
-		boolean original) {
+		KaleoTransitionModelImpl kaleoTransitionModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kaleoTransitionModelImpl.getColumnOriginalValue(
+				value = kaleoTransitionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = kaleoTransitionModelImpl.getColumnValue(
-					columnName);
+				value = kaleoTransitionModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -131,4 +136,4 @@ public class KaleoTransitionModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1885600655
+// LIFERAY-SERVICE-BUILDER-HASH:-1087875986

@@ -853,8 +853,8 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "CIWarehouseId"}, false,
-			CommerceInventoryWarehouseRel::getClassNameId,
+			new String[] {"classNameId", "classPK", "CIWarehouseId"}, 0, 0,
+			false, CommerceInventoryWarehouseRel::getClassNameId,
 			CommerceInventoryWarehouseRel::getClassPK,
 			CommerceInventoryWarehouseRel::getCommerceInventoryWarehouseId);
 
@@ -949,4 +949,4 @@ public class CommerceInventoryWarehouseRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-799685148
+// LIFERAY-SERVICE-BUILDER-HASH:-637475666

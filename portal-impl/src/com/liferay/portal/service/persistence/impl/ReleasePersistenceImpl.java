@@ -359,8 +359,8 @@ public class ReleasePersistenceImpl
 		_finderPathFetchByServletContextName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByServletContextName",
 			new String[] {String.class.getName()},
-			new String[] {"servletContextName"}, true,
-			convertNullFunction(Release::getServletContextName));
+			new String[] {"servletContextName"}, 1, 1, true,
+			convertCaseFunction(Release::getServletContextName));
 
 		_uniquePersistenceFinderByServletContextName =
 			new UniquePersistenceFinder<>(
@@ -403,4 +403,4 @@ public class ReleasePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-839833465
+// LIFERAY-SERVICE-BUILDER-HASH:-2045600321

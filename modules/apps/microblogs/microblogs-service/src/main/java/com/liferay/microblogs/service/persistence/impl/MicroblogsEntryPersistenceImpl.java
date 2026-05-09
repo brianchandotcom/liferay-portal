@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -30,6 +29,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -1155,7 +1155,8 @@ public class MicroblogsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCCNI_CCPK;
 	private FinderPath _finderPathWithoutPaginationFindByCCNI_CCPK;
 	private FinderPath _finderPathCountByCCNI_CCPK;
-	private FinderPath _finderPathWithPaginationCountByCCNI_CCPK;
+	private CollectionPersistenceFinder<MicroblogsEntry>
+		_collectionPersistenceFinderByCCNI_CCPK;
 
 	/**
 	 * Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -1239,104 +1240,10 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK;
-				finderArgs = new Object[] {creatorClassNameId, creatorClassPK};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCCNI_CCPK;
-			finderArgs = new Object[] {
-				creatorClassNameId, creatorClassPK, start, end,
-				orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK !=
-							microblogsEntry.getCreatorClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					4 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(4);
-			}
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCCNI_CCPK.find(
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1389,14 +1296,10 @@ public class MicroblogsEntryPersistenceImpl
 		long creatorClassNameId, long creatorClassPK,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByCCNI_CCPK(
-			creatorClassNameId, creatorClassPK, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCCNI_CCPK.fetchFirst(
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}},
+			orderByComparator);
 	}
 
 	/**
@@ -1805,122 +1708,12 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		if (creatorClassPKs.length == 1) {
-			return findByCCNI_CCPK(
-				creatorClassNameId, creatorClassPKs[0], start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					creatorClassNameId, StringUtil.merge(creatorClassPKs)
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				creatorClassNameId, StringUtil.merge(creatorClassPKs), start,
-				end, orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByCCNI_CCPK, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(
-							creatorClassPKs,
-							microblogsEntry.getCreatorClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByCCNI_CCPK, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCCNI_CCPK.find(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, ArrayUtil.sortedUnique(creatorClassPKs)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1933,13 +1726,9 @@ public class MicroblogsEntryPersistenceImpl
 	public void removeByCCNI_CCPK(
 		long creatorClassNameId, long creatorClassPK) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByCCNI_CCPK(
-					creatorClassNameId, creatorClassPK, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByCCNI_CCPK.remove(
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}});
 	}
 
 	/**
@@ -1951,49 +1740,9 @@ public class MicroblogsEntryPersistenceImpl
 	 */
 	@Override
 	public int countByCCNI_CCPK(long creatorClassNameId, long creatorClassPK) {
-		FinderPath finderPath = _finderPathCountByCCNI_CCPK;
-
-		Object[] finderArgs = new Object[] {creatorClassNameId, creatorClassPK};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCCNI_CCPK.count(
+			finderCache,
+			new Object[] {creatorClassNameId, new long[] {creatorClassPK}});
 	}
 
 	/**
@@ -2007,70 +1756,11 @@ public class MicroblogsEntryPersistenceImpl
 	public int countByCCNI_CCPK(
 		long creatorClassNameId, long[] creatorClassPKs) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		Object[] finderArgs = new Object[] {
-			creatorClassNameId, StringUtil.merge(creatorClassPKs)
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByCCNI_CCPK, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByCCNI_CCPK, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCCNI_CCPK.count(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, ArrayUtil.sortedUnique(creatorClassPKs)
+			});
 	}
 
 	/**
@@ -2996,7 +2686,8 @@ public class MicroblogsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_CCNI_CCPK;
 	private FinderPath _finderPathWithoutPaginationFindByC_CCNI_CCPK;
 	private FinderPath _finderPathCountByC_CCNI_CCPK;
-	private FinderPath _finderPathWithPaginationCountByC_CCNI_CCPK;
+	private CollectionPersistenceFinder<MicroblogsEntry>
+		_collectionPersistenceFinderByC_CCNI_CCPK;
 
 	/**
 	 * Returns all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63;.
@@ -3085,111 +2776,12 @@ public class MicroblogsEntryPersistenceImpl
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK;
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId, creatorClassPK
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_CCNI_CCPK;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId, creatorClassPK, start, end,
-				orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((companyId != microblogsEntry.getCompanyId()) ||
-						(creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK !=
-							microblogsEntry.getCreatorClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_CCNI_CCPK.find(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3247,15 +2839,12 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long creatorClassPK,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByC_CCNI_CCPK(
-			companyId, creatorClassNameId, creatorClassPK, 0, 1,
+		return _collectionPersistenceFinderByC_CCNI_CCPK.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -3688,128 +3277,13 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		if (creatorClassPKs.length == 1) {
-			return findByC_CCNI_CCPK(
-				companyId, creatorClassNameId, creatorClassPKs[0], start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId,
-					StringUtil.merge(creatorClassPKs)
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _collectionPersistenceFinderByC_CCNI_CCPK.find(
+			finderCache,
+			new Object[] {
 				companyId, creatorClassNameId,
-				StringUtil.merge(creatorClassPKs), start, end, orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((companyId != microblogsEntry.getCompanyId()) ||
-						(creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(
-							creatorClassPKs,
-							microblogsEntry.getCreatorClassPK())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_CCNI_CCPK, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+				ArrayUtil.sortedUnique(creatorClassPKs)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -3823,13 +3297,11 @@ public class MicroblogsEntryPersistenceImpl
 	public void removeByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long creatorClassPK) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByC_CCNI_CCPK(
-					companyId, creatorClassNameId, creatorClassPK,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByC_CCNI_CCPK.remove(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			});
 	}
 
 	/**
@@ -3844,55 +3316,11 @@ public class MicroblogsEntryPersistenceImpl
 	public int countByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long creatorClassPK) {
 
-		FinderPath finderPath = _finderPathCountByC_CCNI_CCPK;
-
-		Object[] finderArgs = new Object[] {
-			companyId, creatorClassNameId, creatorClassPK
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_CCNI_CCPK.count(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}
+			});
 	}
 
 	/**
@@ -3907,74 +3335,12 @@ public class MicroblogsEntryPersistenceImpl
 	public int countByC_CCNI_CCPK(
 		long companyId, long creatorClassNameId, long[] creatorClassPKs) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		Object[] finderArgs = new Object[] {
-			companyId, creatorClassNameId, StringUtil.merge(creatorClassPKs)
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_CCNI_CCPK, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_CCNI_CCPK, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_CCNI_CCPK.count(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId,
+				ArrayUtil.sortedUnique(creatorClassPKs)
+			});
 	}
 
 	/**
@@ -4567,7 +3933,8 @@ public class MicroblogsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByCCNI_CCPK_T;
 	private FinderPath _finderPathWithoutPaginationFindByCCNI_CCPK_T;
 	private FinderPath _finderPathCountByCCNI_CCPK_T;
-	private FinderPath _finderPathWithPaginationCountByCCNI_CCPK_T;
+	private CollectionPersistenceFinder<MicroblogsEntry>
+		_collectionPersistenceFinderByCCNI_CCPK_T;
 
 	/**
 	 * Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -4656,111 +4023,12 @@ public class MicroblogsEntryPersistenceImpl
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByCCNI_CCPK_T;
-				finderArgs = new Object[] {
-					creatorClassNameId, creatorClassPK, type
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByCCNI_CCPK_T;
-			finderArgs = new Object[] {
-				creatorClassNameId, creatorClassPK, type, start, end,
-				orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK !=
-							microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				queryPos.add(type);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCCNI_CCPK_T.find(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4818,14 +4086,12 @@ public class MicroblogsEntryPersistenceImpl
 		long creatorClassNameId, long creatorClassPK, int type,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByCCNI_CCPK_T(
-			creatorClassNameId, creatorClassPK, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByCCNI_CCPK_T.fetchFirst(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -5257,129 +4523,13 @@ public class MicroblogsEntryPersistenceImpl
 		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		if (creatorClassPKs.length == 1) {
-			return findByCCNI_CCPK_T(
-				creatorClassNameId, creatorClassPKs[0], type, start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					creatorClassNameId, StringUtil.merge(creatorClassPKs), type
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				creatorClassNameId, StringUtil.merge(creatorClassPKs), type,
-				start, end, orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(
-							creatorClassPKs,
-							microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(type);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByCCNI_CCPK_T, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByCCNI_CCPK_T.find(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, ArrayUtil.sortedUnique(creatorClassPKs),
+				type
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5393,13 +4543,11 @@ public class MicroblogsEntryPersistenceImpl
 	public void removeByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByCCNI_CCPK_T(
-					creatorClassNameId, creatorClassPK, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByCCNI_CCPK_T.remove(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			});
 	}
 
 	/**
@@ -5414,55 +4562,11 @@ public class MicroblogsEntryPersistenceImpl
 	public int countByCCNI_CCPK_T(
 		long creatorClassNameId, long creatorClassPK, int type) {
 
-		FinderPath finderPath = _finderPathCountByCCNI_CCPK_T;
-
-		Object[] finderArgs = new Object[] {
-			creatorClassNameId, creatorClassPK, type
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCCNI_CCPK_T.count(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, new long[] {creatorClassPK}, type
+			});
 	}
 
 	/**
@@ -5477,76 +4581,12 @@ public class MicroblogsEntryPersistenceImpl
 	public int countByCCNI_CCPK_T(
 		long creatorClassNameId, long[] creatorClassPKs, int type) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		Object[] finderArgs = new Object[] {
-			creatorClassNameId, StringUtil.merge(creatorClassPKs), type
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByCCNI_CCPK_T, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByCCNI_CCPK_T, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByCCNI_CCPK_T.count(
+			finderCache,
+			new Object[] {
+				creatorClassNameId, ArrayUtil.sortedUnique(creatorClassPKs),
+				type
+			});
 	}
 
 	/**
@@ -5727,7 +4767,8 @@ public class MicroblogsEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_CCNI_CCPK_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_CCNI_CCPK_T;
 	private FinderPath _finderPathCountByC_CCNI_CCPK_T;
-	private FinderPath _finderPathWithPaginationCountByC_CCNI_CCPK_T;
+	private CollectionPersistenceFinder<MicroblogsEntry>
+		_collectionPersistenceFinderByC_CCNI_CCPK_T;
 
 	/**
 	 * Returns all the microblogs entries where companyId = &#63; and creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
@@ -5824,116 +4865,12 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_CCNI_CCPK_T;
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId, creatorClassPK, type
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_CCNI_CCPK_T;
-			finderArgs = new Object[] {
-				companyId, creatorClassNameId, creatorClassPK, type, start, end,
-				orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((companyId != microblogsEntry.getCompanyId()) ||
-						(creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						(creatorClassPK !=
-							microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				queryPos.add(type);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_CCNI_CCPK_T.find(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5997,15 +4934,12 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long creatorClassPK, int type,
 		OrderByComparator<MicroblogsEntry> orderByComparator) {
 
-		List<MicroblogsEntry> list = findByC_CCNI_CCPK_T(
-			companyId, creatorClassNameId, creatorClassPK, type, 0, 1,
+		return _collectionPersistenceFinderByC_CCNI_CCPK_T.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -6465,136 +5399,13 @@ public class MicroblogsEntryPersistenceImpl
 		OrderByComparator<MicroblogsEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		if (creatorClassPKs.length == 1) {
-			return findByC_CCNI_CCPK_T(
-				companyId, creatorClassNameId, creatorClassPKs[0], type, start,
-				end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, creatorClassNameId,
-					StringUtil.merge(creatorClassPKs), type
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
+		return _collectionPersistenceFinderByC_CCNI_CCPK_T.find(
+			finderCache,
+			new Object[] {
 				companyId, creatorClassNameId,
-				StringUtil.merge(creatorClassPKs), type, start, end,
-				orderByComparator
-			};
-		}
-
-		List<MicroblogsEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<MicroblogsEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_CCNI_CCPK_T, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (MicroblogsEntry microblogsEntry : list) {
-					if ((companyId != microblogsEntry.getCompanyId()) ||
-						(creatorClassNameId !=
-							microblogsEntry.getCreatorClassNameId()) ||
-						!ArrayUtil.contains(
-							creatorClassPKs,
-							microblogsEntry.getCreatorClassPK()) ||
-						(type != microblogsEntry.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(type);
-
-				list = (List<MicroblogsEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_CCNI_CCPK_T,
-						finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+				ArrayUtil.sortedUnique(creatorClassPKs), type
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -6610,13 +5421,11 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long creatorClassPK,
 		int type) {
 
-		for (MicroblogsEntry microblogsEntry :
-				findByC_CCNI_CCPK_T(
-					companyId, creatorClassNameId, creatorClassPK, type,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(microblogsEntry);
-		}
+		_collectionPersistenceFinderByC_CCNI_CCPK_T.remove(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			});
 	}
 
 	/**
@@ -6633,59 +5442,11 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long creatorClassPK,
 		int type) {
 
-		FinderPath finderPath = _finderPathCountByC_CCNI_CCPK_T;
-
-		Object[] finderArgs = new Object[] {
-			companyId, creatorClassNameId, creatorClassPK, type
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(creatorClassPK);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_CCNI_CCPK_T.count(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId, new long[] {creatorClassPK}, type
+			});
 	}
 
 	/**
@@ -6702,81 +5463,12 @@ public class MicroblogsEntryPersistenceImpl
 		long companyId, long creatorClassNameId, long[] creatorClassPKs,
 		int type) {
 
-		if (creatorClassPKs == null) {
-			creatorClassPKs = new long[0];
-		}
-		else if (creatorClassPKs.length > 1) {
-			creatorClassPKs = ArrayUtil.sortedUnique(creatorClassPKs);
-		}
-
-		Object[] finderArgs = new Object[] {
-			companyId, creatorClassNameId, StringUtil.merge(creatorClassPKs),
-			type
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_CCNI_CCPK_T, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				sb.append(StringUtil.merge(creatorClassPKs));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(creatorClassNameId);
-
-				queryPos.add(type);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_CCNI_CCPK_T, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_CCNI_CCPK_T.count(
+			finderCache,
+			new Object[] {
+				companyId, creatorClassNameId,
+				ArrayUtil.sortedUnique(creatorClassPKs), type
+			});
 	}
 
 	/**
@@ -7761,14 +6453,26 @@ public class MicroblogsEntryPersistenceImpl
 			new String[] {"creatorClassNameId", "creatorClassPK"}, true);
 
 		_finderPathCountByCCNI_CCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCNI_CCPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"creatorClassNameId", "creatorClassPK"}, false);
-
-		_finderPathWithPaginationCountByCCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCCNI_CCPK",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"creatorClassNameId", "creatorClassPK"}, false);
+
+		_collectionPersistenceFinderByCCNI_CCPK =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCCNI_CCPK,
+				_finderPathWithoutPaginationFindByCCNI_CCPK,
+				_finderPathCountByCCNI_CCPK, _SQL_SELECT_MICROBLOGSENTRY_WHERE,
+				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
+				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"microblogsEntry.", "creatorClassNameId",
+					FinderColumn.Type.LONG, "=", true, true,
+					MicroblogsEntry::getCreatorClassNameId),
+				new ArrayableFinderColumn<>(
+					"microblogsEntry.", "creatorClassPK",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					MicroblogsEntry::getCreatorClassPK));
 
 		_finderPathWithPaginationFindByCCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCCNI_T",
@@ -7856,20 +6560,33 @@ public class MicroblogsEntryPersistenceImpl
 			true);
 
 		_finderPathCountByC_CCNI_CCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CCNI_CCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
-			false);
-
-		_finderPathWithPaginationCountByC_CCNI_CCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_CCNI_CCPK",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "creatorClassNameId", "creatorClassPK"},
 			false);
+
+		_collectionPersistenceFinderByC_CCNI_CCPK =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_CCNI_CCPK,
+				_finderPathWithoutPaginationFindByC_CCNI_CCPK,
+				_finderPathCountByC_CCNI_CCPK,
+				_SQL_SELECT_MICROBLOGSENTRY_WHERE,
+				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
+				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, MicroblogsEntry::getCompanyId),
+				new FinderColumn<>(
+					"microblogsEntry.", "creatorClassNameId",
+					FinderColumn.Type.LONG, "=", true, true,
+					MicroblogsEntry::getCreatorClassNameId),
+				new ArrayableFinderColumn<>(
+					"microblogsEntry.", "creatorClassPK",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					MicroblogsEntry::getCreatorClassPK));
 
 		_finderPathWithPaginationFindByC_CCNI_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CCNI_T",
@@ -7935,15 +6652,6 @@ public class MicroblogsEntryPersistenceImpl
 			true);
 
 		_finderPathCountByCCNI_CCPK_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCCNI_CCPK_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
-			false);
-
-		_finderPathWithPaginationCountByCCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -7951,6 +6659,27 @@ public class MicroblogsEntryPersistenceImpl
 			},
 			new String[] {"creatorClassNameId", "creatorClassPK", "type_"},
 			false);
+
+		_collectionPersistenceFinderByCCNI_CCPK_T =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByCCNI_CCPK_T,
+				_finderPathWithoutPaginationFindByCCNI_CCPK_T,
+				_finderPathCountByCCNI_CCPK_T,
+				_SQL_SELECT_MICROBLOGSENTRY_WHERE,
+				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
+				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"microblogsEntry.", "creatorClassNameId",
+					FinderColumn.Type.LONG, "=", true, true,
+					MicroblogsEntry::getCreatorClassNameId),
+				new ArrayableFinderColumn<>(
+					"microblogsEntry.", "creatorClassPK",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					MicroblogsEntry::getCreatorClassPK),
+				new FinderColumn<>(
+					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
+					true, true, MicroblogsEntry::getType));
 
 		_finderPathWithPaginationFindByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CCNI_CCPK_T",
@@ -7977,17 +6706,6 @@ public class MicroblogsEntryPersistenceImpl
 			true);
 
 		_finderPathCountByC_CCNI_CCPK_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CCNI_CCPK_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "creatorClassNameId", "creatorClassPK", "type_"
-			},
-			false);
-
-		_finderPathWithPaginationCountByC_CCNI_CCPK_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_CCNI_CCPK_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -7997,6 +6715,30 @@ public class MicroblogsEntryPersistenceImpl
 				"companyId", "creatorClassNameId", "creatorClassPK", "type_"
 			},
 			false);
+
+		_collectionPersistenceFinderByC_CCNI_CCPK_T =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_CCNI_CCPK_T,
+				_finderPathWithoutPaginationFindByC_CCNI_CCPK_T,
+				_finderPathCountByC_CCNI_CCPK_T,
+				_SQL_SELECT_MICROBLOGSENTRY_WHERE,
+				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
+				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, MicroblogsEntry::getCompanyId),
+				new FinderColumn<>(
+					"microblogsEntry.", "creatorClassNameId",
+					FinderColumn.Type.LONG, "=", true, true,
+					MicroblogsEntry::getCreatorClassNameId),
+				new ArrayableFinderColumn<>(
+					"microblogsEntry.", "creatorClassPK",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					MicroblogsEntry::getCreatorClassPK),
+				new FinderColumn<>(
+					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
+					true, true, MicroblogsEntry::getType));
 
 		_finderPathWithPaginationFindByU_C_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_C_T_S",
@@ -8147,4 +6889,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1342770801
+// LIFERAY-SERVICE-BUILDER-HASH:-1897496343

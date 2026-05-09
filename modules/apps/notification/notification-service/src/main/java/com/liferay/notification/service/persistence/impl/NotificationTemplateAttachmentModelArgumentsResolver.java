@@ -57,7 +57,7 @@ public class NotificationTemplateAttachmentModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				notificationTemplateAttachmentModelImpl, columnNames, original);
+				notificationTemplateAttachmentModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class NotificationTemplateAttachmentModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				notificationTemplateAttachmentModelImpl, columnNames, original);
+				notificationTemplateAttachmentModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class NotificationTemplateAttachmentModelArgumentsResolver
 	private static Object[] _getValue(
 		NotificationTemplateAttachmentModelImpl
 			notificationTemplateAttachmentModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					notificationTemplateAttachmentModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					notificationTemplateAttachmentModelImpl.getColumnValue(
-						columnName);
+				value = notificationTemplateAttachmentModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class NotificationTemplateAttachmentModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-375853462
+// LIFERAY-SERVICE-BUILDER-HASH:746771195

@@ -1716,13 +1716,13 @@ public class DDMStructureLayoutPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1737,7 +1737,7 @@ public class DDMStructureLayoutPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(DDMStructureLayout::getUuid),
 			DDMStructureLayout::getGroupId);
 
@@ -1763,12 +1763,12 @@ public class DDMStructureLayoutPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1826,12 +1826,12 @@ public class DDMStructureLayoutPersistenceImpl
 		_finderPathWithoutPaginationFindByStructureLayoutKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByStructureLayoutKey", new String[] {String.class.getName()},
-			new String[] {"structureLayoutKey"}, true);
+			new String[] {"structureLayoutKey"}, 0, 1, true, null);
 
 		_finderPathCountByStructureLayoutKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByStructureLayoutKey", new String[] {String.class.getName()},
-			new String[] {"structureLayoutKey"}, false);
+			new String[] {"structureLayoutKey"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByStructureLayoutKey =
 			new CollectionPersistenceFinder<>(
@@ -1850,7 +1850,7 @@ public class DDMStructureLayoutPersistenceImpl
 		_finderPathFetchByStructureVersionId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByStructureVersionId",
 			new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, false,
+			new String[] {"structureVersionId"}, 0, 0, false,
 			DDMStructureLayout::getStructureVersionId);
 
 		_uniquePersistenceFinderByStructureVersionId =
@@ -1900,7 +1900,7 @@ public class DDMStructureLayoutPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "structureLayoutKey"},
+			new String[] {"groupId", "classNameId", "structureLayoutKey"}, 0, 4,
 			false, DDMStructureLayout::getGroupId,
 			DDMStructureLayout::getClassNameId,
 			convertNullFunction(DDMStructureLayout::getStructureLayoutKey));
@@ -2037,4 +2037,4 @@ public class DDMStructureLayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2087660862
+// LIFERAY-SERVICE-BUILDER-HASH:-1342787310

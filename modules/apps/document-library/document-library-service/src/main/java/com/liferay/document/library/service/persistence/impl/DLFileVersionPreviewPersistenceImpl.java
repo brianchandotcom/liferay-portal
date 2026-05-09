@@ -937,7 +937,7 @@ public class DLFileVersionPreviewPersistenceImpl
 		_finderPathFetchByF_F = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_F",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"fileEntryId", "fileVersionId"}, false,
+			new String[] {"fileEntryId", "fileVersionId"}, 0, 0, false,
 			DLFileVersionPreview::getFileEntryId,
 			DLFileVersionPreview::getFileVersionId);
 
@@ -958,8 +958,8 @@ public class DLFileVersionPreviewPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"fileEntryId", "fileVersionId", "previewStatus"},
-			false, DLFileVersionPreview::getFileEntryId,
+			new String[] {"fileEntryId", "fileVersionId", "previewStatus"}, 0,
+			0, false, DLFileVersionPreview::getFileEntryId,
 			DLFileVersionPreview::getFileVersionId,
 			DLFileVersionPreview::getPreviewStatus);
 
@@ -1047,4 +1047,4 @@ public class DLFileVersionPreviewPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:245803540
+// LIFERAY-SERVICE-BUILDER-HASH:1195161614

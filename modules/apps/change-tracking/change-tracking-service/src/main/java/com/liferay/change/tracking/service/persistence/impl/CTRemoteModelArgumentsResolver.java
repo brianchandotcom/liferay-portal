@@ -52,7 +52,7 @@ public class CTRemoteModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ctRemoteModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ctRemoteModelImpl, columnNames, original);
+			return _getValue(ctRemoteModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class CTRemoteModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ctRemoteModelImpl, columnNames, original);
+			return _getValue(ctRemoteModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class CTRemoteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CTRemoteModelImpl ctRemoteModelImpl, String[] columnNames,
+		CTRemoteModelImpl ctRemoteModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ctRemoteModelImpl.getColumnOriginalValue(
-					columnName);
+				value = ctRemoteModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = ctRemoteModelImpl.getColumnValue(columnName);
+				value = ctRemoteModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -131,4 +136,4 @@ public class CTRemoteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-278652172
+// LIFERAY-SERVICE-BUILDER-HASH:1309347601

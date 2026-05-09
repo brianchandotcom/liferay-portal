@@ -1235,7 +1235,7 @@ public class KaleoTaskFormPersistenceImpl
 		_finderPathFetchByFormUuid_KTI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByFormUuid_KTI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoTaskId", "formUuid"}, false,
+			new String[] {"kaleoTaskId", "formUuid"}, 0, 2, false,
 			KaleoTaskForm::getKaleoTaskId,
 			convertNullFunction(KaleoTaskForm::getFormUuid));
 
@@ -1318,4 +1318,4 @@ public class KaleoTaskFormPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:729544670
+// LIFERAY-SERVICE-BUILDER-HASH:-37698981

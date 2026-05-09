@@ -2446,13 +2446,13 @@ public class ObjectEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2466,7 +2466,7 @@ public class ObjectEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(ObjectEntry::getUuid), ObjectEntry::getGroupId);
 
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
@@ -2490,12 +2490,12 @@ public class ObjectEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2514,7 +2514,7 @@ public class ObjectEntryPersistenceImpl
 		_finderPathFetchByHeadObjectEntryId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadObjectEntryId",
 			new String[] {Long.class.getName()},
-			new String[] {"headObjectEntryId"}, false,
+			new String[] {"headObjectEntryId"}, 0, 0, false,
 			ObjectEntry::getHeadObjectEntryId);
 
 		_uniquePersistenceFinderByHeadObjectEntryId =
@@ -2844,7 +2844,8 @@ public class ObjectEntryPersistenceImpl
 				"externalReferenceCode", "groupId", "companyId",
 				"objectDefinitionId"
 			},
-			false, convertNullFunction(ObjectEntry::getExternalReferenceCode),
+			0, 1, false,
+			convertNullFunction(ObjectEntry::getExternalReferenceCode),
 			ObjectEntry::getGroupId, ObjectEntry::getCompanyId,
 			ObjectEntry::getObjectDefinitionId);
 
@@ -2934,4 +2935,4 @@ public class ObjectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-68040947
+// LIFERAY-SERVICE-BUILDER-HASH:1994821513

@@ -51,7 +51,7 @@ public class EagerBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 		if (!checkColumn ||
 			_hasModifiedColumns(eagerBlobEntryModelImpl, columnNames)) {
 
-			return _getValue(eagerBlobEntryModelImpl, columnNames, original);
+			return _getValue(eagerBlobEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -68,22 +68,27 @@ public class EagerBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		EagerBlobEntryModelImpl eagerBlobEntryModelImpl, String[] columnNames,
+		EagerBlobEntryModelImpl eagerBlobEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = eagerBlobEntryModelImpl.getColumnOriginalValue(
+				value = eagerBlobEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = eagerBlobEntryModelImpl.getColumnValue(
-					columnName);
+				value = eagerBlobEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -109,4 +114,4 @@ public class EagerBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-874121007
+// LIFERAY-SERVICE-BUILDER-HASH:1962573753

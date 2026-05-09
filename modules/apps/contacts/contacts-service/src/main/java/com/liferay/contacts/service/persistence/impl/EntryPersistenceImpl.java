@@ -530,8 +530,8 @@ public class EntryPersistenceImpl
 		_finderPathFetchByU_EA = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_EA",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "emailAddress"}, false, Entry::getUserId,
-			convertNullFunction(Entry::getEmailAddress));
+			new String[] {"userId", "emailAddress"}, 0, 2, false,
+			Entry::getUserId, convertNullFunction(Entry::getEmailAddress));
 
 		_uniquePersistenceFinderByU_EA = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByU_EA, _SQL_SELECT_ENTRY_WHERE, "",
@@ -608,4 +608,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1890025299
+// LIFERAY-SERVICE-BUILDER-HASH:-1227082808

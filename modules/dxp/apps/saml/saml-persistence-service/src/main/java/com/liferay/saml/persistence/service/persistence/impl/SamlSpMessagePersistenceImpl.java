@@ -541,7 +541,7 @@ public class SamlSpMessagePersistenceImpl
 		_finderPathFetchBySIEI_SIRK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SIRK",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"samlIdpEntityId", "samlIdpResponseKey"}, false,
+			new String[] {"samlIdpEntityId", "samlIdpResponseKey"}, 0, 3, false,
 			convertNullFunction(SamlSpMessage::getSamlIdpEntityId),
 			convertNullFunction(SamlSpMessage::getSamlIdpResponseKey));
 
@@ -622,4 +622,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1162291628
+// LIFERAY-SERVICE-BUILDER-HASH:-1259018685

@@ -3829,13 +3829,13 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -3852,7 +3852,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(LayoutPageTemplateCollection::getUuid),
 			LayoutPageTemplateCollection::getGroupId);
 
@@ -3880,12 +3880,12 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -4062,7 +4062,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "lptCollectionKey", "type_"}, false,
+			new String[] {"groupId", "lptCollectionKey", "type_"}, 0, 2, false,
 			LayoutPageTemplateCollection::getGroupId,
 			convertNullFunction(
 				LayoutPageTemplateCollection::
@@ -4102,7 +4102,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "name", "type_"}, true);
+			new String[] {"groupId", "name", "type_"}, 0, 2, true, null);
 
 		_finderPathCountByG_N_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_T",
@@ -4110,7 +4110,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Integer.class.getName()
 			},
-			new String[] {"groupId", "name", "type_"}, false);
+			new String[] {"groupId", "name", "type_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByG_N_T = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_N_T,
@@ -4177,7 +4177,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 				String.class.getName(), Integer.class.getName()
 			},
 			new String[] {"groupId", "parentLPTCollectionId", "name", "type_"},
-			false, LayoutPageTemplateCollection::getGroupId,
+			0, 4, false, LayoutPageTemplateCollection::getGroupId,
 			LayoutPageTemplateCollection::
 				getParentLayoutPageTemplateCollectionId,
 			convertNullFunction(LayoutPageTemplateCollection::getName),
@@ -4208,7 +4208,7 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 		_finderPathFetchByERC_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, false,
+			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
 			convertNullFunction(
 				LayoutPageTemplateCollection::getExternalReferenceCode),
 			LayoutPageTemplateCollection::getGroupId);
@@ -4329,4 +4329,4 @@ public class LayoutPageTemplateCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-479819951
+// LIFERAY-SERVICE-BUILDER-HASH:666473547

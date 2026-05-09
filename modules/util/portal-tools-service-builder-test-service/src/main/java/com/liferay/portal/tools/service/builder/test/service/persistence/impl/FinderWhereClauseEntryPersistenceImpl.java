@@ -404,12 +404,13 @@ public class FinderWhereClauseEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByName_Nickname = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			true, null);
 
 		_finderPathCountByName_Nickname = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByName_Nickname =
 			new CollectionPersistenceFinder<>(
@@ -464,4 +465,4 @@ public class FinderWhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1932692274
+// LIFERAY-SERVICE-BUILDER-HASH:507467478

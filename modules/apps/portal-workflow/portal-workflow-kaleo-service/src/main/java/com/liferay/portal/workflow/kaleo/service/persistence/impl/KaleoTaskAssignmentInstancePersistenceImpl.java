@@ -1898,12 +1898,12 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		_finderPathWithoutPaginationFindByAssigneeClassName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByAssigneeClassName", new String[] {String.class.getName()},
-			new String[] {"assigneeClassName"}, true);
+			new String[] {"assigneeClassName"}, 0, 1, true, null);
 
 		_finderPathCountByAssigneeClassName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByAssigneeClassName", new String[] {String.class.getName()},
-			new String[] {"assigneeClassName"}, false);
+			new String[] {"assigneeClassName"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByAssigneeClassName =
 			new CollectionPersistenceFinder<>(
@@ -1969,14 +1969,14 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		_finderPathWithoutPaginationFindByKTITI_ACN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKTITI_ACN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoTaskInstanceTokenId", "assigneeClassName"},
-			true);
+			new String[] {"kaleoTaskInstanceTokenId", "assigneeClassName"}, 0,
+			2, true, null);
 
 		_finderPathCountByKTITI_ACN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKTITI_ACN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoTaskInstanceTokenId", "assigneeClassName"},
-			false);
+			new String[] {"kaleoTaskInstanceTokenId", "assigneeClassName"}, 0,
+			2, false, null);
 
 		_collectionPersistenceFinderByKTITI_ACN =
 			new CollectionPersistenceFinder<>(
@@ -2008,12 +2008,14 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		_finderPathWithoutPaginationFindByACN_ACPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByACN_ACPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"assigneeClassName", "assigneeClassPK"}, true);
+			new String[] {"assigneeClassName", "assigneeClassPK"}, 0, 1, true,
+			null);
 
 		_finderPathCountByACN_ACPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByACN_ACPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"assigneeClassName", "assigneeClassPK"}, false);
+			new String[] {"assigneeClassName", "assigneeClassPK"}, 0, 1, false,
+			null);
 
 		_collectionPersistenceFinderByACN_ACPK =
 			new CollectionPersistenceFinder<>(
@@ -2103,4 +2105,4 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1571354721
+// LIFERAY-SERVICE-BUILDER-HASH:1803637540

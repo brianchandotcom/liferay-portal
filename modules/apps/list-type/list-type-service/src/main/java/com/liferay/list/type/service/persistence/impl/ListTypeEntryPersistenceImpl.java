@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
@@ -33,6 +31,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
@@ -397,7 +395,8 @@ public class ListTypeEntryPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByListTypeEntryId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeEntryId;
 	private FinderPath _finderPathCountByListTypeEntryId;
-	private FinderPath _finderPathWithPaginationCountByListTypeEntryId;
+	private CollectionPersistenceFinder<ListTypeEntry>
+		_collectionPersistenceFinderByListTypeEntryId;
 
 	/**
 	 * Returns all the list type entries where listTypeEntryId = &#63;.
@@ -472,95 +471,9 @@ public class ListTypeEntryPersistenceImpl
 		OrderByComparator<ListTypeEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByListTypeEntryId;
-				finderArgs = new Object[] {listTypeEntryId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByListTypeEntryId;
-			finderArgs = new Object[] {
-				listTypeEntryId, start, end, orderByComparator
-			};
-		}
-
-		List<ListTypeEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<ListTypeEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ListTypeEntry listTypeEntry : list) {
-					if (listTypeEntryId != listTypeEntry.getListTypeEntryId()) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ListTypeEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeEntryId);
-
-				list = (List<ListTypeEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByListTypeEntryId.find(
+			finderCache, new Object[] {new long[] {listTypeEntryId}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -608,14 +521,9 @@ public class ListTypeEntryPersistenceImpl
 		long listTypeEntryId,
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
-		List<ListTypeEntry> list = findByListTypeEntryId(
-			listTypeEntryId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByListTypeEntryId.fetchFirst(
+			finderCache, new Object[] {new long[] {listTypeEntryId}},
+			orderByComparator);
 	}
 
 	/**
@@ -695,112 +603,10 @@ public class ListTypeEntryPersistenceImpl
 		OrderByComparator<ListTypeEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (listTypeEntryIds == null) {
-			listTypeEntryIds = new long[0];
-		}
-		else if (listTypeEntryIds.length > 1) {
-			listTypeEntryIds = ArrayUtil.sortedUnique(listTypeEntryIds);
-		}
-
-		if (listTypeEntryIds.length == 1) {
-			return findByListTypeEntryId(
-				listTypeEntryIds[0], start, end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {StringUtil.merge(listTypeEntryIds)};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				StringUtil.merge(listTypeEntryIds), start, end,
-				orderByComparator
-			};
-		}
-
-		List<ListTypeEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<ListTypeEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByListTypeEntryId, finderArgs,
-				this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ListTypeEntry listTypeEntry : list) {
-					if (!ArrayUtil.contains(
-							listTypeEntryIds,
-							listTypeEntry.getListTypeEntryId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
-
-			if (listTypeEntryIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_7);
-
-				sb.append(StringUtil.merge(listTypeEntryIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ListTypeEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<ListTypeEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByListTypeEntryId,
-						finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByListTypeEntryId.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -810,13 +616,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByListTypeEntryId(long listTypeEntryId) {
-		for (ListTypeEntry listTypeEntry :
-				findByListTypeEntryId(
-					listTypeEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listTypeEntry);
-		}
+		_collectionPersistenceFinderByListTypeEntryId.remove(
+			finderCache, new Object[] {new long[] {listTypeEntryId}});
 	}
 
 	/**
@@ -827,45 +628,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public int countByListTypeEntryId(long listTypeEntryId) {
-		FinderPath finderPath = _finderPathCountByListTypeEntryId;
-
-		Object[] finderArgs = new Object[] {listTypeEntryId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			sb.append(_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeEntryId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByListTypeEntryId.count(
+			finderCache, new Object[] {new long[] {listTypeEntryId}});
 	}
 
 	/**
@@ -876,76 +640,20 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public int countByListTypeEntryId(long[] listTypeEntryIds) {
-		if (listTypeEntryIds == null) {
-			listTypeEntryIds = new long[0];
-		}
-		else if (listTypeEntryIds.length > 1) {
-			listTypeEntryIds = ArrayUtil.sortedUnique(listTypeEntryIds);
-		}
-
-		Object[] finderArgs = new Object[] {StringUtil.merge(listTypeEntryIds)};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByListTypeEntryId, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			if (listTypeEntryIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_7);
-
-				sb.append(StringUtil.merge(listTypeEntryIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByListTypeEntryId, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByListTypeEntryId.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(listTypeEntryIds)});
 	}
 
 	private static final String
 		_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_2 =
 			"listTypeEntry.listTypeEntryId = ?";
 
-	private static final String
-		_FINDER_COLUMN_LISTTYPEENTRYID_LISTTYPEENTRYID_7 =
-			"listTypeEntry.listTypeEntryId IN (";
-
 	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
 	private FinderPath _finderPathCountByListTypeDefinitionId;
-	private FinderPath _finderPathWithPaginationCountByListTypeDefinitionId;
+	private CollectionPersistenceFinder<ListTypeEntry>
+		_collectionPersistenceFinderByListTypeDefinitionId;
 
 	/**
 	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
@@ -1023,99 +731,9 @@ public class ListTypeEntryPersistenceImpl
 		OrderByComparator<ListTypeEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByListTypeDefinitionId;
-				finderArgs = new Object[] {listTypeDefinitionId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByListTypeDefinitionId;
-			finderArgs = new Object[] {
-				listTypeDefinitionId, start, end, orderByComparator
-			};
-		}
-
-		List<ListTypeEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<ListTypeEntry>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ListTypeEntry listTypeEntry : list) {
-					if (listTypeDefinitionId !=
-							listTypeEntry.getListTypeDefinitionId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ListTypeEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeDefinitionId);
-
-				list = (List<ListTypeEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByListTypeDefinitionId.find(
+			finderCache, new Object[] {new long[] {listTypeDefinitionId}},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1163,14 +781,9 @@ public class ListTypeEntryPersistenceImpl
 		long listTypeDefinitionId,
 		OrderByComparator<ListTypeEntry> orderByComparator) {
 
-		List<ListTypeEntry> list = findByListTypeDefinitionId(
-			listTypeDefinitionId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByListTypeDefinitionId.fetchFirst(
+			finderCache, new Object[] {new long[] {listTypeDefinitionId}},
+			orderByComparator);
 	}
 
 	/**
@@ -1253,116 +866,10 @@ public class ListTypeEntryPersistenceImpl
 		OrderByComparator<ListTypeEntry> orderByComparator,
 		boolean useFinderCache) {
 
-		if (listTypeDefinitionIds == null) {
-			listTypeDefinitionIds = new long[0];
-		}
-		else if (listTypeDefinitionIds.length > 1) {
-			listTypeDefinitionIds = ArrayUtil.sortedUnique(
-				listTypeDefinitionIds);
-		}
-
-		if (listTypeDefinitionIds.length == 1) {
-			return findByListTypeDefinitionId(
-				listTypeDefinitionIds[0], start, end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					StringUtil.merge(listTypeDefinitionIds)
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				StringUtil.merge(listTypeDefinitionIds), start, end,
-				orderByComparator
-			};
-		}
-
-		List<ListTypeEntry> list = null;
-
-		if (useFinderCache) {
-			list = (List<ListTypeEntry>)finderCache.getResult(
-				_finderPathWithPaginationFindByListTypeDefinitionId, finderArgs,
-				this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ListTypeEntry listTypeEntry : list) {
-					if (!ArrayUtil.contains(
-							listTypeDefinitionIds,
-							listTypeEntry.getListTypeDefinitionId())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_LISTTYPEENTRY_WHERE);
-
-			if (listTypeDefinitionIds.length > 0) {
-				sb.append("(");
-
-				sb.append(
-					_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_7);
-
-				sb.append(StringUtil.merge(listTypeDefinitionIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ListTypeEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				list = (List<ListTypeEntry>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByListTypeDefinitionId,
-						finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByListTypeDefinitionId.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(listTypeDefinitionIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1372,13 +879,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public void removeByListTypeDefinitionId(long listTypeDefinitionId) {
-		for (ListTypeEntry listTypeEntry :
-				findByListTypeDefinitionId(
-					listTypeDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(listTypeEntry);
-		}
+		_collectionPersistenceFinderByListTypeDefinitionId.remove(
+			finderCache, new Object[] {new long[] {listTypeDefinitionId}});
 	}
 
 	/**
@@ -1389,46 +891,8 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public int countByListTypeDefinitionId(long listTypeDefinitionId) {
-		FinderPath finderPath = _finderPathCountByListTypeDefinitionId;
-
-		Object[] finderArgs = new Object[] {listTypeDefinitionId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(listTypeDefinitionId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByListTypeDefinitionId.count(
+			finderCache, new Object[] {new long[] {listTypeDefinitionId}});
 	}
 
 	/**
@@ -1439,76 +903,14 @@ public class ListTypeEntryPersistenceImpl
 	 */
 	@Override
 	public int countByListTypeDefinitionId(long[] listTypeDefinitionIds) {
-		if (listTypeDefinitionIds == null) {
-			listTypeDefinitionIds = new long[0];
-		}
-		else if (listTypeDefinitionIds.length > 1) {
-			listTypeDefinitionIds = ArrayUtil.sortedUnique(
-				listTypeDefinitionIds);
-		}
-
-		Object[] finderArgs = new Object[] {
-			StringUtil.merge(listTypeDefinitionIds)
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByListTypeDefinitionId, finderArgs,
-			this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_LISTTYPEENTRY_WHERE);
-
-			if (listTypeDefinitionIds.length > 0) {
-				sb.append("(");
-
-				sb.append(
-					_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_7);
-
-				sb.append(StringUtil.merge(listTypeDefinitionIds));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByListTypeDefinitionId,
-					finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByListTypeDefinitionId.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(listTypeDefinitionIds)});
 	}
 
 	private static final String
 		_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_2 =
 			"listTypeEntry.listTypeDefinitionId = ?";
-
-	private static final String
-		_FINDER_COLUMN_LISTTYPEDEFINITIONID_LISTTYPEDEFINITIONID_7 =
-			"listTypeEntry.listTypeDefinitionId IN (";
 
 	private FinderPath _finderPathWithPaginationFindByC_U;
 	private FinderPath _finderPathWithoutPaginationFindByC_U;
@@ -2150,13 +1552,13 @@ public class ListTypeEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2179,12 +1581,12 @@ public class ListTypeEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -2214,14 +1616,20 @@ public class ListTypeEntryPersistenceImpl
 			new String[] {"listTypeEntryId"}, true);
 
 		_finderPathCountByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByListTypeEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"listTypeEntryId"}, false);
-
-		_finderPathWithPaginationCountByListTypeEntryId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByListTypeEntryId",
 			new String[] {Long.class.getName()},
 			new String[] {"listTypeEntryId"}, false);
+
+		_collectionPersistenceFinderByListTypeEntryId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByListTypeEntryId,
+				_finderPathWithoutPaginationFindByListTypeEntryId,
+				_finderPathCountByListTypeEntryId,
+				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
+				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"listTypeEntry.", "listTypeEntryId", FinderColumn.Type.LONG,
+					"=", false, true, true, ListTypeEntry::getListTypeEntryId));
 
 		_finderPathWithPaginationFindByListTypeDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -2238,14 +1646,21 @@ public class ListTypeEntryPersistenceImpl
 			new String[] {"listTypeDefinitionId"}, true);
 
 		_finderPathCountByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, false);
-
-		_finderPathWithPaginationCountByListTypeDefinitionId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
 			new String[] {"listTypeDefinitionId"}, false);
+
+		_collectionPersistenceFinderByListTypeDefinitionId =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByListTypeDefinitionId,
+				_finderPathWithoutPaginationFindByListTypeDefinitionId,
+				_finderPathCountByListTypeDefinitionId,
+				_SQL_SELECT_LISTTYPEENTRY_WHERE, _SQL_COUNT_LISTTYPEENTRY_WHERE,
+				ListTypeEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new ArrayableFinderColumn<>(
+					"listTypeEntry.", "listTypeDefinitionId",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					ListTypeEntry::getListTypeDefinitionId));
 
 		_finderPathWithPaginationFindByC_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
@@ -2281,7 +1696,7 @@ public class ListTypeEntryPersistenceImpl
 		_finderPathFetchByLTDI_K = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByLTDI_K",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"listTypeDefinitionId", "key_"}, false,
+			new String[] {"listTypeDefinitionId", "key_"}, 0, 2, false,
 			ListTypeEntry::getListTypeDefinitionId,
 			convertNullFunction(ListTypeEntry::getKey));
 
@@ -2304,7 +1719,8 @@ public class ListTypeEntryPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "listTypeDefinitionId"
 			},
-			false, convertNullFunction(ListTypeEntry::getExternalReferenceCode),
+			0, 1, false,
+			convertNullFunction(ListTypeEntry::getExternalReferenceCode),
 			ListTypeEntry::getCompanyId,
 			ListTypeEntry::getListTypeDefinitionId);
 
@@ -2392,4 +1808,4 @@ public class ListTypeEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:778880923
+// LIFERAY-SERVICE-BUILDER-HASH:581685958

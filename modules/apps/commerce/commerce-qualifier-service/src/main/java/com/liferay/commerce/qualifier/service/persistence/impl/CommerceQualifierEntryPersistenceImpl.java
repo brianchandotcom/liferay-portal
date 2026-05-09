@@ -1320,7 +1320,7 @@ public class CommerceQualifierEntryPersistenceImpl
 				"sourceClassNameId", "sourceClassPK", "targetClassNameId",
 				"targetClassPK"
 			},
-			false, CommerceQualifierEntry::getSourceClassNameId,
+			0, 0, false, CommerceQualifierEntry::getSourceClassNameId,
 			CommerceQualifierEntry::getSourceClassPK,
 			CommerceQualifierEntry::getTargetClassNameId,
 			CommerceQualifierEntry::getTargetClassPK);
@@ -1417,4 +1417,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-256346957
+// LIFERAY-SERVICE-BUILDER-HASH:-1601139402

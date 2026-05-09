@@ -1893,12 +1893,12 @@ public class KaleoInstancePersistenceImpl
 		_finderPathWithoutPaginationFindByCN_CPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCN_CPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"className", "classPK"}, true);
+			new String[] {"className", "classPK"}, 0, 1, true, null);
 
 		_finderPathCountByCN_CPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCN_CPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"className", "classPK"}, false);
+			new String[] {"className", "classPK"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByCN_CPK =
 			new CollectionPersistenceFinder<>(
@@ -1919,9 +1919,9 @@ public class KaleoInstancePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"kaleoInstanceId", "companyId", "userId"}, false,
-			KaleoInstance::getKaleoInstanceId, KaleoInstance::getCompanyId,
-			KaleoInstance::getUserId);
+			new String[] {"kaleoInstanceId", "companyId", "userId"}, 0, 0,
+			false, KaleoInstance::getKaleoInstanceId,
+			KaleoInstance::getCompanyId, KaleoInstance::getUserId);
 
 		_uniquePersistenceFinderByKII_C_U = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKII_C_U, _SQL_SELECT_KALEOINSTANCE_WHERE,
@@ -1960,7 +1960,7 @@ public class KaleoInstancePersistenceImpl
 				"companyId", "kaleoDefinitionName", "kaleoDefinitionVersion",
 				"completionDate"
 			},
-			true);
+			0, 2, true, null);
 
 		_finderPathCountByC_KDN_KDV_CD = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_KDN_KDV_CD",
@@ -1972,7 +1972,7 @@ public class KaleoInstancePersistenceImpl
 				"companyId", "kaleoDefinitionName", "kaleoDefinitionVersion",
 				"completionDate"
 			},
-			false);
+			0, 2, false, null);
 
 		_collectionPersistenceFinderByC_KDN_KDV_CD =
 			new CollectionPersistenceFinder<>(
@@ -2068,4 +2068,4 @@ public class KaleoInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102862742
+// LIFERAY-SERVICE-BUILDER-HASH:-1732089438

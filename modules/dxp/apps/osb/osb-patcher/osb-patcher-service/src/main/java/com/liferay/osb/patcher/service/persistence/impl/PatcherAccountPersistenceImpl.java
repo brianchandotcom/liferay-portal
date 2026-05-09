@@ -1499,7 +1499,7 @@ public class PatcherAccountPersistenceImpl
 		_finderPathFetchByAccountEntryCode = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByAccountEntryCode",
 			new String[] {String.class.getName()},
-			new String[] {"accountEntryCode"}, false,
+			new String[] {"accountEntryCode"}, 0, 1, false,
 			convertNullFunction(PatcherAccount::getAccountEntryCode));
 
 		_uniquePersistenceFinderByAccountEntryCode =
@@ -1637,4 +1637,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1946729586
+// LIFERAY-SERVICE-BUILDER-HASH:-1205424928

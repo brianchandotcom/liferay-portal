@@ -1241,12 +1241,12 @@ public class CTSContentPersistenceImpl
 		_finderPathWithoutPaginationFindByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, true);
+			new String[] {"repositoryId", "path_"}, 0, 2, true, null);
 
 		_finderPathCountByR_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, false);
+			new String[] {"repositoryId", "path_"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByR_P = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByR_P,
@@ -1275,7 +1275,8 @@ public class CTSContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "storeType"}, true);
+			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4, true,
+			null);
 
 		_finderPathCountByC_R_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_S",
@@ -1283,7 +1284,8 @@ public class CTSContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "storeType"}, false);
+			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByC_R_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_R_S,
@@ -1317,8 +1319,8 @@ public class CTSContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			true);
+			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
+			12, true, null);
 
 		_finderPathCountByC_R_P_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_S",
@@ -1326,8 +1328,8 @@ public class CTSContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			false);
+			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
+			12, false, null);
 
 		_collectionPersistenceFinderByC_R_P_S =
 			new CollectionPersistenceFinder<>(
@@ -1398,7 +1400,7 @@ public class CTSContentPersistenceImpl
 			new String[] {
 				"companyId", "repositoryId", "path_", "version", "storeType"
 			},
-			false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
+			0, 28, false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
 			convertNullFunction(CTSContent::getPath),
 			convertNullFunction(CTSContent::getVersion),
 			convertNullFunction(CTSContent::getStoreType));
@@ -1493,4 +1495,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:261988824
+// LIFERAY-SERVICE-BUILDER-HASH:819900185

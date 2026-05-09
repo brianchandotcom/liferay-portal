@@ -52,7 +52,7 @@ public class CPOptionModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = cpOptionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(cpOptionModelImpl, columnNames, original);
+			return _getValue(cpOptionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class CPOptionModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(cpOptionModelImpl, columnNames, original);
+			return _getValue(cpOptionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class CPOptionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CPOptionModelImpl cpOptionModelImpl, String[] columnNames,
+		CPOptionModelImpl cpOptionModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = cpOptionModelImpl.getColumnOriginalValue(
-					columnName);
+				value = cpOptionModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = cpOptionModelImpl.getColumnValue(columnName);
+				value = cpOptionModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class CPOptionModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:478862487
+// LIFERAY-SERVICE-BUILDER-HASH:-497073986

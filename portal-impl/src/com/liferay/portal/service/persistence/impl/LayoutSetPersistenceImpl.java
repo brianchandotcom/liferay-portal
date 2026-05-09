@@ -1171,13 +1171,13 @@ public class LayoutSetPersistenceImpl
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByLayoutSetPrototypeUuid",
 				new String[] {String.class.getName()},
-				new String[] {"layoutSetPrototypeUuid"}, true);
+				new String[] {"layoutSetPrototypeUuid"}, 0, 1, true, null);
 
 		_finderPathCountByLayoutSetPrototypeUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByLayoutSetPrototypeUuid",
 			new String[] {String.class.getName()},
-			new String[] {"layoutSetPrototypeUuid"}, false);
+			new String[] {"layoutSetPrototypeUuid"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByLayoutSetPrototypeUuid =
 			new CollectionPersistenceFinder<>(
@@ -1194,7 +1194,7 @@ public class LayoutSetPersistenceImpl
 		_finderPathFetchByG_P = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, false,
+			new String[] {"groupId", "privateLayout"}, 0, 0, false,
 			LayoutSet::getGroupId, LayoutSet::isPrivateLayout);
 
 		_uniquePersistenceFinderByG_P = new UniquePersistenceFinder<>(
@@ -1218,12 +1218,14 @@ public class LayoutSetPersistenceImpl
 		_finderPathWithoutPaginationFindByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "layoutSetPrototypeUuid"}, true);
+			new String[] {"companyId", "layoutSetPrototypeUuid"}, 0, 2, true,
+			null);
 
 		_finderPathCountByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "layoutSetPrototypeUuid"}, false);
+			new String[] {"companyId", "layoutSetPrototypeUuid"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_L,
@@ -1305,4 +1307,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1586629684
+// LIFERAY-SERVICE-BUILDER-HASH:-1836984385

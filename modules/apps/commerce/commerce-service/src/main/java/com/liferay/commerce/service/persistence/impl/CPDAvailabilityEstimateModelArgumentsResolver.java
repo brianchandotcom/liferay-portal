@@ -56,7 +56,7 @@ public class CPDAvailabilityEstimateModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				cpdAvailabilityEstimateModelImpl, columnNames, original);
+				cpdAvailabilityEstimateModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class CPDAvailabilityEstimateModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				cpdAvailabilityEstimateModelImpl, columnNames, original);
+				cpdAvailabilityEstimateModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,22 +95,27 @@ public class CPDAvailabilityEstimateModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CPDAvailabilityEstimateModelImpl cpdAvailabilityEstimateModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = cpdAvailabilityEstimateModelImpl.getColumnValue(
+				value = cpdAvailabilityEstimateModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = cpdAvailabilityEstimateModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +125,4 @@ public class CPDAvailabilityEstimateModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1475549246
+// LIFERAY-SERVICE-BUILDER-HASH:86330753

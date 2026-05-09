@@ -53,7 +53,7 @@ public class SXPBlueprintModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = sxpBlueprintModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(sxpBlueprintModelImpl, columnNames, original);
+			return _getValue(sxpBlueprintModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class SXPBlueprintModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(sxpBlueprintModelImpl, columnNames, original);
+			return _getValue(sxpBlueprintModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,27 @@ public class SXPBlueprintModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		SXPBlueprintModelImpl sxpBlueprintModelImpl, String[] columnNames,
+		SXPBlueprintModelImpl sxpBlueprintModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = sxpBlueprintModelImpl.getColumnOriginalValue(
+				value = sxpBlueprintModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = sxpBlueprintModelImpl.getColumnValue(columnName);
+				value = sxpBlueprintModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +119,4 @@ public class SXPBlueprintModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1888514010
+// LIFERAY-SERVICE-BUILDER-HASH:-1764253321

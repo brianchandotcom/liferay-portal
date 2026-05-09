@@ -481,12 +481,13 @@ public class ResourceActionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			true, null);
 
 		_finderPathCountByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByName = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByName,
@@ -500,7 +501,7 @@ public class ResourceActionPersistenceImpl
 		_finderPathFetchByN_A = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"name", "actionId"}, false,
+			new String[] {"name", "actionId"}, 0, 3, false,
 			convertNullFunction(ResourceAction::getName),
 			convertNullFunction(ResourceAction::getActionId));
 
@@ -546,4 +547,4 @@ public class ResourceActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1876869238
+// LIFERAY-SERVICE-BUILDER-HASH:168102564

@@ -882,7 +882,7 @@ public class SegmentsExperimentRelPersistenceImpl
 		_finderPathFetchByS_S = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_S",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"segmentsExperimentId", "segmentsExperienceId"},
+			new String[] {"segmentsExperimentId", "segmentsExperienceId"}, 0, 0,
 			false, SegmentsExperimentRel::getSegmentsExperimentId,
 			SegmentsExperimentRel::getSegmentsExperienceId);
 
@@ -967,4 +967,4 @@ public class SegmentsExperimentRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-392437598
+// LIFERAY-SERVICE-BUILDER-HASH:-1978590543

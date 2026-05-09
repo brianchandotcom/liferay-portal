@@ -1376,12 +1376,12 @@ public class SocialActivityAchievementPersistenceImpl
 		_finderPathWithoutPaginationFindByG_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, true);
+			new String[] {"groupId", "name"}, 0, 2, true, null);
 
 		_finderPathCountByG_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, false);
+			new String[] {"groupId", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByG_N = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_N,
@@ -1437,7 +1437,7 @@ public class SocialActivityAchievementPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "userId", "name"}, false,
+			new String[] {"groupId", "userId", "name"}, 0, 4, false,
 			SocialActivityAchievement::getGroupId,
 			SocialActivityAchievement::getUserId,
 			convertNullFunction(SocialActivityAchievement::getName));
@@ -1532,4 +1532,4 @@ public class SocialActivityAchievementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:71795934
+// LIFERAY-SERVICE-BUILDER-HASH:813889996

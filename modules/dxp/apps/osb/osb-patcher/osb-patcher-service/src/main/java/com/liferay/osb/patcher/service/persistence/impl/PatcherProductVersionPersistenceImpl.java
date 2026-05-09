@@ -774,8 +774,8 @@ public class PatcherProductVersionPersistenceImpl
 
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			convertNullFunction(PatcherProductVersion::getName));
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, convertNullFunction(PatcherProductVersion::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -875,4 +875,4 @@ public class PatcherProductVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-942575027
+// LIFERAY-SERVICE-BUILDER-HASH:-114268541

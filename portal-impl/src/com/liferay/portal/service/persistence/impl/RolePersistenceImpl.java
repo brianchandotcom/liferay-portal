@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.service.persistence.RoleUtil;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -2429,7 +2429,7 @@ public class RolePersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
 	private FinderPath _finderPathCountByC_T;
-	private FinderPath _finderPathWithPaginationCountByC_T;
+	private CollectionPersistenceFinder<Role> _collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns all the roles where companyId = &#63; and type = &#63;.
@@ -2508,101 +2508,10 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			FinderPath finderPath = null;
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_T;
-					finderArgs = new Object[] {companyId, type};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_T;
-				finderArgs = new Object[] {
-					companyId, type, start, end, orderByComparator
-				};
-			}
-
-			List<Role> list = null;
-
-			if (useFinderCache) {
-				list = (List<Role>)FinderCacheUtil.getResult(
-					finderPath, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Role role : list) {
-						if ((companyId != role.getCompanyId()) ||
-							(type != role.getType())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(RoleModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(type);
-
-					list = (List<Role>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(finderPath, finderArgs, list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_T.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, new int[] {type}}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -2653,13 +2562,9 @@ public class RolePersistenceImpl
 	public Role fetchByC_T_First(
 		long companyId, int type, OrderByComparator<Role> orderByComparator) {
 
-		List<Role> list = findByC_T(companyId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_T.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, new int[] {type}}, orderByComparator);
 	}
 
 	/**
@@ -3039,123 +2944,14 @@ public class RolePersistenceImpl
 		long companyId, int[] types, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean useFinderCache) {
 
-		if (types == null) {
-			types = new int[0];
-		}
-		else if (types.length > 1) {
-			types = ArrayUtil.sortedUnique(types);
-		}
-
-		if (types.length == 1) {
-			return findByC_T(
-				companyId, types[0], start, end, orderByComparator);
-		}
-
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						companyId, StringUtil.merge(types)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(types), start, end,
-					orderByComparator
-				};
-			}
-
-			List<Role> list = null;
-
-			if (useFinderCache) {
-				list = (List<Role>)FinderCacheUtil.getResult(
-					_finderPathWithPaginationFindByC_T, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Role role : list) {
-						if ((companyId != role.getCompanyId()) ||
-							!ArrayUtil.contains(types, role.getType())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-				if (types.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_T_TYPE_7);
-
-					sb.append(StringUtil.merge(types));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(RoleModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					list = (List<Role>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathWithPaginationFindByC_T, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_T.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, ArrayUtil.sortedUnique(types)}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -3167,13 +2963,9 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public void removeByC_T(long companyId, int type) {
-		for (Role role :
-				findByC_T(
-					companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(role);
-		}
+		_collectionPersistenceFinderByC_T.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, new int[] {type}});
 	}
 
 	/**
@@ -3189,50 +2981,9 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			FinderPath finderPath = _finderPathCountByC_T;
-
-			Object[] finderArgs = new Object[] {companyId, type};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_T_TYPE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(type);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_T.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, new int[] {type}});
 		}
 	}
 
@@ -3245,74 +2996,13 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public int countByC_T(long companyId, int[] types) {
-		if (types == null) {
-			types = new int[0];
-		}
-		else if (types.length > 1) {
-			types = ArrayUtil.sortedUnique(types);
-		}
-
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = new Object[] {
-				companyId, StringUtil.merge(types)
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_T, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_T_COMPANYID_2);
-
-				if (types.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_T_TYPE_7);
-
-					sb.append(StringUtil.merge(types));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationCountByC_T, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_T.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, ArrayUtil.sortedUnique(types)});
 		}
 	}
 
@@ -3872,7 +3562,9 @@ public class RolePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
 	private FinderPath _finderPathFetchByC_C_C;
 	private FinderPath _finderPathCountByC_C_C;
-	private FinderPath _finderPathWithPaginationCountByC_C_C;
+	private CollectionPersistenceFinder<Role>
+		_collectionPersistenceFinderByC_C_C;
+	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns all the roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63;.
@@ -3962,15 +3654,11 @@ public class RolePersistenceImpl
 		long companyId, long classNameId, long[] classPKs, int start, int end,
 		OrderByComparator<Role> orderByComparator, boolean useFinderCache) {
 
-		if (classPKs == null) {
-			classPKs = new long[0];
-		}
-		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.sortedUnique(classPKs);
-		}
+		classPKs = ArrayUtil.sortedUnique(classPKs);
 
 		if (classPKs.length == 1) {
-			Role role = fetchByC_C_C(companyId, classNameId, classPKs[0]);
+			Role role = fetchByC_C_C(
+				companyId, classNameId, classPKs[0], useFinderCache);
 
 			if (role == null) {
 				return Collections.emptyList();
@@ -3988,112 +3676,10 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						companyId, classNameId, StringUtil.merge(classPKs)
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, classNameId, StringUtil.merge(classPKs), start,
-					end, orderByComparator
-				};
-			}
-
-			List<Role> list = null;
-
-			if (useFinderCache) {
-				list = (List<Role>)FinderCacheUtil.getResult(
-					_finderPathWithPaginationFindByC_C_C, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Role role : list) {
-						if ((companyId != role.getCompanyId()) ||
-							(classNameId != role.getClassNameId()) ||
-							!ArrayUtil.contains(classPKs, role.getClassPK())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				if (classPKs.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_7);
-
-					sb.append(StringUtil.merge(classPKs));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(RoleModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					list = (List<Role>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathWithPaginationFindByC_C_C, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_C_C.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, classNameId, classPKs}, start, end,
+				orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4113,26 +3699,16 @@ public class RolePersistenceImpl
 		Role role = fetchByC_C_C(companyId, classNameId, classPK);
 
 		if (role == null) {
-			StringBundler sb = new StringBundler(8);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, classNameId, classPK});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRoleException(sb.toString());
+			throw new NoSuchRoleException(message);
 		}
 
 		return role;
@@ -4169,88 +3745,9 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {companyId, classNameId, classPK};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByC_C_C, finderArgs, this);
-			}
-
-			if (result instanceof Role) {
-				Role role = (Role)result;
-
-				if ((companyId != role.getCompanyId()) ||
-					(classNameId != role.getClassNameId()) ||
-					(classPK != role.getClassPK())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					List<Role> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByC_C_C, finderArgs, list);
-						}
-					}
-					else {
-						Role role = list.get(0);
-
-						result = role;
-
-						cacheResult(role);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (Role)result;
-			}
+			return _uniquePersistenceFinderByC_C_C.fetch(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, classNameId, classPK}, useFinderCache);
 		}
 	}
 
@@ -4285,56 +3782,9 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			FinderPath finderPath = _finderPathCountByC_C_C;
-
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_C_C.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, classNameId, new long[] {classPK}});
 		}
 	}
 
@@ -4348,79 +3798,15 @@ public class RolePersistenceImpl
 	 */
 	@Override
 	public int countByC_C_C(long companyId, long classNameId, long[] classPKs) {
-		if (classPKs == null) {
-			classPKs = new long[0];
-		}
-		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.sortedUnique(classPKs);
-		}
-
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, StringUtil.merge(classPKs)
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_C_C, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_CLASSNAMEID_2);
-
-				if (classPKs.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_C_C_CLASSPK_7);
-
-					sb.append(StringUtil.merge(classPKs));
-
-					sb.append(")");
-
-					sb.append(")");
-				}
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationCountByC_C_C, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_C_C.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {
+					companyId, classNameId, ArrayUtil.sortedUnique(classPKs)
+				});
 		}
 	}
 
@@ -4594,7 +3980,9 @@ public class RolePersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
 	private FinderPath _finderPathFetchByC_C_C_T;
 	private FinderPath _finderPathCountByC_C_C_T;
-	private FinderPath _finderPathWithPaginationCountByC_C_C_T;
+	private CollectionPersistenceFinder<Role>
+		_collectionPersistenceFinderByC_C_C_T;
+	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C_T;
 
 	/**
 	 * Returns all the roles where companyId = &#63; and classNameId = &#63; and classPK = any &#63; and type = &#63;.
@@ -4691,16 +4079,11 @@ public class RolePersistenceImpl
 		int end, OrderByComparator<Role> orderByComparator,
 		boolean useFinderCache) {
 
-		if (classPKs == null) {
-			classPKs = new long[0];
-		}
-		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.sortedUnique(classPKs);
-		}
+		classPKs = ArrayUtil.sortedUnique(classPKs);
 
 		if (classPKs.length == 1) {
 			Role role = fetchByC_C_C_T(
-				companyId, classNameId, classPKs[0], type);
+				companyId, classNameId, classPKs[0], type, useFinderCache);
 
 			if (role == null) {
 				return Collections.emptyList();
@@ -4718,119 +4101,10 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = null;
-
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderArgs = new Object[] {
-						companyId, classNameId, StringUtil.merge(classPKs), type
-					};
-				}
-			}
-			else if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, classNameId, StringUtil.merge(classPKs), type,
-					start, end, orderByComparator
-				};
-			}
-
-			List<Role> list = null;
-
-			if (useFinderCache) {
-				list = (List<Role>)FinderCacheUtil.getResult(
-					_finderPathWithPaginationFindByC_C_C_T, finderArgs, this);
-
-				if ((list != null) && !list.isEmpty()) {
-					for (Role role : list) {
-						if ((companyId != role.getCompanyId()) ||
-							(classNameId != role.getClassNameId()) ||
-							!ArrayUtil.contains(classPKs, role.getClassPK()) ||
-							(type != role.getType())) {
-
-							list = null;
-
-							break;
-						}
-					}
-				}
-			}
-
-			if (list == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
-
-				if (classPKs.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_7);
-
-					sb.append(StringUtil.merge(classPKs));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-				}
-				else {
-					sb.append(RoleModelImpl.ORDER_BY_JPQL);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(type);
-
-					list = (List<Role>)QueryUtil.list(
-						query, getDialect(), start, end);
-
-					cacheResult(list);
-
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathWithPaginationFindByC_C_C_T, finderArgs,
-							list);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return list;
+			return _collectionPersistenceFinderByC_C_C_T.find(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, classNameId, classPKs, type}, start,
+				end, orderByComparator, useFinderCache);
 		}
 	}
 
@@ -4852,29 +4126,16 @@ public class RolePersistenceImpl
 		Role role = fetchByC_C_C_T(companyId, classNameId, classPK, type);
 
 		if (role == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", classNameId=");
-			sb.append(classNameId);
-
-			sb.append(", classPK=");
-			sb.append(classPK);
-
-			sb.append(", type=");
-			sb.append(type);
-
-			sb.append("}");
+			String message =
+				_uniquePersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
+					_NO_SUCH_ENTITY_WITH_KEY,
+					new Object[] {companyId, classNameId, classPK, type});
 
 			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
+				_log.debug(message);
 			}
 
-			throw new NoSuchRoleException(sb.toString());
+			throw new NoSuchRoleException(message);
 		}
 
 		return role;
@@ -4915,95 +4176,10 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, classNameId, classPK, type
-				};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByC_C_C_T, finderArgs, this);
-			}
-
-			if (result instanceof Role) {
-				Role role = (Role)result;
-
-				if ((companyId != role.getCompanyId()) ||
-					(classNameId != role.getClassNameId()) ||
-					(classPK != role.getClassPK()) ||
-					(type != role.getType())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(6);
-
-				sb.append(_SQL_SELECT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(type);
-
-					List<Role> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByC_C_C_T, finderArgs, list);
-						}
-					}
-					else {
-						Role role = list.get(0);
-
-						result = role;
-
-						cacheResult(role);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (Role)result;
-			}
+			return _uniquePersistenceFinderByC_C_C_T.fetch(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {companyId, classNameId, classPK, type},
+				useFinderCache);
 		}
 	}
 
@@ -5043,60 +4219,11 @@ public class RolePersistenceImpl
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			FinderPath finderPath = _finderPathCountByC_C_C_T;
-
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, classPK, type
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(classPK);
-
-					queryPos.add(type);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_C_C_T.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {
+					companyId, classNameId, new long[] {classPK}, type
+				});
 		}
 	}
 
@@ -5113,85 +4240,16 @@ public class RolePersistenceImpl
 	public int countByC_C_C_T(
 		long companyId, long classNameId, long[] classPKs, int type) {
 
-		if (classPKs == null) {
-			classPKs = new long[0];
-		}
-		else if (classPKs.length > 1) {
-			classPKs = ArrayUtil.sortedUnique(classPKs);
-		}
-
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Role.class)) {
 
-			Object[] finderArgs = new Object[] {
-				companyId, classNameId, StringUtil.merge(classPKs), type
-			};
-
-			Long count = (Long)FinderCacheUtil.getResult(
-				_finderPathWithPaginationCountByC_C_C_T, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler();
-
-				sb.append(_SQL_COUNT_ROLE__WHERE);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_COMPANYID_2);
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_CLASSNAMEID_2);
-
-				if (classPKs.length > 0) {
-					sb.append("(");
-
-					sb.append(_FINDER_COLUMN_C_C_C_T_CLASSPK_7);
-
-					sb.append(StringUtil.merge(classPKs));
-
-					sb.append(")");
-
-					sb.append(")");
-
-					sb.append(WHERE_AND);
-				}
-
-				sb.append(_FINDER_COLUMN_C_C_C_T_TYPE_2);
-
-				sb.setStringAt(
-					removeConjunction(sb.stringAt(sb.index() - 1)),
-					sb.index() - 1);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					queryPos.add(classNameId);
-
-					queryPos.add(type);
-
-					count = (Long)query.uniqueResult();
-
-					FinderCacheUtil.putResult(
-						_finderPathWithPaginationCountByC_C_C_T, finderArgs,
-						count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+			return _collectionPersistenceFinderByC_C_C_T.count(
+				FinderCacheUtil.getFinderCache(),
+				new Object[] {
+					companyId, classNameId, ArrayUtil.sortedUnique(classPKs),
+					type
+				});
 		}
 	}
 
@@ -6506,13 +5564,13 @@ public class RolePersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -6535,12 +5593,12 @@ public class RolePersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -6595,12 +5653,13 @@ public class RolePersistenceImpl
 
 		_finderPathWithoutPaginationFindByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			true, null);
 
 		_finderPathCountByName = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByName = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByName,
@@ -6648,13 +5707,13 @@ public class RolePersistenceImpl
 
 		_finderPathWithoutPaginationFindBySubtype = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySubtype",
-			new String[] {String.class.getName()}, new String[] {"subtype"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"subtype"}, 0,
+			1, true, null);
 
 		_finderPathCountBySubtype = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySubtype",
-			new String[] {String.class.getName()}, new String[] {"subtype"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"subtype"}, 0,
+			1, false, null);
 
 		_collectionPersistenceFinderBySubtype =
 			new CollectionPersistenceFinder<>(
@@ -6670,8 +5729,8 @@ public class RolePersistenceImpl
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true, Role::getCompanyId,
-			convertNullFunction(Role::getName));
+			new String[] {"companyId", "name"}, 2, 2, true, Role::getCompanyId,
+			convertCaseFunction(Role::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_ROLE__WHERE, "",
@@ -6697,14 +5756,21 @@ public class RolePersistenceImpl
 			new String[] {"companyId", "type_"}, true);
 
 		_finderPathCountByC_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "type_"}, false);
-
-		_finderPathWithPaginationCountByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"companyId", "type_"}, false);
+
+		_collectionPersistenceFinderByC_T = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_T,
+			_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
+			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
+				Role::getCompanyId),
+			new ArrayableFinderColumn<>(
+				"role_.", "type", FinderColumn.Type.INTEGER, "=", false, true,
+				true, Role::getType));
 
 		_finderPathWithPaginationFindByT_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
@@ -6718,12 +5784,12 @@ public class RolePersistenceImpl
 		_finderPathWithoutPaginationFindByT_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
 			new String[] {Integer.class.getName(), String.class.getName()},
-			new String[] {"type_", "subtype"}, true);
+			new String[] {"type_", "subtype"}, 0, 2, true, null);
 
 		_finderPathCountByT_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
 			new String[] {Integer.class.getName(), String.class.getName()},
-			new String[] {"type_", "subtype"}, false);
+			new String[] {"type_", "subtype"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByT_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByT_S,
@@ -6758,22 +5824,42 @@ public class RolePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK"}, false,
+			new String[] {"companyId", "classNameId", "classPK"}, 0, 0, false,
 			Role::getCompanyId, Role::getClassNameId, Role::getClassPK);
 
 		_finderPathCountByC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, false);
-
-		_finderPathWithPaginationCountByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"companyId", "classNameId", "classPK"}, false);
+
+		_collectionPersistenceFinderByC_C_C = new CollectionPersistenceFinder<>(
+			this, _finderPathWithPaginationFindByC_C_C,
+			_finderPathWithoutPaginationFindByC_C_C, _finderPathCountByC_C_C,
+			_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
+			RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+			new FinderColumn<>(
+				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
+				Role::getCompanyId),
+			new FinderColumn<>(
+				"role_.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				true, Role::getClassNameId),
+			new ArrayableFinderColumn<>(
+				"role_.", "classPK", FinderColumn.Type.LONG, "=", false, true,
+				true, Role::getClassPK));
+
+		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C_C, _SQL_SELECT_ROLE__WHERE, "",
+			new FinderColumn<>(
+				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
+				Role::getCompanyId),
+			new FinderColumn<>(
+				"role_.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				true, Role::getClassNameId),
+			new FinderColumn<>(
+				"role_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
+				Role::getClassPK));
 
 		_finderPathWithPaginationFindByC_C_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
@@ -6801,20 +5887,11 @@ public class RolePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Integer.class.getName()
 			},
-			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			new String[] {"companyId", "classNameId", "classPK", "type_"}, 0, 0,
 			false, Role::getCompanyId, Role::getClassNameId, Role::getClassPK,
 			Role::getType);
 
 		_finderPathCountByC_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK", "type_"},
-			false);
-
-		_finderPathWithPaginationCountByC_C_C_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -6823,10 +5900,45 @@ public class RolePersistenceImpl
 			new String[] {"companyId", "classNameId", "classPK", "type_"},
 			false);
 
+		_collectionPersistenceFinderByC_C_C_T =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_C_C_T,
+				_finderPathWithoutPaginationFindByC_C_C_T,
+				_finderPathCountByC_C_C_T, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Role::getCompanyId),
+				new FinderColumn<>(
+					"role_.", "classNameId", FinderColumn.Type.LONG, "=", true,
+					true, Role::getClassNameId),
+				new ArrayableFinderColumn<>(
+					"role_.", "classPK", FinderColumn.Type.LONG, "=", false,
+					true, true, Role::getClassPK),
+				new FinderColumn<>(
+					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
+					true, Role::getType));
+
+		_uniquePersistenceFinderByC_C_C_T = new UniquePersistenceFinder<>(
+			this, _finderPathFetchByC_C_C_T, _SQL_SELECT_ROLE__WHERE, "",
+			new FinderColumn<>(
+				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
+				Role::getCompanyId),
+			new FinderColumn<>(
+				"role_.", "classNameId", FinderColumn.Type.LONG, "=", true,
+				true, Role::getClassNameId),
+			new FinderColumn<>(
+				"role_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
+				Role::getClassPK),
+			new FinderColumn<>(
+				"role_.", "type", FinderColumn.Type.INTEGER, "=", true, true,
+				Role::getType));
+
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(Role::getExternalReferenceCode),
 			Role::getCompanyId);
 
@@ -6913,4 +6025,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-526409144
+// LIFERAY-SERVICE-BUILDER-HASH:1238505771

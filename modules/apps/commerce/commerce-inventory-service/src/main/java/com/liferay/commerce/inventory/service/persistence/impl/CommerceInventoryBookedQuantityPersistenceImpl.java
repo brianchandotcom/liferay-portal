@@ -833,11 +833,13 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 
 		_finderPathWithoutPaginationFindBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySku",
-			new String[] {String.class.getName()}, new String[] {"sku"}, true);
+			new String[] {String.class.getName()}, new String[] {"sku"}, 0, 1,
+			true, null);
 
 		_finderPathCountBySku = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySku",
-			new String[] {String.class.getName()}, new String[] {"sku"}, false);
+			new String[] {String.class.getName()}, new String[] {"sku"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderBySku = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindBySku,
@@ -866,7 +868,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, true);
+			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, true,
+			null);
 
 		_finderPathCountByC_S_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
@@ -874,7 +877,8 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, false);
+			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, false,
+			null);
 
 		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_S_U,
@@ -968,4 +972,4 @@ public class CommerceInventoryBookedQuantityPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-999723186
+// LIFERAY-SERVICE-BUILDER-HASH:-333422215

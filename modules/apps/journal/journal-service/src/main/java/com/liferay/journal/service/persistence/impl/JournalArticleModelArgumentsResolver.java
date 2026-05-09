@@ -53,7 +53,7 @@ public class JournalArticleModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = journalArticleModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(journalArticleModelImpl, columnNames, original);
+			return _getValue(journalArticleModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class JournalArticleModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(journalArticleModelImpl, columnNames, original);
+			return _getValue(journalArticleModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class JournalArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		JournalArticleModelImpl journalArticleModelImpl, String[] columnNames,
+		JournalArticleModelImpl journalArticleModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = journalArticleModelImpl.getColumnOriginalValue(
+				value = journalArticleModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = journalArticleModelImpl.getColumnValue(
-					columnName);
+				value = journalArticleModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -135,4 +140,4 @@ public class JournalArticleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1518177634
+// LIFERAY-SERVICE-BUILDER-HASH:1453578997

@@ -933,7 +933,8 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commercePricingClassId", "CPDefinitionId"}, false,
+			new String[] {"commercePricingClassId", "CPDefinitionId"}, 0, 0,
+			false,
 			CommercePricingClassCPDefinitionRel::getCommercePricingClassId,
 			CommercePricingClassCPDefinitionRel::getCPDefinitionId);
 
@@ -1026,4 +1027,4 @@ public class CommercePricingClassCPDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2011433971
+// LIFERAY-SERVICE-BUILDER-HASH:-1558318800

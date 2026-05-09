@@ -52,7 +52,7 @@ public class MBThreadModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = mbThreadModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(mbThreadModelImpl, columnNames, original);
+			return _getValue(mbThreadModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class MBThreadModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(mbThreadModelImpl, columnNames, original);
+			return _getValue(mbThreadModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class MBThreadModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		MBThreadModelImpl mbThreadModelImpl, String[] columnNames,
+		MBThreadModelImpl mbThreadModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = mbThreadModelImpl.getColumnOriginalValue(
-					columnName);
+				value = mbThreadModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = mbThreadModelImpl.getColumnValue(columnName);
+				value = mbThreadModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class MBThreadModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-939668720
+// LIFERAY-SERVICE-BUILDER-HASH:1296600995

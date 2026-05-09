@@ -1580,7 +1580,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				FINDER_CLASS_NAME_ENTITY,
 				"fetchByFriendlyURLEntryId_LanguageId",
 				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"friendlyURLEntryId", "languageId"}, false,
+				new String[] {"friendlyURLEntryId", "languageId"}, 0, 2, false,
 				FriendlyURLEntryLocalization::getFriendlyURLEntryId,
 				convertNullFunction(
 					FriendlyURLEntryLocalization::getLanguageId));
@@ -1613,7 +1613,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "urlTitle"}, true);
+			new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4, true,
+			null);
 
 		_finderPathCountByG_C_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_U",
@@ -1621,7 +1622,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "urlTitle"}, false);
+			new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4, false,
+			null);
 
 		_collectionPersistenceFinderByG_C_U = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_C_U,
@@ -1665,7 +1667,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new String[] {
 				"companyId", "classNameId", "urlTitle", "ctCollectionId"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByC_C_U_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_U_C",
@@ -1676,7 +1678,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new String[] {
 				"companyId", "classNameId", "urlTitle", "ctCollectionId"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByC_C_U_C =
 			new CollectionPersistenceFinder<>(
@@ -1721,8 +1723,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "classPK", "languageId"},
-			true);
+			new String[] {"groupId", "classNameId", "classPK", "languageId"}, 0,
+			8, true, null);
 
 		_finderPathCountByG_C_C_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L",
@@ -1730,8 +1732,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), String.class.getName()
 			},
-			new String[] {"groupId", "classNameId", "classPK", "languageId"},
-			false);
+			new String[] {"groupId", "classNameId", "classPK", "languageId"}, 0,
+			8, false, null);
 
 		_collectionPersistenceFinderByG_C_C_L =
 			new CollectionPersistenceFinder<>(
@@ -1766,7 +1768,7 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				String.class.getName(), String.class.getName()
 			},
 			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
-			false, FriendlyURLEntryLocalization::getGroupId,
+			0, 12, false, FriendlyURLEntryLocalization::getGroupId,
 			FriendlyURLEntryLocalization::getClassNameId,
 			convertNullFunction(FriendlyURLEntryLocalization::getLanguageId),
 			convertNullFunction(FriendlyURLEntryLocalization::getUrlTitle));
@@ -1906,4 +1908,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1478504752
+// LIFERAY-SERVICE-BUILDER-HASH:-1459458655

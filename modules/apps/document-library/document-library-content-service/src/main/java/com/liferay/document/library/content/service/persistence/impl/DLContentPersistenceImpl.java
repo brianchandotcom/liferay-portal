@@ -1039,7 +1039,8 @@ public class DLContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "path_"}, true);
+			new String[] {"companyId", "repositoryId", "path_"}, 0, 4, true,
+			null);
 
 		_finderPathCountByC_R_P = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P",
@@ -1047,7 +1048,8 @@ public class DLContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "path_"}, false);
+			new String[] {"companyId", "repositoryId", "path_"}, 0, 4, false,
+			null);
 
 		_collectionPersistenceFinderByC_R_P = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_R_P,
@@ -1103,8 +1105,8 @@ public class DLContentPersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			new String[] {"companyId", "repositoryId", "path_", "version"},
-			false, DLContent::getCompanyId, DLContent::getRepositoryId,
+			new String[] {"companyId", "repositoryId", "path_", "version"}, 0,
+			12, false, DLContent::getCompanyId, DLContent::getRepositoryId,
 			convertNullFunction(DLContent::getPath),
 			convertNullFunction(DLContent::getVersion));
 
@@ -1195,4 +1197,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1527239183
+// LIFERAY-SERVICE-BUILDER-HASH:28063351

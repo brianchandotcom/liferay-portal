@@ -2961,13 +2961,13 @@ public class ObjectFieldPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -2990,12 +2990,12 @@ public class ObjectFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -3144,12 +3144,12 @@ public class ObjectFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByC_BT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_BT",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "businessType"}, true);
+			new String[] {"companyId", "businessType"}, 0, 2, true, null);
 
 		_finderPathCountByC_BT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_BT",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "businessType"}, false);
+			new String[] {"companyId", "businessType"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_BT = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_BT,
@@ -3209,12 +3209,14 @@ public class ObjectFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByODI_BT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_BT",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "businessType"}, true);
+			new String[] {"objectDefinitionId", "businessType"}, 0, 2, true,
+			null);
 
 		_finderPathCountByODI_BT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_BT",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "businessType"}, false);
+			new String[] {"objectDefinitionId", "businessType"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByODI_BT =
 			new CollectionPersistenceFinder<>(
@@ -3243,12 +3245,14 @@ public class ObjectFieldPersistenceImpl
 		_finderPathWithoutPaginationFindByODI_DTN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI_DTN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "dbTableName"}, true);
+			new String[] {"objectDefinitionId", "dbTableName"}, 0, 2, true,
+			null);
 
 		_finderPathCountByODI_DTN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_DTN",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "dbTableName"}, false);
+			new String[] {"objectDefinitionId", "dbTableName"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByODI_DTN =
 			new CollectionPersistenceFinder<>(
@@ -3330,7 +3334,7 @@ public class ObjectFieldPersistenceImpl
 		_finderPathFetchByODI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByODI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId", "name"}, false,
+			new String[] {"objectDefinitionId", "name"}, 0, 2, false,
 			ObjectField::getObjectDefinitionId,
 			convertNullFunction(ObjectField::getName));
 
@@ -3383,7 +3387,8 @@ public class ObjectFieldPersistenceImpl
 			new String[] {
 				"externalReferenceCode", "companyId", "objectDefinitionId"
 			},
-			false, convertNullFunction(ObjectField::getExternalReferenceCode),
+			0, 1, false,
+			convertNullFunction(ObjectField::getExternalReferenceCode),
 			ObjectField::getCompanyId, ObjectField::getObjectDefinitionId);
 
 		_uniquePersistenceFinderByERC_C_ODI = new UniquePersistenceFinder<>(
@@ -3415,7 +3420,8 @@ public class ObjectFieldPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"objectDefinitionId", "dbType", "indexed"}, true);
+			new String[] {"objectDefinitionId", "dbType", "indexed"}, 0, 2,
+			true, null);
 
 		_finderPathCountByODI_DBT_I = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI_DBT_I",
@@ -3423,7 +3429,8 @@ public class ObjectFieldPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Boolean.class.getName()
 			},
-			new String[] {"objectDefinitionId", "dbType", "indexed"}, false);
+			new String[] {"objectDefinitionId", "dbType", "indexed"}, 0, 2,
+			false, null);
 
 		_collectionPersistenceFinderByODI_DBT_I =
 			new CollectionPersistenceFinder<>(
@@ -3555,4 +3562,4 @@ public class ObjectFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:967358882
+// LIFERAY-SERVICE-BUILDER-HASH:855298726

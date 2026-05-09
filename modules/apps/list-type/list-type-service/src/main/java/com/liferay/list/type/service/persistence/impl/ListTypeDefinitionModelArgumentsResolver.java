@@ -54,8 +54,7 @@ public class ListTypeDefinitionModelArgumentsResolver
 		long columnBitmask = listTypeDefinitionModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				listTypeDefinitionModelImpl, columnNames, original);
+			return _getValue(listTypeDefinitionModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,8 +73,7 @@ public class ListTypeDefinitionModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				listTypeDefinitionModelImpl, columnNames, original);
+			return _getValue(listTypeDefinitionModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +91,26 @@ public class ListTypeDefinitionModelArgumentsResolver
 
 	private static Object[] _getValue(
 		ListTypeDefinitionModelImpl listTypeDefinitionModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					listTypeDefinitionModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = listTypeDefinitionModelImpl.getColumnValue(
+				value = listTypeDefinitionModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = listTypeDefinitionModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +120,4 @@ public class ListTypeDefinitionModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1844998430
+// LIFERAY-SERVICE-BUILDER-HASH:-2070391833

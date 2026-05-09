@@ -53,7 +53,7 @@ public class DLStorageQuotaModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = dlStorageQuotaModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dlStorageQuotaModelImpl, columnNames, original);
+			return _getValue(dlStorageQuotaModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class DLStorageQuotaModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dlStorageQuotaModelImpl, columnNames, original);
+			return _getValue(dlStorageQuotaModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class DLStorageQuotaModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DLStorageQuotaModelImpl dlStorageQuotaModelImpl, String[] columnNames,
+		DLStorageQuotaModelImpl dlStorageQuotaModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dlStorageQuotaModelImpl.getColumnOriginalValue(
+				value = dlStorageQuotaModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = dlStorageQuotaModelImpl.getColumnValue(
-					columnName);
+				value = dlStorageQuotaModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class DLStorageQuotaModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:89259087
+// LIFERAY-SERVICE-BUILDER-HASH:-574869972

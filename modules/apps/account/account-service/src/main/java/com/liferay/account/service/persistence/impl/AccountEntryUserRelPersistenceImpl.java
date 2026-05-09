@@ -718,7 +718,7 @@ public class AccountEntryUserRelPersistenceImpl
 		_finderPathFetchByAEI_AUI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByAEI_AUI",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "accountUserId"}, false,
+			new String[] {"accountEntryId", "accountUserId"}, 0, 0, false,
 			AccountEntryUserRel::getAccountEntryId,
 			AccountEntryUserRel::getAccountUserId);
 
@@ -799,4 +799,4 @@ public class AccountEntryUserRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:663396780
+// LIFERAY-SERVICE-BUILDER-HASH:-983943481

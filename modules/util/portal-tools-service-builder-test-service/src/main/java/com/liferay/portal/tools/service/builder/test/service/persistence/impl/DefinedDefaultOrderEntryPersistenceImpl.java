@@ -502,8 +502,8 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	public void afterPropertiesSet() {
 		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, false,
-			convertNullFunction(DefinedDefaultOrderEntry::getName));
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, convertNullFunction(DefinedDefaultOrderEntry::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
@@ -522,12 +522,13 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByName_Collection = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Collection",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			true, null);
 
 		_finderPathCountByName_Collection = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Collection",
-			new String[] {String.class.getName()}, new String[] {"name"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByName_Collection =
 			new CollectionPersistenceFinder<>(
@@ -582,4 +583,4 @@ public class DefinedDefaultOrderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1934973093
+// LIFERAY-SERVICE-BUILDER-HASH:1784585337

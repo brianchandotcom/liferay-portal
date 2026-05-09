@@ -567,7 +567,7 @@ public class BatchPlannerPolicyPersistenceImpl
 		_finderPathFetchByBPPI_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByBPPI_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"batchPlannerPlanId", "name"}, false,
+			new String[] {"batchPlannerPlanId", "name"}, 0, 2, false,
 			BatchPlannerPolicy::getBatchPlannerPlanId,
 			convertNullFunction(BatchPlannerPolicy::getName));
 
@@ -648,4 +648,4 @@ public class BatchPlannerPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1398348665
+// LIFERAY-SERVICE-BUILDER-HASH:2003415942

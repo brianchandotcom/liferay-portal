@@ -609,7 +609,8 @@ public class UserIdMapperPersistenceImpl
 		_finderPathFetchByU_T = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_T",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "type_"}, false, UserIdMapper::getUserId,
+			new String[] {"userId", "type_"}, 0, 2, false,
+			UserIdMapper::getUserId,
 			convertNullFunction(UserIdMapper::getType));
 
 		_uniquePersistenceFinderByU_T = new UniquePersistenceFinder<>(
@@ -624,7 +625,7 @@ public class UserIdMapperPersistenceImpl
 		_finderPathFetchByT_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByT_E",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"type_", "externalUserId"}, false,
+			new String[] {"type_", "externalUserId"}, 0, 3, false,
 			convertNullFunction(UserIdMapper::getType),
 			convertNullFunction(UserIdMapper::getExternalUserId));
 
@@ -673,4 +674,4 @@ public class UserIdMapperPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-437900616
+// LIFERAY-SERVICE-BUILDER-HASH:-1012549655

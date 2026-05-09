@@ -846,7 +846,7 @@ public class KaleoConditionPersistenceImpl
 		_finderPathFetchByKaleoNodeId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByKaleoNodeId",
 			new String[] {Long.class.getName()}, new String[] {"kaleoNodeId"},
-			false, KaleoCondition::getKaleoNodeId);
+			0, 0, false, KaleoCondition::getKaleoNodeId);
 
 		_uniquePersistenceFinderByKaleoNodeId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByKaleoNodeId,
@@ -924,4 +924,4 @@ public class KaleoConditionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1529180886
+// LIFERAY-SERVICE-BUILDER-HASH:-338127443

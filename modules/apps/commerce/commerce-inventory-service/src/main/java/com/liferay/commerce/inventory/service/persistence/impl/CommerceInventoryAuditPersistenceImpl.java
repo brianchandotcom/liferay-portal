@@ -667,7 +667,8 @@ public class CommerceInventoryAuditPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, true);
+			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, true,
+			null);
 
 		_finderPathCountByC_S_U = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_U",
@@ -675,7 +676,8 @@ public class CommerceInventoryAuditPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "sku", "unitOfMeasureKey"}, false);
+			new String[] {"companyId", "sku", "unitOfMeasureKey"}, 0, 6, false,
+			null);
 
 		_collectionPersistenceFinderByC_S_U = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_S_U,
@@ -764,4 +766,4 @@ public class CommerceInventoryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1642103448
+// LIFERAY-SERVICE-BUILDER-HASH:1928826489

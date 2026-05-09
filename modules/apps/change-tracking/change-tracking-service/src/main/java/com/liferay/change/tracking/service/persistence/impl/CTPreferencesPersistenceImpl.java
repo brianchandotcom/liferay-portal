@@ -708,7 +708,7 @@ public class CTPreferencesPersistenceImpl
 		_finderPathFetchByC_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false,
+			new String[] {"companyId", "userId"}, 0, 0, false,
 			CTPreferences::getCompanyId, CTPreferences::getUserId);
 
 		_uniquePersistenceFinderByC_U = new UniquePersistenceFinder<>(
@@ -786,4 +786,4 @@ public class CTPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-563559136
+// LIFERAY-SERVICE-BUILDER-HASH:-220301021

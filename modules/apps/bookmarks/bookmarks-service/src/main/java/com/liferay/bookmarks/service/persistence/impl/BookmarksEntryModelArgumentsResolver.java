@@ -53,7 +53,7 @@ public class BookmarksEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = bookmarksEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(bookmarksEntryModelImpl, columnNames, original);
+			return _getValue(bookmarksEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class BookmarksEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(bookmarksEntryModelImpl, columnNames, original);
+			return _getValue(bookmarksEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,22 +97,27 @@ public class BookmarksEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		BookmarksEntryModelImpl bookmarksEntryModelImpl, String[] columnNames,
+		BookmarksEntryModelImpl bookmarksEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = bookmarksEntryModelImpl.getColumnOriginalValue(
+				value = bookmarksEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = bookmarksEntryModelImpl.getColumnValue(
-					columnName);
+				value = bookmarksEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -135,4 +140,4 @@ public class BookmarksEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1253553403
+// LIFERAY-SERVICE-BUILDER-HASH:-1598795206

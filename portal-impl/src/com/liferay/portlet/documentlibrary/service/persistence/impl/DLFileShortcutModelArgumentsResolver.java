@@ -52,7 +52,7 @@ public class DLFileShortcutModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = dlFileShortcutModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dlFileShortcutModelImpl, columnNames, original);
+			return _getValue(dlFileShortcutModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class DLFileShortcutModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dlFileShortcutModelImpl, columnNames, original);
+			return _getValue(dlFileShortcutModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,22 +88,27 @@ public class DLFileShortcutModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DLFileShortcutModelImpl dlFileShortcutModelImpl, String[] columnNames,
+		DLFileShortcutModelImpl dlFileShortcutModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dlFileShortcutModelImpl.getColumnOriginalValue(
+				value = dlFileShortcutModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = dlFileShortcutModelImpl.getColumnValue(
-					columnName);
+				value = dlFileShortcutModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +118,4 @@ public class DLFileShortcutModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1344981968
+// LIFERAY-SERVICE-BUILDER-HASH:-794382631

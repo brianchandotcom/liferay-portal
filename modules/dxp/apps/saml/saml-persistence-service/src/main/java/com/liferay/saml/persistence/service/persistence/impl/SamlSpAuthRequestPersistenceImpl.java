@@ -547,8 +547,8 @@ public class SamlSpAuthRequestPersistenceImpl
 		_finderPathFetchBySIEI_SSARK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SSARK",
 			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, false,
-			convertNullFunction(SamlSpAuthRequest::getSamlIdpEntityId),
+			new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, 0, 3,
+			false, convertNullFunction(SamlSpAuthRequest::getSamlIdpEntityId),
 			convertNullFunction(SamlSpAuthRequest::getSamlSpAuthRequestKey));
 
 		_uniquePersistenceFinderBySIEI_SSARK = new UniquePersistenceFinder<>(
@@ -629,4 +629,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-409990973
+// LIFERAY-SERVICE-BUILDER-HASH:-2117582452

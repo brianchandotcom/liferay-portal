@@ -54,7 +54,7 @@ public class SocialActivityLimitModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				socialActivityLimitModelImpl, columnNames, original);
+				socialActivityLimitModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,7 +74,7 @@ public class SocialActivityLimitModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				socialActivityLimitModelImpl, columnNames, original);
+				socialActivityLimitModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +92,26 @@ public class SocialActivityLimitModelArgumentsResolver
 
 	private static Object[] _getValue(
 		SocialActivityLimitModelImpl socialActivityLimitModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					socialActivityLimitModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = socialActivityLimitModelImpl.getColumnValue(
+				value = socialActivityLimitModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = socialActivityLimitModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +121,4 @@ public class SocialActivityLimitModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-866187617
+// LIFERAY-SERVICE-BUILDER-HASH:280437814

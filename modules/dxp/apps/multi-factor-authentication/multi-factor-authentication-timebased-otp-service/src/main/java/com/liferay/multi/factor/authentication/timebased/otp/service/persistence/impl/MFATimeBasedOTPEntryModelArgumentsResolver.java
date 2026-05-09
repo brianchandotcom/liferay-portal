@@ -55,7 +55,7 @@ public class MFATimeBasedOTPEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				mfaTimeBasedOTPEntryModelImpl, columnNames, original);
+				mfaTimeBasedOTPEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class MFATimeBasedOTPEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				mfaTimeBasedOTPEntryModelImpl, columnNames, original);
+				mfaTimeBasedOTPEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class MFATimeBasedOTPEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		MFATimeBasedOTPEntryModelImpl mfaTimeBasedOTPEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					mfaTimeBasedOTPEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = mfaTimeBasedOTPEntryModelImpl.getColumnValue(
+				value = mfaTimeBasedOTPEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = mfaTimeBasedOTPEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class MFATimeBasedOTPEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-658243619
+// LIFERAY-SERVICE-BUILDER-HASH:-15948038

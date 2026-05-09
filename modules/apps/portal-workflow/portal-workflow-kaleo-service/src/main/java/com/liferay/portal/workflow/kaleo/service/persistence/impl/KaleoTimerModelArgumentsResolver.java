@@ -53,7 +53,7 @@ public class KaleoTimerModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = kaleoTimerModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kaleoTimerModelImpl, columnNames, original);
+			return _getValue(kaleoTimerModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class KaleoTimerModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kaleoTimerModelImpl, columnNames, original);
+			return _getValue(kaleoTimerModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,26 @@ public class KaleoTimerModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		KaleoTimerModelImpl kaleoTimerModelImpl, String[] columnNames,
+		KaleoTimerModelImpl kaleoTimerModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kaleoTimerModelImpl.getColumnOriginalValue(
-					columnName);
+				value = kaleoTimerModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = kaleoTimerModelImpl.getColumnValue(columnName);
+				value = kaleoTimerModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -129,4 +134,4 @@ public class KaleoTimerModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-783311325
+// LIFERAY-SERVICE-BUILDER-HASH:953606786

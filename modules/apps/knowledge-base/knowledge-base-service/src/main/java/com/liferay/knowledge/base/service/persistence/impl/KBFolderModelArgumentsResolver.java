@@ -52,7 +52,7 @@ public class KBFolderModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = kbFolderModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(kbFolderModelImpl, columnNames, original);
+			return _getValue(kbFolderModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class KBFolderModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(kbFolderModelImpl, columnNames, original);
+			return _getValue(kbFolderModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,21 +88,26 @@ public class KBFolderModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		KBFolderModelImpl kbFolderModelImpl, String[] columnNames,
+		KBFolderModelImpl kbFolderModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = kbFolderModelImpl.getColumnOriginalValue(
-					columnName);
+				value = kbFolderModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = kbFolderModelImpl.getColumnValue(columnName);
+				value = kbFolderModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -112,4 +117,4 @@ public class KBFolderModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1750650822
+// LIFERAY-SERVICE-BUILDER-HASH:1036488599

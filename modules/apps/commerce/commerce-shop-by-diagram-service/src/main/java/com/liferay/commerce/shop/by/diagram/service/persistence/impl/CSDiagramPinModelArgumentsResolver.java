@@ -53,7 +53,7 @@ public class CSDiagramPinModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = csDiagramPinModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(csDiagramPinModelImpl, columnNames, original);
+			return _getValue(csDiagramPinModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class CSDiagramPinModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(csDiagramPinModelImpl, columnNames, original);
+			return _getValue(csDiagramPinModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,27 @@ public class CSDiagramPinModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		CSDiagramPinModelImpl csDiagramPinModelImpl, String[] columnNames,
+		CSDiagramPinModelImpl csDiagramPinModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = csDiagramPinModelImpl.getColumnOriginalValue(
+				value = csDiagramPinModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = csDiagramPinModelImpl.getColumnValue(columnName);
+				value = csDiagramPinModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +138,4 @@ public class CSDiagramPinModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-968118489
+// LIFERAY-SERVICE-BUILDER-HASH:-347735378

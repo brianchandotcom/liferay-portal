@@ -2040,7 +2040,7 @@ public class ExpandoValuePersistenceImpl
 		_finderPathFetchByC_R = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"columnId", "rowId_"}, false,
+			new String[] {"columnId", "rowId_"}, 0, 0, false,
 			ExpandoValue::getColumnId, ExpandoValue::getRowId);
 
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
@@ -2088,7 +2088,7 @@ public class ExpandoValuePersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"tableId", "columnId", "classPK"}, false,
+			new String[] {"tableId", "columnId", "classPK"}, 0, 0, false,
 			ExpandoValue::getTableId, ExpandoValue::getColumnId,
 			ExpandoValue::getClassPK);
 
@@ -2119,7 +2119,7 @@ public class ExpandoValuePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"tableId", "columnId", "data_"}, true);
+			new String[] {"tableId", "columnId", "data_"}, 0, 4, true, null);
 
 		_finderPathCountByT_C_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_D",
@@ -2127,7 +2127,7 @@ public class ExpandoValuePersistenceImpl
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"tableId", "columnId", "data_"}, false);
+			new String[] {"tableId", "columnId", "data_"}, 0, 4, false, null);
 
 		_collectionPersistenceFinderByT_C_D = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByT_C_D,
@@ -2180,4 +2180,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1713705016
+// LIFERAY-SERVICE-BUILDER-HASH:467402208

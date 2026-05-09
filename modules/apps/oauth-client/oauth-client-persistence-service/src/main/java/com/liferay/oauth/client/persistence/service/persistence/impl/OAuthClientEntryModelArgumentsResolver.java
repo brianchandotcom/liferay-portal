@@ -54,7 +54,7 @@ public class OAuthClientEntryModelArgumentsResolver
 		long columnBitmask = oAuthClientEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(oAuthClientEntryModelImpl, columnNames, original);
+			return _getValue(oAuthClientEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class OAuthClientEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(oAuthClientEntryModelImpl, columnNames, original);
+			return _getValue(oAuthClientEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,21 +91,26 @@ public class OAuthClientEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		OAuthClientEntryModelImpl oAuthClientEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = oAuthClientEntryModelImpl.getColumnOriginalValue(
+				value = oAuthClientEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = oAuthClientEntryModelImpl.getColumnValue(
-					columnName);
+				value = oAuthClientEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class OAuthClientEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1914977338
+// LIFERAY-SERVICE-BUILDER-HASH:661714039

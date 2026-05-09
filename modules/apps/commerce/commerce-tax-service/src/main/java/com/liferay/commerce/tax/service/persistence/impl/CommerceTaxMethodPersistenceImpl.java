@@ -721,7 +721,7 @@ public class CommerceTaxMethodPersistenceImpl
 		_finderPathFetchByG_E = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "engineKey"}, false,
+			new String[] {"groupId", "engineKey"}, 0, 2, false,
 			CommerceTaxMethod::getGroupId,
 			convertNullFunction(CommerceTaxMethod::getEngineKey));
 
@@ -836,4 +836,4 @@ public class CommerceTaxMethodPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1928194015
+// LIFERAY-SERVICE-BUILDER-HASH:156488841

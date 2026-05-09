@@ -651,7 +651,8 @@ public class SamlPeerBindingPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "deleted", "samlNameIdValue"}, true);
+			new String[] {"companyId", "deleted", "samlNameIdValue"}, 0, 4,
+			true, null);
 
 		_finderPathCountByC_D_SNIV = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_D_SNIV",
@@ -659,7 +660,8 @@ public class SamlPeerBindingPersistenceImpl
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "deleted", "samlNameIdValue"}, false);
+			new String[] {"companyId", "deleted", "samlNameIdValue"}, 0, 4,
+			false, null);
 
 		_collectionPersistenceFinderByC_D_SNIV =
 			new CollectionPersistenceFinder<>(
@@ -698,7 +700,7 @@ public class SamlPeerBindingPersistenceImpl
 				String.class.getName(), Boolean.class.getName()
 			},
 			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByC_U_SPEI_D = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_SPEI_D",
@@ -707,7 +709,7 @@ public class SamlPeerBindingPersistenceImpl
 				String.class.getName(), Boolean.class.getName()
 			},
 			new String[] {"companyId", "userId", "samlPeerEntityId", "deleted"},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByC_U_SPEI_D =
 			new CollectionPersistenceFinder<>(
@@ -797,4 +799,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:153487446
+// LIFERAY-SERVICE-BUILDER-HASH:-264514613

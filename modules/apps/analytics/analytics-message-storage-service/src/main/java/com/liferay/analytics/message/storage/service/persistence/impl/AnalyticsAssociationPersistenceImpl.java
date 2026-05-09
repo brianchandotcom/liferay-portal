@@ -1332,12 +1332,14 @@ public class AnalyticsAssociationPersistenceImpl
 		_finderPathWithoutPaginationFindByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "associationClassName"}, true);
+			new String[] {"companyId", "associationClassName"}, 0, 2, true,
+			null);
 
 		_finderPathCountByC_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "associationClassName"}, false);
+			new String[] {"companyId", "associationClassName"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_A,
@@ -1415,7 +1417,7 @@ public class AnalyticsAssociationPersistenceImpl
 			new String[] {
 				"companyId", "associationClassName", "associationClassPK"
 			},
-			true);
+			0, 2, true, null);
 
 		_finderPathCountByC_A_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_A",
@@ -1426,7 +1428,7 @@ public class AnalyticsAssociationPersistenceImpl
 			new String[] {
 				"companyId", "associationClassName", "associationClassPK"
 			},
-			false);
+			0, 2, false, null);
 
 		_collectionPersistenceFinderByC_A_A = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_A_A,
@@ -1516,4 +1518,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1237188054
+// LIFERAY-SERVICE-BUILDER-HASH:440924076

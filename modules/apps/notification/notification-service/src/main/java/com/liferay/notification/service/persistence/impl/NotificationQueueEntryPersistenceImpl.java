@@ -1918,12 +1918,12 @@ public class NotificationQueueEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByT_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, true);
+			new String[] {"type_", "status"}, 0, 1, true, null);
 
 		_finderPathCountByT_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
 			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, false);
+			new String[] {"type_", "status"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByT_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByT_S,
@@ -2033,4 +2033,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1859812206
+// LIFERAY-SERVICE-BUILDER-HASH:1274321408

@@ -760,7 +760,8 @@ public class PortletItemPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"groupId", "portletId", "classNameId"}, true);
+			new String[] {"groupId", "portletId", "classNameId"}, 0, 2, true,
+			null);
 
 		_finderPathCountByG_P_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_C",
@@ -768,7 +769,8 @@ public class PortletItemPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			new String[] {"groupId", "portletId", "classNameId"}, false);
+			new String[] {"groupId", "portletId", "classNameId"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByG_P_C = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByG_P_C,
@@ -791,8 +793,9 @@ public class PortletItemPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName(), Long.class.getName()
 			},
-			new String[] {"groupId", "name", "portletId", "classNameId"}, false,
-			PortletItem::getGroupId, convertNullFunction(PortletItem::getName),
+			new String[] {"groupId", "name", "portletId", "classNameId"}, 2, 6,
+			false, PortletItem::getGroupId,
+			convertCaseFunction(PortletItem::getName),
 			convertNullFunction(PortletItem::getPortletId),
 			PortletItem::getClassNameId);
 
@@ -844,4 +847,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1537840325
+// LIFERAY-SERVICE-BUILDER-HASH:-389020436

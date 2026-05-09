@@ -596,7 +596,7 @@ public class BatchPlannerMappingPersistenceImpl
 			new String[] {
 				"batchPlannerPlanId", "externalFieldName", "internalFieldName"
 			},
-			false, BatchPlannerMapping::getBatchPlannerPlanId,
+			0, 6, false, BatchPlannerMapping::getBatchPlannerPlanId,
 			convertNullFunction(BatchPlannerMapping::getExternalFieldName),
 			convertNullFunction(BatchPlannerMapping::getInternalFieldName));
 
@@ -682,4 +682,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-15034833
+// LIFERAY-SERVICE-BUILDER-HASH:863507542

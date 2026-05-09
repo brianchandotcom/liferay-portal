@@ -51,7 +51,7 @@ public class GroupModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = groupModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(groupModelImpl, columnNames, original);
+			return _getValue(groupModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class GroupModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(groupModelImpl, columnNames, original);
+			return _getValue(groupModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,20 +95,26 @@ public class GroupModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		GroupModelImpl groupModelImpl, String[] columnNames, boolean original) {
+		GroupModelImpl groupModelImpl, FinderPath finderPath,
+		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = groupModelImpl.getColumnOriginalValue(
-					columnName);
+				value = groupModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = groupModelImpl.getColumnValue(columnName);
+				value = groupModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -128,4 +134,4 @@ public class GroupModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1648762982
+// LIFERAY-SERVICE-BUILDER-HASH:699541209

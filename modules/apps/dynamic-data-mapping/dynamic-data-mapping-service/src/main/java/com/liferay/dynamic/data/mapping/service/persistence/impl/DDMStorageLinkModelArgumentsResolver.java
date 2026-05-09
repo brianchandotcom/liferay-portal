@@ -53,7 +53,7 @@ public class DDMStorageLinkModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = ddmStorageLinkModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(ddmStorageLinkModelImpl, columnNames, original);
+			return _getValue(ddmStorageLinkModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class DDMStorageLinkModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(ddmStorageLinkModelImpl, columnNames, original);
+			return _getValue(ddmStorageLinkModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class DDMStorageLinkModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DDMStorageLinkModelImpl ddmStorageLinkModelImpl, String[] columnNames,
+		DDMStorageLinkModelImpl ddmStorageLinkModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = ddmStorageLinkModelImpl.getColumnOriginalValue(
+				value = ddmStorageLinkModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = ddmStorageLinkModelImpl.getColumnValue(
-					columnName);
+				value = ddmStorageLinkModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class DDMStorageLinkModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-895579288
+// LIFERAY-SERVICE-BUILDER-HASH:335152121

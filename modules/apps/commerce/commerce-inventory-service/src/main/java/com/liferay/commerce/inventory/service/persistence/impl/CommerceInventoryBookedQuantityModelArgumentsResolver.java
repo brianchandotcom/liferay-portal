@@ -57,8 +57,7 @@ public class CommerceInventoryBookedQuantityModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceInventoryBookedQuantityModelImpl, columnNames,
-				original);
+				commerceInventoryBookedQuantityModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,8 +78,7 @@ public class CommerceInventoryBookedQuantityModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceInventoryBookedQuantityModelImpl, columnNames,
-				original);
+				commerceInventoryBookedQuantityModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -99,23 +97,28 @@ public class CommerceInventoryBookedQuantityModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceInventoryBookedQuantityModelImpl
 			commerceInventoryBookedQuantityModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceInventoryBookedQuantityModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					commerceInventoryBookedQuantityModelImpl.getColumnValue(
-						columnName);
+				value = commerceInventoryBookedQuantityModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -125,4 +128,4 @@ public class CommerceInventoryBookedQuantityModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-202446190
+// LIFERAY-SERVICE-BUILDER-HASH:895232701

@@ -1122,7 +1122,7 @@ public class CommercePriceModifierRelPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"commercePriceModifierId", "classNameId", "classPK"},
-			false, CommercePriceModifierRel::getCommercePriceModifierId,
+			0, 0, false, CommercePriceModifierRel::getCommercePriceModifierId,
 			CommercePriceModifierRel::getClassNameId,
 			CommercePriceModifierRel::getClassPK);
 
@@ -1210,4 +1210,4 @@ public class CommercePriceModifierRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-255434192
+// LIFERAY-SERVICE-BUILDER-HASH:-1963671661

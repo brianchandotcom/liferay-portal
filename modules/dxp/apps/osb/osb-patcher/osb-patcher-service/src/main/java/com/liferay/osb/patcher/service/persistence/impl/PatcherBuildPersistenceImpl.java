@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -32,6 +31,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -4517,6 +4517,8 @@ public class PatcherBuildPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByLtM_N_S;
 	private FinderPath _finderPathWithPaginationCountByLtM_N_S;
+	private CollectionPersistenceFinder<PatcherBuild>
+		_collectionPersistenceFinderByLtM_N_S;
 
 	/**
 	 * Returns all the patcher builds where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
@@ -4603,109 +4605,10 @@ public class PatcherBuildPersistenceImpl
 		OrderByComparator<PatcherBuild> orderByComparator,
 		boolean useFinderCache) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByLtM_N_S;
-		finderArgs = new Object[] {
-			_getTime(modifiedDate), notified, status, start, end,
-			orderByComparator
-		};
-
-		List<PatcherBuild> list = null;
-
-		if (useFinderCache) {
-			list = (List<PatcherBuild>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PatcherBuild patcherBuild : list) {
-					if ((modifiedDate.getTime() <= patcherBuild.getModifiedDate(
-						).getTime()) ||
-						(notified != patcherBuild.isNotified()) ||
-						(status != patcherBuild.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					5 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(5);
-			}
-
-			sb.append(_SQL_SELECT_PATCHERBUILD_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_NOTIFIED_2);
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(PatcherBuildModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				queryPos.add(notified);
-
-				queryPos.add(status);
-
-				list = (List<PatcherBuild>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLtM_N_S.find(
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {status}}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -4763,14 +4666,10 @@ public class PatcherBuildPersistenceImpl
 		Date modifiedDate, boolean notified, int status,
 		OrderByComparator<PatcherBuild> orderByComparator) {
 
-		List<PatcherBuild> list = findByLtM_N_S(
-			modifiedDate, notified, status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByLtM_N_S.fetchFirst(
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {status}},
+			orderByComparator);
 	}
 
 	/**
@@ -5218,137 +5117,12 @@ public class PatcherBuildPersistenceImpl
 		OrderByComparator<PatcherBuild> orderByComparator,
 		boolean useFinderCache) {
 
-		if (statuses == null) {
-			statuses = new int[0];
-		}
-		else if (statuses.length > 1) {
-			statuses = ArrayUtil.sortedUnique(statuses);
-		}
-
-		if (statuses.length == 1) {
-			return findByLtM_N_S(
-				modifiedDate, notified, statuses[0], start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					_getTime(modifiedDate), notified, StringUtil.merge(statuses)
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				_getTime(modifiedDate), notified, StringUtil.merge(statuses),
-				start, end, orderByComparator
-			};
-		}
-
-		List<PatcherBuild> list = null;
-
-		if (useFinderCache) {
-			list = (List<PatcherBuild>)finderCache.getResult(
-				_finderPathWithPaginationFindByLtM_N_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (PatcherBuild patcherBuild : list) {
-					if ((modifiedDate.getTime() <= patcherBuild.getModifiedDate(
-						).getTime()) ||
-						(notified != patcherBuild.isNotified()) ||
-						!ArrayUtil.contains(
-							statuses, patcherBuild.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_PATCHERBUILD_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_NOTIFIED_2);
-
-			if (statuses.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_STATUS_7);
-
-				sb.append(StringUtil.merge(statuses));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(PatcherBuildModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				queryPos.add(notified);
-
-				list = (List<PatcherBuild>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByLtM_N_S, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByLtM_N_S.find(
+			finderCache,
+			new Object[] {
+				modifiedDate, notified, ArrayUtil.sortedUnique(statuses)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5362,13 +5136,9 @@ public class PatcherBuildPersistenceImpl
 	public void removeByLtM_N_S(
 		Date modifiedDate, boolean notified, int status) {
 
-		for (PatcherBuild patcherBuild :
-				findByLtM_N_S(
-					modifiedDate, notified, status, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(patcherBuild);
-		}
+		_collectionPersistenceFinderByLtM_N_S.remove(
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {status}});
 	}
 
 	/**
@@ -5381,66 +5151,9 @@ public class PatcherBuildPersistenceImpl
 	 */
 	@Override
 	public int countByLtM_N_S(Date modifiedDate, boolean notified, int status) {
-		FinderPath finderPath = _finderPathWithPaginationCountByLtM_N_S;
-
-		Object[] finderArgs = new Object[] {
-			_getTime(modifiedDate), notified, status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_SQL_COUNT_PATCHERBUILD_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_NOTIFIED_2);
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				queryPos.add(notified);
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLtM_N_S.count(
+			finderCache,
+			new Object[] {modifiedDate, notified, new int[] {status}});
 	}
 
 	/**
@@ -5455,84 +5168,11 @@ public class PatcherBuildPersistenceImpl
 	public int countByLtM_N_S(
 		Date modifiedDate, boolean notified, int[] statuses) {
 
-		if (statuses == null) {
-			statuses = new int[0];
-		}
-		else if (statuses.length > 1) {
-			statuses = ArrayUtil.sortedUnique(statuses);
-		}
-
-		Object[] finderArgs = new Object[] {
-			_getTime(modifiedDate), notified, StringUtil.merge(statuses)
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByLtM_N_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_PATCHERBUILD_WHERE);
-
-			boolean bindModifiedDate = false;
-
-			if (modifiedDate == null) {
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_1);
-			}
-			else {
-				bindModifiedDate = true;
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_MODIFIEDDATE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_LTM_N_S_NOTIFIED_2);
-
-			if (statuses.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_LTM_N_S_STATUS_7);
-
-				sb.append(StringUtil.merge(statuses));
-
-				sb.append(")");
-
-				sb.append(")");
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindModifiedDate) {
-					queryPos.add(new Timestamp(modifiedDate.getTime()));
-				}
-
-				queryPos.add(notified);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByLtM_N_S, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByLtM_N_S.count(
+			finderCache,
+			new Object[] {
+				modifiedDate, notified, ArrayUtil.sortedUnique(statuses)
+			});
 	}
 
 	/**
@@ -7671,12 +7311,13 @@ public class PatcherBuildPersistenceImpl
 
 		_finderPathWithoutPaginationFindByKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, true);
+			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByKey = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByKey = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByKey,
@@ -7754,7 +7395,7 @@ public class PatcherBuildPersistenceImpl
 		_finderPathFetchByK_KV = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByK_KV",
 			new String[] {String.class.getName(), Double.class.getName()},
-			new String[] {"key_", "keyVersion"}, false,
+			new String[] {"key_", "keyVersion"}, 0, 1, false,
 			convertNullFunction(PatcherBuild::getKey),
 			PatcherBuild::getKeyVersion);
 
@@ -7833,12 +7474,12 @@ public class PatcherBuildPersistenceImpl
 		_finderPathWithoutPaginationFindByK_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByK_L",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"key_", "latestKeyBuild"}, true);
+			new String[] {"key_", "latestKeyBuild"}, 0, 1, true, null);
 
 		_finderPathCountByK_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByK_L",
 			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"key_", "latestKeyBuild"}, false);
+			new String[] {"key_", "latestKeyBuild"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByK_L = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByK_L,
@@ -7864,12 +7505,14 @@ public class PatcherBuildPersistenceImpl
 		_finderPathWithoutPaginationFindByL_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_S",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"latestSupportTicketBuild", "supportTicket"}, true);
+			new String[] {"latestSupportTicketBuild", "supportTicket"}, 0, 2,
+			true, null);
 
 		_finderPathCountByL_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_S",
 			new String[] {Boolean.class.getName(), String.class.getName()},
-			new String[] {"latestSupportTicketBuild", "supportTicket"}, false);
+			new String[] {"latestSupportTicketBuild", "supportTicket"}, 0, 2,
+			false, null);
 
 		_collectionPersistenceFinderByL_S = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByL_S,
@@ -7955,6 +7598,22 @@ public class PatcherBuildPersistenceImpl
 			},
 			new String[] {"modifiedDate", "notified", "status"}, false);
 
+		_collectionPersistenceFinderByLtM_N_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByLtM_N_S, null,
+				_finderPathWithPaginationCountByLtM_N_S,
+				_SQL_SELECT_PATCHERBUILD_WHERE, _SQL_COUNT_PATCHERBUILD_WHERE,
+				PatcherBuildModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"patcherBuild.", "modifiedDate", FinderColumn.Type.DATE,
+					"<", true, true, PatcherBuild::getModifiedDate),
+				new FinderColumn<>(
+					"patcherBuild.", "notified", FinderColumn.Type.BOOLEAN, "=",
+					true, true, PatcherBuild::isNotified),
+				new ArrayableFinderColumn<>(
+					"patcherBuild.", "status", FinderColumn.Type.INTEGER, "=",
+					false, true, true, PatcherBuild::getStatus));
+
 		_finderPathWithPaginationFindByP_NotP_C_NotT = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_NotP_C_NotT",
 			new String[] {
@@ -8023,7 +7682,7 @@ public class PatcherBuildPersistenceImpl
 				"patcherProjectVersionId", "accountEntryCode", "latestKeyBuild",
 				"name"
 			},
-			true);
+			0, 10, true, null);
 
 		_finderPathCountByP_N_L_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_L_A",
@@ -8035,7 +7694,7 @@ public class PatcherBuildPersistenceImpl
 				"patcherProjectVersionId", "accountEntryCode", "latestKeyBuild",
 				"name"
 			},
-			false);
+			0, 10, false, null);
 
 		_collectionPersistenceFinderByP_N_L_A =
 			new CollectionPersistenceFinder<>(
@@ -8172,4 +7831,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1899215514
+// LIFERAY-SERVICE-BUILDER-HASH:-335140300

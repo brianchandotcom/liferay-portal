@@ -57,7 +57,7 @@ public class CommerceVirtualOrderItemFileEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceVirtualOrderItemFileEntryModelImpl, columnNames,
+				commerceVirtualOrderItemFileEntryModelImpl, finderPath,
 				original);
 		}
 
@@ -87,7 +87,7 @@ public class CommerceVirtualOrderItemFileEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceVirtualOrderItemFileEntryModelImpl, columnNames,
+				commerceVirtualOrderItemFileEntryModelImpl, finderPath,
 				original);
 		}
 
@@ -107,23 +107,29 @@ public class CommerceVirtualOrderItemFileEntryModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceVirtualOrderItemFileEntryModelImpl
 			commerceVirtualOrderItemFileEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceVirtualOrderItemFileEntryModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
+				value =
 					commerceVirtualOrderItemFileEntryModelImpl.getColumnValue(
 						columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -145,4 +151,4 @@ public class CommerceVirtualOrderItemFileEntryModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1628933125
+// LIFERAY-SERVICE-BUILDER-HASH:-842733254

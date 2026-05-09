@@ -952,9 +952,9 @@ public class AccountGroupRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"accountGroupId", "classNameId", "classPK"}, false,
-			AccountGroupRel::getAccountGroupId, AccountGroupRel::getClassNameId,
-			AccountGroupRel::getClassPK);
+			new String[] {"accountGroupId", "classNameId", "classPK"}, 0, 0,
+			false, AccountGroupRel::getAccountGroupId,
+			AccountGroupRel::getClassNameId, AccountGroupRel::getClassPK);
 
 		_uniquePersistenceFinderByA_C_C = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByA_C_C, _SQL_SELECT_ACCOUNTGROUPREL_WHERE,
@@ -1035,4 +1035,4 @@ public class AccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-125930301
+// LIFERAY-SERVICE-BUILDER-HASH:-2001138610

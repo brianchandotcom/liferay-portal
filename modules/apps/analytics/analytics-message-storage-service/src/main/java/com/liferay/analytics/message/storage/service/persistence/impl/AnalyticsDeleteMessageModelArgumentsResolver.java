@@ -55,7 +55,7 @@ public class AnalyticsDeleteMessageModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				analyticsDeleteMessageModelImpl, columnNames, original);
+				analyticsDeleteMessageModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -76,7 +76,7 @@ public class AnalyticsDeleteMessageModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				analyticsDeleteMessageModelImpl, columnNames, original);
+				analyticsDeleteMessageModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -94,22 +94,27 @@ public class AnalyticsDeleteMessageModelArgumentsResolver
 
 	private static Object[] _getValue(
 		AnalyticsDeleteMessageModelImpl analyticsDeleteMessageModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					analyticsDeleteMessageModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = analyticsDeleteMessageModelImpl.getColumnValue(
+				value = analyticsDeleteMessageModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = analyticsDeleteMessageModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -119,4 +124,4 @@ public class AnalyticsDeleteMessageModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2024882177
+// LIFERAY-SERVICE-BUILDER-HASH:2136395418

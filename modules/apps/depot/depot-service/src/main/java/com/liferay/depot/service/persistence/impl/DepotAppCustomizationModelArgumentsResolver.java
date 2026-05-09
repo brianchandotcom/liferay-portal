@@ -55,7 +55,7 @@ public class DepotAppCustomizationModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				depotAppCustomizationModelImpl, columnNames, original);
+				depotAppCustomizationModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class DepotAppCustomizationModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				depotAppCustomizationModelImpl, columnNames, original);
+				depotAppCustomizationModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class DepotAppCustomizationModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DepotAppCustomizationModelImpl depotAppCustomizationModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					depotAppCustomizationModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = depotAppCustomizationModelImpl.getColumnValue(
+				value = depotAppCustomizationModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = depotAppCustomizationModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class DepotAppCustomizationModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1235424615
+// LIFERAY-SERVICE-BUILDER-HASH:108641882

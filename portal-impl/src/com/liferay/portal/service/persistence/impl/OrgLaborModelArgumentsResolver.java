@@ -51,7 +51,7 @@ public class OrgLaborModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = orgLaborModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(orgLaborModelImpl, columnNames, original);
+			return _getValue(orgLaborModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class OrgLaborModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(orgLaborModelImpl, columnNames, original);
+			return _getValue(orgLaborModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,21 +95,26 @@ public class OrgLaborModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		OrgLaborModelImpl orgLaborModelImpl, String[] columnNames,
+		OrgLaborModelImpl orgLaborModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = orgLaborModelImpl.getColumnOriginalValue(
-					columnName);
+				value = orgLaborModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = orgLaborModelImpl.getColumnValue(columnName);
+				value = orgLaborModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class OrgLaborModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1307322955
+// LIFERAY-SERVICE-BUILDER-HASH:403910786

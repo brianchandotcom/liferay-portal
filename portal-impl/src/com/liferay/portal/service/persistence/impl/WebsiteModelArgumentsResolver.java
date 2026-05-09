@@ -51,7 +51,7 @@ public class WebsiteModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = websiteModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(websiteModelImpl, columnNames, original);
+			return _getValue(websiteModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class WebsiteModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(websiteModelImpl, columnNames, original);
+			return _getValue(websiteModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,21 +95,26 @@ public class WebsiteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		WebsiteModelImpl websiteModelImpl, String[] columnNames,
+		WebsiteModelImpl websiteModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = websiteModelImpl.getColumnOriginalValue(
-					columnName);
+				value = websiteModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = websiteModelImpl.getColumnValue(columnName);
+				value = websiteModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class WebsiteModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-157306134
+// LIFERAY-SERVICE-BUILDER-HASH:-2068942507

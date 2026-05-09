@@ -54,8 +54,7 @@ public class DepotEntryGroupRelModelArgumentsResolver
 		long columnBitmask = depotEntryGroupRelModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				depotEntryGroupRelModelImpl, columnNames, original);
+			return _getValue(depotEntryGroupRelModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,8 +73,7 @@ public class DepotEntryGroupRelModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				depotEntryGroupRelModelImpl, columnNames, original);
+			return _getValue(depotEntryGroupRelModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +91,26 @@ public class DepotEntryGroupRelModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DepotEntryGroupRelModelImpl depotEntryGroupRelModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					depotEntryGroupRelModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = depotEntryGroupRelModelImpl.getColumnValue(
+				value = depotEntryGroupRelModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = depotEntryGroupRelModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +120,4 @@ public class DepotEntryGroupRelModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-326519943
+// LIFERAY-SERVICE-BUILDER-HASH:-31487478

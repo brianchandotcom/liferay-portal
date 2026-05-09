@@ -52,7 +52,7 @@ public class ExpandoValueModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = expandoValueModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(expandoValueModelImpl, columnNames, original);
+			return _getValue(expandoValueModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class ExpandoValueModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(expandoValueModelImpl, columnNames, original);
+			return _getValue(expandoValueModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,27 @@ public class ExpandoValueModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		ExpandoValueModelImpl expandoValueModelImpl, String[] columnNames,
+		ExpandoValueModelImpl expandoValueModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = expandoValueModelImpl.getColumnOriginalValue(
+				value = expandoValueModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = expandoValueModelImpl.getColumnValue(columnName);
+				value = expandoValueModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -135,4 +141,4 @@ public class ExpandoValueModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-555401725
+// LIFERAY-SERVICE-BUILDER-HASH:2101335280

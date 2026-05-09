@@ -1711,13 +1711,13 @@ public class CommerceSubscriptionEntryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1733,7 +1733,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(CommerceSubscriptionEntry::getUuid),
 			CommerceSubscriptionEntry::getGroupId);
 
@@ -1759,12 +1759,12 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1851,7 +1851,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 		_finderPathFetchByCommerceOrderItemId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCommerceOrderItemId",
 			new String[] {Long.class.getName()},
-			new String[] {"commerceOrderItemId"}, false,
+			new String[] {"commerceOrderItemId"}, 0, 0, false,
 			CommerceSubscriptionEntry::getCommerceOrderItemId);
 
 		_uniquePersistenceFinderByCommerceOrderItemId =
@@ -1979,7 +1979,7 @@ public class CommerceSubscriptionEntryPersistenceImpl
 			new String[] {
 				"CPInstanceUuid", "CProductId", "commerceOrderItemId"
 			},
-			false,
+			0, 1, false,
 			convertNullFunction(CommerceSubscriptionEntry::getCPInstanceUuid),
 			CommerceSubscriptionEntry::getCProductId,
 			CommerceSubscriptionEntry::getCommerceOrderItemId);
@@ -2069,4 +2069,4 @@ public class CommerceSubscriptionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:904082403
+// LIFERAY-SERVICE-BUILDER-HASH:-264913434

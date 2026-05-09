@@ -654,7 +654,7 @@ public class ExportImportReportEntryPersistenceImpl
 				"groupId", "companyId", "classExternalReferenceCode",
 				"classNameId", "exportImportConfigurationId", "type_"
 			},
-			false, ExportImportReportEntry::getGroupId,
+			0, 4, false, ExportImportReportEntry::getGroupId,
 			ExportImportReportEntry::getCompanyId,
 			convertNullFunction(
 				ExportImportReportEntry::getClassExternalReferenceCode),
@@ -756,4 +756,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-287084928
+// LIFERAY-SERVICE-BUILDER-HASH:2066675270

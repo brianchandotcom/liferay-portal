@@ -53,7 +53,7 @@ public class UADPartialEntryModelArgumentsResolver
 		long columnBitmask = uadPartialEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(uadPartialEntryModelImpl, columnNames, original);
+			return _getValue(uadPartialEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class UADPartialEntryModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(uadPartialEntryModelImpl, columnNames, original);
+			return _getValue(uadPartialEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class UADPartialEntryModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		UADPartialEntryModelImpl uadPartialEntryModelImpl, String[] columnNames,
-		boolean original) {
+		UADPartialEntryModelImpl uadPartialEntryModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = uadPartialEntryModelImpl.getColumnOriginalValue(
+				value = uadPartialEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = uadPartialEntryModelImpl.getColumnValue(
-					columnName);
+				value = uadPartialEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class UADPartialEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1815511102
+// LIFERAY-SERVICE-BUILDER-HASH:-1596506435

@@ -343,7 +343,7 @@ public class FaroProjectUsagePersistenceImpl
 		_finderPathFetchByF_U = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByF_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"faroProjectId", "usageTime"}, false,
+			new String[] {"faroProjectId", "usageTime"}, 0, 0, false,
 			FaroProjectUsage::getFaroProjectId, FaroProjectUsage::getUsageTime);
 
 		_uniquePersistenceFinderByF_U = new UniquePersistenceFinder<>(
@@ -418,4 +418,4 @@ public class FaroProjectUsagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1343221095
+// LIFERAY-SERVICE-BUILDER-HASH:1445542586

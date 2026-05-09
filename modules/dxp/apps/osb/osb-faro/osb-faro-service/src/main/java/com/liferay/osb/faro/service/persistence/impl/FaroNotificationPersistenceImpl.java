@@ -18,28 +18,25 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -229,6 +226,8 @@ public class FaroNotificationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_GtC_O_T;
 	private FinderPath _finderPathWithPaginationCountByG_GtC_O_T;
+	private CollectionPersistenceFinder<FaroNotification>
+		_collectionPersistenceFinderByG_GtC_O_T;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63;.
@@ -321,114 +320,10 @@ public class FaroNotificationPersistenceImpl
 		int end, OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		type = Objects.toString(type, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByG_GtC_O_T;
-		finderArgs = new Object[] {
-			groupId, createTime, ownerId, type, start, end, orderByComparator
-		};
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						(ownerId != faroNotification.getOwnerId()) ||
-						!type.equals(faroNotification.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					6 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(6);
-			}
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_OWNERID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_T.find(
+			finderCache,
+			new Object[] {groupId, createTime, new long[] {ownerId}, type},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -491,14 +386,10 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, String type,
 		OrderByComparator<FaroNotification> orderByComparator) {
 
-		List<FaroNotification> list = findByG_GtC_O_T(
-			groupId, createTime, ownerId, type, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByG_GtC_O_T.fetchFirst(
+			finderCache,
+			new Object[] {groupId, createTime, new long[] {ownerId}, type},
+			orderByComparator);
 	}
 
 	/**
@@ -596,147 +487,12 @@ public class FaroNotificationPersistenceImpl
 		int end, OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-
-		if (ownerIds.length == 1) {
-			return findByG_GtC_O_T(
-				groupId, createTime, ownerIds[0], type, start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, createTime, StringUtil.merge(ownerIds), type
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, createTime, StringUtil.merge(ownerIds), type, start,
-				end, orderByComparator
-			};
-		}
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_GtC_O_T, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						!ArrayUtil.contains(
-							ownerIds, faroNotification.getOwnerId()) ||
-						!type.equals(faroNotification.getType())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			sb.append(" AND faroNotification.read = [$FALSE$]");
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_GtC_O_T, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_T.find(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), type
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -751,13 +507,9 @@ public class FaroNotificationPersistenceImpl
 	public void removeByG_GtC_O_T(
 		long groupId, long createTime, long ownerId, String type) {
 
-		for (FaroNotification faroNotification :
-				findByG_GtC_O_T(
-					groupId, createTime, ownerId, type, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(faroNotification);
-		}
+		_collectionPersistenceFinderByG_GtC_O_T.remove(
+			finderCache,
+			new Object[] {groupId, createTime, new long[] {ownerId}, type});
 	}
 
 	/**
@@ -773,70 +525,9 @@ public class FaroNotificationPersistenceImpl
 	public int countByG_GtC_O_T(
 		long groupId, long createTime, long ownerId, String type) {
 
-		type = Objects.toString(type, "");
-
-		FinderPath finderPath = _finderPathWithPaginationCountByG_GtC_O_T;
-
-		Object[] finderArgs = new Object[] {groupId, createTime, ownerId, type};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_OWNERID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_T.count(
+			finderCache,
+			new Object[] {groupId, createTime, new long[] {ownerId}, type});
 	}
 
 	/**
@@ -852,95 +543,11 @@ public class FaroNotificationPersistenceImpl
 	public int countByG_GtC_O_T(
 		long groupId, long createTime, long[] ownerIds, String type) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-
-		Object[] finderArgs = new Object[] {
-			groupId, createTime, StringUtil.merge(ownerIds), type
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_GtC_O_T, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_TYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			sb.append(" AND faroNotification.read = [$FALSE$]");
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_GtC_O_T, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_T.count(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), type
+			});
 	}
 
 	private static final String _FINDER_COLUMN_G_GTC_O_T_GROUPID_2 =
@@ -952,9 +559,6 @@ public class FaroNotificationPersistenceImpl
 	private static final String _FINDER_COLUMN_G_GTC_O_T_OWNERID_2 =
 		"faroNotification.ownerId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_GTC_O_T_OWNERID_7 =
-		"faroNotification.ownerId IN (";
-
 	private static final String _FINDER_COLUMN_G_GTC_O_T_TYPE_2 =
 		"faroNotification.type = ? AND faroNotification.read = [$FALSE$]";
 
@@ -963,6 +567,8 @@ public class FaroNotificationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_GtC_O_T_S;
 	private FinderPath _finderPathWithPaginationCountByG_GtC_O_T_S;
+	private CollectionPersistenceFinder<FaroNotification>
+		_collectionPersistenceFinderByG_GtC_O_T_S;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63; and subtype = &#63;.
@@ -1062,132 +668,12 @@ public class FaroNotificationPersistenceImpl
 		OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByG_GtC_O_T_S;
-		finderArgs = new Object[] {
-			groupId, createTime, ownerId, type, subtype, start, end,
-			orderByComparator
-		};
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						(ownerId != faroNotification.getOwnerId()) ||
-						!type.equals(faroNotification.getType()) ||
-						!subtype.equals(faroNotification.getSubtype())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					7 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(7);
-			}
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_OWNERID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_T_S.find(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, type, subtype
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1256,15 +742,12 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, String type,
 		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
 
-		List<FaroNotification> list = findByG_GtC_O_T_S(
-			groupId, createTime, ownerId, type, subtype, 0, 1,
+		return _collectionPersistenceFinderByG_GtC_O_T_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, type, subtype
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -1369,163 +852,13 @@ public class FaroNotificationPersistenceImpl
 		OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		if (ownerIds.length == 1) {
-			return findByG_GtC_O_T_S(
-				groupId, createTime, ownerIds[0], type, subtype, start, end,
-				orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, createTime, StringUtil.merge(ownerIds), type,
-					subtype
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, createTime, StringUtil.merge(ownerIds), type, subtype,
-				start, end, orderByComparator
-			};
-		}
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_GtC_O_T_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						!ArrayUtil.contains(
-							ownerIds, faroNotification.getOwnerId()) ||
-						!type.equals(faroNotification.getType()) ||
-						!subtype.equals(faroNotification.getSubtype())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_GtC_O_T_S, finderArgs,
-						list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_T_S.find(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), type,
+				subtype
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1542,13 +875,11 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, String type,
 		String subtype) {
 
-		for (FaroNotification faroNotification :
-				findByG_GtC_O_T_S(
-					groupId, createTime, ownerId, type, subtype,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroNotification);
-		}
+		_collectionPersistenceFinderByG_GtC_O_T_S.remove(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, type, subtype
+			});
 	}
 
 	/**
@@ -1566,88 +897,11 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, String type,
 		String subtype) {
 
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		FinderPath finderPath = _finderPathWithPaginationCountByG_GtC_O_T_S;
-
-		Object[] finderArgs = new Object[] {
-			groupId, createTime, ownerId, type, subtype
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_OWNERID_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_T_S.count(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, type, subtype
+			});
 	}
 
 	/**
@@ -1665,109 +919,12 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long[] ownerIds, String type,
 		String subtype) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		Object[] finderArgs = new Object[] {
-			groupId, createTime, StringUtil.merge(ownerIds), type, subtype
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_GtC_O_T_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_T_S_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_T_S_SUBTYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_GtC_O_T_S, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_T_S.count(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), type,
+				subtype
+			});
 	}
 
 	private static final String _FINDER_COLUMN_G_GTC_O_T_S_GROUPID_2 =
@@ -1778,9 +935,6 @@ public class FaroNotificationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_GTC_O_T_S_OWNERID_2 =
 		"faroNotification.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_T_S_OWNERID_7 =
-		"faroNotification.ownerId IN (";
 
 	private static final String _FINDER_COLUMN_G_GTC_O_T_S_TYPE_2 =
 		"faroNotification.type = ? AND ";
@@ -1796,6 +950,8 @@ public class FaroNotificationPersistenceImpl
 
 	private FinderPath _finderPathWithPaginationFindByG_GtC_O_R_T_S;
 	private FinderPath _finderPathWithPaginationCountByG_GtC_O_R_T_S;
+	private CollectionPersistenceFinder<FaroNotification>
+		_collectionPersistenceFinderByG_GtC_O_R_T_S;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and read = &#63; and type = &#63; and subtype = &#63;.
@@ -1900,137 +1056,12 @@ public class FaroNotificationPersistenceImpl
 		OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = _finderPathWithPaginationFindByG_GtC_O_R_T_S;
-		finderArgs = new Object[] {
-			groupId, createTime, ownerId, read, type, subtype, start, end,
-			orderByComparator
-		};
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						(ownerId != faroNotification.getOwnerId()) ||
-						(read != faroNotification.isRead()) ||
-						!type.equals(faroNotification.getType()) ||
-						!subtype.equals(faroNotification.getSubtype())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					8 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(8);
-			}
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_READ_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				queryPos.add(read);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_R_T_S.find(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, read, type, subtype
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2105,15 +1136,12 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, boolean read, String type,
 		String subtype, OrderByComparator<FaroNotification> orderByComparator) {
 
-		List<FaroNotification> list = findByG_GtC_O_R_T_S(
-			groupId, createTime, ownerId, read, type, subtype, 0, 1,
+		return _collectionPersistenceFinderByG_GtC_O_R_T_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, read, type, subtype
+			},
 			orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
 	}
 
 	/**
@@ -2223,168 +1251,13 @@ public class FaroNotificationPersistenceImpl
 		OrderByComparator<FaroNotification> orderByComparator,
 		boolean useFinderCache) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		if (ownerIds.length == 1) {
-			return findByG_GtC_O_R_T_S(
-				groupId, createTime, ownerIds[0], read, type, subtype, start,
-				end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					groupId, createTime, StringUtil.merge(ownerIds), read, type,
-					subtype
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				groupId, createTime, StringUtil.merge(ownerIds), read, type,
-				subtype, start, end, orderByComparator
-			};
-		}
-
-		List<FaroNotification> list = null;
-
-		if (useFinderCache) {
-			list = (List<FaroNotification>)finderCache.getResult(
-				_finderPathWithPaginationFindByG_GtC_O_R_T_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (FaroNotification faroNotification : list) {
-					if ((groupId != faroNotification.getGroupId()) ||
-						(createTime >= faroNotification.getCreateTime()) ||
-						!ArrayUtil.contains(
-							ownerIds, faroNotification.getOwnerId()) ||
-						(read != faroNotification.isRead()) ||
-						!type.equals(faroNotification.getType()) ||
-						!subtype.equals(faroNotification.getSubtype())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_READ_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(FaroNotificationModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(read);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				list = (List<FaroNotification>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByG_GtC_O_R_T_S,
-						finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByG_GtC_O_R_T_S.find(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), read,
+				type, subtype
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -2402,13 +1275,11 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, boolean read, String type,
 		String subtype) {
 
-		for (FaroNotification faroNotification :
-				findByG_GtC_O_R_T_S(
-					groupId, createTime, ownerId, read, type, subtype,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-
-			remove(faroNotification);
-		}
+		_collectionPersistenceFinderByG_GtC_O_R_T_S.remove(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, read, type, subtype
+			});
 	}
 
 	/**
@@ -2427,92 +1298,11 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long ownerId, boolean read, String type,
 		String subtype) {
 
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		FinderPath finderPath = _finderPathWithPaginationCountByG_GtC_O_R_T_S;
-
-		Object[] finderArgs = new Object[] {
-			groupId, createTime, ownerId, read, type, subtype
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_CREATETIME_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_READ_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(ownerId);
-
-				queryPos.add(read);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_R_T_S.count(
+			finderCache,
+			new Object[] {
+				groupId, createTime, new long[] {ownerId}, read, type, subtype
+			});
 	}
 
 	/**
@@ -2531,113 +1321,12 @@ public class FaroNotificationPersistenceImpl
 		long groupId, long createTime, long[] ownerIds, boolean read,
 		String type, String subtype) {
 
-		if (ownerIds == null) {
-			ownerIds = new long[0];
-		}
-		else if (ownerIds.length > 1) {
-			ownerIds = ArrayUtil.sortedUnique(ownerIds);
-		}
-
-		type = Objects.toString(type, "");
-		subtype = Objects.toString(subtype, "");
-
-		Object[] finderArgs = new Object[] {
-			groupId, createTime, StringUtil.merge(ownerIds), read, type, subtype
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByG_GtC_O_R_T_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_FARONOTIFICATION_WHERE);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2);
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_CREATETIME_2);
-
-			if (ownerIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_7);
-
-				sb.append(StringUtil.merge(ownerIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_READ_2);
-
-			boolean bindType = false;
-
-			if (type.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_3);
-			}
-			else {
-				bindType = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_TYPE_2);
-			}
-
-			boolean bindSubtype = false;
-
-			if (subtype.isEmpty()) {
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_3);
-			}
-			else {
-				bindSubtype = true;
-
-				sb.append(_FINDER_COLUMN_G_GTC_O_R_T_S_SUBTYPE_2);
-			}
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(groupId);
-
-				queryPos.add(createTime);
-
-				queryPos.add(read);
-
-				if (bindType) {
-					queryPos.add(type);
-				}
-
-				if (bindSubtype) {
-					queryPos.add(subtype);
-				}
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByG_GtC_O_R_T_S, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByG_GtC_O_R_T_S.count(
+			finderCache,
+			new Object[] {
+				groupId, createTime, ArrayUtil.sortedUnique(ownerIds), read,
+				type, subtype
+			});
 	}
 
 	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_GROUPID_2 =
@@ -2648,9 +1337,6 @@ public class FaroNotificationPersistenceImpl
 
 	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_2 =
 		"faroNotification.ownerId = ? AND ";
-
-	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_OWNERID_7 =
-		"faroNotification.ownerId IN (";
 
 	private static final String _FINDER_COLUMN_G_GTC_O_R_T_S_READ_2 =
 		"faroNotification.read = ? AND ";
@@ -2879,6 +1565,27 @@ public class FaroNotificationPersistenceImpl
 			},
 			new String[] {"groupId", "createTime", "ownerId", "type_"}, false);
 
+		_collectionPersistenceFinderByG_GtC_O_T =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_GtC_O_T, null,
+				_finderPathWithPaginationCountByG_GtC_O_T,
+				_SQL_SELECT_FARONOTIFICATION_WHERE,
+				_SQL_COUNT_FARONOTIFICATION_WHERE,
+				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"faroNotification.read = [$FALSE$]",
+				new FinderColumn<>(
+					"faroNotification.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, FaroNotification::getGroupId),
+				new FinderColumn<>(
+					"faroNotification.", "createTime", FinderColumn.Type.LONG,
+					">", true, true, FaroNotification::getCreateTime),
+				new ArrayableFinderColumn<>(
+					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
+					false, true, true, FaroNotification::getOwnerId),
+				new FinderColumn<>(
+					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
+					true, true, FaroNotification::getType));
+
 		_finderPathWithPaginationFindByG_GtC_O_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_T_S",
 			new String[] {
@@ -2903,6 +1610,30 @@ public class FaroNotificationPersistenceImpl
 				"groupId", "createTime", "ownerId", "type_", "subtype"
 			},
 			false);
+
+		_collectionPersistenceFinderByG_GtC_O_T_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_GtC_O_T_S, null,
+				_finderPathWithPaginationCountByG_GtC_O_T_S,
+				_SQL_SELECT_FARONOTIFICATION_WHERE,
+				_SQL_COUNT_FARONOTIFICATION_WHERE,
+				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"faroNotification.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, FaroNotification::getGroupId),
+				new FinderColumn<>(
+					"faroNotification.", "createTime", FinderColumn.Type.LONG,
+					">", true, true, FaroNotification::getCreateTime),
+				new ArrayableFinderColumn<>(
+					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
+					false, true, true, FaroNotification::getOwnerId),
+				new FinderColumn<>(
+					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
+					true, true, FaroNotification::getType),
+				new FinderColumn<>(
+					"faroNotification.", "subtype", FinderColumn.Type.STRING,
+					"=", true, true, FaroNotification::getSubtype));
 
 		_finderPathWithPaginationFindByG_GtC_O_R_T_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_R_T_S",
@@ -2929,6 +1660,33 @@ public class FaroNotificationPersistenceImpl
 				"groupId", "createTime", "ownerId", "read_", "type_", "subtype"
 			},
 			false);
+
+		_collectionPersistenceFinderByG_GtC_O_R_T_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByG_GtC_O_R_T_S, null,
+				_finderPathWithPaginationCountByG_GtC_O_R_T_S,
+				_SQL_SELECT_FARONOTIFICATION_WHERE,
+				_SQL_COUNT_FARONOTIFICATION_WHERE,
+				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"faroNotification.", "groupId", FinderColumn.Type.LONG, "=",
+					true, true, FaroNotification::getGroupId),
+				new FinderColumn<>(
+					"faroNotification.", "createTime", FinderColumn.Type.LONG,
+					">", true, true, FaroNotification::getCreateTime),
+				new ArrayableFinderColumn<>(
+					"faroNotification.", "ownerId", FinderColumn.Type.LONG, "=",
+					false, true, true, FaroNotification::getOwnerId),
+				new FinderColumn<>(
+					"faroNotification.", "read", FinderColumn.Type.BOOLEAN, "=",
+					true, true, FaroNotification::isRead),
+				new FinderColumn<>(
+					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
+					true, true, FaroNotification::getType),
+				new FinderColumn<>(
+					"faroNotification.", "subtype", FinderColumn.Type.STRING,
+					"=", true, true, FaroNotification::getSubtype));
 
 		FaroNotificationUtil.setPersistence(this);
 	}
@@ -2999,4 +1757,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1082452999
+// LIFERAY-SERVICE-BUILDER-HASH:1073780961

@@ -519,7 +519,7 @@ public class FaroPreferencesPersistenceImpl
 		_finderPathFetchByG_O = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_O",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "ownerId"}, false,
+			new String[] {"groupId", "ownerId"}, 0, 0, false,
 			FaroPreferences::getGroupId, FaroPreferences::getOwnerId);
 
 		_uniquePersistenceFinderByG_O = new UniquePersistenceFinder<>(
@@ -597,4 +597,4 @@ public class FaroPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1055938559
+// LIFERAY-SERVICE-BUILDER-HASH:-2096191080

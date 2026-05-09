@@ -1148,12 +1148,12 @@ public class KaleoTaskAssignmentPersistenceImpl
 		_finderPathWithoutPaginationFindByKCN_KCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, true);
+			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, true, null);
 
 		_finderPathCountByKCN_KCPK = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"kaleoClassName", "kaleoClassPK"}, false);
+			new String[] {"kaleoClassName", "kaleoClassPK"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByKCN_KCPK =
 			new CollectionPersistenceFinder<>(
@@ -1194,7 +1194,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			new String[] {
 				"kaleoClassName", "kaleoClassPK", "assigneeClassName"
 			},
-			true);
+			0, 5, true, null);
 
 		_finderPathCountByKCN_KCPK_ACN = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK_ACN",
@@ -1205,7 +1205,7 @@ public class KaleoTaskAssignmentPersistenceImpl
 			new String[] {
 				"kaleoClassName", "kaleoClassPK", "assigneeClassName"
 			},
-			false);
+			0, 5, false, null);
 
 		_collectionPersistenceFinderByKCN_KCPK_ACN =
 			new CollectionPersistenceFinder<>(
@@ -1298,4 +1298,4 @@ public class KaleoTaskAssignmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-125016900
+// LIFERAY-SERVICE-BUILDER-HASH:1225696757

@@ -53,7 +53,7 @@ public class DispatchLogModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = dispatchLogModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dispatchLogModelImpl, columnNames, original);
+			return _getValue(dispatchLogModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class DispatchLogModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dispatchLogModelImpl, columnNames, original);
+			return _getValue(dispatchLogModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,26 @@ public class DispatchLogModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		DispatchLogModelImpl dispatchLogModelImpl, String[] columnNames,
+		DispatchLogModelImpl dispatchLogModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dispatchLogModelImpl.getColumnOriginalValue(
-					columnName);
+				value = dispatchLogModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = dispatchLogModelImpl.getColumnValue(columnName);
+				value = dispatchLogModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class DispatchLogModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-560814435
+// LIFERAY-SERVICE-BUILDER-HASH:1166644870

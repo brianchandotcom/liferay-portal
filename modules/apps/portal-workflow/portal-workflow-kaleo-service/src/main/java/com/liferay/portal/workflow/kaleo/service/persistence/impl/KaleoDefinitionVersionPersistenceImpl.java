@@ -858,12 +858,12 @@ public class KaleoDefinitionVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, 0, 2, true, null);
 
 		_finderPathCountByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
+			new String[] {"companyId", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_N = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_N,
@@ -885,7 +885,7 @@ public class KaleoDefinitionVersionPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "name", "version"}, false,
+			new String[] {"companyId", "name", "version"}, 0, 6, false,
 			KaleoDefinitionVersion::getCompanyId,
 			convertNullFunction(KaleoDefinitionVersion::getName),
 			convertNullFunction(KaleoDefinitionVersion::getVersion));
@@ -972,4 +972,4 @@ public class KaleoDefinitionVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1188127050
+// LIFERAY-SERVICE-BUILDER-HASH:-750369532

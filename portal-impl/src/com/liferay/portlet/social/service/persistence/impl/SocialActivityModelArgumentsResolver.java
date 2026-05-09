@@ -52,7 +52,7 @@ public class SocialActivityModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = socialActivityModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(socialActivityModelImpl, columnNames, original);
+			return _getValue(socialActivityModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class SocialActivityModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(socialActivityModelImpl, columnNames, original);
+			return _getValue(socialActivityModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,22 +96,27 @@ public class SocialActivityModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		SocialActivityModelImpl socialActivityModelImpl, String[] columnNames,
+		SocialActivityModelImpl socialActivityModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = socialActivityModelImpl.getColumnOriginalValue(
+				value = socialActivityModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = socialActivityModelImpl.getColumnValue(
-					columnName);
+				value = socialActivityModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -132,4 +137,4 @@ public class SocialActivityModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-557853645
+// LIFERAY-SERVICE-BUILDER-HASH:782880358

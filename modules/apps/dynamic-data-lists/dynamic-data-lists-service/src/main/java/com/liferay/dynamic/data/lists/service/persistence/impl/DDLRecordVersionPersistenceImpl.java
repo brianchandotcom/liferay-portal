@@ -1188,12 +1188,13 @@ public class DDLRecordVersionPersistenceImpl
 		_finderPathWithoutPaginationFindByR_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "recordSetVersion"}, true);
+			new String[] {"recordSetId", "recordSetVersion"}, 0, 2, true, null);
 
 		_finderPathCountByR_R = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordSetId", "recordSetVersion"}, false);
+			new String[] {"recordSetId", "recordSetVersion"}, 0, 2, false,
+			null);
 
 		_collectionPersistenceFinderByR_R = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByR_R,
@@ -1212,7 +1213,7 @@ public class DDLRecordVersionPersistenceImpl
 		_finderPathFetchByR_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"recordId", "version"}, false,
+			new String[] {"recordId", "version"}, 0, 2, false,
 			DDLRecordVersion::getRecordId,
 			convertNullFunction(DDLRecordVersion::getVersion));
 
@@ -1279,7 +1280,7 @@ public class DDLRecordVersionPersistenceImpl
 			new String[] {
 				"userId", "recordSetId", "recordSetVersion", "status"
 			},
-			true);
+			0, 4, true, null);
 
 		_finderPathCountByU_R_R_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_R_R_S",
@@ -1290,7 +1291,7 @@ public class DDLRecordVersionPersistenceImpl
 			new String[] {
 				"userId", "recordSetId", "recordSetVersion", "status"
 			},
-			false);
+			0, 4, false, null);
 
 		_collectionPersistenceFinderByU_R_R_S =
 			new CollectionPersistenceFinder<>(
@@ -1383,4 +1384,4 @@ public class DDLRecordVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1400698118
+// LIFERAY-SERVICE-BUILDER-HASH:188006592

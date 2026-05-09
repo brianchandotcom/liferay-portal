@@ -52,7 +52,7 @@ public class COREntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = corEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(corEntryModelImpl, columnNames, original);
+			return _getValue(corEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -79,7 +79,7 @@ public class COREntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(corEntryModelImpl, columnNames, original);
+			return _getValue(corEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,21 +96,26 @@ public class COREntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		COREntryModelImpl corEntryModelImpl, String[] columnNames,
+		COREntryModelImpl corEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = corEntryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = corEntryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = corEntryModelImpl.getColumnValue(columnName);
+				value = corEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -130,4 +135,4 @@ public class COREntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1441473413
+// LIFERAY-SERVICE-BUILDER-HASH:964744792

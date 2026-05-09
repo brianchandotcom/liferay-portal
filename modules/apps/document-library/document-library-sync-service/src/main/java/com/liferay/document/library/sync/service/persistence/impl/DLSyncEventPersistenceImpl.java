@@ -509,8 +509,8 @@ public class DLSyncEventPersistenceImpl
 
 		_finderPathFetchByTypePK = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByTypePK",
-			new String[] {Long.class.getName()}, new String[] {"typePK"}, false,
-			DLSyncEvent::getTypePK);
+			new String[] {Long.class.getName()}, new String[] {"typePK"}, 0, 0,
+			false, DLSyncEvent::getTypePK);
 
 		_uniquePersistenceFinderByTypePK = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByTypePK, _SQL_SELECT_DLSYNCEVENT_WHERE, "",
@@ -587,4 +587,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:532590920
+// LIFERAY-SERVICE-BUILDER-HASH:1652407338

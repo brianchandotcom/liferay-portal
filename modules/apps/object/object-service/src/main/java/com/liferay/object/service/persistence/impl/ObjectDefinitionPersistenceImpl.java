@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
@@ -4944,7 +4944,8 @@ public class ObjectDefinitionPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByC_OFI_A_E_S_S;
 	private FinderPath _finderPathWithoutPaginationFindByC_OFI_A_E_S_S;
 	private FinderPath _finderPathCountByC_OFI_A_E_S_S;
-	private FinderPath _finderPathWithPaginationCountByC_OFI_A_E_S_S;
+	private CollectionPersistenceFinder<ObjectDefinition>
+		_collectionPersistenceFinderByC_OFI_A_E_S_S;
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
@@ -5050,140 +5051,13 @@ public class ObjectDefinitionPersistenceImpl
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		scope = Objects.toString(scope, "");
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_OFI_A_E_S_S;
-				finderArgs = new Object[] {
-					companyId, objectFolderId, active, enableObjectEntryDraft,
-					scope, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_OFI_A_E_S_S;
-			finderArgs = new Object[] {
-				companyId, objectFolderId, active, enableObjectEntryDraft,
-				scope, status, start, end, orderByComparator
-			};
-		}
-
-		List<ObjectDefinition> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectDefinition>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectDefinition objectDefinition : list) {
-					if ((companyId != objectDefinition.getCompanyId()) ||
-						(objectFolderId !=
-							objectDefinition.getObjectFolderId()) ||
-						(active != objectDefinition.isActive()) ||
-						(enableObjectEntryDraft !=
-							objectDefinition.isEnableObjectEntryDraft()) ||
-						!scope.equals(objectDefinition.getScope()) ||
-						(status != objectDefinition.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					8 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(8);
-			}
-
-			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
-
-			boolean bindScope = false;
-
-			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
-			}
-			else {
-				bindScope = true;
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ObjectDefinitionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(objectFolderId);
-
-				queryPos.add(active);
-
-				queryPos.add(enableObjectEntryDraft);
-
-				if (bindScope) {
-					queryPos.add(scope);
-				}
-
-				queryPos.add(status);
-
-				list = (List<ObjectDefinition>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_OFI_A_E_S_S.find(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5259,15 +5133,13 @@ public class ObjectDefinitionPersistenceImpl
 		boolean enableObjectEntryDraft, String scope, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		List<ObjectDefinition> list = findByC_OFI_A_E_S_S(
-			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
-			status, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
+		return _collectionPersistenceFinderByC_OFI_A_E_S_S.fetchFirst(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -5794,159 +5666,13 @@ public class ObjectDefinitionPersistenceImpl
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		if (objectFolderIds == null) {
-			objectFolderIds = new long[0];
-		}
-		else if (objectFolderIds.length > 1) {
-			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
-		}
-
-		scope = Objects.toString(scope, "");
-
-		if (objectFolderIds.length == 1) {
-			return findByC_OFI_A_E_S_S(
-				companyId, objectFolderIds[0], active, enableObjectEntryDraft,
-				scope, status, start, end, orderByComparator);
-		}
-
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {
-					companyId, StringUtil.merge(objectFolderIds), active,
-					enableObjectEntryDraft, scope, status
-				};
-			}
-		}
-		else if (useFinderCache) {
-			finderArgs = new Object[] {
-				companyId, StringUtil.merge(objectFolderIds), active,
-				enableObjectEntryDraft, scope, status, start, end,
-				orderByComparator
-			};
-		}
-
-		List<ObjectDefinition> list = null;
-
-		if (useFinderCache) {
-			list = (List<ObjectDefinition>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_OFI_A_E_S_S, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (ObjectDefinition objectDefinition : list) {
-					if ((companyId != objectDefinition.getCompanyId()) ||
-						!ArrayUtil.contains(
-							objectFolderIds,
-							objectDefinition.getObjectFolderId()) ||
-						(active != objectDefinition.isActive()) ||
-						(enableObjectEntryDraft !=
-							objectDefinition.isEnableObjectEntryDraft()) ||
-						!scope.equals(objectDefinition.getScope()) ||
-						(status != objectDefinition.getStatus())) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
-
-			if (objectFolderIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
-
-				sb.append(StringUtil.merge(objectFolderIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
-
-			boolean bindScope = false;
-
-			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
-			}
-			else {
-				bindScope = true;
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ENTITY_ALIAS_PREFIX, orderByComparator);
-			}
-			else {
-				sb.append(ObjectDefinitionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(active);
-
-				queryPos.add(enableObjectEntryDraft);
-
-				if (bindScope) {
-					queryPos.add(scope);
-				}
-
-				queryPos.add(status);
-
-				list = (List<ObjectDefinition>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(
-						_finderPathWithPaginationFindByC_OFI_A_E_S_S,
-						finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
+		return _collectionPersistenceFinderByC_OFI_A_E_S_S.find(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(objectFolderIds), active,
+				enableObjectEntryDraft, scope, status
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -5964,14 +5690,12 @@ public class ObjectDefinitionPersistenceImpl
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		for (ObjectDefinition objectDefinition :
-				findByC_OFI_A_E_S_S(
-					companyId, objectFolderId, active, enableObjectEntryDraft,
-					scope, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(objectDefinition);
-		}
+		_collectionPersistenceFinderByC_OFI_A_E_S_S.remove(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
+			});
 	}
 
 	/**
@@ -5990,81 +5714,12 @@ public class ObjectDefinitionPersistenceImpl
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		scope = Objects.toString(scope, "");
-
-		FinderPath finderPath = _finderPathCountByC_OFI_A_E_S_S;
-
-		Object[] finderArgs = new Object[] {
-			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
-			status
-		};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(7);
-
-			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
-
-			boolean bindScope = false;
-
-			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
-			}
-			else {
-				bindScope = true;
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(objectFolderId);
-
-				queryPos.add(active);
-
-				queryPos.add(enableObjectEntryDraft);
-
-				if (bindScope) {
-					queryPos.add(scope);
-				}
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_OFI_A_E_S_S.count(
+			finderCache,
+			new Object[] {
+				companyId, new long[] {objectFolderId}, active,
+				enableObjectEntryDraft, scope, status
+			});
 	}
 
 	/**
@@ -6083,102 +5738,12 @@ public class ObjectDefinitionPersistenceImpl
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		if (objectFolderIds == null) {
-			objectFolderIds = new long[0];
-		}
-		else if (objectFolderIds.length > 1) {
-			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
-		}
-
-		scope = Objects.toString(scope, "");
-
-		Object[] finderArgs = new Object[] {
-			companyId, StringUtil.merge(objectFolderIds), active,
-			enableObjectEntryDraft, scope, status
-		};
-
-		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_OFI_A_E_S_S, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler();
-
-			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
-
-			if (objectFolderIds.length > 0) {
-				sb.append("(");
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
-
-				sb.append(StringUtil.merge(objectFolderIds));
-
-				sb.append(")");
-
-				sb.append(")");
-
-				sb.append(WHERE_AND);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
-
-			boolean bindScope = false;
-
-			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
-			}
-			else {
-				bindScope = true;
-
-				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
-			}
-
-			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
-
-			sb.setStringAt(
-				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(companyId);
-
-				queryPos.add(active);
-
-				queryPos.add(enableObjectEntryDraft);
-
-				if (bindScope) {
-					queryPos.add(scope);
-				}
-
-				queryPos.add(status);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(
-					_finderPathWithPaginationCountByC_OFI_A_E_S_S, finderArgs,
-					count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return _collectionPersistenceFinderByC_OFI_A_E_S_S.count(
+			finderCache,
+			new Object[] {
+				companyId, ArrayUtil.sortedUnique(objectFolderIds), active,
+				enableObjectEntryDraft, scope, status
+			});
 	}
 
 	/**
@@ -6832,13 +6397,13 @@ public class ObjectDefinitionPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -6862,12 +6427,12 @@ public class ObjectDefinitionPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -6985,7 +6550,7 @@ public class ObjectDefinitionPersistenceImpl
 		_finderPathFetchByClassName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByClassName",
 			new String[] {String.class.getName()}, new String[] {"className"},
-			false, convertNullFunction(ObjectDefinition::getClassName));
+			0, 1, false, convertNullFunction(ObjectDefinition::getClassName));
 
 		_uniquePersistenceFinderByClassName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByClassName,
@@ -7059,7 +6624,7 @@ public class ObjectDefinitionPersistenceImpl
 		_finderPathFetchByC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "className"}, false,
+			new String[] {"companyId", "className"}, 0, 2, false,
 			ObjectDefinition::getCompanyId,
 			convertNullFunction(ObjectDefinition::getClassName));
 
@@ -7075,7 +6640,7 @@ public class ObjectDefinitionPersistenceImpl
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true,
+			new String[] {"companyId", "name"}, 0, 2, true,
 			ObjectDefinition::getCompanyId,
 			convertNullFunction(ObjectDefinition::getName));
 
@@ -7307,22 +6872,9 @@ public class ObjectDefinitionPersistenceImpl
 				"companyId", "objectFolderId", "active_",
 				"enableObjectEntryDraft", "scope", "status"
 			},
-			true);
+			0, 16, true, null);
 
 		_finderPathCountByC_OFI_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_OFI_A_E_S_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "objectFolderId", "active_",
-				"enableObjectEntryDraft", "scope", "status"
-			},
-			false);
-
-		_finderPathWithPaginationCountByC_OFI_A_E_S_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_OFI_A_E_S_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
@@ -7333,12 +6885,42 @@ public class ObjectDefinitionPersistenceImpl
 				"companyId", "objectFolderId", "active_",
 				"enableObjectEntryDraft", "scope", "status"
 			},
-			false);
+			0, 16, false, null);
+
+		_collectionPersistenceFinderByC_OFI_A_E_S_S =
+			new CollectionPersistenceFinder<>(
+				this, _finderPathWithPaginationFindByC_OFI_A_E_S_S,
+				_finderPathWithoutPaginationFindByC_OFI_A_E_S_S,
+				_finderPathCountByC_OFI_A_E_S_S,
+				_SQL_SELECT_OBJECTDEFINITION_WHERE,
+				_SQL_COUNT_OBJECTDEFINITION_WHERE,
+				ObjectDefinitionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"",
+				new FinderColumn<>(
+					"objectDefinition.", "companyId", FinderColumn.Type.LONG,
+					"=", true, true, ObjectDefinition::getCompanyId),
+				new ArrayableFinderColumn<>(
+					"objectDefinition.", "objectFolderId",
+					FinderColumn.Type.LONG, "=", false, true, true,
+					ObjectDefinition::getObjectFolderId),
+				new FinderColumn<>(
+					"objectDefinition.", "active", FinderColumn.Type.BOOLEAN,
+					"=", true, true, ObjectDefinition::isActive),
+				new FinderColumn<>(
+					"objectDefinition.", "enableObjectEntryDraft",
+					FinderColumn.Type.BOOLEAN, "=", true, true,
+					ObjectDefinition::isEnableObjectEntryDraft),
+				new FinderColumn<>(
+					"objectDefinition.", "scope", FinderColumn.Type.STRING, "=",
+					true, true, ObjectDefinition::getScope),
+				new FinderColumn<>(
+					"objectDefinition.", "status", FinderColumn.Type.INTEGER,
+					"=", true, true, ObjectDefinition::getStatus));
 
 		_finderPathFetchByERC_C = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, false,
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
 			convertNullFunction(ObjectDefinition::getExternalReferenceCode),
 			ObjectDefinition::getCompanyId);
 
@@ -7447,4 +7029,4 @@ public class ObjectDefinitionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:460357935
+// LIFERAY-SERVICE-BUILDER-HASH:-438864390

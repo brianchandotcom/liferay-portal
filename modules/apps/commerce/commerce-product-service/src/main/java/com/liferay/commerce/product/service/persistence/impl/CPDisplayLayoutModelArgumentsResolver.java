@@ -54,7 +54,7 @@ public class CPDisplayLayoutModelArgumentsResolver
 		long columnBitmask = cpDisplayLayoutModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(cpDisplayLayoutModelImpl, columnNames, original);
+			return _getValue(cpDisplayLayoutModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class CPDisplayLayoutModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(cpDisplayLayoutModelImpl, columnNames, original);
+			return _getValue(cpDisplayLayoutModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -90,22 +90,27 @@ public class CPDisplayLayoutModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		CPDisplayLayoutModelImpl cpDisplayLayoutModelImpl, String[] columnNames,
-		boolean original) {
+		CPDisplayLayoutModelImpl cpDisplayLayoutModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = cpDisplayLayoutModelImpl.getColumnOriginalValue(
+				value = cpDisplayLayoutModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = cpDisplayLayoutModelImpl.getColumnValue(
-					columnName);
+				value = cpDisplayLayoutModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class CPDisplayLayoutModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1908863406
+// LIFERAY-SERVICE-BUILDER-HASH:-778727767

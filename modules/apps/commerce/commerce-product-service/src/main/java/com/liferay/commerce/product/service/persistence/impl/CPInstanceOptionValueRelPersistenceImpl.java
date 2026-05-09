@@ -1596,13 +1596,13 @@ public class CPInstanceOptionValueRelPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -1618,7 +1618,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		_finderPathFetchByUUID_G = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, false,
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
 			convertNullFunction(CPInstanceOptionValueRel::getUuid),
 			CPInstanceOptionValueRel::getGroupId);
 
@@ -1644,12 +1644,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -1777,7 +1777,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 		_finderPathFetchByCDOVRI_CII = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCDOVRI_CII",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPDefinitionOptionValueRelId", "CPInstanceId"},
+			new String[] {"CPDefinitionOptionValueRelId", "CPInstanceId"}, 0, 0,
 			false, CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId,
 			CPInstanceOptionValueRel::getCPInstanceId);
 
@@ -1802,7 +1802,7 @@ public class CPInstanceOptionValueRelPersistenceImpl
 				"CPDefinitionOptionRelId", "CPDefinitionOptionValueRelId",
 				"CPInstanceId"
 			},
-			false, CPInstanceOptionValueRel::getCPDefinitionOptionRelId,
+			0, 0, false, CPInstanceOptionValueRel::getCPDefinitionOptionRelId,
 			CPInstanceOptionValueRel::getCPDefinitionOptionValueRelId,
 			CPInstanceOptionValueRel::getCPInstanceId);
 
@@ -1895,4 +1895,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1904246181
+// LIFERAY-SERVICE-BUILDER-HASH:630535609

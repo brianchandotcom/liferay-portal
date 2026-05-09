@@ -4954,13 +4954,13 @@ public class CountryPersistenceImpl
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			true);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
 
 		_finderPathCountByUuid = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"},
-			false);
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
 
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByUuid,
@@ -4983,12 +4983,12 @@ public class CountryPersistenceImpl
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, true);
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
 
 		_finderPathCountByUuid_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, false);
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
 
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
@@ -5065,8 +5065,8 @@ public class CountryPersistenceImpl
 		_finderPathFetchByC_A2 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a2"}, false, Country::getCompanyId,
-			convertNullFunction(Country::getA2));
+			new String[] {"companyId", "a2"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getA2));
 
 		_uniquePersistenceFinderByC_A2 = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A2, _SQL_SELECT_COUNTRY_WHERE, "",
@@ -5080,8 +5080,8 @@ public class CountryPersistenceImpl
 		_finderPathFetchByC_A3 = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "a3"}, false, Country::getCompanyId,
-			convertNullFunction(Country::getA3));
+			new String[] {"companyId", "a3"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getA3));
 
 		_uniquePersistenceFinderByC_A3 = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_A3, _SQL_SELECT_COUNTRY_WHERE, "",
@@ -5128,8 +5128,8 @@ public class CountryPersistenceImpl
 		_finderPathFetchByC_Name = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Name",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false, Country::getCompanyId,
-			convertNullFunction(Country::getName));
+			new String[] {"companyId", "name"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getName));
 
 		_uniquePersistenceFinderByC_Name = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_Name, _SQL_SELECT_COUNTRY_WHERE, "",
@@ -5143,8 +5143,8 @@ public class CountryPersistenceImpl
 		_finderPathFetchByC_Number = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "number_"}, false, Country::getCompanyId,
-			convertNullFunction(Country::getNumber));
+			new String[] {"companyId", "number_"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getNumber));
 
 		_uniquePersistenceFinderByC_Number = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_Number, _SQL_SELECT_COUNTRY_WHERE, "",
@@ -5470,4 +5470,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1579141576
+// LIFERAY-SERVICE-BUILDER-HASH:1867970728

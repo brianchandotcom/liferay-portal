@@ -57,7 +57,7 @@ public class CommerceInventoryReplenishmentItemModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceInventoryReplenishmentItemModelImpl, columnNames,
+				commerceInventoryReplenishmentItemModelImpl, finderPath,
 				original);
 		}
 
@@ -79,7 +79,7 @@ public class CommerceInventoryReplenishmentItemModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceInventoryReplenishmentItemModelImpl, columnNames,
+				commerceInventoryReplenishmentItemModelImpl, finderPath,
 				original);
 		}
 
@@ -99,23 +99,29 @@ public class CommerceInventoryReplenishmentItemModelArgumentsResolver
 	private static Object[] _getValue(
 		CommerceInventoryReplenishmentItemModelImpl
 			commerceInventoryReplenishmentItemModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					commerceInventoryReplenishmentItemModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
+				value =
 					commerceInventoryReplenishmentItemModelImpl.getColumnValue(
 						columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -125,4 +131,4 @@ public class CommerceInventoryReplenishmentItemModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1703275180
+// LIFERAY-SERVICE-BUILDER-HASH:705709701

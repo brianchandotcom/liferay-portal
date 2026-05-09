@@ -563,7 +563,7 @@ public class SamlSpIdpConnectionPersistenceImpl
 		_finderPathFetchByC_SIEI = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_SIEI",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "samlIdpEntityId"}, false,
+			new String[] {"companyId", "samlIdpEntityId"}, 0, 2, false,
 			SamlSpIdpConnection::getCompanyId,
 			convertNullFunction(SamlSpIdpConnection::getSamlIdpEntityId));
 
@@ -644,4 +644,4 @@ public class SamlSpIdpConnectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:426869927
+// LIFERAY-SERVICE-BUILDER-HASH:-678794458

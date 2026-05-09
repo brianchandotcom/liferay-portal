@@ -780,8 +780,8 @@ public class CommerceTermEntryRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "commerceTermEntryId"},
-			false, CommerceTermEntryRel::getClassNameId,
+			new String[] {"classNameId", "classPK", "commerceTermEntryId"}, 0,
+			0, false, CommerceTermEntryRel::getClassNameId,
 			CommerceTermEntryRel::getClassPK,
 			CommerceTermEntryRel::getCommerceTermEntryId);
 
@@ -865,4 +865,4 @@ public class CommerceTermEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:969859211
+// LIFERAY-SERVICE-BUILDER-HASH:1524794131

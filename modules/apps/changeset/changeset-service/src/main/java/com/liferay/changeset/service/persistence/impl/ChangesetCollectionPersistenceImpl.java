@@ -1078,7 +1078,7 @@ public class ChangesetCollectionPersistenceImpl
 		_finderPathFetchByG_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, false,
+			new String[] {"groupId", "name"}, 0, 2, false,
 			ChangesetCollection::getGroupId,
 			convertNullFunction(ChangesetCollection::getName));
 
@@ -1104,12 +1104,12 @@ public class ChangesetCollectionPersistenceImpl
 		_finderPathWithoutPaginationFindByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, true);
+			new String[] {"companyId", "name"}, 0, 2, true, null);
 
 		_finderPathCountByC_N = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
+			new String[] {"companyId", "name"}, 0, 2, false, null);
 
 		_collectionPersistenceFinderByC_N = new CollectionPersistenceFinder<>(
 			this, _finderPathWithPaginationFindByC_N,
@@ -1191,4 +1191,4 @@ public class ChangesetCollectionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1824092729
+// LIFERAY-SERVICE-BUILDER-HASH:-1730489650

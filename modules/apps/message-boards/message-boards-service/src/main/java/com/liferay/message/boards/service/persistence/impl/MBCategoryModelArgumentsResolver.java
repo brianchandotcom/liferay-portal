@@ -53,7 +53,7 @@ public class MBCategoryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = mbCategoryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(mbCategoryModelImpl, columnNames, original);
+			return _getValue(mbCategoryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -80,7 +80,7 @@ public class MBCategoryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(mbCategoryModelImpl, columnNames, original);
+			return _getValue(mbCategoryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,21 +97,26 @@ public class MBCategoryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		MBCategoryModelImpl mbCategoryModelImpl, String[] columnNames,
+		MBCategoryModelImpl mbCategoryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = mbCategoryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = mbCategoryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = mbCategoryModelImpl.getColumnValue(columnName);
+				value = mbCategoryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -133,4 +138,4 @@ public class MBCategoryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2023488204
+// LIFERAY-SERVICE-BUILDER-HASH:-1207797585

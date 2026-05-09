@@ -725,7 +725,7 @@ public class CPDefinitionLocalizationPersistenceImpl
 		_finderPathFetchByCPDefinitionId_LanguageId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByCPDefinitionId_LanguageId",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"CPDefinitionId", "languageId"}, false,
+			new String[] {"CPDefinitionId", "languageId"}, 0, 2, false,
 			CPDefinitionLocalization::getCPDefinitionId,
 			convertNullFunction(CPDefinitionLocalization::getLanguageId));
 
@@ -811,4 +811,4 @@ public class CPDefinitionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-561351076
+// LIFERAY-SERVICE-BUILDER-HASH:-468896139

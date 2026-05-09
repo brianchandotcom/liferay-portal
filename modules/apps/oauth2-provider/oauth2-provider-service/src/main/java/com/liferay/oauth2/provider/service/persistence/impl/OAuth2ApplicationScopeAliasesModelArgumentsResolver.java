@@ -57,7 +57,7 @@ public class OAuth2ApplicationScopeAliasesModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				oAuth2ApplicationScopeAliasesModelImpl, columnNames, original);
+				oAuth2ApplicationScopeAliasesModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class OAuth2ApplicationScopeAliasesModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				oAuth2ApplicationScopeAliasesModelImpl, columnNames, original);
+				oAuth2ApplicationScopeAliasesModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -97,23 +97,28 @@ public class OAuth2ApplicationScopeAliasesModelArgumentsResolver
 	private static Object[] _getValue(
 		OAuth2ApplicationScopeAliasesModelImpl
 			oAuth2ApplicationScopeAliasesModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					oAuth2ApplicationScopeAliasesModelImpl.
 						getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] =
-					oAuth2ApplicationScopeAliasesModelImpl.getColumnValue(
-						columnName);
+				value = oAuth2ApplicationScopeAliasesModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -123,4 +128,4 @@ public class OAuth2ApplicationScopeAliasesModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1534897545
+// LIFERAY-SERVICE-BUILDER-HASH:-1489222194

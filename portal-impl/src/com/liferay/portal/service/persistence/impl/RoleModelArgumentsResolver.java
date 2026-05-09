@@ -50,7 +50,7 @@ public class RoleModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = roleModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(roleModelImpl, columnNames, original);
+			return _getValue(roleModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class RoleModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(roleModelImpl, columnNames, original);
+			return _getValue(roleModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -94,19 +94,25 @@ public class RoleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		RoleModelImpl roleModelImpl, String[] columnNames, boolean original) {
+		RoleModelImpl roleModelImpl, FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = roleModelImpl.getColumnOriginalValue(columnName);
+				value = roleModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = roleModelImpl.getColumnValue(columnName);
+				value = roleModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -126,4 +132,4 @@ public class RoleModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1273345200
+// LIFERAY-SERVICE-BUILDER-HASH:499294447

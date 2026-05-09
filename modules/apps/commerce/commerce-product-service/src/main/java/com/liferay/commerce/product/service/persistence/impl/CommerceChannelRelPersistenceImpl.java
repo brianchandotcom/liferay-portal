@@ -879,8 +879,9 @@ public class CommerceChannelRelPersistenceImpl
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
-			new String[] {"classNameId", "classPK", "commerceChannelId"}, false,
-			CommerceChannelRel::getClassNameId, CommerceChannelRel::getClassPK,
+			new String[] {"classNameId", "classPK", "commerceChannelId"}, 0, 0,
+			false, CommerceChannelRel::getClassNameId,
+			CommerceChannelRel::getClassPK,
 			CommerceChannelRel::getCommerceChannelId);
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
@@ -966,4 +967,4 @@ public class CommerceChannelRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1142563430
+// LIFERAY-SERVICE-BUILDER-HASH:2009198362

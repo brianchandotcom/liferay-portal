@@ -360,7 +360,7 @@ public class SamlIbSloMessagePersistenceImpl
 		_finderPathFetchBySamlIdpSessionIndex = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSessionIndex",
 			new String[] {String.class.getName()},
-			new String[] {"samlIdpSessionIndex"}, false,
+			new String[] {"samlIdpSessionIndex"}, 0, 1, false,
 			convertNullFunction(SamlIbSloMessage::getSamlIdpSessionIndex));
 
 		_uniquePersistenceFinderBySamlIdpSessionIndex =
@@ -435,4 +435,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-591321369
+// LIFERAY-SERVICE-BUILDER-HASH:-708244561

@@ -57,7 +57,7 @@ public class SharepointOAuth2TokenEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				sharepointOAuth2TokenEntryModelImpl, columnNames, original);
+				sharepointOAuth2TokenEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -78,7 +78,7 @@ public class SharepointOAuth2TokenEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				sharepointOAuth2TokenEntryModelImpl, columnNames, original);
+				sharepointOAuth2TokenEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -96,23 +96,28 @@ public class SharepointOAuth2TokenEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		SharepointOAuth2TokenEntryModelImpl sharepointOAuth2TokenEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
+				value =
 					sharepointOAuth2TokenEntryModelImpl.getColumnOriginalValue(
 						columnName);
 			}
 			else {
-				arguments[i] =
-					sharepointOAuth2TokenEntryModelImpl.getColumnValue(
-						columnName);
+				value = sharepointOAuth2TokenEntryModelImpl.getColumnValue(
+					columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -122,4 +127,4 @@ public class SharepointOAuth2TokenEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-381416851
+// LIFERAY-SERVICE-BUILDER-HASH:401846858

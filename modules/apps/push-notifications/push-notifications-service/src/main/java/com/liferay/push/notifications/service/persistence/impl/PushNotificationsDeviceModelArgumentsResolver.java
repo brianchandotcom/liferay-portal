@@ -56,7 +56,7 @@ public class PushNotificationsDeviceModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				pushNotificationsDeviceModelImpl, columnNames, original);
+				pushNotificationsDeviceModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -77,7 +77,7 @@ public class PushNotificationsDeviceModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				pushNotificationsDeviceModelImpl, columnNames, original);
+				pushNotificationsDeviceModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -95,22 +95,27 @@ public class PushNotificationsDeviceModelArgumentsResolver
 
 	private static Object[] _getValue(
 		PushNotificationsDeviceModelImpl pushNotificationsDeviceModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					pushNotificationsDeviceModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = pushNotificationsDeviceModelImpl.getColumnValue(
+				value = pushNotificationsDeviceModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = pushNotificationsDeviceModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -120,4 +125,4 @@ public class PushNotificationsDeviceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1491221764
+// LIFERAY-SERVICE-BUILDER-HASH:-2064628761

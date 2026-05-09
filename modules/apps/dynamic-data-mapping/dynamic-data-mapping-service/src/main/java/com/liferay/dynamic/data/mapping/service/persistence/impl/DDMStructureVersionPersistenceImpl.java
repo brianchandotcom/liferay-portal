@@ -835,7 +835,7 @@ public class DDMStructureVersionPersistenceImpl
 		_finderPathFetchByS_V = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByS_V",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"structureId", "version"}, false,
+			new String[] {"structureId", "version"}, 0, 2, false,
 			DDMStructureVersion::getStructureId,
 			convertNullFunction(DDMStructureVersion::getVersion));
 
@@ -954,4 +954,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:656803427
+// LIFERAY-SERVICE-BUILDER-HASH:758952877

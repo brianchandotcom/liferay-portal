@@ -55,7 +55,7 @@ public class CommerceTaxFixedRateModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				commerceTaxFixedRateModelImpl, columnNames, original);
+				commerceTaxFixedRateModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -83,7 +83,7 @@ public class CommerceTaxFixedRateModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				commerceTaxFixedRateModelImpl, columnNames, original);
+				commerceTaxFixedRateModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +101,27 @@ public class CommerceTaxFixedRateModelArgumentsResolver
 
 	private static Object[] _getValue(
 		CommerceTaxFixedRateModelImpl commerceTaxFixedRateModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					commerceTaxFixedRateModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = commerceTaxFixedRateModelImpl.getColumnValue(
+				value = commerceTaxFixedRateModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = commerceTaxFixedRateModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +142,4 @@ public class CommerceTaxFixedRateModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:637498633
+// LIFERAY-SERVICE-BUILDER-HASH:362143532

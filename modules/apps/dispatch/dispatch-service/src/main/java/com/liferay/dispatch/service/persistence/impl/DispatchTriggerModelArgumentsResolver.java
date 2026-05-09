@@ -54,7 +54,7 @@ public class DispatchTriggerModelArgumentsResolver
 		long columnBitmask = dispatchTriggerModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(dispatchTriggerModelImpl, columnNames, original);
+			return _getValue(dispatchTriggerModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -81,7 +81,7 @@ public class DispatchTriggerModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(dispatchTriggerModelImpl, columnNames, original);
+			return _getValue(dispatchTriggerModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -98,22 +98,27 @@ public class DispatchTriggerModelArgumentsResolver
 	}
 
 	private static Object[] _getValue(
-		DispatchTriggerModelImpl dispatchTriggerModelImpl, String[] columnNames,
-		boolean original) {
+		DispatchTriggerModelImpl dispatchTriggerModelImpl,
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = dispatchTriggerModelImpl.getColumnOriginalValue(
+				value = dispatchTriggerModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = dispatchTriggerModelImpl.getColumnValue(
-					columnName);
+				value = dispatchTriggerModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -134,4 +139,4 @@ public class DispatchTriggerModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:443511989
+// LIFERAY-SERVICE-BUILDER-HASH:-1646060154

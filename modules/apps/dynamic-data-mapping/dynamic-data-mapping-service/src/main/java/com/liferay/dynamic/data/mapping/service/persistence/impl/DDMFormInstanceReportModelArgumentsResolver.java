@@ -55,7 +55,7 @@ public class DDMFormInstanceReportModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				ddmFormInstanceReportModelImpl, columnNames, original);
+				ddmFormInstanceReportModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class DDMFormInstanceReportModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				ddmFormInstanceReportModelImpl, columnNames, original);
+				ddmFormInstanceReportModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class DDMFormInstanceReportModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DDMFormInstanceReportModelImpl ddmFormInstanceReportModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					ddmFormInstanceReportModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = ddmFormInstanceReportModelImpl.getColumnValue(
+				value = ddmFormInstanceReportModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = ddmFormInstanceReportModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class DDMFormInstanceReportModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:46464212
+// LIFERAY-SERVICE-BUILDER-HASH:2076755543

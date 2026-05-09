@@ -52,7 +52,7 @@ public class PasswordPolicyModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = passwordPolicyModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(passwordPolicyModelImpl, columnNames, original);
+			return _getValue(passwordPolicyModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class PasswordPolicyModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(passwordPolicyModelImpl, columnNames, original);
+			return _getValue(passwordPolicyModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,22 +88,27 @@ public class PasswordPolicyModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		PasswordPolicyModelImpl passwordPolicyModelImpl, String[] columnNames,
+		PasswordPolicyModelImpl passwordPolicyModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = passwordPolicyModelImpl.getColumnOriginalValue(
+				value = passwordPolicyModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = passwordPolicyModelImpl.getColumnValue(
-					columnName);
+				value = passwordPolicyModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +118,4 @@ public class PasswordPolicyModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:87134184
+// LIFERAY-SERVICE-BUILDER-HASH:-2091409691

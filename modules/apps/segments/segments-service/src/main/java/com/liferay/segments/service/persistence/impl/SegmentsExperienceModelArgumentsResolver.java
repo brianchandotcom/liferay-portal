@@ -54,8 +54,7 @@ public class SegmentsExperienceModelArgumentsResolver
 		long columnBitmask = segmentsExperienceModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(
-				segmentsExperienceModelImpl, columnNames, original);
+			return _getValue(segmentsExperienceModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -82,8 +81,7 @@ public class SegmentsExperienceModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(
-				segmentsExperienceModelImpl, columnNames, original);
+			return _getValue(segmentsExperienceModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -101,22 +99,26 @@ public class SegmentsExperienceModelArgumentsResolver
 
 	private static Object[] _getValue(
 		SegmentsExperienceModelImpl segmentsExperienceModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					segmentsExperienceModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = segmentsExperienceModelImpl.getColumnValue(
+				value = segmentsExperienceModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = segmentsExperienceModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -137,4 +139,4 @@ public class SegmentsExperienceModelArgumentsResolver
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-148634619
+// LIFERAY-SERVICE-BUILDER-HASH:-354482276

@@ -55,7 +55,7 @@ public class RedirectNotFoundEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				redirectNotFoundEntryModelImpl, columnNames, original);
+				redirectNotFoundEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -75,7 +75,7 @@ public class RedirectNotFoundEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				redirectNotFoundEntryModelImpl, columnNames, original);
+				redirectNotFoundEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -93,22 +93,27 @@ public class RedirectNotFoundEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		RedirectNotFoundEntryModelImpl redirectNotFoundEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					redirectNotFoundEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = redirectNotFoundEntryModelImpl.getColumnValue(
+				value = redirectNotFoundEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = redirectNotFoundEntryModelImpl.getColumnValue(
+					columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -118,4 +123,4 @@ public class RedirectNotFoundEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:457384465
+// LIFERAY-SERVICE-BUILDER-HASH:-1435763832

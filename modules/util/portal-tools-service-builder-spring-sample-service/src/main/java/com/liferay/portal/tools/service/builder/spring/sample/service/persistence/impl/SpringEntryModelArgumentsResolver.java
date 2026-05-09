@@ -52,7 +52,7 @@ public class SpringEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = springEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(springEntryModelImpl, columnNames, original);
+			return _getValue(springEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -71,7 +71,7 @@ public class SpringEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(springEntryModelImpl, columnNames, original);
+			return _getValue(springEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -88,21 +88,26 @@ public class SpringEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		SpringEntryModelImpl springEntryModelImpl, String[] columnNames,
+		SpringEntryModelImpl springEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = springEntryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = springEntryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = springEntryModelImpl.getColumnValue(columnName);
+				value = springEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -112,4 +117,4 @@ public class SpringEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-504051013
+// LIFERAY-SERVICE-BUILDER-HASH:-1891276310

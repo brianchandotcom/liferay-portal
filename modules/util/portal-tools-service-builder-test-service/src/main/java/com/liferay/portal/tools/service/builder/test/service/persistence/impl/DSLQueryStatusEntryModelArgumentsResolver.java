@@ -54,7 +54,7 @@ public class DSLQueryStatusEntryModelArgumentsResolver
 
 		if (!checkColumn || (columnBitmask == 0)) {
 			return _getValue(
-				dslQueryStatusEntryModelImpl, columnNames, original);
+				dslQueryStatusEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -74,7 +74,7 @@ public class DSLQueryStatusEntryModelArgumentsResolver
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
 			return _getValue(
-				dslQueryStatusEntryModelImpl, columnNames, original);
+				dslQueryStatusEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -92,22 +92,26 @@ public class DSLQueryStatusEntryModelArgumentsResolver
 
 	private static Object[] _getValue(
 		DSLQueryStatusEntryModelImpl dslQueryStatusEntryModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] =
-					dslQueryStatusEntryModelImpl.getColumnOriginalValue(
-						columnName);
-			}
-			else {
-				arguments[i] = dslQueryStatusEntryModelImpl.getColumnValue(
+				value = dslQueryStatusEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
+			else {
+				value = dslQueryStatusEntryModelImpl.getColumnValue(columnName);
+			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -117,4 +121,4 @@ public class DSLQueryStatusEntryModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-86764738
+// LIFERAY-SERVICE-BUILDER-HASH:1760277741

@@ -366,8 +366,8 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	public void activate() {
 		_finderPathFetchByUserId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, false,
-			MFATimeBasedOTPEntry::getUserId);
+			new String[] {Long.class.getName()}, new String[] {"userId"}, 0, 0,
+			false, MFATimeBasedOTPEntry::getUserId);
 
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByUserId,
@@ -439,4 +439,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:467125092
+// LIFERAY-SERVICE-BUILDER-HASH:-236418629

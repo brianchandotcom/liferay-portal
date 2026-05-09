@@ -541,7 +541,7 @@ public class PluginSettingPersistenceImpl
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "pluginId", "pluginType"}, false,
+			new String[] {"companyId", "pluginId", "pluginType"}, 0, 6, false,
 			PluginSetting::getCompanyId,
 			convertNullFunction(PluginSetting::getPluginId),
 			convertNullFunction(PluginSetting::getPluginType));
@@ -594,4 +594,4 @@ public class PluginSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-876857145
+// LIFERAY-SERVICE-BUILDER-HASH:333499260

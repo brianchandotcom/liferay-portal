@@ -54,7 +54,7 @@ public class WikiPageResourceModelArgumentsResolver
 		long columnBitmask = wikiPageResourceModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(wikiPageResourceModelImpl, columnNames, original);
+			return _getValue(wikiPageResourceModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -73,7 +73,7 @@ public class WikiPageResourceModelArgumentsResolver
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(wikiPageResourceModelImpl, columnNames, original);
+			return _getValue(wikiPageResourceModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -91,21 +91,26 @@ public class WikiPageResourceModelArgumentsResolver
 
 	private static Object[] _getValue(
 		WikiPageResourceModelImpl wikiPageResourceModelImpl,
-		String[] columnNames, boolean original) {
+		FinderPath finderPath, boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = wikiPageResourceModelImpl.getColumnOriginalValue(
+				value = wikiPageResourceModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = wikiPageResourceModelImpl.getColumnValue(
-					columnName);
+				value = wikiPageResourceModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -115,4 +120,4 @@ public class WikiPageResourceModelArgumentsResolver
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1138335351
+// LIFERAY-SERVICE-BUILDER-HASH:-820697996

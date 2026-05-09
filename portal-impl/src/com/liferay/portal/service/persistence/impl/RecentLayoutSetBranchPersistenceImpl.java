@@ -893,7 +893,7 @@ public class RecentLayoutSetBranchPersistenceImpl
 		_finderPathFetchByU_L = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByU_L",
 			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"userId", "layoutSetId"}, false,
+			new String[] {"userId", "layoutSetId"}, 0, 0, false,
 			RecentLayoutSetBranch::getUserId,
 			RecentLayoutSetBranch::getLayoutSetId);
 
@@ -940,4 +940,4 @@ public class RecentLayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:186311595
+// LIFERAY-SERVICE-BUILDER-HASH:-1122645164

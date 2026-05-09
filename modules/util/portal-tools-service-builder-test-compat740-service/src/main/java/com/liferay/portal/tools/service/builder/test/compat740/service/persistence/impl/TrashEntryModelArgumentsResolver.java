@@ -53,7 +53,7 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = trashEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(trashEntryModelImpl, columnNames, original);
+			return _getValue(trashEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(trashEntryModelImpl, columnNames, original);
+			return _getValue(trashEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,21 +89,26 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		TrashEntryModelImpl trashEntryModelImpl, String[] columnNames,
+		TrashEntryModelImpl trashEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = trashEntryModelImpl.getColumnOriginalValue(
-					columnName);
+				value = trashEntryModelImpl.getColumnOriginalValue(columnName);
 			}
 			else {
-				arguments[i] = trashEntryModelImpl.getColumnValue(columnName);
+				value = trashEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -113,4 +118,4 @@ public class TrashEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-125196397
+// LIFERAY-SERVICE-BUILDER-HASH:-414109284

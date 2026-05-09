@@ -53,7 +53,7 @@ public class LazyBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 		long columnBitmask = lazyBlobEntryModelImpl.getColumnBitmask();
 
 		if (!checkColumn || (columnBitmask == 0)) {
-			return _getValue(lazyBlobEntryModelImpl, columnNames, original);
+			return _getValue(lazyBlobEntryModelImpl, finderPath, original);
 		}
 
 		Long finderPathColumnBitmask = _finderPathColumnBitmasksCache.get(
@@ -72,7 +72,7 @@ public class LazyBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 		}
 
 		if ((columnBitmask & finderPathColumnBitmask) != 0) {
-			return _getValue(lazyBlobEntryModelImpl, columnNames, original);
+			return _getValue(lazyBlobEntryModelImpl, finderPath, original);
 		}
 
 		return null;
@@ -89,22 +89,27 @@ public class LazyBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 	}
 
 	private static Object[] _getValue(
-		LazyBlobEntryModelImpl lazyBlobEntryModelImpl, String[] columnNames,
+		LazyBlobEntryModelImpl lazyBlobEntryModelImpl, FinderPath finderPath,
 		boolean original) {
+
+		String[] columnNames = finderPath.getColumnNames();
 
 		Object[] arguments = new Object[columnNames.length];
 
 		for (int i = 0; i < arguments.length; i++) {
 			String columnName = columnNames[i];
 
+			Object value;
+
 			if (original) {
-				arguments[i] = lazyBlobEntryModelImpl.getColumnOriginalValue(
+				value = lazyBlobEntryModelImpl.getColumnOriginalValue(
 					columnName);
 			}
 			else {
-				arguments[i] = lazyBlobEntryModelImpl.getColumnValue(
-					columnName);
+				value = lazyBlobEntryModelImpl.getColumnValue(columnName);
 			}
+
+			arguments[i] = finderPath.normalizeArgument(i, value);
 		}
 
 		return arguments;
@@ -114,4 +119,4 @@ public class LazyBlobEntryModelArgumentsResolver implements ArgumentsResolver {
 		new ConcurrentHashMap<>();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-152256515
+// LIFERAY-SERVICE-BUILDER-HASH:-1470490276

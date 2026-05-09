@@ -509,8 +509,8 @@ public class MVCCEntryPersistenceImpl
 		_finderPathFetchByC_N = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
 			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false, MVCCEntry::getCompanyId,
-			convertNullFunction(MVCCEntry::getName));
+			new String[] {"companyId", "name"}, 0, 2, false,
+			MVCCEntry::getCompanyId, convertNullFunction(MVCCEntry::getName));
 
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByC_N, _SQL_SELECT_MVCCENTRY_WHERE, "",
@@ -587,4 +587,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:932433971
+// LIFERAY-SERVICE-BUILDER-HASH:-718819168

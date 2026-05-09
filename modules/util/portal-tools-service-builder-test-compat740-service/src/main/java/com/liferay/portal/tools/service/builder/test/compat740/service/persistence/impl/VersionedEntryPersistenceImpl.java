@@ -697,8 +697,8 @@ public class VersionedEntryPersistenceImpl
 
 		_finderPathFetchByHeadId = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, false,
-			VersionedEntry::getHeadId);
+			new String[] {Long.class.getName()}, new String[] {"headId"}, 0, 0,
+			false, VersionedEntry::getHeadId);
 
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByHeadId, _SQL_SELECT_VERSIONEDENTRY_WHERE,
@@ -773,4 +773,4 @@ public class VersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:476929244
+// LIFERAY-SERVICE-BUILDER-HASH:-2022311832

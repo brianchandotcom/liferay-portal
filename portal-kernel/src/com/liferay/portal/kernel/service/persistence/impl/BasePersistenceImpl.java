@@ -1007,12 +1007,13 @@ public class BasePersistenceImpl
 	@SafeVarargs
 	protected final FinderPath createUniqueFinderPath(
 		String cacheName, String methodName, String[] params,
-		String[] columnNames, int caseInsensitiveBitmask, boolean pretouch,
+		String[] columnNames, int caseInsensitiveBitmask,
+		int convertNullBitmask, boolean pretouch,
 		Function<? super T, ?>... argsExtractors) {
 
 		FinderPath finderPath = new FinderPath(
 			cacheName, methodName, params, columnNames, caseInsensitiveBitmask,
-			true,
+			convertNullBitmask, true,
 			baseModel -> {
 				Object[] args = new Object[argsExtractors.length];
 

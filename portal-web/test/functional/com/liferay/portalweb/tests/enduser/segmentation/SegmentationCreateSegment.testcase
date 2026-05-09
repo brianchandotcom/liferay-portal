@@ -479,13 +479,8 @@ definition {
 				locator1 = "Segmentation#CRITERION_OPERATOR",
 				value1 = "contains");
 		}
-	}
 
-	@description = "Test Automation for LPS-130324: Validate if it's posible to create a segment based on Session > Signed In criteria"
-	@priority = 5
-	@uitest
-	test AddSegmentBySessionSignedIn {
-		task ("Add segment") {
+		task ("Add segment with Signed In property") {
 			LexiconEntry.gotoAdd();
 
 			Segmentation.gotoSidebar(fieldType = "Session");
@@ -503,7 +498,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("Assert the segment is correctly created") {
+		task ("Assert the Signed In segment is correctly created") {
 			Segmentation.editSegment(entry = "Signed In Test");
 
 			AssertValue(

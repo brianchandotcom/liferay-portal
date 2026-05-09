@@ -122,8 +122,7 @@ public class UpgradeQueryMonitorTest {
 				).thenReturn(
 					Collections.singletonList(
 						new DB.QueryInfo(
-							30000, id1, query1,
-							RandomTestUtil.randomString(),
+							30000, id1, query1, RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()))
 				);
 
@@ -150,16 +149,13 @@ public class UpgradeQueryMonitorTest {
 				).thenReturn(
 					Arrays.asList(
 						new DB.QueryInfo(
-							300000, id2, query2,
-							RandomTestUtil.randomString(),
+							300000, id2, query2, RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()),
 						new DB.QueryInfo(
-							600000, id3, query3,
-							RandomTestUtil.randomString(),
+							600000, id3, query3, RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()),
 						new DB.QueryInfo(
-							900000, id4, query4,
-							RandomTestUtil.randomString(),
+							900000, id4, query4, RandomTestUtil.randomString(),
 							RandomTestUtil.randomString()))
 				);
 

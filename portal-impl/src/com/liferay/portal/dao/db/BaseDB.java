@@ -586,6 +586,46 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public List<QueryInfo> getLongRunningQueryInfos(
+			Connection connection, long threshold)
+		throws SQLException {
+
+		String sql = getLongRunningQueryInfosSQL();
+
+		if (sql == null) {
+			return Collections.emptyList();
+		}
+
+		List<QueryInfo> longRunningQueryInfos = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				sql)) {
+
+			preparedStatement.setLong(1, threshold);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String query = resultSet.getString("query");
+
+					if (query == null) {
+						continue;
+					}
+
+					long duration = resultSet.getLong("duration");
+					String id = resultSet.getString("id");
+					String schema = resultSet.getString("schema_");
+					String state = resultSet.getString("state");
+
+					longRunningQueryInfos.add(
+						new QueryInfo(duration, id, query, schema, state));
+				}
+			}
+		}
+
+		return longRunningQueryInfos;
+	}
+
+	@Override
 	public int getMajorVersion() {
 		return _majorVersion;
 	}
@@ -1549,6 +1589,10 @@ public abstract class BaseDB implements DB {
 	}
 
 	protected String getLockedQueryInfosSQL() {
+		return null;
+	}
+
+	protected String getLongRunningQueryInfosSQL() {
 		return null;
 	}
 

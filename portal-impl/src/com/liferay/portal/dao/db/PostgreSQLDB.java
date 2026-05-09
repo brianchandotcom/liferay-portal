@@ -347,6 +347,23 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	protected String getLongRunningQueryInfosSQL() {
+		return StringBundler.concat(
+			"select extract(epoch from (clock_timestamp() - ",
+			"pg_catalog.pg_stat_activity.query_start)) * 1000 as duration, ",
+			"pg_catalog.pg_stat_activity.pid as id, ",
+			"substring(pg_catalog.pg_stat_activity.query, 1, 4000) as query, ",
+			"pg_catalog.pg_stat_activity.datname as schema_, ",
+			"pg_catalog.pg_stat_activity.wait_event_type as state from ",
+			"pg_catalog.pg_stat_activity where ",
+			"pg_catalog.pg_stat_activity.pid != pg_backend_pid() and ",
+			"extract(epoch from (clock_timestamp() - ",
+			"pg_catalog.pg_stat_activity.query_start)) * 1000 >= ? and (",
+			"pg_catalog.pg_stat_activity.wait_event_type is null or ",
+			"pg_catalog.pg_stat_activity.wait_event_type != 'Lock')");
+	}
+
+	@Override
 	protected int[] getSQLTypes() {
 		return _SQL_TYPES;
 	}

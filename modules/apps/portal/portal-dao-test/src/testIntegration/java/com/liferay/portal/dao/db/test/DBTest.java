@@ -721,6 +721,150 @@ public class DBTest {
 	}
 
 	@Test
+	public void testGetLongRunningQueryInfos() throws Exception {
+		Assume.assumeTrue(db.getDBType() != DBType.HYPERSONIC);
+
+		String slowQueryFragment = _getSlowQueryFragment();
+		String slowQuerySQL = _getSlowQuerySQL();
+
+		FutureTask<Void> futureTask = null;
+
+		try (Connection slowConnection = DataAccess.getConnection()) {
+			futureTask = new FutureTask<>(
+				() -> {
+					db.runSQL(slowConnection, slowQuerySQL);
+
+					return null;
+				});
+
+			Thread thread = new Thread(futureTask);
+
+			thread.setDaemon(true);
+
+			thread.start();
+
+			long endTime = System.currentTimeMillis() + 5000;
+
+			while (System.currentTimeMillis() < endTime) {
+				for (DB.QueryInfo longRunningQueryInfo :
+						db.getLongRunningQueryInfos(connection, 0L)) {
+
+					if (StringUtil.containsIgnoreCase(
+							longRunningQueryInfo.getQuery(),
+							slowQueryFragment)) {
+
+						Assert.assertNotNull(longRunningQueryInfo.getId());
+						Assert.assertNotNull(longRunningQueryInfo.getSchema());
+
+						return;
+					}
+				}
+
+				Thread.sleep(200);
+			}
+
+			Assert.fail();
+		}
+		finally {
+			if (futureTask != null) {
+				try {
+					futureTask.get(5, TimeUnit.SECONDS);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+		}
+	}
+
+	@Test
+	public void testGetLongRunningQueryInfosExcludesLockedQueries()
+		throws Exception {
+
+		Assume.assumeTrue(db.getDBType() != DBType.HYPERSONIC);
+
+		db.runSQL(
+			"insert into " + TABLE_NAME_1 +
+				" (id, notNilColumn) values (1, '1')");
+
+		FutureTask<Void> futureTask = null;
+
+		try (SafeCloseable safeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD", 0L);
+			Connection lockingConnection = DataAccess.getConnection()) {
+
+			lockingConnection.setAutoCommit(false);
+
+			db.runSQL(
+				lockingConnection,
+				"update " + TABLE_NAME_1 +
+					" set nilColumn = 'locked' where id = 1");
+
+			futureTask = new FutureTask<>(
+				() -> {
+					db.runSQL(
+						connection,
+						"update " + TABLE_NAME_1 +
+							" set nilColumn = 'waiting' where id = 1");
+
+					return null;
+				});
+
+			Thread thread = new Thread(futureTask);
+
+			thread.setDaemon(true);
+
+			thread.start();
+
+			long endTime = System.currentTimeMillis() + 5000;
+
+			while (System.currentTimeMillis() < endTime) {
+				boolean waitingQueryIsLocked = false;
+
+				for (DB.QueryInfo lockedQueryInfo :
+						db.getLockedQueryInfos(lockingConnection)) {
+
+					String query = lockedQueryInfo.getQuery();
+
+					if (query.contains("waiting")) {
+						waitingQueryIsLocked = true;
+
+						break;
+					}
+				}
+
+				if (waitingQueryIsLocked) {
+					for (DB.QueryInfo longRunningQueryInfo :
+							db.getLongRunningQueryInfos(
+								lockingConnection, 0L)) {
+
+						String query = longRunningQueryInfo.getQuery();
+
+						Assert.assertFalse(query.contains("waiting"));
+					}
+
+					return;
+				}
+
+				Thread.sleep(200);
+			}
+
+			Assert.fail();
+		}
+		finally {
+			if (futureTask != null) {
+				try {
+					futureTask.get(5, TimeUnit.SECONDS);
+				}
+				catch (Exception exception) {
+					_log.error(exception);
+				}
+			}
+		}
+	}
+
+	@Test
 	public void testGetPrimaryKeyColumnNames() throws Exception {
 		db.runSQL(_SQL_CREATE_TABLE_2);
 
@@ -1063,6 +1207,45 @@ public class DBTest {
 				Connection.class, String.class, String.class, boolean.class
 			},
 			connection, tableName, columnNames[0], false);
+	}
+
+	private String _getSlowQueryFragment() {
+		DBType dbType = db.getDBType();
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			return "sleep(2)";
+		}
+
+		if (dbType == DBType.SQLSERVER) {
+			return "waitfor delay";
+		}
+
+		if (dbType == DBType.DB2) {
+			return "select max(n) from t";
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported database type " + dbType);
+	}
+
+	private String _getSlowQuerySQL() {
+		DBType dbType = db.getDBType();
+
+		if ((dbType == DBType.MARIADB) || (dbType == DBType.MYSQL)) {
+			return "select sleep(2)";
+		}
+
+		if (dbType == DBType.SQLSERVER) {
+			return "waitfor delay '00:00:02'";
+		}
+
+		if (dbType == DBType.DB2) {
+			return "with t(n) as (values 1 union all select n + 1 from t " +
+				"where n < 5000000) select max(n) from t";
+		}
+
+		throw new UnsupportedOperationException(
+			"Unsupported database type " + dbType);
 	}
 
 	private void _validateIndex(String[] columnNames) throws Exception {

@@ -61,6 +61,10 @@ public class CTRemoteModelResourcePermission
 		PermissionChecker permissionChecker, CTRemote ctRemote,
 		String actionId) {
 
+		if (ctRemote.getCompanyId() != permissionChecker.getCompanyId()) {
+			return false;
+		}
+
 		if (permissionChecker.hasOwnerPermission(
 				ctRemote.getCompanyId(), CTRemote.class.getName(),
 				ctRemote.getCtRemoteId(), ctRemote.getUserId(), actionId)) {

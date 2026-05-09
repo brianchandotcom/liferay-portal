@@ -1,0 +1,52 @@
+query getWorkspaceGroupAssetSummariesPage(
+    $channelId: String
+    $keywords: String
+    $rangeEnd: String
+    $rangeKey: Int
+    $rangeStart: String
+    $size: Int!
+    $sort: Sort!
+    $start: Int!
+) {
+    assetSummaries(
+        channelId: $channelId
+        keywords: $keywords
+        rangeEnd: $rangeEnd
+        rangeKey: $rangeKey
+        rangeStart: $rangeStart
+        size: $size
+        sort: $sort
+        start: $start
+    ) {
+        assetSummaryMetrics {
+            assetId
+            assetTitle
+            assetType
+            downloadsMetric {
+                value
+                trend {
+                    percentage
+                }
+            }
+            impressionsMetric {
+                value
+                trend {
+                    percentage
+                }
+            }
+            readsMetric {
+                value
+                trend {
+                    percentage
+                }
+            }
+            viewsMetric {
+                value
+                trend {
+                    percentage
+                }
+            }
+        }
+        total
+    }
+}

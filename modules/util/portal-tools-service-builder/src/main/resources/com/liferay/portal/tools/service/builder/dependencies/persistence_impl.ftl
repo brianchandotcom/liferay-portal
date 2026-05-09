@@ -2786,15 +2786,22 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 
 		<#list entity.entityFinders as entityFinder>
-			<#assign entityColumns = entityFinder.entityColumns />
+			<#assign
+				entityColumns = entityFinder.entityColumns
 
-			<#assign caseInsensitiveBitmask = 0 />
-			<#assign caseInsensitiveBit = 1 />
+				caseInsensitiveBitmask = 0
+				convertNullBitmask = 0
+				normalizationBit = 1
+			/>
+
 			<#list entityColumns as entityColumn>
 				<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
-					<#assign caseInsensitiveBitmask = caseInsensitiveBitmask + caseInsensitiveBit />
+					<#assign caseInsensitiveBitmask = caseInsensitiveBitmask + normalizationBit />
 				</#if>
-				<#assign caseInsensitiveBit = caseInsensitiveBit * 2 />
+				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+					<#assign convertNullBitmask = convertNullBitmask + normalizationBit />
+				</#if>
+				<#assign normalizationBit = normalizationBit * 2 />
 			</#list>
 
 			<#if entityFinder.isCollection()>
@@ -2867,8 +2874,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									</#if>
 								</#list>
 								},
-							<#if serviceBuilder.isVersionGTE_7_4_0() && (caseInsensitiveBitmask > 0)>
-								${caseInsensitiveBitmask},
+							<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
+								${caseInsensitiveBitmask}, ${convertNullBitmask},
 								true,
 								null
 							<#else>
@@ -2938,7 +2945,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							}
 						<#if serviceBuilder.isVersionGTE_7_4_0()>
 							,
-							${caseInsensitiveBitmask},
+							${caseInsensitiveBitmask}, ${convertNullBitmask},
 							<#if entityFinder.isPretouch()>true<#else>false</#if>
 
 							<#list entityColumns as entityColumn>
@@ -3010,8 +3017,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							</#if>
 						</#list>
 						},
-						<#if serviceBuilder.isVersionGTE_7_4_0() && (caseInsensitiveBitmask > 0)>
-							${caseInsensitiveBitmask},
+						<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
+							${caseInsensitiveBitmask}, ${convertNullBitmask},
 							false,
 							null
 						<#else>

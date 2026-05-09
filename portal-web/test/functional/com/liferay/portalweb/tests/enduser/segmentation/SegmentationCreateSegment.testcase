@@ -1325,6 +1325,12 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
+		task ("Check if title displayed is in english") {
+			AssertElementPresent(
+				key_rowEntry = "Original Segment",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
 		task ("Assert if Titile is 'readonly' when edit toggle is disabled") {
 			LexiconEntry.gotoEntry(rowEntry = "Original Segment");
 
@@ -1381,39 +1387,6 @@ definition {
 			AssertValue(
 				locator1 = "Segmentation#CRITERION_INPUT_ANY",
 				value1 = "user'ln");
-		}
-	}
-
-	@description = "LPS-135495 Validate if, The title shown in the segments list shows the value for the current user language or the value for the criteria default language."
-	@priority = 3
-	test CheckTitleLanguageInSegmentsList {
-		task ("Create new segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Original Segment",
-				text = "Test");
-
-			Refresh();
-		}
-
-		task ("Create segment's translation") {
-			Segmentation.editSegment(entry = "Original Segment");
-
-			Segmentation.changeLocale(locale = "pt-BR");
-
-			Segmentation.fillTitle(titleField = "Segmento Traduzido");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Check if title displayed is in english") {
-			AssertElementPresent(
-				key_rowEntry = "Original Segment",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 	}
 

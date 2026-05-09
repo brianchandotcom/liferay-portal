@@ -6,10 +6,16 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
@@ -33,16 +39,39 @@ public class EditCTRemoteMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long ctRemoteId = ParamUtil.getLong(renderRequest, "ctRemoteId");
 
-		renderRequest.setAttribute(
-			CTWebKeys.CT_REMOTE,
-			_ctRemoteLocalService.fetchCTRemote(ctRemoteId));
+		CTRemote ctRemote = _ctRemoteLocalService.fetchCTRemote(ctRemoteId);
+
+		try {
+			if ((ctRemote != null) &&
+				!_ctRemoteModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), ctRemote,
+					ActionKeys.VIEW)) {
+
+				ctRemote = null;
+			}
+		}
+		catch (Exception exception) {
+			SessionErrors.add(renderRequest, exception.getClass());
+
+			return "/publications/error.jsp";
+		}
+
+		renderRequest.setAttribute(CTWebKeys.CT_REMOTE, ctRemote);
 
 		return "/publications/edit_ct_remote.jsp";
 	}
 
 	@Reference
 	private CTRemoteLocalService _ctRemoteLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.change.tracking.model.CTRemote)"
+	)
+	private ModelResourcePermission<CTRemote> _ctRemoteModelResourcePermission;
 
 }

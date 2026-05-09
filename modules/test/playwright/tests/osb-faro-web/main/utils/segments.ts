@@ -39,8 +39,13 @@ export async function addSegmentField({
 	criterionType: string;
 	page: Page;
 }) {
-	await page.locator('button.dropdown-toggle.btn-outline-secondary').click();
-	await page.getByRole('menuitem', {name: criterionType}).click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: criterionType}),
+		trigger: page
+			.locator('.criteria-sidebar-root .sidebar-header')
+			.getByRole('button'),
+	});
 
 	await dragAndDropCriteriaItem({
 		page,

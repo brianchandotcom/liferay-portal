@@ -1087,31 +1087,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-130917 Given Instance Settings > Segments When the user clicks on Analytics Cloud Segments tab Then help text of Anonymous User Segments Cache Expiration Time will be: Define the time (in seconds) before clearing the Anonymous Segment cache."
-	@priority = 3
-	test CheckAnalyticsCloudSegmentsHelpTexts {
-		task ("Go to Instance Settings > Segments") {
-			PortalSettings.openInstanceSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Analytics Cloud Segments",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Assert the text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Anonymous Segment cache.");
-		}
-
-		task ("Assert the Interest Terms cache help text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
-		}
-	}
-
 	@description = "Test Automation for LPS-92366: Segment names with script tags cause them to no longer be accessible"
 	@priority = 3
 	test CanCreateSegmentNameWithScriptTags {
@@ -1271,6 +1246,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-130917 Given Instance Settings > Segments When the user clicks on Analytics Cloud Segments tab Then help text of Anonymous User Segments Cache Expiration Time will be: Define the time (in seconds) before clearing the Anonymous Segment cache."
+	@priority = 3
+	test CheckAnalyticsCloudSegmentsHelpTexts {
+		task ("Go to Instance Settings > Segments") {
+			PortalSettings.openInstanceSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Segments",
+				configurationName = "Analytics Cloud Segments",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Assert the text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Anonymous Segment cache.");
+		}
+
+		task ("Assert the Interest Terms cache help text is present") {
+			AssertTextEquals(
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = 3
 	test CheckDefaultLanguageTag {
@@ -1291,6 +1291,50 @@ definition {
 				key_locale = StringUtil.replace(${defaultLanguage}, "_", "-"),
 				locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
 				value1 = "Default");
+		}
+	}
+
+	@description = "LPS-134561 Bug: Apostrophe in segment property value breaks filter"
+	@priority = 4
+	@uitest
+	test CheckSegmentationWithApostropheValueFilter {
+		task ("Add user with apostrophe in first and last name") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "user'fn",
+				userLastName = "user'ln",
+				userScreenName = "usersn");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
+		}
+
+		task ("Add segment and check the user Belongs To the segment") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
+
+			Segmentation.fillProperty(criterionValue = "user'ln");
+
+			Segmentation.fillTitle(titleField = "CheckSegmentationWithApostropheValueFilter Test");
+
+			Segmentation.viewMembers(memberName = "user'fn user'ln");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Checks if the second segmentation is edited correctly") {
+			Segmentation.editSegment(entry = "CheckSegmentationWithApostropheValueFilter Test");
+
+			AssertValue(
+				locator1 = "Segmentation#CRITERION_INPUT_ANY",
+				value1 = "user'ln");
 		}
 	}
 
@@ -1338,50 +1382,6 @@ definition {
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			AssertElementNotPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
-		}
-	}
-
-	@description = "LPS-134561 Bug: Apostrophe in segment property value breaks filter"
-	@priority = 4
-	@uitest
-	test CheckSegmentationWithApostropheValueFilter {
-		task ("Add user with apostrophe in first and last name") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "user'fn",
-				userLastName = "user'ln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Add segment and check the user Belongs To the segment") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Last Name");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "user'ln");
-
-			Segmentation.fillTitle(titleField = "CheckSegmentationWithApostropheValueFilter Test");
-
-			Segmentation.viewMembers(memberName = "user'fn user'ln");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Checks if the second segmentation is edited correctly") {
-			Segmentation.editSegment(entry = "CheckSegmentationWithApostropheValueFilter Test");
-
-			AssertValue(
-				locator1 = "Segmentation#CRITERION_INPUT_ANY",
-				value1 = "user'ln");
 		}
 	}
 
@@ -1468,6 +1468,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-135969 Validate if, on Segmentation, the user can't drag and drop fields into different Property section."
+	@priority = 3
+	test ValidatePropertyDragAndDropToSections {
+		task ("Create a segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Screen Name",
+				groupName = "Test Site Name",
+				operator = "contains",
+				segmentName = "Segment With Multiple Conditions",
+				text = "Test");
+
+			Refresh();
+		}
+
+		task ("Try to drag property to wrong section") {
+			Segmentation.editSegment(entry = "Segment With Multiple Conditions");
+
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
+				value1 = "Country");
+		}
+
+		task ("Assert that property was not added") {
+			AssertElementNotPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Country");
+
+			Refresh();
+		}
+
+		task ("Try to drag property to right section") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_propertyOption = "Country",
+				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
+				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
+				value1 = "Country");
+
+			AssertElementPresent(
+				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
+				propertyName = "Country");
+		}
+	}
+
 	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of this section will be displayed."
 	@priority = 3
 	test ValidatePropertyVisibilityBySection {
@@ -1541,55 +1590,6 @@ definition {
 					key_propertyOption = ${option},
 					locator1 = "Segmentation#ADD_FIELD_TYPE");
 			}
-		}
-	}
-
-	@description = "LPS-135969 Validate if, on Segmentation, the user can't drag and drop fields into different Property section."
-	@priority = 3
-	test ValidatePropertyDragAndDropToSections {
-		task ("Create a segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Segment With Multiple Conditions",
-				text = "Test");
-
-			Refresh();
-		}
-
-		task ("Try to drag property to wrong section") {
-			Segmentation.editSegment(entry = "Segment With Multiple Conditions");
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
-				value1 = "Country");
-		}
-
-		task ("Assert that property was not added") {
-			AssertElementNotPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country");
-
-			Refresh();
-		}
-
-		task ("Try to drag property to right section") {
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
-				value1 = "Country");
-
-			AssertElementPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country");
 		}
 	}
 

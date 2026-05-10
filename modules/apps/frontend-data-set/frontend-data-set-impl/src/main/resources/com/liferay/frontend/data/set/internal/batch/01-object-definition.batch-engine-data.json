@@ -483,6 +483,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetAction",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -747,6 +753,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetCardsSection",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -833,6 +845,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetClientExtensionFilter",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -922,6 +940,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetDateFilter",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -1042,6 +1066,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetListSection",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -1128,6 +1158,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetSelectionFilter",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -1361,6 +1397,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetSort",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",
@@ -1466,6 +1508,12 @@
 			},
 			"modifiable": true,
 			"name": "DataSetTableSection",
+			"objectDefinitionSettings": [
+				{
+					"name": "allowStandaloneObjectEntry",
+					"value": "false"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Boolean",

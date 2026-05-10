@@ -103,6 +103,7 @@ export default function SpaceSummaryHeader({
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={`Add ${title}`}
+						data-canonical-name={`Add ${title}`}
 						displayType="secondary"
 						small
 						symbol="plus"

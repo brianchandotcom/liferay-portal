@@ -315,7 +315,7 @@ definition {
 
 	@description = "Story: LRAC-10866 | Automation ID: LRAC-12904 | Test Summary: Check that it is possible to make pagination in the Attribute for Product list"
 	@priority = 3
-	test CanPaginateInProductAttributeList {
+	test CheckProductsAttributes {
 		var firstPageList = "catalogId,categoryIds,cost,createDate,currencyCode";
 		var lastPageList = "value,values,vocabulary";
 

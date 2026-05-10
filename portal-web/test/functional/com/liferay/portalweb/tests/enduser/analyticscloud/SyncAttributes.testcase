@@ -422,7 +422,7 @@ definition {
 
 	@description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
 	@priority = 3
-	test CanPaginationAttributeForPeopleList {
+	test ConfigurePeopleAttributes {
 		var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
 		var lastPageList = "uuid";
 

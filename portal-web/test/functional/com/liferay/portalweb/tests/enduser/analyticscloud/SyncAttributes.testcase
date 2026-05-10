@@ -242,6 +242,26 @@ definition {
 	@description = "Story: LRAC-10865 | Automation ID: LRAC-12843 | Test Summary: Check that it is possible to make pagination in the Attribute for Account list"
 	@priority = 3
 	test ConfigureAccountAttributes {
+		var attributesAscendingOrder = '''
+			accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description,domains,
+			emailAddress,externalReferenceCode,logoId,modifiedDate,name,parentAccountEntryId,
+			restrictMembership,status,taxExemptionCode,taxIdNumber,type_,uuid_
+		''';
+		var attributesDataTypeAscending = '''
+			restrictMembership,status,accountEntryId,companyId,logoId,parentAccountEntryId,defaultCPaymentMethodKey,
+			description,domains,emailAddress,externalReferenceCode,name,taxExemptionCode,taxIdNumber,type_,
+			uuid_,createDate,modifiedDate
+		''';
+		var attributesDataTypeDescending = '''
+			createDate,modifiedDate,defaultCPaymentMethodKey,description,domains,emailAddress,externalReferenceCode,name,
+			taxExemptionCode,taxIdNumber,type_,uuid_,accountEntryId,companyId,logoId,parentAccountEntryId,
+			status,restrictMembership
+		''';
+		var attributesDescendingOrder = '''
+			uuid_,type_,taxIdNumber,taxExemptionCode,status,restrictMembership,parentAccountEntryId,name,
+			modifiedDate,logoId,externalReferenceCode,emailAddress,domains,description,defaultCPaymentMethodKey,
+			createDate,companyId,accountEntryId
+		''';
 		var defaultAttributesName = '''
             companyId,createDate,defaultCPaymentMethodKey,description,
             domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,
@@ -249,6 +269,7 @@ definition {
         ''';
 		var defaultAttributesNameList = ListUtil.newListFromString(${defaultAttributesName});
 		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
+		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18";
 		var requiredAttributes = "accountEntryId,emailAddress,name";
 		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
 
@@ -270,6 +291,44 @@ definition {
 					key_requiredAttribute = ${attribute},
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 			}
+		}
+
+		task ("See that the list is sorted by attributes in the ascending order") {
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = ${indexList},
+				itemValueList = ${attributesAscendingOrder});
+		}
+
+		task ("See that the list is sorted by attributes in the descending order") {
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
+
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = ${indexList},
+				itemValueList = ${attributesDescendingOrder});
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in ascending order") {
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = ${indexList},
+				itemValueList = ${attributesDataTypeAscending});
+		}
+
+		task ("See that the list is sorted by the data type of the attributes in descending order") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = ${indexList},
+				itemValueList = ${attributesDataTypeDescending});
 		}
 
 		task ("Change the pagination to 5") {
@@ -541,74 +600,6 @@ definition {
 				attributeCategory = "People",
 				currentAttributeNumber = ${syncPeopleNumberStart},
 				increaseAttributeNumber = 2);
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12844 | Test Summary: Check that it is possible to sort the Attribute for Account list by attribute and data type"
-	@priority = 3
-	test CanSortAttributeForAccountList {
-		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18";
-		var attributesAscendingOrder = '''
-			accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description,domains,
-			emailAddress,externalReferenceCode,logoId,modifiedDate,name,parentAccountEntryId,
-			restrictMembership,status,taxExemptionCode,taxIdNumber,type_,uuid_
-		''';
-		var attributesDescendingOrder = '''
-			uuid_,type_,taxIdNumber,taxExemptionCode,status,restrictMembership,parentAccountEntryId,name,
-			modifiedDate,logoId,externalReferenceCode,emailAddress,domains,description,defaultCPaymentMethodKey,
-			createDate,companyId,accountEntryId
-		''';
-		var attributesDataTypeAscending = '''
-			restrictMembership,status,accountEntryId,companyId,logoId,parentAccountEntryId,defaultCPaymentMethodKey,
-			description,domains,emailAddress,externalReferenceCode,name,taxExemptionCode,taxIdNumber,type_,
-			uuid_,createDate,modifiedDate
-		''';
-		var attributesDataTypeDescending = '''
-			createDate,modifiedDate,defaultCPaymentMethodKey,description,domains,emailAddress,externalReferenceCode,name,
-			taxExemptionCode,taxIdNumber,type_,uuid_,accountEntryId,companyId,logoId,parentAccountEntryId,
-			status,restrictMembership
-		''';
-
-		task ("Click to configure Account attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("See that the list is sorted by attributes in the ascending order") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = ${indexList},
-				itemValueList = ${attributesAscendingOrder});
-		}
-
-		task ("See that the list is sorted by attributes in the descending order") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Attribute");
-
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = ${indexList},
-				itemValueList = ${attributesDescendingOrder});
-		}
-
-		task ("See that the list is sorted by the data type of the attributes in ascending order") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Data Type");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = ${indexList},
-				itemValueList = ${attributesDataTypeAscending});
-		}
-
-		task ("See that the list is sorted by the data type of the attributes in descending order") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = ${indexList},
-				itemValueList = ${attributesDataTypeDescending});
 		}
 	}
 

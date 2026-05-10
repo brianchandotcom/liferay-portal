@@ -328,8 +328,10 @@ definition {
 			expirationDate,expirationDate,displayDate,discontinued,description,customFields,currencyCode,createDate,cost,categoryIds,catalogId
 		''';
 		var firstPageList = "catalogId,categoryIds,cost,createDate,currencyCode";
+		var foundProductsAttribute = "currencyCode";
 		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48";
 		var lastPageList = "value,values,vocabulary";
+		var notFoundProductsAttribute = "name,description";
 
 		task ("Click to select attribute for products") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
@@ -417,6 +419,28 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList},
 				itemValueList = ${attributesDataTypeDescending});
+		}
+
+		task ("Search for products attributes") {
+			ACUtils.searchBar(searchItem = ${foundProductsAttribute});
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundProductsAttribute});
+		}
+
+		task ("Check that unsearched products attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundProductsAttribute});
+		}
+
+		task ("Search by name of a products attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "ACQA");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 
@@ -840,39 +864,6 @@ definition {
 				attributeCategory = "People",
 				currentAttributeNumber = ${syncPeopleNumberStart},
 				increaseAttributeNumber = 2);
-		}
-	}
-
-	@description = "Story: LRAC-10866 | Automation ID: LRAC-12903 | Test Summary: Check that it is possible to search the Attribute for Product list"
-	@priority = 4
-	test CanSearchAttributeInProductList {
-		var foundProductsAttribute = "currencyCode";
-		var notFoundProductsAttribute = "name,description";
-
-		task ("Click to select attribute for products") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
-		}
-
-		task ("Search for products attributes") {
-			ACUtils.searchBar(searchItem = ${foundProductsAttribute});
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
-		}
-
-		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = ${foundProductsAttribute});
-		}
-
-		task ("Check that unsearched products attributes do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundProductsAttribute});
-		}
-
-		task ("Search by name of a products attributes that does not exist") {
-			ACUtils.searchBar(searchItem = "ACQA");
-		}
-
-		task ("Check that no result is found for the search") {
-			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 

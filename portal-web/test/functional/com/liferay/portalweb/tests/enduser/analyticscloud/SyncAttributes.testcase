@@ -249,6 +249,7 @@ definition {
         ''';
 		var defaultAttributesNameList = ListUtil.newListFromString(${defaultAttributesName});
 		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
+		var requiredAttributes = "accountEntryId,emailAddress,name";
 		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
 
 		task ("Click to select attribute for Account") {
@@ -260,6 +261,14 @@ definition {
 				AssertElementPresent(
 					key_attributeName = ${attribute},
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
+			}
+		}
+
+		task ("See that the required attributes can not be deselected (the input is disabled)") {
+			for (var attribute : list ${requiredAttributes}) {
+				AssertElementPresent(
+					key_requiredAttribute = ${attribute},
+					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 			}
 		}
 
@@ -904,24 +913,6 @@ definition {
 				AssertElementPresent(
 					key_attributeName = ${attribute},
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
-			}
-		}
-	}
-
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12837 | Test Summary: Cannot deselect required Attributes for Account"
-	@priority = 5
-	test CheckNotPossibleDeselectRequiredAttributesForAccounts {
-		var requiredAttributes = "accountEntryId,emailAddress,name";
-
-		task ("Click to configure account attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("See that the required attributes can not be deselected (the input is disabled)") {
-			for (var attribute : list ${requiredAttributes}) {
-				AssertElementPresent(
-					key_requiredAttribute = ${attribute},
-					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 			}
 		}
 	}

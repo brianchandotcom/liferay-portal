@@ -463,9 +463,11 @@ definition {
 		var attributesDescendingOrder2 = "agreedToTermsOfUse";
 		var defaultAttributes = "birthday,firstName,firstName,jobTitle,jobTitle,lastName,lastName,timeZoneId";
 		var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
+		var foundPeopleAttribute = "birthday";
 		var indexList1 = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50";
 		var indexList2 = 1;
 		var lastPageList = "uuid";
+		var notFoundPeopleAttribute = "createDate,firstName";
 		var requiredAttribute = "uuid";
 		var requiredAttributes = '''
 			classPK,contactId,createDate,createDate,
@@ -599,17 +601,6 @@ definition {
 
 		task ("Check that the attributes for people on the first page does not appear on the last") {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
-		}
-	}
-
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12781 | Test Summary: Check that it is possible to search the Attribute for People list"
-	@priority = 4
-	test CanSearchAttributeForPeopleList {
-		var foundPeopleAttribute = "birthday";
-		var notFoundPeopleAttribute = "createDate,firstName";
-
-		task ("Click to select attribute for people") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
 		}
 
 		task ("Search for people attributes") {

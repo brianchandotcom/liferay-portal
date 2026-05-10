@@ -3208,9 +3208,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							new FilterCollectionPersistenceFinder.FilterMetadata<>(
 								${entity.name}Impl.class,
 								${entity.name}.class,
-								_FILTER_ENTITY_ALIAS,
-								_FILTER_ENTITY_TABLE,
-								_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+								"${entity.alias}",
+								"${entity.table}",
+								"${entity.alias}.${entity.filterPKEntityColumn.DBName}",
 								_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE,
 								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1,
 								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2,
@@ -3549,9 +3549,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKDBName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
 
-			private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
+			<#if !serviceBuilder.isVersionGTE_7_4_0()>
+				private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
 
-			private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
+				private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
+			</#if>
 		</#if>
 	</#if>
 

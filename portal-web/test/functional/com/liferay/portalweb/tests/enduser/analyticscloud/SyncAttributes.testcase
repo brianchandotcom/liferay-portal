@@ -271,7 +271,9 @@ definition {
 		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
 		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18";
 		var requiredAttributes = "accountEntryId,emailAddress,name";
+		var searchedAccountAttribute = "companyId";
 		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
+		var unsearchedAccountAttribute = "domains";
 
 		task ("Click to select attribute for Account") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
@@ -358,6 +360,28 @@ definition {
 		task ("Check that the attributes for Account on the first page does not appear on the second page") {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
+
+		task ("Search for account attributes") {
+			ACUtils.searchBar(searchItem = ${searchedAccountAttribute});
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = ${searchedAccountAttribute});
+		}
+
+		task ("Check that unsearched account attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${unsearchedAccountAttribute});
+		}
+
+		task ("Search by name of a account attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "gold");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
+		}
 	}
 
 	@description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
@@ -396,39 +420,6 @@ definition {
 
 		task ("Check that the attributes for people on the first page does not appear on the last") {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12842 | Test Summary: Check that it is possible to search the Attribute for Account list"
-	@priority = 4
-	test CanSearchAttributeForAccountList {
-		var searchedAccountAttribute = "companyId";
-		var unsearchedAccountAttribute = "domains";
-
-		task ("Click to select attribute for account") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("Search for account attributes") {
-			ACUtils.searchBar(searchItem = ${searchedAccountAttribute});
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
-		}
-
-		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = ${searchedAccountAttribute});
-		}
-
-		task ("Check that unsearched account attributes do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${unsearchedAccountAttribute});
-		}
-
-		task ("Search by name of a account attributes that does not exist") {
-			ACUtils.searchBar(searchItem = "gold");
-		}
-
-		task ("Check that no result is found for the search") {
-			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 

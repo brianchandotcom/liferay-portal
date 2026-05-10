@@ -242,11 +242,25 @@ definition {
 	@description = "Story: LRAC-10865 | Automation ID: LRAC-12843 | Test Summary: Check that it is possible to make pagination in the Attribute for Account list"
 	@priority = 3
 	test ConfigureAccountAttributes {
+		var defaultAttributesName = '''
+            companyId,createDate,defaultCPaymentMethodKey,description,
+            domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,
+			status,taxExemptionCode,taxIdNumber,type_
+        ''';
+		var defaultAttributesNameList = ListUtil.newListFromString(${defaultAttributesName});
 		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
 		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
 
 		task ("Click to select attribute for Account") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+		}
+
+		task ("See that the all the default attributes are checked") {
+			for (var attribute : list ${defaultAttributesNameList}) {
+				AssertElementPresent(
+					key_attributeName = ${attribute},
+					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
+			}
 		}
 
 		task ("Change the pagination to 5") {
@@ -871,30 +885,6 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList},
 				itemValueList = ${attributesDataTypeDescending});
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12841 | Test Summary: Check that all defaults attributes are being checked for Account"
-	@priority = 4
-	test CheckAllDefaultsAttributesAreBeingCheckedForAccounts {
-		var defaultAttributesName = '''
-            companyId,createDate,defaultCPaymentMethodKey,description,
-            domains,logoId,modifiedDate,parentAccountEntryId,restrictMembership,
-			status,taxExemptionCode,taxIdNumber,type_
-        ''';
-
-		var defaultAttributesNameList = ListUtil.newListFromString(${defaultAttributesName});
-
-		task ("Click to configure account attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
-		}
-
-		task ("See that the all the default attributes are checked") {
-			for (var attribute : list ${defaultAttributesNameList}) {
-				AssertElementPresent(
-					key_attributeName = ${attribute},
-					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
-			}
 		}
 	}
 

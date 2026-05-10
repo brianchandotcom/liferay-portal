@@ -51,20 +51,6 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Story: LRAC-10866 | Automation ID: LRAC-12901 | Test Summary: Check that all attributes for Products are marked as required"
-	@priority = 5
-	test AllProductAttributesRequired {
-		task ("Click to configure products attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
-		}
-
-		task ("See that the all the attributes are checked") {
-			ACUtils.changePagination(itemsPerPage = 50);
-
-			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
-		}
-	}
-
 	@description = "Story: LRAC-10865 | Automation ID: LRAC-12838 | Test Summary: Deselect non-required Attributes for Account"
 	@priority = 5
 	test CanDeselectNonRequiredAccountAttributes {
@@ -321,6 +307,12 @@ definition {
 
 		task ("Click to select attribute for products") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");
+		}
+
+		task ("See that the all the attributes are checked") {
+			ACUtils.changePagination(itemsPerPage = 50);
+
+			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
 		}
 
 		task ("Change the pagination to 5") {

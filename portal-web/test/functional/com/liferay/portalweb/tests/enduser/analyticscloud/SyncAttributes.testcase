@@ -147,6 +147,13 @@ definition {
 	@priority = 3
 	test CheckOrdersAttributes {
 		var firstPageList = "orderItems,total,subscription,accountId,channelId";
+		var requiredAttributes = '''
+			accountId,channelId,cpDefinitionId,createDate,currencyCode,customFields,externalReferenceCode,
+			finalPrice,id,modifiedDate,name,options,orderDate,orderId,orderItems,orderStatus,
+			orderTypeExternalReferenceCode,orderTypeId,parentOrderItemId,paymentMethod,paymentStatus,
+			quantity,sku,status,subscription,total,unitOfMeasure,unitPrice,userId
+			''';
+		var requiredAttributesList = ListUtil.newListFromString(${requiredAttributes});
 		var secondPageList = "id,orderStatus,orderTypeId,paymentStatus,status";
 
 		task ("Click to select attribute for Orders") {
@@ -157,6 +164,16 @@ definition {
 			ACUtils.changePagination(itemsPerPage = 50);
 
 			AssertElementNotPresent(locator1 = "ACDXPSettings#REQUIRED_ATTRIBUTES");
+		}
+
+		task ("See that the required attributes can not be deselected") {
+			ACUtils.changePagination(itemsPerPage = 50);
+
+			for (var attribute : list ${requiredAttributesList}) {
+				AssertElementPresent(
+					key_requiredAttribute = ${attribute},
+					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
+			}
 		}
 
 		task ("Change filter to Data type") {
@@ -883,33 +900,6 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList},
 				itemValueList = ${attributesDataTypeDescending});
-		}
-	}
-
-	@description = "Story: LRAC-10867 | Automation ID: LRAC-12910 | Test Summary: Cannot deselect required Attributes for Orders"
-	@priority = 5
-	test CheckNotPossibleToDeselectRequiredAttributesForOrders {
-		var requiredAttributes = '''
-			accountId,channelId,cpDefinitionId,createDate,currencyCode,customFields,externalReferenceCode,
-			finalPrice,id,modifiedDate,name,options,orderDate,orderId,orderItems,orderStatus,
-			orderTypeExternalReferenceCode,orderTypeId,parentOrderItemId,paymentMethod,paymentStatus,
-			quantity,sku,status,subscription,total,unitOfMeasure,unitPrice,userId
-			''';
-
-		var requiredAttributesList = ListUtil.newListFromString(${requiredAttributes});
-
-		task ("Click to configure orders attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
-		}
-
-		task ("See that the required attributes can not be deselected") {
-			ACUtils.changePagination(itemsPerPage = 50);
-
-			for (var attribute : list ${requiredAttributesList}) {
-				AssertElementPresent(
-					key_requiredAttribute = ${attribute},
-					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
-			}
 		}
 	}
 

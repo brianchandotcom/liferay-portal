@@ -382,6 +382,42 @@ definition {
 		task ("Check that no result is found for the search") {
 			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
+
+		task ("Click to configure Account attributes for sync") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Account");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
+		}
+
+		task ("Enable two attributes for Account") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "Account",
+				attributeNameList = "externalReferenceCode,uuid_");
+		}
+
+		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "Account",
+				currentAttributeNumber = ${syncAccountNumberStart},
+				increaseAttributeNumber = 2);
+		}
+
+		task ("Save and Finish the wizard") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+
+		task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+		task ("Check selecteded number of account attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "Account",
+				currentAttributeNumber = ${syncAccountNumberStart},
+				increaseAttributeNumber = 2);
+		}
 	}
 
 	@description = "Story: LRAC-10860 | Automation ID: LRAC-12782 | Test Summary: Check that it is possible to make pagination in the Attribute for People list"
@@ -519,42 +555,6 @@ definition {
 
 		task ("Check that no result is found for the search") {
 			ACUtils.viewGenericText(textValueList = "No attributes were found.");
-		}
-	}
-
-	@description = "Story: LRAC-10865 | Automation ID: LRAC-12835 | Test Summary: Select Attributes for Account"
-	@priority = 5
-	test CanSelectAccountAttributes {
-		task ("Get the number of attributes currently synced") {
-			var syncAccountNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "Account");
-		}
-
-		task ("Enable two attributes for Account") {
-			ACDXPSettings.syncAttributes(
-				attributeCategory = "Account",
-				attributeNameList = "externalReferenceCode,uuid_");
-		}
-
-		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "Account",
-				currentAttributeNumber = ${syncAccountNumberStart},
-				increaseAttributeNumber = 2);
-		}
-
-		task ("Save and Finish the wizard") {
-			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-		}
-
-		task ("Go to the attributes page in the sidebar") {
-			ACDXPSettings.navToSyncedAttributes();
-		}
-
-		task ("Check selecteded number of account attributes") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "Account",
-				currentAttributeNumber = ${syncAccountNumberStart},
-				increaseAttributeNumber = 2);
 		}
 	}
 

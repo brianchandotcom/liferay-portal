@@ -156,6 +156,32 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 	}
 
+	private <T extends BaseModel<T>> JSONObject
+		_buildEditInProductionJSONObject(
+			long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+			CTEntry ctEntry, CTCollection ctCollection, T model,
+			HttpServletRequest httpServletRequest,
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
+
+		String editURL = _ctDisplayRendererRegistry.getEditURL(
+			ctCollectionId, ctSQLMode, httpServletRequest, model,
+			ctEntry.getModelClassNameId());
+
+		if (Validator.isNull(editURL)) {
+			return null;
+		}
+
+		return _getEditJSONObject(
+			_language.format(
+				httpServletRequest,
+				"you-are-currently-working-on-x.-work-on-production",
+				new Object[] {ctCollection.getName()}, false),
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, editURL,
+			_language.get(httpServletRequest, "edit-in-production"),
+			resourceRequest, resourceResponse);
+	}
+
 	private Function<String, ServiceContext> _createServiceContextFunction() {
 		return className -> {
 			ServiceContext serviceContext = new ServiceContext();
@@ -180,16 +206,8 @@ public class GetEntryRenderDataMVCResourceCommand
 			_ctDisplayRendererRegistry.getCTDisplayRenderer(
 				ctEntry.getModelClassNameId());
 
-		String changeType = "modified";
-
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_ADDITION) {
-			changeType = "added";
-		}
-		else if (ctEntry.getChangeType() ==
-					CTConstants.CT_CHANGE_TYPE_DELETION) {
-
-			changeType = "deleted";
-		}
+		String changeType = CTConstants.getCTChangeTypeLabel(
+			ctEntry.getChangeType());
 
 		boolean localize = ParamUtil.getBoolean(resourceRequest, "localize");
 
@@ -265,14 +283,9 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-					for (String languageId : availableLanguageIds) {
-						localizedTitlesJSONObject.put(
-							languageId,
-							_ctDisplayRendererRegistry.getTitle(
-								ctCollectionId, ctSQLMode,
-								LocaleUtil.fromLanguageId(languageId),
-								rightModel, ctEntry.getModelClassNameId()));
-					}
+					_putLocalizedTitles(
+						availableLanguageIds, ctCollectionId, ctSQLMode,
+						ctEntry, localizedTitlesJSONObject, rightModel);
 
 					rightLocalizedPreviewJSONObject =
 						_getLocalizedPreviewJSONObject(
@@ -345,22 +358,11 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				if (leftModel != null) {
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						leftCtCollectionId, leftCTSQLMode, httpServletRequest,
-						leftModel, ctEntry.getModelClassNameId());
-
-					if (Validator.isNotNull(editURL)) {
-						editInProductionJSONObject = _getEditJSONObject(
-							_language.format(
-								httpServletRequest,
-								"you-are-currently-working-on-x.-work-on-" +
-									"production",
-								new Object[] {ctCollection.getName()}, false),
-							CTConstants.CT_COLLECTION_ID_PRODUCTION, editURL,
-							_language.get(
-								httpServletRequest, "edit-in-production"),
+					editInProductionJSONObject =
+						_buildEditInProductionJSONObject(
+							leftCtCollectionId, leftCTSQLMode, ctEntry,
+							ctCollection, leftModel, httpServletRequest,
 							resourceRequest, resourceResponse);
-					}
 
 					String leftVersionName = ctDisplayRenderer.getVersionName(
 						leftModel);
@@ -370,16 +372,14 @@ public class GetEntryRenderDataMVCResourceCommand
 							httpServletRequest, "production");
 					}
 					else {
-						leftTitle = StringBundler.concat(
-							_language.get(httpServletRequest, "version"), ": ",
-							leftVersionName, " (",
-							_language.get(httpServletRequest, "production"),
-							")");
+						leftTitle = _getVersionTitle(
+							httpServletRequest, leftVersionName,
+							_language.get(httpServletRequest, "production"));
 					}
 
-					rightTitle = StringBundler.concat(
-						_language.get(httpServletRequest, "version"), ": ",
-						rightVersionName, " (", ctCollection.getName(), ")");
+					rightTitle = _getVersionTitle(
+						httpServletRequest, rightVersionName,
+						ctCollection.getName());
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						leftLocalizedPreviewJSONObject =
@@ -428,22 +428,11 @@ public class GetEntryRenderDataMVCResourceCommand
 				if (ctEntry.getChangeType() ==
 						CTConstants.CT_CHANGE_TYPE_MODIFICATION) {
 
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						leftCtCollectionId, leftCTSQLMode, httpServletRequest,
-						leftModel, ctEntry.getModelClassNameId());
-
-					if (Validator.isNotNull(editURL)) {
-						editInProductionJSONObject = _getEditJSONObject(
-							_language.format(
-								httpServletRequest,
-								"you-are-currently-working-on-x.-work-on-" +
-									"production",
-								new Object[] {ctCollection.getName()}, false),
-							CTConstants.CT_COLLECTION_ID_PRODUCTION, editURL,
-							_language.get(
-								httpServletRequest, "edit-in-production"),
+					editInProductionJSONObject =
+						_buildEditInProductionJSONObject(
+							leftCtCollectionId, leftCTSQLMode, ctEntry,
+							ctCollection, leftModel, httpServletRequest,
 							resourceRequest, resourceResponse);
-					}
 				}
 
 				if (localize &&
@@ -460,14 +449,9 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 
 				if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
-					for (String languageId : availableLanguageIds) {
-						localizedTitlesJSONObject.put(
-							languageId,
-							_ctDisplayRendererRegistry.getTitle(
-								leftCtCollectionId, leftCTSQLMode,
-								LocaleUtil.fromLanguageId(languageId),
-								leftModel, ctEntry.getModelClassNameId()));
-					}
+					_putLocalizedTitles(
+						availableLanguageIds, leftCtCollectionId, leftCTSQLMode,
+						ctEntry, localizedTitlesJSONObject, leftModel);
 
 					leftLocalizedPreviewJSONObject =
 						_getLocalizedPreviewJSONObject(
@@ -540,16 +524,14 @@ public class GetEntryRenderDataMVCResourceCommand
 						rightTitle = ctCollection.getName();
 					}
 					else {
-						rightTitle = StringBundler.concat(
-							_language.get(httpServletRequest, "version"), ": ",
-							rightVersionName, " (", ctCollection.getName(),
-							")");
+						rightTitle = _getVersionTitle(
+							httpServletRequest, rightVersionName,
+							ctCollection.getName());
 					}
 
-					leftTitle = StringBundler.concat(
-						_language.get(httpServletRequest, "version"), ": ",
-						leftVersionName, " (",
-						_language.get(httpServletRequest, "deleted"), ")");
+					leftTitle = _getVersionTitle(
+						httpServletRequest, leftVersionName,
+						_language.get(httpServletRequest, "deleted"));
 
 					if (ArrayUtil.isNotEmpty(availableLanguageIds)) {
 						rightLocalizedPreviewJSONObject =
@@ -1114,6 +1096,15 @@ public class GetEntryRenderDataMVCResourceCommand
 		jsonObject.put("segmentsExperiences", jsonArray);
 	}
 
+	private String _getVersionTitle(
+		HttpServletRequest httpServletRequest, String versionName,
+		String context) {
+
+		return StringBundler.concat(
+			_language.get(httpServletRequest, "version"), ": ", versionName,
+			" (", context, ")");
+	}
+
 	private <T extends BaseModel<T>> JSONArray _getWorkflowActionsJSONArray(
 			CTEntry ctEntry, T model, ThemeDisplay themeDisplay,
 			ResourceResponse resourceResponse)
@@ -1630,6 +1621,21 @@ public class GetEntryRenderDataMVCResourceCommand
 		}
 
 		return workflowTasks.get(0);
+	}
+
+	private <T extends BaseModel<T>> void _putLocalizedTitles(
+		String[] availableLanguageIds, long ctCollectionId,
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode, CTEntry ctEntry,
+		JSONObject localizedTitlesJSONObject, T model) {
+
+		for (String languageId : availableLanguageIds) {
+			localizedTitlesJSONObject.put(
+				languageId,
+				_ctDisplayRendererRegistry.getTitle(
+					ctCollectionId, ctSQLMode,
+					LocaleUtil.fromLanguageId(languageId), model,
+					ctEntry.getModelClassNameId()));
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

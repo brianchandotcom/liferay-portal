@@ -9,6 +9,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
@@ -3612,7 +3613,9 @@ public class ObjectDefinitionLocalServiceImpl
 						NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
 					objectDefinitionSettingsValue.getKey())) {
 
-				if (!objectDefinition.isRootDescendantNode()) {
+				if (!BatchEngineThreadLocal.isBatchImportInProcess() &&
+					!objectDefinition.isRootDescendantNode()) {
+
 					_handleException(
 						new ObjectDefinitionSettingNameException.
 							NotAllowedNames(

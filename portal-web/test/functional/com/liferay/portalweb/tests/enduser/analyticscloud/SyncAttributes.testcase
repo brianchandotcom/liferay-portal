@@ -184,7 +184,9 @@ definition {
 			quantity,sku,status,subscription,total,unitOfMeasure,unitPrice,userId
 			''';
 		var requiredAttributesList = ListUtil.newListFromString(${requiredAttributes});
+		var searchedOrdersAttribute = "orderId";
 		var secondPageList = "id,orderStatus,orderTypeId,paymentStatus,status";
+		var unsearchedOrdersAttribute = "currencyCode,orderDate";
 
 		task ("Click to select attribute for Orders") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
@@ -286,6 +288,28 @@ definition {
 			ACDXPSettings.viewGenericListItemInOrder(
 				indexList = ${indexList},
 				itemValueList = ${attributesDataTypeDescending});
+		}
+
+		task ("Search for orders attributes") {
+			ACUtils.searchBar(searchItem = ${searchedOrdersAttribute});
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("Check that a search result is found") {
+			ACDXPSettings.viewGenericListItem(itemValueList = ${searchedOrdersAttribute});
+		}
+
+		task ("Check that unsearched orders attributes do not appear in the search result") {
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${unsearchedOrdersAttribute});
+		}
+
+		task ("Search by name of an order attributes that does not exist") {
+			ACUtils.searchBar(searchItem = "accountEntryId");
+		}
+
+		task ("Check that no result is found for the search") {
+			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 
@@ -748,39 +772,6 @@ definition {
 				attributeCategory = "People",
 				currentAttributeNumber = ${syncPeopleNumberStart},
 				increaseAttributeNumber = 2);
-		}
-	}
-
-	@description = "Story: LRAC-10867 | Automation ID: LRAC-12911 | Test Summary: Check that it is possible to search the Attribute for Orders list"
-	@priority = 4
-	test CanSearchAttributeInOrdersList {
-		var searchedOrdersAttribute = "orderId";
-		var unsearchedOrdersAttribute = "currencyCode,orderDate";
-
-		task ("Click to select attribute for orders") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Order");
-		}
-
-		task ("Search for orders attributes") {
-			ACUtils.searchBar(searchItem = ${searchedOrdersAttribute});
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
-		}
-
-		task ("Check that a search result is found") {
-			ACDXPSettings.viewGenericListItem(itemValueList = ${searchedOrdersAttribute});
-		}
-
-		task ("Check that unsearched orders attributes do not appear in the search result") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${unsearchedOrdersAttribute});
-		}
-
-		task ("Search by name of an order attributes that does not exist") {
-			ACUtils.searchBar(searchItem = "accountEntryId");
-		}
-
-		task ("Check that no result is found for the search") {
-			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
 	}
 

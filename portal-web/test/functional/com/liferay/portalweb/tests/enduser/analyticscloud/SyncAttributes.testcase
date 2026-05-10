@@ -241,7 +241,7 @@ definition {
 
 	@description = "Story: LRAC-10865 | Automation ID: LRAC-12843 | Test Summary: Check that it is possible to make pagination in the Attribute for Account list"
 	@priority = 3
-	test CanPaginationAttributeForAccountList {
+	test ConfigureAccountAttributes {
 		var firstPageList = "accountEntryId,companyId,createDate,defaultCPaymentMethodKey,description";
 		var secondPageList = "domains,emailAddress,externalReferenceCode,logoId,modifiedDate";
 

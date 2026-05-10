@@ -153,9 +153,10 @@ test(
 
 		await documentLibraryPage.orderBy('relevance');
 
-		await expect(
-			page.locator('dd[data-title="test"]')
-		).toHaveAttribute('id', /_entries_1$/);
+		await expect(page.locator('dd[data-title="test"]')).toHaveAttribute(
+			'id',
+			/_entries_1$/
+		);
 	}
 );
 

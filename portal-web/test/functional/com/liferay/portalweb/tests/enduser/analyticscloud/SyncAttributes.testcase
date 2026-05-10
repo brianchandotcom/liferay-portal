@@ -624,6 +624,42 @@ definition {
 		task ("Check that no result is found for the search") {
 			ACUtils.viewGenericText(textValueList = "No attributes were found.");
 		}
+
+		task ("Click to configure People attributes for sync") {
+			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
+		}
+
+		task ("Get the number of attributes currently synced") {
+			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
+		}
+
+		task ("Enable two attributes for People") {
+			ACDXPSettings.syncAttributes(
+				attributeCategory = "People",
+				attributeNameList = "comments,externalReferenceCode");
+		}
+
+		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				currentAttributeNumber = ${syncPeopleNumberStart},
+				increaseAttributeNumber = 2);
+		}
+
+		task ("Save and Finish the wizard") {
+			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
+		}
+
+		task ("Go to the attributes page in the sidebar") {
+			ACDXPSettings.navToSyncedAttributes();
+		}
+
+		task ("Check selected account group number") {
+			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
+				attributeCategory = "People",
+				currentAttributeNumber = ${syncPeopleNumberStart},
+				increaseAttributeNumber = 2);
+		}
 	}
 
 	@description = "Story: LRAC-10867 | Automation ID: LRAC-12911 | Test Summary: Check that it is possible to search the Attribute for Orders list"
@@ -689,42 +725,6 @@ definition {
 
 		task ("Check that no result is found for the search") {
 			ACUtils.viewGenericText(textValueList = "No attributes were found.");
-		}
-	}
-
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12777 | Test Summary: Select Attributes for People"
-	@priority = 5
-	test CanSelectAttributesForPeople {
-		task ("Get the number of attributes currently synced") {
-			var syncPeopleNumberStart = ACDXPSettings.getSyncNumberPreview(attributeCategory = "People");
-		}
-
-		task ("Enable two attributes for People") {
-			ACDXPSettings.syncAttributes(
-				attributeCategory = "People",
-				attributeNameList = "comments,externalReferenceCode");
-		}
-
-		task ("Check that the number of synchronized attributes has increased by 2 attributes") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "People",
-				currentAttributeNumber = ${syncPeopleNumberStart},
-				increaseAttributeNumber = 2);
-		}
-
-		task ("Save and Finish the wizard") {
-			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-		}
-
-		task ("Go to the attributes page in the sidebar") {
-			ACDXPSettings.navToSyncedAttributes();
-		}
-
-		task ("Check selected account group number") {
-			ACDXPSettings.viewIncreaseOrDecreaseSyncNumber(
-				attributeCategory = "People",
-				currentAttributeNumber = ${syncPeopleNumberStart},
-				increaseAttributeNumber = 2);
 		}
 	}
 

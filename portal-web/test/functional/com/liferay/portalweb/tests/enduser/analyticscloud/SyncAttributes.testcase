@@ -159,7 +159,7 @@ definition {
 
 	@description = "Story: LRAC-10867 | Automation ID: LRAC-12913 | Test Summary: Check that it is possible to make pagination in the Attribute for Order list"
 	@priority = 3
-	test CanPaginateInOrdersAttributeList {
+	test CheckOrdersAttributes {
 		var firstPageList = "orderItems,total,subscription,accountId,channelId";
 		var secondPageList = "id,orderStatus,orderTypeId,paymentStatus,status";
 

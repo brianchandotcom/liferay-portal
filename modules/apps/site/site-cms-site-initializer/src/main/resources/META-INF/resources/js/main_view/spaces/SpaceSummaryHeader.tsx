@@ -6,6 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import {navigate} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -183,23 +184,23 @@ export default function SpaceSummaryHeader({
 			<div className="align-items-center d-flex">
 				{showViewAll &&
 					(url ? (
-						<ClayButton
+						<ClayLink
 							className="text-3 text-weight-semi-bold"
-							displayType="link"
+							data-canonical-name={label}
+							displayType="primary"
 							onClick={() => navigate(url)}
-							size="sm"
 						>
 							{label}
-						</ClayButton>
+						</ClayLink>
 					) : (
-						<ClayButton
+						<ClayLink
 							className="text-3 text-weight-semi-bold"
-							displayType="link"
+							data-canonical-name={label}
+							displayType="primary"
 							onClick={getActionCallback}
-							size="sm"
 						>
 							{label}
-						</ClayButton>
+						</ClayLink>
 					))}
 
 				<CreationMenu />

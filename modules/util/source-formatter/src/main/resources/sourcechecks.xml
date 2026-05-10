@@ -808,6 +808,10 @@
 			<category name="Javadoc" />
 			<description name="Checks if the `@deprecated` javadoc is pointing to the correct version." />
 		</check>
+		<check name="JavaExpandoBridgeAttributesCallOrderCheck">
+			<category name="Bug Prevention" />
+			<description name="Ensure `setExpandoBridgeAttributes` is the final setter called on a model before model persistence." />
+		</check>
 		<check name="JavaFeatureFlagManagerUtilCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used and incorrect use of it." />

@@ -426,6 +426,12 @@ definition {
 		var defaultAttributes = "birthday,firstName,firstName,jobTitle,jobTitle,lastName,lastName,timeZoneId";
 		var firstPageList = "agreedToTermsOfUse,birthday,classNameId,classPK,comments";
 		var lastPageList = "uuid";
+		var requiredAttribute = "uuid";
+		var requiredAttributes = '''
+			classPK,contactId,createDate,createDate,
+			emailAddress,emailAddress,modifiedDate,modifiedDate,userId
+		''';
+		var requiredAttributesList = ListUtil.newListFromString(${requiredAttributes});
 
 		task ("Click to select attribute for people") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
@@ -439,6 +445,22 @@ definition {
 					key_attributeName = ${attribute},
 					locator1 = "ACDXPSettings#CHECK_SELECT_ATTRIBUTES_ENABLE");
 			}
+		}
+
+		task ("See that the required attributes can not be deselected (the input is disabled)") {
+			ACUtils.changePagination(itemsPerPage = 50);
+
+			for (var attribute : list ${requiredAttributesList}) {
+				AssertElementPresent(
+					key_requiredAttribute = ${attribute},
+					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
+			}
+
+			ACUtils.checkAnyPage(pageNumber = 2);
+
+			AssertElementPresent(
+				key_requiredAttribute = ${requiredAttribute},
+				locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 		}
 
 		task ("Change the pagination to 5") {
@@ -914,37 +936,6 @@ definition {
 					key_requiredAttribute = ${attribute},
 					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 			}
-		}
-	}
-
-	@description = "Story: LRAC-10860 | Automation ID: LRAC-12778 | Test Summary: Cannot deselect required Attributes for People"
-	@priority = 5
-	test CheckNotPossibleToDeselectRequiredAttributesForPeople {
-		var requiredAttributes = '''
-			classPK,contactId,createDate,createDate,
-			emailAddress,emailAddress,modifiedDate,modifiedDate,userId
-		''';
-		var requiredAttribute = "uuid";
-		var requiredAttributesList = ListUtil.newListFromString(${requiredAttributes});
-
-		task ("Click to configure people attributes") {
-			ACDXPSettings.clickToSelectAttributes(attributeCategory = "People");
-		}
-
-		task ("See that the required attributes can not be deselected (the input is disabled)") {
-			ACUtils.changePagination(itemsPerPage = 50);
-
-			for (var attribute : list ${requiredAttributesList}) {
-				AssertElementPresent(
-					key_requiredAttribute = ${attribute},
-					locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
-			}
-
-			ACUtils.checkAnyPage(pageNumber = 2);
-
-			AssertElementPresent(
-				key_requiredAttribute = ${requiredAttribute},
-				locator1 = "ACDXPSettings#ATTRIBUTES_CHECKBOX_DISABLED");
 		}
 	}
 

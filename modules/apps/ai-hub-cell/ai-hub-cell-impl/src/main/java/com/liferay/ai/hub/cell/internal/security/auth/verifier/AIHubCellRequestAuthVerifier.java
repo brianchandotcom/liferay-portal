@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.cell.internal.security.auth.verifier;
 
-import com.liferay.ai.hub.cell.security.JWTTokenUtil;
+import com.liferay.ai.hub.cell.internal.security.JWTTokenUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;

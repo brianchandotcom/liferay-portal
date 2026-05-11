@@ -3,32 +3,51 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.ai.hub.cell.security;
+package com.liferay.ai.hub.cell.rest.internal.security;
 
 import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.Base64;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
- * @author Rafael Praxedes
+ * @author Christopher Kian
  */
 public class JWTTokenUtil {
 
-	public static String generateToken(
+	public static String generateToken() {
+		try {
+			Company company = CompanyLocalServiceUtil.getCompany(
+				CompanyThreadLocal.getCompanyId());
+
+			return _generateToken(
+				TimeUnit.MINUTES.toMillis(10), company.getVirtualHostname(),
+				PrincipalThreadLocal.getUserId());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to generate a signed token", exception);
+			}
+
+			return null;
+		}
+	}
+
+	private static String _generateToken(
 		long expirationTime, String issuer, long userId) {
 
 		Date now = new Date();
@@ -58,54 +77,6 @@ public class JWTTokenUtil {
 		}
 
 		return signedJWT.serialize();
-	}
-
-	public static long getUserId(String issuer, String token) {
-		JWTClaimsSet jwtClaimsSet = null;
-
-		try {
-			SignedJWT signedJWT = SignedJWT.parse(token);
-
-			if (!signedJWT.verify(new MACVerifier(_getSecret()))) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Invalid JWT signature");
-				}
-
-				return 0;
-			}
-
-			jwtClaimsSet = signedJWT.getJWTClaimsSet();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to parse and verify the JWT token", exception);
-			}
-
-			return 0;
-		}
-
-		if (Validator.isNull(issuer) ||
-			!issuer.equals(jwtClaimsSet.getIssuer())) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Invalid JWT issuer");
-			}
-
-			return 0;
-		}
-
-		Date expirationDate = jwtClaimsSet.getExpirationTime();
-
-		if ((expirationDate == null) || expirationDate.before(new Date())) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("The JWT token is expired");
-			}
-
-			return 0;
-		}
-
-		return GetterUtil.getLong(jwtClaimsSet.getSubject());
 	}
 
 	private static byte[] _getSecret() throws Exception {

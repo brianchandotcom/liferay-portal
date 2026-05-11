@@ -118,6 +118,7 @@ export function NewExport({
 		<Formik
 			initialValues={{
 				contentSelection: undefined,
+				dateFilter: {filterType: FilterType.All} as DateFilterValues,
 				deletions: false,
 				filename: '',
 			}}
@@ -129,6 +130,7 @@ export function NewExport({
 
 				// eslint-disable-next-line no-console
 				console.log({
+					...dateFilterToQuery(values.dateFilter),
 					contentSelection: values.contentSelection,
 					deletions: values.deletions,
 					filename: values.filename,

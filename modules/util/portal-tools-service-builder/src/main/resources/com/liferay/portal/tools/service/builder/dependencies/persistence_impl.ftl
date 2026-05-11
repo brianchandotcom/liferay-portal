@@ -3375,7 +3375,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		}
 	</#if>
 
-	private static final String _ENTITY_ALIAS_PREFIX = ${entity.name}ModelImpl.ENTITY_ALIAS + ".";
+	<#if !serviceBuilder.isVersionGTE_7_4_0() || entity.hasCollectionEntityFinder()>
+		private static final String _ENTITY_ALIAS_PREFIX = ${entity.name}ModelImpl.ENTITY_ALIAS + ".";
+	</#if>
 
 	private static final String _SQL_SELECT_${entity.alias?upper_case} = "SELECT ${entity.alias} FROM ${entity.name} ${entity.alias}";
 
@@ -3416,7 +3418,19 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled() && !entity.isPermissionedModel()>
-		private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";
+		<#assign hasNonDelegatedCollectionFilterFinder = false />
+
+		<#list entity.entityFinders as orderByEntityTableEntityFinder>
+			<#if orderByEntityTableEntityFinder.isCollection() && !orderByEntityTableEntityFinder.finderDelegationEnabled>
+				<#assign hasNonDelegatedCollectionFilterFinder = true />
+
+				<#break>
+			</#if>
+		</#list>
+
+		<#if hasNonDelegatedCollectionFilterFinder>
+			private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";
+		</#if>
 	</#if>
 
 	<#if !serviceBuilder.isVersionGTE_7_4_0()>
@@ -3427,7 +3441,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ${entity.name} exists with the key {";
 	</#if>
 
-	private static final Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
+	<#assign logEmissionEnabled = !serviceBuilder.isVersionGTE_7_4_0() />
+
+	<#if !logEmissionEnabled>
+		<#list entity.entityFinders as logEmissionEntityFinder>
+			<#if !logEmissionEntityFinder.isCollection() || logEmissionEntityFinder.isUnique()>
+				<#assign logEmissionEnabled = true />
+
+				<#break>
+			</#if>
+		</#list>
+	</#if>
+
+	<#if logEmissionEnabled>
+		private static final Log _log = LogFactoryUtil.getLog(${entity.name}PersistenceImpl.class);
+	</#if>
 
 	<#if entity.badEntityColumns?size != 0>
 		private static final Set<String> _badColumnNames = SetUtil.fromArray(

@@ -123,6 +123,8 @@ test('Can publish a Publication containing an edited KBArticle', async ({
 
 	await page.goto(knowledgeBaseUrls.getEditKBArticleUrl(kbArticle.id));
 
+	await knowledgeBaseEditArticlePage.titlePlaceholder.waitFor();
+
 	await knowledgeBaseEditArticlePage.publishNewKnowledgeBaseArticle(
 		`${content} edit`,
 		`${title} edit`

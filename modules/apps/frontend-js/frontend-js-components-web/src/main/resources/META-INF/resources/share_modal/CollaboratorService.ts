@@ -27,7 +27,8 @@ export interface CollaboratorItem {
 export interface CollaboratorPayload {
 	actionIds: string[];
 	dateExpired?: string;
-	id: string | number;
+	emailAddress?: string;
+	id?: string | number;
 	share: boolean;
 	type: string;
 }

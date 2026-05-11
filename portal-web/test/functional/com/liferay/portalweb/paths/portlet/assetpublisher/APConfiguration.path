@@ -61,7 +61,7 @@
 
 <tr>
 	<td>RULE_BUILDER_ADD_CONDITION</td>
-	<td>//button[contains(@class,'form-builder-rule-add-condition')] | //button[@aria-label='Add Condition']</td>
+	<td>//button[contains(@class,'form-builder-rule-add-condition')] | //button[@aria-label='Add Condition'] | //button[@aria-label='Add Option']</td>
 	<td></td>
 </tr>
 <tr>

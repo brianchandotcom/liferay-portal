@@ -291,18 +291,14 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEntries.toString(), 6, logEntries.size());
+		Assert.assertEquals(logEntries.toString(), 5, logEntries.size());
 
-		LogEntry logEntry1 = logEntries.get(4);
-
-		Assert.assertEquals(
-			"Upgrade query monitoring is disabled", logEntry1.getMessage());
-
-		LogEntry logEntry2 = logEntries.get(5);
+		LogEntry logEntry = logEntries.get(4);
 
 		Assert.assertEquals(
-			"Unable to detect locked queries: " + exceptionMessage,
-			logEntry2.getMessage());
+			StringBundler.concat(
+				"Upgrade query monitoring is disabled: ", exceptionMessage),
+			logEntry.getMessage());
 	}
 
 	private static final String _SCHEDULED_EXECUTOR_SERVICE =

@@ -111,7 +111,7 @@ test(
 		page,
 		site,
 	}) => {
-		test.setTimeout(120000);
+		test.setTimeout(80000);
 
 		const {order} = await setUpOrder(apiHelpers, site);
 
@@ -188,41 +188,108 @@ test(
 			await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click();
 
 			await waitForAlert(page);
+
+			await expect(
+				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+			).toHaveCount(0);
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(addedTitle)
 			).toBeVisible();
 		});
 
-		const editedTitle = `edited-${getRandomString()}.png`;
+		let editedTitle = `edited-${getRandomString()}.png`;
 
 		await test.step('Edit the added attachment from the row dropdown', async () => {
 			await expect(async () => {
-				await commerceAdminOrderAttachmentsPage
-					.rowActionsButton(addedTitle)
-					.click();
+				if (
+					!(await commerceAdminOrderAttachmentsPage.sidePanelTitleInput.isVisible())
+				) {
+					await commerceAdminOrderAttachmentsPage
+						.rowActionsButton(addedTitle)
+						.click();
+
+					await expect(
+						commerceAdminOrderAttachmentsPage.editRowAction
+					).toBeVisible({timeout: 500});
+
+					await commerceAdminOrderAttachmentsPage.editRowAction.click(
+						{timeout: 500}
+					);
+				}
+
 				await expect(
-					commerceAdminOrderAttachmentsPage.editRowAction
-				).toBeVisible({timeout: 500});
+					commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+				).toHaveValue(addedTitle, {timeout: 500});
 			}).toPass({timeout: 5000});
-
-			await commerceAdminOrderAttachmentsPage.editRowAction.click();
-
-			await expect(
-				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
-			).toHaveValue(addedTitle);
 
 			await commerceAdminOrderAttachmentsPage.sidePanelTitleInput.fill(
 				editedTitle
 			);
 
-			await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click();
+			await expect(async () => {
+				if (
+					await commerceAdminOrderAttachmentsPage.sidePanelTitleInput.isVisible(
+						{timeout: 100}
+					)
+				) {
+					await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click(
+						{timeout: 1000}
+					);
+				}
 
-			await waitForAlert(page);
+				await waitForAlert(page, undefined, {timeout: 1000});
+			}).toPass({timeout: 10000});
+
+			await expect(
+				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+			).toHaveCount(0);
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(editedTitle)
 			).toBeVisible();
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(addedTitle)
+			).toHaveCount(0);
+		});
+
+		await test.step('Edit the attachment again via the title link', async () => {
+			await commerceAdminOrderAttachmentsPage
+				.rowTitleLink(editedTitle)
+				.click();
+
+			await expect(
+				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+			).toHaveValue(editedTitle);
+
+			const previousTitle = editedTitle;
+
+			editedTitle = `edited-twice-${getRandomString()}.png`;
+
+			await commerceAdminOrderAttachmentsPage.sidePanelTitleInput.fill(
+				editedTitle
+			);
+
+			await expect(async () => {
+				if (
+					await commerceAdminOrderAttachmentsPage.sidePanelTitleInput.isVisible(
+						{timeout: 100}
+					)
+				) {
+					await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click(
+						{timeout: 1000}
+					);
+				}
+
+				await waitForAlert(page, undefined, {timeout: 1000});
+			}).toPass({timeout: 10000});
+
+			await expect(
+				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+			).toHaveCount(0);
+			await expect(
+				commerceAdminOrderAttachmentsPage.rowByTitle(editedTitle)
+			).toBeVisible();
+			await expect(
+				commerceAdminOrderAttachmentsPage.rowByTitle(previousTitle)
 			).toHaveCount(0);
 		});
 
@@ -272,7 +339,7 @@ test(
 		page,
 		site,
 	}) => {
-		test.setTimeout(120000);
+		test.setTimeout(80000);
 
 		const {order} = await setUpOrder(apiHelpers, site);
 
@@ -356,6 +423,10 @@ test(
 			await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click();
 
 			await waitForAlert(page);
+
+			await expect(
+				commerceAdminOrderAttachmentsPage.sidePanelTitleInput
+			).toHaveCount(0);
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(addedTitle)
 			).toBeVisible();
@@ -366,22 +437,42 @@ test(
 
 		await test.step('Verify the file has the checkbox set', async () => {
 			await expect(async () => {
-				await commerceAdminOrderAttachmentsPage
-					.rowActionsButton(addedTitle)
-					.click();
+				if (
+					!(await commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox.isVisible())
+				) {
+					await commerceAdminOrderAttachmentsPage
+						.rowActionsButton(addedTitle)
+						.click();
+
+					await expect(
+						commerceAdminOrderAttachmentsPage.editRowAction
+					).toBeVisible({timeout: 500});
+
+					await commerceAdminOrderAttachmentsPage.editRowAction.click(
+						{timeout: 500}
+					);
+				}
 
 				await expect(
-					commerceAdminOrderAttachmentsPage.editRowAction
-				).toBeVisible({timeout: 500});
+					commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox
+				).toBeChecked({timeout: 500});
 			}).toPass({timeout: 5000});
 
-			await commerceAdminOrderAttachmentsPage.editRowAction.click();
+			await expect(async () => {
+				if (
+					await commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox.isVisible(
+						{timeout: 100}
+					)
+				) {
+					await commerceAdminOrderAttachmentsPage.sidePanelCancelButton.click(
+						{timeout: 1000}
+					);
+				}
 
-			await expect(
-				commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox
-			).toBeChecked();
-
-			await commerceAdminOrderAttachmentsPage.sidePanelCancelButton.click();
+				await expect(
+					commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox
+				).toHaveCount(0, {timeout: 500});
+			}).toPass({timeout: 5000});
 		});
 	}
 );
@@ -397,7 +488,7 @@ test(
 		page,
 		pageEditorPage,
 	}) => {
-		test.setTimeout(120000);
+		test.setTimeout(80000);
 
 		const {channel, site} = await classicCommerceSetUp(
 			apiHelpers,

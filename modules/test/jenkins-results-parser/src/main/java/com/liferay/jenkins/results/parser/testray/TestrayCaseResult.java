@@ -203,22 +203,35 @@ public class TestrayCaseResult {
 		return _testrayBuild;
 	}
 
-	public TestrayCase getTestrayCase() {
+	public synchronized TestrayCase getTestrayCase() {
 		if (_testrayCase != null) {
 			return _testrayCase;
 		}
 
-		JSONObject caseJSONObject = _jsonObject.optJSONObject(
-			"caseToCaseResult");
-
-		if (caseJSONObject != null) {
-			TestrayBuild testrayBuild = getTestrayBuild();
-
-			_testrayCase = TestrayFactory.newTestrayCase(
-				testrayBuild.getTestrayProject(), caseJSONObject);
+		if (_resolvingTestrayCase) {
+			return null;
 		}
 
-		return _testrayCase;
+		_resolvingTestrayCase = true;
+
+		try {
+			if (_jsonObject != null) {
+				JSONObject caseJSONObject = _jsonObject.optJSONObject(
+					"caseToCaseResult");
+
+				if (caseJSONObject != null) {
+					TestrayBuild testrayBuild = getTestrayBuild();
+
+					_testrayCase = TestrayFactory.newTestrayCase(
+						testrayBuild.getTestrayProject(), caseJSONObject);
+				}
+			}
+
+			return _testrayCase;
+		}
+		finally {
+			_resolvingTestrayCase = false;
+		}
 	}
 
 	public List<TestrayCaseResult> getTestrayCaseResultHistory(
@@ -273,36 +286,47 @@ public class TestrayCaseResult {
 		return _testrayCaseResultURL;
 	}
 
-	public TestrayComponent getTestrayComponent() {
+	public synchronized TestrayComponent getTestrayComponent() {
 		if (_testrayComponent != null) {
 			return _testrayComponent;
 		}
 
-		TestrayBuild testrayBuild = getTestrayBuild();
-
-		if (testrayBuild == null) {
+		if (_resolvingTestrayComponent) {
 			return null;
 		}
 
-		TestrayProject testrayProject = testrayBuild.getTestrayProject();
+		_resolvingTestrayComponent = true;
 
-		JSONObject componentJSONObject = null;
+		try {
+			TestrayBuild testrayBuild = getTestrayBuild();
 
-		if (_jsonObject != null) {
-			componentJSONObject = _jsonObject.optJSONObject(
-				"componentToCaseResult");
+			if (testrayBuild == null) {
+				return null;
+			}
+
+			TestrayProject testrayProject = testrayBuild.getTestrayProject();
+
+			JSONObject componentJSONObject = null;
+
+			if (_jsonObject != null) {
+				componentJSONObject = _jsonObject.optJSONObject(
+					"componentToCaseResult");
+			}
+
+			if (componentJSONObject != null) {
+				_testrayComponent = testrayProject.getTestrayComponentByID(
+					componentJSONObject.getLong("id"));
+			}
+			else {
+				_testrayComponent = testrayProject.getTestrayComponentByName(
+					getComponentName());
+			}
+
+			return _testrayComponent;
 		}
-
-		if (componentJSONObject != null) {
-			_testrayComponent = testrayProject.getTestrayComponentByID(
-				componentJSONObject.getLong("id"));
+		finally {
+			_resolvingTestrayComponent = false;
 		}
-		else {
-			_testrayComponent = testrayProject.getTestrayComponentByName(
-				getComponentName());
-		}
-
-		return _testrayComponent;
 	}
 
 	public TestrayProject getTestrayProject() {
@@ -616,6 +640,8 @@ public class TestrayCaseResult {
 
 	private ErrorType _errorType;
 	private final JSONObject _jsonObject;
+	private boolean _resolvingTestrayCase;
+	private boolean _resolvingTestrayComponent;
 	private TestrayBuild _testrayBuild;
 	private TestrayCase _testrayCase;
 	private URL _testrayCaseResultURL;

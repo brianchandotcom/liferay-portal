@@ -2587,8 +2587,15 @@ test.describe('Manage object relationships with system objects', () => {
 				.first();
 
 			await expect(saveButton).toBeVisible();
+
+			const layoutSavedPromise = page.waitForResponse(
+				(response) =>
+					response.url().includes('/object-layouts/') &&
+					response.request().method() === 'PUT'
+			);
+
 			await saveButton.dispatchEvent('click');
-			await page.waitForLoadState('domcontentloaded');
+			await layoutSavedPromise;
 
 			const restPath = `c/${objectDefinition.name.toLowerCase()}s`;
 
@@ -2602,72 +2609,51 @@ test.describe('Manage object relationships with system objects', () => {
 				restPath
 			);
 
-			for (const entryLabel of ['Entry A', 'Entry B']) {
+			const relateEntryToBothUsers = async (entryLabel: string) => {
 				await viewObjectEntriesPage.goto(objectEntriesClassName);
 
-				const entryRow = page.getByRole('row', {
-					name: new RegExp(entryLabel),
-				});
-
-				await expect(entryRow).toBeVisible();
-
-				await entryRow.getByRole('button', {name: 'Actions'}).click();
+				await page
+					.getByRole('row', {name: new RegExp(entryLabel)})
+					.getByRole('button', {name: 'Actions'})
+					.click();
 				await page.getByRole('menuitem', {name: 'View'}).click();
 
-				const relationshipTab = page.getByText('Relationship Tab', {
-					exact: true,
-				});
-
-				await expect(relationshipTab).toBeVisible();
-				await relationshipTab.click();
+				await page
+					.getByText('Relationship Tab', {exact: true})
+					.click();
 
 				await page.getByLabel('Select Existing One').first().click();
-
 				await page
 					.frameLocator('iframe[title="Select"]')
 					.getByText(String(userAccount1.id), {exact: true})
 					.first()
 					.click();
-				await page.waitForTimeout(1000);
 
 				await page.reload();
 
-				const relationshipTabLink = page.getByRole('link', {
-					exact: true,
-					name: 'Relationship Tab',
-				});
-
-				await expect(relationshipTabLink).toBeVisible();
-				await relationshipTabLink.click();
+				await page
+					.getByRole('link', {exact: true, name: 'Relationship Tab'})
+					.click();
 
 				await page.getByLabel('Select Existing One').first().click();
-
 				await page
 					.frameLocator('iframe[title="Select"]')
 					.getByText(String(userAccount2.id), {exact: true})
 					.click();
+			};
 
-				await page.waitForTimeout(1000);
-			}
-
-			for (const entryLabel of ['Entry A', 'Entry B']) {
+			const deleteAllRelationsFromEntry = async (entryLabel: string) => {
 				await viewObjectEntriesPage.goto(objectEntriesClassName);
 
-				const entryRow = page.getByRole('row', {
-					name: new RegExp(entryLabel),
-				});
-
-				await expect(entryRow).toBeVisible();
-
-				await entryRow.getByRole('button', {name: 'Actions'}).click();
+				await page
+					.getByRole('row', {name: new RegExp(entryLabel)})
+					.getByRole('button', {name: 'Actions'})
+					.click();
 				await page.getByRole('menuitem', {name: 'View'}).click();
 
-				const relationshipTab = page.getByText('Relationship Tab', {
-					exact: true,
-				});
-
-				await expect(relationshipTab).toBeVisible();
-				await relationshipTab.click();
+				await page
+					.getByText('Relationship Tab', {exact: true})
+					.click();
 
 				const actionsButtons = page.getByRole('button', {
 					name: 'Actions',
@@ -2677,27 +2663,10 @@ test.describe('Manage object relationships with system objects', () => {
 					'tbody tr [aria-label="Delete"]'
 				);
 
-				await page
-					.locator('tbody tr')
-					.first()
-					.waitFor({state: 'visible', timeout: 15000});
+				const rowCount = await page.getByRole('row').count();
 
-				while (
-					(await actionsButtons
-						.first()
-						.isVisible({timeout: 1000})
-						.catch(() => false)) ||
-					(await trashLinks
-						.first()
-						.isVisible({timeout: 1000})
-						.catch(() => false))
-				) {
-					if (
-						await actionsButtons
-							.first()
-							.isVisible()
-							.catch(() => false)
-					) {
+				for (let i = 0; i < rowCount; i++) {
+					if (await actionsButtons.count()) {
 						await actionsButtons.first().click();
 						await page
 							.getByRole('menuitem', {name: 'Delete'})
@@ -2706,13 +2675,34 @@ test.describe('Manage object relationships with system objects', () => {
 							.getByRole('button', {name: 'Delete'})
 							.click();
 					}
-					else {
+					else if (await trashLinks.count()) {
 						await trashLinks.first().click();
 					}
+					else {
+						break;
+					}
 
-					await page.waitForTimeout(1500);
+					await expect
+						.poll(
+							async () =>
+								(await actionsButtons.count()) +
+								(await trashLinks.count())
+						)
+						.toBe(rowCount - i - 1);
 				}
-			}
+			};
+
+			await test.step('relate Entry A to both users', () =>
+				relateEntryToBothUsers('Entry A'));
+
+			await test.step('relate Entry B to both users', () =>
+				relateEntryToBothUsers('Entry B'));
+
+			await test.step('delete all relations from Entry A', () =>
+				deleteAllRelationsFromEntry('Entry A'));
+
+			await test.step('delete all relations from Entry B', () =>
+				deleteAllRelationsFromEntry('Entry B'));
 
 			await expect(
 				page.getByText(userAccount1.givenName.toLowerCase())
@@ -2887,7 +2877,6 @@ test.describe('Manage object relationships with system objects', () => {
 
 				await expect(relationshipEntry).toBeVisible();
 				await relationshipEntry.click();
-				await page.waitForTimeout(1000);
 			};
 
 			const getRelatedUserRow = (userAccount: TUserAccount) =>
@@ -2906,15 +2895,11 @@ test.describe('Manage object relationships with system objects', () => {
 
 				await selectExistingRelationshipEntry(userAccount1);
 
-				await page.waitForTimeout(1000);
-
 				await openEntryRelationshipTab(entryLabel);
 
 				await expect(getRelatedUserRow(userAccount1)).toBeVisible();
 
 				await selectExistingRelationshipEntry(userAccount2);
-
-				await page.waitForTimeout(1000);
 
 				await openEntryRelationshipTab(entryLabel);
 
@@ -3090,13 +3075,9 @@ test.describe('Manage object relationship entries', () => {
 
 			await selectExistingRelationshipEntry('Entry B');
 
-			await page.waitForTimeout(1000);
-
 			await openEntryRelationshipTab('Entry B');
 
 			await selectExistingRelationshipEntry('Entry A');
-
-			await page.waitForTimeout(1000);
 
 			await viewObjectEntriesPage.goto(objectDefinition.className);
 
@@ -3628,7 +3609,6 @@ test.describe('Manage object relationship entries', () => {
 			await expect(relationshipEntry).toBeVisible();
 			await relationshipEntry.click();
 
-			await page.waitForTimeout(1000);
 			await openEntryRelationshipTab('Entry Test A');
 
 			await expect(

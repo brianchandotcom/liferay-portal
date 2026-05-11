@@ -95,7 +95,7 @@ const StageMetrics = ({
 		percentage > 0 ? 'stage-metrics__bar' : 'stage-metrics__bar--empty';
 
 	return (
-		<div className='col d-flex flex-column p-3'>
+		<div className='col-12 col-lg d-flex flex-column p-3 stage-metrics'>
 			<div className='align-items-center d-flex mb-2'>
 				<Text size={4} weight='semi-bold'>
 					{Liferay.Language.get(stageType)}
@@ -151,7 +151,7 @@ const StageMetrics = ({
 				</div>
 			</div>
 			<div
-				className='align-items-end d-flex mt-3 mx-n2'
+				className='align-items-end d-none d-lg-flex mt-3 mx-n2'
 				style={{height: REFERENCE_BAR_HEIGHT}}
 			>
 				<div
@@ -178,15 +178,20 @@ const StageProgression = ({
 	const topRight = REFERENCE_BAR_HEIGHT - nextBarHeight;
 
 	return (
-		<div className='border-light d-flex flex-column px-2 py-3 stage-progression'>
-			<Label className='mt-auto p-0' displayType='info'>
+		<div className='align-items-center align-items-lg-stretch border-light col-12 col-lg-auto d-flex flex-lg-column flex-row justify-content-center justify-content-lg-start px-2 py-3 stage-progression'>
+			<Label className='mt-lg-auto p-0' displayType='info'>
 				<span className='inline-item ml-1'>
 					{`${percentage}%`}
+					<span className='d-lg-none ml-1'>
+						{Liferay.Language.get(
+							'conversion-to-next-stage'
+						).toLowerCase()}
+					</span>
 					<Icon symbol='angle-right-small' />
 				</span>
 			</Label>
 			<div
-				className='bg-light mt-auto mx-n2 stage-progression__fill'
+				className='bg-light d-none d-lg-block mt-auto mx-n2 stage-progression__fill'
 				style={{
 					clipPath: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
 					height: REFERENCE_BAR_HEIGHT
@@ -212,7 +217,7 @@ const LifecycleChart = () => {
 							'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe.'
 						)}
 					</Text>
-					<div className='h-100 mt-4 no-gutters row'>
+					<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
 						{STAGES.map((stage, index) => {
 							const nextStage = STAGES[index + 1];
 							return (

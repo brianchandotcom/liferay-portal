@@ -10,11 +10,13 @@ import com.liferay.frontend.data.set.test.util.FrontendDataSetTestUtil;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -80,6 +82,11 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
+		_forEachDataSetObjectDefinition(
+			objectDefinition -> Assert.assertEquals(
+				"false",
+				_getAllowStandaloneObjectEntryValue(objectDefinition)));
+
 		Assert.assertNull(
 			_getAllowStandaloneObjectEntryValue(_objectDefinition));
 		Assert.assertNull(
@@ -88,6 +95,21 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 			_getAllowStandaloneObjectEntryValue(_objectDefinitionAA));
 		Assert.assertEquals(
 			"false", _getAllowStandaloneObjectEntryValue(_objectDefinitionAB));
+
+		_forEachDataSetObjectDefinition(
+			objectDefinition -> {
+				ObjectDefinitionSetting objectDefinitionSetting =
+					_objectDefinitionSettingLocalService.
+						fetchObjectDefinitionSetting(
+							objectDefinition.getObjectDefinitionId(),
+							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+				if (objectDefinitionSetting != null) {
+					_objectDefinitionSettingLocalService.
+						deleteObjectDefinitionSetting(objectDefinitionSetting);
+				}
+			});
 
 		_runUpgrade();
 
@@ -99,6 +121,23 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 			"true", _getAllowStandaloneObjectEntryValue(_objectDefinitionAA));
 		Assert.assertEquals(
 			"false", _getAllowStandaloneObjectEntryValue(_objectDefinitionAB));
+
+		_forEachDataSetObjectDefinition(
+			objectDefinition -> Assert.assertEquals(
+				"false",
+				_getAllowStandaloneObjectEntryValue(objectDefinition)));
+
+		_runUpgrade();
+
+		Assert.assertEquals(
+			"true", _getAllowStandaloneObjectEntryValue(_objectDefinitionAA));
+		Assert.assertEquals(
+			"false", _getAllowStandaloneObjectEntryValue(_objectDefinitionAB));
+	}
+
+	private void _forEachDataSetObjectDefinition(
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
 
 		for (String externalReferenceCode : _DATA_SET_OBJECT_DEFINITION_ERCS) {
 			ObjectDefinition objectDefinition =
@@ -110,16 +149,8 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 				continue;
 			}
 
-			Assert.assertEquals(
-				"false", _getAllowStandaloneObjectEntryValue(objectDefinition));
+			unsafeConsumer.accept(objectDefinition);
 		}
-
-		_runUpgrade();
-
-		Assert.assertEquals(
-			"true", _getAllowStandaloneObjectEntryValue(_objectDefinitionAA));
-		Assert.assertEquals(
-			"false", _getAllowStandaloneObjectEntryValue(_objectDefinitionAB));
 	}
 
 	private String _getAllowStandaloneObjectEntryValue(

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.order.content.web.internal.frontend.data.set.filter;
+package com.liferay.commerce.order.web.internal.frontend.data.set.filter;
 
-import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
+import com.liferay.commerce.order.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
@@ -26,13 +26,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Tancredi Covioli
+ * @author Stefano Motta
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PENDING_ORDER_ATTACHMENTS,
-		"frontend.data.set.name=" + CommerceOrderFragmentFDSNames.PLACED_ORDER_ATTACHMENTS
-	},
+	property = "frontend.data.set.name=" + CommerceOrderFDSNames.ATTACHMENTS,
 	service = FDSFilter.class
 )
 public class CommerceOrderAttachmentTypeSelectionFDSFilter

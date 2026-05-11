@@ -305,6 +305,20 @@ module.exports = {
 					pageViewsLimit: 5000000,
 					price: 250
 				},
+				['Liferay Data Platform']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 1000,
+					name: 'Liferay Data Platform',
+					pageViewsLimit: 300000,
+					price: 0
+				},
+				['Liferay Data Platform Enterprise']: {
+					baseSubscriptionPlan: null,
+					individualsLimit: 100000,
+					name: 'Liferay Data Platform Enterprise',
+					pageViewsLimit: 60000000,
+					price: 0
+				},
 				['Liferay SaaS - Business Plan']: {
 					baseSubscriptionPlan: null,
 					individualsLimit: 10000,

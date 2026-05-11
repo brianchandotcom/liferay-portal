@@ -14,10 +14,10 @@ spec:
         apiVersion: apps/v1
         kind: StatefulSet
         name: {{ include "liferay.name" . }}
-    {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
     {{- $hasTriggerAuthentication := .Values.autoscaling.keda.triggerAuthentication.spec }}
-    {{- $triggerAuthenticationName := include "liferay.name" . }}
     {{- $merged := mergeOverwrite (deepCopy (.Values.autoscaling.keda.triggers | default dict)) (.Values.autoscaling.keda.customTriggers | default dict) }}
+    {{- $resolvedServerAddress := include "liferay.keda.prometheusServerAddress" . }}
+    {{- $triggerAuthenticationName := include "liferay.name" . }}
     {{- $triggers := list }}
     {{- range $k, $v := $merged }}
         {{- $trigger := deepCopy $v }}

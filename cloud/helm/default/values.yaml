@@ -226,7 +226,7 @@ env:
     -   name: JMX_AGENT_YAML
         value: |
             rules:
-            -   pattern: 'com.zaxxer.hikari<type=Pool \(([^)]+)\)><>(\w+)'
+            -   pattern: "com.zaxxer.hikari<type=Pool \\(([^)]+)\\)><>(\\w+)"
                 name: hikaricp_$2
                 labels:
                     pool: "$1"

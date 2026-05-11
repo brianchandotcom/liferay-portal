@@ -4,10 +4,11 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDatePicker from '@clayui/date-picker';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
-import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import {dateUtils} from 'frontend-js-web';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {EEntityFieldType} from '../utils/types';
 
@@ -43,10 +44,82 @@ interface SelectedData {
 
 const pad2 = (value: number) => String(value).padStart(2, '0');
 
-function formatDateTimeObject(dateTime: DateTime): string {
-	return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(dateTime.day)}T${pad2(
-		dateTime.hour
-	)}:${pad2(dateTime.minute)}`;
+function isUserLocale12Hour(): boolean {
+	try {
+		const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
+		const formatter = new Intl.DateTimeFormat(locale, {hour: 'numeric'});
+
+		return formatter.resolvedOptions().hour12 === true;
+	}
+	catch {
+		return false;
+	}
+}
+
+function formatPartsForClay(dateTime: DateTime, use12Hours: boolean): string {
+	if (use12Hours) {
+		const period = dateTime.hour >= 12 ? 'PM' : 'AM';
+		const hour12 = dateTime.hour % 12 === 0 ? 12 : dateTime.hour % 12;
+
+		return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(
+			dateTime.day
+		)} ${pad2(hour12)}:${pad2(dateTime.minute)} ${period}`;
+	}
+
+	return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(
+		dateTime.day
+	)} ${pad2(dateTime.hour)}:${pad2(dateTime.minute)}`;
+}
+
+function parseClayDateTime(
+	value: string | undefined,
+	use12Hours: boolean
+): DateTime | null {
+	if (!value) {
+		return null;
+	}
+
+	if (use12Hours) {
+		const match =
+			/^(\d{4})-(\d{2})-(\d{2}) (\d{1,2}):(\d{2}) (AM|PM)$/i.exec(value);
+
+		if (!match) {
+			return null;
+		}
+
+		let hour = Number(match[4]);
+		const period = match[6].toUpperCase();
+
+		if (period === 'PM' && hour !== 12) {
+			hour += 12;
+		}
+
+		if (period === 'AM' && hour === 12) {
+			hour = 0;
+		}
+
+		return {
+			day: Number(match[3]),
+			hour,
+			minute: Number(match[5]),
+			month: Number(match[2]),
+			year: Number(match[1]),
+		};
+	}
+
+	const match = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(value);
+
+	if (!match) {
+		return null;
+	}
+
+	return {
+		day: Number(match[3]),
+		hour: Number(match[4]),
+		minute: Number(match[5]),
+		month: Number(match[2]),
+		year: Number(match[1]),
+	};
 }
 
 function nowInTimeZone(timeZone: string): DateTime {
@@ -77,34 +150,26 @@ function nowInTimeZone(timeZone: string): DateTime {
 	};
 }
 
-function resolveBound(bound?: DateTimeBound): string | undefined {
+function resolveBound(bound?: DateTimeBound): DateTime | undefined {
 	if (!bound) {
 		return undefined;
 	}
 
 	if (bound === 'now') {
-		return formatDateTimeObject(
-			nowInTimeZone(Liferay.ThemeDisplay.getTimeZone())
-		);
+		return nowInTimeZone(Liferay.ThemeDisplay.getTimeZone());
 	}
 
-	return formatDateTimeObject(bound);
+	return bound;
 }
 
-function getDateTimeFromDateTimeString(value: string): DateTime | null {
-	const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(value);
-
-	if (!match) {
-		return null;
-	}
-
-	return {
-		day: Number(match[3]),
-		hour: Number(match[4]),
-		minute: Number(match[5]),
-		month: Number(match[2]),
-		year: Number(match[1]),
-	};
+function partsToInstantMs(parts: DateTime): number {
+	return Date.UTC(
+		parts.year,
+		parts.month - 1,
+		parts.day,
+		parts.hour,
+		parts.minute
+	);
 }
 
 function getTimeZoneOffset(timeZone: string, atDate: Date): string {
@@ -142,15 +207,7 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 }
 
 function zonedPartsToOdataDateTime(parts: DateTime, timeZone: string): string {
-	const asUTC = new Date(
-		Date.UTC(
-			parts.year,
-			parts.month - 1,
-			parts.day,
-			parts.hour,
-			parts.minute
-		)
-	);
+	const asUTC = new Date(partsToInstantMs(parts));
 
 	const offset = getTimeZoneOffset(timeZone, asUTC);
 
@@ -215,15 +272,63 @@ const DateTimeRangeFilter = ({
 	selectedData,
 	setFilter,
 }: DateTimeRangeFilterImplementationArgs) => {
+	const use12Hours = useMemo(() => isUserLocale12Hour(), []);
+
+	const months = useMemo(() => dateUtils.getMonthsLong(), []);
+
 	const [fromValue, setFromValue] = useState(
-		selectedData?.from && formatDateTimeObject(selectedData.from)
+		selectedData?.from
+			? formatPartsForClay(selectedData.from, use12Hours)
+			: ''
 	);
 	const [toValue, setToValue] = useState(
-		selectedData?.to && formatDateTimeObject(selectedData.to)
+		selectedData?.to ? formatPartsForClay(selectedData.to, use12Hours) : ''
 	);
 
-	const [fromDateTimeValid, setFromDateTimeValid] = useState(true);
-	const [toDateTimeValid, setToDateTimeValid] = useState(true);
+	const fromParts = parseClayDateTime(fromValue, use12Hours);
+	const toParts = parseClayDateTime(toValue, use12Hours);
+
+	const resolvedMin = resolveBound(min);
+	const resolvedMax = resolveBound(max);
+
+	const [isValidRange, setIsValidRange] = useState(true);
+	const [isWithinBounds, setIsWithinBounds] = useState(true);
+
+	useEffect(() => {
+		let valid = true;
+
+		if (fromParts && toParts) {
+			valid = partsToInstantMs(fromParts) <= partsToInstantMs(toParts);
+		}
+
+		setIsValidRange(valid);
+	}, [fromParts, toParts]);
+
+	useEffect(() => {
+		let valid = true;
+
+		const checkInBounds = (parts: DateTime | null) => {
+			if (!parts) {
+				return true;
+			}
+
+			const partsMs = partsToInstantMs(parts);
+
+			if (resolvedMin && partsMs < partsToInstantMs(resolvedMin)) {
+				return false;
+			}
+
+			if (resolvedMax && partsMs > partsToInstantMs(resolvedMax)) {
+				return false;
+			}
+
+			return true;
+		};
+
+		valid = checkInBounds(fromParts) && checkInBounds(toParts);
+
+		setIsWithinBounds(valid);
+	}, [fromParts, toParts, resolvedMin, resolvedMax]);
 
 	let actionType = 'edit';
 
@@ -235,18 +340,28 @@ const DateTimeRangeFilter = ({
 		actionType = 'add';
 	}
 
+	const initialFromString = selectedData?.from
+		? formatPartsForClay(selectedData.from, use12Hours)
+		: '';
+	const initialToString = selectedData?.to
+		? formatPartsForClay(selectedData.to, use12Hours)
+		: '';
+
 	const isChanged =
 		actionType === 'delete' ||
-		((!selectedData || !selectedData.from) && fromValue) ||
-		((!selectedData || !selectedData.to) && toValue) ||
-		(selectedData &&
-			selectedData.from &&
-			fromValue !== formatDateTimeObject(selectedData.from)) ||
-		(selectedData &&
-			selectedData.to &&
-			toValue !== formatDateTimeObject(selectedData.to));
+		fromValue !== initialFromString ||
+		toValue !== initialToString;
 
-	const submitDisabled = !isChanged || !fromDateTimeValid || !toDateTimeValid;
+	const submitDisabled = !isChanged || !isValidRange || !isWithinBounds;
+
+	const yearRange = {
+		end: new Date().getFullYear() + 25,
+		start: new Date().getFullYear() - 50,
+	};
+
+	const fallbackPlaceholder = use12Hours
+		? 'yyyy-mm-dd hh:mm aa'
+		: 'yyyy-mm-dd hh:mm';
 
 	return (
 		<>
@@ -257,29 +372,18 @@ const DateTimeRangeFilter = ({
 							{Liferay.Language.get('from')}
 						</label>
 
-						<input
-							className="fds-from-date-time form-control"
-							id={`from-${id}`}
-							max={toValue || resolveBound(max)}
-							min={resolveBound(min)}
-							onBlur={(event) => {
-								event.target.reportValidity();
-
-								setFromDateTimeValid(
-									event.target.checkValidity()
-								);
-							}}
-							onChange={(event) => {
-								setFromValue(event.target.value);
-
-								setFromDateTimeValid(
-									event.target.checkValidity()
-								);
-							}}
-							pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}"
-							placeholder={placeholder || 'yyyy-mm-ddThh:mm'}
-							type="datetime-local"
-							value={fromValue || ''}
+						<ClayDatePicker
+							dateFormat="yyyy-MM-dd"
+							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+							inputName={`from-${id}`}
+							months={months}
+							onChange={(value: string) => setFromValue(value)}
+							placeholder={placeholder || fallbackPlaceholder}
+							time={true}
+							use12Hours={use12Hours}
+							value={fromValue}
+							weekdaysShort={dateUtils.getWeekdaysShort()}
+							years={yearRange}
 						/>
 					</ClayForm.Group>
 
@@ -288,31 +392,32 @@ const DateTimeRangeFilter = ({
 							{Liferay.Language.get('to[date-time]')}
 						</label>
 
-						<input
-							className="fds-to-date-time form-control"
-							id={`to-${id}`}
-							max={resolveBound(max)}
-							min={fromValue || resolveBound(min)}
-							onBlur={(event) => {
-								event.target.reportValidity();
-
-								setToDateTimeValid(
-									event.target.checkValidity()
-								);
-							}}
-							onChange={(event) => {
-								setToValue(event.target.value);
-
-								setToDateTimeValid(
-									event.target.checkValidity()
-								);
-							}}
-							pattern="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}"
-							placeholder={placeholder || 'yyyy-mm-ddThh:mm'}
-							type="datetime-local"
-							value={toValue || ''}
+						<ClayDatePicker
+							dateFormat="yyyy-MM-dd"
+							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+							inputName={`to-${id}`}
+							months={months}
+							onChange={(value: string) => setToValue(value)}
+							placeholder={placeholder || fallbackPlaceholder}
+							time={true}
+							use12Hours={use12Hours}
+							value={toValue}
+							weekdaysShort={dateUtils.getWeekdaysShort()}
+							years={yearRange}
 						/>
 					</ClayForm.Group>
+
+					{!isValidRange && (
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								{Liferay.Language.get(
+									'date-range-is-invalid.-from-must-be-before-to'
+								)}
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					)}
 				</div>
 			</ClayDropDown.Caption>
 			<ClayDropDown.Divider />
@@ -324,18 +429,12 @@ const DateTimeRangeFilter = ({
 							setFilter({active: false});
 						}
 						else {
-							const newSelectedData = {
-								from: fromValue
-									? getDateTimeFromDateTimeString(fromValue)
-									: null,
-								to: toValue
-									? getDateTimeFromDateTimeString(toValue)
-									: null,
-							};
-
 							setFilter({
 								active: true,
-								selectedData: newSelectedData,
+								selectedData: {
+									from: fromParts,
+									to: toParts,
+								},
 							});
 						}
 					}}
@@ -352,25 +451,6 @@ const DateTimeRangeFilter = ({
 			</ClayDropDown.Caption>
 		</>
 	);
-};
-
-const dateTimeShape = PropTypes.shape({
-	day: PropTypes.number,
-	hour: PropTypes.number,
-	minute: PropTypes.number,
-	month: PropTypes.number,
-	year: PropTypes.number,
-});
-
-DateTimeRangeFilter.propTypes = {
-	id: PropTypes.string.isRequired,
-	max: dateTimeShape,
-	min: dateTimeShape,
-	placeholder: PropTypes.string,
-	selectedData: PropTypes.shape({
-		from: dateTimeShape,
-		to: dateTimeShape,
-	}),
 };
 
 const filterImplementation: FilterImplementation<DateTimeRangeFilterImplementationArgs> =

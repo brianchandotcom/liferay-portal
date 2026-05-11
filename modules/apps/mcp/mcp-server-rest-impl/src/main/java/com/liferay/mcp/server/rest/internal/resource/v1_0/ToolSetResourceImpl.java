@@ -5,7 +5,10 @@
 
 package com.liferay.mcp.server.rest.internal.resource.v1_0;
 
+import com.liferay.mcp.server.rest.dto.v1_0.ToolSet;
+import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolSetResource;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -18,5 +21,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ToolSetResource.class
 )
 public class ToolSetResourceImpl extends BaseToolSetResourceImpl {
+
+	@Override
+	public Page<ToolSet> getToolSets() {
+		return ToolSetUtil.getToolSetsPage();
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:-1668838776

@@ -46,9 +46,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Endpoints"
+						"en_US": "Tools"
 					},
-					"name": "endpoints",
+					"name": "tools",
 					"required": true,
 					"state": false,
 					"system": true,

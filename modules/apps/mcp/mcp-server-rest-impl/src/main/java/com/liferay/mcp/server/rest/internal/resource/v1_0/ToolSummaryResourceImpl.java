@@ -5,7 +5,10 @@
 
 package com.liferay.mcp.server.rest.internal.resource.v1_0;
 
+import com.liferay.mcp.server.rest.dto.v1_0.ToolSummary;
+import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolSummaryResource;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -18,4 +21,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ToolSummaryResource.class
 )
 public class ToolSummaryResourceImpl extends BaseToolSummaryResourceImpl {
+
+	@Override
+	public Page<ToolSummary> getToolSummaries(String toolSetName)
+		throws Exception {
+
+		return ToolSetUtil.getToolSummariesPage(
+			contextHttpServletRequest, toolSetName);
+	}
+
 }

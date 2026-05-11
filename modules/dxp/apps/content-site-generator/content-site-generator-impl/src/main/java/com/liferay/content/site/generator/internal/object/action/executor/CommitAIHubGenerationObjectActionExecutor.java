@@ -19,6 +19,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -68,9 +69,14 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectActionExecutor.class
 )
 public class CommitAIHubGenerationObjectActionExecutor
-	extends BaseObjectActionExecutor {
+	extends BaseObjectActionExecutor implements ObjectDefinitionScoped {
 
 	public static final String KEY = "commit-ai-hub-generation";
+
+	@Override
+	public List<String> getAllowedObjectDefinitionNames() {
+		return List.of("AIHubGeneration");
+	}
 
 	@Override
 	public String getKey() {

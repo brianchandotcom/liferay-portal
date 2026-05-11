@@ -750,8 +750,11 @@ database.type=db2
 		<execute>
 			<![CDATA[
 				set -e
+
 				docker exec localhost_db2 su - db2inst1 -c "db2set DB2_RESTORE_GRANT_ADMIN_AUTHORITIES=YES"
+
 				docker exec localhost_db2 su - db2inst1 -c "db2stop force"
+
 				docker exec localhost_db2 su - db2inst1 -c "db2start"
 			]]>
 		</execute>

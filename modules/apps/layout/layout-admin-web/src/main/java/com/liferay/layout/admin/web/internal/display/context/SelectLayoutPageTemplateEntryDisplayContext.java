@@ -11,6 +11,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -278,21 +279,35 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			return _types;
 		}
 
+		boolean widgetPageFFEnabled = FeatureFlagManagerUtil.isEnabled(
+			_themeDisplay.getCompanyId(), "LPD-76864");
+
 		_types = ListUtil.filter(
 			ListUtil.fromArray(LayoutTypeControllerTracker.getTypes()),
 			type -> {
 				LayoutTypeController layoutTypeController =
 					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
+				boolean deprecatedType = false;
+
+				if (type.equals(LayoutConstants.TYPE_FULL_PAGE_APPLICATION) ||
+					type.equals(LayoutConstants.TYPE_PANEL) ||
+					type.equals(LayoutConstants.TYPE_PORTLET)) {
+
+					deprecatedType = true;
+				}
+
 				if (ParamUtil.getBoolean(_httpServletRequest, "emptyLayout")) {
 					return layoutTypeController.isInstanceable() &&
 						   !layoutTypeController.isPrimaryType() &&
+						   (widgetPageFFEnabled || !deprecatedType) &&
 						   !type.equals(LayoutConstants.TYPE_URL) &&
 						   !type.equals(LayoutConstants.TYPE_EMBEDDED);
 				}
 
 				return layoutTypeController.isInstanceable() &&
-					   !layoutTypeController.isPrimaryType();
+					   !layoutTypeController.isPrimaryType() &&
+					   (widgetPageFFEnabled || !deprecatedType);
 			});
 
 		return _types;

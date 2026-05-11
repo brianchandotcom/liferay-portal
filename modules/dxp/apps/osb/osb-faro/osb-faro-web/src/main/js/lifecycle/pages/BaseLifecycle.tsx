@@ -3,6 +3,7 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import AccountsDataSet from 'shared/components/AccountsDataSet';
 import BasePage from 'shared/components/base-page';
 import GlobalFilters from '../components/GlobalFilters';
+import LifecycleChart from 'lifecycle/components/LifecycleChart';
 import OverviewSection from '../components/OverviewSection';
 import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
@@ -90,6 +91,8 @@ const BaseLifecycle = () => {
 				</BasePage.SubHeader>
 				<BasePage.Body>
 					<LifecycleOverview />
+
+					<LifecycleChart />
 
 					<LifecycleAccounts />
 				</BasePage.Body>

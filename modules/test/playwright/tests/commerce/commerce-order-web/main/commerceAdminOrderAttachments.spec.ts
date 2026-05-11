@@ -295,6 +295,9 @@ test(
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(seededTitle)
 			).toBeVisible();
+			await expect(
+				commerceAdminOrderAttachmentsPage.rowRestrictedIcon(seededTitle)
+			).toHaveCount(0);
 		});
 
 		const addedTitle = `added-${getRandomString()}.png`;
@@ -334,6 +337,9 @@ test(
 			await waitForAlert(page);
 			await expect(
 				commerceAdminOrderAttachmentsPage.rowByTitle(addedTitle)
+			).toBeVisible();
+			await expect(
+				commerceAdminOrderAttachmentsPage.rowRestrictedIcon(addedTitle)
 			).toBeVisible();
 		});
 

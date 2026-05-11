@@ -61,6 +61,14 @@ public class InvitedMemberDTOConverter
 			{
 				setEmailAddress(() -> jsonObject.getString("emailAddress"));
 				setId(ticket::getTicketId);
+				setOwnerId(
+					() -> {
+						if (jsonObject.isNull("ownerId")) {
+							return null;
+						}
+
+						return jsonObject.getLong("ownerId");
+					});
 				setRoleKey(() -> jsonObject.getString("roleKey"));
 			}
 		};

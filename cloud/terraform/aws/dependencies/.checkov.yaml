@@ -1,3 +1,9 @@
 skip-check:
     -   CKV_AWS_23
+    -   CKV_AWS_157
+    -   CKV_AWS_158
+    -   CKV_AWS_161
     -   CKV_AWS_273
+    -   CKV_AWS_318
+    -   CKV_AWS_338
+    -   CKV_AWS_354

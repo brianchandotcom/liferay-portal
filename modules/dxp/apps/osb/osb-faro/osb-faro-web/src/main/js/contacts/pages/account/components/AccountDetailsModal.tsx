@@ -90,6 +90,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 								value: string;
 							}) =>
 								columns.nameAndLinkRenderer({
+									channelId,
 									groupId,
 									itemData: {
 										id: itemData.dataSourceId ?? ''

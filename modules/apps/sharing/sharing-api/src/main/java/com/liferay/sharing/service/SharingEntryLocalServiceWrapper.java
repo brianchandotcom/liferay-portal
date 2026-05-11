@@ -745,6 +745,13 @@ public class SharingEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.sharing.model.SharingEntry>
+		getToTicketSharingEntries(long toTicketId) {
+
+		return _sharingEntryLocalService.getToTicketSharingEntries(toTicketId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.sharing.model.SharingEntry>
 		getToUserGroupSharingEntries(long toUserGroupId) {
 
 		return _sharingEntryLocalService.getToUserGroupSharingEntries(
@@ -995,4 +1002,4 @@ public class SharingEntryLocalServiceWrapper
 	private SharingEntryLocalService _sharingEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1811871518
+// LIFERAY-SERVICE-BUILDER-HASH:1731710970

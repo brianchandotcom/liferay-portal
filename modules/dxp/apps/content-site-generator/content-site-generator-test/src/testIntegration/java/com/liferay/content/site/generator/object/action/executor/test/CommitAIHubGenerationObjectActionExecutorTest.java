@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -132,13 +133,22 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 			),
 			TestPropsValues.getUserId());
 
-		Map<String, Serializable> values = _awaitCompletion(
-			generationObjectEntry.getObjectEntryId());
+		IdempotentRetryAssert.retryAssert(
+			60, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				Map<String, Serializable> values =
+					_objectEntryLocalService.getValues(
+						generationObjectEntry.getObjectEntryId());
 
-		Assert.assertNotNull(values.get("commitDate"));
-		Assert.assertTrue(
-			Validator.isBlank(MapUtil.getString(values, "failureReason")));
-		Assert.assertEquals("committed", values.get("generationStatus"));
+				Assert.assertNotNull(values.get("commitDate"));
+				Assert.assertTrue(
+					Validator.isBlank(
+						MapUtil.getString(values, "failureReason")));
+				Assert.assertEquals(
+					"committed", values.get("generationStatus"));
+
+				return null;
+			});
 
 		Assert.assertNotNull(
 			_listTypeDefinitionLocalService.
@@ -221,31 +231,6 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 				generationObjectEntry.getObjectEntryId()
 			).build(),
 			_serviceContext);
-	}
-
-	private Map<String, Serializable> _awaitCompletion(
-			long generationObjectEntryId)
-		throws Exception {
-
-		long deadline = System.currentTimeMillis() + Time.MINUTE;
-
-		while (System.currentTimeMillis() < deadline) {
-			Thread.sleep(Time.SECOND / 2);
-
-			Map<String, Serializable> values =
-				_objectEntryLocalService.getValues(generationObjectEntryId);
-
-			String generationStatus = MapUtil.getString(
-				values, "generationStatus");
-
-			if (generationStatus.equals("committed") ||
-				generationStatus.equals("failed")) {
-
-				return values;
-			}
-		}
-
-		throw new AssertionError("Generation completion takes too long");
 	}
 
 	@Inject

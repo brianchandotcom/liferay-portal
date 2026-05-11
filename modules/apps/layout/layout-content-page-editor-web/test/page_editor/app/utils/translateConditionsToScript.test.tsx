@@ -1,0 +1,209 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {translateConditionsToScript} from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/translateConditionsToScript';
+import {Condition} from '../../../../src/main/resources/META-INF/resources/page_editor/types/Rule';
+
+describe('translateConditionsToScript', () => {
+	describe('field conditions', () => {
+		it('emits an equality check', () => {
+			expect(
+				translateConditionsToScript(
+					[getFieldCondition('publishDate', 'equal', '2026-05-11')],
+					'all'
+				)
+			).toBe('publishDate == "2026-05-11"');
+		});
+
+		it('emits a not-equal check', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition(
+							'publishDate',
+							'not-equal',
+							'2026-05-11'
+						),
+					],
+					'all'
+				)
+			).toBe('publishDate != "2026-05-11"');
+		});
+
+		it('emits futureDates for greater-than (inclusive >=)', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition(
+							'publishDate',
+							'greater-than',
+							'2026-05-11'
+						),
+					],
+					'all'
+				)
+			).toBe('futureDates(publishDate, "2026-05-11")');
+		});
+
+		it('emits pastDates for less-than (inclusive <=)', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition(
+							'publishDate',
+							'less-than',
+							'2026-05-11'
+						),
+					],
+					'all'
+				)
+			).toBe('pastDates(publishDate, "2026-05-11")');
+		});
+
+		it('quotes a missing value as an empty string', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						{
+							field: 'title',
+							id: 'a',
+							options: {type: 'equal'},
+							type: 'field',
+						},
+					],
+					'all'
+				)
+			).toBe('title == ""');
+		});
+	});
+
+	describe('form conditions', () => {
+		it('rewrites the field name with the input__ prefix and underscores', () => {
+			expect(
+				translateConditionsToScript(
+					[getFormCondition('field-name', 'equal', 'true')],
+					'all'
+				)
+			).toBe('input__field_name == "true"');
+		});
+	});
+
+	describe('user conditions', () => {
+		it('emits a contains check for role equality', () => {
+			expect(
+				translateConditionsToScript(
+					[getUserCondition('role', 'equal', '42')],
+					'all'
+				)
+			).toBe('contains(roleIds, 42)');
+		});
+
+		it('wraps role not-equal in NOT(contains(...))', () => {
+			expect(
+				translateConditionsToScript(
+					[getUserCondition('role', 'not-equal', '42')],
+					'all'
+				)
+			).toBe('NOT(contains(roleIds, 42))');
+		});
+
+		it('emits a contains check for segment equality', () => {
+			expect(
+				translateConditionsToScript(
+					[getUserCondition('segment', 'equal', '99')],
+					'all'
+				)
+			).toBe('contains(segmentsEntryIds, 99)');
+		});
+
+		it('emits a userId equality check for the user field', () => {
+			expect(
+				translateConditionsToScript(
+					[getUserCondition('user', 'equal', '7')],
+					'all'
+				)
+			).toBe('userId == 7');
+		});
+	});
+
+	describe('combinators', () => {
+		it('joins multiple conditions with AND for conditionType "all"', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition(
+							'publishDate',
+							'greater-than',
+							'2026-01-01'
+						),
+						getFieldCondition(
+							'publishDate',
+							'less-than',
+							'2027-01-01'
+						),
+					],
+					'all'
+				)
+			).toBe(
+				'futureDates(publishDate, "2026-01-01") AND pastDates(publishDate, "2027-01-01")'
+			);
+		});
+
+		it('joins multiple conditions with OR for conditionType "any"', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getFieldCondition('title', 'equal', 'foo'),
+						getFieldCondition('title', 'equal', 'bar'),
+					],
+					'any'
+				)
+			).toBe('title == "foo" OR title == "bar"');
+		});
+
+		it('returns an empty string when there are no conditions', () => {
+			expect(translateConditionsToScript([], 'all')).toBe('');
+		});
+	});
+});
+
+function getFieldCondition(
+	field: string,
+	type: NonNullable<Condition['options']>['type'],
+	value: string
+): Condition {
+	return {
+		field,
+		id: `condition-${field}-${type}`,
+		options: {type, value},
+		type: 'field',
+	};
+}
+
+function getFormCondition(
+	field: string,
+	type: NonNullable<Condition['options']>['type'],
+	value: string
+): Condition {
+	return {
+		field,
+		id: `condition-${field}-${type}`,
+		options: {type, value},
+		type: 'form',
+	};
+}
+
+function getUserCondition(
+	field: string,
+	type: NonNullable<Condition['options']>['type'],
+	value: string
+): Condition {
+	return {
+		field,
+		id: `condition-${field}-${type}`,
+		options: {type, value},
+		type: 'user',
+	};
+}

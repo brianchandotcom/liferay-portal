@@ -10,6 +10,7 @@ import {
 	buildQueryString,
 	ILifecycleFilterValues
 } from '../utils/buildQueryString';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 interface ILifecycleFilters extends ILifecycleFilterValues {
 	filterString: string;
@@ -25,7 +26,8 @@ const LifecycleContext = createContext<ILifecycleContext>({
 	filters: {
 		countryFilter: '',
 		filterString: '',
-		industryFilter: ''
+		industryFilter: '',
+		lifecycleStageFilter: LifecycleStages.AT_RISK
 	},
 	resetFilters: () => {},
 	updateFilters: () => {}
@@ -36,7 +38,8 @@ export const useLifecycle = (): ILifecycleContext =>
 
 const initialValues: ILifecycleFilterValues = {
 	countryFilter: '',
-	industryFilter: ''
+	industryFilter: '',
+	lifecycleStageFilter: LifecycleStages.AT_RISK
 };
 
 export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {

@@ -5,6 +5,7 @@ import {ButtonWithIcon, Icon, Text} from '@clayui/core';
 import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
+import {useLifecycle} from 'lifecycle/context/LifecycleContext';
 
 interface ILifecycleStage {
 	accountCount: number;
@@ -203,8 +204,10 @@ const StageProgression = ({
 };
 
 const LifecycleChart = () => {
+	const {updateFilters} = useLifecycle();
+
 	const onFilterClick = (stageType: LifecycleStages) =>
-		console.log(stageType);
+		updateFilters({lifecycleStageFilter: stageType});
 
 	const refPct = STAGES[0]?.percentage ?? 0;
 

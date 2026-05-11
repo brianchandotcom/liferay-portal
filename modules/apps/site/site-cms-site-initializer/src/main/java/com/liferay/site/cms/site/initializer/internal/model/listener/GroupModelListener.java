@@ -32,6 +32,16 @@ import org.osgi.service.component.annotations.Reference;
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
+	public void onAfterRemove(Group group) throws ModelListenerException {
+		try {
+			_onAfterRemove(group);
+		}
+		catch (Exception exception) {
+			throw new ModelListenerException(exception);
+		}
+	}
+
+	@Override
 	public void onAfterUpdate(Group originalGroup, Group group)
 		throws ModelListenerException {
 
@@ -60,6 +70,31 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			Long.class);
 	}
 
+	private void _onAfterRemove(Group group) throws Exception {
+		if (!group.isDepot() ||
+			!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPD-17564")) {
+
+			return;
+		}
+
+		Group cmsGroup = _groupLocalService.fetchGroup(
+			group.getCompanyId(), GroupConstants.CMS);
+
+		if (cmsGroup == null) {
+			return;
+		}
+
+		Long[] groupIds = _getDepotGroupIds(group.getCompanyId());
+
+		if (groupIds.length > 0) {
+			_updateRecycleBinLayout(cmsGroup, false);
+		}
+		else {
+			_updateRecycleBinLayout(cmsGroup, true);
+		}
+	}
+
 	private void _onAfterUpdate(Group originalGroup, Group group)
 		throws Exception {
 
@@ -79,20 +114,20 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				return;
 			}
 
-			Group siteGroup = _groupLocalService.fetchGroup(
+			Group cmsGroup = _groupLocalService.fetchGroup(
 				group.getCompanyId(), GroupConstants.CMS);
 
-			if (siteGroup == null) {
+			if (cmsGroup == null) {
 				return;
 			}
 
 			Long[] groupIds = _getDepotGroupIds(group.getCompanyId());
 
 			if (groupIds.length > 0) {
-				_updateRecycleBinLayout(siteGroup, false);
+				_updateRecycleBinLayout(cmsGroup, false);
 			}
 			else {
-				_updateRecycleBinLayout(siteGroup, true);
+				_updateRecycleBinLayout(cmsGroup, true);
 			}
 		}
 	}

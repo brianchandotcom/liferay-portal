@@ -45,8 +45,9 @@
 		/]
 
 		[#list navItems as navItem]
-			[#if navItem.isBrowsable() || navItem.getChildren()?has_content]
-				[#assign navLayout = navItem.getLayout()! /]
+			[#assign navLayout = navItem.getLayout()! /]
+
+			[#if (navItem.isBrowsable() && navLayout?? && !navLayout.isHidden()) || navItem.getChildren()?has_content]
 
 				[#if !firstNavItem]
 					[#assign navItemsJSONArray = navItemsJSONArray + "," /]

@@ -30,6 +30,17 @@ const test = mergeTests(
 	loginTest()
 );
 
+const testWithModalExportImport = mergeTests(
+	cmsPagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+		'LPD-57655': {enabled: false},
+	}),
+	loginTest(),
+	structureBuilderPagesTest
+);
+
 test(
 	'Structure can be deleted without confirmation if it does not have an approved status',
 	{tag: '@LPD-51516'},
@@ -451,7 +462,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'Export and Import Content Structures actions open the export modal from the breadcrumb',
 	{tag: '@LPD-78381'},
 	async ({page, structuresPage}) => {
@@ -469,7 +480,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'CMS Administrator can export and import content structures',
 	{tag: '@LPD-87533'},
 	async ({apiHelpers, page, structuresPage}) => {
@@ -544,7 +555,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'Export Content Structures list includes only object definitions from CMS folders',
 	{tag: '@LPD-78381'},
 	async ({apiHelpers, page, structuresPage}) => {

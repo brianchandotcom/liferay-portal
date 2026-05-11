@@ -55,6 +55,29 @@ export class HeadlessAssetLibraryApiHelper {
 		return response?.items;
 	}
 
+	async updateAssetLibrary({
+		externalReferenceCode,
+		name,
+		settings = {},
+		type = 'Space',
+	}: {
+		externalReferenceCode: string;
+		name: string;
+		settings?: any;
+		type?: string;
+	}) {
+		const data = JSON.stringify({
+			name,
+			settings,
+			type,
+		});
+
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`,
+			{data}
+		);
+	}
+
 	async deleteAssetLibrary(externalReferenceCode: string) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`

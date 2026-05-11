@@ -8,9 +8,9 @@ import {openToast} from 'frontend-js-components-web';
 import CollaboratorService from '../../../common/services/CollaboratorService';
 import {COLLABORATOR_TYPE} from '../../../common/utils/constants';
 import {openCMSModal} from '../../../common/utils/openCMSModal';
-import ShareModalContent, {
+import CMSShareModalContent, {
 	Collaborator,
-} from '../../modal/share_modal_content/ShareModalContent';
+} from '../../modal/share_modal_content/CMSShareModalContent';
 
 export default async function shareAction({
 	autocompleteURL,
@@ -93,7 +93,7 @@ export default async function shareAction({
 		openCMSModal({
 			className: 'share-modal',
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
-				ShareModalContent({
+				CMSShareModalContent({
 					autocompleteURL,
 					canManageCollaborators,
 					closeModal,

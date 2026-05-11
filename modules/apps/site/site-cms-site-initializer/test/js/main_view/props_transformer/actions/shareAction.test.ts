@@ -5,7 +5,7 @@
 
 import CollaboratorService from '../../../../../src/main/resources/META-INF/resources/js/common/services/CollaboratorService';
 import {openCMSModal} from '../../../../../src/main/resources/META-INF/resources/js/common/utils/openCMSModal';
-import ShareModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
+import CMSShareModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent';
 import shareAction from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/shareAction';
 
 jest.mock(
@@ -26,7 +26,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent',
+	'../../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent',
 	() => jest.fn()
 );
 
@@ -57,7 +57,7 @@ const baseItem = {
 };
 
 const getInitialCollaborators = () => {
-	const mockShareModalContent = ShareModalContent as unknown as jest.Mock;
+	const mockShareModalContent = CMSShareModalContent as unknown as jest.Mock;
 
 	const openCMSModalArgs = (openCMSModal as jest.Mock).mock.calls[0][0];
 

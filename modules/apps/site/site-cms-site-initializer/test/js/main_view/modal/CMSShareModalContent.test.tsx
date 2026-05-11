@@ -10,22 +10,26 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {act, fireEvent, render, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
-import ShareModalContent, {
+import CMSShareModalContent, {
 	Collaborator,
-} from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/ShareModalContent';
+} from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/share_modal_content/CMSShareModalContent';
 
 jest.useFakeTimers();
 
 jest.mock('frontend-js-components-web', () => ({
+	...(jest.requireActual('frontend-js-components-web') as object),
 	openToast: jest.fn(),
 }));
 
 jest.mock('frontend-js-web', () => ({
+	buildFragment: () => ({
+		querySelector: () => globalThis.document.createElement('div'),
+	}),
 	dateUtils: {
 		getFirstDayOfWeek: jest.fn(() => 0),
 	},
+	fetch: (...args: any[]) => (global.fetch as any)(...args),
 	sub: jest.fn((str) => str),
 }));
 
@@ -60,10 +64,10 @@ const DEFAULT_PROPS = {
 };
 
 const renderComponent = (props = DEFAULT_PROPS) => {
-	return render(<ShareModalContent {...props} />);
+	return render(<CMSShareModalContent {...props} />);
 };
 
-describe('ShareModalContent', () => {
+describe('CMSShareModalContent', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 
@@ -79,6 +83,9 @@ describe('ShareModalContent', () => {
 				ok: true,
 			});
 		});
+
+		document.body.innerHTML =
+			'<div class="alert-notifications alert-notifications-fixed"></div>';
 	});
 
 	it('checks the accessibility of the share content', async () => {
@@ -160,10 +167,6 @@ describe('ShareModalContent', () => {
 	});
 
 	it('calls submission when save is clicked', async () => {
-		const apiPostSpy = jest
-			.spyOn(ApiHelper, 'post')
-			.mockResolvedValue({data: {}, error: null});
-
 		const {getByLabelText, getByRole, getByText} = renderComponent();
 
 		fireEvent.click(getByLabelText('more-options'));
@@ -186,10 +189,17 @@ describe('ShareModalContent', () => {
 			fireEvent.click(getByText('save'));
 		});
 
-		expect(apiPostSpy).toHaveBeenCalledWith(
-			'/o/cms/basic-documents/20/collaborators',
-			[{actionIds: ['VIEW'], id: 2, share: true, type: 'User'}]
+		const fetchMock = global.fetch as jest.Mock;
+		const submitCall = fetchMock.mock.calls.find(
+			([url, options]) =>
+				url === '/o/cms/basic-documents/20/collaborators' &&
+				options?.method === 'POST'
 		);
+
+		expect(submitCall).toBeDefined();
+		expect(JSON.parse(submitCall![1].body)).toEqual([
+			{actionIds: ['VIEW'], id: 2, share: true, type: 'User'},
+		]);
 
 		expect(mockCloseModal).toHaveBeenCalledTimes(1);
 	});
@@ -405,15 +415,9 @@ describe('ShareModalContent', () => {
 			] as Collaborator[],
 		};
 
-		const {getByLabelText, getByRole, queryByText} =
-			renderComponent(emailProps);
+		const {queryByLabelText, queryByText} = renderComponent(emailProps);
 
-		fireEvent.click(getByLabelText('edit-permissions'));
-
-		expect(
-			getByRole('option', {name: 'view-and-download'})
-		).toBeInTheDocument();
-
+		expect(queryByLabelText('edit-permissions')).not.toBeInTheDocument();
 		expect(
 			queryByText('view-download-and-comment')
 		).not.toBeInTheDocument();
@@ -423,10 +427,6 @@ describe('ShareModalContent', () => {
 	});
 
 	it('omits the id when saving a newly invited external user', async () => {
-		const apiPostSpy = jest
-			.spyOn(ApiHelper, 'post')
-			.mockResolvedValue({data: {}, error: null});
-
 		const {container, getByText} = renderComponent();
 
 		const input = container.querySelector<HTMLInputElement>(
@@ -455,29 +455,29 @@ describe('ShareModalContent', () => {
 			fireEvent.click(getByText('save'));
 		});
 
-		expect(apiPostSpy).toHaveBeenCalledWith(
-			'/o/cms/basic-documents/20/collaborators',
-			expect.arrayContaining([
-				expect.objectContaining({
-					emailAddress: 'external@example.com',
-					type: 'Email',
-				}),
-			])
+		const fetchMock = global.fetch as jest.Mock;
+		const submitCall = fetchMock.mock.calls.find(
+			([url, options]) =>
+				url === '/o/cms/basic-documents/20/collaborators' &&
+				options?.method === 'POST'
 		);
 
-		const payload = apiPostSpy.mock.calls[0][1] as Array<{id?: number}>;
-		const externalEntry = payload.find(
-			(entry: any) => entry.type === 'Email'
-		);
+		expect(submitCall).toBeDefined();
 
+		const payload = JSON.parse(submitCall![1].body) as Array<{
+			id?: number;
+			type: string;
+		}>;
+		const externalEntry = payload.find((entry) => entry.type === 'Email');
+
+		expect(externalEntry).toMatchObject({
+			emailAddress: 'external@example.com',
+			type: 'Email',
+		});
 		expect(externalEntry).not.toHaveProperty('id');
 	});
 
 	it('sends type="Email" and the email as id when saving an external user invite', async () => {
-		const apiPostSpy = jest
-			.spyOn(ApiHelper, 'post')
-			.mockResolvedValue({data: {}, error: null});
-
 		const emailProps = {
 			...DEFAULT_PROPS,
 			initialCollaborators: [
@@ -512,17 +512,22 @@ describe('ShareModalContent', () => {
 			fireEvent.click(getByText('save'));
 		});
 
-		expect(apiPostSpy).toHaveBeenCalledWith(
-			'/o/cms/basic-documents/20/collaborators',
-			[
-				{
-					actionIds: ['VIEW'],
-					emailAddress: 'external@example.com',
-					share: true,
-					type: 'Email',
-				},
-			]
+		const fetchMock = global.fetch as jest.Mock;
+		const submitCall = fetchMock.mock.calls.find(
+			([url, options]) =>
+				url === '/o/cms/basic-documents/20/collaborators' &&
+				options?.method === 'POST'
 		);
+
+		expect(submitCall).toBeDefined();
+		expect(JSON.parse(submitCall![1].body)).toEqual([
+			{
+				actionIds: ['VIEW'],
+				emailAddress: 'external@example.com',
+				share: true,
+				type: 'Email',
+			},
+		]);
 	});
 
 	it('does not offer the invite-external-user option when externalUserSharingEnabled is false', async () => {

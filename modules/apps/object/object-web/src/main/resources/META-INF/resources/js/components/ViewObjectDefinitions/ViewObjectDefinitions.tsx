@@ -24,6 +24,7 @@ import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinit
 import ObjectFolderCardHeader from './ObjectFolderCardHeader';
 import ObjectFoldersSideBar from './ObjectFoldersSidebar';
 import {
+	canCreateInObjectFolder,
 	deleteObjectDefinition,
 	getObjectFolderActions,
 } from './objectDefinitionUtil';
@@ -476,7 +477,9 @@ export default function ViewObjectDefinitions({
 												: undefined
 										}
 										creationMenu={
-											selectedObjectFolder
+											canCreateInObjectFolder(
+												selectedObjectFolder
+											)
 												? objectDefinitionsCreationMenu
 												: undefined
 										}

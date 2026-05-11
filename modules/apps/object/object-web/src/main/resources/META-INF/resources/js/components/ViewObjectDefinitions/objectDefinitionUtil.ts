@@ -473,6 +473,16 @@ export function getObjectFolderActions({
 	return kebabOptions;
 }
 
+export function canCreateInObjectFolder(
+	folder?: Partial<ObjectFolder | undefined>
+): boolean {
+	if (!folder) {
+		return false;
+	}
+
+	return folder.externalReferenceCode !== 'L_CMS_CONTENT_STRUCTURES';
+}
+
 export async function getUpdatedModelBuilderStructurePayload(
 	baseResourceURL: string,
 	currentObjectFolderName: string

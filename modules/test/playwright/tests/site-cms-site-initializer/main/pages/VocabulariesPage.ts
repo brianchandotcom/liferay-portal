@@ -53,4 +53,8 @@ export class VocabulariesPage {
 			filter,
 		});
 	}
+
+	async search(value: string) {
+		await this.dataSetFragmentPage.search(value);
+	}
 }

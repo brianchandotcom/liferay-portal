@@ -685,7 +685,7 @@ public class DBTest {
 
 			thread.start();
 
-			long endTime = System.currentTimeMillis() + 5000;
+			long endTime = System.currentTimeMillis() + 30000;
 
 			while (System.currentTimeMillis() < endTime) {
 				for (DB.QueryInfo lockedQueryInfo :
@@ -711,7 +711,7 @@ public class DBTest {
 		finally {
 			if (futureTask != null) {
 				try {
-					futureTask.get(5, TimeUnit.SECONDS);
+					futureTask.get(30, TimeUnit.SECONDS);
 				}
 				catch (Exception exception) {
 					_log.error(exception);

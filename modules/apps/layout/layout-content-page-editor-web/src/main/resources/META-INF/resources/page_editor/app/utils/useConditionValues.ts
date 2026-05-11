@@ -7,13 +7,13 @@ import {useMemo} from 'react';
 
 import {
 	CONDITION_TYPE_ITEMS,
-	FORM_FRAGMENT_CONDITION_ITEMS,
 	TYPE_VALUES,
 	USER_CONDITION_ITEMS,
 	convertOptionsToConditionValue,
 	filterAndConvertMappingFields,
 } from '../../plugins/page_rules/components/Condition';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
+import OPERATORS from '../../plugins/page_rules/components/operators';
 import {Condition} from '../../types/Rule';
 import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
@@ -118,12 +118,14 @@ function getCondition(condition: Condition) {
 
 	const conditionValue = convertOptionsToConditionValue(condition);
 
-	return condition.type === TYPE_VALUES.user
-		? USER_CONDITION_ITEMS.find(({value}) => value === conditionValue)
-				?.label
-		: FORM_FRAGMENT_CONDITION_ITEMS.find(
-				({value}) => value === condition.options?.type
-			)?.label;
+	if (condition.type === TYPE_VALUES.user) {
+		return USER_CONDITION_ITEMS.find(({value}) => value === conditionValue)
+			?.label;
+	}
+
+	return Object.values(OPERATORS).find(
+		({value}) => value === condition.options?.type
+	)?.label;
 }
 
 function getDescription(

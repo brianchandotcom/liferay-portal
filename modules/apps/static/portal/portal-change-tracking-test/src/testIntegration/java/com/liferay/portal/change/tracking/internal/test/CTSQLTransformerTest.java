@@ -1238,10 +1238,10 @@ public class CTSQLTransformerTest {
 	@Inject
 	private static CTPreferencesLocalService _ctPreferencesLocalService;
 
-	@Inject
-	private static CTSQLTransformer _ctSQLTransformer;
-
 	private static DB _db;
+
+	@Inject
+	private CTSQLTransformer _ctSQLTransformer;
 
 	private static class MainTable {
 	}

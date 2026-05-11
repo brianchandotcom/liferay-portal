@@ -1203,6 +1203,32 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		);
 	});
 
+	test(
+		'can set Title Field for a system object',
+		{tag: '@LPS-145393'},
+		async ({apiHelpers: _apiHelpers, editObjectDetailsPage, page}) => {
+			await editObjectDetailsPage.goto('User');
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await editObjectDetailsPage.entryTitleField.click();
+
+			await page
+				.getByRole('option', {exact: true, name: 'Screen Name'})
+				.click();
+
+			await editObjectDetailsPage.saveObjectDefinition();
+
+			await editObjectDetailsPage.goto('User');
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await expect(editObjectDetailsPage.entryTitleField).toContainText(
+				'Screen Name'
+			);
+		}
+	);
+
 	test('can update editable fields and cannot update disabled fields after publishing', async ({
 		apiHelpers,
 		editObjectDetailsPage,
@@ -1618,32 +1644,6 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await expect(editObjectDetailsPage.publishButton).toBeEnabled();
 	});
-
-	test(
-		'can set Title Field for a system object',
-		{tag: '@LPS-145393'},
-		async ({apiHelpers: _apiHelpers, editObjectDetailsPage, page}) => {
-			await editObjectDetailsPage.goto('User');
-
-			await editObjectDetailsPage.goToDetailsTab();
-
-			await editObjectDetailsPage.entryTitleField.click();
-
-			await page
-				.getByRole('option', {exact: true, name: 'Screen Name'})
-				.click();
-
-			await editObjectDetailsPage.saveObjectDefinition();
-
-			await editObjectDetailsPage.goto('User');
-
-			await editObjectDetailsPage.goToDetailsTab();
-
-			await expect(editObjectDetailsPage.entryTitleField).toContainText(
-				'Screen Name'
-			);
-		}
-	);
 
 	test('cannot save an object definition without a translation after changing the default language', async ({
 		apiHelpers,

@@ -239,6 +239,130 @@ test.describe('Manage custom layouts through object layout tab', () => {
 		});
 	});
 
+	test(
+		'can add tabs for self Many-to-Many relationship',
+		{tag: '@LPS-163656'},
+		async ({apiHelpers, objectLayoutsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const objectRelationshipName1 =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+			const objectRelationshipName2 =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const {body: objectRelationship1} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition.externalReferenceCode,
+					{
+						label: {en_US: 'Relationship'},
+						name: objectRelationshipName1,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId1: objectDefinition.id,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'manyToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship1.id,
+				type: 'objectRelationship',
+			});
+
+			const {body: objectRelationship2} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition.externalReferenceCode,
+					{
+						label: {en_US: 'Relationship 2'},
+						name: objectRelationshipName2,
+						objectDefinitionExternalReferenceCode1:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId1: objectDefinition.id,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'manyToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship2.id,
+				type: 'objectRelationship',
+			});
+
+			await objectLayoutsPage.goto(objectDefinition.label['en_US']);
+
+			const layoutName = 'Layout' + getRandomInt();
+
+			await objectLayoutsPage.createObjectLayout(layoutName);
+
+			await objectLayoutsPage.openObjectLayoutConfiguration(layoutName);
+
+			await objectLayoutsPage.layoutTab.click();
+
+			await objectLayoutsPage.createObjectLayoutTab('Field Tab');
+
+			const tabs = [
+				{optionIndex: 0, tabLabel: 'Relationship Tab A'},
+				{optionIndex: 1, tabLabel: 'Relationship Tab B'},
+			];
+
+			for (const {optionIndex, tabLabel} of tabs) {
+				await objectLayoutsPage.addTab.click();
+
+				const addTabDialog =
+					objectLayoutsPage.iframeLocator.getByLabel('Add Tab');
+
+				await addTabDialog.getByLabel('Label').fill(tabLabel);
+
+				await addTabDialog
+					.getByText('Relationships', {exact: true})
+					.click();
+
+				await addTabDialog
+					.getByRole('combobox', {name: 'Relationship'})
+					.click();
+
+				await objectLayoutsPage.iframeLocator
+					.getByRole('option')
+					.nth(optionIndex)
+					.click();
+
+				await objectLayoutsPage.saveTabButton.click();
+
+				await objectLayoutsPage.saveUpdateLayoutButton.click();
+			}
+
+			await expect(
+				objectLayoutsPage.iframeLocator.getByText('Relationship Tab A')
+			).toBeVisible();
+
+			await expect(
+				objectLayoutsPage.iframeLocator.getByText('Relationship Tab B')
+			).toBeVisible();
+		}
+	);
+
 	test('can cancel an in-progress layout update', async ({
 		apiHelpers,
 		objectLayoutsPage,
@@ -600,6 +724,79 @@ test.describe('Manage custom layouts through object layout tab', () => {
 
 		await expect(page.getByText(objectLayoutName)).toBeHidden();
 	});
+
+	test(
+		'can see label when creating Relationship Tab',
+		{tag: '@LPS-163660'},
+		async ({
+			addNewObjectRelationshipModalPage,
+			apiHelpers,
+			objectLayoutsPage,
+			objectRelationshipsPage,
+			page: _page,
+		}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await objectRelationshipsPage.goto(objectDefinition.label['en_US']);
+
+			await objectRelationshipsPage.addObjectRelationshipButton.click();
+
+			const objectRelationship =
+				await addNewObjectRelationshipModalPage.handleForm({
+					manyRecordsOf: objectDefinition.label['en_US'],
+					objectRelationshipLabel: 'Relationship',
+					type: 'Many to Many',
+				});
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await objectLayoutsPage.goto(objectDefinition.label['en_US']);
+
+			const layoutName = 'Layout' + getRandomInt();
+
+			await objectLayoutsPage.createObjectLayout(layoutName);
+
+			await objectLayoutsPage.openObjectLayoutConfiguration(layoutName);
+
+			await objectLayoutsPage.layoutTab.click();
+
+			await objectLayoutsPage.iframeLocator
+				.getByLabel('Mark as Default')
+				.click();
+
+			await objectLayoutsPage.createObjectLayoutTab('Field Tab');
+
+			await objectLayoutsPage.addTab.click();
+
+			await objectLayoutsPage.relationshipType.click();
+
+			await objectLayoutsPage.fieldList.click();
+
+			await expect(
+				objectLayoutsPage.iframeLocator.getByText('Parent')
+			).toBeVisible();
+
+			await expect(
+				objectLayoutsPage.iframeLocator.getByText('Child')
+			).toBeVisible();
+		}
+	);
 
 	test("can update a layout's name", async ({
 		apiHelpers,
@@ -1369,201 +1566,4 @@ test.describe('Manage custom layouts through object layout tab', () => {
 			).not.toBeVisible();
 		});
 	});
-
-	test(
-		'LPS-163656 - Can add tabs for self Many-to-Many relationship',
-		{tag: '@LPS-163656'},
-		async ({apiHelpers, objectLayoutsPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-			const objectRelationshipName1 =
-				'objectRelationshipName' + Math.floor(Math.random() * 99);
-			const objectRelationshipName2 =
-				'objectRelationshipName' + Math.floor(Math.random() * 99);
-
-			const {body: objectRelationship1} =
-				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinition.externalReferenceCode,
-					{
-						label: {en_US: 'Relationship'},
-						name: objectRelationshipName1,
-						objectDefinitionExternalReferenceCode1:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionExternalReferenceCode2:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionId1: objectDefinition.id,
-						objectDefinitionId2: objectDefinition.id,
-						objectDefinitionName2: objectDefinition.name,
-						type: 'manyToMany',
-					}
-				);
-
-			apiHelpers.data.push({
-				id: objectRelationship1.id,
-				type: 'objectRelationship',
-			});
-
-			const {body: objectRelationship2} =
-				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					objectDefinition.externalReferenceCode,
-					{
-						label: {en_US: 'Relationship 2'},
-						name: objectRelationshipName2,
-						objectDefinitionExternalReferenceCode1:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionExternalReferenceCode2:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionId1: objectDefinition.id,
-						objectDefinitionId2: objectDefinition.id,
-						objectDefinitionName2: objectDefinition.name,
-						type: 'manyToMany',
-					}
-				);
-
-			apiHelpers.data.push({
-				id: objectRelationship2.id,
-				type: 'objectRelationship',
-			});
-
-			await objectLayoutsPage.goto(objectDefinition.label['en_US']);
-
-			const layoutName = 'Layout' + getRandomInt();
-
-			await objectLayoutsPage.createObjectLayout(layoutName);
-
-			await objectLayoutsPage.openObjectLayoutConfiguration(layoutName);
-
-			await objectLayoutsPage.layoutTab.click();
-
-			await objectLayoutsPage.createObjectLayoutTab('Field Tab');
-
-			const tabs = [
-				{optionIndex: 0, tabLabel: 'Relationship Tab A'},
-				{optionIndex: 1, tabLabel: 'Relationship Tab B'},
-			];
-
-			for (const {optionIndex, tabLabel} of tabs) {
-				await objectLayoutsPage.addTab.click();
-
-				const addTabDialog =
-					objectLayoutsPage.iframeLocator.getByLabel('Add Tab');
-
-				await addTabDialog.getByLabel('Label').fill(tabLabel);
-
-				await addTabDialog
-					.getByText('Relationships', {exact: true})
-					.click();
-
-				await addTabDialog
-					.getByRole('combobox', {name: 'Relationship'})
-					.click();
-
-				await objectLayoutsPage.iframeLocator
-					.getByRole('option')
-					.nth(optionIndex)
-					.click();
-
-				await objectLayoutsPage.saveTabButton.click();
-
-				await objectLayoutsPage.saveUpdateLayoutButton.click();
-			}
-
-			await expect(
-				objectLayoutsPage.iframeLocator.getByText('Relationship Tab A')
-			).toBeVisible();
-
-			await expect(
-				objectLayoutsPage.iframeLocator.getByText('Relationship Tab B')
-			).toBeVisible();
-		}
-	);
-
-	test(
-		'LPS-163660 Can see label when creating Relationship Tab',
-		{tag: '@LPS-163660'},
-		async ({
-			addNewObjectRelationshipModalPage,
-			apiHelpers,
-			objectLayoutsPage,
-			objectRelationshipsPage,
-			page: _page,
-		}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			await objectRelationshipsPage.goto(objectDefinition.label['en_US']);
-
-			await objectRelationshipsPage.addObjectRelationshipButton.click();
-
-			const objectRelationship =
-				await addNewObjectRelationshipModalPage.handleForm({
-					manyRecordsOf: objectDefinition.label['en_US'],
-					objectRelationshipLabel: 'Relationship',
-					type: 'Many to Many',
-				});
-
-			apiHelpers.data.push({
-				id: objectRelationship.id,
-				type: 'objectRelationship',
-			});
-
-			await objectLayoutsPage.goto(objectDefinition.label['en_US']);
-
-			const layoutName = 'Layout' + getRandomInt();
-
-			await objectLayoutsPage.createObjectLayout(layoutName);
-
-			await objectLayoutsPage.openObjectLayoutConfiguration(layoutName);
-
-			await objectLayoutsPage.layoutTab.click();
-
-			await objectLayoutsPage.iframeLocator
-				.getByLabel('Mark as Default')
-				.click();
-
-			await objectLayoutsPage.createObjectLayoutTab('Field Tab');
-
-			await objectLayoutsPage.addTab.click();
-
-			await objectLayoutsPage.relationshipType.click();
-
-			await objectLayoutsPage.fieldList.click();
-
-			await expect(
-				objectLayoutsPage.iframeLocator.getByText('Parent')
-			).toBeVisible();
-
-			await expect(
-				objectLayoutsPage.iframeLocator.getByText('Child')
-			).toBeVisible();
-		}
-	);
 });

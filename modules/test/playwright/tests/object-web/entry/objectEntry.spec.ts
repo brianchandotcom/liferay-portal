@@ -3411,6 +3411,177 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 	});
 
+	test(
+		'can link an object entry to a system object via relationship picker',
+		{tag: '@LPS-145393'},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const userAccount =
+				await apiHelpers.headlessAdminUser.postUserAccount();
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const objectRelationshipName =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_USER',
+					{
+						label: {en_US: 'Relationship'},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1: 'L_USER',
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await viewObjectEntriesPage.goto(objectDefinition.className);
+
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
+
+			await page.getByPlaceholder('Search').click();
+
+			await page
+				.getByRole('menuitem', {name: userAccount.givenName})
+				.click();
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			expect(
+				(
+					await page.getByPlaceholder('Search').inputValue()
+				).toLowerCase()
+			).toBe(userAccount.givenName.toLowerCase());
+		}
+	);
+
+	test(
+		'can link multiple object entries to a system object via relationship picker',
+		{tag: '@LPS-145393'},
+		async ({apiHelpers, page, viewObjectEntriesPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const userAccount =
+				await apiHelpers.headlessAdminUser.postUserAccount();
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const objectRelationshipName =
+				'objectRelationshipName' + Math.floor(Math.random() * 99);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_USER',
+					{
+						label: {en_US: 'Relationship'},
+						name: objectRelationshipName,
+						objectDefinitionExternalReferenceCode1: 'L_USER',
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			const textFieldName = objectFields[0].name;
+
+			const entryA = await apiHelpers.objectEntry.postObjectEntry(
+				{[textFieldName]: 'Entry A'},
+				`c/${objectDefinition.name.toLowerCase()}s`
+			);
+
+			const entryB = await apiHelpers.objectEntry.postObjectEntry(
+				{[textFieldName]: 'Entry B'},
+				`c/${objectDefinition.name.toLowerCase()}s`
+			);
+
+			expect(entryA.id).toBeTruthy();
+			expect(entryB.id).toBeTruthy();
+
+			for (const entryLabel of ['Entry A', 'Entry B']) {
+				await viewObjectEntriesPage.goto(objectDefinition.className);
+
+				await page
+					.getByRole('row', {name: new RegExp(entryLabel)})
+					.getByRole('button', {name: 'Actions'})
+					.first()
+					.click();
+
+				await viewObjectEntriesPage.frontendDatasetViewAction.click();
+
+				await viewObjectEntriesPage.editObjectEntryForm.waitFor({
+					state: 'visible',
+				});
+
+				await page.getByPlaceholder('Search').click();
+
+				await page
+					.getByRole('menuitem', {name: userAccount.givenName})
+					.click();
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(
+					viewObjectEntriesPage.successMessage
+				).toBeVisible();
+
+				expect(
+					(
+						await page.getByPlaceholder('Search').inputValue()
+					).toLowerCase()
+				).toBe(userAccount.givenName.toLowerCase());
+			}
+		}
+	);
+
 	test('can only see entries from their own account', async ({
 		apiHelpers,
 		page,
@@ -5495,105 +5666,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 	);
 
 	test(
-		'can link multiple object entries to a system object via relationship picker',
-		{tag: '@LPS-145393'},
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const userAccount =
-				await apiHelpers.headlessAdminUser.postUserAccount();
-
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-			const objectRelationshipName =
-				'objectRelationshipName' + Math.floor(Math.random() * 99);
-
-			const {body: objectRelationship} =
-				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					'L_USER',
-					{
-						label: {en_US: 'Relationship'},
-						name: objectRelationshipName,
-						objectDefinitionExternalReferenceCode1: 'L_USER',
-						objectDefinitionExternalReferenceCode2:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionId2: objectDefinition.id,
-						objectDefinitionName2: objectDefinition.name,
-						type: 'oneToMany',
-					}
-				);
-
-			apiHelpers.data.push({
-				id: objectRelationship.id,
-				type: 'objectRelationship',
-			});
-
-			const textFieldName = objectFields[0].name;
-
-			const entryA = await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: 'Entry A'},
-				`c/${objectDefinition.name.toLowerCase()}s`
-			);
-
-			const entryB = await apiHelpers.objectEntry.postObjectEntry(
-				{[textFieldName]: 'Entry B'},
-				`c/${objectDefinition.name.toLowerCase()}s`
-			);
-
-			expect(entryA.id).toBeTruthy();
-			expect(entryB.id).toBeTruthy();
-
-			for (const entryLabel of ['Entry A', 'Entry B']) {
-				await viewObjectEntriesPage.goto(objectDefinition.className);
-
-				await page
-					.getByRole('row', {name: new RegExp(entryLabel)})
-					.getByRole('button', {name: 'Actions'})
-					.first()
-					.click();
-
-				await viewObjectEntriesPage.frontendDatasetViewAction.click();
-
-				await viewObjectEntriesPage.editObjectEntryForm.waitFor({
-					state: 'visible',
-				});
-
-				await page.getByPlaceholder('Search').click();
-
-				await page
-					.getByRole('menuitem', {name: userAccount.givenName})
-					.click();
-
-				await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-				await expect(
-					viewObjectEntriesPage.successMessage
-				).toBeVisible();
-
-				expect(
-					(
-						await page.getByPlaceholder('Search').inputValue()
-					).toLowerCase()
-				).toBe(userAccount.givenName.toLowerCase());
-			}
-		}
-	);
-
-	test(
 		'can add an entry with phone number object field where prefix type is fixed',
 		{tag: ['@LPD-83570']},
 		async ({apiHelpers, page, viewObjectEntriesPage}) => {
@@ -5674,78 +5746,6 @@ test.describe('Manage object entries through View Object Entries', () => {
 					fieldContainer.getByLabel('Phone Number')
 				).toHaveValue(localNumber);
 			});
-		}
-	);
-
-	test(
-		'can link an object entry to a system object via relationship picker',
-		{tag: '@LPS-145393'},
-		async ({apiHelpers, page, viewObjectEntriesPage}) => {
-			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['Text'],
-			});
-
-			const objectDefinition =
-				await apiHelpers.objectAdmin.postRandomObjectDefinition({
-					objectFields,
-					status: {code: 0},
-				});
-
-			apiHelpers.data.push({
-				id: objectDefinition.id,
-				type: 'objectDefinition',
-			});
-
-			const userAccount =
-				await apiHelpers.headlessAdminUser.postUserAccount();
-
-			const objectRelationshipAPIClient =
-				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
-
-			const objectRelationshipName =
-				'objectRelationshipName' + Math.floor(Math.random() * 99);
-
-			const {body: objectRelationship} =
-				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-					'L_USER',
-					{
-						label: {en_US: 'Relationship'},
-						name: objectRelationshipName,
-						objectDefinitionExternalReferenceCode1: 'L_USER',
-						objectDefinitionExternalReferenceCode2:
-							objectDefinition.externalReferenceCode,
-						objectDefinitionId2: objectDefinition.id,
-						objectDefinitionName2: objectDefinition.name,
-						type: 'oneToMany',
-					}
-				);
-
-			apiHelpers.data.push({
-				id: objectRelationship.id,
-				type: 'objectRelationship',
-			});
-
-			await viewObjectEntriesPage.goto(objectDefinition.className);
-
-			await viewObjectEntriesPage.clickAddObjectEntry(
-				objectDefinition.label['en_US']
-			);
-
-			await page.getByPlaceholder('Search').click();
-
-			await page
-				.getByRole('menuitem', {name: userAccount.givenName})
-				.click();
-
-			await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
-
-			expect(
-				(
-					await page.getByPlaceholder('Search').inputValue()
-				).toLowerCase()
-			).toBe(userAccount.givenName.toLowerCase());
 		}
 	);
 });

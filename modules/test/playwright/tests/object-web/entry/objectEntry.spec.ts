@@ -5649,22 +5649,11 @@ test.describe('Manage object entries through View Object Entries', () => {
 			for (const entryLabel of ['Entry A', 'Entry B']) {
 				await viewObjectEntriesPage.goto(objectDefinition.className);
 
-				const row = page.getByRole('row', {
-					name: new RegExp(entryLabel),
-				});
-
-				await expect(row).toBeVisible();
-
-				const actionsButton = row
+				await page
+					.getByRole('row', {name: new RegExp(entryLabel)})
 					.getByRole('button', {name: 'Actions'})
-					.first();
-
-				if (await actionsButton.isVisible()) {
-					await actionsButton.click();
-				}
-				else {
-					await row.getByRole('button').last().click();
-				}
+					.first()
+					.click();
 
 				await viewObjectEntriesPage.frontendDatasetViewAction.click();
 

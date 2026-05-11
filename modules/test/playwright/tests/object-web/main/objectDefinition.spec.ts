@@ -1627,22 +1627,13 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 			await editObjectDetailsPage.goToDetailsTab();
 
-			if (
-				!(
-					await editObjectDetailsPage.entryTitleField
-						.first()
-						.textContent()
-				)?.includes('Screen Name')
-			) {
-				await editObjectDetailsPage.entryTitleField.click();
+			await editObjectDetailsPage.entryTitleField.click();
 
-				await page
-					.getByRole('option', {exact: true, name: 'Screen Name'})
-					.click();
+			await page
+				.getByRole('option', {exact: true, name: 'Screen Name'})
+				.click();
 
-				await editObjectDetailsPage.saveObjectDefinition();
-				await page.waitForLoadState('networkidle');
-			}
+			await editObjectDetailsPage.saveObjectDefinition();
 
 			await editObjectDetailsPage.goto('User');
 

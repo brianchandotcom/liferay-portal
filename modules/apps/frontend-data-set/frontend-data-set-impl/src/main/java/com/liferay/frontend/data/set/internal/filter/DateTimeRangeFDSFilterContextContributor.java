@@ -9,7 +9,6 @@ import com.liferay.frontend.data.set.filter.BaseDateTimeRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.DateTimeFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
@@ -40,8 +39,22 @@ public class DateTimeRangeFDSFilterContextContributor
 		return Collections.emptyMap();
 	}
 
-	private JSONObject _getJSONObject(
-		DateTimeFDSFilterItem dateTimeFDSFilterItem) {
+	private Map<String, Object> _serialize(
+		BaseDateTimeRangeFDSFilter baseDateTimeRangeFDSFilter) {
+
+		return HashMapBuilder.<String, Object>put(
+			"max",
+			_serialize(baseDateTimeRangeFDSFilter.getMaxDateTimeFDSFilterItem())
+		).put(
+			"min",
+			_serialize(baseDateTimeRangeFDSFilter.getMinDateTimeFDSFilterItem())
+		).build();
+	}
+
+	private Object _serialize(DateTimeFDSFilterItem dateTimeFDSFilterItem) {
+		if (dateTimeFDSFilterItem.isNow()) {
+			return "now";
+		}
 
 		return JSONUtil.put(
 			"day", dateTimeFDSFilterItem.getDay()
@@ -54,20 +67,6 @@ public class DateTimeRangeFDSFilterContextContributor
 		).put(
 			"year", dateTimeFDSFilterItem.getYear()
 		);
-	}
-
-	private Map<String, Object> _serialize(
-		BaseDateTimeRangeFDSFilter baseDateTimeRangeFDSFilter) {
-
-		return HashMapBuilder.<String, Object>put(
-			"max",
-			_getJSONObject(
-				baseDateTimeRangeFDSFilter.getMaxDateTimeFDSFilterItem())
-		).put(
-			"min",
-			_getJSONObject(
-				baseDateTimeRangeFDSFilter.getMinDateTimeFDSFilterItem())
-		).build();
 	}
 
 }

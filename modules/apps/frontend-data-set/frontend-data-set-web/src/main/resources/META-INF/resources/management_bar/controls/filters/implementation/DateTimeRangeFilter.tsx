@@ -18,11 +18,13 @@ import type {
 	ISelectedItemsLabelArgs,
 } from '../Filter';
 
+type DateTimeBound = DateTime | 'now';
+
 export interface DateTimeRangeFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
 	entityFieldType: EEntityFieldType;
-	max?: DateTime;
-	min?: DateTime;
+	max?: DateTimeBound;
+	min?: DateTimeBound;
 	placeholder?: string;
 }
 
@@ -45,6 +47,48 @@ function formatDateTimeObject(dateTime: DateTime): string {
 	return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(dateTime.day)}T${pad2(
 		dateTime.hour
 	)}:${pad2(dateTime.minute)}`;
+}
+
+function nowInTimeZone(timeZone: string): DateTime {
+	const formatter = new Intl.DateTimeFormat('en-US', {
+		day: '2-digit',
+		hour: '2-digit',
+		hour12: false,
+		minute: '2-digit',
+		month: '2-digit',
+		timeZone,
+		year: 'numeric',
+	});
+
+	const parts: Record<string, string> = {};
+
+	for (const part of formatter.formatToParts(new Date())) {
+		if (part.type !== 'literal') {
+			parts[part.type] = part.value;
+		}
+	}
+
+	return {
+		day: Number(parts.day),
+		hour: parts.hour === '24' ? 0 : Number(parts.hour),
+		minute: Number(parts.minute),
+		month: Number(parts.month),
+		year: Number(parts.year),
+	};
+}
+
+function resolveBound(bound?: DateTimeBound): string | undefined {
+	if (!bound) {
+		return undefined;
+	}
+
+	if (bound === 'now') {
+		return formatDateTimeObject(
+			nowInTimeZone(Liferay.ThemeDisplay.getTimeZone())
+		);
+	}
+
+	return formatDateTimeObject(bound);
 }
 
 function getDateTimeFromDateTimeString(value: string): DateTime | null {
@@ -216,8 +260,8 @@ const DateTimeRangeFilter = ({
 						<input
 							className="fds-from-date-time form-control"
 							id={`from-${id}`}
-							max={toValue || (max && formatDateTimeObject(max))}
-							min={min && formatDateTimeObject(min)}
+							max={toValue || resolveBound(max)}
+							min={resolveBound(min)}
 							onBlur={(event) => {
 								event.target.reportValidity();
 
@@ -247,10 +291,8 @@ const DateTimeRangeFilter = ({
 						<input
 							className="fds-to-date-time form-control"
 							id={`to-${id}`}
-							max={max && formatDateTimeObject(max)}
-							min={
-								fromValue || (min && formatDateTimeObject(min))
-							}
+							max={resolveBound(max)}
+							min={fromValue || resolveBound(min)}
 							onBlur={(event) => {
 								event.target.reportValidity();
 

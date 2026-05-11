@@ -10,6 +10,8 @@ package com.liferay.frontend.data.set.filter;
  */
 public class DateTimeFDSFilterItem {
 
+	public static final DateTimeFDSFilterItem NOW = new DateTimeFDSFilterItem();
+
 	public DateTimeFDSFilterItem(
 		int day, int month, int year, int hour, int minute) {
 
@@ -18,6 +20,8 @@ public class DateTimeFDSFilterItem {
 		_year = year;
 		_hour = hour;
 		_minute = minute;
+
+		_now = false;
 	}
 
 	public int getDay() {
@@ -40,10 +44,24 @@ public class DateTimeFDSFilterItem {
 		return _year;
 	}
 
+	public boolean isNow() {
+		return _now;
+	}
+
+	private DateTimeFDSFilterItem() {
+		_day = 0;
+		_month = 0;
+		_year = 0;
+		_hour = 0;
+		_minute = 0;
+		_now = true;
+	}
+
 	private final int _day;
 	private final int _hour;
 	private final int _minute;
 	private final int _month;
+	private final boolean _now;
 	private final int _year;
 
 }

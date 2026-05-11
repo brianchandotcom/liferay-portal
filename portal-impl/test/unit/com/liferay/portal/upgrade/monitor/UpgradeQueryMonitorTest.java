@@ -77,164 +77,15 @@ public class UpgradeQueryMonitorTest {
 				db
 			);
 
-			String id1 = RandomTestUtil.randomString();
-			String id2 = RandomTestUtil.randomString();
-			String id3 = RandomTestUtil.randomString();
-			String id4 = RandomTestUtil.randomString();
-			String query1 = RandomTestUtil.randomString();
-			String query2 = RandomTestUtil.randomString();
-			String query3 = RandomTestUtil.randomString();
-			String query4 = RandomTestUtil.randomString();
-
-			String expectedMessage1 = StringBundler.concat(
-				"Locked query \"", query1, "\" (id ", id1,
-				") running for 30 seconds");
-			String expectedMessage2 = StringBundler.concat(
-				"Locked query \"", query2, "\" (id ", id2,
-				") running for 300 seconds");
-			String expectedMessage3 = StringBundler.concat(
-				"Locked query \"", query3, "\" (id ", id3,
-				") running for 600 seconds");
-			String expectedMessage4 = StringBundler.concat(
-				"Locked query \"", query4, "\" (id ", id4,
-				") running for 900 seconds");
-
 			DataSource originalDataSource = InfrastructureUtil.getDataSource();
 
 			InfrastructureUtil.setDataSource(dataSource);
 
 			try {
-				Mockito.when(
-					db.getLockedQueryInfos(connection)
-				).thenReturn(
-					Collections.emptyList()
-				);
-
-				ReflectionTestUtil.invoke(
-					UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertTrue(logEntries.isEmpty());
-
-				Mockito.when(
-					db.getLockedQueryInfos(connection)
-				).thenReturn(
-					Collections.singletonList(
-						new DB.QueryInfo(
-							30000, id1, query1, RandomTestUtil.randomString(),
-							RandomTestUtil.randomString()))
-				);
-
-				ReflectionTestUtil.invoke(
-					UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-				logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 1, logEntries.size());
-
-				LogEntry logEntry1 = logEntries.get(0);
-
-				Assert.assertEquals(expectedMessage1, logEntry1.getMessage());
-				Assert.assertEquals("WARN", logEntry1.getPriority());
-
-				Mockito.when(
-					db.getLockedQueryInfos(connection)
-				).thenReturn(
-					Arrays.asList(
-						new DB.QueryInfo(
-							300000, id2, query2, RandomTestUtil.randomString(),
-							RandomTestUtil.randomString()),
-						new DB.QueryInfo(
-							600000, id3, query3, RandomTestUtil.randomString(),
-							RandomTestUtil.randomString()),
-						new DB.QueryInfo(
-							900000, id4, query4, RandomTestUtil.randomString(),
-							RandomTestUtil.randomString()))
-				);
-
-				ReflectionTestUtil.invoke(
-					UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
-
-				logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 4, logEntries.size());
-
-				LogEntry logEntry2 = logEntries.get(1);
-				LogEntry logEntry3 = logEntries.get(2);
-				LogEntry logEntry4 = logEntries.get(3);
-
-				Assert.assertEquals(expectedMessage2, logEntry2.getMessage());
-				Assert.assertEquals(expectedMessage3, logEntry3.getMessage());
-				Assert.assertEquals(expectedMessage4, logEntry4.getMessage());
-			}
-			finally {
-				InfrastructureUtil.setDataSource(originalDataSource);
-			}
-		}
-	}
-
-	@Test
-	public void testPollDisablesMonitoringOnSQLException() throws Exception {
-		try (MockedStatic<DBManagerUtil> dbManagerUtilMockedStatic =
-				Mockito.mockStatic(DBManagerUtil.class);
-			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				UpgradeQueryMonitor.class.getName(), LoggerTestUtil.WARN)) {
-
-			Connection connection = Mockito.mock(Connection.class);
-
-			DataSource dataSource = Mockito.mock(DataSource.class);
-
-			Mockito.when(
-				dataSource.getConnection()
-			).thenReturn(
-				connection
-			);
-
-			DB db = Mockito.mock(DB.class);
-
-			dbManagerUtilMockedStatic.when(
-				DBManagerUtil::getDB
-			).thenReturn(
-				db
-			);
-
-			String exceptionMessage = RandomTestUtil.randomString();
-
-			Mockito.when(
-				db.getLockedQueryInfos(connection)
-			).thenThrow(
-				new SQLException(exceptionMessage)
-			);
-
-			DataSource originalDataSource = InfrastructureUtil.getDataSource();
-
-			InfrastructureUtil.setDataSource(dataSource);
-
-			try {
-				Assert.assertThrows(
-					SQLException.class,
-					() -> ReflectionTestUtil.invoke(
-						UpgradeQueryMonitor.class, "_poll", new Class<?>[0]));
-
-				List<LogEntry> logEntries = logCapture.getLogEntries();
-
-				Assert.assertEquals(
-					logEntries.toString(), 2, logEntries.size());
-
-				LogEntry logEntry1 = logEntries.get(0);
-
-				Assert.assertEquals(
-					"Upgrade query monitoring is disabled",
-					logEntry1.getMessage());
-
-				LogEntry logEntry2 = logEntries.get(1);
-
-				Assert.assertEquals(
-					"Unable to detect locked queries: " + exceptionMessage,
-					logEntry2.getMessage());
+				_testPollWithNoLockedQueries(connection, db, logCapture);
+				_testPollWithOneLockedQuery(connection, db, logCapture);
+				_testPollWithMultipleLockedQueries(connection, db, logCapture);
+				_testPollWithSQLException(connection, db, logCapture);
 			}
 			finally {
 				InfrastructureUtil.setDataSource(originalDataSource);
@@ -310,6 +161,148 @@ public class UpgradeQueryMonitorTest {
 				ReflectionTestUtil.getFieldValue(
 					UpgradeQueryMonitor.class, _SCHEDULED_EXECUTOR_SERVICE));
 		}
+	}
+
+	private void _testPollWithMultipleLockedQueries(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		String id1 = RandomTestUtil.randomString();
+		String id2 = RandomTestUtil.randomString();
+		String id3 = RandomTestUtil.randomString();
+		String query1 = RandomTestUtil.randomString();
+		String query2 = RandomTestUtil.randomString();
+		String query3 = RandomTestUtil.randomString();
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Arrays.asList(
+				new DB.QueryInfo(
+					300000, id1, query1, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()),
+				new DB.QueryInfo(
+					600000, id2, query2, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()),
+				new DB.QueryInfo(
+					900000, id3, query3, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()))
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
+
+		LogEntry logEntry1 = logEntries.get(1);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query1, "\" (id ", id1,
+				") running for 300 seconds"),
+			logEntry1.getMessage());
+
+		LogEntry logEntry2 = logEntries.get(2);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query2, "\" (id ", id2,
+				") running for 600 seconds"),
+			logEntry2.getMessage());
+
+		LogEntry logEntry3 = logEntries.get(3);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query3, "\" (id ", id3,
+				") running for 900 seconds"),
+			logEntry3.getMessage());
+	}
+
+	private void _testPollWithNoLockedQueries(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Collections.emptyList()
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		Assert.assertTrue(
+			logCapture.getLogEntries(
+			).isEmpty());
+	}
+
+	private void _testPollWithOneLockedQuery(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		String id = RandomTestUtil.randomString();
+		String query = RandomTestUtil.randomString();
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenReturn(
+			Collections.singletonList(
+				new DB.QueryInfo(
+					30000, id, query, RandomTestUtil.randomString(),
+					RandomTestUtil.randomString()))
+		);
+
+		ReflectionTestUtil.invoke(
+			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"Locked query \"", query, "\" (id ", id,
+				") running for 30 seconds"),
+			logEntry.getMessage());
+		Assert.assertEquals("WARN", logEntry.getPriority());
+	}
+
+	private void _testPollWithSQLException(
+			Connection connection, DB db, LogCapture logCapture)
+		throws Exception {
+
+		String exceptionMessage = RandomTestUtil.randomString();
+
+		Mockito.when(
+			db.getLockedQueryInfos(connection)
+		).thenThrow(
+			new SQLException(exceptionMessage)
+		);
+
+		Assert.assertThrows(
+			SQLException.class,
+			() -> ReflectionTestUtil.invoke(
+				UpgradeQueryMonitor.class, "_poll", new Class<?>[0]));
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 6, logEntries.size());
+
+		LogEntry logEntry1 = logEntries.get(4);
+
+		Assert.assertEquals(
+			"Upgrade query monitoring is disabled", logEntry1.getMessage());
+
+		LogEntry logEntry2 = logEntries.get(5);
+
+		Assert.assertEquals(
+			"Unable to detect locked queries: " + exceptionMessage,
+			logEntry2.getMessage());
 	}
 
 	private static final String _SCHEDULED_EXECUTOR_SERVICE =

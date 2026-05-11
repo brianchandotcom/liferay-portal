@@ -1,0 +1,28 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+export default function CommerceOrderAttachmentRestrictedDataRenderer({value}) {
+	if (!value) {
+		return null;
+	}
+
+	return (
+		<ClayIcon
+			aria-label={Liferay.Language.get('restricted')}
+			className="text-success"
+			role="img"
+			spritemap={Liferay.Icons.spritemap}
+			symbol="check"
+		/>
+	);
+}
+
+CommerceOrderAttachmentRestrictedDataRenderer.propTypes = {
+	value: PropTypes.bool,
+};

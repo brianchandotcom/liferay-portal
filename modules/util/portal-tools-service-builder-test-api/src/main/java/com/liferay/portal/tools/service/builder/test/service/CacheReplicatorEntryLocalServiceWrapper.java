@@ -256,10 +256,10 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	@Override
 	public
 		com.liferay.portal.tools.service.builder.test.model.CacheReplicatorEntry
-			fetchCacheReplicatorEntryByName(String name) {
+			fetchCacheReplicatorEntry(String name) {
 
-		return _cacheReplicatorEntryLocalService.
-			fetchCacheReplicatorEntryByName(name);
+		return _cacheReplicatorEntryLocalService.fetchCacheReplicatorEntry(
+			name);
 	}
 
 	@Override
@@ -293,21 +293,20 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	@Override
 	public java.util.List
 		<com.liferay.portal.tools.service.builder.test.model.
-			CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
-				long companyId) {
+			CacheReplicatorEntry> getCacheReplicatorEntries(long companyId) {
 
-		return _cacheReplicatorEntryLocalService.
-			getCacheReplicatorEntriesByCompanyId(companyId);
+		return _cacheReplicatorEntryLocalService.getCacheReplicatorEntries(
+			companyId);
 	}
 
 	@Override
 	public java.util.List
 		<com.liferay.portal.tools.service.builder.test.model.
-			CacheReplicatorEntry> getCacheReplicatorEntriesByCompanyId(
+			CacheReplicatorEntry> getCacheReplicatorEntries(
 				long companyId, int start, int end) {
 
-		return _cacheReplicatorEntryLocalService.
-			getCacheReplicatorEntriesByCompanyId(companyId, start, end);
+		return _cacheReplicatorEntryLocalService.getCacheReplicatorEntries(
+			companyId, start, end);
 	}
 
 	/**
@@ -415,4 +414,4 @@ public class CacheReplicatorEntryLocalServiceWrapper
 	private CacheReplicatorEntryLocalService _cacheReplicatorEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1582792236
+// LIFERAY-SERVICE-BUILDER-HASH:378816471

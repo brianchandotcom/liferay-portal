@@ -180,21 +180,6 @@ public interface CacheReplicatorEntryPersistence
 	public int countByName(String name);
 
 	/**
-	 * Caches the cache replicator entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheReplicatorEntry the cache replicator entry
-	 */
-	public void cacheResult(CacheReplicatorEntry cacheReplicatorEntry);
-
-	/**
-	 * Caches the cache replicator entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheReplicatorEntries the cache replicator entries
-	 */
-	public void cacheResult(
-		java.util.List<CacheReplicatorEntry> cacheReplicatorEntries);
-
-	/**
 	 * Creates a new cache replicator entry with the primary key. Does not add the cache replicator entry to the database.
 	 *
 	 * @param cacheReplicatorEntryId the primary key for the new cache replicator entry
@@ -234,4 +219,4 @@ public interface CacheReplicatorEntryPersistence
 	public CacheReplicatorEntry fetchByPrimaryKey(long cacheReplicatorEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1708294516
+// LIFERAY-SERVICE-BUILDER-HASH:-414678032

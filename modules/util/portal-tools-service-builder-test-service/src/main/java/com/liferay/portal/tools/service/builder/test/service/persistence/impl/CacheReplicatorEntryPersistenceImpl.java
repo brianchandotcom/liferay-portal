@@ -17,10 +17,7 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchCacheReplicatorEntryException;
@@ -310,61 +307,6 @@ public class CacheReplicatorEntryPersistenceImpl
 	}
 
 	/**
-	 * Caches the cache replicator entry in the entity cache if it is enabled.
-	 *
-	 * @param cacheReplicatorEntry the cache replicator entry
-	 */
-	@Override
-	public void cacheResult(CacheReplicatorEntry cacheReplicatorEntry) {
-		entityCache.putResult(
-			CacheReplicatorEntryImpl.class,
-			cacheReplicatorEntry.getPrimaryKey(), cacheReplicatorEntry);
-
-		finderCache.putResult(
-			_finderPathFetchByName,
-			new Object[] {cacheReplicatorEntry.getName()},
-			cacheReplicatorEntry);
-	}
-
-	private int _valueObjectFinderCacheListThreshold;
-
-	/**
-	 * Caches the cache replicator entries in the entity cache if it is enabled.
-	 *
-	 * @param cacheReplicatorEntries the cache replicator entries
-	 */
-	@Override
-	public void cacheResult(List<CacheReplicatorEntry> cacheReplicatorEntries) {
-		if ((_valueObjectFinderCacheListThreshold == 0) ||
-			((_valueObjectFinderCacheListThreshold > 0) &&
-			 (cacheReplicatorEntries.size() >
-				 _valueObjectFinderCacheListThreshold))) {
-
-			return;
-		}
-
-		for (CacheReplicatorEntry cacheReplicatorEntry :
-				cacheReplicatorEntries) {
-
-			if (entityCache.getResult(
-					CacheReplicatorEntryImpl.class,
-					cacheReplicatorEntry.getPrimaryKey()) == null) {
-
-				cacheResult(cacheReplicatorEntry);
-			}
-		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		CacheReplicatorEntryModelImpl cacheReplicatorEntryModelImpl) {
-
-		Object[] args = new Object[] {cacheReplicatorEntryModelImpl.getName()};
-
-		finderCache.putResult(
-			_finderPathFetchByName, args, cacheReplicatorEntryModelImpl);
-	}
-
-	/**
 	 * Creates a new cache replicator entry with the primary key. Does not add the cache replicator entry to the database.
 	 *
 	 * @param cacheReplicatorEntryId the primary key for the new cache replicator entry
@@ -476,11 +418,7 @@ public class CacheReplicatorEntryPersistenceImpl
 			closeSession(session);
 		}
 
-		entityCache.putResult(
-			CacheReplicatorEntryImpl.class, cacheReplicatorEntryModelImpl,
-			false, true);
-
-		cacheUniqueFindersCache(cacheReplicatorEntryModelImpl);
+		cacheUniqueFindersResult(cacheReplicatorEntry, false);
 
 		if (isNew) {
 			cacheReplicatorEntry.setNew(false);
@@ -540,9 +478,6 @@ public class CacheReplicatorEntryPersistenceImpl
 	 * Initializes the cache replicator entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_valueObjectFinderCacheListThreshold = GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VALUE_OBJECT_FINDER_CACHE_LIST_THRESHOLD));
-
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -569,19 +504,20 @@ public class CacheReplicatorEntryPersistenceImpl
 				_SQL_SELECT_CACHEREPLICATORENTRY_WHERE,
 				_SQL_COUNT_CACHEREPLICATORENTRY_WHERE,
 				CacheReplicatorEntryModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"cacheReplicatorEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
 					CacheReplicatorEntry::getCompanyId));
 
-		_finderPathFetchByName = new FinderPath(
+		_finderPathFetchByName = createUniqueFinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, true);
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, convertNullFunction(CacheReplicatorEntry::getName));
 
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
 			this, _finderPathFetchByName,
-			_SQL_SELECT_CACHEREPLICATORENTRY_WHERE,
+			_SQL_SELECT_CACHEREPLICATORENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cacheReplicatorEntry.", "name", FinderColumn.Type.STRING, "=",
 				true, true, CacheReplicatorEntry::getName));
@@ -625,4 +561,4 @@ public class CacheReplicatorEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:282007670
+// LIFERAY-SERVICE-BUILDER-HASH:-1836717030

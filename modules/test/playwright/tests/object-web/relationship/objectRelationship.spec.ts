@@ -2618,9 +2618,7 @@ test.describe('Manage object relationships with system objects', () => {
 					.click();
 				await page.getByRole('menuitem', {name: 'View'}).click();
 
-				await page
-					.getByText('Relationship Tab', {exact: true})
-					.click();
+				await page.getByText('Relationship Tab', {exact: true}).click();
 
 				await page.getByLabel('Select Existing One').first().click();
 				await page
@@ -2651,9 +2649,7 @@ test.describe('Manage object relationships with system objects', () => {
 					.click();
 				await page.getByRole('menuitem', {name: 'View'}).click();
 
-				await page
-					.getByText('Relationship Tab', {exact: true})
-					.click();
+				await page.getByText('Relationship Tab', {exact: true}).click();
 
 				const actionsButtons = page.getByRole('button', {
 					name: 'Actions',
@@ -2911,7 +2907,6 @@ test.describe('Manage object relationships with system objects', () => {
 });
 
 test.describe('Manage object relationship entries', () => {
-
 	test(
 		'can relate two entries bidirectionally in a self-referencing One-to-Many relationship',
 		{tag: '@LPS-147906'},
@@ -3756,15 +3751,15 @@ test.describe('View relationship hierarchy labels', () => {
 
 			await addNewObjectRelationshipModalPage.objectRelationshipFormPage.reverseOrderButton.click();
 
-			const modalContent = page.locator('.modal-content');
+			const modal = page.getByRole('dialog');
 
-			await expect(modalContent.getByLabel('One Record Of')).toHaveValue(
+			await expect(modal.getByLabel('One Record Of')).toHaveValue(
 				objectDefinition2.label['en_US']
 			);
 
-			await expect(
-				modalContent.getByLabel('Many Records Of')
-			).toHaveValue(objectDefinition1.label['en_US']);
+			await expect(modal.getByLabel('Many Records Of')).toHaveValue(
+				objectDefinition1.label['en_US']
+			);
 
 			const objectRelationship =
 				await addNewObjectRelationshipModalPage.objectRelationshipFormPage.saveButton
@@ -3785,5 +3780,4 @@ test.describe('View relationship hierarchy labels', () => {
 			}
 		}
 	);
-
 });

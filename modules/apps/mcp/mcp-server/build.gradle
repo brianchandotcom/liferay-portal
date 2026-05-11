@@ -20,6 +20,4 @@ dependencies {
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
-	testImplementation group: "io.modelcontextprotocol.sdk", name: "mcp-json-jackson2", version: "1.0.1"
-	testImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.5.0"
 }

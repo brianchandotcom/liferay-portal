@@ -6,15 +6,51 @@
 package com.liferay.mcp.server.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.mcp.server.rest.client.dto.v1_0.ToolSet;
+import com.liferay.mcp.server.rest.client.pagination.Page;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
-import org.junit.Ignore;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.function.Predicate;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ToolSetResourceTest extends BaseToolSetResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetToolSets() throws Exception {
+		_assertToolSet(
+			toolSet ->
+				Objects.equals(toolSet.getName(), "mcp-server-v1.0") &&
+				Validator.isNotNull(toolSet.getDescription()));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		String restContextPath = objectDefinition.getRESTContextPath();
+
+		_assertToolSet(
+			toolSet -> Objects.equals(
+				"c-" + restContextPath.substring(3), toolSet.getName()));
+	}
+
+	private void _assertToolSet(Predicate<ToolSet> predicate) throws Exception {
+		Page<ToolSet> toolSetsPage = toolSetResource.getToolSets();
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				new ArrayList<>(toolSetsPage.getItems()), predicate));
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:62830971

@@ -1,0 +1,31 @@
+{
+	"properties": {
+		"body": {
+			"oneOf": [
+				{
+					"properties": {
+						"integer": {
+							"type": "integer"
+						}
+					},
+					"type": "object"
+				},
+				{
+					"properties": {
+						"string": {
+							"type": "string"
+						}
+					},
+					"required": [
+						"string"
+					],
+					"type": "object"
+				}
+			]
+		}
+	},
+	"required": [
+		"body"
+	],
+	"type": "object"
+}

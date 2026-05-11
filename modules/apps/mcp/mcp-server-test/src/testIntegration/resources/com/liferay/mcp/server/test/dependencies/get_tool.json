@@ -1,0 +1,15 @@
+{
+	"properties": {
+		"toolName": {
+			"type": "string"
+		},
+		"toolSetName": {
+			"type": "string"
+		}
+	},
+	"required": [
+		"toolName",
+		"toolSetName"
+	],
+	"type": "object"
+}

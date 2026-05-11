@@ -5,7 +5,11 @@
 
 package com.liferay.mcp.server.rest.internal.resource.v1_0;
 
+import com.liferay.mcp.server.rest.dto.v1_0.Tool;
+import com.liferay.mcp.server.rest.internal.util.ToolSetUtil;
 import com.liferay.mcp.server.rest.resource.v1_0.ToolResource;
+
+import jakarta.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -18,4 +22,21 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = ToolResource.class
 )
 public class ToolResourceImpl extends BaseToolResourceImpl {
+
+	@Override
+	public Tool getTool(String toolSetName, String toolName) {
+		return ToolSetUtil.getTool(
+			contextHttpServletRequest, toolName, toolSetName);
+	}
+
+	@Override
+	public Response invokeToolObject(
+			String toolSetName, String toolName, Object object)
+		throws Exception {
+
+		return ToolSetUtil.invokeTool(
+			contextHttpServletRequest, object, toolName, toolSetName,
+			contextUriInfo);
+	}
+
 }

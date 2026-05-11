@@ -6,14 +6,89 @@
 package com.liferay.mcp.server.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.mcp.server.rest.client.dto.v1_0.Tool;
+import com.liferay.mcp.server.rest.client.http.HttpInvoker;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
-import org.junit.Ignore;
+import java.util.Base64;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alejandro Tardín
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class ToolResourceTest extends BaseToolResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetTool() throws Exception {
+		Tool tool = toolResource.getTool("mcp-server-v1.0", "getToolSets");
+
+		Assert.assertEquals("getToolSets", tool.getName());
+		Assert.assertNotNull(tool.getInputSchema());
+	}
+
+	@Override
+	@Test
+	public void testInvokeTool() throws Exception {
+		byte[] bytes = RandomTestUtil.randomBytes();
+
+		String fileName =
+			"mcp-upload-" + RandomTestUtil.randomString() + ".txt";
+
+		HttpInvoker.HttpResponse httpResponse =
+			toolResource.invokeToolHttpResponse(
+				"headless-delivery-v1.0", "postSiteDocument",
+				JSONUtil.put(
+					"file",
+					JSONUtil.put(
+						"contentType", "text/plain"
+					).put(
+						"data",
+						Base64.getEncoder(
+						).encodeToString(
+							bytes
+						)
+					).put(
+						"filename", fileName
+					)
+				).put(
+					"siteId", testGroup.getGroupId()
+				).toString());
+
+		Assert.assertEquals(
+			httpResponse.getContent(), 200, httpResponse.getStatusCode());
+
+		JSONObject documentJSONObject = JSONFactoryUtil.createJSONObject(
+			httpResponse.getContent());
+
+		Assert.assertTrue(documentJSONObject.getLong("id") > 0);
+		Assert.assertEquals(
+			bytes.length, documentJSONObject.getInt("sizeInBytes"));
+		Assert.assertEquals(fileName, documentJSONObject.getString("title"));
+
+		httpResponse = toolResource.invokeToolHttpResponse(
+			"mcp-server-v1.0", "getToolSummaries",
+			JSONUtil.put(
+				"toolSetName", "mcp-server-v1.0"
+			).toString());
+
+		Assert.assertFalse(
+			JSONFactoryUtil.createJSONObject(
+				httpResponse.getContent()
+			).getJSONArray(
+				"items"
+			).getJSONObject(
+				0
+			).has(
+				"xClassName"
+			));
+	}
+
 }

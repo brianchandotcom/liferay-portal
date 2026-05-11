@@ -1,6 +1,7 @@
 import LifecycleChart from '../LifecycleChart';
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
+import {ILifecycleStage} from 'lifecycle/utils/types';
 import {
 	LifecycleContextProvider,
 	useLifecycle
@@ -9,33 +10,7 @@ import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 jest.unmock('react-dom');
 
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useParams: () => ({groupId: '2000'})
-}));
-
-jest.mock('shared/hooks/useRequest', () => ({
-	useRequest: jest.fn(() => ({
-		data: null,
-		error: false,
-		loading: false
-	}))
-}));
-
-const mockUseRequest = (state: {
-	data?: any;
-	error?: boolean;
-	loading?: boolean;
-}) => {
-	const useRequest = require('shared/hooks/useRequest');
-	useRequest.useRequest = jest.fn(() => ({
-		data: state.data,
-		error: state.error ?? false,
-		loading: state.loading ?? false
-	}));
-};
-
-const sampleStages = [
+const sampleStages: ILifecycleStage[] = [
 	{
 		accountCount: 13,
 		averageDaysInStage: 9.8,
@@ -82,10 +57,10 @@ const FilterProbe = () => {
 	);
 };
 
-const renderChart = () =>
+const renderChart = (props: Parameters<typeof LifecycleChart>[0] = {}) =>
 	render(
 		<LifecycleContextProvider>
-			<LifecycleChart />
+			<LifecycleChart {...props} />
 			<FilterProbe />
 		</LifecycleContextProvider>
 	);
@@ -94,18 +69,14 @@ describe('LifecycleChart', () => {
 	afterEach(cleanup);
 
 	it('should render a loading spinner while the request is in flight', () => {
-		mockUseRequest({loading: true});
-
-		const {container, queryByText} = renderChart();
+		const {container, queryByText} = renderChart({loading: true});
 
 		expect(container.querySelector('.loading-root')).toBeInTheDocument();
 		expect(queryByText('Aware')).toBeNull();
 	});
 
 	it('should render every stage title in the empty state when the request errors', () => {
-		mockUseRequest({error: true});
-
-		const {getByText} = renderChart();
+		const {getByText} = renderChart({error: true});
 
 		expect(getByText('Aware')).toBeInTheDocument();
 		expect(getByText('Engaged')).toBeInTheDocument();
@@ -115,9 +86,7 @@ describe('LifecycleChart', () => {
 	});
 
 	it('should omit bar and trapezium visuals in the empty state', () => {
-		mockUseRequest({error: true});
-
-		const {container, getAllByText} = renderChart();
+		const {container, getAllByText} = renderChart({error: true});
 
 		expect(getAllByText('no activity')).toHaveLength(5);
 
@@ -128,18 +97,14 @@ describe('LifecycleChart', () => {
 		expect(container.querySelector('.stage-progression__fill')).toBeNull();
 	});
 
-	it('should fall back to the empty state when the data array is empty', () => {
-		mockUseRequest({data: []});
-
-		const {getAllByText} = renderChart();
+	it('should fall back to the empty state when the stages array is empty', () => {
+		const {getAllByText} = renderChart({stages: []});
 
 		expect(getAllByText('no activity')).toHaveLength(5);
 	});
 
-	it('should render each stage with its metrics when data is available', () => {
-		mockUseRequest({data: sampleStages});
-
-		const {container, getByText} = renderChart();
+	it('should render each stage with its metrics when stages are provided', () => {
+		const {container, getByText} = renderChart({stages: sampleStages});
 
 		expect(getByText('13')).toBeInTheDocument();
 		expect(getByText('64')).toBeInTheDocument();
@@ -159,18 +124,14 @@ describe('LifecycleChart', () => {
 	});
 
 	it('should show "avg. day" for non-zero averages and "no activity" otherwise', () => {
-		mockUseRequest({data: sampleStages});
-
-		const {getAllByText, getByText} = renderChart();
+		const {getAllByText, getByText} = renderChart({stages: sampleStages});
 
 		expect(getAllByText('avg. day')).toHaveLength(4);
 		expect(getByText('no activity')).toBeInTheDocument();
 	});
 
 	it('should compute progression labels from adjacent accountCounts', () => {
-		mockUseRequest({data: sampleStages});
-
-		const {container} = renderChart();
+		const {container} = renderChart({stages: sampleStages});
 
 		const labels = Array.from(
 			container.querySelectorAll('.label-info')
@@ -183,9 +144,7 @@ describe('LifecycleChart', () => {
 	});
 
 	it('should default the context lifecycleStageFilter to AT_RISK on mount', () => {
-		mockUseRequest({data: sampleStages});
-
-		const {getByTestId} = renderChart();
+		const {getByTestId} = renderChart({stages: sampleStages});
 
 		expect(getByTestId('lifecycle-filter').textContent).toBe(
 			LifecycleStages.AT_RISK
@@ -193,9 +152,7 @@ describe('LifecycleChart', () => {
 	});
 
 	it('should update the context lifecycleStageFilter when a stage filter button is clicked', () => {
-		mockUseRequest({data: sampleStages});
-
-		const {getAllByRole, getByTestId} = renderChart();
+		const {getAllByRole, getByTestId} = renderChart({stages: sampleStages});
 
 		const filterButtons = getAllByRole('button');
 		fireEvent.click(filterButtons[0]);

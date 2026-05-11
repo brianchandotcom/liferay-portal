@@ -1308,26 +1308,36 @@ public class StructuredContentResourceImpl
 			}
 		}
 
-		for (ContentField contentField : contentFields) {
-			Field field = fields.get(contentField.getName());
+		Map<String, List<ContentField>> contentFieldsMap = new HashMap<>();
 
-			Value value = DDMValueUtil.toDDMValue(
-				contentField.toString(),
-				DDMFormFieldUtil.getDDMFormField(
-					_ddmStructureService, ddmStructure, contentField.getName()),
-				_dlAppService, journalArticle.getGroupId(),
-				_journalArticleService, _layoutLocalService,
-				contextAcceptLanguage.getPreferredLocale());
+		_populateContentFieldsMap(contentFields, contentFieldsMap);
 
-			for (Locale locale : value.getAvailableLocales()) {
-				field.setValue(locale, value.getString(locale));
+		for (Map.Entry<String, List<ContentField>> entry :
+				contentFieldsMap.entrySet()) {
+
+			Field field = fields.get(entry.getKey());
+
+			if (field == null) {
+				continue;
 			}
 
-			ContentField[] nestedContentFields =
-				contentField.getNestedContentFields();
+			DDMFormField ddmFormField = DDMFormFieldUtil.getDDMFormField(
+				_ddmStructureService, ddmStructure, entry.getKey());
 
-			if (nestedContentFields != null) {
-				_toPatchedFields(nestedContentFields, journalArticle);
+			for (ContentField contentField : entry.getValue()) {
+				Value value = DDMValueUtil.toDDMValue(
+					contentField.toString(), ddmFormField, _dlAppService,
+					journalArticle.getGroupId(), _journalArticleService,
+					_layoutLocalService,
+					contextAcceptLanguage.getPreferredLocale());
+
+				if (value == null) {
+					continue;
+				}
+
+				for (Locale locale : value.getAvailableLocales()) {
+					field.setValue(locale, value.getString(locale));
+				}
 			}
 		}
 

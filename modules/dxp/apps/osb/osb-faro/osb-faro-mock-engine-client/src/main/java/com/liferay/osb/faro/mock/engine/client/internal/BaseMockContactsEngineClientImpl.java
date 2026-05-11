@@ -356,12 +356,11 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(
-			FaroProject faroProject, String country, String id, String industry,
-			String revenue)
+			FaroProject faroProject, String country, String id, String industry)
 		throws FaroEngineClientException {
 
 		return contactsEngineClient.getAccountLifecycleMetrics(
-			faroProject, country, id, industry, revenue);
+			faroProject, country, id, industry);
 	}
 
 	@Override

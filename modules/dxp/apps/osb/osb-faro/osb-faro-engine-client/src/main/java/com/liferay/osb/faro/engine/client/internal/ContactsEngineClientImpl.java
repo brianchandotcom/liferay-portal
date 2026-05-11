@@ -700,8 +700,7 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(
-			FaroProject faroProject, String country, String id, String industry,
-			String revenue)
+			FaroProject faroProject, String country, String id, String industry)
 		throws FaroEngineClientException {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
@@ -712,10 +711,6 @@ public class ContactsEngineClientImpl
 
 		if (Validator.isNotNull(industry)) {
 			uriVariables.put("industry", industry);
-		}
-
-		if (Validator.isNotNull(revenue)) {
-			uriVariables.put("revenue", revenue);
 		}
 
 		return get(

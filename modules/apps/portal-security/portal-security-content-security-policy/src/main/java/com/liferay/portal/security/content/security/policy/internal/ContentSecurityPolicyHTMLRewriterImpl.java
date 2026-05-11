@@ -105,9 +105,10 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 	private boolean _extractInlineHandlers(
 		Element element, boolean recursive, StringBundler sb) {
 
+		boolean rewrite = false;
+
 		String id = element.attr("id");
 		List<String> keys = new ArrayList<>();
-		boolean rewrite = false;
 
 		for (Attribute attribute : element.attributes()) {
 			String key = attribute.getKey();

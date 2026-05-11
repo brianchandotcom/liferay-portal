@@ -59,20 +59,14 @@ test('can export at site level with custom export task name', async ({
 });
 
 test(
-	'cannot export at site level without file name',
+	'Can successfully export without file name by falling back to default',
 	{tag: '@LPD-76875'},
 	async ({exportImportPage}) => {
 		await exportImportPage.goToExport();
 
-		await exportImportPage.newExportButton.click();
+		const exportFilePath = await exportImportPage.export({taskName: ''});
 
-		await exportImportPage.exportButton.click();
-
-		await expect(
-			exportImportPage.page.getByRole('alert').filter({
-				hasText: 'Please enter a file with a valid file name.',
-			})
-		).toBeVisible();
+		expect(exportFilePath).toMatch('Export.lar');
 	}
 );
 

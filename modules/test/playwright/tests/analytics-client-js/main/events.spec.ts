@@ -7,12 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {
-	createSitePage,
-	navigateToSitePage,
-} from '../../osb-faro-web/main/utils/portal';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {Analytics, Event} from './utils/analytics';
 
 const test = mergeTests(
@@ -20,84 +19,68 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginTest()
 );
-
-let site;
-const siteName = getRandomString();
-
-test.beforeEach(async ({apiHelpers}) => {
-	site = await apiHelpers.headlessAdminSite.postSite({
-		name: siteName,
-	});
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete site on de DXP side', async () => {
-		await apiHelpers.headlessAdminSite.deleteSite(
-			site.externalReferenceCode
-		);
-	});
-});
 
 test(
 	'Verify events after navigating by SPA',
 	{
 		tag: '@LPD-56895',
 	},
-	async ({apiHelpers, page}) => {
-		await test.step('test', async () => {
-			const pageTitle1 = 'MyPage 1';
+	async ({apiHelpers, page, site}) => {
+		const layout1 = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: 'MyPage 1',
+		});
 
-			await test.step('Create My Page 1', async () => {
-				await createSitePage({
-					apiHelpers,
-					pageTitle: pageTitle1,
-					siteName,
-				});
-			});
+		const layout2 = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			]),
+			siteId: site.id,
+			title: 'MyPage 2',
+		});
 
-			const pageTitle2 = 'MyPage 2';
+		await test.step('Go to My Page 1', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout1.friendlyUrlPath}`
+			);
+		});
 
-			await test.step('Create My Page 2', async () => {
-				await createSitePage({
-					apiHelpers,
-					pageTitle: pageTitle2,
-					siteName,
-				});
-			});
+		await test.step('Check the pageViewed event on My Page 1', async () => {
+			const analytics = new Analytics(page);
 
-			await test.step('Go to My Page 1', async () => {
-				await navigateToSitePage({
-					page,
-					pageName: pageTitle1,
-					siteName,
-				});
-			});
+			const pageViewedEvent = (await analytics.getEvents(
+				'pageViewed'
+			)) as Event;
 
-			await test.step('Check the pageViewed event on My Page 1', async () => {
-				const analytics = new Analytics(page);
+			expect(pageViewedEvent).toBeTruthy();
+		});
 
-				const pageViewedEvent = (await analytics.getEvents(
-					'pageViewed'
-				)) as Event;
+		await test.step('Go to My Page 2', async () => {
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout2.friendlyUrlPath}`
+			);
+		});
 
-				expect(pageViewedEvent).toBeTruthy();
-			});
+		await test.step('Check the pageViewed event on My Page 2', async () => {
+			const analytics = new Analytics(page);
 
-			await test.step('Go to My Page 2', async () => {
-				await page.getByRole('menuitem', {name: 'MyPage 2'}).click();
-			});
+			const pageViewedEvent = (await analytics.getEvents(
+				'pageViewed'
+			)) as Event;
 
-			await test.step('Check the pageViewed event on My Page 2', async () => {
-				const analytics = new Analytics(page);
-
-				const pageViewedEvent = (await analytics.getEvents(
-					'pageViewed'
-				)) as Event;
-
-				expect(pageViewedEvent).toBeTruthy();
-			});
+			expect(pageViewedEvent).toBeTruthy();
 		});
 	}
 );

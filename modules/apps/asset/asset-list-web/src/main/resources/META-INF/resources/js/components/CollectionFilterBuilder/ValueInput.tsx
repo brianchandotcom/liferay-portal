@@ -4,7 +4,6 @@
  */
 
 import {Option, Picker} from '@clayui/core';
-import DatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
 import MultiSelect from '@clayui/multi-select';
 import {
@@ -14,9 +13,13 @@ import {
 import React from 'react';
 
 import {TriggerLabel} from './ConditionBuilder';
+import DateValueInput from './DateValueInput';
 import {config} from './config';
 
 import type {FilterProperty} from './types';
+
+export const VALUE_INPUT_CLASSNAME =
+	'condition-builder__value-input d-flex flex-grow-1';
 
 interface SelectedItem {
 	label: string;
@@ -29,7 +32,7 @@ function _handlePreventEnterSubmit(event: React.KeyboardEvent) {
 	}
 }
 
-interface ValueInputProps {
+export interface ValueInputProps {
 	index: number;
 	onChange: (value: string | Array<string | object>) => void;
 	operator: string;
@@ -103,16 +106,18 @@ export default function ValueInput({
 		];
 
 		return (
-			<Picker
-				aria-label={Liferay.Language.get('value')}
-				as={TriggerLabel}
-				items={items}
-				onSelectionChange={(key) => onChange(key as string)}
-				placeholder={Liferay.Language.get('select')}
-				selectedKey={value as string}
-			>
-				{(item) => <Option key={item.value}>{item.label}</Option>}
-			</Picker>
+			<div className={VALUE_INPUT_CLASSNAME}>
+				<Picker
+					aria-label={Liferay.Language.get('value')}
+					as={TriggerLabel}
+					items={items}
+					onSelectionChange={(key) => onChange(key as string)}
+					placeholder={Liferay.Language.get('select')}
+					selectedKey={value as string}
+				>
+					{(item) => <Option key={item.value}>{item.label}</Option>}
+				</Picker>
+			</div>
 		);
 	}
 
@@ -120,26 +125,30 @@ export default function ValueInput({
 		const items = (Array.isArray(value) ? value : []) as SelectedItem[];
 
 		return (
-			<MultiSelect
-				allowsCustomLabel={false}
-				aria-label={Liferay.Language.get('value')}
-				inputName={`${namespace}${property.name}-${index}`}
-				items={items}
-				onItemsChange={(newItems) => {
-					const uniqueNewItems = newItems
-						.filter(
-							(item, index, self) =>
-								index ===
-								self.findIndex((p) => p.value === item.value)
-						)
-						.map(({label, value}) => ({label, value}));
+			<div className={VALUE_INPUT_CLASSNAME}>
+				<MultiSelect
+					allowsCustomLabel={false}
+					aria-label={Liferay.Language.get('value')}
+					inputName={`${namespace}${property.name}-${index}`}
+					items={items}
+					onItemsChange={(newItems) => {
+						const uniqueNewItems = newItems
+							.filter(
+								(item, index, self) =>
+									index ===
+									self.findIndex(
+										(p) => p.value === item.value
+									)
+							)
+							.map(({label, value}) => ({label, value}));
 
-					onChange(uniqueNewItems as Array<string | object>);
-				}}
-				onKeyDown={_handlePreventEnterSubmit}
-				size="sm"
-				sourceItems={options}
-			/>
+						onChange(uniqueNewItems as Array<string | object>);
+					}}
+					onKeyDown={_handlePreventEnterSubmit}
+					size="sm"
+					sourceItems={options}
+				/>
+			</div>
 		);
 	}
 
@@ -148,7 +157,7 @@ export default function ValueInput({
 			const [from, to] = (value as string[]) || [];
 
 			return (
-				<div className="c-gap-2 d-flex flex-grow-1">
+				<div className={VALUE_INPUT_CLASSNAME}>
 					<ClayInput
 						aria-label={Liferay.Language.get('from')}
 						className="form-control-sm"
@@ -181,110 +190,46 @@ export default function ValueInput({
 		}
 
 		return (
-			<ClayInput
-				aria-label={Liferay.Language.get('value')}
-				className="form-control-sm"
-				id={`${property.name}-${index}`}
-				onChange={(event) => onChange(event.target.value)}
-				onKeyDown={_handlePreventEnterSubmit}
-				placeholder={Liferay.Language.get('enter-value')}
-				step={type === 'decimal' ? '0.001' : '1'}
-				type="number"
-				value={(value as string) ?? ''}
-			/>
+			<div className={VALUE_INPUT_CLASSNAME}>
+				<ClayInput
+					aria-label={Liferay.Language.get('value')}
+					className="form-control-sm"
+					id={`${property.name}-${index}`}
+					onChange={(event) => onChange(event.target.value)}
+					onKeyDown={_handlePreventEnterSubmit}
+					placeholder={Liferay.Language.get('enter-value')}
+					step={type === 'decimal' ? '0.001' : '1'}
+					type="number"
+					value={(value as string) ?? ''}
+				/>
+			</div>
 		);
 	}
 
 	if (type === 'date' || type === 'date-time') {
-		const isDateTime = type === 'date-time';
-		const dateFormat = 'yyyy-MM-dd';
-		const placeholder = isDateTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD';
-		const years = {
-			end: new Date().getFullYear() + 25,
-			start: new Date().getFullYear() - 50,
-		};
-
-		if (operator === 'between') {
-			const [from, to] = (value as string[]) || [];
-
-			if (!isDateTime) {
-				const rangeValue = from && to ? `${from} - ${to}` : from ?? '';
-
-				return (
-					<DatePicker
-						className="form-control-sm"
-						dateFormat={dateFormat}
-						inputName={`${property.name}-${index}`}
-						onChange={(newValue: any) => {
-							const [newFrom = '', newTo = ''] = (
-								newValue as string
-							).split(' - ');
-
-							onChange([newFrom, newTo] as string[]);
-						}}
-						placeholder={placeholder}
-						range
-						value={rangeValue}
-						years={years}
-					/>
-				);
-			}
-
-			return (
-				<div className="c-gap-2 d-flex flex-grow-1">
-					<DatePicker
-						className="form-control-sm"
-						dateFormat={dateFormat}
-						inputName={`${property.name}-from-${index}`}
-						onChange={(newValue: any) =>
-							onChange([newValue as string, to] as string[])
-						}
-						placeholder={placeholder}
-						time={isDateTime}
-						value={from ?? ''}
-						years={years}
-					/>
-
-					<DatePicker
-						className="form-control-sm"
-						dateFormat={dateFormat}
-						inputName={`${property.name}-to-${index}`}
-						onChange={(newValue: any) =>
-							onChange([from, newValue as string] as string[])
-						}
-						placeholder={placeholder}
-						time={isDateTime}
-						value={to ?? ''}
-						years={years}
-					/>
-				</div>
-			);
-		}
-
 		return (
-			<DatePicker
-				className="form-control-sm"
-				dateFormat={dateFormat}
-				inputName={`${property.name}-${index}`}
-				onChange={(newValue: any) => onChange(newValue as string)}
-				placeholder={placeholder}
-				time={isDateTime}
-				value={(value as string) ?? ''}
-				years={years}
+			<DateValueInput
+				index={index}
+				onChange={onChange}
+				operator={operator}
+				property={property}
+				value={value}
 			/>
 		);
 	}
 
 	return (
-		<ClayInput
-			aria-label={Liferay.Language.get('value')}
-			className="form-control-sm"
-			id={`${property.name}-${index}`}
-			onChange={(event) => onChange(event.target.value)}
-			onKeyDown={_handlePreventEnterSubmit}
-			placeholder={Liferay.Language.get('enter-value')}
-			type="text"
-			value={(value as string) ?? ''}
-		/>
+		<div className={VALUE_INPUT_CLASSNAME}>
+			<ClayInput
+				aria-label={Liferay.Language.get('value')}
+				className="d-flex form-control-sm"
+				id={`${property.name}-${index}`}
+				onChange={(event) => onChange(event.target.value)}
+				onKeyDown={_handlePreventEnterSubmit}
+				placeholder={Liferay.Language.get('enter-value')}
+				type="text"
+				value={(value as string) ?? ''}
+			/>
+		</div>
 	);
 }

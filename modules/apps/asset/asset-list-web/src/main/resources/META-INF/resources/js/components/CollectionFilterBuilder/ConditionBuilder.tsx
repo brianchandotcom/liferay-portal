@@ -205,19 +205,17 @@ function ConditionRow({
 				</div>
 			)}
 
-			<div className="c-gap-2 condition-builder__value-input d-flex flex-grow-1">
-				{selectedProperty &&
-				condition.operatorName &&
-				(!quantifierOptions?.length || condition.quantifier) ? (
-					<ValueInput
-						index={index}
-						onChange={handleValueChange}
-						operator={condition.operatorName}
-						property={selectedProperty}
-						value={condition.value}
-					/>
-				) : null}
-			</div>
+			{selectedProperty &&
+			condition.operatorName &&
+			(!quantifierOptions?.length || condition.quantifier) ? (
+				<ValueInput
+					index={index}
+					onChange={handleValueChange}
+					operator={condition.operatorName}
+					property={selectedProperty}
+					value={condition.value}
+				/>
+			) : null}
 		</>
 	);
 }

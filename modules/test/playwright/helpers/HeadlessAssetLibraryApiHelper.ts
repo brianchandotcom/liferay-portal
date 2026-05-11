@@ -23,7 +23,7 @@ export class HeadlessAssetLibraryApiHelper {
 		description?: string;
 		name: string;
 		settings?: any;
-		type: string;
+		type?: string;
 	}) {
 		const data = JSON.stringify({
 			description,

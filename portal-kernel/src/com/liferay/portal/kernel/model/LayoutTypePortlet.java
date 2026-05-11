@@ -14,7 +14,9 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Neil Griffin
+ * @deprecated As of Cavanaugh (7.4.x), replaced by Content Pages
  */
+@Deprecated
 public interface LayoutTypePortlet extends LayoutType {
 
 	public void addModeAboutPortletId(String portletId);

@@ -10,11 +10,13 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -180,21 +182,26 @@ public class RetrievalAugmentorUtil {
 			if (Objects.equals(
 					contentRetrieverJSONObject.getString("key"), "liferay")) {
 
+				Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
 				return WebSearchContentRetriever.builder(
 				).webSearchEngine(
 					new LiferayWebSearchEngine(
-						GetterUtil.getString(
-							workflowContext.get("accessToken")),
+						EncryptorUtil.decrypt(
+							company.getKeyObj(),
+							(String)workflowContext.get("accessToken")),
 						contentRetrieverJSONObject.getString(
 							"blueprintExternalReferenceCode"),
 						companyId,
-						GetterUtil.getString(workflowContext.get("userToken")))
+						EncryptorUtil.decrypt(
+							company.getKeyObj(),
+							(String)workflowContext.get("userToken")))
 				).build();
 			}
 		}
-		catch (JSONException jsonException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
+				_log.debug(exception);
 			}
 		}
 

@@ -888,95 +888,10 @@ public class ObjectDefinitionResourceTest
 		assertValid(postObjectDefinition);
 
 		_testPostObjectDefinitionBatch();
+		_testPostObjectDefinitionWithAllowStandaloneObjectEntry();
 		_testPostObjectDefinitionWithAssigneeObjectField();
 		_testPostObjectDefinitionWithSystemAggregationObjectField();
 		_testPostObjectDefinitionWithWorkflowDefinitionLinks();
-	}
-
-	@Test
-	public void testPostPutObjectDefinitionWithAllowStandaloneObjectEntry()
-		throws Exception {
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				JSONUtil.put(
-					"label", RandomTestUtil.randomLocaleStringMap()
-				).put(
-					"name", ObjectDefinitionTestUtil.getRandomName()
-				).put(
-					"objectDefinitionSettings",
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"name",
-							ObjectDefinitionSettingConstants.
-								NAME_ALLOW_STANDALONE_OBJECT_ENTRY
-						).put(
-							"value", "true"
-						))
-				).put(
-					"pluralLabel", RandomTestUtil.randomLocaleStringMap()
-				).put(
-					"scope", ObjectDefinitionConstants.SCOPE_COMPANY
-				).toString(),
-				"object-admin/v1.0/object-definitions", Http.Method.POST));
-
-		ObjectDefinition parentObjectDefinition =
-			objectDefinitionResource.postObjectDefinition(
-				randomObjectDefinition());
-		ObjectDefinition childObjectDefinition =
-			objectDefinitionResource.postObjectDefinition(
-				randomObjectDefinition());
-
-		TreeTestUtil.bind(
-			parentObjectDefinition.getId(), childObjectDefinition.getId(),
-			_objectRelationshipLocalService);
-
-		parentObjectDefinition.setObjectDefinitionSettings(
-			_getObjectDefinitionSettings("true"));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				parentObjectDefinition.toString(),
-				"object-admin/v1.0/object-definitions/" +
-					parentObjectDefinition.getId(),
-				Http.Method.PUT));
-
-		childObjectDefinition.setObjectDefinitionSettings(
-			_getObjectDefinitionSettings(RandomTestUtil.randomString()));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				childObjectDefinition.toString(),
-				"object-admin/v1.0/object-definitions/" +
-					childObjectDefinition.getId(),
-				Http.Method.PUT));
-
-		childObjectDefinition.setObjectDefinitionSettings(
-			_getObjectDefinitionSettings("false"));
-
-		Assert.assertEquals(
-			200,
-			HTTPTestUtil.invokeToHttpCode(
-				childObjectDefinition.toString(),
-				"object-admin/v1.0/object-definitions/" +
-					childObjectDefinition.getId(),
-				Http.Method.PUT));
-
-		Assert.assertFalse(
-			_objectDefinitionLocalService.getObjectDefinition(
-				childObjectDefinition.getId()
-			).isAllowStandaloneObjectEntry());
-
-		TreeTestUtil.unbind(
-			parentObjectDefinition.getId(), _objectRelationshipLocalService);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			parentObjectDefinition.getId());
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			childObjectDefinition.getId());
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -2188,6 +2103,7 @@ public class ObjectDefinitionResourceTest
 			null, objectField);
 
 		_testPutObjectDefinitionByExternalReferenceCodeWithSystemAggregationObjectField();
+		_testPutObjectDefinitionWithAllowStandaloneObjectEntry();
 	}
 
 	@Override
@@ -3178,6 +3094,34 @@ public class ObjectDefinitionResourceTest
 				objectDefinition2.getExternalReferenceCode()));
 	}
 
+	private void _testPostObjectDefinitionWithAllowStandaloneObjectEntry()
+		throws Exception {
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				JSONUtil.put(
+					"label", RandomTestUtil.randomLocaleStringMap()
+				).put(
+					"name", ObjectDefinitionTestUtil.getRandomName()
+				).put(
+					"objectDefinitionSettings",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"name",
+							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+						).put(
+							"value", "true"
+						))
+				).put(
+					"pluralLabel", RandomTestUtil.randomLocaleStringMap()
+				).put(
+					"scope", ObjectDefinitionConstants.SCOPE_COMPANY
+				).toString(),
+				"object-admin/v1.0/object-definitions", Http.Method.POST));
+	}
+
 	private void _testPostObjectDefinitionWithAssigneeObjectField()
 		throws Exception {
 
@@ -3381,6 +3325,67 @@ public class ObjectDefinitionResourceTest
 		Assert.assertNotNull(
 			_objectFieldLocalService.getObjectField(
 				putObjectDefinition.getId(), aggregationObjectFieldName));
+	}
+
+	private void _testPutObjectDefinitionWithAllowStandaloneObjectEntry()
+		throws Exception {
+
+		ObjectDefinition parentObjectDefinition =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+		ObjectDefinition childObjectDefinition =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+
+		TreeTestUtil.bind(
+			parentObjectDefinition.getId(), childObjectDefinition.getId(),
+			_objectRelationshipLocalService);
+
+		parentObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings("true"));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				parentObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					parentObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		childObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings(RandomTestUtil.randomString()));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				childObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					childObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		childObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings("false"));
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				childObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					childObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		Assert.assertFalse(
+			_objectDefinitionLocalService.getObjectDefinition(
+				childObjectDefinition.getId()
+			).isAllowStandaloneObjectEntry());
+
+		TreeTestUtil.unbind(
+			parentObjectDefinition.getId(), _objectRelationshipLocalService);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			parentObjectDefinition.getId());
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			childObjectDefinition.getId());
 	}
 
 	private JSONObject _waitForFinish(

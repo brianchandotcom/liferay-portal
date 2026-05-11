@@ -19,10 +19,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -168,10 +172,7 @@ public class ExportImportUtil {
 		return JSONUtil.put(
 			"href",
 			PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					httpServletRequest, themeDisplay.getScopeGroup(),
-					ExportImportPortletKeys.EXPORT_IMPORT, 0, 0,
-					PortletRequest.RENDER_PHASE)
+				_getPortletURL(themeDisplay.getScopeGroup(), httpServletRequest)
 			).setMVCPath(
 				mvcPath
 			).setRedirect(
@@ -210,6 +211,24 @@ public class ExportImportUtil {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private static PortletURL _getPortletURL(
+		Group group, HttpServletRequest httpServletRequest) {
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			group.getGroupId(), false, "/export-import");
+
+		if (layout == null) {
+			return PortalUtil.getControlPanelPortletURL(
+				httpServletRequest, group,
+				ExportImportPortletKeys.EXPORT_IMPORT, 0, 0,
+				PortletRequest.RENDER_PHASE);
+		}
+
+		return PortletURLFactoryUtil.create(
+			httpServletRequest, ExportImportPortletKeys.EXPORT_IMPORT, layout,
+			PortletRequest.RENDER_PHASE);
 	}
 
 	private static boolean _hasConfigurationPermission(

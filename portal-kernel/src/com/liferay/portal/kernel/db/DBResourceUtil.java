@@ -214,6 +214,10 @@ public class DBResourceUtil {
 	public static Set<String> parseCreateTableSQL(String createTableSQL) {
 		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
+		if (createTableSQL == null) {
+			return tableNames;
+		}
+
 		Matcher matcher = _createTablePattern.matcher(createTableSQL);
 
 		while (matcher.find()) {
@@ -298,6 +302,10 @@ public class DBResourceUtil {
 		String sql) {
 
 		Map<String, List<String>> columnDefinitionsMap = new TreeMap<>();
+
+		if (sql == null) {
+			return columnDefinitionsMap;
+		}
 
 		String tableName = null;
 

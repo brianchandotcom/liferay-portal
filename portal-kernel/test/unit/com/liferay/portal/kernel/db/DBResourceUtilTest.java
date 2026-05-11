@@ -119,6 +119,14 @@ public class DBResourceUtilTest {
 		}
 	}
 
+	@Test
+	public void testParseCreateTableSQLWhenSQLIsNull() {
+		Assert.assertTrue(
+			DBResourceUtil.parseCreateTableSQL(
+				null
+			).isEmpty());
+	}
+
 	private InputStream _getSQLFileInputStream(String lineSeparator) {
 		String sqlFile = StringBundler.concat(
 			"create index IX_TEST1 on Table1 (field1);", lineSeparator,

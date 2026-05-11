@@ -114,38 +114,38 @@ public class AssetStatisticsResourceTest
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_WEB_CONTENT", cmsGroup.getCompanyId());
 
-		Date now = new Date();
+		Date date = new Date();
 
-		// Add object entry with imminent expiration date
+		// Add object entry with distant expiration date
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
 		objectEntry1.setExpirationDate(
-			new Date(now.getTime() + (3 * Time.DAY)));
+			new Date(date.getTime() + (10 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry1);
 
-		_assertAssetStatistics(0, 1, 0, 0);
+		_assertAssetStatistics(0, 0, 0, 0);
 
-		// Add object entry with distant expiration date
+		// Add object entry with future review date
 
 		ObjectEntry objectEntry2 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry2.setExpirationDate(
-			new Date(now.getTime() + (10 * Time.DAY)));
+		objectEntry2.setReviewDate(new Date(date.getTime() + (5 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry2);
 
-		_assertAssetStatistics(0, 1, 0, 0);
+		_assertAssetStatistics(0, 0, 0, 0);
 
-		// Add object entry with future review date
+		// Add object entry with imminent expiration date
 
 		ObjectEntry objectEntry3 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry3.setReviewDate(new Date(now.getTime() + (5 * Time.DAY)));
+		objectEntry3.setExpirationDate(
+			new Date(date.getTime() + (3 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry3);
 
@@ -156,7 +156,7 @@ public class AssetStatisticsResourceTest
 		ObjectEntry objectEntry4 = _addObjectEntry(
 			depotEntry, objectDefinition);
 
-		objectEntry4.setReviewDate(new Date(now.getTime() - (2 * Time.DAY)));
+		objectEntry4.setReviewDate(new Date(date.getTime() - (2 * Time.DAY)));
 
 		_objectEntryLocalService.updateObjectEntry(objectEntry4);
 

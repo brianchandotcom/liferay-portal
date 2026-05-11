@@ -10,6 +10,7 @@ locals {
 }
 module "postgres_blue" {
 	count=local.is_active_data_blue || var.is_restoring ? 1 : 0
+	arn_partition=var.arn_partition
 	db_subnet_group_name=aws_db_subnet_group.rds.name
 	identifier="${var.deployment_name}-postgres-db-blue"
 	password=random_password.postgres_password.result
@@ -23,6 +24,7 @@ module "postgres_blue" {
 }
 module "postgres_green" {
 	count=local.is_active_data_green || var.is_restoring ? 1 : 0
+	arn_partition=var.arn_partition
 	db_subnet_group_name=aws_db_subnet_group.rds.name
 	identifier="${var.deployment_name}-postgres-db-green"
 	password=random_password.postgres_password.result

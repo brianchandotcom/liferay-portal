@@ -43,13 +43,11 @@ public class ArrayableFinderColumnTest {
 			new int[] {1, 2, 3});
 
 		Assert.assertTrue(
-			"normalize should box int[] to Object[]",
 			normalizedValue instanceof Integer[]);
 		Assert.assertEquals(
 			"(t.col IN (?,?,?))",
 			arrayableFinderColumn.getSqlFragment(normalizedValue));
 		Assert.assertTrue(
-			"entity Integer 2 should match {1, 2, 3}",
 			arrayableFinderColumn.matches(_TEST_MODEL, normalizedValue));
 		Assert.assertEquals(
 			"1,2,3", arrayableFinderColumn.toFinderArg(normalizedValue));
@@ -77,14 +75,12 @@ public class ArrayableFinderColumnTest {
 			new long[] {1L, 2L, 3L});
 
 		Assert.assertTrue(
-			"entity value 2 should be in {1, 2, 3}",
 			arrayableFinderColumn.matches(_TEST_MODEL, normalizedValue));
 
 		ArrayableFinderColumn<TestModel> missingColumn = _newLongColumn(
 			false, entity -> 9L);
 
 		Assert.assertFalse(
-			"entity value 9 should not be in {1, 2, 3}",
 			missingColumn.matches(_TEST_MODEL, normalizedValue));
 	}
 
@@ -135,7 +131,6 @@ public class ArrayableFinderColumnTest {
 			new String[] {"Foo", "BAR"});
 
 		Assert.assertTrue(
-			"entity value Bar should match {foo, bar} after lowercasing",
 			arrayableFinderColumn.matches(_TEST_MODEL, normalizedValue));
 	}
 
@@ -174,8 +169,6 @@ public class ArrayableFinderColumnTest {
 			new long[] {42L});
 
 		Assert.assertEquals(
-			"length-1 long must return the boxed Long so the cache key " +
-				"matches the invalidation key",
 			42L, arrayableFinderColumn.toFinderArg(normalizedValue));
 	}
 

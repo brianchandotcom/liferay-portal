@@ -57,7 +57,9 @@ html#{$cadmin-selector} .cadmin .page-audit {
 		position: relative;
 
 		&:after {
-			background-color: rgba($cadmin-primary-l1, 0.5);
+			background-color: unquote(
+				'hsl(from #{$cadmin-primary-l1} h s l / 0.5)'
+			);
 			border: 2px solid $cadmin-primary-l1;
 			content: '';
 			height: 100%;

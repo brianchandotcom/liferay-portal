@@ -58,9 +58,9 @@
 		&:hover,
 		&:focus-visible {
 			border-color: $blue;
-			box-shadow:
-				0 0 0 2px $primary-l1,
-				0 4px 8px fade_out($gray-900, 0.9);
+			box-shadow: unquote(
+				'0 0 0 2px #{$primary-l1}, 0 4px 8px hsl(from #{$gray-900} h s l / 0.1)'
+			);
 			cursor: grab;
 			outline: 0;
 			transform: translateX(-4px);

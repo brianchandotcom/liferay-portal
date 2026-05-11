@@ -13,7 +13,8 @@ $gsdc-btn-primary: map-merge(
 		color: $white,
 		hover-bg: darken($gsdc-primary, 5.1),
 		hover-border-color: transparent,
-		focus-box-shadow: 0 0 0 2px rgba(darken($primary, 5.1), 0.5),
+		focus-box-shadow:
+			unquote('0 0 0 2px hsl(from #{$primary} h s calc(l - 5.1) / 0.5)'),
 		active-bg: darken($gsdc-primary, 10),
 		active-border-color: transparent,
 		active-box-shadow: none,

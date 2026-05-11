@@ -10143,7 +10143,9 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 							>
 								<replacetoken>grant connect,resource to &amp;1;</replacetoken>
 								<replacevalue>grant connect,resource to &amp;1;
-	grant unlimited tablespace to &amp;1;</replacevalue>
+	grant unlimited tablespace to &amp;1;
+	grant select on sys.v_$session to &amp;1;
+	grant select on sys.v_$sql to &amp;1;</replacevalue>
 							</replace>
 
 							<if>
@@ -10153,7 +10155,9 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 										file="create.sql"
 									>
 										<replacetoken>grant connect,resource to &amp;1;
-	grant unlimited tablespace to &amp;1;</replacetoken>
+	grant unlimited tablespace to &amp;1;
+	grant select on sys.v_$session to &amp;1;
+	grant select on sys.v_$sql to &amp;1;</replacetoken>
 										<replacevalue>grant all privileges to &amp;1;</replacevalue>
 									</replace>
 									<replace
@@ -10388,7 +10392,9 @@ update db cfg for lportal${databases.size} using logsecond 254;</echo>
 							>
 								<replacetoken>grant connect,resource to &amp;1;</replacetoken>
 								<replacevalue>grant connect,resource to &amp;1;
-grant unlimited tablespace to &amp;1;</replacevalue>
+grant unlimited tablespace to &amp;1;
+grant select on sys.v_$session to &amp;1;
+grant select on sys.v_$sql to &amp;1;</replacevalue>
 							</replace>
 
 							<if>
@@ -10398,7 +10404,9 @@ grant unlimited tablespace to &amp;1;</replacevalue>
 										file="create.sql"
 									>
 										<replacetoken>grant connect,resource to &amp;1;
-grant unlimited tablespace to &amp;1;</replacetoken>
+grant unlimited tablespace to &amp;1;
+grant select on sys.v_$session to &amp;1;
+grant select on sys.v_$sql to &amp;1;</replacetoken>
 										<replacevalue>grant all privileges to &amp;1;</replacevalue>
 									</replace>
 									<replace

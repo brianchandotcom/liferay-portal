@@ -7,7 +7,9 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {createChannel} from '../../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../../osb-faro-web/main/utils/data-source';
 import {acceptsCookiesBanner} from '../../../osb-faro-web/main/utils/portal';
@@ -80,9 +82,7 @@ export async function disconnectFromAnalyticsCloud(page: Page) {
 
 		await confirmationButton.click();
 
-		await expect(
-			page.getByText('Success:Workspace disconnected.')
-		).toBeVisible();
+		await waitForAlert(page, 'Workspace disconnected.');
 	}
 }
 
@@ -332,15 +332,9 @@ export async function syncCommerce({
 
 	await checkbox.check();
 
-	const submitButton = await page.$(
-		'.modal .modal-item-last button.btn-primary'
-	);
+	await page.locator('.modal .modal-item-last button.btn-primary').click();
 
-	await submitButton.click();
-
-	await expect(
-		page.getByText('Success:Properties settings have been saved.')
-	).toBeVisible();
+	await waitForAlert(page, 'Properties settings have been saved.');
 }
 
 export async function toggleSiteSync({
@@ -356,9 +350,10 @@ export async function toggleSiteSync({
 }) {
 	const channel = await findChannel({channelName, page});
 
-	const assignButton = await channel.locator('button');
-
-	await assignButton.click();
+	await clickAndExpectToBeVisible({
+		target: page.getByRole('dialog'),
+		trigger: channel.locator('button'),
+	});
 
 	await switchToTab({page, tabName: TabName.Sites});
 
@@ -385,15 +380,9 @@ export async function toggleSiteSync({
 		await checkbox.uncheck();
 	}
 
-	const submitButton = await page.$(
-		'.modal .modal-item-last button.btn-primary'
-	);
+	await page.locator('.modal .modal-item-last button.btn-primary').click();
 
-	await submitButton.click();
-
-	await expect(
-		page.getByText('Success:Properties settings have been saved.')
-	).toBeVisible();
+	await waitForAlert(page, 'Properties settings have been saved.');
 }
 
 export async function goNextStep(page) {

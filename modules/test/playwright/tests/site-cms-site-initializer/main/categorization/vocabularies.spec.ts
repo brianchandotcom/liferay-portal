@@ -32,6 +32,7 @@ const createScopedVocabularyAndContent = async ({
 	apiHelpers,
 	assetLibraries,
 	assetTypes,
+	categoryName,
 	contentsPage,
 	page,
 	siteId,
@@ -39,20 +40,18 @@ const createScopedVocabularyAndContent = async ({
 	apiHelpers: ApiHelpers;
 	assetLibraries: AssetLibrary[];
 	assetTypes: AssetType[];
+	categoryName: string;
 	contentsPage: ContentsPage;
 	page: Page;
 	siteId: string;
 }) => {
-	const categoryName = getRandomString();
-	const vocabularyName = getRandomString();
-
 	await createCategories({
 		apiHelpers,
 		assetLibraries,
 		assetTypes,
 		categoryNames: [{name: categoryName}],
 		siteId,
-		vocabularyName,
+		vocabularyName: getRandomString(),
 	});
 
 	await contentsPage.goto();
@@ -69,8 +68,6 @@ const createScopedVocabularyAndContent = async ({
 
 	await content.waitFor();
 	await content.click();
-
-	return {categoryName};
 };
 
 test(
@@ -525,10 +522,13 @@ test(
 				type: 'Space',
 			});
 
-		const {categoryName} = await createScopedVocabularyAndContent({
+		const categoryName = getRandomString();
+
+		await createScopedVocabularyAndContent({
 			apiHelpers,
 			assetLibraries: [{id: spaceId, name: spaceName}],
 			assetTypes: [{required: false, type: 'AllAssetTypes'}],
+			categoryName,
 			contentsPage,
 			page,
 			siteId: site.id,
@@ -552,10 +552,13 @@ test(
 	async ({apiHelpers, contentsPage, page}) => {
 		const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
 
-		const {categoryName} = await createScopedVocabularyAndContent({
+		const categoryName = getRandomString();
+
+		await createScopedVocabularyAndContent({
 			apiHelpers,
 			assetLibraries: [{id: -1, name: 'All Spaces'}],
 			assetTypes: [{required: false, type: 'BlogPosting'}],
+			categoryName,
 			contentsPage,
 			page,
 			siteId: site.id,

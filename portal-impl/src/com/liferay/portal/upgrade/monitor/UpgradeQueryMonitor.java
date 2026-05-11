@@ -59,8 +59,8 @@ public final class UpgradeQueryMonitor {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Upgrade query monitor did not terminate within ",
-							_SHUTDOWN_TIMEOUT_SECONDS, " seconds."));
+							"Unable to terminate upgrade query monitor ",
+							"within ", _SHUTDOWN_TIMEOUT_SECONDS, " seconds"));
 				}
 			}
 		}
@@ -94,12 +94,12 @@ public final class UpgradeQueryMonitor {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Query \"", lockedQueryInfo.getQuery(), "\" (id ",
-							lockedQueryInfo.getId(),
-							"), which has been running for ",
+							"Locked query \"", lockedQueryInfo.getQuery(),
+							"\" (id ", lockedQueryInfo.getId(),
+							") running for ",
 							TimeUnit.MILLISECONDS.toSeconds(
 								lockedQueryInfo.getDuration()),
-							" seconds, is locked."));
+							" seconds"));
 				}
 			}
 		}
@@ -111,10 +111,10 @@ public final class UpgradeQueryMonitor {
 			}
 
 			if (_log.isWarnEnabled()) {
+				_log.warn("Upgrade query monitoring is disabled");
 				_log.warn(
-					StringBundler.concat(
-						"Upgrade query monitoring was disabled. Unable to ",
-						"detect locked queries: ", exception.getMessage()));
+					"Unable to detect locked queries: " +
+						exception.getMessage());
 			}
 
 			if (_log.isDebugEnabled()) {

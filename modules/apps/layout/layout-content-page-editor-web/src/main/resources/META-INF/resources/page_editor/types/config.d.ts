@@ -213,6 +213,7 @@ export interface Config {
 	searchContainerPageMaxDelta: number;
 
 	selectedMappingTypes?: {
+		formEnabled: boolean;
 		subtype: {
 			id: string;
 			label: string;

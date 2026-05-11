@@ -130,6 +130,7 @@ public class TemplatesAspect {
 
 			String message = _buildMessage(
 				(DDMTemplateShim)parameters[1],
+				(JournalArticleShim)parameters[0],
 				(ThemeDisplayShim)parameters[9]);
 
 			if (_INSTRUMENTATION_LEVEL_TRACE.equals(
@@ -285,6 +286,11 @@ public class TemplatesAspect {
 
 	@Shim("com.liferay.journal.model.JournalArticle")
 	public interface JournalArticleShim {
+
+		public long getCompanyId();
+
+		public long getGroupId();
+
 	}
 
 	@Shim("com.liferay.portal.kernel.theme.ThemeDisplay")
@@ -301,14 +307,28 @@ public class TemplatesAspect {
 	}
 
 	private static String _buildMessage(
-		DDMTemplateShim dDMTemplateShim, ThemeDisplayShim themeDisplayShim) {
+		DDMTemplateShim dDMTemplateShim, JournalArticleShim journalArticleShim,
+		ThemeDisplayShim themeDisplayShim) {
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("Journal Article FreeMarker Template (Company ID ");
-		sb.append(themeDisplayShim.getCompanyId());
-		sb.append(", Site Group ID ");
-		sb.append(themeDisplayShim.getSiteGroupId());
+
+		if (themeDisplayShim != null) {
+			sb.append(themeDisplayShim.getCompanyId());
+			sb.append(", Site Group ID ");
+			sb.append(themeDisplayShim.getSiteGroupId());
+		}
+		else if (journalArticleShim != null) {
+			sb.append(journalArticleShim.getCompanyId());
+			sb.append(", Site Group ID ");
+			sb.append(journalArticleShim.getGroupId());
+		}
+		else {
+			sb.append("?");
+			sb.append(", Site Group ID ");
+			sb.append("?");
+		}
 
 		if (dDMTemplateShim != null) {
 			sb.append(", and Dynamic Data Mapping Template ID ");

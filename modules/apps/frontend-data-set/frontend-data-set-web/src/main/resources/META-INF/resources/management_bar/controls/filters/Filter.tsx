@@ -13,6 +13,7 @@ import FrontendDataSetContext from '../../../FrontendDataSetContext';
 
 import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
 import dateRangeFilterImplementation from './implementation/DateRangeFilter';
+import dateTimeRangeFilterImplementation from './implementation/DateTimeRangeFilter';
 import selectionFilterImplementation from './implementation/SelectionFilter';
 import {EEntityFieldType} from './utils/types';
 
@@ -63,12 +64,13 @@ export interface IFilter {
 	moduleURL?: string;
 	onClose: () => void;
 	selectedItemsLabel: string;
-	type: 'clientExtension' | 'dateRange' | 'selection';
+	type: 'clientExtension' | 'dateRange' | 'dateTimeRange' | 'selection';
 }
 
 const FILTER_IMPLEMENTATIONS = {
 	clientExtension: clientExtensionFilterImplementation,
 	dateRange: dateRangeFilterImplementation,
+	dateTimeRange: dateTimeRangeFilterImplementation,
 	selection: selectionFilterImplementation,
 };
 

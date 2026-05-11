@@ -19,6 +19,7 @@ import {
 import {createChannel} from './utils/channel';
 import {
 	checkDataSourceStatus,
+	createDataSource,
 	findDataSource,
 	renameDataSource,
 } from './utils/data-source';
@@ -47,29 +48,7 @@ test(
 			channelName,
 		});
 
-		let token;
-
-		await test.step('Go to Analytics Cloud settings and add a Data Source', async () => {
-			await navigateToACSettingsViaURL({
-				acPage: ACPage.dataSourcePage,
-				page,
-				projectID: project.groupId,
-			});
-
-			await page.getByRole('button', {name: 'Add Data Source'}).click();
-
-			await page
-				.getByRole('menuitem', {name: 'Liferay DXP Site'})
-				.click();
-
-			await page.waitForTimeout(1000);
-
-			token = await page
-				.locator('.onboarding-modal-root input')
-				.getAttribute('value');
-
-			await page.getByRole('link', {name: 'Done'}).click();
-		});
+		const {token} = await createDataSource(page);
 
 		await test.step('Go to DXP --> Instance Settings --> Analytics Cloud and disconnect the workspace', async () => {
 			await goToAnalyticsCloudInstanceSettings(page);

@@ -10,7 +10,9 @@ import com.liferay.osb.faro.engine.client.ContactsEngineClient;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountDetails;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageMetric;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
 import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
@@ -72,6 +74,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseMockContactsEngineClientImpl
 	extends BaseEngineClient implements ContactsEngineClient {
+
+	@Override
+	public AccountLifecycle addAccountLifecycle(
+		FaroProject faroProject, String description, String name,
+		String segmentId) {
+
+		return contactsEngineClient.addAccountLifecycle(
+			faroProject, description, name, segmentId);
+	}
 
 	@Override
 	public Results<BlockedKeyword> addBlockedKeywords(
@@ -336,6 +347,14 @@ public abstract class BaseMockContactsEngineClientImpl
 	}
 
 	@Override
+	public AccountLifecycle getAccountLifecycle(
+			FaroProject faroProject, String id)
+		throws FaroEngineClientException {
+
+		return contactsEngineClient.getAccountLifecycle(faroProject, id);
+	}
+
+	@Override
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(
 			FaroProject faroProject, String country, String id, String industry,
 			String revenue)
@@ -343,6 +362,22 @@ public abstract class BaseMockContactsEngineClientImpl
 
 		return contactsEngineClient.getAccountLifecycleMetrics(
 			faroProject, country, id, industry, revenue);
+	}
+
+	@Override
+	public List<AccountLifecycle> getAccountLifecycles(FaroProject faroProject)
+		throws FaroEngineClientException {
+
+		return contactsEngineClient.getAccountLifecycles(faroProject);
+	}
+
+	@Override
+	public List<AccountLifecycleStageMetric> getAccountLifecycleStageMetrics(
+			FaroProject faroProject, String country, String id, String industry)
+		throws FaroEngineClientException {
+
+		return contactsEngineClient.getAccountLifecycleStageMetrics(
+			faroProject, country, id, industry);
 	}
 
 	@Override
@@ -1187,6 +1222,24 @@ public abstract class BaseMockContactsEngineClientImpl
 		super.setEngineURL(engineURL);
 
 		contactsEngineClient.setEngineURL(engineURL);
+	}
+
+	@Override
+	public AccountLifecycle updateAccountLifecycle(
+		FaroProject faroProject, String description, String id, String name,
+		String segmentId) {
+
+		return contactsEngineClient.updateAccountLifecycle(
+			faroProject, description, id, name, segmentId);
+	}
+
+	@Override
+	public void updateAccountLifecycleStageRule(
+		FaroProject faroProject, String filterMetadata, String filterString,
+		String id, String name, String stageId) {
+
+		contactsEngineClient.updateAccountLifecycleStageRule(
+			faroProject, filterMetadata, filterString, id, name, stageId);
 	}
 
 	@Override

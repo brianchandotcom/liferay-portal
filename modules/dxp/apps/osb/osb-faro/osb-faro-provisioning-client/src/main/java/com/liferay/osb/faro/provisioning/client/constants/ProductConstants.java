@@ -44,7 +44,7 @@ public class ProductConstants {
 	public static final String DATA_PLATFORM_ENTERPRISE_PRODUCT_ENTRY_NAME =
 		"Liferay Data Platform Enterprise";
 
-	public static final String DATA_PLATFORM_PRODUCT_ENTRY_ID = "KOR-17035360";
+	public static final String DATA_PLATFORM_PRODUCT_ENTRY_ID = "KOR-17035332";
 
 	public static final String DATA_PLATFORM_PRODUCT_ENTRY_NAME =
 		"Liferay Data Platform";

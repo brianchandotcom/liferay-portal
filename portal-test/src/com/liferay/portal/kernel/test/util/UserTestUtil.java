@@ -45,10 +45,16 @@ import java.util.Locale;
 public class UserTestUtil {
 
 	public static User addCompanyAdminUser(Company company) throws Exception {
+		return addCompanyUser(company, RoleConstants.ADMINISTRATOR);
+	}
+
+	public static User addCompanyUser(Company company, String roleName)
+		throws Exception {
+
 		User user = addUser(company);
 
 		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+			company.getCompanyId(), roleName);
 
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
 
@@ -199,19 +205,6 @@ public class UserTestUtil {
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	public static User addUser(Company company, String roleName)
-		throws Exception {
-
-		User user = addUser(company);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), roleName);
-
-		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
-
-		return user;
 	}
 
 	public static User addUser(long... groupIds) throws Exception {

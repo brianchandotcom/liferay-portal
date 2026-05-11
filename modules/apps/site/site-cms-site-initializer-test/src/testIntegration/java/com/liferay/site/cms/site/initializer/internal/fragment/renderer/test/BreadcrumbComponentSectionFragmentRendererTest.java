@@ -77,7 +77,7 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		_cmsAdministratorUser = UserTestUtil.addUser(
+		_cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			_company, RoleConstants.CMS_ADMINISTRATOR);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(

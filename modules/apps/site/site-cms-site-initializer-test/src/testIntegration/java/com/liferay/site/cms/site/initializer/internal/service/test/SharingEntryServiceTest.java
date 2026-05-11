@@ -203,7 +203,7 @@ public class SharingEntryServiceTest {
 		_assertAddOrUpdateSharingEntry(
 			_portal.getClassNameId(objectDefinition.getClassName()), true,
 			_addCMSBasicDocumentObjectEntry(objectDefinition),
-			UserTestUtil.addUser(
+			UserTestUtil.addCompanyUser(
 				_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 				RoleConstants.CMS_ADMINISTRATOR));
 	}

@@ -182,7 +182,7 @@ public class UserSegmentsEntryMembershipChecker {
 
 			String replacement = StringBundler.concat(
 				"((user['", _getFieldName(fieldName),
-				"']?.toLowerCase().indexOf('", value, "') != null ? user['",
+				"']?.toLowerCase()?.indexOf('", value, "') != null ? user['",
 				_getFieldName(fieldName), "'].toLowerCase().indexOf('", value,
 				"') : -1) >= 0)");
 

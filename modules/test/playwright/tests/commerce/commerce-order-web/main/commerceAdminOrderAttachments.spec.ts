@@ -111,7 +111,7 @@ test(
 		page,
 		site,
 	}) => {
-		test.setTimeout(180000);
+		test.setTimeout(120000);
 
 		const {order} = await setUpOrder(apiHelpers, site);
 
@@ -170,16 +170,20 @@ test(
 				'5'
 			);
 
-			await commerceAdminOrderAttachmentsPage.sidePanelFileInput.setInputFiles(
-				{
-					buffer: Buffer.from(
-						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-						'base64'
-					),
-					mimeType: 'image/png',
-					name: addedTitle,
-				}
-			);
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await commerceAdminOrderAttachmentsPage.sidePanelSelectFileButton.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles({
+				buffer: Buffer.from(
+					'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+					'base64'
+				),
+				mimeType: 'image/png',
+				name: addedTitle,
+			});
 
 			await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click();
 
@@ -224,15 +228,26 @@ test(
 
 		await test.step('Delete the edited attachment from the row dropdown', async () => {
 			await expect(async () => {
-				await commerceAdminOrderAttachmentsPage
-					.rowActionsButton(editedTitle)
-					.click();
+				if (
+					!(await commerceAdminOrderAttachmentsPage.deleteConfirmButton.isVisible())
+				) {
+					await commerceAdminOrderAttachmentsPage
+						.rowActionsButton(editedTitle)
+						.click();
+
+					await expect(
+						commerceAdminOrderAttachmentsPage.deleteRowAction
+					).toBeVisible({timeout: 500});
+
+					await commerceAdminOrderAttachmentsPage.deleteRowAction.click(
+						{timeout: 500}
+					);
+				}
+
 				await expect(
-					commerceAdminOrderAttachmentsPage.deleteRowAction
+					commerceAdminOrderAttachmentsPage.deleteConfirmButton
 				).toBeVisible({timeout: 500});
 			}).toPass({timeout: 5000});
-
-			await commerceAdminOrderAttachmentsPage.deleteRowAction.click();
 
 			await commerceAdminOrderAttachmentsPage.deleteConfirmButton.click();
 
@@ -257,7 +272,7 @@ test(
 		page,
 		site,
 	}) => {
-		test.setTimeout(180000);
+		test.setTimeout(120000);
 
 		const {order} = await setUpOrder(apiHelpers, site);
 
@@ -318,16 +333,22 @@ test(
 			await commerceAdminOrderAttachmentsPage.sidePanelPriorityInput.fill(
 				'5'
 			);
-			await commerceAdminOrderAttachmentsPage.sidePanelFileInput.setInputFiles(
-				{
-					buffer: Buffer.from(
-						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-						'base64'
-					),
-					mimeType: 'image/png',
-					name: addedTitle,
-				}
-			);
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await commerceAdminOrderAttachmentsPage.sidePanelSelectFileButton.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles({
+				buffer: Buffer.from(
+					'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+					'base64'
+				),
+				mimeType: 'image/png',
+				name: addedTitle,
+			});
+
 			await commerceAdminOrderAttachmentsPage.sidePanelRestrictedCheckbox.setChecked(
 				true
 			);
@@ -376,7 +397,7 @@ test(
 		page,
 		pageEditorPage,
 	}) => {
-		test.setTimeout(180000);
+		test.setTimeout(120000);
 
 		const {channel, site} = await classicCommerceSetUp(
 			apiHelpers,
@@ -443,16 +464,22 @@ test(
 			await commerceAdminOrderAttachmentsPage.sidePanelPriorityInput.fill(
 				'5'
 			);
-			await commerceAdminOrderAttachmentsPage.sidePanelFileInput.setInputFiles(
-				{
-					buffer: Buffer.from(
-						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
-						'base64'
-					),
-					mimeType: 'image/png',
-					name: attachmentTitle,
-				}
-			);
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			await commerceAdminOrderAttachmentsPage.sidePanelSelectFileButton.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles({
+				buffer: Buffer.from(
+					'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+					'base64'
+				),
+				mimeType: 'image/png',
+				name: attachmentTitle,
+			});
+
 			await commerceAdminOrderAttachmentsPage.sidePanelSaveButton.click();
 
 			await waitForAlert(page);
@@ -496,16 +523,25 @@ test(
 
 		await test.step('Delete the attachment from the admin panel', async () => {
 			await expect(async () => {
-				await commerceAdminOrderAttachmentsPage
-					.rowActionsButton(attachmentTitle)
-					.click();
+				if (
+					!(await commerceAdminOrderAttachmentsPage.deleteConfirmButton.isVisible())
+				) {
+					await commerceAdminOrderAttachmentsPage
+						.rowActionsButton(attachmentTitle)
+						.click();
+					await expect(
+						commerceAdminOrderAttachmentsPage.deleteRowAction
+					).toBeVisible({timeout: 500});
+					await commerceAdminOrderAttachmentsPage.deleteRowAction.click(
+						{timeout: 500}
+					);
+				}
 
 				await expect(
-					commerceAdminOrderAttachmentsPage.deleteRowAction
+					commerceAdminOrderAttachmentsPage.deleteConfirmButton
 				).toBeVisible({timeout: 500});
 			}).toPass({timeout: 5000});
 
-			await commerceAdminOrderAttachmentsPage.deleteRowAction.click();
 			await commerceAdminOrderAttachmentsPage.deleteConfirmButton.click();
 
 			await page.goto(

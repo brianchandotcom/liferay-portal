@@ -69,9 +69,8 @@ public final class UpgradeQueryMonitor {
 				_log.debug(interruptedException);
 			}
 
-			Thread currentThread = Thread.currentThread();
-
-			currentThread.interrupt();
+			Thread.currentThread(
+			).interrupt();
 		}
 
 		_scheduledExecutorService = null;
@@ -104,17 +103,16 @@ public final class UpgradeQueryMonitor {
 			}
 		}
 		catch (Exception exception) {
-			Thread currentThread = Thread.currentThread();
+			if (Thread.currentThread(
+				).isInterrupted()) {
 
-			if (currentThread.isInterrupted()) {
 				return;
 			}
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					StringBundler.concat(
-						"Upgrade query monitoring is disabled: ",
-						exception.getMessage()));
+					"Upgrade query monitoring is disabled: " +
+						exception.getMessage());
 			}
 
 			if (_log.isDebugEnabled()) {

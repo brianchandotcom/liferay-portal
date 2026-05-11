@@ -55,14 +55,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = Mockito.mock(ObjectDefinition.class);
-
-		Mockito.when(
-			_objectDefinition.isDefaultStorageType()
-		).thenReturn(
-			false
-		);
-
 		DisplayPageInfoItemFieldSetProvider
 			displayPageInfoItemFieldSetProvider = Mockito.mock(
 				DisplayPageInfoItemFieldSetProvider.class);
@@ -84,6 +76,15 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				Mockito.anyString(), Mockito.any())
 		).thenReturn(
 			Collections.emptyList()
+		);
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		Mockito.when(
+			objectDefinition.isDefaultStorageType()
+		).thenReturn(
+			false
 		);
 
 		ObjectFieldLocalService objectFieldLocalService = Mockito.mock(
@@ -113,7 +114,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				Mockito.mock(FriendlyURLEntryLocalService.class),
 				infoItemFieldReaderFieldSetProvider,
 				Mockito.mock(ListTypeEntryLocalService.class),
-				Mockito.mock(ObjectActionLocalService.class), _objectDefinition,
+				Mockito.mock(ObjectActionLocalService.class), objectDefinition,
 				Mockito.mock(ObjectDefinitionLocalService.class),
 				Mockito.mock(ObjectFieldInfoFieldConverter.class),
 				Mockito.mock(ObjectEntryLocalService.class),
@@ -127,16 +128,14 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	}
 
 	@Test
-	public void testGetInfoItemFieldValuesExposesExternalReferenceCodeForProxyObjectEntries()
-		throws Exception {
-
+	public void testGetInfoItemFieldValuesProxyObjectEntry() throws Exception {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		com.liferay.object.rest.dto.v1_0.ObjectEntry dtoObjectEntry =
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
 
-		dtoObjectEntry.setExternalReferenceCode(externalReferenceCode);
-		dtoObjectEntry.setProperties(Collections.emptyMap());
+		objectEntry.setExternalReferenceCode(externalReferenceCode);
+		objectEntry.setProperties(Collections.emptyMap());
 
 		ObjectEntry serviceBuilderObjectEntry = Mockito.mock(ObjectEntry.class);
 
@@ -160,14 +159,13 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			InfoItemFieldValues infoItemFieldValues =
 				_objectEntryInfoItemFieldValuesProvider.getInfoItemFieldValues(
 					new ProxyObjectEntry(
-						serviceBuilderObjectEntry, dtoObjectEntry));
+						serviceBuilderObjectEntry, objectEntry));
 
 			InfoFieldValue<Object> infoFieldValue =
 				infoItemFieldValues.getInfoFieldValue(
 					ObjectEntryInfoItemFields.externalReferenceCodeInfoField.
 						getName());
 
-			Assert.assertNotNull(infoFieldValue);
 			Assert.assertEquals(
 				externalReferenceCode, infoFieldValue.getValue());
 		}
@@ -176,7 +174,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		}
 	}
 
-	private ObjectDefinition _objectDefinition;
 	private ObjectEntryInfoItemFieldValuesProvider
 		_objectEntryInfoItemFieldValuesProvider;
 

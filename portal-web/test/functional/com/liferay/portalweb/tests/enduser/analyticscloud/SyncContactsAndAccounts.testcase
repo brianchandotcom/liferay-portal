@@ -45,13 +45,23 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
 	@priority = 4
-	test CanSearchAccountGroupsInContactsModal {
+	test CanSearchAcrossEntityTypesInPropertyWizard {
 		var foundAccountGroup = "Brazilian";
+		var foundUserGroup = "LXC";
 		var notFoundAccountGroup = "Silver,Copper";
+		var notFoundUserGroup = "AC,DXP";
 
-		task ("Create 3 account groups") {
+		task ("Create some user groups") {
+			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
+				JSONUserGroup.addUserGroup(
+					userGroupDescription = "UserGroup Description",
+					userGroupName = ${userGroupName});
+			}
+		}
+
+		task ("Create account groups") {
 			for (var accountGroupName : list "${foundAccountGroup},${notFoundAccountGroup}") {
 				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
 			}
@@ -84,7 +94,7 @@ definition {
 				locator1 = "Button#ANY");
 		}
 
-		task ("Click on sync by account groups") {
+		task ("Click on Select Accounts > Click on sync by Account Groups") {
 			Click(
 				key_panel = "Select Accounts",
 				locator1 = "Panel#PANEL_COLLAPSED");
@@ -102,48 +112,6 @@ definition {
 			ACDXPSettings.viewGenericListItem(itemValueList = ${foundAccountGroup});
 
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundAccountGroup});
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12663 | Test Summary: Can search for groups in the select contacts modal"
-	@priority = 4
-	test CanSearchAcrossEntityTypesInPropertyWizard {
-		var foundUserGroup = "LXC";
-		var notFoundUserGroup = "AC,DXP";
-
-		task ("Create some user groups") {
-			for (var userGroupName : list "${foundUserGroup},${notFoundUserGroup}") {
-				JSONUserGroup.addUserGroup(
-					userGroupDescription = "UserGroup Description",
-					userGroupName = ${userGroupName});
-			}
-		}
-
-		task ("Connect Commerce and AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
 		}
 
 		task ("Click on Select Contacts > Click on sync contacts by groups") {

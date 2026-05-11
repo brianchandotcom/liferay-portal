@@ -24,8 +24,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertCaseFunction(testModel -> null);
 
-		Assert.assertEquals(
-			"", function.apply(_TEST_MODEL));
+		Assert.assertEquals("", function.apply(_TEST_MODEL));
 	}
 
 	@Test
@@ -33,8 +32,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertCaseFunction(testModel -> "Alice");
 
-		Assert.assertEquals(
-			"alice", function.apply(_TEST_MODEL));
+		Assert.assertEquals("alice", function.apply(_TEST_MODEL));
 	}
 
 	@Test
@@ -44,8 +42,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertDateFunction(testModel -> date);
 
-		Assert.assertEquals(
-			1_234_567_890L, function.apply(_TEST_MODEL));
+		Assert.assertEquals(1_234_567_890L, function.apply(_TEST_MODEL));
 	}
 
 	@Test
@@ -53,8 +50,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertDateFunction(testModel -> null);
 
-		Assert.assertNull(
-			function.apply(_TEST_MODEL));
+		Assert.assertNull(function.apply(_TEST_MODEL));
 	}
 
 	@Test
@@ -70,8 +66,7 @@ public class BasePersistenceImplTest {
 		Function<TestModel, Object> function =
 			BasePersistenceImpl.convertNullFunction(testModel -> null);
 
-		Assert.assertEquals(
-			"", function.apply(_TEST_MODEL));
+		Assert.assertEquals("", function.apply(_TEST_MODEL));
 	}
 
 	@Test

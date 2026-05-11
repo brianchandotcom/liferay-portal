@@ -67,8 +67,7 @@ public class FinderPathTest {
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, 0b10, 0, true, null);
 
-		Assert.assertEquals(
-			"alice", finderPath.normalizeArgument(1, "Alice"));
+		Assert.assertEquals("alice", finderPath.normalizeArgument(1, "Alice"));
 		Assert.assertEquals(
 			Long.valueOf(123L), finderPath.normalizeArgument(0, 123L));
 	}

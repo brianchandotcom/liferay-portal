@@ -42,8 +42,7 @@ public class ArrayableFinderColumnTest {
 		Object normalizedValue = arrayableFinderColumn.normalizeValue(
 			new int[] {1, 2, 3});
 
-		Assert.assertTrue(
-			normalizedValue instanceof Integer[]);
+		Assert.assertTrue(normalizedValue instanceof Integer[]);
 		Assert.assertEquals(
 			"(t.col IN (?,?,?))",
 			arrayableFinderColumn.getSqlFragment(normalizedValue));
@@ -80,8 +79,7 @@ public class ArrayableFinderColumnTest {
 		ArrayableFinderColumn<TestModel> missingColumn = _newLongColumn(
 			false, entity -> 9L);
 
-		Assert.assertFalse(
-			missingColumn.matches(_TEST_MODEL, normalizedValue));
+		Assert.assertFalse(missingColumn.matches(_TEST_MODEL, normalizedValue));
 	}
 
 	@Test

@@ -7,7 +7,7 @@ import {dateUtils, sub} from 'frontend-js-web';
 
 import {
 	DateFilterValues,
-	FilterState,
+	EditingState,
 	FilterType,
 	ModifiedLastType,
 } from './types';
@@ -54,7 +54,7 @@ export const MODIFIED_LAST_OPTIONS = [
 ];
 
 export function mapEditingToFilterValues(
-	editing: FilterState['editing']
+	editing: EditingState
 ): DateFilterValues {
 	const {filterType, fromDate, modifiedLast, toDate} = editing;
 
@@ -101,8 +101,8 @@ export function getAppliedFilterSummary(applied: DateFilterValues): string {
 }
 
 export function getIsDirty(
-	editing: FilterState['editing'],
-	applied: FilterState['applied']
+	editing: EditingState,
+	applied: DateFilterValues
 ): boolean {
 	if (editing.filterType !== applied.filterType) {
 		return true;
@@ -128,7 +128,7 @@ export function getIsDirty(
 	return false;
 }
 
-export function getValidation(editing: FilterState['editing']): {
+export function getValidation(editing: EditingState): {
 	errors: {fromDate?: string; toDate?: string};
 	isValid: boolean;
 } {

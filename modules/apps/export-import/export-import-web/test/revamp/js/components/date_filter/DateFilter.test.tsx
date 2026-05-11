@@ -6,23 +6,40 @@
 import '@testing-library/jest-dom';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
+import React, {useState} from 'react';
 
 import DateFilter from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter';
 import {
+	DateFilterValues,
 	FilterType,
 	ModifiedLastType,
 } from '../../../../../src/main/resources/META-INF/resources/revamp/js/components/date_filter/types';
 
-describe('DateFilter', () => {
-	beforeAll(() => {
-		global.Liferay.ThemeDisplay.getTimeZone = jest.fn(() => 'UTC');
+function ControlledDateFilter({
+	onApplyFilter,
+}: {
+	onApplyFilter: (filterValues: DateFilterValues) => void;
+}) {
+	const [appliedValue, setAppliedValue] = useState<DateFilterValues>({
+		filterType: FilterType.All,
 	});
 
+	return (
+		<DateFilter
+			appliedValue={appliedValue}
+			onApplyFilter={(filterValues) => {
+				setAppliedValue(filterValues);
+				onApplyFilter(filterValues);
+			}}
+		/>
+	);
+}
+
+describe('DateFilter', () => {
 	const renderDateFilter = (onApplyFilter = jest.fn()) => {
 		const user = userEvent.setup();
 
-		render(<DateFilter onApplyFilter={onApplyFilter} />);
+		render(<ControlledDateFilter onApplyFilter={onApplyFilter} />);
 
 		return {onApplyFilter, user};
 	};

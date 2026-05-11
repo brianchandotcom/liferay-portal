@@ -7,13 +7,18 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
-import React, {useMemo, useReducer} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
 import DateRangeFields from './DateRangeFields';
 import ModifiedLastFields from './ModifiedLastFields';
-import {INITIAL_STATE, filterReducer} from './reducer';
-import {DateFilterValues, FilterType} from './types';
+import {
+	DateFilterValues,
+	EditingState,
+	FilterType,
+	ModifiedLastType,
+	TouchedFields,
+} from './types';
 import {
 	FILTER_OPTIONS,
 	getAppliedFilterSummary,
@@ -22,49 +27,63 @@ import {
 	mapEditingToFilterValues,
 } from './utils';
 
+const INITIAL_EDITING: EditingState = {
+	filterType: FilterType.All,
+	fromDate: '',
+	modifiedLast: ModifiedLastType.H12,
+	toDate: '',
+};
+
+const INITIAL_TOUCHED: TouchedFields = {
+	fromDate: false,
+	toDate: false,
+};
+
 export default function DateFilter({
+	appliedValue = {filterType: FilterType.All} as DateFilterValues,
 	itemsCount = 0,
 	onApplyFilter,
 }: {
+	appliedValue?: DateFilterValues;
 	itemsCount?: number;
 	onApplyFilter?: (filterValues: DateFilterValues) => void;
 }) {
-	const [state, dispatch] = useReducer(filterReducer, INITIAL_STATE);
-
-	const {applied, editing, touchedFields} = state;
+	const [editing, setEditing] = useState<EditingState>(INITIAL_EDITING);
+	const [touchedFields, setTouchedFields] =
+		useState<TouchedFields>(INITIAL_TOUCHED);
 
 	const validation = useMemo(() => getValidation(editing), [editing]);
 
 	const isDirty = useMemo(
-		() => getIsDirty(editing, applied),
-		[editing, applied]
+		() => getIsDirty(editing, appliedValue),
+		[editing, appliedValue]
 	);
 
 	const appliedFilterSummary = useMemo(
-		() => getAppliedFilterSummary(applied),
-		[applied]
+		() => getAppliedFilterSummary(appliedValue),
+		[appliedValue]
 	);
 
+	const updateFilter = (patch: Partial<EditingState>) => {
+		setEditing((prev) => ({...prev, ...patch}));
+	};
+
+	const updateTouched = (patch: Partial<TouchedFields>) => {
+		setTouchedFields((prev) => ({...prev, ...patch}));
+	};
+
 	const handleShowResults = () => {
-		dispatch({type: 'SET_TOUCH_ALL'});
+		setTouchedFields({fromDate: true, toDate: true});
 
 		if (validation.isValid) {
-			dispatch({type: 'APPLY'});
 			onApplyFilter?.(mapEditingToFilterValues(editing));
 		}
 	};
 
 	const handleClearFilters = () => {
-		dispatch({type: 'RESET'});
+		setEditing(INITIAL_EDITING);
+		setTouchedFields(INITIAL_TOUCHED);
 		onApplyFilter?.({filterType: FilterType.All});
-	};
-
-	const handleUpdateFilter = (payload: Partial<typeof editing>) => {
-		dispatch({payload, type: 'UPDATE_FILTER'});
-	};
-
-	const handleUpdateTouched = (payload: Partial<typeof touchedFields>) => {
-		dispatch({payload, type: 'UPDATE_TOUCHED'});
 	};
 
 	return (
@@ -76,7 +95,7 @@ export default function DateFilter({
 						label={Liferay.Language.get('filter-content-by')}
 						name="filterContentBy"
 						onChange={(event) =>
-							handleUpdateFilter({
+							updateFilter({
 								filterType: event.target.value as FilterType,
 							})
 						}
@@ -87,7 +106,7 @@ export default function DateFilter({
 
 				{editing.filterType === FilterType.Last && (
 					<ModifiedLastFields
-						handleUpdateFilter={handleUpdateFilter}
+						handleUpdateFilter={updateFilter}
 						value={editing.modifiedLast}
 					/>
 				)}
@@ -96,8 +115,8 @@ export default function DateFilter({
 					<DateRangeFields
 						editing={editing}
 						errors={validation.errors}
-						handleUpdateFilter={handleUpdateFilter}
-						handleUpdateTouched={handleUpdateTouched}
+						handleUpdateFilter={updateFilter}
+						handleUpdateTouched={updateTouched}
 						touchedFields={touchedFields}
 					/>
 				)}
@@ -108,7 +127,7 @@ export default function DateFilter({
 				>
 					{!(
 						editing.filterType === FilterType.All &&
-						applied.filterType === FilterType.All
+						appliedValue.filterType === FilterType.All
 					) && (
 						<ClayButton
 							disabled={isDirty ? !validation.isValid : true}
@@ -122,7 +141,7 @@ export default function DateFilter({
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			{applied.filterType !== FilterType.All && (
+			{appliedValue.filterType !== FilterType.All && (
 				<ClayLayout.ContentRow padded>
 					<ClayLayout.ContentCol expand>
 						<ClayAlert

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
@@ -42,71 +43,75 @@ public class UniquePersistenceFinder<T extends BaseModel<T>>
 	public T fetch(
 		FinderCache finderCache, Object[] values, boolean useFinderCache) {
 
-		normalizeValues(values);
+		try (SafeCloseable safeCloseable =
+				setCTCollectionIdWithSafeCloseable()) {
 
-		Object[] finderArgs = null;
+			normalizeValues(values);
 
-		if (useFinderCache) {
-			finderArgs = buildFinderArgs(values);
-		}
+			Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (useFinderCache) {
-			result = finderCache.getResult(
-				_fetchPath, finderArgs, basePersistenceImpl);
-		}
-
-		if (result instanceof BaseModel) {
-			T entity = (T)result;
-
-			if (!matchesAll(entity, values)) {
-				result = null;
+			if (useFinderCache) {
+				finderArgs = buildFinderArgs(values);
 			}
-		}
 
-		if (result == null) {
-			String sql = buildSQLWhere(sqlSelectWhere, values);
+			Object result = null;
 
-			Session session = null;
+			if (useFinderCache) {
+				result = finderCache.getResult(
+					_fetchPath, finderArgs, basePersistenceImpl);
+			}
 
-			try {
-				session = basePersistenceImpl.openSession();
+			if (result instanceof BaseModel) {
+				T entity = (T)result;
 
-				Query query = session.createQuery(sql);
+				if (!matchesAll(entity, values)) {
+					result = null;
+				}
+			}
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+			if (result == null) {
+				String sql = buildSQLWhere(sqlSelectWhere, values);
 
-				bindQueryParams(queryPos, values);
+				Session session = null;
 
-				List<T> list = query.list();
+				try {
+					session = basePersistenceImpl.openSession();
 
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						finderCache.putResult(_fetchPath, finderArgs, list);
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					bindQueryParams(queryPos, values);
+
+					List<T> list = query.list();
+
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(_fetchPath, finderArgs, list);
+						}
+					}
+					else {
+						T entity = list.get(0);
+
+						result = entity;
+
+						basePersistenceImpl.cacheResult(entity);
 					}
 				}
-				else {
-					T entity = list.get(0);
-
-					result = entity;
-
-					basePersistenceImpl.cacheResult(entity);
+				catch (Exception exception) {
+					throw basePersistenceImpl.processException(exception);
+				}
+				finally {
+					basePersistenceImpl.closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw basePersistenceImpl.processException(exception);
-			}
-			finally {
-				basePersistenceImpl.closeSession(session);
-			}
-		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
+			if (result instanceof List<?>) {
+				return null;
+			}
 
-		return (T)result;
+			return (T)result;
+		}
 	}
 
 	private final FinderPath _fetchPath;

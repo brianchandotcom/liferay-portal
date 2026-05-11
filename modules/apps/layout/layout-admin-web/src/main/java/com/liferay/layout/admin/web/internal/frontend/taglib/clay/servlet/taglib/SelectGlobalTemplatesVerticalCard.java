@@ -6,7 +6,11 @@
 package com.liferay.layout.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -17,13 +21,17 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +46,8 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override
@@ -68,6 +78,23 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 	@Override
 	public String getIcon() {
 		return "page-template";
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_layoutPageTemplateEntry.getCompanyId(), "LPD-76864")) {
+
+			return null;
+		}
+
+		return LabelItemListBuilder.add(
+			labelItem -> {
+				labelItem.setDisplayType("warning");
+				labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "deprecated"));
+			}
+		).build();
 	}
 
 	@Override
@@ -132,6 +159,7 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectGlobalTemplatesVerticalCard.class);
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

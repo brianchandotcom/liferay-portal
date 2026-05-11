@@ -151,7 +151,16 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 				_layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE)) {
 
-			return super.getLabels();
+			return LabelItemListBuilder.add(
+				labelItem -> {
+					labelItem.setDisplayType("warning");
+					labelItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "deprecated"));
+				}
+			).add(
+				labelItem -> labelItem.setStatus(
+					_layoutPageTemplateEntry.getStatus())
+			).build();
 		}
 
 		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(

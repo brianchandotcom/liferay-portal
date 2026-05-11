@@ -12,28 +12,18 @@ export function translateConditionsToScript(
 ) {
 	const conditionScript = conditions.map((condition) => {
 		if (condition.type === 'field') {
-			let script = `${condition.field}`;
-
-			if (condition.options?.type === 'equal') {
-				script += ` == "${condition.options?.value || ''}"`;
-			}
-			else {
-				script += ` != "${condition.options?.value || ''}"`;
-			}
-
-			return script;
+			return _toFieldComparison(
+				condition.field || '',
+				condition.options?.type,
+				condition.options?.value || ''
+			);
 		}
 		else if (condition.type === 'form') {
-			let script = `input__${condition.field?.replaceAll('-', '_')}`;
-
-			if (condition.options?.type === 'equal') {
-				script += ` == "${condition.options?.value || ''}"`;
-			}
-			else {
-				script += ` != "${condition.options?.value || ''}"`;
-			}
-
-			return script;
+			return _toFieldComparison(
+				`input__${condition.field?.replaceAll('-', '_')}`,
+				condition.options?.type,
+				condition.options?.value || ''
+			);
 		}
 		else if (condition.type === 'user') {
 			if (condition.field === 'role') {
@@ -68,4 +58,22 @@ export function translateConditionsToScript(
 	else {
 		return conditionScript.join(' OR ');
 	}
+}
+
+function _toFieldComparison(
+	field: string,
+	type: NonNullable<Condition['options']>['type'] | undefined,
+	value: string
+) {
+	if (type === 'greater-than') {
+		return `futureDates(${field}, "${value}")`;
+	}
+
+	if (type === 'less-than') {
+		return `pastDates(${field}, "${value}")`;
+	}
+
+	const operator = type === 'not-equal' ? '!=' : '==';
+
+	return `${field} ${operator} "${value}"`;
 }

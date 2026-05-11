@@ -190,7 +190,7 @@ export default function ContentEditorToolbar({
 						}
 						aria-pressed={showPreview}
 						borderless
-						className={classNames('c-mr-2 d-lg-block d-none', {
+						className={classNames('d-lg-block d-none', {
 							active: showPreview,
 						})}
 						displayType="secondary"
@@ -216,7 +216,8 @@ export default function ContentEditorToolbar({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('preview')}
-						className="c-mr-3 d-lg-none"
+						borderless
+						className="c-mr-1 d-lg-none"
 						displayType="secondary"
 						onClick={() => setShowPreviewModal(true)}
 						size="sm"

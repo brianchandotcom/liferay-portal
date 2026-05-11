@@ -355,11 +355,7 @@ public class CacheReplicatorEntryTest implements Serializable {
 
 			List<Serializable> keys = portalCache.getKeys();
 
-			Assert.assertTrue(
-				nodeName + " portal cache \"" +
-					portalCache.getPortalCacheName() +
-						"\" should be empty but contains keys " + keys,
-				keys.isEmpty());
+			Assert.assertTrue(keys.isEmpty());
 		}
 	}
 
@@ -371,27 +367,17 @@ public class CacheReplicatorEntryTest implements Serializable {
 		Map<String, FinderPath> entityFinderPaths = finderPathsMap.get(
 			_ENTITY_CLASS_NAME);
 
-		Assert.assertEquals(
-			"Entity-keyed finder cache should have one finder path " +
-				"\"fetchByName\" but has " + entityFinderPaths.keySet(),
-			1, entityFinderPaths.size());
+		Assert.assertEquals(1, entityFinderPaths.size());
 
 		Map<String, FinderPath> list1FinderPaths = finderPathsMap.get(
 			_LIST1_CACHE_NAME);
 
-		Assert.assertEquals(
-			".List1 cache should have one paginated finder path " +
-				"\"findByCompanyId\" but has " + list1FinderPaths.keySet(),
-			1, list1FinderPaths.size());
+		Assert.assertEquals(1, list1FinderPaths.size());
 
 		Map<String, FinderPath> list2FinderPaths = finderPathsMap.get(
 			_LIST2_CACHE_NAME);
 
-		Assert.assertEquals(
-			".List2 cache should have two finder paths \"findByCompanyId\" " +
-				"unpaginated and \"countByCompanyId\" but has " +
-					list2FinderPaths.keySet(),
-			2, list2FinderPaths.size());
+		Assert.assertEquals(2, list2FinderPaths.size());
 	}
 
 	private List<PortalCache<Serializable, Serializable>>

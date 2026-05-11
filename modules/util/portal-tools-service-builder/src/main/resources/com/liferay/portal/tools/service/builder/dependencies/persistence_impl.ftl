@@ -117,6 +117,10 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 <#if serviceBuilder.isVersionGTE_7_4_0()>
 	import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 	import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
+	<#if entity.isPermissionCheckEnabled()>
+		import com.liferay.portal.kernel.service.persistence.impl.FilterCollectionPersistenceFinder;
+	</#if>
+
 	import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 </#if>
 
@@ -3073,8 +3077,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#if>
 
 			<#if entityFinder.collectionPersistenceFinderEnabled>
+				<#assign filterEnabled = entity.isPermissionCheckEnabled(entityFinder) />
+
 				_collectionPersistenceFinderBy${entityFinder.name} =
-					new CollectionPersistenceFinder<>(
+					<#if filterEnabled>
+						new FilterCollectionPersistenceFinder<>(
+					<#else>
+						new CollectionPersistenceFinder<>(
+					</#if>
 						this,
 						_finderPathWithPaginationFindBy${entityFinder.name},
 						<#if !entityFinder.hasCustomComparator()>
@@ -3092,6 +3102,21 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.name}ModelImpl.ORDER_BY_JPQL,
 						_ENTITY_ALIAS_PREFIX,
 						"${entityFinder.where!}",
+						<#if filterEnabled>
+							new FilterCollectionPersistenceFinder.FilterMetadata<>(
+								${entity.name}Impl.class,
+								${entity.name}.class,
+								_FILTER_ENTITY_ALIAS,
+								_FILTER_ENTITY_TABLE,
+								_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+								_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE,
+								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1,
+								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2,
+								_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE,
+								${entity.name}ModelImpl.ORDER_BY_SQL,
+								${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT
+							),
+						</#if>
 						<#list entityColumns as entityColumn>
 							<#if entityColumn.hasArrayableOperator()>
 								new ArrayableFinderColumn<>(

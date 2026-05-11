@@ -21,7 +21,11 @@
 </#if>
 
 <#if entityFinder.collectionPersistenceFinderEnabled>
-	private CollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+	<#if entity.isPermissionCheckEnabled(entityFinder)>
+		private FilterCollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+	<#else>
+		private CollectionPersistenceFinder<${entity.name}> _collectionPersistenceFinderBy${entityFinder.name};
+	</#if>
 </#if>
 
 <#if entityFinder.uniquePersistenceFinderEnabled>

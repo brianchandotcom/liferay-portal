@@ -117,7 +117,8 @@ export default function Condition({
 	};
 
 	const conditionTypeItems =
-		config.layoutType === LAYOUT_TYPES.display
+		config.layoutType === LAYOUT_TYPES.display &&
+		config.selectedMappingTypes?.formEnabled
 			? [
 					...CONDITION_TYPE_ITEMS,
 					{

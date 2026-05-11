@@ -49,13 +49,10 @@ public class FinderColumnTest {
 			entity -> entityDate);
 
 		Assert.assertTrue(
-			"entity 2000000 > input 1000000",
 			finderColumn.matches(_TEST_MODEL, new Date(1_000_000L)));
 		Assert.assertFalse(
-			"entity 2000000 not > input 2000000",
 			finderColumn.matches(_TEST_MODEL, new Date(2_000_000L)));
 		Assert.assertFalse(
-			"entity 2000000 not > input 3000000",
 			finderColumn.matches(_TEST_MODEL, new Date(3_000_000L)));
 	}
 
@@ -65,11 +62,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, ">", true, true,
 			entity -> 10L);
 
-		Assert.assertTrue("10 > 5", finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertFalse(
-			"10 not > 10", finderColumn.matches(_TEST_MODEL, 10L));
-		Assert.assertFalse(
-			"10 not > 20", finderColumn.matches(_TEST_MODEL, 20L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 10L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 20L));
 	}
 
 	@Test
@@ -78,10 +73,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, ">=", true, true,
 			entity -> 10L);
 
-		Assert.assertTrue("10 >= 5", finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertTrue("10 >= 10", finderColumn.matches(_TEST_MODEL, 10L));
-		Assert.assertFalse(
-			"10 not >= 20", finderColumn.matches(_TEST_MODEL, 20L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 20L));
 	}
 
 	@Test
@@ -91,7 +85,6 @@ public class FinderColumnTest {
 			entity -> null);
 
 		Assert.assertFalse(
-			"null entity value cannot satisfy > comparison",
 			finderColumn.matches(_TEST_MODEL, 5L));
 	}
 
@@ -101,9 +94,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "<", true, true,
 			entity -> 5L);
 
-		Assert.assertTrue("5 < 10", finderColumn.matches(_TEST_MODEL, 10L));
-		Assert.assertFalse("5 not < 5", finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertFalse("5 not < 3", finderColumn.matches(_TEST_MODEL, 3L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3L));
 	}
 
 	@Test
@@ -112,9 +105,9 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "<=", true, true,
 			entity -> 5L);
 
-		Assert.assertTrue("5 <= 10", finderColumn.matches(_TEST_MODEL, 10L));
-		Assert.assertTrue("5 <= 5", finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertFalse("5 not <= 3", finderColumn.matches(_TEST_MODEL, 3L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 10L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3L));
 	}
 
 	@Test
@@ -123,8 +116,8 @@ public class FinderColumnTest {
 			"t.", "status", FinderColumn.Type.INTEGER, "<>", true, true,
 			entity -> 3);
 
-		Assert.assertTrue("3 <> 5", finderColumn.matches(_TEST_MODEL, 5));
-		Assert.assertFalse("3 not <> 3", finderColumn.matches(_TEST_MODEL, 3));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3));
 	}
 
 	@Test
@@ -134,14 +127,10 @@ public class FinderColumnTest {
 			entity -> "Hello World");
 
 		Assert.assertTrue(
-			"Hello World LIKE Hello%",
 			finderColumn.matches(_TEST_MODEL, "Hello%"));
 		Assert.assertTrue(
-			"Hello World LIKE %World",
 			finderColumn.matches(_TEST_MODEL, "%World"));
-		Assert.assertFalse(
-			"Hello World does not LIKE Goodbye%",
-			finderColumn.matches(_TEST_MODEL, "Goodbye%"));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, "Goodbye%"));
 	}
 
 	@Test
@@ -150,10 +139,8 @@ public class FinderColumnTest {
 			"t.", "status", FinderColumn.Type.INTEGER, "!=", true, true,
 			entity -> 3);
 
-		Assert.assertTrue(
-			"entity 3 != input 5", finderColumn.matches(_TEST_MODEL, 5));
-		Assert.assertFalse(
-			"entity 3 not != input 3", finderColumn.matches(_TEST_MODEL, 3));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3));
 	}
 
 	@Test
@@ -162,10 +149,7 @@ public class FinderColumnTest {
 			"t.", "name", FinderColumn.Type.STRING, "=", false, true,
 			entity -> "ignored");
 
-		Assert.assertEquals(
-			"case-insensitive String must lowercase so the cache key matches " +
-				"across casings",
-			"alice", finderColumn.normalizeValue("Alice"));
+		Assert.assertEquals("alice", finderColumn.normalizeValue("Alice"));
 	}
 
 	private static final TestModel _TEST_MODEL =

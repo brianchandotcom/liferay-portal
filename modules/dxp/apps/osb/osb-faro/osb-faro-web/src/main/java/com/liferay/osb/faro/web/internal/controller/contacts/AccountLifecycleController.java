@@ -5,13 +5,18 @@
 
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
+import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageMetric;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.portal.kernel.model.RoleConstants;
 
 import jakarta.annotation.security.RolesAllowed;
 
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -30,6 +35,31 @@ import org.osgi.service.component.annotations.Component;
 @Produces(MediaType.APPLICATION_JSON)
 public class AccountLifecycleController extends BaseFaroController {
 
+	@POST
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public AccountLifecycle createAccountLifecycle(
+			@PathParam("groupId") long groupId,
+			@FormParam("description") String description,
+			@FormParam("name") String name,
+			@FormParam("segmentId") String segmentId)
+		throws Exception {
+
+		return contactsEngineClient.addAccountLifecycle(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			description, name, segmentId);
+	}
+
+	@GET
+	@Path("/{id}")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public AccountLifecycle getAccountLifecycle(
+			@PathParam("groupId") long groupId, @PathParam("id") String id)
+		throws Exception {
+
+		return contactsEngineClient.getAccountLifecycle(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), id);
+	}
+
 	@GET
 	@Path("/{id}/overview")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
@@ -43,6 +73,61 @@ public class AccountLifecycleController extends BaseFaroController {
 		return contactsEngineClient.getAccountLifecycleMetrics(
 			faroProjectLocalService.getFaroProjectByGroupId(groupId), country,
 			id, industry, revenue);
+	}
+
+	@GET
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<AccountLifecycle> getAccountLifecycles(
+			@PathParam("groupId") long groupId)
+		throws Exception {
+
+		return contactsEngineClient.getAccountLifecycles(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId));
+	}
+
+	@GET
+	@Path("/{id}/stages")
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public List<AccountLifecycleStageMetric> getAccountLifecycleStageMetrics(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@QueryParam("country") String country,
+			@QueryParam("industry") String industry)
+		throws Exception {
+
+		return contactsEngineClient.getAccountLifecycleStageMetrics(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), country,
+			id, industry);
+	}
+
+	@Path("/{id}")
+	@PUT
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public AccountLifecycle updateAccountLifecycle(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@FormParam("description") String description,
+			@FormParam("name") String name,
+			@FormParam("segmentId") String segmentId)
+		throws Exception {
+
+		return contactsEngineClient.updateAccountLifecycle(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			description, id, name, segmentId);
+	}
+
+	@Path("/{id}/stages/{stageId}/rules")
+	@PUT
+	@RolesAllowed(RoleConstants.SITE_MEMBER)
+	public void updateAccountLifecycleStageRule(
+			@PathParam("groupId") long groupId, @PathParam("id") String id,
+			@PathParam("stageId") String stageId,
+			@FormParam("filter") String filterString,
+			@FormParam("filterMetadata") String filterMetadata,
+			@FormParam("name") String name)
+		throws Exception {
+
+		contactsEngineClient.updateAccountLifecycleStageRule(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			filterMetadata, filterString, id, name, stageId);
 	}
 
 }

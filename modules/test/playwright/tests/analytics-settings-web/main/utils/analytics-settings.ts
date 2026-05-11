@@ -125,11 +125,15 @@ export async function findChannel({
 	channelName: string;
 	page: Page;
 }): Promise<any> {
-	await page.waitForSelector('[data-testid="properties"]');
+	const managementBar = page
+		.locator('.management-bar')
+		.filter({
+			has: page.locator('input[placeholder="Search"]:not([disabled])'),
+		});
 
-	await page.getByPlaceholder('Search').first().fill(channelName);
+	await managementBar.getByPlaceholder('Search').fill(channelName);
 
-	await page.getByRole('button', {name: 'Search'}).first().click();
+	await managementBar.getByRole('button', {name: 'Search'}).click();
 
 	await expect(page.getByRole('cell', {name: channelName})).toBeVisible({
 		timeout: 100 * 1000,
@@ -370,9 +374,11 @@ export async function toggleSiteSync({
 
 	expect(sitesTable).toBeVisible();
 
-	const checkbox = sitesTable.locator(
-		'tbody tr:first-child input[type="checkbox"]'
-	);
+	const siteRow = sitesTable.locator('tbody tr').filter({hasText: siteName});
+
+	await expect(siteRow).toBeVisible();
+
+	const checkbox = siteRow.locator('input[type="checkbox"]');
 
 	if (synced) {
 		await checkbox.check();

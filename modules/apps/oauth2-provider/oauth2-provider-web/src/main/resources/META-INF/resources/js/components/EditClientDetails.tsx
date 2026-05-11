@@ -47,7 +47,9 @@ const EditClientDetails: React.FC<IEditClientDetailsProps> = (props) => {
 				editable={false}
 				id={`${props.portletNamespace}externalReferenceCode`}
 				initialValue={props.externalReferenceCode}
-				label={Liferay.Language.get('oauth2-application-external-reference-code')}
+				label={Liferay.Language.get(
+					'oauth2-application-external-reference-code'
+				)}
 			/>
 		</>
 	);

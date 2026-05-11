@@ -67,6 +67,13 @@ public class FaroSubscriptionConstants {
 					ProductConstants.BUSINESS_TRACKED_PAGES_PRODUCT_ENTRY_NAME,
 					0, 5000000)
 			).put(
+				ProductConstants.DATA_PLATFORM_ENTERPRISE_PRODUCT_ENTRY_NAME,
+				new FaroSubscriptionPlan(
+					null,
+					ProductConstants.
+						DATA_PLATFORM_ENTERPRISE_PRODUCT_ENTRY_NAME,
+					100000, 60000000)
+			).put(
 				ProductConstants.DATA_PLATFORM_PRODUCT_ENTRY_NAME,
 				new FaroSubscriptionPlan(
 					20, 300, null, 5, 3, 1000,

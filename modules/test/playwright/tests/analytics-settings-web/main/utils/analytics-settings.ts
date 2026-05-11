@@ -125,11 +125,9 @@ export async function findChannel({
 	channelName: string;
 	page: Page;
 }): Promise<any> {
-	const managementBar = page
-		.locator('.management-bar')
-		.filter({
-			has: page.locator('input[placeholder="Search"]:not([disabled])'),
-		});
+	const managementBar = page.locator('.management-bar').filter({
+		has: page.locator('input[placeholder="Search"]:not([disabled])'),
+	});
 
 	await managementBar.getByPlaceholder('Search').fill(channelName);
 

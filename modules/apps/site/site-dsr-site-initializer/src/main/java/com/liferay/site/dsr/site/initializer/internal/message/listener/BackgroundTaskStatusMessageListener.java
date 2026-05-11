@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 
 import java.util.Objects;
 
@@ -90,7 +91,7 @@ public class BackgroundTaskStatusMessageListener implements MessageListener {
 		}
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			"L_DSR_SELLER", companyId);
+			DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE, companyId);
 
 		if (role == null) {
 			return;

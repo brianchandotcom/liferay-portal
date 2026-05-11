@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 import com.liferay.site.dsr.site.initializer.internal.security.permission.resource.DSRDefaultPermissionObjectEntryModelResourcePermission;
 import com.liferay.site.dsr.site.initializer.internal.util.SiteInitializerUtil;
 import com.liferay.site.initializer.SiteInitializer;
@@ -147,28 +148,43 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		Group group = layoutSetPrototype.getGroup();
 
-		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			"L_DSR_CONTRIBUTOR", companyId);
+		Role contributorRole =
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
+				companyId);
 
-		if (role == null) {
+		if (contributorRole == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
-			_roleLocalService.addRole(
-				"L_DSR_CONTRIBUTOR", user.getUserId(), null, 0,
-				"DSR Contributor", null, null, RoleConstants.TYPE_SITE, null,
-				null);
+			contributorRole = _roleLocalService.addRole(
+				DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
+				user.getUserId(), null, 0, DSRRoleConstants.DSR_CONTRIBUTOR,
+				null, null, RoleConstants.TYPE_SITE, null, null);
 		}
 
-		role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			"L_DSR_SELLER", companyId);
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			contributorRole.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
+
+		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
+			DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE, companyId);
 
 		if (role == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
 			role = _roleLocalService.addRole(
-				"L_DSR_SELLER", user.getUserId(), null, 0, "DSR Seller", null,
+				DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE,
+				user.getUserId(), null, 0, DSRRoleConstants.DSR_SELLER, null,
 				null, RoleConstants.TYPE_REGULAR, null, null);
 		}
+
+		_resourcePermissionLocalService.addResourcePermission(
+			companyId, Group.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+			role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
 
 		_resourcePermissionLocalService.addResourcePermission(
 			companyId, PortletKeys.PORTAL, ResourceConstants.SCOPE_COMPANY,
@@ -202,6 +218,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
+			DSRRoleConstants.DSR_CONTRIBUTOR,
+			new String[] {
+				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
+				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+			}
+		).put(
+			DSRRoleConstants.DSR_SELLER, new String[] {ActionKeys.VIEW}
+		).put(
 			RoleConstants.OWNER,
 			new String[] {
 				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
@@ -212,14 +236,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new String[] {ActionKeys.SUBSCRIBE, ActionKeys.VIEW}
 		).put(
 			RoleConstants.USER, new String[] {ActionKeys.VIEW}
-		).put(
-			"DSR Contributor",
-			new String[] {
-				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
-				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
-			}
-		).put(
-			"DSR Seller", new String[] {ActionKeys.VIEW}
 		).build();
 
 		for (Role currentRole :

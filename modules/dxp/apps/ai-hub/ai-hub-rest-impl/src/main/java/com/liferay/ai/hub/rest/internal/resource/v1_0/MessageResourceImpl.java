@@ -13,7 +13,6 @@ import com.liferay.ai.hub.rest.dto.v1_0.Message;
 import com.liferay.ai.hub.rest.internal.util.OAuth2ApplicationIdResolverUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.MessageResource;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -77,7 +76,7 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 				message.getInstructionDefinitionScopeAsString()
 			).oAuth2ApplicationId(
 				OAuth2ApplicationIdResolverUtil.resolve(
-					contextHttpServletRequest, _oAuth2AuthorizationLocalService)
+					contextHttpServletRequest)
 			).serviceContext(
 				ServiceContextFactory.getInstance(contextHttpServletRequest)
 			).sseEventSinkKey(
@@ -136,9 +135,6 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

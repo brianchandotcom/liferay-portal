@@ -1,3 +1,4 @@
+import {method} from 'lodash';
 import sendRequest from 'shared/util/request';
 
 interface IFetchOverviewMetrics {
@@ -20,5 +21,18 @@ export async function fetchOverviewMetrics({
 		},
 		method: 'GET',
 		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/overview`
+	});
+}
+
+export async function fetchLifecycleStages({
+	groupId,
+	lifecycleId
+}: {
+	groupId: string;
+	lifecycleId: string;
+}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/stages`
 	});
 }

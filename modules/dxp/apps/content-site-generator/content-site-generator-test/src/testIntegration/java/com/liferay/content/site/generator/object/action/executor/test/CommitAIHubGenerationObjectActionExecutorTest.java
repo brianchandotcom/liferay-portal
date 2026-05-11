@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -115,12 +114,8 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 				).build(),
 				_serviceContext);
 
-		_addGenerationItemObjectEntry(
-			RandomTestUtil.randomString() + ".json",
-			generationObjectEntry.getObjectEntryId(), 1);
-		_addGenerationItemObjectEntry(
-			RandomTestUtil.randomString() + ".json",
-			generationObjectEntry.getObjectEntryId(), 2);
+		_addGenerationItemObjectEntry(generationObjectEntry, 1);
+		_addGenerationItemObjectEntry(generationObjectEntry, 2);
 
 		_objectActionEngine.executeObjectAction(
 			"commit", ObjectActionTriggerConstants.KEY_STANDALONE,
@@ -142,8 +137,7 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 
 		Assert.assertNotNull(values.get("commitDate"));
 		Assert.assertTrue(
-			Validator.isBlank(
-				GetterUtil.getString(values.get("failureReason"))));
+			Validator.isBlank(MapUtil.getString(values, "failureReason")));
 		Assert.assertEquals("committed", values.get("generationStatus"));
 
 		Assert.assertNotNull(
@@ -159,7 +153,7 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 	}
 
 	private void _addGenerationItemObjectEntry(
-			String fileName, long generationObjectEntryId, int loadOrder)
+			ObjectEntry generationObjectEntry, int loadOrder)
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
@@ -168,7 +162,8 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".json",
 			ContentTypes.APPLICATION_JSON,
 			JSONUtil.put(
 				"configuration",
@@ -216,13 +211,14 @@ public class CommitAIHubGenerationObjectActionExecutorTest {
 			HashMapBuilder.<String, Serializable>put(
 				"batchFile", fileEntry.getFileEntryId()
 			).put(
-				"fileName", fileName
+				"fileName", fileEntry.getFileName()
 			).put(
 				"itemCount", 1
 			).put(
 				"loadOrder", loadOrder
 			).put(
-				"r_items_l_aiHubGenerationId", generationObjectEntryId
+				"r_items_l_aiHubGenerationId",
+				generationObjectEntry.getObjectEntryId()
 			).build(),
 			_serviceContext);
 	}

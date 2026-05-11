@@ -246,10 +246,12 @@ describe('CMSFilesItemSelectorModal — open/close state management', () => {
 });
 
 describe('CMSFilesItemSelectorModal — upload integration', () => {
-	it('does not enable the uploader when in space list view', () => {
+	it('enables the uploader when in space list view', () => {
 		render(<CMSFilesItemSelectorModal {...defaultProps} open={true} />);
 
-		expect(lastItemSelectorProps?.filesUploaderComponent).toBeUndefined();
+		expect(lastItemSelectorProps?.filesUploaderComponent).toBe(
+			mockCMSFileUploaderComponent
+		);
 		expect(lastItemSelectorProps?.groupId).toBeUndefined();
 	});
 

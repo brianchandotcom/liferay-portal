@@ -72,8 +72,7 @@ public class AssetStatisticsResourceImpl
 		}
 
 		Long[] groupIds = depotEntryGroupIds.toArray(new Long[0]);
-
-		Date now = new Date();
+		Date date = new Date();
 
 		return new AssetStatistics() {
 			{
@@ -88,11 +87,11 @@ public class AssetStatisticsResourceImpl
 						ObjectEntryTable.INSTANCE.status.eq(
 							WorkflowConstants.STATUS_APPROVED
 						).and(
-							ObjectEntryTable.INSTANCE.expirationDate.gt(now)
+							ObjectEntryTable.INSTANCE.expirationDate.gt(date)
 						).and(
 							ObjectEntryTable.INSTANCE.expirationDate.lte(
 								new Date(
-									now.getTime() +
+									date.getTime() +
 										(Time.DAY * _EXPIRING_SOON_DAYS)))
 						)));
 				setInDraftCount(
@@ -103,7 +102,7 @@ public class AssetStatisticsResourceImpl
 				setReviewDateOverdueCount(
 					() -> _getCount(
 						groupIds, objectDefinitionIds,
-						ObjectEntryTable.INSTANCE.reviewDate.lt(now)));
+						ObjectEntryTable.INSTANCE.reviewDate.lt(date)));
 			}
 		};
 	}

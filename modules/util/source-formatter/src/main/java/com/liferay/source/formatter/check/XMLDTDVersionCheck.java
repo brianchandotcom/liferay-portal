@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -30,14 +29,17 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 			return content;
 		}
 
+		String lpVersion = getLPVersion();
+
+		if (lpVersion == null) {
+			return content;
+		}
+
 		String lpVersionDTD = getLPVersionDTD();
 
 		if (lpVersionDTD == null) {
 			return content;
 		}
-
-		String lpVersion = StringUtil.replace(
-			lpVersionDTD, CharPool.UNDERLINE, CharPool.PERIOD);
 
 		return StringUtil.replaceFirst(
 			content, matcher.group(),
@@ -65,6 +67,10 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 		}
 
 		return checkDTDVersion(content);
+	}
+
+	protected String getLPVersion() {
+		return _releaseProperties.getProperty("lp.version");
 	}
 
 	protected String getLPVersionDTD() {

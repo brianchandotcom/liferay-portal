@@ -20,7 +20,6 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -192,10 +191,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				_commerceChannel.getCommerceChannelId(), false, 0,
 				CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		User user = UserTestUtil.addUser(testCompany);
-
-		user = UserLocalServiceUtil.updatePassword(
-			user.getUserId(), "test", "test", false, true);
+		User user = UserTestUtil.addUser(testCompany, "test");
 
 		AccountResource accountResource = AccountResource.builder(
 		).authentication(
@@ -224,10 +220,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 				_commerceChannel.getCommerceChannelId(), false, 0,
 				CommerceChannelAccountEntryRelConstants.TYPE_ELIGIBILITY);
 
-		User user = UserTestUtil.addUser(testCompany);
-
-		user = UserLocalServiceUtil.updatePassword(
-			user.getUserId(), "test", "test", false, true);
+		User user = UserTestUtil.addUser(testCompany, "test");
 
 		AccountResource accountResource = AccountResource.builder(
 		).authentication(

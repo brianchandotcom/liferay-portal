@@ -109,7 +109,7 @@ public class CollaboratorUtil {
 		_validateEmailAddress(emailAddress);
 		_validateEmailActionIds(collaborator.getActionIds());
 
-		collaborator.setEmailAddress(() -> emailAddress);
+		emailAddress = _normalizeEmailAddress(emailAddress);
 
 		User existingUser = userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);
@@ -147,7 +147,7 @@ public class CollaboratorUtil {
 		}
 
 		Ticket ticket = _addOrUpdateTicket(
-			className, classPK, collaborator, companyId,
+			className, classPK, collaborator, companyId, emailAddress,
 			_fetchTicketByEmailAddress(
 				className, classPK, companyId, emailAddress,
 				ticketLocalService),
@@ -192,13 +192,16 @@ public class CollaboratorUtil {
 				_validateEmailAddress(collaborator.getEmailAddress());
 				_validateEmailActionIds(collaborator.getActionIds());
 
+				String emailAddress = _normalizeEmailAddress(
+					collaborator.getEmailAddress());
+
 				User existingUser = userLocalService.fetchUserByEmailAddress(
-					companyId, collaborator.getEmailAddress());
+					companyId, emailAddress);
 
 				if (existingUser != null) {
 					_validateSharingEntry(
-						classNameId, classPK, collaborator.getEmailAddress(),
-						sharingEntryService, user, existingUser.getUserId());
+						classNameId, classPK, emailAddress, sharingEntryService,
+						user, existingUser.getUserId());
 
 					sharingEntry = _addOrUpdateSharingEntry(
 						classNameId, classPK, collaborator,
@@ -209,9 +212,10 @@ public class CollaboratorUtil {
 				else {
 					Ticket ticket = _addOrUpdateTicket(
 						className, classPK, collaborator, companyId,
+						emailAddress,
 						_fetchTicketByEmailAddress(
-							className, classPK, companyId,
-							collaborator.getEmailAddress(), ticketLocalService),
+							className, classPK, companyId, emailAddress,
+							ticketLocalService),
 						ticketLocalService);
 
 					sharingEntry = _addOrUpdateSharingEntry(
@@ -301,7 +305,7 @@ public class CollaboratorUtil {
 		_validateEmailAddress(emailAddress);
 
 		User toUser = userLocalService.fetchUserByEmailAddress(
-			companyId, emailAddress);
+			companyId, _normalizeEmailAddress(emailAddress));
 
 		if (toUser != null) {
 			SharingEntry sharingEntry = sharingEntryService.fetchSharingEntry(
@@ -378,6 +382,8 @@ public class CollaboratorUtil {
 		throws Exception {
 
 		_validateEmailAddress(emailAddress);
+
+		emailAddress = _normalizeEmailAddress(emailAddress);
 
 		User existingUser = userLocalService.fetchUserByEmailAddress(
 			companyId, emailAddress);
@@ -521,12 +527,9 @@ public class CollaboratorUtil {
 	}
 
 	private static Ticket _addOrUpdateTicket(
-			String className, long classPK, Collaborator collaborator,
-			long companyId, Ticket ticket,
-			TicketLocalService ticketLocalService) {
-
-		String emailAddress = _normalizeEmailAddress(
-			collaborator.getEmailAddress());
+		String className, long classPK, Collaborator collaborator,
+		long companyId, String emailAddress, Ticket ticket,
+		TicketLocalService ticketLocalService) {
 
 		if (ticket == null) {
 			return ticketLocalService.addTicket(

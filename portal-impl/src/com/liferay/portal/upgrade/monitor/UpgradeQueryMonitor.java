@@ -111,10 +111,10 @@ public final class UpgradeQueryMonitor {
 			}
 
 			if (_log.isWarnEnabled()) {
-				_log.warn("Upgrade query monitoring is disabled");
 				_log.warn(
-					"Unable to detect locked queries: " +
-						exception.getMessage());
+					StringBundler.concat(
+						"Upgrade query monitoring is disabled: ",
+						exception.getMessage()));
 			}
 
 			if (_log.isDebugEnabled()) {

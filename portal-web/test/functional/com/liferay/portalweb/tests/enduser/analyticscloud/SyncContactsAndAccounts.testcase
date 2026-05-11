@@ -687,123 +687,19 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12764 | Test Summary: Check that it is possible to sort by account groups name in the account groups list"
+	@description = "Story: LRAC-10859 | Automation ID: LRAC-12762 | Test Summary: Check that it is possible to sort by organizations name in the organizations list"
 	@priority = 3
-	test CheckCanSortByAccountGroupsName {
-		var accountGroupPageListUp = "brazilian,European,Gold,North American";
+	test CheckCanSortAcrossEntityTypes {
 		var accountGroupPageListDown = "North American,Gold,European,brazilian";
+		var accountGroupPageListUp = "brazilian,European,Gold,North American";
+		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
+		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
 
 		task ("Create 4 account groups") {
 			for (var accountGroupName : list ${accountGroupPageListUp}) {
 				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
 			}
 		}
-
-		task ("Connect Commerce and AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Click on sync by account groups") {
-			Click(
-				key_panel = "Select Accounts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "Sync by Account Groups",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Sort the list by the Account Groups column (Ascending)") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Account Group");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3,4",
-				itemValueList = ${accountGroupPageListUp});
-		}
-
-		task ("Sort the list by the Account Groups column (Descending)") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3,4",
-				itemValueList = ${accountGroupPageListDown});
-		}
-
-		task ("Complete the wizard configuration") {
-			ACDXPSettings.completeWizardConfiguration();
-		}
-
-		task ("Go to the people page in the sidebar") {
-			ACDXPSettings.navToSyncedContactDataMenu();
-		}
-
-		task ("Click on sync by account groups") {
-			Click(
-				key_panel = "Select Accounts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "Sync by Account Groups",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Sort the list by the Account Groups column (Ascending)") {
-			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Account Group");
-
-			ACDXPSettings.setSortDirection(sortDirection = "up");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3,4",
-				itemValueList = ${accountGroupPageListUp});
-		}
-
-		task ("Sort the list by the Account Groups column (Descending)") {
-			ACDXPSettings.setSortDirection(sortDirection = "down");
-		}
-
-		task ("Check that the list is sorted correctly") {
-			ACDXPSettings.viewGenericListItemInOrder(
-				indexList = "1,2,3,4",
-				itemValueList = ${accountGroupPageListDown});
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12762 | Test Summary: Check that it is possible to sort by organizations name in the organizations list"
-	@priority = 3
-	test CheckCanSortAcrossEntityTypes {
-		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
-		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 
 		task ("Create 5 organizations") {
 			for (var organizationName : list ${orgNamePageListUp}) {
@@ -836,6 +732,38 @@ definition {
 			Click(
 				key_text = "Next",
 				locator1 = "Button#ANY");
+		}
+
+		task ("Click on Select Accounts > Sync by Account Groups") {
+			Click(
+				key_panel = "Select Accounts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Sync by Account Groups",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Sort the list by the Account Groups column (Ascending)") {
+			KaleoFormsManageFieldSets.clickFilterAndOrderBy(filterOption = "Account Group");
+
+			ACDXPSettings.setSortDirection(sortDirection = "up");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3,4",
+				itemValueList = ${accountGroupPageListUp});
+		}
+
+		task ("Sort the list by the Account Groups column (Descending)") {
+			ACDXPSettings.setSortDirection(sortDirection = "down");
+		}
+
+		task ("Check that the list is sorted correctly") {
+			ACDXPSettings.viewGenericListItemInOrder(
+				indexList = "1,2,3,4",
+				itemValueList = ${accountGroupPageListDown});
 		}
 
 		task ("Click on sync by organizations") {

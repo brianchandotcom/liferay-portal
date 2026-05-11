@@ -39,12 +39,41 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 
 			<%
 			for (String type : selectLayoutPageTemplateEntryDisplayContext.getTypes()) {
+				SelectBasicTemplatesNavigationCard selectBasicTemplatesNavigationCard = new SelectBasicTemplatesNavigationCard(type, renderRequest, renderResponse);
 			%>
 
 				<li class="card-page-item card-page-item-directory" data-qa-id="cardPageItemDirectory">
-					<clay:navigation-card
-						navigationCard="<%= new SelectBasicTemplatesNavigationCard(type, renderRequest, renderResponse) %>"
-					/>
+					<c:choose>
+						<c:when test="<%= selectBasicTemplatesNavigationCard.isDeprecated() %>">
+							<div class="add-layout-action-option card card-interactive card-interactive-primary card-type-template template-card-horizontal" data-add-layout-url="<%= HtmlUtil.escapeAttribute(selectBasicTemplatesNavigationCard.getDynamicAttributes().get("data-add-layout-url")) %>" role="button" tabindex="0">
+								<span class="card-body">
+									<span class="card-row">
+										<div class="autofit-col">
+											<clay:sticker
+												icon="page"
+												inline="<%= true %>"
+											/>
+										</div>
+
+										<div class="autofit-col autofit-col-expand">
+											<div class="autofit-section">
+												<p class="card-title">
+													<%= HtmlUtil.escape(selectBasicTemplatesNavigationCard.getTitle()) %>
+
+													<span class="badge badge-translucent badge-warning c-ml-1 c-pl-0 text-uppercase"><span class="badge-item badge-item-expand"><liferay-ui:message key="deprecated" /></span></span>
+												</p>
+											</div>
+										</div>
+									</span>
+								</span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<clay:navigation-card
+								navigationCard="<%= selectBasicTemplatesNavigationCard %>"
+							/>
+						</c:otherwise>
+					</c:choose>
 				</li>
 
 			<%

@@ -7,6 +7,7 @@ import type {Locator, Page} from '@playwright/test';
 
 export class ModelBuilderRightSidebarPage {
 	readonly advancedTab: Locator;
+	readonly allowStandaloneEntriesToggle: Locator;
 	readonly deleteButton: Locator;
 	readonly deleteObjectRelationshipButton: Locator;
 	readonly deleteTrashButton: Locator;
@@ -34,6 +35,9 @@ export class ModelBuilderRightSidebarPage {
 	constructor(page: Page) {
 		this.advancedTab = page.getByRole('tab', {
 			name: 'Advanced',
+		});
+		this.allowStandaloneEntriesToggle = page.getByRole('switch', {
+			name: 'Allow Standalone Entries',
 		});
 		this.deleteButton = page.getByRole('button', {
 			exact: true,

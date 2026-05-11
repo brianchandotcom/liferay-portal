@@ -597,10 +597,6 @@ test(
 			...defaultAddress,
 			name: 'Test Name',
 		});
-		await apiHelpers.headlessCommerceAdminAccount.postAddress(account2.id, {
-			...defaultAddress,
-			name: 'Account 2 Address',
-		});
 
 		const salesAgentRole =
 			await apiHelpers.headlessAdminUser.getRoleByName('Sales Agent');
@@ -626,62 +622,115 @@ test(
 			'Money Order'
 		);
 
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.getProductByName(
+				'U-Joint'
+			);
+
+		await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account1.id,
+			channelId: channel.id,
+			orderItems: [{quantity: 1, skuId: String(product.skus[0].id)}],
+			orderStatus: '2',
+		});
+
 		try {
 			await performUserSwitch(page, salesAgent.alternateName);
 
-			for (const accountName of [account1Name, account2Name]) {
-				await test.step(`Checkout an order for ${accountName}`, async () => {
-					await page.goto(`/web/${site.name}`, {
-						waitUntil: 'networkidle',
-					});
+			await test.step(`Checkout the pre-existing Open order for ${account1Name}`, async () => {
+				await page.goto(`/web/${site.name}`, {
+					waitUntil: 'networkidle',
+				});
 
-					await commerceThemeMiniumCatalogPage.openAccountSelectorDropdown();
+				await commerceThemeMiniumCatalogPage.openAccountSelectorDropdown();
 
+				await commerceThemeMiniumCatalogPage
+					.accountSelectorAccount(account1Name)
+					.click();
+
+				await page.waitForLoadState('networkidle');
+
+				await commerceMiniCartPage.miniCartButton.click();
+				await commerceMiniCartPage.submitButton.click();
+
+				await expect(checkoutPage.activeCheckoutStep).toContainText(
+					'Shipping Address'
+				);
+
+				await checkoutPage.continueButton.click();
+
+				await expect(checkoutPage.activeCheckoutStep).toContainText(
+					'Order Summary'
+				);
+
+				await checkoutPage.continueButton.click();
+
+				await expect(
+					checkoutPage.orderConfirmationContainer
+				).toBeVisible();
+				await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+			});
+
+			await test.step(`Create a new order for ${account2Name} entering a new address inline at checkout`, async () => {
+				await page.goto(`/web/${site.name}`, {
+					waitUntil: 'networkidle',
+				});
+
+				await commerceThemeMiniumCatalogPage.openAccountSelectorDropdown();
+
+				await commerceThemeMiniumCatalogPage
+					.accountSelectorAccount(account2Name)
+					.click();
+
+				await page.waitForLoadState('networkidle');
+
+				await expect(
+					commerceThemeMiniumCatalogPage.productCardAddToCartButton(
+						'U-Joint'
+					)
+				).toBeEnabled();
+
+				await expect(async () => {
 					await commerceThemeMiniumCatalogPage
-						.accountSelectorAccount(accountName)
+						.productCardAddToCartButton('U-Joint')
 						.click();
 
-					await page.waitForLoadState('networkidle');
-
 					await expect(
-						commerceThemeMiniumCatalogPage.productCardAddToCartButton(
-							'U-Joint'
-						)
-					).toBeEnabled();
+						commerceMiniCartPage.miniCartButton
+					).toHaveClass('has-badge mini-cart-opener', {
+						timeout: 1000,
+					});
+				}).toPass({timeout: 10000});
 
-					await expect(async () => {
-						await commerceThemeMiniumCatalogPage
-							.productCardAddToCartButton('U-Joint')
-							.click();
+				await commerceMiniCartPage.miniCartButton.click();
+				await commerceMiniCartPage.submitButton.click();
 
-						await expect(
-							commerceMiniCartPage.miniCartButton
-						).toHaveClass('has-badge mini-cart-opener', {
-							timeout: 1000,
-						});
-					}).toPass({timeout: 10000});
+				await expect(checkoutPage.activeCheckoutStep).toContainText(
+					'Shipping Address'
+				);
 
-					await commerceMiniCartPage.miniCartButton.click();
-					await commerceMiniCartPage.submitButton.click();
-
-					await expect(checkoutPage.activeCheckoutStep).toContainText(
-						'Shipping Address'
-					);
-					await checkoutPage.continueButton.click();
-
-					await expect(checkoutPage.activeCheckoutStep).toContainText(
-						'Order Summary'
-					);
-					await checkoutPage.continueButton.click();
-
-					await expect(
-						checkoutPage.orderConfirmationContainer
-					).toBeVisible();
-					await expect(
-						checkoutPage.goToOrderDetailsButton
-					).toBeVisible();
+				await checkoutPage.addAddress({
+					city: 'Test City',
+					countryLabel: 'United States',
+					name: 'Account 2 Address',
+					regionLabel: 'California',
+					street: 'Test Address',
+					zip: '12345',
 				});
-			}
+
+				await checkoutPage.continueButton.click();
+
+				await expect(checkoutPage.activeCheckoutStep).toContainText(
+					'Order Summary'
+				);
+
+				await checkoutPage.continueButton.click();
+
+				await expect(
+					checkoutPage.orderConfirmationContainer
+				).toBeVisible();
+				await expect(checkoutPage.goToOrderDetailsButton).toBeVisible();
+			});
 		}
 		finally {
 			await performLoginViaApi({page, screenName: 'test'});
@@ -925,7 +974,7 @@ test(
 );
 
 test(
-	'Sales Agent without MANAGE_AVAILABLE_ACCOUNTS permission sees no accounts or orders',
+	'Sales Agent without MANAGE_AVAILABLE_ACCOUNTS permission sees no accounts',
 	{tag: ['@COMMERCE-9874', '@LPD-89343']},
 	async ({
 		accountEntriesManagementPortletPage,

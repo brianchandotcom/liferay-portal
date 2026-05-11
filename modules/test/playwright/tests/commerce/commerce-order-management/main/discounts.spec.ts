@@ -1386,3 +1386,77 @@ test(
 		await expect(commerceAdminDiscountsPage.discountsHeading).toBeVisible();
 	}
 );
+
+test(
+	'Discount targeting a different channel does not apply on the buyer-visible channel',
+	{tag: ['@LPD-85008']},
+	async ({apiHelpers, page, productDetailsPage}) => {
+		const productName = `U-Joint Discount ${getRandomString()}`;
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				active: true,
+				catalogId: catalog.id,
+				name: {en_US: productName},
+				skus: [
+					{
+						cost: 0,
+						price: 24,
+						published: true,
+						purchasable: true,
+						sku: `SKU${getRandomString()}`,
+					},
+				],
+			});
+
+		const otherSite = await apiHelpers.headlessSite.createSite({
+			name: 'OtherSite-' + getRandomString(),
+		});
+
+		apiHelpers.data.push({
+			id: otherSite.externalReferenceCode,
+			type: 'site',
+		});
+
+		const otherChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `TestChannel-${getRandomString()}`,
+				siteGroupId: otherSite.id,
+			});
+
+		await apiHelpers.headlessCommerceAdminPricing.postDiscount({
+			active: true,
+			discountChannels: [{channelId: otherChannel.id}],
+			discountProducts: [{productId: product.productId}],
+			level: 'L1',
+			percentageLevel1: 25,
+			target: 'products',
+			title: `Test Discount ${getRandomString()}`,
+			usePercentage: true,
+		} as any);
+
+		const {buyerUser} = await createAccountWithBuyerUser(
+			apiHelpers,
+			site.id
+		);
+
+		await performUserSwitch(page, buyerUser.alternateName);
+
+		await page.goto(
+			`/web${site.friendlyUrlPath}/p/${encodeURIComponent(productName)}`
+		);
+
+		await expect(
+			await productDetailsPage.priceField(
+				'$ 24.00',
+				productDetailsPage.priceContainer
+			)
+		).toBeVisible();
+		await expect(
+			await productDetailsPage.promoPriceField(
+				'$ 18.00',
+				productDetailsPage.priceContainer
+			)
+		).toHaveCount(0);
+	}
+);

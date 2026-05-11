@@ -179,9 +179,7 @@ test(
 				editAccountChannelDefaultsPage.modalIframe
 			).toHaveCount(0);
 			await expect(
-				editAccountChannelDefaultsPage.defaultShippingOptionsTable
-					.getByText('Use Priority Settings')
-					.first()
+				editAccountChannelDefaultsPage.usePrioritySettingsCell
 			).toBeVisible();
 		});
 	}
@@ -527,9 +525,7 @@ test(
 				editAccountChannelDefaultsPage.modalIframe
 			).toHaveCount(0);
 			await expect(
-				editAccountChannelDefaultsPage.defaultShippingOptionsTable
-					.getByText('Use Priority Settings')
-					.first()
+				editAccountChannelDefaultsPage.usePrioritySettingsCell
 			).toBeVisible();
 		});
 	}
@@ -618,5 +614,229 @@ test(
 				page.getByText('Standard Delivery').first()
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Deleting a shipping option that is linked as default reverts the account default to Use Priority Settings',
+	{tag: ['@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+	}) => {
+		const optionName = 'OptionToDelete' + getRandomString();
+
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const openAccountChannelDefaults = async () => {
+			await accountsPage.gotoAccountAdmin();
+
+			await (
+				await accountsPage.accountsTable.cellLink(account.name)
+			).click();
+			await editAccountPage.channelDefaultsLink.click();
+		};
+
+		await test.step('Add a custom Flat Rate shipping option to the channel', async () => {
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await commerceAdminChannelDetailsPage.addFlatRateShippingOption(
+				optionName,
+				'5'
+			);
+		});
+
+		await test.step('Set Flat Rate / <custom option> as the account default', async () => {
+			await openAccountChannelDefaults();
+
+			await (
+				await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowAction(
+					'Edit',
+					channel.name
+				)
+			).click();
+
+			await editAccountChannelDefaultsPage
+				.modalOptionCheckbox(`Flat Rate / ${optionName}`)
+				.check();
+
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				editAccountChannelDefaultsPage.modalIframe
+			).toHaveCount(0);
+			await expect(
+				editAccountChannelDefaultsPage.defaultShippingOptionsTable.getByText(
+					optionName
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Delete the underlying shipping option from the channel', async () => {
+			await commerceAdminChannelsPage.goto();
+
+			await (
+				await commerceAdminChannelsPage.channelsTableRowLink(
+					channel.name
+				)
+			).click();
+
+			await (
+				await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+					'Flat Rate'
+				)
+			).click();
+			await (
+				await commerceAdminChannelDetailsPage.shippingOptionsTab(
+					'Shipping Methods'
+				)
+			).click();
+			await (
+				await commerceAdminChannelDetailsPage.sidePanelFrameActionsButton(
+					'Shipping Methods',
+					optionName
+				)
+			).click();
+
+			page.once('dialog', (dialog) => dialog.accept());
+
+			await (
+				await commerceAdminChannelDetailsPage.sidePanelFrameDeleteMenuItem(
+					'Shipping Methods'
+				)
+			).click();
+
+			await expect(
+				(
+					await commerceAdminChannelDetailsPage.sidePanelFrame(
+						'Shipping Methods'
+					)
+				).getByText(optionName)
+			).toHaveCount(0);
+		});
+
+		await test.step('Account default reverts to Use Priority Settings', async () => {
+			await openAccountChannelDefaults();
+
+			await expect(
+				editAccountChannelDefaultsPage.usePrioritySettingsCell
+			).toBeVisible();
+			await expect(
+				editAccountChannelDefaultsPage.defaultShippingOptionsTable.getByText(
+					optionName
+				)
+			).toHaveCount(0);
+		});
+	}
+);
+
+test(
+	'Channel-level shipping method toggle propagates to the account default Active column',
+	{tag: ['@LPD-85008']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+	}) => {
+		const {account} = await createAccountWithBuyerUser(apiHelpers, site.id);
+
+		const openAccountChannelDefaults = async () => {
+			await accountsPage.gotoAccountAdmin();
+
+			await (
+				await accountsPage.accountsTable.cellLink(account.name)
+			).click();
+			await editAccountPage.channelDefaultsLink.click();
+		};
+
+		await test.step('Set Flat Rate / Standard Delivery as default', async () => {
+			await openAccountChannelDefaults();
+
+			await (
+				await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowAction(
+					'Edit',
+					channel.name
+				)
+			).click();
+
+			await editAccountChannelDefaultsPage
+				.modalOptionCheckbox('Flat Rate / Standard Delivery')
+				.check();
+
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				editAccountChannelDefaultsPage.modalIframe
+			).toHaveCount(0);
+
+			await expect(
+				await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowActiveCell(
+					channel.name
+				)
+			).toHaveText('Yes');
+		});
+
+		try {
+			await test.step('Disable Flat Rate at the channel — Active column flips to No', async () => {
+				await commerceAdminChannelsPage.goto();
+
+				await (
+					await commerceAdminChannelsPage.channelsTableRowLink(
+						channel.name
+					)
+				).click();
+
+				await commerceAdminChannelDetailsPage.deactivateChannelConfiguration(
+					'Flat Rate',
+					'Shipping Methods'
+				);
+
+				await openAccountChannelDefaults();
+
+				await expect(
+					await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowActiveCell(
+						channel.name
+					)
+				).toHaveText('No');
+			});
+		}
+		finally {
+			await test.step('Re-enable Flat Rate at the channel — Active column flips back to Yes', async () => {
+				await commerceAdminChannelsPage.goto();
+
+				await (
+					await commerceAdminChannelsPage.channelsTableRowLink(
+						channel.name
+					)
+				).click();
+
+				await commerceAdminChannelDetailsPage.activateChannelConfiguration(
+					'Flat Rate',
+					'Shipping Methods'
+				);
+
+				await openAccountChannelDefaults();
+
+				await expect(
+					await editAccountChannelDefaultsPage.defaultShippingOptionsTableRowActiveCell(
+						channel.name
+					)
+				).toHaveText('Yes');
+			});
+		}
 	}
 );

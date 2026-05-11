@@ -1069,3 +1069,50 @@ test(
 		});
 	}
 );
+
+test(
+	'Product is Unavailable on the channel when warehouses have No Channel eligibility',
+	{tag: ['@COMMERCE-10640', '@LPD-88485']},
+	async ({apiHelpers}) => {
+		const skuName = `TestSKU-${getRandomString()}`;
+
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+			{
+				active: true,
+				latitude: getRandomInt(),
+				longitude: getRandomInt(),
+				name: {en_US: `TestWH-${getRandomString()}`},
+				warehouseItems: [{quantity: 100, sku: skuName}],
+			}
+		);
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				productConfiguration: {
+					allowBackOrder: false,
+					displayStockQuantity: true,
+					inventoryEngine: 'default',
+				},
+				skus: [
+					{
+						cost: 0,
+						price: 10,
+						published: true,
+						purchasable: true,
+						sku: skuName,
+					},
+				],
+			});
+
+		const channelSkus =
+			await apiHelpers.headlessCommerceDeliveryCatalog.getChannelProductSkusPage(
+				channel.id,
+				product.productId
+			);
+
+		expect(channelSkus.items?.[0]?.availability?.stockQuantity ?? 0).toBe(
+			0
+		);
+	}
+);

@@ -16,6 +16,7 @@ type TCart = {
 	id?: number;
 	modifiedDate?: string;
 	paymentMethod?: string;
+	printedNote?: string;
 	shippingAddressId?: number;
 	shippingMethod?: string;
 	shippingOption?: string;

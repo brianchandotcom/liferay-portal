@@ -31,7 +31,7 @@
 	}
 
 	&.active {
-		background-color: rgba($cadmin-primary, 0.04);
+		background-color: unquote('hsl(from #{$cadmin-primary} h s l / 0.04)');
 
 		#{$self}__label {
 			a {
@@ -42,7 +42,7 @@
 	}
 
 	&:hover:not(.active) {
-		background-color: rgba($cadmin-dark, 0.04);
+		background-color: unquote('hsl(from #{$cadmin-dark} h s l / 0.04)');
 	}
 }
 
@@ -55,7 +55,7 @@
 		color: $cadmin-gray-600;
 
 		&--active {
-			background-color: rgba($cadmin-dark, 0.03);
+			background-color: unquote('hsl(from #{$cadmin-dark} h s l / 0.03)');
 			color: $cadmin-gray-900;
 		}
 	}

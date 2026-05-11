@@ -172,7 +172,7 @@
 
 	.card {
 		border-radius: 0.5rem;
-		box-shadow: 0 0.1rem 0.1rem rgba($dark, 0.16);
+		box-shadow: unquote('0 0.1rem 0.1rem hsl(from #{$dark} h s l / 0.16)');
 		height: 200px;
 		margin-bottom: 0;
 		transition: box-shadow 300ms ease-in-out;
@@ -193,7 +193,9 @@
 	&:hover,
 	&:focus {
 		.card {
-			box-shadow: 0 1.25rem 2.5rem rgba($dark, 0.16);
+			box-shadow: unquote(
+				'0 1.25rem 2.5rem hsl(from #{$dark} h s l / 0.16)'
+			);
 		}
 	}
 
@@ -329,7 +331,7 @@
 	}
 
 	.breadcrumb-button:hover {
-		background-color: rgba($dark, 0.04);
+		background-color: unquote('hsl(from #{$dark} h s l / 0.04)');
 		color: $dark;
 	}
 
@@ -348,7 +350,7 @@
 		}
 
 		.questions-breadcrumb-unstyled:hover {
-			background-color: rgba($dark, 0.06);
+			background-color: unquote('hsl(from #{$dark} h s l / 0.06)');
 		}
 
 		.questions-breadcrumb-unstyled:focus {

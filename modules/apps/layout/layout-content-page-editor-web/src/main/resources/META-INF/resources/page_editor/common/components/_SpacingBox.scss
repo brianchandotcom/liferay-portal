@@ -14,6 +14,7 @@ html#{$cadmin-selector} {
 			$paddingHorizonalDropdownButton: 1px;
 			$paddingVerticalDropdownButton: 28px;
 
+			color-scheme: light;
 			display: grid;
 			grid:
 				#{$marginButtonHeight} #{$verticalSpacing} #{$paddingButtonHeight} auto #{$paddingButtonHeight} #{$verticalSpacing} #{$marginButtonHeight} /

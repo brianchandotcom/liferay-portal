@@ -16,9 +16,8 @@ $control-menu-level-1-bg: $cadmin-dark-l1 !default;
 $control-menu-level-1-color: $cadmin-gray-400 !default;
 $control-menu-level-1-link-color: $cadmin-gray-400 !default;
 $control-menu-level-1-link-hover-color: $cadmin-white !default;
-$control-menu-level-1-link-background-color: fade_out(
-	$cadmin-white,
-	0.97
+$control-menu-level-1-link-background-color: unquote(
+	'hsl(from #{$cadmin-white} h s l / 0.03)'
 ) !default;
 
 $control-menu-level-1-light-bg: $cadmin-white !default;

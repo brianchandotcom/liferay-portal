@@ -24,7 +24,7 @@
 
 		&.disabled:before {
 			align-items: center;
-			background-color: rgba($white, 0.75);
+			background-color: unquote('hsl(from #{$white} h s l / 0.75)');
 			bottom: 0;
 			content: '';
 			display: flex;

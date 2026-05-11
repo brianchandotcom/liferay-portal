@@ -7,7 +7,7 @@
 
 	&:focus,
 	&:hover {
-		box-shadow: 0px 1px 5px -1px rgba($black, 0.3);
+		box-shadow: unquote('0px 1px 5px -1px hsl(from #{$black} h s l / 0.3)');
 	}
 
 	.remove-button {

@@ -1,3 +1,4 @@
+@import 'atlas-custom-properties/_variables';
 @import 'atlas-variables';
 
 $management-bar-base: (
@@ -49,15 +50,15 @@ $management-bar-light: (
 			color: $navbar-light-color,
 			font-weight: $font-weight-semi-bold,
 			hover: (
-				background-color: rgba($gray-900, 0.03),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.03)'),
 				color: $gray-900,
 			),
 			focus: (
-				background-color: rgba($gray-900, 0.03),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.03)'),
 				color: $gray-900,
 			),
 			active: (
-				background-color: rgba($gray-900, 0.06),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.06)'),
 				color: $navbar-light-active-color,
 			),
 			disabled: (
@@ -81,15 +82,15 @@ $management-bar-primary: (
 			font-weight: $font-weight-semi-bold,
 			color: $navbar-light-color,
 			hover: (
-				background-color: rgba($gray-900, 0.03),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.03)'),
 				color: $gray-900,
 			),
 			focus: (
-				background-color: rgba($gray-900, 0.03),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.03)'),
 				color: $gray-900,
 			),
 			active: (
-				background-color: rgba($gray-900, 0.06),
+				background-color: unquote('hsl(from #{$gray-900} h s l / 0.06)'),
 			),
 			disabled: (
 				background-color: transparent,

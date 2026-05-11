@@ -50,7 +50,7 @@ $btn-size: 28px;
 		stroke-width: 1.5;
 
 		&.highlighted {
-			stroke: rgba($primary, 0.4);
+			stroke: unquote('hsl(from #{$primary} h s l / 0.4)');
 		}
 	}
 
@@ -69,7 +69,7 @@ $btn-size: 28px;
 		transition: transform 0.2s linear;
 
 		.chart-rect {
-			stroke: rgba($primary, 0.6);
+			stroke: unquote('hsl(from #{$primary} h s l / 0.6)');
 		}
 	}
 
@@ -79,7 +79,7 @@ $btn-size: 28px;
 	}
 
 	.highlighted .chart-rect {
-		stroke: rgba($primary, 0.6);
+		stroke: unquote('hsl(from #{$primary} h s l / 0.6)');
 	}
 
 	.discovered {

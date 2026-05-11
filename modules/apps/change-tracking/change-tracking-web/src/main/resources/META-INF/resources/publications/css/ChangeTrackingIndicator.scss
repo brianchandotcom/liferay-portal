@@ -3,7 +3,9 @@
 html#{$cadmin-selector} .cadmin {
 	.change-tracking-indicator {
 		background-color: $cadmin-dark-l1;
-		border-bottom: 1px solid lighten($cadmin-dark-l2, 4.3);
+		border-bottom: unquote(
+			'1px solid hsl(from #{$cadmin-dark-l2} h s calc(l + 4.3))'
+		);
 		font-size: 12px;
 		text-align: center;
 

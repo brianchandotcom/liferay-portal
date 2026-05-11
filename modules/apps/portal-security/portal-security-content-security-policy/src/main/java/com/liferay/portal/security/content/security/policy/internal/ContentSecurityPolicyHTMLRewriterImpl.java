@@ -52,18 +52,22 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		boolean containsBody = _containsBody(html);
 
+		boolean rewrite = false;
+
 		if (containsBody) {
-			_extractInlineHandlers(bodyElement, recursive, scriptSB);
-			_extractInlineStyles(bodyElement, recursive, styleSB);
+			rewrite |= _extractInlineHandlers(bodyElement, recursive, scriptSB);
+			rewrite |= _extractInlineStyles(bodyElement, recursive, styleSB);
 		}
 		else {
 			for (Element childElement : bodyElement.children()) {
-				_extractInlineHandlers(childElement, recursive, scriptSB);
-				_extractInlineStyles(childElement, recursive, styleSB);
+				rewrite |= _extractInlineHandlers(
+					childElement, recursive, scriptSB);
+				rewrite |= _extractInlineStyles(
+					childElement, recursive, styleSB);
 			}
 		}
 
-		if ((scriptSB.length() == 0) && (styleSB.length() == 0)) {
+		if (!rewrite) {
 			return html;
 		}
 
@@ -98,11 +102,12 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 		return html.startsWith("<body");
 	}
 
-	private void _extractInlineHandlers(
+	private boolean _extractInlineHandlers(
 		Element element, boolean recursive, StringBundler sb) {
 
 		String id = element.attr("id");
 		List<String> keys = new ArrayList<>();
+		boolean rewrite = false;
 
 		for (Attribute attribute : element.attributes()) {
 			String key = attribute.getKey();
@@ -112,6 +117,8 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 			if (!lowerCaseKey.startsWith("on")) {
 				continue;
 			}
+
+			rewrite = true;
 
 			if (Objects.equals(element.nodeName(), "body")) {
 				sb.append("document.body.");
@@ -144,39 +151,49 @@ public class ContentSecurityPolicyHTMLRewriterImpl
 
 		if (recursive) {
 			for (Element childElement : element.children()) {
-				_extractInlineHandlers(childElement, true, sb);
+				rewrite |= _extractInlineHandlers(childElement, true, sb);
 			}
 		}
+
+		return rewrite;
 	}
 
-	private void _extractInlineStyles(
+	private boolean _extractInlineStyles(
 		Element element, boolean recursive, StringBundler sb) {
 
-		String style = element.attr("style");
+		boolean rewrite = false;
 
-		if (!Validator.isBlank(style)) {
-			String id = element.attr("id");
+		if (element.hasAttr("style")) {
+			rewrite = true;
 
-			if (Validator.isBlank(id)) {
-				id = StringUtil.randomId(8);
+			String style = element.attr("style");
 
-				element.attr("id", id);
+			if (!Validator.isBlank(style)) {
+				String id = element.attr("id");
+
+				if (Validator.isBlank(id)) {
+					id = StringUtil.randomId(8);
+
+					element.attr("id", id);
+				}
+
+				sb.append("#");
+				sb.append(id);
+				sb.append("{");
+				sb.append(style);
+				sb.append("}");
 			}
-
-			sb.append("#");
-			sb.append(id);
-			sb.append("{");
-			sb.append(style);
-			sb.append("}");
 
 			element.removeAttr("style");
 		}
 
 		if (recursive) {
 			for (Element childElement : element.children()) {
-				_extractInlineStyles(childElement, recursive, sb);
+				rewrite |= _extractInlineStyles(childElement, recursive, sb);
 			}
 		}
+
+		return rewrite;
 	}
 
 	@Reference

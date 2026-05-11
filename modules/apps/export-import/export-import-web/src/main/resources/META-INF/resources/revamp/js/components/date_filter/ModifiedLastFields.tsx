@@ -7,11 +7,11 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import FieldSelectWithOption from '../forms/FieldSelectWithOption';
-import {FilterState, ModifiedLastType} from './types';
+import {EditingState, ModifiedLastType} from './types';
 import {MODIFIED_LAST_OPTIONS} from './utils';
 
 type Props = {
-	handleUpdateFilter: (payload: Partial<FilterState['editing']>) => void;
+	handleUpdateFilter: (payload: Partial<EditingState>) => void;
 	value: ModifiedLastType;
 };
 

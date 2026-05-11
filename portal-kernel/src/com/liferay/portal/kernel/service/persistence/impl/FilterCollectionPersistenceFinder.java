@@ -1,0 +1,362 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.kernel.service.persistence.impl;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.SQLQuery;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
+	extends CollectionPersistenceFinder<T> {
+
+	@SafeVarargs
+	public FilterCollectionPersistenceFinder(
+		BasePersistenceImpl<T, ?> basePersistenceImpl,
+		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
+		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
+		String defaultOrderByJpql, String orderByEntityAlias, String where,
+		FilterMetadata<T> filterMetadata, FinderColumn<T>... finderColumns) {
+
+		super(
+			basePersistenceImpl, paginatedFindPath, unpaginatedFindPath,
+			countFinderPath, sqlSelectWhere, sqlCountWhere, defaultOrderByJpql,
+			orderByEntityAlias, where, finderColumns);
+
+		_filterMetadata = filterMetadata;
+	}
+
+	public int filterCount(FinderCache finderCache, Object[] values) {
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return count(finderCache, values);
+		}
+
+		return _filterCount(finderCache, values, _EMPTY_GROUP_IDS);
+	}
+
+	public int filterCount(
+		FinderCache finderCache, Object[] values, long groupId) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return count(finderCache, values);
+		}
+
+		return _filterCount(finderCache, values, new long[] {groupId});
+	}
+
+	public int filterCount(
+		FinderCache finderCache, Object[] values, long companyId,
+		long groupId) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, groupId)) {
+			return count(finderCache, values);
+		}
+
+		return _filterCount(finderCache, values, _EMPTY_GROUP_IDS);
+	}
+
+	public int filterCount(
+		FinderCache finderCache, Object[] values, long[] groupIds) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return count(finderCache, values);
+		}
+
+		return _filterCount(finderCache, values, groupIds);
+	}
+
+	public List<T> filterFind(
+		FinderCache finderCache, Object[] values, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled()) {
+			return find(
+				finderCache, values, start, end, orderByComparator, true);
+		}
+
+		return _filterFind(
+			finderCache, values, start, end, orderByComparator,
+			_EMPTY_GROUP_IDS);
+	}
+
+	public List<T> filterFind(
+		FinderCache finderCache, Object[] values, int start, int end,
+		OrderByComparator<T> orderByComparator, long groupId) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return find(
+				finderCache, values, start, end, orderByComparator, true);
+		}
+
+		return _filterFind(
+			finderCache, values, start, end, orderByComparator,
+			new long[] {groupId});
+	}
+
+	public List<T> filterFind(
+		FinderCache finderCache, Object[] values, int start, int end,
+		OrderByComparator<T> orderByComparator, long companyId, long groupId) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, groupId)) {
+			return find(
+				finderCache, values, start, end, orderByComparator, true);
+		}
+
+		return _filterFind(
+			finderCache, values, start, end, orderByComparator,
+			_EMPTY_GROUP_IDS);
+	}
+
+	public List<T> filterFind(
+		FinderCache finderCache, Object[] values, int start, int end,
+		OrderByComparator<T> orderByComparator, long[] groupIds) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
+			return find(
+				finderCache, values, start, end, orderByComparator, true);
+		}
+
+		return _filterFind(
+			finderCache, values, start, end, orderByComparator, groupIds);
+	}
+
+	public static class FilterMetadata<T extends BaseModel<T>> {
+
+		public FilterMetadata(
+			Class<? extends T> implClass, Class<? extends T> apiClass,
+			String entityAlias, String entityTable, String filterPKColumn,
+			String filterSqlSelectWhere,
+			String filterSqlSelectNoInlineDistinctWhere1,
+			String filterSqlSelectNoInlineDistinctWhere2,
+			String filterSqlCountWhere, String defaultOrderBySql,
+			String defaultOrderBySqlInlineDistinct) {
+
+			_implClass = implClass;
+			_apiClass = apiClass;
+			_entityAlias = entityAlias;
+			_entityTable = entityTable;
+			_filterPKColumn = filterPKColumn;
+			_filterSqlSelectWhere = filterSqlSelectWhere;
+			_filterSqlSelectNoInlineDistinctWhere1 =
+				filterSqlSelectNoInlineDistinctWhere1;
+			_filterSqlSelectNoInlineDistinctWhere2 =
+				filterSqlSelectNoInlineDistinctWhere2;
+			_filterSqlCountWhere = filterSqlCountWhere;
+			_defaultOrderBySql = defaultOrderBySql;
+			_defaultOrderBySqlInlineDistinct = defaultOrderBySqlInlineDistinct;
+
+			_entityAliasPrefix = entityAlias + ".";
+			_orderByEntityTable = entityTable + ".";
+		}
+
+		private final Class<? extends T> _apiClass;
+		private final String _defaultOrderBySql;
+		private final String _defaultOrderBySqlInlineDistinct;
+		private final String _entityAlias;
+		private final String _entityAliasPrefix;
+		private final String _entityTable;
+		private final String _filterPKColumn;
+		private final String _filterSqlCountWhere;
+		private final String _filterSqlSelectNoInlineDistinctWhere1;
+		private final String _filterSqlSelectNoInlineDistinctWhere2;
+		private final String _filterSqlSelectWhere;
+		private final Class<? extends T> _implClass;
+		private final String _orderByEntityTable;
+
+	}
+
+	private String _buildFilterFindSql(
+		boolean inlineDistinct, Object[] values,
+		OrderByComparator<T> orderByComparator) {
+
+		StringBundler sb = null;
+
+		int extraSize = inlineDistinct ? 3 : 4;
+
+		if (orderByComparator == null) {
+			sb = new StringBundler((finderColumns.length * 2) + extraSize);
+		}
+		else {
+			sb = new StringBundler(
+				(finderColumns.length * 2) + extraSize +
+					(orderByComparator.getOrderByFields().length * 2));
+		}
+
+		if (inlineDistinct) {
+			sb.append(_filterMetadata._filterSqlSelectWhere);
+		}
+		else {
+			sb.append(_filterMetadata._filterSqlSelectNoInlineDistinctWhere1);
+		}
+
+		for (int i = 0; i < finderColumns.length; i++) {
+			String fragment = finderColumns[i].getSqlFragment(values[i]);
+
+			if (fragment.isEmpty()) {
+				continue;
+			}
+
+			sb.append(fragment);
+			sb.append(" AND ");
+		}
+
+		if ((where != null) && !where.isEmpty()) {
+			sb.append(where);
+		}
+		else if (sb.index() > 1) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		if (!inlineDistinct) {
+			sb.append(_filterMetadata._filterSqlSelectNoInlineDistinctWhere2);
+		}
+
+		if (orderByComparator != null) {
+			basePersistenceImpl.appendOrderByComparator(
+				sb,
+				inlineDistinct ? _filterMetadata._entityAliasPrefix :
+					_filterMetadata._orderByEntityTable,
+				orderByComparator, true);
+		}
+		else if (inlineDistinct) {
+			sb.append(_filterMetadata._defaultOrderBySqlInlineDistinct);
+		}
+		else {
+			sb.append(_filterMetadata._defaultOrderBySql);
+		}
+
+		return sb.toString();
+	}
+
+	private int _filterCount(
+		FinderCache finderCache, Object[] values, long[] groupIds) {
+
+		if (basePersistenceImpl.isPermissionsInMemoryFilterEnabled()) {
+			List<T> list = find(
+				finderCache, values, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null,
+				true);
+
+			list = InlineSQLHelperUtil.filter(list, groupIds);
+
+			return list.size();
+		}
+
+		normalizeValues(values);
+
+		String sql = _replacePermissionCheck(
+			buildSQLWhere(_filterMetadata._filterSqlCountWhere, values),
+			groupIds);
+
+		Session session = null;
+
+		try {
+			session = basePersistenceImpl.openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				BasePersistenceImpl.COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			bindQueryParams(queryPos, values);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw basePersistenceImpl.processException(exception);
+		}
+		finally {
+			basePersistenceImpl.closeSession(session);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<T> _filterFind(
+		FinderCache finderCache, Object[] values, int start, int end,
+		OrderByComparator<T> orderByComparator, long[] groupIds) {
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			basePersistenceImpl.isPermissionsInMemoryFilterEnabled()) {
+
+			List<T> list = find(
+				finderCache, values, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				orderByComparator, true);
+
+			return InlineSQLHelperUtil.filter(list, groupIds);
+		}
+
+		normalizeValues(values);
+
+		boolean inlineDistinct = basePersistenceImpl.getDB(
+		).isSupportsInlineDistinct();
+
+		String sql = _replacePermissionCheck(
+			_buildFilterFindSql(inlineDistinct, values, orderByComparator),
+			groupIds);
+
+		Session session = null;
+
+		try {
+			session = basePersistenceImpl.openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (inlineDistinct) {
+				sqlQuery.addEntity(
+					_filterMetadata._entityAlias, _filterMetadata._implClass);
+			}
+			else {
+				sqlQuery.addEntity(
+					_filterMetadata._entityTable, _filterMetadata._implClass);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			bindQueryParams(queryPos, values);
+
+			return (List<T>)QueryUtil.list(
+				sqlQuery, basePersistenceImpl.getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw basePersistenceImpl.processException(exception);
+		}
+		finally {
+			basePersistenceImpl.closeSession(session);
+		}
+	}
+
+	private String _replacePermissionCheck(String sql, long[] groupIds) {
+		if (groupIds.length == 0) {
+			return InlineSQLHelperUtil.replacePermissionCheck(
+				sql, _filterMetadata._apiClass.getName(),
+				_filterMetadata._filterPKColumn);
+		}
+
+		return InlineSQLHelperUtil.replacePermissionCheck(
+			sql, _filterMetadata._apiClass.getName(),
+			_filterMetadata._filterPKColumn, groupIds);
+	}
+
+	private static final long[] _EMPTY_GROUP_IDS = new long[0];
+
+	private final FilterMetadata<T> _filterMetadata;
+
+}

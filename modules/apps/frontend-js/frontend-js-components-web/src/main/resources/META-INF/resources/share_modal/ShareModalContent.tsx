@@ -13,7 +13,7 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import openToast from '../toast/openToast';
 import CollaboratorService from './CollaboratorService';
@@ -33,6 +33,30 @@ import {
 } from './types';
 
 import './ShareModalContent.scss';
+
+function CollaboratorStickerIcon({
+	type,
+	user,
+}: {
+	type: CollaboratorType;
+	user: ShareModalUserAccount | ShareModalUserGroup;
+}) {
+	if (type === COLLABORATOR_TYPE.USER_GROUP) {
+		return <ClayIcon symbol="users" />;
+	}
+
+	if ('image' in user && user.image) {
+		return (
+			<img
+				alt={user.name}
+				className="sticker-img"
+				src={(user as ShareModalUserAccount).image}
+			/>
+		);
+	}
+
+	return <ClayIcon symbol="user" />;
+}
 
 function CollaboratorListItem({
 	actionIds,
@@ -77,19 +101,7 @@ function CollaboratorListItem({
 		>
 			<div className="autofit-col pl-0">
 				<ClaySticker displayType="secondary" shape="circle" size="sm">
-					{type === COLLABORATOR_TYPE.USER ? (
-						'image' in user && user.image ? (
-							<img
-								alt={user.name}
-								className="sticker-img"
-								src={(user as ShareModalUserAccount).image}
-							/>
-						) : (
-							<ClayIcon symbol="user" />
-						)
-					) : (
-						<ClayIcon symbol="users" />
-					)}
+					<CollaboratorStickerIcon type={type} user={user} />
 				</ClaySticker>
 			</div>
 
@@ -126,10 +138,9 @@ function CollaboratorListItem({
 					) : (
 						dateExpired && (
 							<div className="text-2">
-								{sub(
-									Liferay.Language.get('access-expires-x'),
-									[formatDateForView(dateExpired)]
-								)}
+								{sub(Liferay.Language.get('access-expires-x'), [
+									formatDateForView(dateExpired),
+								])}
 
 								<ClayButtonWithIcon
 									aria-label={sub(
@@ -198,7 +209,9 @@ function CollaboratorListItem({
 										}
 										symbolLeft={share ? 'check-small' : ''}
 									>
-										{Liferay.Language.get('allow-resharing')}
+										{Liferay.Language.get(
+											'allow-resharing'
+										)}
 									</ClayDropDown.Item>
 
 									<ClayDropDown.Item
@@ -214,7 +227,9 @@ function CollaboratorListItem({
 							</ClayDropDown>
 						) : (
 							<ClayButtonWithIcon
-								aria-label={Liferay.Language.get('remove-access')}
+								aria-label={Liferay.Language.get(
+									'remove-access'
+								)}
 								borderless
 								displayType="secondary"
 								monospaced
@@ -387,6 +402,38 @@ export default function ShareModalContent({
 	const _isCollaboratorsUpdated = () =>
 		JSON.stringify(collaborators) !== JSON.stringify(initialCollaborators);
 
+	const sourceItems = useMemo(
+		() =>
+			users?.items?.length
+				? users.items.map((item: any) => {
+						if (
+							item.entryClassName?.includes(
+								COLLABORATOR_TYPE.USER_GROUP
+							)
+						) {
+							return {
+								type: COLLABORATOR_TYPE.USER_GROUP,
+								user: {
+									id: item.embedded.id.toString(),
+									name: item.embedded.name,
+								},
+							};
+						}
+
+						return {
+							type: COLLABORATOR_TYPE.USER,
+							user: {
+								emailAddress: item.embedded.emailAddress,
+								id: item.embedded.id.toString(),
+								image: item.embedded.image,
+								name: item.embedded.name,
+							},
+						};
+					})
+				: [],
+		[users]
+	);
+
 	return (
 		<div className="share-modal-content">
 			<ClayModal.Header
@@ -427,40 +474,7 @@ export default function ShareModalContent({
 								placeholder={Liferay.Language.get(
 									'enter-name-email-or-groups'
 								)}
-								sourceItems={
-									users?.items?.length
-										? users.items?.map((item: any) => {
-												if (
-													item.entryClassName?.includes(
-														COLLABORATOR_TYPE.USER_GROUP
-													)
-												) {
-													return {
-														type: COLLABORATOR_TYPE.USER_GROUP,
-														user: {
-															id: item.embedded.id.toString(),
-															name: item.embedded
-																.name,
-														},
-													};
-												}
-
-												return {
-													type: COLLABORATOR_TYPE.USER,
-													user: {
-														emailAddress:
-															item.embedded
-																.emailAddress,
-														id: item.embedded.id.toString(),
-														image: item.embedded
-															.image,
-														name: item.embedded
-															.name,
-													},
-												};
-											})
-										: []
-								}
+								sourceItems={sourceItems}
 								value={autocompleteValue}
 							>
 								{({

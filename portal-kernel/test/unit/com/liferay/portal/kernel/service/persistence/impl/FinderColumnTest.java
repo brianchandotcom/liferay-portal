@@ -126,11 +126,9 @@ public class FinderColumnTest {
 			"t.", "name", FinderColumn.Type.STRING, "LIKE", true, true,
 			entity -> "Hello World");
 
-		Assert.assertTrue(
-			finderColumn.matches(_TEST_MODEL, "Hello%"));
-		Assert.assertTrue(
-			finderColumn.matches(_TEST_MODEL, "%World"));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, "Goodbye%"));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, "%World"));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, "Hello%"));
 	}
 
 	@Test
@@ -139,8 +137,8 @@ public class FinderColumnTest {
 			"t.", "status", FinderColumn.Type.INTEGER, "!=", true, true,
 			entity -> 3);
 
-		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
 		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 3));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5));
 	}
 
 	@Test

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -58,40 +59,44 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 	}
 
 	public int count(FinderCache finderCache, Object[] values) {
-		normalizeValues(values);
+		try (SafeCloseable safeCloseable =
+				setCTCollectionIdWithSafeCloseable()) {
 
-		Object[] finderArgs = buildFinderArgs(values);
+			normalizeValues(values);
 
-		Long count = (Long)finderCache.getResult(
-			_countFinderPath, finderArgs, basePersistenceImpl);
+			Object[] finderArgs = buildFinderArgs(values);
 
-		if (count == null) {
-			String sql = buildSQLWhere(_sqlCountWhere, values);
+			Long count = (Long)finderCache.getResult(
+				_countFinderPath, finderArgs, basePersistenceImpl);
 
-			Session session = null;
+			if (count == null) {
+				String sql = buildSQLWhere(_sqlCountWhere, values);
 
-			try {
-				session = basePersistenceImpl.openSession();
+				Session session = null;
 
-				Query query = session.createQuery(sql);
+				try {
+					session = basePersistenceImpl.openSession();
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					Query query = session.createQuery(sql);
 
-				bindQueryParams(queryPos, values);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				count = (Long)query.uniqueResult();
+					bindQueryParams(queryPos, values);
 
-				finderCache.putResult(_countFinderPath, finderArgs, count);
+					count = (Long)query.uniqueResult();
+
+					finderCache.putResult(_countFinderPath, finderArgs, count);
+				}
+				catch (Exception exception) {
+					throw basePersistenceImpl.processException(exception);
+				}
+				finally {
+					basePersistenceImpl.closeSession(session);
+				}
 			}
-			catch (Exception exception) {
-				throw basePersistenceImpl.processException(exception);
-			}
-			finally {
-				basePersistenceImpl.closeSession(session);
-			}
+
+			return count.intValue();
 		}
-
-		return count.intValue();
 	}
 
 	public T fetchFirst(
@@ -112,75 +117,80 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 		FinderCache finderCache, Object[] values, int start, int end,
 		OrderByComparator<T> orderByComparator, boolean useFinderCache) {
 
-		normalizeValues(values);
+		try (SafeCloseable safeCloseable =
+				setCTCollectionIdWithSafeCloseable()) {
 
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
+			normalizeValues(values);
 
-		if ((_unpaginatedFindPath != null) && (start == QueryUtil.ALL_POS) &&
-			(end == QueryUtil.ALL_POS) && (orderByComparator == null) &&
-			!_isMultiElementArrayable(values)) {
+			FinderPath finderPath = null;
+			Object[] finderArgs = null;
+
+			if ((_unpaginatedFindPath != null) &&
+				(start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null) &&
+				!_isMultiElementArrayable(values)) {
+
+				if (useFinderCache) {
+					finderPath = _unpaginatedFindPath;
+					finderArgs = buildFinderArgs(values);
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _paginatedFindPath;
+				finderArgs = _buildPaginatedFinderArgs(
+					values, start, end, orderByComparator);
+			}
+
+			List<T> list = null;
 
 			if (useFinderCache) {
-				finderPath = _unpaginatedFindPath;
-				finderArgs = buildFinderArgs(values);
-			}
-		}
-		else if (useFinderCache) {
-			finderPath = _paginatedFindPath;
-			finderArgs = _buildPaginatedFinderArgs(
-				values, start, end, orderByComparator);
-		}
+				list = (List<T>)finderCache.getResult(
+					finderPath, finderArgs, basePersistenceImpl);
 
-		List<T> list = null;
+				if ((list != null) && !list.isEmpty()) {
+					for (T entity : list) {
+						if (!matchesAll(entity, values)) {
+							list = null;
 
-		if (useFinderCache) {
-			list = (List<T>)finderCache.getResult(
-				finderPath, finderArgs, basePersistenceImpl);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (T entity : list) {
-					if (!matchesAll(entity, values)) {
-						list = null;
-
-						break;
+							break;
+						}
 					}
 				}
 			}
-		}
 
-		if (list == null) {
-			String sql = _buildFindSql(values, orderByComparator);
+			if (list == null) {
+				String sql = _buildFindSql(values, orderByComparator);
 
-			Session session = null;
+				Session session = null;
 
-			try {
-				session = basePersistenceImpl.openSession();
+				try {
+					session = basePersistenceImpl.openSession();
 
-				Query query = session.createQuery(sql);
+					Query query = session.createQuery(sql);
 
-				QueryPos queryPos = QueryPos.getInstance(query);
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-				bindQueryParams(queryPos, values);
+					bindQueryParams(queryPos, values);
 
-				list = (List<T>)QueryUtil.list(
-					query, basePersistenceImpl.getDialect(), start, end);
+					list = (List<T>)QueryUtil.list(
+						query, basePersistenceImpl.getDialect(), start, end);
 
-				basePersistenceImpl.cacheResult(list);
+					basePersistenceImpl.cacheResult(list);
 
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
+					if (useFinderCache) {
+						finderCache.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw basePersistenceImpl.processException(exception);
+				}
+				finally {
+					basePersistenceImpl.closeSession(session);
 				}
 			}
-			catch (Exception exception) {
-				throw basePersistenceImpl.processException(exception);
-			}
-			finally {
-				basePersistenceImpl.closeSession(session);
-			}
-		}
 
-		return list;
+			return list;
+		}
 	}
 
 	public void remove(FinderCache finderCache, Object[] values) {

@@ -5,9 +5,11 @@
 
 package com.liferay.portal.kernel.service.persistence.impl;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 
 /**
  * @author Shuyang Zhou
@@ -103,9 +105,25 @@ public abstract class BasePersistenceFinder<T extends BaseModel<T>> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	protected SafeCloseable setCTCollectionIdWithSafeCloseable() {
+		CTPersistenceHelper ctPersistenceHelper =
+			basePersistenceImpl.getCTPersistenceHelper();
+
+		if (ctPersistenceHelper == null) {
+			return _NO_OP_SAFE_CLOSEABLE;
+		}
+
+		return ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
+			(Class)basePersistenceImpl.getModelClass());
+	}
+
 	protected final BasePersistenceImpl<T, ?> basePersistenceImpl;
 	protected final FinderColumn<T>[] finderColumns;
 	protected final String sqlSelectWhere;
 	protected final String where;
+
+	private static final SafeCloseable _NO_OP_SAFE_CLOSEABLE = () -> {
+	};
 
 }

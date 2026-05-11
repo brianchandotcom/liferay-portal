@@ -41,8 +41,7 @@ jobs:
                 with:
                     directory: ./cloud/terraform/${{matrix.stack}}
                     framework: terraform
-                    hard_fail_on: CKV_TF_1
-                    soft_fail: true
+                    soft_fail: false
         strategy:
             fail-fast: false
             matrix:

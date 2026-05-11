@@ -5,6 +5,8 @@
 
 package com.liferay.headless.dsr.resource.v1_0.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.dsr.client.dto.v1_0.InvitedMember;
 import com.liferay.headless.dsr.client.dto.v1_0.UserAccount;
@@ -13,6 +15,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -61,6 +64,19 @@ public class InvitedMemberResourceTest
 			objectDefinition.getObjectDefinitionId(), 0, null,
 			HashMapBuilder.<String, Serializable>put(
 				"name", RandomTestUtil.randomString()
+			).put(
+				"r_accountToDSRRooms_accountEntryId",
+				() -> {
+					AccountEntry accountEntry =
+						_accountEntryLocalService.addAccountEntry(
+							StringPool.BLANK, TestPropsValues.getUserId(), 0,
+							RandomTestUtil.randomString(),
+							RandomTestUtil.randomString(), null,
+							RandomTestUtil.randomString() + "@liferay.com",
+							null, null, "business", 1, serviceContext);
+
+					return accountEntry.getAccountEntryId();
+				}
 			).build(),
 			serviceContext);
 
@@ -121,6 +137,9 @@ public class InvitedMemberResourceTest
 	protected Long testGetRoomInvitedMembersPage_getRoomId() throws Exception {
 		return _objectEntry.getObjectEntryId();
 	}
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

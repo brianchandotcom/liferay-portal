@@ -127,7 +127,7 @@ public class ObjectEntryFolderServiceTest {
 				parentObjectEntryFolder2.getObjectEntryFolderId(),
 				_user.getUserId()));
 
-		User user = UserTestUtil.addUser(
+		User user = UserTestUtil.addCompanyUser(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 

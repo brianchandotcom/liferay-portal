@@ -380,7 +380,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			filterString.contains(
 				"groupIds/any(g:g in (" + depotEntry1.getGroupId() + "))"));
 
-		User cmsAdministratorUser = UserTestUtil.addUser(
+		User cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 

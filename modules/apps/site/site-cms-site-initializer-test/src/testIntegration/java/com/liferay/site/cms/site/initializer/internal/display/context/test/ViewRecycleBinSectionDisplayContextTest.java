@@ -140,7 +140,7 @@ public class ViewRecycleBinSectionDisplayContextTest
 
 		_assertTrashEnabled(depotEntry3, true);
 
-		User cmsAdministratorUser = UserTestUtil.addUser(
+		User cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 

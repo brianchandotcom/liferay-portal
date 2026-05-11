@@ -405,7 +405,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 		irrelevantGroup = originalIrrelevantGroup;
 		testGroup = originalTestGroup;
 
-		_cmsAdministratorUser = UserTestUtil.addUser(
+		_cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			testCompany, RoleConstants.CMS_ADMINISTRATOR);
 
 		_userLocalService.updatePassword(
@@ -469,7 +469,7 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 
 		testGroup = CMSTestUtil.getOrAddGroup(KeywordResourceTest.class);
 
-		_cmsAdministratorUser = UserTestUtil.addUser(
+		_cmsAdministratorUser = UserTestUtil.addCompanyUser(
 			testCompany, RoleConstants.CMS_ADMINISTRATOR);
 
 		_userLocalService.updatePassword(

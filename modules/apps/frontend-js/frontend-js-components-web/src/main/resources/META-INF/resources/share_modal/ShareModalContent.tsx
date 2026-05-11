@@ -16,7 +16,7 @@ import {sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import openToast from '../toast/openToast';
-import CollaboratorService from './CollaboratorService';
+import CollaboratorService, {CollaboratorPayload} from './CollaboratorService';
 import ExpirationDateSelector, {
 	formatDateForView,
 	formatDateToISO,
@@ -33,6 +33,34 @@ import {
 } from './types';
 
 import './ShareModalContent.scss';
+
+type AutocompleteItem = {
+	type: CollaboratorType;
+	user: ShareModalUserAccount | ShareModalUserGroup;
+};
+
+const _identityTransformSourceItems = (
+	items: AutocompleteItem[],
+	_query: string
+) => items;
+
+const _passthroughFilterCollaborators = (_collaborator: Collaborator) => true;
+
+const _defaultTransformSubmitPayload = ({
+	actionIds,
+	dateExpired,
+	share,
+	type,
+	user,
+}: Collaborator) => ({
+	actionIds: actionIds.split(','),
+	...(!!dateExpired && {
+		dateExpired: formatDateToISO(dateExpired),
+	}),
+	id: user.id,
+	share,
+	type,
+});
 
 function CollaboratorStickerIcon({
 	type,
@@ -254,12 +282,15 @@ export default function ShareModalContent({
 	collaboratorURL = '',
 	collaboratorsListTitle = Liferay.Language.get('who-has-access'),
 	creator,
+	filterCollaborators = _passthroughFilterCollaborators,
 	initialCollaborators = [],
 	itemId,
 	permissionOptions,
 	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
+	transformSourceItems = _identityTransformSourceItems,
+	transformSubmitPayload = _defaultTransformSubmitPayload,
 }: {
 	autocompleteHelpText?: string;
 	autocompleteLabel?: string;
@@ -269,18 +300,27 @@ export default function ShareModalContent({
 	collaboratorURL: string;
 	collaboratorsListTitle?: string;
 	creator: ShareModalCreator;
+	filterCollaborators?: (collaborator: Collaborator) => boolean;
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	permissionOptions: PermissionOption[];
 	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
 	title: string;
+	transformSourceItems?: (
+		items: AutocompleteItem[],
+		query: string
+	) => AutocompleteItem[];
+	transformSubmitPayload?: (
+		collaborator: Collaborator
+	) => CollaboratorPayload;
 }) {
 	const [autocompleteValue, setAutocompleteValue] = useState('');
 	const [autocompleteNetworkStatus, setAutocompleteNetworkStatus] =
 		useState(4);
-	const [collaborators, setCollaborators] =
-		useState<Collaborator[]>(initialCollaborators);
+	const [collaborators, setCollaborators] = useState<Collaborator[]>(() =>
+		initialCollaborators.filter(filterCollaborators)
+	);
 	const [loading, setLoading] = useState(false);
 
 	const {resource: users} = useResource({
@@ -361,17 +401,9 @@ export default function ShareModalContent({
 		const {error} = await CollaboratorService.updateCollaborators(
 			collaboratorURL,
 			itemId,
-			collaborators.map(
-				({actionIds, dateExpired, share, type, user}) => ({
-					actionIds: actionIds.split(','),
-					...(!!dateExpired && {
-						dateExpired: formatDateToISO(dateExpired),
-					}),
-					id: user.id,
-					share,
-					type,
-				})
-			)
+			collaborators
+				.filter(filterCollaborators)
+				.map(transformSubmitPayload)
 		);
 
 		setLoading(false);
@@ -402,37 +434,37 @@ export default function ShareModalContent({
 	const _isCollaboratorsUpdated = () =>
 		JSON.stringify(collaborators) !== JSON.stringify(initialCollaborators);
 
-	const sourceItems = useMemo(
-		() =>
-			users?.items?.length
-				? users.items.map((item: any) => {
-						if (
-							item.entryClassName?.includes(
-								COLLABORATOR_TYPE.USER_GROUP
-							)
-						) {
-							return {
-								type: COLLABORATOR_TYPE.USER_GROUP,
-								user: {
-									id: item.embedded.id.toString(),
-									name: item.embedded.name,
-								},
-							};
-						}
-
+	const sourceItems = useMemo(() => {
+		const rawItems: AutocompleteItem[] = users?.items?.length
+			? users.items.map((item: any) => {
+					if (
+						item.entryClassName?.includes(
+							COLLABORATOR_TYPE.USER_GROUP
+						)
+					) {
 						return {
-							type: COLLABORATOR_TYPE.USER,
+							type: COLLABORATOR_TYPE.USER_GROUP,
 							user: {
-								emailAddress: item.embedded.emailAddress,
 								id: item.embedded.id.toString(),
-								image: item.embedded.image,
 								name: item.embedded.name,
 							},
 						};
-					})
-				: [],
-		[users]
-	);
+					}
+
+					return {
+						type: COLLABORATOR_TYPE.USER,
+						user: {
+							emailAddress: item.embedded.emailAddress,
+							id: item.embedded.id.toString(),
+							image: item.embedded.image,
+							name: item.embedded.name,
+						},
+					};
+				})
+			: [];
+
+		return transformSourceItems(rawItems, autocompleteValue);
+	}, [users, autocompleteValue, transformSourceItems]);
 
 	return (
 		<div className="share-modal-content">

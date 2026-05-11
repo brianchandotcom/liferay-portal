@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -26,9 +25,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.cms.site.initializer.test.util.CMSTestUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,10 +53,33 @@ public class GroupModelListenerTest {
 	}
 
 	@Test
-	public void testUpdateDepotEntry() throws Exception {
-		Layout layout = _getRecycleBinLayout(_cmsGroup);
+	public void testRemoveDepotEntryHidesLayout() throws Exception {
+		Layout layout = _getRecycleBinLayout();
+
+		layout = _setLayoutHidden(layout, false);
 
 		Assert.assertFalse(layout.isHidden());
+
+		DepotEntry depotEntry = _addDepotEntry();
+
+		_setTrashEnabled(depotEntry.getGroup(), Boolean.TRUE.toString());
+
+		Assert.assertFalse(layout.isHidden());
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+
+		layout = _getRecycleBinLayout();
+
+		Assert.assertTrue(layout.isHidden());
+	}
+
+	@Test
+	public void testUpdateDepotEntry() throws Exception {
+		Layout layout = _getRecycleBinLayout();
+
+		layout = _setLayoutHidden(layout, false);
+
+		Assert.assertFalse(_getRecycleBinLayout().isHidden());
 
 		DepotEntry depotEntry = _addDepotEntry();
 
@@ -72,15 +91,21 @@ public class GroupModelListenerTest {
 			GetterUtil.getBoolean(
 				depotGroup.getTypeSettingsProperty("trashEnabled")));
 
+		Assert.assertFalse(layout.isHidden());
+
 		_setTrashEnabled(depotGroup, Boolean.FALSE.toString());
+
+		layout = _getRecycleBinLayout();
 
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
 				depotGroup.getTypeSettingsProperty("trashEnabled")));
+
+		Assert.assertTrue(layout.isHidden());
 	}
 
 	private DepotEntry _addDepotEntry() throws Exception {
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+		return _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
@@ -89,15 +114,19 @@ public class GroupModelListenerTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
-
-		_depotEntries.add(depotEntry);
-
-		return depotEntry;
 	}
 
-	private Layout _getRecycleBinLayout(Group group) throws Exception {
+	private Layout _getRecycleBinLayout() throws Exception {
 		return _layoutLocalService.getLayoutByFriendlyURL(
-			group.getGroupId(), false, "/recycle-bin");
+			_cmsGroup.getGroupId(), false, "/recycle-bin");
+	}
+
+	private Layout _setLayoutHidden(Layout layout, boolean hidden)
+		throws Exception {
+
+		layout.setHidden(hidden);
+
+		return _layoutLocalService.updateLayout(layout);
 	}
 
 	private void _setTrashEnabled(Group group, String value) throws Exception {
@@ -115,9 +144,6 @@ public class GroupModelListenerTest {
 	}
 
 	private Group _cmsGroup;
-
-	@DeleteAfterTestRun
-	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

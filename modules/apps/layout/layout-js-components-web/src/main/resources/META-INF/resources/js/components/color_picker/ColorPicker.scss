@@ -46,7 +46,9 @@ html#{$cadmin-selector} {
 
 					&:focus,
 					&:hover {
-						background-color: rgba($cadmin-dark, 0.06);
+						background-color: unquote(
+							'hsl(from #{$cadmin-dark} h s l / 0.06)'
+						);
 					}
 				}
 

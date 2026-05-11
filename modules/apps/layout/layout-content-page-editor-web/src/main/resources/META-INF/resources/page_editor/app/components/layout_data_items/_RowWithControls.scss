@@ -11,16 +11,8 @@ html#{$cadmin-selector} {
 		&:before {
 			animation: RowOverlayGridFadeIn ease 0.3s;
 			animation-fill-mode: forwards;
-			background: repeating-linear-gradient(
-				to right,
-				$cadmin-white,
-				$cadmin-white 12px,
-				fade_out($cadmin-red, 0.92) 12px,
-				fade_out($cadmin-red, 0.92) 13px,
-				$cadmin-white 13px,
-				$cadmin-white 24px,
-				fade_out($cadmin-red, 0.96) 24px,
-				fade_out($cadmin-red, 0.96) 8.33%
+			background: unquote(
+				'repeating-linear-gradient(to right, #{$cadmin-white}, #{$cadmin-white} 12px, hsl(from #{$cadmin-red} h s l / 0.08) 12px, hsl(from #{$cadmin-red} h s l / 0.08) 13px, #{$cadmin-white} 13px, #{$cadmin-white} 24px, hsl(from #{$cadmin-red} h s l / 0.04) 24px, hsl(from #{$cadmin-red} h s l / 0.04) 8.33%)'
 			);
 			background-position: -24px 0;
 			background-size: calc(100% + 24px);
@@ -36,14 +28,8 @@ html#{$cadmin-selector} {
 		}
 
 		&.no-gutters:before {
-			background: repeating-linear-gradient(
-				to right,
-				fade_out($cadmin-red, 0.96),
-				fade_out($cadmin-red, 0.96) 12px,
-				fade_out($cadmin-red, 0.92) 12px,
-				fade_out($cadmin-red, 0.92) 13px,
-				fade_out($cadmin-red, 0.96) 13px,
-				fade_out($cadmin-red, 0.96) 8.33%
+			background: unquote(
+				'repeating-linear-gradient(to right, hsl(from #{$cadmin-red} h s l / 0.04), hsl(from #{$cadmin-red} h s l / 0.04) 12px, hsl(from #{$cadmin-red} h s l / 0.08) 12px, hsl(from #{$cadmin-red} h s l / 0.08) 13px, hsl(from #{$cadmin-red} h s l / 0.04) 13px, hsl(from #{$cadmin-red} h s l / 0.04) 8.33%)'
 			);
 			background-position: -11px 0;
 			background-size: calc(100% + 1px);

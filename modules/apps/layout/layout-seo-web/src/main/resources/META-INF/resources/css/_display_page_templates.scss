@@ -24,7 +24,7 @@
 
 		&:focus,
 		&:hover {
-			background-color: fade_out($purple, 0.9);
+			background-color: unquote('hsl(from #{$purple} h s l / 0.1)');
 		}
 	}
 

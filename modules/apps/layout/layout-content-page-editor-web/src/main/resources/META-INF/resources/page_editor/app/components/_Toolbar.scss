@@ -2,7 +2,9 @@ html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__toolbar {
 			background-color: $cadmin-white;
-			border-bottom: 1px solid fade_out($cadmin-secondary-l2, 0.5);
+			border-bottom: unquote(
+				'1px solid hsl(from #{$cadmin-secondary-l2} h s l / 0.5)'
+			);
 			color: $cadmin-secondary;
 			display: flex;
 			margin-bottom: 0;
@@ -66,8 +68,9 @@ html#{$cadmin-selector} {
 
 					&.end {
 						@include media-breakpoint-down(sm) {
-							box-shadow: inset 0 1px 0 0
-								fade-out($cadmin-secondary-l2, 0.5);
+							box-shadow: unquote(
+								'inset 0 1px 0 0 hsl(from #{$cadmin-secondary-l2} h s l / 0.5)'
+							);
 							flex-basis: 100%;
 						}
 

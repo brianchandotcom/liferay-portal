@@ -79,7 +79,9 @@ html#{$cadmin-selector} {
 
 			&__toolbar {
 				background-color: $cadmin-white;
-				border-bottom: 1px solid fade_out($cadmin-secondary-l2, 0.5);
+				border-bottom: unquote(
+					'1px solid hsl(from #{$cadmin-secondary-l2} h s l / 0.5)'
+				);
 				flex: 1 1 100%;
 			}
 

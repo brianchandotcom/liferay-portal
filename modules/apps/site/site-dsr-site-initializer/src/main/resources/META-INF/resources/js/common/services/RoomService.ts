@@ -188,6 +188,23 @@ async function updateRoom(
 	throw new Error(error);
 }
 
+async function updateRoomInvitedMember(
+	roomId: number,
+	invitedMemberId: number,
+	invitedMember: {roleKey?: string}
+): Promise<IInvitedMember> {
+	const {data, error} = await ApiHelper.patch<IInvitedMember>(
+		invitedMember,
+		`${DSR_PATH}/${roomId}/invited-members/${invitedMemberId}`
+	);
+
+	if (data) {
+		return data;
+	}
+
+	throw new Error(error);
+}
+
 async function updateRoomUserAccount(
 	roomId: number,
 	userId: number,
@@ -217,5 +234,6 @@ export default {
 	getRoomUserAccounts,
 	getRooms,
 	updateRoom,
+	updateRoomInvitedMember,
 	updateRoomUserAccount,
 };

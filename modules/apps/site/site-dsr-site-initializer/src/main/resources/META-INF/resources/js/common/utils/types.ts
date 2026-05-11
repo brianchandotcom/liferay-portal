@@ -45,6 +45,7 @@ export interface IFrequencyChartProps {
 export interface IInvitedMember {
 	emailAddress: string;
 	id: number;
+	ownerId?: number;
 	roleKey?: string;
 }
 
@@ -191,6 +192,7 @@ export interface IUserAccount {
 	image?: string;
 	isInvitedMember?: boolean;
 	name: string;
+	ownerId?: number;
 	roleKey?: string;
 }
 

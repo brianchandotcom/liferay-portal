@@ -21,6 +21,42 @@ const readFileAsBase64 = (file) =>
 	});
 
 export default function (context) {
+	const fileInput = document.getElementById(
+		`${context.namespace}attachmentFile`
+	);
+	const fileNameLabel = document.getElementById(
+		`${context.namespace}attachmentFileName`
+	);
+	const fileError = document.getElementById(
+		`${context.namespace}attachmentFileError`
+	);
+	const selectFileButton = document.getElementById(
+		`${context.namespace}selectFileButton`
+	);
+
+	if (fileInput && selectFileButton) {
+		selectFileButton.addEventListener('click', (event) => {
+			event.preventDefault();
+
+			fileInput.click();
+		});
+	}
+
+	if (fileInput) {
+		fileInput.addEventListener('change', () => {
+			const file = fileInput.files?.[0];
+
+			if (file) {
+				if (fileNameLabel) {
+					fileNameLabel.textContent = file.name;
+					fileNameLabel.classList.remove('d-none');
+				}
+
+				fileError?.classList.add('d-none');
+			}
+		});
+	}
+
 	Liferay.provide(
 		window,
 		`${context.namespace}editCommerceOrderAttachment`,
@@ -29,10 +65,13 @@ export default function (context) {
 
 			const formData = new FormData(form);
 
-			const fileInput = form.querySelector(
-				`#${context.namespace}attachmentFile`
-			);
 			const newFile = fileInput?.files?.[0];
+
+			if (context.mode !== 'edit' && !newFile) {
+				fileError?.classList.remove('d-none');
+
+				return;
+			}
 
 			const priorityValue = formData.get(`${context.namespace}priority`);
 

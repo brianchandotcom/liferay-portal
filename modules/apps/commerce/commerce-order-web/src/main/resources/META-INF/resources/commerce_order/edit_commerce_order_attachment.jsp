@@ -21,16 +21,26 @@ String mode = editCommerceOrderAttachmentDisplayContext.getMode();
 	<aui:form method="post" name="fm" onSubmit='<%= liferayPortletResponse.getNamespace() + "editCommerceOrderAttachment(event, this.form)" %>'>
 		<aui:input name="attachmentId" type="hidden" value="<%= attachmentId %>" />
 
-		<commerce-ui:panel
-			title='<%= LanguageUtil.get(request, "file") %>'
-		>
-			<aui:input label="file" name="attachmentFile" required='<%= !Objects.equals(mode, "edit") %>' type="file" />
+		<commerce-ui:panel>
+			<div class="<%= (fileEntryId > 0) ? StringPool.BLANK : " d-none" %> font-weight-bold mb-3" id="<portlet:namespace />attachmentFileName">
+				<c:if test="<%= fileEntryId > 0 %>">
+					<%= HtmlUtil.escape(editCommerceOrderAttachmentDisplayContext.getFileEntryName()) %>
+				</c:if>
+			</div>
 
-			<c:if test="<%= fileEntryId > 0 %>">
-				<div class="text-secondary">
-					<liferay-ui:message key="current-file" />: <%= HtmlUtil.escape(editCommerceOrderAttachmentDisplayContext.getFileEntryName()) %>
+			<input class="d-none" id="<portlet:namespace />attachmentFile" type="file" />
+
+			<clay:button
+				displayType="secondary"
+				id='<%= liferayPortletResponse.getNamespace() + "selectFileButton" %>'
+				label="select-file"
+			/>
+
+			<div class="d-none has-error" id="<portlet:namespace />attachmentFileError">
+				<div class="form-feedback-item">
+					<liferay-ui:message key="this-field-is-required" />
 				</div>
-			</c:if>
+			</div>
 		</commerce-ui:panel>
 
 		<commerce-ui:panel
@@ -56,7 +66,7 @@ String mode = editCommerceOrderAttachmentDisplayContext.getMode();
 			<aui:input name="priority" type="text" value="<%= editCommerceOrderAttachmentDisplayContext.getPriority() %>" />
 
 			<c:if test="<%= editCommerceOrderAttachmentDisplayContext.hasViewRestrictedCommerceOrderAttachmentsPermission() %>">
-				<aui:input checked="<%= editCommerceOrderAttachmentDisplayContext.getRestricted() %>" label="restricted" name="restricted" type="checkbox" />
+				<aui:input checked="<%= editCommerceOrderAttachmentDisplayContext.getRestricted() %>" inlineLabel="right" label="restricted" labelCssClass="simple-toggle-switch" name="restricted" type="toggle-switch" />
 			</c:if>
 		</commerce-ui:panel>
 

@@ -140,7 +140,7 @@ public class EditCommerceOrderAttachmentDisplayContext {
 
 	public String getPriority() {
 		if (_commerceOrderAttachment == null) {
-			return "0";
+			return String.valueOf(0.0);
 		}
 
 		return String.valueOf(_commerceOrderAttachment.getPriority());

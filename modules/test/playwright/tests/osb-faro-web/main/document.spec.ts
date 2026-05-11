@@ -125,7 +125,7 @@ test('Documents visitor behavior card shows expected amount of views', async ({
 	});
 
 	await test.step('Go to Analytics Cloud asset page', async () => {
-		navigateToACPageViaURL({
+		await navigateToACPageViaURL({
 			acPage: ACPage.assetPage,
 			channelID: channel.id,
 			page,

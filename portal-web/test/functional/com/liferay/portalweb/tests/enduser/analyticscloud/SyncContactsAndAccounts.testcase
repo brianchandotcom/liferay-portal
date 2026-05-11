@@ -801,7 +801,7 @@ definition {
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12762 | Test Summary: Check that it is possible to sort by organizations name in the organizations list"
 	@priority = 3
-	test CheckCanSortByOrganizationsName {
+	test CheckCanSortAcrossEntityTypes {
 		var orgNamePageListUp = "Canada,england,Italy,Minium,United States";
 		var orgNamePageListDown = "United States,Minium,Italy,england,Canada";
 

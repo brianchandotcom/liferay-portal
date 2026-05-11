@@ -45,7 +45,7 @@ export async function connectToAnalyticsCloud(
 ) {
 	await page.getByPlaceholder('Paste token here.').fill(token);
 
-	await page.getByRole('button', {name: 'Connect'}).click();
+	await page.getByRole('button', {name: 'Connect'}).last().click();
 }
 
 export async function connectToAnalyticsCloudWithNoSiteSynced(page: Page) {

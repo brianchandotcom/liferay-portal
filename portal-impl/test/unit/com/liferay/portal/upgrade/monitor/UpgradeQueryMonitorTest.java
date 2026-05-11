@@ -194,30 +194,30 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
+		Assert.assertEquals(4, logEntries.size());
 
 		LogEntry logEntry1 = logEntries.get(1);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query1, "\" (id ", id1,
-				") running for 300 seconds"),
+				"Locked query \"", query1, "\" with ID ", id1,
+				" has been running for 300 seconds"),
 			logEntry1.getMessage());
 
 		LogEntry logEntry2 = logEntries.get(2);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query2, "\" (id ", id2,
-				") running for 600 seconds"),
+				"Locked query \"", query2, "\" with ID ", id2,
+				" has been running for 600 seconds"),
 			logEntry2.getMessage());
 
 		LogEntry logEntry3 = logEntries.get(3);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query3, "\" (id ", id3,
-				") running for 900 seconds"),
+				"Locked query \"", query3, "\" with ID ", id3,
+				" has been running for 900 seconds"),
 			logEntry3.getMessage());
 	}
 
@@ -234,9 +234,9 @@ public class UpgradeQueryMonitorTest {
 		ReflectionTestUtil.invoke(
 			UpgradeQueryMonitor.class, "_poll", new Class<?>[0]);
 
-		Assert.assertTrue(
-			logCapture.getLogEntries(
-			).isEmpty());
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertTrue(logEntries.isEmpty());
 	}
 
 	private void _testPollWithOneLockedQuery(
@@ -260,14 +260,14 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+		Assert.assertEquals(1, logEntries.size());
 
 		LogEntry logEntry = logEntries.get(0);
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Locked query \"", query, "\" (id ", id,
-				") running for 30 seconds"),
+				"Locked query \"", query, "\" with ID ", id,
+				" has been running for 30 seconds"),
 			logEntry.getMessage());
 		Assert.assertEquals("WARN", logEntry.getPriority());
 	}
@@ -276,12 +276,12 @@ public class UpgradeQueryMonitorTest {
 			Connection connection, DB db, LogCapture logCapture)
 		throws Exception {
 
-		String exceptionMessage = RandomTestUtil.randomString();
+		String message = RandomTestUtil.randomString();
 
 		Mockito.when(
 			db.getLockedQueryInfos(connection)
 		).thenThrow(
-			new SQLException(exceptionMessage)
+			new SQLException(message)
 		);
 
 		Assert.assertThrows(
@@ -291,13 +291,12 @@ public class UpgradeQueryMonitorTest {
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();
 
-		Assert.assertEquals(logEntries.toString(), 5, logEntries.size());
+		Assert.assertEquals(5, logEntries.size());
 
 		LogEntry logEntry = logEntries.get(4);
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				"Upgrade query monitoring is disabled: ", exceptionMessage),
+			"Upgrade query monitoring is disabled: " + message,
 			logEntry.getMessage());
 	}
 

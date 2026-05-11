@@ -112,9 +112,8 @@ public final class UpgradeQueryMonitor {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					StringBundler.concat(
-						"Upgrade query monitoring is disabled: ",
-						exception.getMessage()));
+					"Upgrade query monitoring is disabled: " +
+						exception.getMessage());
 			}
 
 			if (_log.isDebugEnabled()) {

@@ -24,9 +24,8 @@ public class FinderColumnTest {
 			"t.", "value", FinderColumn.Type.LONG, "=", true, true,
 			entity -> 5L);
 
-		Assert.assertTrue("5 matches 5", finderColumn.matches(_TEST_MODEL, 5L));
-		Assert.assertFalse(
-			"5 does not match 6", finderColumn.matches(_TEST_MODEL, 6L));
+		Assert.assertTrue(finderColumn.matches(_TEST_MODEL, 5L));
+		Assert.assertFalse(finderColumn.matches(_TEST_MODEL, 6L));
 	}
 
 	@Test
@@ -36,10 +35,8 @@ public class FinderColumnTest {
 			entity -> "Alice");
 
 		Assert.assertTrue(
-			"case-insensitive match must lowercase the entity value",
 			finderColumn.matches(_TEST_MODEL, "alice"));
 		Assert.assertFalse(
-			"\"Alice\" must not match \"bob\"",
 			finderColumn.matches(_TEST_MODEL, "bob"));
 	}
 

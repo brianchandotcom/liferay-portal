@@ -7283,6 +7283,9 @@ public class ObjectEntryResourceTest {
 	@Test
 	@TestInfo("LPD-83639")
 	public void testGetObjectEntryShareAction() throws Exception {
+
+		// With asset library administrator role
+
 		CMSTestUtil.getOrAddGroup(ObjectEntryResourceTest.class);
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -7311,8 +7314,6 @@ public class ObjectEntryResourceTest {
 		String password = RandomTestUtil.randomString();
 
 		User user = _addUser(RandomTestUtil.randomString(), password);
-
-		// With asset library administrator role
 
 		Role role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(),

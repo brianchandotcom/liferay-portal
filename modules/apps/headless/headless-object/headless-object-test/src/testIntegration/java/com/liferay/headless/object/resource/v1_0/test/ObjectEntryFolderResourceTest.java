@@ -1020,6 +1020,9 @@ public class ObjectEntryFolderResourceTest
 
 	@TestInfo("LPD-83639")
 	private void _testGetObjectEntryFolderShareAction() throws Exception {
+
+		// With asset library administrator role
+
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
@@ -1050,8 +1053,6 @@ public class ObjectEntryFolderResourceTest
 				ServiceContextTestUtil.getServiceContext(
 					depotEntry.getGroupId()),
 				depotEntry.getUserId());
-
-		// With asset library administrator role
 
 		Role role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(),

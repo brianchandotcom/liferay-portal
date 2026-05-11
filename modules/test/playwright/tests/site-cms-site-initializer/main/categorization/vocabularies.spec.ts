@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {createCategories} from '../../../../helpers/CreateCategories';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
@@ -459,6 +460,60 @@ test(
 		await expect(page.getByLabel('External Reference Code')).toHaveValue(
 			'x'.repeat(80)
 		);
+	}
+);
+
+test(
+	'Hide a Space-restricted vocabulary from content in another Space',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+
+		const spaceName = `Space ${getRandomString()}`;
+
+		const {id: spaceId} =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+		const categoryName = getRandomString();
+		const vocabularyName = getRandomString();
+
+		await createCategories({
+			apiHelpers,
+			assetLibraries: [{id: spaceId, name: spaceName}],
+			assetTypes: [{required: false, type: 'AllAssetTypes'}],
+			categoryNames: [{name: categoryName}],
+			siteId: site.id,
+			vocabularyName,
+		});
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		const title = getRandomString();
+
+		await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+		await contentsPage.publishButton.click();
+
+		const content = page.locator('.table-list-title a', {hasText: title});
+
+		await content.waitFor();
+		await content.click();
+
+		await contentsPage.openSidePanel('Categorization');
+
+		await page.getByPlaceholder('Add category').fill(categoryName);
+
+		await page.waitForTimeout(500);
+
+		await expect(
+			page.getByRole('option', {name: categoryName})
+		).toBeHidden();
 	}
 );
 

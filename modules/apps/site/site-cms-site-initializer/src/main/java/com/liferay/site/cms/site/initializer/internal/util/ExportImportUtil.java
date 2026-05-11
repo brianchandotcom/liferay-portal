@@ -5,9 +5,14 @@
 
 package com.liferay.site.cms.site.initializer.internal.util;
 
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -82,9 +87,52 @@ public class ExportImportUtil {
 		);
 	}
 
+	public static JSONArray getCategorizationActionItemsJSONArray(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-57655")) {
+
+			return _putAll(
+				getExportActionItemJSONObject(
+					httpServletRequest,
+					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+					"export-vocabularies", themeDisplay),
+				getImportActionItemJSONObject(
+					httpServletRequest,
+					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+					"import-vocabularies", themeDisplay),
+				getExportActionItemJSONObject(
+					httpServletRequest,
+					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, "export-tags",
+					themeDisplay),
+				getImportActionItemJSONObject(
+					httpServletRequest,
+					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, "import-tags",
+					themeDisplay));
+		}
+
+		return _putAll(
+			getActionItemJSONObject(
+				httpServletRequest, "export-import-vocabularies",
+				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
+				themeDisplay),
+			getActionItemJSONObject(
+				httpServletRequest, "export-import-tags",
+				AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, themeDisplay));
+	}
+
 	public static JSONObject getExportActionItemJSONObject(
 		HttpServletRequest httpServletRequest, String portletResource,
 		String titleKey, ThemeDisplay themeDisplay) {
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-57655")) {
+
+			return _getActionItemJSONObject(
+				httpServletRequest, "/export_portlet.jsp", portletResource,
+				"export", titleKey, themeDisplay);
+		}
 
 		return getActionItemJSONObject(
 			httpServletRequest, "export", portletResource, "export", "export",
@@ -95,9 +143,49 @@ public class ExportImportUtil {
 		HttpServletRequest httpServletRequest, String portletResource,
 		String titleKey, ThemeDisplay themeDisplay) {
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-57655")) {
+
+			return _getActionItemJSONObject(
+				httpServletRequest, "/import_portlet.jsp", portletResource,
+				"import", titleKey, themeDisplay);
+		}
+
 		return getActionItemJSONObject(
 			httpServletRequest, "import", portletResource, "import", "import",
 			titleKey, themeDisplay);
+	}
+
+	private static JSONObject _getActionItemJSONObject(
+		HttpServletRequest httpServletRequest, String mvcPath,
+		String portletResource, String symbolLeft, String titleKey,
+		ThemeDisplay themeDisplay) {
+
+		if (!_hasConfigurationPermission(portletResource, themeDisplay)) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"href",
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					httpServletRequest, themeDisplay.getScopeGroup(),
+					ExportImportPortletKeys.EXPORT_IMPORT, 0, 0,
+					PortletRequest.RENDER_PHASE)
+			).setMVCPath(
+				mvcPath
+			).setRedirect(
+				PortalUtil.getCurrentURL(httpServletRequest)
+			).setPortletResource(
+				portletResource
+			).buildString()
+		).put(
+			"label", LanguageUtil.get(httpServletRequest, titleKey)
+		).put(
+			"symbolLeft", symbolLeft
+		).put(
+			"title", LanguageUtil.get(httpServletRequest, titleKey)
+		);
 	}
 
 	private static String _getControlPanelPortletURL(
@@ -154,6 +242,18 @@ public class ExportImportUtil {
 
 			return false;
 		}
+	}
+
+	private static JSONArray _putAll(JSONObject... jsonObjects) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject jsonObject : jsonObjects) {
+			if (jsonObject != null) {
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

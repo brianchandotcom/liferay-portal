@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.rest.internal.util;
 
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Validator;
@@ -18,9 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
  */
 public class OAuth2ApplicationIdResolverUtil {
 
-	public static long resolve(
-			HttpServletRequest httpServletRequest,
-			OAuth2AuthorizationLocalService oAuth2AuthorizationLocalService)
+	public static long resolve(HttpServletRequest httpServletRequest)
 		throws PrincipalException {
 
 		String authorization = httpServletRequest.getHeader(
@@ -32,7 +30,7 @@ public class OAuth2ApplicationIdResolverUtil {
 
 		if (authorization.startsWith("Bearer ")) {
 			OAuth2Authorization oAuth2Authorization =
-				oAuth2AuthorizationLocalService.
+				OAuth2AuthorizationLocalServiceUtil.
 					fetchOAuth2AuthorizationByAccessTokenContent(
 						authorization.substring(7));
 

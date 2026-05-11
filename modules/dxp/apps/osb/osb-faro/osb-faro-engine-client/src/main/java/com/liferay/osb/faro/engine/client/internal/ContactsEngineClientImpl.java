@@ -16,7 +16,10 @@ import com.liferay.osb.faro.engine.client.constants.FilterConstants;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountDetails;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageMetric;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageRule;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
 import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
@@ -122,6 +125,22 @@ import org.springframework.web.client.RestTemplate;
 @Component(service = ContactsEngineClient.class)
 public class ContactsEngineClientImpl
 	extends BaseEngineClient implements ContactsEngineClient {
+
+	@Override
+	public AccountLifecycle addAccountLifecycle(
+		FaroProject faroProject, String description, String name,
+		String segmentId) {
+
+		AccountLifecycle accountLifecycle = new AccountLifecycle();
+
+		accountLifecycle.setDescription(description);
+		accountLifecycle.setName(name);
+		accountLifecycle.setSegmentId(segmentId);
+
+		return post(
+			faroProject, Rels.ACCOUNT_LIFECYCLES, accountLifecycle,
+			AccountLifecycle.class);
+	}
 
 	@Override
 	public Results<BlockedKeyword> addBlockedKeywords(
@@ -671,18 +690,25 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
+	public AccountLifecycle getAccountLifecycle(
+			FaroProject faroProject, String id)
+		throws FaroEngineClientException {
+
+		return get(
+			faroProject, Rels.ACCOUNT_LIFECYCLE, id, AccountLifecycle.class);
+	}
+
+	@Override
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(
 			FaroProject faroProject, String country, String id, String industry,
 			String revenue)
 		throws FaroEngineClientException {
 
-		Map<String, Object> uriVariables = getUriVariables(faroProject);
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
 
 		if (Validator.isNotNull(country)) {
 			uriVariables.put("country", country);
 		}
-
-		uriVariables.put("id", id);
 
 		if (Validator.isNotNull(industry)) {
 			uriVariables.put("industry", industry);
@@ -695,6 +721,40 @@ public class ContactsEngineClientImpl
 		return get(
 			faroProject, Rels.ACCOUNT_LIFECYCLE_OVERVIEW,
 			new ParameterizedTypeReference<List<AccountLifecycleMetric>>() {
+			},
+			uriVariables);
+	}
+
+	@Override
+	public List<AccountLifecycle> getAccountLifecycles(FaroProject faroProject)
+		throws FaroEngineClientException {
+
+		return get(
+			faroProject, Rels.ACCOUNT_LIFECYCLES,
+			new ParameterizedTypeReference<List<AccountLifecycle>>() {
+			},
+			getUriVariables(faroProject));
+	}
+
+	@Override
+	public List<AccountLifecycleStageMetric> getAccountLifecycleStageMetrics(
+			FaroProject faroProject, String country, String id, String industry)
+		throws FaroEngineClientException {
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
+
+		if (Validator.isNotNull(country)) {
+			uriVariables.put("country", country);
+		}
+
+		if (Validator.isNotNull(industry)) {
+			uriVariables.put("industry", industry);
+		}
+
+		return get(
+			faroProject, Rels.ACCOUNT_LIFECYCLE_STAGES,
+			new ParameterizedTypeReference
+				<List<AccountLifecycleStageMetric>>() {
 			},
 			uriVariables);
 	}
@@ -3139,6 +3199,44 @@ public class ContactsEngineClientImpl
 
 		return post(
 			faroProject, Rels.DATA_SOURCE_REFRESH_LIFERAY, null, List.class);
+	}
+
+	@Override
+	public AccountLifecycle updateAccountLifecycle(
+		FaroProject faroProject, String description, String id, String name,
+		String segmentId) {
+
+		AccountLifecycle accountLifecycle = new AccountLifecycle();
+
+		accountLifecycle.setDescription(description);
+		accountLifecycle.setId(id);
+		accountLifecycle.setName(name);
+		accountLifecycle.setSegmentId(segmentId);
+
+		return put(
+			faroProject, Rels.ACCOUNT_LIFECYCLE, accountLifecycle,
+			AccountLifecycle.class, getUriVariables(faroProject, id));
+	}
+
+	@Override
+	public void updateAccountLifecycleStageRule(
+		FaroProject faroProject, String filterMetadata, String filterString,
+		String id, String name, String stageId) {
+
+		AccountLifecycleStageRule accountLifecycleStageRule =
+			new AccountLifecycleStageRule();
+
+		accountLifecycleStageRule.setFilterMetadata(filterMetadata);
+		accountLifecycleStageRule.setFilterString(filterString);
+		accountLifecycleStageRule.setName(name);
+
+		Map<String, Object> uriVariables = getUriVariables(faroProject, id);
+
+		uriVariables.put("stageId", stageId);
+
+		put(
+			faroProject, Rels.ACCOUNT_LIFECYCLE_STAGE_RULES,
+			accountLifecycleStageRule, Void.class, uriVariables);
 	}
 
 	@Override

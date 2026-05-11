@@ -8,7 +8,9 @@ package com.liferay.osb.faro.engine.client;
 import com.liferay.osb.faro.engine.client.exception.FaroEngineClientException;
 import com.liferay.osb.faro.engine.client.model.Account;
 import com.liferay.osb.faro.engine.client.model.AccountDetails;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycle;
 import com.liferay.osb.faro.engine.client.model.AccountLifecycleMetric;
+import com.liferay.osb.faro.engine.client.model.AccountLifecycleStageMetric;
 import com.liferay.osb.faro.engine.client.model.AccountMetric;
 import com.liferay.osb.faro.engine.client.model.Activity;
 import com.liferay.osb.faro.engine.client.model.ActivityAggregation;
@@ -68,6 +70,10 @@ import java.util.Map;
  * @author Shinn Lok
  */
 public interface ContactsEngineClient {
+
+	public AccountLifecycle addAccountLifecycle(
+		FaroProject faroProject, String description, String name,
+		String segmentId);
 
 	public Results<BlockedKeyword> addBlockedKeywords(
 		FaroProject faroProject, List<String> keywords);
@@ -183,9 +189,20 @@ public interface ContactsEngineClient {
 		String query, String status, int cur, int delta,
 		List<OrderByField> orderByFields);
 
+	public AccountLifecycle getAccountLifecycle(
+			FaroProject faroProject, String id)
+		throws FaroEngineClientException;
+
 	public List<AccountLifecycleMetric> getAccountLifecycleMetrics(
 			FaroProject faroProject, String country, String id, String industry,
 			String revenue)
+		throws FaroEngineClientException;
+
+	public List<AccountLifecycle> getAccountLifecycles(FaroProject faroProject)
+		throws FaroEngineClientException;
+
+	public List<AccountLifecycleStageMetric> getAccountLifecycleStageMetrics(
+			FaroProject faroProject, String country, String id, String industry)
 		throws FaroEngineClientException;
 
 	public List<AccountMetric> getAccountMetrics(
@@ -573,6 +590,14 @@ public interface ContactsEngineClient {
 	public List<Map<String, Object>> refreshLiferay(FaroProject faroProject);
 
 	public void setEngineURL(String engineURL);
+
+	public AccountLifecycle updateAccountLifecycle(
+		FaroProject faroProject, String description, String id, String name,
+		String segmentId);
+
+	public void updateAccountLifecycleStageRule(
+		FaroProject faroProject, String filterMetadata, String filterString,
+		String id, String name, String stageId);
 
 	public void updateBQProject(FaroProject faroProject, Date startDate)
 		throws Exception;

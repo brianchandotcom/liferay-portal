@@ -15,11 +15,13 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,16 +33,22 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -111,7 +119,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(roomId);
+		ObjectEntry objectEntry = _getObjectEntryWithInviteCheck(roomId);
+
+		Group group = _groupService.getGroup(
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		return Page.of(
 			null,
@@ -175,7 +186,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			throw new ValidationException("Email Address is null");
 		}
 
-		ObjectEntry objectEntry = _getObjectEntry(roomId);
+		ObjectEntry objectEntry = _getObjectEntryWithInviteCheck(roomId);
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -247,6 +258,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			).put(
 				"emailAddress", userAccount.getEmailAddress()
 			).put(
+				"ownerId", contextUser.getUserId()
+			).put(
 				"roleKey", userAccount.getRoleKey()
 			).toString(),
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
@@ -311,12 +324,36 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return ticket;
 	}
 
+	private void _checkInvitePermission(ObjectEntry objectEntry)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
+
+		if ((modelResourcePermission != null) &&
+			modelResourcePermission.contains(
+				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
+
+			return;
+		}
+
+		GroupPermissionUtil.check(
+			permissionChecker,
+			MapUtil.getLong(objectEntry.getValues(), "siteId"),
+			ActionKeys.ASSIGN_MEMBERS);
+	}
+
 	private Group _getGroup(long roomId) throws Exception {
 		ObjectEntry objectEntry = _getObjectEntry(roomId);
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		return _groupService.getGroup(GetterUtil.getLong(values.get("siteId")));
+		return _groupService.getGroup(
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 	}
 
 	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
@@ -324,6 +361,16 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		_objectEntryService.checkModelResourcePermission(
 			objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
+
+		return objectEntry;
+	}
+
+	private ObjectEntry _getObjectEntryWithInviteCheck(long roomId)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
+
+		_checkInvitePermission(objectEntry);
 
 		return objectEntry;
 	}

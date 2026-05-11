@@ -52,14 +52,12 @@ export {
 	type UploadRequestCallback,
 } from './multiple_file_uploader/types';
 
-export {default as openToast} from './toast/openToast';
-export type {OpenToastProps} from './toast/openToast';
-
 export {default as CollaboratorService} from './share_modal/CollaboratorService';
 export type {
 	CollaboratorItem,
 	CollaboratorPayload,
 } from './share_modal/CollaboratorService';
+
 export {
 	default as ExpirationDateSelector,
 	formatDateForView,
@@ -76,6 +74,8 @@ export type {
 	ShareModalUserAccount,
 	ShareModalUserGroup,
 } from './share_modal/types';
+export {default as openToast} from './toast/openToast';
+export type {OpenToastProps} from './toast/openToast';
 
 export {
 	Locale,

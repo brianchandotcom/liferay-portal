@@ -86,6 +86,63 @@ function CollaboratorStickerIcon({
 	return <ClayIcon symbol="user" />;
 }
 
+const _defaultRenderCollaboratorStickerIcon = ({
+	type,
+	user,
+}: {
+	type: CollaboratorType;
+	user: ShareModalUserAccount | ShareModalUserGroup;
+}) => <CollaboratorStickerIcon type={type} user={user} />;
+
+const _defaultRenderCollaboratorBadge = ({
+	toBeShared,
+}: {
+	toBeShared?: boolean;
+	type: CollaboratorType;
+	user: ShareModalUserAccount | ShareModalUserGroup;
+}) =>
+	toBeShared ? (
+		<span className="inline-item inline-item-after label label-inverse-light">
+			<span className="label-item label-item-expand text-nowrap">
+				{Liferay.Language.get('to-be-shared')}
+			</span>
+		</span>
+	) : null;
+
+const _defaultRenderAutocompleteItem = ({
+	type,
+	user,
+}: {
+	type: CollaboratorType;
+	user: ShareModalUserAccount | ShareModalUserGroup;
+}) => (
+	<div className="autofit-row autofit-row-center">
+		<div className="autofit-col c-mr-1">
+			<ClaySticker className="sticker-user-icon" size="sm">
+				{type === COLLABORATOR_TYPE.USER ? (
+					'image' in user && user.image ? (
+						<div className="sticker-overlay">
+							<img className="sticker-img" src={user.image} />
+						</div>
+					) : (
+						<ClayIcon symbol="user" />
+					)
+				) : (
+					<ClayIcon symbol="users" />
+				)}
+			</ClaySticker>
+		</div>
+
+		<div className="autofit-col">
+			<span className="text-weight-semibold">
+				<span className="c-mr-1">{user.name}</span>
+
+				{'emailAddress' in user && `(${user.emailAddress})`}
+			</span>
+		</div>
+	</div>
+);
+
 function CollaboratorListItem({
 	actionIds,
 	canManageCollaborators = true,
@@ -94,6 +151,8 @@ function CollaboratorListItem({
 	onChangeUser,
 	onRemoveUser,
 	permissionOptions,
+	renderCollaboratorBadge,
+	renderCollaboratorStickerIcon,
 	share,
 	showAllowResharing = true,
 	showExpirationDate = true,
@@ -111,6 +170,15 @@ function CollaboratorListItem({
 	) => void;
 	onRemoveUser: (user: ShareModalUserAccount | ShareModalUserGroup) => void;
 	permissionOptions: PermissionOption[];
+	renderCollaboratorBadge: (props: {
+		toBeShared?: boolean;
+		type: CollaboratorType;
+		user: ShareModalUserAccount | ShareModalUserGroup;
+	}) => React.ReactNode;
+	renderCollaboratorStickerIcon: (props: {
+		type: CollaboratorType;
+		user: ShareModalUserAccount | ShareModalUserGroup;
+	}) => React.ReactNode;
 	share: boolean;
 	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
@@ -129,7 +197,7 @@ function CollaboratorListItem({
 		>
 			<div className="autofit-col pl-0">
 				<ClaySticker displayType="secondary" shape="circle" size="sm">
-					<CollaboratorStickerIcon type={type} user={user} />
+					{renderCollaboratorStickerIcon({type, user})}
 				</ClaySticker>
 			</div>
 
@@ -140,13 +208,7 @@ function CollaboratorListItem({
 							{user.name}
 						</span>
 
-						{toBeShared && (
-							<span className="inline-item inline-item-after label label-inverse-light">
-								<span className="label-item label-item-expand text-nowrap">
-									{Liferay.Language.get('to-be-shared')}
-								</span>
-							</span>
-						)}
+						{renderCollaboratorBadge({toBeShared, type, user})}
 					</div>
 
 					{permissionOptions.length > 1 ? (
@@ -286,6 +348,9 @@ export default function ShareModalContent({
 	initialCollaborators = [],
 	itemId,
 	permissionOptions,
+	renderAutocompleteItem = _defaultRenderAutocompleteItem,
+	renderCollaboratorBadge = _defaultRenderCollaboratorBadge,
+	renderCollaboratorStickerIcon = _defaultRenderCollaboratorStickerIcon,
 	showAllowResharing = true,
 	showExpirationDate = true,
 	title = '',
@@ -304,6 +369,19 @@ export default function ShareModalContent({
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	permissionOptions: PermissionOption[];
+	renderAutocompleteItem?: (props: {
+		type: CollaboratorType;
+		user: ShareModalUserAccount | ShareModalUserGroup;
+	}) => React.ReactNode;
+	renderCollaboratorBadge?: (props: {
+		toBeShared?: boolean;
+		type: CollaboratorType;
+		user: ShareModalUserAccount | ShareModalUserGroup;
+	}) => React.ReactNode;
+	renderCollaboratorStickerIcon?: (props: {
+		type: CollaboratorType;
+		user: ShareModalUserAccount | ShareModalUserGroup;
+	}) => React.ReactNode;
 	showAllowResharing?: boolean;
 	showExpirationDate?: boolean;
 	title: string;
@@ -525,44 +603,7 @@ export default function ShareModalContent({
 										}
 										textValue={user.name}
 									>
-										<div className="autofit-row autofit-row-center">
-											<div className="autofit-col c-mr-1">
-												<ClaySticker
-													className="sticker-user-icon"
-													size="sm"
-												>
-													{type ===
-													COLLABORATOR_TYPE.USER ? (
-														'image' in user &&
-														user.image ? (
-															<div className="sticker-overlay">
-																<img
-																	className="sticker-img"
-																	src={
-																		user.image
-																	}
-																/>
-															</div>
-														) : (
-															<ClayIcon symbol="user" />
-														)
-													) : (
-														<ClayIcon symbol="users" />
-													)}
-												</ClaySticker>
-											</div>
-
-											<div className="autofit-col">
-												<span className="text-weight-semibold">
-													<span className="c-mr-1">
-														{user.name}
-													</span>
-
-													{'emailAddress' in user &&
-														`(${user.emailAddress})`}
-												</span>
-											</div>
-										</div>
+										{renderAutocompleteItem({type, user})}
 									</ClayMultiSelect.Item>
 								)}
 							</ClayMultiSelect>
@@ -599,6 +640,12 @@ export default function ShareModalContent({
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}
 										permissionOptions={permissionOptions}
+										renderCollaboratorBadge={
+											renderCollaboratorBadge
+										}
+										renderCollaboratorStickerIcon={
+											renderCollaboratorStickerIcon
+										}
 										showAllowResharing={showAllowResharing}
 										showExpirationDate={showExpirationDate}
 										{...item}

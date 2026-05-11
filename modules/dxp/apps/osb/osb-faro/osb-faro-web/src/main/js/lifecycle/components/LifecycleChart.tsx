@@ -3,6 +3,7 @@ import Label from '@clayui/label';
 import React from 'react';
 import {ButtonWithIcon, Icon, Text} from '@clayui/core';
 import {LifecycleStages} from 'contacts/pages/account/utils/constants';
+import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
 
 interface ILifecycleStage {
@@ -208,54 +209,62 @@ const LifecycleChart = () => {
 	const refPct = STAGES[0]?.percentage ?? 0;
 
 	return (
-		<Card className='p-3'>
-			<Card.Title>{Liferay.Language.get('accounts-by-stage')}</Card.Title>
-			<Card.Body noPadding>
-				<div className='mt-1'>
-					<Text color='secondary' size={3}>
-						{Liferay.Language.get(
-							'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe.'
-						)}
-					</Text>
-					<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
-						{STAGES.map((stage, index) => {
-							const nextStage = STAGES[index + 1];
-							return (
-								<React.Fragment key={stage.stageType}>
-									<StageMetrics
-										accountCount={stage.accountCount}
-										averageDaysInStage={
-											stage.averageDaysInStage
-										}
-										description={stage.description}
-										onFilterClick={onFilterClick}
-										percentage={stage.percentage}
-										referencePercentage={refPct}
-										stageType={stage.stageType}
-									/>
-									{nextStage && (
-										<StageProgression
-											nextBarHeight={getBarHeight(
-												nextStage.percentage,
-												refPct
-											)}
-											percentage={getProgressionPercentage(
-												stage.accountCount,
-												nextStage.accountCount
-											)}
-											previousBarHeight={getBarHeight(
-												stage.percentage,
-												refPct
-											)}
+		<>
+			<SectionHeader
+				icon='polls'
+				title={Liferay.Language.get('lifecycle-stages')}
+			/>
+			<Card className='p-3'>
+				<Card.Title>
+					{Liferay.Language.get('accounts-by-stage')}
+				</Card.Title>
+				<Card.Body noPadding>
+					<div className='mt-1'>
+						<Text color='secondary' size={3}>
+							{Liferay.Language.get(
+								'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe.'
+							)}
+						</Text>
+						<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
+							{STAGES.map((stage, index) => {
+								const nextStage = STAGES[index + 1];
+								return (
+									<React.Fragment key={stage.stageType}>
+										<StageMetrics
+											accountCount={stage.accountCount}
+											averageDaysInStage={
+												stage.averageDaysInStage
+											}
+											description={stage.description}
+											onFilterClick={onFilterClick}
+											percentage={stage.percentage}
+											referencePercentage={refPct}
+											stageType={stage.stageType}
 										/>
-									)}
-								</React.Fragment>
-							);
-						})}
+										{nextStage && (
+											<StageProgression
+												nextBarHeight={getBarHeight(
+													nextStage.percentage,
+													refPct
+												)}
+												percentage={getProgressionPercentage(
+													stage.accountCount,
+													nextStage.accountCount
+												)}
+												previousBarHeight={getBarHeight(
+													stage.percentage,
+													refPct
+												)}
+											/>
+										)}
+									</React.Fragment>
+								);
+							})}
+						</div>
 					</div>
-				</div>
-			</Card.Body>
-		</Card>
+				</Card.Body>
+			</Card>
+		</>
 	);
 };
 

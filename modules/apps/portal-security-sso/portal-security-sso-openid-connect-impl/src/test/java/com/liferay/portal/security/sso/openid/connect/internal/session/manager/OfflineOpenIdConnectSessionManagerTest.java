@@ -351,7 +351,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 		};
 
-		String refreshedIssuer = "https://op.example.com";
+		String refreshedIssuer = RandomTestUtil.randomString();
 		String refreshedSessionId = RandomTestUtil.randomString();
 
 		PlainJWT plainJWT = new PlainJWT(
@@ -498,7 +498,7 @@ public class OfflineOpenIdConnectSessionManagerTest {
 
 	@Test
 	public void testUpdateOpenIdConnectSessionIdToken() throws Exception {
-		String issuer = "https://op.example.com";
+		String issuer = RandomTestUtil.randomString();
 		String sessionId = RandomTestUtil.randomString();
 
 		PlainJWT plainJWT = new PlainJWT(

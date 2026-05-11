@@ -5,16 +5,20 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
+import {categorizationPagesTest} from '../fixtures/categorizationPagesTest';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
+	categorizationPagesTest,
 	cmsPagesTest,
+	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
 	}),
@@ -129,6 +133,57 @@ test(
 		await expect(
 			page.getByRole('heading', {name: 'Permissions'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Add category from vocabulary dropdown actions',
+	{tag: '@LPD-69691'},
+	async ({
+		apiHelpers,
+		categoriesPage,
+		editCategoryPage,
+		page,
+		vocabulariesPage,
+	}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const vocabularyName = getRandomString();
+
+		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+			assetLibraries: [{id: -1}],
+			assetTypes: [
+				{
+					required: true,
+					subtype: 'AllAssetSubtypes',
+					type: 'AllAssetTypes',
+				},
+			],
+			name: vocabularyName,
+			siteId,
+			visibilityType: 'PUBLIC',
+		});
+
+		await vocabulariesPage.goto();
+
+		await vocabulariesPage.execItemAction({
+			action: 'Add Category',
+			filter: vocabularyName,
+		});
+
+		await expect(page.getByText('Basic Info')).toBeVisible();
+
+		const categoryName = getRandomString();
+
+		await editCategoryPage.fillName(categoryName);
+		await editCategoryPage.clickSave();
+
+		await categoriesPage.assertBreadcrumbItemText(0, 'Categorization');
+		await categoriesPage.assertBreadcrumbItemText(1, vocabularyName);
+
+		await expect(categoriesPage.getItem(categoryName)).toBeVisible();
 	}
 );
 

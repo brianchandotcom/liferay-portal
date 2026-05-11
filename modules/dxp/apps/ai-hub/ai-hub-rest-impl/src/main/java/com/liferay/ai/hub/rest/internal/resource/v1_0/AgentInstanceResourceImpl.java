@@ -12,7 +12,6 @@ import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
 import com.liferay.ai.hub.rest.resource.v1_0.AgentInstanceResource;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -95,7 +94,7 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 			).put(
 				"oAuth2ApplicationId",
 				OAuth2ApplicationIdResolverUtil.resolve(
-					contextHttpServletRequest, _oAuth2AuthorizationLocalService)
+					contextHttpServletRequest)
 			).put(
 				"outBoundEventName", agentDefinition.getExternalReferenceCode()
 			).put(
@@ -140,9 +139,6 @@ public class AgentInstanceResourceImpl extends BaseAgentInstanceResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Reference
-	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;
 
 	@Context
 	private Sse _sse;

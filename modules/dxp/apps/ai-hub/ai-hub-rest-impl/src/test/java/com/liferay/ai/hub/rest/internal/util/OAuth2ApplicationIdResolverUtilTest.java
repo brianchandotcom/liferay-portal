@@ -7,9 +7,12 @@ package com.liferay.ai.hub.rest.internal.util;
 
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
 import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalService;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -37,6 +40,19 @@ public class OAuth2ApplicationIdResolverUtilTest {
 	public void setUp() {
 		_oAuth2AuthorizationLocalService = Mockito.mock(
 			OAuth2AuthorizationLocalService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			OAuth2AuthorizationLocalServiceUtil.class, "_serviceSnapshot",
+			new Snapshot<OAuth2AuthorizationLocalService>(
+				OAuth2AuthorizationLocalServiceUtil.class,
+				OAuth2AuthorizationLocalService.class) {
+
+				@Override
+				public OAuth2AuthorizationLocalService get() {
+					return _oAuth2AuthorizationLocalService;
+				}
+
+			});
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -48,8 +64,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 			HttpHeaders.AUTHORIZATION,
 			"Basic " + RandomTestUtil.randomString());
 
-		OAuth2ApplicationIdResolverUtil.resolve(
-			mockHttpServletRequest, _oAuth2AuthorizationLocalService);
+		OAuth2ApplicationIdResolverUtil.resolve(mockHttpServletRequest);
 	}
 
 	@Test
@@ -62,8 +77,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 
 		Assert.assertEquals(
 			0L,
-			OAuth2ApplicationIdResolverUtil.resolve(
-				mockHttpServletRequest, _oAuth2AuthorizationLocalService));
+			OAuth2ApplicationIdResolverUtil.resolve(mockHttpServletRequest));
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -74,8 +88,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 		mockHttpServletRequest.addHeader(
 			HttpHeaders.AUTHORIZATION, RandomTestUtil.randomString());
 
-		OAuth2ApplicationIdResolverUtil.resolve(
-			mockHttpServletRequest, _oAuth2AuthorizationLocalService);
+		OAuth2ApplicationIdResolverUtil.resolve(mockHttpServletRequest);
 	}
 
 	@Test
@@ -83,8 +96,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 		Assert.assertEquals(
 			0L,
 			OAuth2ApplicationIdResolverUtil.resolve(
-				new MockHttpServletRequest(),
-				_oAuth2AuthorizationLocalService));
+				new MockHttpServletRequest()));
 	}
 
 	@Test(expected = PrincipalException.class)
@@ -104,8 +116,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 		mockHttpServletRequest.addHeader(
 			HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
-		OAuth2ApplicationIdResolverUtil.resolve(
-			mockHttpServletRequest, _oAuth2AuthorizationLocalService);
+		OAuth2ApplicationIdResolverUtil.resolve(mockHttpServletRequest);
 	}
 
 	@Test
@@ -138,8 +149,7 @@ public class OAuth2ApplicationIdResolverUtilTest {
 
 		Assert.assertEquals(
 			oAuth2ApplicationId,
-			OAuth2ApplicationIdResolverUtil.resolve(
-				mockHttpServletRequest, _oAuth2AuthorizationLocalService));
+			OAuth2ApplicationIdResolverUtil.resolve(mockHttpServletRequest));
 	}
 
 	private OAuth2AuthorizationLocalService _oAuth2AuthorizationLocalService;

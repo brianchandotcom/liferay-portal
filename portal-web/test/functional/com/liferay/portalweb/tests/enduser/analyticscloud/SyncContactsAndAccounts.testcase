@@ -887,6 +887,8 @@ definition {
 		var accountGroupFirstPageList = "Brazilian,Copper,European,Gold,North American";
 		var accountGroupSecondPageList = "Silver";
 		var firstPageList = "AC UserGroup Pagination 1,AC UserGroup Pagination 2,AC UserGroup Pagination 3,AC UserGroup Pagination 4,AC UserGroup Pagination 5";
+		var organizationFirstPageList = "Brazil,Canada,France,Italy,Minium";
+		var organizationSecondPageList = "United States";
 		var secondPageList = "AC UserGroup Pagination 6";
 
 		task ("Connect Commerce and AC") {
@@ -927,6 +929,12 @@ definition {
 		task ("Create 6 account groups") {
 			for (var accountGroupName : list "${accountGroupFirstPageList},${accountGroupSecondPageList}") {
 				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
+		task ("Create 6 organizations") {
+			for (var organizationName : list "${organizationFirstPageList},${organizationSecondPageList}") {
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
 			}
 		}
 
@@ -996,6 +1004,34 @@ definition {
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 
+		task ("Click on Select Contacts > Organizations") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Choose the pagination to 5 items per page for organizations") {
+			ACUtils.changePagination(itemsPerPage = 5);
+		}
+
+		task ("See that there's only 5 organizations present in the list on the first page") {
+			ACDXPSettings.viewGenericListItem(itemValueList = ${organizationFirstPageList});
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${organizationSecondPageList});
+		}
+
+		task ("Go to the second page and see that there's only one organization in the list") {
+			ACUtils.checkAnyPage(pageNumber = 2);
+
+			ACDXPSettings.viewGenericListItem(itemValueList = ${organizationSecondPageList});
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${organizationFirstPageList});
+		}
+
 		task ("Complete the wizard configuration") {
 			ACDXPSettings.completeWizardConfiguration();
 		}
@@ -1039,74 +1075,6 @@ definition {
 		}
 
 		task ("Check that the user group on the first page does not appear on the second") {
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12661 | Test Summary: Check that it is possible to make pagination in the organizations"
-	@priority = 4
-	test CheckIsPossiblePaginateOrganizations {
-		var firstPageList = "Brazil,Canada,France,Italy,Minium";
-		var secondPageList = "United States";
-
-		task ("Create 6 organizations") {
-			for (var organizationName : list "${firstPageList},${secondPageList}") {
-				JSONOrganization.addOrganization(organizationName = ${organizationName});
-			}
-		}
-
-		task ("Connect Commerce and AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Click on sync by organizations") {
-			Click(
-				key_panel = "Select Contacts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "Organizations",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Choose the pagination to 5 items per page") {
-			ACUtils.changePagination(itemsPerPage = 5);
-		}
-
-		task ("See that there's only 5 organizations present in the list on the first page") {
-			ACDXPSettings.viewGenericListItem(itemValueList = ${firstPageList});
-
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${secondPageList});
-		}
-
-		task ("Go to the second page and see that there's only one organization in the list") {
-			ACUtils.checkAnyPage(pageNumber = 2);
-
-			ACDXPSettings.viewGenericListItem(itemValueList = ${secondPageList});
-
 			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${firstPageList});
 		}
 	}

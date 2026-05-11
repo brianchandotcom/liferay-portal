@@ -49,8 +49,10 @@ definition {
 	@priority = 4
 	test CanSearchAcrossEntityTypesInPropertyWizard {
 		var foundAccountGroup = "Brazilian";
+		var foundOrganization = "Minium";
 		var foundUserGroup = "LXC";
 		var notFoundAccountGroup = "Silver,Copper";
+		var notFoundOrganization = "Canada,Italy";
 		var notFoundUserGroup = "AC,DXP";
 
 		task ("Create some user groups") {
@@ -64,6 +66,12 @@ definition {
 		task ("Create account groups") {
 			for (var accountGroupName : list "${foundAccountGroup},${notFoundAccountGroup}") {
 				JSONAccountGroup.addAccountGroup(accountGroupName = ${accountGroupName});
+			}
+		}
+
+		task ("Create organizations") {
+			for (var organizationName : list "${foundOrganization},${notFoundOrganization}") {
+				JSONOrganization.addOrganization(organizationName = ${organizationName});
 			}
 		}
 
@@ -146,6 +154,26 @@ definition {
 			ACUtils.viewGenericText(textValueList = "No user groups were found.");
 		}
 
+		task ("Click on Select Contacts > Click on Organizations") {
+			Click(
+				key_panel = "Select Contacts",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			Click(
+				key_option = "Organizations",
+				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
+		}
+
+		task ("Search for an organization and assert the result") {
+			ACUtils.searchBar(searchItem = ${foundOrganization});
+
+			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
+
+			ACDXPSettings.viewGenericListItem(itemValueList = ${foundOrganization});
+
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundOrganization});
+		}
+
 		task ("Complete the wizard configuration") {
 			ACDXPSettings.completeWizardConfiguration();
 		}
@@ -184,66 +212,6 @@ definition {
 
 		task ("Check that no result is found for the search") {
 			ACUtils.viewGenericText(textValueList = "No user groups were found.");
-		}
-	}
-
-	@description = "Story: LRAC-10859 | Automation ID: LRAC-12660 | Test Summary: Can search for organizations in the select contacts modal"
-	@priority = 4
-	test CanSearchOrganizationsInContactsModal {
-		var foundOrganizations = "Minium";
-		var notFoundOrganizations = "Canada,Italy";
-
-		task ("Create 3 organizations") {
-			for (var organizationName : list "${foundOrganizations},${notFoundOrganizations}") {
-				JSONOrganization.addOrganization(organizationName = ${organizationName});
-			}
-		}
-
-		task ("Connect Commerce and AC") {
-			ACDXPSettings.connectAnalyticsCloud();
-		}
-
-		task ("Get the property name to enable commerce on the right one") {
-			var channelName = "Minium Portal";
-			var siteName = "Minium";
-
-			ACDXPSettings.getAssignedPropertyName();
-		}
-
-		task ("Enable commerce and sync the commerce channel and the related site") {
-			ACDXPSettings.syncChannel(
-				channelName = ${channelName},
-				propertyName = ${assignedPropertyName});
-
-			ACDXPSettings.syncSites(
-				propertyName = ${assignedPropertyName},
-				siteName = ${siteName});
-		}
-
-		task ("Go to the next page to configure people data") {
-			Click(
-				key_text = "Next",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Click on sync by organizations") {
-			Click(
-				key_panel = "Select Contacts",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			Click(
-				key_option = "Organizations",
-				locator1 = "ACDXPSettings#CONTACT_SYNC_OPTIONS");
-		}
-
-		task ("Search for an organization and assert the result") {
-			ACUtils.searchBar(searchItem = ${foundOrganizations});
-
-			ACUtils.viewResultsMessage(results = "Showing 1 to 1 of 1 entries.");
-
-			ACDXPSettings.viewGenericListItem(itemValueList = ${foundOrganizations});
-
-			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = ${notFoundOrganizations});
 		}
 	}
 

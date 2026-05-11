@@ -27,9 +27,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -40,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -436,10 +439,8 @@ public class AgentInstanceResourceTest
 	private JSONObject _postAgentInstance(
 			String agentDefinitionExternalReferenceCode, String inputText,
 			String inputVariable, String instructionDefinitionScope,
-			String sseEventSinkKey)
+			JSONObject tokenJSONObject, String sseEventSinkKey)
 		throws Exception {
-
-		JSONObject tokenJSONObject = TokenTestUtil.postToken();
 
 		return HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -463,16 +464,22 @@ public class AgentInstanceResourceTest
 			Http.Method.POST);
 	}
 
+	private JSONObject _postAgentInstance(
+			String agentDefinitionExternalReferenceCode, String inputText,
+			String inputVariable, String instructionDefinitionScope,
+			String sseEventSinkKey)
+		throws Exception {
+
+		return _postAgentInstance(
+			agentDefinitionExternalReferenceCode, inputText, inputVariable,
+			instructionDefinitionScope, TokenTestUtil.postToken(),
+			sseEventSinkKey);
+	}
+
 	private void _testPostAgentInstance() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"agentDefinitionExternalReferenceCode", "L_WORKFLOW_DEFINITION"
-			).put(
-				"context", JSONUtil.put("text", RandomTestUtil.randomString())
-			).put(
-				"sseEventSinkKey", RandomTestUtil.randomString()
-			).toString(),
-			"ai-hub/v1.0/agent-instances", Http.Method.POST);
+		JSONObject jsonObject = _postAgentInstance(
+			"L_WORKFLOW_DEFINITION", RandomTestUtil.randomString(), "text",
+			RandomTestUtil.randomString());
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.getWorkflowInstance(
@@ -492,15 +499,9 @@ public class AgentInstanceResourceTest
 			WorkflowDefinitionConstants.SCOPE_AI, StringUtil.randomId(),
 			TestPropsValues.getUserId());
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"agentDefinitionExternalReferenceCode", "L_WORKFLOW_DEFINITION"
-			).put(
-				"context", JSONUtil.put("text", RandomTestUtil.randomString())
-			).put(
-				"sseEventSinkKey", RandomTestUtil.randomString()
-			).toString(),
-			"ai-hub/v1.0/agent-instances", Http.Method.POST);
+		jsonObject = _postAgentInstance(
+			"L_WORKFLOW_DEFINITION", RandomTestUtil.randomString(), "text",
+			RandomTestUtil.randomString());
 
 		workflowInstance = _workflowInstanceManager.getWorkflowInstance(
 			TestPropsValues.getCompanyId(),
@@ -940,8 +941,11 @@ public class AgentInstanceResourceTest
 			"This is a long and detailed sentence that should be shortened " +
 				"by the AI model for testing purposes.";
 
+		JSONObject tokenJSONObject = TokenTestUtil.postToken();
+
 		JSONObject jsonObject = _postAgentInstance(
-			"L_MAKE_SHORTER", inputText, "text", sseEventSinkKey);
+			"L_MAKE_SHORTER", inputText, "text", null, tokenJSONObject,
+			sseEventSinkKey);
 
 		Assert.assertTrue(countDownLatch.await(20, TimeUnit.SECONDS));
 
@@ -968,6 +972,22 @@ public class AgentInstanceResourceTest
 
 				Map<String, Serializable> workflowContext =
 					workflowInstance.getWorkflowContext();
+
+				Company company = CompanyLocalServiceUtil.getCompany(
+					TestPropsValues.getCompanyId());
+
+				Assert.assertEquals(
+					"Bearer " + tokenJSONObject.getString("accessToken"),
+					EncryptorUtil.decrypt(
+						company.getKeyObj(),
+						GetterUtil.getString(
+							workflowContext.get("accessToken"))));
+				Assert.assertEquals(
+					tokenJSONObject.getString("userToken"),
+					EncryptorUtil.decrypt(
+						company.getKeyObj(),
+						GetterUtil.getString(
+							workflowContext.get("userToken"))));
 
 				String rewrittenText = GetterUtil.getString(
 					workflowContext.get("rewrittenText"));

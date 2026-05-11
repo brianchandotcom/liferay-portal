@@ -517,137 +517,157 @@ public int countBy${entityFinder.name}(
 	</#list>
 
 	) {
-		<#if entityFinder.hasEntityColumn("groupId")>
-			if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-		<#elseif entityFinder.hasEntityColumn("companyId")>
-			if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-		<#else>
-			if (!InlineSQLHelperUtil.isEnabled()) {
-		</#if>
+		<#if entityFinder.collectionPersistenceFinderEnabled>
+			return _collectionPersistenceFinderBy${entityFinder.name}.filterCount(
+				${finderCacheInstance},
+				new Object[] {
+					<#list entityColumns as entityColumn>
+						${entityColumn.name}
 
-			return countBy${entityFinder.name}(
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+				}
+				<#if entityFinder.hasEntityColumn("groupId")>
+					, groupId
+				<#elseif entityFinder.hasEntityColumn("companyId")>
+					, companyId, 0
+				</#if>
+				);
+		<#else>
+			<#if entityFinder.hasEntityColumn("groupId")>
+				if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			<#elseif entityFinder.hasEntityColumn("companyId")>
+				if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			<#else>
+				if (!InlineSQLHelperUtil.isEnabled()) {
+			</#if>
+
+				return countBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name}
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+
+				);
+			}
+
+			<#if serviceBuilder.isVersionGTE_7_4_0()>
+				if (isPermissionsInMemoryFilterEnabled()) {
+					List<${entity.name}> ${entity.pluralVariableName} =
+
+					<#if !entityFinder.isCollection() || entityFinder.isUnique()>
+						Arrays.asList(fetchBy${entityFinder.name}(
+
+						<#list entityColumns as entityColumn>
+							${entityColumn.name}
+
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+
+						));
+					<#else>
+						findBy${entityFinder.name}(
+
+						<#list entityColumns as entityColumn>
+							${entityColumn.name}
+
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+
+						);
+					</#if>
+
+					${entity.pluralVariableName} = InlineSQLHelperUtil.filter(
+						${entity.pluralVariableName}
+
+						<#if entityFinder.hasEntityColumn("groupId")>
+							, groupId
+						</#if>
+					);
+
+					return ${entity.pluralVariableName}.size();
+				}
+			</#if>
 
 			<#list entityColumns as entityColumn>
-				${entityColumn.name}
-
-				<#if entityColumn_has_next>
-					,
+				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 				</#if>
 			</#list>
 
-			);
-		}
+			<#if entity.isPermissionedModel()>
+				<#include "persistence_impl_count_by_query.ftl">
 
-		<#if serviceBuilder.isVersionGTE_7_4_0()>
-			if (isPermissionsInMemoryFilterEnabled()) {
-				List<${entity.name}> ${entity.pluralVariableName} =
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
-				<#if !entityFinder.isCollection() || entityFinder.isUnique()>
-					Arrays.asList(fetchBy${entityFinder.name}(
+				Session session = null;
 
-					<#list entityColumns as entityColumn>
-						${entityColumn.name}
+				try {
+					session = openSession();
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
+					Query query = session.createQuery(sql);
 
-					));
-				<#else>
-					findBy${entityFinder.name}(
+					QueryPos queryPos = QueryPos.getInstance(query);
 
-					<#list entityColumns as entityColumn>
-						${entityColumn.name}
+					<@finderQPos />
 
-						<#if entityColumn_has_next>
-							,
-						</#if>
-					</#list>
+					Long count = (Long)query.uniqueResult();
 
-					);
-				</#if>
+					return count.intValue();
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			<#else>
+				StringBundler sb = new StringBundler(${entityColumns?size + 1});
 
-				${entity.pluralVariableName} = InlineSQLHelperUtil.filter(
-					${entity.pluralVariableName}
+				sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-					<#if entityFinder.hasEntityColumn("groupId")>
-						, groupId
-					</#if>
-				);
+				<#assign sqlQuery = true />
 
-				return ${entity.pluralVariableName}.size();
-			}
-		</#if>
+				<#include "persistence_impl_finder_cols.ftl">
 
-		<#list entityColumns as entityColumn>
-			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-				${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+				<#assign sqlQuery = false />
+
+				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+					sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+					QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+					<@finderQPos />
+
+					Long count = (Long)sqlQuery.uniqueResult();
+
+					return count.intValue();
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
 			</#if>
-		</#list>
-
-		<#if entity.isPermissionedModel()>
-			<#include "persistence_impl_count_by_query.ftl">
-
-			String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				<@finderQPos />
-
-				Long count = (Long)query.uniqueResult();
-
-				return count.intValue();
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		<#else>
-			StringBundler sb = new StringBundler(${entityColumns?size + 1});
-
-			sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
-
-			<#assign sqlQuery = true />
-
-			<#include "persistence_impl_finder_cols.ftl">
-
-			<#assign sqlQuery = false />
-
-			String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-				sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-				<@finderQPos />
-
-				Long count = (Long)sqlQuery.uniqueResult();
-
-				return count.intValue();
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
 		</#if>
 	}
 
@@ -680,44 +700,18 @@ public int countBy${entityFinder.name}(
 		</#list>
 
 		) {
-			<#if entityFinder.hasEntityColumn("groupId")>
-				if (!InlineSQLHelperUtil.isEnabled(
-					<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-						groupIds
-					<#else>
-						groupId
-					</#if>
-				)) {
-			<#elseif entityFinder.hasEntityColumn("companyId")>
-				if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			<#else>
-				if (!InlineSQLHelperUtil.isEnabled()) {
-			</#if>
+			<#if entityFinder.collectionPersistenceFinderEnabled>
+				<#if entityFinder.hasEntityColumn("groupId") && entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+					groupIds = ArrayUtil.sortedUnique(groupIds);
+				</#if>
 
-				return countBy${entityFinder.name}(
-
-				<#list entityColumns as entityColumn>
-					<#if entityColumn.hasArrayableOperator()>
-						${entityColumn.pluralName}
-					<#else>
-						${entityColumn.name}
-					</#if>
-
-					<#if entityColumn_has_next>
-						,
-					</#if>
-				</#list>
-
-				);
-			}
-
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				if (isPermissionsInMemoryFilterEnabled()) {
-					List<${entity.name}> ${entity.pluralVariableName} = InlineSQLHelperUtil.filter(
-						findBy${entityFinder.name}(
-
+				return _collectionPersistenceFinderBy${entityFinder.name}.filterCount(
+					${finderCacheInstance},
+					new Object[] {
 						<#list entityColumns as entityColumn>
-							<#if entityColumn.hasArrayableOperator()>
+							<#if entityColumn.hasArrayableOperator() && !stringUtil.equals(entityColumn.name, "groupId")>
+								ArrayUtil.sortedUnique(${entityColumn.pluralName})
+							<#elseif entityColumn.hasArrayableOperator()>
 								${entityColumn.pluralName}
 							<#else>
 								${entityColumn.name}
@@ -727,139 +721,199 @@ public int countBy${entityFinder.name}(
 								,
 							</#if>
 						</#list>
-
-						)
-
-						<#if entityFinder.hasEntityColumn("groupId")>,
-							<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-								groupIds
-							<#else>
-								groupId
-							</#if>
-						</#if>
-
-						);
-
-					return ${entity.pluralVariableName}.size();
-				}
-			</#if>
-
-			<#list entityColumns as entityColumn>
-				<#if entityColumn.hasArrayableOperator()>
-					if (${entityColumn.pluralName} == null) {
-						${entityColumn.pluralName} = new ${entityColumn.type}[0];
 					}
-					else if (${entityColumn.pluralName}.length > 1) {
-						<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-							for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
-								${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
-							}
+					<#if entityFinder.hasEntityColumn("groupId")>
+						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+							, groupIds
+						<#else>
+							, groupId
+						</#if>
+					<#elseif entityFinder.hasEntityColumn("companyId")>
+						, companyId, 0
+					</#if>
+					);
+			<#else>
+				<#if entityFinder.hasEntityColumn("groupId")>
+					if (!InlineSQLHelperUtil.isEnabled(
+						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+							groupIds
+						<#else>
+							groupId
+						</#if>
+					)) {
+				<#elseif entityFinder.hasEntityColumn("companyId")>
+					if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+				<#else>
+					if (!InlineSQLHelperUtil.isEnabled()) {
+				</#if>
+
+					return countBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName}
+						<#else>
+							${entityColumn.name}
 						</#if>
 
-						<#if serviceBuilder.isVersionGTE_7_2_0()>
-							${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
-						<#else>
-							${entityColumn.pluralName} =
-								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-									ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+						<#if entityColumn_has_next>
+							,
+						</#if>
+					</#list>
+
+					);
+				}
+
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+					if (isPermissionsInMemoryFilterEnabled()) {
+						List<${entity.name}> ${entity.pluralVariableName} = InlineSQLHelperUtil.filter(
+							findBy${entityFinder.name}(
+
+							<#list entityColumns as entityColumn>
+								<#if entityColumn.hasArrayableOperator()>
+									${entityColumn.pluralName}
 								<#else>
-									ArrayUtil.unique(${entityColumn.pluralName});
+									${entityColumn.name}
 								</#if>
 
-							<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-								Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
-							<#else>
-								Arrays.sort(${entityColumn.pluralName});
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>
+
+							)
+
+							<#if entityFinder.hasEntityColumn("groupId")>,
+								<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+									groupIds
+								<#else>
+									groupId
+								</#if>
 							</#if>
-						</#if>
+
+							);
+
+						return ${entity.pluralVariableName}.size();
 					}
-				<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 				</#if>
-			</#list>
 
-			<#if entity.isPermissionedModel()>
-				<#include "persistence_impl_count_by_arrayable_query.ftl">
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						if (${entityColumn.pluralName} == null) {
+							${entityColumn.pluralName} = new ${entityColumn.type}[0];
+						}
+						else if (${entityColumn.pluralName}.length > 1) {
+							<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+								for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
+									${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
+								}
+							</#if>
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
+							<#if serviceBuilder.isVersionGTE_7_2_0()>
+								${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
+							<#else>
+								${entityColumn.pluralName} =
+									<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+										ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+									<#else>
+										ArrayUtil.unique(${entityColumn.pluralName});
+									</#if>
 
-				<#if entityFinder.hasEntityColumn("groupId")>,
-					<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-						groupIds
-					<#else>
-						groupId
+								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+									Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+								<#else>
+									Arrays.sort(${entityColumn.pluralName});
+								</#if>
+							</#if>
+						}
+					<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 					</#if>
-				</#if>);
+				</#list>
 
-				Session session = null;
+				<#if entity.isPermissionedModel()>
+					<#include "persistence_impl_count_by_arrayable_query.ftl">
 
-				try {
-					session = openSession();
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
-					Query query = session.createQuery(sql);
+					<#if entityFinder.hasEntityColumn("groupId")>,
+						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+							groupIds
+						<#else>
+							groupId
+						</#if>
+					</#if>);
 
-					<#if bindParameter(entityColumns)>
-						QueryPos queryPos = QueryPos.getInstance(query);
-					</#if>
+					Session session = null;
 
-					<@finderQPos _arrayable = true />
+					try {
+						session = openSession();
 
-					Long count = (Long)query.uniqueResult();
+						Query query = session.createQuery(sql);
 
-					return count.intValue();
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			<#else>
-				StringBundler sb = new StringBundler();
+						<#if bindParameter(entityColumns)>
+							QueryPos queryPos = QueryPos.getInstance(query);
+						</#if>
 
-				sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
+						<@finderQPos _arrayable = true />
 
-				<#assign sqlQuery = true />
+						Long count = (Long)query.uniqueResult();
 
-				<#include "persistence_impl_finder_arrayable_cols.ftl">
+						return count.intValue();
+					}
+					catch (Exception exception) {
+						throw processException(exception);
+					}
+					finally {
+						closeSession(session);
+					}
+				<#else>
+					StringBundler sb = new StringBundler();
 
-				<#assign sqlQuery = false />
+					sb.append(_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE);
 
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+					<#assign sqlQuery = true />
 
-				<#if entityFinder.hasEntityColumn("groupId")>,
-					<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-						groupIds
-					<#else>
-						groupId
-					</#if>
-				</#if>);
+					<#include "persistence_impl_finder_arrayable_cols.ftl">
 
-				Session session = null;
+					<#assign sqlQuery = false />
 
-				try {
-					session = openSession();
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
 
-					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+					<#if entityFinder.hasEntityColumn("groupId")>,
+						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+							groupIds
+						<#else>
+							groupId
+						</#if>
+					</#if>);
 
-					sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+					Session session = null;
 
-					<#if bindParameter(entityColumns)>
-						QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-					</#if>
+					try {
+						session = openSession();
 
-					<@finderQPos _arrayable = true />
+						SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
-					Long count = (Long)sqlQuery.uniqueResult();
+						sqlQuery.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
 
-					return count.intValue();
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
+						<#if bindParameter(entityColumns)>
+							QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+						</#if>
+
+						<@finderQPos _arrayable = true />
+
+						Long count = (Long)sqlQuery.uniqueResult();
+
+						return count.intValue();
+					}
+					catch (Exception exception) {
+						throw processException(exception);
+					}
+					finally {
+						closeSession(session);
+					}
+				</#if>
 			</#if>
 		}
 	</#if>

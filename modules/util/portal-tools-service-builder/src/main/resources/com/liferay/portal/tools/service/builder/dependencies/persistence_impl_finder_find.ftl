@@ -740,148 +740,169 @@ that may or may not be enforced with a unique index at the database level. Case
 		</#list>
 
 		int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-			<#if entityFinder.hasEntityColumn("groupId")>
-				if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			<#elseif entityFinder.hasEntityColumn("companyId")>
-				if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			<#else>
-				if (!InlineSQLHelperUtil.isEnabled()) {
-			</#if>
+			<#if entityFinder.collectionPersistenceFinderEnabled>
+				return _collectionPersistenceFinderBy${entityFinder.name}.filterFind(
+					${finderCacheInstance},
+					new Object[] {
+						<#list entityColumns as entityColumn>
+							${entityColumn.name}
 
-				return findBy${entityFinder.name}(
+							<#if entityColumn_has_next>
+								,
+							</#if>
+						</#list>
+					},
+					start, end, orderByComparator
+					<#if entityFinder.hasEntityColumn("groupId")>
+						, groupId
+					<#elseif entityFinder.hasEntityColumn("companyId")>
+						, companyId, 0
+					</#if>
+					);
+			<#else>
+				<#if entityFinder.hasEntityColumn("groupId")>
+					if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+				<#elseif entityFinder.hasEntityColumn("companyId")>
+					if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+				<#else>
+					if (!InlineSQLHelperUtil.isEnabled()) {
+				</#if>
+
+					return findBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						${entityColumn.name},
+					</#list>
+
+					start, end, orderByComparator);
+				}
+
+				<#if serviceBuilder.isVersionGTE_7_4_0()>
+					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && isPermissionsInMemoryFilterEnabled()) {
+						return InlineSQLHelperUtil.filter(
+							findBy${entityFinder.name}(
+
+							<#list entityColumns as entityColumn>
+								${entityColumn.name},
+							</#list>
+
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator)
+
+							<#if entityFinder.hasEntityColumn("groupId")>
+								, groupId
+							</#if>
+
+							);
+					}
+				</#if>
 
 				<#list entityColumns as entityColumn>
-					${entityColumn.name},
+					<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+						${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+					</#if>
 				</#list>
 
-				start, end, orderByComparator);
-			}
+				<#if entity.isPermissionedModel()>
+					<#include "persistence_impl_find_by_query.ftl">
 
-			<#if serviceBuilder.isVersionGTE_7_4_0()>
-				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && isPermissionsInMemoryFilterEnabled()) {
-					return InlineSQLHelperUtil.filter(
-						findBy${entityFinder.name}(
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
 
-						<#list entityColumns as entityColumn>
-							${entityColumn.name},
-						</#list>
+					Session session = null;
 
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator)
+					try {
+						session = openSession();
 
-						<#if entityFinder.hasEntityColumn("groupId")>
-							, groupId
-						</#if>
+						Query query = session.createQuery(sql);
 
-						);
-				}
-			</#if>
+						QueryPos queryPos = QueryPos.getInstance(query);
 
-			<#list entityColumns as entityColumn>
-				<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-					${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+						<@finderQPos />
+
+						return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
+					}
+					catch (Exception exception) {
+						throw processException(exception);
+					}
+					finally {
+						closeSession(session);
+					}
+				<#else>
+					StringBundler sb = null;
+
+					if (orderByComparator != null) {
+						sb = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
+					}
+					else {
+						sb = new StringBundler(${entityColumns?size + 3});
+					}
+
+					if (getDB().isSupportsInlineDistinct()) {
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+					}
+					else {
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+					}
+
+					<#assign sqlQuery = true />
+
+					<#include "persistence_impl_finder_cols.ftl">
+
+					<#assign sqlQuery = false />
+
+					if (!getDB().isSupportsInlineDistinct()) {
+						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+					}
+
+					if (orderByComparator != null) {
+						if (getDB().isSupportsInlineDistinct()) {
+							appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
+						}
+						else {
+							appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+						}
+					}
+					else {
+						if (getDB().isSupportsInlineDistinct()) {
+							<#if serviceBuilder.isVersionGTE_7_4_0()>
+								sb.append(${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+							<#else>
+								sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+							</#if>
+						}
+						else {
+							sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+						}
+					}
+
+					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
+
+					Session session = null;
+
+					try {
+						session = openSession();
+
+						SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+						if (getDB().isSupportsInlineDistinct()) {
+							sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+						}
+						else {
+							sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+						}
+
+						QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+						<@finderQPos />
+
+						return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
+					}
+					catch (Exception exception) {
+						throw processException(exception);
+					}
+					finally {
+						closeSession(session);
+					}
 				</#if>
-			</#list>
-
-			<#if entity.isPermissionedModel()>
-				<#include "persistence_impl_find_by_query.ftl">
-
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					<@finderQPos />
-
-					return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			<#else>
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(${entityColumns?size + 2} + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(${entityColumns?size + 3});
-				}
-
-				if (getDB().isSupportsInlineDistinct()) {
-					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-				}
-				else {
-					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
-				}
-
-				<#assign sqlQuery = true />
-
-				<#include "persistence_impl_finder_cols.ftl">
-
-				<#assign sqlQuery = false />
-
-				if (!getDB().isSupportsInlineDistinct()) {
-					sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
-				}
-
-				if (orderByComparator != null) {
-					if (getDB().isSupportsInlineDistinct()) {
-						appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-					}
-					else {
-						appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-					}
-				}
-				else {
-					if (getDB().isSupportsInlineDistinct()) {
-						<#if serviceBuilder.isVersionGTE_7_4_0()>
-							sb.append(${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-						<#else>
-							sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-						</#if>
-					}
-					else {
-						sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN<#if entityFinder.hasEntityColumn("groupId")>, groupId</#if>);
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-					if (getDB().isSupportsInlineDistinct()) {
-						sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
-					}
-					else {
-						sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
-					}
-
-					QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-					<@finderQPos />
-
-					return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
 			</#if>
 		}
 
@@ -1261,207 +1282,242 @@ that may or may not be enforced with a unique index at the database level. Case
 			</#list>
 
 			int start, int end, OrderByComparator<${entity.name}> orderByComparator) {
-				<#if entityFinder.hasEntityColumn("groupId")>
-					if (!InlineSQLHelperUtil.isEnabled(
-						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-							groupIds
-						<#else>
-							groupId
-						</#if>
-					)) {
-				<#elseif entityFinder.hasEntityColumn("companyId")>
-					if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-				<#else>
-					if (!InlineSQLHelperUtil.isEnabled()) {
-				</#if>
+				<#if entityFinder.collectionPersistenceFinderEnabled>
+					<#if entityFinder.hasEntityColumn("groupId") && entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+						groupIds = ArrayUtil.sortedUnique(groupIds);
+					</#if>
 
-					return findBy${entityFinder.name}(
+					return _collectionPersistenceFinderBy${entityFinder.name}.filterFind(
+						${finderCacheInstance},
+						new Object[] {
+							<#list entityColumns as entityColumn>
+								<#if entityColumn.hasArrayableOperator() && !stringUtil.equals(entityColumn.name, "groupId")>
+									ArrayUtil.sortedUnique(${entityColumn.pluralName})
+								<#elseif entityColumn.hasArrayableOperator()>
+									${entityColumn.pluralName}
+								<#else>
+									${entityColumn.name}
+								</#if>
+
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>
+						},
+						start, end, orderByComparator
+						<#if entityFinder.hasEntityColumn("groupId")>
+							<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+								, groupIds
+							<#else>
+								, groupId
+							</#if>
+						<#elseif entityFinder.hasEntityColumn("companyId")>
+							, companyId, 0
+						</#if>
+						);
+				<#else>
+					<#if entityFinder.hasEntityColumn("groupId")>
+						if (!InlineSQLHelperUtil.isEnabled(
+							<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+								groupIds
+							<#else>
+								groupId
+							</#if>
+						)) {
+					<#elseif entityFinder.hasEntityColumn("companyId")>
+						if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+					<#else>
+						if (!InlineSQLHelperUtil.isEnabled()) {
+					</#if>
+
+						return findBy${entityFinder.name}(
+
+						<#list entityColumns as entityColumn>
+							<#if entityColumn.hasArrayableOperator()>
+								${entityColumn.pluralName},
+							<#else>
+								${entityColumn.name},
+							</#if>
+						</#list>
+
+						start, end, orderByComparator);
+					}
+
+					<#if serviceBuilder.isVersionGTE_7_4_0()>
+						if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && isPermissionsInMemoryFilterEnabled()) {
+							return InlineSQLHelperUtil.filter(
+								findBy${entityFinder.name}(
+
+								<#list entityColumns as entityColumn>
+									<#if entityColumn.hasArrayableOperator()>
+										${entityColumn.pluralName},
+									<#else>
+										${entityColumn.name},
+									</#if>
+								</#list>
+
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator)
+
+								<#if entityFinder.hasEntityColumn("groupId")>,
+									<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+										groupIds
+									<#else>
+										groupId
+									</#if>
+								</#if>
+
+								);
+						}
+					</#if>
 
 					<#list entityColumns as entityColumn>
 						<#if entityColumn.hasArrayableOperator()>
-							${entityColumn.pluralName},
-						<#else>
-							${entityColumn.name},
+							if (${entityColumn.pluralName} == null) {
+								${entityColumn.pluralName} = new ${entityColumn.type}[0];
+							}
+							else if (${entityColumn.pluralName}.length > 1) {
+								<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+									for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
+										${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
+									}
+								</#if>
+
+								<#if serviceBuilder.isVersionGTE_7_2_0()>
+									${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
+								<#else>
+									${entityColumn.pluralName} =
+										<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+											ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+										<#else>
+											ArrayUtil.unique(${entityColumn.pluralName});
+										</#if>
+
+									<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
+										Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
+									<#else>
+										Arrays.sort(${entityColumn.pluralName});
+									</#if>
+								</#if>
+							}
+						<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+							${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
 						</#if>
 					</#list>
 
-					start, end, orderByComparator);
-				}
+					<#if entity.isPermissionedModel()>
+						<#include "persistence_impl_find_by_arrayable_query.ftl">
 
-				<#if serviceBuilder.isVersionGTE_7_4_0()>
-					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && isPermissionsInMemoryFilterEnabled()) {
-						return InlineSQLHelperUtil.filter(
-							findBy${entityFinder.name}(
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
 
-							<#list entityColumns as entityColumn>
-								<#if entityColumn.hasArrayableOperator()>
-									${entityColumn.pluralName},
-								<#else>
-									${entityColumn.name},
-								</#if>
-							</#list>
-
-							QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator)
-
-							<#if entityFinder.hasEntityColumn("groupId")>,
-								<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-									groupIds
-								<#else>
-									groupId
-								</#if>
-							</#if>
-
-							);
-					}
-				</#if>
-
-				<#list entityColumns as entityColumn>
-					<#if entityColumn.hasArrayableOperator()>
-						if (${entityColumn.pluralName} == null) {
-							${entityColumn.pluralName} = new ${entityColumn.type}[0];
-						}
-						else if (${entityColumn.pluralName}.length > 1) {
-							<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-								for (int i = 0; i < ${entityColumn.pluralName}.length; i++) {
-									${entityColumn.pluralName}[i] = Objects.toString(${entityColumn.pluralName}[i], "");
-								}
-							</#if>
-
-							<#if serviceBuilder.isVersionGTE_7_2_0()>
-								${entityColumn.pluralName} = ArrayUtil.sortedUnique(${entityColumn.pluralName});
+						<#if entityFinder.hasEntityColumn("groupId")>,
+							<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+								groupIds
 							<#else>
-								${entityColumn.pluralName} =
-									<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-										ArrayUtil.distinct(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
-									<#else>
-										ArrayUtil.unique(${entityColumn.pluralName});
-									</#if>
-
-								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isConvertNull()>
-									Arrays.sort(${entityColumn.pluralName}, NULL_SAFE_STRING_COMPARATOR);
-								<#else>
-									Arrays.sort(${entityColumn.pluralName});
-								</#if>
+								groupId
 							</#if>
+						</#if>);
+
+						Session session = null;
+
+						try {
+							session = openSession();
+
+							Query query = session.createQuery(sql);
+
+							<#if bindParameter(entityColumns)>
+								QueryPos queryPos = QueryPos.getInstance(query);
+							</#if>
+
+							<@finderQPos _arrayable = true />
+
+							return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
 						}
-					<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-						${entityColumn.name} = Objects.toString(${entityColumn.name}, "");
+						catch (Exception exception) {
+							throw processException(exception);
+						}
+						finally {
+							closeSession(session);
+						}
+					<#else>
+						StringBundler sb = new StringBundler();
+
+						if (getDB().isSupportsInlineDistinct()) {
+							sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
+						}
+						else {
+							sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
+						}
+
+						<#assign sqlQuery = true />
+
+						<#include "persistence_impl_finder_arrayable_cols.ftl">
+
+						<#assign sqlQuery = false />
+
+						if (!getDB().isSupportsInlineDistinct()) {
+							sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
+						}
+
+						if (orderByComparator != null) {
+							if (getDB().isSupportsInlineDistinct()) {
+								appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
+							}
+							else {
+								appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+							}
+						}
+						else {
+							if (getDB().isSupportsInlineDistinct()) {
+								<#if serviceBuilder.isVersionGTE_7_4_0()>
+									sb.append(${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+								<#else>
+									sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
+								</#if>
+							}
+							else {
+								sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
+							}
+						}
+
+						String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
+
+						<#if entityFinder.hasEntityColumn("groupId")>,
+							<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
+								groupIds
+							<#else>
+								groupId
+							</#if>
+						</#if>);
+
+						Session session = null;
+
+						try {
+							session = openSession();
+
+							SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+							if (getDB().isSupportsInlineDistinct()) {
+								sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
+							}
+							else {
+								sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
+							}
+
+							<#if bindParameter(entityColumns)>
+								QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+							</#if>
+
+							<@finderQPos _arrayable = true />
+
+							return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
+						}
+						catch (Exception exception) {
+							throw processException(exception);
+						}
+						finally {
+							closeSession(session);
+						}
 					</#if>
-				</#list>
-
-				<#if entity.isPermissionedModel()>
-					<#include "persistence_impl_find_by_arrayable_query.ftl">
-
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN
-
-					<#if entityFinder.hasEntityColumn("groupId")>,
-						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-							groupIds
-						<#else>
-							groupId
-						</#if>
-					</#if>);
-
-					Session session = null;
-
-					try {
-						session = openSession();
-
-						Query query = session.createQuery(sql);
-
-						<#if bindParameter(entityColumns)>
-							QueryPos queryPos = QueryPos.getInstance(query);
-						</#if>
-
-						<@finderQPos _arrayable = true />
-
-						return (List<${entity.name}>)QueryUtil.list(query, getDialect(), start, end);
-					}
-					catch (Exception exception) {
-						throw processException(exception);
-					}
-					finally {
-						closeSession(session);
-					}
-				<#else>
-					StringBundler sb = new StringBundler();
-
-					if (getDB().isSupportsInlineDistinct()) {
-						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE);
-					}
-					else {
-						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1);
-					}
-
-					<#assign sqlQuery = true />
-
-					<#include "persistence_impl_finder_arrayable_cols.ftl">
-
-					<#assign sqlQuery = false />
-
-					if (!getDB().isSupportsInlineDistinct()) {
-						sb.append(_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2);
-					}
-
-					if (orderByComparator != null) {
-						if (getDB().isSupportsInlineDistinct()) {
-							appendOrderByComparator(sb, _ENTITY_ALIAS_PREFIX, orderByComparator, true);
-						}
-						else {
-							appendOrderByComparator(sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
-						}
-					}
-					else {
-						if (getDB().isSupportsInlineDistinct()) {
-							<#if serviceBuilder.isVersionGTE_7_4_0()>
-								sb.append(${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
-							<#else>
-								sb.append(${entity.name}ModelImpl.ORDER_BY_JPQL);
-							</#if>
-						}
-						else {
-							sb.append(${entity.name}ModelImpl.ORDER_BY_SQL);
-						}
-					}
-
-					String sql = InlineSQLHelperUtil.replacePermissionCheck(sb.toString(), ${entity.name}.class.getName(), _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN
-
-					<#if entityFinder.hasEntityColumn("groupId")>,
-						<#if entityFinder.getEntityColumn("groupId").hasArrayableOperator()>
-							groupIds
-						<#else>
-							groupId
-						</#if>
-					</#if>);
-
-					Session session = null;
-
-					try {
-						session = openSession();
-
-						SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-						if (getDB().isSupportsInlineDistinct()) {
-							sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, ${entity.name}Impl.class);
-						}
-						else {
-							sqlQuery.addEntity(_FILTER_ENTITY_TABLE, ${entity.name}Impl.class);
-						}
-
-						<#if bindParameter(entityColumns)>
-							QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-						</#if>
-
-						<@finderQPos _arrayable = true />
-
-						return (List<${entity.name}>)QueryUtil.list(sqlQuery, getDialect(), start, end);
-					}
-					catch (Exception exception) {
-						throw processException(exception);
-					}
-					finally {
-						closeSession(session);
-					}
 				</#if>
 			}
 		</#if>

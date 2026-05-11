@@ -174,9 +174,14 @@ test('LPD-29693, LPD-29294 Assert silence context change popover behavior', asyn
 
 	await page.getByLabel('Hide warning when changing').uncheck();
 
-	await page.getByRole('button', {name: 'Save'}).click();
-
-	await page.reload();
+	await Promise.all([
+		page.waitForResponse(
+			(response) =>
+				response.url().includes('save_display_preference') &&
+				response.ok()
+		),
+		page.getByRole('button', {name: 'Save'}).click(),
+	]);
 
 	await journalPage.goto(site1.friendlyUrlPath);
 

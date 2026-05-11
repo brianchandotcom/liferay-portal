@@ -19,31 +19,15 @@ export type Site = {
 	name: string;
 };
 
-export default function usePreviewState(getPreviewDataURL: string) {
-	const [languageId, setLanguageId] = useState<string>(
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	);
+export default function usePreviewState(
+	getPreviewDataURL: string,
+	languageId: Liferay.Language.Locale
+) {
 	const [selectedChannelKey, setSelectedChannelKey] = useState<React.Key>('');
 	const [selectedDisplayPageKey, setSelectedDisplayPageKey] =
 		useState<React.Key>('');
 	const [sites, setSites] = useState<Site[]>([]);
 	const [sitesStatus, setSitesStatus] = useState<Status>('saving');
-
-	useEffect(() => {
-		const handleLocaleChanged = ({
-			languageId,
-		}: {
-			languageId: Liferay.Language.Locale;
-		}) => setLanguageId(languageId);
-
-		Liferay.on('localizationSelect:localeChanged', handleLocaleChanged);
-
-		return () =>
-			Liferay.detach(
-				'localizationSelect:localeChanged',
-				handleLocaleChanged
-			);
-	}, []);
 
 	const loadSites = useCallback(async () => {
 		setSitesStatus('saving');

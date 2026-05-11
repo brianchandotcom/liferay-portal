@@ -10,6 +10,9 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -36,11 +39,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x), replaced by Content Pages
  */
 @Component(
 	property = "layout.type=" + LayoutConstants.TYPE_PORTLET,
 	service = LayoutTypeController.class
 )
+@Deprecated
 public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Override
@@ -76,6 +81,14 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, Layout layout)
 		throws Exception {
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				StringBundler.concat(
+					"Layout ", layout.getPlid(),
+					" is a deprecated widget page (type=portlet). Migrate it ",
+					"to a content page."));
+		}
 
 		RequestDispatcher requestDispatcher =
 			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
@@ -181,6 +194,9 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			"p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/portlet.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletLayoutTypeController.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

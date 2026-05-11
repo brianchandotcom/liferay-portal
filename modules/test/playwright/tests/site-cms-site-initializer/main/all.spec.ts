@@ -17,6 +17,7 @@ import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
 	performLogout,
+	performUserSwitchViaApi,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -2200,5 +2201,70 @@ test(
 				);
 			}
 		}
+	}
+);
+
+test(
+	"Author filter lists only members of the current user's Spaces",
+	{tag: '@LPD-70773'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const space1 = await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+			{
+				name: `Space ${getRandomString()}`,
+				settings: {},
+				type: 'Space',
+			}
+		);
+
+		const space2 = await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+			{
+				name: `Space ${getRandomString()}`,
+				settings: {},
+				type: 'Space',
+			}
+		);
+
+		const viewer = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[viewer.alternateName] = {
+			name: viewer.givenName,
+			password: 'test',
+			surname: viewer.familyName,
+		};
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space1.externalReferenceCode,
+			viewer.externalReferenceCode
+		);
+
+		const insider = await apiHelpers.headlessAdminUser.postUserAccount();
+		const insiderFullName = `${insider.givenName} ${insider.familyName}`;
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space1.externalReferenceCode,
+			insider.externalReferenceCode
+		);
+
+		const outsider = await apiHelpers.headlessAdminUser.postUserAccount();
+		const outsiderFullName = `${outsider.givenName} ${outsider.familyName}`;
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space2.externalReferenceCode,
+			outsider.externalReferenceCode
+		);
+
+		await performUserSwitchViaApi(page, viewer.alternateName);
+
+		await assetsPage.gotoAll();
+
+		await page.getByRole('button', {name: 'Filter'}).click();
+		await page.getByRole('menuitem', {name: 'Author'}).click();
+
+		await expect(
+			page.getByRole('checkbox', {name: insiderFullName})
+		).toBeVisible();
+		await expect(
+			page.getByRole('checkbox', {name: outsiderFullName})
+		).toBeHidden();
 	}
 );

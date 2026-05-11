@@ -59,8 +59,8 @@ public final class UpgradeQueryMonitor {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Unable to terminate upgrade query monitor ",
-							"within ", _SHUTDOWN_TIMEOUT_SECONDS, " seconds"));
+							"Unable to terminate upgrade query monitor within ",
+							_SHUTDOWN_TIMEOUT_SECONDS, " seconds"));
 				}
 			}
 		}

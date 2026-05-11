@@ -15,10 +15,13 @@ import {PermissionOption} from '../../src/main/resources/META-INF/resources/shar
 
 jest.useFakeTimers();
 
-jest.mock('../../src/main/resources/META-INF/resources/toast/openToast', () => ({
-	__esModule: true,
-	default: jest.fn(),
-}));
+jest.mock(
+	'../../src/main/resources/META-INF/resources/toast/openToast',
+	() => ({
+		__esModule: true,
+		default: jest.fn(),
+	})
+);
 
 jest.mock('frontend-js-web', () => ({
 	dateUtils: {
@@ -33,7 +36,10 @@ const mockCloseModal = jest.fn();
 const DEFAULT_PERMISSION_OPTIONS: PermissionOption[] = [
 	{label: 'view-and-download', value: 'VIEW'},
 	{label: 'view-download-and-comment', value: 'ADD_DISCUSSION,VIEW'},
-	{label: 'view-download-comment-and-update', value: 'ADD_DISCUSSION,UPDATE,VIEW'},
+	{
+		label: 'view-download-comment-and-update',
+		value: 'ADD_DISCUSSION,UPDATE,VIEW',
+	},
 ];
 
 const FOLDER_PERMISSION_OPTIONS: PermissionOption[] = [
@@ -66,7 +72,9 @@ const DEFAULT_PROPS = {
 	title: 'Test Document',
 };
 
-const renderComponent = (props = DEFAULT_PROPS) => {
+const renderComponent = (
+	props: React.ComponentProps<typeof ShareModalContent> = DEFAULT_PROPS
+) => {
 	return render(<ShareModalContent {...props} />);
 };
 

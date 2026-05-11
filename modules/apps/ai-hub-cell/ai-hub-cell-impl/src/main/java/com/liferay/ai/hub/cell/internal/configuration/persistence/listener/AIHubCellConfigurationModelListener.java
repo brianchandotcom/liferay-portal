@@ -27,13 +27,13 @@ public class AIHubCellConfigurationModelListener
 	public void onBeforeSave(
 		String pid, Dictionary<String, Object> properties) {
 
-		byte[] secretBytes = new byte[64];
+		byte[] bytes = new byte[64];
 
-		for (int i = 0; i < secretBytes.length; i++) {
-			secretBytes[i] = SecureRandomUtil.nextByte();
+		for (int i = 0; i < bytes.length; i++) {
+			bytes[i] = SecureRandomUtil.nextByte();
 		}
 
-		properties.put("secret", Base64.encode(secretBytes));
+		properties.put("secret", Base64.encode(bytes));
 	}
 
 }

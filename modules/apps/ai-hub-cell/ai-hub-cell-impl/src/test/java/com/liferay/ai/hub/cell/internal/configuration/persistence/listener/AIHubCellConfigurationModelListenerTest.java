@@ -39,7 +39,10 @@ public class AIHubCellConfigurationModelListenerTest {
 		String secret = GetterUtil.getString(properties.get("secret"));
 
 		Assert.assertFalse(Validator.isBlank(secret));
-		Assert.assertEquals(64, Base64.decode(secret).length);
+
+		byte[] bytes = Base64.decode(secret);
+
+		Assert.assertEquals(64, bytes.length);
 	}
 
 }

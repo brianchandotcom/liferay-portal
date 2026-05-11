@@ -25,7 +25,9 @@ HEALTHCHECK --interval=3s --timeout=3s CMD curl -f http://localhost:8080 || exit
 COPY ./bundles /opt/liferay
 
 RUN mkdir -p /opt/liferay/tomcat/lib/org/apache/catalina/util && \
+	\
     echo "server.info=" > /opt/liferay/tomcat/lib/org/apache/catalina/util/ServerInfo.properties && \
+    \
     sed -i ':a;N;$!ba;s|<Connector\([[:space:]][^>]*\)port="8080"|<Connector encodedSolidusHandling="passthrough"\1port="8080"|' /opt/liferay/tomcat/conf/server.xml
 
 COPY ./common/resources/context.xml /opt/liferay/tomcat/conf

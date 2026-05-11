@@ -11,7 +11,9 @@ RUN cd /opt/liferay/tomcat/lib && \
     curl -O https://repo1.maven.org/maven2/co/elastic/logging/ecs-logging-core/1.6.0/ecs-logging-core-1.6.0.jar && \
     \
     cd /opt/liferay/tomcat/webapps/ROOT/WEB-INF/shielded-container-lib && \
+    \
     curl -O https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-layout-template-json/2.17.2/log4j-layout-template-json-2.17.2.jar && \
     curl -O https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.16.2/jackson-core-2.16.2.jar && \
     curl -O https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.16.2/jackson-annotations-2.16.2.jar && \
+    \
     sed -i ':a;N;$!ba;s|<Connector\([[:space:]][^>]*\)port="8080"|<Connector encodedSolidusHandling="passthrough"\1port="8080"|' /opt/liferay/tomcat/conf/server.xml

@@ -114,6 +114,48 @@ public abstract class BaseInvitedMemberResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-dsr/v1.0/rooms/{roomId}/invited-members/{invitedMemberId}' -d $'{"roleKey": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "roomId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "invitedMemberId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "InvitedMember")
+		}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path("/rooms/{roomId}/invited-members/{invitedMemberId}")
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public InvitedMember patchRoomInvitedMember(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("roomId")
+			Long roomId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("invitedMemberId")
+			Long invitedMemberId,
+			InvitedMember invitedMember)
+		throws Exception {
+
+		return new InvitedMember();
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
@@ -559,4 +601,4 @@ public abstract class BaseInvitedMemberResourceImpl
 		LogFactoryUtil.getLog(BaseInvitedMemberResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1635572795
+// LIFERAY-REST-BUILDER-HASH:-1698440073

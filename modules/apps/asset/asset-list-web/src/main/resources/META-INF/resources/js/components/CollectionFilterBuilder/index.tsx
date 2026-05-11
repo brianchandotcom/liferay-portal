@@ -9,6 +9,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import {ConditionBuilder} from './ConditionBuilder';
 import {Config, initializeConfig} from './config';
+import {RELATIVE_DATE_VALUES} from './operators';
 
 import type {
 	FilterCondition,
@@ -36,6 +37,10 @@ function serializeValue(
 	value: FilterCondition['value']
 ): FilterCondition['value'] {
 	if (property?.type !== 'date-time' || value === null) {
+		return value;
+	}
+
+	if (typeof value === 'string' && RELATIVE_DATE_VALUES.includes(value)) {
 		return value;
 	}
 

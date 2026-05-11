@@ -24,10 +24,6 @@ public int countBy${entityFinder.name}(
 
 ) {
 	<#if entityFinder.collectionPersistenceFinderEnabled>
-		<#if entity.isChangeTrackingEnabled()>
-			try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-		</#if>
-
 		return _collectionPersistenceFinderBy${entityFinder.name}.count(
 			${finderCacheInstance},
 			new Object[] {
@@ -43,10 +39,6 @@ public int countBy${entityFinder.name}(
 					</#if>
 				</#list>
 			});
-
-		<#if entity.isChangeTrackingEnabled()>
-			}
-		</#if>
 	<#elseif entityFinder.uniquePersistenceFinderEnabled>
 		return _uniquePersistenceFinderBy${entityFinder.name}.count(
 			${finderCacheInstance},
@@ -221,10 +213,6 @@ public int countBy${entityFinder.name}(
 		</#if>
 
 		<#if entityFinder.collectionPersistenceFinderEnabled>
-			<#if entity.isChangeTrackingEnabled()>
-				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {
-			</#if>
-
 			return _collectionPersistenceFinderBy${entityFinder.name}.count(
 				${finderCacheInstance},
 				new Object[] {
@@ -240,10 +228,6 @@ public int countBy${entityFinder.name}(
 						</#if>
 					</#list>
 				});
-
-			<#if entity.isChangeTrackingEnabled()>
-				}
-			</#if>
 		<#else>
 			<#if entity.isChangeTrackingEnabled()>
 				try (SafeCloseable safeCloseable = ${ctPersistenceHelper}.setCTCollectionIdWithSafeCloseable(${entity.name}.class)) {

@@ -133,15 +133,15 @@ async function handleBulkDeletion({
 		someEntriesHaveTrashEnabled
 	);
 	if (
-		!showConfirmationModal &&
-		!selectedData.selectAll &&
-		allEntriesHaveTrashEnabled &&
-		!isFromRecycleBin(selectedData)
+		showConfirmationModal ||
+		selectedData.selectAll ||
+		!allEntriesHaveTrashEnabled ||
+		isFromRecycleBin(selectedData)
 	) {
-		executeBulkDeleteAction(apiURL, dataSetId, selectedData);
+		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
 	}
 	else {
-		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
+		executeBulkDeleteAction(apiURL, dataSetId, selectedData);
 	}
 }
 

@@ -15,12 +15,12 @@
 		{
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#G3I1",
-			"externalReferenceCode": "L_AI_HUB_GENERATION_ITEM",
+			"externalReferenceCode": "L_CSG_GENERATION_ITEM",
 			"label": {
-				"en_US": "AI Hub Generation Item"
+				"en_US": "CSG Generation Item"
 			},
 			"modifiable": true,
-			"name": "AIHubGenerationItem",
+			"name": "CSGGenerationItem",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -130,10 +130,10 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "L_AI_HUB_GENERATIONS_FOLDER",
+			"objectFolderExternalReferenceCode": "L_CSG_GENERATIONS_FOLDER",
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "AI Hub Generation Items"
+				"en_US": "CSG Generation Items"
 			},
 			"scope": "company",
 			"status": {
@@ -145,12 +145,12 @@
 		{
 			"active": true,
 			"className": "com.liferay.object.model.ObjectDefinition#G3N1",
-			"externalReferenceCode": "L_AI_HUB_GENERATION",
+			"externalReferenceCode": "L_CSG_GENERATION",
 			"label": {
-				"en_US": "AI Hub Generation"
+				"en_US": "CSG Generation"
 			},
 			"modifiable": true,
-			"name": "AIHubGeneration",
+			"name": "CSGGeneration",
 			"objectActions": [
 				{
 					"active": true,
@@ -162,7 +162,7 @@
 						"en_US": "Commit"
 					},
 					"name": "commit",
-					"objectActionExecutorKey": "commit-ai-hub-generation",
+					"objectActionExecutorKey": "commit-csg-generation",
 					"objectActionTriggerKey": "standalone",
 					"parameters": {
 					},
@@ -211,7 +211,7 @@
 					"label": {
 						"en_US": "Generation Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_AI_HUB_GENERATION_STATUSES",
+					"listTypeDefinitionExternalReferenceCode": "L_CSG_GENERATION_STATUSES",
 					"name": "generationStatus",
 					"required": true,
 					"state": true,
@@ -287,18 +287,18 @@
 					"type": "String"
 				}
 			],
-			"objectFolderExternalReferenceCode": "L_AI_HUB_GENERATIONS_FOLDER",
+			"objectFolderExternalReferenceCode": "L_CSG_GENERATIONS_FOLDER",
 			"objectRelationships": [
 				{
 					"deletionType": "cascade",
-					"externalReferenceCode": "L_AI_HUB_GENERATIONS_TO_L_AI_HUB_GENERATION_ITEMS",
+					"externalReferenceCode": "L_CSG_GENERATIONS_TO_L_CSG_GENERATION_ITEMS",
 					"label": {
 						"en_US": "Items"
 					},
 					"name": "items",
-					"objectDefinitionExternalReferenceCode1": "L_AI_HUB_GENERATION",
-					"objectDefinitionExternalReferenceCode2": "L_AI_HUB_GENERATION_ITEM",
-					"objectDefinitionName2": "AIHubGenerationItem",
+					"objectDefinitionExternalReferenceCode1": "L_CSG_GENERATION",
+					"objectDefinitionExternalReferenceCode2": "L_CSG_GENERATION_ITEM",
+					"objectDefinitionName2": "CSGGenerationItem",
 					"parameterObjectFieldId": 0,
 					"parameterObjectFieldName": "",
 					"reverse": false,
@@ -308,7 +308,7 @@
 			],
 			"panelCategoryKey": "control_panel.object",
 			"pluralLabel": {
-				"en_US": "AI Hub Generations"
+				"en_US": "CSG Generations"
 			},
 			"scope": "company",
 			"status": {

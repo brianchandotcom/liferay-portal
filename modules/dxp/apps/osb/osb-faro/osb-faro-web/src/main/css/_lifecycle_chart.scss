@@ -1,6 +1,8 @@
 @use 'sass:math';
 
 .stage-metrics {
+	min-width: 0;
+
 	&__bar {
 		background-color: $cadmin-indigo-l2;
 		border-radius: 8px;
@@ -35,6 +37,27 @@
 
 	&__fill {
 		background: $cadmin-light-d1;
+	}
+
+	@media (max-width: 991.98px) {
+		&::before {
+			border-bottom: 1px dashed $cadmin-secondary-l2;
+			border-left: none;
+			bottom: auto;
+			left: 0;
+			right: 0;
+			top: 50%;
+			z-index: 0;
+		}
+
+		&::after {
+			display: none;
+		}
+
+		.label-info {
+			position: relative;
+			z-index: 1;
+		}
 	}
 
 	.label-info {

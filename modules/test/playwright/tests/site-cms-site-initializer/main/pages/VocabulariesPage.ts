@@ -29,6 +29,10 @@ export class VocabulariesPage {
 		return this.dataSetFragmentPage.getRow(filter);
 	}
 
+	async clickCategoriesLink(name: string) {
+		await this.getItem(name).locator('a[href*="view-categories"]').click();
+	}
+
 	async deleteVocabulary(name: string) {
 		await this.execItemAction({
 			action: 'Delete',

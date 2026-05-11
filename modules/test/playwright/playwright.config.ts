@@ -119,6 +119,7 @@ import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/mai
 import {config as notificationWebConfig} from './tests/notification-web/main/config';
 import {config as notificationsWebConfig} from './tests/notifications-web/main/config';
 import {config as oauthClientAdministrationConfig} from './tests/oauth-client-administration/main/config';
+import {config as oauth2ProviderWebConfig} from './tests/oauth2-provider-web/main/config';
 import {config as objectActionWebConfig} from './tests/object-web/action/config';
 import {config as objectClientExtensionWebConfig} from './tests/object-web/client-extension/config';
 import {config as objectContentPageIntegrationWebConfig} from './tests/object-web/content-page-integration/config';
@@ -344,6 +345,7 @@ export default defineConfig({
 		notificationWebConfig,
 		notificationsWebConfig,
 		oauthClientAdministrationConfig,
+		oauth2ProviderWebConfig,
 		listTypeDefinitionsWebConfig,
 		objectActionWebConfig,
 		objectClientExtensionWebConfig,

@@ -38,11 +38,16 @@
 		border-radius: 0;
 	}
 
-	.timeline-item {
-		&:hover .container-trash.btn {
-			opacity: 1;
-		}
+	.asset-filter-builder-add,
+	.asset-filter-builder-remove {
+		min-height: 44px;
+	}
 
+	.asset-filter-builder-remove {
+		min-width: 44px;
+	}
+
+	.timeline-item {
 		& + .timeline-item > .panel {
 			border-top: none;
 		}
@@ -50,16 +55,6 @@
 		.form-group {
 			display: inline-block;
 			margin: 0 8px 8px 0;
-		}
-
-		.container-trash {
-			&.btn {
-				opacity: 0;
-
-				&:focus {
-					opacity: 1;
-				}
-			}
 		}
 	}
 }

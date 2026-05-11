@@ -1,11 +1,16 @@
 @import './variations-nav';
 
 .portlet-asset-list-web {
-	.timeline-item {
-		&:hover .container-trash.btn {
-			opacity: 1;
-		}
+	.asset-filter-builder-add,
+	.asset-filter-builder-remove {
+		min-height: 44px;
+	}
 
+	.asset-filter-builder-remove {
+		min-width: 44px;
+	}
+
+	.timeline-item {
 		.form-group {
 			display: inline-block;
 
@@ -15,16 +20,6 @@
 
 			.field-content:after {
 				overflow: visible;
-			}
-		}
-
-		.container-trash {
-			&.btn {
-				opacity: 0;
-
-				&:focus {
-					opacity: 1;
-				}
 			}
 		}
 	}

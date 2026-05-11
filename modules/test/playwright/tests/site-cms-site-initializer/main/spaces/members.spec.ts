@@ -10,6 +10,10 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import getRandomString from '../../../../utils/getRandomString';
+import {
+	performUserSwitchViaApi,
+	userData,
+} from '../../../../utils/performLogin';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 import {SpaceSummaryPage} from '../pages/SpaceSummaryPage';
 
@@ -117,5 +121,69 @@ test(
 				role: 'Space Content Reviewer',
 				spaceSummaryPage,
 			}));
+	}
+);
+
+test(
+	'A non-admin space member can search members in the space',
+	{tag: '@LPD-58201'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: `Space ${getRandomString()}`,
+			settings: {},
+			type: 'Space',
+		});
+
+		const viewer = await apiHelpers.headlessAdminUser.postUserAccount();
+		const viewerFullName = `${viewer.givenName} ${viewer.familyName}`;
+
+		userData[viewer.alternateName] = {
+			name: viewer.givenName,
+			password: 'test',
+			surname: viewer.familyName,
+		};
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space.externalReferenceCode,
+			viewer.externalReferenceCode
+		);
+
+		const reviewer = await apiHelpers.headlessAdminUser.postUserAccount();
+		const reviewerFullName = `${reviewer.givenName} ${reviewer.familyName}`;
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space.externalReferenceCode,
+			reviewer.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			space.externalReferenceCode,
+			reviewer.externalReferenceCode,
+			['Asset Library Content Reviewer']
+		);
+
+		await performUserSwitchViaApi(page, viewer.alternateName);
+
+		await spaceSummaryPage.goto(space.name);
+		await spaceSummaryPage.viewAllMembersLink.click();
+
+		const searchInput = page.getByPlaceholder('Search for name or email');
+
+		await expect(searchInput).toBeVisible();
+
+		await searchInput.fill(reviewer.givenName);
+
+		const reviewerRow = page
+			.getByRole('listitem')
+			.filter({hasText: reviewerFullName});
+
+		await expect(reviewerRow).toBeVisible();
+		await expect(
+			page.getByRole('listitem').filter({hasText: viewerFullName})
+		).toBeHidden();
+
+		await expect(
+			reviewerRow.getByRole('button', {name: 'Space Content Reviewer'})
+		).toBeHidden();
 	}
 );

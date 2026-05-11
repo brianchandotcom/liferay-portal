@@ -10,6 +10,10 @@ import React from 'react';
 
 import {Picklist} from '../../../../src/main/resources/META-INF/resources/js/common/types/Picklist';
 import StructureFieldSettings from '../../../../src/main/resources/META-INF/resources/js/structure_builder/components/settings/StructureFieldSettings';
+import {
+	Config,
+	initializeConfig,
+} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/config';
 import {State} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 import {Uuid} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Uuid';
 import {
@@ -79,6 +83,13 @@ const DEFAULT_PICKLISTS = [
 	},
 ];
 
+const DEFAULT_CONFIG = {
+	countries: [
+		{a2: 'US', name: 'United States', prefix: '1'},
+		{a2: 'ES', name: 'Spain', prefix: '34'},
+	],
+} as Config;
+
 const MOCK_DISPATCH = jest.fn();
 
 const renderComponent = ({
@@ -91,6 +102,8 @@ const renderComponent = ({
 	uuid?: Uuid;
 } = {}) => {
 	const field = state.structure?.children?.get(uuid) as Field;
+
+	initializeConfig(DEFAULT_CONFIG);
 
 	return render(
 		<MockStateProvider dispatch={MOCK_DISPATCH} state={state}>
@@ -158,7 +171,7 @@ describe('StructureFieldSettings', () => {
 	it('updates searchable configuration', async () => {
 		renderComponent();
 
-		await userEvent.click(screen.getByText('search'));
+		await userEvent.click(screen.getByText('advanced'));
 
 		await userEvent.click(screen.getByLabelText('searchable'));
 
@@ -368,6 +381,166 @@ describe('StructureFieldSettings', () => {
 			},
 			type: 'update-field',
 			uuid: TEXT_FIELD_UUID,
+		});
+	});
+
+	it('updates specific email configuration', async () => {
+		const uuid = getUuid();
+
+		renderComponent({
+			state: {
+				...DEFAULT_STATE,
+				structure: {
+					...DEFAULT_STATE.structure,
+					children: new Map([
+						[
+							uuid,
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'email',
+								}),
+								uuid,
+							},
+						],
+					]),
+				},
+			},
+			uuid,
+		});
+
+		await userEvent.click(
+			screen.getByLabelText('accept-unique-values-only')
+		);
+
+		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
+			settings: {
+				uniqueValues: true,
+			},
+			type: 'update-field',
+			uuid,
+		});
+
+		expect(
+			screen.queryByLabelText('limit-characters')
+		).not.toBeInTheDocument();
+
+		await userEvent.click(screen.getByText('advanced'));
+
+		expect(screen.getAllByText('blocked-domains')).not.toHaveLength(0);
+		expect(screen.getByText('autocomplete')).toBeInTheDocument();
+		expect(screen.getByLabelText('domains')).toBeInTheDocument();
+	});
+
+	it('updates specific phone number configuration', async () => {
+		const uuid = getUuid();
+
+		renderComponent({
+			state: {
+				...DEFAULT_STATE,
+				structure: {
+					...DEFAULT_STATE.structure,
+					children: new Map([
+						[
+							uuid,
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'phone-number',
+								}),
+								uuid,
+							},
+						],
+					]),
+				},
+			},
+			uuid,
+		});
+
+		await userEvent.click(screen.getByLabelText('prefix-type'));
+		await userEvent.click(screen.getByText('fixed'));
+
+		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
+			settings: {
+				fixedCountryCode: 'US',
+				prefixType: 'fixed',
+			},
+			type: 'update-field',
+			uuid,
+		});
+
+		await userEvent.click(
+			screen.getByLabelText('accept-unique-values-only')
+		);
+
+		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
+			settings: {
+				prefixType: 'defined-by-user',
+				uniqueValues: true,
+			},
+			type: 'update-field',
+			uuid,
+		});
+
+		await userEvent.click(screen.getByLabelText('limit-characters'));
+
+		const numberOfCharactersInput = screen.getByLabelText(
+			'maximum-number-of-characters'
+		);
+
+		await userEvent.type(numberOfCharactersInput, '15');
+		fireEvent.blur(numberOfCharactersInput);
+
+		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
+			settings: {
+				maxLength: 15,
+				prefixType: 'defined-by-user',
+				showCounter: true,
+			},
+			type: 'update-field',
+			uuid,
+		});
+	});
+
+	it('updates fixed country code on phone number field', async () => {
+		const uuid = getUuid();
+
+		renderComponent({
+			state: {
+				...DEFAULT_STATE,
+				structure: {
+					...DEFAULT_STATE.structure,
+					children: new Map([
+						[
+							uuid,
+							{
+								...getDefaultField({
+									parent: getUuid(),
+									type: 'phone-number',
+								}),
+								settings: {
+									fixedCountryCode: 'US',
+									prefixType: 'fixed',
+								},
+								uuid,
+							},
+						],
+					]),
+				},
+			},
+			uuid,
+		});
+
+		await userEvent.click(screen.getByLabelText('prefix'));
+		await userEvent.click(screen.getByRole('option', {name: /Spain/}));
+
+		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
+			settings: {
+				fixedCountryCode: 'ES',
+				prefixType: 'fixed',
+			},
+			type: 'update-field',
+			uuid,
 		});
 	});
 

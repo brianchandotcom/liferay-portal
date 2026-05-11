@@ -51,5 +51,3 @@ public class SiteVisitorBehaviorMetricResourceImpl
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:-623990378

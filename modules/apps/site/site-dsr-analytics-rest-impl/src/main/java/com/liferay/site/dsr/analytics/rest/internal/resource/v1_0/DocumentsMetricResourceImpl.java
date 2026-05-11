@@ -53,5 +53,3 @@ public class DocumentsMetricResourceImpl
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:1243811315

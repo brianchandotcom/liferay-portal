@@ -51,5 +51,3 @@ public class MostActiveVisitorsResourceImpl
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:-1247656806

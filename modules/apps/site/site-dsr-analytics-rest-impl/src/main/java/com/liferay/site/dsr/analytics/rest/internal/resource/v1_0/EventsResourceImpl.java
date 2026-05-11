@@ -52,5 +52,3 @@ public class EventsResourceImpl extends BaseEventsResourceImpl {
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:-592800883

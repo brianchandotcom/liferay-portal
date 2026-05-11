@@ -66,5 +66,3 @@ public class SiteHistogramMetricResourceImpl
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:360112903

@@ -52,5 +52,3 @@ public class UserSessionsResourceImpl extends BaseUserSessionsResourceImpl {
 	private Http _http;
 
 }
-
-// LIFERAY-REST-BUILDER-HASH:270762275

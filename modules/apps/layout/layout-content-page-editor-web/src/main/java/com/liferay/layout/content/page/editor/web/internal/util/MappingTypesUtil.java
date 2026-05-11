@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -71,6 +72,24 @@ public class MappingTypesUtil {
 		}
 
 		return mappingTypesJSONArray;
+	}
+
+	public static boolean hasInfoItemCapability(
+		String className, InfoItemServiceRegistry infoItemServiceRegistry,
+		String itemCapabilityKey) {
+
+		for (InfoItemClassDetails infoItemClassDetails :
+				infoItemServiceRegistry.getInfoItemClassDetails(
+					itemCapabilityKey)) {
+
+			if (Objects.equals(
+					infoItemClassDetails.getClassName(), className)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static JSONArray _getMappingFormVariationsJSONArray(

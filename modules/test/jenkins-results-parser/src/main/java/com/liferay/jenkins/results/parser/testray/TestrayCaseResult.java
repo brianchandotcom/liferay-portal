@@ -280,10 +280,18 @@ public class TestrayCaseResult {
 
 		TestrayBuild testrayBuild = getTestrayBuild();
 
+		if (testrayBuild == null) {
+			return null;
+		}
+
 		TestrayProject testrayProject = testrayBuild.getTestrayProject();
 
-		JSONObject componentJSONObject = _jsonObject.optJSONObject(
-			"componentToCaseResult");
+		JSONObject componentJSONObject = null;
+
+		if (_jsonObject != null) {
+			componentJSONObject = _jsonObject.optJSONObject(
+				"componentToCaseResult");
+		}
 
 		if (componentJSONObject != null) {
 			_testrayComponent = testrayProject.getTestrayComponentByID(

@@ -169,6 +169,15 @@ public class ContentSecurityPolicyHTMLRewriterImplTest {
 		Assert.assertTrue(_matches(html, ".*<div id=\"TEST_ID\">.*</div>"));
 	}
 
+	@Test
+	public void testRewriteInlineStylesWithEmptyStyleAttribute() {
+		String html = _rewriteInlineAttributes(
+			"<div id=\"TEST_ID\" style=\"\">Yo!</div>", "TEST_NONCE", false);
+
+		Assert.assertTrue(
+			_matches(html, ".*<div id=\"TEST_ID\">.*Yo!.*</div>.*"));
+	}
+
 	private boolean _matches(String html, String regexp) {
 		Pattern pattern = Pattern.compile(regexp, Pattern.DOTALL);
 

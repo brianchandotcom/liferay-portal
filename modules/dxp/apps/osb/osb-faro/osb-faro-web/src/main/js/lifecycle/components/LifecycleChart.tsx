@@ -2,66 +2,59 @@ import Card from 'shared/components/Card';
 import Label from '@clayui/label';
 import React from 'react';
 import {ButtonWithIcon, Icon, Text} from '@clayui/core';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 import {sub} from 'shared/util/lang';
 
-const stage1 = {
-	description: Liferay.Language.get(
-		'identifies-cold-accounts-showing-early-intent-so-marketing-can-run-targeted-ads.'
-	),
-	metric: {
-		average: 9.8,
+interface ILifecycleStage {
+	accountCount: number;
+	averageDaysInStage: number;
+	description: string;
+	percentage: number;
+	stageType: LifecycleStages;
+}
+
+const STAGES: ILifecycleStage[] = [
+	{
+		accountCount: 13,
+		averageDaysInStage: 9.8,
+		description:
+			'Identifies cold accounts showing early intent so Marketing can run targeted ads.',
 		percentage: 43.6,
-		value: 13
+		stageType: LifecycleStages.AWARE
 	},
-	stageName: Liferay.Language.get('aware')
-};
-
-const stage2 = {
-	description: Liferay.Language.get(
-		'the-buying-committee-is-researching-us.-triggers-warm-call-alerts-to-sales.'
-	),
-	metric: {
-		average: 4.6,
+	{
+		accountCount: 504,
+		averageDaysInStage: 4.6,
+		description:
+			'The buying committee is researching us. Triggers "warm call" alerts to Sales.',
 		percentage: 28.4,
-		value: 64
+		stageType: LifecycleStages.ENGAGED
 	},
-	stageName: Liferay.Language.get('engaged')
-};
-const stage3 = {
-	description: Liferay.Language.get(
-		'active-deal.-automatically-halts-generic-marketing-spend-so-sales-can-work-the-account.'
-	),
-	metric: {
-		average: 4.5,
+	{
+		accountCount: 41,
+		averageDaysInStage: 4.5,
+		description:
+			'Active deal. Automatically halts generic marketing spend so Sales can work the account.',
 		percentage: 18.2,
-		value: 41
+		stageType: LifecycleStages.PIPELINE
 	},
-	stageName: Liferay.Language.get('pipeline')
-};
-
-const stage4 = {
-	description: Liferay.Language.get(
-		'identifies-cold-accounts-showing-early-intent-so-marketing-can-run-targeted-ads.'
-	),
-	metric: {
-		average: 12,
+	{
+		accountCount: 22,
+		averageDaysInStage: 12,
+		description:
+			'Identifies cold accounts showing early intent so Marketing can run targeted ads.',
 		percentage: 9.8,
-		value: 22
+		stageType: LifecycleStages.ONBOARDING
 	},
-	stageName: Liferay.Language.get('onboarding')
-};
-
-const stage5 = {
-	description: Liferay.Language.get(
-		'account-is-healthy-and-realizing-roi.-safe-to-pitch-expansion/add-ons.'
-	),
-	metric: {
-		average: 0,
+	{
+		accountCount: 0,
+		averageDaysInStage: 0,
+		description:
+			'Account is healthy and realizing ROI. Safe to pitch expansion/add-ons.',
 		percentage: 0,
-		value: 0
-	},
-	stageName: Liferay.Language.get('established')
-};
+		stageType: LifecycleStages.ESTABLISHED
+	}
+];
 
 const REFERENCE_BAR_HEIGHT = 136;
 const MIN_BAR_HEIGHT = 4;
@@ -74,43 +67,44 @@ const getBarHeight = (percentage: number, referencePercentage: number) => {
 	);
 };
 
-interface IChartSectionProps {
+const getProgressionPercentage = (current: number, next: number) =>
+	current === 0 ? 0 : Math.round((next / current) * 100);
+
+interface IStageMetricsProps {
+	accountCount: number;
+	averageDaysInStage: number;
 	description: string;
-	metric: {
-		average: number;
-		percentage: number;
-		value: number;
-	};
-	onFilterClick: (lifecycleStage: string) => void;
+	onFilterClick: (stageType: LifecycleStages) => void;
+	percentage: number;
 	referencePercentage: number;
-	stageName: string;
+	stageType: LifecycleStages;
 }
 
-const ChartSection = ({
+const StageMetrics = ({
+	accountCount,
+	averageDaysInStage,
 	description,
-	metric,
 	onFilterClick,
+	percentage,
 	referencePercentage,
-	stageName
-}: IChartSectionProps) => {
-	const barHeight = getBarHeight(metric.percentage, referencePercentage);
+	stageType
+}: IStageMetricsProps) => {
+	const barHeight = getBarHeight(percentage, referencePercentage);
 
-	const barClassName = `${
-		metric.percentage > 0
-			? 'lifecycle-chart-bar'
-			: 'empty-lifecycle-chart-bar'
-	}`;
+	const barClassName =
+		percentage > 0 ? 'stage-metrics__bar' : 'stage-metrics__bar--empty';
+
 	return (
 		<div className='col d-flex flex-column p-3'>
 			<div className='align-items-center d-flex mb-2'>
 				<Text size={4} weight='semi-bold'>
-					{stageName}
+					{Liferay.Language.get(stageType)}
 				</Text>
 				<ButtonWithIcon
 					borderless
 					className='ml-auto'
 					displayType='secondary'
-					onClick={() => onFilterClick(stageName)}
+					onClick={() => onFilterClick(stageType)}
 					size='sm'
 					symbol='filter'
 				/>
@@ -122,7 +116,7 @@ const ChartSection = ({
 				<div>
 					<p className='mb-0'>
 						<Text size={7} weight='bold'>
-							{metric.value}
+							{accountCount}
 						</Text>
 					</p>
 					<Text color='secondary' size={4}>
@@ -131,15 +125,15 @@ const ChartSection = ({
 								Liferay.Language.get(
 									'x-percent-of-all-accounts'
 								),
-								[metric.percentage]
+								[percentage]
 							) as string
 						).toLowerCase()}
 					</Text>
 				</div>
 				<div className='mt-3 text-secondary'>
-					{metric.average != 0 ? (
+					{averageDaysInStage != 0 ? (
 						<>
-							<span className='mr-4'>{`${metric.average}`}</span>
+							<span className='mr-4'>{`${averageDaysInStage}`}</span>
 							<span>
 								{Liferay.Language.get('avg.-day').toLowerCase()}
 							</span>
@@ -169,22 +163,22 @@ const ChartSection = ({
 	);
 };
 
-interface IProgressionSectionProps {
+interface IStageProgressionProps {
 	nextBarHeight: number;
 	percentage: number;
 	previousBarHeight: number;
 }
 
-const ProgressionSection = ({
+const StageProgression = ({
 	nextBarHeight,
 	percentage,
 	previousBarHeight
-}: IProgressionSectionProps) => {
+}: IStageProgressionProps) => {
 	const topLeft = REFERENCE_BAR_HEIGHT - previousBarHeight;
 	const topRight = REFERENCE_BAR_HEIGHT - nextBarHeight;
 
 	return (
-		<div className='border-light d-flex flex-column progression-section px-2 py-3'>
+		<div className='border-light d-flex flex-column px-2 py-3 stage-progression'>
 			<Label className='mt-auto p-0' displayType='info'>
 				<span className='inline-item ml-1'>
 					{`${percentage}%`}
@@ -192,7 +186,7 @@ const ProgressionSection = ({
 				</span>
 			</Label>
 			<div
-				className='bg-light mt-auto mx-n2 trapezium-path'
+				className='bg-light mt-auto mx-n2 stage-progression__fill'
 				style={{
 					clipPath: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
 					height: REFERENCE_BAR_HEIGHT
@@ -202,19 +196,11 @@ const ProgressionSection = ({
 	);
 };
 
-interface IChartProps {
-	lifecycleStages: IChartSectionProps[];
-}
-
 const LifecycleChart = () => {
-	const onFilterClick = (stageName: string) => console.log(stageName);
+	const onFilterClick = (stageType: LifecycleStages) =>
+		console.log(stageType);
 
-	const refPct = stage1.metric.percentage;
-	const h1 = getBarHeight(stage1.metric.percentage, refPct);
-	const h2 = getBarHeight(stage2.metric.percentage, refPct);
-	const h3 = getBarHeight(stage3.metric.percentage, refPct);
-	const h4 = getBarHeight(stage4.metric.percentage, refPct);
-	const h5 = getBarHeight(stage5.metric.percentage, refPct);
+	const refPct = STAGES[0]?.percentage ?? 0;
 
 	return (
 		<Card className='p-3'>
@@ -227,61 +213,40 @@ const LifecycleChart = () => {
 						)}
 					</Text>
 					<div className='h-100 mt-4 no-gutters row'>
-						<ChartSection
-							description={stage1.description}
-							metric={stage1.metric}
-							onFilterClick={onFilterClick}
-							referencePercentage={refPct}
-							stageName={stage1.stageName}
-						/>
-						<ProgressionSection
-							nextBarHeight={h2}
-							percentage={64}
-							previousBarHeight={h1}
-						/>
-						<ChartSection
-							description={stage2.description}
-							metric={stage2.metric}
-							onFilterClick={onFilterClick}
-							referencePercentage={refPct}
-							stageName={stage2.stageName}
-						/>
-						<ProgressionSection
-							nextBarHeight={h3}
-							percentage={64}
-							previousBarHeight={h2}
-						/>
-						<ChartSection
-							description={stage3.description}
-							metric={stage3.metric}
-							onFilterClick={onFilterClick}
-							referencePercentage={refPct}
-							stageName={stage3.stageName}
-						/>
-						<ProgressionSection
-							nextBarHeight={h4}
-							percentage={64}
-							previousBarHeight={h3}
-						/>
-						<ChartSection
-							description={stage4.description}
-							metric={stage4.metric}
-							onFilterClick={onFilterClick}
-							referencePercentage={refPct}
-							stageName={stage4.stageName}
-						/>
-						<ProgressionSection
-							nextBarHeight={h5}
-							percentage={64}
-							previousBarHeight={h4}
-						/>
-						<ChartSection
-							description={stage5.description}
-							metric={stage5.metric}
-							onFilterClick={onFilterClick}
-							referencePercentage={refPct}
-							stageName={stage5.stageName}
-						/>
+						{STAGES.map((stage, index) => {
+							const nextStage = STAGES[index + 1];
+							return (
+								<React.Fragment key={stage.stageType}>
+									<StageMetrics
+										accountCount={stage.accountCount}
+										averageDaysInStage={
+											stage.averageDaysInStage
+										}
+										description={stage.description}
+										onFilterClick={onFilterClick}
+										percentage={stage.percentage}
+										referencePercentage={refPct}
+										stageType={stage.stageType}
+									/>
+									{nextStage && (
+										<StageProgression
+											nextBarHeight={getBarHeight(
+												nextStage.percentage,
+												refPct
+											)}
+											percentage={getProgressionPercentage(
+												stage.accountCount,
+												nextStage.accountCount
+											)}
+											previousBarHeight={getBarHeight(
+												stage.percentage,
+												refPct
+											)}
+										/>
+									)}
+								</React.Fragment>
+							);
+						})}
 					</div>
 				</div>
 			</Card.Body>

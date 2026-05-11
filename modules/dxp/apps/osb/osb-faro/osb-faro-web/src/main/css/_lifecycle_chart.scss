@@ -1,21 +1,23 @@
 @use 'sass:math';
 
-.empty-lifecycle-chart-bar {
-	border: 1px dashed #c7ccdb;
+.stage-metrics {
+	&__bar {
+		background-color: $cadmin-indigo-l2;
+		border-radius: 8px;
+		max-height: 136px;
+
+		&--empty {
+			border: 1px dashed $cadmin-secondary-l2;
+		}
+	}
 }
 
-.lifecycle-chart-bar {
-	border-radius: 8px;
-	max-height: 136px;
-	background-color: #99a3ff;
-}
-
-.progression-section {
+.stage-progression {
 	position: relative;
 
 	&::before,
 	&::after {
-		border-left: 1px dashed #c7ccdb;
+		border-left: 1px dashed $cadmin-secondary-l2;
 		bottom: 1rem;
 		content: '';
 		position: absolute;
@@ -29,6 +31,10 @@
 
 	&::after {
 		right: 0;
+	}
+
+	&__fill {
+		background: $cadmin-light-d1;
 	}
 
 	.label-info {
@@ -45,8 +51,4 @@
 			text-transform: none;
 		}
 	}
-}
-
-.trapezium-path {
-	background: #e2e4ea;
 }

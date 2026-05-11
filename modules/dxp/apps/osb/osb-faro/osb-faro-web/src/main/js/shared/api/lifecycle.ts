@@ -25,14 +25,24 @@ export async function fetchOverviewMetrics({
 	});
 }
 
-export async function fetchLifecycleStages({
-	groupId,
-	lifecycleId
-}: {
+interface IFetchLifecycleStages {
+	country?: string;
 	groupId: string;
+	industry?: string;
 	lifecycleId: string;
-}) {
+}
+
+export async function fetchLifecycleStages({
+	country,
+	groupId,
+	industry,
+	lifecycleId
+}: IFetchLifecycleStages) {
 	return sendRequest({
+		data: {
+			...(country && {country}),
+			...(industry && {industry})
+		},
 		method: 'GET',
 		path: `contacts/${groupId}/account-lifecycle/${lifecycleId}/stages`
 	});

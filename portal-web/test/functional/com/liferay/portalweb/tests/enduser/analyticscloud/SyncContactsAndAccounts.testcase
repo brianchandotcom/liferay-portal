@@ -883,7 +883,7 @@ definition {
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12664 | Test Summary: Check that it is possible to make pagination in the groups"
 	@priority = 3
-	test CheckIsPossiblePaginateGroups {
+	test CheckCanPaginateAcrossEntityTypes {
 		var firstPageList = "AC UserGroup Pagination 1,AC UserGroup Pagination 2,AC UserGroup Pagination 3,AC UserGroup Pagination 4,AC UserGroup Pagination 5";
 		var secondPageList = "AC UserGroup Pagination 6";
 

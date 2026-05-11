@@ -22,9 +22,7 @@ public class FinderPathTest {
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, 0, 0, true, null);
 
-		Assert.assertArrayEquals(
-			"null argsExtractorFunction returns empty Object[]", new Object[0],
-			finderPath.extractArgs(null));
+		Assert.assertArrayEquals(new Object[0], finderPath.extractArgs(null));
 	}
 
 	@Test
@@ -34,9 +32,7 @@ public class FinderPathTest {
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, 0b10, 0b10, true, null);
 
-		Assert.assertEquals(
-			"caseInsensitive + convertNull on null returns \"\"", "",
-			finderPath.normalizeArgument(1, null));
+		Assert.assertEquals("", finderPath.normalizeArgument(1, null));
 	}
 
 	@Test
@@ -46,11 +42,9 @@ public class FinderPathTest {
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "emailAddress"}, 0, 0b10, true, null);
 
+		Assert.assertEquals("", finderPath.normalizeArgument(1, null));
 		Assert.assertEquals(
-			"convertNull on null returns \"\"", "",
-			finderPath.normalizeArgument(1, null));
-		Assert.assertEquals(
-			"convertNull on non-null preserves case", "Alice@example.com",
+			"Alice@example.com",
 			finderPath.normalizeArgument(1, "Alice@example.com"));
 	}
 
@@ -62,7 +56,7 @@ public class FinderPathTest {
 			true);
 
 		Assert.assertEquals(
-			"Date returns getTime() as long", 1_234_567_890L,
+			1_234_567_890L,
 			finderPath.normalizeArgument(0, new Date(1_234_567_890L)));
 	}
 
@@ -74,11 +68,9 @@ public class FinderPathTest {
 			new String[] {"groupId", "name"}, 0b10, 0, true, null);
 
 		Assert.assertEquals(
-			"non-flagged Long passes through", Long.valueOf(123L),
-			finderPath.normalizeArgument(0, 123L));
+			Long.valueOf(123L), finderPath.normalizeArgument(0, 123L));
 		Assert.assertEquals(
-			"caseInsensitive lowercases", "alice",
-			finderPath.normalizeArgument(1, "Alice"));
+			"alice", finderPath.normalizeArgument(1, "Alice"));
 	}
 
 	@Test
@@ -88,9 +80,7 @@ public class FinderPathTest {
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "name"}, true);
 
-		Assert.assertEquals(
-			"default bitmask 0 passes through", "Alice",
-			finderPath.normalizeArgument(1, "Alice"));
+		Assert.assertEquals("Alice", finderPath.normalizeArgument(1, "Alice"));
 	}
 
 }

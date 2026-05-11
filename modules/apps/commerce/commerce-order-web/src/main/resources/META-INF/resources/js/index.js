@@ -5,6 +5,7 @@
 
 export {default as AttachmentsFDSPropsTransformer} from './AttachmentsFDSPropsTransformer';
 export {default as CommerceOrderAttachmentRestrictedDataRenderer} from './CommerceOrderAttachmentRestrictedDataRenderer';
+export {default as CommerceOrderAttachmentTitleDataRenderer} from './CommerceOrderAttachmentTitleDataRenderer';
 export {default as CommerceOrderItemsFDSPropsTransformer} from './CommerceOrderItemsFDSPropsTransformer';
 export {default as CommerceStatusDataRenderer} from './CommerceStatusDataRenderer';
 export {default as addCommerceOrderType} from './addCommerceOrderType';

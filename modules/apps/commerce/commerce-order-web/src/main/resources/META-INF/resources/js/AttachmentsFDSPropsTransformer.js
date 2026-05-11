@@ -7,6 +7,7 @@ import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
 import CommerceOrderAttachmentRestrictedDataRenderer from './CommerceOrderAttachmentRestrictedDataRenderer';
+import CommerceOrderAttachmentTitleDataRenderer from './CommerceOrderAttachmentTitleDataRenderer';
 
 const openDeleteConfirmationModal = ({itemName, loadData, url}) => {
 	openModal({
@@ -79,6 +80,8 @@ const AttachmentsFDSPropsTransformer = (props) => ({
 	customDataRenderers: {
 		commerceOrderAttachmentRestrictedDataRenderer:
 			CommerceOrderAttachmentRestrictedDataRenderer,
+		commerceOrderAttachmentTitleDataRenderer:
+			CommerceOrderAttachmentTitleDataRenderer,
 	},
 	itemsActions: props.itemsActions?.map((action) => {
 		if (action?.data?.id === 'delete') {

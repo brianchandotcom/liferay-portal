@@ -17,7 +17,6 @@ export default function CommerceOrderAttachmentRestrictedDataRenderer({value}) {
 			aria-label={Liferay.Language.get('restricted')}
 			className="text-success"
 			role="img"
-			spritemap={Liferay.Icons.spritemap}
 			symbol="check"
 		/>
 	);

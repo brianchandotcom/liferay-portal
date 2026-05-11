@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Arrays;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
@@ -42,7 +43,7 @@ public class AIHubCellConfigurationModelListenerTest {
 
 		byte[] bytes = Base64.decode(secret);
 
-		Assert.assertEquals(64, bytes.length);
+		Assert.assertEquals(Arrays.toString(bytes), 64, bytes.length);
 	}
 
 }

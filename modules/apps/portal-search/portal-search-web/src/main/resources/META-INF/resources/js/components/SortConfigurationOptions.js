@@ -424,7 +424,8 @@ function SortConfigurationOptions({
 
 						<ClayButton
 							aria-label={Liferay.Language.get('add-option')}
-							className={getCN({
+							borderless
+							className={getCN('input-sets-add', {
 								'c-mt-4': !fields.length,
 							})}
 							displayType="secondary"

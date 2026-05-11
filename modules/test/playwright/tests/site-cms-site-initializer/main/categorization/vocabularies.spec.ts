@@ -547,6 +547,33 @@ test(
 );
 
 test(
+	'Hide an asset-type-restricted vocabulary from content of another asset type',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+
+		const {categoryName} = await createScopedVocabularyAndContent({
+			apiHelpers,
+			assetLibraries: [{id: -1, name: 'All Spaces'}],
+			assetTypes: [{required: false, type: 'BlogPosting'}],
+			contentsPage,
+			page,
+			siteId: site.id,
+		});
+
+		await contentsPage.openSidePanel('Categorization');
+
+		await page.getByPlaceholder('Add category').fill(categoryName);
+
+		await page.waitForTimeout(500);
+
+		await expect(
+			page.getByRole('option', {name: categoryName})
+		).toBeHidden();
+	}
+);
+
+test(
 	'Open categories from the Categories column link',
 	{tag: '@LPD-89497'},
 	async ({apiHelpers, categoriesPage, vocabulariesPage}) => {

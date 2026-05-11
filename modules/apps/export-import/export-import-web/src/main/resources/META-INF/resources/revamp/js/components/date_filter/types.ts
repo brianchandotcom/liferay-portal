@@ -21,26 +21,17 @@ export type DateFilterValues =
 	| {filterType: FilterType.Last; modifiedLast: ModifiedLastType}
 	| {filterType: FilterType.Range; fromDate: string; toDate: string};
 
-export type FilterState = {
-	applied: DateFilterValues;
-	editing: {
-		filterType: FilterType;
-		fromDate: string;
-		modifiedLast: ModifiedLastType;
-		toDate: string;
-	};
-	touchedFields: {
-		fromDate: boolean;
-		toDate: boolean;
-	};
+export type EditingState = {
+	filterType: FilterType;
+	fromDate: string;
+	modifiedLast: ModifiedLastType;
+	toDate: string;
 };
 
-export type FilterAction =
-	| {payload: Partial<FilterState['editing']>; type: 'UPDATE_FILTER'}
-	| {payload: Partial<FilterState['touchedFields']>; type: 'UPDATE_TOUCHED'}
-	| {type: 'SET_TOUCH_ALL'}
-	| {type: 'APPLY'}
-	| {type: 'RESET'};
+export type TouchedFields = {
+	fromDate: boolean;
+	toDate: boolean;
+};
 
 export const YEARS_OFFSET = 10;
 

@@ -7,17 +7,15 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import FieldDatePicker from '../forms/FieldDatePicker';
-import {DATE_FORMAT, FilterState, YEARS_OFFSET} from './types';
+import {DATE_FORMAT, EditingState, TouchedFields, YEARS_OFFSET} from './types';
 import {getValidation} from './utils';
 
 type Props = {
-	editing: FilterState['editing'];
+	editing: EditingState;
 	errors: ReturnType<typeof getValidation>['errors'];
-	handleUpdateFilter: (payload: Partial<FilterState['editing']>) => void;
-	handleUpdateTouched: (
-		payload: Partial<FilterState['touchedFields']>
-	) => void;
-	touchedFields: FilterState['touchedFields'];
+	handleUpdateFilter: (payload: Partial<EditingState>) => void;
+	handleUpdateTouched: (payload: Partial<TouchedFields>) => void;
+	touchedFields: TouchedFields;
 };
 
 const DateRangeFields = ({

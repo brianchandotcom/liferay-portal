@@ -2268,3 +2268,73 @@ test(
 		).toBeHidden();
 	}
 );
+
+test(
+	"All section lists only content from the current user's Spaces",
+	{tag: '@LPD-76453'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const space1 = await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+			{
+				name: `Space ${getRandomString()}`,
+				settings: {},
+				type: 'Space',
+			}
+		);
+
+		const space2 = await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+			{
+				name: `Space ${getRandomString()}`,
+				settings: {},
+				type: 'Space',
+			}
+		);
+
+		const insideTitle = getRandomString();
+		const outsideTitle = getRandomString();
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: insideTitle,
+			},
+			'cms/basic-web-contents',
+			space1.name
+		);
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: outsideTitle,
+			},
+			'cms/basic-web-contents',
+			space2.name
+		);
+
+		const viewer = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[viewer.alternateName] = {
+			name: viewer.givenName,
+			password: 'test',
+			surname: viewer.familyName,
+		};
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			space1.externalReferenceCode,
+			viewer.externalReferenceCode
+		);
+
+		await performUserSwitchViaApi(page, viewer.alternateName);
+
+		await assetsPage.gotoAll();
+
+		await expect(assetsPage.getItem(insideTitle)).toBeVisible();
+		await expect(assetsPage.getItem(outsideTitle)).toBeHidden();
+
+		await test.step("Search results are scoped to the viewer's Spaces", async () => {
+			await assetsPage.dataSetFragmentPage.search(outsideTitle);
+
+			await expect(assetsPage.getItem(insideTitle)).toBeHidden();
+			await expect(assetsPage.getItem(outsideTitle)).toBeHidden();
+		});
+	}
+);

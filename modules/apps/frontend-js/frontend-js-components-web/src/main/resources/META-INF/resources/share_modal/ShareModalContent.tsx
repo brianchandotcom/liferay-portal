@@ -372,7 +372,9 @@ export default function ShareModalContent({
 	initialCollaborators: Collaborator[];
 	itemId: number;
 	onAutocompleteChange?: (item: AutocompleteItem | undefined) => void;
-	permissionOptions: PermissionOption[];
+	permissionOptions:
+		| PermissionOption[]
+		| ((collaborator: Collaborator) => PermissionOption[]);
 	renderAutocompleteItem?: (props: {
 		type: CollaboratorType;
 		user: ShareModalUserAccount | ShareModalUserGroup;
@@ -657,7 +659,12 @@ export default function ShareModalContent({
 										key={`listItem-${item.type}-${item.user.id}`}
 										onChangeUser={handleChangeUser}
 										onRemoveUser={handleRemoveUser}
-										permissionOptions={permissionOptions}
+										permissionOptions={
+											typeof permissionOptions ===
+											'function'
+												? permissionOptions(item)
+												: permissionOptions
+										}
 										renderCollaboratorBadge={
 											renderCollaboratorBadge
 										}

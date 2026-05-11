@@ -63,9 +63,11 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 				exact: true,
 				name: menuItemName,
 			});
-		this.creationMenuNewButton = page.locator(
-			'[data-testid="fdsCreationActionButton"]'
-		);
+		this.creationMenuNewButton = page
+			.locator(
+				'#_com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet_fm'
+			)
+			.locator('[data-testid="fdsCreationActionButton"]');
 		this.managementToolbarItemLink = (productName: string) =>
 			page.getByRole('link', {exact: true, name: productName});
 		this.managementToolbarSearchInput = page

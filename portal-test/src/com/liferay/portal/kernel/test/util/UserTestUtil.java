@@ -207,6 +207,28 @@ public class UserTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	public static User addUser(Company company, String password)
+		throws Exception {
+
+		User user = getAdminUser(company.getCompanyId());
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			company.getCompanyId(), GroupConstants.GUEST);
+
+		String emailAddress =
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com";
+
+		return addUser(
+			company.getCompanyId(), user.getUserId(), password, emailAddress,
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	public static User addUser(long... groupIds) throws Exception {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

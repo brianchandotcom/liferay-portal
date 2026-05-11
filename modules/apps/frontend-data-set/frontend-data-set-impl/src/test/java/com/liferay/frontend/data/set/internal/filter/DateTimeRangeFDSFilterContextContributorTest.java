@@ -81,6 +81,18 @@ public class DateTimeRangeFDSFilterContextContributorTest {
 		Assert.assertEquals(59, maxJSONObject.getInt("minute"));
 	}
 
+	@Test
+	public void testGetFDSFilterContextSerializesNowAsString() {
+		Map<String, Object> context =
+			_dateTimeRangeFDSFilterContextContributor.getFDSFilterContext(
+				new TestDateTimeRangeFDSFilter(
+					new DateTimeFDSFilterItem(1, 1, 2026, 0, 0),
+					DateTimeFDSFilterItem.NOW),
+				LocaleUtil.US);
+
+		Assert.assertEquals("now", context.get("max"));
+	}
+
 	private DateTimeRangeFDSFilterContextContributor
 		_dateTimeRangeFDSFilterContextContributor;
 

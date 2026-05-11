@@ -1,11 +1,19 @@
+import * as API from 'shared/api';
 import Card from 'shared/components/Card';
+import classNames from 'classnames';
 import Label from '@clayui/label';
+import Loading from 'shared/components/Loading';
 import React from 'react';
 import {ButtonWithIcon, Icon, Text} from '@clayui/core';
-import {LifecycleStages} from 'contacts/pages/account/utils/constants';
+import {
+	LifecycleStages,
+	lifecycleStagesLabelMap
+} from 'contacts/pages/account/utils/constants';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
 import {useLifecycle} from 'lifecycle/context/LifecycleContext';
+import {useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 interface ILifecycleStage {
 	accountCount: number;
@@ -15,48 +23,19 @@ interface ILifecycleStage {
 	stageType: LifecycleStages;
 }
 
-const STAGES: ILifecycleStage[] = [
-	{
-		accountCount: 13,
-		averageDaysInStage: 9.8,
-		description:
-			'Identifies cold accounts showing early intent so Marketing can run targeted ads.',
-		percentage: 43.6,
-		stageType: LifecycleStages.AWARE
-	},
-	{
-		accountCount: 504,
-		averageDaysInStage: 4.6,
-		description:
-			'The buying committee is researching us. Triggers "warm call" alerts to Sales.',
-		percentage: 28.4,
-		stageType: LifecycleStages.ENGAGED
-	},
-	{
-		accountCount: 41,
-		averageDaysInStage: 4.5,
-		description:
-			'Active deal. Automatically halts generic marketing spend so Sales can work the account.',
-		percentage: 18.2,
-		stageType: LifecycleStages.PIPELINE
-	},
-	{
-		accountCount: 22,
-		averageDaysInStage: 12,
-		description:
-			'Identifies cold accounts showing early intent so Marketing can run targeted ads.',
-		percentage: 9.8,
-		stageType: LifecycleStages.ONBOARDING
-	},
-	{
-		accountCount: 0,
-		averageDaysInStage: 0,
-		description:
-			'Account is healthy and realizing ROI. Safe to pitch expansion/add-ons.',
-		percentage: 0,
-		stageType: LifecycleStages.ESTABLISHED
-	}
-];
+const EMPTY_STAGES: ILifecycleStage[] = [
+	LifecycleStages.AWARE,
+	LifecycleStages.ENGAGED,
+	LifecycleStages.PIPELINE,
+	LifecycleStages.ONBOARDING,
+	LifecycleStages.ESTABLISHED
+].map(stageType => ({
+	accountCount: 0,
+	averageDaysInStage: 0,
+	description: '',
+	percentage: 0,
+	stageType
+}));
 
 const REFERENCE_BAR_HEIGHT = 136;
 const MIN_BAR_HEIGHT = 4;
@@ -76,6 +55,7 @@ interface IStageMetricsProps {
 	accountCount: number;
 	averageDaysInStage: number;
 	description: string;
+	empty?: boolean;
 	onFilterClick: (stageType: LifecycleStages) => void;
 	percentage: number;
 	referencePercentage: number;
@@ -86,6 +66,7 @@ const StageMetrics = ({
 	accountCount,
 	averageDaysInStage,
 	description,
+	empty,
 	onFilterClick,
 	percentage,
 	referencePercentage,
@@ -100,9 +81,10 @@ const StageMetrics = ({
 		<div className='col-12 col-lg d-flex flex-column p-3 stage-metrics'>
 			<div className='align-items-center d-flex mb-2'>
 				<Text size={4} weight='semi-bold'>
-					{Liferay.Language.get(stageType)}
+					{lifecycleStagesLabelMap[stageType].label}
 				</Text>
 				<ButtonWithIcon
+					aria-labelledby='title'
 					borderless
 					className='ml-auto'
 					displayType='secondary'
@@ -156,22 +138,26 @@ const StageMetrics = ({
 				className='align-items-end d-none d-lg-flex mt-3 mx-n2'
 				style={{height: REFERENCE_BAR_HEIGHT}}
 			>
-				<div
-					className={`${barClassName} rounded-lg w-100`}
-					style={{height: barHeight}}
-				/>
+				{!empty && (
+					<div
+						className={`${barClassName} rounded-lg w-100`}
+						style={{height: barHeight}}
+					/>
+				)}
 			</div>
 		</div>
 	);
 };
 
 interface IStageProgressionProps {
+	empty?: boolean;
 	nextBarHeight: number;
 	percentage: number;
 	previousBarHeight: number;
 }
 
 const StageProgression = ({
+	empty,
 	nextBarHeight,
 	percentage,
 	previousBarHeight
@@ -193,9 +179,17 @@ const StageProgression = ({
 				</span>
 			</Label>
 			<div
-				className='bg-light d-none d-lg-block mt-auto mx-n2 stage-progression__fill'
+				className={classNames([
+					'd-none',
+					'd-lg-block',
+					'mt-auto',
+					'mx-n2',
+					empty ? '' : 'bg-light stage-progression__fill'
+				])}
 				style={{
-					clipPath: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
+					clipPath: empty
+						? undefined
+						: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
 					height: REFERENCE_BAR_HEIGHT
 				}}
 			/>
@@ -206,10 +200,30 @@ const StageProgression = ({
 const LifecycleChart = () => {
 	const {updateFilters} = useLifecycle();
 
+	const {groupId} = useParams();
+
+	const {
+		data: stagesData,
+		error,
+		loading
+	} = useRequest({
+		dataSourceFn: API.lifecycle.fetchLifecycleStages as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
+		variables: {
+			groupId,
+			lifecycleId: '1'
+		}
+	});
+
+	const isEmpty = error || !stagesData?.length;
+
+	const stages: ILifecycleStage[] = isEmpty ? EMPTY_STAGES : stagesData;
+
 	const onFilterClick = (stageType: LifecycleStages) =>
 		updateFilters({lifecycleStageFilter: stageType});
 
-	const refPct = STAGES[0]?.percentage ?? 0;
+	const refPct = stages[0]?.percentage ?? 0;
 
 	return (
 		<>
@@ -228,42 +242,50 @@ const LifecycleChart = () => {
 								'the-distribution-of-accounts-across-the-lifecycle-stages-within-the-timeframe.'
 							)}
 						</Text>
-						<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
-							{STAGES.map((stage, index) => {
-								const nextStage = STAGES[index + 1];
-								return (
-									<React.Fragment key={stage.stageType}>
-										<StageMetrics
-											accountCount={stage.accountCount}
-											averageDaysInStage={
-												stage.averageDaysInStage
-											}
-											description={stage.description}
-											onFilterClick={onFilterClick}
-											percentage={stage.percentage}
-											referencePercentage={refPct}
-											stageType={stage.stageType}
-										/>
-										{nextStage && (
-											<StageProgression
-												nextBarHeight={getBarHeight(
-													nextStage.percentage,
-													refPct
-												)}
-												percentage={getProgressionPercentage(
-													stage.accountCount,
-													nextStage.accountCount
-												)}
-												previousBarHeight={getBarHeight(
-													stage.percentage,
-													refPct
-												)}
+						{loading ? (
+							<Loading className='mt-4' />
+						) : (
+							<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
+								{stages.map((stage, index) => {
+									const nextStage = stages[index + 1];
+									return (
+										<React.Fragment key={stage.stageType}>
+											<StageMetrics
+												accountCount={
+													stage.accountCount
+												}
+												averageDaysInStage={
+													stage.averageDaysInStage
+												}
+												description={stage.description}
+												empty={isEmpty}
+												onFilterClick={onFilterClick}
+												percentage={stage.percentage}
+												referencePercentage={refPct}
+												stageType={stage.stageType}
 											/>
-										)}
-									</React.Fragment>
-								);
-							})}
-						</div>
+											{nextStage && (
+												<StageProgression
+													empty={isEmpty}
+													nextBarHeight={getBarHeight(
+														nextStage.percentage,
+														refPct
+													)}
+													percentage={getProgressionPercentage(
+														stage.accountCount,
+														nextStage.accountCount
+													)}
+													previousBarHeight={getBarHeight(
+														stage.percentage,
+														refPct
+													)}
+												/>
+											)}
+										</React.Fragment>
+									);
+								})}
+							</div>
+						)}
 					</div>
 				</Card.Body>
 			</Card>

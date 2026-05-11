@@ -212,7 +212,7 @@ public class RoutesPortalK8sConfigMapModifierTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

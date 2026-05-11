@@ -65,7 +65,6 @@ import java.io.FileWriter;
 import java.io.Writer;
 
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -80,6 +79,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -283,14 +283,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testDataCleanupMessages() throws Exception {
-		Thread currentThread = Thread.currentThread();
-
 		long randomCompanyId = RandomTestUtil.nextLong();
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PortalClassLoaderUtil.class, "_classLoader",
-					currentThread.getContextClassLoader());
+					Thread.currentThread(
+					).getContextClassLoader());
 			Connection connection = DataAccess.getConnection()) {
 
 			_db.runSQL(
@@ -381,19 +380,11 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				_appender, "_upgradeReport");
 
 			ReflectionTestUtil.setFieldValue(
-				upgradeReport, "_dlSizeThread",
-				new Thread() {
+				upgradeReport, "_dlSizeCallable",
+				(Callable<Long>)() -> {
+					Thread.sleep(5 * Time.SECOND);
 
-					@Override
-					public void run() {
-						try {
-							sleep(5 * Time.SECOND);
-						}
-						catch (InterruptedException interruptedException) {
-							throw new RuntimeException(interruptedException);
-						}
-					}
-
+					return 0L;
 				});
 
 			_appender.stop();
@@ -432,16 +423,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeThread",
-			new Thread() {
-
-				@Override
-				public void run() {
-					ReflectionTestUtil.setFieldValue(
-						upgradeReport, "_dlSize", 1073742000);
-				}
-
-			});
+			upgradeReport, "_dlSizeCallable",
+			(Callable<Long>)() -> 1073742000L);
 
 		_appender.stop();
 
@@ -459,16 +442,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender, "_upgradeReport");
 
 		ReflectionTestUtil.setFieldValue(
-			upgradeReport, "_dlSizeThread",
-			new Thread() {
-
-				@Override
-				public void run() {
-					ReflectionTestUtil.setFieldValue(
-						upgradeReport, "_dlSize", 1048576);
-				}
-
-			});
+			upgradeReport, "_dlSizeCallable", (Callable<Long>)() -> 1048576L);
 
 		_appender.stop();
 
@@ -504,9 +478,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		_appender.stop();
 
-		RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
-
-		List<String> inputArguments = runtimeMXBean.getInputArguments();
+		List<String> inputArguments = ManagementFactory.getRuntimeMXBean(
+		).getInputArguments();
 
 		_assertLogContext(
 			"upgrade.report.jvm.arguments", inputArguments.get(0));
@@ -667,12 +640,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			longestUpgradeProcessesValue.contains(
 				belowThresholdUpgradeProcessName));
 
-		int index1 = longestUpgradeProcessesValue.indexOf(
+		int slowerIndex = longestUpgradeProcessesValue.indexOf(
 			slowerUpgradeProcessClassName);
-		int index2 = longestUpgradeProcessesValue.indexOf(
+		int fasterIndex = longestUpgradeProcessesValue.indexOf(
 			fasterUpgradeProcessClassName);
 
-		Assert.assertTrue(index1 < index2);
+		Assert.assertTrue(slowerIndex < fasterIndex);
 	}
 
 	@Test
@@ -712,9 +685,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void testNoLogEvents() throws Exception {
 		_appender.start();
 
-		Object upgradeReport = ReflectionTestUtil.getFieldValue(
-			_appender, "_upgradeReport");
-
 		_appender.stop();
 
 		_assertLogContextDiagnostics("upgrade.report.errors", "[]");
@@ -726,6 +696,10 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		_assertLogContextDiagnostics("upgrade.report.warnings", "[]");
 		_assertReportDiagnostics("Errors: Nothing registered");
 		_assertReportDiagnostics("Failed sqls: Nothing registered");
+
+		Object upgradeReport = ReflectionTestUtil.getFieldValue(
+			_appender, "_upgradeReport");
+
 		_assertReportDiagnostics(
 			String.format(
 				"Top %d longest running SQLs above %d milliseconds: Nothing " +
@@ -767,25 +741,24 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		File file = new File(
 			new File(getFilePath(), "reports"), "upgrade_report.txt");
 
-		Assert.assertTrue(!file.exists());
+		Assert.assertFalse(file.exists());
 
 		file = new File(
 			new File(getFilePath(), "reports"),
 			"upgrade_report_diagnostics.txt");
 
-		Assert.assertTrue(!file.exists());
+		Assert.assertFalse(file.exists());
 	}
 
 	@Test
 	public void testPostUpgradeDataCleanupMessages() throws Exception {
-		Thread currentThread = Thread.currentThread();
-
 		ClassName className = null;
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PortalClassLoaderUtil.class, "_classLoader",
-					currentThread.getContextClassLoader());
+					Thread.currentThread(
+					).getContextClassLoader());
 			Connection connection = DataAccess.getConnection()) {
 
 			String value = "com.liferay.test." + RandomTestUtil.randomString();

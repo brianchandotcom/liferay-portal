@@ -75,6 +75,7 @@ import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
@@ -197,9 +198,8 @@ public class UpgradeReport {
 
 		List<MessagesPrinter> messagesPrinters = new ArrayList<>();
 
-		List<Map.Entry<String, Map<String, Integer>>> list = new ArrayList<>();
-
-		list.addAll(map1.entrySet());
+		List<Map.Entry<String, Map<String, Integer>>> list = new ArrayList<>(
+			map1.entrySet());
 
 		ListUtil.sort(
 			list,
@@ -207,18 +207,19 @@ public class UpgradeReport {
 				Map.Entry.comparingByValue(
 					Comparator.comparingInt(Map::size))));
 
-		for (Map.Entry<String, Map<String, Integer>> entry1 : list) {
+		for (Map.Entry<String, Map<String, Integer>> entry : list) {
 			MessagesPrinter messagesPrinter = new MessagesPrinter(
-				entry1.getKey());
+				entry.getKey());
 
 			messagesPrinters.add(messagesPrinter);
 
-			Map<String, Integer> map2 = entry1.getValue();
+			for (Map.Entry<String, Integer> messageEntry :
+					entry.getValue(
+					).entrySet()) {
 
-			for (Map.Entry<String, Integer> entry2 : map2.entrySet()) {
 				messagesPrinter.addMessagePrinter(
-					entry2.getKey(),
-					includeOccurrences ? entry2.getValue() : null);
+					messageEntry.getKey(),
+					includeOccurrences ? messageEntry.getValue() : null);
 			}
 		}
 
@@ -389,8 +390,22 @@ public class UpgradeReport {
 							"\"rootDir\" was not set";
 					}
 
+					File rootDirFile = new File(_rootDir);
+
+					if (!rootDirFile.isDirectory()) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Unable to determine the document library " +
+									"size. Directory does not exist: " +
+										_rootDir);
+						}
+
+						return "Unable to determine. Directory does not exist";
+					}
+
 					FutureTask<Long> dlSizeFutureTask = new FutureTask<>(
-						() -> FileUtils.sizeOfDirectory(new File(_rootDir)));
+						(_dlSizeCallable != null) ? _dlSizeCallable :
+							() -> FileUtils.sizeOfDirectory(rootDirFile));
 
 					try {
 						Thread dlSizeThread = new Thread(
@@ -894,14 +909,14 @@ public class UpgradeReport {
 		}
 	}
 
-	private void _printToLogContext(Map.Entry<String, Object> entry1) {
-		Object value = entry1.getValue();
+	private void _printToLogContext(Map.Entry<String, Object> entry) {
+		Object value = entry.getValue();
 
 		if (value == null) {
 			return;
 		}
 
-		String key = "upgrade.report." + entry1.getKey();
+		String key = "upgrade.report." + entry.getKey();
 
 		if (value instanceof List<?>) {
 			StringBundler sb = new StringBundler(StringPool.OPEN_BRACKET);
@@ -948,10 +963,10 @@ public class UpgradeReport {
 		else if (value instanceof Map<?, ?>) {
 			Map<?, ?> map = (Map<?, ?>)value;
 
-			for (Map.Entry<?, ?> entry2 : map.entrySet()) {
+			for (Map.Entry<?, ?> mapEntry : map.entrySet()) {
 				ThreadContext.put(
-					key + StringPool.PERIOD + entry2.getKey(),
-					String.valueOf(entry2.getValue()));
+					key + StringPool.PERIOD + mapEntry.getKey(),
+					String.valueOf(mapEntry.getValue()));
 			}
 		}
 		else {
@@ -967,8 +982,8 @@ public class UpgradeReport {
 		_logContext = true;
 
 		try {
-			for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
-				_printToLogContext(entry1);
+			for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+				_printToLogContext(entry);
 			}
 		}
 		finally {
@@ -981,14 +996,14 @@ public class UpgradeReport {
 
 		StringBundler sb = new StringBundler();
 
-		for (Map.Entry<String, Object> entry1 : reportData.entrySet()) {
-			Object value = entry1.getValue();
+		for (Map.Entry<String, Object> entry : reportData.entrySet()) {
+			Object value = entry.getValue();
 
 			if (value == null) {
 				continue;
 			}
 
-			String key = entry1.getKey();
+			String key = entry.getKey();
 
 			if (value instanceof Collection<?>) {
 				String reportHeader = _getReportHeader(key);
@@ -1018,11 +1033,11 @@ public class UpgradeReport {
 			else if (value instanceof Map<?, ?>) {
 				Map<?, ?> map = (Map<?, ?>)value;
 
-				for (Map.Entry<?, ?> entry2 : map.entrySet()) {
+				for (Map.Entry<?, ?> mapEntry : map.entrySet()) {
 					sb.append(
 						_getReportLine(
-							key + StringPool.PERIOD + entry2.getKey(),
-							entry2.getValue()));
+							key + StringPool.PERIOD + mapEntry.getKey(),
+							mapEntry.getValue()));
 					sb.append(StringPool.NEW_LINE);
 				}
 			}
@@ -1085,6 +1100,7 @@ public class UpgradeReport {
 	private static final Snapshot<ReleaseManager> _releaseManagerSnapshot =
 		new Snapshot<>(UpgradeReport.class, ReleaseManager.class);
 
+	private Callable<Long> _dlSizeCallable;
 	private String _executionDateString;
 	private String _executionTimeString;
 	private final int _initialBuildNumber;

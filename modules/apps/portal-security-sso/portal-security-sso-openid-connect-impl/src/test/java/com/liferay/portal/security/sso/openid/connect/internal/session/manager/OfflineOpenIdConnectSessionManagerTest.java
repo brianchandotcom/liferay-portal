@@ -517,8 +517,8 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		ReflectionTestUtil.invoke(
 			new OfflineOpenIdConnectSessionManager(),
 			"_updateOpenIdConnectSessionIdToken",
-			new Class<?>[] {OpenIdConnectSession.class, String.class},
-			openIdConnectSession, idTokenString);
+			new Class<?>[] {String.class, OpenIdConnectSession.class},
+			idTokenString, openIdConnectSession);
 
 		Mockito.verify(
 			openIdConnectSession
@@ -549,8 +549,8 @@ public class OfflineOpenIdConnectSessionManagerTest {
 		ReflectionTestUtil.invoke(
 			new OfflineOpenIdConnectSessionManager(),
 			"_updateOpenIdConnectSessionIdToken",
-			new Class<?>[] {OpenIdConnectSession.class, String.class},
-			openIdConnectSession, null);
+			new Class<?>[] {String.class, OpenIdConnectSession.class}, null,
+			openIdConnectSession);
 
 		Mockito.verifyNoInteractions(openIdConnectSession);
 	}

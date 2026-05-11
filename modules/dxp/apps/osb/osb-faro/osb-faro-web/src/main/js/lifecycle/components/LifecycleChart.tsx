@@ -1,10 +1,10 @@
-import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import Label from '@clayui/label';
 import Loading from 'shared/components/Loading';
 import React from 'react';
 import {ButtonWithIcon, Icon, Text} from '@clayui/core';
+import {ILifecycleStage} from 'lifecycle/utils/types';
 import {
 	LifecycleStages,
 	lifecycleStagesLabelMap
@@ -12,16 +12,6 @@ import {
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {sub} from 'shared/util/lang';
 import {useLifecycle} from 'lifecycle/context/LifecycleContext';
-import {useParams} from 'react-router-dom';
-import {useRequest} from 'shared/hooks/useRequest';
-
-interface ILifecycleStage {
-	accountCount: number;
-	averageDaysInStage: number;
-	description: string;
-	percentage: number;
-	stageType: LifecycleStages;
-}
 
 const EMPTY_STAGES: ILifecycleStage[] = [
 	LifecycleStages.AWARE,
@@ -55,9 +45,9 @@ interface IStageMetricsProps {
 	accountCount: number;
 	averageDaysInStage: number;
 	description: string;
-	empty?: boolean;
 	onFilterClick: (stageType: LifecycleStages) => void;
 	percentage: number;
+	placeholder?: boolean;
 	referencePercentage: number;
 	stageType: LifecycleStages;
 }
@@ -66,9 +56,9 @@ const StageMetrics = ({
 	accountCount,
 	averageDaysInStage,
 	description,
-	empty,
 	onFilterClick,
 	percentage,
+	placeholder,
 	referencePercentage,
 	stageType
 }: IStageMetricsProps) => {
@@ -77,14 +67,16 @@ const StageMetrics = ({
 	const barClassName =
 		percentage > 0 ? 'stage-metrics__bar' : 'stage-metrics__bar--empty';
 
+	const titleId = `stage-metrics-title-${stageType}`;
+
 	return (
 		<div className='col-12 col-lg d-flex flex-column p-3 stage-metrics'>
 			<div className='align-items-center d-flex mb-2'>
-				<Text size={4} weight='semi-bold'>
+				<Text id={titleId} size={4} weight='semi-bold'>
 					{lifecycleStagesLabelMap[stageType].label}
 				</Text>
 				<ButtonWithIcon
-					aria-labelledby='title'
+					aria-labelledby={titleId}
 					borderless
 					className='ml-auto'
 					displayType='secondary'
@@ -138,7 +130,7 @@ const StageMetrics = ({
 				className='align-items-end d-none d-lg-flex mt-3 mx-n2'
 				style={{height: REFERENCE_BAR_HEIGHT}}
 			>
-				{!empty && (
+				{!placeholder && (
 					<div
 						className={`${barClassName} rounded-lg w-100`}
 						style={{height: barHeight}}
@@ -150,16 +142,16 @@ const StageMetrics = ({
 };
 
 interface IStageProgressionProps {
-	empty?: boolean;
 	nextBarHeight: number;
 	percentage: number;
+	placeholder?: boolean;
 	previousBarHeight: number;
 }
 
 const StageProgression = ({
-	empty,
 	nextBarHeight,
 	percentage,
+	placeholder,
 	previousBarHeight
 }: IStageProgressionProps) => {
 	const topLeft = REFERENCE_BAR_HEIGHT - previousBarHeight;
@@ -184,10 +176,10 @@ const StageProgression = ({
 					'd-lg-block',
 					'mt-auto',
 					'mx-n2',
-					empty ? '' : 'bg-light stage-progression__fill'
+					placeholder ? '' : 'bg-light stage-progression__fill'
 				])}
 				style={{
-					clipPath: empty
+					clipPath: placeholder
 						? undefined
 						: `polygon(0 ${topLeft}px, 100% ${topRight}px, 100% 100%, 0 100%)`,
 					height: REFERENCE_BAR_HEIGHT
@@ -197,33 +189,27 @@ const StageProgression = ({
 	);
 };
 
-const LifecycleChart = () => {
+interface ILifecycleChartProps {
+	error?: boolean;
+	loading?: boolean;
+	stages?: ILifecycleStage[];
+}
+
+const LifecycleChart = ({
+	error,
+	loading,
+	stages
+}: ILifecycleChartProps) => {
 	const {updateFilters} = useLifecycle();
 
-	const {groupId} = useParams();
+	const isEmpty = error || !stages?.length;
 
-	const {
-		data: stagesData,
-		error,
-		loading
-	} = useRequest({
-		dataSourceFn: API.lifecycle.fetchLifecycleStages as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
-		variables: {
-			groupId,
-			lifecycleId: '1'
-		}
-	});
-
-	const isEmpty = error || !stagesData?.length;
-
-	const stages: ILifecycleStage[] = isEmpty ? EMPTY_STAGES : stagesData;
+	const resolvedStages: ILifecycleStage[] = isEmpty ? EMPTY_STAGES : stages!;
 
 	const onFilterClick = (stageType: LifecycleStages) =>
 		updateFilters({lifecycleStageFilter: stageType});
 
-	const refPct = stages[0]?.percentage ?? 0;
+	const refPct = resolvedStages[0]?.percentage ?? 0;
 
 	return (
 		<>
@@ -246,8 +232,8 @@ const LifecycleChart = () => {
 							<Loading className='mt-4' />
 						) : (
 							<div className='flex-lg-nowrap h-100 mt-4 no-gutters row'>
-								{stages.map((stage, index) => {
-									const nextStage = stages[index + 1];
+								{resolvedStages.map((stage, index) => {
+									const nextStage = resolvedStages[index + 1];
 									return (
 										<React.Fragment key={stage.stageType}>
 											<StageMetrics
@@ -258,15 +244,14 @@ const LifecycleChart = () => {
 													stage.averageDaysInStage
 												}
 												description={stage.description}
-												empty={isEmpty}
 												onFilterClick={onFilterClick}
 												percentage={stage.percentage}
+												placeholder={isEmpty}
 												referencePercentage={refPct}
 												stageType={stage.stageType}
 											/>
 											{nextStage && (
 												<StageProgression
-													empty={isEmpty}
 													nextBarHeight={getBarHeight(
 														nextStage.percentage,
 														refPct
@@ -275,6 +260,7 @@ const LifecycleChart = () => {
 														stage.accountCount,
 														nextStage.accountCount
 													)}
+													placeholder={isEmpty}
 													previousBarHeight={getBarHeight(
 														stage.percentage,
 														refPct

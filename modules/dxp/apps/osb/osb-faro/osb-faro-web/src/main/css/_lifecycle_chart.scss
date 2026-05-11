@@ -39,7 +39,7 @@
 		background: $cadmin-light-d1;
 	}
 
-	@media (max-width: 991.98px) {
+	@include media-breakpoint-down(md) {
 		&::before {
 			border-bottom: 1px dashed $cadmin-secondary-l2;
 			border-left: none;

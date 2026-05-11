@@ -1,11 +1,12 @@
-import {method} from 'lodash';
 import sendRequest from 'shared/util/request';
+
+export const DEFAULT_LIFECYCLE_ID = '1';
 
 interface IFetchOverviewMetrics {
 	country?: string;
 	groupId: string;
 	industry?: string;
-	lifecycleId: number;
+	lifecycleId: string;
 }
 
 export async function fetchOverviewMetrics({

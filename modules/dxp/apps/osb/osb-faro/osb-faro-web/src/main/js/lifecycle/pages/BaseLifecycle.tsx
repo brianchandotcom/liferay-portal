@@ -28,11 +28,37 @@ const LifecycleOverview = () => {
 			country: filters.countryFilter,
 			groupId,
 			industry: filters.industryFilter,
-			lifecycleId: 1
+			lifecycleId: API.lifecycle.DEFAULT_LIFECYCLE_ID
 		}
 	});
 
 	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
+};
+
+const LifecycleStagesSection = () => {
+	const {groupId} = useParams();
+
+	const {
+		data: stagesData,
+		error: stagesError,
+		loading: stagesLoading
+	} = useRequest({
+		dataSourceFn: API.lifecycle.fetchLifecycleStages as (params: {
+			[key: string]: any;
+		}) => Promise<any>,
+		variables: {
+			groupId,
+			lifecycleId: API.lifecycle.DEFAULT_LIFECYCLE_ID
+		}
+	});
+
+	return (
+		<LifecycleChart
+			error={stagesError}
+			loading={stagesLoading}
+			stages={stagesData}
+		/>
+	);
 };
 
 const LifecycleAccounts = () => {
@@ -91,7 +117,7 @@ const BaseLifecycle = () => {
 				<BasePage.Body>
 					<LifecycleOverview />
 
-					<LifecycleChart />
+					<LifecycleStagesSection />
 
 					<LifecycleAccounts />
 				</BasePage.Body>

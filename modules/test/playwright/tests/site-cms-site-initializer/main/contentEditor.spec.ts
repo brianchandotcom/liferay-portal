@@ -1616,6 +1616,19 @@ test(
 
 		await structureBuilderPage.publishStructure();
 
+		// Verify the embedded structure renders in the customize editor
+
+		await structureBuilderPage.customizeEditor();
+
+		await expect(
+			page.locator('.lfr-layout-structure-item-basic-component-accordion')
+		).toBeVisible();
+
+		await page
+			.locator('.management-bar')
+			.getByRole('link', {name: 'Back'})
+			.click();
+
 		// Go to CMS Contents
 
 		await contentsPage.goto();

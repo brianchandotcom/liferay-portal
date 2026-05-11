@@ -1,6 +1,7 @@
 import {
 	formatPlanData,
 	getPlanAddOns,
+	getPlanLabel,
 	getPropIcon,
 	getPropLabel,
 	INDIVIDUALS,
@@ -52,6 +53,24 @@ describe('subscriptions', () => {
 			);
 
 			expect(planAddOns).toEqual({});
+		});
+	});
+
+	describe('getPlanLabel', () => {
+		it('should return the label for the Liferay Data Platform plan', () => {
+			expect(getPlanLabel(SubscriptionNames.LiferayDataPlatform)).toEqual(
+				'Liferay Data Platform'
+			);
+		});
+
+		it('should return the label for the Liferay Data Platform Enterprise plan', () => {
+			expect(
+				getPlanLabel(SubscriptionNames.LiferayDataPlatformEnterprise)
+			).toEqual('Liferay Data Platform Enterprise');
+		});
+
+		it('should return an empty string for an unknown plan', () => {
+			expect(getPlanLabel('something-unknown')).toEqual('');
 		});
 	});
 

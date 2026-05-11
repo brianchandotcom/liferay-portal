@@ -14,6 +14,10 @@ export class OrderDetailsPage {
 	readonly discountNotApplicableError: Locator;
 	readonly editButton: Locator;
 	readonly enterPromoCodeInput: Locator;
+	readonly minimumOrderAmountWarning: (
+		minAmount: string,
+		additionalAmount: string
+	) => Locator;
 	readonly notesButton: Locator;
 	readonly orderTotal: (amount: string) => Locator;
 	readonly page: Page;
@@ -48,6 +52,14 @@ export class OrderDetailsPage {
 		);
 		this.editButton = page.getByRole('button', {name: 'Edit'});
 		this.enterPromoCodeInput = page.getByPlaceholder('Enter Promo Code');
+		this.minimumOrderAmountWarning = (
+			minAmount: string,
+			additionalAmount: string
+		) =>
+			page.getByText(
+				`The minimum order amount is ${minAmount}. This order needs an additional ${additionalAmount} to meet the requirement.`,
+				{exact: false}
+			);
 		this.notesButton = page.locator('span[title="Notes"] a');
 		this.orderTotal = (amount: string) => page.getByText(amount).first();
 		this.page = page;

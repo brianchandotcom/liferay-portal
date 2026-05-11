@@ -39,6 +39,9 @@ export class EditAccountChannelDefaultsPage {
 		value: number | string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly defaultShippingOptionsTableRowActiveCell: (
+		channelName: string
+	) => Promise<Locator>;
 	readonly defaultShippingOptionsTableRowAction: (
 		action: string,
 		channelName: string
@@ -57,6 +60,7 @@ export class EditAccountChannelDefaultsPage {
 	readonly modalRadioLabels: Locator;
 	readonly modalSaveButton: Locator;
 	readonly page: Page;
+	readonly usePrioritySettingsCell: Locator;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
 	readonly setDefaultAddressFrameChannelDropdownOptions: Locator;
 	readonly setDefaultBillingAddressFrameBillingAddressDropdownMenu: Locator;
@@ -164,6 +168,19 @@ export class EditAccountChannelDefaultsPage {
 				strictEqual
 			);
 		};
+		this.defaultShippingOptionsTableRowActiveCell = async (
+			channelName: string
+		) => {
+			const shippingOptionsTableRow =
+				await this.defaultShippingOptionsTableRow(0, channelName, true);
+
+			if (shippingOptionsTableRow && shippingOptionsTableRow.column) {
+				return shippingOptionsTableRow.row.getByRole('cell').nth(3);
+			}
+			throw new Error(
+				`Cannot locate shipping option row with name ${channelName}`
+			);
+		};
 		this.defaultShippingOptionsTableRowAction = async (
 			action: string,
 			channelName: string
@@ -208,6 +225,9 @@ export class EditAccountChannelDefaultsPage {
 		this.modalSaveButton = this.modalContainer.getByRole('button', {
 			name: 'Save',
 		});
+		this.usePrioritySettingsCell = this.defaultShippingOptionsTable
+			.getByText('Use Priority Settings')
+			.first();
 		this.setDefaultAddressFrameChannelDropdownMenu =
 			this.modalContainer.getByLabel('Channel');
 		this.setDefaultAddressFrameChannelDropdownOptions =

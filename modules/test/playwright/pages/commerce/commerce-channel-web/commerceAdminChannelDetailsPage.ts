@@ -110,6 +110,9 @@ export class CommerceAdminChannelDetailsPage {
 		navItem: string,
 		tableName: string
 	) => Promise<Locator>;
+	readonly sidePanelFrameDeleteMenuItem: (
+		tableName: string
+	) => Promise<Locator>;
 	readonly sidePanelFrameEditMenuItem: (
 		tableName: string
 	) => Promise<Locator>;
@@ -421,6 +424,12 @@ export class CommerceAdminChannelDetailsPage {
 				exact: true,
 				name: navItem,
 			});
+		};
+		this.sidePanelFrameDeleteMenuItem = async (tableName: string) => {
+			return (await this.sidePanelFrame(tableName)).getByRole(
+				'menuitem',
+				{name: 'Delete'}
+			);
 		};
 		this.sidePanelFrameEditMenuItem = async (tableName: string) => {
 			return (await this.sidePanelFrame(tableName)).getByRole(

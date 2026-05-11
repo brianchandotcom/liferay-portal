@@ -9,6 +9,7 @@ import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly acceptOrderButton: Locator;
+	readonly addressFieldText: (value: string) => Locator;
 	readonly cancelButton: Locator;
 	readonly checkoutButton: Locator;
 	readonly commerceOrderAccountEntryName: Locator;
@@ -48,11 +49,14 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderSummarySaveButton: Locator;
 	readonly orderSummarySubtotal: Locator;
 	readonly orderSummarySubtotalInput: Locator;
+	readonly firstTransactionTimestampCell: Locator;
 	readonly page: Page;
+	readonly paymentMethodName: Locator;
 	readonly paymentMethodRadioButton: (
 		paymentMethod: string
 	) => Promise<Locator>;
 	readonly paymentStatusText: (status: string) => Locator;
+	readonly transactionsTable: Locator;
 	readonly recalculateButton: Locator;
 	readonly recalculateOrderSummaryModalTitle: Locator;
 	readonly recalculateOrderSummaryModalCancelButton: Locator;
@@ -73,6 +77,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			exact: true,
 			name: 'Accept Order',
 		});
+		this.addressFieldText = (value: string) => page.getByText(value);
 		this.cancelButton = page.getByRole('link', {
 			exact: true,
 			name: 'Cancel',
@@ -172,6 +177,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			{exact: true}
 		);
 		this.page = page;
+		this.paymentMethodName = page.locator('.payment-name');
 		this.paymentMethodRadioButton = async (paymentMethod: string) => {
 			return this.editPaymentMethodFrame
 				.locator('li')
@@ -180,6 +186,18 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		};
 		this.paymentStatusText = (status: string) =>
 			page.getByText(status).first();
+		this.transactionsTable = page.getByRole('table').filter({
+			has: page.getByRole('columnheader', {
+				exact: true,
+				name: 'Timestamp',
+			}),
+		});
+		this.firstTransactionTimestampCell = this.transactionsTable
+			.locator('tbody')
+			.getByRole('row')
+			.first()
+			.getByRole('cell')
+			.nth(2);
 		this.recalculateButton = page
 			.getByText('Order Summary')
 			.getByRole('link', {name: 'Recalculate'});

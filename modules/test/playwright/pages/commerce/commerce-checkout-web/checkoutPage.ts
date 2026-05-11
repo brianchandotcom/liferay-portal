@@ -54,6 +54,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly orderItemsTabLink: Locator;
 	readonly orderItemsTableLocator: Locator;
 	readonly orderSuccessMessage: Locator;
+	readonly noDefaultBillingAddressError: Locator;
 	readonly orderSummaryTableRow: (
 		colPosition: number,
 		value: number | string,
@@ -165,6 +166,10 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		);
 		this.orderSuccessMessage = page.getByText(
 			'Success! Your order has been processed.'
+		);
+		this.noDefaultBillingAddressError = page.getByText(
+			'No default billing address has been created for this account',
+			{exact: false}
 		);
 		this.orderSummaryTableRow = async (
 			colPosition: number,

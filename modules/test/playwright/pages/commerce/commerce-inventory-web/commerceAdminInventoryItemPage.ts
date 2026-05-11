@@ -18,7 +18,10 @@ export class CommerceAdminInventoryItemPage {
 	readonly modalFrameLocator: FrameLocator;
 	readonly modalQuantityInput: Locator;
 	readonly modalSubmitButton: Locator;
+	readonly onOrderRowText: (value: string) => Locator;
+	readonly onOrderTab: Locator;
 	readonly page: Page;
+	readonly searchInput: Locator;
 	readonly sidePanelDateInput: Locator;
 	readonly sidePanelFrameLocator: FrameLocator;
 	readonly sidePanelQuantityInput: Locator;
@@ -54,6 +57,15 @@ export class CommerceAdminInventoryItemPage {
 			exact: true,
 			name: 'Incoming',
 		});
+		this.onOrderRowText = (value: string) =>
+			page.locator('table').getByText(value, {exact: false});
+		this.onOrderTab = page.getByRole('link', {
+			exact: true,
+			name: 'On Order',
+		});
+		this.searchInput = page
+			.getByTestId('managementToolbar')
+			.getByRole('searchbox', {name: 'Search'});
 		this.inventoryByWarehouseTable = page.locator('.fds table');
 		this.modalFrameLocator = page.frameLocator('.fds-modal-body iframe');
 		this.modalDateInput = this.modalFrameLocator.locator(

@@ -20,6 +20,7 @@ import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
+import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
 
@@ -52,6 +53,7 @@ export default function ContentEditorToolbar({
 	const [showPreview, setShowPreview] = useState<boolean>(false);
 	const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
+	const localizationLanguageId = useLocalizationLanguageId();
 	const previewButtonRef = useRef<HTMLButtonElement>(null);
 
 	const optionsTitle = hasWorkflow
@@ -348,6 +350,7 @@ export default function ContentEditorToolbar({
 			{showPreviewModal ? (
 				<PreviewModal
 					getPreviewDataURL={getPreviewDataURL}
+					languageId={localizationLanguageId}
 					onCloseModal={() => setShowPreviewModal(false)}
 					title={title}
 				/>

@@ -17,6 +17,7 @@ import {
 import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
 import useIsContentEdited from './useIsContentEdited';
+import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 import '../../../css/content_editor/ContentEditorPreview.scss';
 
@@ -44,6 +45,7 @@ export default function ContentEditorPreview({
 	const previewRef = useRef<HTMLDivElement>(null);
 	const sidePanelBarRef = useRef<HTMLElement | null>(null);
 
+	const localizationLanguageId = useLocalizationLanguageId();
 	const previewWidthMax = useObservedMaxWidth(previewRef);
 	const previewWidth = Math.min(previewWidthMax, resizeWidth!);
 	const titleId = useId();
@@ -129,6 +131,7 @@ export default function ContentEditorPreview({
 					<PreviewBody
 						getPreviewDataURL={getPreviewDataURL}
 						isContentEdited={isContentEdited}
+						languageId={localizationLanguageId}
 					/>
 				</>
 			) : null}

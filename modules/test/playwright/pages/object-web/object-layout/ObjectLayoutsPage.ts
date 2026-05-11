@@ -172,13 +172,10 @@ export class ObjectLayoutsPage {
 		await this.saveTabButton.click();
 	}
 
-	async createObjectRelationshipTab(
-		objectLayoutName: string,
+	async addRelationshipTab(
 		objectLayoutTabName: string,
 		relationshipField: string
 	) {
-		await this.openObjectLayoutConfiguration(objectLayoutName);
-
 		await this.addTab.click();
 
 		await this.iframeLocator
@@ -188,13 +185,24 @@ export class ObjectLayoutsPage {
 
 		await this.relationshipType.click();
 
-		await this.fieldList.fill(relationshipField);
+		await this.fieldList.click();
 
 		await this.iframeLocator
 			.getByRole('option', {name: relationshipField})
+			.first()
 			.click();
 
 		await this.saveTabButton.click();
+	}
+
+	async createObjectRelationshipTab(
+		objectLayoutName: string,
+		objectLayoutTabName: string,
+		relationshipField: string
+	) {
+		await this.openObjectLayoutConfiguration(objectLayoutName);
+
+		await this.addRelationshipTab(objectLayoutTabName, relationshipField);
 
 		await this.saveUpdateLayoutButton.click();
 	}

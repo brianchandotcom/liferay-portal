@@ -27,7 +27,6 @@ import {OnDemandAdminPage} from '../pages/users-admin-web/OnDemandAdminPage';
 import {OrganizationUsersPage} from '../pages/users-admin-web/OrganizationUsersPage';
 import {PersonalMenuInstanceSettingsPage} from '../pages/users-admin-web/PersonalMenuInstanceSettingsPage';
 import {PersonalMenuPage} from '../pages/users-admin-web/PersonalMenuPage';
-import {SMTPMockServerPage} from '../pages/users-admin-web/SMTPMockServerPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
 import {TeamsPage} from '../pages/users-admin-web/TeamsPage';
 import {UserLoginPage} from '../pages/users-admin-web/UserLoginPage';
@@ -57,7 +56,6 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	siteMembershipsPage: SiteMembershipsPage;
 	siteSettingsPage: SiteSettingsPage;
 	sitesAdminPage: SitesAdminPage;
-	smtpMockServerPage: SMTPMockServerPage;
 	tagsEditPage: TagsEditPage;
 	teamsPage: TeamsPage;
 	userAssociatedDataAnnouncementPage: UserAssociatedDataAnnouncementPage;
@@ -122,9 +120,6 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	sitesAdminPage: async ({page}, use) => {
 		await use(new SitesAdminPage(page));
-	},
-	smtpMockServerPage: async ({page}, use) => {
-		await use(new SMTPMockServerPage(page));
 	},
 	tagsEditPage: async ({page}, use) => {
 		await use(new TagsEditPage(page));

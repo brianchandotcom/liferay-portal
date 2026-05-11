@@ -10,8 +10,8 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
+import {smtpPagesTest} from '../../../fixtures/smtpPagesTest';
 import {liferayConfig} from '../../../liferay.config';
-import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -28,7 +28,8 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	formsPagesTest,
 	loginTest(),
-	objectPagesTest
+	objectPagesTest,
+	smtpPagesTest
 );
 
 test.afterEach(async ({formsPage}) => {
@@ -1421,6 +1422,7 @@ test(
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
+		mockMockPage,
 		page,
 	}) => {
 		const objectDefinition =
@@ -1471,50 +1473,24 @@ test(
 
 		await formBuilderPage.clickPublishFormButton();
 
-		const mockMockPage = await page.context().newPage();
-		const emailNotificationPage = new EmailNotificationPage(mockMockPage);
+		await mockMockPage.deleteAll();
 
-		try {
-			await emailNotificationPage.goto();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
-			if (await emailNotificationPage.deleteAllLink.isVisible()) {
-				await emailNotificationPage.deleteAllLink.click();
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-				await expect(
-					emailNotificationPage.noEmailsInQueueMessage
-				).toBeVisible();
-			}
+		await page.getByLabel('Text').fill('Entry test');
 
-			const formSubmissionURL =
-				await formBuilderPage.getFormSubmissionURL();
+		await page.getByRole('button', {name: 'Save'}).click();
 
-			await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+		await expect(
+			page.getByText('Your request completed successfully.')
+		).toBeVisible();
 
-			await page.getByLabel('Text').fill('Entry test');
-
-			await page.getByRole('button', {name: 'Save'}).click();
-
-			await expect(
-				page.getByText('Your request completed successfully.')
-			).toBeVisible();
-
-			await emailNotificationPage.page.reload();
-
-			await expect(
-				emailNotificationPage.emailSubjectLink('Form Subject')
-			).toBeVisible({timeout: 15000});
-
-			await emailNotificationPage
-				.emailSubjectLink('Form Subject')
-				.click();
-
-			await expect(
-				emailNotificationPage.emailBodyText('Entry test')
-			).toBeVisible();
-		}
-		finally {
-			await mockMockPage.close();
-		}
+		await mockMockPage.assertEmail({
+			body: 'Entry test',
+			subject: 'Form Subject',
+		});
 	}
 );
 

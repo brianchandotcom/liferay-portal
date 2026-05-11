@@ -8,8 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {smtpPagesTest} from '../../../fixtures/smtpPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
-import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -18,13 +18,17 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	instanceSettingsPagesTest,
 	loginTest(),
+	smtpPagesTest,
 	usersAndOrganizationsPagesTest
 );
 
-let emailNotificationPage: EmailNotificationPage;
-
 test.beforeEach(
-	async ({emailInstanceSettingsPage, instanceSettingsPage, page}) => {
+	async ({
+		emailInstanceSettingsPage,
+		instanceSettingsPage,
+		mockMockPage,
+		page,
+	}) => {
 		await emailInstanceSettingsPage.goToEmailSender();
 
 		await emailInstanceSettingsPage.senderAddressInput.fill(
@@ -36,25 +40,12 @@ test.beforeEach(
 
 		await page.waitForLoadState('networkidle');
 
-		const mockMockPage = await page.context().newPage();
-
-		emailNotificationPage = new EmailNotificationPage(mockMockPage);
-
-		await emailNotificationPage.goto();
-
-		if (await emailNotificationPage.deleteAllLink.isVisible()) {
-			await emailNotificationPage.deleteAllLink.click();
-			await expect(
-				emailNotificationPage.noEmailsInQueueMessage
-			).toBeVisible();
-		}
+		await mockMockPage.deleteAll();
 	}
 );
 
 test.afterEach(
 	async ({emailInstanceSettingsPage, instanceSettingsPage, page}) => {
-		await emailNotificationPage.page.close();
-
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await emailInstanceSettingsPage.goToEmailSender();
@@ -74,6 +65,7 @@ test(
 	async ({
 		emailInstanceSettingsPage,
 		instanceSettingsPage,
+		mockMockPage,
 		page,
 		usersAndOrganizationsPage,
 	}) => {
@@ -100,11 +92,9 @@ test(
 
 			await waitForAlert(page, 'The user was created successfully.');
 
-			await emailNotificationPage.page.reload();
+			await mockMockPage.page.reload();
 
-			await expect(
-				emailNotificationPage.noEmailsInQueueMessage
-			).toBeVisible();
+			await expect(mockMockPage.noEmailsInQueueMessage).toBeVisible();
 		}
 		finally {
 			await emailInstanceSettingsPage.goToAccountCreatedNotification();
@@ -119,7 +109,7 @@ test(
 test(
 	'Can view account created email with password setup link',
 	{tag: ['@LPD-81993', '@LPS-176074', '@LPS-85534']},
-	async ({page, usersAndOrganizationsPage}) => {
+	async ({mockMockPage, page, usersAndOrganizationsPage}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -136,26 +126,17 @@ test(
 
 		await waitForAlert(page, 'The user was created successfully.');
 
-		await emailNotificationPage.page.reload();
-
-		await expect(
-			emailNotificationPage.emailSubjectLink('Your New Account')
-		).toBeVisible({timeout: 10000});
-
-		await emailNotificationPage
-			.emailSubjectLink('Your New Account')
-			.click();
-
-		await expect(
-			emailNotificationPage.emailBodyText(userName)
-		).toBeVisible();
+		await mockMockPage.assertEmail({
+			subject: 'Your New Account',
+			to: userName,
+		});
 	}
 );
 
 test(
 	'Can view password changed notification email',
 	{tag: ['@LPD-81993', '@LPS-176074', '@LRQA-68315']},
-	async ({editUserPage, page, usersAndOrganizationsPage}) => {
+	async ({editUserPage, mockMockPage, page, usersAndOrganizationsPage}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -195,26 +176,17 @@ test(
 
 		await waitForAlert(page);
 
-		await emailNotificationPage.page.reload();
-
-		await expect(
-			emailNotificationPage.emailSubjectLink('Password Has Been Changed')
-		).toBeVisible({timeout: 10000});
-
-		await emailNotificationPage
-			.emailSubjectLink('Password Has Been Changed')
-			.click();
-
-		await expect(
-			emailNotificationPage.emailBodyText(userName)
-		).toBeVisible();
+		await mockMockPage.assertEmail({
+			body: userName,
+			subject: 'Password Has Been Changed',
+		});
 	}
 );
 
 test(
 	'Can view password reset notification email',
 	{tag: ['@LPD-81993', '@LPS-176074', '@LRQA-68316']},
-	async ({page, userLoginPage, usersAndOrganizationsPage}) => {
+	async ({mockMockPage, page, userLoginPage, usersAndOrganizationsPage}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -246,26 +218,23 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible({timeout: 10000});
 
-		await emailNotificationPage.page.reload();
-
-		await expect(
-			emailNotificationPage.emailSubjectLink('Reset Your Password')
-		).toBeVisible({timeout: 10000});
-
-		await emailNotificationPage
-			.emailSubjectLink('Reset Your Password')
-			.click();
-
-		await expect(
-			emailNotificationPage.emailBodyText(userName)
-		).toBeVisible();
+		await mockMockPage.assertEmail({
+			body: userName,
+			subject: 'Reset Your Password',
+		});
 	}
 );
 
 test(
 	'Can change password via password reset link',
 	{tag: '@LPD-81993'},
-	async ({browser, page, userLoginPage, usersAndOrganizationsPage}) => {
+	async ({
+		browser,
+		mockMockPage,
+		page,
+		userLoginPage,
+		usersAndOrganizationsPage,
+	}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -297,14 +266,10 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible({timeout: 10000});
 
-		await emailNotificationPage.page.reload();
-
-		await emailNotificationPage
-			.emailSubjectLink('Reset Your Password')
-			.click();
+		await mockMockPage.assertEmail({subject: 'Reset Your Password'});
 
 		const resetLinkHref =
-			await emailNotificationPage.getEmailBodyLinkHref('update_password');
+			await mockMockPage.getEmailBodyLinkHref('update_password');
 
 		expect(resetLinkHref).toContain('update_password');
 
@@ -331,7 +296,13 @@ test(
 test(
 	'Error message displays when passwords do not match in reset link',
 	{tag: ['@LPD-81993', '@LPS-60180']},
-	async ({browser, page, userLoginPage, usersAndOrganizationsPage}) => {
+	async ({
+		browser,
+		mockMockPage,
+		page,
+		userLoginPage,
+		usersAndOrganizationsPage,
+	}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -363,14 +334,10 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible({timeout: 10000});
 
-		await emailNotificationPage.page.reload();
-
-		await emailNotificationPage
-			.emailSubjectLink('Reset Your Password')
-			.click();
+		await mockMockPage.assertEmail({subject: 'Reset Your Password'});
 
 		const resetLinkHref =
-			await emailNotificationPage.getEmailBodyLinkHref('update_password');
+			await mockMockPage.getEmailBodyLinkHref('update_password');
 
 		const resetContext = await browser.newContext();
 		const resetPage = await resetContext.newPage();
@@ -397,7 +364,13 @@ test(
 test(
 	'Language changed without redirect on password reset page',
 	{tag: ['@LPD-81993', '@LPS-145025']},
-	async ({browser, page, userLoginPage, usersAndOrganizationsPage}) => {
+	async ({
+		browser,
+		mockMockPage,
+		page,
+		userLoginPage,
+		usersAndOrganizationsPage,
+	}) => {
 		const userName = `user${getRandomString()}`;
 
 		await usersAndOrganizationsPage.goToUsers();
@@ -429,14 +402,10 @@ test(
 			page.getByText('Your request completed successfully.')
 		).toBeVisible({timeout: 10000});
 
-		await emailNotificationPage.page.reload();
-
-		await emailNotificationPage
-			.emailSubjectLink('Reset Your Password')
-			.click();
+		await mockMockPage.assertEmail({subject: 'Reset Your Password'});
 
 		const resetLinkHref =
-			await emailNotificationPage.getEmailBodyLinkHref('update_password');
+			await mockMockPage.getEmailBodyLinkHref('update_password');
 
 		const resetContext = await browser.newContext();
 		const resetPage = await resetContext.newPage();

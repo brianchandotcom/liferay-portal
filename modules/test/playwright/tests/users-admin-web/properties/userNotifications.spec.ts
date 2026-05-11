@@ -9,9 +9,9 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {smtpPagesTest} from '../../../fixtures/smtpPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {liferayConfig} from '../../../liferay.config';
-import {EmailNotificationPage} from '../../../pages/users-admin-web/EmailNotificationPage';
 import {UserRegistrationPage} from '../../../pages/users-admin-web/UserRegistrationPage';
 import {SiteSettingsPage} from '../../../pages/users-admin-web/site-admin-web/SiteSettingsPage';
 import getRandomString from '../../../utils/getRandomString';
@@ -29,6 +29,7 @@ const test = mergeTests(
 	}),
 	instanceSettingsPagesTest,
 	loginTest(),
+	smtpPagesTest,
 	usersAndOrganizationsPagesTest
 );
 
@@ -39,6 +40,7 @@ test(
 		apiHelpers,
 		emailInstanceSettingsPage,
 		instanceSettingsPage,
+		mockMockPage,
 		page,
 		userLoginPage,
 	}) => {
@@ -68,17 +70,7 @@ test(
 
 		await page.waitForLoadState('networkidle');
 
-		const mockMockPage = await page.context().newPage();
-		const emailNotificationPage = new EmailNotificationPage(mockMockPage);
-
-		await emailNotificationPage.goto();
-
-		if (await emailNotificationPage.deleteAllLink.isVisible()) {
-			await emailNotificationPage.deleteAllLink.click();
-			await expect(
-				emailNotificationPage.noEmailsInQueueMessage
-			).toBeVisible();
-		}
+		await mockMockPage.deleteAll();
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -101,26 +93,12 @@ test(
 
 			await page.waitForLoadState('networkidle');
 
-			await emailNotificationPage.page.reload();
-
-			await expect(
-				emailNotificationPage
-					.emailSubjectLink('Email Address Verification')
-					.first()
-			).toBeVisible({timeout: 10000});
-
-			await emailNotificationPage
-				.emailSubjectLink('Email Address Verification')
-				.first()
-				.click();
-
-			await expect(
-				emailNotificationPage.emailBodyText(user.givenName)
-			).toBeVisible();
+			await mockMockPage.assertEmail({
+				subject: 'Email Address Verification',
+				to: user.givenName,
+			});
 		}
 		finally {
-			await mockMockPage.close();
-
 			await page.context().clearCookies();
 			await performLoginViaApi({page, screenName: 'test'});
 
@@ -154,6 +132,7 @@ test(
 		apiHelpers,
 		emailInstanceSettingsPage,
 		instanceSettingsPage,
+		mockMockPage,
 		page,
 	}) => {
 		await instanceSettingsPage.goToInstanceSetting(
@@ -178,17 +157,7 @@ test(
 
 		await page.waitForLoadState('networkidle');
 
-		const mockMockPage = await page.context().newPage();
-		const emailNotificationPage = new EmailNotificationPage(mockMockPage);
-
-		await emailNotificationPage.goto();
-
-		if (await emailNotificationPage.deleteAllLink.isVisible()) {
-			await emailNotificationPage.deleteAllLink.click();
-			await expect(
-				emailNotificationPage.noEmailsInQueueMessage
-			).toBeVisible();
-		}
+		await mockMockPage.deleteAll();
 
 		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: `Site${getRandomString()}`,
@@ -251,24 +220,12 @@ test(
 				await registrationContext.close();
 			}
 
-			await emailNotificationPage.page.reload();
-
-			await expect(
-				emailNotificationPage.emailSubjectLink('www.able.com').first()
-			).toBeVisible({timeout: 10000});
-
-			await emailNotificationPage
-				.emailSubjectLink('www.able.com')
-				.first()
-				.click();
-
-			await expect(
-				emailNotificationPage.emailBodyText('www.able.com')
-			).toBeVisible();
+			await mockMockPage.assertEmail({
+				body: 'www.able.com',
+				subject: 'www.able.com',
+			});
 		}
 		finally {
-			await mockMockPage.close();
-
 			await emailInstanceSettingsPage.goToEmailSender();
 
 			await emailInstanceSettingsPage.senderAddressInput.fill(

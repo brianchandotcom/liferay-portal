@@ -5,9 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
@@ -15,9 +13,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -151,14 +146,8 @@ public class ViewVocabulariesDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			_putAll(
-				ExportImportUtil.getActionItemJSONObject(
-					_httpServletRequest, "export-import-vocabularies",
-					AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN,
-					_themeDisplay),
-				ExportImportUtil.getActionItemJSONObject(
-					_httpServletRequest, "export-import-tags",
-					AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, _themeDisplay))
+			ExportImportUtil.getCategorizationActionItemsJSONArray(
+				_httpServletRequest, _themeDisplay)
 		).put(
 			"activeTab", "vocabularies"
 		).put(
@@ -195,18 +184,6 @@ public class ViewVocabulariesDisplayContext {
 		}
 
 		return url;
-	}
-
-	private JSONArray _putAll(JSONObject... jsonObjects) {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (JSONObject jsonObject : jsonObjects) {
-			if (jsonObject != null) {
-				jsonArray.put(jsonObject);
-			}
-		}
-
-		return jsonArray;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

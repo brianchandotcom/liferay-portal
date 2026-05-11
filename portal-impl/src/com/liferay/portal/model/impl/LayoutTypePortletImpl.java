@@ -79,7 +79,9 @@ import java.util.Set;
  * @author Jorge Ferrer
  * @author Raymond Augé
  * @author Neil Griffin
+ * @deprecated As of Cavanaugh (7.4.x), replaced by Content Pages
  */
+@Deprecated
 public class LayoutTypePortletImpl
 	extends LayoutTypeImpl implements LayoutTypePortlet {
 

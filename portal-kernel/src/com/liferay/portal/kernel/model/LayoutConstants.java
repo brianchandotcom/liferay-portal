@@ -32,6 +32,10 @@ public class LayoutConstants {
 
 	public static final String TYPE_EMPTY = "empty";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #TYPE_CONTENT}
+	 */
+	@Deprecated
 	public static final String TYPE_FULL_PAGE_APPLICATION =
 		"full_page_application";
 
@@ -39,8 +43,16 @@ public class LayoutConstants {
 
 	public static final String TYPE_NODE = "node";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #TYPE_CONTENT}
+	 */
+	@Deprecated
 	public static final String TYPE_PANEL = "panel";
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #TYPE_CONTENT}
+	 */
+	@Deprecated
 	public static final String TYPE_PORTLET = "portlet";
 
 	public static final String TYPE_URL = "url";

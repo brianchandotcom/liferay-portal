@@ -64,10 +64,7 @@ const createScopedVocabularyAndContent = async ({
 
 	await contentsPage.publishButton.click();
 
-	const content = page.locator('.table-list-title a', {hasText: title});
-
-	await content.waitFor();
-	await content.click();
+	await page.locator('.table-list-title a', {hasText: title}).click();
 };
 
 test(

@@ -10,6 +10,10 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
+import {
+	performUserSwitchViaApi,
+	userData,
+} from '../../../../utils/performLogin';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -323,6 +327,48 @@ test(
 		await page.getByRole('menuitem', {name: 'Disconnect'}).click();
 
 		await expect(globalSiteLocator).not.toBeVisible();
+	}
+);
+
+test(
+	'Space member without assign-members permission cannot see the Add Members button',
+	{tag: '@LPD-89584'},
+	async ({apiHelpers, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const userFullName = `${user.givenName} ${user.familyName}`;
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.addUserOrUserGroup(userFullName, 'users');
+
+		await performUserSwitchViaApi(
+			spaceSummaryPage.page,
+			user.alternateName
+		);
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await spaceSummaryPage.usersTab.click();
+
+		await expect(spaceSummaryPage.addMembersButton).toBeHidden();
+
+		await spaceSummaryPage.userGroupsTab.click();
+
+		await expect(spaceSummaryPage.addMembersButton).toBeHidden();
 	}
 );
 

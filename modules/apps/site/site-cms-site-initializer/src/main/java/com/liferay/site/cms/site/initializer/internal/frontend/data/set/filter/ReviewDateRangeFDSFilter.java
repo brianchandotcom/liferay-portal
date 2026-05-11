@@ -6,8 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
-import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
-import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
+import com.liferay.frontend.data.set.filter.BaseDateTimeRangeFDSFilter;
+import com.liferay.frontend.data.set.filter.DateTimeFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FDSFilter.class
 )
-public class ReviewDateRangeFDSFilter extends BaseDateRangeFDSFilter {
+public class ReviewDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -50,17 +50,18 @@ public class ReviewDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 	}
 
 	@Override
-	public DateFDSFilterItem getMaxDateFDSFilterItem() {
+	public DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem() {
 		Calendar calendar = Calendar.getInstance();
 
-		return new DateFDSFilterItem(
+		return new DateTimeFDSFilterItem(
 			calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR));
+			calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.YEAR),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE));
 	}
 
 	@Override
-	public DateFDSFilterItem getMinDateFDSFilterItem() {
-		return new DateFDSFilterItem(0, 0, 0);
+	public DateTimeFDSFilterItem getMinDateTimeFDSFilterItem() {
+		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
 	}
 
 }

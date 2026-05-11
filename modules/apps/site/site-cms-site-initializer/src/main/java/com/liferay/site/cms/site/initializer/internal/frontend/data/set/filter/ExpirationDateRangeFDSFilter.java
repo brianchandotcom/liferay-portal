@@ -6,8 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
-import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
-import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
+import com.liferay.frontend.data.set.filter.BaseDateTimeRangeFDSFilter;
+import com.liferay.frontend.data.set.filter.DateTimeFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = FDSFilter.class
 )
-public class ExpirationDateRangeFDSFilter extends BaseDateRangeFDSFilter {
+public class ExpirationDateRangeFDSFilter extends BaseDateTimeRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
@@ -48,13 +48,13 @@ public class ExpirationDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 	}
 
 	@Override
-	public DateFDSFilterItem getMaxDateFDSFilterItem() {
-		return new DateFDSFilterItem(0, 0, 0);
+	public DateTimeFDSFilterItem getMaxDateTimeFDSFilterItem() {
+		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
 	}
 
 	@Override
-	public DateFDSFilterItem getMinDateFDSFilterItem() {
-		return new DateFDSFilterItem(0, 0, 0);
+	public DateTimeFDSFilterItem getMinDateTimeFDSFilterItem() {
+		return new DateTimeFDSFilterItem(0, 0, 0, 0, 0);
 	}
 
 }

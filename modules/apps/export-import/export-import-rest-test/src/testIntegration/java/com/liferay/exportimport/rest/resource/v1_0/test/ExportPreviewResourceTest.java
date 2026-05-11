@@ -69,11 +69,13 @@ public class ExportPreviewResourceTest
 		_siteObjectDefinition = _publishObjectDefinitionWithEntries(
 			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
 
-		_user = UserTestUtil.addUser(testCompany);
+		String password = RandomTestUtil.randomString();
+
+		_user = UserTestUtil.addUser(testCompany, password);
 
 		_exportPreviewResource = ExportPreviewResource.builder(
 		).authentication(
-			_user.getEmailAddress(), RandomTestUtil.randomString()
+			_user.getEmailAddress(), password
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
